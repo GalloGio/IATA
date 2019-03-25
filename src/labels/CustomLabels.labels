@@ -2126,13 +2126,6 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Non-compliance</value>
     </labels>
     <labels>
-        <fullName>ANG_OnGoing_OSCAR_Warning</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_OnGoing_OSCAR_Warning</shortDescription>
-        <value>Please finalize any ongoing OSCAR process before proceeding with the conversion.</value>
-    </labels>
-    <labels>
         <fullName>ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2166,6 +2159,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG Oscar Risk values Warning</shortDescription>
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OnGoing_OSCAR_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_OnGoing_OSCAR_Warning</shortDescription>
+        <value>Please finalize any ongoing OSCAR process before proceeding with the conversion.</value>
     </labels>
     <labels>
         <fullName>ANG_PCI_COMPLIANT</fullName>
@@ -3179,6 +3179,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Actual Amount Blocked</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_AddCountry_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_AddCountry_Monthly_Survey</shortDescription>
+        <value>Add to Survey</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Airlines_Charges</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3205,6 +3212,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_All_Others_Country</shortDescription>
         <value>All Others Country</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Annual_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Annual_Survey</shortDescription>
+        <value>Annual Survey</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Annual_Surveys</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Annual_Surveys</shortDescription>
+        <value>Annual Surveys</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Attachments_Description</fullName>
@@ -3256,6 +3277,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Go back to currency center home</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Back_ReportingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Back_ReportingActions</shortDescription>
+        <value>Go Back To Reporting Actions</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Blocked_Funds</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3298,6 +3326,27 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>CASS PROFILE</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Cancel_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Cancel_Confirmation_Question</shortDescription>
+        <value>If you leave you will loose all changes made since you last saved. Are you sure you want to leave?</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Cancel_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Cancel_Confirmation_Title</shortDescription>
+        <value>Leave survey form</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Cancel_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Cancel_Monthly_Survey</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Countries</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3324,6 +3373,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Currency</shortDescription>
         <value>CURRENCY</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_DeleteCountry_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_DeleteCountry_Confirmation_Question</shortDescription>
+        <value>Are you sure you want to delete this country?</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_DeleteCountry_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_DeleteCountry_Confirmation_Title</shortDescription>
+        <value>Delete country</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Details</fullName>
@@ -3377,6 +3440,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Economic_Profile</shortDescription>
         <value>ECONOMIC PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Edit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Edit</shortDescription>
+        <value>Edit</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Exchange_Rates_Directory</fullName>
@@ -3463,6 +3533,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Issue Started</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Link</shortDescription>
+        <value>Link</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Manage_Notifications</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3484,6 +3561,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>You will receive a notification every time an update feed is posted for the countries checked in the list below.</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Monthly_Survey</shortDescription>
+        <value>Monthly Survey</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Monthly_Surveys</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Monthly_Surveys</shortDescription>
+        <value>Monthly Surveys</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Next_Action</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3496,6 +3587,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Number_of_Airlines_Reporting</shortDescription>
         <value># of Airlines Reporting the Issue</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Open</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Open</shortDescription>
+        <value>View</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Preferences_Save_Error</fullName>
@@ -3533,6 +3631,34 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>REPATRIATION PROCESS</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Reporting_And_Actions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Reporting_And_Actions</shortDescription>
+        <value>Reporting &amp; Actions</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Request_Update</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Request_Update</shortDescription>
+        <value>Request Update</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Request_Update_Hover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Request_Update_Hover</shortDescription>
+        <value>Dummy text</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Save_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Save_Monthly_Survey</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Save_Preferences</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3568,6 +3694,34 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Subject</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Submission_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Submission_Confirmation_Question</shortDescription>
+        <value>By pressing continue you will be submitting all countries data. Are you sure you want to continue?</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Submission_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Submission_Confirmation_Title</shortDescription>
+        <value>Confirm survey submission</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Submit_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Submit_Monthly_Survey</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Survey</shortDescription>
+        <value>Survey</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Treasury_Dashboard</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3580,6 +3734,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Unfollow</shortDescription>
         <value>Unfollow</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_UpcomingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_UpcomingActions</shortDescription>
+        <value>Upcoming Actions &amp; Events</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Update_Feeds</fullName>
@@ -19409,6 +19570,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Email</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOthers_Invalid_Contact</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Invalid Contact</shortDescription>
+        <value>This contact cannot be added because it belongs to another account</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CNS_Documents</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20236,11 +20405,32 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Currency Center</value>
     </labels>
     <labels>
+        <fullName>ISSP_CurrencyCenterReportingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reporting Actions Page</shortDescription>
+        <value>ISSP_CurrencyCenterReportingActions</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CurrencyCenter_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CurrencyCenter_Description</shortDescription>
         <value>The IATA Currency Center is a new, dynamic, web based information tool that provides currency information from an economic, financial markets and IATA perspective for different set of countries. In this first version you will find information related to blocked funds countries and watch list  countries. The onboarding of all other countries will follow!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CurrencyCenter_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CurrencyCenter Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CurrencyCenter_Last_Updated_On</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CurrencyCenter Last Updated On</shortDescription>
+        <value>Last updated on</value>
     </labels>
     <labels>
         <fullName>ISSP_Currency_Filter</fullName>
@@ -21478,6 +21668,147 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_FAQ</shortDescription>
         <value>Frequently Asked Questions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountries</shortDescription>
+        <value>All Operational Calendars</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountriesWithServices</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountriesWithServices</shortDescription>
+        <value>All Countries where my airline participates</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_ChooseCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_ChooseCountries</shortDescription>
+        <value>All Operational Calendards for specific countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Countries</shortDescription>
+        <value>Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountriesSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountriesSelected</shortDescription>
+        <value>Selected Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountryName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountryName</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CustomFilterBtn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CustomFilterBtn</shortDescription>
+        <value>Multi-download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_DownloadOpts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_DownloadOpts</shortDescription>
+        <value>I want to download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FileFormat</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FileFormat</shortDescription>
+        <value>Format</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FillAllFields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FillAllFields</shortDescription>
+        <value>Please fill all mandatory filters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Filters</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Filters</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_NoResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_NoResults</shortDescription>
+        <value>No results for your search.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Operations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Operations</shortDescription>
+        <value>Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_OperationsSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_OperationsSelected</shortDescription>
+        <value>Selected Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_PopupTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_PopupTitle</shortDescription>
+        <value>Multi Calendar Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Remittance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Remittance</shortDescription>
+        <value>Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_RemittanceSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_RemittanceSelected</shortDescription>
+        <value>Selected Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_SelectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_SelectAll</shortDescription>
+        <value>Select All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_UnselectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_UnselectAll</shortDescription>
+        <value>Unselect All</value>
     </labels>
     <labels>
         <fullName>ISSP_Fax</fullName>
@@ -23598,7 +23929,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
-        <value>Country/ Teritory</value>
+        <value>Country/ Territory</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
@@ -23623,6 +23954,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_DownloadDate</shortDescription>
         <value>Download Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_DownloadWarning</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_DownloadWarning</shortDescription>
+        <value>This operation may take few minutes. Please wait.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_EnableFilters</fullName>
@@ -25411,7 +25750,7 @@ Review the standard participation agreement &lt;a href=&quot;https://www.iata.or
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
-        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;http://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xls&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.
+        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xlsx&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.
 &lt;br/&gt;
 Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Standard_Participation_Agreement_for_SIS_e-Invoicing_Services-Invoice_Receiver_TOU.pdf&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
@@ -26058,7 +26397,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_TOU_Section1_Subtitle1</shortDescription>
-        <value>Airline Head Office Information:</value>
+        <value>Head Office Information:</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_TOU_Section1_Subtitle2</fullName>
@@ -26066,7 +26405,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_TOU_Section1_Subtitle2</shortDescription>
-        <value>Airline Information to be included in the invoices produced by SIS</value>
+        <value>Information to be included in the invoices produced by SIS</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_TOU_Section1_Title</fullName>
@@ -29224,6 +29563,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Add</value>
     </labels>
     <labels>
+        <fullName>MultiselectPicklist_AddAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_AddAll</shortDescription>
+        <value>Add All</value>
+    </labels>
+    <labels>
         <fullName>MultiselectPicklist_Down</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29236,6 +29582,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>MultiselectPicklist_Remove</shortDescription>
         <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_RemoveAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_RemoveAll</shortDescription>
+        <value>Remove All</value>
     </labels>
     <labels>
         <fullName>MultiselectPicklist_Up</fullName>

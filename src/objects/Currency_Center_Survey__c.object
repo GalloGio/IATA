@@ -1,0 +1,2008 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Airline__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Airline</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Currency Center Survey</relationshipLabel>
+        <relationshipName>Currency_Center_Survey</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Allocation_of_Funds__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Allocation of Funds</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Amount_USD__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount USD</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amounts_Blocked_Delayed__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>In Local Currency</description>
+        <externalId>false</externalId>
+        <label>Amounts Blocked/Delayed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Average_Exchange_Rate__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>To USD</description>
+        <externalId>false</externalId>
+        <label>Average Exchange Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Bank Name</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <label>Bank Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Bank</label>
+        <referenceTo>Financial_Institution__c</referenceTo>
+        <relationshipLabel>Currency Center Survey</relationshipLabel>
+        <relationshipName>Currency_Center_Survey</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <description>Comment on issues faced and causing blocked funds</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Comment on issues faced and causing blocked funds</inlineHelpText>
+        <label>Comments</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Currency Center Survey</relationshipLabel>
+        <relationshipName>Currency_Center_Survey</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Country Comments</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Country_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Country Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country</label>
+        <referenceTo>Country_Profile__c</referenceTo>
+        <relationshipLabel>Currency Center Survey</relationshipLabel>
+        <relationshipName>Currency_Center_Survey</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Currency__c</fullName>
+        <externalId>false</externalId>
+        <label>Currency</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_Balance_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Balance Amount in local Currency</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Delay_in_day__c</fullName>
+        <externalId>false</externalId>
+        <label>Delay in day</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>IATA ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Currency Center Survey</relationshipLabel>
+        <relationshipName>Currency_Center_Survey</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ICCS__c</fullName>
+        <externalId>false</externalId>
+        <label>ICCS</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Allocation_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Allocation Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Allocation_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Last_Allocation_Total_Amount_USD__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount USD</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Local_Currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Country__r.ISO_Code__c</formula>
+        <label>Local Currency</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Month_Survey__c</fullName>
+        <externalId>false</externalId>
+        <label>Month Survey</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nov_Dec_Sales__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Nov &amp; Dec Sales</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_Currency_Business__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Other Currency Business</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Id__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Parent Id</label>
+        <referenceTo>Currency_Center_Survey__c</referenceTo>
+        <relationshipLabel>Currency Center Survey</relationshipLabel>
+        <relationshipName>Currency_Center_Survey</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Report_Type_Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Report Type Comments</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Reporting_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Reporting Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Reporting_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Reporting Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Pending Transfer</fullName>
+                    <default>false</default>
+                    <label>Pending Transfer</label>
+                </value>
+                <value>
+                    <fullName>Pending Approval</fullName>
+                    <default>false</default>
+                    <label>Pending Approval</label>
+                </value>
+                <value>
+                    <fullName>Blocked Amount</fullName>
+                    <default>false</default>
+                    <label>Blocked Amount</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SalesFundsAwaintingRepatriation__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Funds Awainting Repatriation</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Sales_Period_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Month Blocked/Delayed End</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Period_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Month Blocked/Delayed Start</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Period__c</fullName>
+        <description>Detailled beginning and end date</description>
+        <externalId>false</externalId>
+        <label>Sales Period</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Section__c</fullName>
+        <externalId>false</externalId>
+        <label>Section</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bank Record</fullName>
+                    <default>false</default>
+                    <label>Bank Record</label>
+                </value>
+                <value>
+                    <fullName>Type Of Operations Record</fullName>
+                    <default>false</default>
+                    <label>Type Of Operations Record</label>
+                </value>
+                <value>
+                    <fullName>Country Record</fullName>
+                    <default>false</default>
+                    <label>Country Record</label>
+                </value>
+                <value>
+                    <fullName>Survey Record</fullName>
+                    <default>false</default>
+                    <label>Survey Record</label>
+                </value>
+                <value>
+                    <fullName>Country Comment Record</fullName>
+                    <default>false</default>
+                    <label>Country Comment Record</label>
+                </value>
+                <value>
+                    <fullName>Report Type Record</fullName>
+                    <default>false</default>
+                    <label>Report Type Record</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>true</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Submitted</fullName>
+                    <default>false</default>
+                    <label>Submitted</label>
+                </value>
+                <value>
+                    <fullName>Cancelled</fullName>
+                    <default>false</default>
+                    <label>Cancelled</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Survey__c</fullName>
+        <externalId>false</externalId>
+        <label>Survey</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+                <value>
+                    <fullName>Annual</fullName>
+                    <default>false</default>
+                    <label>Annual</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_USD__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount USD</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Blocked_Delayed_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Amounts_Blocked_Delayed__c/Average_Exchange_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Blocked/Delayed Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Currency__c</fullName>
+        <externalId>false</externalId>
+        <label>Total_Currency</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type_Of_Operations_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <label>Type Of Operations (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Type_of_Operations__c</fullName>
+        <externalId>false</externalId>
+        <label>Type of Operations</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Direct Sales</fullName>
+                    <default>false</default>
+                    <label>Direct Sales</label>
+                </value>
+                <value>
+                    <fullName>BSP</fullName>
+                    <default>false</default>
+                    <label>BSP</label>
+                </value>
+                <value>
+                    <fullName>CASS</fullName>
+                    <default>false</default>
+                    <label>CASS</label>
+                </value>
+                <value>
+                    <fullName>ICCS</fullName>
+                    <default>false</default>
+                    <label>ICCS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Type_of_Revenues__c</fullName>
+        <externalId>false</externalId>
+        <label>Type of Revenues</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not flown ticket revenues</fullName>
+                    <default>false</default>
+                    <label>Not flown ticket revenues</label>
+                </value>
+                <value>
+                    <fullName>Not flown from Algeria</fullName>
+                    <default>false</default>
+                    <label>Not flown from Algeria</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Year_Survey__c</fullName>
+        <externalId>false</externalId>
+        <label>Year Survey</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Currency Center Survey</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Country__c</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Parent_Id__c</columns>
+        <columns>Survey__c</columns>
+        <columns>Section__c</columns>
+        <columns>Currency__c</columns>
+        <columns>Amount__c</columns>
+        <columns>Bank_Percentage__c</columns>
+        <columns>Total_Currency__c</columns>
+        <columns>Total_Amount_USD__c</columns>
+        <columns>Type_of_Operations__c</columns>
+        <columns>Type_Of_Operations_Percentage__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Annual_Country</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Parent_Id__c</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Currency__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Currency_Center_Survey__c.AnnualCountryRecord</value>
+        </filters>
+        <label>Annual Country</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Annual_Surveys</fullName>
+        <columns>NAME</columns>
+        <columns>Airline__c</columns>
+        <columns>Year_Survey__c</columns>
+        <columns>Status__c</columns>
+        <columns>Amount_USD__c</columns>
+        <columns>Reporting_Date__c</columns>
+        <columns>Sales_Period__c</columns>
+        <columns>Total_Amount_USD__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Survey__c</field>
+            <operation>equals</operation>
+            <value>Annual</value>
+        </filters>
+        <label>Annual Surveys</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Monthly_Surveys</fullName>
+        <columns>NAME</columns>
+        <columns>Airline__c</columns>
+        <columns>Year_Survey__c</columns>
+        <columns>Month_Survey__c</columns>
+        <columns>Status__c</columns>
+        <columns>Amount_USD__c</columns>
+        <columns>Reporting_Date__c</columns>
+        <columns>Sales_Period__c</columns>
+        <columns>Total_Amount_USD__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Survey__c</field>
+            <operation>equals</operation>
+            <value>Monthly</value>
+        </filters>
+        <label>Monthly Surveys</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Record_Type</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Parent_Id__c</columns>
+        <columns>Section__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <label>Record Type</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>CCS-{0000000000}</displayFormat>
+        <label>Currency Center Survey Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Currency Center Survey</pluralLabel>
+    <recordTypes>
+        <fullName>AnnualBankRecord</fullName>
+        <active>true</active>
+        <description>Annual - Bank Record</description>
+        <label>Annual - Bank Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>AnnualCountryCommentRecord</fullName>
+        <active>true</active>
+        <description>Annual - Country Comment Record</description>
+        <label>Annual - Country Comment Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>AnnualCountryRecord</fullName>
+        <active>true</active>
+        <description>Annual - Country Record</description>
+        <label>Annual - Country Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>AnnualReportTypeRecord</fullName>
+        <active>true</active>
+        <description>Annual - Report Type Record</description>
+        <label>Annual - Report Type Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>AnnualSurveyRecord</fullName>
+        <active>true</active>
+        <description>Annual - Survey Record</description>
+        <label>Annual - Survey Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>AnnualTypeOfOperationsRecord</fullName>
+        <active>true</active>
+        <description>Annual - Type Of Operations Record</description>
+        <label>Annual - Type Of Operations Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>MonthlyBankRecord</fullName>
+        <active>true</active>
+        <description>Monthly - Bank Record</description>
+        <label>Monthly - Bank Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>MonthlyCountryRecord</fullName>
+        <active>true</active>
+        <description>Monthly - Country Record</description>
+        <label>Monthly - Country Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>MonthlyReportTypeRecord</fullName>
+        <active>true</active>
+        <description>Monthly - Report Type Record</description>
+        <label>Monthly - Report Type Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>MonthlySurveyRecord</fullName>
+        <active>true</active>
+        <description>Monthly - Survey Record</description>
+        <label>Monthly - Survey Record</label>
+        <picklistValues>
+            <picklist>Reporting_Type__c</picklist>
+            <values>
+                <fullName>Blocked Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Transfer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SalesFundsAwaintingRepatriation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Section__c</picklist>
+            <values>
+                <fullName>Bank Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Comment Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Report Type Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Survey Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Type Of Operations Record</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Survey__c</picklist>
+            <values>
+                <fullName>Annual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Operations__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Revenues__c</picklist>
+            <values>
+                <fullName>Not flown from Algeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not flown ticket revenues</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Percentage_Validation</fullName>
+        <active>false</active>
+        <description>To verify if the percentage is greater then 100 or opposite</description>
+        <errorConditionFormula>OR(
+   Type_Of_Operations_Percentage__c &gt; 1.0,
+   Type_Of_Operations_Percentage__c &lt; 0.0
+)</errorConditionFormula>
+        <errorDisplayField>Type_Of_Operations_Percentage__c</errorDisplayField>
+        <errorMessage>Type of Operations percentage must be between 0 and 100%.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

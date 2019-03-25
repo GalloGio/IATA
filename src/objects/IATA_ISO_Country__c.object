@@ -46,9 +46,9 @@
     <description>Contain a list of countries with their ISO country code and their Region</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -1472,6 +1472,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Croatia</fullName>
                     <default>false</default>
                     <label>Croatia</label>
+                </value>
+                <value>
+                    <fullName>Cuba</fullName>
+                    <default>false</default>
+                    <label>Cuba</label>
                 </value>
                 <value>
                     <fullName>Cyprus</fullName>
