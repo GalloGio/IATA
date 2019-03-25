@@ -86,7 +86,11 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static Boolean shouldRunMulticountryValidations(Account account){
-    	return (allowedLocationsSet.contains(account.Location_Class__c) && account.ANG_IsNewGenAgency__c);
+    	return (
+    			(allowedLocationsSet.contains(account.Location_Class__c) && account.ANG_IsNewGenAgency__c) 
+    			|| 
+    			(account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
+    		   );
 	}
 
 	/**
