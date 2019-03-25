@@ -640,8 +640,6 @@ public class AmazonFileTrgHelper {
 
         Set<Id> erIds = new Set<Id>();
 
-        System.debug('ALEX listNews : ' + listNews.size());
-
         //
         // Send an email to all users where the amazon file is linked to an external report.
         // when the amazon file is set to public.
@@ -656,40 +654,41 @@ public class AmazonFileTrgHelper {
         // Determine the set of amazon files to send their users an email.
         //
         for(AmazonFile__c aFile : listNews) {
-            Id auxId = aFile.sObject_Id__c;
-            String auxStr = '' + auxId.getsobjecttype();
+            if(aFile.sObject_Id__c != null) {
+                Id auxId = aFile.sObject_Id__c;
+                String auxStr = '' + auxId.getsobjecttype();
 
-            Boolean erFileFlag = false;
-            if(mapOlds == null) {
-                if(auxStr == 'ISSP_External_Report__c' &&
-                   aFile.isPublic__c) {
+                Boolean erFileFlag = false;
+                if(mapOlds == null) {
+                    if(auxStr == 'ISSP_External_Report__c' &&
+                       aFile.isPublic__c) {
 
-                    erFileFlag = true; 
+                        erFileFlag = true; 
 
-                }
-            } else {
-                if(auxStr == 'ISSP_External_Report__c' && !mapOlds.get(aFile.Id).isPublic__c &&
-                   aFile.isPublic__c) {
-
-                    erFileFlag = true;
-
-                }
-            }
-            if(erFileFlag) {
-
-                List<AmazonFile__c> files = externalReportFileMap.get(aFile.sObject_Id__c);
-
-                if(files == null) {
-                    List<AmazonFile__c> auxList = new List<AmazonFile__c>();
-                    auxList.add(aFile);
-                    externalReportFileMap.put(aFile.sObject_Id__c, auxList);    
+                    }
                 } else {
-                    files.add(aFile);
+                    if(auxStr == 'ISSP_External_Report__c' && !mapOlds.get(aFile.Id).isPublic__c &&
+                       aFile.isPublic__c) {
+
+                        erFileFlag = true;
+
+                    }
                 }
+                if(erFileFlag) {
 
-                erIds.add(aFile.sObject_Id__c);
+                    List<AmazonFile__c> files = externalReportFileMap.get(aFile.sObject_Id__c);
+
+                    if(files == null) {
+                        List<AmazonFile__c> auxList = new List<AmazonFile__c>();
+                        auxList.add(aFile);
+                        externalReportFileMap.put(aFile.sObject_Id__c, auxList);    
+                    } else {
+                        files.add(aFile);
+                    }
+
+                    erIds.add(aFile.sObject_Id__c);
+                }
             }
-
         }
 
         if(externalReportFileMap.keySet().size() != 0) {
@@ -803,8 +802,6 @@ public class AmazonFileTrgHelper {
                     List<AmazonFile__c> files = contactFileMap.get(key);
 
                     Id userId = contactUserMap.get(key);
-
-                    System.debug('ALEX sending to user : ' + userId);
 
                     // process the merge fields
                     String subject = emailTemplate.Subject;

@@ -49,6 +49,7 @@ public class TIP_Utils{
 	public static String PARTNER_STATUS_ACTIVE='Active';
 	public static String PARTNER_STATUS_INACTIVE='Inactive';
 	public static String PARTNER_STATUS_IN_PROGRESS='In Progress';
+	public static String PARTNER_STATUS_TERMINATED='Terminated';
 	
 
 	//Partner Product status

@@ -155,24 +155,17 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
    			String status = sObjectsFields.get(sObjectType).get(FIELD_STATUS);
    			String dateToUpdate = sObjectsFields.get(sObjectType).get(FIELD_START_DATE_TO_UPDATE);
 
-			String auxStatus = '';
-   			if (sObjectType == PRODUCT_TYPE) {
-				auxStatus = sObjectsFields.get(sObjectType).get(FIELD_STATUS);
-				if(auxStatus == TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE) {
-					o.put(status, TIP_Utils.PARTNER_PRODUCT_STATUS_TERMINATED);
-				}
-   			} else if (sObjectType == PRODUCT_TYPE) {
-   				//
-   				// Second part for the account
-   				//
-   			}
+			String auxStatus = checkStatus(sObjectType, status);
 
    			if(auxStatus == '') {
 	   			result = dateCompare((Date) o.get(startDate), (Date) o.get(endDate));
 	   			o.put(status, sObjectsStatus.get(sObjectType).get(result));
 
 	   			if(o.get(dateToUpdate) == null) o.put(dateToUpdate, o.get(startDate));
+   			} else {
+   				o.put(status, auxStatus);
    			}
+
    			regsToUpdate.add(o);   			
    		}
    		system.debug('PF regsToUpdate'+regsToUpdate);
@@ -183,6 +176,22 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 		if(startDate > System.Today()) stat=DATE_STATUS_IN_PROGRESS;
 		if(startDate <=System.Today()) stat=DATE_STATUS_ACTIVE;
 		if(endDate <= System.Today()) stat=DATE_STATUS_INACTIVE; //ACAMBAS - TIP-161
+		return stat ; 
+	}
+
+	public static String checkStatus(Integer sObjectType, String status){
+		String stat = '';
+
+   		if (sObjectType == PRODUCT_TYPE || sObjectType == PROVIDER_TYPE) {
+			if(status == TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE || status == TIP_Utils.PARTNER_STATUS_INACTIVE) {
+				if(sObjectType == PRODUCT_TYPE) {
+					stat = TIP_Utils.PARTNER_PRODUCT_STATUS_TERMINATED;
+				} else {
+					stat = TIP_Utils.PARTNER_STATUS_TERMINATED;
+				}
+			}
+   		}
+
 		return stat ; 
 	}
 		
