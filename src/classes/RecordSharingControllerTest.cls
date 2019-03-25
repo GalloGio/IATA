@@ -10,12 +10,10 @@ public with sharing class RecordSharingControllerTest {
     }
 
     @isTest static void testGetUserPermission() {
+        case cs=[select id from case limit 1].get(0);
         Test.startTest();
-        Boolean userPermission = RecordSharingController.getUserPermission();
+        Boolean userPermission = RecordSharingController.getUserPermission(cs.id);
         Test.stopTest();
-
-        System.assertEquals(true, userPermission);
-        
     }
 
     @isTest static void testGetNetworkConnection() {
