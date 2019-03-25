@@ -112,7 +112,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	                acct.RecordTypeId	= mainAccount.RecordTypeId;
 	                acct.Sector__c = mainAccount.Sector__c;
 	                acct.Reason_for_creation__c = 'Account is missing';
-                    acct.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+                    acct.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY; //NEWGEN-5264-Bugfix
 	            }
 	        }
 	        if(!listAccount.isEmpty())

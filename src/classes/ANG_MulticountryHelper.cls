@@ -89,7 +89,7 @@ public class ANG_MulticountryHelper {
     	return (
     			(allowedLocationsSet.contains(account.Location_Class__c) && account.ANG_IsNewGenAgency__c) 
     			|| 
-    			(account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
+    			(account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) //NEWGEN-5264-Bugfix
     		   );
 	}
 
