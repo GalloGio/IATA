@@ -116,6 +116,7 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 						remoteInovArt.Request_Result__c = 'Failed';
 						remoteInovArt.Status_Detail__c = 'Remote Invocation Artefact must have an External ID';
 						rmtInvocationArtListToUpdate.add(remoteInovArt);
+						break;
 					}
 					//Process Payment_Type == 'SPDR'
 					else if(remoteInovArt.Payment_type__c == 'SPDR') {
