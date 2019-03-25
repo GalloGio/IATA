@@ -1171,8 +1171,8 @@ public without sharing class AMS_Utils {
 
         String status;
         if (code == '0') status = 'Terminated';
-        else if (code == '2') status = 'Pending';
-        else if (code == '9') status = 'Active';
+        else if (code == '2') status = 'New Application Pending';
+        else if (code == '9') status = 'Approved';
         else status = getIATAReadableStatus(code);
 
         return status;
