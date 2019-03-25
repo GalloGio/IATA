@@ -46,9 +46,9 @@
     <description>Object that tracks different aspects of a subscription purchase for the IATA eCommerce project (e.g. subscription, invoice, payment method, T&amp;C accepted, etc)</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>

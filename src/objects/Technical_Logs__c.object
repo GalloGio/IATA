@@ -46,9 +46,9 @@
     <description>Technical Logs</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -145,7 +145,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>83249342</value>
+            <value>95226106</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -252,7 +252,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>2/15/2019 12:00 AM</value>
+            <value>3/6/2019 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>
