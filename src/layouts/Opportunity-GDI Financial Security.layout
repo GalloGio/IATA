@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>GDI_Offer_Id__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Offer_exchange_rate_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

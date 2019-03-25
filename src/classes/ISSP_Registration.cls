@@ -1737,8 +1737,8 @@ public without sharing class ISSP_Registration {
     	}
     	String queryStr = 'SELECT Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, '+
     					  'Airline_designator__c, Airline_Prefix__c FROM Account ';
-    	String whereClause = 'WHERE RecordType.DeveloperName IN :recordTypes AND '+
-    								'IATA_ISO_Country__c = \''+companyLocation+'\' ';
+    	String whereClause = 'WHERE RecordType.DeveloperName IN :recordTypes AND Location_Class__c <> \'M\''+
+    								'AND IATA_ISO_Country__c = \''+companyLocation+'\' ';
     	
     	if(!String.isBlank(searchTerm) && companyType == 'Airline') {
     		whereClause += 'AND Airline_Search_Field__c LIKE \''+buildSearchExpression(searchTerm)+'\' ';
