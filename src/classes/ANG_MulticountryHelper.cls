@@ -392,6 +392,7 @@ public class ANG_MulticountryHelper {
 			swapWrapper.newGE = firstAccount.Id;
 			swapWrapper.bspOldGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 			swapWrapper.bspNewGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
+			toReturn.moveFsAndRiskEventsMap = new Map<Id,Id>{secondAccount.Id => firstAccount.Id};
 		}
 		//If we are swapping a GE we store the new GE Id, the old GE BSP and the new GE BSP
 		else if(secondAccount.Location_Type__c == AMS_Utils.GE){
@@ -399,6 +400,7 @@ public class ANG_MulticountryHelper {
 			swapWrapper.newGE = secondAccount.Id;
 			swapWrapper.bspOldGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 			swapWrapper.bspNewGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
+			toReturn.moveFsAndRiskEventsMap = new Map<Id,Id>{firstAccount.Id => secondAccount.Id};
 		}
 		else if(firstAccount.Location_Type__c == AMS_Utils.HE){
 			swapRelatedFields(firstAccount, secondAccount);
@@ -430,7 +432,7 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static void moveRiskRelatedFieldsFromAccount(Account assignFieldsAcct, Account srcAcct){
-
+		
 		assignFieldsAcct.ANG_IEP_Status__c = srcAcct.ANG_IEP_Status__c;
 		assignFieldsAcct.ANG_HE_RiskStatus__c = srcAcct.ANG_HE_RiskStatus__c;
 		assignFieldsAcct.ANG_IEP_HE_AccntNum__c = srcAcct.ANG_IEP_HE_AccntNum__c;
@@ -445,9 +447,7 @@ public class ANG_MulticountryHelper {
 		srcAcct.ANG_HE_RiskHistoryAssessment__c = null;
 
 		ANG_RHCHelper.moveRHCInfos(srcAcct.RHC_Informations__r, new Map<Id,Id>{srcAcct.Id => assignFieldsAcct.Id});
-
-        System.enqueueJob(new ANG_Risk_Helper.FutureHandler(new Map<Id,Id>{srcAcct.Id => assignFieldsAcct.Id}));
-		
+	
 	}
 
 

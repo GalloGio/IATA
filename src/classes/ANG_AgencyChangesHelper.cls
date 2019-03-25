@@ -11,6 +11,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		public List<Agency_Applied_Change_code__c> changeCodesToCreate;
 		public List<AMS_OSCAR_JSON.ChangeCode> changeCodesToCreateDef;
 		public List<Account> accountsToApplyChangeCodes;
+		//Used to move financial securities and risk events
+		//from one account (key) to the other (value)
+		public Map<Id, Id> moveFsAndRiskEventsMap;
 
 		public Set<Id> accountsChanged;
 
@@ -83,6 +86,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
+
+			if(moveFsAndRiskEventsMap != NULL && !moveFsAndRiskEventsMap.isEmpty()){
+        		System.enqueueJob(new ANG_Risk_Helper.FutureHandler(moveFsAndRiskEventsMap));
+			}
 
 			return hasUpserted;
 		}
