@@ -94270,6 +94270,21 @@ $Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
         <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Agent_Country_Not_Enabled_Multicountry</fullName>
+        <active>true</active>
+        <description>Validate for the selected country if it is a multicountry enabled</description>
+        <errorConditionFormula>OR(
+ AND(ISPICKVAL(Location_Type__c,&apos;GE&apos;), NOT(IATA_ISO_Country__r.Multicountry_Enabled__c)),
+
+AND(
+ OR(ISPICKVAL(Parent.Location_Type__c,&apos;GE&apos;),ISPICKVAL(Parent.Parent.Location_Type__c,&apos;GE&apos;)),
+
+ NOT(IATA_ISO_Country__r.Multicountry_Enabled__c)
+ )
+)</errorConditionFormula>
+        <errorMessage>The selected country is not enabled for multicountry.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
         <description>You are not allowed to change the field &quot;Account Name&quot;.</description>

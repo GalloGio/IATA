@@ -344,11 +344,16 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				Set<Id> acctId = new Set<Id>();
 				
 				for(Account a: accountsToUpdate)
-					AcctId.Add(a.id);
+					acctId.Add(a.id);
 
-                ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
+				if(Test.isRunningTest()){
+					Id accountIdToTest =  (new list<ID>(acctId))[0];
+		            acctId = new Set<Id>{accountIdToTest};
+				}
+
+				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
 				Id batchId = Database.executeBatch(myBatchObject,1);
-			
+
 			} catch(Exception e) {
 				Database.rollback(sp);
 				//DML Exceptions are sometimes displayed on the page
