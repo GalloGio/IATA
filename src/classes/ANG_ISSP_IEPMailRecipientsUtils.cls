@@ -68,21 +68,24 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
                           From Portal_Application_Right__c
                          Where ANG_Portal_Service_Role__c in : roles
                            And right__c = 'Access Granted'
-                           And contact__r.accountId in : accountIDsSet];
+                           And contact__r.accountId in : accountIDsSet
+                           And contact__r.isEmailBounced = false];
         } else if (type == 'C') {
             parList2 = [Select Account__c,
                                Contact__c
                           From Portal_Application_Right__c
                          Where Portal_Application__c in : portalServices
                            And right__c = 'Access Granted'
-                           And contact__r.accountId in : accountIDsSet];
+                           And contact__r.accountId in : accountIDsSet
+                           And contact__r.isEmailBounced = false];
         } else {
             parList2 = [Select Account__c,
                                Contact__c
                           From Portal_Application_Right__c
                          Where Portal_Application__r.name in : portalServices
                            And right__c = 'Access Granted'
-                           And contact__r.accountId in : accountIDsSet];                           
+                           And contact__r.accountId in : accountIDsSet
+                           And contact__r.isEmailBounced = false];                           
         }
 
         //System.debug('ALEX parList2-->' + parList2);

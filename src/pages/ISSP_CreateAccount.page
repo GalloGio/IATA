@@ -877,12 +877,12 @@
 	                        StatusStyle="{!IF(sRefererCommunity == 'iec','elementBAddressToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1')}"
 	                        FormControlStyle="form-control req" rendered="{!preventAddressDoctorService==false}">
 	                      </DSE:DS_DataQuality>
-	                      <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
-	                      		<div id="divToMove2" class="col-lg-6" style="display: none;">
-	                      			<select class="form-control rec" id="drpdwnBState" onchange="copyToAccBState();">
-	                      				<option value="">--Select One--</option>
-	                      			</select>                		 	
-	                        	</div>
+                          <apex:outputPanel layout="block" styleClass="requiredBlock"  rendered="{!sRefererCommunity == 'iec'}">
+                                <div id="divToMove2" class="col-lg-6" style="display: none;">
+                                    <select class="form-control rec" html-required="true" id="drpdwnBState" onchange="copyToAccBState();">
+                                        <option value=" ">--Select One--</option>
+                                    </select>                           
+                                </div>
                        	  </apex:outputPanel>	
                       </div>
                       <div class="form-group col-lg-6">

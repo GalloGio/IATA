@@ -53,6 +53,10 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AccountSource</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>state_numeric_code__c</field>
             </layoutItems>
