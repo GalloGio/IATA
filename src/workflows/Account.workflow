@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Airline_Becomes_Active_for_the_First_Time_Alert</fullName>
+        <description>Airline Becomes Active for the First Time Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>humbertdrc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kirkl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>luntrarum@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>matepiner@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pilonb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Airline_Becomes_Active_for_the_First_Time_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Airline_Becomes_Inactive_Alert</fullName>
+        <description>Airline Becomes Inactive Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>humbertdrc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kirkl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>luntrarum@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>matepiner@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pilonb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Airline_Becomes_Inactive_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Airline_Becomes_Re_Activated_Alert</fullName>
+        <description>Airline Becomes Re-Activated Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>humbertdrc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kirkl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>luntrarum@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>matepiner@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pilonb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Airline_Becomes_Re_Activated_Notification</template>
+    </alerts>
+    <alerts>
         <fullName>FDS_CodingAOC</fullName>
         <description>FDS Coding - AOC Expiry alert</description>
         <protected>false</protected>
@@ -309,6 +393,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Account_Type_to_Not_Applicable</fullName>
+        <description>Update Account Type field to &apos;Not Applicable&apos;</description>
+        <field>Account_Type__c</field>
+        <literalValue>Not Applicable</literalValue>
+        <name>Update Account Type to Not Applicable</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Type_to_empty</fullName>
+        <description>Clears the Account Type field</description>
+        <field>Account_Type__c</field>
+        <name>Update Account Type to empty</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Cash_Condition</fullName>
         <field>ANG_HE_CashCondition__c</field>
         <literalValue>1</literalValue>
@@ -492,6 +595,50 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>false</active>
         <description>Used for updating the agency short name with the trade name if exist, if not then it updates it with the account name</description>
         <formula>AND ( RecordType.DeveloperName = &apos;IATA_Agency&apos;, OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Airline Becomes Active for the First Time</fullName>
+        <actions>
+            <name>Airline_Becomes_Active_for_the_First_Time_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Sends a notification email when an airline becomes active for the first time</description>
+        <formula>AND(  ISNEW(),  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Airline Becomes Inactive</fullName>
+        <actions>
+            <name>Airline_Becomes_Inactive_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Sends a notification email when an airline becomes inactive</description>
+        <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Active Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Airline Becomes Re-Activated</fullName>
+        <actions>
+            <name>Airline_Becomes_Re_Activated_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Sends a notification email when an airline becomes re-activated</description>
+        <formula>AND(  RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISCHANGED( ACLI_Status__c),  ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Inactive Company&apos;),  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Clear Account Type when the field is applicable</fullName>
+        <actions>
+            <name>Update_Account_Type_to_empty</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Clears the Account Type field when the field should be filled by the user</description>
+        <formula>AND(         	RecordType.DeveloperName  = &apos;IATA_Airline&apos;,             	ISPICKVAL(Sector__c, &apos;Airline&apos;),         	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),         	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;),         	ISPICKVAL(Account_Type__c, &apos;Not Applicable&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -748,6 +895,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </criteriaItems>
         <description>Sends email when the account reaches the irregularity thresold for the country. This validation is made on the AccountTrigger trigger</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Account Type when Not Applicable</fullName>
+        <actions>
+            <name>Update_Account_Type_to_Not_Applicable</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Update Account Type field to &apos;Not Applicable&apos; when the field should not be filled</description>
+        <formula>AND(RecordType.DeveloperName  = &apos;IATA_Airline&apos;, NOT(AND(  	ISPICKVAL(Sector__c, &apos;Airline&apos;),  	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),  	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;)) ))</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Site Index</fullName>

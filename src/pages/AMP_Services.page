@@ -1,6 +1,8 @@
 <apex:page showHeader="true" sidebar="true" standardController="Account" extensions="AMP_ProductsController">
 
-<apex:pageBlock id="theBlock">
+<apex:pageMessage severity="info" strength="1" summary="{!$Label.Not_Applicable}" rendered="{!acc.Membership_status__c != 'IATA member'}" />
+
+<apex:pageBlock id="theBlock" rendered="{!acc.Membership_status__c == 'IATA member'}">
 	<table class="list"  border="0" cellpadding="0" cellspacing="0">
 		<thead class="rich-table-thead">
 			<tr class="headerRow" >
@@ -31,6 +33,5 @@
 		</apex:form>
 	</table>
 </apex:pageBlock>
-
 
 </apex:page>

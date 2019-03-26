@@ -27,46 +27,49 @@
                 </aura:if>
             </div>
         </div>
-
-        <div class="slds-card">
-
-            <div class="slds-card__header slds-grid">
-                <div class="slds-media slds-media--center slds-has-flexi-truncate">
-                    <div class="slds-media__figure">
-                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#related_list'}" class="slds-icon slds-icon-standard-groups slds-icon--medium" />
-                    </div>
-                    <div class="slds-media__body slds-truncate">
-                        <span class="slds-text-heading--small">Non SAP Products and Services</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slds-card__body">
-
-                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
-                    <thead>
-                        <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable" >
-                            <th style="width: 10%;"><span class="slds-truncate">AMP Lob</span></th>
-                            <th style="width: 70%;"><span class="slds-truncate">AMP Product</span></th>
-                            <th style="width: 20%;"><span class="slds-truncate">Active</span></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <aura:iteration items="{!v.AccountServicesWrapper}" var="service" indexVar="index">
-
-                            <tr>
-                                <aura:if isTrue="{!service.rowspan>0}">
-                                    <td rowspan="{!service.rowspan}"><ui:outputText value="{!service.Service_Publication}" /></td>
-                                </aura:if>
-                                <td class="{!service.rowspan==0 ? 'dontIndent':''}"><a href="{!'/' +service.Id}" target="_blank">{!service.Name}</a></td>
-                                <td><ui:outputCheckbox value="{!service.Active}" /></td>
-                            </tr>
-
-                        </aura:iteration>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
+        
+        <aura:if isTrue="{!v.account.Membership_status__c == 'IATA member'}">
+	        <div class="slds-card">
+	
+	            <div class="slds-card__header slds-grid">
+	                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+	                    <div class="slds-media__figure">
+	                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#related_list'}" class="slds-icon slds-icon-standard-groups slds-icon--medium" />
+	                    </div>
+	                    <div class="slds-media__body slds-truncate">
+	                        <span class="slds-text-heading--small">Non SAP Products and Services</span>
+	                    </div>
+	                </div>
+	            </div>
+	
+	            <div class="slds-card__body">
+	
+	                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
+	                    <thead>
+	                        <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable" >
+	                            <th style="width: 10%;"><span class="slds-truncate">AMP Lob</span></th>
+	                            <th style="width: 70%;"><span class="slds-truncate">AMP Product</span></th>
+	                            <th style="width: 20%;"><span class="slds-truncate">Active</span></th>
+	                        </tr>
+	                    </thead>
+	
+	                    <tbody>
+	                        <aura:iteration items="{!v.AccountServicesWrapper}" var="service" indexVar="index">
+	
+	                            <tr>
+	                                <aura:if isTrue="{!service.rowspan>0}">
+	                                    <td rowspan="{!service.rowspan}"><ui:outputText value="{!service.Service_Publication}" /></td>
+	                                </aura:if>
+	                                <td class="{!service.rowspan==0 ? 'dontIndent':''}"><a href="{!'/' +service.Id}" target="_blank">{!service.Name}</a></td>
+	                                <td><ui:outputCheckbox value="{!service.Active}" /></td>
+	                            </tr>
+	
+	                        </aura:iteration>
+	                    </tbody>
+	                </table>
+	            </div>
+	
+	        </div>
+		</aura:if>
+		
 </aura:component>

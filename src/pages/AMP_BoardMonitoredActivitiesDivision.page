@@ -1,5 +1,5 @@
 <apex:page showHeader="false" standardStylesheets="true" sidebar="false"
-  applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Account" extensions="AMP_BoardMonitoredActivitiesExtension">
+  applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Account" extensions="AMP_BoardMonitoredActivitiesExtension" >
   <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <!--
   showHeader="true" sidebar="true"  >
@@ -9,146 +9,155 @@
     <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
     <apex:stylesheet value="{!URLFOR($Resource.AMP_helper,'css/general.css')}"/>
   </head>
-    <apex:form >
-        <apex:pageBlock title="BMA/RSA/OSA">
-            <apex:outputPanel id="BMATable">
-            <apex:pageMessages />
-                <!-- <h2>Board Monitore Activities</h2> -->
+  
+	<apex:outputPanel >
+	    <apex:form >
+	        <apex:pageBlock title="BMA/RSA/OSA">
+	        
+				<apex:pageMessage severity="info" strength="1" summary="{!$Label.Not_Applicable}" rendered="{!showNotApplicableMsg}"/>
 
-                <apex:pageBlockTable value="{!lstDivisionBMAs}" var="item">
-
-                    <apex:column styleClass="narrow-table-column">
-                <apex:facet name="header">Actions</apex:facet>
-
-                <!--
-                <apex:commandLink value="Del" action="{!DeleteLine}" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" >
-                    <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
-                </apex:commandLink>
-                &nbsp; -->
-
-                <apex:commandLink value="Edit" action="{!EditCommentLine}" oncomplete="enableShowMoreOrLess();" rerender="BMATable" rendered="{!IF(OR(AND(isEditMode, IdConcerned==item.Id), NOT(canEdit)), false, true)}" >
-                    <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
-                </apex:commandLink>
-
-                <apex:commandLink value="Save" action="{!SaveCommentLine}" oncomplete="enableShowMoreOrLess();" rerender="BMATable" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" >
-                    <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
-                </apex:commandLink>
-                &nbsp;
-                <apex:commandLink value="Cancel" action="{!CancelEdit}" oncomplete="enableShowMoreOrLess();" rerender="BMATable" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" >
-                    <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
-                </apex:commandLink>
-                </apex:column>
-
-                <apex:column styleClass="column-25">
-                    <apex:facet name="header">Activity</apex:facet>
-                    <apex:outputField value="{!item.Name}"  />
-                        <!-- rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}"
-                        <apex:inputField value="{!item.Name}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 80%;" />
-                    -->
-                </apex:column>
-
-                <!-- <apex:column styleClass="column-30">
-                    <apex:facet name="header">Target</apex:facet>
-                        <apex:outputPanel styleClass="long-text-area hidden"  >
-                <apex:outputText value="{!item.Details__c}"   />
-                <a href="#" class="show-less">[show less]</a>
-              </apex:outputPanel>
-              <apex:outputPanel styleClass="short-text-area" >
-                <apex:outputText value="{!LEFT(item.Details__c,100)}" />
-                <apex:outputPanel rendered="{!LEN(item.Details__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
-              </apex:outputPanel>
-                </apex:column> -->
-
-                <apex:column styleClass="narrow-table-column">
-                    <apex:facet name="header">Type</apex:facet>
-
-                    <apex:outputField value="{!item.Type__c}"  />
-                </apex:column>
-
-                <apex:column styleClass="narrow-table-column">
-                    <apex:facet name="header">Account Status</apex:facet>
-
-                        <apex:inputField value="{!selectedComment.Status__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 90%;" />
-                        <apex:outputPanel rendered="{!item.Comments__r.size > 0}" >
-                        <apex:outputField value="{!item.Comments__r[0].Status__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" />
-                        </apex:outputPanel>
-                </apex:column>
-
-
-                    <!-- <apex:column >
-                        <apex:facet name="header">Comments</apex:facet>
-                        <apex:inputField value="{!item.comment}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 90%;" />
-                        <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==item.Id))}" >
-                            <apex:outputText value="{!item.comment}"   />
-                            <a href="#" class="show-less">[show less]</a>
-                        </apex:outputPanel>
-                        <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==item.Id))}">
-                            <apex:outputText value="{!LEFT(item.comment,100)}" />
-                            <apex:outputPanel rendered="{!LEN(item.comment)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
-                        </apex:outputPanel>
-                    </apex:column> -->
-                    <apex:column styleClass="column-30">
-                        <apex:facet name="header">Comments</apex:facet>
-
-                        <apex:inputField value="{!selectedComment.Detail__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 90%;" />
-                        <!-- <apex:outputField value="{!item.Comments__r[0].Detail__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" /> -->
-                        <apex:outputPanel rendered="{!item.Comments__r.size > 0}" >
-                        <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==item.Id))}" >
-                            <apex:outputText value="{!item.Comments__r[0].Detail__c}"   />
-                            <a href="#" class="show-less">[show less]</a>
-                        </apex:outputPanel>
-                        <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==item.Id))}">
-                            <apex:outputText value="{!LEFT(item.Comments__r[0].Detail__c,100)}" />
-                            <apex:outputPanel rendered="{!LEN(item.Comments__r[0].Detail__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
-                        </apex:outputPanel>
-                        <!-- <br /> -->
-                        </apex:outputPanel>
-                    <!-- <apex:outputLink value="/{!item.Id}" target="_top">show all comments</apex:outputLink> -->
-                    </apex:column>
-                </apex:pageBlockTable>
-
-                <!-- <apex:commandButton action="{!AddNewBMA}" value="Add New Board Monitored Activity" rendered="{!IF(isEditMode, false, true)}" /> -->
-            </apex:outputPanel>
-
-
-
-        </apex:pageBlock>
-
-    </apex:form>
-    <style>
-        .column-25 {width: 25%;}
-        .column-30 {width: 30%;}
-    </style>
-
-    <!-- JAVASCRIPT -->
-
-    <!--<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />-->
-    <apex:includeScript value="{!URLFOR($Resource.IECjQuery172)}"/>
-    <script>
-        $(document).ready(function(){
-          // $('.long-text-area').each(function() {
-          //   if($(this).text().length > 100 ) {
-          //     var t = $(this).text();
-          //     $(this).append('<span class="show-less">show less</span>');
-          //     $(this).hide().after('<span class="short-text-area">'+t.substring(0,100)+'<span class="show-more">..</span></span>');
-          //
-          //   }
-          // });
-          enableShowMoreOrLess();
-        });
-        function enableShowMoreOrLess() {
-          $('.show-more').click(function() {
-            event.preventDefault();
-            $(this).parents('.short-text-area').hide().siblings('.long-text-area').show();
-            // $(this).parent().siblings('.long-text-area').show();
-          });
-          $('.show-less').click(function() {
-            event.preventDefault();
-            $(this).parents('.long-text-area').hide();
-            $(this).parent().siblings('.short-text-area').show();
-          });
-
-        }
-    </script>
+	            <apex:outputPanel id="BMATable" rendered="{!NOT(showNotApplicableMsg)}">
+	            <apex:pageMessages />
+	                <!-- <h2>Board Monitore Activities</h2> -->
+	
+	                <apex:pageBlockTable value="{!lstDivisionBMAs}" var="item">
+	
+	                    <apex:column styleClass="narrow-table-column">
+	                <apex:facet name="header">Actions</apex:facet>
+	
+	                <!--
+	                <apex:commandLink value="Del" action="{!DeleteLine}" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" oncomplete="enableShowMoreOrLess();" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" >
+	                    <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
+	                </apex:commandLink>
+	                &nbsp; -->
+	
+	                <apex:commandLink value="Edit" action="{!EditCommentLine}" oncomplete="enableShowMoreOrLess();" rerender="BMATable" rendered="{!IF(OR(AND(isEditMode, IdConcerned==item.Id), NOT(canEdit)), false, true)}" >
+	                    <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
+	                </apex:commandLink>
+	
+	                <apex:commandLink value="Save" action="{!SaveCommentLine}" oncomplete="enableShowMoreOrLess();" rerender="BMATable" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" >
+	                    <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
+	                </apex:commandLink>
+	                &nbsp;
+	                <apex:commandLink value="Cancel" action="{!CancelEdit}" oncomplete="enableShowMoreOrLess();" rerender="BMATable" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" >
+	                    <apex:param name="IdConcerned" value="{!item.Id}" assignTo="{!IdConcerned}"/>
+	                </apex:commandLink>
+	                </apex:column>
+	
+	                <apex:column styleClass="column-25">
+	                    <apex:facet name="header">Activity</apex:facet>
+	                    <apex:outputField value="{!item.Name}"  />
+	                        <!-- rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}"
+	                        <apex:inputField value="{!item.Name}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 80%;" />
+	                    -->
+	                </apex:column>
+	
+	                <!-- <apex:column styleClass="column-30">
+	                    <apex:facet name="header">Target</apex:facet>
+	                        <apex:outputPanel styleClass="long-text-area hidden"  >
+	                <apex:outputText value="{!item.Details__c}"   />
+	                <a href="#" class="show-less">[show less]</a>
+	              </apex:outputPanel>
+	              <apex:outputPanel styleClass="short-text-area" >
+	                <apex:outputText value="{!LEFT(item.Details__c,100)}" />
+	                <apex:outputPanel rendered="{!LEN(item.Details__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+	              </apex:outputPanel>
+	                </apex:column> -->
+	
+	                <apex:column styleClass="narrow-table-column">
+	                    <apex:facet name="header">Type</apex:facet>
+	
+	                    <apex:outputField value="{!item.Type__c}"  />
+	                </apex:column>
+	
+	                <apex:column styleClass="narrow-table-column">
+	                    <apex:facet name="header">Account Status</apex:facet>
+	
+	                        <apex:inputField value="{!selectedComment.Status__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 90%;" />
+	                        <apex:outputPanel rendered="{!item.Comments__r.size > 0}" >
+	                        <apex:outputField value="{!item.Comments__r[0].Status__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" />
+	                        </apex:outputPanel>
+	                </apex:column>
+	
+	
+	                    <!-- <apex:column >
+	                        <apex:facet name="header">Comments</apex:facet>
+	                        <apex:inputField value="{!item.comment}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 90%;" />
+	                        <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==item.Id))}" >
+	                            <apex:outputText value="{!item.comment}"   />
+	                            <a href="#" class="show-less">[show less]</a>
+	                        </apex:outputPanel>
+	                        <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==item.Id))}">
+	                            <apex:outputText value="{!LEFT(item.comment,100)}" />
+	                            <apex:outputPanel rendered="{!LEN(item.comment)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+	                        </apex:outputPanel>
+	                    </apex:column> -->
+	                    <apex:column styleClass="column-30">
+	                        <apex:facet name="header">Comments</apex:facet>
+	
+	                        <apex:inputField value="{!selectedComment.Detail__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 90%;" />
+	                        <!-- <apex:outputField value="{!item.Comments__r[0].Detail__c}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" /> -->
+	                        <apex:outputPanel rendered="{!item.Comments__r.size > 0}" >
+	                        <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==item.Id))}" >
+	                            <apex:outputText value="{!item.Comments__r[0].Detail__c}"   />
+	                            <a href="#" class="show-less">[show less]</a>
+	                        </apex:outputPanel>
+	                        <apex:outputPanel styleClass="short-text-area" rendered="{!NOT(AND(isEditMode, IdConcerned==item.Id))}">
+	                            <apex:outputText value="{!LEFT(item.Comments__r[0].Detail__c,100)}" />
+	                            <apex:outputPanel rendered="{!LEN(item.Comments__r[0].Detail__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+	                        </apex:outputPanel>
+	                        <!-- <br /> -->
+	                        </apex:outputPanel>
+	                    <!-- <apex:outputLink value="/{!item.Id}" target="_top">show all comments</apex:outputLink> -->
+	                    </apex:column>
+	                </apex:pageBlockTable>
+	
+	                <!-- <apex:commandButton action="{!AddNewBMA}" value="Add New Board Monitored Activity" rendered="{!IF(isEditMode, false, true)}" /> -->
+	            </apex:outputPanel>
+	
+	
+	
+	        </apex:pageBlock>
+	
+	    </apex:form>
+	    
+	    <style>
+	        .column-25 {width: 25%;}
+	        .column-30 {width: 30%;}
+	    </style>
+	
+	    <!-- JAVASCRIPT -->
+	
+	    <!--<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />-->
+	    <apex:includeScript value="{!URLFOR($Resource.IECjQuery172)}"/>
+	    <script>
+	        $(document).ready(function(){
+	          // $('.long-text-area').each(function() {
+	          //   if($(this).text().length > 100 ) {
+	          //     var t = $(this).text();
+	          //     $(this).append('<span class="show-less">show less</span>');
+	          //     $(this).hide().after('<span class="short-text-area">'+t.substring(0,100)+'<span class="show-more">..</span></span>');
+	          //
+	          //   }
+	          // });
+	          enableShowMoreOrLess();
+	        });
+	        function enableShowMoreOrLess() {
+	          $('.show-more').click(function() {
+	            event.preventDefault();
+	            $(this).parents('.short-text-area').hide().siblings('.long-text-area').show();
+	            // $(this).parent().siblings('.long-text-area').show();
+	          });
+	          $('.show-less').click(function() {
+	            event.preventDefault();
+	            $(this).parents('.long-text-area').hide();
+	            $(this).parent().siblings('.short-text-area').show();
+	          });
+	
+	        }
+	    </script>
+    
+    </apex:outputPanel>
+    
   </html>
 </apex:page>
