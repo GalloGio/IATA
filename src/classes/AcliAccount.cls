@@ -134,7 +134,11 @@ global  class AcliAccount  {
 	        }
 	        else{
 	        	if(TYPE_OF_OPERATIONS_CODES_AIRLINES.contains(this.TypeOfOperations)){
-					acliFileInconsistency += '"' + this.AcliSAPId + '","' + this.AirlineName + '","' + this.legalName + '","' + 'The area of operation is blank although the entity is an airline. (The area of operation should never be blank for airlines)"\r\n';
+	        		/* Temporary deactivate this validation as data is inconsistent for many airlines in ACLI.*/
+	        		/* The following line will have to be un-commented when Laurent Kirk requests it ...*/
+					//acliFileInconsistency += '"' + this.AcliSAPId + '","' + this.AirlineName + '","' + this.legalName + '","' + 'The area of operation is blank although the entity is an airline. (The area of operation should never be blank for airlines)"\r\n';
+					/* ... and the following line will have to be deleted*/
+					this.areaOfOperations = null;
 	        	}
 	        	else{
 					this.areaOfOperations = 'Not applicable';
