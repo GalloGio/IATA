@@ -241,7 +241,7 @@ System.debug('############ processPWCResults ' + pwcress);
                 qiscasenumbers.add(pwcres.caseNumber);
             }
             Map<String,Case> caseMap = new Map<String,Case>();
-            for(Case c : [SELECT CaseNumber, Status, OwnerId FROM Case WHERE CaseNumber IN :casenumbers])
+            for(Case c : [SELECT CaseNumber, Status, OwnerId, Account.IATA_ISO_Country__r.BSP_Country_free_text__c FROM Case WHERE CaseNumber IN :casenumbers])
                 caseMap.put(c.CaseNumber, c);
 
             //Getting all IFAP Quality issues
@@ -333,6 +333,16 @@ System.debug('############ continue ' );
                             // AP: Assessment Performed Date update fix
                             theCase.Financial_Review_Result__c = xml.getGFAStatus();
                             theCase.Assessment_Performed_Date__c = Date.today();
+
+                            if(theCase.Account.IATA_ISO_Country__r.BSP_Country_free_text__c == 'HK' || theCase.Account.IATA_ISO_Country__r.BSP_Country_free_text__c == 'MO'){
+
+                                if(xml.getFinancialCriteriaTotalScore() == '' || xml.getFinancialCriteriaTotalScore() == null){
+                                    errors.add('[Result File "' + pwcres.originalFileName + '" ] Case with CaseNumber '+pwcres.caseNumber+' does not contain information regarding Financial Criteria Score (FinancialCriteriaTotalScore).');
+                                    continue;
+                                }else{
+                                    theCase.Financial_Assessment_Points__c = decimalTryParse(xml.getFinancialCriteriaTotalScore());
+                                }
+                            }
 
                             // FT: IFAP 4 enhancement if we are receiving a reply from a quality issue, we must set the Quality issue approved date
                             //also when case is going from Submitted to Assessment Performed and there is a Quality Issue
