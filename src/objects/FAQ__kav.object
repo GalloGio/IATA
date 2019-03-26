@@ -19,7 +19,18 @@
             <template>Toc</template>
         </articleTypeTemplates>
     </articleTypeChannelDisplay>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Lightning_KB_Compact_Layout</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Lightning_KB_Compact_Layout</fullName>
+        <fields>Title</fields>
+        <fields>RecordTypeId</fields>
+        <fields>ArticleNumber</fields>
+        <fields>PublishStatus</fields>
+        <fields>ValidationStatus</fields>
+        <fields>LastModifiedDate</fields>
+        <fields>VersionNumber</fields>
+        <label>Lightning KB Compact Layout</label>
+    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Knowledge articles to be deployed on public portal</description>
     <enableFeeds>false</enableFeeds>
@@ -50,6 +61,91 @@
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
-    <label>FAQ</label>
-    <pluralLabel>FAQs</pluralLabel>
+    <label>Knowledge</label>
+    <listViews>
+        <fullName>Internal_FAQs</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>FAQ__kav.Internal_FAQ</value>
+        </filters>
+        <label>Internal FAQs</label>
+    </listViews>
+    <listViews>
+        <fullName>archived_articles</fullName>
+        <columns>TITLE</columns>
+        <columns>ABSTRACT</columns>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>LANGUAGE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PUBLISH_STATUS</field>
+            <operation>equals</operation>
+            <value>3</value>
+        </filters>
+        <filters>
+            <field>LANGUAGE</field>
+            <operation>equals</operation>
+            <value>en_US</value>
+        </filters>
+        <label>Archived Articles</label>
+    </listViews>
+    <listViews>
+        <fullName>draft_articles</fullName>
+        <columns>TITLE</columns>
+        <columns>ABSTRACT</columns>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>LANGUAGE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PUBLISH_STATUS</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>LANGUAGE</field>
+            <operation>equals</operation>
+            <value>en_US</value>
+        </filters>
+        <label>Draft Articles</label>
+    </listViews>
+    <listViews>
+        <fullName>published_articles</fullName>
+        <columns>TITLE</columns>
+        <columns>ABSTRACT</columns>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>LANGUAGE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PUBLISH_STATUS</field>
+            <operation>equals</operation>
+            <value>2</value>
+        </filters>
+        <filters>
+            <field>LANGUAGE</field>
+            <operation>equals</operation>
+            <value>en_US</value>
+        </filters>
+        <label>Published Articles</label>
+    </listViews>
+    <pluralLabel>Knowledge</pluralLabel>
+    <recordTypes>
+        <fullName>FAQ</fullName>
+        <active>true</active>
+        <label>FAQ</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Internal_FAQ</fullName>
+        <active>true</active>
+        <description>FAQs for internal use only. Not to be published to Partner Channel</description>
+        <label>Internal FAQ</label>
+    </recordTypes>
+    <searchLayouts/>
 </CustomObject>
