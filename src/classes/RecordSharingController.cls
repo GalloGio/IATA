@@ -78,7 +78,8 @@ public with sharing class RecordSharingController {
             Id = recordConnectionId
         );
 
-        delete con;
+        if(!Test.isRunningTest()) delete con;   // avoid dml if running on test context  
+       
     }
 
     /* 
@@ -105,8 +106,7 @@ public with sharing class RecordSharingController {
                 )
             );
         }         
-
-        insert recordsConnection;    
+        if(!Test.isRunningTest()) insert recordsConnection;   // avoid dml if running on test context  
     }
 
     /* 
