@@ -1,4 +1,7 @@
 public with sharing class AMP_ChatterBroadcastToolController {
+
+	public Boolean showNotApplicableMsg {get; set;}
+
 	public Integer step {get; set;}
 
 	public String message {get; set;}
@@ -22,7 +25,6 @@ public with sharing class AMP_ChatterBroadcastToolController {
 	public Integer numberOfAccounts {get; set;}
 
 	public String strRegion {get; set;}
-	public String membershipStatusSelected {get; set;}
 
 	public Boolean selectWholeRegion {get;set;}
 
@@ -36,13 +38,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
         options.add(new SelectOption('Europe','Europe'));
         return options;
     }
-    
-    public List<SelectOption> getMembershipStatuses() {
-    	List<SelectOption> options = new List<SelectOption>();
-    	options.add(new SelectOption('IATA member', 'IATA Member Airlines'));
-    	options.add(new SelectOption('Non-IATA member', 'Non-IATA Active Airlines'));
-    	return options;
-    }
+
 
     public void GoToStep2 () {
     	if (strAcctList == '') {
@@ -61,7 +57,6 @@ public with sharing class AMP_ChatterBroadcastToolController {
     	step = 1;
     	message = '';
     	strRegion = '';
-    	membershipStatusSelected = 'IATA member';
     	RefreshAccountsList();
     }
 
@@ -138,34 +133,13 @@ public with sharing class AMP_ChatterBroadcastToolController {
     }
 
     public void RefreshAccountsList () {
+    	list<Account> tmpList = new list<Account>();
 
-		String baseQuery = '' +
-			'SELECT                                        	' +
-			'	Id,                                       	' +
-			'	Name                                      	' +
-			'FROM                                          	' +
-			'	Account                                   	' +
-			'WHERE                                         	' +
-			'	RecordType.DeveloperName = \'IATA_Airline\' ';
-	
-		if(String.isNotBlank(strRegion)){
-			baseQuery += 'AND Region_formula__c = :strRegion ';
+		if (strRegion != null && strRegion != '') {
+			tmpList = [SELECT Id, Name FROM Account WHERE RecordType.DeveloperName = 'IATA_Airline' AND Membership_status__c = 'IATA Member' AND Region_formula__c = :strRegion ORDER BY Name];
+		} else {
+			tmpList = [SELECT Id, Name FROM Account WHERE RecordType.DeveloperName = 'IATA_Airline' AND Membership_status__c = 'IATA Member' ORDER BY Name];
 		}
-		
-		// IATA member option selected
-		if('IATA member'.equals(membershipStatusSelected)){
-			baseQuery += 'AND Membership_status__c = \'IATA member\' ';
-		}
-		// Non-IATA Member option selected
-		else {
-			baseQuery += 'AND Membership_status__c <> \'IATA member\' ';
-			baseQuery += 'AND Sector__c = \'Airline\' ';
-			baseQuery += 'AND ACLI_Status__c = \'Active Company\' ';
-		}
-		
-		baseQuery += 'ORDER BY Name';
-		
-		List<Account> tmpList = (List<Account>) Database.query(baseQuery);
 
 		list<AccountWrapper> lstFilteredAccounts = new list<AccountWrapper>();
 		for (Account acc : tmpList) {
@@ -180,13 +154,29 @@ public with sharing class AMP_ChatterBroadcastToolController {
     }
 
 	public AMP_ChatterBroadcastToolController() {
-		step = 1;
-		numberOfAccounts = 0;
-		strRegion = '';
-		membershipStatusSelected = 'IATA member';
-		RefreshAccountsList();
-
+		
 		accountId =  ApexPages.currentPage().getParameters().get('accountId');
+		
+		Account acct = 
+			[SELECT 
+				Id, 
+				Membership_status__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Id = :accountId
+			];
+		
+		showNotApplicableMsg = acct.Membership_status__c != 'IATA member';
+		
+		// Chatter broadcast tool is only available for IATA Members Airlines
+		if(!showNotApplicableMsg){
+			step = 1;
+			numberOfAccounts = 0;
+			strRegion = '';
+			RefreshAccountsList();
+		}
+		
 	}
 
 	public class AccountWrapper {

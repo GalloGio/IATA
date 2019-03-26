@@ -21,21 +21,6 @@
                 }
             }
         }
-        
-        function cleanAllCheckboxes(){
-        
-        	var clist = document.getElementsByTagName("input");
-			
-			for (var i = 0; i < clist.length; ++i){
-			
-				if (clist[i].type == 'checkbox')   {
-			    	clist[i].checked = false;
-			    }
-
-			}
-        
-        }
-        
     </script>
 
     <apex:form >
@@ -44,76 +29,73 @@
 
         <apex:pageBlock id="mainBlock" title="Chatter Broadcast Tool" >
 
-            <apex:pageMessages escape="false" />
+			<apex:pageMessage severity="info" strength="1" summary="{!$Label.Only_Allow_Broadcast_Tool_for_IATA_Members}" rendered="{!showNotApplicableMsg}"/>
 
-            <apex:pageBlockSection title="Step 1 - Select Accounts" columns="2" collapsible="false" rendered="{! step == 1}">
+			<apex:outputPanel id="chatterBroadcastPanel" rendered="{!NOT(showNotApplicableMsg)}" >
 				
-                <apex:selectList value="{!membershipStatusSelected}" multiselect="false" size="1" onchange="reloadAccounts();" label="Show only Accounts from the following type:">
-                    <apex:selectOptions value="{!MembershipStatuses}"/>
-                </apex:selectList>
-               
-                <apex:selectList value="{!strRegion}" multiselect="false" size="1" onchange="reloadAccounts()" label="Show only Accounts from the following region(s):">
-                    <apex:selectOptions value="{!lstRegions}"/>
-                </apex:selectList>
-	            
-			</apex:pageBlockSection>
-			
-			<apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 1}">
-				
-				<apex:pageBlockSectionItem >
-					<apex:outputPanel >
+	            <apex:pageMessages escape="false" />
+	
+	            <apex:pageBlockSection title="Step 1 - Select Accounts" columns="1" collapsible="false" rendered="{! step == 1}">
+	
+	                <apex:selectList value="{!strRegion}" multiselect="false" size="1" onchange="reloadAccounts();" label="Show only Accounts from the following region(s):">
+	                    <apex:selectOptions value="{!lstRegions}"/>
+	                </apex:selectList>
+	
+	                <apex:outputPanel >
 	                    <apex:commandButton action="{!GoToStep2}" value="Next >" reRender="mainBlock" style="float: right;" />
 	                </apex:outputPanel>
-                </apex:pageBlockSectionItem>
-                
-                <apex:pageBlockTable value="{!lstAccounts}" var="accWrapper" id="AccountTable">
-                    <apex:column style="width:100px;">
-                        <apex:facet name="header">
-                            <apex:inputCheckbox value="{!selectWholeRegion}" onclick="cvCheckAllOrNone(this);"/> 
+	
+	                <apex:pageBlockTable value="{!lstAccounts}" var="accWrapper" id="AccountTable" >
+	                    <apex:column style="width:100px;">
+	                        <apex:facet name="header">
+	                            <apex:inputCheckbox value="{!selectWholeRegion}" onclick="cvCheckAllOrNone(this);"/> 
+	
+	                        </apex:facet>
+	
+	                        <apex:inputCheckbox value="{!accWrapper.isSelected}" />
+	                    </apex:column>
+	
+	                    <apex:column >
+	                        <apex:facet name="header">Account Name</apex:facet>
+	                        <apex:outputText value="{!accWrapper.acct.Name}" />
+	                    </apex:column>
+	                </apex:pageBlockTable>
+	
+	                <apex:outputPanel >
+	                    <apex:commandButton action="{!GoToStep2}" value="Next >" reRender="mainBlock" style="float: right;" />
+	                </apex:outputPanel>
+	
+	                <apex:actionFunction name="reloadAccounts" action="{! RefreshAccountsList }" reRender="AccountTable" />
+	
+	            </apex:pageBlockSection>
+	
+	
+	            <apex:pageBlockSection title="Step 2 - Compose Message and Broadcast" columns="1" collapsible="false" rendered="{! step == 2}">
+	
+	                <apex:inputTextarea cols="50" rows="4" value="{! message }" label="Message:"/>
+	
+	                <b>The message will be posted to the Chatter feed of the following accounts: ({!numberOfAccounts})</b><br/>
+	                {!strAcctList}
+	
+	                <apex:outputPanel >
+	                    <apex:commandButton action="{! GoBackToStep1 }" value="< Back to Account Selection" reRender="mainBlock" />
+	                    <apex:commandButton action="{! BroadcastMessage }" value="Broadcast Message" reRender="mainBlock" style="float: right;" status="actStatusId"/>
+	                    <apex:actionStatus id="actStatusId" >
+	                        <apex:facet name="start" >
+	                          <img src="/img/loading.gif" style="float: right;"/>
+	                        </apex:facet>
+	                    </apex:actionStatus>
+	                </apex:outputPanel>
+	            </apex:pageBlockSection>
+	
+	
+	            <apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 3}">
+	
+	                <apex:commandButton action="{! RestartFromStep1 }" value="Broadcast a New Message" reRender="mainBlock" />
+	
+	            </apex:pageBlockSection>
 
-                        </apex:facet>
-
-                        <apex:inputCheckbox value="{!accWrapper.isSelected}" />
-                    </apex:column>
-
-                    <apex:column >
-                        <apex:facet name="header">Account Name</apex:facet>
-                        <apex:outputText value="{!accWrapper.acct.Name}" />
-                    </apex:column>
-                </apex:pageBlockTable>
-              
-                <apex:outputPanel >
-                    <apex:commandButton action="{!GoToStep2}" value="Next >" reRender="mainBlock" style="float: right;" />
-                </apex:outputPanel>
-
-                <apex:actionFunction name="reloadAccounts" action="{! RefreshAccountsList }" reRender="AccountTable" />
-
-            </apex:pageBlockSection>
-
-            <apex:pageBlockSection title="Step 2 - Compose Message and Broadcast" columns="1" collapsible="false" rendered="{! step == 2}">
-
-                <apex:inputTextarea cols="50" rows="4" value="{! message }" label="Message:"/>
-
-                <b>The message will be posted to the Chatter feed of the following accounts: ({!numberOfAccounts})</b><br/>
-                {!strAcctList}
-
-                <apex:outputPanel >
-                    <apex:commandButton action="{! GoBackToStep1 }" value="< Back to Account Selection" reRender="mainBlock" />
-                    <apex:commandButton action="{! BroadcastMessage }" value="Broadcast Message" reRender="mainBlock" style="float: right;" status="actStatusId"/>
-                    <apex:actionStatus id="actStatusId" >
-                        <apex:facet name="start" >
-                          <img src="/img/loading.gif" style="float: right;"/>
-                        </apex:facet>
-                    </apex:actionStatus>
-                </apex:outputPanel>
-            </apex:pageBlockSection>
-
-
-            <apex:pageBlockSection columns="1" collapsible="false" rendered="{! step == 3}">
-
-                <apex:commandButton action="{! RestartFromStep1 }" value="Broadcast a New Message" reRender="mainBlock" oncomplete="cleanAllCheckboxes();" />
-
-            </apex:pageBlockSection>
+			</apex:outputPanel>
 
         </apex:pageBlock>
     </apex:form>

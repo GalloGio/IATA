@@ -31187,6 +31187,13 @@ Please check your mailbox to finalize the registration process.</value>
         <value>REQUEST ACCESS TO A NEW SERVICE</value>
     </labels>
     <labels>
+        <fullName>Only_Allow_Broadcast_Tool_for_IATA_Members</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Only Allow Broadcast Tool for IATA Members</shortDescription>
+        <value>The chatter broadcast tool is only available for IATA Member Airlines.</value>
+    </labels>    
+    <labels>
         <fullName>Only_one_subscription_can_be_purchased</fullName>
         <language>en_US</language>
         <protected>false</protected>
