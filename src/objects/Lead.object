@@ -5544,6 +5544,7 @@ albam@iata.org</description>
                 </value>
             </valueSetDefinition>
         </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <listViews>
         <fullName>CCCLeadsPublications</fullName>
