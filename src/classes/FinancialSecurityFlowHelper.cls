@@ -21,9 +21,9 @@ public with sharing class FinancialSecurityFlowHelper {
             
             update fs;
             Map<Id,List<Contact>> mapKeyContacts = getKeyContacts(accountIds);
-            sendEmailNotification(fs, mapKeyContacts);
                         
-            return new List<String> {'Financial Security acknowledgement was sent successfully.'};
+                        
+            return new List<String> {sendEmailNotification(fs, mapKeyContacts)};
         } catch(Exception e) {
             Database.rollback(sp);
             System.debug(e.getStackTraceString());
@@ -61,13 +61,18 @@ public with sharing class FinancialSecurityFlowHelper {
         return res;
     }
 
-    private static void sendEmailNotification(List<Financial_Security__c> fs, Map<Id,List<Contact>> mapKeyContacts) {
+    private static String sendEmailNotification(List<Financial_Security__c> fs, Map<Id,List<Contact>> mapKeyContacts) {
         OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'agencymanagement@iata.org'];
 
         Map<String,Id> mapTemplates = getEmailTemplates(); 
         List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
         for(Financial_Security__c f : fs) {
             List<Contact> keyContacts = mapKeyContacts.get(f.Account__c);
+            
+            if(keyContacts == null || keyContacts.isEmpty()) {
+                continue;
+            }
+
             for(Contact c : keyContacts) {
 
                 String unlimited = f.Unlimited_Security__c ? 'Unlimited_' : '';
@@ -91,6 +96,9 @@ public with sharing class FinancialSecurityFlowHelper {
 
         if(!mailsToSend.isEmpty()) {
             Messaging.sendEmail(mailsToSend);
+            return 'Financial Security acknowledgement was sent successfully.';
+        } else {
+            return 'Error:\n No Approved Admin or Financial Assessment Contacts found for this Agency.';
         }
     }
 
