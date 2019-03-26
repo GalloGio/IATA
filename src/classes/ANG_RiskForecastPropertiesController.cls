@@ -67,7 +67,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
         }
 
-        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD){
+        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && myCase.OSCAR__r.ANG_Change_Entity_Location__c){
 
             options.add(new SelectOption('8','Change of Entity\'s location'));
 
