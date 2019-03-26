@@ -4050,7 +4050,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>All/IFG_Internal_Case_Close_confirmation_e_mail_HTML_English</template>
+        <template>Escalated_cases/X1st_escalation</template>
     </alerts>
     <alerts>
         <fullName>sMAP_Inform_to_CM_Case_Owner</fullName>

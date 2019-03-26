@@ -13456,11 +13456,6 @@ EA=EUROPE ACCREDITED AGENT</inlineHelpText>
                     <label>HS</label>
                 </value>
                 <value>
-                    <fullName>IB</fullName>
-                    <default>false</default>
-                    <label>IB</label>
-                </value>
-                <value>
                     <fullName>IC</fullName>
                     <default>false</default>
                     <label>IC</label>
@@ -13479,11 +13474,6 @@ EA=EUROPE ACCREDITED AGENT</inlineHelpText>
                     <fullName>IS</fullName>
                     <default>false</default>
                     <label>IS</label>
-                </value>
-                <value>
-                    <fullName>JJ</fullName>
-                    <default>false</default>
-                    <label>JJ</label>
                 </value>
                 <value>
                     <fullName>MB</fullName>
@@ -32380,10 +32370,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -32397,10 +32383,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59741,10 +59723,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -59758,10 +59736,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -69144,10 +69118,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -69161,10 +69131,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82486,10 +82452,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -82503,10 +82465,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -90857,10 +90815,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -90874,10 +90828,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
