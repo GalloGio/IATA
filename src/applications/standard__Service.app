@@ -16,4 +16,5 @@
     <tabs>Operational_Improvements__c</tabs>
     <tabs>AmazonFile__c</tabs>
     <tabs>AMS_Account_Role__c</tabs>
+    <tabs>FAQ__kav</tabs>
 </CustomApplication>
