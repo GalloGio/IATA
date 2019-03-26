@@ -92,7 +92,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
             else
                 listAccount.add(acct);
         isHierarchyMulticountry = false;
-        hasErrors = (listAccount.isEmpty())? true : false;
+
 	}
 
     public void addAccount(){
@@ -112,21 +112,32 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	                acct.RecordTypeId	= mainAccount.RecordTypeId;
 	                acct.Sector__c = mainAccount.Sector__c;
 	                acct.Reason_for_creation__c = 'Account is missing';
-                    acct.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY; //NEWGEN-5264-Bugfix
 	            }
+
+                IATA_ISO_Country__c cntry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acct.IATA_ISO_Country__c})[0];
+
+                if(!cntry.Multicountry_Enabled__c){
+                    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, 'The country ' + cntry.Name  + ' is not enabled for multicountry');
+                    ApexPages.addMessage(myMsg);
+                    hasErrors = true;
+                }
+
 	        }
-	        if(!listAccount.isEmpty())
-				upsert listAccount;
-            
+
+	        if(!hasErrors && !listAccount.isEmpty()){
+                upsert listAccount;
+            }
+
             if(Test.isRunningTest())
                 integer intTest =1/0;//exception for catch test coverage
 
-			return true;	      
+			return !hasErrors;	
+
         }
         catch(Exception e){
 			hasErrors = true;
             if(!ApexPages.hasMessages(ApexPages.Severity.ERROR)){
-            //Only exhibits the message if it was not thrown an error before (e.g. trigger addError)
+                //Only exhibits the message if it was not thrown an error before (e.g. trigger addError)
                 ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
                 ApexPages.addMessage(myMsg);
             }
@@ -148,10 +159,11 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	
     public void submitHierarchy(){
 
+        hasErrors = false;
+
 		if(!saveAccount())
 			return;
 
-    	hasErrors = false;
     	try{
 	    	if(checkMulticountry()){
 				
