@@ -10,25 +10,16 @@
                 <field>ValidationStatus</field>
             </layoutItems>
             <layoutItems>
-                <field>CNS_Article__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>Title</field>
             </layoutItems>
             <layoutItems>
                 <field>UrlName</field>
             </layoutItems>
             <layoutItems>
+                <field>CNS_Article__c</field>
+            </layoutItems>
+            <layoutItems>
                 <field>Answer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <field>IsVisibleInApp</field>
-            </layoutItems>
-            <layoutItems>
-                <field>IsVisibleInPkb</field>
-            </layoutItems>
-            <layoutItems>
-                <field>IsVisibleInPrm</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -45,11 +36,6 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-        <platformActionListItems>
-            <actionName>ChangeKnowledgeArticleVersionRecordType</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
         <platformActionListItems>
             <actionName>EditDraftKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
@@ -71,12 +57,12 @@
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SubmitKnowledgeArticleVersionForTranslation</actionName>
+            <actionName>SubmitKnowledgeArticleVersionForApproval</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SubmitKnowledgeArticleVersionForApproval</actionName>
+            <actionName>ChangeKnowledgeArticleVersionRecordType</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
