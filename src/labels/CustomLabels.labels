@@ -19577,6 +19577,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Email</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOthers_Invalid_Contact</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Invalid Contact</shortDescription>
+        <value>This contact cannot be added because it belongs to another account</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CNS_Documents</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -21667,6 +21675,147 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_FAQ</shortDescription>
         <value>Frequently Asked Questions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountries</shortDescription>
+        <value>All Operational Calendars</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountriesWithServices</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountriesWithServices</shortDescription>
+        <value>All Countries where my airline participates</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_ChooseCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_ChooseCountries</shortDescription>
+        <value>All Operational Calendards for specific countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Countries</shortDescription>
+        <value>Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountriesSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountriesSelected</shortDescription>
+        <value>Selected Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountryName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountryName</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CustomFilterBtn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CustomFilterBtn</shortDescription>
+        <value>Multi-download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_DownloadOpts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_DownloadOpts</shortDescription>
+        <value>I want to download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FileFormat</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FileFormat</shortDescription>
+        <value>Format</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FillAllFields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FillAllFields</shortDescription>
+        <value>Please fill all mandatory filters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Filters</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Filters</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_NoResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_NoResults</shortDescription>
+        <value>No results for your search.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Operations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Operations</shortDescription>
+        <value>Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_OperationsSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_OperationsSelected</shortDescription>
+        <value>Selected Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_PopupTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_PopupTitle</shortDescription>
+        <value>Multi Calendar Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Remittance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Remittance</shortDescription>
+        <value>Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_RemittanceSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_RemittanceSelected</shortDescription>
+        <value>Selected Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_SelectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_SelectAll</shortDescription>
+        <value>Select All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_UnselectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_UnselectAll</shortDescription>
+        <value>Unselect All</value>
     </labels>
     <labels>
         <fullName>ISSP_Fax</fullName>
@@ -23787,7 +23936,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
-        <value>Country/ Teritory</value>
+        <value>Country/ Territory</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
@@ -23812,6 +23961,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_DownloadDate</shortDescription>
         <value>Download Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_DownloadWarning</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_DownloadWarning</shortDescription>
+        <value>This operation may take few minutes. Please wait.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_EnableFilters</fullName>
@@ -25600,7 +25757,7 @@ Review the standard participation agreement &lt;a href=&quot;https://www.iata.or
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
-        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;http://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xls&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.
+        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xlsx&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.
 &lt;br/&gt;
 Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Standard_Participation_Agreement_for_SIS_e-Invoicing_Services-Invoice_Receiver_TOU.pdf&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
@@ -26247,7 +26404,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_TOU_Section1_Subtitle1</shortDescription>
-        <value>Airline Head Office Information:</value>
+        <value>Head Office Information:</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_TOU_Section1_Subtitle2</fullName>
@@ -26255,7 +26412,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_TOU_Section1_Subtitle2</shortDescription>
-        <value>Airline Information to be included in the invoices produced by SIS</value>
+        <value>Information to be included in the invoices produced by SIS</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_TOU_Section1_Title</fullName>
@@ -29413,6 +29570,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Add</value>
     </labels>
     <labels>
+        <fullName>MultiselectPicklist_AddAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_AddAll</shortDescription>
+        <value>Add All</value>
+    </labels>
+    <labels>
         <fullName>MultiselectPicklist_Down</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29425,6 +29589,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>MultiselectPicklist_Remove</shortDescription>
         <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_RemoveAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_RemoveAll</shortDescription>
+        <value>Remove All</value>
     </labels>
     <labels>
         <fullName>MultiselectPicklist_Up</fullName>
@@ -30494,7 +30665,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
-        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
+        <value>https://portal.iata.org/faq/articles/en_US/FAQ/Customer-Portal-Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_International_Air_Transport_Association_IATA</fullName>
@@ -32883,13 +33054,6 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>SIS Operations</shortDescription>
         <value>SIS Operations</value>
-    </labels>
-    <labels>
-        <fullName>SSW_New_Users</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SSW New Users</shortDescription>
-        <value>003w000001tTc3i,003w000001sLm30,00320000005pXm5,0031r00002SZ68U,0031r00002SXscd,0031r000029cxR6,003w000001gpW8N,00320000001209R,00320000005dLUm,0031r00002IYvOF,0031r00002SZEef,003w000001sLmLd,003w000001xkqUm,003w000001K8fNw,00320000005dLLJ,0032000000EKamA,003w000001bfQZM,003w000001C3xn0,00320000005mg3u,003w000001sLm8u,0031r00002SZGG0,0031r00002SZIQa,0031r00002SZJbv,003w000001JUBmP,003w000001zF7fB,0032000000LFfdk,00320000010qi7T,0031r00002SZOl3,00320000005mf5P,0031r00002WMa7f,0031r00002DetvZ,0031r000024nLI2,0031r00002NcNYj,0031r00002NaMXn,0031r00002NavpT</value>
     </labels>
     <labels>
         <fullName>Salutation</fullName>

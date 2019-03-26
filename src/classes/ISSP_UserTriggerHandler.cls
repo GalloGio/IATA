@@ -13,13 +13,14 @@ public without sharing class ISSP_UserTriggerHandler {
         Set <Id> contactKaviAdd = new Set <Id>();
 
         for(User oneUser: newUserList) {
+        	
             if (oldUserMap.containsKey(oneUser.Id)){
                 if (oneUser.Email != oldUserMap.get(oneUser.Id).Email){
                     oneUser.ISSP_Old_Email__c = oldUserMap.get(oneUser.Id).Email;
                 }
             }
 
-            if(oldUserMap.get(oneUser.Id).Username != oneUser.Username ||
+			if(oldUserMap.get(oneUser.Id).Username != oneUser.Username ||
                oldUserMap.get(oneUser.Id).Phone != oneUser.Phone ||
                oldUserMap.get(oneUser.Id).Fax != oneUser.Fax ||
                oldUserMap.get(oneUser.Id).City != oneUser.City ||
@@ -29,27 +30,22 @@ public without sharing class ISSP_UserTriggerHandler {
                oldUserMap.get(oneUser.Id).Mobilephone != oneUser.Mobilephone ||
                oldUserMap.get(oneUser.Id).Street != oneUser.Street){
               
-               if(oneUser.contactId != null)
+               if(oneUser.contactId != null){
                  contactIdSet.add(oneUser.contactId);
-
+               }
+               
                //Code added to consider Kavi internal users
                if(oneUser.ContactKaviId__c != null){
                    contactIdSet.add(oneUser.ContactKaviId__c);
-                  }
                }
+               
             }
+        }
 
-        List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c FROM Portal_Application_Right__c
-                            WHERE Application_Name__c = 'Standards Setting Workspace'
-                            AND Right__c = 'Access Granted'
-                            AND Contact__c IN :contactIdSet];
-         
-        for (Portal_Application_Right__c thisRecord : appRightList)
-             contactKaviAdd.add(thisRecord.Contact__c);
+        if(contactIdSet.size() > 0){
+            HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, contactIdSet, null);
+        }
         
-        if(contactKaviAdd.size()>0)
-            ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('update',contactKaviAdd);
-
         setPortalUserName(newUserList);
     }
 
@@ -174,7 +170,12 @@ public without sharing class ISSP_UserTriggerHandler {
                 for (Portal_Application_Right__c thisRecord : appRightList){
                     listContactId.add(thisRecord.Contact__c);
                 }
-                ISSP_WS_Utilities.invokeSisModifyUser(listContactId);
+	        	if(Test.isRunningTest()){
+	        		ISSP_WS_Utilities.invokeSisModifyUser(listContactId);
+	        	}
+	        	else{
+	                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listContactId, 'invokeSisModifyUser'));
+	        	}
             }
         }
     }
@@ -183,10 +184,20 @@ public without sharing class ISSP_UserTriggerHandler {
         Boolean callSIS = ISSP_WS_SIS_Callout_Common.SIS_CALLOUTS_ENABLED && !preventSISIntegration;
         if (callSIS) {
             if (!contactIdAddSet.isEmpty()) {
-                ISSP_WS_Utilities.invokeSisActivateUsers(new list<Id>(contactIdAddSet));
+	        	if(Test.isRunningTest()){
+	        		ISSP_WS_Utilities.invokeSisActivateUsers(new list<Id>(contactIdAddSet));
+	        	}
+	        	else{
+	                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(new list<Id>(contactIdAddSet), 'invokeSisActivateUsers'));
+	        	}
             }
             if (!contactRemoveIdSet.isEmpty()) {
-                ISSP_WS_Utilities.invokeSisDeactivateUsers(new list<Id>(contactRemoveIdSet));
+	        	if(Test.isRunningTest()){
+	        		ISSP_WS_Utilities.invokeSisDeactivateUsers(new list<Id>(contactRemoveIdSet));
+	        	}
+	        	else{
+	                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(new list<Id>(contactRemoveIdSet), 'invokeSisDeactivateUsers'));
+	        	}
             }
         }
     }

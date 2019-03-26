@@ -89,5 +89,5 @@
 		<members>TaskType</members>
         <name>StandardValueSet</name>
 	</types>
-    <version>43.0</version>
+    <version>45.0</version>
 </Package>

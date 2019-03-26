@@ -729,15 +729,15 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label>请阅读此</label>
+        <label>您可以随时从</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</name>
     </customLabels>
     <customLabels>
-        <label>常见问题</label>
+        <label>来自 IATA 客户服务团队门户网站</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</name>
     </customLabels>
     <customLabels>
-        <label>了解更多关于如何管理您的EasyPay账户并开始使用的信息。</label>
+        <label>访问您的 IATA EasyPay 账户。您的同事现在还可以请求访问您新开设的账户。</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</name>
     </customLabels>
     <customLabels>
@@ -745,11 +745,11 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</name>
     </customLabels>
     <customLabels>
-        <label>&quot;您的同事现在可从IATA客户服务门户网站申请访问您新开设的账户了。上面的&amp;lt;a href=&quot;&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot;&gt;常见问题&amp;lt;/a&gt;部分对您应如何管理用户访问权限进行了说明。&quot;</label>
+        <label>请参阅 EasyPay 门户网站上的“常见问题/帮助”部分，进一步了解如何管理您的 EasyPay 账户。</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</name>
     </customLabels>
     <customLabels>
-        <label>恭喜您开立了新的IATA EasyPay账户。本文针对如何管理您的EasyPay账户以及转账的初始步骤进行了说明，请按本文进行操作，以便开始办理EasyPay出票。您的同事现在可从IATA客户服务门户网站申请访问您新开设的账户了。上文对您应如何管理用户访问权限进行了说明。谢谢，IATA客户服务团队</label>
+        <label>恭喜您开设了新的 IATA EasyPay 账户。您可以随时从 IATA 客户服务团队门户网站 &lt;https://portal.iata.org/ISSP_Login&gt; 访问您的 IATA EasyPay 账户。您的同事现在还可以请求访问您新开设的账户。 请参阅 EasyPay 门户网站上的“常见问题/帮助”部分，进一步了解如何管理您的 EasyPay 账户。谢谢， IATA 客户服务团队</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</name>
     </customLabels>
     <customLabels>
@@ -845,39 +845,39 @@
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Agreement --></label>
+        <label>我同意</label>
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Breadcrumb --></label>
+        <label>在您的国家/地区提供财务保证金保险的金融机构列表</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Navigate_Portal --></label>
+        <label>前往 GDI 门户网站</label>
         <name>ANG_ISSP_GDI_Navigate_Portal</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Page_Display_Records --></label>
+        <label>按页显示记录：</label>
         <name>ANG_ISSP_GDI_Page_Display_Records</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Page_First --></label>
+        <label>第一页</label>
         <name>ANG_ISSP_GDI_Page_First</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Page_Last --></label>
+        <label>最后一页</label>
         <name>ANG_ISSP_GDI_Page_Last</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Page_Next --></label>
+        <label>下一页</label>
         <name>ANG_ISSP_GDI_Page_Next</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Page_Previous --></label>
+        <label>上一页</label>
         <name>ANG_ISSP_GDI_Page_Previous</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_Terms_Conditions --></label>
+        <label>申请由 Euler Hermes 向 IATA 提供您的财务保证金即表示：您同意 IATA 与 Euler Hermes 分享其掌握的、与您的财务状况相关的信息——无论是在您申请 IATA 认证时直接从您那里获得的信息，还是 IATA 在您成为 IATA 会员期间保存的信息。</label>
         <name>ANG_ISSP_GDI_Terms_Conditions</name>
     </customLabels>
     <customLabels>
@@ -885,7 +885,7 @@
         <name>ANG_ISSP_GDI_UserProvisioningError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_GDI_UserProvisioningWait --></label>
+        <label>请稍候。随后您将被重新定向至 GDI 门户网站。</label>
         <name>ANG_ISSP_GDI_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
@@ -1285,15 +1285,15 @@
         <name>ANG_RHC_AmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG RHC HUB Current Usage Tooltip --></label>
+        <label>使用的 RHC 金额</label>
         <name>ANG_RHC_HUB_Current_UsageTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_RHC RHC Amount Tooltip --></label>
+        <label>关于代理的未偿付 BSP 现金销售的货币限额</label>
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG RHC Risk Status Tooltip --></label>
+        <label>由代理的持续风险历史记录及其财务审查的结果决定</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -1801,6 +1801,10 @@
         <name>CurrencyCenter_Actual_Amount_Blocked</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_AddCountry_Monthly_Survey --></label>
+        <name>CurrencyCenter_AddCountry_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Airlines_Charges --></label>
         <name>CurrencyCenter_Airlines_Charges</name>
     </customLabels>
@@ -1815,6 +1819,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Survey --></label>
+        <name>CurrencyCenter_Annual_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Surveys --></label>
+        <name>CurrencyCenter_Annual_Surveys</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Attachments_Description --></label>
@@ -1845,6 +1857,10 @@
         <name>CurrencyCenter_Back_Home</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Back_ReportingActions --></label>
+        <name>CurrencyCenter_Back_ReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Blocked_Funds --></label>
         <name>CurrencyCenter_Blocked_Funds</name>
     </customLabels>
@@ -1869,6 +1885,18 @@
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Question --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Title --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Monthly_Survey --></label>
+        <name>CurrencyCenter_Cancel_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -1883,6 +1911,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Title --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Details --></label>
@@ -1911,6 +1947,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_Economic_Profile --></label>
         <name>CurrencyCenter_Economic_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Edit --></label>
+        <name>CurrencyCenter_Edit</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Exchange_Rates_Directory --></label>
@@ -1961,6 +2001,10 @@
         <name>CurrencyCenter_Issue_Started</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Link --></label>
+        <name>CurrencyCenter_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Manage_Notifications --></label>
         <name>CurrencyCenter_Manage_Notifications</name>
     </customLabels>
@@ -1973,12 +2017,24 @@
         <name>CurrencyCenter_Manage_Notifications_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Survey --></label>
+        <name>CurrencyCenter_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Surveys --></label>
+        <name>CurrencyCenter_Monthly_Surveys</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Next_Action --></label>
         <name>CurrencyCenter_Next_Action</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Number_of_Airlines_Reporting --></label>
         <name>CurrencyCenter_Number_of_Airlines_Reporting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Open --></label>
+        <name>CurrencyCenter_Open</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Preferences_Save_Error --></label>
@@ -2001,6 +2057,22 @@
         <name>CurrencyCenter_Repatriation_Process</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Reporting_And_Actions --></label>
+        <name>CurrencyCenter_Reporting_And_Actions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update --></label>
+        <name>CurrencyCenter_Request_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update_Hover --></label>
+        <name>CurrencyCenter_Request_Update_Hover</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Save_Monthly_Survey --></label>
+        <name>CurrencyCenter_Save_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Save_Preferences --></label>
         <name>CurrencyCenter_Save_Preferences</name>
     </customLabels>
@@ -2021,12 +2093,32 @@
         <name>CurrencyCenter_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Question --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Title --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submit_Monthly_Survey --></label>
+        <name>CurrencyCenter_Submit_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Survey --></label>
+        <name>CurrencyCenter_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Treasury_Dashboard --></label>
         <name>CurrencyCenter_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Unfollow --></label>
         <name>CurrencyCenter_Unfollow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_UpcomingActions --></label>
+        <name>CurrencyCenter_UpcomingActions</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Update_Feeds --></label>
@@ -5721,7 +5813,7 @@ and
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Agency_Accreditation --></label>
+        <label>代理机构认证</label>
         <name>ISSP_AMS_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
@@ -5729,23 +5821,23 @@ and
         <name>ISSP_AMS_Agency_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Associate_Entity --></label>
+        <label>申请新联合实体</label>
         <name>ISSP_AMS_Apply_New_Associate_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Branch_Office --></label>
+        <label>申请新分公司</label>
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <label>申请新货运总部</label>
         <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
+        <label>申请新总实体</label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Office --></label>
+        <label>申请新总部</label>
         <name>ISSP_AMS_Apply_New_Office</name>
     </customLabels>
     <customLabels>
@@ -5757,11 +5849,11 @@ and
         <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
+        <label>申请新旅行总实体</label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Office --></label>
+        <label>申请新旅行总部</label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
@@ -6833,43 +6925,43 @@ and
         <name>ISSP_AMS_LABEL_Listed_Shares</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Association --></label>
+        <label>协会</label>
         <name>ISSP_AMS_LS_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Co-operative --></label>
+        <label>合作企业</label>
         <name>ISSP_AMS_LS_Co_operative</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Corporation --></label>
+        <label>股份有限公司</label>
         <name>ISSP_AMS_LS_Corporation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Government --></label>
+        <label>国有企业</label>
         <name>ISSP_AMS_LS_Government</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Limited Company --></label>
+        <label>有限公司</label>
         <name>ISSP_AMS_LS_Limited_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Limited Partnership --></label>
+        <label>有限合伙企业</label>
         <name>ISSP_AMS_LS_Limited_Partnership</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Other --></label>
+        <label>其他</label>
         <name>ISSP_AMS_LS_Other</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Partnership --></label>
+        <label>合伙企业</label>
         <name>ISSP_AMS_LS_Partnership</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Sole Owner --></label>
+        <label>独资企业</label>
         <name>ISSP_AMS_LS_Sole_Owner</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Trust Company --></label>
+        <label>信托公司</label>
         <name>ISSP_AMS_LS_Trust_Company</name>
     </customLabels>
     <customLabels>
@@ -7649,7 +7741,7 @@ and
         <name>ISSP_AMS_NoC_New_HO_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC No Company Owners --></label>
+        <label>未列明您所属公司的当前所有者。</label>
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
     </customLabels>
     <customLabels>
@@ -8485,7 +8577,7 @@ and
         <name>ISSP_AMS_Step3_4_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 4 Companies New --></label>
+        <label>如果您的公司由一家或多家公司完全或部分拥有，请在此输入详细信息（除非您的组织机构是法人实体，其股票在证券交易所上市或定期在“场外交易”市场交易）。</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
@@ -9477,15 +9569,15 @@ and
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP --></label>
+        <label>总所有权（个人 + 公司）必须等于 100%，才能向 IATA 提交。</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <label>根据我们的记录，该 IATA 代码的所有权并非 100%。请更新代理机构详情（“代理机构所有权/股权”部分），确保总所有权等于 100%，以便我们可以更新记录。</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
+        <label>总所有权：</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
     <customLabels>
@@ -9513,7 +9605,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <label>与正在更新的代码相同的 IATA 代码不能添加为公司所有人。</label>
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
@@ -9629,7 +9721,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC --></label>
+        <label>等于财务保证金</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
     </customLabels>
     <customLabels>
@@ -9637,7 +9729,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_FORMULA --></label>
+        <label>根据公式</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
@@ -10325,6 +10417,10 @@ and
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CCOthers Invalid Contact --></label>
+        <name>ISSP_CCOthers_Invalid_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CNS_Documents --></label>
         <name>ISSP_CNS_Documents</name>
     </customLabels>
@@ -10747,8 +10843,20 @@ and
         <name>ISSP_CurrencyCenter</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reporting Actions Page --></label>
+        <name>ISSP_CurrencyCenterReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CurrencyCenter_Description --></label>
         <name>ISSP_CurrencyCenter_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Download --></label>
+        <name>ISSP_CurrencyCenter_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Last Updated On --></label>
+        <name>ISSP_CurrencyCenter_Last_Updated_On</name>
     </customLabels>
     <customLabels>
         <label>币种筛选</label>
@@ -11379,6 +11487,86 @@ and
         <name>ISSP_FAQ</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_FDS_AllCountries --></label>
+        <name>ISSP_FDS_AllCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountriesWithServices --></label>
+        <name>ISSP_FDS_AllCountriesWithServices</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_ChooseCountries --></label>
+        <name>ISSP_FDS_ChooseCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Countries --></label>
+        <name>ISSP_FDS_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountriesSelected --></label>
+        <name>ISSP_FDS_CountriesSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountryName --></label>
+        <name>ISSP_FDS_CountryName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CustomFilterBtn --></label>
+        <name>ISSP_FDS_CustomFilterBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Download --></label>
+        <name>ISSP_FDS_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_DownloadOpts --></label>
+        <name>ISSP_FDS_DownloadOpts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FileFormat --></label>
+        <name>ISSP_FDS_FileFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FillAllFields --></label>
+        <name>ISSP_FDS_FillAllFields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Filters --></label>
+        <name>ISSP_FDS_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_NoResults --></label>
+        <name>ISSP_FDS_NoResults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Operations --></label>
+        <name>ISSP_FDS_Operations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_OperationsSelected --></label>
+        <name>ISSP_FDS_OperationsSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_PopupTitle --></label>
+        <name>ISSP_FDS_PopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Remittance --></label>
+        <name>ISSP_FDS_Remittance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_RemittanceSelected --></label>
+        <name>ISSP_FDS_RemittanceSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_SelectAll --></label>
+        <name>ISSP_FDS_SelectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_UnselectAll --></label>
+        <name>ISSP_FDS_UnselectAll</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Fax --></label>
         <name>ISSP_Fax</name>
     </customLabels>
@@ -11439,15 +11627,15 @@ and
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Insititutions --></label>
+        <label>金融机构</label>
         <name>ISSP_Financial_Insititutions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Insititutions_Header --></label>
+        <label>金融机构保险提供商</label>
         <name>ISSP_Financial_Insititutions_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Insititutions_Subheader --></label>
+        <label>下列金融机构在您的国家/地区提供财务保证金保险</label>
         <name>ISSP_Financial_Insititutions_Subheader</name>
     </customLabels>
     <customLabels>
@@ -11935,7 +12123,7 @@ and
         <name>ISSP_InvalidPassword</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_InvalidPostalCode --></label>
+        <label>邮政编码格式无效</label>
         <name>ISSP_InvalidPostalCode</name>
     </customLabels>
     <customLabels>
@@ -12457,6 +12645,10 @@ and
     <customLabels>
         <label>下载日期</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_DownloadWarning --></label>
+        <name>ISSP_OperationalCalendar_DownloadWarning</name>
     </customLabels>
     <customLabels>
         <label>应用筛选</label>
@@ -15303,12 +15495,20 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
+        <label><!-- MultiselectPicklist_AddAll --></label>
+        <name>MultiselectPicklist_AddAll</name>
+    </customLabels>
+    <customLabels>
         <label>向下</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
     <customLabels>
         <label>移除</label>
         <name>MultiselectPicklist_Remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MultiselectPicklist_RemoveAll --></label>
+        <name>MultiselectPicklist_RemoveAll</name>
     </customLabels>
     <customLabels>
         <label>向上</label>
@@ -15451,7 +15651,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CategoryError</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CheckEmail --></label>
+        <label>注册成功完成</label>
         <name>OneId_CheckEmail</name>
     </customLabels>
     <customLabels>
@@ -16011,7 +16211,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Profile_OfficeEmail</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_RegistrationComplete --></label>
+        <label>请检查您的电子邮件以获取您的访问详情</label>
         <name>OneId_RegistrationComplete</name>
     </customLabels>
     <customLabels>
@@ -17142,10 +17342,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>SIS_Operations</name>
     </customLabels>
     <customLabels>
-        <label><!-- SSW New Users --></label>
-        <name>SSW_New_Users</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Salutation --></label>
         <name>Salutation</name>
     </customLabels>
@@ -17434,7 +17630,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Warning_Empty_Cart</name>
     </customLabels>
     <customLabels>
-        <label><!-- Warning_Expired --></label>
+        <label>已过期</label>
         <name>Warning_Expired</name>
     </customLabels>
     <customLabels>
