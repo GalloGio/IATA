@@ -355,6 +355,46 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Comments_4__c</fullName>
+        <description>Additional field for comments</description>
+        <externalId>false</externalId>
+        <label>Comments 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Comments_5__c</fullName>
+        <description>Additional field for comments</description>
+        <externalId>false</externalId>
+        <label>Comments 5</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Comments_6__c</fullName>
+        <description>Additional field for comments</description>
+        <externalId>false</externalId>
+        <label>Comments 6</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Comments_7__c</fullName>
+        <description>Additional field for comments</description>
+        <externalId>false</externalId>
+        <label>Comments 7</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Comments__c</fullName>
         <description>Additional comments to the record</description>
         <externalId>false</externalId>
