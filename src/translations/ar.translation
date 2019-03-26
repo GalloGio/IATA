@@ -1801,6 +1801,10 @@
         <name>CurrencyCenter_Actual_Amount_Blocked</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_AddCountry_Monthly_Survey --></label>
+        <name>CurrencyCenter_AddCountry_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Airlines_Charges --></label>
         <name>CurrencyCenter_Airlines_Charges</name>
     </customLabels>
@@ -1815,6 +1819,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Survey --></label>
+        <name>CurrencyCenter_Annual_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Surveys --></label>
+        <name>CurrencyCenter_Annual_Surveys</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Attachments_Description --></label>
@@ -1845,6 +1857,10 @@
         <name>CurrencyCenter_Back_Home</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Back_ReportingActions --></label>
+        <name>CurrencyCenter_Back_ReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Blocked_Funds --></label>
         <name>CurrencyCenter_Blocked_Funds</name>
     </customLabels>
@@ -1869,6 +1885,18 @@
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Question --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Title --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Monthly_Survey --></label>
+        <name>CurrencyCenter_Cancel_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -1883,6 +1911,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Title --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Details --></label>
@@ -1911,6 +1947,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_Economic_Profile --></label>
         <name>CurrencyCenter_Economic_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Edit --></label>
+        <name>CurrencyCenter_Edit</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Exchange_Rates_Directory --></label>
@@ -1961,6 +2001,10 @@
         <name>CurrencyCenter_Issue_Started</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Link --></label>
+        <name>CurrencyCenter_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Manage_Notifications --></label>
         <name>CurrencyCenter_Manage_Notifications</name>
     </customLabels>
@@ -1973,12 +2017,24 @@
         <name>CurrencyCenter_Manage_Notifications_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Survey --></label>
+        <name>CurrencyCenter_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Surveys --></label>
+        <name>CurrencyCenter_Monthly_Surveys</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Next_Action --></label>
         <name>CurrencyCenter_Next_Action</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Number_of_Airlines_Reporting --></label>
         <name>CurrencyCenter_Number_of_Airlines_Reporting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Open --></label>
+        <name>CurrencyCenter_Open</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Preferences_Save_Error --></label>
@@ -2001,6 +2057,22 @@
         <name>CurrencyCenter_Repatriation_Process</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Reporting_And_Actions --></label>
+        <name>CurrencyCenter_Reporting_And_Actions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update --></label>
+        <name>CurrencyCenter_Request_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update_Hover --></label>
+        <name>CurrencyCenter_Request_Update_Hover</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Save_Monthly_Survey --></label>
+        <name>CurrencyCenter_Save_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Save_Preferences --></label>
         <name>CurrencyCenter_Save_Preferences</name>
     </customLabels>
@@ -2021,12 +2093,32 @@
         <name>CurrencyCenter_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Question --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Title --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submit_Monthly_Survey --></label>
+        <name>CurrencyCenter_Submit_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Survey --></label>
+        <name>CurrencyCenter_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Treasury_Dashboard --></label>
         <name>CurrencyCenter_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Unfollow --></label>
         <name>CurrencyCenter_Unfollow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_UpcomingActions --></label>
+        <name>CurrencyCenter_UpcomingActions</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Update_Feeds --></label>
@@ -10326,6 +10418,10 @@ and
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CCOthers Invalid Contact --></label>
+        <name>ISSP_CCOthers_Invalid_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CNS_Documents --></label>
         <name>ISSP_CNS_Documents</name>
     </customLabels>
@@ -10747,8 +10843,20 @@ and
         <name>ISSP_CurrencyCenter</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reporting Actions Page --></label>
+        <name>ISSP_CurrencyCenterReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CurrencyCenter_Description --></label>
         <name>ISSP_CurrencyCenter_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Download --></label>
+        <name>ISSP_CurrencyCenter_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Last Updated On --></label>
+        <name>ISSP_CurrencyCenter_Last_Updated_On</name>
     </customLabels>
     <customLabels>
         <label>اختيار العملة</label>
@@ -11377,6 +11485,86 @@ and
     <customLabels>
         <label>الأسئلة المتكررة</label>
         <name>ISSP_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountries --></label>
+        <name>ISSP_FDS_AllCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountriesWithServices --></label>
+        <name>ISSP_FDS_AllCountriesWithServices</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_ChooseCountries --></label>
+        <name>ISSP_FDS_ChooseCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Countries --></label>
+        <name>ISSP_FDS_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountriesSelected --></label>
+        <name>ISSP_FDS_CountriesSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountryName --></label>
+        <name>ISSP_FDS_CountryName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CustomFilterBtn --></label>
+        <name>ISSP_FDS_CustomFilterBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Download --></label>
+        <name>ISSP_FDS_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_DownloadOpts --></label>
+        <name>ISSP_FDS_DownloadOpts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FileFormat --></label>
+        <name>ISSP_FDS_FileFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FillAllFields --></label>
+        <name>ISSP_FDS_FillAllFields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Filters --></label>
+        <name>ISSP_FDS_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_NoResults --></label>
+        <name>ISSP_FDS_NoResults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Operations --></label>
+        <name>ISSP_FDS_Operations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_OperationsSelected --></label>
+        <name>ISSP_FDS_OperationsSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_PopupTitle --></label>
+        <name>ISSP_FDS_PopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Remittance --></label>
+        <name>ISSP_FDS_Remittance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_RemittanceSelected --></label>
+        <name>ISSP_FDS_RemittanceSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_SelectAll --></label>
+        <name>ISSP_FDS_SelectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_UnselectAll --></label>
+        <name>ISSP_FDS_UnselectAll</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Fax --></label>
@@ -12453,6 +12641,10 @@ and
     <customLabels>
         <label>تاريخ التحميل</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_DownloadWarning --></label>
+        <name>ISSP_OperationalCalendar_DownloadWarning</name>
     </customLabels>
     <customLabels>
         <label>تفعيل الفلاتر</label>
@@ -15299,12 +15491,20 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
+        <label><!-- MultiselectPicklist_AddAll --></label>
+        <name>MultiselectPicklist_AddAll</name>
+    </customLabels>
+    <customLabels>
         <label>أسفل</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
     <customLabels>
         <label>إزالة</label>
         <name>MultiselectPicklist_Remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MultiselectPicklist_RemoveAll --></label>
+        <name>MultiselectPicklist_RemoveAll</name>
     </customLabels>
     <customLabels>
         <label>أعلى</label>

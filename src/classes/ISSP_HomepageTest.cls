@@ -85,9 +85,10 @@ private class ISSP_HomepageTest {
         //insert con3;
         
         FAQ__kav FAQkav;
-        Portal_news__kav Portal_newska;
-        Content__kav Contentkav;
-        How_To__kav howTokav ;  
+        //Portal_news__kav Portal_newska;
+        //+++kb migration vanja
+        //Content__kav Contentkav;
+        //How_To__kav howTokav ;  
         Test.startTest() ;
         //system.runAs(adminUser){
             
@@ -98,32 +99,32 @@ private class ISSP_HomepageTest {
             FAQkav.UrlName = 'test00qwe';
             FAQkav.Title ='Test';
             //FAQkav.PublishStatus='Online';
-            FAQkav.To_display_on_Homepage__c=true;
+            //FAQkav.To_display_on_Homepage__c=true;
             insert FAQkav;
             
-            Portal_newska =  (Portal_news__kav)ISSP_ObjectFactory.createSObject('Portal_news__kav',false,6);
-            Portal_newska.Language='en_US';
-            Portal_newska.UrlName = 'test1qwefghgf';
-            Portal_newska.Title = 'test001';
+            //Portal_newska =  (Portal_news__kav)ISSP_ObjectFactory.createSObject('Portal_news__kav',false,6);
+            //Portal_newska.Language='en_US';
+            //Portal_newska.UrlName = 'test1qwefghgf';
+            //Portal_newska.Title = 'test001';
             //Portal_newska.PublishStatus='Online';
-            Portal_newska.To_display_on_Homepage__c=true;
-            insert Portal_newska;
-            
-            Contentkav =  (Content__kav)ISSP_ObjectFactory.createSObject('Content__kav',false,11);
-            Contentkav.Language='en_US';
-            Contentkav.UrlName = 'test2qweghfgh';
-            Contentkav.Title='test2';
+            //Portal_newska.To_display_on_Homepage__c=true;
+            //insert Portal_newska;
+            //+++kb migration vanja
+            //Contentkav =  (Content__kav)ISSP_ObjectFactory.createSObject('Content__kav',false,11);
+            //Contentkav.Language='en_US';
+            //Contentkav.UrlName = 'test2qweghfgh';
+            //Contentkav.Title='test2';
             //Contentkav.PublishStatus='Online';
-            Contentkav.To_display_on_Homepage__c=true;
-            insert Contentkav;
+            //Contentkav.To_display_on_Homepage__c=true;
+            //insert Contentkav;
             
-            howTokav =  (How_To__kav)ISSP_ObjectFactory.createSObject('How_To__kav',false,12);
-            howTokav.Language='en_US';
-            howTokav.UrlName = 'test2qwesdf';
-            howTokav.Title='test2';
+            //howTokav =  (How_To__kav)ISSP_ObjectFactory.createSObject('How_To__kav',false,12);
+            //howTokav.Language='en_US';
+            //howTokav.UrlName = 'test2qwesdf';
+            //howTokav.Title='test2';
             //howTokav.PublishStatus='Online';
-            howTokav.To_display_on_Homepage__c=true;
-            insert howTokav;
+            //howTokav.To_display_on_Homepage__c=true;
+            //insert howTokav;
             
         //}
         
@@ -141,11 +142,12 @@ private class ISSP_HomepageTest {
             ctrl.isLogined();  
             ctrl.populateVariables();
             ISSP_Homepage.KnowledgeArticleVersionWrapper kbv= new ISSP_Homepage.KnowledgeArticleVersionWrapper(FAQkav);
-            ISSP_Homepage.KnowledgeArticleVersionWrapper kbv1= new ISSP_Homepage.KnowledgeArticleVersionWrapper(Portal_newska);
-            ISSP_Homepage.KnowledgeArticleVersionWrapper kbv2= new ISSP_Homepage.KnowledgeArticleVersionWrapper(Contentkav);
-            ISSP_Homepage.KnowledgeArticleVersionWrapper kbv3= new ISSP_Homepage.KnowledgeArticleVersionWrapper(howTokav);
-            kbv2.compareTo(kbv1);
-            kbv1.compareTo(kbv2);
+            //ISSP_Homepage.KnowledgeArticleVersionWrapper kbv1= new ISSP_Homepage.KnowledgeArticleVersionWrapper(Portal_newska);
+            //+++kb migration vanja
+            //ISSP_Homepage.KnowledgeArticleVersionWrapper kbv2= new ISSP_Homepage.KnowledgeArticleVersionWrapper(Contentkav);
+            //ISSP_Homepage.KnowledgeArticleVersionWrapper kbv3= new ISSP_Homepage.KnowledgeArticleVersionWrapper(howTokav);
+            //kbv2.compareTo(kbv1);
+            //kbv1.compareTo(kbv2);
             
             Portal_Applications__c app = new Portal_Applications__c(Name = 'Test Method App'); 
             insert app;

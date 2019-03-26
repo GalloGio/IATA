@@ -303,19 +303,20 @@ public with sharing class ISSP_Homepage {
         }
 
         // Constructor
-        public KnowledgeArticleVersionWrapper(Portal_news__kav kb) {
-            this.kb = kb;
-        }
+        //public KnowledgeArticleVersionWrapper(Portal_news__kav kb) {
+        //    this.kb = kb;
+        //}
 
         // Constructor
-        public KnowledgeArticleVersionWrapper(Content__kav kb) {
-            this.kb = kb;
-        }
+        // +++kb migration vanja
+        //public KnowledgeArticleVersionWrapper(Content__kav kb) {
+        //    this.kb = kb;
+        //}
 
         // Constructor
-        public KnowledgeArticleVersionWrapper(How_To__kav kb) {
-            this.kb = kb;
-        }
+        //public KnowledgeArticleVersionWrapper(How_To__kav kb) {
+        //    this.kb = kb;
+        //}
 
 
         // Compare opportunities based on the opportunity amount.
