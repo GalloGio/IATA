@@ -152,7 +152,7 @@ public without sharing class RemoteInvocationTriggerHandler {
                                                               Where Account__c In :accountsSet
                                                                 And Report_ID__c = :TIP_Utils.REPORT_TYPE_TIP_AUTO_REPORTS];
 
- 
+
             Map<Id, ISSP_External_Report__c> accountExternalReportMap = new Map<Id, ISSP_External_Report__c>();
 
             for(ISSP_External_Report__c er : existingExternalReportsList) {
@@ -192,40 +192,51 @@ public without sharing class RemoteInvocationTriggerHandler {
                 if(auxAccountId == null) {
                     auxStatus = TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED;
                     auxErrorMessage = 'The account : ' + ipRi.Internal_ID__c + ' does not exist';
-                    break;                         
+
+                    remoteInvocationExternalReportWrapperList.add(
+                        new remoteInvocationExternalReportWrapper(
+                            tempId,
+                            ipRi,
+                            null
+                        )
+                    );
                 }
 
-                ISSP_External_Report__c auxEr = accountExternalReportMap.get(auxAccountId); 
+                if(auxAccountId != null) {
+                    ISSP_External_Report__c auxEr = accountExternalReportMap.get(auxAccountId); 
 
-                if(auxEr == null) {
-                    auxEr = new ISSP_External_Report__c (
-                                    Account__c = auxAccountId,
-                                    Report_ID__c = TIP_Utils.REPORT_TYPE_TIP_AUTO_REPORTS
-                                );
+                    if(auxEr == null) {
+                        auxEr = new ISSP_External_Report__c (
+                                        Account__c = auxAccountId,
+                                        Report_ID__c = TIP_Utils.REPORT_TYPE_TIP_AUTO_REPORTS
+                                    );
+                    }
+
+                    remoteInvocationExternalReportWrapperList.add(
+                        new remoteInvocationExternalReportWrapper(
+                            tempId,
+                            ipRi,
+                            auxEr
+                        )
+                    );
                 }
 
-                remoteInvocationExternalReportWrapperList.add(
-                    new remoteInvocationExternalReportWrapper(
-                        tempId,
-                        ipRi,
-                        auxEr
-                    )
-                );
                 tempId++;
+
             }
 
             List<ISSP_External_Report__c> externalReportsToInsert = new List<ISSP_External_Report__c>();
             Map<Integer, RemoteInvocationExternalReportWrapper> tempIdWrapperMap = new Map<Integer, RemoteInvocationExternalReportWrapper>();
 
             for(RemoteInvocationExternalReportWrapper rierw : remoteInvocationExternalReportWrapperList) {
-                externalReportsToInsert.add(rierw.er);
+                if(rierw.er != null) externalReportsToInsert.add(rierw.er);
                 tempIdWrapperMap.put(rierw.tempId, rierw);
             }
 
             //
             // We are creating an external report for each 
             //
-            if(externalReportsToInsert.size() != 0) {
+            if(externalReportsToInsert.size() != 0 || auxStatus != '') {
 
                 if(auxStatus == '') {
                     try {
@@ -262,11 +273,19 @@ public without sharing class RemoteInvocationTriggerHandler {
                     riToUpdate.add(rierw.ri);
 
                     for(Remote_Invocation_Artefact__c ria : riaList2) {
-                        ria.Object_ID_Created__c = rierw.er.Id; 
+                        if(rierw.er != null) ria.Object_ID_Created__c = rierw.er.Id;
+
+                        if(auxStatus == TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED) {
+                            ria.Request_Result__c = TIP_Utils.REMOTE_INVOCATION_ARTEFACT_STATUS_FAILED;
+                        } else if(auxStatus == TIP_Utils.REMOTE_INVOCATION_STATUS_COMPLETED) {
+                            ria.Request_Result__c = TIP_Utils.REMOTE_INVOCATION_ARTEFACT_STATUS_COMPLETED;
+                        }
+
                         ria.Status_Detail__c = auxErrorMessage;
                         riaToUpdate.add(ria);
                     }
                 }
+
                 update riaToUpdate;  
             }
         }

@@ -90,6 +90,10 @@ public class TIP_Utils{
     public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
     public static final String REMOTE_INVOCATION_STATUS_IN_PROGRESS  = 'In Progress';  
 
+    public static final String REMOTE_INVOCATION_ARTEFACT_STATUS_COMPLETED    = 'Completed';
+    public static final String REMOTE_INVOCATION_ARTEFACT_STATUS_FAILED       = 'Failed'; 
+    public static final String REMOTE_INVOCATION_ARTEFACT_STATUS_IN_PROGRESS  = 'In Progress';  
+
 	//TIP-49 - validate IATA code is unique for payment providers
   	/*public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
 		  

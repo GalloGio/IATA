@@ -435,4 +435,103 @@ public class RemoteInvocationTriggerHandlerTest {
 
 		Test.stopTest();
 	}	
+
+	@isTest
+	public static void testAutomaticUploadReportsError() {
+
+		Test.startTest();
+
+		ISSP_External_Reports_Config__c conf = new ISSP_External_Reports_Config__c(
+			name = 'bla',
+			Portal_Service_ID__c = 'a2w1r000001STdj',
+			Report_ID__c = 'TIP_AUTO_REPORTS'
+		);
+
+		insert conf;
+
+		Account acc = new Account(name = 'some airline', Sector__c = 'Airline', 
+			IATACode__c = '123', recordtypeid = AMS_Utils.RECTYPE_AIRLINE);
+
+		Account acc2 = new Account(name = 'some airline2', Sector__c = 'Airline', 
+			IATACode__c = '321', recordtypeid = AMS_Utils.RECTYPE_AIRLINE);
+
+		List<Account> la = new List<Account>();
+		la.add(acc);
+		la.add(acc2);
+
+		insert la;
+
+		//
+		// This IATA code doesn't exists.
+		//
+		Remote_Invocation__c ri = new Remote_Invocation__c (
+			Integration_Transaction_ID__c = 'ABC1',
+			Internal_ID__c = '123543',
+			Request_Type__c = TIP_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
+			Source__c = 'IFG',
+			Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
+		);
+
+		Remote_Invocation__c ri2 = new Remote_Invocation__c (
+			Integration_Transaction_ID__c = 'ABC2',
+			Internal_ID__c = '321',
+			Request_Type__c = TIP_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
+			Source__c = 'IFG',
+			Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
+		);
+
+		List<Remote_Invocation__c> lri = new List<Remote_Invocation__c>();
+		lri.add(ri);
+		lri.add(ri2);
+
+		insert lri;
+
+		Remote_Invocation_Artefact__c ria1 = new Remote_Invocation_Artefact__c (
+			Name__c = 'some document 1',
+			Remote_Invocation__c = lri[0].Id
+		);
+
+		Remote_Invocation_Artefact__c ria2 = new Remote_Invocation_Artefact__c (
+			Name__c = 'some document 2',
+			Remote_Invocation__c = lri[0].Id
+		);
+
+		Remote_Invocation_Artefact__c ria3 = new Remote_Invocation_Artefact__c (
+			Name__c = 'some document 3',
+			Remote_Invocation__c = lri[1].Id
+		);
+
+		Remote_Invocation_Artefact__c ria4 = new Remote_Invocation_Artefact__c (
+			Name__c = 'some document 4',
+			Remote_Invocation__c = lri[1].Id
+		);
+
+		List<Remote_Invocation_Artefact__c> lria = new List<Remote_Invocation_Artefact__c>();
+		lria.add(ria1);
+		lria.add(ria2);
+		lria.add(ria3);
+		lria.add(ria4);
+
+		insert lria;
+
+		lri = [Select Id, Status__c From Remote_Invocation__c Where Integration_Transaction_ID__c Like 'ABC%'];
+
+		lri[0].Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
+		lri[1].Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
+
+		update lri;
+
+		lri = [Select Id, Integration_Transaction_ID__c, Internal_ID__c, Status__c From Remote_Invocation__c Where Integration_Transaction_ID__c Like 'ABC%'];		
+
+		lria = [Select Id, Object_ID_Created__c, Remote_Invocation__c, Request_Result__c From Remote_Invocation_Artefact__c Where Remote_Invocation__r.Integration_Transaction_ID__c Like 'ABC%'];
+
+		for(Remote_Invocation__c auxri : lri) {
+			System.assertEquals(auxri.Status__c, TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED); 
+		}
+
+		for(Remote_Invocation_Artefact__c auxria : lria) {
+			System.assertEquals(auxria.Request_Result__c, TIP_Utils.REMOTE_INVOCATION_ARTEFACT_STATUS_FAILED); 
+		}
+
+	}		
 }
