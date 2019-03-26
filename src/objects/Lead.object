@@ -5453,7 +5453,7 @@ albam@iata.org</description>
         <label>Job Function</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
         <valueSet>
             <valueSetDefinition>
                 <sorted>false</sorted>
