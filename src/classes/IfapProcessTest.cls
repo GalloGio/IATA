@@ -289,5 +289,92 @@ public class IfapProcessTest {
 		List<Financial_Assessment_Result__c> fars = [SELECT Id FROM Financial_Assessment_Result__c];
 		//system.assertEquals(NUM_TEST_CASES,fars.size());
 	}
+	static testMethod void testResultsBatchFinancialAssessmentResult() {
+		
+		loadTestCases();
 
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(ISO_Code__c = 'HK',AIMS_Area_Name__c = 'HK', BSP_Country_free_text__c = 'HK', ANG_Enable_NewGen__c = true);
+		insert country;
+
+		Id caseId;
+
+		// prepare json String
+		list<String> listJson = new list<String>();
+		for ( Case c: [Select CaseNumber, AccountId from Case LIMIT 1] ) {
+
+			caseId = c.Id;
+
+			String jsonCase =
+				'{'+
+				'"caseNumber": "'+c.CaseNumber+'",'+
+				'"xml": "<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+c.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>100</FinancialCriteriaTotalScore> <Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>",' +
+				'"success":true'+
+				'}';
+			listJson.add(jsonCase);
+
+			Account a = new Account(Id = c.AccountId);
+			a.IATA_ISO_Country__c = country.Id;
+			update a;
+		}
+
+		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
+
+		//Test the batch
+		Test.startTest();
+		IfapToolManager.PWCResponses response = IfapToolManager.processPWCResults();
+		IfapProcessResultsBatch batch = new IfapProcessResultsBatch(response);
+		Database.executeBatch(batch);
+		Test.stopTest();
+
+		Case caseReturned = [Select Id, Financial_Assessment_Points__c from Case where Id = :caseId];
+
+		system.assertEquals(100,caseReturned.Financial_Assessment_Points__c);
+		system.assertEquals(true,batch.errors.isEmpty());
+
+
+	}
+
+	static testMethod void testResultsBatchFinancialAssessmentResult_Failure() {
+		
+		loadTestCases();
+
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(ISO_Code__c = 'HK',AIMS_Area_Name__c = 'HK', BSP_Country_free_text__c = 'HK', ANG_Enable_NewGen__c = true);
+		insert country;
+
+		Id caseId;
+
+		// prepare json String
+		list<String> listJson = new list<String>();
+		for ( Case c: [Select CaseNumber, AccountId from Case LIMIT 1] ) {
+
+			caseId = c.Id;
+
+			String jsonCase =
+				'{'+
+				'"caseNumber": "'+c.CaseNumber+'",'+
+				'"xml": "<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+c.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus><Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>",' +
+				'"success":true'+
+				'}';
+			listJson.add(jsonCase);
+
+			Account a = new Account(Id = c.AccountId);
+			a.IATA_ISO_Country__c = country.Id;
+			update a;
+		}
+
+		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
+
+		//Test the batch
+		Test.startTest();
+		IfapToolManager.PWCResponses response = IfapToolManager.processPWCResults();
+		IfapProcessResultsBatch batch = new IfapProcessResultsBatch(response);
+		Database.executeBatch(batch);
+		Test.stopTest();
+
+		Case caseReturned = [Select Id, Financial_Assessment_Points__c from Case where Id = :caseId];
+
+		system.assertEquals(null,caseReturned.Financial_Assessment_Points__c);
+		system.assertEquals(false,batch.errors.isEmpty());
+
+	}
 }
