@@ -21942,15 +21942,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Financial_Insititutions</shortDescription>
-        <value>Financial Institutions</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Financial_Insititutions_Header</fullName>
-        <categories>ISSP, Portal, ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
-        <value>Financial Institution Insurance Providers</value>
+        <value>Insurance Providers</value>
     </labels>
     <labels>
         <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
