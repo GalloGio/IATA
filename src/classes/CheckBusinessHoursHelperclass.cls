@@ -143,7 +143,7 @@ public with sharing class CheckBusinessHoursHelperclass {
                     newCaseObj.IATAcode__c = clsCheckBusinessHours.getWebFieldValue(Label.IATA_Alpha, Label.Company, descDetails);
                 }
                 if ((newCaseObj.CaseArea__c == Label.ICH && newCaseObj.RecordTypeId == null)){
-                    //newCaseObj.RecordTypeId = sisHelpDeskCaseRecordTypeID;
+                    newCaseObj.RecordTypeId = sisHelpDeskCaseRecordTypeID;
                     newCaseObj.classification_SIS__C = newCaseObj.Classification__c;
                 }
                 // Assign Case Priority - for Web2Case with attachments 
