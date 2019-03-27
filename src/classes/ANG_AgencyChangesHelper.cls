@@ -1017,7 +1017,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<ANG_RHC_Information__c> rhcInfoList = new List<ANG_RHC_Information__c>();
 		Set<Id> accountIdsToProcess = new Set<Id>();
 
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
 			rhcInfoList.add(r);
 			accountIdsToProcess.add(r.ANG_AccountId__c);
 		}

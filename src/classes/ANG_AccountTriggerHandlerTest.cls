@@ -510,5 +510,5 @@ private class ANG_AccountTriggerHandlerTest {
 			return res;
 		}
 	}
-	
+
 }
