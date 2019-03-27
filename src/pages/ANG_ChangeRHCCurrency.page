@@ -74,7 +74,7 @@
          <apex:pageBlockButtons location="bottom">
             <apex:commandButton value="Save RHC Information" action="{!save}"  id="acceptButton" disabled="{!!isEdit}" rerender="infoBlock,editSection">
             </apex:commandButton>
-            <apex:commandButton value="Cancel" id="cancel" onclick="closeTab()">
+            <apex:commandButton value="Cancel" id="cancel" onclick="closeTab();return false;">
             </apex:commandButton>
          </apex:pageBlockButtons>
          <apex:pageBlockSection columns="1">
