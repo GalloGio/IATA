@@ -130,11 +130,6 @@
                 <field>SuppliedPhone</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Case_record_type__c</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
     <targetObject>Case</targetObject>
