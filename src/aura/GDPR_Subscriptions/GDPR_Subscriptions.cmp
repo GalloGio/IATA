@@ -13,6 +13,7 @@
     <aura:attribute name="salesforceSynced" type="Boolean" default="false"/> 
     <aura:attribute name="unsubscribe" type="Boolean" default="false"/>
     <aura:attribute name="localLoading" type="Boolean" default="false"/>
+    <aura:attribute name="showSelect" type="Boolean" default="Save All Changes"/>
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:registerEvent name="EVT_GDPR_OptOutSync" type="c:EVT_GDPR_OptOutSync"/>
@@ -74,7 +75,7 @@
 <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
     <aura:if isTrue="{!!v.opted_out}">
         <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 positionRight">
-            <button class="btn btn-primary buttonSelectAllSpace" type="submit" onclick="{!c.selectAll}" >Select All</button>
+            <button class="btn btn-primary buttonSelectAllSpace" type="submit" onclick="{!c.selectAll}" >{!v.showSelect ? 'Select All' : 'Deselect All'}</button>
             <button class="btn btn-primary " type="submit" onclick="{!c.saveAll}" >Save All Changes</button>
         </div>
     </aura:if>

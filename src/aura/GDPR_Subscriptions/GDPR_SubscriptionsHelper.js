@@ -18,6 +18,21 @@
 				if(! $A.util.isEmpty(_userInfo.getUserInfo().salesforceId)) {
 					cmp.set("v.salesforceSynced", true);
 				}
+
+				// CR1 - Propose deselect button when all checked during loading
+				cmp.set("v.showSelect", false); 
+				for (var i = 0; i < obj.newsletters.length; i++) { 
+					if(!result[i].selected) {
+						cmp.set("v.showSelect", true);
+						break;
+					}
+				}
+				for (var i = 0; i < obj.products.length; i++) { 
+					if(!result[i].selected) {
+						cmp.set("v.showSelect", true);
+						break; 
+					}
+				}
             } else {
 				this.showToast("error", "Error", "An error occurs");
 			}

@@ -10,7 +10,8 @@
 		var allInterests = cmp.get("v.interests");
 		var choices = cmp.find("interestsCbx");
 		var userChoice = [];
-	
+		
+		
 		for (var i = 0; i < choices.length; i++) { 
 			if(choices[i].get("v.value")) {
 				userChoice.push(allInterests[i].label);
@@ -31,10 +32,14 @@
 
 	selectAll : function(cmp, evt, hlp) {
 		var allInterests = cmp.get("v.interests");
-		
+		// CR1: Add deselect feature to the button
+		var check = cmp.get("v.showSelect");
 		for (var i = 0; i < allInterests.length; i++) { 
-			allInterests[i].selected = true;
+			allInterests[i].selected = check;
 		}
 		cmp.set("v.interests", allInterests);
+
+		// Change the button label (select all or deselect all)
+		cmp.set("v.showSelect", !check);
 	}
 })

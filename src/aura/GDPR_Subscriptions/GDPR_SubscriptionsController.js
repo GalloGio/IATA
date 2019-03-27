@@ -49,16 +49,21 @@
 
 	selectAll : function(cmp, evt, hlp) {
 		var allNewletters = cmp.get("v.newsletters");
+		// CR1: Add deselect feature to the button
+		var check = cmp.get("v.showSelect");
 		for (var i = 0; i < allNewletters.length; i++) { 
-			allNewletters[i].selected = true;
+			allNewletters[i].selected = check;
 		}
 		cmp.set("v.newsletters", allNewletters);
 
 		var allProducts = cmp.get("v.products");
 		for (var i = 0; i < allProducts.length; i++) { 
-			allProducts[i].selected = true;
+			allProducts[i].selected = check;
 		}
 		cmp.set("v.products", allProducts);
+
+		// Change the button label (select all or deselect all)
+		cmp.set("v.showSelect", !check);
 	}
 	
 })

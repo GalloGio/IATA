@@ -2,20 +2,59 @@ public without sharing class GDRP_UserInfo_CTRL {
 	@AuraEnabled
     public static Individual retrieveUserInfo(String email) {
 		
-		// Retrieve from Pardot based on email
+		// Retrieve from Salesforce lead or contact based on email
 		Individual indiv = new Individual();
-		Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
-		try {
-			prospect = Pardot_API.getProspect(email);
-			if(prospect != null) {
-				indiv = prospectToIndividual(indiv, prospect);
-			}
-		} catch(Exception e) {
-			return null;
-		} 
+		
+		// Identify if it's a lead or contact
+		list<Contact> contacts = [SELECT ID, LastName, FirstName, email, salutation, account.Name, Title, phone, MailingCountry, Membership_Function__c, Department, Industry__c FROM CONTACT WHERE Email = :email ORDER BY pi__last_activity__c, LastModifiedDate];
+		if(! contacts.isEmpty()) {
+				return contactToIndividual(indiv, contacts[0]);
+		}
+		list<Lead> leads = [SELECT ID, LastName, FirstName, email, salutation, company, phone, country, industry, Title , Membership_Function__c, Department__c FROM LEAD WHERE Email = :email ORDER BY pi__last_activity__c, LastModifiedDate];
+		if(! leads.isEmpty()) {
+				return leadToIndividual(indiv, leads[0]);
+		}
+		return null;
+	}
+
+	private static Individual contactToIndividual(Individual indiv, Contact contact) {
+		if(contact == null) return null;
+		indiv.Token__c = (String)contact.Id; // it's just to transfer contactID in a text field for the UI logic
+		indiv.Email__c = contact.email;
+		indiv.FirstName = contact.FirstName;
+		indiv.LastName = contact.LastName;
+		indiv.Salutation = contact.salutation;
+		indiv.Company__c = contact.account.Name;
+		indiv.Job_Title__c = contact.Title;
+		indiv.Phone__c = contact.phone;
+		indiv.Country__c = contact.MailingCountry;
+		indiv.Industry__c = contact.Industry__c;
+		indiv.Job_Function__c = contact.Membership_Function__c;
+		indiv.Department__c = contact.Department;
+		indiv.Timestamp__c = 'true'; // Transfer a boolean to indicate temporary it's a contact
 		return indiv;
 	}
 
+private static Individual leadToIndividual(Individual indiv, Lead lead) {
+		if(lead == null) return null;
+		// it's just to transfer contactID in a text field for the UI logic
+		indiv.Token__c = (String)lead.Id;
+		indiv.Email__c = lead.email;
+		indiv.FirstName = lead.FirstName;
+		indiv.LastName = lead.LastName;
+		indiv.Salutation = lead.salutation;
+		indiv.Company__c = lead.company;
+		indiv.Job_Title__c = lead.Title;
+		indiv.Phone__c = lead.phone;
+		indiv.Country__c = lead.country;
+		indiv.Industry__c = lead.industry;
+		indiv.Job_Function__c = lead.Membership_Function__c;
+		indiv.Department__c = lead.Department__c;
+		indiv.Timestamp__c = 'false'; // Transfer a boolean to indicate temporary it's not a contact
+
+		return indiv;
+	}
+/*
 	private static Individual prospectToIndividual(Individual indiv, Pardot_API.Pardot_Prospect prospect) {
 		if(prospect == null) return null;
 
@@ -29,9 +68,11 @@ public without sharing class GDRP_UserInfo_CTRL {
 		indiv.Phone__c = prospect.phone;
 		indiv.Country__c = prospect.country;
 		indiv.Industry__c = prospect.industry;
+		
 
 		return indiv;
 	}
+	*/
 
 	private static Pardot_API.Pardot_Prospect individualToPropect(Individual indiv, Pardot_API.Pardot_Prospect prospect) {
 		if(indiv == null) return null;
@@ -46,16 +87,52 @@ public without sharing class GDRP_UserInfo_CTRL {
 		prospect.phone = indiv.Phone__c;
 		prospect.country = indiv.Country__c;
 		prospect.industry = indiv.Industry__c;
-
+		prospect.job_Function = indiv.Job_Function__c;
+		prospect.department = indiv.Department__c;
 		return prospect;
 	}
 
 	@AuraEnabled
-    public static Boolean updateUserInfo(String prospect) {
-		
-		Pardot_API.Pardot_Prospect prospectObj = (Pardot_API.Pardot_Prospect)JSON.deserializeStrict( prospect, Pardot_API.Pardot_Prospect.class);
+    public static Boolean updateUserInfo(String indivJson) {
+		// Save to Salesforce lead or contact. The connector will save to Pardot
 
-		return Pardot_API.updateProspect(prospectObj);
+		Individual indiv = (Individual)JSON.deserialize(indivJson, Individual.class);
+		Id sampleid = indiv.Token__c;
+		BOolean isContact = sampleid.getsobjecttype() == Schema.Contact.SObjectType;
+
+		if(! isContact) {
+			Lead lead = new Lead();
+			lead.Id = indiv.Token__c;
+			lead.email = indiv.Email__c;
+			lead.FirstName = indiv.FirstName;
+			lead.LastName = indiv.LastName;
+			lead.salutation = indiv.Salutation;
+			lead.company = indiv.Company__c;
+			lead.phone = indiv.Phone__c;
+			lead.country = indiv.Country__c;
+			lead.industry = indiv.Industry__c;
+			lead.title = indiv.Job_Title__c;
+			lead.Membership_Function__c = indiv.Job_Function__c;
+			lead.Department__c = indiv.Department__c;
+			update lead;
+			return true;
+		} else {
+			Contact contact = new Contact();
+			contact.Id = indiv.Token__c;
+			contact.email = indiv.Email__c;
+			contact.FirstName = indiv.FirstName;
+			contact.LastName = indiv.LastName;
+			contact.salutation = indiv.Salutation;
+			contact.title = indiv.Job_Title__c;
+			contact.industry__c = indiv.Industry__c;
+			contact.phone = indiv.Phone__c;
+			contact.MailingCountry = indiv.Country__c;
+			contact.Membership_Function__c = indiv.Job_Function__c;
+			contact.Department = indiv.Department__c;
+			
+			update contact;
+			return true;
+		}
 	}
 
 
@@ -66,6 +143,7 @@ public without sharing class GDRP_UserInfo_CTRL {
 		List<InnerPicklistWrapper> salutations = new List<InnerPicklistWrapper>();
 		List<InnerPicklistWrapper> industries = new List<InnerPicklistWrapper>();
 		List<InnerPicklistWrapper> countries = new List<InnerPicklistWrapper>();
+		List<InnerPicklistWrapper> jobFunctions = new List<InnerPicklistWrapper>();
 
 		// get Salutation values from Individual object setup
 		Schema.DescribeFieldResult fieldResultSalutation = Individual.Salutation.getDescribe();
@@ -85,10 +163,17 @@ public without sharing class GDRP_UserInfo_CTRL {
 		for(Schema.PicklistEntry pickListVal : pleCountries){
 			countries.add(new InnerPicklistWrapper(pickListVal.getLabel(), pickListVal.getValue(), false));
 		}
+		// get job functions values from Individual object setup
+		Schema.DescribeFieldResult fieldResultJobFunctions = Individual.Job_Function__c.getDescribe();
+		List<Schema.PicklistEntry> pleJobFunctions = fieldResultJobFunctions.getPicklistValues();
+		for(Schema.PicklistEntry pickListVal : pleJobFunctions){
+			jobFunctions.add(new InnerPicklistWrapper(pickListVal.getLabel(), pickListVal.getValue(), false));
+		}
 
 		picklists.salutations = salutations;
 		picklists.industries = industries;
 		picklists.countries = countries;
+		picklists.jobFunctions = jobFunctions;
 
 		return picklists;
 	}
@@ -98,13 +183,14 @@ public without sharing class GDRP_UserInfo_CTRL {
 		
 		Individual indiv = (Individual)JSON.deserialize(indivJson, Individual.class);
 		String encryptedToken = null;
-		// Create prospect in Pardot so the lead will be created by the connector in SF
+		// Create the lead in Salesforce and create the prospect in Pardot
 		Pardot_API.Pardot_Prospect prospectObj = new Pardot_API.Pardot_Prospect();
 
 		prospectObj = individualToPropect(indiv, prospectObj);
 		if(Pardot_API.createProspect(prospectObj) ) {
 			
 			Individual indivInSF = GDPR_Helper.createIndividual(indiv.firstName, indiv.LastName, indiv.Email__c);
+			GDPR_Helper.createLead(indiv.firstName, indiv.LastName, indiv.Email__c, indiv.Company__c);
 			String tokenizedLink = GDPR_Helper.updateEncryptEmailProcessWithLink(indivInSF, indiv.Email__c);
 			GDPR_Helper.sendWelcomeEmail(indiv.Email__c);
 			return tokenizedLink;
@@ -136,6 +222,8 @@ public without sharing class GDRP_UserInfo_CTRL {
 		public List<InnerPicklistWrapper> industries {get;set;}
 		@AuraEnabled
 		public List<InnerPicklistWrapper> countries {get;set;}
+		@AuraEnabled
+		public List<InnerPicklistWrapper> jobFunctions {get;set;}
 	}
 
 	public class InnerPicklistWrapper {

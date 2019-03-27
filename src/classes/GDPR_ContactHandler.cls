@@ -90,8 +90,9 @@ public class GDPR_ContactHandler {
         
         map<Id, contact> contactId2Contact = new map<Id, contact> ([SELECT accountId, account.Name FROM Contact WHERE Id IN : newcontactMap.keySet()]);
         //Search for existing Individuals, by Email
-        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
+        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c, Job_Function__c, Department__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
+               
                 //Get the respective contact with the new version of the object
                 String email = String.isBlank(i.Email__c) ? null : i.Email__c.toLowerCase();
                 contact newcontact = newcontactMap.get(mapEmailcontact.get(email).Id);
@@ -112,7 +113,10 @@ public class GDPR_ContactHandler {
                     Contact aContact = contactId2Contact.get(newcontact.id);
                     i.company__c = aContact == null ? '' : aContact.accountId != null ? aContact.account.Name : '';
                     i.country__c = newcontact.mailingcountry;
-                    //i.industry__c = newcontact.industry; // No industry field in contact in standard
+                    i.industry__c = newcontact.industry__c; // No industry field in contact in standard
+                    // Change request
+                    i.job_function__c = newcontact.Membership_Function__c;
+                    i.Department__c = newcontact.Department;
 
                     individualsToUpdate.add(i);
                              

@@ -23,19 +23,10 @@ public class GDRP_UserInfo_CTRL_Test {
 		 Test.startTest();
 		// Get user information from Pardot
 		Individual i = GDRP_UserInfo_CTRL.retrieveUserInfo(l.Email);
-		Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
-		prospect.salutation = 'Mr';
-		prospect.first_name = l.FirstName;
-		prospect.last_name = l.LastName;
-		prospect.email = l.Email;
-		prospect.company = 'Test';
-		prospect.job_title = 'Test';
-		prospect.industry = 'Test';
-		prospect.phone = 'Test';
-		prospect.country = 'Test';
+		i.Token__c = l.id;
         
-		// update user information from Pardot
-		GDRP_UserInfo_CTRL.updateUserInfo(JSON.serialize(prospect));
+		// update user information in Salesforce
+		GDRP_UserInfo_CTRL.updateUserInfo(JSON.serialize(i));
 
 		// Check token validity
 		String encryptedToken = Comm_User_Helper.EncryptString(''+String.valueOf(System.TODAY()).left(10)+l.Email);
@@ -44,9 +35,27 @@ public class GDRP_UserInfo_CTRL_Test {
 		GDRP_UserInfo_CTRL.grantAccessToPortal(JSON.serialize(i));
 		Test.stopTest();
 	}
+
 	@isTest
 	static void getPicklist(){
 		// Get picklist value from individual object
 		GDRP_UserInfo_CTRL.getPickListValues();
+	}
+
+	@isTest
+    static void retrieveUserInfoContact(){
+
+		// Insert Contact that will create the associated individual object
+		Contact c = new Contact(FirstName = 'fred', LastName = 'dev', Salutation = 'Mr.',  Email = 'iata.fred.dev+2@gmail.com');
+        INSERT c;
+
+		 Test.startTest();
+		// Get user information from Pardot
+		Individual i = GDRP_UserInfo_CTRL.retrieveUserInfo(c.Email);
+		i.Token__c = c.id;
+        
+		// update user information in Salesforce
+		GDRP_UserInfo_CTRL.updateUserInfo(JSON.serialize(i));
+		Test.stopTest();
 	}
 }
