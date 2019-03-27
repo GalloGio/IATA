@@ -46,9 +46,9 @@
     <description>This custom object contains all history of e-mail credit transactions per campain on eBroadcast - how many e-mails credits were sent out (expensed), how many credits were adjusted, how many credits were received.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
