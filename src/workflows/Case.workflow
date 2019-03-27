@@ -5556,6 +5556,17 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+	<fieldUpdates>
+        <fullName>ICH_Web_Case_Assignment</fullName>
+        <description>Changes record type to Cases - Global on web cases</description>
+        <field>RecordTypeId</field>
+        <lookupValue>Cases_Global</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>ICH Web CaseAssignment</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <fieldUpdates>
         <fullName>IDCARD_Approve</fullName>
         <field>ID_Card_Status__c</field>
@@ -18182,7 +18193,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Make_new_case_visible_in_CustPortal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
@@ -18195,6 +18206,26 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Web</value>
         </criteriaItems>
         <description>Whenever a new SIS case is created, assign case owner and notify, record type, case origin and notify SIS Customer Support team</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+	<rules>
+        <fullName>SIS and ICH New Web Case</fullName>
+        <actions>
+            <name>ICH_Web_Case_Assignment</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>ICH,SIS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Web</value>
+        </criteriaItems>
+        <description>Whenever a new ICH web case is created, assign record type</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
