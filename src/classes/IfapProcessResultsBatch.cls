@@ -241,7 +241,7 @@ System.debug('############ processPWCResults ' + pwcress);
                 qiscasenumbers.add(pwcres.caseNumber);
             }
             Map<String,Case> caseMap = new Map<String,Case>();
-            for(Case c : [SELECT CaseNumber, Status, OwnerId, Account.IATA_ISO_Country__r.BSP_Country_free_text__c FROM Case WHERE CaseNumber IN :casenumbers])
+            for(Case c : [SELECT CaseNumber, Status, OwnerId, Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name FROM Case WHERE CaseNumber IN :casenumbers])
                 caseMap.put(c.CaseNumber, c);
 
             //Getting all IFAP Quality issues
@@ -334,7 +334,7 @@ System.debug('############ continue ' );
                             theCase.Financial_Review_Result__c = xml.getGFAStatus();
                             theCase.Assessment_Performed_Date__c = Date.today();
 
-                            if(theCase.Account.IATA_ISO_Country__r.BSP_Country_free_text__c == 'HK' || theCase.Account.IATA_ISO_Country__r.BSP_Country_free_text__c == 'MO'){
+                            if(theCase.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name == 'HK' || theCase.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name == 'MO'){
 
                                 if(xml.getFinancialCriteriaTotalScore() == '' || xml.getFinancialCriteriaTotalScore() == null){
                                     errors.add('[Result File "' + pwcres.originalFileName + '" ] Case with CaseNumber '+pwcres.caseNumber+' does not contain information regarding Financial Criteria Score (FinancialCriteriaTotalScore).');
