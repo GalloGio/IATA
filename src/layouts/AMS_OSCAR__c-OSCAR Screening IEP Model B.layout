@@ -77,10 +77,6 @@
                 <behavior>Edit</behavior>
                 <field>Sanity_check_results__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_shared_documentation_with_vendor__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
