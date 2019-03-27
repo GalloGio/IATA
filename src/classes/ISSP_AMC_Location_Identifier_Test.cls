@@ -441,7 +441,7 @@ private class ISSP_AMC_Location_Identifier_Test {
         
         User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-        Test.StartTest(); 
+        
             System.runAs(myUser){
 
             User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -449,13 +449,15 @@ private class ISSP_AMC_Location_Identifier_Test {
             System.runAs(portalUser){
 
                 PageReference pageRef = Page.ISSP_AMC_Location_Identifier;
+                Test.StartTest();
                 Test.setCurrentPageReference(pageRef);
                 pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Bus Station', false).Id);
                 ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
                 ISSP_AMC_ParticipationFactory.testUploads(controller);
+                Test.stopTest();
             }
 
-            Test.stopTest();
+            
 
         }
     }

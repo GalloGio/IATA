@@ -256,10 +256,10 @@ public class ISSP_AMC_Upload_Files {
 	/**
         Delete a file in Amazon Bucket, including AmazonFile object in Amazon
     **/
-    @Future
+    /*@Future
 	private static void deleteAmazonAttachmentInFuture(String strId, String fullName) {
 		deleteAmazonAttachment(strId, fullName);
-	}
+	}*/
 
 	/**
 	Downlaod an attachment

@@ -32,6 +32,26 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 		return pApply;
 	}
 
+    
+    	@IsTest
+	static Participation_Online_Application__c createApplicationDesigna() {
+		Participation_Online_Application__c pApply = new Participation_Online_Application__c();
+		Id devRecordTypeId = Schema.SObjectType.Participation_Online_Application__c.getRecordTypeInfosByName().get('Designator Code').getRecordTypeId();
+		pApply.Billing_City__c = 'Madrid';
+		pApply.Billing_Country__c = 'Spain';
+		pApply.Billing_Postal_Zip_code__c = 'ADSA1';
+		pApply.Billing_State_Province__c = 'Madrid';
+		pApply.Billing_Street_address_1__c = 'Paseo de la castellana';
+		pApply.Billing_VAT__c = '3232323';
+		pApply.RecordTypeId = devRecordTypeId;
+
+		Case testCase = createCase();
+		pApply.case__c = testCase.Id;
+
+		insert pApply;
+		return pApply;
+	}
+    
 	@IsTest
 	static Case createCase() {
 		Case tCase = new Case();
@@ -43,6 +63,19 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 
 		insert tCase;
 		return tCase;
+	}
+    
+    	@IsTest
+	static Case createCaseDesignator() {
+        Case tCase = new Case();
+        //tCase.IATA_Code__c = 'TP PT';
+        tCase.BSPCountry__c = 'Portugal';
+        tCase.Case_Creator_Email__c = 'test@gmail.com';
+        tCase.Status = ISSP_AMC_Constants.AMC_CASE_STATUS_SUBMITTED;
+        tCase.Coding_Application_ID__c = 'designator';
+        
+        insert tCase;
+        return tCase;
 	}
 
 	/*
@@ -65,6 +98,29 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 
 		System.assertEquals(c.Coding_Application_ID__c, 'Not Applicable');
 	}
+    
+    	/*
+	 Purpose: Disable the sync button according to a value
+	 Parameters:
+	 Returns:
+	 Throws [Exceptions]:
+	*/
+	@isTest public static void disableButtonDesigTest() {
+    	Case desigCase = createCaseDesignator();
+        
+        
+		Participation_Online_Application__c apllicationTest = createApplicationDesigna();
+
+		Test.startTest();
+		ISSP_AMC_FlowDAO.disableButton(apllicationTest.case__c);
+		Test.stopTest();
+
+		Case c = [SELECT id, Coding_Application_ID__c,
+						(SELECT Id, RecordType.DeveloperName FROM Participation_Online_Applications__r)
+		FROM Case WHERE id =: desigCase.Id];
+
+		System.assertEquals(c.Coding_Application_ID__c, 'designator');
+    }
 
 	/*
 	Purpose: Sync case to ACLI
@@ -75,34 +131,37 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 	/*@isTest public static void sendCaseCtrTest() {
 		ISSP_AMC_Integration.ACLIResponse acli = new ISSP_AMC_Integration.ACLIResponse();
 
-		insert new AMC_Configuration__c(SetupOwnerId = UserInfo.getOrganizationId(),
-				endpoint__c = 'https://apisbx.iata.org/acli-coding/requests',
-				username__c = '9b5e2abd65ee4c8e9bff0e97bd8c4e16',
-				password__c = '8ac07dac22564502AB51BfBF6f24D217');
+        insert new AMC_Configuration__c(SetupOwnerId = UserInfo.getOrganizationId(),
+                endpoint__c = 'https://apisbx.iata.org/acli-coding/requests',
+                username__c = '9b5e2abd65ee4c8e9bff0e97bd8c4e16',
+                password__c = '8ac07dac22564502AB51BfBF6f24D217');
 
-		acli.isSuccess = false;
-		acli.errorCode = '';
-		acli.errorDescription = '';
-		acli.status = null;
-		acli.requestId = null;
-		acli.OscarCase = null;
-		//acli.errors = null;
-		System.debug('FILIPA TESTTT ' + acli);
-		String resp = JSON.serialize(acli);
+        acli.isSuccess = false;
+        acli.errorCode = '400';
+        acli.errorDescription = 'Missing field';
+        acli.status = '';
+        acli.requestId = null;
+        acli.OscarCase = null;
+        acli.errors = null;
 
-		ISSP_AMC_MockHttp_Response_generator fakeResponse = new ISSP_AMC_MockHttp_Response_generator(400,
-				'Complete',
-				resp,
-				null);
+        String resp = JSON.serialize(acli);
+        System.debug('Fili ' + resp);
 
-		Test.setMock(HttpCalloutMock.class, fakeResponse);
+        ISSP_AMC_MockHttp_Response_generator fakeResponse = new ISSP_AMC_MockHttp_Response_generator(400,
+                'Complete',
+                resp,
+                null);
 
+        Test.setMock(HttpCalloutMock.class, fakeResponse);
 
-		Test.startTest();
-		ISSP_AMC_FlowDAO.sendCaseCtr(resp);
-		Test.stopTest();
+        Participation_Online_Application__c apllicationTest = createApplication();
+        
+        System.debug('fffff ' + apllicationTest.case__c);
 
-		//System.assertEquals(resp, 'Error validating JSON. Error: -Invalid type Null, expected String for Prefix_Code');
+        Test.startTest();
+
+        HttpResponse response = ISSP_AMC_Integration.doPost(apllicationTest.case__c);
+        Test.stopTest();
 	}*/
 
 	@isTest static void testOrchestrator() {
@@ -249,6 +308,9 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Off-line Point', false);
 
 		User myUser = [select Id,Name from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+        
+        User myUserCesar = [select Id, Name from User WHERE Name = 'Cesar Gonzalez' AND IsActive = true LIMIT 1];
+        User myUserAndreina = [select Id, Name from User WHERE Name = 'Andreina Briceno' AND IsActive = true LIMIT 1];
 
 		
 		System.runAs(myUser){
@@ -278,7 +340,10 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 
 				ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
 
-				
+				IATA_Process_Orchestrator_Step_Action__c stepactionO = [SELECT Stage__c, Approver__c, Status__c, IATA_Process_Orchestrator__r.IATA_Orchestrator_Process__c FROM IATA_Process_Orchestrator_Step_Action__c WHERE Stage__c = 'STAGE D'];
+                stepactionO.Approver__c = myUserCesar.Id;
+                stepactionO.Status__c = 'Not Started';
+                update stepactionO;
 				
 				/*User approvalUser = new User(
 				     ProfileId = [SELECT Id FROM Profile WHERE Name = 'IDFS Distribution'].Id,
@@ -294,10 +359,12 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 				);
 				insert approvalUser;*/
 
+                
 				IATA_Process_Orchestrator_Step_Action__c stepaction = new IATA_Process_Orchestrator_Step_Action__c();
 				stepaction.Approvel_Process_User__c = myUser.name;
 				stepaction.Action_name__c = 'STAGE D';
 				stepaction.IATA_Process_Orchestrator__c = orchestrator.Id;
+                stepaction.Approver__c = myUserCesar.Id;
 				insert stepaction;
 
 
@@ -308,9 +375,12 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 				Test.StartTest();
 
 				ISSP_AMC_FlowDAO.updateStepAction(stepaction.Id, 'Completed');
-				ISSP_AMC_FlowDAO.updateStepActionApprovelProcessUser(stepaction.Id, portalUser.Id);
+				ISSP_AMC_FlowDAO.updateStepActionApprovelProcessUser(stepaction.Id, myUserCesar.Id);
 				ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE D');
-				//ISSP_AMC_FlowDAO.requestForApproval(orchestrator.Id, 'STAGE D');
+                
+                System.runAs(myUserAndreina){
+				ISSP_AMC_FlowDAO.requestForApproval(stepactionO.IATA_Process_Orchestrator__r.IATA_Orchestrator_Process__c, stepactionO.Stage__c);
+                }
 
 
 				Test.stopTest();
@@ -359,4 +429,8 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 			}
 		}
 	}
+    
+    /*@isTest static void requestForApprovalTest() {
+        IATA_Process_Orchestrator_Step_Action__c stepACtion
+    }*/
 }

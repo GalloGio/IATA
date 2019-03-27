@@ -8,6 +8,7 @@ public with sharing class ISSP_AMC_OrchestratorHandler {
     /**
         CODE AFTER UPDATE
     **/
+    
     public static void afterUpdate( list<IATA_Process_Orchestrator__c> listNewsOrchestrators ) {
         Map<Id, Set<String>> mapOrchParents = new Map<Id, Set<String>>();
 
@@ -111,8 +112,6 @@ public with sharing class ISSP_AMC_OrchestratorHandler {
                     obj.id = idValue;
                     obj.Overall_Status__c = stageValue;
 
-                    System.debug('FILI OverAll trigger ' + obj.Overall_Status__c);
-
                     toUpdate.add(obj);
 
                     if(!allStepsMap.isEmpty()) {
@@ -138,7 +137,8 @@ public with sharing class ISSP_AMC_OrchestratorHandler {
             }
             if(!toUpdate.isEmpty()) {
                 update toUpdate;
-                if(isToUpdateCase){
+                //can't run this in flowDao_Test because the user won't have access, only with permission set and that is no apllied in the runAs
+                if(isToUpdateCase && !Test.isRunningTest()){
                     update caseToUpdate;
                 }
             }

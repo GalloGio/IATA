@@ -100,13 +100,9 @@ public with sharing class ISSP_AMC_FlowDAO {
         HttpResponse res = new HttpResponse();
         try {
             /*List<Case> casesToSendList = new List<Case>([SELECT id FROM Case WHERE id =: caseId]);
-            System.debug('FILIPA case: ' + casesToSendList);
             if(!casesToSendList.isEmpty()){*/
             res = ISSP_AMC_Integration.doPost(caseId);
             ISSP_AMC_Integration.ACLIResponse acliResponse = (ISSP_AMC_Integration.ACLIResponse)JSON.deserialize(res.getBody(),ISSP_AMC_Integration.ACLIResponse.class);
-
-            System.debug('FILI status ' + acliResponse.status);
-            System.debug('FILI body ' + res.getBody());
 
             if(acliResponse.errors != null && !acliResponse.errors.isEmpty()){
                 errorMessageByStatus = new Map<String, String>();
@@ -114,8 +110,6 @@ public with sharing class ISSP_AMC_FlowDAO {
                     errorMessageByStatus.put(error.status, error.detail);
                 }
             }
-
-            System.debug('Fili error ' + acliResponse.error);
 
             if(!String.isEmpty(acliResponse.error)){
                 if(errorMessageByStatus == null){
