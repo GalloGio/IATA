@@ -68,7 +68,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
         }
 
         //lstAccount = [SELECT Id, Name, Location_Class__c, Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys];
-        lstAccount = [SELECT Id, Name, Location_Class__c, Location_Type__c,Country_ISO_Code__c, ANG_Accreditation_Model__c, ANG_IsNewGenAgency__c,, Special_Remarks__c FROM Account WHERE id in :setAccountKeys]; //FM AMSU-116
+        lstAccount = [SELECT Id, Name, Location_Class__c, Location_Type__c,Country_ISO_Code__c, ANG_Accreditation_Model__c, ANG_IsNewGenAgency__c, Special_Remarks__c FROM Account WHERE id in :setAccountKeys]; //FM AMSU-116
         system.debug('AMS_2_MDM_Batch: lstAccount - ' + lstAccount);
         for(Account auxAccount :lstAccount){
             //system.debug('AMS_2_MDM_Batch: auxAccount - ' + auxAccount);
