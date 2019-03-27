@@ -47,9 +47,7 @@ private class PlatformEvents_Helper_Test {
         
         	delete con;
 
-        	try {
-            	undelete con;
-       		} catch(Exception e){}
+        	undelete con;
 
         test.stopTest();
     }
@@ -182,7 +180,8 @@ private class PlatformEvents_Helper_Test {
 		test.startTest();
         	insert BinRange;
         
-	        BinRange.TIP_Range_End__c = '6000';
+	        //BinRange.TIP_Range_End__c = '6000';
+	        BinRange.TIP_Effective_To_Date__c = Date.today()+30;
         
         	update BinRange;
         

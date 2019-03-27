@@ -4,7 +4,8 @@
         <fullName>Populate_IATA_code_in_LCR</fullName>
         <description>Adds the code of the airline or GSSA to the LCR</description>
         <field>Airline_code_3digit__c</field>
-        <formula>Local_Charge_Request__r.Account.IATACode__c</formula>
+        <formula>IF(Local_Charge_Request__r.Account.IATACode__c = null, Local_Charge_Request__r.Account.Airline_Prefix__c,
+Local_Charge_Request__r.Account.IATACode__c)</formula>
         <name>Populate IATA code in LCR</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
