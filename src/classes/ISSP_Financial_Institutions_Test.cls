@@ -27,7 +27,8 @@ private class ISSP_Financial_Institutions_Test {
                                                    RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
                                                    IATA_ISO_Country__c = portugal.Id,
                                                    Location_Class__c = 'P',
-                                                   Category__c = 'IATA Passenger Sales Agent');
+                                                   Category__c = 'IATA Passenger Sales Agent',
+                                                   Sector__c = AMS_Utils.SECTOR_PASSENGER);
 
         Account travelAgencySpain = new Account(Name = 'Travel Agency Spain',
                                                 Status__c = AMS_Utils.ACC_S9_APPROVED,
@@ -35,7 +36,8 @@ private class ISSP_Financial_Institutions_Test {
                                                 RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
                                                 IATA_ISO_Country__c = spain.Id,
                                                 Location_Class__c = 'P',
-                                                Category__c = 'IATA Passenger Sales Agent');
+                                                Category__c = 'IATA Passenger Sales Agent',
+                                                Sector__c = AMS_Utils.SECTOR_PASSENGER);
 
         agencies.add(travelAgencyPortugal);
         agencies.add(travelAgencySpain);
@@ -174,6 +176,7 @@ private class ISSP_Financial_Institutions_Test {
 
             System.assertEquals(2, controller.financialInstitutionList.size());
             System.assertEquals(true, controller.financialInstitutionsFound);
+            System.assertEquals(false, controller.userCanRequestGDI);
         }
 
         Test.stopTest();
@@ -191,6 +194,7 @@ private class ISSP_Financial_Institutions_Test {
 
             System.assertEquals(2, controller.financialInstitutionList.size());
             System.assertEquals(true, controller.financialInstitutionsFound);
+            System.assertEquals(false, controller.userCanRequestGDI);
 
             List<SelectOption> paginationSizeOptions = controller.paginationSizeOptions;
 
