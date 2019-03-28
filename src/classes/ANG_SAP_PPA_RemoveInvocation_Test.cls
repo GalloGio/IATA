@@ -8,6 +8,11 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
         insert ctry;
 
+        List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
+        customsettings.add(new ANG_CalloutMapping__c(Name = 'ENDORS_CERT', Integration_System__c='Mulesoft',
+        Action__c = 'GET' , CalloutClass__c = 'ANG_RME_Alert_Service', Event_Type__C = 'WebService', Change_code__c = 
+        'GDIEN' ,Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='Button',Field__c='' ));
+
 		Account acc = new Account(name = 'account name', Sector__c = 'Travel Agent', Category__c = 'Non-IATA Passenger Agent', IATACode__c = '1234567',
             Location_Type__c = AMS_Utils.HE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
         insert acc;
@@ -26,6 +31,11 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 
         oscar.Oscar_Communication_Case_Id__c = oscarCase.id;
         update oscar;
+
+        ID oppRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity'); 
+        Opportunity opp = new Opportunity(AccountId = acc.id, CloseDate = Date.today(), CurrencyIsoCode = 'USD', Name ='OPP - ' , RecordTypeId = oppRecordtype, 
+        								StageName = 'Pending', Related_Oscar__c = oscar.id, GDI_Offer_Id__c='001',  Offer_exchange_rate_date__c = Date.today());        
+        insert opp;
 
 		//create Remote Invocation 
 		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = oscarCase.id,
