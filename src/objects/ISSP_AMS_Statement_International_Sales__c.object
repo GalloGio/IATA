@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>AMS_Online_Accreditation__c</fullName>
+        <description>Related AMS Online Acreditation</description>
         <externalId>false</externalId>
         <label>AMS Online Accreditation</label>
         <referenceTo>AMS_Pax_Accreditation_Form__c</referenceTo>
@@ -67,6 +68,7 @@
     </fields>
     <fields>
         <fullName>Charges_Collected__c</fullName>
+        <description>Amount of charges collected from the AMS Online Accreditation</description>
         <externalId>false</externalId>
         <label>Charges Collected</label>
         <precision>18</precision>
@@ -77,6 +79,7 @@
     </fields>
     <fields>
         <fullName>IATA_Member_Airline__c</fullName>
+        <description>Related IATA Member Airline's Account</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>IATA Member Airline</label>
@@ -88,6 +91,7 @@
     </fields>
     <fields>
         <fullName>Prepaid_Collected__c</fullName>
+        <description>Amount of prepaid value collected</description>
         <externalId>false</externalId>
         <label>Prepaid Collected</label>
         <precision>15</precision>
@@ -98,6 +102,7 @@
     </fields>
     <fields>
         <fullName>Sales_Amount__c</fullName>
+        <description>Value of the sales</description>
         <externalId>false</externalId>
         <inlineHelpText>In Local Currency</inlineHelpText>
         <label>Sales Amount</label>
@@ -109,6 +114,7 @@
     </fields>
     <fields>
         <fullName>Weight_Kg__c</fullName>
+        <description>Weight in kilograms</description>
         <externalId>false</externalId>
         <label>Weight (Kg)</label>
         <precision>8</precision>

@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Amount__c</fullName>
+        <description>Represents the ammount to be charge</description>
         <externalId>false</externalId>
         <label>Amount</label>
         <precision>7</precision>
@@ -66,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Charge__c</fullName>
+        <description>Description of the charge</description>
         <externalId>false</externalId>
         <label>Charge</label>
         <length>100</length>
@@ -77,6 +79,7 @@
     </fields>
     <fields>
         <fullName>Code__c</fullName>
+        <description>Represents the code of the charge. Can be a "XF", "EF - Boarding Br", "EF - Landing" charge </description>
         <externalId>false</externalId>
         <label>Code</label>
         <required>false</required>
@@ -107,6 +110,7 @@
     <fields>
         <fullName>Collected__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Represents if the charge has been collected</description>
         <externalId>false</externalId>
         <label>Collected</label>
         <trackHistory>false</trackHistory>
@@ -116,6 +120,7 @@
     <fields>
         <fullName>E_F_Asset__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Asset that the charge is collected for</description>
         <externalId>false</externalId>
         <label>E&amp;F Asset</label>
         <referenceTo>E_F_Asset__c</referenceTo>

@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Status_Bucket__c</fullName>
+        <description>This is a picklist of available case status values. "Escalatd Internally" means the case has been escalated internally and the time shouldn't be added to time with support. "With Customer" means the case is being reviewed with the customer and the time shouldn't be added to time with support. "Escalatd Externally" means the case has been escalated externally and the time shouldn't be added to time with support</description>
         <externalId>false</externalId>
         <label>Status Bucket</label>
         <required>false</required>
