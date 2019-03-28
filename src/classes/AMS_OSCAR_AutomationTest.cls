@@ -381,7 +381,109 @@ private class AMS_OSCAR_AutomationTest {
 			System.assertEquals('N/A', oscar.Financial_security_result__c);
 
 
+        	/*
+        		Step 25
+        	*/
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step25_succeeded');
+        	oscar.STEP12__c = AMS_Utils.PASSED;
+        	System.assertEquals(true, factory.processWork(event, oscar));	
+        	System.assertEquals('Passed', oscar.Validation_result__c);
+        	System.assertEquals('Pending Approval', oscar.Status__c);
+        	oscar.STEP12__c = AMS_Utils.NOT_APPLICABLE;
+        	System.assertEquals(true, factory.processWork(event, oscar));	
+       		System.assertEquals('Passed', oscar.Validation_result__c);
+        	System.assertEquals('Pending Approval', oscar.Status__c);
+            try{
+                oscar.STEP12__c = AMS_Utils.FAILED;
+                System.assertEquals(false, factory.processWork(event, oscar));
+                oscar.STEP12__c = AMS_Utils.IN_PROGRESS;
+                System.assertEquals(false, factory.processWork(event, oscar));
+            }
+            catch(Exception ex){
+                Boolean exceptionThrown;
+                if(oscar.STEP12__c == AMS_Utils.FAILED)
+            		exceptionThrown =  ex.getMessage().contains('Validation can\'t be Passed when Manage Financial Security step is Failed.') ? true : false;
+				else if(oscar.STEP12__c == AMS_Utils.IN_PROGRESS)
+                    exceptionThrown =  ex.getMessage().contains('Validation can only be Passed if Manage Financial Security step is Not Applicable or Passed.') ? true : false;
+                System.assertEquals(exceptionThrown, true);
+        	}
 
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step25_failed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			System.assertEquals('Failed', oscar.Validation_result__c);
+        	System.assertEquals('On Hold_Internal', oscar.Status__c);
+        
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step25_inProgress');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+			try{
+                oscar.STEP12__c = AMS_Utils.FAILED;
+                System.assertEquals(false, factory.processWork(event, oscar));
+            }
+            catch(Exception ex){
+                Boolean exceptionThrown =  ex.getMessage().contains('Validation can only be Failed when Manage Financial Security step is Failed.') ? true : false; 
+				oscar.Apply_Penalty_Fee__c = false;
+                System.assertEquals(exceptionThrown, true);
+                oscar.Apply_Penalty_Fee__c = true;
+                System.assertEquals(exceptionThrown, false);
+        	}
+        	
+        
+        	/*
+        	 	Step 29 
+        	*/
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step29_succeeded');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        	oscar.Apply_Penalty_Fee__c = true;
+        	System.assertEquals(false, factory.processWork(event, oscar));
+
+        
+        	/*
+        	 	Step 46 
+        	*/
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step46_passed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        
+        	
+        	/*
+        	 	Step 47
+        	*/
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step47_passed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        	System.assertEquals(AMS_Utils.IN_PROGRESS, oscar.STEP48__c);
+        
+        
+        	/*
+        	 	Step 48
+        	*/
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_passed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        	System.assertEquals('Paid', oscar.Invoice_status__c);
+        
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_failed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        	System.assertEquals('Outstanding', oscar.Invoice_status__c);
+        
+       		factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        	System.assertEquals('N/A', oscar.Invoice_status__c);
+        
+        
+        	/*
+        	 	Step 49
+        	*/
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step49_passed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        
+        
+        	/*
+        	 	Step 50
+        	*/
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step50_passed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        
+        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step50_failed');
+        	System.assertEquals(true, factory.processWork(event, oscar));
+        
 		Test.stopTest();
 
 	}

@@ -74,6 +74,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>Applicable_to_Which_Version_s__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Subject</field>
             </layoutItems>
             <layoutItems>

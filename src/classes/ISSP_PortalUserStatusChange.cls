@@ -372,11 +372,11 @@ public with sharing class ISSP_PortalUserStatusChange {
             newUser.UID__c = UID;
             newUser.Community__c = 'ISSP';
             system.debug('inserting newuser');
-            insert newUser;
-            system.debug('inserted newuser: ' + newUser.Id);
+            ID userID = WithoutSharingOperations.insertUser(newUser);
+            system.debug('inserted newuser: ' + userID);
             // new email process
             String password = Comm_User_Helper.generateRandomString(6)+'1a';
-            System.setPassword(newUser.Id, password);
+            System.setPassword(userID, password);
             String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
             cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
             string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
@@ -390,7 +390,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 
             Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
             Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
-            Comm_User_Helper.permissionASS(new list<Id>{newUser.Id});
+            Comm_User_Helper.permissionASS(new list<Id>{userID});
             
         }else{
             system.debug('will update user with this profile id: ' + newUser.ProfileId);
@@ -672,9 +672,40 @@ public with sharing class ISSP_PortalUserStatusChange {
      
     @future(callout=true)
     public static void futureUpdateUsers(set<string> conIdSet) {
-        map<Id,Contact> contactMap = new map<Id,Contact>([select Id,email,firstName,lastname,Title,Preferred_Language__c,Status__c from Contact where Id in:conIdSet]);
+        
+        Map<Id,Contact> contactMap = new Map<Id,Contact>(
+        	[SELECT 
+        		Id,
+        		email,
+        		firstName,
+        		lastname,
+        		Title,
+        		Preferred_Language__c,
+        		Status__c, 
+        		(SELECT
+        			Id,
+        			Right__c
+        		 FROM
+        		 	Portal_Application_Rights__r 
+        		 WHERE 
+        		 	 Kavi_user__c = true 
+        		 AND Portal_Application__r.Name = 'Standards Setting Workspace'
+        		 )
+        	 FROM 
+        	 	Contact 
+        	 WHERE
+        	 	Id IN :conIdSet
+        	]
+        );
+        
+        
         if(!contactMap.values().isEmpty()){
+
+	        List<User> usersToPushHL = new List<User>();
+	        Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
+
             list<User> userList = [select Id,ContactId, ContactKaviId__c,languagelocalekey,email,firstname,lastname,Title,IsActive,IsPortalEnabled,username from User where ContactId in:contactMap.keySet() OR ContactKaviId__c in:contactMap.keySet()];
+
             for(User user : userList){
                 //Code extension to consider internal users
                 Contact con = new Contact();
@@ -696,9 +727,21 @@ public with sharing class ISSP_PortalUserStatusChange {
                     user.IsActive = false;
                 else
                     user.IsActive = true;
+                    
+                List<Portal_Application_Right__c> parLst = (List<Portal_Application_Right__c>) con.getSObjects('Portal_Application_Rights__r');
+                
+                System.debug(LoggingLevel.FINE, '____ [cls ISSP_PortalUserStatusChange - futureUpdateUsers] Portal Application Rights associated: ' + parLst);
+                
+                if(parLst != null && !parLst.isEmpty()){
+                	String access = parLst.get(0).Right__c;
+                	usersToPushHL.add(user);
+                	activeUserMap.put(user.Id, access == 'Access Granted');
+                }
+				                
              }
 
-            ISSP_WS_KAVI.updateKaviUsers(conIdSet, userList);
+            HigherLogicIntegrationHelper.pushPersonMembers(usersToPushHL, activeUserMap);
+            
             update userList;
             
         }
@@ -1127,6 +1170,6 @@ public with sharing class ISSP_PortalUserStatusChange {
     
     @future
     public static void updateUser(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
-        ISSP_PortalUserStatusChangeHelper.updateUserSync(conId, isActive, email, profileId, firstCommunity);
+        WithoutSharingOperations.updateUserSync(conId, isActive, email, profileId, firstCommunity);
     }    
 }

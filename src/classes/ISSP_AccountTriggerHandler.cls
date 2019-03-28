@@ -31,7 +31,9 @@ public with sharing class ISSP_AccountTriggerHandler
                                                 	  AND Right__c = 'Access Granted'
                                                 	  AND Portal_Application__r.Name LIKE 'Standards Setting Workspace%'];
 
-        for(Portal_Application_Right__c par : kaviList){
+		Map<Id, Id> legacyContactMap = new Map<Id, Id>();
+		
+        for(Portal_Application_Right__c par:kaviList){
         	String accId = par.Contact__r.AccountId;
         	if((par.Contact__r.Account.Field_Head_Office__c=='Branch' || par.Contact__r.Account.ParentId!=null) && par.Contact__r.Account.Parent.ParentId==null)
         		accId = par.Contact__r.Account.ParentId;
@@ -47,11 +49,14 @@ public with sharing class ISSP_AccountTriggerHandler
         	   oldAccountMap.get(accId).BillingPostalCode != newAccountMap.get(accId).BillingPostalCode)
 
         	   newAccountsIds.add(accId);
+        	   legacyContactMap.put(accId, par.Contact__c);
+        	   
         }
 
-        if (newAccountsIds.size() > 0 && !System.isBatch())
-        	ISSP_WS_KAVI.createOrUpdateKaviAccountsFuture(newAccountsIds);
-
+        if (newAccountsIds.size() > 0 && !System.isBatch()){
+        	HigherLogicIntegrationHelper.pushCompanyMembers(newAccountsIds, legacyContactMap);
+        }
+        
 		sendAccountNotifications(oldAccountMap, newAccountMap);
 	}
     

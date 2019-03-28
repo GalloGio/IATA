@@ -3,6 +3,55 @@
 	<apex:attribute name="is_dashboard" description="Determine if current page is dashboard page" required="false"  type="Boolean" default="false" />
 	<apex:attribute name="is_checkout" description="Determine if current page is checkout page" required="false" type="Boolean" default="false" />
 
+	<script type="text/javascript">
+		//Google analytics 
+	    function pushToGoToSocialNetwork(socialNetwork){
+	        dataLayer.push({
+	            "event": "userAction",
+	            "eventCategory": "Follow Us On",
+	            "eventAction": socialNetwork,
+	            "eventLabel": socialNetwork
+	        });
+	    }
+
+	    function pushGoToIATACorporateSite(){
+	    	dataLayer.push({
+	            "event": "userAction",
+	            "eventCategory": "Outbound Clicks",
+	            "eventAction": "Go To IATA Corporate Site",
+	            "eventLabel": "Go To IATA Corporate Site"
+	        });
+	    }
+
+	    function pushGoToCustomerCareService(service){
+	    	dataLayer.push({
+	            "event": "userAction",
+	            "eventCategory": "Customer Care Services",
+	            "eventAction": service,
+	            "eventLabel": service
+	        });
+	    }
+
+	    function pushGoToTermsLegalPrivacy(selected){
+	    	dataLayer.push({
+	            "event": "userAction",
+	            "eventCategory": "Legal/Terms/Privacy",
+	            "eventAction": selected,
+	            "eventLabel": selected
+	        });
+	    }
+
+	    function pushGoToStayInformed(){
+	    	dataLayer.push({
+	            "event": "userAction",
+	            "eventCategory": "Stay Informed",
+	            "eventAction": "Click on Learn More",
+	            "eventLabel": "Click on Learn More"
+	        });
+	    }
+
+	</script>
+
 	<!-- Footer Aside -->
 	<apex:variable value="1" var="footerAside" rendered="{!AND(is_dashboard !=true, is_checkout!=true)}">
 		<aside class="footer-aside">
@@ -11,13 +60,13 @@
 		            <div class="group-container stay-informed icon inline-chart">
 		                <div class="group-title">{!$Label.Stay_Informed}</div>
 		                <p>{!$Label.StayInformedMessage}</p>
-		                <a href="{!customLinks['Stay Informed'][0].URL__c}" target="_blank">{!customLinks['Stay Informed'][0].Name}</a>
+		                <a href="{!customLinks['Stay Informed'][0].URL__c}" target="_blank" onclick="pushGoToStayInformed();">{!customLinks['Stay Informed'][0].Name}</a>
 		            </div>
 		            <div class="group-container customer-care icon phone">
 		                <div class="group-title">Customer Care Services</div>
 		                <ul class="nav nav-services">
 		                	<apex:repeat value="{!customLinks['Customer Care Services']}" var="link">
-		                		<li class="icon arrow-right"><a target="_blank" href="{!link.URL__c}">{!link.Name}</a></li>
+		                		<li class="icon arrow-right"><a target="_blank" href="{!link.URL__c}" onclick="pushGoToCustomerCareService('{!link.Name}');">{!link.Name}</a></li>
 		                    </apex:repeat>
 		                </ul>
 		            </div>
@@ -48,15 +97,15 @@
 	            </div>
 	            <div class="group-container corporate-site">
 	                <div class="group-title">{!$Label.Go_to_IATA_corporate_site}</div>
-	                <a href="//www.iata.org/">www.iata.org</a>
+	                <a href="//www.iata.org/" onclick="pushGoToIATACorporateSite();">www.iata.org</a>
 	            </div>
 	            <div class="group-container social">
 	                <ul class="nav nav-social">
-	                    <li><a target="_blank" class="icon twitter" href="//twitter.com/iata"><span class="reader-only">Twitter</span></a></li>
-	                    <li><a target="_blank" class="icon facebook" href="//www.facebook.com/iata.org"><span class="reader-only">FaceBook</span></a></li>
-	                    <li><a target="_blank" class="icon google" href="#"><span class="reader-only">Google</span></a></li>
-	                    <li><a target="_blank" class="icon linkedin" href="//www.linkedin.com/groups?mostPopular=&amp;gid=3315879"><span class="reader-only">LinkedIn</span></a></li>
-	                    <li><a target="_blank" class="icon youtube" href="//www.youtube.com/iatatv"><span class="reader-only">YouTube</span></a></li>
+	                    <li><a target="_blank" class="icon twitter" href="//twitter.com/iata" onclick="pushToGoToSocialNetwork('twitter');"><span class="reader-only">Twitter</span></a></li>
+	                    <li><a target="_blank" class="icon facebook" href="//www.facebook.com/iata.org" onclick="pushToGoToSocialNetwork('facebook');"><span class="reader-only">FaceBook</span></a></li>
+	                    <li><a target="_blank" class="icon google" href="#"><span class="reader-only" onclick="pushToGoToSocialNetwork('google');">Google</span></a></li>
+	                    <li><a target="_blank" class="icon linkedin" href="//www.linkedin.com/groups?mostPopular=&amp;gid=3315879"><span class="reader-only" onclick="pushToGoToSocialNetwork('linkedin');">LinkedIn</span></a></li>
+	                    <li><a target="_blank" class="icon youtube" href="//www.youtube.com/iatatv" onclick="pushToGoToSocialNetwork('youtube');"><span class="reader-only">YouTube</span></a></li>
 	                </ul>
 	            </div>
 	        </apex:outputPanel>
@@ -64,7 +113,7 @@
 	        <div class="footer-legal">
 	        	<ul class="nav nav-legal">
 	            	<apex:repeat value="{!customLinks['Legal']}" var="link">
-	            		<li><a target="_blank" href="{!link.URL__c}">{!link.Name}</a></li>
+	            		<li><a target="_blank" href="{!link.URL__c}" onclick="pushGoToTermsLegalPrivacy('{!link.Name}');">{!link.Name}</a></li>
 	            	</apex:repeat>
 	            </ul>
 	            <small class="copyright"><apex:outputText value="{!copyright}" escape="false" /></small>

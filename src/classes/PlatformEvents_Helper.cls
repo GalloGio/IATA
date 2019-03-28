@@ -9,7 +9,8 @@ public class PlatformEvents_Helper {
                 'Account_Role__c' => 'AccountRole__e',
                 'Partner_products__c' => 'PartnerProduct__e',
                 'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
-                'TIP_BIN_Range__c' => 'Product_Bin_Range__e'
+                'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
+                'Remote_Invocation__c' => 'RemoteInvocation__e'
 		};
           
     	
@@ -89,7 +90,7 @@ public class PlatformEvents_Helper {
     
     private static string RTName(string theObject, id RTId){
         if(RTId==null)  return null;
-        return Schema.getGlobalDescribe().get(theObject).getDescribe().getRecordTypeInfosById().get(RTId).getName();
+        return RecordTypeSingleton.getInstance().getRecordTypeById(theObject, RTId).Name;
     }
     
     private static map<string, string> getMappingMap(string sObj){
@@ -102,7 +103,7 @@ public class PlatformEvents_Helper {
         }
         
         if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' 
-        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e'){
+        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'){
             return new map<String,String>{
                 'Id' => 'RecordId__c',
                 'Recordtype' => 'RecordType__c',

@@ -51,12 +51,12 @@ public without sharing class PortalServiceAccessTriggerHandler {
         Map<id, boolean> requestByUserMap = new Map<id, boolean>();
         Set<Id> accountIDsIepAux = new Set<Id>();
 
-        List<Portal_Application_Right__c> parListAux = [Select id, Right__c, Contact__c, Application_Name__c, Account__c, Portal_Application__r.Cannot_be_managed_by_portal_admin__c from Portal_Application_Right__c  where id in :ids];  
+        Map<ID,Portal_Application_Right__c> parMapAux = new Map<ID,Portal_Application_Right__c>([Select id, Right__c, Contact__c, Application_Name__c, Account__c, Portal_Application__r.Cannot_be_managed_by_portal_admin__c, Contact__r.User_Portal_Status__c from Portal_Application_Right__c  where id in :ids]);  
 
         User currentUser = [Select contactId from User where id =: UserInfo.getUserId() limit 1];
 
         //for(Portal_Application_Right__c par : newPortalApplicationRightList) {
-        for(Portal_Application_Right__c par : parListAux) {
+        for(Portal_Application_Right__c par : parMapAux.values()) {
             if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
                 if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
                     if(par.Account__c != null) accountIDsIepAux.add(par.Account__c);
@@ -117,9 +117,11 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 // portal_application__c.Cannot_be_managed_by_portal_admin__c = true && portal_application__c = IEP Service && 
                 //      IEP Account Status = open && the request was made by the portal user.
                 //                
-                if( (cannotManagedPortalAdminFlag == false) ||
+                if(((cannotManagedPortalAdminFlag == false) ||
                     (cannotManagedPortalAdminFlag == true && ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c) &&
-                     iepAccountStatusMap.get(par.Account__c) == ANG_ISSP_PortalServiceHelper.STATUS_OPEN)) {
+                     iepAccountStatusMap.get(par.Account__c) == ANG_ISSP_PortalServiceHelper.STATUS_OPEN)) && ( 
+                        (par.Application_Name__c == 'Global Default Insurance (GDI)' && parMapAux.get(par.id).Contact__r.User_Portal_Status__c != 'Approved Admin' ) 
+                        || parMapAux.get(par.id).Application_Name__c != 'Global Default Insurance (GDI)' ) ) {
 
                     Set<ID> portalAdminUserIDs;
                     if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {

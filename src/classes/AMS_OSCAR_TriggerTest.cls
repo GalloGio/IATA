@@ -1464,7 +1464,7 @@
 
         Account agency = new Account();
         agency.Name = 'Agency';
-        agency.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        agency.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         agency.IATACode__c = '24125';
         agency.Location_Type__c = 'HO';
         agency.Location_Class__c = 'P';
@@ -1482,13 +1482,13 @@
         oscar.Account__c = agency.Id;
         oscar.OwnerId = UserInfo.getUserId();
         oscar.Process__c = AMS_Utils.new_HO;    
-        oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();  
+        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         insert oscar;
 
         Case cse = new Case();
         cse.OSCAR__c = oscar.Id;
         cse.Status = 'New';
-        cse.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        cse.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         insert cse;
 
         Attachment attch = new Attachment();
@@ -1517,13 +1517,13 @@
         owner.Phone__c = '123456789';
         owner.Financial_interest__c = 100;
         owner.AMS_Pax_Accreditation_Form__c = stagingArea.Id;
-        owner.RecordTypeId = Schema.AMS_Accreditation_Contact__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
+        owner.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
         insert owner;
 
         Test.startTest();
         AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c();
         issOperation.Name = 'TEST';
-        issOperation.RecordTypeId = Schema.AMS_Settlement_System__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('BSP').getRecordTypeId();
+        issOperation.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
         insert issOperation;
 
         AMS_Operation__c operation = new AMS_Operation__c();

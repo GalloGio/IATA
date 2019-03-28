@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification e-mail HTML sent when a SIS E-Invoicing case is submitted (English)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>SIS E-Invoicing - Case confirmation - online HTML (English)</name>
+    <style>freeForm</style>
+    <subject>Case {!Case.CaseNumber}  {!Case.Subject}</subject>
+    <textOnly>Note that this is an auto-reply message. Please do not respond to this email.
+
+
+Dear Customer,
+
+Thank you for your enquiry. One of our Customer Service Representatives will respond to you shortly.
+
+
+You have been allocated the following:
+
+Case number: # {!Case.CaseNumber}
+
+
+Please quote this case number as a reference if you wish to contact us regarding your enquiry.
+
+
+Best regards,
+
+
+
+IATA Operations &amp; Service Center
+
+
+
+
+
+
+
+Please visit our portal to search FAQs, to find documents and information related to Accreditation, BSP and CASS or to contact us!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{!Case.Thread_Id}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

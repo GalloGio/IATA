@@ -349,8 +349,9 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
-    public static Boolean checkAddress(String info, String countryCode) {
-        return OneId_AddressDoctor.isValidAddress((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class), countryCode);
+    public static List<OneId_AddressDoctor.AddressInfo> checkAddress(String info) {
+        System.debug(loggingLevel.FINE, '____ [cls OneId_RegistrationProcessController - checkAddress] info - ' + info);
+        return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
     }
 
     @AuraEnabled

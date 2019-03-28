@@ -4157,6 +4157,7 @@ albam@iata.org</description>
     </fields>
     <fields>
         <fullName>PartnerAccountId</fullName>
+        <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>

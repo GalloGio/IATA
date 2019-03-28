@@ -318,8 +318,6 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 list<Contact> contactsToDisable_TD = new list<Contact>();
                 set<string> contactsForUserUpdateIdSet = new set<string>();
                 set<string> contactsForUserdeActivateIdSet = new set<string>();
-                Map<Id,Id> oldAccountByContactIdMap = new Map<Id,Id>();
-                Map<Id,Id> newAccountByContactIdMap = new Map<Id,Id>();
                 Set<Id> contactsToProcess = new Set<Id>();
                 Map<Id, Id> contactsToProcessMap = new Map<Id, Id>();
                 
@@ -406,6 +404,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     ISSP_PortalUserStatusChange.futureDeactivateUsers(contactsForUserdeActivateIdSet);
                 }
                 
+                Set<Id> contactIdSet = new Set<Id>();
+                
                 if (contactsToDisable_TD.size() > 0){
 
                     list<Portal_Application_Right__c> portalAppList = [SELECT Id, Right__c, Contact__c, Portal_Application__r.Name
@@ -421,8 +421,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                              tdList.add(par);
                         }
                         else if(par.Portal_Application__r.Name.startsWith('Standards Setting Workspace')){
-                            oldAccountByContactIdMap.put(par.Contact__c,trigger.oldMap.get(par.Contact__c).AccountId);
-                            newAccountByContactIdMap.put(par.Contact__c,trigger.newMap.get(par.Contact__c).AccountId);
+                            contactIdSet.add(par.Contact__c);
                         } 
                     }
                     if(!tdList.isEmpty())
@@ -430,12 +429,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     
                 }
 
-                if(ISSP_WS_KAVI.preventTrigger!=null) {
-                    if(!ISSP_WS_KAVI.preventTrigger && oldAccountByContactIdMap.size()>0){
-                        ISSP_WS_KAVI.preventTrigger = true;
-                        ISSP_WS_KAVI.replaceKaviRelationShip(newAccountByContactIdMap,oldAccountByContactIdMap);
-                    }
-                }
+                if(!HigherLogicIntegrationHelper.preventTrigger && contactIdSet.size() > 0){
+			HigherLogicIntegrationHelper.preventTrigger = true;
+			HigherLogicIntegrationHelper.updateMembersRelationships(contactIdSet);
+		}
             }
             /*ISSP_ContactAfterInsert Trigger.After*/   
         }
@@ -629,6 +626,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 }
             }
             /*ISSP_UpdateContacKaviIdOnUser AfterUpdate*/
+
+            ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Contact', 'ANG_Contact_Tracking_History__c'); //ACAMBAS - WMO-390
 
         }
         /*Trigger.AfterUpdate*/

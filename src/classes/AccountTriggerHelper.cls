@@ -10,10 +10,10 @@ public  class AccountTriggerHelper {
     //if(!SectorCatToIndType )
     for (Account a : triggerNew) {
 
-      if ( (a.Sector__c == null || a.Category__c == null)
+      if ( ((a.Sector__c == null || a.Category__c == null)
            ||
            trigger.isUpdate &&
-           ( a.industry <> triggeroldMap.get(a.id).industry || a.Type <> triggeroldMap.get(a.id).Type)
+           ( a.industry <> triggeroldMap.get(a.id).industry || a.Type <> triggeroldMap.get(a.id).Type)) && a.Type_of__c != 'S'
          ) {
         a.Sector__c =  (a.Sector__c == null) || trigger.isUpdate && ( a.industry <> triggeroldMap.get(a.id).industry) ? a.Industry : a.Sector__c;
         a.Category__c =  (a.Category__c == null) || trigger.isUpdate && ( a.Type <> triggeroldMap.get(a.id).Type ) ? a.Type : a.Category__c ;
@@ -296,8 +296,26 @@ public  class AccountTriggerHelper {
 
       }
 
-      if (!childrenTOUpdate.isEmpty())
-        System.enqueueJob(new AsyncDML_Util(childrenTOUpdate, AsyncDML_Util.DML_UPDATE, false));
+    if (!childrenTOUpdate.isEmpty()){
+        Integer enqueuedJobs=[select count() from asyncApexJob where JobType = 'BatchApex' and status in ('Processing', 'Preparing', 'Queued')];
+        if(enqueuedJobs == 0){
+        	System.enqueueJob(new AsyncDML_Util(childrenTOUpdate, AsyncDML_Util.DML_UPDATE, false));
+    	}
+        else{
+            Datetime now = Datetime.now().addSeconds(3);
+            String hour = String.valueOf(now.hour());
+            String min = String.valueOf(now.minute()); 
+            String ss = String.valueOf(now.second());
+            String day = String.valueOf(now.day());
+            String month = String.valueOf(now.month());
+            String year = String.valueOf(now.year());
+            //parse to cron expression
+            String nextFireTime = ss + ' ' + min + ' ' + hour + ' ' + day + ' ' + month + ' ? ' + year;
+            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), nextFireTime, new AsyncDML_Util_Schedulable(childrenTOUpdate, AsyncDML_Util.DML_UPDATE, false));
+        }
     }
+    }
+
   }
+
 }
