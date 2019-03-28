@@ -34,7 +34,7 @@ public class ISSP_AMC_EntityContactData_Test {
                     ctrl.saveParticipation();
                     ISSP_AMC_EntityContactData controller = new ISSP_AMC_EntityContactData();
                     List <SelectOption> testCountry = controller.countryList;
-                    Contact contactSalutation = controller.contactSalutation;
+                    //Contact contactSalutation = controller.contactSalutation;
                     List <SelectOption> testSalutation2 = controller.salutationListSIS;
                     List <SelectOption> testSalutation3 = controller.salutationListHOC;
                     List <SelectOption> testSalutation4 = controller.salutationListHOB;

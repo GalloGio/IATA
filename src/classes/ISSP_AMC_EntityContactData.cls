@@ -18,8 +18,6 @@ public class ISSP_AMC_EntityContactData {
 	public String searchHobEmail { get; set; }
 	public String currentContactId { get; set; }
 	public List<Contact> contactList { get; set; }
-
-	
 	
 	public Participation_Online_Application__c controllerParticipation {
 		get {
@@ -90,11 +88,10 @@ public class ISSP_AMC_EntityContactData {
     }
 
     public Account accountRecord {get;set;}
-
-	
-
-	public ISSP_AMC_EntityContactData() {
-	}
+    
+    public ISSP_AMC_EntityContactData(){
+        
+    }
 
 	public void selectHocContact() {
 		
