@@ -220,7 +220,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		//test products
 		
-		system.debug('ALEX ##PRODUCTS: ' + [select id, PP_status__c from Partner_products__c ]);
+		system.debug('##PROD: ' + [select id, PP_Payment_Product_Code__c, RecordTypeid, PP_status__c, Payment_Provider_Account_Role__r.Status__c from Partner_products__c ]);
 		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_ACTIVE ]);
 		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE ]);
 		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_IN_PROGRESS ]);
