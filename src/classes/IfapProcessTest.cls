@@ -293,7 +293,7 @@ public class IfapProcessTest {
 		
 		loadTestCases();
 
-		AMS_Settlement_System__c sett_sys = new AMS_Settlement_System__c(name = 'HK', DPC_System__c = 'test_dpc');
+		AMS_Settlement_System__c sett_sys = new AMS_Settlement_System__c(name = 'BSP-HK', DPC_System__c = 'test_dpc');
 		insert sett_sys;
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(ISO_Code__c = 'HK',AIMS_Area_Name__c = 'HK', BSP_Country_free_text__c = 'HK', ANG_Enable_NewGen__c = true,AMS_Settlement_System__c = sett_sys.Id);
@@ -341,7 +341,7 @@ public class IfapProcessTest {
 		
 		loadTestCases();
 		
-		AMS_Settlement_System__c sett_sys = new AMS_Settlement_System__c(name = 'HK', DPC_System__c = 'test_dpc');
+		AMS_Settlement_System__c sett_sys = new AMS_Settlement_System__c(name = 'BSP-HK', DPC_System__c = 'test_dpc');
 		insert sett_sys;
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(ISO_Code__c = 'HK',AIMS_Area_Name__c = 'HK', BSP_Country_free_text__c = 'HK', ANG_Enable_NewGen__c = true,AMS_Settlement_System__c = sett_sys.Id);
@@ -380,7 +380,7 @@ public class IfapProcessTest {
 		Case caseReturned = [Select Id, Financial_Assessment_Points__c from Case where Id = :caseId];
 
 		system.assertEquals(null,caseReturned.Financial_Assessment_Points__c);
-		system.assertEquals(false,batch.errors.isEmpty());
+		system.assertEquals(true,batch.errors.isEmpty());
 
 	}
 }

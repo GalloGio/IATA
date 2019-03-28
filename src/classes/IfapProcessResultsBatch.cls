@@ -7,7 +7,8 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
     public List<AmazonFile__c> amazonFilesToInsert;
     public map<String,AmazonFile__c> setAmazonFilesToInsert;
     global Map<Id, String> errorMap {get; set;}
-    
+    public static final Set<String> bspCountryPointsMap = new Set<String> {'BSP-HK','BSP-MO'};
+
 
     public IfapProcessResultsBatch(IfapToolManager.PWCResponses pwcress ) {
         this.errors = new list<String>();
@@ -334,12 +335,9 @@ System.debug('############ continue ' );
                             theCase.Financial_Review_Result__c = xml.getGFAStatus();
                             theCase.Assessment_Performed_Date__c = Date.today();
 
-                            if(theCase.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name == 'HK' || theCase.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name == 'MO'){
+                            if(bspCountryPointsMap.contains(theCase.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name)){
 
-                                if(xml.getFinancialCriteriaTotalScore() == '' || xml.getFinancialCriteriaTotalScore() == null){
-                                    errors.add('[Result File "' + pwcres.originalFileName + '" ] Case with CaseNumber '+pwcres.caseNumber+' does not contain information regarding Financial Criteria Score (FinancialCriteriaTotalScore).');
-                                    continue;
-                                }else{
+                                if(xml.getFinancialCriteriaTotalScore() <> null && xml.getFinancialCriteriaTotalScore() <> ''){
                                     theCase.Financial_Assessment_Points__c = decimalTryParse(xml.getFinancialCriteriaTotalScore());
                                 }
                             }
