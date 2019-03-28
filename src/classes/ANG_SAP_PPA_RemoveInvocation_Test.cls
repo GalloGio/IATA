@@ -13,6 +13,8 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
         Action__c = 'GET' , CalloutClass__c = 'ANG_RME_Alert_Service', Event_Type__C = 'WebService', Change_code__c = 
         'GDIEN' ,Credential__c = '/v1/agencies/{agencyId}/offer/{offerId}/endorsement' , Named_Credential__c = 'Mulesoft_Credential_Masterdata',Type__c='Button',Field__c='' ));
 
+        insert customsettings;
+		
 		Account acc = new Account(name = 'account name', Sector__c = 'Travel Agent', Category__c = 'Non-IATA Passenger Agent', IATACode__c = '1234567',
             Location_Type__c = AMS_Utils.HE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
         insert acc;
