@@ -384,7 +384,7 @@
 						liveagent.addCustomDetail('#TopicEN', '{!topicId}').saveToTranscript('Topic__c');
 						liveagent.addCustomDetail('#SubtopicEN', '{!subTopicId}').saveToTranscript('Subtopic__c');
 						
-						liveagent.findOrCreate('Case')
+                    /*liveagent.findOrCreate('Case')
 						.map('Subject','Case Subject',true,true,false)
 						.map('Status','Case Status',true,true,false)
 						.map('ContactId','userContactId',true,true,false)
@@ -392,9 +392,9 @@
 						.map('RecordTypeId','caseRTId',true,true,false)
 						.map('Topic__c','#TopicEN',false,true,true)
 						.map('Subtopic__c','#SubtopicEN',false,true,true)
-						.saveToTranscript('CaseId').showOnCreate();
+						.saveToTranscript('CaseId').showOnCreate();*/
 						
-						/*liveagent.findOrCreate('Case')
+                    liveagent.findOrCreate('Case')
 						.map('Subject','Case Subject',false,true,true)
 						.map('Status','Case Status',false,true,true)
 						.map('ContactId','userContactId',false,true,true)
@@ -402,7 +402,7 @@
 						.map('RecordTypeId','caseRTId',false,true,true)
 						.map('Topic__c','#TopicEN',false,true,true)
 						.map('Subtopic__c','#SubtopicEN',false,true,true)
-						.saveToTranscript('CaseId').showOnCreate();*/
+						.saveToTranscript('CaseId').showOnCreate();
 						
 						liveagent.findOrCreate('Contact').map('Id','userContactId', true, true, false).showOnCreate().linkToEntity('Case','						ContactId').saveToTranscript('ContactId');                    
 						liveagent.findOrCreate('Account').map('Id','userAccountId', true, true, false).showOnCreate().linkToEntity('Case','						AccountId').saveToTranscript('AccountId');
