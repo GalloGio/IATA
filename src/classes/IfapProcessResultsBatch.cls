@@ -7,7 +7,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
     public List<AmazonFile__c> amazonFilesToInsert;
     public map<String,AmazonFile__c> setAmazonFilesToInsert;
     global Map<Id, String> errorMap {get; set;}
-    public static final Set<String> bspCountryPointsMap = new Set<String> {'BSP-HK','BSP-MO'};
+    //public static final Set<String> bspCountryPointsMap = new Set<String> {'BSP-HK','BSP-MO'};
 
 
     public IfapProcessResultsBatch(IfapToolManager.PWCResponses pwcress ) {
@@ -335,12 +335,11 @@ System.debug('############ continue ' );
                             theCase.Financial_Review_Result__c = xml.getGFAStatus();
                             theCase.Assessment_Performed_Date__c = Date.today();
 
-                            if(bspCountryPointsMap.contains(theCase.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name)){
+                            //if(bspCountryPointsMap.contains(theCase.Account.IATA_ISO_Country__r.AMS_Settlement_System__r.Name))
 
                                 if(xml.getFinancialCriteriaTotalScore() <> null && xml.getFinancialCriteriaTotalScore() <> ''){
                                     theCase.Financial_Assessment_Points__c = decimalTryParse(xml.getFinancialCriteriaTotalScore());
                                 }
-                            }
 
                             // FT: IFAP 4 enhancement if we are receiving a reply from a quality issue, we must set the Quality issue approved date
                             //also when case is going from Submitted to Assessment Performed and there is a Quality Issue
