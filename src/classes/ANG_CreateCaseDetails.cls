@@ -190,5 +190,3 @@ global without sharing class ANG_CreateCaseDetails {
 		}
 	}
 }
-
-
