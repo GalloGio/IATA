@@ -3075,6 +3075,11 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
                 //ACAMBAS - NEWGEN-4784 - End
+
+                if(oscar.Process__c == AMS_Utils.NEWHESTANDARD && oscar.ANG_Change_Entity_Location__c && oscar.Change_of_Entity_Location_within_EU__c){
+                    oscar.addError('The \'Change of Entity Location\' and \'Change of Entity Location within EU\' fields cannot be checked at the same time.');
+                }
+
             }
         }
     }
