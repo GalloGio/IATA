@@ -21,6 +21,7 @@ global without sharing class ISSP_APProcess {
     public AP_Process_Form__c newForm {get;set;}
     public AP_Country_Requierment__c countryRequirement {get;set;}
     public IATA_ISO_Country__c isocountry{get;set;}
+    public ICCS_Product_Country__c ICCSProductCountry{get;set;}
     public boolean isNewCase {get;set;}
     public string stepNumber {get;set;}
     public string APprocess {get;set;}
@@ -260,6 +261,7 @@ global without sharing class ISSP_APProcess {
             SYSTEM.DEBUG('INIT - Country ISO Code: ' + apcountryisocode);
 
             retrieveCountryRequirements(apcountryisocode, strLoB );
+            this.ICCSProductCountry = retrieveICCSProductCountry(strLoB, isocountry);
             apCountry = countryRequirement.Name;  //Used for country display on Country Reqs pages
 
             if(apcountryisocode == 'CN') {
@@ -891,6 +893,10 @@ global without sharing class ISSP_APProcess {
 
     public Pagereference goToFinalStep(){
         List<String> listMandatoryFiles = new list<String>();
+        Boolean showJoinICCSQuestion = getShowJoinICCSQuestion();
+        if (!showJoinICCSQuestion) {
+            this.newForm.Airline_wish_to_join_ICCS__c = 'No';
+        }
         if (this.newForm.Airline_wish_to_join_ICCS__c==null) {
             this.newForm.Airline_wish_to_join_ICCS__c.addError('Select an option');
             return null;
@@ -899,11 +905,11 @@ global without sharing class ISSP_APProcess {
             //check ICCS_Join
             listMandatoryFiles.add('ICCS_Join');
         }
-        if (newForm.Airline_wish_to_join_ICCS__c=='Yes') {
+        if (showJoinICCSQuestion && newForm.Airline_wish_to_join_ICCS__c=='Yes') {
             //check ICCS_Join_market
             listMandatoryFiles.add('ICCS_Join_market');
         }
-        if(newForm.Airline_wish_to_join_ICCS__c == 'No') {
+        if (getShowUploadBankMandate()) {
             //check Bank_Mandate
             listMandatoryFiles.add('Bank_Mandate');
         }
@@ -1468,16 +1474,14 @@ global without sharing class ISSP_APProcess {
     /**
         Finds the ICCS Product country for the current ISO country and a type (BSP or CASS)
     **/
-    public ICCS_Product_Country__c getICCSProductCountry() {
+    public ICCS_Product_Country__c retrieveICCSProductCountry(String productType, IATA_ISO_Country__c country) {
         try {
-            String productType = '';
-            if (this.isBSP) productType = 'BSP';
-            if (this.isCASS) productType = 'CASS';
             return [
                 SELECT Id, Product__r.Name
                 FROM ICCS_Product_Country__c
-                WHERE Country__c = :this.isocountry.Id
-                AND Product__r.Name = :productType];
+                WHERE Country__c = :country.Id
+                AND Product__r.Name = :productType
+                LIMIT 1];
         } catch (Exception e) {
             return null;
         }
@@ -1673,15 +1677,29 @@ global without sharing class ISSP_APProcess {
     }
 
     /**
+        Returns true if the account meets the conditions to show the field Airline_wish_to_join_ICCS__c
+    **/
+    public Boolean getShowJoinICCSQuestion() {
+        return ICCSProductCountry!=null;
+    }
+
+    /**
         Returns true if the account meets the conditions to show ICCS Joining section
     **/
     public Boolean getShowJoinICCS() {
         return this.newForm.Airline_wish_to_join_ICCS__c=='Yes'
+            && this.hqaccount!=null
             && this.hqaccount.ICCS_Membership_Status__c!='Prospect'
             && this.hqaccount.ICCS_Membership_Status__c!='Active'
             && this.hqaccount.ICCS_Membership_Status__c!='Member';
     }
 
+    /**
+        Returns true if the account meets the conditions to show Upload Bank Mandate section
+    **/
+    public Boolean getShowUploadBankMandate() {
+        return !getShowJoinICCSQuestion() || this.newForm.Airline_wish_to_join_ICCS__c == 'No';
+    }
     /**
         Returns true if the account meets the conditions to show CounterIndemnity section
     **/
@@ -1689,12 +1707,14 @@ global without sharing class ISSP_APProcess {
         if (isBSP) {
             return isGSSAUser==false
                 && strAreaType=='Airline Joining'
+                && accountToShowSections!=null
                 && accountToShowSections.Sector__c=='Airline'
                 && accountToShowSections.BSP_CI_Valid__c==false;
         }
         if (isCASS) {
             return isGSSAUser==false
                 && strAreaType=='Airline Joining'
+                && accountToShowSections!=null
                 && accountToShowSections.Sector__c=='Airline'
                 && accountToShowSections.CASS_CI_Valid__c==false;
         }
@@ -1707,6 +1727,7 @@ global without sharing class ISSP_APProcess {
     public Boolean getShowFormOfConcurrence() {
         return isBSP
             && strAreaType=='Airline Joining'
+            && accountToShowSections!=null
             && accountToShowSections.Sector__c=='Airline'
             && accountToShowSections.BSP_FOC_Valid__c==false
             && accountToShowSections.Membership_status__c!='IATA member';
@@ -1718,6 +1739,7 @@ global without sharing class ISSP_APProcess {
     public Boolean getShowFormOfApplication() {
         return isGSSAUser==false
             && strAreaType=='Airline Joining'
+            && accountToShowSections!=null
             && accountToShowSections.Sector__c=='Airline'
             && accountToShowSections.Membership_status__c!='IATA member';
     }
@@ -1728,6 +1750,7 @@ global without sharing class ISSP_APProcess {
     public Boolean getShowFormOfApplicationAndConcurrence() {
         return isCASS
             && strAreaType=='Airline Joining'
+            && accountToShowSections!=null
             && accountToShowSections.Sector__c=='Airline'
             && accountToShowSections.Membership_status__c!='IATA member';
     }
@@ -1769,9 +1792,14 @@ global without sharing class ISSP_APProcess {
     /**
         Get the document guide record
     **/
-    public Document getDocumentGuide() {
+    public String getDocumentGuide() {
         if (this.strAreaType=='Airline Joining') {
-            return findDocument('Airline_Process_User_Guide');
+            if (isBSP) {
+                return getDocumentUrl('BSP-Guide');
+            }
+            if (isCASS) {
+                return getDocumentUrl('CASS-Guide');
+            }
         }
         return null;
     }
@@ -1779,24 +1807,78 @@ global without sharing class ISSP_APProcess {
     /**
         Get the document CASS Specification
     **/
-    public Document getDocumentCASSSpecification() {
-        return findDocument('CASS_Technical_Specifications_Handbook_pdf');
+    public String getDocumentCASSSpecificationUrl() {
+        return getDocumentUrl('CASS_Technical_Specifications_Handbook');
     }
-    
-    /**
-        Get the document Appendix A
-    **/
-    public Document getDocumentAppendixA() {
-        return findDocument('Appendix_A_Processing_of_test_billing_fils_during_the_joining_process_pdf');
+    public String getDocumentCASSSpecificationName() {
+        return getDocumentName('CASS_Technical_Specifications_Handbook');
     }
 
     /**
-        Find doc by developername
+        Get the document Appendix A
     **/
-    private Document findDocument(String devname) {
+    public String getDocumentAppendixAUrl() {
+        return getDocumentUrl('Appendix_A');
+    }
+    public String getDocumentAppendixAName() {
+        return getDocumentName('Appendix_A');
+    }
+
+    /**
+        Get the document for "Information required to join ICCS" section
+    **/
+    public String getICCSJoiningPackageUrl() {
+        return getDocumentUrl('ICCS_Joining_Package');
+    }
+    public String getICCSJoiningPackageName() {
+        return getDocumentName('ICCS_Joining_Package');
+    }
+
+    /**
+        Get the url to the document specified in CS AP_Country_specs__c
+        It can be a url or a Document Name in a Library (Content Document)
+    **/
+    private static final String INSTANCE_URL = URL.getSalesforceBaseUrl().toExternalForm();
+    private String getDocumentUrl(String countrySpecsName) {
         try {
-            return [SELECT Id, Name FROM Document WHERE DeveloperName = :devname];
-        }catch(Exception e) {
+            AP_Country_specs__c specs = AP_Country_specs__c.getValues(countrySpecsName);
+            System.debug('*** getDocumentUrl AP_Country_specs__c : ' + specs);
+            if (!String.isBlank(specs.Download_URL__c)) {
+                return specs.Download_URL__c;
+            }
+            if (!String.isBlank(specs.Library_Doc_Name__c)) {
+                ContentVersion content = getContentDoc(specs.Library_Doc_Name__c);
+                System.debug('*** getDocumentUrl contentVersion: ' + content);
+                return INSTANCE_URL + '/sfc/servlet.shepherd/version/download/' + content.Id;
+            }
+        } catch(Exception e) {
+            System.debug('*** getDocumentUrl error: ' + e.getMessage());
+        }
+        return null;
+    }
+
+    private String getDocumentName(String countrySpecsName) {
+        try {
+            return AP_Country_specs__c.getValues(countrySpecsName).Link_label__c;
+        } catch(Exception e) {
+            System.debug('*** getDocumentUrlName error: ' + e.getMessage());
+            return '';
+        }
+    }
+
+    /**
+    Get File document object from the library with given name
+    **/
+    private ContentVersion getContentDoc(String name) {
+        try {
+            return [
+                SELECT Id
+                FROM ContentVersion
+                WHERE isLatest = true
+                AND title = :name
+                LIMIT 1];
+        } catch (Exception e) {
+            System.debug('ERROR, document "' + name + '" not found: ' + e.getMessage());
             return null;
         }
     }

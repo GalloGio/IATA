@@ -23,7 +23,7 @@
 
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;
-        <apex:outputLink value="{!URLFOR($Action.Document.Download, DocumentGuide.Id)}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
+        <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
     </apex:outputPanel>
 
      <apex:form id="FinalForm">
@@ -52,15 +52,15 @@
                         </div>
                     </apex:outputText>
 
-                    <apex:pageBlockSectionItem rendered="{!NOT(ISNULL(ICCSProductCountry))}">
+                    <apex:pageBlockSectionItem rendered="{!showJoinICCSQuestion}">
                         <apex:outputLabel value="Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market" styleclass="ap-required"/>
                         <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}" >
                             <apex:actionSupport event="onchange" rerender="mainPanel,buttonSection"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
 
-                    <!-- Without ICCS -->
-                    <apex:outputPanel layout="block" rendered="{!OR(ISNULL(ICCSProductCountry),newForm.Airline_wish_to_join_ICCS__c == 'No')}">
+                    <!-- Upload Bank Mandate section (Without ICCS) -->
+                    <apex:outputPanel layout="block" rendered="{!showUploadBankMandate}">
                         <p>
                             <b>Please download the Bank Mandate form using the link below:</b>
                             <div id="bankmandatelink_p">
@@ -82,35 +82,53 @@
                                 </apex:repeat>
                             </ul>
                         </apex:outputPanel>
+                        <apex:iframe scrolling="false" height="180px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription=Please upload the completed Bank Mandates.&reqIdentifier=Bank_Mandate&onlyOne=true"/>
                     </apex:outputPanel>
+
                 </apex:pageBlockSection>
 
                 <!-- With ICCS and is not a Member -->
-                <apex:pageBlockSection title="Information required to join ICCS" columns="1"
-                    rendered="{!showJoinICCS}">
-                    Scenario D<br/>
-                    <a href="#" style="text-decoration: underline">Download a file</a><br/>
-                    
-                    <apex:iframe scrolling="false" height="160px"
-                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Information required to join ICCS&reqDescription=&reqIdentifier=ICCS_Join&onlyOne=true"/>
+                <apex:pageBlockSection title="Information required to join ICCS" columns="1" rendered="{!showJoinICCS}">
+                    <p>
+                        Thank you for your interest in IATA’s ICCS services.<br/>
+                        As per our records your company is not active member of ICCS; in order to activate your application with ICCS, please complete the package in the link below:
+                        <apex:outputPanel layout="block" rendered="{!ICCSJoiningPackageUrl!=null}">
+                            <apex:outputLink value="{!ICCSJoiningPackageUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ICCSJoiningPackageName}</apex:outputLink>
+                        </apex:outputPanel>
+                        Please download, complete and upload a scanned version of the documents mentioned. All documents should be uploaded together in a .zip folder
+                        Due diligence:
+                        <ul>
+                            <li>Form A &amp; K</li>
+                            <li>Other additional documents as explain in the Antimoney Laundering Instructions (AML) document </li>
+                        </ul>
+                        Membership documents:
+                        <ul>
+                            <li>ICCS agreement (signatory should be done  by an authorized Head Office officer(s) of  your company)</li>
+                            <li>FDS Authorized Signatories Package 2019 (and the supporting documents, mentioned in the Guide tab)</li>
+                            <li>At least one ICCS Bank Account Details</li>
+                            <li>ICCS Joining for all Countries, to activate this operation</li>
+                        </ul>
+                        Once validated by us, you will be requested to send the originals to our office at the following address:<br/>
+                        <b>Paseo de la Castellana, 95</b><br/>
+                        <b>28046 Madrid</b><br/>
+                        <b>Spain </b><br/>
+                        <b>Attn: Participation department </b><br/>
+                        <b>IATA Global Delivery Center (GDC)</b><br/>
+                    </p>
+
+                    <apex:iframe scrolling="true" height="190px"
+                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Information required to join ICCS&reqDescription=&reqIdentifier=ICCS_Join&onlyOne=false"/>
                 </apex:pageBlockSection>
 
                 <!-- With ICCS and is Member -->
-                <apex:pageBlockSection title="Information required to join ICCS in this market" columns="1"
-                    rendered="{!newForm.Airline_wish_to_join_ICCS__c=='Yes'}">
+                <apex:pageBlockSection title="Information required to join ICCS in this market" columns="1" rendered="{!newForm.Airline_wish_to_join_ICCS__c=='Yes'}">
                     Scenario C<br/>
                     information required to join ICCS in this market. <br/>
                     <a href="#" style="text-decoration: underline">Download a file</a><br/>
 
                     <apex:iframe scrolling="false" height="160px"
                         src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market&onlyOne=true"/>
-                </apex:pageBlockSection>
-
-                <apex:pageBlockSection title="Upload Bank Mandate" columns="1"
-                        rendered="{!newForm.Airline_wish_to_join_ICCS__c=='No'}">
-                    Please upload the completed Bank Mandates.
-                    <apex:iframe scrolling="false" height="160px"
-                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription=&reqIdentifier=Bank_Mandate&onlyOne=true"/>
                 </apex:pageBlockSection>
 
                 <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='IL',apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}">
@@ -224,52 +242,38 @@
                     </div>
                 </apex:pageBlockSection>
 
-                <!-- Counter Indemnity Agreement -->
-                <apex:pageBlockSection title="Counter Indemnity Agreement" columns="1"
-                    rendered="{!ShowCounterIndemnity}">
+                <!-- Agreements BSP -->
+                <apex:pageBlockSection title="Agreements BSP" columns="1" rendered="{!isBSP && OR(ShowCounterIndemnity,ShowFormOfConcurrence,ShowFormOfApplication)}">
                     <div class="aplabel">
                         <p>
-                            According to our records, your airline needs to provide a counter indemnity agreement in order to join this operation. Please sondlowad in the download it in the following link and attach an escaned copy using the button below
+                            IATA currently does not hold any valid agreement(s) for your airline. All participants must sign these agreements as condition to join CASS as per resolution 850.<br/>
+                            Agreements must be signed at the Airline's Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document will be signed by any other authorized signatory as per Power of attorney (POA), please provide the POA copy.<br/>
+                            <br/>
+                            Please download, complete and upload the resolution agreement(s) as a scanned document(s).<br/>
                         </p>
                     </div>
-                    <p>
-                        <a href="#" style="text-decoration: underline;">Counter indemnity agreement</a>
-                    </p>
-                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=Please upload the completed Bank Mandates&reqIdentifier=CounterIndemnityAgreement" height="180px" width="100%" scrolling="false"/>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=This agreement must be signed once for all BSPs by IATA and Non-IATA Members&reqIdentifier=CounterIndemnityAgreement&onlyOne=true"
+                        height="190px" width="100%" scrolling="false" rendered="{!ShowCounterIndemnity}"/>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName=Form of Concurrence&reqDescription=This agreement must be signed once for all BSPs only by Non- IATA Members&reqIdentifier=FormOfAuthorization&onlyOne=true"
+                        height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfConcurrence}"/>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=6&reqRequired=Mandatory&reqName=Form of Application&reqDescription=This agreement must be signed per each BSP only by Non-IATA Members&reqIdentifier=FormOfApplication&onlyOne=true"
+                        height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfApplication}"/>
                 </apex:pageBlockSection>
 
-                <!-- Form of Concurrence -->
-                <apex:pageBlockSection title="Form of Concurrence" columns="1"
-                    rendered="{!ShowFormOfConcurrence}">
+                <!-- Agreements CASS -->
+                <apex:pageBlockSection title="Agreements CASS" columns="1" rendered="{!isCASS && OR(ShowCounterIndemnity,ShowFormOfApplicationAndConcurrence)}">
                     <div class="aplabel">
                         <p>
-                            According to our records, your airline needs to provide a form of Concurrence document signed. This document needs to be provided only once. Please download using the following link and attach an escaned copy using the button below. The hard copy must be send to the address below.
+                            IATA currently does not hold any valid agreement(s) for your airline. All participants must sign these agreements as condition to join CASS as per resolution 851.<br/>
+                            Agreements must be signed at the Airline's Head Office, by the Chief Executive Officer, Chief Financial Officer, Director General. If the document will be signed by any other authorized signatory as per Power of attorney (POA), please provide the POA copy.<br/>
+                            <br/>
+                            Please download, complete and upload the resolution agreement(s) as a scanned document(s).<br/>
                         </p>
                     </div>
-                    <p>
-                        <a href="#" style="text-decoration: underline;">Form of Concurrence</a>
-                    </p>
-                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName=Form of Concurrence&reqDescription=&reqIdentifier=FormOfAuthorization" height="180px" width="100%" scrolling="false"/>
-                </apex:pageBlockSection>
-
-                <!-- Form Of Application -->
-                <apex:pageBlockSection title="Form of Application" columns="1" rendered="{!ShowFormOfApplication}">
-                    <div class="aplabel">
-                        <p>
-                            Text to be defined
-                        </p>
-                    </div>
-                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=6&reqRequired=Mandatory&reqName=Form of Application&reqDescription=&reqIdentifier=FormOfApplication" height="180px" width="100%" scrolling="false"/>
-                </apex:pageBlockSection>
-
-                <!-- Form Of Application and Concurrence -->
-                <apex:pageBlockSection title="Form of Application and Concurrence" columns="1" rendered="{!ShowFormOfApplicationAndConcurrence}">
-                    <div class="aplabel">
-                        <p>
-                            Text to be defined
-                        </p>
-                    </div>
-                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName=Form of Application and Concurrence&reqDescription=&reqIdentifier=FormOfApplicationAndConcurrence" height="180px" width="100%" scrolling="false"/>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=This agreement must be signed once for all CASS by IATA and Non-IATA Members&reqIdentifier=CounterIndemnityAgreement&onlyOne=true"
+                        height="190px" width="100%" scrolling="false" rendered="{!ShowCounterIndemnity}"/>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName=Form of Application and Concurrence&reqDescription=This agreement must be signed per each CASS only by Non-IATA Members&reqIdentifier=FormOfApplicationAndConcurrence&onlyOne=true"
+                        height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfApplicationAndConcurrence}"/>
                 </apex:pageBlockSection>
 
             </apex:outputPanel>
