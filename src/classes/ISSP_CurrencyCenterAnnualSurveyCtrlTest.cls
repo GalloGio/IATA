@@ -235,6 +235,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					Currency_Center_Survey__C typeOperation = createTypeOperation(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert typeOperation;
 
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
+
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
 					annualSurvey.loadAll();
@@ -291,6 +293,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					Currency_Center_Survey__C typeOperation = createTypeOperation(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert typeOperation;
 
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
+
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
 					annualSurvey.loadAll();
@@ -342,6 +346,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 																				Currency_Exchange_Rate__c = 2,
 																				CurrencyIsoCode = 'EUR');
 					insert countryProfile;
+
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName=France'));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -395,6 +401,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					Currency_Center_Survey__C typeOperation = createTypeOperation(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert typeOperation;
 
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
+
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName='+country.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
 					annualSurvey.loadAll();
@@ -434,6 +442,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					//insert the bank survey
 					Currency_Center_Survey__C bank = createBank(reportType.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert bank;
+
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'indexBankPanel='+1+'&&'+'countryName='+country.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -475,6 +485,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					//insert the type of Operation survey
 					Currency_Center_Survey__C typeOperation = createTypeOperation(reportType.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert typeOperation;
+
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'indexTypeOperationsPanel='+1+'&&'+'countryName='+country.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -522,6 +534,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					Currency_Center_Survey__C typeOperation = createTypeOperation(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert typeOperation;
 
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
+
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'indexCountryCommentsPanel='+1+'&&'+'countryName='+country.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
 					annualSurvey.loadAll();
@@ -559,6 +573,7 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					Currency_Center_Survey__C reportType = createReportType(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert reportType;
 
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName='+country.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -596,6 +611,7 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					Currency_Center_Survey__C reportType = createReportType(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert reportType;
 
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName='+country.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -633,6 +649,7 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					Currency_Center_Survey__C reportType = createReportType(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert reportType;
 
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName='+country.Country_Name__c+'&&'+'indexCountryCommentsPanel='+2));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -716,6 +733,7 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 			    																			Bank__c = bank.Id);
 					insert bankRecord;
 
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName='+countryRecord.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -758,6 +776,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					//insert the type of Operation survey
 					Currency_Center_Survey__C typeOperation = createTypeOperation(reportType.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert typeOperation;
+
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName='+country.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -814,6 +834,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					//insert the type of Operation survey
 					Currency_Center_Survey__C typeOperation = createTypeOperation(reportType.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert typeOperation;
+
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName='+country.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
@@ -875,6 +897,8 @@ public class ISSP_CurrencyCenterAnnualSurveyCtrlTest {
 					Currency_Center_Survey__C reportType = createReportType(countryRecord.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					System.debug('Anydatatype_msg reportType ' + reportType);
 					insert reportType;
+
+					IATAIsoCountryDAO.resetMapIataIsoCountry();
 
 					Test.setCurrentPageReference(new PageReference('https://ccf2-customer-portal-iata.cs106.force.com/ISSP_CurrencyCenterAnnualSurvey?id='+parent.Id+'&&'+'countryName='+countryRecord.Country_Name__c));
 					ISSP_CurrencyCenterAnnualSurveyCtrl annualSurvey = new ISSP_CurrencyCenterAnnualSurveyCtrl();
