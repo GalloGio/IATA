@@ -3072,6 +3072,11 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
                 //ACAMBAS - NEWGEN-4784 - End
+
+                if(oscar.Process__c == AMS_Utils.NEWHESTANDARD && oscar.ANG_Change_Entity_Location__c && oscar.Change_of_Entity_Location_within_EU__c){
+                    oscar.addError(ANG_OscarProcessHelper.NEW_HE_CHANGE_ENTITY_LOCATION_ERROR_MSG);
+                }
+
             }
         }
     }

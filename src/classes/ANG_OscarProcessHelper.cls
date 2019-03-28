@@ -4,6 +4,7 @@ global class ANG_OscarProcessHelper {
 	public static final Set<String> SanityCheckVerificationProcesses = new Set <String>{AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE};
 
 	public static final String ANG_PCI_RENEWAL = 'ANG_PCI_RENEWAL'; //email template id name for pci automatic renewal
+    public static final String NEW_HE_CHANGE_ENTITY_LOCATION_ERROR_MSG = 'The \'Change of Entity Location\' and \'Change of Entity Location within EU\' fields cannot be checked at the same time.';
 
 	/* EasyPay Service Providers */
 	public static final Set<String> MODEL_A_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)'};
