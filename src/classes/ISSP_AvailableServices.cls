@@ -2,8 +2,8 @@ public with sharing class ISSP_AvailableServices{
 
     public string selectedList {get;set;}
     public List<ServiceWrapper> ServiceList;
-    public map<string,ISSPServiceListView__c> ServiceListViewMap {get;set;} 
-    public list<string> ListViewNameList {get;set;}
+    public Map<String,ISSPServiceListView__c> ServiceListViewMap {get;set;} 
+    public List<String> ListViewNameList {get;set;}
     
     private String sortDirection = 'ASC';
     private String sortExp  = 'CreatedDate'; 
@@ -13,8 +13,7 @@ public with sharing class ISSP_AvailableServices{
 
     public String conId {get; set;}
     public String conHOAccountLocType {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
-    public Boolean isIEPAccountEnable {get;set;} //FM 17-03-2017 - check if IEC Account is available for User to request Access  
-    //public String isIEPAccountEnableMsg {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    public Boolean isIEPAccountEnable {get;set;} //FM 17-03-2017 - check if IEC Account is available for User to request Access    
     public String modalErrorMessage {get; set;}
     public Boolean isModalErrorMessageEnable {get;set;}
     
@@ -24,7 +23,7 @@ public with sharing class ISSP_AvailableServices{
     public Boolean hasPremiumTD {get; set;}
 
     public String TOCdocumentId {get; set;}
-    public list<String> errorMessage {get; set;}
+    public List<String> errorMessage {get; set;}
     public boolean accept {get; set;}
     public boolean pollerOn {get; set;}
     public Map<String, String> iepRoles {get; set;}
@@ -48,10 +47,10 @@ public with sharing class ISSP_AvailableServices{
             }
             return currentPortalUser;
         } 
-        set;}
+        set;
+    }
     
-    public String defaultPortalUserRole {get; set;}    
-
+    public String defaultPortalUserRole {get; set;}
     public String IepStatus {get; set;}
 
     public class SelectOption2 {
@@ -70,10 +69,7 @@ public with sharing class ISSP_AvailableServices{
 
     public List<SelectOption2> availablePortalServiceRoles {
         get{
-
-
             Map<String, Map<Decimal, String>> orderRoles = new Map<String, Map<Decimal, String>>();
-
 
             availableRoles = new Map<String,List<String>>();
 
@@ -103,17 +99,13 @@ public with sharing class ISSP_AvailableServices{
             Set<String> availableRolesSet = new Set<String>();
 
             for(String roleConnApp: availableRolesLst){
-
                 if(roleConnApp == this.Serv.recordService.Name){
-
                     for(String roleStr : availableRoles.get(roleConnApp)){
                         availableRolesSet.add(roleStr);
-                        //availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
                     }
                 }
             }
             
-
             if(orderRoles.containsKey(this.Serv.recordService.Name)) {
 
                 availablePortalServiceRolesAux = new List<SelectOption2>();
@@ -125,46 +117,40 @@ public with sharing class ISSP_AvailableServices{
                 orders.sort();
 
                 for(Decimal o : orders) {
-
                     String roleStr = rolesOrderToApply.get(o);
 
                     if(availableRolesSet.contains(roleStr)) {
                         availablePortalServiceRolesAux.add(new SelectOption2(roleStr, roleStr, this.helpTextPortalRoles.get(roleStr)));
-
                     }
                 }
-
-                availablePortalServiceRoles = availablePortalServiceRolesAux;
-
-            } else {
-                availablePortalServiceRoles = availablePortalServiceRolesAux;
             }
+            
+            availablePortalServiceRoles = availablePortalServiceRolesAux;
 
             return availablePortalServiceRoles;
-
-        } set;}    
+        } 
+        set;
+    }    
 
     public List<SelectOption> iccsAvailablePortalServiceRoles {get; set;}
 
     public String sortExpression {
-     get { return sortExp; }
-     set {
+        get { return sortExp; }
+        set {
         
-       //if the column is clicked on then switch between Ascending and Descending modes
-       if (value == sortExp || (value == 'Name' && sortExp == 'Name') || (value == 'Name' && sortExp == 'Name')){
-        system.debug('CHANGING FROM: ' + sortDirection);
-         sortDirection = (sortDirection == 'ASC')? 'DESC' : 'ASC';
-        system.debug('CHANGING TO: ' + sortDirection);
-       }
-       else{
-         sortDirection = 'ASC';
-         system.debug('NOT CHANGING');
-       }
-       if (value != 'Description__c')
-        sortExp = value;
-       else
-        sortExp = 'Name';
-     }
+            //if the column is clicked on then switch between Ascending and Descending modes
+            if (value == sortExp || (value == 'Name' && sortExp == 'Name') || (value == 'Name' && sortExp == 'Name')){
+                sortDirection = (sortDirection == 'ASC')? 'DESC' : 'ASC';
+
+            } else {
+                sortDirection = 'ASC';
+            }
+           
+            if (value != 'Description__c')
+                sortExp = value;
+            else
+                sortExp = 'Name';
+        }
     }
 
     public String getSortDirection() {
@@ -180,7 +166,6 @@ public with sharing class ISSP_AvailableServices{
     }    
     
     public ISSP_AvailableServices(){
-
         this.isModalErrorMessageEnable = false;
 
         this.helpTextPortalRoles = new Map<String, String>();
@@ -196,7 +181,6 @@ public with sharing class ISSP_AvailableServices{
 					if(helpText == 'NONE') helpText = '';
 
 					this.helpTextPortalRoles.put(role.Role__c, helpText);
-
 				}
 			}
         }
@@ -247,6 +231,7 @@ public with sharing class ISSP_AvailableServices{
         if(labelName != null && labelName != '') {
             Component.Apex.OutputText output = new Component.Apex.OutputText();
             output.expressions.value = '{!$Label.' + labelName + '}';
+            
             return string.valueOf(output.value);
         } else {
             return labelName;
@@ -267,8 +252,6 @@ public with sharing class ISSP_AvailableServices{
             accept = false;
 
             this.isAdmin = isPortalAdminUser();
-            system.debug('isAdmin: ' +  this.isAdmin);
-
 
             if(!Test.isRunningTest()) {
                 conId = currentPortalUser.ContactId;
@@ -279,16 +262,11 @@ public with sharing class ISSP_AvailableServices{
             //FM 17-03-2017 - Logic for Authorised Signatory 
             //NOTE - Base any logic on the Portal Admin for now (User Portal Status=Approved Admin) since Authorised Signatories are not yet identified in SFDC
             //TODO - Remove above note once  Authorised Signatory code implemented
-            System.debug('[FM] initialization conId - '+ conId);
 
-            //
             // Get the contact's data.
-            //
             Contact contAcc = AMS_Utils.getIEPContact(conId);
 
             this.isAuthorisedSignatory = (isAdmin && contAcc.Authorized_Signatory__c);                
-            
-            System.debug('[FM] initialization contAcc - '+ contAcc);
 
             conHOAccountLocType = '';
             isIEPAccountEnable = false;
@@ -369,14 +347,14 @@ public with sharing class ISSP_AvailableServices{
         get {
             if(null == csServiceListViews)
                 csServiceListViews = ISSPServiceListView__c.getAll().values();
-            system.debug('ISSPServiceListView__c: ' + csServiceListViews);
+
             return csServiceListViews;
         } 
         set; 
     }
     private PermissionSetFilter     thePermissionSetFilter { get; set; }
-    private ProfilePermissionFilter theProfilePermissionFilter { get; set; }   
-    //todo
+    private ProfilePermissionFilter theProfilePermissionFilter { get; set; }
+
     private void initFilters() {
         set<String> permissionSetIDs = new Set<String>(); 
         for(ISSPServiceListView__c ServiceListViewItem : csServiceListViews){
@@ -391,7 +369,7 @@ public with sharing class ISSP_AvailableServices{
         theProfilePermissionFilter = new ProfilePermissionFilter(); 
         thePermissionSetFilter = new PermissionSetFilter(permissionSetIDs);
     }
-    //todo 
+
     private void initServiceListViewMap() {
         ListViewNameList = new list<string>();
         ServiceListViewMap = new map<string,ISSPServiceListView__c>();
@@ -399,76 +377,40 @@ public with sharing class ISSP_AvailableServices{
             
             Boolean resultPermission1 = true; 
             if(!theProfilePermissionFilter.isDataEmpty(ServiceListViewItem)){
-                system.debug('not profile data empty');
                 resultPermission1 = theProfilePermissionFilter.isUserPermittedFor(ServiceListViewItem);
-            }
-            else{
-                system.debug('profile data empty');
             }
              
             Boolean resultPermission2 = true; 
             if(!thePermissionSetFilter.isDataEmpty(ServiceListViewItem)){
-                system.debug('not permission data empty');
                 resultPermission2 = thePermissionSetFilter.isUserPermittedFor(ServiceListViewItem);
-            }
-            else{
-                system.debug('permission data empty');
-            }
-            //resultPermission1 && resultPermission2    
-            if(true) {
-                ServiceListViewMap.put(ServiceListViewItem.Name,ServiceListViewItem);
-                ListViewNameList.add(ServiceListViewItem.Name);
-            }
+            }  
             
-            system.debug('resultPermission1: ' + resultPermission1);
-            system.debug('resultPermission2: ' + resultPermission2);
-            
+            ServiceListViewMap.put(ServiceListViewItem.Name,ServiceListViewItem);
+            ListViewNameList.add(ServiceListViewItem.Name);   
         }
+        
         ListViewNameList.sort();
         if(ListViewNameList.size()>0)
             selectedList = ListViewNameList.get(0);
         string ListViewName = ApexPages.currentPage().getParameters().get('ListViewName');
         if( ListViewName!=null && ServiceListViewMap.containsKey(ListViewName))
             selectedList = ListViewName;
-            
-        system.debug('ServiceListViewMap start: ' + ServiceListViewMap);
-        system.debug('selectedList start: ' + selectedList);
-        /*
-        if(String.isNotBlank(selectedList)){
-            
-        }
-        */
     }
     
     public List<Schema.FieldSetMember> getFields() {
-        system.debug('selectedList rrr1: ' + selectedList);
-        system.debug('ServiceListViewMap.get(selectedList).Field_Set_API_Name__c rrr1: ' + ServiceListViewMap.get(selectedList).Field_Set_API_Name__c);
-        system.debug('final rrr1: ' + sObjectType.Portal_Applications__c.FieldSets.getMap().get(ServiceListViewMap.get(selectedList).Field_Set_API_Name__c).getFields());
-       return selectedList==null||selectedList==''?
+        return selectedList==null||selectedList==''?
             new list<Schema.FieldSetMember>():
             sObjectType.Portal_Applications__c.FieldSets.getMap().get(ServiceListViewMap.get(selectedList).Field_Set_API_Name__c).getFields();
     }
     
     public Pagereference refresh(){ 
-        //system.debug('selectedList: ' + selectedList);
-        /*
-        if(String.isNotBlank(selectedList)){
-
-        }
-        */
         setCon = null;
         return null; 
     }
     public string getQueryConditions() {
-        
-        //string t =  selectedList==null||selectedList=='' ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
-        system.debug('ServiceListViewMap>>> ' + ServiceListViewMap);
-        //String queryConditions =  String.isBlank(selectedList) ? '' : ServiceListViewMap.get(selectedList).SOQL_Filter__c;
-        //if (selectedList == null) selectedList = '';
         if(ServiceListViewMap.isEmpty())
             return 'WHERE ID = NULL';
         
-        system.debug('selectedList: ' + selectedList);
         String queryConditions;
         if(String.isNotBlank(selectedList)){
             queryConditions = ServiceListViewMap.get(selectedList).SOQL_Filter__c;
@@ -476,8 +418,6 @@ public with sharing class ISSP_AvailableServices{
             
         return String.isNotBlank(queryConditions) ? queryConditions : ''; 
     }
-    
-    ////////////////////////////////
     
     Public Integer noOfRecords{get; set;}
     Public Integer size{get;set;}
@@ -489,8 +429,7 @@ public with sharing class ISSP_AvailableServices{
                     sortFullExp = 'Name'  + ' ' + sortDirection;
                 else
                     sortFullExp = sortExpression  + ' ' + sortDirection;
-                system.debug('ORDERING BY: ' + sortExpression);
-                system.debug('ORDERING LIKE: ' + sortDirection);
+
                 size = 10;
 
                 String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
@@ -562,7 +501,6 @@ public with sharing class ISSP_AvailableServices{
         }
 
         public string getServiceStatus(Portal_Applications__c inService){
-            
             List<Portal_Application_Right__c> appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.PortalServiceTranslatedName__c ,p.Portal_Application__r.Description__c,
                                                                                                     p.Portal_Application__r.Requestable__c,
                                                                                                     p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
@@ -579,41 +517,36 @@ public with sharing class ISSP_AvailableServices{
             if(appsGrantedList != null && appsGrantedList.size() > 0){
                 //MConde
                 if(appsGrantedList[0].Right__c != null && appsGrantedList[0].Technical_Provisioning_Status__c != null) {
-
                     if(appsGrantedList[0].Right__c.equals('Access Granted') && appsGrantedList[0].Technical_Provisioning_Status__c.equals('IATA Access Granted') && appsGrantedList[0].IsSCIMIFG__c == true){
                         return 'Access Under Provisioning';
                     }
-
                 }
                 return appsGrantedList[0].Right__c;
             }else{
-                return null ;
+                return null;
             }
         }
     }
-
-     
     
-    public List<ServiceWrapper > getServiceList(){
+    public List<ServiceWrapper> getServiceList(){
         hasPremiumTD = false;
         List<ServiceWrapper > allServiceList =  new List<ServiceWrapper>();   
-        List<Portal_Applications__c > allServices = (List<Portal_Applications__c >)setCon.getRecords();
+        List<Portal_Applications__c> allServices = (List<Portal_Applications__c>)setCon.getRecords();
 
         for (Portal_Applications__c thisService : allServices){
             ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService, IepStatus, isAdmin, isAuthorisedSignatory);
             allServiceList.add(thisServiceRecord);
         }
         
-        //TF
-        //system.debug(LoggingLevel.ERROR, '--CON ID: ' + conId);
-        List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
+        List<Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
                                                         Portal_Application__r.Name,
                                                         Portal_Application__r.ServiceName__c,   
                                                         Portal_Application__r.Service_Description__c,
                                                         Portal_Application__r.Service_Description_Label__c
                                                         FROM Portal_Application_Right__c
                                                         WHERE Contact__c = :conId
-                                                        AND Right__c = 'Access Granted'];
+                                                        AND Right__c = 'Access Granted'
+                                                        AND Portal_Application__r.Hide_on_Homepage__c = false];
 
 
         if (!appRightList.isEmpty()){
@@ -621,18 +554,14 @@ public with sharing class ISSP_AvailableServices{
             Set<Id> newAppIds = new Set<Id>();
             for (Portal_Applications__c thisApp : allServices){
                 if (!appIds.contains(thisApp.Id)){
-                    system.debug('ADDING: ' + thisApp.Name);
                     appIds.add(thisApp.Id);
                 }
             }
             for (Portal_Application_Right__c thisAppRight : appRightList){
-                system.debug('THIS APP: ' + thisAppRight.Portal_Application__r.Name);
                 if (thisAppRight.Portal_Application__r.Name == 'Treasury Dashboard - Premium'){
                     hasPremiumTD = true;
-                    system.debug('HAS PREMIUM');
                 }
                 if (!appIds.contains(thisAppRight.Portal_Application__c)){
-                    system.debug('ADDING SECOND: ' + thisAppRight.Portal_Application__r.Name);
                     newAppIds.add(thisAppRight.Portal_Application__c);
                 }
             }
@@ -652,9 +581,7 @@ public with sharing class ISSP_AvailableServices{
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){
                     for (Portal_Applications__c thisApp : appList){
-                        system.debug('FOUND: ' + thisApp.Name);
                         if (!appIds.contains(thisApp.Id)){
-                            system.debug('ADDING FINAL: ' + thisApp.Name);
                             ServiceWrapper thisServiceRecord = new ServiceWrapper (thisApp, IepStatus, isAdmin, isAuthorisedSignatory);
                             allServiceList.add(thisServiceRecord);
                         }
@@ -663,7 +590,6 @@ public with sharing class ISSP_AvailableServices{
             }
         }
 
-        system.debug('hasPremiumTD: ' + hasPremiumTD);
         if (hasPremiumTD){
             integer i = 0;
             integer j = -1;
@@ -674,7 +600,6 @@ public with sharing class ISSP_AvailableServices{
                 i++;
             }
             if (j > -1){
-                system.debug('removing service');
                 allServiceList.remove(j);
             }
         }
@@ -684,22 +609,21 @@ public with sharing class ISSP_AvailableServices{
         return allServiceList;
     }
      
-    public List<Portal_Applications__c > getServices(){
-        return (List<Portal_Applications__c >)setCon.getRecords();
+    public List<Portal_Applications__c> getServices(){
+        return (List<Portal_Applications__c>)setCon.getRecords();
     }
-    //AEF:
-    public static set<String> getPermissionSetForUserSet(set<String> permissionSetIDs, ID userId) {
-        set<String> permissionSetForUserSet = new Set<String>();
-        for(PermissionSet onePermissionSet :  getPermissionSetById(permissionSetIDs, userId)) {
+
+    public static Set<String> getPermissionSetForUserSet(Set<String> permissionSetIDs, ID userId) {
+        Set<String> permissionSetForUserSet = new Set<String>();
+        for(PermissionSet onePermissionSet: getPermissionSetById(permissionSetIDs, userId)) {
             if(ISSP_Utilities.isNotEmpty(onePermissionSet.Assignments)) {
                 permissionSetForUserSet.add(onePermissionSet.Id);
             }
         }
         return permissionSetForUserSet;
-                
     }  
     
-    public static list<PermissionSet> getPermissionSetById(set<String> permissionSetIDs, ID userId) {
+    public static List<PermissionSet> getPermissionSetById(set<String> permissionSetIDs, ID userId) {
         return 
             [SELECT Id
                   ,(SELECT Id, PermissionSetId, AssigneeId 
@@ -710,7 +634,6 @@ public with sharing class ISSP_AvailableServices{
     } 
     
     public interface IPermissionFilter {
-        
         Boolean isUserPermittedFor(object oneData);
         Boolean isDataEmpty(object oneData);
     }
@@ -722,14 +645,10 @@ public with sharing class ISSP_AvailableServices{
         }
         
         public Boolean isUserPermittedFor(object oneData) {
-            //ISSPContactListView__c contactListViewItem = (ISSPContactListView__c)oneData;
-            //return String.isBlank(contactListViewItem.Profiles_Id__c);
             Boolean isUserPermitted = false;
             ISSPServiceListView__c ServiceListViewItem = (ISSPServiceListView__c)oneData;
             list<String> profileIds = ServiceListViewItem.Profiles_Id__c.split(';');
-            system.debug('MY PROFILE: ' + profileId15);
             for(String profileId : profileIds) {
-                system.debug('THIS PROFILE: ' + profileId);
                 if(profileId15 == profileId) {
                     return true; 
                 }
@@ -740,13 +659,10 @@ public with sharing class ISSP_AvailableServices{
         public Boolean isDataEmpty(object oneData) {
             ISSPServiceListView__c ServiceListViewItem = (ISSPServiceListView__c)oneData;
             return String.isBlank(ServiceListViewItem.Profiles_Id__c);
-            //Set<string> profilesIdSet = new Set<string>(ServiceListViewItem.Profiles_Id__c.split(';'));
-            //return profilesIdSet.contains(profileId15);
         }
-        
     }
     
-    public class  PermissionSetFilter implements IPermissionFilter {
+    public class PermissionSetFilter implements IPermissionFilter {
         private Set<String> permissionSetForUserSet; 
         public PermissionSetFilter(set<String> permissionSetIDs) {
             permissionSetForUserSet = getPermissionSetForUserSet(permissionSetIDs, UserInfo.getUserId()); 
@@ -771,13 +687,9 @@ public with sharing class ISSP_AvailableServices{
     }
     
     public PageReference doRequest() {
-
-        system.debug('XXX START doRequest : ');
         String Servid = Apexpages.currentPage().getParameters().get('servId');
-        system.debug('XXX Servid : '+Servid);
 
         List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Application_URL__c, Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c,Cannot_be_managed_by_portal_admin__c from Portal_Applications__c where Id =: Servid ]);
-        system.debug('XXX Servicetmp_List : '+Servicetmp_List);
         Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin, isAuthorisedSignatory);
 
         List<UserProvisioningRequest> uprFailed = [Select id From UserProvisioningRequest where SalesforceUserId =: currentPortalUser.id And State = 'Failed'];
@@ -785,8 +697,6 @@ public with sharing class ISSP_AvailableServices{
         this.failedCount = uprFailed.size();
 
         this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole && !isModalErrorMessageEnable);
-
-        system.debug('XXX Serv : '+Serv);
 
         //since you have the serv available ...
 
@@ -801,7 +711,6 @@ public with sharing class ISSP_AvailableServices{
         if(!accept){
             errorMessage.add('Please accept the Terms & Conditions');
         }
-       
     }
 
     @RemoteAction
@@ -860,11 +769,9 @@ public with sharing class ISSP_AvailableServices{
                 app.ANG_Portal_Service_Role__c = portalServiceRole;                    
             }
         }
-        System.debug('-->Insert');
         insert app;
 
 		if(applicationName == ISSP_ICCS_Utils.ICCS_PORTAL_APPLICATION_NAME){
-        	System.debug('sending notification');
 			Portal_Application_Right__c appForNotification = [select Id, Top_Account__c, Contact__r.FirstName, Contact__r.LastName, ANG_Portal_Service_Role__c from Portal_Application_Right__c where id =: app.Id];
 			ISSP_ICCS_Utils.requestRole(appForNotification, portalServiceRole, true);
         }
@@ -880,11 +787,8 @@ public with sharing class ISSP_AvailableServices{
             req1.setObjectId(objectId);
             req1.setSubmitterId(UserInfo.getUserId());
             Approval.ProcessResult result = Approval.process(req1);
-            System.debug('SUCESS, approval process submitted ' + result);
 
-        } catch (Exception e) {
-            System.debug('ERROR Approval Process: ' + e.getMessage());
-        }
+        } catch (Exception e) { System.debug('ERROR Approval Process: ' + e.getMessage()); }
     }
 
     public PageReference setPollerOff() {
@@ -893,7 +797,6 @@ public with sharing class ISSP_AvailableServices{
     }
 
     public PageReference iepPermissionSetPoller() {
-
         String permSetSSO = this.iepRoles.get(this.Serv.recordService.Name + ' - ' + this.defaultPortalUserRole);
 
         List<PermissionSetAssignment> l = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSetId in (select id from PermissionSet Where name =: permSetSSO)];
