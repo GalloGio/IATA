@@ -117,10 +117,6 @@
         <formula>Case.Outstanding_Amount__c</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>ParentId</field>
-        <formula>Case.Parent.Id</formula>
-    </fieldOverrides>
-    <fieldOverrides>
         <field>Payment_Confirm_by_R_S__c</field>
         <formula>TEXT( Case.Payment_Confirm_by_R_S__c  )</formula>
     </fieldOverrides>
@@ -344,7 +340,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>IATAcode__c</field>
-                <uiBehavior>Required</uiBehavior>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>

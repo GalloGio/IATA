@@ -149,10 +149,6 @@
         <formula>TEXT(Case.Origin)</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>ParentId</field>
-        <formula>Case.Parent.Id</formula>
-    </fieldOverrides>
-    <fieldOverrides>
         <field>Payment_Date__c</field>
         <formula>Case.Payment_Date__c</formula>
     </fieldOverrides>
@@ -545,6 +541,6 @@
     <successMessage>Case Created</successMessage>
     <targetObject>Case</targetObject>
     <targetParentField>Parent</targetParentField>
-    <targetRecordType>Case.CS_Process_IDFS_ISS</targetRecordType>
+    <targetRecordType>Case.Invoicing_Collection_Cases</targetRecordType>
     <type>Create</type>
 </QuickAction>

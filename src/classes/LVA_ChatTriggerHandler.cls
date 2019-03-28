@@ -1,4 +1,4 @@
-public with sharing class LVA_ChatTriggerHandler {
+public without sharing class LVA_ChatTriggerHandler {
     public List<LiveChatTranscript> triggerNew = (List<LiveChatTranscript>) Trigger.new;
     public List<LiveChatTranscript> triggerOld = (List<LiveChatTranscript>) Trigger.old;
     
@@ -13,7 +13,8 @@ public with sharing class LVA_ChatTriggerHandler {
     // ************************************************************
     
     public void onBeforeInsert(){
-        CreateCaseForLiveChat();
+        //workaround no longer needed
+       // CreateCaseForLiveChat();
     }
     
     public void onAfterInsert(){
@@ -33,7 +34,8 @@ public with sharing class LVA_ChatTriggerHandler {
     // ************************************************************
     
     public void CreateCaseForLiveChat(){
-        Date mydate = Date.today();
+        //Workaround for salesforce issue on creating cases from the deploymetn API
+       /* Date mydate = Date.today();
         Map<Id, Case> mapCases = new Map<Id,Case>();
         List<Case> lstCases = new List<Case>();
         for(LiveChatTranscript lct : triggerNew){
@@ -48,8 +50,10 @@ public with sharing class LVA_ChatTriggerHandler {
 				assign__C= false,
                 ownerId=lct.OwnerId
             );
-            lstCases.add(casec);
-            mapCases.put(lct.id, casec);
+       
+            system.debug(casec);
+            //lstCases.add(casec);
+            //mapCases.put(lct.id, casec);
         }
         
         if(!lstCases.isEmpty()){
@@ -59,7 +63,7 @@ public with sharing class LVA_ChatTriggerHandler {
                 Case c = mapCases.get(lct.id);
                 lct.CaseId = c.id;
             }
-        }
+        }*/
     }
 
 
@@ -71,13 +75,7 @@ public with sharing class LVA_ChatTriggerHandler {
         for(LiveChatTranscript lct:triggerNew){
         
             if(lct.Status != oldMap.get(lct.id).Status ){
-                
-                //assign case owner
-                if(lct.Status==INPROGRESS_STATUS)  caseToUpdateList.add(new case(id=lct.caseId,ownerId=lct.ownerId));
-                else    
-                //createLiveChatPDF
                 if(oldMap.get(lct.id).Status ==INPROGRESS_STATUS && closedStatusSet.contains(lct.Status))   lctlist.add(lct);
-
             }
         }
         if(!lctlist.isEmpty()) ProcessLiveChatTranscript(lctlist);   
