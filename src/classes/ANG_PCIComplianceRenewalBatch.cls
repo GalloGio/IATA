@@ -29,7 +29,7 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 
 	    String query = 'SELECT Id, Name, IataCode__c, BillingCountry, Region_formula__c,ANG_Accreditation_Model__c, Legal_name__c, '+
 	    	'(SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, New_BSPLink_Contact__c, AccountId '+
-	    		'FROM Contacts WHERE Status__c = \'Active\' AND (User_Portal_Status__c = \'Approved Admin\' OR Financial_Assessment_Contact__c = true OR BSP_CASS_Payment_contact__c = true)) '+
+	    		'FROM Contacts WHERE Status__c = \'Active\' AND (User_Portal_Status__c = \'Approved Admin\' OR Financial_Assessment_Contact__c = true OR BSP_CASS_Payment_contact__c = true) and IsEmailBounced = false) '+
 	    	'FROM Account '+
 	    	'WHERE RecordTypeId = :AGENCYRTID '+
 	    	'AND Is_PCI_compliant__c = \'Yes\' '+

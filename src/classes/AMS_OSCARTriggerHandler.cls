@@ -3012,10 +3012,7 @@ public class AMS_OSCARTriggerHandler {
                             }
 
                             if(amazonFiles.isEmpty()){
-                                listAttachment = [SELECT  Id,  Name, BodyLength, CreatedById, CreatedDate, ContentType, Description, IsPrivate, LastModifiedDate, LastModifiedById, OwnerId, ParentId, CreatedBy.Name, Body
-                                FROM Attachment
-                                WHERE ParentId = :c.Id];
-
+                                listAttachment = [SELECT Id FROM Attachment WHERE ParentId = :c.Id];
                             }
                             
                             if(amazonFiles.isEmpty() && listAttachment.isEmpty()){

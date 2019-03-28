@@ -46,9 +46,9 @@
     <description>This object will use attachments to store sensitive documents related to the authorized signatories of an account. IMPORTANT! Access to this object should only be ranted through the permission set, due to the sensitive nature of the data it contains.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
