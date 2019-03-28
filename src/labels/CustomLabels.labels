@@ -3228,6 +3228,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Annual Surveys</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Annual_Top_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Annual_Top_Text</shortDescription>
+        <value>To determine the industry-wide amount of blocked or delayed sales funds in and from countries that are subject to currency and repatriation restrictions, IATA conducts this Survey of Remittances of Foreign Balances (RFB) annually. We therefore ask you to complete the following table with data as of 31 December {0} for sales of previous months.</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Attachments_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21935,15 +21942,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Financial_Insititutions</shortDescription>
-        <value>Financial Institutions</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Financial_Insititutions_Header</fullName>
-        <categories>ISSP, Portal, ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
-        <value>Financial Institution Insurance Providers</value>
+        <value>Insurance Providers</value>
     </labels>
     <labels>
         <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
@@ -30658,7 +30657,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
-        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
+        <value>https://portal.iata.org/faq/articles/en_US/FAQ/Customer-Portal-Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_International_Air_Transport_Association_IATA</fullName>

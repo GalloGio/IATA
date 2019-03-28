@@ -82,6 +82,11 @@
         <label>Strategic Partner</label>
     </standardValue>
     <standardValue>
+        <fullName>TIDS Qantas Pilot 2019</fullName>
+        <default>false</default>
+        <label>TIDS Qantas Pilot 2019</label>
+    </standardValue>
+    <standardValue>
         <fullName>Viral Campaign</fullName>
         <default>false</default>
         <label>Viral Campaign</label>
