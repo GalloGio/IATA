@@ -124,16 +124,14 @@ global without sharing class ANG_CreateCaseDetails {
             list<Case> lsCase;
 			AMS_OSCAR__c oscar;
 
-			lsCase = [SELECT Id, OSCAR__c,  Account.ANG_IsNewGenAgency__c, Reason1__c  FROM Case where Id =: caseId];
+			lsCase = [SELECT Id, OSCAR__c,  Account.ANG_IsNewGenAgency__c, Reason1__c  FROM Case where Id =: caseId]; 
 
 			if(lsCase==null || lsCase.isEmpty()){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Case with Id' + caseId +' not found')), 404);
-                return false;
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Case with Id' + caseId +' not found')), 404);return false;
             }
             
             if(lsCase.size()>1){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'Multiple records found with Case Id ' + caseId) ), 409);
-                return false;
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'Multiple records found with Case Id ' + caseId) ), 409);return false;
             }
             
             
@@ -142,37 +140,31 @@ global without sharing class ANG_CreateCaseDetails {
 			//Perform Validations
 
 			if(gdiCase.OSCAR__c == null){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
-				return false;
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);return false;
             }
 
             if(gdiCase.Reason1__c != 'GDI setup'){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Case Type with Id' + caseId +' is not GDI but instead: ' + gdiCase.Reason1__c) ), 403);
-				return false;
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Case Type with Id' + caseId +' is not GDI but instead: ' + gdiCase.Reason1__c) ), 403);return false;
             }
 
             if(!gdiCase.Account.ANG_IsNewGenAgency__c){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Account Related the Case with Id' + caseId +' is not a NewGen agency') ), 403);
-				return false;
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Account Related the Case with Id' + caseId +' is not a NewGen agency') ), 403);return false;
             }
 
 			List<AMS_OSCAR__c> oscarLst = [Select Id, Invoice_status__c, Payment_Type__c,Oscar_Communication_Case_Id__c, Billing_Document_Number__c from AMS_OSCAR__c where Id = :gdiCase.OSCAR__c];
 			
 			if(oscarLst.isEmpty()){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Oscar with Id' + caseId +' not found')), 404);
-                return false;
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Oscar with Id' + caseId +' not found')), 404);return false;
 			}
 
 			oscar = oscarLst.get(0);
 
 			if(oscar == null){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
-				return false;
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);return false;
             }
 
 			if(oscar.Invoice_status__c != null){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'The Oscar Record from the case Id ' +caseID+' already has the payment status filled with value ' + oscar.Invoice_status__c) ), 404);
-				return false;
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'The Oscar Record from the case Id ' +caseID+' already has the payment status filled with value ' + oscar.Invoice_status__c) ), 404);return false;
             }
 
 			oscar.Invoice_status__c = paymentStatusMap.get(paymentStatus);
@@ -191,5 +183,3 @@ global without sharing class ANG_CreateCaseDetails {
 		}
 	}
 }
-
-
