@@ -362,24 +362,27 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 		system.assert(!controller.hasPrevious, 'Should only find one account and for that, only one page');
 		system.assert(controller.isValidPercentageFS, 'Should be a valid percentageFS');
 
-
+		Integer i = 0;
 		for(ANG_BSP_Attributes__c bsptoChange: controller.attributesToShow){
-			bsptoChange.Min_FA_Points__c = 0;
-			bsptoChange.Max_FA_Points__c = 20;
-			bsptoChange.FS_Percentage__c = 21;
+			bsptoChange.Min_FA_Points__c = 0 + i;
+			bsptoChange.Max_FA_Points__c = 1 + i;
+			bsptoChange.FS_Percentage__c = 21 + i;
+            i += 10;
 		}
 
 		controller.applyOrRevertRHC();
 
 		controller.getBatchStatus();
 
-		list<ANG_BSP_Attributes__c> bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-HK'];
-		for (ANG_BSP_Attributes__c bsp: bsps){
+		list<ANG_BSP_Attributes__c> bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-HK' order by Risk_status__c,Max_FA_Points__c ];
+		i = 0;
+        for (ANG_BSP_Attributes__c bsp: bsps){
 			if(bsp.recordtypeid == ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT){	
 				system.assertEquals(bsp.RHC_Amnt_Calc_Type__c, 'Fixed Percentage');
-				system.assertEquals(bsp.FS_Percentage__c, 21);
-				system.assertEquals(bsp.Min_FA_Points__c, 0);
-				system.assertEquals(bsp.Max_FA_Points__c,20);
+                system.assertEquals(bsp.FS_Percentage__c, 21 + i);
+				system.assertEquals(bsp.Min_FA_Points__c, 0 + i);
+				system.assertEquals(bsp.Max_FA_Points__c, 1 + i);
+                i+=10;
 			}
 			else
 				system.assertEquals(bsp.FS_Percentage__c, 50);
