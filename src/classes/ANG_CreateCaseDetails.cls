@@ -143,12 +143,8 @@ global without sharing class ANG_CreateCaseDetails {
 				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);return false;
             }
 
-            if(gdiCase.Reason1__c != 'GDI setup'){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Case Type with Id' + caseId +' is not GDI but instead: ' + gdiCase.Reason1__c) ), 403);return false;
-            }
-
-            if(!gdiCase.Account.ANG_IsNewGenAgency__c){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Account Related the Case with Id' + caseId +' is not a NewGen agency') ), 403);return false;
+            if(!gdiCase.Account.ANG_IsNewGenAgency__c && gdiCase.Reason1__c != 'GDI setup'){
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Account Related the Case with Id' + caseId +' is not a NewGen agency nor a GDI case') ), 403);return false;
             }
 
 			List<AMS_OSCAR__c> oscarLst = [Select Id, Invoice_status__c, Payment_Type__c,Oscar_Communication_Case_Id__c, Billing_Document_Number__c from AMS_OSCAR__c where Id = :gdiCase.OSCAR__c];
