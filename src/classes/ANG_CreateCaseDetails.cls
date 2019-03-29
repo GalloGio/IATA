@@ -145,13 +145,8 @@ global without sharing class ANG_CreateCaseDetails {
 				return false;
 			}
 
-			if(gdiCase.Reason1__c != 'GDI setup'){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Case Type with Id' + caseId +' is not GDI but instead: ' + gdiCase.Reason1__c) ), 403);
-				return false;
-			}
-
-			if(!gdiCase.Account.ANG_IsNewGenAgency__c){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Account Related the Case with Id' + caseId +' is not a NewGen agency') ), 403);
+			if(!gdiCase.Account.ANG_IsNewGenAgency__c && gdiCase.Reason1__c != 'GDI setup'){
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Account Related the Case with Id' + caseId +' is not a NewGen agency nor a GDI case') ), 403);
 				return false;
 			}
 
