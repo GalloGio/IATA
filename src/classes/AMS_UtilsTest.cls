@@ -800,6 +800,9 @@ private class AMS_UtilsTest {
         result = AMS_Utils.decodeAMFromOscarProcess(AMS_Utils.NEWHESTANDARD, 'value');
         System.assertEquals(result, AMS_Utils.ACCREDITATIONMODEL_CASH);
 
+        result = AMS_Utils.decodeAMFromOscarProcess(AMS_Utils.NEWGESTANDARD, 'value');
+        System.assertEquals(result, AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+
         result = AMS_Utils.decodeAMFromOscarProcess('something', 'value');
         System.assertEquals(result, 'value');
     }
