@@ -1421,11 +1421,6 @@ public without sharing class AMS_Utils {
                     accountHasChanges = true;
                 }
 
-                if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
-                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                    accountHasChanges = true;
-                }
-
                 if(onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true && (acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name || acc.BillingState != onlineAcc.IATA_ISO_State__r.Name)){
                     acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
                     acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
@@ -1523,11 +1518,8 @@ public without sharing class AMS_Utils {
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
-        if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-            return true;
-
-        return false;
-
+        
+        return (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'));
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
