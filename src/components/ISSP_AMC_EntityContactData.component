@@ -88,11 +88,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                     <apex:selectOptions value="{!salutationListHOC}" />
                                 </apex:selectList> 
                             </div>
-                            <div class="col-sm-offset-3 col-sm-1">
+                            <!--div class="col-sm-offset-3 col-sm-1">
                                 <apex:commandLink id="btnId" styleClass="btn btn-primary btn-sm " html-data-toggle="modal" html-data-target=".searchHocContact" reRender="fake">
                                         <span class="glyphicon glyphicon-search"></span> {!$Label.ISSP_AMC_SEARCH_EXISTING}
                                 </apex:commandLink>
-                            </div>
+                            </div-->
                         </div>
                         <div class="form-group">
                             <label for="firstName1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME} <span class="asteriskRequiredField">*</span></label>
@@ -194,9 +194,9 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                     </apex:selectList>
                                 </div>
                                 <div class="col-sm-offset-3 col-sm-1">
-                                    <apex:commandLink styleClass="btn btn-primary btn-sm " html-data-toggle="modal" html-data-target=".searchHobContact" reRender="fake">
+                                    <!--apex:commandLink styleClass="btn btn-primary btn-sm " html-data-toggle="modal" html-data-target=".searchHobContact" reRender="fake">
                                         <span class="glyphicon glyphicon-search"></span> {!$Label.ISSP_AMC_SEARCH_EXISTING}
-                                    </apex:commandLink>
+                                    </apex:commandLink-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -293,7 +293,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 <label for="legalName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_First_Name__c == null, participation.SIS_First_Name__c == "")), 'has-error has-feedback', '')}">
-                                        <apex:inputText id="legalName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_First_Name__c}"/>
+                                        <apex:inputText id="legalName2" onchange="SISVALIDATION(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_First_Name__c}"/>
                                         <span class="{!IF(AND(hasError, OR(participation.SIS_First_Name__c == null, participation.SIS_First_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
                                         <span class="sr-only">(error)</span>
                                         
@@ -305,7 +305,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 <label for="tradingName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_Last_Name__c == null, participation.SIS_Last_Name__c == "")), 'has-error has-feedback', '')}">
-                                        <apex:inputText id="tradingName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Last_Name__c}"/>
+                                        <apex:inputText id="tradingName2" onchange="SISVALIDATION(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Last_Name__c}"/>
                                         <span class="{!IF(AND(hasError, OR(participation.SIS_Last_Name__c == null, participation.SIS_Last_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
                                         <span class="sr-only">(error)</span>
                                         
@@ -317,7 +317,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_Title__c == null, participation.SIS_Title__c == "")), 'has-error has-feedback', '')}">
-                                        <apex:inputText maxlength="15" id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Title__c}"/>
+                                        <apex:inputText maxlength="15" id="streetAddress2" onchange="SISVALIDATION(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Title__c}"/>
                                         <span class="{!IF(AND(hasError, OR(participation.SIS_Title__c == null, participation.SIS_Title__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
                                         <span class="sr-only">(error)</span>
                                         
@@ -850,6 +850,63 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     //t.add("phoneValidation");
                     t.remove("has-error");
                     t.remove("has-feedback");
+                }
+            }
+
+
+             function SISVALIDATION(element, errorClass, parentClass) {
+                //console.log('ENTREI NA VALIDAÇÂO');
+                var x = element.parentElement.classList;
+                var y = element.parentElement.children;
+                //filter = /([^A-Za-z0-9\s]+)/;
+                filter= /([0-9\/\[\`\~\,\.\<\>\;\'\:\"\/\[\]\|\{\}\(\)\-\=\_\+\]\/\º\ª\*\´\\\^\§\£\@\?\«\»\!\#\$\%\&]+)/;
+                if(element.value  != null && element.value != ""){
+                    if (filter.test(element.value)) {
+                        x.remove("parentClass");
+                        x.add("has-error");
+                        x.add("has-feedback");
+                        console.log('ClassList: ' + x);
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "errorClass" || y[i].classList == ""){
+                                y[i].classList.remove("errorClass");
+                                y[i].classList.add("glyphicon");
+                                y[i].classList.add("glyphicon-remove"); 
+                                y[i].classList.add("form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = "{!$Label.ISSP_AMC_ContactDataValidation}";
+                                element.value= "";
+                            }                   
+                        }
+                    } 
+                    else{
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                y[i].classList.add("errorClass");
+                                y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = ""
+                            }
+                        }
+                        x.add("parentClass");
+                        x.remove("has-error");
+                        x.remove("has-feedback");
+                    }
+                }
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            y[i].classList.add("errorClass");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    x.add("parentClass");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
                 }
             }
 

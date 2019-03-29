@@ -2054,12 +2054,9 @@ public class ISSP_AMC_DAO {
 
         if(participationId != null){
             
-            participationRecord = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
-            
-            /*if(participationRecord.RecordTypeId == Schema.SObjectType.Participation_Online_Application__c.getRecordTypeInfosByName().get(ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE).getRecordTypeId()){
+            if(participationRecord.RecordTypeId != Schema.SObjectType.Participation_Online_Application__c.getRecordTypeInfosByName().get(ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE).getRecordTypeId()){
+				participationRecord = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
             }
-            else{*/
-            //}
         }
         return participationRecord;
     }

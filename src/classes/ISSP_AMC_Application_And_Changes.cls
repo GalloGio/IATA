@@ -272,6 +272,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 	public String step = '1';
 	public Participation_Online_Application__c participation ;
 
+    //public String locationCaseNumber {get;set;}
 
 	public PageReference navigateLocationIdentifier(){
 
@@ -280,9 +281,16 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 
 		String caseUrl;
 
-		
+        String locationCaseNumber = ApexPages.CurrentPage().getParameters().get('locationCaseNumber');
 
-		if(caseLocationCodeApplicationId != null){
+        system.debug('DB :: Number do case'+locationCaseNumber);
+
+        Case locationCase = [SELECT Id,CaseNumber,Status FROM Case WHERE CaseNumber=:locationCaseNumber];
+        Participation_Online_Application__c locationParticipation = [SELECT Id FROM Participation_Online_Application__c WHERE Case__c=:locationCase.Id];
+        caseLocationCodeApplicationId = locationCase.Id;
+		locationCodeApplicationId = locationParticipation.Id;
+
+		if(caseLocationCodeApplicationId != null && locationCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_SUBMITTED){
 			UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
                 FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :caseLocationCodeApplicationId];
 			if(!recordAccess.hasReadAccess){
@@ -312,14 +320,14 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 				return null;
 			}
 
-			if(locationCodeApplicationId == null){
+			/*if(locationCodeApplicationId == null){
 				ISSP_AMC_Location_Identifier location = new ISSP_AMC_Location_Identifier();
 				location.CalculateWhichComponentsToShow();
 				ISSP_AMC_DAO.saveForm(location.participation, location.appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
 				locationCodeApplicationId = location.participation.Id; 
 
 				caseUrl = '/ISSP_AMC_Location_Identifier?' + 'participationId=' + locationCodeApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';
-			}
+			}*/
 			
 		}
 		PageReference pr = new PageReference(caseUrl);

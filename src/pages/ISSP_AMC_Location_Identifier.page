@@ -292,7 +292,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                 }
 
                 $(document).ready(function() {
-
+					
+                    
                     $('.datepicker').datepicker({
                         format: 'mm/dd/yyyy'
                     });
@@ -454,7 +455,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                             </div>
                                         </div> <!--  -->
                                         <apex:outputPanel id="entity">
-                                            <c:ISSP_AMC_EntityContactData participation="{!participation}" hasError="{!hasError}" isLocation="{!isLocation}" isSISUser="{!isSISUser}" rendered="{!IF(accountRecord.SIS_Status__c == 'Active',false,true)}"></c:ISSP_AMC_EntityContactData> 
+                                            <c:ISSP_AMC_EntityContactData participation="{!participation}" hasError="{!hasError}" isLocation="{!isLocation}" isSISUser="{!isSISUser}" rendered="{!IF(accountRecord.SIS_Status__c == 'Active',false,true)}"/> 
                                         </apex:outputPanel>
                                         <!-- DAVID BENTO -->
                                         <apex:outputPanel id="locmap">                                 

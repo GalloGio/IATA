@@ -329,7 +329,7 @@ public class ISSP_AMC_Apply_New_Code {
 
 		
 
-		if(caseLocationCodeApplicationId != null){
+		/*if(caseLocationCodeApplicationId != null){
 			UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
                 FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :caseLocationCodeApplicationId];
 			if(!recordAccess.hasReadAccess){
@@ -361,7 +361,7 @@ public class ISSP_AMC_Apply_New_Code {
 
 			if(locationCodeApplicationId == null){
 				ISSP_AMC_Location_Identifier location = new ISSP_AMC_Location_Identifier();
-				location.CalculateWhichComponentsToShow();
+				
 				ISSP_AMC_DAO.saveForm(location.participation, location.appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
 				locationCodeApplicationId = location.participation.Id; 
 
@@ -371,9 +371,22 @@ public class ISSP_AMC_Apply_New_Code {
 
 			
 
-			//String participationId = locationCodeApplicationId == null ? '' : 'participationId=' + locationCodeApplicationId + '&';
+			String participationId = locationCodeApplicationId == null ? '' : 'participationId=' + locationCodeApplicationId + '&';
 			//caseUrl = '/ISSP_AMC_Location_Identifier?' + participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';
-		}
+		}*/
+		
+        ISSP_AMC_Location_Identifier location = new ISSP_AMC_Location_Identifier();
+        //location.participation = participation;
+        //
+        location.participation.Location_Type__c = location.locationList.get(0).getValue();
+        ISSP_AMC_DAO.saveForm(location.participation, location.appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
+         locationCodeApplicationId = location.participation.Id;
+
+        
+
+        caseUrl = '/ISSP_AMC_Location_Identifier?' + 'participationId=' + locationCodeApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';
+
+
 		PageReference pr = new PageReference(caseUrl);
 		pr.setRedirect(true);
 		return pr;

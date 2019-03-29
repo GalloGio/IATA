@@ -234,8 +234,8 @@ return recordTypes;
                 }
                 relatedCase.CaseArea__c = 'Invoicing';
                 //relatedCase.Reason = 'Customer Charge Request';
-                relatedCase.Reason = 'New Coding Assignment';
-                relatedCase.Reason1__c = 'New Coding Assignment';
+                relatedCase.Reason = 'Customer charge request';
+                relatedCase.Reason1__c = 'Customer charge request';
                 relatedCase.Subject = 'Charge Request for ' + parentCase.Account.Name + ' – ' + parentCase.Account.ACLI_SAP_Id__c;
                 relatedCase.Status = 'Open';
                 relatedCase.Description = descriptionC;

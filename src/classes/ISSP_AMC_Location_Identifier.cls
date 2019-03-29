@@ -20,7 +20,6 @@ public without sharing class ISSP_AMC_Location_Identifier {
     public Boolean isSISUser{get;set;}
 
     public PageReference init(){
-        
         if(participation.Case__c != null && participation.Case__r.Status != ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
             PageReference pr = new PageReference('/ISSP_Case?caseId=' + participation.Case__c + '&mid=M1S2');
             pr.setRedirect(true);
@@ -166,21 +165,38 @@ public without sharing class ISSP_AMC_Location_Identifier {
         
         step = Apexpages.currentPage().getParameters().get('step');
 
-        if(participationId == null){
+        /*if(participationId == null){
+            system.debug('ele entra aqui'+participationId);
             participation = ISSP_AMC_DAO.getCompleteParticipation(ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM);
             if(participation.Id == null){
+                system.debug('ele entra aqui2'+participation.Id);
                 participation.Location_Type__c = locationList.get(0).getValue();
             }
         }
-        else {
+        else {*/
             step = '1';
             
             participation = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
-            //participation.Location_Type__c = locationList.get(0).getValue();
+            //
+            
+            //participation = ISSP_AMC_DAO.getCompleteParticipation(ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM);
+            System.debug('DB : participation ' + participation);
+            System.debug('DB : appRequirementList' + appRequirementList);
+            
             //ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
 
-        }
+        //}
+        
+        //changeListReqs();
+        //participation = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
+        
         CalculateWhichComponentsToShow();
+        System.debug('DB : appRequirementList' + appRequirementList);
+        
+        /*PageReference pr = new PageReference('/ISSP_AMC_Location_Identifier?' + 'participationId=' + location.participation.Id + '&mid=M3S1&retURL=/ISSP_AMC_Home');
+        pr.setRedirect(true);
+        return pr;*/
+		
         //if(participation.Case__c == null){
           //  ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
         //}

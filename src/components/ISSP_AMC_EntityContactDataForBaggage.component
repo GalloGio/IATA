@@ -85,11 +85,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                             <apex:selectOptions value="{!salutationListHOC}" />
                                         </apex:selectList>
                                     </div>
-                                    <div class="col-sm-offset-3 col-sm-1">
+                                    <!--div class="col-sm-offset-3 col-sm-1">
                                         <apex:commandLink id="btnId" styleClass="btn btn-primary btn-sm " html-data-toggle="modal" html-data-target=".searchHocContact" reRender="fake">
                                             <span class="glyphicon glyphicon-search"></span> {!$Label.ISSP_AMC_SEARCH_EXISTING}
                                         </apex:commandLink>
-                                    </div>
+                                    </div-->
                                 </div>
                                 <div class="form-group">
                                     <label for="firstName1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME} <span class="asteriskRequiredField">*</span></label>
@@ -190,11 +190,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                     <apex:selectOptions value="{!salutationListHOB}" />
                                                 </apex:selectList>
                                             </div>
-                                            <div class="col-sm-offset-3 col-sm-1">
+                                            <!--div class="col-sm-offset-3 col-sm-1">
                                                 <apex:commandLink styleClass="btn btn-primary btn-sm " html-data-toggle="modal" html-data-target=".searchHobContact" reRender="fake">
                                                     <span class="glyphicon glyphicon-search"></span> {!$Label.ISSP_AMC_SEARCH_EXISTING}
                                                 </apex:commandLink>
-                                            </div>
+                                            </div-->
                                         </div>
                                         <div class="form-group">
                                             <label for="legalName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME} <span class="asteriskRequiredField">*</span></label>
