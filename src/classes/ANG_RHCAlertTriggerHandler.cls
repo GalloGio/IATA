@@ -144,8 +144,7 @@ public class ANG_RHCAlertTriggerHandler{
             Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(newGenAccounts, new Map<Id, Portal_Applications__c>(rhcServices).keySet()); //this sets use the 15 char id
 
             Map<Id, Set<Id>> portalAdmins = new Map<Id, Set<Id>>();
-
-            for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
+            for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND IsEmailBounced = false AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
 
                 Id accId;
                 if(legacyAccounts.contains(c.AccountId)) accId = c.AccountId;
@@ -242,8 +241,9 @@ public class ANG_RHCAlertTriggerHandler{
             System.Debug('NewGenApp End');
             //NewGenApp End  
 
-            if(!processCases.isEmpty()) insert processCases;
-            if(!mailList.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(mailList, notifiedAlerts));
+        if(!processCases.isEmpty()) insert processCases;
+        system.debug('mailList ' + mailList);
+        if(!mailList.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(mailList, notifiedAlerts));
 
             if(!notificationTargets.isEmpty()){
                 List<Notification__c> notifications = new List<Notification__c>();
