@@ -135,7 +135,27 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
 						ORDER BY ANG_AccountId__r.Name];
     	
-    	bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
+    	Boolean isApply =(actionValue == 'Apply_RHC_per_RS');
+        bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
+    	
+    	if(isApply && showCountrySpecificColumns){
+    		AMS_Settlement_System__c operation = [SELECT  id, name FROM AMS_Settlement_System__c WHERE name = :bspValue limit 1];
+    		List<ANG_BSP_Attributes__c> listBspToInsert =  new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
+            bspAttributes.addAll(listBspToInsert);
+            
+            List<BSPAttributeWrapper> sortedBSPAttributeWrapper = new List<BSPAttributeWrapper>();
+            for(ANG_BSP_Attributes__c bsp : bspAttributes){
+				sortedBSPAttributeWrapper.add(new BSPAttributeWrapper(bsp));
+			}
+
+			sortedBSPAttributeWrapper.sort();
+			bspAttributes.clear();
+			for(BSPAttributeWrapper bsp : sortedBSPAttributeWrapper){
+				bspAttributes.add(bsp.bspAttribute);
+			}
+    		//insert new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
+    	}
+
     	
     	if(actionValue != 'Apply_RHC_regardless')
     		for(ANG_BSP_Attributes__c bsp : bspAttributes) 
@@ -270,7 +290,21 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
   			}
 
-  			update bspAttributes;
+  			
+  			if(actionValue == 'Revert_RHC_per_RS' && showCountrySpecificColumns && bspAttributes.size() > 4 ){
+
+                Map<String, ANG_BSP_Attributes__c> mapBspByStatus = new Map<String, ANG_BSP_Attributes__c>();
+                list<ANG_BSP_Attributes__c> listBspToDelete = new list<ANG_BSP_Attributes__c>();
+                for (ANG_BSP_Attributes__c bsp : bspAttributes){
+                    if(mapBspByStatus.containsKey(bsp.Risk_Status__c)) listBspToDelete.add(bsp);
+                    else mapBspByStatus.put(bsp.Risk_Status__c, BSP);
+                }
+                
+                delete listBspToDelete;
+                upsert mapBspByStatus.values();
+                
+
+  			}else upsert bspAttributes;
 
   			//and to force the NEWGEN-5173 to run
   			batchTimestamp = Datetime.now();
@@ -309,6 +343,35 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
 			if (!pollerBool) ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to the following agencies:'));
 		}
+	}
+
+
+	public class BSPAttributeWrapper implements Comparable {
+
+	    private ANG_BSP_Attributes__c bspAttribute;
+	    
+	    // Constructor 
+	    public BSPAttributeWrapper(ANG_BSP_Attributes__c bspAttribute) {
+	        this.bspAttribute = bspAttribute;
+	    }
+	    
+	    // Compare opportunities based on the opportunity amount.
+	    public Integer compareTo(Object compareTo) {
+	        // Cast argument to OpportunityWrapper
+	        BSPAttributeWrapper compareToBSP = (BSPAttributeWrapper)compareTo;
+	        
+	        // The return value of 0 indicates that both elements are equal.
+	        Integer returnValue = 0;
+	        if ((String)bspAttribute.Risk_Status__c > (String)compareToBSP.bspAttribute.Risk_Status__c) {
+	            // Set return value to a positive value.
+	            returnValue = 1;
+	        } else if ((String)bspAttribute.Risk_Status__c < (String)compareToBSP.bspAttribute.Risk_Status__c) {
+	            // Set return value to a negative value.
+	            returnValue = -1;
+	        }
+	        
+	        return returnValue;       
+	    }
 	}
 
 }
