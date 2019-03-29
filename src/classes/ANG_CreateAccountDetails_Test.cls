@@ -38,7 +38,7 @@ private class ANG_CreateAccountDetails_Test {
     	Test.startTest();
 
         RestRequest req = new RestRequest();
-        req.requestBody = Blob.valueOf('{"offerId":"test123"}');
+        req.requestBody = Blob.valueOf('{"offerId":"test123", "offerDate" : "2019-01-01"}');
         RestResponse res = new RestResponse(); 
 
         req.requestURI = '/account-create-details/12345678/gdi-create-offer'; 
