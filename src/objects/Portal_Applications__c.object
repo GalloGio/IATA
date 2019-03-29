@@ -426,6 +426,49 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Auto_approved_for__c</fullName>
+        <description>This fields controls if the service can be auto approved by a portal user</description>
+        <externalId>false</externalId>
+        <inlineHelpText>All profiles selected here will be able to get this service without any approval from the administrator.</inlineHelpText>
+        <label>Auto approved for</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ISS Portal (Partner)</fullName>
+                    <default>false</default>
+                    <label>ISS Portal (Partner)</label>
+                </value>
+                <value>
+                    <fullName>ISS Portal Agency User (Partner)</fullName>
+                    <default>false</default>
+                    <label>ISS Portal Agency User (Partner)</label>
+                </value>
+                <value>
+                    <fullName>ISS Portal Airline User (Partner)</fullName>
+                    <default>false</default>
+                    <label>ISS Portal Airline User (Partner)</label>
+                </value>
+                <value>
+                    <fullName>ISS Portal GSA User (Partner)</fullName>
+                    <default>false</default>
+                    <label>ISS Portal GSA User (Partner)</label>
+                </value>
+                <value>
+                    <fullName>ISS Portal PwC2</fullName>
+                    <default>false</default>
+                    <label>ISS Portal PwC2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Cannot_be_managed_by_portal_admin__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If true do not allow portal admin to manage service</description>
@@ -1074,6 +1117,29 @@ OR(
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Auto_approved_for__c</picklist>
+            <values>
+                <fullName>ISS Portal %28Partner%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Portal Agency User %28Partner%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Portal Airline User %28Partner%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Portal GSA User %28Partner%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Portal PwC2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Provisioning_Type__c</picklist>
             <values>
                 <fullName>SCIM</fullName>
@@ -1163,6 +1229,17 @@ OR(
         <searchResultsAdditionalFields>Application_icon__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Autoapproved_only_when_managed_by_admins</fullName>
+        <active>true</active>
+        <description>The field Auto_approved_for__c cannot be filled if this application cannot be managed by admins</description>
+        <errorConditionFormula>AND(
+  Cannot_be_managed_by_portal_admin__c,
+		NOT(ISBLANK(Auto_approved_for__c))
+)</errorConditionFormula>
+        <errorDisplayField>Auto_approved_for__c</errorDisplayField>
+        <errorMessage>Field &quot;Cannot be managed by portal admin&quot; must be unchecked in order to select profiles</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Restrict_by_Accreditation_Type</fullName>
         <active>true</active>
