@@ -1307,9 +1307,9 @@
         <columns>ACLI_Codes__c</columns>
         <columns>Display_Order__c</columns>
         <columns>Type_of_Operation__c</columns>
-        <columns>ACLI_Requirement_Fields__c</columns>
         <columns>Type_of_Requirement__c</columns>
         <columns>Component_Key__c</columns>
+        <columns>ACLI_Requirement_Fields__c</columns>
         <columns>isToShow__c</columns>
         <columns>NOTE_Custom_Label__c</columns>
         <columns>Location_Type__c</columns>

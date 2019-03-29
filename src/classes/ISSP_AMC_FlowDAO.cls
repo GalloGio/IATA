@@ -223,6 +223,7 @@ return recordTypes;
             if(stage == 'Stage B'){
                 relatedCase.CaseArea__c = 'Corporate Compliance';
                 relatedCase.Reason = 'New Coding Assignment';
+                relatedCase.Reason1__c = 'New Coding Assignment';
                 relatedCase.Subject = 'Due Diligence – ' + parentCase.Account.Name;
                 relatedCase.Status = 'Open';
                 relatedCase.Description = descriptionB;
@@ -232,7 +233,9 @@ return recordTypes;
                     parentCase.Account.ACLI_SAP_Id__c = 'No value';
                 }
                 relatedCase.CaseArea__c = 'Invoicing';
-                relatedCase.Reason = 'Customer Charge Request';
+                //relatedCase.Reason = 'Customer Charge Request';
+                relatedCase.Reason = 'New Coding Assignment';
+                relatedCase.Reason1__c = 'New Coding Assignment';
                 relatedCase.Subject = 'Charge Request for ' + parentCase.Account.Name + ' – ' + parentCase.Account.ACLI_SAP_Id__c;
                 relatedCase.Status = 'Open';
                 relatedCase.Description = descriptionC;
@@ -240,6 +243,7 @@ return recordTypes;
             }else if(stage == 'Stage F'){
                 relatedCase.CaseArea__c = 'SIS';
                 relatedCase.Reason = 'Under discussion';
+                relatedCase.Reason1__c = 'Under discussion';
                 relatedCase.Subject = 'SIS New Register – ' + parentCase.Account.Name;
                 relatedCase.Status = 'Open';
                 relatedCase.Type = 'SIS Internal Case';

@@ -686,7 +686,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                 console.log('ENTREI NA VALIDAÇÂO');
                 var x = element.parentElement.classList;
                 var y = element.parentElement.children;
-                filter = /([^A-Za-z0-9\s]+)/;
+                //filter = /([^A-Za-z0-9\s]+)/;
+                filter= /([0-9\/\[\`\~\,\.\<\>\;\'\:\"\/\[\]\|\{\}\(\)\-\=\_\+\]\/\º\ª\*\´\\\^\§\£\@\?\«\»\!\#\$\%\&]+)/;
                 if(element.value  != null && element.value != ""){
                     if (filter.test(element.value)) {
                         x.remove("parentClass");
@@ -701,7 +702,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 y[i].classList.add("form-control-feedback");
                             }
                             if(y[i].classList =="errormessage"){
-                                y[i].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+                                y[i].innerHTML = "{!$Label.ISSP_AMC_ContactDataValidation}";
                                 element.value= "";
                             }                   
                         }

@@ -176,6 +176,12 @@ public without sharing class ISSP_AMC_Baggage_Tag_Range {
             
             ISSP_AMC_DAO.calculateApplicationRequirementsToShow(this.appRequirementList, selectedOperationTypeForRequirements, componentByOperation, participation, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_BAGGAGE_CODE);
             
+            for(Integer i = 0; i <appRequirementList.size();i++){
+                if(appRequirementList[i].noteCustomLabel == 'ISSP_AMC_TERMS_AND_CONDITIONS'){
+                    appRequirementList[i].isToShow = false;
+                }
+                
+            }   
     }
 
 }

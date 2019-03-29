@@ -20,11 +20,14 @@ public without sharing class ISSP_AMC_Location_Identifier {
     public Boolean isSISUser{get;set;}
 
     public PageReference init(){
+        
         if(participation.Case__c != null && participation.Case__r.Status != ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
             PageReference pr = new PageReference('/ISSP_Case?caseId=' + participation.Case__c + '&mid=M1S2');
             pr.setRedirect(true);
             return pr;
         }
+        
+        
         return null;
     }
 
@@ -330,15 +333,19 @@ public without sharing class ISSP_AMC_Location_Identifier {
 
             ISSP_AMC_DAO.calculateApplicationRequirementsToShow(this.appRequirementList, selectedOperationTypeForRequirements, componentByOperation, participation, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
             
-            if(accountRecord.SIS_Status__c == 'Active'){
-                for(Integer i = 0; i <appRequirementList.size();i++){
-                    if(appRequirementList[i].noteCustomLabel == 'ISSP_AMC_CONTACT_DATA'){
+        	system.debug('DB2 : '+this.appRequirementList);
+            system.debug('DB3 : '+selectedOperationTypeForRequirements);
+            
+            for(Integer i = 0; i <appRequirementList.size();i++){
+                if(accountRecord.SIS_Status__c == 'Active'){
+                    if(appRequirementList[i].noteCustomLabel == 'ISSP_AMC_CONTACT_DATA' ){
                         appRequirementList[i].isToShow = false;
                     }
-                    
                 }
-            }
-
-            
+                if(appRequirementList[i].noteCustomLabel == 'ISSP_AMC_TERMS_AND_CONDITIONS'){
+                    appRequirementList[i].isToShow = false;
+                }
+                
+            }    
     }
 }

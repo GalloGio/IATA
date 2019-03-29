@@ -31,7 +31,7 @@
             </componentInstanceProperties>
             <componentName>flowruntime:interview</componentName>
             <visibilityRule>
-                <booleanFilter>(1 AND 2) OR (1 AND NOT 2 AND NOT 3)</booleanFilter>
+                <booleanFilter>1 AND 2 AND NOT 3</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                     <operator>EQUAL</operator>

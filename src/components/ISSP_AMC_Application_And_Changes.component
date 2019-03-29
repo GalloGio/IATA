@@ -10,6 +10,7 @@
     1.0         Filipa Martins       26-10-2018      INITIAL DEVELOPMENT
  -->
 <apex:component controller="ISSP_AMC_Application_And_Changes">
+
     <head>
         <style>
             .subtitle{
@@ -47,7 +48,7 @@
     <apex:form >
         <!-- NO RESULTS -->
         <apex:outputPanel rendered="{!AMCDraftCases.size <= 0}">
-            <apex:outputText styleClass="bg-info" value="{!$Label.ISSP_AMS_No_Pending}"/>
+            <apex:outputText styleClass="bg-info" value="{!$Label.ISSP_AMC_No_Pending}"/>
         </apex:outputPanel>
         
         <!-- WITH RESULTS -->
@@ -69,24 +70,25 @@
                                 <td>
                                     <!-- AIRLINE DESIGNATORS -->
                                         <!-- DRAFT -->
-                                        <apex:commandLink action="{!navigateAirlineDesignators}"  rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateAirlineDesignators}"  rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:commandLink>
                                     <!-- END: AIRLINE DESIGNATORS -->
                                     <!-- ACCOUNTING OR PREFIX CODE -->
                                         <!-- DRAFT -->
-                                        <apex:commandLink action="{!navigateAccountingOrPrefixCode}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateAccountingOrPrefixCode}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:commandLink>
                                     <!-- END: ACCOUNTING OR PREFIX CODE -->
                                     <!-- LOCATION IDENTIFIER value="/ISSP_AMC_Location_Identifier?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home"-->
-                                        <apex:commandLink action="{!navigateLocationIdentifier}" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateLocationIdentifier}" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
+                                            <apex:param name="locationCaseNumber" value="{!caseItem.CaseNumber}"/>
                                             {!caseItem.CaseNumber}
                                         </apex:commandLink>
                                     <!-- END: LOCATION IDENTIFIER -->
                                     <!-- BAGGAGE TAG RANGE -->
                                         <!-- DRAFT -->
-                                        <apex:commandLink action="{!navigateBaggageTagRange}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateBaggageTagRange}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:commandLink>
                                     <!-- END: BAGGAGE TAG RANGE -->

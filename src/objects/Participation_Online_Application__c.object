@@ -77,7 +77,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of operation: Bus Company.</description>
         <externalId>false</externalId>
-        <label>AOC Bus Company</label>
+        <label>Bus Company</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -87,7 +87,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of Operation: CRS</description>
         <externalId>false</externalId>
-        <label>AOC CRS</label>
+        <label>CRS</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -107,7 +107,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of Operation: Ferry Company</description>
         <externalId>false</externalId>
-        <label>AOC Ferry Company</label>
+        <label>Ferry Company</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -129,7 +129,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of Operation: Non-Scheduled Cargo</description>
         <externalId>false</externalId>
-        <label>AOC Non-Scheduled Cargo</label>
+        <label>Non-Scheduled Cargo</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -139,7 +139,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of Operation: Non-Scheduled Passenger</description>
         <externalId>false</externalId>
-        <label>AOC Non-Scheduled Passenger</label>
+        <label>Non-Scheduled Passenger</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -149,7 +149,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of Operation: Railway Company</description>
         <externalId>false</externalId>
-        <label>AOC Railway Company</label>
+        <label>Railway Company</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -159,7 +159,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of Operation: Scheduled Cargo</description>
         <externalId>false</externalId>
-        <label>AOC Scheduled Cargo</label>
+        <label>Scheduled Cargo</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -169,7 +169,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of Operation: Scheduled Passenger</description>
         <externalId>false</externalId>
-        <label>AOC Scheduled Passenger</label>
+        <label>Scheduled Passenger</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -179,7 +179,7 @@
         <defaultValue>false</defaultValue>
         <description>Type of Operation: ULD</description>
         <externalId>false</externalId>
-        <label>AOC ULD</label>
+        <label>ULD</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>

@@ -17,11 +17,11 @@
         <name>AAO_International__c</name>
     </fields>
     <fields>
-        <label><!-- AOC Bus Company --></label>
+        <label><!-- Bus Company --></label>
         <name>AOC_Bus_Company__c</name>
     </fields>
     <fields>
-        <label><!-- AOC CRS --></label>
+        <label><!-- CRS --></label>
         <name>AOC_CRS__c</name>
     </fields>
     <fields>
@@ -29,7 +29,7 @@
         <name>AOC_Expiry_Date__c</name>
     </fields>
     <fields>
-        <label><!-- AOC Ferry Company --></label>
+        <label><!-- Ferry Company --></label>
         <name>AOC_Ferry_Company__c</name>
     </fields>
     <fields>
@@ -37,27 +37,27 @@
         <name>AOC_Issuing_Authority_Name__c</name>
     </fields>
     <fields>
-        <label><!-- AOC Non-Scheduled Cargo --></label>
+        <label><!-- Non-Scheduled Cargo --></label>
         <name>AOC_Non_Scheduled_Cargo__c</name>
     </fields>
     <fields>
-        <label><!-- AOC Non-Scheduled Passenger --></label>
+        <label><!-- Non-Scheduled Passenger --></label>
         <name>AOC_Non_Scheduled_Passenger__c</name>
     </fields>
     <fields>
-        <label><!-- AOC Railway Company --></label>
+        <label><!-- Railway Company --></label>
         <name>AOC_Railway_Company__c</name>
     </fields>
     <fields>
-        <label><!-- AOC Scheduled Cargo --></label>
+        <label><!-- Scheduled Cargo --></label>
         <name>AOC_Scheduled_Cargo__c</name>
     </fields>
     <fields>
-        <label><!-- AOC Scheduled Passenger --></label>
+        <label><!-- Scheduled Passenger --></label>
         <name>AOC_Scheduled_Passenger__c</name>
     </fields>
     <fields>
-        <label><!-- AOC ULD --></label>
+        <label><!-- ULD --></label>
         <name>AOC_ULD__c</name>
     </fields>
     <fields>

@@ -43,7 +43,7 @@ global class ISSP_AMC_CaseCleanUpBatch implements Database.Batchable<sObject> {
                         FROM Participation_Online_Application__c
                         WHERE LastModifiedDate < :dateToDeleteTo
                 )
-                AND Status = 'Open'
+                AND Status = :ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN
                 AND RecordTypeId = :recordTypeId
         ]);
 

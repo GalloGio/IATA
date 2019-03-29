@@ -765,9 +765,9 @@ public class ISSP_AMC_DAO {
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
                         if(participation.Has_the_company_published_their_schedule__c == 'No'){
-                            errorMessages.add(Label.ISSP_AMC_SCHEDULES_PUBLICATION + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
+                            /*errorMessages.add(Label.ISSP_AMC_SCHEDULES_PUBLICATION + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
                                             '<a href="#" step="step2" goto="#SCHEDULESPUBLICATION" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a></br>');                            
-                            parOnlineRecord.Status__c = 'Incomplete';
+                            parOnlineRecord.Status__c = 'Incomplete';*/
                         }
 
                     }
@@ -805,6 +805,13 @@ public class ISSP_AMC_DAO {
                             errorMessages.add(errorSection + errorSectionFields);
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
+                    }
+                    if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_TERMSANDCONDITIONS){
+                        if(participation.Terms_Conditions_Agreement__c == false){
+                            termsAndConditionsErrorMessage++;
+                            parOnlineRecord.Status__c = 'Incomplete';
+                        }
+
                     }
                     if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_TERMSANDCONDITIONS){
                         if(participation.Terms_Conditions_Agreement__c == false){
@@ -1551,9 +1558,9 @@ public class ISSP_AMC_DAO {
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
                         if(participation.Has_the_company_published_their_schedule__c == 'No'){
-                            errorMessages.add(Label.ISSP_AMC_SCHEDULES_PUBLICATION + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
+                            /*errorMessages.add(Label.ISSP_AMC_SCHEDULES_PUBLICATION + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
                                             '<a href="#" step="step2" goto="#SCHEDULESPUBLICATION" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a></br>');                            
-                            parOnlineRecord.Status__c = 'Incomplete';
+                            parOnlineRecord.Status__c = 'Incomplete';*/
                         }
 
                     }
@@ -2033,6 +2040,7 @@ public class ISSP_AMC_DAO {
     }
 
     public static Participation_Online_Application__c getCompleteParticipation(String caseReasonForm) {
+        AMC_Configuration__c amcConfiguration = AMC_Configuration__c.getInstance();
         List <Case> AMCDraftCases = ISSP_AMC_DAO.getOngoingApplicationsChanges();
         Id participationId;
         for(Case eachExistingCase : AMCDraftCases){
@@ -2045,7 +2053,13 @@ public class ISSP_AMC_DAO {
         Participation_Online_Application__c participationRecord = new Participation_Online_Application__c();
 
         if(participationId != null){
+            
             participationRecord = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
+            
+            /*if(participationRecord.RecordTypeId == Schema.SObjectType.Participation_Online_Application__c.getRecordTypeInfosByName().get(ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE).getRecordTypeId()){
+            }
+            else{*/
+            //}
         }
         return participationRecord;
     }

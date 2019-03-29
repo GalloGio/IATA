@@ -106,7 +106,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         //Create portal account owner
         UserRole portalRole = [Select Id From UserRole Where PortalType = 'None' Limit 1];
         Profile profile1 = [Select Id from Profile where name = 'System Administrator'];
-        User portalAccountOwner1 = new User(
+        User portalAccountOwner2 = new User(
             UserRoleId = portalRole.Id,
             ProfileId = profile1.Id,
             Username = System.now().millisecond() + Math.random() + 'test2@test.com',
@@ -120,7 +120,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             TimeZoneSidKey='America/Chicago',
             License_Cost_Center__c = 'ISF005CH01'
         );
-        Database.insert(portalAccountOwner1);
+        Database.insert(portalAccountOwner2);
 
         //create Country
         /*IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
@@ -132,7 +132,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         //parent account(ISSP_AMC_Home_Test)
         Account parentAccount = new Account(                        // HOME
             Name = 'TestAccount2',
-            OwnerId = portalAccountOwner1.Id,
+            OwnerId = portalAccountOwner2.Id,
             IATA_ISO_Country__c = country.Id,
             RecordType = [SELECT Name,id from RecordType WHERE Name = 'Airline Headquarters'][0]
         );
@@ -142,7 +142,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         Account portalAccount1 = new Account(
             Name = 'TestAccount',
             //Top_Parent__c = parentAccount.Id,
-            OwnerId = portalAccountOwner1.Id,
+            OwnerId = portalAccountOwner2.Id,
             RecordType = [SELECT Name,id from RecordType WHERE Name = 'Airline Headquarters'][0]
         );
         Database.insert(portalAccount1);
@@ -262,6 +262,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         String amazonName = ''+fileToDelete.Full_Name_Unique__c;
         ISSP_AMC_Upload_Files.getExpiringLink(amazonName);
         ISSP_AMC_Upload_Files.deleteAttachment(amazonId,amazonName);
+        ISSP_AMC_Upload_Files.deleteAttachmentInFuture(amazonId,amazonName);
         Case cs1 = new Case(
                               Region__c = 'China & North Asia',
                               BSPCountry__c = 'China',

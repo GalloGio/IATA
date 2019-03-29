@@ -200,6 +200,8 @@ public class ISSP_AMC_EntityContactData {
 
     public void searchContact(String searchFirstName, String searchLastName, String searchEmail ) {
     	Contact contactInfo = OneIdProfileCompanySettings.getUserContact();
+    	User userInfo = [SELECT accountId FROM USER WHERE id=: UserInfo.getUserId()];
+    	System.debug('Tiago Mendes user ' + userInfo);
     	String sFirstName = '%';
     	String sLastName = '%';
     	String sEmail = '%';
@@ -211,8 +213,7 @@ public class ISSP_AMC_EntityContactData {
     	}
     	if(!String.isBlank(searchEmail)) {
     		sEmail = '%' + searchEmail + '%';
-    	}
-   		
+    	}   		
     	List<Contact> contactList = [
     			SELECT 
 					id, Name, FirstName, LastName, Email, Fax, Phone, Salutation, Title, Account.Name
@@ -227,8 +228,11 @@ public class ISSP_AMC_EntityContactData {
         			LastName LIKE :sLastName
         		AND 
         			Email LIKE :sEmail
+        		AND
+        			AccountId = :userInfo.AccountId
         		LIMIT 100
 		];
+		System.debug('Tiago Mendes user accountID ' + userInfo.AccountId);
 		System.debug('JCFF sFirstName ' + sFirstName);
 		System.debug('JCFF sLastName ' + sLastName);
 		System.debug('JCFF sEmail ' + sEmail);

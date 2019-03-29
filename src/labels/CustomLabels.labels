@@ -11121,6 +11121,13 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>Is this location connected intermodally to an airline passenger ticket?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_ContactDataValidation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ContactDataValidation</shortDescription>
+        <value>No numbers or special characters allowed!</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_DATE_ISSUE</fullName>
         <categories>Page Labels</categories>
         <language>en_US</language>
@@ -11809,6 +11816,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMC_NUMERIC_CODE_VALIDATION</shortDescription>
         <value>Invalid format! Three number code!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_No_Pending</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_No_Pending</shortDescription>
+        <value>You don&apos;t have any pending IATA Codes Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_OBTAINED_APPROVALS</fullName>
