@@ -12678,6 +12678,13 @@ IFG Customer Services</value>
         <value>We regret to inform you that according to the current Passenger Sales Agency Rules, the applicant shall not trade as a General Sales Agent (GSA) for any carrier in the country where it is established.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_IS_Legal_Name_Selected_Null</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS IS Legal Name Null</shortDescription>
+        <value>Please select a legal name to copy the owners from if the Associate Entity is not a separate Legal Entity.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_IS_Separate_Entity_Null</fullName>
         <language>en_US</language>
         <protected>false</protected>

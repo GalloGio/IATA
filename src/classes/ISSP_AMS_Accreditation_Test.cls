@@ -44,7 +44,8 @@ private class ISSP_AMS_Accreditation_Test {
                                     IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
                                     IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'tp',
                                     IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test', Region__c = 'Europe',
-                                    Informatica_Value__c = 'test', Local_language_Agency_details_required__c = true);
+                                    Informatica_Value__c = 'test', Local_language_Agency_details_required__c = true,
+                                    Enable_Minor_Changes_from_Portal__c = true);
 
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(Name = 'testOptOut2', ISO_Code__c = 'tl', Case_BSP_Country__c = 'test2', 
                                     CASS_Import__c = 'Yes', Local_language_Agency_details_required__c = true);
@@ -63,7 +64,10 @@ private class ISSP_AMS_Accreditation_Test {
                                     Informatica_Value__c = 'test', Multicountry_Enabled__c = true, Hide_Tax_Number_VAT__c = true, ANG_Enable_NewGen__c = true,
                                     AMS_Default_State__c = 'ES', AMS_Settlement_System__c = bsp_es.Id);
 
-        insert new List<IATA_ISO_Country__c>{country, country2, country3, country4};
+        IATA_ISO_Country__c country5 = new IATA_ISO_Country__c(Name = 'testOptOut2', ISO_Code__c = 'GI', Case_BSP_Country__c = 'test2', 
+                                    CASS_Import__c = 'Yes', Local_language_Agency_details_required__c = true);
+
+        insert new List<IATA_ISO_Country__c>{country, country2, country3, country4, country5};
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
@@ -91,7 +95,9 @@ private class ISSP_AMS_Accreditation_Test {
                                         RecordTypeId = rtIdBr,
                                         IATACode__c = '100',
                                         ANG_FA_Opt_out__c = true,
-                                        ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH);
+                                        ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+                                        Email__c = 'qwe@dse.pt',
+                                        BillingStreet =  'askd');
 
         Account parentAccountTravel = new Account(BillingCity = 'test',
                                                 Name = 'parentAccountTravel',
@@ -280,22 +286,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(fetchUser('conBasicChild@test11.com')) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
@@ -332,16 +326,7 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
@@ -388,23 +373,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(fetchUser('conBasicChild@test11.com')) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
-            insert newForm;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
 
             ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
             ApexPages.currentPage().getParameters().put('step', '2');
@@ -413,6 +385,30 @@ private class ISSP_AMS_Accreditation_Test {
 
         }
         Test.stopTest();
+    }
+
+    private static AMS_Pax_Accreditation_Form__c basicForm(IATA_ISO_Country__c country, Case testCase) {
+        AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+        newForm.IsGSA__c = 'No';
+        newForm.CurrencyIsoCode = country.CurrencyIsoCode;
+        newForm.SAAM_Case__c = testCase.Id;
+
+        return newForm;
+    }
+
+    private static Case fetchCaseToInsert(Account child) {
+        Case testCase = ISSP_ObjectFactory.createNewCase();
+        testCase.BSPCountry__c = 'Hong Kong (SAR), China';
+        testCase.Reason1__c = 'Cargo';
+        testCase.Customer_recovery__c = false;
+        testCase.BounceEmailCounter__c = 0.0;
+        testCase.Case_Language__c = 'English';
+        testCase.Subject = 'Test 006';
+        testCase.Reopened_case__c = 0.0;
+        testCase.Account_Concerned__c = child.Id;
+        testCase.IFAP_Country_ISO__c = 'tp';
+
+        return testCase;
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_3() {
@@ -431,23 +427,12 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(fetchUser('conBasicChild@test11.com')) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
+
             ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
             ApexPages.currentPage().getParameters().put('step', '3');
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
@@ -475,22 +460,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(fetchUser('conBasicChild@test11.com')) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
@@ -561,6 +534,7 @@ private class ISSP_AMS_Accreditation_Test {
         ISSP_AMS_Accreditation_Acc_Req1.Name = 'TestReq1';
         ISSP_AMS_Accreditation_Acc_Req1.File_Identifier2__c = 'CV';
         ISSP_AMS_Accreditation_Acc_Req1.File_to_Upload__c = 'Optional';
+        ISSP_AMS_Accreditation_Acc_Req1.Requirement_text__c = 'cdd';
         insert ISSP_AMS_Accreditation_Acc_Req1;
 
         AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c();
@@ -572,6 +546,7 @@ private class ISSP_AMS_Accreditation_Test {
         ISSP_AMS_Accreditation_Acc_Req2.Name = 'TestReq2';
         ISSP_AMS_Accreditation_Acc_Req2.File_Identifier2__c = 'DATA_PROT';
         ISSP_AMS_Accreditation_Acc_Req2.File_to_Upload__c = 'Optional';
+        ISSP_AMS_Accreditation_Acc_Req2.Requirement_text__c = 'cdd';
         ISSP_AMS_Accreditation_Acc_Req2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Cargo_Agent');
         insert ISSP_AMS_Accreditation_Acc_Req2;
 
@@ -595,6 +570,23 @@ private class ISSP_AMS_Accreditation_Test {
             newForm.SAAM_Case__c = testCase.Id;
             newForm.Validation_ERRORS__c = true;
             insert newForm;
+
+            Id rtIdOff = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Office');
+            Id rtIdWar = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Warehouse');
+
+            AMS_Facility__c facility1 = new AMS_Facility__c(Is_the_warehouse_sub_contracted__c = 'Yes',
+                                                            Is_the_office_warehouse_leased__c = 'Yes',
+                                                            RecordTypeId = rtIdOff,
+                                                            AMS_Online_Accreditation__c = newForm.Id,
+                                                            Are_Consignments_made_ready__c = 'Yes');
+
+            AMS_Facility__c facility2 = new AMS_Facility__c(Is_the_warehouse_sub_contracted__c = 'Yes',
+                                                            Is_the_office_warehouse_leased__c = 'Yes',
+                                                            RecordTypeId = rtIdWar,
+                                                            AMS_Online_Accreditation__c = newForm.Id,
+                                                            Are_Consignments_made_ready__c = 'Yes');
+
+            insert new List<AMS_Facility__c>{facility1, facility2};
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
             newContact.Name = con.Name;
@@ -779,6 +771,7 @@ private class ISSP_AMS_Accreditation_Test {
             testCase.Reopened_case__c = 0.0;
             testCase.Account_Concerned__c = null;
             testCase.IFAP_Country_ISO__c = 'tp';
+            testCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
             insert testCase;
 
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
@@ -879,6 +872,191 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.newform.Accept_terms_and_conditions__c = true;
 
             ctrl.goToFinalStep();
+        }
+    }
+
+    @isTest static void ISSP_AMS_Accreditation_Test_NOC_1s_NoBank() {
+        IATA_ISO_Country__c country = fetchCountry('testOptOut');
+
+        Account parent;
+        Account child;
+
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
+
+        child.ParentId = parent.Id;
+        child.Location_Type__c = 'BR';
+
+        User newUser = fetchUser('conBasicChild@test11.com');
+
+        parent.OwnerId = newUser.Id;
+        update new List<Account>{parent, child};
+
+        AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist2 = new  AMS_Accreditation_Country_CheckList__c();
+        AMS_Acc_Checklist2.IATA_ISO_Country__c = country.id;
+        AMS_Acc_Checklist2.Operation__c = 'Cargo Agent';
+        AMS_Acc_Checklist2.License_required__c = true;
+        AMS_Acc_Checklist2.Registration_required__c = true;
+        insert AMS_Acc_Checklist2;
+
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c();
+        ISSP_AMS_Accreditation_Acc_Req2.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist2.Id;
+        ISSP_AMS_Accreditation_Acc_Req2.Language__c = 'Chinese';
+        ISSP_AMS_Accreditation_Acc_Req2.Location_type__c = 'HO; Head Office;Branch';
+        ISSP_AMS_Accreditation_Acc_Req2.Type_Of_Change__c = 'bank account details;legal name;location;ownership or shareholding';
+        ISSP_AMS_Accreditation_Acc_Req2.Requirement_text__c = 'cdd';
+        ISSP_AMS_Accreditation_Acc_Req2.Sort_Order__c = 1;
+        ISSP_AMS_Accreditation_Acc_Req2.Name = 'TestReq2';
+        ISSP_AMS_Accreditation_Acc_Req2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Cargo_Agent');
+        insert ISSP_AMS_Accreditation_Acc_Req2;
+
+        System.runAs(newUser) {
+            Case testCase = ISSP_ObjectFactory.createNewCase();
+            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
+            testCase.Reason1__c = 'Cargo Agent';
+            testCase.Customer_recovery__c = false;
+            testCase.BounceEmailCounter__c = 0.0;
+            testCase.Case_Language__c = 'English';
+            testCase.Subject = 'Test 006';
+            testCase.Reopened_case__c = 0.0;
+            testCase.Account_Concerned__c = null;
+            testCase.IFAP_Country_ISO__c = 'tp';
+            testCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+            insert testCase;
+
+            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+            newForm.IsGSA__c = 'No';
+            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
+            newForm.SAAM_Case__c = testCase.Id;
+            newForm.HO_Account__c = parent.Id;
+            insert newForm;
+
+            AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
+            newContact.Authorised_signatory__c = true;
+            newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
+            insert newContact;
+
+            Test.startTest();
+
+            ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id;
+            AMS_SIS.IATA_Member_Airline__c = child.Id;
+            insert AMS_SIS;
+
+            ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
+            ApexPages.currentPage().getParameters().put('step', '5');
+            ApexPages.currentPage().getParameters().put('isBankAccountChange', 'false');
+            ApexPages.currentPage().getParameters().put('isNoticeOfChange', 'true');
+            ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
+            ctrl.contactType = 'Company';
+            ctrl.securityCheck();
+            List<AMS_Accreditation_Contact__c> owners_list = ctrl.List_PreviousOwners;
+            owners_list = ctrl.List_CurrentOwners;
+            owners_list = ctrl.List_CurrentCompanies;
+            owners_list = ctrl.List_PreviousCompanies;
+            owners_list = ctrl.List_Prev_Ownership_Summary;
+            owners_list = ctrl.List_Curr_Ownership_Summary;
+            Double ownership_total = ctrl.Curr_Ownership_Total;
+            ownership_total = ctrl.Prev_Ownership_Total;
+
+            ctrl.agencyCodesConcerned = new List<SelectOption>();
+            ctrl.amsOfficeType = 'Branch';
+            ctrl.sector = 'Cargo Agent';
+            ctrl.iatacode = '12345678';
+            ctrl.newCase = testCase;
+            ctrl.editContactId = newContact.Id;
+            ctrl.brAccountId = parent.Id;
+
+            ctrl.getBranchAccounts();
+            ctrl.isocountry.OSCAR_enabled__c = true;
+            ctrl.Save();
+            ctrl.createAgencyContact();
+
+            ctrl.cancelAgentUpdate();
+            ctrl.cancelFormUpdate();
+            ctrl.editAgencyContact();
+            ctrl.updateAgencyDetails();
+            ctrl.isocountry.OSCAR_enabled__c = true;
+            ctrl.updateNoCAgencyLocation();
+            ctrl.goToStep3Section1();
+            ctrl.goToStep3Section2();
+            ctrl.goToStep3Section3();
+            ctrl.goToStep3Section4();
+            ctrl.goToStep1();
+            ctrl.goToStep2();
+            ctrl.goToStep3();
+            ctrl.goToStep4();
+            ctrl.goToStep5();
+            ctrl.saveAMSFormAndGoForward();
+            ctrl.saveAMSFormAndGoBack();
+            ctrl.saveAMSFormAndLeave();
+
+            ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
+
+            ctrl.newForm.IATA_Registered_IATAN_Agent__c = 'Yes';
+            ctrl.newForm.IATAN_Agent_Account__c = null;
+            ctrl.hqAccount.Name = null;
+            ctrl.hqAccount.Phone = null;
+            ctrl.hqAccount.Status__c = 'Approved';
+            ctrl.hqAccount.BillingStreet = null;
+            ctrl.hqAccount.BillingCity = null;
+
+            ctrl.newForm.Branch_Office_Fax_National__c = null;
+            ctrl.newCase.Reason1__c = AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD;
+            
+            ctrl.newform.Confirm_accreditation_type_are_correct__c = true;
+            ctrl.newForm.Notify_Change_Accreditation_Type__c = true;
+            ctrl.newform.Confirm_Legal_Details_are_correct__c = true;
+            ctrl.newForm.Notify_Change_Legal_Details__c = true;
+            ctrl.newform.Confirm_Location_Details_are_correct__c = true;
+            ctrl.newForm.Notify_Change_Location__c = true;
+            ctrl.newform.Confirm_Ownership_Details_are_correct__c = true;
+            ctrl.newForm.Notify_Change_Ownership__c = true;
+            ctrl.newForm.ANG_Accreditation_Model_to_Change__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+            ctrl.newForm.Is_this_Head_Office_becoming_a_Branch__c = 'Yes';
+            ctrl.newForm.New_Head_Office_IATA_Code__c = '12332341';
+            ctrl.newForm.Is_this_Branch_becoming_a_Head_Office__c = 'No';
+            ctrl.newForm.Will_such_change_affect_locations__c = 'No';
+            ctrl.newForm.Provide_explanation_for_change_locations__c = 'whatever';
+            ctrl.newForm.Will_such_change_affect_the_managers__c = 'No';
+
+            ctrl.newForm.ISSP_AMS_Legal_Status__c = 'Corporation';
+            ctrl.newForm.ISSP_AMS_Entity_with_listed_shares__c = 'Yes';
+            ctrl.newForm.Effective_Date_Of_Change__c = Date.today();
+            ctrl.newForm.Will_the_change_of_ownership_cause__c = 'No';
+            ctrl.newForm.Have_any_having_authorization_to_act__c = 'No';
+
+            ctrl.newForm.Accept_terms_and_conditions__c = true;
+
+            ctrl.newForm.Branch_Office_Phone__c = '123123123';
+            ctrl.newForm.Branch_Office_Phone_National__c = '123123123';
+            ctrl.newForm.Branch_Office_Fax__c = '123123123';
+            ctrl.newForm.Branch_Office_Fax_National__c = '123123123';
+            ctrl.newForm.Branch_Office_Email__c = 'aas@asdh.com';
+            ctrl.isocountry.Prevent_Portal_Trade_Name_Change__c = false;
+            ctrl.newForm.Trade_Name__c = 'wkef';
+
+            ctrl.goToFinalStep();
+
+            ctrl.resetOwnership();
+            ctrl.resetCreatedOwnership();
+            List<AMS_Facility__c> facilityList = ctrl.facilityList;
+            List<AMS_Accreditation_Contact__c> ifapAgencyContacts = ctrl.List_IFAPAgencyContacts;
+            List<AMS_Accreditation_Contact__c> previousCompaniesOwners = ctrl.List_PreviousCompaniesOwners;
+            List<AMS_Accreditation_Contact__c> currentCompaniesOwners = ctrl.List_CurrentCompaniesOwners;
+            ctrl.getIsPartnership();
         }
     }
 
@@ -1162,6 +1340,9 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.validateDangerousGoods(5);
 
             ctrl.redirectToCountryRequirementPage();
+
+            ctrl.sectorValue = 'Cargo_Agent';
+            ctrl.fetchCountryRequirements();
         }
     }
 
@@ -1411,16 +1592,7 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
@@ -1529,6 +1701,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.newCase.Reason1__c = 'idk';
             ctrl.redirectToPDF();
         }
+        Test.stopTest();
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_17s() {
@@ -1549,22 +1722,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
@@ -1639,22 +1800,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
@@ -1848,22 +1997,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
@@ -1969,22 +2106,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
@@ -2011,9 +2136,21 @@ private class ISSP_AMS_Accreditation_Test {
             ApexPages.currentPage().getParameters().put('sectorValue', 'Travel_Agent');
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
 
+            ctrl.newCase.IFAP_Country_ISO__c = 'GI';
+
             ctrl.sectorValue = 'Travel_Agent';
             ctrl.con.Account.Sector__c = 'Travel Agent';
+            ctrl.con.Account.Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
             ctrl.isHOAccredited = true;
+            ctrl.getOfficeTypes();
+
+            ctrl.con.Account.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+            ctrl.getOfficeTypes();
+
+            ctrl.con.Account.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+            ctrl.getOfficeTypes();
+
+            ctrl.con.Account.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
             ctrl.getOfficeTypes();
 
             ApexPages.currentPage().getParameters().put('sectorValue', 'Cargo_Agent');
@@ -2132,6 +2269,17 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.save();
             ctrl.applyLanguage = 'es';
             ctrl.fetchCountryRequirements();
+
+            ctrl.isHOAccredited = false;
+            ctrl.sectorValue = 'Travel_Agent';
+            ctrl.con.Account.Sector__c = 'Travel Agent';
+            ctrl.isocountry.ANG_Enable_NewGen__c = true;
+            ctrl.isocountry.Multicountry_Enabled__c = true;
+            ctrl.isMultiCountryNewAE = true;
+            ctrl.getOfficeTypes();
+
+            ctrl.isocountry.ANG_Enable_NewGen__c = false;
+            ctrl.getOfficeTypes();
         }
 
         Test.stopTest();
@@ -2170,23 +2318,12 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(fetchUser('conBasicChild@test11.com')) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
+            Case testCase = fetchCaseToInsert(child);
             testCase.IFAP_Country_ISO__c = 'CN';
             testCase.Applicable_to_Which_Version_s__c = '5';
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
@@ -2313,22 +2450,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
@@ -2557,22 +2682,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = parent.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(parent);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
@@ -2611,22 +2724,10 @@ private class ISSP_AMS_Accreditation_Test {
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = child.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(child);
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
@@ -2639,7 +2740,6 @@ private class ISSP_AMS_Accreditation_Test {
 
     @isTest static void ISSP_AMS_Accreditation_Test_12() {
         Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
-        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         Id rtAccreditContCurrentOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
         Id rtAccreditContCurrentCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
 
@@ -2672,55 +2772,15 @@ private class ISSP_AMS_Accreditation_Test {
         AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id, Lastname__c = 'person', Phone__c = '123123123');
         insert p1;
 
-        AMS_Account_Role__c ar1 = new AMS_Account_Role__c(Account__c = parent.id,  Employee_Name__c = 'test1',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test1', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Owner_Account__c = child.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar2 = new AMS_Account_Role__c(Account__c = parent.id,  Employee_Name__c = 'test2',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test2', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Person__c = p1.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar3 = new AMS_Account_Role__c(Account__c = parent.id, Employee_Name__c = 'test3',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test3', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Contact__c = con.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar4 = new AMS_Account_Role__c(Account__c = parent.id, Employee_Name__c = 'test4',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test4', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Legacy_External_ID__c = '1234', Contact__c = con.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        insert new List<AMS_Account_Role__c>{ar1, ar2, ar3, ar4};
+        List<AMS_Account_Role__c> accRoles = createAccountRoles(parent, con, p1.Id, child);
+        insert accRoles;
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'Cargo';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = parent.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(parent);
 
-            Case testCase2 = ISSP_ObjectFactory.createNewCase();
-            testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase2.Reason1__c = 'Cargo';
-            testCase2.Customer_recovery__c = false;
-            testCase2.BounceEmailCounter__c = 0.0;
-            testCase2.Case_Language__c = 'English';
+            Case testCase2 = fetchCaseToInsert(parent);
             testCase2.Subject = 'Test 007';
-            testCase2.Reopened_case__c = 0.0;
-            testCase2.Account_Concerned__c = parent.Id;
-            testCase2.IFAP_Country_ISO__c = 'tp';
             testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
 
             insert new List<Case>{testCase, testCase2};
@@ -2744,10 +2804,10 @@ private class ISSP_AMS_Accreditation_Test {
             List<SelectOption> countryList = ctrl.countryList;
             Integer agencyCodesSize = ctrl.getAgencyCodesConcernedSize();
 
-            AMS_Accreditation_Contact__c accrCont1 = ISSP_AMS_Accreditation.setAccreditationContact(ar1, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont2 = ISSP_AMS_Accreditation.setAccreditationContact(ar2, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont3 = ISSP_AMS_Accreditation.setAccreditationContact(ar3, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont4 = ISSP_AMS_Accreditation.setAccreditationContact(ar4, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont1 = ISSP_AMS_Accreditation.setAccreditationContact(accRoles[0], newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont2 = ISSP_AMS_Accreditation.setAccreditationContact(accRoles[1], newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont3 = ISSP_AMS_Accreditation.setAccreditationContact(accRoles[2], newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont4 = ISSP_AMS_Accreditation.setAccreditationContact(accRoles[3], newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
 
             ctrl.setContextualHelp('en_US');
 
@@ -2852,8 +2912,6 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_13() {
-        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-
         IATA_ISO_Country__c country = fetchCountry('testOptOut');
 
         country.Enable_Minor_Changes_from_Portal__c = true;
@@ -2883,42 +2941,11 @@ private class ISSP_AMS_Accreditation_Test {
         AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id);
         insert p1;
 
-        AMS_Account_Role__c ar1 = new AMS_Account_Role__c(Account__c = parent.id,  Employee_Name__c = 'test1',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test1', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Owner_Account__c = child.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar2 = new AMS_Account_Role__c(Account__c = parent.id,  Employee_Name__c = 'test2',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test2', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Person__c = p1.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar3 = new AMS_Account_Role__c(Account__c = parent.id, Employee_Name__c = 'test3',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test3', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Contact__c = con.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar4 = new AMS_Account_Role__c(Account__c = parent.id, Employee_Name__c = 'test4',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test4', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Legacy_External_ID__c = '1234',
-                RecordTypeId = rtAccRoleOwnership);
+        List<AMS_Account_Role__c> accRoles = createAccountRoles(parent, con, p1.Id, child);
 
         Test.startTest();
         System.runAs(newUser) {
-            Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Reason1__c = 'New HO';
-            testCase.Customer_recovery__c = false;
-            testCase.BounceEmailCounter__c = 0.0;
-            testCase.Case_Language__c = 'English';
-            testCase.Subject = 'Test 006';
-            testCase.Reopened_case__c = 0.0;
-            testCase.Account_Concerned__c = parent.Id;
-            testCase.IFAP_Country_ISO__c = 'tp';
+            Case testCase = fetchCaseToInsert(parent);
             insert testCase;
 
             AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
@@ -3146,9 +3173,38 @@ private class ISSP_AMS_Accreditation_Test {
         System.assertNotEquals(true, notifications.isEmpty());
     }
 
+    private static List<AMS_Account_Role__c> createAccountRoles(Account parent, Contact con, String person, Account owner) {
+        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+
+        AMS_Account_Role__c ar1 = new AMS_Account_Role__c(Account__c = parent.id,  Employee_Name__c = 'test1',
+                Employee_type__c = 'CL', Owner_Name__c = 'owner test1', Percentage__c = 100,
+                Position__c = 'A', Valid__c = true, Title__c = 'owner',
+                Owner_Account__c = owner.id,
+                RecordTypeId = rtAccRoleOwnership);
+
+        AMS_Account_Role__c ar2 = new AMS_Account_Role__c(Account__c = parent.id,  Employee_Name__c = 'test2',
+                Employee_type__c = 'CL', Owner_Name__c = 'owner test2', Percentage__c = 100,
+                Position__c = 'A', Valid__c = true, Title__c = 'owner',
+                Person__c = person,
+                RecordTypeId = rtAccRoleOwnership);
+
+        AMS_Account_Role__c ar3 = new AMS_Account_Role__c(Account__c = parent.id, Employee_Name__c = 'test3',
+                Employee_type__c = 'CL', Owner_Name__c = 'owner test3', Percentage__c = 100,
+                Position__c = 'A', Valid__c = true, Title__c = 'owner',
+                Contact__c = con.id,
+                RecordTypeId = rtAccRoleOwnership);
+
+        AMS_Account_Role__c ar4 = new AMS_Account_Role__c(Account__c = parent.id, Employee_Name__c = 'test4',
+                Employee_type__c = 'CL', Owner_Name__c = 'owner test4', Percentage__c = 100,
+                Position__c = 'A', Valid__c = true, Title__c = 'owner',
+                Legacy_External_ID__c = '1234', Contact__c = con.id,
+                RecordTypeId = rtAccRoleOwnership);
+
+        return new List<AMS_Account_Role__c>{ar1, ar2, ar3, ar4};
+    }
+
     @isTest static void ISSP_AMS_Accreditation_Test_16() {
         Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
-        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         Id rtAccreditContCurrentOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
         Id rtAccreditContCurrentCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
 
@@ -3184,29 +3240,7 @@ private class ISSP_AMS_Accreditation_Test {
         AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id);
         insert p1;
 
-        AMS_Account_Role__c ar1 = new AMS_Account_Role__c(Account__c = parent.id,  Employee_Name__c = 'test1',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test1', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Owner_Account__c = child.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar2 = new AMS_Account_Role__c(Account__c = parent.id,  Employee_Name__c = 'test2',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test2', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Person__c = p1.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar3 = new AMS_Account_Role__c(Account__c = parent.id, Employee_Name__c = 'test3',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test3', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Contact__c = con.id,
-                RecordTypeId = rtAccRoleOwnership);
-
-        AMS_Account_Role__c ar4 = new AMS_Account_Role__c(Account__c = parent.id, Employee_Name__c = 'test4',
-                Employee_type__c = 'CL', Owner_Name__c = 'owner test4', Percentage__c = 100,
-                Position__c = 'A', Valid__c = true, Title__c = 'owner',
-                Legacy_External_ID__c = '1234',
-                RecordTypeId = rtAccRoleOwnership);
+        List<AMS_Account_Role__c> accRoles = createAccountRoles(parent, con, p1.Id, child);
 
         Test.startTest();
         System.runAs(newUser) {
@@ -3253,10 +3287,10 @@ private class ISSP_AMS_Accreditation_Test {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.newCase = testCase;
 
-            AMS_Accreditation_Contact__c accrCont1 = ISSP_AMS_Accreditation.setAccreditationContact(ar1, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont2 = ISSP_AMS_Accreditation.setAccreditationContact(ar2, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont3 = ISSP_AMS_Accreditation.setAccreditationContact(ar3, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
-            AMS_Accreditation_Contact__c accrCont4 = ISSP_AMS_Accreditation.setAccreditationContact(ar4, newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont1 = ISSP_AMS_Accreditation.setAccreditationContact(accRoles[0], newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont2 = ISSP_AMS_Accreditation.setAccreditationContact(accRoles[1], newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont3 = ISSP_AMS_Accreditation.setAccreditationContact(accRoles[2], newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
+            AMS_Accreditation_Contact__c accrCont4 = ISSP_AMS_Accreditation.setAccreditationContact(accRoles[3], newForm.id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner);
 
             ctrl.setContextualHelp('en_US');
 
@@ -3509,6 +3543,8 @@ private class ISSP_AMS_Accreditation_Test {
             pageRef = accr.save();
             accr.hqAccount.Company_Type__c = 'A';
             pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'V';
+            pageRef = accr.save();
         }
 
         Test.stopTest();
@@ -3554,7 +3590,6 @@ private class ISSP_AMS_Accreditation_Test {
         System.runAs(fetchUser('conChildIcc@test11.com')) {
             ISSP_AMS_Accreditation cont = new ISSP_AMS_Accreditation();
 
-            cont.resetOwnership();
             cont.iatacode = '121321343';
             cont.iatanAccount = AMS_UTILS.IATAN_PASSENGER_AGENT;
             cont.fetchIATANDetails();
@@ -3588,10 +3623,7 @@ private class ISSP_AMS_Accreditation_Test {
             testCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             ApexPages.currentPage().getParameters().put('caseId',testCase.Id);
@@ -3698,10 +3730,7 @@ private class ISSP_AMS_Accreditation_Test {
             testCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
             insert testCase;
 
-            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
-            newForm.IsGSA__c = 'No';
-            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm.SAAM_Case__c = testCase.Id;
+            AMS_Pax_Accreditation_Form__c newForm = basicForm(country, testCase);
             insert newForm;
 
             ApexPages.currentPage().getParameters().put('caseId',testCase.Id);
@@ -3899,6 +3928,7 @@ private class ISSP_AMS_Accreditation_Test {
             Case c = getMCCase(mcUser);
             insert c;
             AMS_Pax_Accreditation_Form__c form = getMCFormHE(c.Id);
+            form.ISSP_AMS_Legal_Status__c = 'Corporation';
             insert form;
             insertMCOwner(form.Id);
 
@@ -3908,6 +3938,9 @@ private class ISSP_AMS_Accreditation_Test {
             Test.setCurrentPage(pageRef);
 
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
+            ctrl.goToFinalStep();
+
+            ctrl.newForm.ISSP_AMS_Legal_Status__c = 'Association';
             ctrl.goToFinalStep();
 
             ctrl.isTerminatedAgent = true;
@@ -3943,7 +3976,11 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.isMultiCountryNewAE = true;
 
             List<SelectOption> mcIsoList = ctrl.countryISOCodeList;
-            String countriesMap = ctrl.countriesByIsoMap;
+            ctrl.newCase.IFAP_Country_ISO__c = 'pt';
+            ctrl.mcformCountryISO = 'pt';
+
+            ctrl.getLegalNameOptions();
+            String hierarchyIsoCodesString = ctrl.hierarchyIsoCodesString;
 
             ctrl.save();
         }
@@ -4218,73 +4255,39 @@ private class ISSP_AMS_Accreditation_Test {
 
     private static List<AMS_Pax_Accreditation_Form__c> getMCFormsAE(Id caseId) {
         Date newDate = Date.today();
-        AMS_Pax_Accreditation_Form__c a1 = new AMS_Pax_Accreditation_Form__c(Local_Legally_Registered_Name__c = 'espana',
-                                                                            Branch_Office_Phone__c = '321312',
-                                                                            Branch_Office_Email__c = 'qwe@qwe.es',
-                                                                            Branch_Office_Country__c = fetchCountry('Spain').Id,
-                                                                            ISSP_AMS_Legal_Status__c = 'Association',
-                                                                            ISSP_AMS_Trade_Reg_No__c = '1234',
-                                                                            ISSP_AMS_Date_Registration_granted__c = newDate,
-                                                                            ISSP_AMS_License_No__c = '1234',
-                                                                            ISSP_AMS_Date_license_granted__c = newDate,
-                                                                            ISSP_AMS_Pax_Office_Open_Date__c = newDate,
-                                                                            ISSP_AMS_Previous_default__c = 'No',
-                                                                            Enable_Credit_Card_FOP__c = 'No',
-                                                                            CurrencyIsoCode = 'EUR',
-                                                                            ISSP_AMS_Gross_Amnt_First_year__c = 1234,
-                                                                            ISSP_AMS_Gross_Amnt_Second_year__c = 1243,
-                                                                            ISSP_AMS_IATA_Registered_Cargo_Agent__c = 'No',
-                                                                            IATA_Registered_IATAN_Agent__c = 'No',
-                                                                            ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus',
-                                                                            SAAM_Case__c = caseId,
-                                                                            AE_separate_Legal_Entity__c = 'Yes',
-                                                                            Status__c = 'InProgress');
+        List<AMS_Pax_Accreditation_Form__c> formsToInsert = new List<AMS_Pax_Accreditation_Form__c>();
 
-        AMS_Pax_Accreditation_Form__c a2 = new AMS_Pax_Accreditation_Form__c(Local_Legally_Registered_Name__c = 'ptpt',
-                                                                            Branch_Office_Phone__c = '321312',
-                                                                            Branch_Office_Email__c = 'qwe@qwe.es',
-                                                                            Branch_Office_Country__c = fetchCountry('Portugal').Id,
-                                                                            ISSP_AMS_Legal_Status__c = 'Association',
-                                                                            ISSP_AMS_Trade_Reg_No__c = '1234',
-                                                                            ISSP_AMS_Date_Registration_granted__c = newDate,
-                                                                            ISSP_AMS_License_No__c = '1234',
-                                                                            ISSP_AMS_Date_license_granted__c = newDate,
-                                                                            ISSP_AMS_Pax_Office_Open_Date__c = newDate,
-                                                                            ISSP_AMS_Previous_default__c = 'No',
-                                                                            Enable_Credit_Card_FOP__c = 'No',
-                                                                            CurrencyIsoCode = 'EUR',
-                                                                            ISSP_AMS_Gross_Amnt_First_year__c = 1234,
-                                                                            ISSP_AMS_Gross_Amnt_Second_year__c = 1243,
-                                                                            ISSP_AMS_IATA_Registered_Cargo_Agent__c = 'No',
-                                                                            IATA_Registered_IATAN_Agent__c = 'No',
-                                                                            ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus',
-                                                                            SAAM_Case__c = caseId,
-                                                                            AE_separate_Legal_Entity__c = 'No',
-                                                                            Status__c = 'InProgress');
+        for (Integer i = 0; i <= 3; i++) {
+            AMS_Pax_Accreditation_Form__c a = new AMS_Pax_Accreditation_Form__c(Local_Legally_Registered_Name__c = 'espana',
+                                                                                Branch_Office_Phone__c = '321312',
+                                                                                Branch_Office_Email__c = 'qwe@qwe.es',
+                                                                                Branch_Office_Country__c = fetchCountry('Spain').Id,
+                                                                                ISSP_AMS_Legal_Status__c = 'Association',
+                                                                                ISSP_AMS_Trade_Reg_No__c = '1234',
+                                                                                ISSP_AMS_Date_Registration_granted__c = newDate,
+                                                                                ISSP_AMS_License_No__c = '1234',
+                                                                                ISSP_AMS_Date_license_granted__c = newDate,
+                                                                                ISSP_AMS_Pax_Office_Open_Date__c = newDate,
+                                                                                ISSP_AMS_Previous_default__c = 'No',
+                                                                                Enable_Credit_Card_FOP__c = 'No',
+                                                                                CurrencyIsoCode = 'EUR',
+                                                                                ISSP_AMS_Gross_Amnt_First_year__c = 1234,
+                                                                                ISSP_AMS_Gross_Amnt_Second_year__c = 1243,
+                                                                                ISSP_AMS_IATA_Registered_Cargo_Agent__c = 'No',
+                                                                                IATA_Registered_IATAN_Agent__c = 'No',
+                                                                                ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus',
+                                                                                SAAM_Case__c = caseId,
+                                                                                AE_separate_Legal_Entity__c = 'Yes',
+                                                                                Status__c = 'InProgress');
+            formsToInsert.add(a);
+        }
 
-        AMS_Pax_Accreditation_Form__c a3 = new AMS_Pax_Accreditation_Form__c(Local_Legally_Registered_Name__c = 'ptpt',
-                                                                            Branch_Office_Phone__c = '321312',
-                                                                            Branch_Office_Email__c = 'qwe@qwe.es',
-                                                                            Branch_Office_Country__c = fetchCountry('Portugal').Id,
-                                                                            ISSP_AMS_Legal_Status__c = 'Association',
-                                                                            ISSP_AMS_Trade_Reg_No__c = '1234',
-                                                                            ISSP_AMS_Date_Registration_granted__c = newDate,
-                                                                            ISSP_AMS_License_No__c = '1234',
-                                                                            ISSP_AMS_Date_license_granted__c = newDate,
-                                                                            ISSP_AMS_Pax_Office_Open_Date__c = newDate,
-                                                                            ISSP_AMS_Previous_default__c = 'No',
-                                                                            Enable_Credit_Card_FOP__c = 'No',
-                                                                            CurrencyIsoCode = 'EUR',
-                                                                            ISSP_AMS_Gross_Amnt_First_year__c = 1234,
-                                                                            ISSP_AMS_Gross_Amnt_Second_year__c = 1243,
-                                                                            ISSP_AMS_IATA_Registered_Cargo_Agent__c = 'No',
-                                                                            IATA_Registered_IATAN_Agent__c = 'No',
-                                                                            ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus',
-                                                                            SAAM_Case__c = caseId,
-                                                                            AE_separate_Legal_Entity__c = 'No',
-                                                                            Status__c = 'InProgress');
+        Id ptId = fetchCountry('Portugal').Id;
 
-        return new List<AMS_Pax_Accreditation_Form__c>{a1, a2, a3};
+        formsToInsert[1].Branch_Office_Country__c = ptId;
+        formsToInsert[2].Branch_Office_Country__c = ptId;
+
+        return formsToInsert;
     }
 
     private static void insertMCOwner(Id formId) {
