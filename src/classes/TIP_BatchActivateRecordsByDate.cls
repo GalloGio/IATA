@@ -76,15 +76,13 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 	public final static String QUERY_PROVIDERS = 'SELECT ID, Status__c, Effective_From_Date__c, Effective_To_Date__c FROM Account_Role__c WHERE recordtypeid = \'' + TIP_Utils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID +'\' AND ('
 			+    '(Effective_From_Date__c > TODAY AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_IN_PROGRESS +'\' ) '			
 			+ 'OR (Effective_From_Date__c <= TODAY AND Status__c <> \''+TIP_Utils.PARTNER_STATUS_ACTIVE+'\' AND (Effective_To_Date__c = NULL OR Effective_To_Date__c > TODAY)) '
-		    + 'OR (Effective_To_Date__c <= TODAY AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_INACTIVE +'\')'
-		    + 'OR (Status__c = \''+ TIP_Utils.PARTNER_STATUS_INACTIVE +'\'))';
+		    + 'OR (Effective_To_Date__c <= TODAY AND Status__c <> \''+ TIP_Utils.PARTNER_STATUS_INACTIVE +'\'))'; //ACAMBAS - TIP-161
 	
 	public final static String QUERY_PRODUCTS = 'SELECT ID, PP_status__c, PP_Effective_from_Date__c, PP_Effective_to_Date__c FROM Partner_products__c WHERE BIN_Conflict_Count__c = 0 AND PP_Payment_Product_Code__c <> NULL AND recordtypeid = \'' + TIP_Utils.PARTNER_PRODUCT_TIP_PRODUCT_RECORD_TYPE_ID +'\' AND '
 			+	 'PP_Status__c <> \''+TIP_Utils.PARTNER_PRODUCT_STATUS_REJECTED+ '\' AND ((Payment_Provider_Account_Role__r.Status__c = \''+TIP_Utils.PARTNER_STATUS_ACTIVE+ '\' AND  ('
 			+    '(PP_Effective_from_Date__c > TODAY AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_IN_PROGRESS +'\' ) '
 			+ 'OR (PP_Effective_from_Date__c <= TODAY AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE +'\' AND (PP_Effective_to_Date__c = NULL OR PP_Effective_to_Date__c > TODAY)))) '	
-			+ 'OR (PP_Effective_to_Date__c <= TODAY AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\')'
-			+ 'OR (PP_status__c = \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\'))';
+			+ 'OR (PP_Effective_to_Date__c <= TODAY AND PP_status__c <> \''+ TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE +'\'))';	//ACAMBAS - TIP-161
 
 	public final static String QUERY_BIN_RANGES = 'SELECT ID, TIP_Status__c, TIP_Effective_From_Date_To_Show__c, TIP_Effective_To_Date__c FROM TIP_BIN_Range__c WHERE (TIP_Payment_Provider_Product__r.PP_status__c = \''+TIP_Utils.PARTNER_PRODUCT_STATUS_ACTIVE+ '\' AND ('
 			+    '(TIP_Effective_From_Date_To_Show__c > TODAY AND TIP_Status__c <> \''+ TIP_Utils.BIN_RANGE_STATUS_IN_PROGRESS +'\' ) '
@@ -143,7 +141,7 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
-		system.debug('PF Query: ' + query);
+		system.debug('##PF Query: ' + query);
 		return Database.getQueryLocator(query);
 	}
 
@@ -157,20 +155,13 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
    			String status = sObjectsFields.get(sObjectType).get(FIELD_STATUS);
    			String dateToUpdate = sObjectsFields.get(sObjectType).get(FIELD_START_DATE_TO_UPDATE);
 
-			String auxStatus = checkStatus(sObjectType, ((String)o.get(status)));
-
-   			if(auxStatus == '') {
-	   			result = dateCompare((Date) o.get(startDate), (Date) o.get(endDate));
-	   			o.put(status, sObjectsStatus.get(sObjectType).get(result));
-
-	   			if(o.get(dateToUpdate) == null) o.put(dateToUpdate, o.get(startDate));
-   			} else {
-   				o.put(status, auxStatus);
-   			}
-
-   			regsToUpdate.add(o);   			
+   			result = dateCompare((Date) o.get(startDate), (Date) o.get(endDate));
+   			o.put(status, sObjectsStatus.get(sObjectType).get(result));
+   			if(o.get(dateToUpdate) == null) o.put(dateToUpdate, o.get(startDate));
+   			regsToUpdate.add(o);
+   			
    		}
-   		system.debug('PF regsToUpdate'+regsToUpdate);
+   			system.debug('PF regsToUpdate'+regsToUpdate);
 	}
 
 	public static Integer dateCompare(Date startDate, Date endDate){
@@ -178,22 +169,6 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
 		if(startDate > System.Today()) stat=DATE_STATUS_IN_PROGRESS;
 		if(startDate <=System.Today()) stat=DATE_STATUS_ACTIVE;
 		if(endDate <= System.Today()) stat=DATE_STATUS_INACTIVE; //ACAMBAS - TIP-161
-		return stat ; 
-	}
-
-	public static String checkStatus(Integer sObjectType, String status){
-		String stat = '';
-
-   		if (sObjectType == PRODUCT_TYPE || sObjectType == PROVIDER_TYPE) {
-			if(status == TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE || status == TIP_Utils.PARTNER_STATUS_INACTIVE) {
-				if(sObjectType == PRODUCT_TYPE) {
-					stat = TIP_Utils.PARTNER_PRODUCT_STATUS_TERMINATED;
-				} else {
-					stat = TIP_Utils.PARTNER_STATUS_TERMINATED;
-				}
-			}
-   		}
-
 		return stat ; 
 	}
 		
