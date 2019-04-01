@@ -488,6 +488,31 @@ global class ISSP_AmazonS3_Ctrl {
         set;
          }
 
+    public String getUniqueFileNames() {
+         String ufn;
+
+        //Get File identifiers for AmzonFile records assoc. with case
+        list<AmazonFile__c> listAmazonFile = [
+            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c, Review_Status__c
+            From AmazonFile__c
+            Where Case__c = :cse.Id
+        ];
+
+        SYSTEM.DEBUG('RETRIEVED listAmazonFile size:' + listAmazonFile.size());
+
+        for ( AmazonFile__c amazonFile: listAmazonFile) {
+            String name = amazonFile.Name;
+            SYSTEM.DEBUG('REMOTE File Name:' + name);
+                if(ufn==null) {
+                    ufn = name;
+                } else {
+                    ufn = ufn + ',' + name;
+                }
+        }
+
+        return ufn;
+    }
+
     /**
         Check is file Name is already in the related files
     **/

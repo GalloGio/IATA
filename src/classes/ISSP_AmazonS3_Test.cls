@@ -207,6 +207,8 @@ private class ISSP_AmazonS3_Test {
 
             ctrl.refreshAfterDelete();
 
+            ctrl.getUniqueFileNames();
+
             ctrl.getStorageFolder();
             ctrl.getCaseOwnerNewgenPCI();
             ctrl.getCaseOwnerModelA();
