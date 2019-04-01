@@ -5379,15 +5379,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Same_Legal_Entity_Account__c</fullName>
+        <fullName>Same_Legal_Entity_Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Same Legal Entity Account</label>
-        <length>20</length>
+        <label>Same Legal Entity Agency</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (Same Legal Entity Agency)</relationshipLabel>
+        <relationshipName>Same_Legal_Entity_Agency</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Scope_of_Change__c</fullName>

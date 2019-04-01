@@ -597,7 +597,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
                 }
 
-                if (isMultiCountryNewAE && mcformCountryISO != null) {
+                if ((isMultiCountryNewAE || isMultiCountryAccredittedAddingAEs()) && !String.isBlank(mcformCountryISO)) {
                     isocountry = fetchISOCountry(mcformCountryISO);
                 }
 
@@ -705,7 +705,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
                     }
 
-                    isocountry = (isMultiCountryNewAE) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
+                    isocountry = (isMultiCountryNewAE ||  isMultiCountryAccredittedAddingAEs()) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
                     //Set default currency, as defined in IATA ISO Country record
                     if (isocountry != null) {
@@ -2193,7 +2193,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if (!isFirstHE && isMultiCountryAccredittedAddingAEs()) {
-            SFDCAccount.ParentId = fetchHEAgency(newForm.Branch_Office_Country__r.Name);
+            SFDCAccount.ParentId = fetchHEAgency(newForm.Branch_Office_Country__r.AMS_Settlement_System__c);
         } else {
             SFDCAccount.ParentId = vHQAccountId;
         }
@@ -2243,11 +2243,11 @@ public without sharing class ISSP_AMS_Accreditation {
         insert copiedOwners;
     }
 
-    private String fetchHEAgency(String countryName) {
+    private String fetchHEAgency(String countryBSP) {
         String accId;
 
         for (Account a: mcHierarchyAccounts) {
-            if (a.IATA_ISO_Country__r.Name == countryName) {
+            if (a.IATA_ISO_Country__r.AMS_Settlement_System__c == countryBSP) {
                 accId = a.Id;
                 break;
             }
@@ -2798,7 +2798,7 @@ public without sharing class ISSP_AMS_Accreditation {
         String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=2' + commParam;
 
         if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-        else if (isMultiCountryNewAE) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
 
         return new Pagereference(pageURL);
     }
@@ -2849,7 +2849,7 @@ public without sharing class ISSP_AMS_Accreditation {
         String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3';
 
         if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-        else if (isMultiCountryNewAE) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
 
         return new Pagereference(pageURL);
     }
@@ -2862,7 +2862,7 @@ public without sharing class ISSP_AMS_Accreditation {
             } else {
                 pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
             }
-        } else if (isMultiCountryNewAE) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
 
         return new Pagereference(pageURL);
     }
@@ -2871,13 +2871,13 @@ public without sharing class ISSP_AMS_Accreditation {
         String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=5' + commParam;
 
         if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-        else if (isMultiCountryNewAE) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         
         return new Pagereference(pageURL);
     }
 
     public Pagereference highLightPageForErrors() {
-        if (newForm.Validation_ERRORS__c ) {
+        if (newForm.Validation_ERRORS__c) {
             if (!validateCharactersInForm() || !validateForm(true)) return null;
         }
         return null;
@@ -3165,11 +3165,6 @@ public without sharing class ISSP_AMS_Accreditation {
             if (mcform.HO_Account__c == null) {
                 if (mcform.AE_separate_Legal_Entity__c == 'No') {
                     sameLegalEntityForms.add(mcform);
-                    /*if (mcForm.Same_Legal_Entity_Account__c.getSObjectType() == 'Account') {
-                        sameLegalEntityFormsFromAccount.add(mcForm);
-                    } else if (mcForm.Same_Legal_Entity_Account__c.getSObjectType() == 'AMS_Pax_Accreditation_Form__c') {
-                        sameLegalEntityFormsFromSRecord.add(mcForm);
-                    }*/
                 }
             } else {
                 mcForm.Location_Type__c = 'GE';
@@ -3926,21 +3921,19 @@ public without sharing class ISSP_AMS_Accreditation {
                         (SELECT Id, Status, Reason1__c, IFAP_Country_ISO__c, Applicable_to_Which_Version_s__c, ContactId, AccountId
                          FROM Cases 
                          WHERE AccountId = :vHQAccountId 
-                            AND (Reason1__c LIKE '%multicountry%' OR Reason1__c = 'New AE')
+                            AND Reason1__c LIKE '%multicountry%'
                             AND Status NOT IN :unavailableStatusesList)
                     FROM Account
                     WHERE Id = :vHQAccountId
                     LIMIT 1];
 
-        if (!hqAccount.Cases.isEmpty()) { //logica para distinguir se multicountrystarted foi from scratch ou nao
-            if (!(hqAccount.Cases[0].Reason1__c == 'New AE' && hqAccount.ANG_Accreditation_Model__c != 'Multicountry')) {
-                isMultiCountryStarted = true;
-                newCase = hqAccount.Cases[0];
-            }
+        if (!hqAccount.Cases.isEmpty()) {
+            isMultiCountryStarted = true;
+            newCase = hqAccount.Cases[0];
         }
     }
 
-    public void fetchAccountConcernedDetails () {
+    public void fetchAccountConcernedDetails() {
         accountConcerned = [SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
                                 TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
                                 Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
@@ -5760,7 +5753,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     if(validateNewAccModelBranch(true)) errorFound = true;
                 }
 
-                if (!isMultiCountryNewAE) {
+                if (!(isMultiCountryNewAE || isMultiCountryAccredittedAddingAEs())) {
                     if (!validateBROfficeDetails()) {
                         errorFound = true;
                     }
@@ -5772,7 +5765,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            if (cntAuthorisedSig == 0 && !(isMultiCountryNewAE && newform.AE_separate_Legal_Entity__c == 'No')) {
+            if (cntAuthorisedSig == 0 && !((isMultiCountryNewAE || isMultiCountryAccredittedAddingAEs()) && newform.AE_separate_Legal_Entity__c == 'No')) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Author_Sig));
                 errorFound = true;
             }
