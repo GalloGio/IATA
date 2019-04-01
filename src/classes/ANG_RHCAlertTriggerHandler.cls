@@ -638,7 +638,7 @@ public class ANG_RHCAlertTriggerHandler{
                         update riskAlertsToUpdate;  
 
                     //Newgen-2179 - Generate Change code (Requires a update)
-                    AMS_OscarCase_RiskMgmt.EndRun();
+                    /*AMS_OscarCase_RiskMgmt.EndRun(); //ENHC to avoid creation of RVW change code + do not fill default section
                                        
                     list<Case> sidrasToGenerateChangeCode = new list<Case>();
                     for(Case sidraToUpdate : sidraLiteCases){
@@ -650,7 +650,7 @@ public class ANG_RHCAlertTriggerHandler{
                         sidraToUpdate.CS_Rep_Acc_DEF__c = userInfo.getUserId();
                         sidrasToGenerateChangeCode.add(sidraToUpdate);
                     }
-                    update sidrasToGenerateChangeCode;  
+                    update sidrasToGenerateChangeCode;*/  
                     //Newgen-2179 - END
 
                     List<Id> caseIds = new List<Id>();
