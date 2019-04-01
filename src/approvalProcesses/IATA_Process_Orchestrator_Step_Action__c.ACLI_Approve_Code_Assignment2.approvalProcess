@@ -23,7 +23,7 @@
         <label>Step 1</label>
         <name>Step_1</name>
     </approvalStep>
-    <emailTemplate>Airline_Coding1/Approve_code_assignment</emailTemplate>
+    <emailTemplate>Airline_Coding/Approve_code_assignment</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>

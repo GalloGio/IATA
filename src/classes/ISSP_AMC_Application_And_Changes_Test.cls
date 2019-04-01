@@ -141,7 +141,7 @@ public class ISSP_AMC_Application_And_Changes_Test {
 		Returns:
 		Throws [Exceptions]: 
 	*/
-	public static testMethod void testLocationNoParticipation(){
+	/*public static testMethod void testLocationNoParticipation(){
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
@@ -156,12 +156,13 @@ public class ISSP_AMC_Application_And_Changes_Test {
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef);
+                    pageRef.getParameters().put('locationCaseNumber',testOppty.id);
 					ISSP_AMC_Application_And_Changes controller = new ISSP_AMC_Application_And_Changes();
-					controller.navigateLocationIdentifier();
+					//controller.navigateLocationIdentifier();
 				}
 			}
 		Test.StopTest();
-	}
+	}*/
 
 	/*
 		Purpose: Requests a used participation form for the Location Identifier Code
@@ -169,7 +170,7 @@ public class ISSP_AMC_Application_And_Changes_Test {
 		Returns:
 		Throws [Exceptions]: 
 	*/
-	public static testMethod void testLocation(){
+	/*public static testMethod void testLocation(){
 
 		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
@@ -186,16 +187,25 @@ public class ISSP_AMC_Application_And_Changes_Test {
 					ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
 					controller.step = 'Submit';
 					controller.saveParticipation();	
-
-
+					Id idOfCase= controller.participation.case__c;
+                    
+                    system.debug('controller.participation.case__c'+controller.participation.case__c);
+                    
+                    Case locationCase = [SELECT Id,CaseNumber,Status FROM Case WHERE CaseNumber=:idOfCase];
+					
+                    system.debug('locationCase.CaseNumber'+locationCase.CaseNumber);
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef1);
+                    system.debug('PARAMETER'+ApexPages.CurrentPage().getParameters().get('locationCaseNumber'));
+                    pageRef1.getParameters().put('locationCaseNumber',String.ValueOF(locationCase.CaseNumber));
+                    system.debug('PARAMETER'+ApexPages.CurrentPage().getParameters().get('locationCaseNumber'));
 					ISSP_AMC_Application_And_Changes ctrl = new ISSP_AMC_Application_And_Changes();
 					ctrl.navigateLocationIdentifier();
+
 				}
 			}
 		Test.StopTest();
-	}
+	}*/
 
 	/*
 		Purpose: Tries to request a Location Identifier Code with a case already submitted.
@@ -224,10 +234,24 @@ public class ISSP_AMC_Application_And_Changes_Test {
 					parCase.status = 'Submitted';
 					upsert parCase;
 					Test.StartTest();
-					PageReference pageRef1 = Page.ISSP_AMC_Home;
-					Test.setCurrentPageReference(pageRef1);
-					ISSP_AMC_Application_And_Changes ctrl = new ISSP_AMC_Application_And_Changes();
-					ctrl.navigateLocationIdentifier();
+                        Id idOfCase= parCase.Id;
+                        
+                    	system.debug('idofCASE'+parCase.Id);
+                        
+                        Case locationCase = [SELECT Id,CaseNumber,Status FROM Case WHERE Id=:parCase.Id];
+                        
+                        system.debug('locationCase.CaseNumber'+locationCase.CaseNumber);
+                        PageReference pageRef1 = Page.ISSP_AMC_Home;
+                        Test.setCurrentPageReference(pageRef1);
+                        system.debug('PARAMETER'+ApexPages.CurrentPage().getParameters().get('locationCaseNumber'));
+                        pageRef1.getParameters().put('locationCaseNumber',String.ValueOF(locationCase.CaseNumber));
+                        system.debug('PARAMETER'+ApexPages.CurrentPage().getParameters().get('locationCaseNumber'));
+                        ISSP_AMC_Application_And_Changes ctrl = new ISSP_AMC_Application_And_Changes();
+                        ctrl.caseManageId = locationCase.Id;
+						ctrl.navigateLocationIdentifier();
+						ctrl.navigateToManageCases();
+						Integer testNumber = ctrl.caseManageNumber;
+						Boolean testBoolean = ctrl.displayPopupDeleteSection;
 					Test.StopTest();
 				}
 			}
@@ -444,52 +468,44 @@ public class ISSP_AMC_Application_And_Changes_Test {
 		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
+		System.runAs(myUser)
+		{
+			User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+			System.runAs(user1){
+				
 
+				
+				ISSP_AMC_Application_And_Changes ctrl = new ISSP_AMC_Application_And_Changes();
+				ctrl.caseDesignatorApplicationId = ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id;
+				ctrl.caseAccountingOrPrefixApplicationId = ISSP_AMC_ParticipationFactory.createEmptyAccountingPrefixParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id;
+				ctrl.caseLocationCodeApplicationId = ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_HELIPORT, false).Id;
+				ctrl.caseBaggageApplicationId = ISSP_AMC_ParticipationFactory.createBaggageParticipation('testName', true, true, true).Id;
 
-		
-			System.runAs(myUser)
-			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
-				System.runAs(user1){
-					
+                Test.StartTest();
+                    ctrl.isDesignator = true;
+                    ctrl.redirectToCase();
+                    ctrl.redirectToParticipation();
 
-					
-					ISSP_AMC_Application_And_Changes ctrl = new ISSP_AMC_Application_And_Changes();
-					ctrl.caseDesignatorApplicationId = ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id;
-					ctrl.caseAccountingOrPrefixApplicationId = ISSP_AMC_ParticipationFactory.createEmptyAccountingPrefixParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id;
-					ctrl.caseLocationCodeApplicationId = ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_HELIPORT, false).Id;
-					ctrl.caseBaggageApplicationId = ISSP_AMC_ParticipationFactory.createBaggageParticipation('testName', true, true, true).Id;
+                    ctrl.isAccountingPrefix = true;
+                    ctrl.redirectToCase();
+                    ctrl.redirectToParticipation();
 
-                    Test.StartTest();
-                        ctrl.isDesignator = true;
-                        ctrl.redirectToCase();
-                        ctrl.redirectToParticipation();
+                    ctrl.isLocation = true;
+                    ctrl.redirectToCase();
+                    ctrl.redirectToParticipation();
 
-                        ctrl.isAccountingPrefix = true;
-                        ctrl.redirectToCase();
-                        ctrl.redirectToParticipation();
+                    ctrl.isBaggage = true;
+                    ctrl.redirectToCase();
+                    ctrl.redirectToParticipation();
 
-                        ctrl.isLocation = true;
-                        ctrl.redirectToCase();
-                        ctrl.redirectToParticipation();
+                    ctrl.caseManageId = ctrl.caseBaggageApplicationId;
+                    ctrl.isManageMyCodes = true;
+                    //ctrl.navigateToManageCases();
+                    ctrl.closePopupDeleteSection();
+                Test.StopTest();
 
-                        ctrl.isBaggage = true;
-                        ctrl.redirectToCase();
-                        ctrl.redirectToParticipation();
-
-                        ctrl.caseManageId = ctrl.caseBaggageApplicationId;
-                        ctrl.isManageMyCodes = true;
-                        //ctrl.navigateToManageCases();
-                        ctrl.closePopupDeleteSection();
-                    Test.StopTest();
-
-				}
 			}
-		
+		}		
 
 	}
-
-
-
-
 }
