@@ -708,6 +708,11 @@ background-color:#428bca;
                 {!$Label.ISSP_Available_services}
                 </a>
 </li>
+    <li>
+        <a href="/ISSP_Financial_Institutions?MainNav=Services&subNav=Financial&mid=M3S2" id="M3S2" style="display:{!IF(showFinancialInstitution,'','none')}">
+            {!$Label.ISSP_Financial_Insititutions}
+        </a>
+    </li>
     </ul>
      <ul class="nav navbar-nav collapse" id="four" >
       <li>

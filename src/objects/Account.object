@@ -2689,6 +2689,11 @@
         <label>Person Account Search Fields</label>
     </fieldSets>
     <fieldSets>
+        <fullName>FieldsExcludedFromTracking</fullName>
+        <description>The fields in this list will be tracked on the Account Tracking History object</description>
+        <label>FieldsExcludedFromTracking</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ISSP_Account_Portal_Search</fullName>
         <description>Portal</description>
         <displayedFields>
@@ -3937,6 +3942,18 @@ Airline_designator__c &amp;IATACode__c&amp;Site</formula>
         <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_at_Risk__c</fullName>
+        <description>Theoretical Guarantee agent&apos;s should have</description>
+        <externalId>false</externalId>
+        <label>Amount at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>AnnualRevenue</fullName>
@@ -10016,6 +10033,37 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
         </valueSet>
     </fields>
     <fields>
+        <fullName>GDI_status__c</fullName>
+        <description>Used for saving the current GDI status</description>
+        <externalId>false</externalId>
+        <label>GDI status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Open</fullName>
+                    <default>false</default>
+                    <label>Open</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>GDP_Location_Type__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -13387,11 +13435,6 @@ EA=EUROPE ACCREDITED AGENT</inlineHelpText>
                     <label>HS</label>
                 </value>
                 <value>
-                    <fullName>IB</fullName>
-                    <default>false</default>
-                    <label>IB</label>
-                </value>
-                <value>
                     <fullName>IC</fullName>
                     <default>false</default>
                     <label>IC</label>
@@ -13410,11 +13453,6 @@ EA=EUROPE ACCREDITED AGENT</inlineHelpText>
                     <fullName>IS</fullName>
                     <default>false</default>
                     <label>IS</label>
-                </value>
-                <value>
-                    <fullName>JJ</fullName>
-                    <default>false</default>
-                    <label>JJ</label>
                 </value>
                 <value>
                     <fullName>MB</fullName>
@@ -15467,6 +15505,18 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_at_Risk__c</fullName>
+        <description>Agency risk management to keep track of Sales at Risk</description>
+        <externalId>false</externalId>
+        <label>Sales at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>SanctionNotice__c</fullName>
@@ -17818,6 +17868,28 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Special_remarks__c</fullName>
+        <description>Multi-picklist to annotate accounts with special remarks</description>
+        <externalId>false</externalId>
+        <label>Special remarks</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>TIDS for NDC</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -28510,6 +28582,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Viral Campaign</fullName>
                 <default>false</default>
             </values>
@@ -29948,6 +30024,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GSSA Cargo</fullName>
                 <default>false</default>
             </values>
@@ -30371,6 +30451,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32235,10 +32330,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -32252,10 +32343,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -33596,6 +33683,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -34211,6 +34305,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -36935,6 +37033,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41010,6 +41123,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -41557,6 +41677,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43299,6 +43423,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47073,6 +47212,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -47612,6 +47758,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -49318,6 +49468,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53047,6 +53212,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -53601,6 +53773,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57373,6 +57549,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
                 <fullName>ABAC</fullName>
@@ -59488,10 +59679,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -59505,10 +59692,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -62093,6 +62276,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>ARC registered</fullName>
@@ -63010,6 +63200,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -66758,6 +66952,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
                 <fullName>ABAC</fullName>
@@ -68865,10 +69074,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -68882,10 +69087,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71407,6 +71608,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -72250,6 +72458,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74245,6 +74457,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77459,6 +77686,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -78166,6 +78400,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -80230,6 +80468,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
                 <fullName>ABAC</fullName>
@@ -82155,10 +82408,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -82172,10 +82421,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -83835,6 +84080,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -84609,6 +84861,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -88381,6 +88637,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDI_status__c</picklist>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
                 <fullName>ABAC</fullName>
@@ -90496,10 +90767,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -90513,10 +90780,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -93101,6 +93364,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>ARC registered</fullName>
@@ -93863,14 +94133,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.INDUSTRY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Field_Head_Office__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
@@ -94087,6 +94356,41 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
  Source_System__c &lt;&gt;&apos;AIMS&apos;, Source_System__c &lt;&gt;&apos;SIS&apos;,RecordTypeId&lt;&gt;&apos;01220000000Q3F1&apos;
 )</errorConditionFormula>
         <errorMessage>Billing City and Billing Country are mandatory fields</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Block_non_AGM_user_from_modifying_agents</fullName>
+        <active>false</active>
+        <description>Avoids AMS data being changed from profiles outside AGM and SF administration.</description>
+        <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+NOT(
+OR(
+$User.ProfileId = &apos;00ew0000001cuCY&apos;,
+$User.ProfileId = &apos;00ew0000001cuCZ&apos;,
+$User.ProfileId = &apos;00ew00000012qoC&apos;,
+$User.ProfileId = &apos;00e20000000h0gF&apos;,
+$User.ProfileId = &apos;00ew0000001R6uT&apos;,
+$User.ProfileId = &apos;00e20000000kvcd&apos;,
+$User.ProfileId = &apos;00e20000001Q8eH&apos;,
+$User.ProfileId = &apos;00ew0000001QUyp&apos;,
+$User.ProfileId = &apos;00e20000001QMpc&apos;,
+$User.ProfileId = &apos;00ew0000001Pj0u&apos;,
+$User.ProfileId = &apos;00ew0000001R6Uk&apos;,
+$User.ProfileId = &apos;00ew0000001QRzE&apos;,
+$User.ProfileId = &apos;00ew0000001QRzF&apos;,
+$User.ProfileId = &apos;00ew0000001QoC9&apos;,
+$User.ProfileId = &apos;00ew0000001QRzG&apos;,
+$User.ProfileId = &apos;00ew0000001QRzD&apos;,
+$User.ProfileId = &apos;00ew0000001QoBp&apos;,
+$User.ProfileId = &apos;00ew0000001QRzC&apos;,
+$User.ProfileId = &apos;00e20000001QJgR&apos;,
+$User.ProfileId = &apos;00e20000001QJSd&apos;,
+$User.ProfileId = &apos;00e20000001QJSs&apos;,
+$User.ProfileId = &apos;00e1r0000021q6N&apos;,
+$User.ProfileId = &apos;00e1r0000021q6S&apos;,
+$User.ProfileId = &apos;00ew0000001R6Za&apos;,
+$User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
+        <errorMessage>You are not allowed to modify AMS data, Please contact agency management or your system admin</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CASS_Number_3_Digits</fullName>

@@ -42,6 +42,8 @@ public with sharing class ISSP_PersonalInformation {
     
 	//Global Variables
 	public String UserPortalStatus {get;set;}
+    public String NameOnAOC {get;set;}
+    public String LegalNameToShow {get;set;}
 	public String UserPortalAccountSector {get;set;}
 	public boolean isValidatedAirlineUser {get;set;}
 	public String ValidatedAirlineUser_Str {get;set;}
@@ -169,6 +171,16 @@ public with sharing class ISSP_PersonalInformation {
 
         if (con.Account.Top_Parent__r.Legal_name__c != null) {
             isLegalNamePopulated = true;
+            LegalNameToShow = con.Account.Top_Parent__r.Legal_name__c;
+        } else if (con.Account.Legal_name__c != null) {
+            isLegalNamePopulated = true;
+            LegalNameToShow = con.Account.Legal_name__c;
+        }
+
+        if (con.Account.Top_Parent__c != null) {
+            NameOnAOC = con.Account.Top_Parent__r.Name_on_AOC__c;
+        } else {
+            NameOnAOC = con.Account.Name_on_AOC__c;
         }
         
         //AS - SP11

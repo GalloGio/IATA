@@ -46,9 +46,9 @@
     <description>Line items of E&amp;F Products used on either Contracts or E&amp;F Airline Billing Agreements.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>false</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>

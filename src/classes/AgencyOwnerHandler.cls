@@ -50,16 +50,22 @@ public class AgencyOwnerHandler {
 		else {
 			relatedGdpProdAccView= [SELECT Related_GDP_Products_Account_View__c FROM Agency_Owner__c WHERE id IN :listNewsAgencyOwners OR id IN :listOldsAgencyOwners GROUP BY Related_GDP_Products_Account_View__c];
 		}
-
+         
+        Set<Id> updatedGDP = new Set<Id>();
 		for(AggregateResult aGdp : relatedGdpProdAccView){
+            gdpPrdAccView.Id = (Id)aGdp.get('Related_GDP_Products_Account_View__c');
+            if (updatedGDP.contains(gdpPrdAccView.Id)) continue;
+		    updatedGDP.add(gdpPrdAccView.Id);
 			AggregateResult totalOwnersPercent = [SELECT SUM(Percent__c)TotalPercentage FROM Agency_Owner__C WHERE Percent__c != null AND Related_GDP_Products_Account_View__c  =: (Id)aGdp.get('Related_GDP_Products_Account_View__c')];
 			gdpPrdAccView.Total_Ownership_Percentage__c = (Decimal)totalOwnersPercent.get('TotalPercentage');
-			gdpPrdAccView.Id = (Id)aGdp.get('Related_GDP_Products_Account_View__c');
-			gdpList_toUpdate.add(gdpPrdAccView);
+			
+         	gdpList_toUpdate.add(gdpPrdAccView);
+            
 		}
 
 		System.debug('totalOWnershipPercentage in gdpList_toUpdate :::' + gdpList_toUpdate);
-		
+        //Abdellah: Old Code 
+		/*
 		try {
 			if(!gdpList_toUpdate.isEmpty()){
 				update gdpList_toUpdate;
@@ -69,8 +75,25 @@ public class AgencyOwnerHandler {
 			}
 		} catch(Exception e) {
 			System.debug(msg + e.getMessage());
-		}
+		} */
+        if (gdpList_toUpdate.Size()==0) return; 
+		//reuse the code of ams2gdp
+        List<ams2gdp_Error> errors = new List<ams2gdp_Error>(); 
+        try{
+            Database.SaveResult[] saveresultlist = Database.update(gdpList_toUpdate,false);
+            // Iterate through saveResultList based on isSuccess capture the failed records
+            for (Database.SaveResult sr : saveresultlist) {
+                if (sr.isSuccess()) continue;
+                // Operation failed, so get all errors                
+                for(Database.Error err : sr.getErrors()) {
+                    errors.add(new ams2gdp_Error('Total Ownership',null, null, 'Error Code: '+err.getStatusCode() + ' Msg: ' + err.getMessage()));
+                }
+            }
+        }Catch(Exception e) {
+          errors.add(new ams2gdp_Error('Total Ownership',null, null, 'Error Code: N/A Msg: ' + e.getMessage()));
+        }
+        if (errors.isEmpty()) return;
+        //Log the current Errors
+        ams2gdp_Utils.logErrors(errors);
 	}
-
-
 }

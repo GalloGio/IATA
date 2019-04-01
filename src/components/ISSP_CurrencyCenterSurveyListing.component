@@ -1,0 +1,251 @@
+<apex:component controller="ISSP_CurrencyCenterSurveyListingCtrl">
+    <apex:includeScript value="{!URLFOR($Resource.Currency_Center, '/jquery.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.Currency_Center, '/bootstrap.js')}"/>
+
+
+
+    <style>
+        #surveyList .ui-accordion-header{
+          font-size:14px;
+          font-weight:bold;
+          background-image:none;
+          background-color:#E6E6E6; //337ab7;
+          color:#0075BC;
+        }
+        #surveyList .ui-widget-content{
+          border: 1px solid #e6e6e6;
+        }
+        #surveyList .ui-widget-header{
+          border: 1px solid #e6e6e6;
+        }
+        #surveyList .ui-state-active{
+          border: 1px solid #e6e6e6;
+        }
+        #surveyList .ui-icon {
+            background-image: url(http://download.jqueryui.com/themeroller/images/ui-icons_0075BC_256x240.png);
+        }
+
+        #surveyList .surveyName {
+            font-family: Arial;
+            color: black !important;
+        }
+
+        #surveyList .separator {
+            width:20px;
+            text-align:center;
+            color: #337ab7 !important;
+        }
+
+        #surveyList .monthSurvey a {
+            font-family: Arial;
+            color: #337ab7 !important;
+        }
+    </style>
+
+    <div style="height: 490px;">
+        <div id="surveyList">
+            <h3>{!$Label.CurrencyCenter_Annual_Surveys}</h3>
+            <div>
+                <table>
+                    <apex:repeat value="{!availableYearsAnnual}" var="year">
+                        <apex:outputPanel layout="none" rendered="{!NOT(annualSurveyMap[year].Id = '')}">
+                            <tr style="margin-bottom: 5px;">
+                                <td class="toolbar" >{!annualSurveyMap[year].Id}|{!annualSurveyMap[year].Status}</td>
+                                <td class="separator"> | </td>
+                                <td class="surveyName">{!annualSurveyMap[year].Status}</td>
+                                <td class="separator"> | </td>
+                                <td class="surveyName"> {!year} {!$Label.CurrencyCenter_Survey}</td>
+                            </tr>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                </table>
+            </div>
+            <h3>{!$Label.CurrencyCenter_Monthly_Surveys}</h3>
+            <div id="monthlySurveys">
+                <apex:repeat value="{!availableYearsMonthly}" var="year">
+                    <h3>{!year}</h3>
+                    <div>
+                        <table>
+                        <apex:repeat value="{!monthlySurveys[year]}" var="ccs">
+                            <apex:outputPanel layout="none" rendered="{!NOT(ccs.Id = '')}">
+                            <tr style="margin-bottom: 5px;">
+                                <td class="monthSurvey" >{!ccs.Id}|{!ccs.Status}</td>
+                                <td class="separator"> | </td>
+                                <td class="surveyName">{!ccs.Status}</td>
+                                <td class="separator"> | </td>
+                                <td class="surveyName"> {!ccs.MonthName} {!$Label.CurrencyCenter_Survey}</td>
+                            </tr>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                        </table>
+                    </div>
+                </apex:repeat>
+            </div>
+        </div>
+    </div>
+    <script>
+        $( function() {
+            var icons = {
+                header: "ui-icon-triangle-1-s",
+                activeHeader: "ui-icon-triangle-1-n"
+            };
+            $( "#surveyList" ).accordion({
+                icons: icons,
+                heightStyle: "fill"
+            });
+            $( "#monthlySurveys" ).accordion({
+                icons: icons,
+                heightStyle: "content"
+            });
+            $(".toolbar a").on("click", null, null, function(event) {
+                window.location.href = $(this).attr("href");
+                event.preventDefault();
+            });
+        });
+
+        var labelOpen = '{!JSENCODE($Label.CurrencyCenter_Open)}';
+        var labelEdit = '{!JSENCODE($Label.CurrencyCenter_Edit)}';
+        var labelLink = '{!JSENCODE($Label.CurrencyCenter_Link)}';
+        var labelRequestUpdate = '{!JSENCODE($Label.CurrencyCenter_Request_Update)}';
+
+        var annualSurvey = document.getElementsByClassName("toolbar");
+
+        for(let i = 0; i < annualSurvey.length; i++) {
+            let month = annualSurvey[i].textContent.split("|");
+            let monthId = month[0];
+            let monthStatus = month[1];
+
+            console.log(annualSurvey[i])
+            annualSurvey[i].innerHTML ="";
+
+            if(monthStatus == "Submitted") {
+
+                var ancoreRequest = document.createElement("a");
+                ancoreRequest.href = "/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1&type=RequestSurveyUpdate";
+                ancoreRequest.target = "_blank";
+                ancoreRequest.title = labelRequestUpdate;
+
+                var spanRequest = document.createElement("span");
+                spanRequest.classList.add("glyphicon");
+                spanRequest.classList.add("glyphicon-envelope");
+                spanRequest.style.color = '#337ab7';
+
+                annualSurvey[i].appendChild(ancoreRequest);
+                ancoreRequest.appendChild(spanRequest);
+
+                var ancoreVisualize = document.createElement("a");
+                ancoreVisualize.href = "/ISSP_CurrencyCenterAnnualSurvey?id="+monthId;
+                ancoreVisualize.style.marginLeft  = "10px";
+                ancoreVisualize.title = labelOpen;
+
+                var spanVisualize = document.createElement("span");
+                spanVisualize.classList.add("glyphicon");
+                spanVisualize.classList.add("glyphicon-eye-open");
+                spanVisualize.style.color = '#337ab7';
+
+                annualSurvey[i].appendChild(ancoreVisualize);
+                ancoreVisualize.appendChild(spanVisualize);
+
+            } else if(monthStatus == "Draft") {
+
+                var ancoreEdit = document.createElement("a");
+                ancoreEdit.href = "/ISSP_CurrencyCenterAnnualSurvey?id="+monthId;
+                ancoreEdit.title = labelEdit;
+
+                var spanVisualize = document.createElement("span");
+                spanVisualize.classList.add("glyphicon");
+                spanVisualize.classList.add("glyphicon-edit");
+                spanVisualize.style.color = '#337ab7';
+
+                annualSurvey[i].appendChild(ancoreEdit);
+                ancoreEdit.appendChild(spanVisualize);
+            }
+
+            /*
+            var ancoreLink = document.createElement("a");
+            ancoreLink.href = "/"+monthId;
+            ancoreLink.style.marginLeft  = "10px";
+            ancoreLink.title = labelLink;
+
+            var spanVisualize = document.createElement("span");
+            spanVisualize.classList.add("glyphicon");
+            spanVisualize.classList.add("glyphicon-link");
+            spanVisualize.style.color = '#7030A0';
+
+            annualSurvey[i].appendChild(ancoreLink);
+            ancoreLink.appendChild(spanVisualize);
+            */
+        }
+
+        var monthSurvey = document.getElementsByClassName("monthSurvey");
+
+        for(let i = 0; i < monthSurvey.length; i++) {
+            let month = monthSurvey[i].textContent.split("|");
+            let monthId = month[0];
+            let monthStatus = month[1];
+
+            console.log(monthSurvey[i])
+            monthSurvey[i].innerHTML ="";
+
+            if(monthStatus == "Submitted") {
+
+                var ancoreRequest = document.createElement("a");
+                ancoreRequest.href = "/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1&type=RequestSurveyUpdate";
+                ancoreRequest.target = "_blank";
+                ancoreRequest.title = labelRequestUpdate;
+
+                var spanRequest = document.createElement("span");
+                spanRequest.classList.add("glyphicon");
+                spanRequest.classList.add("glyphicon-envelope");
+                spanRequest.style.color = '#337ab7';
+
+                monthSurvey[i].appendChild(ancoreRequest);
+                ancoreRequest.appendChild(spanRequest);
+
+                var ancoreVisualize = document.createElement("a");
+                ancoreVisualize.href = "/ISSP_CurrencyCenterReportingActionsMonth?id="+monthId;
+                ancoreVisualize.style.marginLeft  = "10px";
+                ancoreVisualize.title = labelOpen;
+
+                var spanVisualize = document.createElement("span");
+                spanVisualize.classList.add("glyphicon");
+                spanVisualize.classList.add("glyphicon-eye-open");
+                spanVisualize.style.color = '#337ab7';
+
+                monthSurvey[i].appendChild(ancoreVisualize);
+                ancoreVisualize.appendChild(spanVisualize);
+
+            } else if(monthStatus == "Draft") {
+
+                var ancoreEdit = document.createElement("a");
+                ancoreEdit.href = "/ISSP_CurrencyCenterReportingActionsMonth?id="+monthId;
+                ancoreEdit.title = labelEdit;
+
+                var spanVisualize = document.createElement("span");
+                spanVisualize.classList.add("glyphicon");
+                spanVisualize.classList.add("glyphicon-edit");
+                spanVisualize.style.color = '#337ab7';
+
+                monthSurvey[i].appendChild(ancoreEdit);
+                ancoreEdit.appendChild(spanVisualize);
+            }
+
+            /*
+            var ancoreLink = document.createElement("a");
+            ancoreLink.href = "/"+monthId;
+            ancoreLink.style.marginLeft  = "10px";
+            ancoreLink.title = labelLink;
+
+            var spanVisualize = document.createElement("span");
+            spanVisualize.classList.add("glyphicon");
+            spanVisualize.classList.add("glyphicon-link");
+            spanVisualize.style.color = '#7030A0';
+
+            monthSurvey[i].appendChild(ancoreLink);
+            ancoreLink.appendChild(spanVisualize);
+            */
+        }
+
+
+    </script>
+</apex:component>
