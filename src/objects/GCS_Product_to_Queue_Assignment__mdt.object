@@ -40,7 +40,6 @@
         <fullName>All_Custom</fullName>
         <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
-        <columns>NamespacePrefix</columns>
         <columns>GCS_Product_Topic__c</columns>
         <columns>Product_Topic__c</columns>
         <columns>Queue_API_Name__c</columns>
