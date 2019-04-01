@@ -145,8 +145,22 @@ public class HigherLogicIntegrationWS {
 			
 			User user = (User) sObj;
 
-			Id accountId = user.ContactId == null ? ProvisionKaviAccess.getFakeAccount().Id : user.Contact.AccountId;
-			String accountName = user.ContactId == null ? ProvisionKaviAccess.getFakeAccount().Name : user.Contact.Account.Name;
+			Id accountId = user.Contact.AccountId;
+			String accountName = user.Contact.Account.Name;
+			
+			if(String.isNotBlank(user.Contact.Account.Parent.ParentId)){
+				accountId = user.Contact.Account.Parent.ParentId;
+				accountName = user.Contact.Account.Parent.Parent.Name;
+			}
+			else if(String.isNotBlank(user.Contact.Account.ParentId)){
+				accountId = user.Contact.Account.ParentId;
+				accountName = user.Contact.Account.Parent.Name;
+			}
+		    else if(String.isBlank(user.ContactId)){
+				Account a = ProvisionKaviAccess.getFakeAccount();
+			    accountId = a.Id;
+			    accountName = a.Name;
+		    }
 			
 			// Active status is defined based on the Portal Application Right
 			// PAR with Access Granted => ACTIVE

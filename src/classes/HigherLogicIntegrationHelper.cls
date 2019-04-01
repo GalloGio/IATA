@@ -52,22 +52,18 @@ public class HigherLogicIntegrationHelper {
 	* @return Id: accountId
 	*
 	*/
-	private static Id fetchAssociatedAccountId(Id accountId, Id recordTypeId, String airlineType, Id parentId, Id parent2Id){
+	private static Id fetchAssociatedAccountId(User u){
 					
-		if(recordTypeId == BRANCH_RECORD_TYPE_ID && airlineType == 'Branch' && parentId != null){
-			return parentId;
-		}
+		Id accountId = u.Contact.AccountId;
 		
-		if(recordTypeId == AGENCY_RECORD_TYPE_ID && parentId != null && parent2Id == null){
-			return parentId;
+		if(String.isNotBlank(u.Contact.Account.Parent.ParentId)){
+			accountId = u.Contact.Account.Parent.ParentId;
 		}
-		
-		if(recordTypeId == AGENCY_RECORD_TYPE_ID && parentId != null && parent2Id != null){
-			return parent2Id;
+		else if(String.isNotBlank(u.Contact.Account.ParentId)){
+			accountId = u.Contact.Account.ParentId;
 		}
 		
 		return accountId;
-		
 	}
 	
 	/*
@@ -121,9 +117,7 @@ public class HigherLogicIntegrationHelper {
 				ContactKaviId__c,
 				Contact.AccountId,
 				Contact.Account.ParentId,
-				Contact.Account.RecordTypeId,
-				Contact.Account.Parent.ParentId,
-				Contact.Account.Field_Head_Office__c
+				Contact.Account.Parent.ParentId
 			 FROM
 			 	User 
 			 WHERE
@@ -135,7 +129,7 @@ public class HigherLogicIntegrationHelper {
 		Map<Id, Id> contactIdMap = new Map<Id, Id>();
 
 		for(User newUser : newUsersLst){
-			Id accId = fetchAssociatedAccountId(newUser.Contact.AccountId, newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
+			Id accId = fetchAssociatedAccountId(newUser);
 			contactIdMap.put(accId, newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c);
 		}
 		
@@ -172,7 +166,9 @@ public class HigherLogicIntegrationHelper {
 			'Contact.AccountId',
 			'Contact.Account.Name',
 			'Contact.Account.ParentId',
-			'Contact.Account.Parent.ParentId'
+			'Contact.Account.Parent.Name',
+			'Contact.Account.Parent.ParentId',
+			'Contact.Account.Parent.Parent.Name'
 		};
 	}
 	
@@ -252,7 +248,7 @@ public class HigherLogicIntegrationHelper {
 			Id accId = provAcctId;
 			
 			if (operation == PUSH_MEMBERS){
-				accId = fetchAssociatedAccountId(newUser.Contact.AccountId,newUser.Contact.Account.RecordTypeId, newUser.Contact.Account.Field_Head_Office__c, newUser.Contact.Account.ParentId, newUser.Contact.Account.Parent.ParentId);
+				accId = fetchAssociatedAccountId(newUser);
 			}
 
 			newAccountsIds.add(accId);
