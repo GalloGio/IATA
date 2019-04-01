@@ -43,7 +43,7 @@
                 <field>DPC__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CurrencyIsoCode</field>
             </layoutItems>
             <layoutItems>

@@ -46,9 +46,9 @@
     <description>Contain a list of countries with their ISO country code and their Region</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -241,7 +241,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <label>EasyPay Model</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1488,6 +1488,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Croatia</label>
                 </value>
                 <value>
+                    <fullName>Cuba</fullName>
+                    <default>false</default>
+                    <label>Cuba</label>
+                </value>
+                <value>
                     <fullName>Cyprus</fullName>
                     <default>false</default>
                     <label>Cyprus</label>
@@ -1541,6 +1546,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Estonia</fullName>
                     <default>false</default>
                     <label>Estonia</label>
+                </value>
+                <value>
+                    <fullName>Eswatini</fullName>
+                    <default>false</default>
+                    <label>Eswatini</label>
                 </value>
                 <value>
                     <fullName>Ethiopia</fullName>
@@ -1996,11 +2006,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Suriname</fullName>
                     <default>false</default>
                     <label>Suriname</label>
-                </value>
-                <value>
-                    <fullName>Swaziland</fullName>
-                    <default>false</default>
-                    <label>Swaziland</label>
                 </value>
                 <value>
                     <fullName>Sweden</fullName>

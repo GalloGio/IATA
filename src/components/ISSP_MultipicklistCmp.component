@@ -1,0 +1,129 @@
+<apex:component>
+  <apex:attribute name="leftLabel" description="Label on left listbox." type="String" required="true"/>
+  <apex:attribute name="rightLabel" description="Label on right listbox." type="String" required="true"/>
+  <apex:attribute name="leftOptions" description="Options on left listBox" type="SelectOption[]" required="true"/>
+  <apex:attribute name="rightOptions" description="Options on right listBox" type="SelectOption[]" required="true"/>
+  <apex:attribute name="compareKey" description="Option attribute to be used on compare" type="String" required="true"/>
+  <apex:attribute name="size" description="Size of listboxes." type="Integer" required="true"/>
+  <apex:attribute name="required" description="Required selection" type="Boolean" required="true"/>
+  <apex:attribute name="identifier" description="Selection identifier" type="string" required="true"/>
+  
+  <style>
+    #table-container {
+      width: 100%;
+      margin-top: 2%;
+    }
+
+    .listbox {
+      width: 100%;
+    }
+
+    .arrows {
+      cursor: pointer;
+    }
+
+    .req-class {
+      border-left: 3px solid #b22222 !important;
+    }
+  </style>
+  <script>
+    function moveSelected(from, to) {
+      var opts = $(from).find(":selected").detach();
+      if(opts) {
+        opts.removeAttr("selected");
+        opts.appendTo(to);
+      }
+    }
+
+    function moveAll(from, to, key) {
+      var lst = [];
+      $.each($(from+" option"), function(i,v) {
+        lst.push(v);
+      });
+      $.each($(to+" option"), function(i,v) {
+        lst.push(v);
+      });
+
+      $(from).empty();
+      $(to).empty();
+
+      lst.sort(function(a,b) {
+        a = a[key];
+        b= b[key];
+
+        return a.toLowerCase() > b.toLowerCase() ? 1 : (a.toLowerCase() < b.toLowerCase() ? -1 : 0);
+      });
+
+      console.log(lst);
+
+      $.each(lst, function(i,v) {
+        $(v).removeAttr("selected");
+        $(v).appendTo(to);
+      });
+    }
+  </script>
+  
+  <apex:outputPanel layout="none" id="table-opts">
+    <table id="table-container">
+      <col width="45%"></col>
+      <col width="10%"></col>
+      <col width="45%"></col>
+      <tbody>
+        <tr>
+          <td>
+            <label for="left-opt-{!identifier}">{!leftLabel}</label>
+            <apex:outputPanel id="left-options">
+              <select id="left-opt-{!identifier}" multiple="multiple" size="{!size}" class="listbox req-class">
+                <apex:repeat value="{!leftOptions}" var="option">
+                  <option title="{!option.label}" value="{!option.value}">{!option.label}</option>
+                </apex:repeat>
+              </select>
+            </apex:outputPanel>
+          </td>
+          <td align="center" valign="center" style="padding-top: 2%;">
+            <div style="width: 75%;">
+              <div style="float: left; margin: 1px;">
+                <apex:image value="{!URLFOR($Resource.ISSP_MultipicklistIcons, 'icons/arrow_rt2.gif')}" 
+                  alt="{!$Label.MultiselectPicklist_Add}"
+                  styleClass="arrows" 
+                  title="{!$Label.MultiselectPicklist_Add}"
+                  onclick="moveSelected('#left-opt-{!identifier}', '#right-opt-{!identifier}')"/>
+              </div>
+              <div style="float: left; margin: 1px;">
+                <apex:image value="{!URLFOR($Resource.ISSP_MultipicklistIcons, 'icons/arrow_rt22.gif')}" 
+                  alt="{!$Label.MultiselectPicklist_AddAll}"
+                  styleClass="arrows" 
+                  title="{!$Label.MultiselectPicklist_AddAll}"
+                  onclick="moveAll('#left-opt-{!identifier}', '#right-opt-{!identifier}', '{!compareKey}')"/>
+              </div>
+            </div>
+            <div style="width: 75%;">
+              <div style="float: left; margin: 1px;">              
+                <apex:image value="{!URLFOR($Resource.ISSP_MultipicklistIcons, 'icons/arrow_lt2.gif')}" 
+                  alt="{!$Label.MultiselectPicklist_Remove}" 
+                  styleClass="arrows" 
+                  title="{!$Label.MultiselectPicklist_Remove}"
+                  onclick="moveSelected('#right-opt-{!identifier}', '#left-opt-{!identifier}')"/>
+              </div>
+              <div style="float: left; margin: 1px;">              
+                <apex:image value="{!URLFOR($Resource.ISSP_MultipicklistIcons, 'icons/arrow_lt22.gif')}" 
+                  alt="{!$Label.MultiselectPicklist_RemoveAll}" 
+                  styleClass="arrows" 
+                  title="{!$Label.MultiselectPicklist_RemoveAll}"
+                  onclick="moveAll('#right-opt-{!identifier}', '#left-opt-{!identifier}', '{!compareKey}')"/>
+              </div>
+            </div>
+          </td>
+          <td>
+            <label for="right-opt-{!identifier}">{!rightLabel}</label>
+            <select id="right-opt-{!identifier}" multiple="multiple" size="{!size}" class="listbox req-class">
+              <apex:repeat value="{!rightOptions}" var="option">
+                <option title="{!option.label}" value="{!option.value}">{!option.label}</option>
+              </apex:repeat>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </apex:outputPanel>
+</apex:component>

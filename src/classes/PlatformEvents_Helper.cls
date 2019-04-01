@@ -10,6 +10,7 @@ public class PlatformEvents_Helper {
                 'Partner_products__c' => 'PartnerProduct__e',
                 'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
                 'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
+				'Remote_Invocation__c' => 'RemoteInvocation__e',
                 'AP_Process_Form__c' => 'PASS__e',
                 'Services_Rendered__c' => 'PASS__e'
 		};
@@ -103,7 +104,7 @@ public class PlatformEvents_Helper {
         }
         
         if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' 
-        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='PASS__e'){
+        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e' || sObj=='PASS__e'){
             return new map<String,String>{
                 'Id' => 'RecordId__c',
                 'Recordtype' => 'RecordType__c',

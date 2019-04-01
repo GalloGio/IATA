@@ -94,7 +94,6 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
         query += ' AND Origin IN :origins ';
         query += 'AND (Account.ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:30 OR (Account.Is_PCI_compliant__c = null AND CreatedDate < LAST_N_DAYS:14))';
         query += 'AND Do_Not_Send_Notification__c = false'; //AMSU-200
-        //query += 'AND (Account.ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:30 OR (Account.Is_PCI_compliant__c = null AND CreatedDate = today))';
 
         system.debug('query: ' + query);
         
@@ -252,45 +251,9 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
                 template = mapTemplates.get(emailTemplateName);
             }
 
-            system.debug('emailTemplateName: ' + emailTemplateName);
-
-            String subject = template.Subject;
-
-            Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
-            emailToSend.saveAsActivity = false;
-            emailToSend.setTargetObjectId(usr.Id);
-            emailToSend.setOrgWideEmailAddressId(orgAddressId);
-            emailToSend.setSubject(subject);
-
-            String iataCode = cse.AccountId == null ? '' : cse.Account.IATACode__c;
-            String contactName = cse.Contact.Name;
-            Datetime dT = cse.CreatedDate.addDays(30);
-            Date myDate = date.newinstance(dT.year(), dT.month(), dT.day());
-
-            String htmlBody = template.HtmlValue;
-            String textBody = template.Body;
-
-            if(!String.isBlank(htmlBody)) {
-                htmlBody = htmlBody.replace('<![CDATA[', '');
-                htmlBody = htmlBody.replace('{!Case.Contact}', contactName);
-                htmlBody = htmlBody.replace('{!Case.IATA_Code__c}', iatacode);
-                htmlBody = htmlBody.replace('{!Case.CreatedDate+30}', myDate.format());
-                htmlBody = htmlBody.replace('{!Case.Id}', cse.Id);
-                htmlBody = htmlBody.replace(']]>', '');
-                emailToSend.setHtmlBody(htmlBody);
-            } 
-
-            if(!String.isBlank(textBody)) {
-                textBody = textBody.replace('{!Case.Contact}}', contactName);
-                textBody = textBody.replace('{!Case.IATA_Code__c}', iatacode);
-                textBody = textBody.replace('{!Case.CreatedDate+30}', myDate.format());
-                textBody = textBody.replace('{!Case.Id}', cse.Id);
-                emailToSend.setPlainTextBody(textBody);
-            }
-
+            //Hotfix to merge templates dynamically
+            Messaging.SingleEmailMessage emailToSend = mergeTemplate(template.Id, cse.contactId, usr.Id, cse.Id, orgAddressId);         
             mailsToSend.add(emailToSend);
-
-            system.debug('emailToSend: ' + emailToSend);
 
             EmailMessage emailMsg = new EmailMessage();
             emailMsg.ToAddress = usr.Email;
@@ -325,7 +288,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
             String regionName = cse.AccountId != null && cse.Account.IATA_ISO_Country__c != null ? cse.Account.IATA_ISO_Country__r.Region__c : '-';
             String preferredLang = String.isBlank(cse.Contact.Preferred_Language__c) ? '-' : cse.Contact.Preferred_Language__c;
             if(!isRenewal) {
-                lstResult.add(new ResultWrapper(cse.CaseNumber, contactName, countryName, regionName, preferredLang, emailTemplateName, 'Success', true));
+                lstResult.add(new ResultWrapper(cse.CaseNumber, cse.Contact.Name, countryName, regionName, preferredLang, emailTemplateName, 'Success', true));
             }
         }
         
@@ -333,6 +296,14 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
             Messaging.SendEmailResult[] EmailResult = Messaging.sendEmail(mailsToSend);
             insert emailToInsert;
         }
+    }
+
+    private static Messaging.SingleEmailMessage mergeTemplate(Id templateId, Id contactId, Id userId, Id caseId, Id oweaId) {
+        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, contactId, caseId);   
+        mail.setOrgWideEmailAddressId(oweaId);
+        mail.setTargetObjectId(userId);
+        mail.saveAsActivity = false;
+        return mail;
     }
 
     public void sendReport(List<ResultWrapper> results) {

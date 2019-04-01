@@ -100,5 +100,5 @@
         <members>*</members>
         <name>Translations</name>
     </types>
-    <version>43.0</version>
+    <version>45.0</version>
 </Package>
