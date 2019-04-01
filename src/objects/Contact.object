@@ -8218,6 +8218,10 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IndividualId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Industry_Areas_of_Involvement__c</fullName>
         <externalId>false</externalId>
         <label>Industry Areas of Involvement</label>
