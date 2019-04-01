@@ -1829,6 +1829,10 @@
         <name>CurrencyCenter_Annual_Surveys</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Annual_Top_Text --></label>
+        <name>CurrencyCenter_Annual_Top_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Attachments_Description --></label>
         <name>CurrencyCenter_Attachments_Description</name>
     </customLabels>
