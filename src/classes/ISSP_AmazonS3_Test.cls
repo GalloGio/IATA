@@ -187,7 +187,9 @@ private class ISSP_AmazonS3_Test {
             );
             insert aFile;
 
-            ctrl.createAmazonFileObject();
+            ISSP_AmazonS3_Ctrl.createAmazonFileObject(null, null, null, null);
+            ISSP_AmazonS3_Ctrl.createAmazonFileObject(aFile.Case__c, aFile.Full_Name_Unique__c, 10, aFile.Full_Name_Unique__c);
+            ISSP_AmazonS3_Ctrl.isFileNameUnique(aFile.Case__c, aFile.Full_Name_Unique__c);
 
             String caseStatus = ctrl.getCaseStatus();
 
@@ -199,14 +201,16 @@ private class ISSP_AmazonS3_Test {
 
             ctrl.currentFileName = 'test';
 
-            String testUnique = ctrl.getUniqueFileNames();
-
             map<String, List<ISSP_AmazonS3_Ctrl.AmazonFileAMS>> mapTest = ctrl.refreshAmazonFileMap();
 
             ctrl.deleteThisFile();
 
             ctrl.refreshAfterDelete();
-            
+
+            ctrl.getStorageFolder();
+            ctrl.getCaseOwnerNewgenPCI();
+            ctrl.getCaseOwnerModelA();
+
             ISSP_AmazonS3_Ctrl ctrl2 = new ISSP_AmazonS3_Ctrl(new Apexpages.Standardcontroller(testCase));
 
             ISSP_AMS_Accreditation amsCtrl = new ISSP_AMS_Accreditation();

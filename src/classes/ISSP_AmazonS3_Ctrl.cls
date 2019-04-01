@@ -13,7 +13,6 @@ global class ISSP_AmazonS3_Ctrl {
     public String caseStatus;
 
     String storageFolder;
-    String uniqueFileNames;
 
     public Id id {get; set;}
 
@@ -28,9 +27,6 @@ global class ISSP_AmazonS3_Ctrl {
     private Map<String,String> mapUniqueFileList;
 
     public String currentFileName {get; set;}
-    public String uploadedFileName {get; set;}
-    public Long uploadedFileSize {get; set;}
-    public String uploadedFileIdentifier {get; set;}
     public string message {get; private set;}
     public boolean archived {get; private set;}
     
@@ -345,7 +341,6 @@ global class ISSP_AmazonS3_Ctrl {
 
         return null;
     }
-**/
 
     private map<String,AmazonFile__c> getMapAmazonFile() {
         System.DEBUG('Get File Map Case Id: ' + this.cse.Id);
@@ -364,7 +359,7 @@ global class ISSP_AmazonS3_Ctrl {
         }
         return mapAmazonFile;
     }
-
+**/
     public map<String, List<AmazonFileAMS>> refreshAmazonFileMap() {
 
         list<AmazonFile__c> listAmazonFile = [
@@ -493,51 +488,40 @@ global class ISSP_AmazonS3_Ctrl {
         set;
          }
 
-    public String getUniqueFileNames() {
-         String ufn;
-
-        //Get File identifiers for AmzonFile records assoc. with case
+    /**
+        Check is file Name is already in the related files
+    **/
+    @RemoteAction
+    global static Boolean isFileNameUnique(Id caseId, String filename) {
         list<AmazonFile__c> listAmazonFile = [
-            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c, Review_Status__c
-            From AmazonFile__c
-            Where Case__c = :cse.Id
+            SELECT Id
+            FROM AmazonFile__c
+            WHERE Case__c = :caseId
+            AND Name = :filename
         ];
-
-        SYSTEM.DEBUG('RETRIEVED listAmazonFile size:' + listAmazonFile.size());
-
-        for ( AmazonFile__c amazonFile: listAmazonFile) {
-            String name = amazonFile.Name;
-            SYSTEM.DEBUG('REMOTE File Name:' + name);
-                if(ufn==null) {
-                    ufn = name;
-                } else {
-                    ufn = ufn + ',' + name;
-                }
-        }
-
-        return ufn;
+        return listAmazonFile.isEmpty();
     }
 
-
-     public void createAmazonFileObject() {
-        String FOLDER = getStorageFolder();
-        String folderName = '';
-        String fullName;
-
-        System.DEBUG('Storage FOLDER: ' + FOLDER);
-
+    /**
+        Creates a new Amazon file record for the related Case
+    **/
+    @RemoteAction
+    global static Boolean createAmazonFileObject(Id caseId, String filename, Long fielsize, String fileid) {
         try {
+            Case cse = [SELECT Id, Status FROM Case WHERE Id = :caseId];
+
+            String baseFolder = FOLDER_STEM + String.valueOf(caseId) + '/';
 
             AmazonFile__c amazonFile = new AmazonFile__c(
-                Name = uploadedFileName,
-                Full_Name_Unique__c = FOLDER + uploadedFileName,
-                File_Identifier__c = uploadedFileIdentifier,
-                File_Identifier_picklist__c = uploadedFileIdentifier,
+                Name = filename,
+                Full_Name_Unique__c = baseFolder + filename,
+                File_Identifier__c = fileid,
+                File_Identifier_picklist__c = fileid,
                 Review_Status__c = 'Pending',
                 RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
-                Size_MB__c = uploadedFileSize* 0.000001, //convert to MB
+                Size_MB__c = fielsize* 0.000001, //convert to MB
                 isPublic__c = true,
-                Case__c = Id
+                Case__c = cse.Id
             );
             insert amazonFile;
 
@@ -546,11 +530,10 @@ global class ISSP_AmazonS3_Ctrl {
                 cse.New_Attachment_From_Portal_User__c = true;
                 update cse;
             }
-
-            refreshAmazonFileMap();
-            refreshReviewStatusMap();
+            return true;
         } catch ( Exception e) {
             System.debug('Error creating an AmazonFile__c object: ' + e.getMessage());
+            return false;
         }
     }
 

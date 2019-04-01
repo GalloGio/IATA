@@ -66,11 +66,6 @@
                                 <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
                             </div>
                         </div>
-                            <apex:actionFunction name="createAmazonFileObject{!reqCnt}_JS" action="{!createAmazonFileObject}" reRender="AmazonDocs,UniqueFileNamesList,mainblock">
-                                <apex:param assignTo="{!uploadedFileName}" name="filename" value=""/>
-                                <apex:param assignTo="{!uploadedFileSize}" name="filesize" value=""/>
-                                <apex:param assignTo="{!uploadedFileIdentifier}" name="fileidentifier" value="{!reqIdentifier}"/>
-                            </apex:actionFunction>
 
                         <apex:outputPanel id="AmazonDocs">
 
@@ -112,7 +107,6 @@
                                 </apex:dataTable>
                             </apex:outputPanel>
                         </apex:repeat>
-                            <input type="hidden" id="UniqueFileNamesList" class="UniqueFileNames" value="{!uniqueFileNames}"/>
                         </apex:outputPanel>
                         </apex:form>
                         </div>
@@ -151,20 +145,40 @@
         },500);
     }
 
-    function getAllFileNames(){
-        var res=[];
-        for(i=0 ; i<$(".UniqueFileNames").length ; i++){
-            var currFileNamesList = ($(".UniqueFileNames")[i].value).split(",");
-            for(j=0 ; j<currFileNamesList.length ; j++){
-                if(res.indexOf(currFileNamesList[j])==-1) {
-                    var filename = currFileNamesList[j];
-                    if (filename>'') {
-                        res.push(filename);
-                    }
+    function checkIfFileExists(caseId, filename, callback) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ISSP_AmazonS3_Ctrl.isFileNameUnique}',
+            caseId,
+            filename,
+            function(result, event){
+                if (event.status) {
+                    callback(result);
+                } else {
+                    console.log("ERROR: " + event.message);
+                    callback(false);
                 }
-            }
-        }
-        return res;
+            },
+            {escape: true}
+        );
+    }
+
+    function createAmazonFileObject(caseId, filename, fielsize, fileid, callback) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ISSP_AmazonS3_Ctrl.createAmazonFileObject}',
+            caseId,
+            filename,
+            fielsize,
+            fileid,
+            function(result, event){
+                if (event.status) {
+                    callback(result);
+                } else {
+                    console.log("ERROR: " + event.message);
+                    callback(false);
+                }
+            },
+            {escape: true}
+        );
     }
 
         $(document).ready( function() {
@@ -189,7 +203,6 @@
 
                         var uploadErrors = [];
                         var acceptFileTypes = {!allowedExtensions};
-                        var currentAmazonFilesArray = getAllFileNames();
 
                         //Remove any special characters from file name
                             var fn = data.originalFiles[0]['name'];
@@ -210,11 +223,6 @@
                             uploadErrors.push('{!JSEncode($Label.ISSP_File_Extension)}');
                             window.onbeforeunload = null;
                         }
-
-                        if(currentAmazonFilesArray.indexOf(fn) > -1) {
-                            uploadErrors.push('{!JSEncode($Label.ISSP_File_Exists)}');
-                            window.onbeforeunload = null;
-                         }
 
                         console.log('File size: '+ data.originalFiles[0]['size']);
                         console.log('File length: '+ data.originalFiles[0]['name'].length);
@@ -238,9 +246,16 @@
                             }
                         } else {
                             $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
-                        // and then Submit
-                            data.submit();
-                            $("#input-{!reqCnt}").attr('disabled', 'disabled');
+                            checkIfFileExists('{!$CurrentPage.parameters.caseId}',fn,function(result) {
+                              if (result) {
+                                // and then Submit
+                                data.submit();
+                                $("#input-{!reqCnt}").attr('disabled', 'disabled');
+                              } else {
+                                alert('{!JSEncode($Label.ISSP_File_Exists)}');
+                                window.onbeforeunload = null;
+                              }
+                            });
                         }
                       }
                     },
@@ -255,6 +270,7 @@
 
                         window.onbeforeunload = null;
                         $('.uploadbar-{!reqCnt}').css('width', '100%').addClass('progress-bar progress-bar-danger progress-bar-striped');
+                        console.log("fail section");
                     },
                     done: function (event, data) {
                         //Remove any special characters from file name
@@ -263,16 +279,27 @@
                         fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
 
                         $(".FileInput-{!reqCnt}").val(folderInit); //Set folder back to init value in case rerendering fails in next line
-                        createAmazonFileObject{!reqCnt}_JS(fn, data.originalFiles[0].size);
-                        vReqNo = {!reqCnt};
+                        createAmazonFileObject(
+                            '{!$CurrentPage.parameters.caseId}',
+                            fn,
+                            data.originalFiles[0].size,
+                            "{!reqIdentifier}",
+                            function(result) {
+                                if (!result) {
+                                    alert('{!JSEncode($Label.ISSP_File_Exists)}');
+                                }
+                                vReqNo = {!reqCnt};
 
-                        $("#input-{!reqCnt}").removeAttr('disabled');
+                                $("#input-{!reqCnt}").removeAttr('disabled');
 
-                        if(isIE()) {
-                            $("#loading-{!reqCnt}").hide();
-                        }
+                                if(isIE()) {
+                                    $("#loading-{!reqCnt}").hide();
+                                }
+                                window.onbeforeunload = null;
+                                location.reload();
+                            }
+                        );
 
-                        window.onbeforeunload = null;
 
                         // Fill the name field with the file's name.
                         //$('#upload_original_name').val(data.originalFiles[0].name);
