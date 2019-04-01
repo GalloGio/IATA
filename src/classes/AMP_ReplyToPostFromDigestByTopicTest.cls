@@ -64,6 +64,12 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		
 		insert accountLst;
 		
+        PageReference pageRef = Page.AMP_ChatterBroadcastTool;
+            
+        Test.setCurrentPage(pageRef);
+            
+        pageRef.getParameters().put('accountId', firstAcctHQ.id);
+            
 		AMP_ChatterBroadcastToolController ctrl = new AMP_ChatterBroadcastToolController();
 		
 		for(AMP_ChatterBroadcastToolController.AccountWrapper aw : ctrl.lstAccounts){
