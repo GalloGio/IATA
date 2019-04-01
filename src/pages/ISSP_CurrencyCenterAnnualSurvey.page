@@ -677,7 +677,9 @@
                                     <p>
                                         Dear IATA Member Airline,
                                         <p>
-                                           To determine the industry-wide amount of blocked or delayed sales funds in and from countries that are subject to currency and repatriation restrictions, IATA conducts this Survey of Remittances of Foreign Balances (RFB) annually. We therefore ask you to complete the following table with data as of 31 December 2017  for sales of previous months.  
+                                            <apex:outputText escape="false" value="{!$Label.CurrencyCenter_Annual_Top_Text}">
+                                                <apex:param value="{!text(YEAR(today())-1)}"/>
+                                            </apex:outputText>
                                         </p>
                                     </p>
                                     <p style="color: #0075BC;">
