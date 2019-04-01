@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to notify users that Annual Survey is submitted</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Currency Center Annual Survey Submitted</name>
+    <style>freeForm</style>
+    <subject>IATA Annual Survey Submitted</subject>
+    <textOnly>Dear {!Contact.Name}
+
+We would like to thank you for participating in the RFB Survey.
+
+You will find attached the RFB Report {!YEAR(TODAY())} with the industry findings and focus for this year’s advocacy efforts for currency repatriation.
+
+We will continue to engage with our Members facing repatriation issues on a monthly basis to keep track of the progress and development and support the advocacy actions.
+
+Should you have any queries, please log a case in your IATA Customer portal under the topic &quot;&quot;Currency Center&quot;&quot;
+
+Kind regards,
+Currency Center Team.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

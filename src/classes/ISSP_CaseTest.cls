@@ -1,8 +1,8 @@
 @isTest
 public class ISSP_CaseTest {
 
-	public static testMethod void testISSP_Case_1() {
-		Account account = ISSP_ObjectFactory.createNewAccount();
+    public static testMethod void testISSP_Case_1() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -32,20 +32,20 @@ public class ISSP_CaseTest {
         Test.startTest();
         ISSP_Case.articleWrapper wrapper = new ISSP_Case.articleWrapper();
         system.runAs(thisUser){
-        	ISSP_Case cttr = new ISSP_Case();
-        	cttr.pageLoad();
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
 
-        	cttr.AddComment();
-        	cttr.edit();
-        	ISSP_Case.getFieldMappedValue('test','test');
+            cttr.AddComment();
+            cttr.edit();
+            ISSP_Case.getFieldMappedValue('test','test');
             cttr.updateCase();
             String fullname = cttr.fullnameNOCFile;
         }
         Test.stopTest();
-	}
+    }
 
-	public static testMethod void testISSP_Case_2() {
-		Account account = ISSP_ObjectFactory.createNewAccount();
+    public static testMethod void testISSP_Case_2() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -66,7 +66,7 @@ public class ISSP_CaseTest {
         c.Reason1__c = 'test';
         insert c;
 
-       	ContentVersion doc = new ContentVersion();
+        ContentVersion doc = new ContentVersion();
         doc.Title = 'test;';
         doc.PathOnClient = 'test';
         doc.VersionData = Blob.valueOf('test');
@@ -84,17 +84,17 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
         Test.startTest();
         system.runAs(thisUser){
-        	ISSP_Case cttr = new ISSP_Case();
-        	cttr.pageLoad();
-        	cttr.sisCaseArea = 'test';
-        	cttr.AddComment();
-        	cttr.edit();
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+            cttr.sisCaseArea = 'test';
+            cttr.AddComment();
+            cttr.edit();
         }
         Test.stopTest();
-	}
+    }
 
-	public static testMethod void testISSP_Case_3() {
-		Account account = ISSP_ObjectFactory.createNewAccount();
+    public static testMethod void testISSP_Case_3() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -138,7 +138,7 @@ public class ISSP_CaseTest {
         FAQkav.Language='en_US';
         FAQkav.UrlName = 'test00qwe';
         FAQkav.Title ='Test';
-        FAQkav.To_display_on_Homepage__c=true;
+        //FAQkav.To_display_on_Homepage__c=true;
         insert FAQkav;
 
         String kId = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :FAQkav.Id LIMIT 1].KnowledgeArticleId;
@@ -148,20 +148,20 @@ public class ISSP_CaseTest {
         art.KnowledgeArticleId = kId;
         insert art;
 
-        How_To__kav howTokav ;
-        howTokav =  (How_To__kav)ISSP_ObjectFactory.createSObject('How_To__kav',false,12);
-        howTokav.Language='en_US';
-        howTokav.UrlName = 'test2qwesdf';
-        howTokav.Title='test2';
-        howTokav.To_display_on_Homepage__c=true;
-        insert howTokav;
+        //How_To__kav howTokav ;
+        //howTokav =  (How_To__kav)ISSP_ObjectFactory.createSObject('How_To__kav',false,12);
+        //howTokav.Language='en_US';
+        //howTokav.UrlName = 'test2qwesdf';
+        //howTokav.Title='test2';
+        //howTokav.To_display_on_Homepage__c=true;
+        //insert howTokav;
 
-        String kId2 = [SELECT KnowledgeArticleId FROM How_To__kav WHERE Id = :howTokav.Id LIMIT 1].KnowledgeArticleId;
+        //String kId2 = [SELECT KnowledgeArticleId FROM How_To__kav WHERE Id = :howTokav.Id LIMIT 1].KnowledgeArticleId;
 
-        CaseArticle art2 = new CaseArticle();
-        art2.CaseId = c.Id;
-        art2.KnowledgeArticleId = kId2;
-        insert art2;
+        //CaseArticle art2 = new CaseArticle();
+        //art2.CaseId = c.Id;
+        //art2.KnowledgeArticleId = kId2;
+        //insert art2;
 
         Id recordTypeId2 = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account account2 = ISSP_ObjectFactory.createNewAccount();
@@ -183,34 +183,34 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('artid', art.Id);
         Test.startTest();
         system.runAs(thisUser){
-        	ISSP_Case cttr = new ISSP_Case();
+            ISSP_Case cttr = new ISSP_Case();
 
-			ApexPages.currentPage().getParameters().put('topic', 'SA');
-			cttr = new ISSP_Case();
-			ApexPages.currentPage().getParameters().put('topic', 'TIDS');
-			cttr = new ISSP_Case();
-			ApexPages.currentPage().getParameters().put('topic', 'VR');
-			cttr = new ISSP_Case();
+            ApexPages.currentPage().getParameters().put('topic', 'SA');
+            cttr = new ISSP_Case();
+            ApexPages.currentPage().getParameters().put('topic', 'TIDS');
+            cttr = new ISSP_Case();
+            ApexPages.currentPage().getParameters().put('topic', 'VR');
+            cttr = new ISSP_Case();
 
-        	cttr.pageLoad();
-        	cttr.getAirlines();
-        	cttr.AddComment();
-        	cttr.edit();
-        	cttr.save();
-        	cttr.saveAttach();
-        	//cttr.getSelectArtical();
+            cttr.pageLoad();
+            cttr.getAirlines();
+            cttr.AddComment();
+            cttr.edit();
+            cttr.save();
+            cttr.saveAttach();
+            //cttr.getSelectArtical();
         }
         Test.stopTest();
-	}
+    }
 
-	public static testMethod void testISSP_Case_4() {
-		dgAI2__DG_Disable_Features__c dg = dgAI2__DG_Disable_Features__c.getOrgDefaults();
-		dg.dgAI2__Disable_Case_Predictions__c = true;
-		dg.dgAI2__Disable_Case_Feedback__c = true;
-		dg.dgAI2__Disable_Prediction_On_Update__c = true;
-		upsert dg;
-		
-		Account account = ISSP_ObjectFactory.createNewAccount();
+    public static testMethod void testISSP_Case_4() {
+        dgAI2__DG_Disable_Features__c dg = dgAI2__DG_Disable_Features__c.getOrgDefaults();
+        dg.dgAI2__Disable_Case_Predictions__c = true;
+        dg.dgAI2__Disable_Case_Feedback__c = true;
+        dg.dgAI2__Disable_Prediction_On_Update__c = true;
+        upsert dg;
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -238,40 +238,40 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
         Test.startTest();
         system.runAs(thisUser){
-        	ISSP_Case cttr = new ISSP_Case();
-        	cttr.pageLoad();
-        	cttr.DPCAccept();
-        	cttr.DPCCompleteDSR();
-        	cttr.newCase.Planned_Start_CR__c = system.today();
-        	cttr.newCase.Planned_End_CR__c = system.today();
-        	cttr.DPCCompleteScheduleDSR();
-        	cttr.DPCSave();
-        	cttr.changeDpcOwner();
-        	cttr.newCase.Escalated_Status_ACCA__c = '8.0 Doc review - completed';
-        	cttr.validateACR();
-        	cttr.newCase.Evaluation_Effort__c = 'test';
-        	cttr.newCase.Specification_Effort__c = 'test';
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+            cttr.DPCAccept();
+            cttr.DPCCompleteDSR();
+            cttr.newCase.Planned_Start_CR__c = system.today();
+            cttr.newCase.Planned_End_CR__c = system.today();
+            cttr.DPCCompleteScheduleDSR();
+            cttr.DPCSave();
+            cttr.changeDpcOwner();
+            cttr.newCase.Escalated_Status_ACCA__c = '8.0 Doc review - completed';
+            cttr.validateACR();
+            cttr.newCase.Evaluation_Effort__c = 'test';
+            cttr.newCase.Specification_Effort__c = 'test';
             cttr.newCase.Coding_Effort__c = 'test';
             cttr.newCase.Unit_Test_Effort__c = 'test';
-    		cttr.newCase.System_Test_Effort__c = 'test';
-    		cttr.newCase.QA_Effort__c = 'test';
+            cttr.newCase.System_Test_Effort__c = 'test';
+            cttr.newCase.QA_Effort__c = 'test';
             cttr.newCase.Documentation_Effort__c = 'test';
             cttr.newCase.Implementation_Effort__c = 'test';
             cttr.newCase.Estimated_Total_Person_days__c = 1;
             cttr.newCase.Estimated_Total_Development_Cost__c = 1;
-        	cttr.validateACR();
-        	cttr.newCase.Planned_Documentation_Date__c = system.today();
-        	cttr.newCase.Planned_Implementation_Date__c = system.today();
-        	cttr.validateACR();
-        	cttr.newCase.Documentation_Complete__c = system.today();
-        	cttr.newCase.Deployment_date_to_acca__c = system.today();
-        	cttr.close();
+            cttr.validateACR();
+            cttr.newCase.Planned_Documentation_Date__c = system.today();
+            cttr.newCase.Planned_Implementation_Date__c = system.today();
+            cttr.validateACR();
+            cttr.newCase.Documentation_Complete__c = system.today();
+            cttr.newCase.Deployment_date_to_acca__c = system.today();
+            cttr.close();
         }
         Test.stopTest();
-	}
+    }
 
-	public static testMethod void testISSP_Case_5() {
-		Account account = ISSP_ObjectFactory.createNewAccount();
+    public static testMethod void testISSP_Case_5() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -299,40 +299,40 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
         Test.startTest();
         system.runAs(thisUser){
-        	ISSP_Case cttr = new ISSP_Case();
-        	cttr.pageLoad();
-        	cttr.DPCCaseScheduleWarning = true;
-        	cttr.newCase.Region__c = 'Africa & Middle East';
-        	cttr.assignToIATA();
-        	cttr.newCase.Region__c = 'Americas';
-        	cttr.assignToIATA();
-        	cttr.newCase.Region__c = 'Asia & Pacific';
-        	cttr.assignToIATA();
-        	cttr.newCase.Region__c = 'China & North Asia';
-        	cttr.assignToIATA();
-        	cttr.newCase.Region__c = 'Europe';
-        	cttr.assignToIATA();
-        	cttr.cancel();
-        	ApexPages.currentPage().getParameters().put('retURL', '/ISSP_Homepage');
-        	cttr.cancel();
-        	ApexPages.currentPage().getParameters().put('caseId', '1234');
-        	cttr.cancel();
-        	cttr.isEditMode = true;
-        	cttr.cancel();
-        	cttr.isGSAOnly = false;
-        	cttr.isGSAUser = true;
-        	cttr.save();
-        	cttr.saveAttach();
-        	cttr.isGSAOnly = false;
-        	cttr.isGSAUser = true;
-        	cttr.save();
-        	cttr.saveAttach();
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+            cttr.DPCCaseScheduleWarning = true;
+            cttr.newCase.Region__c = 'Africa & Middle East';
+            cttr.assignToIATA();
+            cttr.newCase.Region__c = 'Americas';
+            cttr.assignToIATA();
+            cttr.newCase.Region__c = 'Asia & Pacific';
+            cttr.assignToIATA();
+            cttr.newCase.Region__c = 'China & North Asia';
+            cttr.assignToIATA();
+            cttr.newCase.Region__c = 'Europe';
+            cttr.assignToIATA();
+            cttr.cancel();
+            ApexPages.currentPage().getParameters().put('retURL', '/ISSP_Homepage');
+            cttr.cancel();
+            ApexPages.currentPage().getParameters().put('caseId', '1234');
+            cttr.cancel();
+            cttr.isEditMode = true;
+            cttr.cancel();
+            cttr.isGSAOnly = false;
+            cttr.isGSAUser = true;
+            cttr.save();
+            cttr.saveAttach();
+            cttr.isGSAOnly = false;
+            cttr.isGSAUser = true;
+            cttr.save();
+            cttr.saveAttach();
         }
         Test.stopTest();
-	}
+    }
     
-	public static testMethod void testISSP_Case_6() {
-		Account account = ISSP_ObjectFactory.createNewAccount();
+    public static testMethod void testISSP_Case_6() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -369,23 +369,23 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
         Test.startTest();
         system.runAs(thisUser){
-        	ISSP_Case cttr = new ISSP_Case();
+            ISSP_Case cttr = new ISSP_Case();
             cttr.newCase = c;
-        	cttr.showAlertMessage();
+            cttr.showAlertMessage();
         }
         Test.stopTest();
-	}
+    }
 
-	public static testMethod void testISSP_Case_99() {
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
-        							IATA_COUNTRY_EN__c = 'test', IATA_Country_FR__c = 'test', IATA_Country_ZH__c = 'test',
-        							IATA_Country_IT__c = 'test', IATA_Country_JP__c = 'test', ISO_Code__c = 'tt',
-        							IATA_Country_PT__c = 'test', IATA_Country_SP__c = 'test', Case_BSP_Country__c = 'test');
+    public static testMethod void testISSP_Case_99() {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+                                    IATA_COUNTRY_EN__c = 'test', IATA_Country_FR__c = 'test', IATA_Country_ZH__c = 'test',
+                                    IATA_Country_IT__c = 'test', IATA_Country_JP__c = 'test', ISO_Code__c = 'tt',
+                                    IATA_Country_PT__c = 'test', IATA_Country_SP__c = 'test', Case_BSP_Country__c = 'test');
         insert country;
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2',  ISO_Code__c = 'tp', Case_BSP_Country__c = 'test2');
         insert country2;
-		User currentUserInfo = [select LanguageLocaleKey from User where Id = :UserInfo.getUserId()];
-    	currentUserInfo.LanguageLocaleKey = 'pt_BR';
+        User currentUserInfo = [select LanguageLocaleKey from User where Id = :UserInfo.getUserId()];
+        currentUserInfo.LanguageLocaleKey = 'pt_BR';
         update currentUserInfo;
 
         Test.StartTest();
@@ -413,17 +413,17 @@ public class ISSP_CaseTest {
         update currentUserInfo;
         cttr.getItems();
 
-		Boolean isOSCARCase = cttr.isOSCARCase;
-		Boolean isAgencyUser = cttr.isAgencyUser;
-		Boolean isToShowSurveyBtn = cttr.isToShowSurveyBtn;
-		Boolean isDPCAccepted = cttr.isDPCAccepted;
-		Boolean isACRAccepted = cttr.isACRAccepted;
-		Boolean disableCaseComments = cttr.getDisableCaseComments();
-		Id i = cttr.getAMSRegionalQueue();
+        Boolean isOSCARCase = cttr.isOSCARCase;
+        Boolean isAgencyUser = cttr.isAgencyUser;
+        Boolean isToShowSurveyBtn = cttr.isToShowSurveyBtn;
+        Boolean isDPCAccepted = cttr.isDPCAccepted;
+        Boolean isACRAccepted = cttr.isACRAccepted;
+        Boolean disableCaseComments = cttr.getDisableCaseComments();
+        Id i = cttr.getAMSRegionalQueue();
 
         cttr.edit();
 
-		Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Feature Request');
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Feature Request');
 
         Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Application Error');
         cttr.getCaseDefectItems();
@@ -504,7 +504,7 @@ public class ISSP_CaseTest {
         cttr.getCaseTypeItems();
         List<SelectOption> selectOptions = cttr.getCaseClassificationItems();
         Test.StopTest();
-	}
+    }
     
     public static testMethod void testCCOthers() {
         Account account = ISSP_ObjectFactory.createNewAccount();

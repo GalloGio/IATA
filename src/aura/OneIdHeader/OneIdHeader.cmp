@@ -1,4 +1,10 @@
 <aura:component extends="c:Base" implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">
+    
+    <ltng:require styles="{!join(',', 
+            '../OneIdResources/css/normalize.css',
+            '../OneIdResources/css/OneIdStyles.css',
+            '../OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
+    />
 
     <aura:attribute type="String" name="greeting" default="OneId" access="global" />
 
