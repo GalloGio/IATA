@@ -3824,6 +3824,10 @@ albam@iata.org</description>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>IndividualId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Industry</fullName>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
