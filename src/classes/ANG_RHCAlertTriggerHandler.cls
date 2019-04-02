@@ -783,7 +783,7 @@ public class ANG_RHCAlertTriggerHandler{
         List<Contact> agents = [
             SELECT Id, Name, AccountId, Account.Top_Parent__c FROM Contact WHERE AccountId in (
                 SELECT id FROM Account WHERE Top_Parent__c in :accountIds OR Id in :accountIds
-            ) AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM];
+            ) AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND IsEmailBounced = false];
         Map<Id, List<Contact>> mapAccContacts = new Map<Id, List<Contact>>();
 
         for (Contact c: agents) {
