@@ -113,6 +113,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
     public PageReference fetchAgencies() {
+    	mustPreventApply = false;
     	ssController = null;
     	agencies = null;
     	renderConfirmButton = true;
@@ -158,7 +159,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     		//insert new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
     	}
     	else if (actionValue == 'Apply_RHC_regardless'){
-    		mustPreventApply = false;
     		for(ANG_BSP_Attributes__c bsp : bspAttributes){
     			if(bsp.RHC_Amnt_Calc_Type__c != 'formula'){
     				mustPreventApply = true;
