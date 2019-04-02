@@ -187,9 +187,10 @@ private class ISSP_AmazonS3_Test {
             );
             insert aFile;
 
-            ISSP_AmazonS3_Ctrl.createAmazonFileObject(null, null, null, null);
-            ISSP_AmazonS3_Ctrl.createAmazonFileObject(aFile.Case__c, aFile.Full_Name_Unique__c, 10, aFile.Full_Name_Unique__c);
-            ISSP_AmazonS3_Ctrl.isFileNameUnique(aFile.Case__c, aFile.Full_Name_Unique__c);
+            ctrl.uploadedFileName = 'filename';
+            ctrl.uploadedFileSize = 10;
+            ctrl.uploadedFileIdentifier = 'filename';
+            ctrl.createAmazonFileObject();
 
             String caseStatus = ctrl.getCaseStatus();
 
@@ -239,5 +240,32 @@ private class ISSP_AmazonS3_Test {
 
         Test.stopTest();
 
+    }
+
+    static testMethod void unitTest_2() {
+        Amazon_Cred__c cred = new Amazon_Cred__c();
+        cred.Name = 'GenericAttach';
+        cred.Dev_Configuration__c = 'GenericDev';
+        cred.Prod_Configuration__c = 'GenericProd';
+        insert cred;
+        
+        AWSKey__c key = new AWSKey__c();
+        key.AWS_ENDPOINT_URL__c = 'test';
+        key.Bucket__c = 'test';
+        key.IAS_Configation_name__c = 'test';
+        key.IAS_configuration_name__c = 'test';
+        key.Key__c = 'test';
+        key.Name = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? cred.Prod_Configuration__c : cred.Dev_Configuration__c ;
+        key.Secret__c = 'test';
+        insert key;
+
+        Case cse = new Case();
+        insert cse;
+
+        Test.startTest();
+        ISSP_AmazonS3_Ctrl.createAmazonFileObject(null, null, null, null);
+        ISSP_AmazonS3_Ctrl.createAmazonFileObject(cse.Id, 'filename', 10, 'filename');
+        ISSP_AmazonS3_Ctrl.isFileNameUnique(cse.Id, 'filename');
+        Test.stopTest();
     }
 }

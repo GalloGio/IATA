@@ -27,6 +27,9 @@ global class ISSP_AmazonS3_Ctrl {
     private Map<String,String> mapUniqueFileList;
 
     public String currentFileName {get; set;}
+    public String uploadedFileName {get; set;}
+    public Long uploadedFileSize {get; set;}
+    public String uploadedFileIdentifier {get; set;}
     public string message {get; private set;}
     public boolean archived {get; private set;}
     
@@ -559,6 +562,41 @@ global class ISSP_AmazonS3_Ctrl {
         } catch ( Exception e) {
             System.debug('Error creating an AmazonFile__c object: ' + e.getMessage());
             return false;
+        }
+    }
+
+     public void createAmazonFileObject() {
+        String FOLDER = getStorageFolder();
+        String folderName = '';
+        String fullName;
+
+        System.DEBUG('Storage FOLDER: ' + FOLDER);
+
+        try {
+
+            AmazonFile__c amazonFile = new AmazonFile__c(
+                Name = uploadedFileName,
+                Full_Name_Unique__c = FOLDER + uploadedFileName,
+                File_Identifier__c = uploadedFileIdentifier,
+                File_Identifier_picklist__c = uploadedFileIdentifier,
+                Review_Status__c = 'Pending',
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
+                Size_MB__c = uploadedFileSize* 0.000001, //convert to MB
+                isPublic__c = true,
+                Case__c = Id
+            );
+            insert amazonFile;
+
+            if(cse.Status!='Draft') {
+                cse.New_interaction__c = 'New Attachment';
+                cse.New_Attachment_From_Portal_User__c = true;
+                update cse;
+            }
+
+            refreshAmazonFileMap();
+            refreshReviewStatusMap();
+        } catch ( Exception e) {
+            System.debug('Error creating an AmazonFile__c object: ' + e.getMessage());
         }
     }
 
