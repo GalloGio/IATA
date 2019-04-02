@@ -1,0 +1,154 @@
+<apex:page controller="AMP_ReplyToPostFromDigestByTopic" showHeader="true" tabStyle="Account">
+
+	<script>
+		function cvCheckAllOrNone(allOrNoneCheckbox) {
+		
+			// Find parent table
+			var container = allOrNoneCheckbox;
+			while (container.tagName != "TABLE") {
+				container = container.parentNode;
+			}
+		
+			// Switch all checkboxes
+			var inputs = container.getElementsByTagName("input");
+			var checked = allOrNoneCheckbox.checked;
+			for (var i = 0; i < inputs.length; i++) {
+				var input = inputs.item(i);
+				if (input.type == "checkbox") {
+					if (input != allOrNoneCheckbox) {
+						input.checked = checked;
+					}
+				}
+			}
+		}
+	</script>
+	
+	<style>
+			p.MsoNormal, li.MsoNormal, div.MsoNormal{
+				margin:0cm;
+				margin-bottom:.0001pt;
+			}
+			p.msonormal0, li.msonormal0, div.msonormal0 {
+				mso-style-name:msonormal;
+				mso-margin-top-alt:auto;
+				margin-right:0cm;
+				mso-margin-bottom-alt:auto;
+				margin-left:0cm;
+			}
+			
+	</style>
+
+	<apex:form >
+
+		<apex:pageBlock id="mainBlock" title="Comment on Chatter Post" >
+			
+			<apex:pageBlockSection columns="1" collapsible="false" >
+			
+				<apex:pageBlockSectionItem >
+				
+					<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border-spacing:0;display:table">
+						
+						<tr>
+							<td width="50" style="padding:7.5pt 0cm 7.5pt 7.5pt">
+								<p class="MsoNormal">
+									<span>
+										<img border="0" width="45" height="45" style='width:.4687in;height:.4687in' src="{!userPhotoURL}"/>
+									</span>
+								</p>
+							</td>
+							
+							<td width="430" style="padding:7.5pt 7.5pt 7.5pt 0.5cm">
+								
+								<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="430" style='width:322.5pt;border-collapse:collapse;border-spacing:0'>
+									<tr>
+										<td valign="top" style="padding:0cm 0cm 0cm 0cm">
+											<p style="font-size:10.5pt;margin:0cm;margin-bottom:.0001pt">
+												<span>{!createdByName}</span>
+											</p>
+											<p style="margin:0cm;margin-bottom:.0001pt">
+												<span style="font-size:9.0pt; color:#94A4BD">{!createdDate}</span>
+											</p>
+										</td>
+									</tr>
+								</table>
+								
+							</td>
+							
+						</tr>
+					</table>
+					
+					<table>
+						<tr>
+							<td colspan="2" valign="top" style="padding:0cm 0cm 0cm 0cm">
+								<p class="MsoNormal" style="font-size:10.5pt;">
+									<span>{!commentBody}</span>
+								</p>
+							</td>
+						</tr>
+					</table>
+			
+				</apex:pageBlockSectionItem>
+				
+			</apex:pageBlockSection>
+		
+			<apex:pageMessages escape="false" />
+
+			<apex:pageBlockSection title="Step 1 - Select accounts on which you want your comment to be posted" columns="1" collapsible="false" rendered="{! step == 1}">
+		
+				<apex:pageBlockSectionItem >
+					<apex:outputPanel >
+						<apex:commandButton action="{!nextStep}" value="Next >" reRender="mainBlock" style="float: right;" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockTable value="{!feedItemAccountLst}" var="wrap" id="feedItemAccountTable">
+
+					<apex:column style="width:100px;">
+
+						<apex:facet name="header">
+							<apex:inputCheckbox onclick="cvCheckAllOrNone(this);"/> 
+						</apex:facet>
+
+						<apex:inputCheckbox value="{!wrap.isSelected}" />
+
+					</apex:column>
+
+					<apex:column headerValue="{!$ObjectType.Account.fields['Name'].label}" value="{!wrap.feedItem.Parent.Name}"/>
+
+				</apex:pageBlockTable>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputPanel >
+						<apex:commandButton action="{!nextStep}" value="Next >" reRender="mainBlock" style="float: right;" />
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection title="Step 2 - Post your comment" columns="1" collapsible="false" rendered="{! step == 2}">
+
+				<apex:inputTextarea cols="50" rows="4" value="{!message}" label="Insert Comment:"/>
+
+				<b>Your comment will be posted on the following accounts ({!numberOfAccounts}):</b>
+				
+				<br/>
+
+				{!acctListStr}
+
+				<apex:outputPanel >
+					<apex:commandButton action="{!previousStep}" value="< Back to Account Selection" reRender="mainBlock" />
+					<apex:commandButton action="{!postReplyMessages}" value="Post Comment" reRender="mainBlock" style="float: right;" status="replyStatusId"/>
+					<apex:actionStatus id="replyStatusId" >
+						<apex:facet name="start" >
+							<img src="/img/loading.gif" style="float: right;"/>
+						</apex:facet>
+					</apex:actionStatus>
+				</apex:outputPanel>
+
+			</apex:pageBlockSection>
+		
+		</apex:pageBlock>
+
+	</apex:form>
+
+</apex:page>
