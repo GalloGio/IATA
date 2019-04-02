@@ -119,6 +119,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Auto_approved_for__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ICH_Airline__c</field>
             </layoutItems>
             <layoutItems>
