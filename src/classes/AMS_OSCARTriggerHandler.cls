@@ -3629,7 +3629,7 @@ public class AMS_OSCARTriggerHandler {
         ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China'); //ACAMBAS - NEWGEN-4445
         */
 
-        Set<Id> oscarRTsToProcess = new Set<ID>{AMS_Utils.RECTYPE_NEW,AMS_Utils.RECTYPE_NEWHE,AMS_Utils.RECTYPE_CORRECTION, AMS_Utils.RECTYPE_CERT,AMS_Utils.RECTYPE_CHINA, AMS_Utils.RECTYPE_GDI};
+        Set<Id> oscarRTsToProcess = new Set<ID>{AMS_Utils.RECTYPE_NEW, AMS_Utils.RECTYPE_NEWHE, AMS_Utils.RECTYPE_NEWAE, AMS_Utils.RECTYPE_GDI};
 
         if (oscarRTsToProcess.contains(updatedOscar.recordTypeID)){
         	//TD2080607: partially refactored below code
