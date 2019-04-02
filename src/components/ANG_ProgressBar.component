@@ -62,7 +62,7 @@
         position: relative;
         width: {!IF(helper.progressNodes.size<9,'80px','60px')};
         height: 6px;
-        margin: 0 0px 32px 0px;
+        margin: 0px 0px 32px 0px;
         border-left: none;
         border-right: none;
         border-radius: 0;
@@ -142,6 +142,12 @@
         color: #383d41;
         background-color: #e2e3e5;
         border-color: #d6d8db;
+    }
+    /** IE styles **/
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        .ANG_progress { padding-bottom: 60px !important; }
+        .ANG_progress .bar { margin: 0px !important; }
+        .ANG_progress .title { white-space:normal !important; }
     }
   </style>
 
