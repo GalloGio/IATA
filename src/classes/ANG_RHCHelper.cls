@@ -158,7 +158,7 @@ public class ANG_RHCHelper {
 			if(rhc.ANG_CashCondition__c && fsAmount > 0){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Cash Condition');
 				ANG_BSP_Attributes__c bspAttrCash = bspAttributesMap.get(relatedBspId + '.' + RECTYPE_CASH_CONDITION_CONFIG);
-				Decimal fsPercentage = (bspAttrCash.FS_Percentage__c == null) ? 0 : bspAttrCash.FS_Percentage__c;
+				Decimal fsPercentage = (bspAttrCash == null || bspAttrCash.FS_Percentage__c == null) ? 0 : bspAttrCash.FS_Percentage__c;
 				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
 				continue;
 			}
