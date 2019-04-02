@@ -27,6 +27,13 @@
 					</tr>
 				</table>
 			</apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!operation == 'CER'}">
+                <table border="1">
+					<tr>
+						<td>Account Id</td>
+					</tr>
+				</table>
+            </apex:outputPanel>
 		</div>
 	</div>
 </apex:component>

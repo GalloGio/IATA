@@ -66,6 +66,7 @@
 	                                <apex:selectOption itemValue="FOP" itemLabel="FOP Oscars"/>
 	                                <apex:selectOption itemValue="PCI_C" itemLabel="Close PCI"/>
                                     <apex:selectOption itemValue="CVR" itemLabel="Create VR"/>
+									<apex:selectOption itemValue="CER" itemLabel="Certificate"/>
 
 	                                <apex:actionSupport event="onchange" reRender="filters" id="Us2"/>
 	                            </apex:selectList>
@@ -136,7 +137,7 @@
 	                    </apex:pageBlockSectionItem>
                    	</apex:outputPanel>
 
-                   	<apex:outputPanel layout="none" id="uploaderSelector" rendered="{!operation == 'PCI_C' || operation == 'CVR'}">
+                   	<apex:outputPanel layout="none" id="uploaderSelector" rendered="{!operation == 'PCI_C' || operation == 'CVR' || operation == 'CER'}">
                    		<apex:pageBlockSectionItem >
                    			<apex:inputHidden id="fileSrvId" value="{!csvFileContent}"/>
 							<input id="fileId" type="file" onchange="onChange(event)" name="csvFile"/>
@@ -154,7 +155,7 @@
                 </apex:pageBlockSection>
 
                 <apex:outputPanel id="resultsColumn" layout="block">
-                <apex:pageBlockSection id="uploadExection" title="Upload Execution" columns="1" rendered="{!operation == 'PCI_C' || operation == 'CVR'}">
+                <apex:pageBlockSection id="uploadExection" title="Upload Execution" columns="1" rendered="{!operation == 'PCI_C' || operation == 'CVR' || operation == 'CER'}">
                 	<c:AMS_Batch_Progress_Bar id="progressBar"
                             cNumberOfJobs="1" 
                             cBatchId="{!batchId}"

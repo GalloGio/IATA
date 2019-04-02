@@ -9,8 +9,34 @@ public class AMS_OSCAR_Mass_ActionHelper {
 	}
 
 	public static void create_VR(Account acc, Map<String,Object> params) {
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule= true;  
+        List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id> {acc.IATA_ISO_Country__c});
+
+        /*** Create Case ***/
+		Case cse = new Case();
+		cse.AccountId = acc.Id;
+		cse.Account_Concerned__c = acc.Id;
+        if(!countries.isEmpty()) {
+            IATA_ISO_Country__c country = countries[0];
+            cse.BSPCountry__c = country.Case_BSP_Country__c;
+            cse.Region__c = country.Region__c;
+        }
+		cse.CaseArea__c = AMS_UTILS.CASE_AREA_ACCREDITATION_PROCESS;
+		cse.Reason1__c = AMS_UTILS.CASE_REASON_VR_CLOSURE;
+		cse.Origin ='IATA Internal User';		
+		cse.ContactId = getCaseContact(acc);
+		cse.RecordTypeId = schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        cse.Status = 'Open';
+		cse.setOptions(dmo);
+        insert cse;
+
+        cse = [SELECT Id, CaseNumber, OwnerId FROM Case WHERE Id = :cse.Id];
+
 		/*** Create OSCAR ***/
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+        oscar.Name = cse.CaseNumber;
+        oscar.OwnerId = cse.OwnerId;
 		oscar.Account__c = acc.Id;
 		Set<String> vr_ca_classes = new Set<String> {'G', 'M', 'X', 'T'};
 		if(vr_ca_classes.contains(oscar.Location_Class__c)) {
@@ -20,31 +46,51 @@ public class AMS_OSCAR_Mass_ActionHelper {
 		}		
 		oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('VOLUNTARY RELINQUISHMENT').getRecordTypeId();
 		oscar.Status__c = 'Open';
+        oscar.Change_Effective_as_of__c = Date.today();
+        oscar.Form_Effective_Date__c = Date.valueOf(((String) params.get('Form_Effective_Date__c')));
+		oscar.Financial_Security_expiry_date__c = Date.valueOf(((String) params.get('Financial_Security_expiry_date__c')));
 		insert oscar;
 
-		/*** Create Case ***/
+		cse.OSCAR__c = oscar.Id;
+        update cse;
+	}
+
+    public static void create_Certificate(Account acc) {
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule= true;  
+        List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id> {acc.IATA_ISO_Country__c});
+        /** Create Case **/
 		Case cse = new Case();
+        cse.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+        cse.Origin = 'IATA Internal User';
+        cse.CaseArea__c = 'Accreditation Products';
+        cse.Reason1__c = 'PAX/CARGO Certificate';
 		cse.AccountId = acc.Id;
 		cse.Account_Concerned__c = acc.Id;
-		cse.BSPCountry__c = acc.BillingCountry;
-		cse.CaseArea__c = AMS_UTILS.CASE_AREA_ACCREDITATION_PROCESS;
-		cse.Reason1__c = AMS_UTILS.CASE_REASON_VR_CLOSURE;
-		cse.Origin = 'Internal';
-		cse.OSCAR__c = oscar.Id;
-		cse.Region__c = acc.Region_formula__c;
 		cse.ContactId = getCaseContact(acc);
-		cse.RecordTypeId = schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        cse.Status = 'Open';
+        if(!countries.isEmpty()) {
+            IATA_ISO_Country__c country = countries[0];
+            cse.BSPCountry__c = country.Case_BSP_Country__c;
+            cse.Region__c = country.Region__c;
+        }
+        cse.setOptions(dmo);
 		insert cse;
 
-		cse = [SELECT Id, CaseNumber, Region__c FROM Case WHERE Id = :cse.Id];
+        cse = [SELECT Id, CaseNumber, OwnerId FROM Case WHERE Id = :cse.Id];
 
-		oscar.STEP6__c = 'Passed';
+        /** Create OSCAR **/
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+        oscar.Process__c = 'CER.1.0';
+		oscar.Account__c = acc.Id;
 		oscar.Name = cse.CaseNumber;
-		oscar.Change_Effective_as_of__c = Date.today();
-		oscar.OwnerId = AMS_Utils.getRegionalQueue(cse);
-		oscar.Form_Effective_Date__c = Date.valueOf(((String) params.get('Form_Effective_Date__c')));
-		oscar.Financial_Security_expiry_date__c = Date.valueOf(((String) params.get('Financial_Security_expiry_date__c')));
-		update oscar;		
+        oscar.OwnerId = cse.OwnerId;
+        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
+        oscar.Status__c = 'Open';
+        insert oscar;
+
+        cse.OSCAR__c = oscar.Id;
+        update cse;
 	}
 
 	private static Id getCaseContact(Account acc) {

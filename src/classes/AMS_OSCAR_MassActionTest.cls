@@ -64,4 +64,14 @@ private class AMS_OSCAR_MassActionTest {
 		Test.stopTest();
 	}
 	
+	@isTest static void test_create_certificate() {
+		Account acc = [SELECT Id FROM Account];
+		Test.startTest();
+		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr ctr = new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr();
+		ctr.operation = 'CER';
+		ctr.csvFileContent = 'RecordId\n' + acc.Id;
+		ctr.uploadFile(); 
+		Test.stopTest();
+	}
+	
 }

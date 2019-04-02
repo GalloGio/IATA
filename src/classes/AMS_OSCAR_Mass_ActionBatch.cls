@@ -2,6 +2,7 @@ global class AMS_OSCAR_Mass_ActionBatch implements Database.Batchable<sObject>, 
 
 	public static String PROCESS_PCI = 'PROCESS_PCI';
 	public static String CREATE_VR = 'CREATE_VR';
+    public static String CREATE_CERT = 'CREATE_CERT'; 
 	
 	global String operation {get;set;}
 	global String objectName {get;set;}
@@ -23,6 +24,8 @@ global class AMS_OSCAR_Mass_ActionBatch implements Database.Batchable<sObject>, 
 			column = 'OSCAR Id,Success,Message';
 		} else if (operation == CREATE_VR) {
 			column = 'Account Id,Form Effective Date,Financial Security expiry date,Success,Message';
+		} else if (operation == CREATE_CERT) {
+			column = 'Account Id,Success,Message';
 		}
 
 		this.results = new ExecutionResult(column);
@@ -51,16 +54,30 @@ global class AMS_OSCAR_Mass_ActionBatch implements Database.Batchable<sObject>, 
 					row += acc.Id + ',' + caseParams.get('Form_Effective_Date__c') + ',' + caseParams.get('Financial_Security_expiry_date__c') + ',';
 					AMS_OSCAR_Mass_ActionHelper.create_VR(acc, caseParams);
 					row += 'true,';
+				} else if(operation == CREATE_CERT) {
+                    Account acc = (Account) record;
+                    row += acc.Id + ',';
+                    AMS_OSCAR_Mass_ActionHelper.create_Certificate(acc);
+                    row += 'true,';
 				}
 			} catch(Exception e) {
-				row += 'false,' + e.getMessage() + ' -> ' + e.getStackTraceString();
+				String errorMessage = e.getMessage() + ' -> ' + e.getStackTraceString();
+				row += 'false,' + errorMessage.escapeCsv();
 			}
 			results.rows.add(row);
 		}
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		String subject = (operation == CREATE_VR ? 'Voluntary Relinquishment Mass Action report - ' : 'PCI Mass Action report - ') + Datetime.now();
+        String subject;
+        if(operation == CREATE_VR) {
+            subject = 'Voluntary Relinquishment Mass Action report - ' + Datetime.now();
+        } else if(operation == PROCESS_PCI) {
+            subject = 'PCI Mass Action report - ' + Datetime.now();
+        } else if(operation == CREATE_CERT) {
+            subject = 'Certificate Mass Action report - ' + Datetime.now();
+        }
+
 		String body = results.columns + '\n';
 		body += String.join(results.rows, '\n');
 		Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();

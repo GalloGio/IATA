@@ -394,6 +394,13 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
                 System.debug('recordIds: ' + recordIds);
                 batchId = Database.executeBatch(new AMS_OSCAR_Mass_ActionBatch(AMS_OSCAR_Mass_ActionBatch.PROCESS_PCI, 'AMS_OSCAR__c', recordIds, null), 1);
                 isBatchRunning = true;
+            } else if(operation == 'CER') {
+                Set<Id> recordIds = new Set<Id>();
+                for(String row : rows) {
+                    recordIds.add(row.trim());                    
+                }
+                batchId = Database.executeBatch(new AMS_OSCAR_Mass_ActionBatch(AMS_OSCAR_Mass_ActionBatch.CREATE_CERT, 'Account', recordIds, null), 1);
+                isBatchRunning = true;
             } else {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Invalid operation, please contact support.'));
             }
