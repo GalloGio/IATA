@@ -38,7 +38,7 @@ public class LeadTriggerHandler {
         
         System.debug('[MAIL AND LEAD MAP] -> '+mapMailLead);
         List<String> uniqueEmails = new List<String>(new Set<String>(leadsEmails));
-		Integer numOfUniqueEmails = uniqueEmails.size();
+        Integer numOfUniqueEmails = uniqueEmails.size();
 
         //If there are more leads being inserted than individuals in the system. Some individuals have to be created and attached to the leads 
         if((numOfUniqueEmails - numOfIndivs) > 0){
@@ -90,7 +90,7 @@ public class LeadTriggerHandler {
         
         
         //Search for existing Individuals, by Email
-        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c, job_function__c, Department__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
+        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c, job_function__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
                 //Get the respective Lead with the new version of the object
                 String email = String.isBlank(i.Email__c) ? null : i.Email__c.toLowerCase();
@@ -114,7 +114,6 @@ public class LeadTriggerHandler {
                     i.industry__c = newLead.industry;
                     // Change request
                     i.job_function__c = newLead.Membership_Function__c;
-                    i.Department__c = newLead.Department__c;
 
                     individualsToUpdate.add(i);
                              

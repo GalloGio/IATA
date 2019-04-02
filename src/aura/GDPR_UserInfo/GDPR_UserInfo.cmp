@@ -82,11 +82,6 @@
                     </ui:inputSelect>
                     </div>
 
-                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
-                        <label class="slds-form-element__label labels" >Department</label>
-                        <ui:inputText value="{!v.individual.Department__c}" class="slds-input required-input fields" />
-                    </div>
-
                     <!-- LEAD: Title Department__c   CONTACT: Title Department -->
 
                     <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
