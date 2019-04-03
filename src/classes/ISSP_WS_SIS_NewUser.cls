@@ -154,7 +154,7 @@ global with sharing class ISSP_WS_SIS_NewUser {
             theUser = ISSP_WS_Utilities.createUser(inputData.FirstName, inputData.LastName, inputData.EmailAddress, theContact.Account.RecordType.DeveloperName, theContact.Id,isCNS);
             try{
                 theUser.FederationIdentifier = String.valueOf(theContact.Id).substring(0, 15);
-                insert theUser;
+                WithoutSharingOperations.insertUser(theUser);               //insert theUser; 
                 ISSP_WS_Utilities.sendUserEmail(theUser, theContact);
             } catch (Exception e){
                 throw new ISSP_WS_SIS_Common.WSException('001', 'User creation failed; ' + e.getMessage());
@@ -163,7 +163,7 @@ global with sharing class ISSP_WS_SIS_NewUser {
             if (theUser.FederationIdentifier == null){
                 try{
                     theUser.FederationIdentifier = theUser.FedContactId__c;
-                    update theUser;
+                    WithoutSharingOperations.updateUser(theUser);           //update theUser;
                 } catch (Exception e){
                     throw new ISSP_WS_SIS_Common.WSException('001', 'User update failed; ' + e.getMessage());
                 }

@@ -26,8 +26,19 @@ public without sharing class WithoutSharingOperations {
      * Workaround to create Portal User by Internal Users
      * without sharing - class
      */
-    public static ID insertUser(User usr){
+    public static void insertUser(User usr){
         insert usr;
-        return usr.id;
     }
+
+    /**
+     * Workaround to update Portal User by Internal Users
+     * without sharing - class
+     */
+    public static void updateUser(User usr){
+        update usr;
+    }
+
+    public static void updateUserList(List<User> usrList){
+        update usrList;
+    } 
 }
