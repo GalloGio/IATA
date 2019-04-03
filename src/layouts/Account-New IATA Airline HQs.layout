@@ -5,6 +5,9 @@
     <customButtons>Chatter_Broadcast_Tool</customButtons>
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Web_App_View</customButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -61,6 +64,10 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Type__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
@@ -432,7 +439,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Monitored Activities</label>
+        <label>Performance Measures</label>
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
@@ -475,8 +482,24 @@
         <label>Non-SAP Products and Services</label>
         <layoutColumns>
             <layoutItems>
-                <height>300</height>
+                <height>100</height>
                 <page>AMP_Services</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Industry Activities</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>AMP_Industry_Activities</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
@@ -614,6 +637,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIS_Sub_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Give_SIS_Membership__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

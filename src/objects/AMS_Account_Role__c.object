@@ -46,9 +46,9 @@
     <description>Object that represents a connection between an Account another entity. This other entity can be a Person, a Contact or another Account. This will replace the Agency Employee and Agency Ownership + Owner structure.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>

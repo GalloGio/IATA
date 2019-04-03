@@ -2689,6 +2689,11 @@
         <label>Person Account Search Fields</label>
     </fieldSets>
     <fieldSets>
+        <fullName>FieldsExcludedFromTracking</fullName>
+        <description>The fields in this list will be tracked on the Account Tracking History object</description>
+        <label>FieldsExcludedFromTracking</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ISSP_Account_Portal_Search</fullName>
         <description>Portal</description>
         <displayedFields>
@@ -3488,6 +3493,7 @@
     </fields>
     <fields>
         <fullName>Account_Type__c</fullName>
+        <description>Indicates the type of stakeholder in terms of its importance for IATA. FOR MORE DETAILS CONTACT AMT</description>
         <externalId>false</externalId>
         <label>Account Type</label>
         <required>false</required>
@@ -3495,6 +3501,7 @@
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
         <valueSet>
+            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
@@ -3598,6 +3605,12 @@
                     <label>General Public</label>
                 </value>
                 <value>
+                    <fullName>GSA Cargo</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>GSA Cargo</label>
+                </value>
+                <value>
                     <fullName>GSA General Sales Agent</fullName>
                     <default>false</default>
                     <label>GSA General Sales Agent</label>
@@ -3613,6 +3626,12 @@
                     <label>IATA Cargo Agent</label>
                 </value>
                 <value>
+                    <fullName>IATA Head Office</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>IATA Head Office</label>
+                </value>
+                <value>
                     <fullName>IATA Local Office</fullName>
                     <default>false</default>
                     <label>IATA Local Office</label>
@@ -3623,9 +3642,36 @@
                     <label>IATA Passenger Sales Agent</label>
                 </value>
                 <value>
+                    <fullName>IATA Regional Office</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>IATA Regional Office</label>
+                </value>
+                <value>
                     <fullName>Inspector</fullName>
                     <default>false</default>
                     <label>Inspector</label>
+                </value>
+                <value>
+                    <fullName>Key Global</fullName>
+                    <default>false</default>
+                    <label>Key Global</label>
+                </value>
+                <value>
+                    <fullName>Key Local</fullName>
+                    <default>false</default>
+                    <label>Key Local</label>
+                </value>
+                <value>
+                    <fullName>Key Regional</fullName>
+                    <default>false</default>
+                    <label>Key Regional</label>
+                </value>
+                <value>
+                    <fullName>MACS Sales Account</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>MACS Sales Account</label>
                 </value>
                 <value>
                     <fullName>Media</fullName>
@@ -3658,6 +3704,11 @@
                     <label>Non-IATA Travel Agent</label>
                 </value>
                 <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+                <value>
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
@@ -3673,6 +3724,12 @@
                     <label>Passenger Airline</label>
                 </value>
                 <value>
+                    <fullName>Pax &amp; Cargo</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Pax &amp; Cargo</label>
+                </value>
+                <value>
                     <fullName>PRIN agents (individuals)</fullName>
                     <default>false</default>
                     <label>PRIN agents (individuals)</label>
@@ -3686,6 +3743,36 @@
                     <fullName>Research Institute</fullName>
                     <default>false</default>
                     <label>Research Institute</label>
+                </value>
+                <value>
+                    <fullName>Standard Global</fullName>
+                    <default>false</default>
+                    <label>Standard Global</label>
+                </value>
+                <value>
+                    <fullName>Standard Local</fullName>
+                    <default>false</default>
+                    <label>Standard Local</label>
+                </value>
+                <value>
+                    <fullName>Standard Regional</fullName>
+                    <default>false</default>
+                    <label>Standard Regional</label>
+                </value>
+                <value>
+                    <fullName>Strategic Global</fullName>
+                    <default>false</default>
+                    <label>Strategic Global</label>
+                </value>
+                <value>
+                    <fullName>Strategic Local</fullName>
+                    <default>false</default>
+                    <label>Strategic Local</label>
+                </value>
+                <value>
+                    <fullName>Strategic Regional</fullName>
+                    <default>false</default>
+                    <label>Strategic Regional</label>
                 </value>
                 <value>
                     <fullName>Student</fullName>
@@ -3937,6 +4024,18 @@ Airline_designator__c &amp;IATACode__c&amp;Site</formula>
         <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_at_Risk__c</fullName>
+        <description>Theoretical Guarantee agent&apos;s should have</description>
+        <externalId>false</externalId>
+        <label>Amount at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>AnnualRevenue</fullName>
@@ -13418,11 +13517,6 @@ EA=EUROPE ACCREDITED AGENT</inlineHelpText>
                     <label>HS</label>
                 </value>
                 <value>
-                    <fullName>IB</fullName>
-                    <default>false</default>
-                    <label>IB</label>
-                </value>
-                <value>
                     <fullName>IC</fullName>
                     <default>false</default>
                     <label>IC</label>
@@ -13441,11 +13535,6 @@ EA=EUROPE ACCREDITED AGENT</inlineHelpText>
                     <fullName>IS</fullName>
                     <default>false</default>
                     <label>IS</label>
-                </value>
-                <value>
-                    <fullName>JJ</fullName>
-                    <default>false</default>
-                    <label>JJ</label>
                 </value>
                 <value>
                     <fullName>MB</fullName>
@@ -15498,6 +15587,18 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_at_Risk__c</fullName>
+        <description>Agency risk management to keep track of Sales at Risk</description>
+        <externalId>false</externalId>
+        <label>Sales at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>SanctionNotice__c</fullName>
@@ -17849,6 +17950,28 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Special_remarks__c</fullName>
+        <description>Multi-picklist to annotate accounts with special remarks</description>
+        <externalId>false</externalId>
+        <label>Special remarks</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>TIDS for NDC</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -28541,6 +28664,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Viral Campaign</fullName>
                 <default>false</default>
             </values>
@@ -32285,10 +32412,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -32302,10 +32425,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -33646,6 +33765,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -34264,6 +34390,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Viral Campaign</fullName>
                 <default>false</default>
             </values>
@@ -34302,191 +34432,43 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
-                <fullName>ATC</fullName>
+                <fullName>Key Global</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Airline</fullName>
+                <fullName>Key Local</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Airline Industry</fullName>
+                <fullName>Key Regional</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Airport</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Attorneys</fullName>
+                <fullName>Standard Global</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>CAA</fullName>
+                <fullName>Standard Local</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
+                <fullName>Standard Regional</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo</fullName>
+                <fullName>Strategic Global</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Airline</fullName>
+                <fullName>Strategic Local</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Clearing Bank</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consultancy</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Credit Card Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer Associations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Domestic Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ERSP Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Financial Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fuel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GDS %2F CRS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSA General Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Public</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Handling Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Local Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inspector</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MSO Member Sales Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Newspaper</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Newswire</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Travel Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other suppliers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PRIN agents %28individuals%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Registered Fuel Supplier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Research Institute</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Student</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>System providers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TIDS Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TV%2FRadio</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ticket Document Distributor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ticket Printer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Trade Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Partner</fullName>
+                <fullName>Strategic Regional</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41075,6 +41057,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -41622,6 +41611,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -47153,6 +47146,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -47692,6 +47692,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -53142,6 +53146,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -53696,6 +53707,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59598,10 +59613,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -59615,10 +59626,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -62203,6 +62210,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>ARC registered</fullName>
@@ -63120,6 +63134,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -68990,10 +69008,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -69007,10 +69021,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71532,6 +71542,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -72375,6 +72392,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77599,6 +77620,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -78306,6 +78334,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82310,10 +82342,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -82327,10 +82355,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -83990,6 +84014,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -84764,6 +84795,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Qantas Pilot 2019</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -90666,10 +90701,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>IB</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IC</fullName>
                 <default>false</default>
             </values>
@@ -90683,10 +90714,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>IS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JJ</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -93271,6 +93298,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>ARC registered</fullName>
@@ -94033,14 +94067,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.INDUSTRY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Field_Head_Office__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
@@ -94142,6 +94175,20 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
 ))</errorConditionFormula>
         <errorDisplayField>TradeName__c</errorDisplayField>
         <errorMessage>The trade name for Member airlines can only be updated by the account management team or membership.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_Account_Type</fullName>
+        <active>true</active>
+        <description>For Airline HQ only the Account Management Team can update the Account Type field</description>
+        <errorConditionFormula>AND(
+ RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+ ISCHANGED(Account_Type__c),
+ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;)),
+ NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
+ NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+)</errorConditionFormula>
+        <errorDisplayField>Account_Type__c</errorDisplayField>
+        <errorMessage>For Airline HQ, only the Account Management Team can update the Account Type field</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>
@@ -94260,7 +94307,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
     </validationRules>
     <validationRules>
         <fullName>Block_non_AGM_user_from_modifying_agents</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Avoids AMS data being changed from profiles outside AGM and SF administration.</description>
         <errorConditionFormula>AND(
 RecordType.DeveloperName = &apos;IATA_Agency&apos;,
@@ -94285,7 +94332,12 @@ $User.ProfileId = &apos;00ew0000001QRzD&apos;,
 $User.ProfileId = &apos;00ew0000001QoBp&apos;,
 $User.ProfileId = &apos;00ew0000001QRzC&apos;,
 $User.ProfileId = &apos;00e20000001QJgR&apos;,
-$User.ProfileId = &apos;00ew0000001R6Za&apos;)))</errorConditionFormula>
+$User.ProfileId = &apos;00e20000001QJSd&apos;,
+$User.ProfileId = &apos;00e20000001QJSs&apos;,
+$User.ProfileId = &apos;00e1r0000021q6N&apos;,
+$User.ProfileId = &apos;00e1r0000021q6S&apos;,
+$User.ProfileId = &apos;00ew0000001R6Za&apos;,
+$User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
         <errorMessage>You are not allowed to modify AMS data, Please contact agency management or your system admin</errorMessage>
     </validationRules>
     <validationRules>

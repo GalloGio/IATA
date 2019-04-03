@@ -141,7 +141,7 @@ public class ANG_RHCAlertTriggerHandler{
         Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(newGenAccounts, new Map<Id, Portal_Applications__c>(rhcServices).keySet()); //this sets use the 15 char id
 
             Map<Id, Set<Id>> portalAdmins = new Map<Id, Set<Id>>();
-            for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
+            for(Contact c : [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND IsEmailBounced = false AND (Account.Top_Parent__c IN :legacyAccounts OR AccountId IN :legacyAccounts)]){
 
                 Id accId;
                 if(legacyAccounts.contains(c.AccountId)) accId = c.AccountId;
@@ -219,6 +219,7 @@ public class ANG_RHCAlertTriggerHandler{
         //NewGenApp End  
 
         if(!processCases.isEmpty()) insert processCases;
+        system.debug('mailList ' + mailList);
         if(!mailList.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(mailList, notifiedAlerts));
 
             if(!notificationTargets.isEmpty()){
@@ -799,7 +800,7 @@ public class ANG_RHCAlertTriggerHandler{
             log.System__c = 'bsplink';
             errorMessage = 'Following locations were not deactivated in BSPLink:\n';
             successMessage = 'Following locations were deactivated successfully in BSPLink:\n';
-            responses = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('Deactivation', (new List<Id>{accountIds[i]}) ,'FromSidra', sidraLiteCaseIds[i]);
+            responses = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('UrgentDeactivation', (new List<Id>{accountIds[i]}) ,'FromSidra', sidraLiteCaseIds[i]);
             for (AMS_BSPLinkIntegration.Response r: responses) {
                 if (r.result == 'Ok') {
                     successMessage = successMessage + '\n ' + r.IATACode;

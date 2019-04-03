@@ -53,7 +53,7 @@ public without sharing class ISSP_Case {
     public Contact con {get; set;}
     public List <FAQ__kav> finalArticleList {get; set;}
     //public FAQ__kav selectedArtical { get; set; }
-    public List <How_To__kav> finalHowList {get; set;} //TF-sp2
+    //public List <How_To__kav> finalHowList {get; set;} //TF-sp2
     //public How_To__kav selectedHow { get; set; }//TF-sp2
     public List <articleWrapper> globalList {get; set;}//TF-sp2
     public articleWrapper selectedArtical { get; set; }
@@ -130,6 +130,15 @@ public without sharing class ISSP_Case {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
 
+            //ACAMBAS - WMO-389 - Start
+            if(newCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
+                newCase.Subject = 'IMPORTANT: ';
+                newCase.Subject = (newCase.BSP_CASS__c != null) ? newCase.Subject + newCase.BSP_CASS__c + ' Payment' : newCase.Subject;
+                newCase.Subject = (newCase.IATA_Code__c != null) ? newCase.Subject + ' - IATA Code ' + newCase.IATA_Code__c : newCase.Subject;
+                newCase.Subject = (newCase.Remittance_period__c != null) ? newCase.Subject + ' - Period ' +  newCase.Remittance_period__c : newCase.Subject;
+            }
+            //ACAMBAS - WMO-389 - End
+
             if(newCase.status == TIP_Utils.CASE_STATUS_DRAFT && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){ //Transparency in Payment's portal access assignment
                 User user = DAL_ISSP.getUser(Userinfo.getUserId());
                 Id appListId;
@@ -184,16 +193,16 @@ public without sharing class ISSP_Case {
                 return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
             }
             // If Case is an ICCS Case, redirect to ICCS Service
-			Set<String> recordTypesSet = new Set<String>{
-				'FDS ASP Management',
-				'FDS ICCS Bank Account Management',
-				'FDS ICCS Membership Management',
-				'FDS ICCS Product Management'
-			};
-			if(newCase.Origin == 'Portal' && recordTypesSet.contains(newCase.RecordType.Name)){
+            Set<String> recordTypesSet = new Set<String>{
+                'FDS ASP Management',
+                'FDS ICCS Bank Account Management',
+                'FDS ICCS Membership Management',
+                'FDS ICCS Product Management'
+            };
+            if(newCase.Origin == 'Portal' && recordTypesSet.contains(newCase.RecordType.Name)){
                 PageReference pr = new PageReference('/ISSP_ICCS_Service?caseId=' + caseId);
                 return pr;
-			}
+            }
             showAlertMessage();
 
         }
@@ -470,7 +479,7 @@ public without sharing class ISSP_Case {
             }
 
             finalArticleList = new List <FAQ__kav>();
-            finalHowList = new List <How_To__kav>();//TF-sp2
+            //finalHowList = new List <How_To__kav>();//TF-sp2
             globalList = new List <articleWrapper>();//TF-sp2
             List <CaseArticle> caseArticleList = [SELECT Id, KnowledgeArticleId  FROM CaseArticle WHERE CaseId = :caseId];
             if (!caseArticleList.isEmpty()) {
@@ -483,7 +492,7 @@ public without sharing class ISSP_Case {
                 system.debug('currentLanguage: ' + currentLanguage);
                 List <FAQ__kav> kList = [SELECT Id, ArticleNumber, CreatedDate, CreatedBy.Name,
                                          Language, LastModifiedDate, Title, KnowledgeArticleId,
-                                         Summary, Answer__c, ArticleType
+                                         Summary, Answer__c//, ArticleType
                                          FROM FAQ__kav
                                          WHERE PublishStatus = 'Online'
                                                  AND KnowledgeArticleId IN :articleIdSet];
@@ -523,46 +532,46 @@ public without sharing class ISSP_Case {
                 }
 
                 //TF-sp2
-                List <How_To__kav> hList = [SELECT Id, ArticleNumber, CreatedDate, CreatedBy.Name,
-                                            Language, LastModifiedDate, Title, KnowledgeArticleId,
-                                            Instructions__c, ArticleType
-                                            FROM How_To__kav
-                                            WHERE PublishStatus = 'Online'
-                                                    AND KnowledgeArticleId IN :articleIdSet];
-                for (How_To__kav thisVersion : hList) {
-                    system.debug('HOW TO LANGUAGE: ' + thisVersion.Language);
-                    if (thisVersion.Language == currentLanguage) {
-                        finalHowList.add(thisVersion);
-                        if (!articleMap.containsKey(thisVersion.KnowledgeArticleId)) {
-                            system.debug('adding my language to how to');
-                            articleMap.put(thisVersion.KnowledgeArticleId, thisVersion.KnowledgeArticleId);
+                //List <How_To__kav> hList = [SELECT Id, ArticleNumber, CreatedDate, CreatedBy.Name,
+                //                            Language, LastModifiedDate, Title, KnowledgeArticleId,
+                //                            Instructions__c, ArticleType
+                //                            FROM How_To__kav
+                //                            WHERE PublishStatus = 'Online'
+                //                                   AND KnowledgeArticleId IN :articleIdSet];
+                // for (How_To__kav thisVersion : hList) {
+                //    system.debug('HOW TO LANGUAGE: ' + thisVersion.Language);
+                //    if (thisVersion.Language == currentLanguage) {
+                        //finalHowList.add(thisVersion);
+                //        if (!articleMap.containsKey(thisVersion.KnowledgeArticleId)) {
+                //            system.debug('adding my language to how to');
+                //            articleMap.put(thisVersion.KnowledgeArticleId, thisVersion.KnowledgeArticleId);
                             //TF-sp2
-                            articleWrapper newArticle = new articleWrapper();
-                            newArticle.articleId = thisVersion.KnowledgeArticleId;
-                            newArticle.articleTitle = thisVersion.Title;
-                            newArticle.articleText = thisVersion.Instructions__c;
-                            newArticle.articleType = 'How To';
-                            globalList.add(newArticle);
-                        }
-                    }
-                }
-                for (How_To__kav thisVersion : hList) {
-                    if (!articleMap.containsKey(thisVersion.KnowledgeArticleId)) {
-                        system.debug('how to not there yet');
-                        if (thisVersion.Language == 'en_US') {
-                            system.debug('adding english to how to');
-                            finalHowList.add(thisVersion);
-                            articleMap.put(thisVersion.KnowledgeArticleId, thisVersion.KnowledgeArticleId);
-                            //TF-sp2
-                            articleWrapper newArticle = new articleWrapper();
-                            newArticle.articleId = thisVersion.KnowledgeArticleId;
-                            newArticle.articleTitle = thisVersion.Title;
-                            newArticle.articleText = thisVersion.Instructions__c;
-                            newArticle.articleType = 'How To';
-                            globalList.add(newArticle);
-                        }
-                    }
-                }
+                //            articleWrapper newArticle = new articleWrapper();
+                //            newArticle.articleId = thisVersion.KnowledgeArticleId;
+                //            newArticle.articleTitle = thisVersion.Title;
+                //            newArticle.articleText = thisVersion.Instructions__c;
+                //            newArticle.articleType = 'How To';
+                //            globalList.add(newArticle);
+                //        }
+                //    }
+                //}
+                //for (How_To__kav thisVersion : hList) {
+                //    if (!articleMap.containsKey(thisVersion.KnowledgeArticleId)) {
+                //        system.debug('how to not there yet');
+                //        if (thisVersion.Language == 'en_US') {
+                //            system.debug('adding english to how to');
+                //            //finalHowList.add(thisVersion);
+                //            articleMap.put(thisVersion.KnowledgeArticleId, thisVersion.KnowledgeArticleId);
+                //            //TF-sp2
+                //            articleWrapper newArticle = new articleWrapper();
+                //           newArticle.articleId = thisVersion.KnowledgeArticleId;
+                //            newArticle.articleTitle = thisVersion.Title;
+                //            newArticle.articleText = thisVersion.Instructions__c;
+                //            newArticle.articleType = 'How To';
+                //            globalList.add(newArticle);
+                //        }
+                //    }
+                //}
             }
 
             isNewCase = false;
@@ -1525,15 +1534,16 @@ public without sharing class ISSP_Case {
                 setEmail.add(email);
             }
         }
+        User myUser = [SELECT Id, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
         List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
         List<String> lsNewEmails = new List<String>();
-        // only add Users from Account_Concerned__c
+        // only add Users from Account_Concerned__c or from current user's account
         List<User> lsUsers =
             [SELECT Id, Name, Email, AccountId, Contact.AccountId
             FROM User
             WHERE Email IN :setEmail
             AND isActive = true
-            AND Contact.AccountId = :newCase.Account_Concerned__c];
+            AND Contact.AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)];
 
         for(User user : lsUsers) {
             CaseTeamMember teammember = new CaseTeamMember(
@@ -1552,7 +1562,7 @@ public without sharing class ISSP_Case {
                 WHERE Email IN :setEmail
                 AND User_Portal_Status__c IN ('Approved Admin', 'Approved User')
                 AND Status__c = 'Active'
-                AND AccountId = :newCase.Account_Concerned__c
+                AND AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)
                 LIMIT 1];
 
             for(Contact contact : listContact) {
@@ -1642,14 +1652,15 @@ public without sharing class ISSP_Case {
                     FROM User
                     WHERE ContactId = :contact.Id
                     AND isActive = true
-                    AND Contact.AccountId = :newCase.Account_Concerned__c
+                    AND Contact.AccountId IN (:newCase.Account_Concerned__c,:newCase.AccountId)
                     AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User') ];
                 if (!listUser.isEmpty()) {
                     memberId = listUser[0].Id;
                 } else {
-                    if (contact.AccountId != newCase.Account_Concerned__c){
+                    if (contact.AccountId != newCase.Account_Concerned__c || contact.AccountId != newCase.AccountId){
                         //if it's DPC, a user is not found and the selected contact is not in the
-                        //same Account Concerned then we cannot continue
+                        //same Account Concerned or related account then we cannot continue
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning,Label.ISSP_CCOthers_Invalid_Contact));
                         return;
                     }
                 }

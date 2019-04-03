@@ -202,7 +202,11 @@ global class vfISSP_FAQ2Case
             if (!areFAQsAllowedForCurrentCountry()){
                 resVal=false;
             }
-
+if (ApexPages.currentPage().getParameters().get('type') == 'AirlineChargesUpdate' ||
+                ApexPages.currentPage().getParameters().get('type') == 'CurrencyRepatriationIssues' ||
+                ApexPages.currentPage().getParameters().get('type') == 'RequestSurveyUpdate') {
+                resVal = false;
+            }
             system.debug('basto1p - isToShowFAQs='+resVal+'; isTopicDefault='+isTopicDefault+'; topic='+topic);
             //RN-INC451479
             if(topic.contains('-- Select --')){
@@ -710,6 +714,44 @@ global class vfISSP_FAQ2Case
 
         //this.DataCategoryContainer.print();
         initTopicsList();
+if(ApexPages.currentPage() != null){
+
+            String type = ApexPages.currentPage().getParameters().get('type');
+            if (type == 'AirlineChargesUpdate' || type == 'CurrencyRepatriationIssues' || type == 'RequestSurveyUpdate') {
+                system.debug('<<<<<<<<<<  Currency Center: Airline Charges Update >>>>>>>>>>');
+
+                GeneralQueueMethod();
+
+                this.topic = ISSP_CurrencyCenterUtil.getFaq2CaseTopic();
+                this.refreshTopicPickList();
+
+                switch on type{
+                    when 'AirlineChargesUpdate' {
+                        this.subtopic = ISSP_CurrencyCenterUtil.FaqSubtopic_AirlineChargesUpdate;
+                    }
+                    when 'CurrencyRepatriationIssues' {
+                        this.subtopic = ISSP_CurrencyCenterUtil.FaqSubtopic_CurrencyRepatriation;
+                    }
+                    when 'RequestSurveyUpdate' {
+                        this.subtopic = ISSP_CurrencyCenterUtil.FaqSubtopic_RequestSurveyUpdate;
+                    }
+                }
+
+                this.refreshSubTopicPickList();
+
+                String isoCode = ApexPages.currentPage().getParameters().get('isocode');
+
+                if(isGSAUser == false || isCompliment == true){
+                    this.newCase1.IFAP_Country_ISO__c = isoCode;
+                    copyCountryISO();
+                }
+                else if(isGSAUser == true && isCompliment == false){
+                    this.newCase.IFAP_Country_ISO__c = isoCode;
+                    refreshAirlineList();
+                }
+            }
+        }
+
         return null;
     }
 

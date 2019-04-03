@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to notify country profile subscrivers of an upcoming event</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Currency Center Event Notification</name>
+    <style>freeForm</style>
+    <subject>Upcoming event regarding your subscribed country</subject>
+    <textOnly>Dear Currency Center users,
+
+This serves to inform you about an upcoming event regarding your subscribed country(ies).
+
+Should  you have any queries, please log a case in your IATA Customer Portal under the topic &quot;Currency Center&quot;.
+
+Kind regards
+Currency Center Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
