@@ -6,6 +6,7 @@ global without sharing class Comm_User_Helper {
   public static final string CNS = 'CNS';
   public static final String ONEIDENTITY = 'IDENTITY';
   public static final string FRED = 'FRED';
+  public static final string NDCMM = 'NDCMM';
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
