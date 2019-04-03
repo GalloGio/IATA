@@ -313,7 +313,7 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 		ANG_Apply_RHC_Equal_FS_Controller controller = new ANG_Apply_RHC_Equal_FS_Controller();
 		controller.setActionValue('Apply_RHC_regardless');
 		controller.setModeValue('BSP');
-		controller.setBspValue('BSP-AA');
+		controller.setBspValue('BSP-BB');
 		controller.setPercentageFS('50');
 		controller.fetchAgencies();
 
@@ -327,7 +327,7 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 
 		Test.stopTest();
 
-		list<ANG_BSP_Attributes__c> bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-AA'];
+		list<ANG_BSP_Attributes__c> bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-BB'];
 		for (ANG_BSP_Attributes__c bsp: bsps){
 			if(bsp.recordtypeid == ANG_Apply_RHC_Equal_FS_Controller.RHCConfRT){	
 				system.assertEquals(bsp.RHC_Amnt_Calc_Type__c, 'Fixed Percentage');
