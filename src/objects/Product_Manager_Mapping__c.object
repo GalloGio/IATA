@@ -46,9 +46,9 @@
     <description>Relationships between Profit Center and Product Manager that a trigger of Product2 will use to set product manager</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
