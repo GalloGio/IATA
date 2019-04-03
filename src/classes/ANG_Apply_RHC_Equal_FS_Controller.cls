@@ -162,7 +162,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     		for(ANG_BSP_Attributes__c bsp : bspAttributes){
     			if(bsp.RHC_Amnt_Calc_Type__c != 'formula'){
     				mustPreventApply = true;
-    				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Error: You cannot set the RHC Regardless the Risk before reverting in the BSP.');
+    				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please proceed to revert existing conditions before applying new conditions.');
             		ApexPages.addMessage(myMsg);
     			}
     		}
