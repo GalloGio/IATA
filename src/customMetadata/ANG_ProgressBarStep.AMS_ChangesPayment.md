@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>IconNotDone__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">usd</value>
     </values>
     <values>
         <field>IconOk__c</field>
@@ -32,18 +32,49 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">OSCAR_ANG_NEW_HE_STANDARD_1</value>
+        <value xsi:type="xsd:string">OSCAR_Changes</value>
     </values>
     <values>
         <field>ValueError__c</field>
-        <value xsi:type="xsd:string">OSCAR__r.STEP9__c=&apos;Failed&apos;</value>
+        <value xsi:type="xsd:string">OSCAR__r.STEP29__c = &apos;Failed&apos;
+OR
+OSCAR__r.STEP28__c = &apos;Failed&apos;
+OR
+OSCAR__r.STEP27__c = &apos;Failed&apos;
+OR
+OSCAR__r.STEP26__c = &apos;Failed&apos;
+OR
+OSCAR__r.STEP8__c = &apos;Failed&apos;
+OR
+OSCAR__r.STEP9__c = &apos;Failed&apos;</value>
     </values>
     <values>
         <field>ValueOk__c</field>
-        <value xsi:type="xsd:string">OSCAR__r.STEP9__c=&apos;Passed&apos; AND OSCAR__r.STEP8__c!=&apos;Failed&apos;</value>
+        <value xsi:type="xsd:string">OSCAR__r.STEP29__c IN (&apos;Passed&apos;, &apos;Not Applicable&apos;)
+AND
+OSCAR__r.STEP8__c IN (&apos;Passed&apos;, &apos;Not Applicable&apos;)
+AND
+OSCAR__r.STEP9__c IN (&apos;Passed&apos;, &apos;Not Applicable&apos;)
+AND
+(
+	NOT
+	(
+		OSCAR__r.STEP28__c = &apos;Failed&apos;
+		OR
+		OSCAR__r.STEP27__c = &apos;Failed&apos;
+		OR
+		OSCAR__r.STEP26__c = &apos;Failed&apos;
+	)
+)</value>
     </values>
     <values>
         <field>ValueProgress__c</field>
-        <value xsi:type="xsd:string">OSCAR__r.Send_invoice__c=true AND OSCAR__r.STEP8__c=&apos;Passed&apos; AND OSCAR__r.STEP9__c NOT IN (&apos;Passed&apos;,&apos;Failed&apos;)</value>
+        <value xsi:type="xsd:string">OSCAR__r.STEP29__c IN (&apos;Passed&apos;, &apos;Not Applicable&apos;)
+AND
+(
+	OSCAR__r.STEP8__c = &apos;In Progress&apos;
+	OR
+	OSCAR__r.STEP9__c = &apos;In Progress&apos;
+)</value>
     </values>
 </CustomMetadata>

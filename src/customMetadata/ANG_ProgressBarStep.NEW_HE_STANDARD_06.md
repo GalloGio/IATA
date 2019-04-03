@@ -7,6 +7,22 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>IconError__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>IconNotDone__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>IconOk__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>IconProgress__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Is_Visible__c</field>
         <value xsi:nil="true"/>
     </values>
