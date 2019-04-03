@@ -3493,7 +3493,7 @@
     </fields>
     <fields>
         <fullName>Account_Type__c</fullName>
-		<description>Indicates the type of stakeholder in terms of its importance for IATA. FOR MORE DETAILS CONTACT AMT</description>
+        <description>Indicates the type of stakeholder in terms of its importance for IATA. FOR MORE DETAILS CONTACT AMT</description>
         <externalId>false</externalId>
         <label>Account Type</label>
         <required>false</required>
@@ -3501,7 +3501,7 @@
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
         <valueSet>
-			<restricted>true</restricted>
+            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
@@ -3605,6 +3605,12 @@
                     <label>General Public</label>
                 </value>
                 <value>
+                    <fullName>GSA Cargo</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>GSA Cargo</label>
+                </value>
+                <value>
                     <fullName>GSA General Sales Agent</fullName>
                     <default>false</default>
                     <label>GSA General Sales Agent</label>
@@ -3620,6 +3626,12 @@
                     <label>IATA Cargo Agent</label>
                 </value>
                 <value>
+                    <fullName>IATA Head Office</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>IATA Head Office</label>
+                </value>
+                <value>
                     <fullName>IATA Local Office</fullName>
                     <default>false</default>
                     <label>IATA Local Office</label>
@@ -3630,9 +3642,36 @@
                     <label>IATA Passenger Sales Agent</label>
                 </value>
                 <value>
+                    <fullName>IATA Regional Office</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>IATA Regional Office</label>
+                </value>
+                <value>
                     <fullName>Inspector</fullName>
                     <default>false</default>
                     <label>Inspector</label>
+                </value>
+                <value>
+                    <fullName>Key Global</fullName>
+                    <default>false</default>
+                    <label>Key Global</label>
+                </value>
+                <value>
+                    <fullName>Key Local</fullName>
+                    <default>false</default>
+                    <label>Key Local</label>
+                </value>
+                <value>
+                    <fullName>Key Regional</fullName>
+                    <default>false</default>
+                    <label>Key Regional</label>
+                </value>
+                <value>
+                    <fullName>MACS Sales Account</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>MACS Sales Account</label>
                 </value>
                 <value>
                     <fullName>Media</fullName>
@@ -3665,6 +3704,11 @@
                     <label>Non-IATA Travel Agent</label>
                 </value>
                 <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+                <value>
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
@@ -3680,6 +3724,12 @@
                     <label>Passenger Airline</label>
                 </value>
                 <value>
+                    <fullName>Pax &amp; Cargo</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Pax &amp; Cargo</label>
+                </value>
+                <value>
                     <fullName>PRIN agents (individuals)</fullName>
                     <default>false</default>
                     <label>PRIN agents (individuals)</label>
@@ -3693,6 +3743,36 @@
                     <fullName>Research Institute</fullName>
                     <default>false</default>
                     <label>Research Institute</label>
+                </value>
+                <value>
+                    <fullName>Standard Global</fullName>
+                    <default>false</default>
+                    <label>Standard Global</label>
+                </value>
+                <value>
+                    <fullName>Standard Local</fullName>
+                    <default>false</default>
+                    <label>Standard Local</label>
+                </value>
+                <value>
+                    <fullName>Standard Regional</fullName>
+                    <default>false</default>
+                    <label>Standard Regional</label>
+                </value>
+                <value>
+                    <fullName>Strategic Global</fullName>
+                    <default>false</default>
+                    <label>Strategic Global</label>
+                </value>
+                <value>
+                    <fullName>Strategic Local</fullName>
+                    <default>false</default>
+                    <label>Strategic Local</label>
+                </value>
+                <value>
+                    <fullName>Strategic Regional</fullName>
+                    <default>false</default>
+                    <label>Strategic Regional</label>
                 </value>
                 <value>
                     <fullName>Student</fullName>
@@ -3738,56 +3818,6 @@
                     <fullName>TV/Radio</fullName>
                     <default>false</default>
                     <label>TV/Radio</label>
-                </value>
-				<value>
-                    <fullName>Strategic Global</fullName>
-                    <default>false</default>
-                    <label>Strategic Global</label>
-                </value>
-                <value>
-                    <fullName>Strategic Regional</fullName>
-                    <default>false</default>
-                    <label>Strategic Regional</label>
-                </value>
-                <value>
-                    <fullName>Strategic Local</fullName>
-                    <default>false</default>
-                    <label>Strategic Local</label>
-                </value>
-                <value>
-                    <fullName>Key Global</fullName>
-                    <default>false</default>
-                    <label>Key Global</label>
-                </value>
-                <value>
-                    <fullName>Key Regional</fullName>
-                    <default>false</default>
-                    <label>Key Regional</label>
-                </value>
-                <value>
-                    <fullName>Key Local</fullName>
-                    <default>false</default>
-                    <label>Key Local</label>
-                </value>
-                <value>
-                    <fullName>Standard Global</fullName>
-                    <default>false</default>
-                    <label>Standard Global</label>
-                </value>
-                <value>
-                    <fullName>Standard Regional</fullName>
-                    <default>false</default>
-                    <label>Standard Regional</label>
-                </value>
-                <value>
-                    <fullName>Standard Local</fullName>
-                    <default>false</default>
-                    <label>Standard Local</label>
-                </value>
-                <value>
-                    <fullName>Not Applicable</fullName>
-                    <default>false</default>
-                    <label>Not Applicable</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -34401,46 +34431,46 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </picklistValues>
         <picklistValues>
             <picklist>Account_Type__c</picklist>
-			<values>
-				<fullName>Key Global</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Key Local</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Key Regional</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Not Applicable</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Standard Global</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Standard Local</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Standard Regional</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Strategic Global</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Strategic Local</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Strategic Regional</fullName>
-				<default>false</default>
-			</values>
+            <values>
+                <fullName>Key Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Key Local</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Key Regional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Local</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Regional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Local</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Regional</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
@@ -94101,20 +94131,6 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Airline_HQ_Account_Type</fullName>
-        <active>true</active>
-        <description>For Airline HQ only the Account Management Team can update the Account Type field</description>
-        <errorConditionFormula>AND(
- RecordType.DeveloperName=&apos;IATA_Airline&apos;,
- ISCHANGED(Account_Type__c),
- NOT(CONTAINS($Profile.Name, &quot;Developer&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
-)</errorConditionFormula>
-        <errorDisplayField>Account_Type__c</errorDisplayField>
-        <errorMessage>For Airline HQ, only the Account Management Team can update the Account Type field</errorMessage>
-	</validationRules>
-	<validationRules>	
         <fullName>Agency_Name</fullName>
         <active>true</active>
         <description>prevent users should changing the agencies name</description>
@@ -94159,6 +94175,20 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
 ))</errorConditionFormula>
         <errorDisplayField>TradeName__c</errorDisplayField>
         <errorMessage>The trade name for Member airlines can only be updated by the account management team or membership.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_Account_Type</fullName>
+        <active>true</active>
+        <description>For Airline HQ only the Account Management Team can update the Account Type field</description>
+        <errorConditionFormula>AND(
+ RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+ ISCHANGED(Account_Type__c),
+ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;)),
+ NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
+ NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+)</errorConditionFormula>
+        <errorDisplayField>Account_Type__c</errorDisplayField>
+        <errorMessage>For Airline HQ, only the Account Management Team can update the Account Type field</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>
