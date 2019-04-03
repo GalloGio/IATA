@@ -239,6 +239,17 @@
         <relatedList>Portal_Application_Right__c.Portal_Application__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Version_Number__c</fields>
+        <fields>Is_Latest__c</fields>
+        <fields>Effective_Start_Date__c</fields>
+        <relatedList>Term_and_Condition__c.NewGenApp_PortalService__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Account_Role_Services__c.Portal_Service__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>IATA_ISO_Country__c.ANG_Portal_Service__c</relatedList>

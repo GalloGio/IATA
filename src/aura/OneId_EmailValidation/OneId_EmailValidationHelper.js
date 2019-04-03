@@ -46,7 +46,7 @@
             c.set("v.isServiceEligible", params.isServiceEligible);
             
             if(params.isContactInserted){
-            	if(serviceName != 'FRED'){
+            	if(serviceName != 'FRED' && serviceName != 'NDCMM'){
                 	var e = c.getEvent("StepCompletionNotification");
                 	e.setParams({
                 	    "stepNumber" : 3,
@@ -60,7 +60,9 @@
             	}
             	else{
             		if(! params.isServiceEligible){
-                        emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+            			if(serviceName == 'FRED'){
+                        	emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+            			}
                         c.set("v.Terms", false);
             		}
             		else{
@@ -80,20 +82,22 @@
             	}
             }
             else if(params.isEmailAddressAvailable && !params.isContactInserted){
-                //notify parent component that step is completed
-                var e = c.getEvent("StepCompletionNotification");
-                e.setParams({
-                    "stepNumber" : 1,
-                    "isComplete" : true,
-                     });
-                e.fire();
-
-                emailCmp.set("v.errors", null);
-                emailCmp.set("v.disabled", true);
-                c.find("termsaccepted").set("v.disabled", true);
+                if(c.get("v.serviceName") != 'NDCMM' || c.get("v.isServiceEligible") == true){
+	                //notify parent component that step is completed
+	                var e = c.getEvent("StepCompletionNotification");
+	                e.setParams({
+	                    "stepNumber" : 1,
+	                    "isComplete" : true,
+	                     });
+	                e.fire();
+	
+            	    emailCmp.set("v.errors", null);
+            	    emailCmp.set("v.disabled", true);
+            	    c.find("termsaccepted").set("v.disabled", true);
+            	}
             }
             else{
-                if(c.get("v.serviceName") != 'FRED'){
+                if(c.get("v.serviceName") != 'FRED' && c.get("v.serviceName") != 'NDCMM'){
                     emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
                 }
                 c.set("v.Terms", false);
@@ -101,5 +105,14 @@
             $A.util.toggleClass(spinner, "slds-hide");
         });
         $A.enqueueAction(action);
+    },
+    
+    next :function(c) {
+        var e = c.getEvent("StepCompletionNotification");
+        e.setParams({
+            "stepNumber" : 1,
+            "isComplete" : true,
+        });
+        e.fire();
     }
 })
