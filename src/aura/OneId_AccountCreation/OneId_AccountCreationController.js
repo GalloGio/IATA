@@ -187,8 +187,6 @@
             c.set("v.validationError", false);
         }
         
-        isAllFilled = true;
-        
         if(isAllFilled){
           c.getEvent("newAccountSet")
             .setParams({
