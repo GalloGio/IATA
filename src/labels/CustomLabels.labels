@@ -29634,6 +29634,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Renewals &gt; Publications</value>
     </labels>
     <labels>
+        <fullName>NDC_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NDC Troubleshooting</shortDescription>
+        <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
+    </labels>
+    <labels>
         <fullName>New</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -30794,6 +30801,19 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <value>My available applications</value>
     </labels>
     <labels>
+        <fullName>OneId_NDCMM_Sharepoint_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
+        <value>http://edit-dev6.iata.org/Pages/ndcmatchmaker.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting</shortDescription>
+        <value>Online Help</value>
+    </labels>
         <fullName>OneId_Name</fullName>
         <categories>OneId</categories>
         <language>en_US</language>

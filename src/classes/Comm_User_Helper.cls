@@ -160,7 +160,7 @@ global without sharing class Comm_User_Helper {
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
 
-        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED){
+        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED || community == NDCMM){
             
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -180,7 +180,7 @@ global without sharing class Comm_User_Helper {
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
 
-                if(community == ISSP || community == ONEIDENTITY || community == FRED ){
+                if(community == ISSP || community == ONEIDENTITY || community == FRED  || community == NDCMM ){
                     link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?' + encodedPart;
 
                     if(community == ISSP){
@@ -189,6 +189,9 @@ global without sharing class Comm_User_Helper {
                     }else if(community == FRED){
                         template = 'Identity_Portal_FRED_New_User';            
                         link += '&serviceName=FRED';
+                    }else if(community == NDCMM){
+                        template = 'Identity_Portal_FRED_New_User';            
+                        link += '&serviceName=NDCMM';
                     }
                     else {
                       template = 'Identity_Portal_New_User';

@@ -79,11 +79,17 @@ public without sharing class OneIdLightningLoginFormController {
 			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
                     }
 
+                    if( String.isNotBlank(serviceName) && serviceName == 'NDCMM'){
+	                     pageLink = '/s/login/SelfRegister?language=en_US&serviceName=NDCMM';
+                    }
+
                 }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                 	 //pageLink = '/ISSP_Homepage';
                 	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
                 	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
 			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+                }else if( String.isNotBlank(serviceName) && serviceName == 'NDCMM'){
+					pageLink = '/s/ndcmm?serviceName=NDCMM';
                 }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
