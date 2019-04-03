@@ -17,6 +17,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public String previousActionValue {get; private set;}
 	public String previousBspValue {get; private set;}
 	public String previousIataCode {get; private set;}
+	public Boolean mustPreventApply {get; private set;}
 	public Boolean renderConfirmButton {
 		get {
 			return (actionValue != '' && modeValue != '' && actionValue == previousActionValue && ((previousModeValue == 'BSP' && bspValue == previousBspValue && modeValue == 'BSP') || (previousModeValue == 'IATA_Code' && iataCode == previousIataCode && modeValue == 'IATA_Code')));
@@ -56,6 +57,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public Datetime batchTimestamp {get; private set;}
 
 	public ANG_Apply_RHC_Equal_FS_Controller() {
+		mustPreventApply = false;
 		populateModes();
 		populateActions();
 		populateBSPs();
@@ -111,6 +113,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
     public PageReference fetchAgencies() {
+        mustPreventApply = false;
     	ssController = null;
     	agencies = null;
     	renderConfirmButton = true;
@@ -128,6 +131,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c
 						FROM ANG_RHC_Information__c
 						WHERE ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
+							AND ANG_RHC_Amount_Equals_FS__c = :rhcFlag
 							AND ANG_AccountId__r.Location_Type__c = 'HE'
 							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
 							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
@@ -135,9 +139,31 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
 						ORDER BY ANG_AccountId__r.Name];
     	
-    	bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
+        bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
     	
-    	if(actionValue == 'Apply_RHC_per_RS' && showCountrySpecificColumns){
+    	if (actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ){
+    		Decimal value = -1; 
+    		Boolean isSameValue = true;
+    		Boolean mayBeBlock = false;
+    		for(ANG_BSP_Attributes__c bsp : bspAttributes){
+
+    			if(bsp.RHC_Amnt_Calc_Type__c == 'Fixed Percentage' && bsp.recordtypeid == RHCConfRT){
+    				mayBeBlock = true;
+    				if(value == -1) value = bsp.FS_Percentage__c;
+    				
+    				isSameValue = (value == bsp.FS_Percentage__c);
+    				if(!isSameValue) break; 
+    			}
+    		}
+    	
+
+            if(mayBeBlock && ((isSameValue && actionValue == 'Apply_RHC_per_RS') || (!isSameValue && actionValue == 'Apply_RHC_regardless'))){
+                    mustPreventApply = true;
+                    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please proceed to revert existing conditions before applying new conditions.');
+                    ApexPages.addMessage(myMsg);
+            }
+        }
+        if(actionValue == 'Apply_RHC_per_RS' && showCountrySpecificColumns && bspAttributes.size() <= 4){
     		AMS_Settlement_System__c operation = [SELECT  id, name FROM AMS_Settlement_System__c WHERE name = :bspValue limit 1];
     		List<ANG_BSP_Attributes__c> listBspToInsert =  new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
             bspAttributes.addAll(listBspToInsert);
@@ -232,6 +258,9 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		this.renderConfirmButton = false;
 		this.percentageFS = '';
 		if(actionValue == 'Apply_RHC_per_RS' || actionValue == 'Revert_RHC_per_RS') modeValue = 'BSP';
+        bspAttributes = null;
+        agencies = null;
+        agenciesFound = false;
 	}
 
 	public void setBspValue (String bspValue) {
@@ -298,7 +327,21 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
   			}
 
-  			update bspAttributes;
+  			
+  			if((actionValue == 'Revert_RHC_per_RS' || actionValue == 'Revert_RHC_regardless' ) && showCountrySpecificColumns && bspAttributes.size() > 4 ){
+
+                Map<String, ANG_BSP_Attributes__c> mapBspByStatus = new Map<String, ANG_BSP_Attributes__c>();
+                list<ANG_BSP_Attributes__c> listBspToDelete = new list<ANG_BSP_Attributes__c>();
+                for (ANG_BSP_Attributes__c bsp : bspAttributes){
+                    if(mapBspByStatus.containsKey(bsp.Risk_Status__c)) listBspToDelete.add(bsp);
+                    else mapBspByStatus.put(bsp.Risk_Status__c, BSP);
+                }
+                
+                delete listBspToDelete;
+                upsert mapBspByStatus.values();
+                
+
+  			}else upsert bspAttributes;
 
   			//and to force the NEWGEN-5173 to run
   			batchTimestamp = Datetime.now();
@@ -337,6 +380,35 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
 			if (!pollerBool) ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to the following agencies:'));
 		}
+	}
+
+
+	public class BSPAttributeWrapper implements Comparable {
+
+	    private ANG_BSP_Attributes__c bspAttribute;
+	    
+	    // Constructor 
+	    public BSPAttributeWrapper(ANG_BSP_Attributes__c bspAttribute) {
+	        this.bspAttribute = bspAttribute;
+	    }
+	    
+	    // Compare opportunities based on the opportunity amount.
+	    public Integer compareTo(Object compareTo) {
+	        // Cast argument to OpportunityWrapper
+	        BSPAttributeWrapper compareToBSP = (BSPAttributeWrapper)compareTo;
+	        
+	        // The return value of 0 indicates that both elements are equal.
+	        Integer returnValue = 0;
+	        if ((String)bspAttribute.Risk_Status__c > (String)compareToBSP.bspAttribute.Risk_Status__c) {
+	            // Set return value to a positive value.
+	            returnValue = 1;
+	        } else if ((String)bspAttribute.Risk_Status__c < (String)compareToBSP.bspAttribute.Risk_Status__c) {
+	            // Set return value to a negative value.
+	            returnValue = -1;
+	        }
+	        
+	        return returnValue;       
+	    }
 	}
 
 }
