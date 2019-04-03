@@ -137,6 +137,34 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	
     	bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
     	
+    	if(actionValue == 'Apply_RHC_per_RS' && showCountrySpecificColumns){
+    		AMS_Settlement_System__c operation = [SELECT  id, name FROM AMS_Settlement_System__c WHERE name = :bspValue limit 1];
+    		List<ANG_BSP_Attributes__c> listBspToInsert =  new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
+            bspAttributes.addAll(listBspToInsert);
+            
+            List<BSPAttributeWrapper> sortedBSPAttributeWrapper = new List<BSPAttributeWrapper>();
+            for(ANG_BSP_Attributes__c bsp : bspAttributes){
+				sortedBSPAttributeWrapper.add(new BSPAttributeWrapper(bsp));
+			}
+
+			sortedBSPAttributeWrapper.sort();
+			bspAttributes.clear();
+			for(BSPAttributeWrapper bsp : sortedBSPAttributeWrapper){
+				bspAttributes.add(bsp.bspAttribute);
+			}
+    		//insert new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
+    	}
+    	else if (actionValue == 'Apply_RHC_regardless'){
+    		for(ANG_BSP_Attributes__c bsp : bspAttributes){
+    			if(bsp.RHC_Amnt_Calc_Type__c != 'formula'){
+    				mustPreventApply = true;
+    				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please proceed to revert existing conditions before applying new conditions.');
+            		ApexPages.addMessage(myMsg);
+    			}
+    		}
+    	}
+
+    	
     	if(actionValue != 'Apply_RHC_regardless')
     		for(ANG_BSP_Attributes__c bsp : bspAttributes) 
     			if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
