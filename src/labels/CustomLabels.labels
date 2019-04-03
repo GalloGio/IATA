@@ -24222,6 +24222,13 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Agreement</value>
     </labels>
     <labels>
+        <fullName>ISSP_ProgressBar_ApplicationProcessing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_ApplicationProcessing</shortDescription>
+        <value>Application Processing</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ProgressBar_Application_Approved</fullName>
         <categories>ISSP ProgressBar</categories>
         <language>en_US</language>
@@ -24236,6 +24243,21 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_ProgressBar_Application_Review</shortDescription>
         <value>Application Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_ChangeProcessing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_ChangeProcessing</shortDescription>
+        <value>Change Processing</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_FinalValidation</fullName>
+        <categories>ISSP: ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_FinalValidation</shortDescription>
+        <value>Final&lt;br/&gt;Validation</value>
     </labels>
     <labels>
         <fullName>ISSP_ProgressBar_Financial_Security</fullName>
@@ -29104,6 +29126,22 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>My_Renewals</shortDescription>
         <value>Renewals &gt; Publications</value>
+    </labels>
+    <labels>
+        <fullName>NEW_HO_SanityCheck</fullName>
+        <categories>NEW_HO_SanityCheck</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NEW_HO_SanityCheck</shortDescription>
+        <value>Sanity Check</value>
+    </labels>
+    <labels>
+        <fullName>NEW_HO_Submitted</fullName>
+        <categories>NEW_HO_Submitted</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NEW_HO_Submitted</shortDescription>
+        <value>Submitted</value>
     </labels>
     <labels>
         <fullName>New</fullName>
