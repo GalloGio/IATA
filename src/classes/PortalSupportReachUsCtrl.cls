@@ -1,12 +1,9 @@
 global with sharing class PortalSupportReachUsCtrl {
     
-    private static Boolean isCNSInitialized = false;
-    
     public static Boolean isCNS {
         get {
-            if (!isCNSInitialized) {
+            if (isCNS == null) {
                 isCNS=ISSP_Utilities.isCNS();
-                isCNSInitialized=true;
             }
             return isCNS;
         }
@@ -75,7 +72,7 @@ global with sharing class PortalSupportReachUsCtrl {
             if(!isIFGUser && val.equals('IATA_Financial_Gateway_IFG__c')) {
                 mapTopics.remove(val);
             }
-        }        
+        }
         return mapTopics;
     }
     
@@ -104,7 +101,7 @@ global with sharing class PortalSupportReachUsCtrl {
         return map_selectSubTopics;
     }
     
-	//Filter Logic for SubTopics
+    //Filter Logic for SubTopics
     @AuraEnabled (cacheable=true)
     public static Map<String,String> subTopicPermissionFilter(Map<String,String> mapSubTopics, String topicValue){
         User user = DAL_ISSP.getUser(UserInfo.getUserId());
@@ -113,7 +110,7 @@ global with sharing class PortalSupportReachUsCtrl {
         
         String sector = cont.Account.Sector__c != null ? cont.Account.Sector__c : '';
         String isoCountry = cont.Account.IATA_ISO_Country__r.ISO_Code__c != null ? cont.Account.IATA_ISO_Country__r.ISO_Code__c : '';
-
+        
         //Custom Setting get list of Permissions getPermissionList(Boolean getSubTopic)
         List <ISSP_FAQ2Case_Permissions__c> csPermissionList = [SELECT Sector_Permission__c, Name,Topic__c,SubTopic__c, ISO_Country__c
                                                                 FROM ISSP_FAQ2Case_Permissions__c
@@ -134,13 +131,13 @@ global with sharing class PortalSupportReachUsCtrl {
                     mapSubTopics.remove(val);
                     break;
                 }
-            }   
-		}
+            }
+        }
         return mapSubTopics;
         
     }
     
-	//Gets Countries according to user's Language
+    //Gets Countries according to user's Language
     @AuraEnabled (cacheable=true)
     public static Map<String,String> getCountryList(){
         

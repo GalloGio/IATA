@@ -9,55 +9,55 @@
                     <h1 class="text-large text-bold">{label.csp_SupportReachUs_IntentionOnThisPage}</h1>
                     <h2 class="text-xsmall">{label.csp_SupportReachUs_ChooseOption}</h2>
                 </div>
-                <div class="slds-p-top_xx-large slds-p-left_xx-large slds-p-right_xx-large slds-p-bottom_xx-large">
-                    <div class="slds-grid slds-wrap">
-                        <div onclick={tileClickHandler} data-id="001" class="slds-col slds-size_1-of-2 slds-small-size_1-of-3 
+                <div class="slds-p-around_xx-large">
+                    <div class="slds-grid grid-margin-bottom-justified slds-wrap">
+                        <div onclick={tileClickHandler} data-id="001" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                    slds-m-right_small slds-m-left_small active_panel cursorPointer">
+                                    slds-m-horizontal_small active_panel cursorPointer">
                             <div class="slds-p-top_large noPointerEvents">
                                 <lightning-icon icon-name="utility:help" size="small" variant="inverse"
                                     class="tileNewServiceIcon slds-current-color">
                                 </lightning-icon>
                             </div>
                             <div class="slds-p-top_xx-large text-xsmall text-bold noPointerEvents">
-                                <span>{label.csp_SupportReachUs_Ask_Label}</span>
+                                {label.csp_SupportReachUs_Ask_Label}
                             </div>
                         </div>
-                        <div onclick={tileClickHandler} data-id="002" class="slds-col slds-size_1-of-2 slds-small-size_1-of-3 
+                        <div onclick={tileClickHandler} data-id="002" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                    slds-m-right_small slds-m-left_small default_panel customCard cursorPointer">
+                                    slds-m-horizontal_small default_panel customCard cursorPointer">
                             <div class="slds-p-top_large noPointerEvents">
                                 <lightning-icon icon-name="utility:password" size="small"
                                     class="tileNewServiceIcon slds-current-color">
                                 </lightning-icon>
                             </div>
                             <div class="slds-p-top_xx-large text-xsmall text-bold noPointerEvents">
-                                <span>{label.csp_SupportReachUs_Concern_Label}</span>
+                                {label.csp_SupportReachUs_Concern_Label}
                             </div>
                         </div>
-                        <div onclick={tileClickHandler} data-id="003" class="slds-col slds-size_1-of-2 slds-small-size_1-of-3 
+                        <div onclick={tileClickHandler} data-id="003" class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                    slds-m-right_small slds-m-left_small default_panel customCard cursorPointer">
+                                    slds-m-horizontal_small default_panel customCard cursorPointer">
                             <div class="slds-p-top_large noPointerEvents">
                                 <lightning-icon icon-name="utility:task" size="small"
                                     class="tileNewServiceIcon slds-current-color">
                                 </lightning-icon>
                             </div>
                             <div class="slds-p-top_xx-large text-xsmall text-bold noPointerEvents">
-                                <span>{label.csp_SupportReachUs_Compliment_Label}</span>
+                                {label.csp_SupportReachUs_Compliment_Label}
                             </div>
                         </div>
                         <!--div onclick={tileClickHandler} data-id="004"
-                                    class="slds-col slds-size_1-of-2 slds-small-size_1-of-3 
+                                    class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                    slds-m-right_small slds-m-left_small default_panel customCard cursorPointer">
+                                     slds-m-horizontal_small default_panel customCard cursorPointer">
                                     <div class="slds-p-top_large noPointerEvents">
                                         <lightning-icon icon-name="utility:display_text" size="small"
                                             class="tileNewServiceIcon slds-current-color">
                                         </lightning-icon>
                                     </div>
                                     <div class="slds-p-top_xx-large text-xsmall text-bold noPointerEvents">
-                                        <span>{label.csp_SupportReachUs_Suggest_Label}</span>
+                                        {label.csp_SupportReachUs_Suggest_Label}
                                     </div>
                                 </div-->
                     </div>
@@ -70,27 +70,24 @@
                 </div>
                 <div class="slds-align_absolute-center">
                     <div class="basicInfoBox">
-                        <div
-                            class="slds-p-right_xx-large slds-p-left_xx-large slds-p-bottom_large slds-p-top_xx-large ">
-                            <span class="text-xxsmall">{label.csp_SupportReachUs_Topic_Label}</span>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Topic_Label}</p>
                             <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
                                 label={label.csp_SupportReachUs_ActionForCategoryPicklist} value={topic}
                                 options={topicoptions} dropdown-alignment="auto" onchange={topicHandler}
                                 placeholder="Select Topic" size=5>
                             </lightning-combobox>
                         </div>
-                        <div class="slds-p-right_xx-large slds-p-left_xx-large slds-p-bottom_large "
-                            if:true={subTopicCB}>
-                            <span class="text-xxsmall">{label.csp_SupportReachUs_Sub_Topic_Label}</span>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large " if:true={subTopicCB}>
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Sub_Topic_Label}</p>
                             <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
                                 label={label.csp_SupportReachUs_toSelectSubTopicPicklist} value={subTopic}
                                 placeholder="Select Sub-Topic" dropdown-alignment="auto" options={subTopicOptions}
                                 onchange={subTopicHandler} data-id="topicCB">
                             </lightning-combobox>
                         </div>
-                        <div class="slds-p-right_xx-large slds-p-left_xx-large slds-p-bottom_xx-large "
-                            if:true={countryCB}>
-                            <span class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</span>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_xx-large " if:true={countryCB}>
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</p>
                             <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
                                 label={label.csp_SupportReachUs_CountryOrRegionIndicator} value={countryValue}
                                 placeholder="Select Country" dropdown-alignment="auto" options={countryOptions}
@@ -100,13 +97,14 @@
                         <div class="slds-checkbox slds-p-bottom_xx-large slds-align_absolute-center">
                             <input type="checkbox" name="options" id="checkbox" value="checkbox-2" />
                             <label class="slds-checkbox__label" for="checkbox">
-                                <span class="slds-checkbox_faux cursorPointer"></span>
+                                <span class="slds-checkbox_faux cursorPointer slds-m-right_xx-small"></span>
                                 <span class=" medium_gray_text">
                                     {label.csp_SupportReachUs_IsEmergency}
                                 </span>
                             </label>
                         </div>
-                        <div class="slds-p-bottom_xx-large slds-align_absolute-center text-xsmall" if:true={optionsButton}>
+                        <div class="slds-p-bottom_xx-large slds-align_absolute-center text-xsmall"
+                            if:true={optionsButton}>
                             <lightning-button onclick={supportOptionsHandler}
                                 label={label.csp_SupportReachUs_btn_Support_Label}
                                 class="containedButton cursorPointer">
@@ -116,23 +114,24 @@
                 </div>
             </div>
             <div if:true={supOptionsPanel}>
-                <div class="slds-text-align_center slds-p-top_xx-large slds-p-bottom_xx-large">
+                <div class="slds-text-align_center slds-p-vertical_xx-large">
                     <h1 class="text-large text-bold">{label.csp_SupportReachUs_Support_Label}</h1>
                     <h2 class="text-xsmall slds-p-top_small">{label.csp_SupportReachUs_Options_Label}</h2>
                 </div>
                 <div class="slds-p-bottom_xx-large lower_gray_panel_half_border">
-                    <div class="slds-p-top_large slds-p-bottom_large slds-text-align_center">
+                    <div class="slds-p-vertical_large slds-text-align_center">
                         <h2 class="text-medium text-bold">{label.csp_SupportReachUs_Suggestion_label}</h2>
                     </div>
                     <div class="slds-p-top_large">
-                        <div class="slds-grid slds-grid_vertical slds-align_absolute-center lower_panel_size">
-                            <div class="slds-col slds-size_2-of-2 slds-small-size_2-of-2 
+                        <div
+                            class="slds-grid grid-margin-bottom-justified slds-grid_vertical slds-align_absolute-center lower_panel_size">
+                            <div class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_2-of-2 slds-small-size_2-of-2 
                                                 slds-medium-size_2-of-2 slds-large-size_4-of-6
                                                 slds-m-bottom_large 
                                                 cursorPointer customCardWhite">
                                 <div class="noPointerEvents slds-p-around_small 
                                             slds-text-align_left text-small">
-                                    <span>Lorem ipsum dolor sit amet</span>
+                                    <p>Lorem ipsum dolor sit amet</p>
                                     <lightning-icon icon-name="utility:forward" size="xx-small"
                                         class="tileNewServiceIcon slds-current-color blue_arrow slds-float_right">
                                     </lightning-icon>
@@ -141,15 +140,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="slds-grid slds-wrap slds-p-bottom_xx-large">
-                    <div class="slds-col slds-size_1-of-2 slds-small-size_1-of-3 
+                <div class="slds-grid grid-margin-bottom-justified slds-wrap slds-p-bottom_xx-large">
+                    <div class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
                                 slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                slds-m-right_small slds-m-left_small customCard" style="height: 145px; width: 200px;">
+                                slds-m-horizontal_small customCard" style="height: 145px; width: 200px;">
                         <div class="slds-text-title_bold noPointerEvents slds-p-around_small">
-                            <span>{label.csp_SupportReachUs_Case_Panel_label}</span>
+                            <p></p>{label.csp_SupportReachUs_Case_Panel_label}</p>
                         </div>
                         <div class="noPointerEvents slds-p-around_small">
-                            <span>{label.csp_SupportReachUs_Case_Panel_sub_label}</span>
+                            {label.csp_SupportReachUs_Case_Panel_sub_label}
                         </div>
                         <button class="slds-button slds-button_neutral">
                             {label.csp_SupportReachUs_btn_Support_Label}

@@ -1,4 +1,4 @@
-.slds-grid {
+.grid-margin-bottom-justified {
     margin-bottom: 1rem;
     justify-content: center;
 }
@@ -33,7 +33,7 @@
     border-color: #1e32fa transparent transparent;
 }
 
-.slds-col{
+.column-backgroundwhite-textblack-aligned-wborder{
     background: #FFFF;
     color: rgb(0, 0, 0);
     text-align: center;
