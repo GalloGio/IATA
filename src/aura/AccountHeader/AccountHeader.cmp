@@ -19,7 +19,7 @@
                 <div class="slds-media">
                     <div class="slds-media__figure">
                         <span class="slds-icon__container slds-icon-standard-account">
-                            <aura:if isTrue="{!v.account.Membership_status__c == 'IATA member'}" >
+                            <aura:if isTrue="{!and(and(v.account.RecordType.DeveloperName == 'IATA_Airline', v.account.Sector__c == 'Airline'), v.account.ACLI_Status__c == 'Active Company')}" >
                                 <img src="/resource/AMP_logo" />
                             </aura:if>
                         </span>
@@ -156,7 +156,19 @@
                 </dl>
             </div>
 
-            <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
+			<aura:if isTrue="{!and(and(and(v.account.RecordType.DeveloperName == 'IATA_Airline', v.account.Membership_Status__c != 'IATA member'), v.account.Sector__c == 'Airline'), v.account.ACLI_Status__c == 'Active Company')}">
+	            <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
+	            <div class="slds-col--padded ">
+	                <dl>
+	                    <dt>
+	                        <p class="slds-text-heading--label slds-truncate">Account Type</p>
+	                    </dt>
+	                    <dd>{!v.account.Account_Type__c}</dd>
+	                </dl>
+	            </div>
+            </aura:if>
+            
+            <!-- PAGE HEADER / ROW 2 / COLUMN 7 -->
             <div class="slds-col--padded ">
                 <dl>
                     <dt>
@@ -174,7 +186,7 @@
                 </dl>
             </div>
 
-            <!-- PAGE HEADER / ROW 2 / COLUMN 7 -->
+            <!-- PAGE HEADER / ROW 2 / COLUMN 8 -->
             <div class="slds-col--padded ">
                 <dl>
                     <dt>
