@@ -229,7 +229,17 @@ global with sharing class AirlineSuspensionCaseController {
             update asrecord;
         
     }
-    
+
+    /**
+        Get all core group names
+    **/
+    public List<SelectOption> getGroupNamesOptions() {
+        List<SelectOption> listOptions = new List<SelectOption>();
+        for(AMPCoreGroups__c a : [SELECT Name, Order__c from AMPCoreGroups__c ORDER BY Order__c ASC]) {
+            listOptions.add(new SelectOption(a.Name,a.Name));
+        }
+        return listOptions;
+    }
     
     /*
     public void CreateAttachmentToParentCase () {
