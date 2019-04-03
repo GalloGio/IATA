@@ -113,7 +113,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
     public PageReference fetchAgencies() {
-    	mustPreventApply = false;
+        mustPreventApply = false;
     	ssController = null;
     	agencies = null;
     	renderConfirmButton = true;
@@ -141,7 +141,29 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	
         bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
     	
-    	if(actionValue == 'Apply_RHC_per_RS' && showCountrySpecificColumns){
+    	if (actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ){
+    		Decimal value = -1; 
+    		Boolean isSameValue = true;
+    		Boolean mayBeBlock = false;
+    		for(ANG_BSP_Attributes__c bsp : bspAttributes){
+
+    			if(bsp.RHC_Amnt_Calc_Type__c == 'Fixed Percentage' && bsp.recordtypeid == RHCConfRT){
+    				mayBeBlock = true;
+    				if(value == -1) value = bsp.FS_Percentage__c;
+    				
+    				isSameValue = (value == bsp.FS_Percentage__c);
+    				if(!isSameValue) break; 
+    			}
+    		}
+    	
+
+            if(mayBeBlock && ((isSameValue && actionValue == 'Apply_RHC_per_RS') || (!isSameValue && actionValue == 'Apply_RHC_regardless'))){
+                    mustPreventApply = true;
+                    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please proceed to revert existing conditions before applying new conditions.');
+                    ApexPages.addMessage(myMsg);
+            }
+        }
+        if(actionValue == 'Apply_RHC_per_RS' && showCountrySpecificColumns && bspAttributes.size() <= 4){
     		AMS_Settlement_System__c operation = [SELECT  id, name FROM AMS_Settlement_System__c WHERE name = :bspValue limit 1];
     		List<ANG_BSP_Attributes__c> listBspToInsert =  new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
             bspAttributes.addAll(listBspToInsert);
@@ -157,15 +179,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 				bspAttributes.add(bsp.bspAttribute);
 			}
     		//insert new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
-    	}
-    	else if (actionValue == 'Apply_RHC_regardless'){
-    		for(ANG_BSP_Attributes__c bsp : bspAttributes){
-    			if(bsp.RHC_Amnt_Calc_Type__c != 'formula'){
-    				mustPreventApply = true;
-    				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please proceed to revert existing conditions before applying new conditions.');
-            		ApexPages.addMessage(myMsg);
-    			}
-    		}
     	}
 
     	
@@ -236,6 +249,9 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		this.renderConfirmButton = false;
 		this.percentageFS = '';
 		if(actionValue == 'Apply_RHC_per_RS' || actionValue == 'Revert_RHC_per_RS') modeValue = 'BSP';
+        bspAttributes = null;
+        agencies = null;
+        agenciesFound = false;
 	}
 
 	public void setBspValue (String bspValue) {
@@ -303,7 +319,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
   			}
 
   			
-  			if(actionValue == 'Revert_RHC_per_RS' && showCountrySpecificColumns && bspAttributes.size() > 4 ){
+  			if((actionValue == 'Revert_RHC_per_RS' || actionValue == 'Revert_RHC_regardless' ) && showCountrySpecificColumns && bspAttributes.size() > 4 ){
 
                 Map<String, ANG_BSP_Attributes__c> mapBspByStatus = new Map<String, ANG_BSP_Attributes__c>();
                 list<ANG_BSP_Attributes__c> listBspToDelete = new list<ANG_BSP_Attributes__c>();
