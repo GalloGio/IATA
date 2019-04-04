@@ -94,10 +94,10 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		insert new List<ANG_Risk_Event_Configuration__c>{chgOfEntityLocationCfg, authCashCfg};
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
+		insert ctry ;
 
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
-        insert stt;
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
 		
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
@@ -105,10 +105,10 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		List<Account> accountList = new List<Account>();
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='NewGenAgency',Short_Name__c='NewGenAgency');
 		a1.Location_Type__c = AMS_Utils.HE;
-   		a1.Location_Class__c = 'D';
+		a1.Location_Class__c = 'D';
 		insert a1;
-        
-        Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
+		
+		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NEWHESTANDARD, Account__c = a1.id, Is_using_credit_card__c = true);
@@ -117,9 +117,9 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		insert oscar;
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
-        oscarCase.AccountId = a1.Id;
-        oscarCase.ContactId = co1.Id;
-        insert oscarCase;
+		oscarCase.AccountId = a1.Id;
+		oscarCase.ContactId = co1.Id;
+		insert oscarCase;
 		
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -129,39 +129,39 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 			SAAM_Case__c = oscarCase.Id,
 			Remittance_frequency__c = 'M',
 			Location_Class__c = 'D',
-            Location_Type__c = AMS_Utils.HE
+			Location_Type__c = AMS_Utils.HE
 		);
 
-        insert stagingArea;
+		insert stagingArea;
 
 		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
-        OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
-        update oscar;
+		OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
+		update oscar;
 		
 		Attachment attc = new Attachment(
-        	OwnerId = UserInfo.getUserId(),
-          	IsPrivate = true,
+			OwnerId = UserInfo.getUserId(),
+			IsPrivate = true,
 			ParentId = oscar.Oscar_Communication_Case_Id__c,
 			Body = Blob.valueOf('Test'),
 			Name = 'test'
 		);
 
-        insert attc;
+		insert attc;
 
-        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
-            Name= 'test owner',
-            First_name__c = 'test',
-            Last_name__c = 'owner',
-            Email__c = 'owner.test@test.com',
-            Phone__c = '123456789',
-            Financial_interest__c = 100,
-            AMS_Pax_Accreditation_Form__c = oscar.AMS_Online_Accreditation__c,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
-        );
+		AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+			Name= 'test owner',
+			First_name__c = 'test',
+			Last_name__c = 'owner',
+			Email__c = 'owner.test@test.com',
+			Phone__c = '123456789',
+			Financial_interest__c = 100,
+			AMS_Pax_Accreditation_Form__c = oscar.AMS_Online_Accreditation__c,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+		);
 
-        insert owner;
+		insert owner;
 
-        Test.stopTest();
+		Test.stopTest();
 
 	}
 
@@ -174,14 +174,14 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 				Oscar_Communication_Case_Id__c,
 				Account__r.ANG_isNewGenAgency__c
 			 FROM 
-			 	AMS_OSCAR__c 
+				AMS_OSCAR__c 
 			 LIMIT 1
 			];
 
 		oscar.ANG_Change_Entity_Location__c = true;
 		oscar.Change_of_Entity_Location_within_EU__c = true;
-        oscar.Is_PCI_compliant__c = 'Yes';
-        oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.STEP6__c = AMS_Utils.PASSED;
 
 		try {
@@ -205,29 +205,29 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update oscar;
-        
+		
 		Case oscarCase = new Case(Id = oscar.Oscar_Communication_Case_Id__c);
-        
-        ANG_RiskForecastPropertiesController pgNewHE = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
+		
+		ANG_RiskForecastPropertiesController pgNewHE = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
 
 		List<SelectOption> riskOptionsLst = pgNewHE.getriskOption();
 
-        System.assert(!riskOptionsLst.isEmpty());
-        System.assert(pgNewHE.riskOpt == '1');
+		System.assert(!riskOptionsLst.isEmpty());
+		System.assert(pgNewHE.riskOpt == '1');
 
-        SelectOption so = riskOptionsLst.get(0);
+		SelectOption so = riskOptionsLst.get(0);
 
-        System.assert(so.getValue() == '8');
-        System.assert(so.getLabel() == 'Change of Entity\'s location');
+		System.assert(so.getValue() == '8');
+		System.assert(so.getLabel() == 'Change of Entity\'s location');
 
 		ANG_RiskEventGenerator.skip = false;
 
 		Test.stopTest();
-        
+		
 		System.assertEquals(AMS_OSCAR_Webservice.createRiskEvent(oscar.Id), '1 Risk(s) Event(s) generated successfully');
 
-    }
-    
+	}
+	
 	@isTest static void changeOfEntityLocationWithinEuNewHEStandardTest(){
  
 		AMS_OSCAR__c oscar = 
@@ -238,14 +238,14 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 				RecordType.DeveloperName,
 				Account__r.ANG_isNewGenAgency__c
 			 FROM 
-			 	AMS_OSCAR__c 
+				AMS_OSCAR__c 
 			 LIMIT 1
 			];
 
 		oscar.ANG_Change_Entity_Location__c = true;
 		oscar.Change_of_Entity_Location_within_EU__c = true;
-        oscar.Is_PCI_compliant__c = 'Yes';
-        oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.STEP6__c = AMS_Utils.PASSED;
 
 		try {
@@ -270,23 +270,23 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update oscar;
-        
-        Case oscarCase = new Case(Id = oscar.Oscar_Communication_Case_Id__c);
-        
-        ANG_RiskForecastPropertiesController pgNewHE = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
+		
+		Case oscarCase = new Case(Id = oscar.Oscar_Communication_Case_Id__c);
+		
+		ANG_RiskForecastPropertiesController pgNewHE = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
 
 		List<SelectOption> riskOptionsLst = pgNewHE.getriskOption();
 
-        System.assert(riskOptionsLst.isEmpty());
-        System.assert(String.isBlank(pgNewHE.riskOpt));
+		System.assert(riskOptionsLst.isEmpty());
+		System.assert(String.isBlank(pgNewHE.riskOpt));
 
-        ANG_RiskEventGenerator.skip = false;
+		ANG_RiskEventGenerator.skip = false;
 
 		Test.stopTest();
 
 		System.assertEquals(AMS_OSCAR_Webservice.createRiskEvent(oscar.Id), 'No risk event is needed for this OSCAR.');
 
-    }
+	}
 
 	@isTest static void newHEStandardTest(){
 
@@ -297,7 +297,7 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 				Oscar_Communication_Case_Id__c,
 				Account__r.ANG_isNewGenAgency__c
 			 FROM 
-			 	AMS_OSCAR__c 
+				AMS_OSCAR__c 
 			 LIMIT 1
 			];
 
@@ -317,27 +317,27 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update oscar;
-        
+		
 		Case oscarCase = new Case(Id = oscar.Oscar_Communication_Case_Id__c);
-        
-        ANG_RiskForecastPropertiesController pgNewHE = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
+		
+		ANG_RiskForecastPropertiesController pgNewHE = new ANG_RiskForecastPropertiesController(new ApexPages.StandardController(oscarCase));
 
 		List<SelectOption> riskOptionsLst = pgNewHE.getriskOption();
 
-        System.assert(!riskOptionsLst.isEmpty());
-        System.assert(pgNewHE.riskOpt == '1');
+		System.assert(!riskOptionsLst.isEmpty());
+		System.assert(pgNewHE.riskOpt == '1');
 
-        SelectOption so = riskOptionsLst.get(0);
+		SelectOption so = riskOptionsLst.get(0);
 
-        System.assert(so.getValue() == '1');
-        System.assert(so.getLabel() == 'Auth. Cash Payment');
+		System.assert(so.getValue() == '1');
+		System.assert(so.getLabel() == 'Auth. Cash Payment');
 
-        ANG_RiskEventGenerator.skip = false;
+		ANG_RiskEventGenerator.skip = false;
 
 		Test.stopTest();
 
 		System.assertEquals(AMS_OSCAR_Webservice.createRiskEvent(oscar.Id), '1 Risk(s) Event(s) generated successfully');
 
-    }
+	}
 
 }
