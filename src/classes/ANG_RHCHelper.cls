@@ -98,12 +98,8 @@ public class ANG_RHCHelper {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 		Set<Id> accountsIds = new Set<Id>();
 
-		for(ANG_RHC_Information__c rhc : rhcInfo) {
-			if(!rhc.ANG_RHC_Amount_Equals_FS__c){
-				accountsIds.add(rhc.ANG_AccountId__c);
-			}
-		}
-
+		for(ANG_RHC_Information__c rhc : rhcInfo) accountsIds.add(rhc.ANG_AccountId__c);
+		
 		Map<Id, String> accountsBspMap = new Map<Id, Id>();
 		Map<Id, Account> accountsMap = new Map<Id, Account>();
 		Map<Id, String> isoCountries = new Map<Id, String>();
@@ -116,9 +112,12 @@ public class ANG_RHCHelper {
 		//NEWGEN-4881-END
 
 		if(!accountsIds.isEmpty()){
-			for(Account a : [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.AMS_Settlement_System__c, Financial_Assessment_Points__c, ANG_RiskStatus__c,Remittance_frequency__c 
+			for(Account a : [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.AMS_Settlement_System__c, Financial_Assessment_Points__c, ANG_RiskStatus__c,
+								Remittance_frequency__c, (SELECT id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)
 							FROM Account WHERE Id IN :accountsIds]) {
-				isoCountries.put(a.Id, a.IATA_ISO_Country__c);
+
+				if(!a.RHC_Informations__r.isEmpty() && !a.RHC_Informations__r[0].ANG_RHC_Amount_Equals_FS__c) 	isoCountries.put(a.Id, a.IATA_ISO_Country__c);
+
 				accountsBspMap.put(a.Id, a.IATA_ISO_Country__r.AMS_Settlement_System__c);
 				accountsMap.put(a.Id, a);
 
@@ -136,21 +135,22 @@ public class ANG_RHCHelper {
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] remittanceFrequencySet: ' + remittanceFrequencySet);
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] mapBspIdAccountList: ' + mapBspIdAccountList);
 			
-			//for accounts where the RHC Amount is NOT equal to FS, we need to check the minimum
-			Id minRHCrt = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
+			if(!isoCountries.isEmpty()){
+				//for accounts where the RHC Amount is NOT equal to FS, we need to check the minimum
+				Id minRHCrt = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
-			for(AMS_Country_Specific_Attribute__c a : [SELECT
-														Id
-														, IATA_ISO_Country__c
-														, IATA_ISO_Country__r.Iso_code__c
-														, ANG_Minimum_RHC_Amount__c
-														, CurrencyIsoCode
-													FROM AMS_Country_Specific_Attribute__c
-													WHERE RecordTypeId =: minRHCrt 
-													AND (IATA_ISO_Country__c IN :isoCountries.values() OR IATA_ISO_Country__r.Iso_code__c =: DEFAULT_CODE)]){
-				attributes.put(a.IATA_ISO_Country__r.Iso_code__c == DEFAULT_CODE ? DEFAULT_CODE : String.valueOf(a.IATA_ISO_Country__c), a);
+				for(AMS_Country_Specific_Attribute__c a : [SELECT
+															Id
+															, IATA_ISO_Country__c
+															, IATA_ISO_Country__r.Iso_code__c
+															, ANG_Minimum_RHC_Amount__c
+															, CurrencyIsoCode
+														FROM AMS_Country_Specific_Attribute__c
+														WHERE RecordTypeId =: minRHCrt 
+														AND (IATA_ISO_Country__c IN :isoCountries.values() OR IATA_ISO_Country__r.Iso_code__c =: DEFAULT_CODE)]){
+					attributes.put(a.IATA_ISO_Country__r.Iso_code__c == DEFAULT_CODE ? DEFAULT_CODE : String.valueOf(a.IATA_ISO_Country__c), a);
+				}
 			}
-
 
 			//NEWGEN-4881 - RHC amount effective from first day of next calendar period
 			Map<Id, Map<String, Date>> mapBSPwithOperationalCalenders = new Map<Id, Map<String, Date>>();
