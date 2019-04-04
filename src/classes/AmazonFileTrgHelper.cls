@@ -772,10 +772,15 @@ public class AmazonFileTrgHelper {
 
                         if(files == null) {
                             List<AmazonFile__c> auxList = new List<AmazonFile__c>();
-                            auxList.addAll(accountFileMap.get(thisAccess.Contact__r.AccountId));
-                            contactFileMap.put(thisAccess.Contact__c, auxList);
+
+                            if(accountFileMap.get(thisAccess.Contact__r.AccountId) != null) {
+                                auxList.addAll(accountFileMap.get(thisAccess.Contact__r.AccountId));
+                                contactFileMap.put(thisAccess.Contact__c, auxList);
+                            }
                         } else {
-                            files.addAll(accountFileMap.get(thisAccess.Contact__r.AccountId));
+                            if(accountFileMap.get(thisAccess.Contact__r.AccountId) != null) {
+                                files.addAll(accountFileMap.get(thisAccess.Contact__r.AccountId));
+                            }
                         }
                     }
                 }
