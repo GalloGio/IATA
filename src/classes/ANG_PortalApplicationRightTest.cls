@@ -305,10 +305,23 @@ private class ANG_PortalApplicationRightTest {
 	
 	@isTest
 	private static void manageShareUsersTest(){
-		insert new Portal_Application_Right__c(
+        System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](before insert) Number of Queries used in this apex code so far: ' + Limits.getQueries());
+        //test on insert
+        Portal_Application_Right__c par = new Portal_Application_Right__c(
 											Contact__c = [SELECT Id, ContactId FROM User WHERE Lastname = 'share Test' LIMIT 1].ContactId,
 											Portal_Application__c = [SELECT Id FROM Portal_Applications__c WHERE Name = 'IATA EasyPay - Tester' LIMIT 1].Id,
 											Right__c = 'Access Granted'
 											);
+        Test.startTest();
+            insert par;
+            System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after insert) Number of Queries used in this apex code so far: ' + Limits.getQueries());
+            par.Right__c = 'Access Denied';
+            update par;
+            System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after update \'Access Denied\') Number of Queries used in this apex code so far: ' + Limits.getQueries());
+            //test on update (needs to be on Access Granted)
+            par.Right__c = 'Access Granted';
+            update par;
+        Test.stopTest();
+        System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after update \'Access Granted\') Number of Queries used in this apex code so far: ' + Limits.getQueries());
 	}
 }
