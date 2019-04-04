@@ -1,14 +1,29 @@
 public class AMS_OSCAR_Mass_ActionHelper {
 	
 	public static void process_PCI(AMS_OSCAR__c oscar) {
+		Savepoint sp = Database.setSavepoint();
+		try {
 		oscar.STEP6__c = 'Passed';
 		oscar.Is_PCI_compliant__c = 'No';
 		oscar.ANG_PCI_compliance_expiry_date__c = null;
 		oscar.Status__c = 'Closed';
 		update oscar;
+
+			Account acc = new Account();
+			acc.Id = oscar.Account__c;
+			acc.ANG_PCI_compliance_expiry_date__c = null;
+			acc.Is_PCI_compliant__c = 'No';
+			acc.PCI_DSS_Compliant__c= null;
+			update acc;
+		} catch(Exception e) {
+			Database.rollback(sp);
+			throw e;
+		}		
 	}
 
 	public static void create_VR(Account acc, Map<String,Object> params) {
+		Savepoint sp = Database.setSavepoint();
+		try {
         Database.DMLOptions dmo = new Database.DMLOptions();
         dmo.assignmentRuleHeader.useDefaultRule= true;  
         List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id> {acc.IATA_ISO_Country__c});
@@ -53,9 +68,15 @@ public class AMS_OSCAR_Mass_ActionHelper {
 
 		cse.OSCAR__c = oscar.Id;
         update cse;
+		} catch(Exception e) {
+			Database.rollback(sp);
+			throw e;
+		}
 	}
 
     public static void create_Certificate(Account acc) {
+		Savepoint sp = Database.setSavepoint();
+		try {
         Database.DMLOptions dmo = new Database.DMLOptions();
         dmo.assignmentRuleHeader.useDefaultRule= true;  
         List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id> {acc.IATA_ISO_Country__c});
@@ -91,6 +112,10 @@ public class AMS_OSCAR_Mass_ActionHelper {
 
         cse.OSCAR__c = oscar.Id;
         update cse;
+		} catch(Exception e) {
+			Database.rollback(sp);
+			throw e;
+		}
 	}
 
 	private static Id getCaseContact(Account acc) {
