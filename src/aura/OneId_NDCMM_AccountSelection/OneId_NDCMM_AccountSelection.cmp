@@ -117,9 +117,11 @@
                                                     </li>
                                                 </aura:if>
                                                 
-                                                <div role="presentation" class="slds-listbox__item lastRow">
-                                                    {!$Label.c.OneId_AccountNotFound} &nbsp;<span onclick="{!c.createNew }">{!$Label.c.OneId_CreateNew}</span>
-                                                </div>
+												<aura:if isTrue="{! v.sector != 'Airline'}">
+                                                    <div role="presentation" class="slds-listbox__item lastRow">
+                                                        {!$Label.c.OneId_AccountNotFound} &nbsp;<span onclick="{!c.createNew }">{!$Label.c.OneId_CreateNew}</span>
+                                                    </div>
+                                                </aura:if>
                                                 
                                             </ul>
                                         </div>

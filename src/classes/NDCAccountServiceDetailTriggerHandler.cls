@@ -19,6 +19,8 @@ public class NDCAccountServiceDetailTriggerHandler {
             beforeInsert();
         } else if (Trigger.isBefore  && Trigger.isUpdate) {
             beforeUpdate();
+        } else if (Trigger.isAfter  && Trigger.isUpdate) {
+            afterUpdate();
         }
     }
     
@@ -28,5 +30,9 @@ public class NDCAccountServiceDetailTriggerHandler {
     
     private void beforeUpdate() {
         NDCAccountServiceDetailHelper.ndcLogic(new_records);
+    }
+
+    private void afterUpdate() {
+        NDCAccountServiceDetailHelper.onAfterUpdate(old_Map, new_Map);
     }
 }
