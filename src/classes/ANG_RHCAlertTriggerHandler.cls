@@ -638,7 +638,7 @@ public class ANG_RHCAlertTriggerHandler{
                         update riskAlertsToUpdate;  
 
                     //Newgen-2179 - Generate Change code (Requires a update)
-                    AMS_OscarCase_RiskMgmt.EndRun();
+                    /*AMS_OscarCase_RiskMgmt.EndRun(); //ENHC to avoid creation of RVW change code + do not fill default section
                                        
                     list<Case> sidrasToGenerateChangeCode = new list<Case>();
                     for(Case sidraToUpdate : sidraLiteCases){
@@ -650,7 +650,7 @@ public class ANG_RHCAlertTriggerHandler{
                         sidraToUpdate.CS_Rep_Acc_DEF__c = userInfo.getUserId();
                         sidrasToGenerateChangeCode.add(sidraToUpdate);
                     }
-                    update sidrasToGenerateChangeCode;  
+                    update sidrasToGenerateChangeCode;*/  
                     //Newgen-2179 - END
 
                     List<Id> caseIds = new List<Id>();
@@ -783,7 +783,7 @@ public class ANG_RHCAlertTriggerHandler{
         List<Contact> agents = [
             SELECT Id, Name, AccountId, Account.Top_Parent__c FROM Contact WHERE AccountId in (
                 SELECT id FROM Account WHERE Top_Parent__c in :accountIds OR Id in :accountIds
-            ) AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM];
+            ) AND User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND IsEmailBounced = false];
         Map<Id, List<Contact>> mapAccContacts = new Map<Id, List<Contact>>();
 
         for (Contact c: agents) {
