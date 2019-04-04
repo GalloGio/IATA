@@ -7385,7 +7385,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>FSS %28FDS Division%29</fullName>
+                <fullName>FSS Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7413,7 +7413,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>IFG %28FDS Division%29</fullName>
+                <fullName>IFG Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7429,7 +7429,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>MER %28MER Division%29</fullName>
+                <fullName>MER Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7497,7 +7497,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>SFO %28SFO Division%29</fullName>
+                <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13452,7 +13452,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>FSS %28FDS Division%29</fullName>
+                <fullName>FSS Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13480,7 +13480,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>IFG %28FDS Division%29</fullName>
+                <fullName>IFG Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13496,7 +13496,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>MER %28MER Division%29</fullName>
+                <fullName>MER Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13568,7 +13568,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>SFO %28SFO Division%29</fullName>
+                <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16530,7 +16530,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>FSS %28FDS Division%29</fullName>
+                <fullName>FSS Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16562,7 +16562,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>IFG %28FDS Division%29</fullName>
+                <fullName>IFG Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16578,7 +16578,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>MER %28MER Division%29</fullName>
+                <fullName>MER Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16650,7 +16650,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>SFO %28SFO Division%29</fullName>
+                <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
             <values>

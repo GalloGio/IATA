@@ -48,6 +48,9 @@ public class ANG_AgencyChangesHelperTest {
 		AMS_Agencies_relationhip__c r3 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Child_Account__c = a3.Id , Parent_Account__c = account.Id, Hierarchy__c = h.Id);
 
 		insert new List<AMS_Agencies_relationhip__c>{r1,r2,r3};
+		
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		insert pa;
 
 	}
 
