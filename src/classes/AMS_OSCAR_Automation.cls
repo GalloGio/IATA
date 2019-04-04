@@ -648,6 +648,11 @@ public with sharing class AMS_OSCAR_Automation {
                 
                 if (oscar != null && ((oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES)) {
 
+				// ENHC0012518 - BEGIN 
+                    if(oscar.Is_NewGen__c){
+                        System.enqueueJob(new PortalRightsForPortalAdmins(oscar));
+                    }
+                // ENHC0012518 - END
                     oscar.Approval_disapproval_date__c = Date.today();
                     oscar.Status__c = 'On Hold_Internal';
                     res = True;
@@ -1445,5 +1450,31 @@ public with sharing class AMS_OSCAR_Automation {
             return res;
         }
     }
+ 
+    /**
+    	Portal_Application_Right__c triggers are query heavy and often trigger a Case or Contact, both also query heavy
+    	resulting oftenly in a query limit exception.
+    **/
+    public class PortalRightsForPortalAdmins implements Queueable{ 
+		
+		public AMS_OSCAR__c oscar;
+		
+		public PortalRightsForPortalAdmins(AMS_OSCAR__c oscar){
+			this.oscar = oscar;
+		}
 
+		public void execute (QueueableContext context){
+           List<AMS_Accreditation_Contact__c> accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
+           Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];
+			
+            if(!accredList.isEmpty() && accredList.get(0).Contact__c != null){
+                Portal_Application_Right__c par = new Portal_Application_Right__c (
+                                        Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
+                                        Contact__c = accredList.get(0).Contact__c,
+                                        Portal_Application__c = pa.Id
+                            );
+                insert par;
+            }
+		}
+	}
 }

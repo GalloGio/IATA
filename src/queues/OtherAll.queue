@@ -12,8 +12,8 @@
             <publicGroup>IDFSAsiaPacificRegionalOffice</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>DistributionCustomerExperienceHOI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>IDFSEuropeRegionalOfficeI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionCustomerExperienceHO</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>IDFSEuropeRegionalOffice</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>
