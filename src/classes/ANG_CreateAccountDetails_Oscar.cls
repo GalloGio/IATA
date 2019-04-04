@@ -10,11 +10,16 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 
         //Parse body request
         String offerId = '';
+        String offerDateStr = '';
+
         try{
             Map<String, Object> reqBody = (Map<String, Object>)JSON.deserializeUntyped(body.toString());
 
             offerId = (String)reqBody.get('offerId');
             System.debug('##offerId: '+offerId);
+
+            offerDateStr = (String)reqBody.get('offerDate');
+
             
         }catch(Exception e){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', 'Invalid body')), 500);
@@ -23,6 +28,11 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
 
         if(String.isBlank(offerId)){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'empty offerId')), 400);
+            return;
+        }
+
+        if(String.isBlank(offerDateStr)){
+            ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'empty offerDate')), 400);
             return;
         }
 
@@ -35,7 +45,8 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
            
             Opportunity opp = new Opportunity(GDI_Offer_Id__c = offerId, CloseDate = Date.today().addYears(1), Name = 'OPP - '+oscar[0].name,
                                 StageName = 'Pending', Related_Oscar__c = oscar[0].Id, AccountId = oscar[0].Account__c,
-                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity'));
+                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity'),
+                                Offer_exchange_rate_date__c = Date.valueOf(offerDateStr));
 
             insert opp;
 

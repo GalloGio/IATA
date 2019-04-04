@@ -3310,6 +3310,16 @@
         <trackTrending>false</trackTrending>
     </fields>
     <fields>
+        <fullName>Offer_exchange_rate_date__c</fullName>
+        <description>Offer exchange rate date coming from INT077 (external service)</description>
+        <externalId>false</externalId>
+        <label>Offer exchange rate date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Opportunity_Open_Duration__c</fullName>
         <externalId>false</externalId>
         <formula>IF(OR(ISPICKVAL( StageName , &quot;7. Closed Sales / Sold&quot;),ISPICKVAL( StageName , &quot;z. Lost&quot;)) ,0, ROUND (NOW()- CreatedDate,0))</formula>
