@@ -180,6 +180,165 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Sub_Region__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub Region</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AR-PY-UY</fullName>
+                    <default>false</default>
+                    <label>AR-PY-UY</label>
+                </value>
+                <value>
+                    <fullName>CA-BM</fullName>
+                    <default>false</default>
+                    <label>CA-BM</label>
+                </value>
+                <value>
+                    <fullName>Caribbean</fullName>
+                    <default>false</default>
+                    <label>Caribbean</label>
+                </value>
+                <value>
+                    <fullName>Central America</fullName>
+                    <default>false</default>
+                    <label>Central America</label>
+                </value>
+                <value>
+                    <fullName>Central Asia</fullName>
+                    <default>false</default>
+                    <label>Central Asia</label>
+                </value>
+                <value>
+                    <fullName>Central Europe</fullName>
+                    <default>false</default>
+                    <label>Central Europe</label>
+                </value>
+                <value>
+                    <fullName>CN-MN-KP</fullName>
+                    <default>false</default>
+                    <label>CN-MN-KP</label>
+                </value>
+                <value>
+                    <fullName>Eastern Europe</fullName>
+                    <default>false</default>
+                    <label>Eastern Europe</label>
+                </value>
+                <value>
+                    <fullName>FR-BE-NL</fullName>
+                    <default>false</default>
+                    <label>FR-BE-NL</label>
+                </value>
+                <value>
+                    <fullName>GB-IE</fullName>
+                    <default>false</default>
+                    <label>GB-IE</label>
+                </value>
+                <value>
+                    <fullName>GR-CY</fullName>
+                    <default>false</default>
+                    <label>GR-CY</label>
+                </value>
+                <value>
+                    <fullName>Gulf and Near East</fullName>
+                    <default>false</default>
+                    <label>Gulf and Near East</label>
+                </value>
+                <value>
+                    <fullName>HK-MO</fullName>
+                    <default>false</default>
+                    <label>HK-MO</label>
+                </value>
+                <value>
+                    <fullName>Iberian Peninsula</fullName>
+                    <default>false</default>
+                    <label>Iberian Peninsula</label>
+                </value>
+                <value>
+                    <fullName>IN-NP-BT</fullName>
+                    <default>false</default>
+                    <label>IN-NP-BT</label>
+                </value>
+                <value>
+                    <fullName>LK-MY-BD-MV-BN</fullName>
+                    <default>false</default>
+                    <label>LK-MY-BD-MV-BN</label>
+                </value>
+                <value>
+                    <fullName>Nordic and Baltic</fullName>
+                    <default>false</default>
+                    <label>Nordic and Baltic</label>
+                </value>
+                <value>
+                    <fullName>North Africa and Levant</fullName>
+                    <default>false</default>
+                    <label>North Africa and Levant</label>
+                </value>
+                <value>
+                    <fullName>PE-BO</fullName>
+                    <default>false</default>
+                    <label>PE-BO</label>
+                </value>
+                <value>
+                    <fullName>RU-BY</fullName>
+                    <default>false</default>
+                    <label>RU-BY</label>
+                </value>
+                <value>
+                    <fullName>South and East Africa</fullName>
+                    <default>false</default>
+                    <label>South and East Africa</label>
+                </value>
+                <value>
+                    <fullName>Southern Europe</fullName>
+                    <default>false</default>
+                    <label>Southern Europe</label>
+                </value>
+                <value>
+                    <fullName>Southwest Pacific</fullName>
+                    <default>false</default>
+                    <label>Southwest Pacific</label>
+                </value>
+                <value>
+                    <fullName>TH-KH-MM-LA</fullName>
+                    <default>false</default>
+                    <label>TH-KH-MM-LA</label>
+                </value>
+                <value>
+                    <fullName>TR-TM-AZ</fullName>
+                    <default>false</default>
+                    <label>TR-TM-AZ</label>
+                </value>
+                <value>
+                    <fullName>UA-GE-AM</fullName>
+                    <default>false</default>
+                    <label>UA-GE-AM</label>
+                </value>
+                <value>
+                    <fullName>West and Central Africa</fullName>
+                    <default>false</default>
+                    <label>West and Central Africa</label>
+                </value>
+                <value>
+                    <fullName>Western Balkans</fullName>
+                    <default>false</default>
+                    <label>Western Balkans</label>
+                </value>
+                <value>
+                    <fullName>not applicable</fullName>
+                    <default>false</default>
+                    <label>not applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Unique_Name__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>false</externalId>
