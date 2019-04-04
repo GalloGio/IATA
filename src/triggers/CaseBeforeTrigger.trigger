@@ -940,6 +940,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgCase) { //FLAG
             system.debug('trgCase Trigger.isInsert');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
+            DPCCasesUtil.addAdditionalContactsBefore(Trigger.new);
         }
         /*trgCase Trigger.isInsert*/
 
@@ -1720,15 +1721,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
         if (trgSidraCaseBeforeInsertUpdate) { //FLAG
             Set<Id> accountIds = new Set<Id>();
+            list<Id> listCasesUpdatedAIMS = new list<Id>();
             system.debug('trgSidraCaseBeforeInsertUpdate Trigger.isUpdate');
             for (Case aCase : trigger.new) { // Fill a set of Account Ids for the cases select statement
+                Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
                 system.debug(LoggingLevel.Error, '============== UPDATE analyze ' + aCase.Subject + ' which has IRR_Withdrawal_Reason__c = ' + aCase.IRR_Withdrawal_Reason__c + '================');
                 if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null) {
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
                 }     
-                Case aCaseOld = Trigger.oldMap.get(aCase.Id);   
                 if (aCase.RecordTypeId == caseSEDARecordTypeID) {
                     if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
                         aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
@@ -1739,6 +1741,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     aCase.DEF_Approval_Rejection_Date__c = DateTime.now();    
                 }
                 //ACAMBAS - WMO-384 - End 
+                if (aCase.RecordTypeId == SIDRAcaseRecordTypeID &&
+                    aCaseOld.Update_AIMS_Repayment_agreed__c == null &&
+                    aCase.Update_AIMS_Repayment_agreed__c != null) {
+                    listCasesUpdatedAIMS.add(aCase.Id);
+                }
+            }
+
+            // Validation when the field Update_AIMS_Repayment_agreed__c is updated
+            // Update not allowed if there is no Repayment Instalment records related to the case
+            if (!listCasesUpdatedAIMS.isEmpty()) {
+                for (Case cse: [SELECT Id, (SELECT Id FROM Case_Details__r WHERE RecordType.DeveloperName = 'Repayment_Instalment')
+                    FROM Case WHERE Id IN :listCasesUpdatedAIMS]) {
+                    Case originalCase = trigger.newmap.get(cse.Id);
+                    if (cse.Case_Details__r.isEmpty()) {
+                        originalCase.addError('Please complete the repayment instalment section to be able to confirm that the agreement has been reached');
+                    }
+                }
             }
 
             if (accountIds.size() > 0) { // This list should be empty if all of the cases aren't related to the Sidra Small amount process

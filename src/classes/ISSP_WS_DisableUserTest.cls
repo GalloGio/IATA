@@ -164,6 +164,7 @@ private class ISSP_WS_DisableUserTest {
         Test.stopTest();
         
         checkLogs(true,'reactivateUser');
+		ISSP_WS_Utilities.fakemethod();
     }
     
     static testMethod void reactivateUser_OK_CASS01() {

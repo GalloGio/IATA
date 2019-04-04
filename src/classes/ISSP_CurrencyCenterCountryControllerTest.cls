@@ -32,6 +32,17 @@ private class ISSP_CurrencyCenterCountryControllerTest {
         System.assertEquals(false,ctrl.isImportantContactsChanged);
         System.assertEquals(false,ctrl.isIccsChanged);
         System.assertEquals(false,ctrl.isAirlinesChargesChanged);
+		System.assertEquals(false,ctrl.isNextActionChanged);
+
+		// check "sectionLastUpdate" - all should be equal to created date as it´s a new country profile
+		System.assertEquals(cp.CreatedDate,ctrl.generalInformationLastUpdate);
+		System.assertEquals(cp.CreatedDate,ctrl.bspCassLastUpdate);
+		System.assertEquals(cp.CreatedDate,ctrl.economicProfileLastUpdate);
+		System.assertEquals(cp.CreatedDate,ctrl.currencyLastUpdate);
+		System.assertEquals(cp.CreatedDate,ctrl.repatriationLastUpdate);
+		System.assertEquals(cp.CreatedDate,ctrl.importantContactsLastUpdate);
+		System.assertEquals(cp.CreatedDate,ctrl.iccsLastUpdate);
+		System.assertEquals(cp.CreatedDate,ctrl.airlinesChargesLastUpdate);
 
         //insert some fake history value for general information and test again
         Country_Profile_History__c cph = new Country_Profile_History__c(Country_Profile__c=cp.Id,Field__c='Presence_of_BSP__c');
@@ -160,4 +171,33 @@ private class ISSP_CurrencyCenterCountryControllerTest {
     	Test.stopTest();
 	}
 
+	@isTest static void testSelectCountries(){
+		Test.startTest();
+
+		//insert country profile
+		Country_Profile__c cp = new Country_Profile__c(Name='Test Country');
+		insert cp;
+
+		//set page to ISSP_CurrencyCenterCountry and set the country profile id
+		PageReference pageRef = Page.ISSP_CurrencyCenterCountry;
+		Test.setCurrentPage(pageRef);
+		pageRef.getParameters().put('id', String.valueOf(cp.Id));
+
+		//initialize controller+extension
+		ApexPages.StandardController sc = new ApexPages.StandardController(cp);
+		ISSP_CurrencyCenterCountryController ctrl = new ISSP_CurrencyCenterCountryController(sc);
+
+		ctrl.PopulateSelectedCountries();
+		System.assertEquals('Select All',ctrl.selectAllLabel);
+		ctrl.selectionAction();
+		System.assertEquals('Deselect All',ctrl.selectAllLabel);
+
+		String selectedCountriesIds = ctrl.selectedCountriesIds;
+
+		pageRef.getParameters().put('ids', String.valueOf(cp.Id));
+		List<Country_Profile__c> countriesToReport = ctrl.countriesToReport;
+		System.assertEquals(1,countriesToReport.size());
+
+		Test.stopTest();
+	}
 }
