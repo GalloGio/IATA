@@ -64,7 +64,6 @@ public class ANG_UserTriggerHandler {
         for(Id u : userIds) users.add(new User(Id = u, FederationIdentifier = u));
 
         doNotRun = true; //prevent recursion of triggers
-        //update users;
         WithoutSharingOperations.updateUserList(users);
         doNotRun = false;
     }		
