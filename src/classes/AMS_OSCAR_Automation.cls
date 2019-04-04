@@ -158,7 +158,9 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Proof_of_payment_received__c = Date.today();
-                oscar.Invoice_status__c = 'Paid';
+                if(oscar.Process__c <> AMS_Utils.NGGDI)
+                    oscar.Invoice_status__c = 'Paid';
+                
                 if (oscar.STEP17__c == 'Not Started' || oscar.STEP17__c == 'Not Applicable' || oscar.STEP17__c == 'Passed')
                     oscar.Process_Start_Date__c = Date.today();
                 res = True;
@@ -176,7 +178,9 @@ public with sharing class AMS_OSCAR_Automation {
             Boolean res = False;
 
             if (oscar != null) {
-                oscar.Invoice_status__c = 'Outstanding';
+                if(oscar.Process__c <> AMS_Utils.NGGDI)
+                    oscar.Invoice_status__c = 'Outstanding';
+    
                 oscar.Proof_of_payment_received__c = Date.today();
                 res = True;
             }
