@@ -5,7 +5,7 @@
     <name>Asia &amp; Pacific PwC</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>APAgencyManagementI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>APAgencyManagement</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>
