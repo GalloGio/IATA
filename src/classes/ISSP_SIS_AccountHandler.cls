@@ -100,7 +100,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         		ISSP_WS_Utilities.invokeCreateAccount(listInsertAccountId);
         	}
         	else{
-	            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listInsertAccountId, 'invokeCreateAccount'));
+            	System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listInsertAccountId, 'invokeCreateAccount'));
         	}
             BLOCK_EXECUTION = true;
         }
@@ -109,7 +109,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         		ISSP_WS_Utilities.invokeUpdateAccount(listUpdateAccountId);
         	}
         	else{
-	            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listUpdateAccountId, 'invokeUpdateAccount'));
+            	System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listUpdateAccountId, 'invokeUpdateAccount'));
         	}
             BLOCK_EXECUTION = true;
         }
@@ -232,15 +232,9 @@ public with sharing class ISSP_SIS_AccountHandler {
         }
         updateSISStatusFields(listAccount);
     }    
+    
     // for insert
     private static void updateSISStatusFields(list<Account> listAccount) {
-        //get countries map
-        set<Id> setCountryId = new set<Id>();
-        for (Account account: listAccount) {
-            setCountryId.add(account.IATA_ISO_Country__c);
-        }
-        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId));
-        
         for (Account account: listAccount) {
             // include country objetct in the account
             account.IATA_ISO_Country__r = AMS_utils.mapCountries.get(account.IATA_ISO_Country__c);
@@ -335,7 +329,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         if (!listAccountId.isEmpty()) {
             // give SIS Joining App to all interested users inside these accounts
         	if(Test.isRunningTest()){
-	            ISSP_WS_Utilities.invokeGiveSISAppToAccountUsers(listAccountId);
+        		ISSP_WS_Utilities.invokeGiveSISAppToAccountUsers(new list<Id>(listAccountId));
         	}
         	else{
 				System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listAccountId, 'invokeGiveSISAppToAccountUsers'));

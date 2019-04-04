@@ -14,17 +14,17 @@ private class ISSP_SIS_AccountHandlerTest {
         	new ISSP_SIS_Account_Allowed_Countries__c(Name='SP')
         };
         insert listAllowedCountries;
+        insert new ISSP_SIS_Account_Allowed_Location__c(
+            Name='1',
+            Location_Classes__c = 'A,B',
+            Location_Types__c = 'AA,BB'
+        );
         list<ISSP_SIS_Account_Allowed_Status__c> listAllowedStatus = new list<ISSP_SIS_Account_Allowed_Status__c>();
         listAllowedStatus.add(new ISSP_SIS_Account_Allowed_Status__c(Name='Approved'));
         listAllowedStatus.add(new ISSP_SIS_Account_Allowed_Status__c(Name='Cash basis/no commission'));
         listAllowedStatus.add(new ISSP_SIS_Account_Allowed_Status__c(Name='Cash basis/with commission'));
         listAllowedStatus.add(new ISSP_SIS_Account_Allowed_Status__c(Name='Changes processed'));
         insert listAllowedStatus;
-        insert new ISSP_SIS_Account_Allowed_Location__c(
-            Name='1',
-            Location_Classes__c = 'A,B',
-            Location_Types__c = 'AA,BB'
-        );
     }
 
     static testMethod void test_afterInsert_NonSISAccount() {
