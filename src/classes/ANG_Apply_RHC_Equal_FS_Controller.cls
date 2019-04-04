@@ -131,7 +131,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c
 						FROM ANG_RHC_Information__c
 						WHERE ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
-							AND ANG_RHC_Amount_Equals_FS__c = :rhcFlag
+							AND RHC_Amount_Equals_FS_Percent__c = :null
 							AND ANG_AccountId__r.Location_Type__c = 'HE'
 							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
 							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
@@ -245,13 +245,18 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
 	public void setActionValue (String actionValue) {
+        
+        if(actionValue != this.actionValue){
+	        bspAttributes = null;
+	        agencies = null;
+	        agenciesFound = false;	
+        }
+
 		this.actionValue = actionValue;
 		this.renderConfirmButton = false;
 		this.percentageFS = '';
+		
 		if(actionValue == 'Apply_RHC_per_RS' || actionValue == 'Revert_RHC_per_RS') modeValue = 'BSP';
-        bspAttributes = null;
-        agencies = null;
-        agenciesFound = false;
 	}
 
 	public void setBspValue (String bspValue) {
@@ -292,31 +297,32 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	  		} catch(Exception e) { ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for Agencies with Iata code(s): ' + String.join(iataCodesAndNames,',') + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString())); }
 	  		
   		} else {
+  			if(bspAttributes != null){
+	  			for (ANG_BSP_Attributes__c attribute : bspAttributes){
+	  				if(attribute.recordtypeid == RHCConfRT){
 
-  			for (ANG_BSP_Attributes__c attribute : bspAttributes){
-  				if(attribute.recordtypeid == RHCConfRT){
+						attribute.FS_Percentage__c = (isRegardlessRisk ? (String.isEmpty(percentageFS) ? 0 : Decimal.valueOf(percentageFS)) : attribute.FS_Percentage__c);
 
-					attribute.FS_Percentage__c = (isRegardlessRisk ? (String.isEmpty(percentageFS) ? 0 : Decimal.valueOf(percentageFS)) : attribute.FS_Percentage__c);
+	  					if(!countrySpecificsList.contains(bspValue) || (isRegardlessRisk && isApply)) {
+		  					attribute.Min_FA_Points__c = 0;
+		  					attribute.Max_FA_Points__c = 999999;
+	  					}
 
-  					if(!countrySpecificsList.contains(bspValue) || (isRegardlessRisk && isApply)) {
-	  					attribute.Min_FA_Points__c = 0;
-	  					attribute.Max_FA_Points__c = 999999;
-  					}
+	  					if(attribute.FS_Percentage__c == null || attribute.FS_Percentage__c == 0 || !isApply ){
+		  					attribute.Min_FA_Points__c = null;
+		  					attribute.Max_FA_Points__c = null;
+		  					attribute.FS_Percentage__c = null;
+		  					attribute.RHC_Amnt_Calc_Type__c = 'Formula'; 
+		  				}
+		  				else attribute.RHC_Amnt_Calc_Type__c = 'Fixed Percentage';
 
-  					if(attribute.FS_Percentage__c == null || attribute.FS_Percentage__c == 0 || !isApply ){
-	  					attribute.Min_FA_Points__c = null;
-	  					attribute.Max_FA_Points__c = null;
-	  					attribute.FS_Percentage__c = null;
-	  					attribute.RHC_Amnt_Calc_Type__c = 'Formula'; 
 	  				}
-	  				else attribute.RHC_Amnt_Calc_Type__c = 'Fixed Percentage';
+	  				else{
+	  					attribute.FS_Percentage__c = (isApply ? (String.isEmpty(percentageFS) ? 100 : Integer.valueOf(percentageFS)) : 100);
+	  				}
 
-  				}
-  				else{
-  					attribute.FS_Percentage__c = (isApply ? (String.isEmpty(percentageFS) ? 100 : Integer.valueOf(percentageFS)) : 100);
-  				}
-
-  			}
+	  			}
+	  		}
 
   			
   			if((actionValue == 'Revert_RHC_per_RS' || actionValue == 'Revert_RHC_regardless' ) && showCountrySpecificColumns && bspAttributes.size() > 4 ){
