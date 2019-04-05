@@ -328,6 +328,7 @@ src/queues/ICH_Help_Desk_ICH_Membership.queue
 src/queues/ICH_Help_Desk_ICH_Operations.queue
 src/queues/Cases_Emirates.queue
 src/queues/PCI_Cases_GDC_SIN.queue
+src/queues/RecycleBinAfricaMiddleEast.queue
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace
