@@ -4,7 +4,33 @@ import getNextMonth from '@salesforce/apex/PortalCalendarCtrl.getNextMonth';
 import getPreviousMonth from '@salesforce/apex/PortalCalendarCtrl.getPreviousMonth';
 import goToOldPortalCalendar from '@salesforce/apex/PortalCalendarCtrl.goToOldPortalCalendar';
 
+//custom labels
+import ISSP_Weekday_Short_Sunday from '@salesforce/label/c.ISSP_Weekday_Short_Sunday';
+import ISSP_Weekday_Short_Monday from '@salesforce/label/c.ISSP_Weekday_Short_Monday';
+import ISSP_Weekday_Short_Tuesday from '@salesforce/label/c.ISSP_Weekday_Short_Tuesday';
+import ISSP_Weekday_Short_Wednesday from '@salesforce/label/c.ISSP_Weekday_Short_Wednesday';
+import ISSP_Weekday_Short_Thursday from '@salesforce/label/c.ISSP_Weekday_Short_Thursday';
+import ISSP_Weekday_Short_Friday from '@salesforce/label/c.ISSP_Weekday_Short_Friday';
+import ISSP_Weekday_Short_Saturday from '@salesforce/label/c.ISSP_Weekday_Short_Saturday';
+import CSP_OperationalCalendar_HomeTileTitle from '@salesforce/label/c.CSP_OperationalCalendar_HomeTileTitle';
+import CSP_OperationalCalendar_SeeMonthlyLink from '@salesforce/label/c.CSP_OperationalCalendar_SeeMonthlyLink';
+
+
+
 export default class PortalHomeCalendar extends LightningElement {
+
+    // Expose the labels to use in the template.
+    label = {
+        ISSP_Weekday_Short_Sunday,
+        ISSP_Weekday_Short_Monday,
+        ISSP_Weekday_Short_Tuesday,
+        ISSP_Weekday_Short_Wednesday,
+        ISSP_Weekday_Short_Thursday,
+        ISSP_Weekday_Short_Friday,
+        ISSP_Weekday_Short_Saturday,
+        CSP_OperationalCalendar_HomeTileTitle,
+        CSP_OperationalCalendar_SeeMonthlyLink
+    };
 
     @track loading = true;
     @track error;
@@ -17,9 +43,11 @@ export default class PortalHomeCalendar extends LightningElement {
     @track viewEvents;
 
     connectedCallback() {
-
         this.getInitialMonth();
+    }
 
+    get showCalendar(){
+        return this.currentViewingMonth !== undefined && this.currentViewingWeek !== undefined;
     }
 
     changeEventsButtonClick(event){

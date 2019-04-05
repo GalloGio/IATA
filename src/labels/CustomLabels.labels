@@ -2685,6 +2685,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CC</shortDescription>
         <value>CC</value>
     </labels>
+        <shortDescription>CSP_OperationalCalendar_HomeTileTitle</shortDescription>
     <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>

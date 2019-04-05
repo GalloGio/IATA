@@ -9,20 +9,36 @@ public with sharing class PortalCalendarCtrl {
 
     public class OperationalCalendarException extends Exception {}
 
-    public static final list<String> AIRLINE_PROFILES = new list<String>();
-    public static final list<String> AGENT_PROFILES = new list<String>();
-    static {
-        try {
-            AIRLINE_PROFILES.addAll(ISSP_CS__c.getValues('ISS OperationalCalendar Airline Profil').Value__c.split(','));
-        } catch(Exception e) {
-            System.debug('No profiles found in ISSP_CS.ISS OperationalCalendar Airline Profil');
+    public static List<String> AIRLINE_PROFILES {
+        get{
+            if(AIRLINE_PROFILES == null){
+                AIRLINE_PROFILES = new List<String>();
+                try {
+                    AIRLINE_PROFILES.addAll(ISSP_CS__c.getValues('ISS OperationalCalendar Airline Profil').Value__c.split(','));
+                } catch(Exception e) {
+                    System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - AIRLINE_PROFILES] AIRLINE_PROFILES - ' + 'No profiles found in ISSP_CS.ISS OperationalCalendar Airline Profil');
+                }
+            }
+            return AIRLINE_PROFILES;
         }
-        try {
-            AGENT_PROFILES.addAll(ISSP_CS__c.getValues('ISS OperationalCalendar Agency Profile').Value__c.split(','));
-        } catch(Exception e) {
-            System.debug('No profiles found in ISSP_CS.ISS OperationalCalendar Agency Profile');
-        }
+        set;
     }
+
+    public static List<String> AGENT_PROFILES {
+        get{
+            if(AGENT_PROFILES == null){
+                AGENT_PROFILES = new List<String>();
+                try {
+                    AGENT_PROFILES.addAll(ISSP_CS__c.getValues('ISS OperationalCalendar Agency Profile').Value__c.split(','));
+                } catch(Exception e) {
+                    System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - AGENT_PROFILES] AGENT_PROFILES - ' + 'No profiles found in ISSP_CS.ISS OperationalCalendar Agency Profile');
+                }
+            }
+            return AGENT_PROFILES;
+        }
+        set;
+    }
+
     public static final map<String,String> MAP_OPERATION_TYPES = new map<String,String>{
         'P' => 'BSP International',
         'D' => 'BSP Domestic',
@@ -31,8 +47,18 @@ public with sharing class PortalCalendarCtrl {
         'I' => 'CASS Import'
     };
     // These countries in the Caribbean region have a special treatment in the query
-    public static final map<Id,IATA_ISO_Country__c> SPECIAL_CASE_COUNTRIES = new map<Id,IATA_ISO_Country__c>(
-        [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c WHERE AMS_Settlement_System__r.Name = 'BSP-BQ']);
+    public static map<Id,IATA_ISO_Country__c> SPECIAL_CASE_COUNTRIES {
+        get{
+            if(SPECIAL_CASE_COUNTRIES == null){
+                Set<String> setSettlementNames = new Set<String>();
+                setSettlementNames.add('BSP-BQ');
+
+                SPECIAL_CASE_COUNTRIES = new Map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesBySettlementSystemName(setSettlementNames));
+            }
+            return SPECIAL_CASE_COUNTRIES;
+        }
+        set;
+    }    
     
     public static final Map<String, Schema.SObjectField> MAP_CALENDAR_FIELDS =
         Schema.getGlobalDescribe().get('operational_Calendar__c').getDescribe().fields.getMap();
@@ -325,7 +351,7 @@ public with sharing class PortalCalendarCtrl {
                 query += ' ORDER BY Remittance_Day__c ASC';
             }
             
-            System.debug('QUERY: ' + query);
+            System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - method] QUERY - ' + query);
             return Database.query(query);
     }
 
@@ -339,12 +365,12 @@ public with sharing class PortalCalendarCtrl {
             return String.ValueOf((obj.get(f.getFieldPath())));
             
         } catch (Exception e) {
-            System.debug('**ERROR in getFieldValue ' + e.getMessage());
+            System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - method] **ERROR in getFieldValue - ' + e.getMessage());
             return '';
         }
     }
 
-    private class EventWrapper {
+    public class EventWrapper {
         @AuraEnabled
         public Integer id {get; set;}
         @AuraEnabled
@@ -382,10 +408,10 @@ public with sharing class PortalCalendarCtrl {
     public static MonthWrapper getInitialMonthPage(String browserDate, String requestedDate){
 
         Date requestedDateAux = Date.valueOf(requestedDate);
-        System.debug(requestedDateAux);
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getInitialMonthPage] requestedDateAux - ' + requestedDateAux);
 
         Date browserDateAux = Date.valueOf(browserDate);
-        System.debug(browserDateAux);
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getInitialMonthPage] browserDateAux - ' + browserDateAux);
         
         return PortalCalendarCtrl.getMonth(browserDateAux, requestedDateAux);
     }
@@ -397,10 +423,10 @@ public with sharing class PortalCalendarCtrl {
         
 		Date oldDate = Date.newInstance(yearNumberInt, monthNumberInt, 1);
         Date newDate = oldDate.addMonths(1);
-		System.debug('newDate: ' + newDate);
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getNextMonth] newDate - ' + newDate);
 
         Date browserDateAux = Date.valueOf(browserDate);
-        System.debug(browserDateAux);
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getNextMonth] browserDateAux - ' + browserDateAux);
         
         return PortalCalendarCtrl.getMonth(browserDateAux, newDate);
     }
@@ -412,10 +438,10 @@ public with sharing class PortalCalendarCtrl {
         
 		Date oldDate = Date.newInstance(yearNumberInt, monthNumberInt, 1);
         Date newDate = oldDate.addMonths(-1);
-		System.debug('newDate: ' + newDate);
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getPreviousMonth] newDate - ' + newDate);
 
         Date browserDateAux = Date.valueOf(browserDate);
-        System.debug(browserDateAux);
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getPreviousMonth] browserDateAux - ' + browserDateAux);
         
         return PortalCalendarCtrl.getMonth(browserDateAux, newDate);
     }
@@ -430,9 +456,10 @@ public with sharing class PortalCalendarCtrl {
             lstDays.add(new DayWrapper(true, false, 0, false));
             numBlankDays--;
         }
-        System.debug('lstDays before: ' + lstDays);
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getMonth] lstDays before - ' + lstDays);
 
         List<EventWrapper> lstEvents = PortalCalendarCtrl.getOperationalCalendarEventsBetweenDates();
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getMonth] lstEvents - ' + lstEvents);
 
         //the actual month days after the blank days
         Integer thisMonthDays = Date.daysInMonth(requestedDate.year(), requestedDate.month());
@@ -445,7 +472,7 @@ public with sharing class PortalCalendarCtrl {
 
             List<EventWrapper> lstEventsAux = new List<EventWrapper>();
             for(EventWrapper ewAux : lstEvents){
-                if(newDate == ewAux.start.date()){
+                if(ewAux.start != null && ewAux.start.date() != null && newDate == ewAux.start.date()){
                     lstEventsAux.add(ewAux);
                 }
             }
@@ -462,7 +489,7 @@ public with sharing class PortalCalendarCtrl {
             
             lstDays.add(dayWrapperAux);
         }
-        System.debug('lstDays after: ' + lstDays);
+        System.debug(loggingLevel.Debug, '____ [cls PortalCalendarCtrl - getMonth] lstDays after - ' + lstDays);
 
 
         //create the weeks
@@ -533,58 +560,11 @@ public with sharing class PortalCalendarCtrl {
             }
         }
         
-        System.debug('daysToReturn: ' + daysToReturn);
-        
         return daysToReturn;
     }
     
     public static String getMonthName(DateTime dateAux){
 		return dateAux.format('MMMMM');
-        
-        //In case the format does not return the name in the current user language - uncoment this and 
-        //replace the strings with custom labels with translation
-        /*
-        Integer monthNumber = dateAux.year();
-		String monthName = '';
-        switch on monthNumber {
-    		when 1 {		
-                monthName = 'January';
-            }
-            when 2 {		
-                monthName = 'February';
-            }
-            when 3 {		
-                monthName = 'March';
-            }
-            when 4 {		
-                monthName = 'April';
-            }
-            when 5 {		
-                monthName = 'May';
-            }
-            when 6 {		
-                monthName = 'June';
-            }
-            when 7 {		
-                monthName = 'Jully';
-            }
-            when 8 {		
-                monthName = 'August';
-            }
-            when 9 {		
-                monthName = 'September';
-            }
-            when 10 {		
-                monthName = 'October';
-            }
-            when 11 {		
-                monthName = 'November';
-            }
-            when else {
-				monthName = 'December';
-            }
-        }
-        return monthName;*/
     }
 
     public class MonthWrapper{

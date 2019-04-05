@@ -13,3 +13,24 @@
     border-radius: 50%;
     display: inline-block;
 }
+
+.dayBoxSize{
+    width:25px;
+    height:25px;
+}
+
+.selectedDay{
+    border: 2px solid #363ffb;
+    border-radius: 1px;
+    background-color: #363ffb;
+    color:white;
+}
+
+.selectedDayNotHighlighted{
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.lightGrayBackgorund{
+    background-color:#f7f8fa;
+}
