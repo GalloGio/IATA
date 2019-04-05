@@ -13102,6 +13102,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <columns>CORE.USERS.ALIAS</columns>
         <columns>CONTACT.CREATED_DATE</columns>
         <columns>PARENT.NAME</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All Contacts</label>
         <language>en_US</language>

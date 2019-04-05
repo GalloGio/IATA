@@ -9735,7 +9735,7 @@
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label>Согласно формуле</label>
+        <label>Предоставленная сумма финансового обеспечения</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
