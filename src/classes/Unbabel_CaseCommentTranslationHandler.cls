@@ -31,8 +31,10 @@ global class Unbabel_CaseCommentTranslationHandler implements unbabelapi.ITransl
         ccTranslated = ccTranslated.clone(false,false);
 
         if(!ccOriginal.IsPublished){
-            ccTranslated.IsPublished = true;
-            ccTranslated.IsNotificationSelected = true;
+            if(!Unbabel_E2CP_Configurations__c.getInstance().Validate_Translation_Step__c){
+                ccTranslated.IsPublished = true;
+                ccTranslated.IsNotificationSelected = true;
+            }
             ccOriginal.CommentBody = ccOriginal.CommentBody + '\n # Translated by Unbabel #';
 
         }else{
@@ -43,9 +45,9 @@ global class Unbabel_CaseCommentTranslationHandler implements unbabelapi.ITransl
 
         ccTranslated.ParentId = ccOriginal.ParentId;
         
-        upsert new List<CaseComment>{ ccOriginal};
+        update ccOriginal;
 
-            // Use DML options to enable email delivery
+        // Use DML options to enable email delivery
         Database.DMLOptions dmlOpts = new Database.DMLOptions();
         dmlOpts.EmailHeader.triggerAutoResponseEmail = true;
         dmlOpts.EmailHeader.triggerOtherEmail = true;
