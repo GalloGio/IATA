@@ -9749,7 +9749,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label>Menurut Rumus</label>
+        <label>Jumlah Penjaminan Yang Disediakan</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>

@@ -1710,12 +1710,19 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>CasesRussia</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND( 
+            <formula>OR(
+AND( 
 ISPICKVAL(Country_concerned_by_the_query__c , &quot;Russian Federation&quot;), 
 ISPICKVAL(Account.Location_Class__c, &quot;P&quot;), 
 NOT(CONTAINS( TEXT(Reason) ,&quot;Certificate&quot;)),
 !(RecordType.DeveloperName=&apos;ID_Card_Application&apos;),
 ISPICKVAL( Status , &quot;Open&quot;) 
+),
+AND(
+RecordType.DeveloperName = &apos;OSCAR_Communication&apos;,
+ISPICKVAL(Reason1__c,&quot;PCI automatic renewal&quot;),
+ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
+)
 )</formula>
         </ruleEntry>
         <ruleEntry>
