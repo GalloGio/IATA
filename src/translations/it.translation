@@ -9744,7 +9744,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label>Secondo la formula</label>
+        <label>Importo della sicurezza finanziaria fornito</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
