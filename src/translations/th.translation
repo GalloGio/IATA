@@ -9737,7 +9737,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label>ตามแบบแผน</label>
+        <label>ยอดหนังสือค้ำประกัน</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
