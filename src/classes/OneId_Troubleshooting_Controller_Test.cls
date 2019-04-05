@@ -28,7 +28,7 @@ public class OneId_Troubleshooting_Controller_Test {
         User user = new User(Alias = 'testuser', Email='testuser@example.com',
                              EmailEncodingKey='UTF-8', LastName='identity Site Guest User', LanguageLocaleKey='en_US',
                              LocalesIdKey='en_US', ProfileId = p, Country='United States', IsActive =true,
-                             TimeZonesIdKey='America/Los_Angeles', Username='guestuser@example.com', License_Cost_Center__c = 'ISF005CH01');
+                             TimeZonesIdKey='America/Los_Angeles', Username='NDC62934728934guestuser@' + + date.today() + 'example.com' , License_Cost_Center__c = 'ISF005CH01');
         
         insert user;
         return user;
