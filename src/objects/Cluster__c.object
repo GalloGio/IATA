@@ -154,7 +154,7 @@
                 <value>
                     <fullName>Africa &amp; Middle East</fullName>
                     <default>false</default>
-                    <label>Africa &amp; Middle East</label>
+                    <label>Africa and Middle East</label>
                 </value>
                 <value>
                     <fullName>Americas</fullName>
@@ -164,12 +164,12 @@
                 <value>
                     <fullName>Asia &amp; Pacific</fullName>
                     <default>false</default>
-                    <label>Asia &amp; Pacific</label>
+                    <label>Asia and Pacific</label>
                 </value>
                 <value>
                     <fullName>China &amp; North Asia</fullName>
                     <default>false</default>
-                    <label>China &amp; North Asia</label>
+                    <label>North Asia</label>
                 </value>
                 <value>
                     <fullName>Europe</fullName>
