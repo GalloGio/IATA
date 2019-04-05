@@ -329,6 +329,13 @@ src/queues/ICH_Help_Desk_ICH_Operations.queue
 src/queues/Cases_Emirates.queue
 src/queues/PCI_Cases_GDC_SIN.queue
 src/queues/RecycleBinAfricaMiddleEast.queue
+src/queues/Asia_Pacific_PwC.queue
+src/queues/CasesACCEuropeOffOnshore.queue
+src/queues/CasesACCEuropeProducts.queue
+src/queues/CasesACCEuropeRisk.queue
+src/queues/CasesAirlinesSCE.queue
+src/queues/CasesInvoicingCIS.queue
+src/queues/OtherAll.queue
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace
