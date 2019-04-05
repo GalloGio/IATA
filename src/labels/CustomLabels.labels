@@ -30805,7 +30805,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
-        <value>http://edit-dev6.iata.org/Pages/ndcmatchmaker.aspx</value>
+        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_NDCMM_Troubleshooting</fullName>

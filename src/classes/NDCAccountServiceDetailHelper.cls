@@ -13,4 +13,29 @@ public class NDCAccountServiceDetailHelper {
             }
         }
     }
+    
+    public static void onAfterUpdate(Map<Id, NDC_Account_Service_Detail__c> oldMap, Map<Id, NDC_Account_Service_Detail__c> newMap){
+    	// Delete relationships if NDC_Capable__c is false
+		List<Id> notNDCCapableAccounts = new List<Id>();
+    	for(NDC_Account_Service_Detail__c ndc : newMap.values()){
+    		if(!ndc.NDC_Capable__c){
+    			notNDCCapableAccounts.add(ndc.Id);
+    		}
+    	}
+    	
+		List<Id> accountRoleIds = new List<Id>();
+		for(NDC_Account_Service_Detail__c ndcRecord :[SELECT Id, Account_Role_Service__r.Account_Role__r.Id
+														FROM NDC_Account_Service_Detail__c
+														WHERE Id in : notNDCCapableAccounts]){
+			accountRoleIds.add(ndcRecord.Account_Role_Service__r.Account_Role__r.Id);
+		}
+
+		List<Account_Role_Relationship__c> relationshipsToDelete = [SELECT Id
+												FROM Account_Role_Relationship__c
+												WHERE Relationship_Type__c = 'NDC Player'
+												AND (From__r.Id in : accountRoleIds
+													OR To__r.Id in : accountRoleIds)];
+													
+    	delete relationshipsToDelete;
+    }
 }
