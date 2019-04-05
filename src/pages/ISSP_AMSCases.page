@@ -123,7 +123,7 @@
             }
 
             function newnAccreditationApplicationNavigateTo() {
-                if (('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') || ('{!isUserAccAccredited}' == 'false' && '{!hqAccount.Country_ISO_Code__c}' == 'CN')) {
+                if (('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false')) {
                     $('#modalChooseAccreditationType').modal('toggle');
                 } else {
                     navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
@@ -389,12 +389,12 @@
                         <div class="row" id="modalChooseAccreditationRow">
                             <apex:outputPanel layout="block" styleClass="col-md-12 text-normal" id="modalChooseAccreditationPanel">
                                 <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId">
-                                    <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" rendered="{!NOT(AND(NOT(isUserAccAccredited), hqAccount.Country_ISO_Code__c == 'CN'))}"/>
-                                    <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" rendered="{!NOT(AND(NOT(isUserAccAccredited), hqAccount.Country_ISO_Code__c == 'CN'))}"/>
+                                    <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" rendered="{!hqAccount.Country_ISO_Code__c != 'CN'}"/>
+                                    <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" rendered="{!hqAccount.Country_ISO_Code__c != 'CN'}"/>
 
-                                    <apex:selectOption itemValue="China_Domestic" itemLabel="{!$Label.ISSP_China_Domestic}" id="chinaDomesticCheck" rendered="{!AND(NOT(isUserAccAccredited), hqAccount.Country_ISO_Code__c == 'CN')}"/>
+                                    <apex:selectOption itemValue="China_Domestic" itemLabel="{!$Label.ISSP_China_Domestic}" id="chinaDomesticCheck" rendered="{!hqAccount.Country_ISO_Code__c == 'CN'}"/>
                                 
-                                    <apex:selectOption itemValue="China_International" itemLabel="{!$Label.ISSP_China_International}" id="chinaInternationalCheck" rendered="{!AND(NOT(isUserAccAccredited), hqAccount.Country_ISO_Code__c == 'CN')}"/> 
+                                    <apex:selectOption itemValue="China_International" itemLabel="{!$Label.ISSP_China_International}" id="chinaInternationalCheck" rendered="{!hqAccount.Country_ISO_Code__c == 'CN'}"/> 
                                 </apex:selectRadio>
                             </apex:outputPanel>
                         </div>
