@@ -254,7 +254,7 @@ public without sharing class ISSP_Financial_Institutions {
 		if (!gdiPermSetAssignmentList.isEmpty()) {
 			gdiPolling = false;
 			gdiAppRightGranted = true;
-			gdiAppRightRequested = false;
+			userCanRequestGDI = false;
 		} else {
 			List<UserProvisioningRequest> provRequestFailedList = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 
