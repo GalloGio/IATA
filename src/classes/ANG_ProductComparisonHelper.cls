@@ -14,7 +14,7 @@ public with sharing class ANG_ProductComparisonHelper {
     public String type {get; set;}
     public String costTooltip {get; set;}
     private User currentUser {get; set;}
-    private String chinaAccreditation {
+    private String chinaLocClass {
     	get {
     		String chinaTypeOfAccred = '';
 
@@ -85,8 +85,8 @@ public with sharing class ANG_ProductComparisonHelper {
 					if (!chinaNotAccredited && (p2.Name == 'Multicountry Accreditation' || p2.Name == 'Standard Accreditation with no Cash' 
 						|| p2.Name == 'Standard Accreditation with Cash')) {
 						lsProd.add(p2);
-					} else if (chinaNotAccredited && (chinaAccreditation == 'Domestic' && p2.Name == 'China Domestic') 
-						|| (chinaAccreditation == 'International' && p2.Name == 'China International')) {
+					} else if (chinaNotAccredited && (chinaLocClass == 'Domestic' && (p2.Name == 'Domestic With Cash' || p2.Name == 'Domestic With No Cash')) 
+						|| (chinaLocClass == 'International' && (p2.Name == 'International With Cash' || p2.Name == 'International With No Cash'))) {
 						lsProd.add(p2);
 					}
 				}

@@ -1943,22 +1943,6 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Multicountry</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_ProductStandardAccreditationChinaDomestic</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductStandardAccreditationChinaDomestic</shortDescription>
-        <value>Domestic</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_ProductStandardAccreditationChinaInternational</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductStandardAccreditationChinaInternational</shortDescription>
-        <value>International</value>
-    </labels>
-    <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithCash</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -28076,7 +28060,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP China Domestic</shortDescription>
-        <value>China Domestic</value>
+        <value>Travel Agent - Domestic</value>
     </labels>
     <labels>
         <fullName>ISSP_China_International</fullName>
@@ -28084,7 +28068,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP China International</shortDescription>
-        <value>China International</value>
+        <value>Travel Agent - International</value>
     </labels>
     <labels>
         <fullName>ISSP_consult_FAQ</fullName>
