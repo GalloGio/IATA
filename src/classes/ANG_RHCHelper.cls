@@ -154,33 +154,36 @@ public class ANG_RHCHelper {
 
 			//NEWGEN-4881 - RHC amount effective from first day of next calendar period
 			Map<Id, Map<String, Date>> mapBSPwithOperationalCalenders = new Map<Id, Map<String, Date>>();
+			AggregateResult[] groupedResults = [SELECT MIN(First_Day__c), ISS_operation__c, Frequency_code__c
+														FROM Operational_Calendar__c 
+														WHERE ISS_operation__c IN :mapBspIdAccountList.KeySet() 
+															AND Frequency_code__c in :remittanceFrequencySet AND First_Day__c > TODAY
+														GROUP BY ISS_Operation__c, Frequency_Code__c
+														ORDER BY ISS_operation__c, Frequency_code__c ASC];
 
-			for(Operational_Calendar__c oppCalendar : [SELECT id, First_Day__c, Last_Day__c, ISS_operation__c, Frequency_code__c
-													FROM Operational_Calendar__c 
-													WHERE ISS_operation__c IN :mapBspIdAccountList.KeySet() 
-														AND Frequency_code__c in :remittanceFrequencySet  // ask to ignore the Frequency_code__c == 'E'
-														AND First_Day__c > TODAY and Last_day__c <= NEXT_MONTH
-													ORDER BY ISS_operation__c, Frequency_code__c, First_Day__c ASC]){
+			for(AggregateResult oppCalendar : groupedResults){
 
 				//Map to group for all the bsps with the specific Account's remittance frequencies
-				if(!mapBSPwithOperationalCalenders.containsKey(oppCalendar.ISS_operation__c))
-					mapBSPwithOperationalCalenders.put(oppCalendar.ISS_operation__c, new Map<String, Date>());
+				if(!mapBSPwithOperationalCalenders.containsKey((ID)oppCalendar.get('ISS_operation__c')))
+					mapBSPwithOperationalCalenders.put((ID)oppCalendar.get('ISS_operation__c'), new Map<String, Date>());
 
 				//Only load the 1st billing Period for the BSP with a specific Remittence Frequency
-				if(!mapBSPwithOperationalCalenders.get(oppCalendar.ISS_operation__c).containsKey(oppCalendar.Frequency_code__c))
-					mapBSPwithOperationalCalenders.get(oppCalendar.ISS_operation__c).put(oppCalendar.Frequency_code__c, oppCalendar.First_Day__c);
+				if(!mapBSPwithOperationalCalenders.get((ID)oppCalendar.get('ISS_operation__c')).containsKey((String)oppCalendar.get('Frequency_code__c')))
+					mapBSPwithOperationalCalenders.get((ID)oppCalendar.get('ISS_operation__c')).put((String)oppCalendar.get('Frequency_code__c'), (Date)oppCalendar.get('expr0'));
 			}
 
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] mapBSPwithOperationalCalenders: ' + mapBSPwithOperationalCalenders);
 
 			List<Account> accountsByBSP;
-			Date firstBillPeriod;
 			for(Id bspId : mapBSPwithOperationalCalenders.KeySet()){
+
 				//Load accounts list by BSP 
 				accountsByBSP = mapBspIdAccountList.get(bspId);
+				Map<String, Date> mapFrequencyCodeFirstBiilingPeriod = mapBSPwithOperationalCalenders.get(bspId);
+
 				for(Account acc : accountsByBSP){
 
-					firstBillPeriod = mapBSPwithOperationalCalenders.get(bspId).get(acc.Remittance_frequency__c);
+					Date firstBillPeriod = mapFrequencyCodeFirstBiilingPeriod.get(acc.Remittance_frequency__c);
 					//Map for each account the new First Billing Period.  
 					if(firstBillPeriod != null)	mapBillingPeriodPerAccount.put(acc.id, firstBillPeriod);
 				}
