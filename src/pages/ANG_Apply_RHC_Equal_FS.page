@@ -1,10 +1,10 @@
 <apex:page controller="ANG_Apply_RHC_Equal_FS_Controller" showHeader="true" docType="html-5.0">
 
-	<style>
-    	.pbSubExtra {
-        	display:none;
-    	}
-	</style>
+    <style>
+        .pbSubExtra {
+            display:none;
+        }
+    </style>
 
     <script type="text/javascript">
         function inputLimiter(e,allow) {
@@ -127,6 +127,10 @@
                 <apex:commandButton value="{!IF(actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' , 'Apply RHC equal FS %', IF(actionValue == 'Revert_RHC_regardless' || actionValue == 'Revert_RHC_per_RS', 'Revert RHC equal FS %', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton), batchStatusBool)}" action="{!applyOrRevertRHC}"/>
             </apex:pageBlockButtons>
         </apex:pageBlock>
+        <apex:pageBlock >
+            <apex:message />
+        </apex:pageBlock>
+
 
         <apex:pageBlock mode="edit" id="searchResultsBlock" rendered="{!agencies != null}">
             <apex:pageBlockSection columns="1" title="Results ({!agenciesFetched})">
@@ -169,6 +173,6 @@
                 <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="statusPageBlock, searchButton, searchResultsBlock" status="act"/>
             </apex:pageBlockSection>
 
-		</apex:pageBlock> 
+        </apex:pageBlock> 
     </apex:form>
 </apex:page>
