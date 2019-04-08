@@ -42,10 +42,7 @@ public with sharing class ANG_ProductComparisonHelper {
 					WHERE Id = :UserInfo.getUserId() 
 					LIMIT 1];
 
-		Boolean isAcredited = (currentUser.Contact.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') 
-							&& AMS_Utils.ACTIVEAGENCYSTATUS.contains(currentUser.Contact.Account.Status__c));
-
-		Boolean chinaNotAccredited = (!isAcredited && currentUser.Contact.Account.Country_ISO_Code__c == 'CN');
+		Boolean chinaAgent = currentUser.Contact.Account.Country_ISO_Code__c == 'CN';
 
     	Map<String, String> mapProductLabels = new Map<String, String>();
     	Map<String, String> mapTooltipLabels = new Map<String, String>();
@@ -82,12 +79,20 @@ public with sharing class ANG_ProductComparisonHelper {
 									ANG_Fees_GoStandard_GoLite__c, ANG_Fees_GoLite_GoStandard__c, ANG_Fees_GoGlobal_GoLite__c, ANG_Fees_GoGlobal_GoStandard__c, ANG_Fees_GoLite_GoGlobal__c, ANG_Fees_GoStandard_GoGlobal__c,
 	    							(SELECT id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c from Product_BOM__r ORDER BY Order__c)
 	    						FROM Product2 WHERE Id IN :setProdId ORDER BY Name DESC]) {
-					if (!chinaNotAccredited && (p2.Name == 'Multicountry Accreditation' || p2.Name == 'Standard Accreditation with no Cash' 
-						|| p2.Name == 'Standard Accreditation with Cash')) {
-						lsProd.add(p2);
-					} else if (chinaNotAccredited && (chinaLocClass == 'Domestic' && (p2.Name == 'Domestic With Cash' || p2.Name == 'Domestic With No Cash')) 
-						|| (chinaLocClass == 'International' && (p2.Name == 'International With Cash' || p2.Name == 'International With No Cash'))) {
-						lsProd.add(p2);
+					if (!chinaAgent) {
+						if (p2.Name == 'Multicountry Accreditation' || p2.Name == 'Standard Accreditation with no Cash' || p2.Name == 'Standard Accreditation with Cash') {
+							lsProd.add(p2);
+						}
+					} else {
+						if (chinaLocClass == 'Domestic') {
+							if (p2.Name == 'Domestic With Cash' || p2.Name == 'Domestic With No Cash') {
+								lsProd.add(p2);
+							}
+						} else {
+							if (p2.Name == 'International With Cash' || p2.Name == 'International With No Cash') {
+								lsProd.add(p2);
+							}
+						}
 					}
 				}
 	    		
