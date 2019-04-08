@@ -2687,6 +2687,174 @@ Payment required on receipt of this Payment Advice
     </labels>
         <shortDescription>CSP_OperationalCalendar_HomeTileTitle</shortDescription>
     <labels>
+        <fullName>CSP_CaseMessage_HelpText</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseMessage_HelpText</shortDescription>
+        <value>You can send and receive messages to IATA Customer Service about the issues regarding this case.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_CaseMessage_InputPlaceholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseMessage_InputPlaceholder</shortDescription>
+        <value>Add comments, ask questions or be informed about the upcoming actions</value>
+    </labels>
+    <labels>
+        <fullName>CSP_CaseMessage_MessageTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseMessage_MessageTitle</shortDescription>
+        <value>Messages</value>
+    </labels>
+    <labels>
+        <fullName>CSP_CaseMessage_SubmitSuccess</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseMessage_SubmitSuccess</shortDescription>
+        <value>Added Comment successfully</value>
+    </labels>
+    <labels>
+        <fullName>CSP_CaseNumber</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CaseNumber</shortDescription>
+        <value>Case Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Cases</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Cases</shortDescription>
+        <value>Cases</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Documents</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Documents</shortDescription>
+        <value>Documents</value>
+    </labels>
+    <labels>
+        <fullName>CSP_FAQReachUsBanner_Text</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_FAQReachUsBanner_Text</shortDescription>
+        <value>You can create a case, start a conversation with IATA Live Support or call us.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_FAQReachUsBanner_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_FAQReachUsBanner_Title</shortDescription>
+        <value>Need more help?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ForYou</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ForYou</shortDescription>
+        <value>For You</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoCases1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoCases1</shortDescription>
+        <value>You don&#39;t have any cases for now.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoCases2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoCases2</shortDescription>
+        <value>But when you have, you&#39;ll view the most recent ones with their basic details in this area.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NoSearchResults</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoSearchResults</shortDescription>
+        <value>Nothing corresponds to your search criteria</value>
+    </labels>
+    <labels>
+        <fullName>CSP_OperationalCalendar_HomeTileTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_OperationalCalendar_HomeTileTitle</shortDescription>
+        <value>Weekly Calendar</value>
+    </labels>
+    <labels>
+        <fullName>CSP_OperationalCalendar_SeeMonthlyLink</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_OperationalCalendar_SeeMonthlyLink</shortDescription>
+        <value>See Monthly</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Question1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Question1</shortDescription>
+        <value>What is a case and when do I need it?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Question2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ Question2</shortDescription>
+        <value>How can I see and update the details of a case?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_RecentCases</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_RecentCases</shortDescription>
+        <value>Recent Cases</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SeeAll</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SeeAll</shortDescription>
+        <value>See All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Status</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TypeOfCase</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_TypeOfCase</shortDescription>
+        <value>Type of case</value>
+    </labels>
+    <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>
         <protected>false</protected>
