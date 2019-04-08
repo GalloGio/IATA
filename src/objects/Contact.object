@@ -8332,6 +8332,10 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IndividualId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Industry_Areas_of_Involvement__c</fullName>
         <externalId>false</externalId>
         <label>Industry Areas of Involvement</label>
@@ -13531,6 +13535,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <columns>CORE.USERS.ALIAS</columns>
         <columns>CONTACT.CREATED_DATE</columns>
         <columns>PARENT.NAME</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All Contacts</label>
         <language>en_US</language>
