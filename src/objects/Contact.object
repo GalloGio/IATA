@@ -18846,12 +18846,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <active>true</active>
         <errorConditionFormula>AND(
         Airline_Credit_Risk_Manager__c = true,
-        NOT(
-        OR(
-        Account.RecordType.DeveloperName = &#39;IATA_Airline_BR&#39;,
-        Account.RecordType.DeveloperName = &#39;IATA_Airline&#39;
-        )
-        )
+        NOT(ISPICKVAL(Account.Sector__c, &#39;Airline&#39;))
         )
         </errorConditionFormula>
         <errorDisplayField>Airline_Credit_Risk_Manager__c</errorDisplayField>
