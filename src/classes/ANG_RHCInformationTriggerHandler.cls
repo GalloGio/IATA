@@ -36,6 +36,9 @@ public class ANG_RHCInformationTriggerHandler{
 				updatedFlagsForRHCEqsFS.add(rhc);
 
 		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
+        
+		assessOscarAccreditationForecastRHC(filterByIATACode(triggerNew));
+
 	}
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
@@ -149,4 +152,14 @@ public class ANG_RHCInformationTriggerHandler{
         }        	
 	}
 
+    public static void assessOscarAccreditationForecastRHC(List<ANG_RHC_Information__c> rhcLst){
+        
+		if(!AMS_OscarTriggerHandler.applyRHCForecast || rhcLst.size() > 1)
+			return;
+
+		System.debug('[ANG_RHCInformationTriggerHandler] Applying ANG_RHC_Amount__c = ANG_RHC_Amount_Forecasted__c to new Oscar Accredited RHC Info.');
+		
+		ANG_RHC_Information__c rhc = rhcLst.get(0);
+		rhc.ANG_RHC_Amount__c = rhc.ANG_RHC_Amount_Forecasted__c;
+	}
 }

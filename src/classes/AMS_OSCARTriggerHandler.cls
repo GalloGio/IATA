@@ -11,6 +11,9 @@ public class AMS_OSCARTriggerHandler {
     //used to identify situations where the LocationType of an SA Agency should not be changed
     public static Boolean keepSALocationTypeFlag = false;
 
+    // used to apply different rules when poulating RHC oBject on the Oscar's account 
+    public static boolean applyRHCForecast = false;
+
     public static Map<String, String> closedStatusMapping{
         get{
             if(closedStatusMapping == null){
