@@ -2,6 +2,7 @@ public with sharing class PortalCasesCtrl {
  
     public static Id userId = UserInfo.getUserId();
     public static Boolean isAdmin;
+    public static Boolean seeAllCases;
     public static String currentListViewName;
     public static Boolean apUser;
     public static String selectedList;
@@ -9,7 +10,7 @@ public with sharing class PortalCasesCtrl {
     public static Id myAccountId;
     private static ISSP_PermissionFilterFactory.PermissionSetFilter     thePermissionSetFilter;
     private static ISSP_PermissionFilterFactory.ProfilePermissionFilter theProfilePermissionFilter;
-    private static List<ISSPCaseListView__c> csCaseListViews = ISSPCaseListView__c.getAll().values(); /* Custom Setting to control the visibility on what Cases should appear */
+    private static List<ISSPCaseListView__c> csCaseListViews;
     public static Map<String, ISSPCaseListView__c> caseListViewMap;
 
     /* 
@@ -18,7 +19,8 @@ public with sharing class PortalCasesCtrl {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static List<Case> getRecentCases() {
+    public static PagedResult getRecentCases(Boolean seeAll) {
+        seeAllCases = seeAll;
 
         initialization();
 
@@ -58,8 +60,6 @@ public with sharing class PortalCasesCtrl {
                 myAccountId = myUser.Contact.AccountId;
             }
             
-            isAdmin = false;
-            
             initFilters();
             initCaseListViewMap();
             
@@ -74,6 +74,8 @@ public with sharing class PortalCasesCtrl {
     * @return
     */    
     private static void initFilters() {
+        csCaseListViews = ISSPCaseListView__c.getAll().values();
+
         theProfilePermissionFilter = ISSP_PermissionFilterFactory.createProfilePermissionFilter();
         thePermissionSetFilter = ISSP_PermissionFilterFactory.createPermissionSetFilter(csCaseListViews, 'Permission_set__c');
     }
@@ -86,6 +88,7 @@ public with sharing class PortalCasesCtrl {
     private static void initCaseListViewMap() {
         List<String> ListViewNameList = new List<String>();
         caseListViewMap = new Map<String, ISSPCaseListView__c>();
+        isAdmin = (seeAllCases && ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId()));
 
         for(ISSPCaseListView__c caseListViewItem : csCaseListViews) {
 			Boolean resultPermission1 = true; 
@@ -136,15 +139,15 @@ public with sharing class PortalCasesCtrl {
     * @params
     * @return List<Case>
     */
-    private static List<Case> getCases() {
+    private static PagedResult getCases() {
         String queryString;
         Set<String> fieldPathSet = new Set<String>{'CaseNumber'};
 
-        for(Schema.FieldSetMember f : getFields()) {
+        for(Schema.FieldSetMember f : getFields()) { 
             fieldPathSet.add(f.getFieldPath());
         }
 
-        String query = ' Account.Name, Contact.Name, Owner.Name, E2CP__AdditionalCC__c ';
+        String query = ' Account.Name, Contact.Name, Owner.Name, E2CP__AdditionalCC__c, LastModifiedDate, CreatedBy.Name ';
         Boolean hasStatus = false;
         
         for(String fieldPath : fieldPathSet) {
@@ -158,14 +161,22 @@ public with sharing class PortalCasesCtrl {
             query += ', Status';
         }
         
-        queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + getQueryConditions() + ' ORDER BY CreatedDate DESC LIMIT 4';
+        String queryConditions = getQueryConditions();
 
-        List<Case> queryResult = Database.query(queryString);
+        queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ';
+
+        if(!seeAllCases) {
+            queryString += 'LIMIT 4';
+        }
+
+        PagedResult result =  new PagedResult();
+        result.totalItemCount = Database.countQuery('SELECT count() FROM Case ' + queryConditions);
+        result.records = Database.query(queryString);
 
         System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - getCases] queryString - ' + queryString);
-        System.debug('____ [cls PortalCasesCtrl - getCases] queryResult - ' + queryResult);
+        System.debug('____ [cls PortalCasesCtrl - getCases] queryResult - ' + result.records);
 
-        return queryResult;
+        return result;
     }
 
     /* 
@@ -222,6 +233,13 @@ public with sharing class PortalCasesCtrl {
         return String.isNotBlank(queryConditions) ? queryConditions : '';
     }
 
+    public class PagedResult {
+        @AuraEnabled
+        public Integer totalItemCount { get;set; }        
+        @AuraEnabled
+        public Object[] records { get;set; }
+    }  
+
     /* 
     * @description Return cases related to logged User, used in search functionality
     * @params String searchKey
@@ -234,7 +252,7 @@ public with sharing class PortalCasesCtrl {
 
         Id accountId = userLogged.AccountId;
 
-        String finalQuery = 'SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, CreatedDate, Portal_Case_Status__c ' +
+        String finalQuery = 'SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, CreatedDate, LastModifiedDate, Portal_Case_Status__c ' +
             'FROM Case ' +
             'WHERE Visible_on_ISS_Portal__c = true AND ' + 
                 '(CaseNumber LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\' OR Subject LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\') ';
@@ -265,11 +283,255 @@ public with sharing class PortalCasesCtrl {
         Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, 
                         CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
                         Subtopic__c, Region__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
-                        Description
+                        Description,E2CP__AdditionalCC__c,Account_Concerned__c
 
-            FROM Case 
-            WHERE Id = :caseId];
+                        FROM Case 
+                        WHERE Id = :caseId];
 
         return caseAux;
-    }                     
+    }
+
+    /*
+    * Returns the comments for a case, given the case id
+    */
+    @AuraEnabled 
+    public static List<MessageWrapper> getCaseMessages(String caseId){
+        List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
+
+        List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished, 
+                                                CreatedDate, CreatedById , CreatedBy.Name , IsDeleted
+                                                FROM CaseComment
+                                                WHERE ParentId = :caseId AND IsDeleted = false
+                                                ORDER BY CreatedDate ASC];
+        
+        if(lstCaseCommentsAux != null && !lstCaseCommentsAux.isEmpty()){
+            for(CaseComment caseCommentAux : lstCaseCommentsAux){
+                Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
+                lstToReturn.add(new MessageWrapper(caseCommentAux.CommentBody, 
+                                                    caseCommentAux.CreatedDate, 
+                                                    caseCommentAux.CreatedBy.Name, 
+                                                    isSelfAux, 
+                                                    caseCommentAux.Id));
+            }
+        }
+
+        return lstToReturn;
+    }
+
+    @AuraEnabled
+    public static ReturnWrapper submitNewMessage(String caseId, String messageTextAux){
+        ReturnWrapper returnWrapper = new ReturnWrapper();
+        Savepoint sp = Database.setSavepoint();
+        Case caseAux = new Case();
+        caseAux.Id = caseId;
+        caseAux.New_interaction__c = 'New Comment';
+        caseAux.New_Comment_From_Connection_User__c = true;
+        CaseComment caseCommentAux = new CaseComment();
+        caseCommentAux.ParentId = caseId;
+        caseCommentAux.CommentBody = messageTextAux;
+
+        try{
+            insert caseCommentAux;
+            update caseAux;
+            returnWrapper = new ReturnWrapper(true, Label.CSP_CaseMessage_SubmitSuccess, ''); 
+        }catch(Exception e){
+            Database.rollback(sp);
+            returnWrapper = new ReturnWrapper(false, e.getMessage(), '');
+        }
+
+        return returnWrapper;
+    }
+
+    /*
+    * Method that adds a new Recipient for this case
+    */
+    @AuraEnabled
+    public static ReturnWrapper addNewRecipient(String caseId, String newRecipientEmail){
+        ReturnWrapper returnWrapper = new ReturnWrapper();
+
+        String findEmail = newRecipientEmail.trim();
+        
+        if (findEmail == null || findEmail == ''){
+            returnWrapper.success = false;
+            returnWrapper.returnMessage = 'No email was provided. ';
+            return returnWrapper;
+        }
+
+        // find contact with input email
+        list<Contact> listContact = [SELECT Id, Email, AccountId FROM Contact WHERE Email = :findEmail AND Status__c = 'Active' LIMIT 1];
+        if (listContact.size() != 1) {
+            returnWrapper.success = false;
+            returnWrapper.returnMessage = Label.ISSP_CCOther_Wrong_Emails.replace('{0}',findEmail);
+            return returnWrapper;
+        }
+
+        Boolean isDPCUser = false;
+        Id profileId = Userinfo.getProfileId();
+        String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
+        //Verify if user is a PWC profile
+        if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
+
+        //get partner user role id
+        Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+
+        //get the case
+        Case caseAux = PortalCasesCtrl.getCaseById(caseId);
+
+        // insert found contact as a team member of the case
+        Savepoint sp = Database.setSavepoint();
+        try {
+            Contact contact = listContact.get(0);
+            Id memberId = contact.Id;
+            if(isDPCUser) {
+                // only add people from Account_Concerned__c by User
+                list<User> listUser = [
+                    SELECT Id, Contact.AccountId
+                    FROM User
+                    WHERE ContactId = :contact.Id AND isActive = true AND Contact.AccountId = :caseAux.Account_Concerned__c AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User') ];
+                if (!listUser.isEmpty()) {
+                    memberId = listUser[0].Id;
+                } else {
+                    if (contact.AccountId != caseAux.Account_Concerned__c){
+                        //if it's DPC, a user is not found and the selected contact is not in the
+                        //same Account Concerned then we cannot continue
+
+                        returnWrapper.success = false;
+                        returnWrapper.returnMessage = 'User is now in the same account concerned';
+                        return returnWrapper;
+                    }
+                }
+            }
+            CaseTeamMember teammember = new CaseTeamMember(ParentId = caseAux.Id, MemberId = memberId, TeamRoleId = PARTNER_USER_ROLE);
+            System.debug(teammember);
+            insert teammember;
+            
+            if(caseAux.E2CP__AdditionalCC__c != null && caseAux.E2CP__AdditionalCC__c != ''){
+                caseAux.E2CP__AdditionalCC__c =  caseAux.E2CP__AdditionalCC__c + ';' + contact.Email;
+            }else{
+                caseAux.E2CP__AdditionalCC__c = contact.Email;
+            }
+            update caseAux;
+
+            returnWrapper.success = true;
+            returnWrapper.returnMessage = 'Recipient added with success!';
+
+        } catch (DMLException e) {
+            String messages = '';
+            for (Integer i = 0; i < e.getNumDml(); i++) {
+                messages += ' ' + findemail + ': ' + e.getDmlMessage(i);
+            }
+            Database.rollback(sp);
+
+            returnWrapper.success = false;
+            returnWrapper.returnMessage = messages;
+        }
+
+        return returnWrapper;
+    }
+
+    /*
+    * Method that removes a recipient from this case
+    */
+    @AuraEnabled
+    public static ReturnWrapper removeRecipient(String caseId, String recipientEmail){
+        ReturnWrapper returnWrapper = new ReturnWrapper();
+
+        String emailFiltered = recipientEmail==null ? '': recipientEmail.trim();
+
+        Case caseAux = PortalCasesCtrl.getCaseById(caseId);
+
+        Savepoint sp = Database.setSavepoint();
+        try {
+            List<String> listNews = new List<String>();
+            for (String email: caseAux.E2CP__AdditionalCC__c.split(';')) {
+                String trimEmail = email.trim();
+                if (trimEmail != emailFiltered) {
+                    listNews.add(trimEmail);
+                }
+            }
+            caseAux.E2CP__AdditionalCC__c = (String.join(listNews,';'));
+            
+            update caseAux;
+
+            //get partner user role id
+            Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+
+            list<Contact> listContact = [SELECT Id, AccountId FROM Contact WHERE email = :emailFiltered];
+            list<User> listUser = [SELECT Id, Contact.AccountId FROM User WHERE email = :emailFiltered];
+            list<CaseTeamMember> listMember = [SELECT id FROM CaseTeamMember
+                WHERE ParentId = :caseId AND TeamRoleId = :PARTNER_USER_ROLE AND (MemberId IN :listContact OR MemberId IN :listUser)];
+            if (!listMember.isEmpty()) {
+                delete listMember;
+            }
+
+            returnWrapper.success = true;
+            returnWrapper.returnMessage = 'Recipient removed with success!';
+
+        } catch (DMLException e) {
+            System.debug('ERROR delTeamMember ' + e.getMessage());
+            
+            String messages = '';
+            for (Integer i = 0; i < e.getNumDml(); i++) {
+                messages += ' ' + emailFiltered + ': ' + e.getDmlMessage(i);
+            }
+            Database.rollback(sp);
+
+            returnWrapper.success = false;
+            returnWrapper.returnMessage = messages;
+        }
+
+        return returnWrapper;
+    }
+
+    /*
+    *   Wrapper class for returning database operations success / unsuccess
+    */
+    public class ReturnWrapper {
+        @AuraEnabled
+        public Boolean success {get; set;}
+        @AuraEnabled
+        public String returnMessage {get; set;}
+        @AuraEnabled
+        public String extraDetails {get; set;}
+
+        public ReturnWrapper(){}
+
+        public ReturnWrapper(Boolean successAux, String returnMessageAux, String extraDetailsAux){
+            this.success = successAux;
+            this.returnMessage = returnMessageAux;
+            this.extraDetails = extraDetailsAux;
+        }
+    }
+
+    /*
+    * Wrapper class for the messaging system
+    */
+    public class MessageWrapper {
+
+        @AuraEnabled
+        public String messageText{get; set;}
+        @AuraEnabled
+        public Datetime timeStamp{get; set;}
+        @AuraEnabled
+        public String senderName{get; set;}
+        @AuraEnabled
+        public Boolean isSelf{get; set;}
+        @AuraEnabled
+        public String id{get; set;}
+
+        public MessageWrapper(){}
+
+        public MessageWrapper(String messageTextAux, Datetime timeStampAux, String senderNameAux, Boolean isSelfAux, String idAux){
+            this.messageText = messageTextAux;
+            this.timeStamp = timeStampAux;
+            this.isSelf = isSelfAux;
+            this.id = idAux;
+            this.senderName = senderNameAux;
+        }
+
+    }
+
+
+
+
 }
