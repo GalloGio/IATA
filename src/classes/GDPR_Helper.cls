@@ -260,6 +260,23 @@ public without sharing class GDPR_Helper {
          sendEmail(email, htmlBody);
     }
 
+    // CR3: Merge 2 emails into 1 (a new version)
+    public static void sendAccessEmailNewVersion(String email, String link){
+        String htmlBody = '<html>'+
+                            '<body>'+
+                                headerHtml()+
+                                'Welcome to IATA<br/><br/>'+
+                                'Thank you for registering to the IATA Signup & Privacy Portal.<br/><br/>'+
+                                'Please click on the following <a href="'+link+'">link</a> to access the Portal.<br/><br/>'+
+                                'Best regards,<br/>'+
+                                'IATA Team'+
+                                footerHtml()+
+                            '</body>'+
+                            '</html>';  
+
+         sendEmail(email, htmlBody);
+    }
+
     public static void sendWelcomeEmail(String email){
         String htmlBody = '<html>'+
                             '<body>'+
@@ -398,7 +415,7 @@ public without sharing class GDPR_Helper {
         
         //Send Email
         String link = Label.IATA_GDPR_URL+'/s/guest?token='+encryptedToken+'&indId='+encryptedId;
-        sendAccessEmail(email, link);  
+        sendAccessEmailNewVersion(email, link);  
         
         return link;                   
      }

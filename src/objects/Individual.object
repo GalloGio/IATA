@@ -1841,16 +1841,6 @@
         <fullName>Website</fullName>
         <trackHistory>false</trackHistory>
     </fields>
-     <fields>
-        <fullName>Department__c</fullName>
-        <externalId>false</externalId>
-        <label>Department</label>
-        <length>80</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <fields>
         <fullName>Job_Function__c</fullName>
         <externalId>false</externalId>
