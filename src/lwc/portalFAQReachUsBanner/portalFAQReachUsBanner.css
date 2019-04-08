@@ -1,0 +1,33 @@
+.shadow {
+  height: 18px;
+  background-color: #e0e2e6;
+  border-radius: 500%;
+}
+
+.customCard {
+  border-width: 2px;
+  position: relative;
+  box-shadow: none;
+}
+
+.triangle-bottomright {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 125px 125px;
+  border-color: transparent transparent #f0f2f5 transparent;
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+}
+
+.triangle-bottomrightlarge {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 125px 125px;
+  border-color: transparent transparent #e2e2e2 transparent;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
