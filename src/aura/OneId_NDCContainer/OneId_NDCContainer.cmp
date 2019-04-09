@@ -1,0 +1,91 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCMatchmakerController">
+    
+    <aura:attribute type="String" name="serviceName"/>
+    
+    <aura:attribute type="Boolean" name="isGuestUser"/>
+    <aura:attribute type="Boolean" name="accessRequested"/>
+    <aura:attribute type="String" name="accessStatus"/>
+    <aura:attribute type="String" name="pendingAccessReason"/>
+    <aura:attribute type="String" name="termsAndConditionsException"/>
+    <aura:attribute type="String" name="termsAndConditionsId"/>
+    <aura:attribute type="URL" name="tcURL"/>
+    <aura:attribute type="Boolean" name="ndcCapable" default="false"/>
+    <aura:attribute type="Term_and_Condition_Acceptance__c" name="termsAndConditionsAcceptance"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <div aura:id="mainContainer" class="slds-container_medium slds-container_center">
+        <h1> NDC Matchmaker </h1>
+        <div class="slds-grid-wrap slds-m-top_medium" style="text-align:left !important;">
+            <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                Go to the <a style="color: #00aeef !important;" href="{! $Label.c.OneId_NDCMM_Sharepoint_URL}">NDC Matchmaker</a> website
+            </div>
+        </div>
+        
+        <aura:if isTrue="{! v.isGuestUser}">
+            <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
+                <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                    Please fill your credentials or create an account if you don't have any in the <a style="color: #00aeef !important;" href="{!'/' + $Label.c.OneId_Community_Name + '/login?language=en_US&amp;serviceName=NDCMM'}">login</a> page.
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{! !v.accessRequested}">
+            <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
+                <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+		            You don't have access to NDC Matchmaker. Please complete the <a style="color: #00aeef !important;" href="{!'/' + $Label.c.OneId_Community_Name + '/login/SelfRegister?language=en_US&amp;serviceName=NDCMM'}">registration form</a>.
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{! v.accessStatus == 'Pending'}">
+            <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
+                <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                    You Access Status to NDC Matchmaker is pending for the following reason(s)
+                    <br/>
+                    {! v.pendingAccessReason}
+                </div>
+            </div>
+        </aura:if>                
+        
+        <aura:if isTrue="{! and(v.accessStatus != null,v.accessStatus != 'Access Granted',v.accessStatus != 'Pending')}">
+            <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
+                <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                    The access status "{! v.accessStatus}" prevents you to access NDC Matchmaker
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{! and(v.termsAndConditionsException != null, v.termsAndConditionsException != '')}">
+            <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
+                <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                    The following error about terms and exception raised : {! v.termsAndConditionsException}.
+                    <br/>
+                    Please contact the <a style="color: #00aeef !important;" href="{!'/' + $Label.c.OneId_Community_Name + '/troubleshooting?serviceName=NDCMM'}">NDC Team</a>.
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{! and(v.termsAndConditionsAcceptance != null,v.termsAndConditionsAcceptance.Is_Accepted__c == false)}">
+            <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
+                <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                    You must accept the latest <a style="color: #00aeef !important;" href="{! '/servlet/servlet.FileDownload?file=' + v.termsAndConditionsId}">Terms and Condition</a>.
+                    <br/>
+                    <lightning:button variant="brand" onclick="{! c.acceptTC}" name="edit" label="Accept" />
+                    <br/>
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{! and(v.termsAndConditionsAcceptance != null,v.termsAndConditionsAcceptance.Is_Accepted__c == true)}">
+            <c:OneId_NDCMatchmaker/>
+            
+            <aura:if isTrue="{! v.ndcCapable}">
+                <c:OneId_NDCRelations/>
+            </aura:if>
+        </aura:if>
+        <br/>
+    </div>
+
+</aura:component>
