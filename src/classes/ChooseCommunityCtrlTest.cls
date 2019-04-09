@@ -47,7 +47,7 @@ private  class ChooseCommunityCtrlTest {
 		List<SelectOptionWrapper> communitiesList =ChooseCommunityCtrl.getAvalaibleCommunities();	
 
 		//send reset email
-		ChooseCommunityCtrl.SendEmail(contact.id,communitiesList.get(0).value); 
+		ChooseCommunityCtrl.SendEmailAura(contact.id,communitiesList.get(0).value); 
 	 }
 
 
