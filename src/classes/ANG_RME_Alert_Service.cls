@@ -256,6 +256,10 @@ global class ANG_RME_Alert_Service {
 		private WebserviceResult(){
 			isSuccess = true;
 		}
+        
+        public RHCMessage getResultMessage(){
+            return this.res;
+        }
 	}
 
 	public static WebserviceResult testWebserviceResult(){
@@ -314,8 +318,13 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
 	webservice static WebserviceResult requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
+		return ANG_RME_Alert_Service.requestProvisionalRHCAux(accountId,flagUpdateProvisioning,true);
+	}
+
+	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
+	webservice static WebserviceResult requestProvisionalRHCAux(String accountId, Boolean flagUpdateProvisioning, Boolean updateResults){
+
 
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 		
