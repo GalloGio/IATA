@@ -32,7 +32,7 @@ public class ChooseCommunityCtrl {
     }
 
     @AuraEnabled
-    public static void SendEmail(String contactId,String community){      
+    public static void SendEmailAura(String contactId,String community){      
        sendAssinc(contactId,community);
     }
 

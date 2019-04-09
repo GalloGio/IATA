@@ -5,7 +5,7 @@ import confirmSendMsgLABEL from '@salesforce/label/c.resetPasswordConfirmMessage
 import communityLABEL from '@salesforce/label/c.CSP_Community';
 import selectCommunityLABEL from '@salesforce/label/c.CSP_SelectCommunity';
 
-import sendEmail from '@salesforce/apex/ChooseCommunityCtrl.SendEmail';
+import sendEmail from '@salesforce/apex/ChooseCommunityCtrl.SendEmailAura';
 import getCommunitiesValues from '@salesforce/apex/ChooseCommunityCtrl.getAvalaibleCommunities';
 import hasValidUser from '@salesforce/apex/ChooseCommunityCtrl.hasValidUser';
 
