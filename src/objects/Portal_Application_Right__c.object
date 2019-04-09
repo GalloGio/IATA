@@ -107,6 +107,27 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Access_Pending_Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>Access Pending Detail</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending IATA Approval</fullName>
+                    <default>false</default>
+                    <label>Pending IATA Approval</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Access_Status_Reason__c</fullName>
         <externalId>false</externalId>
         <label>Reason</label>
@@ -599,6 +620,11 @@ Application_Name__c
                     <default>false</default>
                     <label>Access Denied</label>
                 </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -865,6 +891,13 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <active>true</active>
         <label>Application access request</label>
         <picklistValues>
+            <picklist>Access_Pending_Detail__c</picklist>
+            <values>
+                <fullName>Pending IATA Approval</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Invoice_Type__c</picklist>
             <values>
                 <fullName>Cass Invoices</fullName>
@@ -906,6 +939,13 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <fullName>Application_rigth</fullName>
         <active>true</active>
         <label>Application rigth</label>
+        <picklistValues>
+            <picklist>Access_Pending_Detail__c</picklist>
+            <values>
+                <fullName>Pending IATA Approval</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Invoice_Type__c</picklist>
             <values>
@@ -960,6 +1000,13 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <fullName>Biller_Direct</fullName>
         <active>true</active>
         <label>Biller Direct</label>
+        <picklistValues>
+            <picklist>Access_Pending_Detail__c</picklist>
+            <values>
+                <fullName>Pending IATA Approval</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Invoice_Type__c</picklist>
             <values>
