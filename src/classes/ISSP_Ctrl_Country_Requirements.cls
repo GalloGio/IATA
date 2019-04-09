@@ -31,8 +31,24 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public List<AMS_Accreditation_Requirement__c> countryRequirementsList;
     public List<SelectOption> accreditationTypes;
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}   
-    public String agencyType {get;set;}
+    
     public Account hqAccount {get; private set;}
+    public List<SelectOption> agencyTypes {
+        get {
+            List<SelectOption> agencyTypeList = new List<SelectOption>();
+            agencyTypeList.add(new SelectOption('Domestic', 'Domestic'));
+            agencyTypeList.add(new SelectOption('International', 'International'));
+
+            return agencyTypeList;
+        }
+        set;
+    }
+    public String agencyType {
+        get {
+            return agencyType == null ? 'Domestic' : agencyType;
+        } 
+        set;
+    }
 
     //Check is the user has access to this service
     public static Boolean isAllowedAccess() {
@@ -116,10 +132,6 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                 sector = user.contact.Account.Sector__c;
             }
 
-            if (hqAccount.IATA_ISO_Country__r.ISO_Code__c == 'CN' && sector == 'Travel Agent') {
-                sector += '- ' + agencyType;
-            }
-
             countryName = user.contact.Account.IATA_ISO_Country__r.Name; 
             amsCountryLabel = countryName;
             isHOAccredited = false;
@@ -172,7 +184,6 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             if (accreditationType != null && accreditationType != '') {
                 accredModel = accreditationType;
             }
-
         } catch (Exception e) { System.debug(LoggingLevel.ERROR, 'Exception caught : ' + e.getMessage()); }
     }
 
@@ -191,9 +202,10 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', '--None--'));
         
-        for (IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
-            if(isoCountry.Name != 'All Countries')
+        for (IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')) {
+            if(isoCountry.Name != 'All Countries') {
                 options.add(new SelectOption(isoCountry.Id, isoCountry.Name));
+            }
         }
 
         return options;
@@ -204,8 +216,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', '--None--'));
         
-        List<Schema.PicklistEntry> ple = AP_Country_Requierment__c.Line_of_business__c.getDescribe().getPicklistValues();
-        for( Schema.PicklistEntry f : ple) {
+        for(Schema.PicklistEntry f : AP_Country_Requierment__c.Line_of_business__c.getDescribe().getPicklistValues()) {
             options.add(new SelectOption(f.getLabel(), f.getValue()));
         }
         
@@ -254,6 +265,16 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public List<AMS_Accreditation_Requirement__c> getCountryRequirementsList() {
         if(countryRequirementsList == null) {
             countryRequirementsList = new List<AMS_Accreditation_Requirement__c>();
+
+            if (hqAccount.IATA_ISO_Country__r.ISO_Code__c == 'CN' && sector.contains('Travel Agent')) {
+                if (sector.contains('-')) {
+                    sector = sector.removeEnd(' - null');
+                    sector = sector.removeEnd(' - International');
+                    sector = sector.removeEnd(' - Domestic');
+                }
+
+                sector += ' - ' + agencyType;
+            }
 
             List<AMS_Accreditation_Requirement__c> countryRequirementListAux = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c,
                                                                                     File_Identifier2__c, Language__c
@@ -332,17 +353,17 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         accreditationType = accredModel;
 
         if(isHOAccredited && category == AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT) {
-            if(isNewgenEnabled){
-                    if (accredModel == 'Cash') {
-                        accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cash));
-                    } else if(accredModel == 'Cashless') {
-                        accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cashless));
-                    }
-                }else{
-                    accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_BRANCH));        
+            if (isNewgenEnabled) {
+                if (accredModel == 'Cash') {
+                    accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cash));
+                } else if(accredModel == 'Cashless') {
+                    accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cashless));
                 }
+            } else {
+                accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_BRANCH));        
+            }
         } else {
-            if(isNewgenEnabled) {                
+            if (isNewgenEnabled) {                
                 accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASH, Label.ISSP_AMS_Head_Entity_Cash));
                 accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, Label.ISSP_AMS_Head_Entity_No_Cash));
             } else {
@@ -352,8 +373,12 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         return accreditationTypes;
     }
 
+    public void setNewAgencyTypeValue() {
+        countryRequirementsList = null;
+    }
+
     public Map<String, String> getLanguagesMap() {
-        if(languagesMap == null) {
+        if (languagesMap == null) {
             languagesMap = new Map<String, String>();
 
             languagesMap.put('en_US','English');
@@ -377,6 +402,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             languagesMap.put('vi', 'Vietnamese');
             languagesMap.put('th', 'Thai'); 
         }
+
         return languagesMap;
     }
 }
