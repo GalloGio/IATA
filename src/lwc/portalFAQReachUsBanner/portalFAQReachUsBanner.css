@@ -1,7 +1,8 @@
-.shadow {
-  height: 18px;
+.underShadow::after {
+  content:"";
   background-color: #e0e2e6;
   border-radius: 500%;
+  padding-left: 100%;
 }
 
 .customCard {
@@ -10,24 +11,24 @@
   box-shadow: none;
 }
 
-.triangle-bottomright {
+.customCard::after,
+.customCard::before {
+  content:"";
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 0 125px 125px;
-  border-color: transparent transparent #f0f2f5 transparent;
+  border-width: 0 0 120px 120px;
   position: absolute;
+}
+
+.customCard::after {
+  border-color: transparent transparent #f0f2f5 transparent;
   bottom: -2px;
   right: -2px;
 }
 
-.triangle-bottomrightlarge {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 0 125px 125px;
+.customCard::before {
   border-color: transparent transparent #e2e2e2 transparent;
-  position: absolute;
   bottom: 0;
   right: 0;
 }

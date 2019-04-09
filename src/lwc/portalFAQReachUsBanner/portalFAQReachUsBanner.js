@@ -8,6 +8,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
 
 //custom labels
+import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 import CSP_FAQReachUsBanner_Title from '@salesforce/label/c.CSP_FAQReachUsBanner_Title';
 import CSP_FAQReachUsBanner_Text from '@salesforce/label/c.CSP_FAQReachUsBanner_Text';
 
@@ -15,11 +16,11 @@ export default class PortalFAQReachUsBanner extends NavigationMixin(LightningEle
 
     // Labels to use in the template
     label = {
+        CSP_FAQReachUsBanner_ButtonText,
         CSP_FAQReachUsBanner_Title,
         CSP_FAQReachUsBanner_Text
     };
 
-    @track reachUs = 'Reach Us';
     @track supportReachUsURL;
     @api topic;
     @api subTopic;
