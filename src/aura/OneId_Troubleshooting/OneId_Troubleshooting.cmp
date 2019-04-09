@@ -1,0 +1,80 @@
+<aura:component extends="c:Base" implements="forceCommunity:availableForAllPageTypes" controller="OneId_Troubleshooting_Controller">
+    
+    <aura:attribute type="String" name="serviceName"/>
+    <aura:attribute type="Boolean" name="isGuestUser"/>
+    <aura:attribute type="String" name="email"/>
+    <aura:attribute type="String" name="subject" default=""/>
+    <aura:attribute type="Boolean" name="subjectMissing" default="false"/>
+    <aura:attribute type="String" name="otherSubject" default=""/>
+    <aura:attribute type="Boolean" name="otherSubjectMissing" default="false"/>
+    <aura:attribute type="String" name="description"/>
+    <aura:attribute type="Case" name="case"/>
+    <aura:attribute type="Boolean" name="submitted" default="false"/>
+    <aura:attribute type="String" name="emailPattern"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
+
+    <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
+    <div aura:id="mainContainer" class="slds-container_medium slds-container_center slds-p-vertical_large">
+        <lightning:spinner alternativeText="Loading" aura:id="spinner"/>
+        <h1> Online help </h1>
+        <div class="slds-grid-wrap slds-m-top_medium" style="text-align:left !important;">
+            <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                Go to the <a style="color: #00aeef !important;" href="{! $Label.c.OneId_NDCMM_Sharepoint_URL}">NDC Matchmaker</a> website
+            </div>
+        </div>
+        <br/>
+        <aura:if isTrue="{! !v.submitted}">
+            <aura:if isTrue="{! v.isGuestUser}">
+                <lightning:input name="inputName" label="Your Name" aura:id="name" value="{!v.case.Case_Creator_Name__c}" required="true"/>
+                <lightning:input messageWhenPatternMismatch="Your email address format is invalid" name="inputEmail" label="Your Email" aura:id="email" value="{!v.case.Case_Creator_Email__c}" required="true" pattern="{! v.emailPattern}"/>
+            </aura:if>
+
+            <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Subject</label>
+            <div class="{! v.subjectMissing? 'slds-form-element__control slds-form-element slds-has-error' : 'slds-form-element__control'}">
+                <ui:inputSelect value="{!v.subject}" required="true" change="{! c.checkSubject}" class="slds-select">
+                    <ui:inputSelectOption text="" label="Select a Subject" value="true"/>
+                    <ui:inputSelectOption text="Login" label="Login Issue"/>
+                    <ui:inputSelectOption text="Eligibility" label="Eligibility Issue"/>
+                    <ui:inputSelectOption text="Other" label="Other - Please specify"/>
+                </ui:inputSelect>
+                <aura:if isTrue="{! v.subjectMissing}">
+                    <div class="slds-form-element__help" data-help-message="true" role="alert">
+                        Complete this field
+                    </div>
+                </aura:if>
+            </div>
+
+            <aura:if isTrue="{! v.subject == 'Other'}">
+                <div class="{! v.otherSubjectMissing? 'slds-form-element__control slds-form-element slds-has-error' : 'slds-form-element__control'}">
+                    <lightning:input name="otherSubject" label="Other" value="{!v.otherSubject}" required="true" onchange="{! c.checkOtherSubject}" />
+                    <aura:if isTrue="{! v.otherSubjectMissing}">
+                        <div class="slds-form-element__help" data-help-message="true" role="alert">
+                            Complete this field.
+                        </div>
+                    </aura:if>
+                </div>
+            </aura:if>
+            
+            <!--lightning:input name="inputSubject" label="Subject" aura:id="subject" value="{!v.case.Subject}" required="true"/-->
+            <lightning:textarea name="inputDescription" label="Description" aura:id="description" value="{!v.case.Description}" required="true"/>
+            
+            <!-- Neutral variant (default) -->
+            <lightning:button label="Submit" title="Submit" onclick="{! c.handleClick }"/>
+            
+            <aura:set attribute="else">
+                <div class="slds-grid-wrap slds-p-horizontal_medium slds-m-top_medium">
+                    <div class="sfdc slds-p-top_medium slds-order_2 slds-medium-order_1  slds-max-small-size_1-of-1">
+                        Thank you for your request. We will get back to you soon.
+                        <aura:if isTrue="{! v.serviceName == 'NDCMM'}">
+                            <br/>
+                            Please follow this <a style="color: #00aeef !important;" href="{! $Label.c.OneId_NDCMM_Sharepoint_URL}">link</a> to access NDC Matchmaker website.
+                        </aura:if>
+                    </div>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+    
+</aura:component>
