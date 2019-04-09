@@ -40,9 +40,9 @@ public with sharing class ISSP_AvailableServices{
     public static User currentPortalUser {
         get {
             if(currentPortalUser == null){
-                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.AccountId, contact.name,
-                                    contact.account.ANG_IEP_Status_FF__c,ContactId,
-                                    languagelocalekey,ProfileId, Profile.Name
+                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c,languagelocalekey,ProfileId,Profile.Name,
+                                    ContactId, contact.name,
+                                    contact.AccountId,contact.account.ANG_IEP_Status_FF__c, contact.account.Sector__c, contact.account.Category__c
                                     from User where id =: UserInfo.getUserId()];
             }
             return currentPortalUser;
@@ -432,23 +432,64 @@ public with sharing class ISSP_AvailableServices{
 
                 size = 10;
 
+                // Find applications from CS ISSPServiceListView__c
                 String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
-                string queryString = '';
-
-                queryString = 'select '+query+' from Portal_Applications__c '+getQueryConditions()+' order by '+ sortFullExp;
-
+                String queryString = 'select '+query+' from Portal_Applications__c '+getQueryConditions()+' order by '+ sortFullExp;
                 ISSP_Utilities.log('SQL String: ' + queryString);
-                setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
-                setCon.setPageSize(size);
+                list<Portal_Applications__c> listApps = Database.query(queryString);
+
+                // Second search based in Custom Matadata for all those remaining apps
+                list<Portal_Applications__c> listRestOfRequestableApps = [
+                    SELECT Name, Application_icon__c, Service_Description__c, CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c
+                    FROM Portal_Applications__c
+                    WHERE Id NOT IN :listApps
+                    AND Requestable__c = true];
+                Account account = currentPortalUser.contact.account;
+                listRestOfRequestableApps = getVisibleApplications(listRestOfRequestableApps,account);
+                listApps.addAll(listRestOfRequestableApps);
+
+                setCon = new ApexPages.StandardSetController(listApps);
+                setCon.setPageSize(listApps.size());
                 noOfRecords = setCon.getResultSize();
             }
             return setCon;
         }set;
     }
-    
+
+    /**
+        From input Portal_Applications__c list return only those records that are visible
+        according to the Custom Metadata Portal_Application_Setting__mdt
+    **/
+    @TestVisible
+    private list<Portal_Applications__c> getVisibleApplications(list<Portal_Applications__c> listApps, Account account) {
+        if (account==null) return new list<Portal_Applications__c>();
+        // Get the list of services visible for thi input account based on the Custom metadata Portal_Application_Setting__mdt
+        set<String> setVisibleApplicationNames = new set<String>();
+        for (Portal_Application_Setting__mdt setting: [
+                SELECT id, MasterLabel,
+                    (SELECT Sector__c, Category__c
+                    FROM Portal_Application_Visibilities__r
+                    WHERE is_Visible__c = true
+                    AND Sector__c = :account.Sector__c
+                    AND Category__c = :account.Category__c)
+                FROM Portal_Application_Setting__mdt]) {
+            if (setting.Portal_Application_Visibilities__r.size()>0) {
+                setVisibleApplicationNames.add(setting.MasterLabel);
+            }
+        }
+        //filter input Portal_Applications__c and return only those defined in setVisibleApplicationNames
+        list<Portal_Applications__c> listVisibleApps = new list<Portal_Applications__c>();
+        for (Portal_Applications__c app: listApps) {
+            if (setVisibleApplicationNames.contains(app.Name)) {
+                listVisibleApps.add(app);
+            }
+        }
+        return listVisibleApps;
+    }
+
     public class ServiceWrapper {
         public string Status {get; set;}
         public Boolean selected {get; set;}
