@@ -9766,7 +9766,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label>Según la fórmula</label>
+        <label>Cantidad de seguridad financiera provista</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
@@ -15572,6 +15572,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>My_Renewals</name>
     </customLabels>
     <customLabels>
+        <label><!-- NDC Troubleshooting --></label>
+        <name>NDC_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
         <label><!-- New --></label>
         <name>New</name>
     </customLabels>
@@ -16154,6 +16158,18 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- OneId_My available applications --></label>
         <name>OneId_My_available_applications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Sharepoint_URL --></label>
+        <name>OneId_NDCMM_Sharepoint_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting --></label>
+        <name>OneId_NDCMM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting_Link --></label>
+        <name>OneId_NDCMM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Name --></label>

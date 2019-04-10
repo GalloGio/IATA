@@ -18251,7 +18251,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</shortDescription>
-        <value>According to Formula</value>
+        <value>Financial Security Amount Provided</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
@@ -29634,6 +29634,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Renewals &gt; Publications</value>
     </labels>
     <labels>
+        <fullName>NDC_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NDC Troubleshooting</shortDescription>
+        <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
+    </labels>
+    <labels>
         <fullName>New</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -30792,6 +30799,27 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <protected>false</protected>
         <shortDescription>OneId_My available applications</shortDescription>
         <value>My available applications</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Sharepoint_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
+        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting</shortDescription>
+        <value>Online Help</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting_Link</shortDescription>
+        <value>/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
         <fullName>OneId_Name</fullName>
