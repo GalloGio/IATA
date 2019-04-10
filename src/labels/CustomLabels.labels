@@ -31,6 +31,13 @@
         <value>Restricted Profile - automated process</value>
     </labels>
     <labels>
+        <fullName>AMP_Services_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMP Services Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
         <fullName>AMS_AttchNotifyOwner</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18244,7 +18251,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</shortDescription>
-        <value>According to Formula</value>
+        <value>Financial Security Amount Provided</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
@@ -28206,6 +28213,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Submission of the documents successfully completed!</value>
     </labels>
     <labels>
+        <fullName>Industry_Activities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Industry_Activities</shortDescription>
+        <value>Industry Activities</value>
+    </labels>
+    <labels>
         <fullName>InputRequiredMessage</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -29324,6 +29338,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Last name</value>
     </labels>
     <labels>
+        <fullName>Line_of_Business_LoB</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Line of Business (LoB)</shortDescription>
+        <value>Line of Business (LoB)</value>
+    </labels>
+    <labels>
         <fullName>LiveAgentButtonLanguage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29613,6 +29634,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Renewals &gt; Publications</value>
     </labels>
     <labels>
+        <fullName>NDC_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NDC Troubleshooting</shortDescription>
+        <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
+    </labels>
+    <labels>
         <fullName>New</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29754,6 +29782,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No special characters</shortDescription>
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
+    </labels>
+    <labels>
+        <fullName>Not_Applicable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not Applicable</shortDescription>
+        <value>Not Applicable</value>
     </labels>
     <labels>
         <fullName>Notions_Essentl_Tarif_Billet_Description</fullName>
@@ -30766,6 +30801,27 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <value>My available applications</value>
     </labels>
     <labels>
+        <fullName>OneId_NDCMM_Sharepoint_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
+        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting</shortDescription>
+        <value>Online Help</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting_Link</shortDescription>
+        <value>/s/troubleshooting?serviceName=NDCMM</value>
+    </labels>
+    <labels>
         <fullName>OneId_Name</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -31192,6 +31248,13 @@ Please check your mailbox to finalize the registration process.</value>
         <protected>false</protected>
         <shortDescription>Oneid_request_acess_to_a_new_service</shortDescription>
         <value>REQUEST ACCESS TO A NEW SERVICE</value>
+    </labels>
+    <labels>
+        <fullName>Only_Allow_Broadcast_Tool_for_IATA_Members</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Only Allow Broadcast Tool for IATA Members</shortDescription>
+        <value>The chatter broadcast tool is only available for IATA Member Airlines.</value>
     </labels>
     <labels>
         <fullName>Only_one_subscription_can_be_purchased</fullName>

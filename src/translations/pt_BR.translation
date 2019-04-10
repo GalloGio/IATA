@@ -141,6 +141,10 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Active --></label>
+        <name>AMP_Services_Active</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -9736,7 +9740,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label>De acordo com a fórmula</label>
+        <label>Quantidade de segurança financeira fornecida</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
@@ -14841,6 +14845,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
+        <label><!-- Industry_Activities --></label>
+        <name>Industry_Activities</name>
+    </customLabels>
+    <customLabels>
         <label><!-- InputRequiredMessage --></label>
         <name>InputRequiredMessage</name>
     </customLabels>
@@ -15373,6 +15381,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>Last_name</name>
     </customLabels>
     <customLabels>
+        <label><!-- Line of Business (LoB) --></label>
+        <name>Line_of_Business_LoB</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LiveAgentButtonLanguage --></label>
         <name>LiveAgentButtonLanguage</name>
     </customLabels>
@@ -15533,6 +15545,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>My_Renewals</name>
     </customLabels>
     <customLabels>
+        <label><!-- NDC Troubleshooting --></label>
+        <name>NDC_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
         <label><!-- New --></label>
         <name>New</name>
     </customLabels>
@@ -15607,6 +15623,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
     <customLabels>
         <label><!-- No special characters --></label>
         <name>No_special_characters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Not Applicable --></label>
+        <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
@@ -16113,6 +16133,18 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_My_available_applications</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_NDCMM_Sharepoint_URL --></label>
+        <name>OneId_NDCMM_Sharepoint_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting --></label>
+        <name>OneId_NDCMM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting_Link --></label>
+        <name>OneId_NDCMM_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Name --></label>
         <name>OneId_Name</name>
     </customLabels>
@@ -16330,6 +16362,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customLabels>
         <label><!-- Oneid_request_acess_to_a_new_service --></label>
         <name>Oneid_request_acess_to_a_new_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Only Allow Broadcast Tool for IATA Members --></label>
+        <name>Only_Allow_Broadcast_Tool_for_IATA_Members</name>
     </customLabels>
     <customLabels>
         <label><!-- Only one subscription can  be purchased --></label>
