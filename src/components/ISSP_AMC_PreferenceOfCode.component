@@ -24,6 +24,7 @@
                 filter = /^([0-9][0-9])+$/;
                 filter2 = /^([a-zA-Z0-9]*\W+[a-zA-Z0-9]*)+$/;
                 if(element.value  != null && element.value != ""){
+                    console.log("estás a entrar aonde?");
                     if (filter.test(element.value) || filter2.test(element.value) || element.value.length != 2) {
                             t.remove("parentClass");
                             t.add("has-error");

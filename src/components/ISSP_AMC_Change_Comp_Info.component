@@ -7,7 +7,8 @@
     Purpose:
 
     VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
-    1.0         Filipa Martins       06-11-2018      INITIAL DEVELOPMENT
+    1.0         Filipa Martins      06-11-2018      INITIAL DEVELOPMENT
+	1.0			Inna Prokopieva		05-04-2019
  -->
 
 <apex:component controller="ISSP_AMC_Change_Comp_Info" allowDML="true">
@@ -96,7 +97,7 @@
             </div>
             <apex:outputPanel rendered="{!hasAccountingCode}">
                 <div class="col-md-6">
-                    <apex:inputText id="AccountingCode" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Accounting_Code__c}" disabled="true"/>
+                    <apex:inputText id="AccountingCode" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.IATACode__c}" disabled="true"/>
                 </div>
             </apex:outputPanel>
             <apex:outputPanel rendered="{!!hasAccountingCode}">

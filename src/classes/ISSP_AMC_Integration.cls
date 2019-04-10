@@ -126,7 +126,7 @@ public without sharing class ISSP_AMC_Integration {
                                                                         AAO_Domestic__c,
                                                                         AAO_International__c,
                                                                         Does_the_airline_presently_hold_a_three__c,
-                                                                        Case__r.account.Accounting_Code__c,
+                                                                        Case__r.account.IATACode__c,
                                                                         Case__r.account.Airline_Prefix__c,
                                                                         case__r.account.IATA_ISO_Billing_State__c,
                                                                         case__r.account.IATA_ISO_Country__r.Name,
@@ -258,7 +258,7 @@ public without sharing class ISSP_AMC_Integration {
 
             /*acliFormFields.Authorized_Domestic = applicationFromOscar.AAO_Domestic__c;
             acliFormFields.Authorized_International = applicationFromOscar.AAO_International__c;*/
-            acliFormFields.Accounting_Code = applicationFromOscar.Case__r.account.Accounting_Code__c;
+            acliFormFields.Accounting_Code = applicationFromOscar.Case__r.account.IATACode__c;
             acliFormFields.Prefix_Code = applicationFromOscar.Case__r.account.Airline_Prefix__c;
 
             acliFormFields.CodePreferences.add(applicationFromOscar.Preference_of_Code_1__c);

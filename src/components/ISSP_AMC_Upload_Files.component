@@ -25,11 +25,13 @@
         <div class="panel-body">
             <c:UploadFileToAmazonButton />
 
+            
             <apex:actionFunction name="saveToAmazon" action="{!saveToAmazon}" rerender="out" status="myStatus" oncomplete="stopLoading()">
                 <apex:param name="amazonFileId" assignTo="{!amazonFileId}" value="" />
             </apex:actionFunction>
 
             <apex:actionFunction name="refreshList" action="{!getUploadedFileInfo}" rerender="out" oncomplete="stopLoading()"/>
+            
 
             <apex:outputPanel id="out">
 
@@ -45,7 +47,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!certificateIncorporationRegistration == null}">
                                         <div class="col-md-offset-2">
-                                            <a reRender="out" title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CertificateIncorporationRegistration');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a reRender="out" title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CertificateIncorporationRegistration','Official copy of Certificate of Incorporation/Registration (COI/COR)');" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -83,7 +85,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!breakdownOfShareholders == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_BreakdownOfShareholders'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_BreakdownOfShareholders','Official copy of Breakdown of shareholders and percentages'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -121,7 +123,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!uld == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_ULD'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_ULD','Copy of the Certificate of IATA Strategic Partnership'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -159,7 +161,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!signedLetterCrs == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Signed_Letter_CRS'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Signed_Letter_CRS','Signed confirmation in letterhead from an airline holding a valid IATA Code that the CRS is providing services to the airline'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -203,7 +205,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!nonScheduled == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Non_Scheduled'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Non_Scheduled','Non-scheduled airlines documents'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -242,7 +244,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!authorizationTransportationServices == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Authorization_Transportation_Services'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Authorization_Transportation_Services','Valid authorization issued by a government body to provide transportation services'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -281,7 +283,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!trafficAgreementValidIATACode == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_TrafficAgreement_Valid_IATA_Code'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_TrafficAgreement_Valid_IATA_Code','Copy of Intermodal Traffic Agreement with an airline holding a valid IATA Code'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -324,7 +326,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!passengers == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Passenger'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Passenger','Passenger airlines document'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -369,7 +371,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!cargos == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Cargo'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Cargo','Cargo Airlines documents'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -408,7 +410,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!currentStructureLocation == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CurrentStructureLocation'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CurrentStructureLocation','Visual proof (pictures) of the current structure of the location and signage'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -447,7 +449,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!caaLetterOpeningDate == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CAALetterOpeningDate'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CAALetterOpeningDate','Letter from the CAA informing the official opening date of the location'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -486,7 +488,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!commercialScheduledOperations == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CommercialScheduledOperations'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CommercialScheduledOperations','Confirmation of the commercial scheduled operations that will be performed in the location'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -524,7 +526,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!metropolitanLetteAirportA == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Metropolitan_Area'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Metropolitan_Area','Copy of signed letter issued by the Airport Authority approving the creation of this Metropolitan Area (Airport 1)'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -561,7 +563,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!metropolitanLetteAirportB == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Metropolitan_AirportB'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Metropolitan_AirportB','Copy of signed letter issued by the Airport Authority approving the creation of this Metropolitan Area (Airport 2)'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -600,7 +602,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!airlineIssuedAOC == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Airline_Issued_AOC'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Airline_Issued_AOC','Copy of a valid AOC (at least with 3 months of validity)'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -662,11 +664,12 @@
                     stopLoading();
                 }
 
-                function callComponentRunClickActionMethod(objectId, amazonRecordTypeId, componentKey){
+                function callComponentRunClickActionMethod(objectId, amazonRecordTypeId, componentKey, picklistIdentifier){
                     let amazonFileModel = {
                         RecordTypeId: amazonRecordTypeId,
                         Description__c: componentKey,
-                        isPublic__c: {!isPublic}
+                        isPublic__c: {!isPublic},
+                        File_Identifier_picklist__c: picklistIdentifier
                     };
                     //alert('id: ' + objectId + ' record: ' + amazonRecordTypeId + ' component key: ' + componentKey);
                     runClickAction(objectId, "{!credentialName}", amazonFileModel, false);

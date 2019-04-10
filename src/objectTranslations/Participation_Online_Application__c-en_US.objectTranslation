@@ -152,7 +152,7 @@
     <fields>
         <label><!-- Case --></label>
         <name>Case__c</name>
-        <relationshipLabel><!-- Participation Online Applications --></relationshipLabel>
+        <relationshipLabel><!-- Coding Online Applications --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- City Name --></label>

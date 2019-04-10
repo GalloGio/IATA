@@ -418,7 +418,7 @@
         <externalId>false</externalId>
         <label>Case</label>
         <referenceTo>Case</referenceTo>
-        <relationshipLabel>Participation Online Applications</relationshipLabel>
+        <relationshipLabel>Coding Online Applications</relationshipLabel>
         <relationshipName>Participation_Online_Applications</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>

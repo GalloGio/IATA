@@ -115,10 +115,10 @@ public class ISSP_AMC_Constants {
 	public static final String AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM = '3 Digit Form';
 	public static final String AMC_CASE_REASON_LOCATION_FORM = 'Location ID Form';
 	public static final String AMC_CASE_REASON_BAGGAGE_FORM = 'Baggage Tag Identifier Codes';
-	public static final String AMC_CASE_REASON_WITHDRAW_CODE = 'Manage Changes / Major';
+	public static final String AMC_CASE_REASON_WITHDRAW_CODE = 'Voluntary withdrawal';
 	public static final String AMC_CASE_REASON_COMPANY_INFO = 'Manage Changes / Minor';
 	// Constantes for Subject
-	public static final String AMC_CASE_SUBJECT_AIRLINE_CODING_APPLICATION = 'Airline Designator Code Request';
+	public static final String AMC_CASE_SUBJECT_AIRLINE_CODING_APPLICATION = 'Designator Code Request';
 	public static final String AMC_CASE_SUBJECT_ACCOUNTING_OR_PREFIX_CODE = 'Accounting or Prefix Code Request';
 	public static final String AMC_CASE_SUBJECT_CODES_LOCATION_CODE = 'Location Code Request';
 	public static final String AMC_CASE_SUBJECT_BAGGAGE_CODE = 'Baggage Code Request';

@@ -297,7 +297,7 @@ global without sharing class ISSP_AMC_Invocable {
                                                                         AOC_Railway_Company__c,
                                                                         AAO_Domestic__c,
                                                                         AAO_International__c,
-                                                                        Case__r.account.Accounting_Code__c,
+                                                                        Case__r.account.IATACode__c,
                                                                         Case__r.account.Airline_Prefix__c,
                                                                         Terms_Conditions_Agreement__c,
                                                                         Is_the_billing_contact_same_the_HOC__c

@@ -7,7 +7,8 @@
     Purpose: Test class for ISSP_AMC_Accounting_Or_Prefix_Code
 
     VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
-    1.0         DAVID BENTO & TIAGO MENDES    06-02-2018              INITIAL DEVELOPMENT
+    1.0         DAVID BENTO & TIAGO MENDES    	06-02-2018              INITIAL DEVELOPMENT
+	1.0			Inna Prokopieva					05-04-2019
 */
 @isTest
 public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
@@ -60,7 +61,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
                                     Airline_Code__c, 
                                     Baggage_Tag_Range_Code__c,
                                     Airline_designator__c,
-                                    Accounting_Code__c,
+                                    IATACode__c,
                                     Airline_Prefix__c,
                                     AOC_Expiry_Date__c,
                                     Legal_name__c,

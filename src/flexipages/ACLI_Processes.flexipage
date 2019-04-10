@@ -45,7 +45,7 @@
                 <criteria>
                     <leftValue>{!Record.Subject}</leftValue>
                     <operator>CONTAINS</operator>
-                    <rightValue>Manage Changes / Major</rightValue>
+                    <rightValue>Voluntary withdrawal</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>

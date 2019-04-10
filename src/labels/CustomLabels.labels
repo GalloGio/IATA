@@ -10681,6 +10681,13 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>Area</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_Accouting_Code_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Accouting_Code_Withdraw</shortDescription>
+        <value>Accounting Code</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_Airline_Issued_AOC_HELP_TEXT</fullName>
         <categories>Page Labels</categories>
         <language>en_US</language>
@@ -10832,6 +10839,13 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <protected>false</protected>
         <shortDescription>ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE</shortDescription>
         <value>Is the billing Contact the same as the above head office contact ?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BTR_Code_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BTR_Code_Withdraw</shortDescription>
+        <value>Baggage Tag Range Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_BUSINESS_PHONE</fullName>
@@ -11185,6 +11199,13 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <protected>false</protected>
         <shortDescription>ISSP_AMC_DRAFT_SUBMITED_60_DAYS</shortDescription>
         <value>Draft changes must be submitted within 60 days, otherwise you will need to restart the change request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Designator_Code_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Designator_Code_Withdraw</shortDescription>
+        <value>Designator Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_EDIT_CASE</fullName>
@@ -11610,6 +11631,13 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <value>Location Type</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_Location_Code_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Location_Code_Error</shortDescription>
+        <value>Invalid location Code! Only letters allowed!</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_Location_Identifier_Code</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12017,6 +12045,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMC_PROVIDING_TICKETING_TO_AIRLINE</shortDescription>
         <value>Are you providing ticketing services for this airline?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Prefix_Code_Withdraw</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Prefix_Code_Withdraw</shortDescription>
+        <value>Prefix Code</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_PreviousIATACode</fullName>

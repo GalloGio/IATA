@@ -8,7 +8,8 @@
 
     VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
     1.0         Filipa Martins      29-10-2018      INITIAL DEVELOPMENT
-    2.0         Miguel                              
+    2.0         Miguel    
+	2.0			Inna Prokopieva		05-04-2019
 */
 public class ISSP_AMC_DAO {
     
@@ -19,7 +20,7 @@ public class ISSP_AMC_DAO {
                                     Airline_Code__c, 
                                     Baggage_Tag_Range_Code__c,
                                     Airline_designator__c,
-                                    Accounting_Code__c,
+                                    IATACode__c,
                                     Airline_Prefix__c,
                                     AOC_Expiry_Date__c,
                                     Legal_name__c,
@@ -237,7 +238,7 @@ public class ISSP_AMC_DAO {
             if(caseScenario == ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_MANAGE_MY_CODES){
                 recordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get(amcConfiguration.CaseManageCodesRecordType__c).RecordTypeId;
                 caseRecord.Reason1__c = reason;
-                caseRecord.Subject = ISSP_AMC_Constants.AMC_CASE_REASON_WITHDRAW_CODE+ ' ' + testAcc.name;
+                caseRecord.Subject = ISSP_AMC_Constants.AMC_CASE_REASON_WITHDRAW_CODE+ ' - ' + reason + ' - ' + testAcc.name;
                 caseRecord.Subtopic__c = subtopic;
                 caseRecord.Description = ISSP_AMC_Constants.AMC_CASE_DESCRIPTION_WITHDRAW + ' ' + description;
             }
@@ -276,11 +277,14 @@ public class ISSP_AMC_DAO {
         System.debug('JCFF saveAmazonFileInJunctionObject amazonFileId: ' + amazonFileId);
         System.debug('JCFF saveAmazonFileInJunctionObject participationBackend: ' + participationBackend);
         //try {
-            AmazonFile__c amazenas = [SELECT id, Description__c
+            AmazonFile__c amazenas = [SELECT id, Description__c, Name, Full_Name_Unique__c, File_Identifier_picklist__c
                     FROM AmazonFile__c
                     WHERE id =: amazonFileId];
 
                     system.debug('amazenas '+amazenas.Description__c);
+                    system.debug('amazenas DB '+amazenas.File_Identifier_picklist__c);
+                    system.debug('amazenas DB '+amazenas.Full_Name_Unique__c);
+                    system.debug('amazenas DB '+amazenas.Name);
 
             //returns 1 per requirement
             savedForms = new List<Participant_Online_App_Requirement__c>(
@@ -324,6 +328,7 @@ public class ISSP_AMC_DAO {
     }
 
     public static void saveForm(Participation_Online_Application__c participation, List<AplicationRequirements> appRequirementList, String step, String acliCode) {
+        System.debug('TIAGO MENDES DEBUG::: ' + participation + ' | ' + appRequirementList + ' | ' + step + ' | ' + acliCode );
         SaveFormUtility saveFormUtility;
         Savepoint sp = Database.setSavepoint();
 
@@ -1218,10 +1223,24 @@ public class ISSP_AMC_DAO {
                             fileErrorMessages.add(Label.ISSP_AMC_CURRENT_STRUCTURE_LOCATION_TEXT);
                         }
                     }
-                    if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CAALETTEROPENINGDATE){
-                        if(parOnlineRecord.AmazonFile__c == null){
-                            parOnlineRecord.Status__c = 'Incomplete';
-                            fileErrorMessages.add(Label.ISSP_AMC_CAALETTEROPENINGDATE_TEXT);
+                    if(participation.Date_when_airport_has_been_operational__c != null){
+                        if(!String.isEmpty(participation.Date_when_airport_has_been_operational__c)){
+                            if(Date.parse(participation.Date_when_airport_has_been_operational__c) > Date.today()){
+                                if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CAALETTEROPENINGDATE){
+                                    if(parOnlineRecord.AmazonFile__c == null){
+                                        parOnlineRecord.Status__c = 'Incomplete';
+                                        fileErrorMessages.add(Label.ISSP_AMC_CAALETTEROPENINGDATE_TEXT);
+                                    }
+                                }
+                            }
+                        }
+                        else if(String.isEmpty(participation.Date_when_airport_has_been_operational__c)){
+                            if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CAALETTEROPENINGDATE){
+                                if(parOnlineRecord.AmazonFile__c == null){
+                                    parOnlineRecord.Status__c = 'Incomplete';
+                                    fileErrorMessages.add(Label.ISSP_AMC_CAALETTEROPENINGDATE_TEXT);
+                                }
+                            }
                         }
                     }
                     if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS){

@@ -6,6 +6,10 @@
         <submitter>bricenoa@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>gonzalezc@iata.org.ritsd</submitter>
+        <type>user</type>
+    </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>
         <field>Approver__c</field>
@@ -26,6 +30,7 @@
     <emailTemplate>Airline_Coding/Approve_code_assignment</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
+        <booleanFilter>1</booleanFilter>
         <criteriaItems>
             <field>IATA_Process_Orchestrator_Step_Action__c.Status__c</field>
             <operation>equals</operation>

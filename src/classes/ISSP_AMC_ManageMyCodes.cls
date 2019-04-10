@@ -8,6 +8,7 @@
 
 	VERSION  	AUTHOR				DATE    		DETAIL/CHANGE REFERENCE
  	1.0		  	Filipa Martins		30-10-2018   	INITIAL DEVELOPMENT
+	1.0			Inna Prokopieva		05-04-2019
 */
 public class ISSP_AMC_ManageMyCodes {
 	public Account accountRecord {get; set;}
@@ -129,7 +130,7 @@ public class ISSP_AMC_ManageMyCodes {
 			hasDesignatorValue = false;
 		}
 
-		if(accountRecord.Accounting_Code__c == null || accountRecord.Accounting_Code__c == ''){
+		if(accountRecord.IATACode__c == null || accountRecord.IATACode__c == ''){
 			hasAccountingCode = false;
 		}
 		if(accountRecord.Airline_Prefix__c == null || accountRecord.Airline_Prefix__c == ''){

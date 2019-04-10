@@ -292,6 +292,10 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                 }
 
                 $(document).ready(function() {
+
+                    $('[data-toggle="tooltip"]').tooltip({'placement':'auto'})
+                    //comment the following line out to see page move on click
+                    $('a[data-toggle="tooltip"]').click(function(e){e.preventDefault()})
 					
                     
                     $('.datepicker').datepicker({
@@ -338,6 +342,61 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     $('#showHocTable').DataTable();
 
                 });
+
+                function validateLatinChar(element, errorClass, parentClass) {
+                    var x = element.parentElement.classList;
+                    var y = element.parentElement.children;
+                    filter = /([^A-Za-z0-9\s]+)/;
+                    if(element.value  != null && element.value != ""){
+                        if (filter.test(element.value)) {
+                            //x.remove("parentClass");
+                            x.add("has-error");
+                            x.add("has-feedback");
+                            for (var i = 0; i < y.length; i++) {
+                                if(y[i].classList == "errorClass" || y[i].classList == ""){
+                                    //y[i].classList.remove("errorClass");
+                                    y[i].classList.add("glyphicon");
+                                    y[i].classList.add("glyphicon-remove"); 
+                                    y[i].classList.add("form-control-feedback");
+                                }
+                                if(y[i].classList =="errormessage"){
+                                    element.value= "";
+                                    y[i].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+
+                                }                   
+                            }
+                        } 
+                        else{
+                            for (var i = 0; i < y.length; i++) {
+                                if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                    //y[i].classList.add("errorClass");
+                                    y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                                }
+                                if(y[i].classList =="errormessage"){
+                                    y[i].innerHTML = ""
+                                }
+                            }
+                            //x.add("parentClass");
+                            x.remove("has-error");
+                            x.remove("has-feedback");
+                        }
+                    }
+                    else{
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback" ){
+                                y[i].classList.add("errorClass");
+                                y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = ""
+                            }
+                        }
+                        x.add("parentClass");
+                        x.remove("has-error");
+                        x.remove("has-feedback");
+                    }
+                }
+
 
                 function getAllErrors() {
                   var x = document.querySelectorAll(".has-error");
@@ -459,7 +518,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                         </apex:outputPanel>
                                         <!-- DAVID BENTO -->
                                         <apex:outputPanel id="locmap">                                 
-                                            <c:ISSP_AMC_LocationAreaData participation="{!participation}" countryList="{!countryList}" hasError="{!hasError}"></c:ISSP_AMC_LocationAreaData>
+                                            <c:ISSP_AMC_LocationAreaData participation="{!participation}" countryList="{!countryList}" hasError="{!hasError}"
+                                            rendered="{!IF(participation.Location_Type__c != 'Metropolitan Area',true,false)}"  ></c:ISSP_AMC_LocationAreaData>
                                         </apex:outputPanel>
  
                                     </div>
@@ -467,6 +527,9 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                             </div>
                             <div class="tab-pane fade tab-pane1" id="step2">
                                 <apex:outputpanel id="step2Panel">
+                                    <apex:actionFunction action="{!saveParticipation}" id="saveOnDate" name="saveOnDate" status="loading" reRender="uploadLoc" oncomplete="stopLoading()">
+                                        <apex:param name="step" assignTo="{!step}" value="2"/>
+                                    </apex:actionFunction>
                                     <div class="well">
                                         <div class="row">
                                             <div class="col-sm-12">
@@ -489,19 +552,20 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-12">
                                                 <c:ISSP_AMC_Metropolitan_Area participation="{!participation}" countryList="{!countryList}" rendered="{!ISSP_AMC_Metropolitan_Area}" hasError="{!hasError}"/>
                                                 <c:ISSP_AMC_LocationAirportHeliportForm participation="{!participation}" countryList="{!countryList}" rendered="{!ISSP_AMC_LocationAirportHeliportForm}" hasError="{!hasError}"/>
+
+
                                                 <c:ISSP_AMC_LocationOfflinePoint rendered="{!ISSP_AMC_LocationOfflinePoint}" participation="{!participation}" hasError="{!hasError}"/>
 
-                                                <c:ISSP_AMC_Upload_Files participation="{!participation}" rendered="{!ISSP_AMC_Upload_Files}" 
+                                                <apex:outputPanel id="uploadLoc">
+                                                    <c:ISSP_AMC_Upload_Files participation="{!participation}" rendered="{!ISSP_AMC_Upload_Files}" 
                                                                          ISSP_AMC_CurrentStructureLocation="{!ISSP_AMC_CurrentStructureLocation}"
                                                                          ISSP_AMC_CAALetterOpeningDate="{!ISSP_AMC_CAALetterOpeningDate}"
                                                                          ISSP_AMC_CommercialScheduledOperations="{!ISSP_AMC_CommercialScheduledOperations}"
                                                                          ISSP_AMC_TrafficAgreement_Valid_IATA_Code="{!ISSP_AMC_TrafficAgreement_Valid_IATA_Code}"
                                                                          ISSP_AMC_Metropolitan_Area="{!ISSP_AMC_Metropolitan_Area}"
                                                                          ISSP_AMC_Metropolitan_AirportB="{!ISSP_AMC_Metropolitan_AirportB}"
-
-                                                                         
-
                                                     />
+                                                </apex:outputPanel>
                                                 </div>
                                             </div>
                                         </div>

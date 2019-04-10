@@ -141,7 +141,8 @@ public without sharing class ISSP_AMC_Location_Identifier {
             }
             displayMessage = true;
         }
-        calculateApplicationRequirementsToShow();
+        //calculateApplicationRequirementsToShow();
+        CalculateWhichComponentsToShow();
         return null;
     }
 
@@ -276,7 +277,16 @@ public without sharing class ISSP_AMC_Location_Identifier {
                         ISSP_AMC_CurrentStructureLocation = IsToShowComponent('ISSP_AMC_CurrentStructureLocation');
                     }
                     when 'ISSP_AMC_CAALetterOpeningDate' {
-                        ISSP_AMC_CAALetterOpeningDate = IsToShowComponent('ISSP_AMC_CAALetterOpeningDate');
+                        if(participation.Date_when_airport_has_been_operational__c == null || String.isEmpty(participation.Date_when_airport_has_been_operational__c)){
+                            ISSP_AMC_CAALetterOpeningDate = IsToShowComponent('ISSP_AMC_CAALetterOpeningDate');
+                        }
+                        else if(participation.Date_when_airport_has_been_operational__c != null){
+                            if(!String.isEmpty(participation.Date_when_airport_has_been_operational__c)){
+                                if(Date.parse(participation.Date_when_airport_has_been_operational__c) > Date.today()){
+                                    ISSP_AMC_CAALetterOpeningDate = IsToShowComponent('ISSP_AMC_CAALetterOpeningDate');
+                                }
+                            }
+                        }
                     }
                     when 'ISSP_AMC_CommercialScheduledOperations' {
                         ISSP_AMC_CommercialScheduledOperations = IsToShowComponent('ISSP_AMC_CommercialScheduledOperations');
@@ -353,6 +363,17 @@ public without sharing class ISSP_AMC_Location_Identifier {
             system.debug('DB3 : '+selectedOperationTypeForRequirements);
             
             for(Integer i = 0; i <appRequirementList.size();i++){
+                
+                if(participation.Date_when_airport_has_been_operational__c != null){
+                    if(participation.Date_when_airport_has_been_operational__c != ''){
+                        if(Date.parse(participation.Date_when_airport_has_been_operational__c) <= Date.today()){
+                            if(appRequirementList[i].noteCustomLabel == 'ISSP_AMC_CAALETTEROPENINGDATE_TEXT'){
+                                appRequirementList[i].isToShow = false;
+                            }
+                        }
+                    }
+                }
+                
                 if(accountRecord.SIS_Status__c == 'Active'){
                     if(appRequirementList[i].noteCustomLabel == 'ISSP_AMC_CONTACT_DATA' ){
                         appRequirementList[i].isToShow = false;

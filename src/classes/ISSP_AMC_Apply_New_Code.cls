@@ -24,6 +24,15 @@ public class ISSP_AMC_Apply_New_Code {
 	
 	public User userInformation {get;set;}
 
+	public Account accountRecord {get; set;}
+	public Boolean hasDesignatorValue {get; set;}
+	public Boolean hasAccountingCode {get; set;}
+	public Boolean hasPrefixCode {get;set;}
+	public Boolean hasLocationCode {get;set;}
+	public Boolean hasBaggageCode {get;set;}
+
+
+
 	public User userInformation(){
         id userId = UserInfo.getUserId();
         userInformation = [SELECT Contact.Name 
@@ -36,9 +45,41 @@ public class ISSP_AMC_Apply_New_Code {
 
     public User myUser{get;set;}
 
-	public ISSP_AMC_Apply_New_Code(){
-		AMCDraftCases = ISSP_AMC_DAO.getOngoingApplicationsChanges();
+    public void getAccountInfo(){
+		accountRecord = ISSP_AMC_DAO.getAccountInfo();
+		/*List<String> pcodeListRend = getLocationCodes();
+		List<String> pcodeListBagRend = getBaggageCodes();*/
+		if(accountRecord.Airline_designator__c == null || accountRecord.Airline_designator__c == ''){
+			hasDesignatorValue = false;
+		}
 
+		if((accountRecord.IATACode__c == null || String.isEmpty(accountRecord.IATACode__c)) || (accountRecord.Airline_Prefix__c == null || String.isEmpty(accountRecord.Airline_Prefix__c))){
+			hasAccountingCode = false;
+			hasPrefixCode = false;
+		}
+		/*if(pcodeListRend == null || pcodeListRend.isEmpty()){
+			hasLocationCode = false;
+		}*/
+		if(accountRecord.Baggage_Tag_Range_Code__c == null || accountRecord.Baggage_Tag_Range_Code__c == ''){
+			hasBaggageCode = false;
+		}
+	}
+
+	public ISSP_AMC_Apply_New_Code(){
+		
+		hasDesignatorValue = true;
+		hasAccountingCode = true;
+		hasPrefixCode = true;
+		hasBaggageCode = true;
+		getAccountInfo();
+		system.debug('DB hasDesignatorValue'+hasDesignatorValue);
+		system.debug('DB hasAccountingCode'+hasAccountingCode);
+		system.debug('DB hasPrefixCode'+hasPrefixCode);
+		system.debug('DB hasBaggageCode'+hasBaggageCode);
+
+
+
+		AMCDraftCases = ISSP_AMC_DAO.getOngoingApplicationsChanges();
 		system.debug('AMCDraftCases' + AMCDraftCases);
 		system.debug('Contact no Portal ' + DAL_ISSP.getContact(userInformation().ContactId));
 

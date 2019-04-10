@@ -317,6 +317,60 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>RecycleBinAfricaMiddleEast_IATA_Process_Orchestrator</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Africa &amp; Middle East</label>
+        <queue>RecycleBinAfricaMiddleEast</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAmericas_IATA_Process_Orchestrator</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Americas</label>
+        <queue>RecycleBinAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinAsiaPacific_IATA_Process_Orchestrator</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Asia &amp; Pacific</label>
+        <queue>RecycleBinAsiaPacific</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinEurope_IATA_Process_Orchestrator</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Europe</label>
+        <queue>RecycleBinEurope</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecycleBinOperationalManagementHO_IATA_Process_Orchestrator</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle Bin Operational Management HO</label>
+        <queue>RecycleBinOperationalManagementHO</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RecyclebinNorthAsia_IATA_Process_Orchestrator</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Recycle bin North Asia</label>
+        <queue>RecyclebinNorthAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <nameField>
         <displayFormat>IO-{000000}</displayFormat>
         <label>IATA Process Orchestrator No</label>

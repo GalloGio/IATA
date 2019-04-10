@@ -7,7 +7,8 @@
     Purpose:
 
     VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
-    1.0         Filipa Martins       30-10-2018      INITIAL DEVELOPMENT
+    1.0         Filipa Martins      30-10-2018      INITIAL DEVELOPMENT
+	1.0			Inna Prokopieva		05-04-2019
  -->
 <apex:component controller="ISSP_AMC_ManageMyCodes" allowDML="true">
     <head>
@@ -76,7 +77,7 @@
                         <apex:param value="{!$Label.ISSP_AMC_AIRLINE_DESIGNATOR}" assignTo="{!labelName}"/>
                         <apex:param value="{!accountRecord.Airline_designator__c}" assignTo="{!value}"/> 
                         <apex:param value="{!$Label.ISSP_AMC_WC_DESIGNATOR}" assignTo="{!subtopic}"/>
-                        <apex:param value="{!$Label.ISSP_AMC_WC_DESIGNATOR}" assignTo="{!reason}"/>
+                        <apex:param value="{!$Label.ISSP_AMC_Designator_Code_Withdraw}" assignTo="{!reason}"/>
                     </apex:commandLink>
                 </apex:outputPanel>
 
@@ -96,7 +97,7 @@
             <div class="col-md-3">
                 <apex:outputPanel rendered="{!hasAccountingCode}">
                     <strong style="color:#7697D3">
-                        <apex:outputText style="margin-left: 5%; color:#7697D3" value="{!accountRecord.Accounting_Code__c}"/>
+                        <apex:outputText style="margin-left: 5%; color:#7697D3" value="{!accountRecord.IATACode__c}"/>
                     </strong>
                 </apex:outputPanel>
 
@@ -108,9 +109,9 @@
                 <apex:outputPanel rendered="{!hasAccountingCode}">
                     <apex:commandLink styleClass="btn btn_iata_primary" status="counterStatus" type="button" value="{!$Label.ISSP_AMC_WITHDRAW}" style="width:100%;  margin:0px;" action="{!createCase}" onclick="startLoading()" reRender="errorMessage,questionSection" oncomplete="stopLoading()">
                         <apex:param value="{!$Label.ISSP_AMC_ACCOUNTING_CODE}" assignTo="{!labelName}"/>
-                        <apex:param value="{!accountRecord.Accounting_Code__c}" assignTo="{!value}"/> 
+                        <apex:param value="{!accountRecord.IATACode__c}" assignTo="{!value}"/> 
                         <apex:param value="{!$Label.ISSP_AMC_WC_ACCOUNTING}" assignTo="{!subtopic}"/>
-                        <apex:param value="{!$Label.ISSP_AMC_WC_ACCOUNTING}" assignTo="{!reason}"/>
+                        <apex:param value="{!$Label.ISSP_AMC_Accouting_Code_Withdraw}" assignTo="{!reason}"/>
                     </apex:commandLink>
                 </apex:outputPanel>
 
@@ -144,7 +145,7 @@
                         <apex:param value="{!$Label.ISSP_AMC_PREFIX_CODE1}" assignTo="{!labelName}"/>
                         <apex:param value="{!accountRecord.Airline_Prefix__c}" assignTo="{!value}"/> 
                         <apex:param value="{!$Label.ISSP_AMC_WC_PREFIX}" assignTo="{!subtopic}"/>
-                        <apex:param value="{!$Label.ISSP_AMC_WC_PREFIX}" assignTo="{!reason}"/>
+                        <apex:param value="{!$Label.ISSP_AMC_Prefix_Code_Withdraw}" assignTo="{!reason}"/>
                     </apex:commandLink>
                 </apex:outputPanel>
 
@@ -263,7 +264,7 @@
                         <apex:param value="{!$Label.ISSP_AMC_BAGGAGE_TAG}" assignTo="{!labelName}"/>
                         <apex:param value="{!accountRecord.Baggage_Tag_Range_Code__c}" assignTo="{!value}"/>
                         <apex:param value="{!$Label.ISSP_AMC_WC_BAGGAGE_TAG_RANGE}" assignTo="{!subtopic}"/>
-                        <apex:param value="{!$Label.ISSP_AMC_WC_BAGGAGE_TAG_RANGE}" assignTo="{!reason}"/>
+                        <apex:param value="{!$Label.ISSP_AMC_BTR_Code_Withdraw}" assignTo="{!reason}"/>
                     </apex:commandLink>
                 </apex:outputPanel>
 

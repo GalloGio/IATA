@@ -7,7 +7,8 @@
     Purpose:
 
     VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
-    1.0         Filipa Martins       26-10-2018      INITIAL DEVELOPMENT
+    1.0         Filipa Martins      26-10-2018      INITIAL DEVELOPMENT
+	1.0			Inna Prokopieva		05-04-2019
  -->
 
 <apex:component controller="ISSP_AMC_Company_Codes">
@@ -48,7 +49,7 @@
             <apex:outputPanel id="hasAccountInfo" rendered="{!hasAccountingCodeInfo}">
                         {!$Label.ISSP_AMC_ACCOUNTING_CODE}
                         <strong style="color:#7697D3">
-                            <apex:outputText value="{!accountRecord.Accounting_Code__c}"/>
+                            <apex:outputText value="{!accountRecord.IATACode__c}"/>
                         </strong><br/>
             </apex:outputPanel>
 

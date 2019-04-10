@@ -4,11 +4,16 @@ public with sharing class ISSP_AMC_FlowDAO {
     @AuraEnabled
     public static Map<Id, String> getUsersCustomSettingList(){
         Map<Id, String> picklistUserInfo = new Map<Id, String>();
-
-        for (ISSP_AMC_Approval_Process__c setting : ISSP_AMC_Approval_Process__c.getAll().values()){
-            picklistUserInfo.put(setting.Id_user__c, setting.Name);
+        for (ISSP_AMC_Approval_Process__c setting : ISSP_AMC_Approval_Process__c.getAll().values()){ 
+           
+            id userId = UserInfo.getUserId();
+           
+            if(setting.Id_user__c != userId){
+             
+            	picklistUserInfo.put(setting.Id_user__c, setting.Name);    
+            }
+       
         }
-
         return picklistUserInfo;
     }
 

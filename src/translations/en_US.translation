@@ -5765,6 +5765,10 @@
         <name>ISSP_AMC_AREA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMC_Accouting_Code_Withdraw --></label>
+        <name>ISSP_AMC_Accouting_Code_Withdraw</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMC_Airline_Issued_AOC_HELP_TEXT --></label>
         <name>ISSP_AMC_Airline_Issued_AOC_HELP_TEXT</name>
     </customLabels>
@@ -5847,6 +5851,10 @@
     <customLabels>
         <label><!-- ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE --></label>
         <name>ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BTR_Code_Withdraw --></label>
+        <name>ISSP_AMC_BTR_Code_Withdraw</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMC_BUSINESS_PHONE --></label>
@@ -6035,6 +6043,10 @@
     <customLabels>
         <label><!-- ISSP_AMC_DRAFT_SUBMITED_60_DAYS --></label>
         <name>ISSP_AMC_DRAFT_SUBMITED_60_DAYS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Designator_Code_Withdraw --></label>
+        <name>ISSP_AMC_Designator_Code_Withdraw</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMC_EDIT_CASE --></label>
@@ -6265,6 +6277,10 @@
         <name>ISSP_AMC_LOCATION_TYPE</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMC_Location_Code_Error --></label>
+        <name>ISSP_AMC_Location_Code_Error</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMC_Location_Identifier_Code --></label>
         <name>ISSP_AMC_Location_Identifier_Code</name>
     </customLabels>
@@ -6483,6 +6499,10 @@
     <customLabels>
         <label><!-- ISSP_AMC_PROVIDING_TICKETING_TO_AIRLINE --></label>
         <name>ISSP_AMC_PROVIDING_TICKETING_TO_AIRLINE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Prefix_Code_Withdraw --></label>
+        <name>ISSP_AMC_Prefix_Code_Withdraw</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMC_PreviousIATACode --></label>

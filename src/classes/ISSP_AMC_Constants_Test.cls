@@ -93,9 +93,9 @@ public class ISSP_AMC_Constants_Test {
 			System.assertEquals('3 Digit Form', ISSP_AMC_Constants.AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM);
 			System.assertEquals('Location ID Form', ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM);
 			System.assertEquals('Baggage Tag Identifier Codes', ISSP_AMC_Constants.AMC_CASE_REASON_BAGGAGE_FORM);
-			System.assertEquals('Manage Changes / Major', ISSP_AMC_Constants.AMC_CASE_REASON_WITHDRAW_CODE);
+			System.assertEquals('Voluntary withdrawal', ISSP_AMC_Constants.AMC_CASE_REASON_WITHDRAW_CODE);
 			System.assertEquals('Manage Changes / Minor', ISSP_AMC_Constants.AMC_CASE_REASON_COMPANY_INFO);
-			System.assertEquals('Airline Designator Code Request', ISSP_AMC_Constants.AMC_CASE_SUBJECT_AIRLINE_CODING_APPLICATION);
+			System.assertEquals('Designator Code Request', ISSP_AMC_Constants.AMC_CASE_SUBJECT_AIRLINE_CODING_APPLICATION);
 			System.assertEquals('Accounting or Prefix Code Request', ISSP_AMC_Constants.AMC_CASE_SUBJECT_ACCOUNTING_OR_PREFIX_CODE);
 			System.assertEquals('Location Code Request', ISSP_AMC_Constants.AMC_CASE_SUBJECT_CODES_LOCATION_CODE);
 			System.assertEquals('Baggage Code Request', ISSP_AMC_Constants.AMC_CASE_SUBJECT_BAGGAGE_CODE);

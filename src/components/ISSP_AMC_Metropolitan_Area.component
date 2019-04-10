@@ -476,7 +476,7 @@
                 console.log('ENTREI NA VALIDAÇÂO');
                 var x = element.parentElement.classList;
                 var y = element.parentElement.children;
-                filter = /([^A-Za-z0-9\s]+)/;
+                filter = /([^A-Za-z]+)/;
                 if(element.value  != null && element.value != ""){
                     if (filter.test(element.value)) {
                         x.remove("parentClass");
@@ -491,7 +491,7 @@
                                 y[i].classList.add("form-control-feedback");
                             }
                             if(y[i].classList =="errormessage"){
-                                y[i].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+                                y[i].innerHTML = "{!$Label.ISSP_AMC_Location_Code_Error}";
                                 element.value= "";
                             }                   
                         }

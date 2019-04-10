@@ -62,7 +62,7 @@ public class ISSP_AMC_Change_Comp_Info {
 			hasDesignatorValue = false;
 		}
 
-		if(accountRecord.Accounting_Code__c == null || accountRecord.Accounting_Code__c == ''){
+		if(accountRecord.IATACode__c == null || accountRecord.IATACode__c == ''){
 			hasAccountingCode = false;
 		}
 		

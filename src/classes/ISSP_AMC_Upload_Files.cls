@@ -59,7 +59,9 @@ public class ISSP_AMC_Upload_Files {
 	}
 
 	public void saveToAmazon(){
+
 		ISSP_AMC_DAO.saveAmazonFileInJunctionObject(amazonFileId, participationBackend.Id);
+
 	}
 
 	public String credentialName  {
@@ -104,57 +106,95 @@ public class ISSP_AMC_Upload_Files {
 				if(eachAmazonFileInForm.AmazonFile__c == null){
 					continue;
 				}
-				tempAmazonFile = new AmazonFile__c(id = eachAmazonFileInForm.AmazonFile__c, Name = eachAmazonFileInForm.AmazonFile__r.Name, Full_Name_Unique__c = eachAmazonFileInForm.AmazonFile__r.Full_Name_Unique__c);
+				tempAmazonFile = new AmazonFile__c(
+					id = eachAmazonFileInForm.AmazonFile__c, 
+					Name = eachAmazonFileInForm.AmazonFile__r.Name, 
+					Full_Name_Unique__c = eachAmazonFileInForm.AmazonFile__r.Full_Name_Unique__c
+					);
+
+
 				/*if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_AIROPERATORCERTIFICATE)
 					airOperator = tempAmazonFile;*/
 
 				/*else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_RAIL_FERRY_OR_BUS)
 					airFerryBus = tempAmazonFile;*/
 
-				 if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CERTIFICATEINCORPORATIONREGISTRATION)
-					certificateIncorporationRegistration = tempAmazonFile;
+				 if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CERTIFICATEINCORPORATIONREGISTRATION){
+				 	//tempAmazonFile.File_Identifier_picklist__c = 'Official copy of Certificate of Incorporation/Registration (COI/COR)';
+				 	certificateIncorporationRegistration = tempAmazonFile;
+				 }
+					
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_BREAKDOWNOFSHAREHOLDERS)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_BREAKDOWNOFSHAREHOLDERS){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Official copy of Breakdown of shareholders and percentages';
 					breakdownOfShareholders = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_ULD)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_ULD){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Copy of the Certificate of IATA Strategic Partnership';
 					uld = tempAmazonFile;
-
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_NON_SCHEDULED)
+				}
+					
+				
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_NON_SCHEDULED){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Non-scheduled airlines documents';
 					nonScheduled = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_AUTHORIZATION_TRANSPORTATION_SERVICES)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_AUTHORIZATION_TRANSPORTATION_SERVICES){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Valid authorization issued by a government body to provide transportation services';
 					authorizationTransportationServices = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_TRAFFIC_AGREEMENT_VALID_IATA_CODE)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_TRAFFIC_AGREEMENT_VALID_IATA_CODE){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Copy of Intermodal Traffic Agreement with an airline holding a valid IATA Code';
 					trafficAgreementValidIATACode = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_SIGNED_LETTER_CRS)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_SIGNED_LETTER_CRS){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Signed confirmation in letterhead from an airline holding a valid IATA Code that the CRS is providing services to the airline';
 					signedLetterCrs = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_PASSENGERS)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_PASSENGERS){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Passenger airlines document';
 					passengers = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CARGOS)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CARGOS){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Cargo Airlines document';
 					cargos = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CURRENTSTRUCTURELOCATION)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CURRENTSTRUCTURELOCATION){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Visual proof (pictures) of the current structure of the location and signage';
 					currentStructureLocation = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CAALETTEROPENINGDATE)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CAALETTEROPENINGDATE){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Letter from the CAA informing the official opening date of the location';
 					caaLetterOpeningDate = tempAmazonFile;
-
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS)
+				}
+					
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Confirmation of the commercial scheduled operations that will be performed in the location';
 					commercialScheduledOperations = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_METROPOLITAN_AREA)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_METROPOLITAN_AREA){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Copy of signed letter issued by the Airport Authority approving the creation of this Metropolitan Area (Airport 1)';
 					metropolitanLetteAirportA = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_METROPOLITAN_AIRPORTB)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_METROPOLITAN_AIRPORTB){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Copy of signed letter issued by the Airport Authority approving the creation of this Metropolitan Area (Airport 2)';
 					metropolitanLetteAirportB = tempAmazonFile;
+				}
 
-				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_AIRLINE_ISSUED_AOC)
+				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_AIRLINE_ISSUED_AOC){
+					//tempAmazonFile.File_Identifier_picklist__c = 'Copy of a valid AOC (at least with 3 months of validity)';
 					airlineIssuedAOC = tempAmazonFile;
+				}
 			}
 
 		}

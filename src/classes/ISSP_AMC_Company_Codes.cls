@@ -8,6 +8,7 @@
 
 	VERSION  	AUTHOR				DATE    		DETAIL/CHANGE REFERENCE
  	1.0		  	Filipa Martins		26-10-2018   	INITIAL DEVELOPMENT
+	1.0			Inna Prokopieva		05-04-2019
 */
 public class ISSP_AMC_Company_Codes {
 
@@ -36,7 +37,7 @@ public class ISSP_AMC_Company_Codes {
 
 		accountRecord = ISSP_AMC_DAO.getAccountInfo();
 
-		if((accountRecord.Airline_designator__c == null || accountRecord.Airline_designator__c == '') && (accountRecord.Accounting_Code__c == null || accountRecord.Accounting_Code__c == '') && 
+		if((accountRecord.Airline_designator__c == null || accountRecord.Airline_designator__c == '') && (accountRecord.IATACode__c == null || accountRecord.IATACode__c == '') && 
 			(accountRecord.Airline_Prefix__c == null || accountRecord.Airline_Prefix__c == '') && (accountRecord.Baggage_Tag_Range_Code__c == null || accountRecord.Baggage_Tag_Range_Code__c == '') &&
 			(accountRecord.AOC_Expiry_Date__c == null))
 		{
@@ -47,7 +48,7 @@ public class ISSP_AMC_Company_Codes {
 			hasDesignatorInfo = false;
 		}
 
-		if((accountRecord.Accounting_Code__c == null || accountRecord.Accounting_Code__c == '')){
+		if((accountRecord.IATACode__c == null || accountRecord.IATACode__c == '')){
 			hasAccountingCodeInfo = false;
 		}
 
@@ -65,7 +66,7 @@ public class ISSP_AMC_Company_Codes {
 		}
 
 		System.debug('designator: ' + accountRecord.Airline_designator__c);
-		System.debug('prefix: ' + accountRecord.Accounting_Code__c);
+		System.debug('prefix: ' + accountRecord.IATACode__c);
 		System.debug('date: ' + accountRecord.AOC_Expiry_Date__c);
 	}
 }
