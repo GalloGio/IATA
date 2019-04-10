@@ -3663,7 +3663,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 if(!(allowIdentifierSetTravel.contains(identifier)))
                     excludeIdentifierSetTravel.add(identifier);
             }
-
+            
+            if(excludeIdentifierSetTravel.isEmpty()){
+                excludeIdentifierSetTravel = null;
+            }
             //NEWGEN-583 end
             system.debug('SFSF excludeIdentifierSetTravel ' + excludeIdentifierSetTravel);
 

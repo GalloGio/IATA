@@ -2289,6 +2289,18 @@
         <template>SCEQOS/InstantSurveyCustomerService</template>
     </alerts>
     <alerts>
+        <fullName>NDC_Matchmaker_Email_Notification_on_Case_Creation</fullName>
+        <description>NDC Matchmaker Email Notification on Case Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>NDC_Matchmaker</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/NDC_Case_Assignment</template>
+    </alerts>
+    <alerts>
         <fullName>NewALmanagementprocess</fullName>
         <description>SCE: New Airline management process</description>
         <protected>false</protected>
@@ -5556,7 +5568,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
-	<fieldUpdates>
+    <fieldUpdates>
         <fullName>ICH_Web_Case_Assignment</fullName>
         <description>Changes record type to Cases - Global on web cases</description>
         <field>RecordTypeId</field>
@@ -16050,6 +16062,25 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>NDC Matchmaker Team Notification</fullName>
+        <actions>
+            <name>NDC_Matchmaker_Email_Notification_on_Case_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>New,Open</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>NDC Management</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>NFE System to product owner</fullName>
         <actions>
             <name>Assign_NFE_ACR_to_system_manager</name>
@@ -18208,26 +18239,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <description>Whenever a new SIS case is created, assign case owner and notify, record type, case origin and notify SIS Customer Support team</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
-	<rules>
-        <fullName>SIS and ICH New Web Case</fullName>
-        <actions>
-            <name>ICH_Web_Case_Assignment</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>ICH,SIS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Web</value>
-        </criteriaItems>
-        <description>Whenever a new ICH web case is created, assign record type</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
     <rules>
         <fullName>SIS Help Desk - New Case Except Web</fullName>
         <actions>
@@ -18426,6 +18437,26 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Resolved</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SIS and ICH New Web Case</fullName>
+        <actions>
+            <name>ICH_Web_Case_Assignment</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>ICH,SIS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Web</value>
+        </criteriaItems>
+        <description>Whenever a new ICH web case is created, assign record type</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SNOW Incident</fullName>
