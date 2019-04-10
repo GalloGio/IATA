@@ -336,6 +336,8 @@ src/queues/CasesACCEuropeRisk.queue
 src/queues/CasesAirlinesSCE.queue
 src/queues/CasesInvoicingCIS.queue
 src/queues/OtherAll.queue
+src/queues/AGM_Internal.queue
+src/queues/Cases_Agent_Financial_Review.queue
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace
