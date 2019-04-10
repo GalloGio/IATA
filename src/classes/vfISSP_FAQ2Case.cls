@@ -3029,6 +3029,7 @@ for (string topicver:listofAllowedTopics){
         //bypass for button per Topic
         if(TopicToLiveAgentButtonSettingMap.containsKey(topicLabel)){
             this.setButtonForTopic(topicLabel);
+            this.getAndSetCallUsString();
         } else {
         this.setLiveAgentButtonsNames();
     }
@@ -3686,6 +3687,7 @@ for (string topicver:listofAllowedTopics){
         //bypass for button per Topic
         if(TopicToLiveAgentButtonSettingMap.containsKey(topicLabel)){
             setButtonForTopic(topicLabel);
+            this.getAndSetCallUsString();
         }else {
         setLiveAgentButtonsNames();
         }
