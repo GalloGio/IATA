@@ -436,7 +436,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
 
                         <apex:form id="step1Frm" html-data-toggle="validator" styleClass="tab-content form-horizontal formValidator">
                             
-                            <apex:actionFunction action="{!saveParticipation}" id="saveOnSwitch" name="saveOnSwitch" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4" status="Loading" oncomplete="rerenderMap(),stopLoading()">
+                            <apex:actionFunction action="{!saveParticipation}" id="saveOnSwitch" name="saveOnSwitch" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4" status="Loading" oncomplete="stopLoading()">
                                 <apex:param name="step" assignTo="{!step}" value="3"/>
                             </apex:actionFunction>
                             <div class="progress">

@@ -697,5 +697,150 @@ private class ISSP_AMC_Location_Identifier_Test {
         }
     }
 
+    /*
+        Purpose: Saves an Empty Participation with Account SIS_Status__c!= ACtive
+        Parameters: 
+        Returns:
+        Throws [Exceptions]: 
+    */
+    @isTest static void testNoParticipationNoSISSpecialToo() {
+
+        ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+        ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
+        
+        User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+
+        Test.StartTest(); 
+            System.runAs(myUser){
+
+            User portalUser = ISSP_AMC_ParticipationFactory.portalSetupNoSIS();
+
+            Account acc = [SELECT id, Name,
+                                    Airline_Code__c, 
+                                    Baggage_Tag_Range_Code__c,
+                                    Airline_designator__c,
+                                    IATACode__c,
+                                    Airline_Prefix__c,
+                                    AOC_Expiry_Date__c,
+                                    Legal_name__c,
+                                    TradeName__c,
+                                    Sector__c,
+                                    Category__c,
+                                    IATA_ISO_Country__r.Name,
+                                    Region_formula__c,
+                                    Phone,
+                                    Email__c,
+                                    Website,
+                                    ShippingStreet,
+                                    ShippingAddress,
+                                    ShippingCity,
+                                    ShippingState,
+                                    ShippingPostalCode,
+                                    ShippingCountry,
+                                    IATA_ISO_Country__c,
+                                    SIS_Status__c
+                            FROM account
+                            
+                            LIMIT 1];
+                acc.SIS_Status__c = 'Terminated';
+                update acc;
+
+            System.runAs(portalUser){
+
+                System.debug('SIS_Status__c '+ISSP_AMC_DAO.getAccountInfo().SIS_Status__c);
+                Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Location_Identifier'));
+                ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
+                controller.init();
+                controller.Participation.Location_Type__c = 'Airport';
+                controller.CalculateWhichComponentsToShow();
+                controller.step = '1';
+                controller.saveParticipation();
+
+
+                //ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
+            }
+
+            Test.stopTest();
+
+        }
+    }
+
+    /*
+        Purpose: Submits a Location participation with the Location type Metropolitan Area
+        Parameters: 
+        Returns:
+        Throws [Exceptions]: 
+    */
+    @isTest static void testWithParticipationOnSubmitMetropolitanAreaNoDate() {
+
+        ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+        ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
+        //ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'MetropolitanArea', false);
+        
+        User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+
+        Test.StartTest(); 
+            System.runAs(myUser){
+
+            User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
+
+            System.runAs(portalUser){
+
+                PageReference pageRef = Page.ISSP_AMC_Location_Identifier;
+                Test.setCurrentPageReference(pageRef);
+                pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipationELSES('ParName', true, 'Metropolitan Area', false).Id);
+                ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
+                String testLanguage = controller.displayLanguage;
+                String testComName = controller.communityName;
+                List <SelectOption> testCountry = controller.countryList;
+                List <SelectOption> testSalutation = controller.salutationList;
+                controller.step = 'Submit';
+                controller.saveParticipation();
+                controller.init();
+            }
+
+            Test.stopTest();
+
+        }
+    }
+
+    /*
+        Purpose: Submits a Location participation with the Location type Metropolitan Area
+        Parameters: 
+        Returns:
+        Throws [Exceptions]: 
+    */
+    @isTest static void testWithParticipationOnSubmitAirportNoDate() {
+
+        ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+        ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
+        //ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'MetropolitanArea', false);
+        
+        User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+
+        Test.StartTest(); 
+            System.runAs(myUser){
+
+            User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
+
+            System.runAs(portalUser){
+
+                PageReference pageRef = Page.ISSP_AMC_Location_Identifier;
+                Test.setCurrentPageReference(pageRef);
+                pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipationELSES('ParName', true, 'Airport', false).Id);
+                ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
+                String testLanguage = controller.displayLanguage;
+                String testComName = controller.communityName;
+                List <SelectOption> testCountry = controller.countryList;
+                List <SelectOption> testSalutation = controller.salutationList;
+                controller.step = 'Submit';
+                controller.saveParticipation();
+                controller.init();
+            }
+
+            Test.stopTest();
+
+        }
+    }
 
 }

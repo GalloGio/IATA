@@ -1002,6 +1002,75 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             return participation;
     }
 
+
+    /*
+        Purpose: Create Location Identifier Participation
+        Parameters: 
+        Returns: Participation_Online_Application__c
+        Throws [Exceptions]: 
+    */
+    public static Participation_Online_Application__c createLocationIdentifierParticipationELSES(String name, Boolean insertParticipation, String locationType, boolean metroQuestion){
+        Participation_Online_Application__c participation = new Participation_Online_Application__c(
+            //Area Data
+            City_Name__c = 'City Name',
+            //IATA_ISO_Country__c = 'AL', MUST BE A ID
+            Location_Name__c    = 'Location Name',
+            State__c = 'State Name',
+            Recommended_Loc_Identifier__c = 'Recommended Loc Identifier',
+            GPS_Coordinates__c = '43°41’30.149"N, 94°55’18.75"W',
+            Time_Zone__c = 'Time Zone',
+            // Terms and Conditions
+            Terms_Conditions_Agreement__c = false,
+            SIS_Salutation__c = '',
+            SIS_First_Name__c ='',
+            SIS_Last_Name__c = '',
+            SIS_Phone__c = '',
+            SIS_Email__c = '',
+            SIS_Title__c = ''
+            );
+
+        if(locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_AIRPORT || locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_HELIPORT){
+                // AIRPORT/HELIPORT FORM
+                participation.Location_Type__c ='Airport';
+                participation.Date_when_airport_has_been_operational__c = '';
+                participation.X1_other_airlines_in_the_airport__c = '';
+                participation.X2_other_airlines_in_the_airport__c = '';
+                participation.X3_other_airlines_in_the_airport__c = '';
+        }
+
+        if(locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_RAILWAY_STATION || locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_BUS_STATION || locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_FERRY_PORT){
+                // AIRPORT/HELIPORT FORM
+                participation.Location_Type__c ='Railway Station';
+        }
+
+        if(locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_OFF_LINE_POINT){
+                // OFF-LINE POINT FORM
+                participation.Location_Type__c ='Off-line Point';
+                participation.Off_Line_Point_Purpose__c = '';
+        }
+
+        if(locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_METROPOLITAN_AREA){
+            //METROPOLITAN AREA FORM
+            participation.Location_Type__c ='Metropolitan Area';
+            if(metroQuestion){
+                participation.Does_Metropolitan_area_currently_exists__c = '';
+                participation.Location_Code__c = '';
+            }
+            else if(metroQuestion = false){
+                participation.Does_Metropolitan_area_currently_exists__c = '';
+                participation.Location_Code_1__c = '';
+                participation.Location_Code_2__c = '';
+            }
+
+        }
+
+        if(insertParticipation){
+            insert participation;
+        }
+
+        return participation;
+    }
+
     /*
         Purpose: Create Baggage Participation with ONLY the type of Operation selected
         Parameters: 
