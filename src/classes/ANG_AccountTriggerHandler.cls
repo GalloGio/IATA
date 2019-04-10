@@ -645,7 +645,7 @@ public class ANG_AccountTriggerHandler {
 		Set<Id> toNotify = new Set<Id>();
 
 		for(account acc : triggerNew){
-			if(!ANG_RHCHelper.emailUpdateAlreadySent.contains(acc.Id) && acc.ANG_HE_RiskStatus__c != oldMap.get(acc.Id).ANG_HE_RiskStatus__c){
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(acc.Id) && acc.ANG_HE_RiskStatus__c != oldMap.get(acc.Id).ANG_HE_RiskStatus__c){
 				toNotify.add(acc.Id);
 			}
 		}

@@ -43,7 +43,7 @@ public class ANG_RHCHelper {
 
 	private static final String RISK_RHC_UPDATE_TEMPLATE = 'Risk_Information_Update';
 
-	public static Set<Id> emailUpdateAlreadySent = new Set<Id>();
+	public static Set<Id> updateNotificationAlreadySent = new Set<Id>();
 
 	// *********************************************************
 	// *********************** Methods *************************
@@ -537,7 +537,7 @@ public class ANG_RHCHelper {
 
 			emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
 
-			emailUpdateAlreadySent.add(wrap.accountId);
+			updateNotificationAlreadySent.add(wrap.accountId);
 
 			if(!notificationTemplates.isEmpty()){
 				notificationTargets.add(wrap.contactId + ':' + notificationTemplates[0].Name);
