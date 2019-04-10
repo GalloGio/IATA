@@ -82,6 +82,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>TC_Letter_Generation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Letter Generation</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>TC_Location_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
