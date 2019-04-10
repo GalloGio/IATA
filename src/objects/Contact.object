@@ -15837,31 +15837,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <picklistValues>
             <picklist>Name</picklist>
             <values>
-                <fullName>Admiral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Capt%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Col%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Dr%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Frau</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Herr</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Lt Col%2E</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15877,31 +15853,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
                 <default>false</default>
             </values>
             <values>
-                <fullName>Off%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Private</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Prof%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sgt%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sr%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sra%2E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Srta%2E</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
