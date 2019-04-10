@@ -60,8 +60,8 @@ private class ANG_RHCHelperTest {
 		insert opCalanderList;
 
 		List<IATA_ISO_Country__c> ctry = new List<IATA_ISO_Country__c>();
-		ctry.add(new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', AMS_Settlement_System__c = settlement.id));
-		ctry.add(new IATA_ISO_Country__c(Name = 'WW', ISO_Code__c = 'WW', AMS_Settlement_System__c = settlement2.id));		
+		ctry.add(new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', AMS_Settlement_System__c = settlement.id, ANG_Enable_NewGen__c = true));
+		ctry.add(new IATA_ISO_Country__c(Name = 'WW', ISO_Code__c = 'WW', AMS_Settlement_System__c = settlement2.id, ANG_Enable_NewGen__c = true));		
 		insert ctry;
 
 		AMS_Country_Specific_Attribute__c config = new AMS_Country_Specific_Attribute__c (
@@ -74,12 +74,12 @@ private class ANG_RHCHelperTest {
 
 		List<Account> accountList = new List<Account>();
 		Account a1 = new Account(IATA_ISO_Country__c = ctry[0].id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',
-			Location_Type__c='BR',Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', 
+			Location_Type__c='HE',Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', 
 			Location_Class__c = 'P', Remittance_frequency__c = 'W' );
 		accountList.add(a1);
 
 		Account a2 = new Account(IATA_ISO_Country__c = ctry[1].id, RecordTypeId = accountAgencyRT, IATACode__c='1234569',
-			Location_Type__c='BR',Name='Test3 Agency OK',Short_Name__c='Test3 Agency', Sector__c = 'Travel Agent 3', 
+			Location_Type__c='HE',Name='Test3 Agency OK',Short_Name__c='Test3 Agency', Sector__c = 'Travel Agent 3', 
 			Location_Class__c = 'P', Remittance_frequency__c = 'D' );
 		accountList.add(a2);
 
