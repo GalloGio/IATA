@@ -1,5 +1,16 @@
 public class ANG_RHCHelper {
 
+	public class RiskInformationUpdateWrapper {
+		Id contactId;
+		Id accountId;
+		String riskStatus;
+		String cashConditions;
+		Decimal rhcAmountForecasted;
+		String currencyIsoCode;
+		Date rhcForecastedEffectiveDate;
+		String templateLanguage;
+	}
+
 	// *********************************************************
 	// ******************* Static Variables ********************
 	// *********************************************************
@@ -29,6 +40,10 @@ public class ANG_RHCHelper {
 		'BSP-HK', 
 		'BSP-MO'
 	};
+
+	private static final String RISK_RHC_UPDATE_TEMPLATE = 'Risk_Information_Update';
+
+	public static Set<Id> updateNotificationAlreadySent = new Set<Id>();
 
 	// *********************************************************
 	// *********************** Methods *************************
@@ -393,19 +408,210 @@ public class ANG_RHCHelper {
 
 	}
 
+	public static void handleRiskOrForecastedRhcAmountUpdates(Set<Id> accountIdSet){
+
+		Map<String, Set<Id>> contactsPerAccount = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(accountIdSet, new Set<String>{ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE});
+		
+		if(contactsPerAccount.isEmpty()) return;
+
+		Set<Id> contactIdSet = new Set<Id>();
+		for(Set<Id> idsSet : contactsPerAccount.values()){
+			contactIdSet.addAll(idsSet);
+		}
+		
+		Map<Id, Contact> contactMap = new Map<Id, Contact>(
+			[SELECT
+				Id,
+				Preferred_Language__c
+			 FROM
+			 	Contact
+			 WHERE
+			 	Id IN :contactIdSet
+			]
+		);
+
+		List<ANG_RHC_Information__c> rhcLst = new List<ANG_RHC_Information__c>(
+			[SELECT 
+				Id,
+				CurrencyIsoCode,
+				ANG_AccountId__c,
+				ANG_RHC_Effective_Date__c,
+				ANG_RHC_Amount_Forecasted__c,
+				ANG_AccountId__r.ANG_HE_RiskStatus__c,
+				ANG_AccountId__r.ANG_HE_CashCondition__c
+			 FROM
+				ANG_RHC_Information__c
+			 WHERE
+				ANG_AccountId__c IN :accountIdSet
+			]
+		);
+		
+		Map<Id, ANG_RHC_Information__c> rhcMap = new Map<Id, ANG_RHC_Information__c>();
+		
+		for(ANG_RHC_Information__c rhcInfo : rhcLst){
+			rhcMap.put(rhcInfo.ANG_AccountId__c, rhcInfo);
+		}
+
+		List<RiskInformationUpdateWrapper> riuwLst = new List<RiskInformationUpdateWrapper>();
+
+		for(Id accountId : contactsPerAccount.keySet()){
+			
+			ANG_RHC_Information__c rhc = rhcMap.get(accountId);
+			
+			for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
+				RiskInformationUpdateWrapper riuw = new RiskInformationUpdateWrapper();
+				riuw.contactId = contactId;
+				riuw.accountId = accountId;
+				riuw.riskStatus = rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c;
+				riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
+				riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c;
+				riuw.currencyIsoCode = rhc.CurrencyIsoCode;
+				riuw.rhcForecastedEffectiveDate = rhc.ANG_RHC_Effective_Date__c;
+				riuw.templateLanguage = contactMap.get(contactId).Preferred_Language__c;
+				riuwLst.add(riuw);
+			}
+
+		}
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - handleRiskOrForecastedRhcAmountUpdates] Risk Information Wrapper - ' + riuwLst);
+
+		triggerRiskOrForecastedRhcAmountNotifications(riuwLst);
+
+	}
+
+	private static void triggerRiskOrForecastedRhcAmountNotifications(List<RiskInformationUpdateWrapper> infoLst){
+		
+		Map<String, EmailTemplate> emailTemplateMap = new Map<String, EmailTemplate>();
+
+		List<EmailTemplate> emailTemplates = new List<EmailTemplate>(
+			[SELECT 
+				Id,
+				Body,
+				Subject,
+				HtmlValue,
+				DeveloperName
+			 FROM 
+			 	EmailTemplate 
+			 WHERE 
+			 	 DeveloperName LIKE :RISK_RHC_UPDATE_TEMPLATE + '%'
+			 AND IsActive = TRUE 
+			]
+		);
+
+		for(EmailTemplate et : emailTemplates){
+			emailTemplateMap.put(et.DeveloperName, et);
+		}
+
+		List<Notification_Template__c> notificationTemplates = new List<Notification_Template__c>(
+			[SELECT 
+				Id,
+				Name, 
+				Identifier__c 
+			 FROM 
+			 	Notification_Template__c 
+			  WHERE 
+			  	Identifier__c = :RISK_RHC_UPDATE_TEMPLATE 
+			]
+		);
+
+		List<Email> emailLst = new List<Email>();
+
+		Map<Id, RiskInformationUpdateWrapper> riuwNotificationsMap = new Map<Id, RiskInformationUpdateWrapper>();
+
+		List<String> notificationTargets = new List<String>();
+
+		for(RiskInformationUpdateWrapper wrap : infoLst){
+
+			EmailTemplate template = emailTemplateMap.get(RISK_RHC_UPDATE_TEMPLATE + '_' + wrap.templateLanguage);
+
+			if(template == NULL) template = emailTemplateMap.get(RISK_RHC_UPDATE_TEMPLATE);
+
+			String htmlBody = template.HtmlValue;
+			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
+			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
+			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
+			htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', String.valueOf(wrap.rhcForecastedEffectiveDate));
+		   
+			String plainBody = template.Body;
+			plainBody = plainBody.replace('#RISK_STATUS#', wrap.riskStatus);
+			plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
+			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
+			plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', String.valueOf(wrap.rhcForecastedEffectiveDate));
+
+			emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
+
+			updateNotificationAlreadySent.add(wrap.accountId);
+
+			if(!notificationTemplates.isEmpty()){
+				notificationTargets.add(wrap.contactId + ':' + notificationTemplates[0].Name);
+				riuwNotificationsMap.put(wrap.ContactId, wrap);
+			}
+
+		}
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - triggerRiskOrForecastedRhcAmountNotifications] Email List - ' + emailLst);
+
+		if(!System.isBatch()){
+			System.enqueueJob(new RiskAlertMailService(emailLst, null));
+		}
+		else {
+			sendMailUpdate(emailLst);
+		}
+
+		createRiskAndRhcPortalNotifications(notificationTargets, riuwNotificationsMap);
+
+	}
+
+	private static void createRiskAndRhcPortalNotifications(List<String> notificationTargets, Map<Id, RiskInformationUpdateWrapper> riuwNotificationsMap){
+
+		if(notificationTargets.isEmpty()) return;
+
+		List<Notification__c> notifications = new List<Notification__c>();
+
+		for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
+			RiskInformationUpdateWrapper riuw = riuwNotificationsMap.get(nt.Contact__c);
+			nt.Message__c = nt.Message__c
+							.replace('#RISK_STATUS#', riuw.riskStatus)
+							.replace('#CASH_CONDITION#', riuw.cashConditions)
+							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmountForecasted) + ' ' + riuw.CurrencyIsoCode)
+							.replace('#RHC_EFFECTIVE_DATE#', String.valueOf(riuw.rhcForecastedEffectiveDate));
+			notifications.add(nt);
+		}
+
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - triggerRiskOrForecastedRhcAmountNotifications] Notifications - ' + notifications);
+		
+		if(!notifications.isEmpty()){
+			insert notifications;
+		}
+
+	}
+
 	public class Email {
 		Id targetId;
 		Id whatId;
 		Id templateId;
+		String subject;
+		String plainBody;
+		String htmlBody;
+		Boolean isTemplate;
 
 		public Email(Id targetId, Id whatId, Id templateId){
 			this.targetId = targetId;
 			this.whatId = whatId;
 			this.templateId = templateId;
+			this.isTemplate = true;
 		}
-	}
 
-	
+		public Email(Id targetId, Id whatId, String subject, String plainBody, String htmlBody){
+			this.targetId = targetId;
+			this.whatId = whatId;
+			this.subject = subject;
+			this.plainBody = plainBody;
+			this.htmlBody = htmlBody;
+			this.isTemplate = false;			
+		}
+
+	}
 
 	public static void sendMailUpdate(List<Email> messages) {
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
@@ -418,7 +624,15 @@ public class ANG_RHCHelper {
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setTargetObjectId(m.targetId);
 			mail.setWhatId(m.whatId);
-			mail.setTemplateId(m.templateId);
+
+			if(m.isTemplate){
+				mail.setTemplateId(m.templateId);
+			} 
+			else {
+				mail.setSubject(m.subject);
+				mail.setHtmlBody(m.htmlBody);
+				mail.setPlainTextBody(m.plainBody);
+			}
 
 			if (!owea.isEmpty()) mail.setOrgWIdeEmailAddressId(owea[0].Id);
 			else{
