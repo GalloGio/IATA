@@ -400,7 +400,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_1</name>
-            <conditionLogic>(1 AND (NOT(2 OR 3 OR 6 OR 9)) AND 4 AND  5) OR (6 AND 7 AND 8)</conditionLogic>
+            <conditionLogic>(1 AND (NOT(2 OR 3 OR 6 OR 9)) AND 4 AND  5) OR (6 AND 7 AND 8) OR (1 AND 5 AND 10)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -678,6 +678,37 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>ICCS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Portal_Application__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>One Id NDC Matchmaker</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1416,7 +1447,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_8</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND (3 OR 6) AND 4 AND 5</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -1572,6 +1603,37 @@
                     <stringValue>ICCS</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Portal_Application__r.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>One Id NDC Matchmaker</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_8_A1</targetReference>
             </connector>
@@ -1606,7 +1668,7 @@ PRIORVALUE({!myVariable_current.ANG_Portal_Service_Role__c}) != &quot;&quot;
 ))
 )</expression>
     </formulas>
-    <interviewLabel>Notify_on_Portal_Service_Access-4_InterviewLabel</interviewLabel>
+    <interviewLabel>Notify_on_Portal_Service_Access-5_InterviewLabel</interviewLabel>
     <label>Notify on Portal Service Access</label>
     <processMetadataValues>
         <name>ObjectType</name>
