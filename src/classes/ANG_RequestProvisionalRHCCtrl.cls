@@ -49,6 +49,7 @@ public with sharing class ANG_RequestProvisionalRHCCtrl {
                 }
                 fieldsToQuery.addAll(FORECAST_REQUIRED_FIELDS);
             }
+            displayFields.sort();
             return fieldsToQuery;
         }
         private set;
@@ -61,13 +62,13 @@ public with sharing class ANG_RequestProvisionalRHCCtrl {
 
     public void requestProvisionalRHC(){ 
 		
-		buttonAlreadyPushed= true;
 		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHCAux(rhc.ANG_AccountId__c, false,false);
 
         if(Test.isRunningTest()){
             result.isSuccess = true;
-            ANG_RME_Alert_Service.RHCMessage message = result.getResultMessage();
+            ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
             message.provisionalRHC = 200;
+            result.setResultMessage(message);
         }
 
         if(result.isSuccess){
@@ -88,8 +89,11 @@ public with sharing class ANG_RequestProvisionalRHCCtrl {
                 
                 rhc.ANG_RME_Amount__c = rhc.ANG_RHC_Amount_Provisional__c;
 
+                ANG_RHCHelper.calculateRHCAmount(new List<ANG_RHC_Information__c>{rhc});
+
             }else{
-                this.hasChanged = false;
+                if(buttonAlreadyPushed)
+                    this.hasChanged = false;
             }
         }else{ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.ERROR,result.description));}
 
@@ -99,6 +103,7 @@ public with sharing class ANG_RequestProvisionalRHCCtrl {
         
         if(canUpdateRHC()){
             update rhc;
+            buttonAlreadyPushed= true;
             ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.INFO,'Provisional RHC Amount saved on record.'));
         }
 
@@ -120,27 +125,43 @@ public with sharing class ANG_RequestProvisionalRHCCtrl {
         return true;
     }
 
-    private void queryRHC(){
-        this.rhc = Database.query('SELECT Id,Name,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
-    }
-
     public ANG_RequestProvisionalRHCCtrl() {
         this.objId = ApexPages.currentPage().getParameters().get('Id'); 
         this.rhc = Database.query('SELECT Id,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
 
         requestedProvisionalRHCAmount = rhc.ANG_RHC_Amount_Provisional__c;
         requestedProvisionalRHCAmountLastUpdate = rhc.ANG_Provisional_RHC_Last_Update__c;
+        buttonAlreadyPushed = false;
     }
 
-    public class FieldWrapper{
+    public class FieldWrapper implements Comparable{
         public String name {get; set;} 
         public String label {get; set;} 
 
         public FieldWrapper(String name, String label){
+
+            if(label == 'IATA Code')
+                this.label = 'AA IATA Code';
+            else if(label == 'Account')
+                this.label = 'AAA Account';
+			else
+				this.label = label;
+
             this.name = name;
-            this.label = label;
+        }
+
+        public Integer compareTo(Object fw) {
+            
+            FieldWrapper tocompare = (FieldWrapper)fw;
+            
+            if(this.label == tocompare.label)
+                return 0;
+            if(this.label > tocompare.label)
+                return 1;
+            
+            return -1;
         }
 
     }
 
-}
+}   

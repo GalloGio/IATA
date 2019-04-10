@@ -76,7 +76,12 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>ANG_RHC_Amount__c</field>
+            <field>ANG_RHC_Amount_Forecasted__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Forecasted_RHC_Effective_date__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>

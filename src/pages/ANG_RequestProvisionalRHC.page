@@ -32,32 +32,9 @@
             sforce.console.getEnclosingPrimaryTabId(openSubtab);
         };
 
-		function refreshTab(){
-
-				if (sforce.console.isInConsole()) {
-						sforce.console.getEnclosingTabId(function(enclosingResult){
-								sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
-										sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
-										closeTab();
-								});
-						});
-				} else {
-						// for inline Vf
-						window.top.location.href = '/'+redirectUrl
-						// for normal vf
-						// window.location.href = '/'+redirectUrl
-				}
-        };
-
     </script>
 
    <apex:form >
-
-        <style>
-                .sample {
-                    color:red;
-                }
-                </style>
 
       <apex:pageBlock id="infoBlock" mode="edit" tabStyle="ANG_RHC_Information__c" rendered="{!rhc != null}">
 			<apex:pageMessages />
