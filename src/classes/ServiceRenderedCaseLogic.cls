@@ -293,19 +293,23 @@ public class ServiceRenderedCaseLogic {
             
             list<Services_Rendered__c> services = new list<Services_Rendered__c>();
             for (Case c :cases) {
+                if(c.AccountId <> null) {
+                    Case_Reason_Service__c caseReasonService = ServicesPerReason.get(c.reason1__c);
+                    if( caseReasonService!=null
+                        && caseReasonService.Create_custom_service_rendered__c==true
+                        && activeServices.get(caseReasonService.service__c) <> null
+                        && activeServices.get(caseReasonService.service__c).get(c.AccountId ) <> null  ){
 
-                if(c.AccountId <> null && activeServices.get(ServicesPerReason.get(c.reason1__c).service__c) <> null &&
-                        activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId ) <> null  ){
-
-                    services.add(new Services_Rendered__c(Name = 'name shall be copied', 
-                                                          Services_Rendered_to_Airline__c = c.AccountId,
-                                                          Services_Rendered_By__c = c.Provider__c,
-                                                          Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
-                                                          Services_Rendered_Status__c ='Inactive',
-                                                          Inactivation_Airline_Participation_Case__c = c.Id,
-                                                          Id = activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id, 
-                                                          Leaving_Date__c = Date.ValueOf(c.ClosedDate)));
-                  //   throw new transformationException( 'asdasd   ' + activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id);
+                        services.add(new Services_Rendered__c(Name = 'name shall be copied', 
+                                                              Services_Rendered_to_Airline__c = c.AccountId,
+                                                              Services_Rendered_By__c = c.Provider__c,
+                                                              Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
+                                                              Services_Rendered_Status__c ='Inactive',
+                                                              Inactivation_Airline_Participation_Case__c = c.Id,
+                                                              Id = activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id, 
+                                                              Leaving_Date__c = Date.ValueOf(c.ClosedDate)));
+                      //   throw new transformationException( 'asdasd   ' + activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId).Id);
+                    }
                 }
             }
 
