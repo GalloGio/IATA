@@ -2543,6 +2543,11 @@ SIS Charge Code Type.</description>
                     <label>Standard Computerized Airplane Performance (SCAP)</label>
                 </value>
                 <value>
+                    <fullName>Standard Procedures for Preloading Advance Cargo Information (PLACI)</fullName>
+                    <default>false</default>
+                    <label>Standard Procedures for Preloading Advance Cargo Information (PLACI)</label>
+                </value>
+                <value>
                     <fullName>Standard Schedules Information</fullName>
                     <default>false</default>
                     <label>Standard Schedules Information</label>
@@ -13928,6 +13933,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Procedures for Preloading Advance Cargo Information %28PLACI%29</fullName>
                 <default>false</default>
             </values>
             <values>
