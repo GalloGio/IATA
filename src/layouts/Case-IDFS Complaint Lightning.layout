@@ -459,6 +459,9 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <relatedList>RelatedCommentsList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedEmailMessageList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -469,9 +472,6 @@
         <fields>Action_Case__c</fields>
         <fields>Comments__c</fields>
         <relatedList>Complaint_Action__c.Complaint_Case__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
@@ -541,7 +541,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h0Q000000NhIS</masterLabel>
+        <masterLabel>00h1j000000NJVI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
