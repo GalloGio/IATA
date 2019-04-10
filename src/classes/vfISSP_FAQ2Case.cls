@@ -210,7 +210,7 @@ if (ApexPages.currentPage().getParameters().get('type') == 'AirlineChargesUpdate
             system.debug('basto1p - isToShowFAQs='+resVal+'; isTopicDefault='+isTopicDefault+'; topic='+topic);
             //RN-INC451479
             if(topic.contains('-- Select --')){
-                topic = '0';
+                this.topic = '';
             }
             return resVal;
         }
