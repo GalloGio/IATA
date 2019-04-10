@@ -85,23 +85,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
-	private Map<String, String> warningMessages {
-		get {
-			if(warningMessages == null){
-
-				warningMessages = new Map<String, String>();
-
-				warningMessages.put(
-					'On Going OSCAR',
-					'Please finalize any ongoing OSCAR process before proceeding with the conversion.'
-				);
-
-			}
-			return warningMessages;
-		}
-		set;
-	}
-
 	private Map<String, String> errorMessages{
 		get{
 			if(errorMessages == null){
@@ -421,7 +404,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		get{
 			//Making sure that this warning is exhibt after elements rerenders
 			if(showOnGoingOscarWarning){
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, warningMessages.get('On Going OSCAR')));
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, Label.ANG_OnGoing_OSCAR_Warning));
 			}
 			return hierarchy.values();
 		}

@@ -46,10 +46,10 @@
     <description>SARA</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -60,7 +60,7 @@
         <externalId>false</externalId>
         <label>Address</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -83,7 +83,7 @@
         <label>Contact Person</label>
         <length>60</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -94,7 +94,7 @@
         <label>Country</label>
         <length>50</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -105,7 +105,7 @@
         <externalId>false</externalId>
         <label>Email</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -120,12 +120,41 @@
         <type>AutoNumber</type>
     </fields>
     <fields>
+        <fullName>Financial_Security_Country_Coverage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Select all countries where this Financial Institution provides Financial Security. Used to show list of Financial Institutions on CS Portal.</inlineHelpText>
+        <label>Financial Security Country Coverage</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Financial_Security_Country_Coverage</valueSetName>
+        </valueSet>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Financial_Security_Regional_Coverage__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security Regional Coverage</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Financial_Security_Regional_Coverage</valueSetName>
+        </valueSet>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
         <fullName>First_Call_Letter_required__c</fullName>
         <description>States if financial securities under this Financial institution require First Call Letter</description>
         <externalId>false</externalId>
         <label>First Call Letter required</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -189,7 +218,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <externalId>false</externalId>
         <label>Institution Type</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -224,7 +253,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <externalId>false</externalId>
         <label>Phone</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Phone</type>
     </fields>
@@ -233,7 +262,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <externalId>false</externalId>
         <label>Region</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -278,7 +307,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <relationshipLabel>Financial Institutions</relationshipLabel>
         <relationshipName>Financial_Institutions</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -289,10 +318,19 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
         <label>Tax ID</label>
         <length>60</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Website__c</fullName>
+        <externalId>false</externalId>
+        <label>Website</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
     </fields>
     <label>Financial Institution</label>
     <listViews>
@@ -457,7 +495,7 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004cgNm&quot;,&quot;Activ
     </listViews>
     <nameField>
         <label>Financial Institution Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Financial Institutions</pluralLabel>

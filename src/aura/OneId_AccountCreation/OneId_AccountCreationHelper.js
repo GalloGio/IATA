@@ -35,5 +35,5 @@
             preferredCountries: [country],
             placeholderNumberType : 'MOBILE'
         });
-    },
+    }
 })

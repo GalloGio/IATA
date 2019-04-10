@@ -35,6 +35,16 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Amount__c</fullName>
+        <description>Amount of Financial Security</description>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>Description</fullName>
     </fields>
     <fields>
@@ -50,6 +60,47 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Expiry_Date__c</fullName>
+        <description>Expiry Date</description>
+        <externalId>false</externalId>
+        <label>Expiry Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>FS_Currency__c</fullName>
+        <externalId>false</externalId>
+        <label>FS Currency</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Currency_Center_Currency_Codes</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Financial_Institution__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Financial Institution</label>
+        <referenceTo>Financial_Institution__c</referenceTo>
+        <relationshipLabel>Financial Institutions</relationshipLabel>
+        <relationshipName>FinancialSecurities</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Financial_Security__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Financial Security</label>
+        <referenceTo>Financial_Security__c</referenceTo>
+        <relationshipLabel>Financial Security</relationshipLabel>
+        <relationshipName>Staging_Financial_Security</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>LineItemID__c</fullName>
         <externalId>false</externalId>
         <formula>Id</formula>
@@ -61,6 +112,17 @@
     </fields>
     <fields>
         <fullName>ListPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>OSCAR_GDI__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>OSCAR_GDI</label>
+        <referenceTo>AMS_OSCAR__c</referenceTo>
+        <relationshipLabel>Financial Security Staging</relationshipLabel>
+        <relationshipName>OscarGDI</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>OpportunityId</fullName>
@@ -89,6 +151,111 @@
         <fullName>Quantity</fullName>
     </fields>
     <fields>
+        <fullName>Reason__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New Application</fullName>
+                    <default>false</default>
+                    <label>New Application</label>
+                </value>
+                <value>
+                    <fullName>ACC change</fullName>
+                    <default>false</default>
+                    <label>ACC change</label>
+                </value>
+                <value>
+                    <fullName>Financial Review</fullName>
+                    <default>false</default>
+                    <label>Financial Review</label>
+                </value>
+                <value>
+                    <fullName>Default</fullName>
+                    <default>false</default>
+                    <label>Default</label>
+                </value>
+                <value>
+                    <fullName>Previous Security Update</fullName>
+                    <default>false</default>
+                    <label>Previous Security Update</label>
+                </value>
+                <value>
+                    <fullName>Irregularities</fullName>
+                    <default>false</default>
+                    <label>Irregularities</label>
+                </value>
+                <value>
+                    <fullName>CASS Associate</fullName>
+                    <default>false</default>
+                    <label>CASS Associate</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Reception_Case__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Reception Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Staging Financial Security</relationshipLabel>
+        <relationshipName>FinancialSecurityStaging</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Reception_Date__c</fullName>
+        <description>SARA</description>
+        <externalId>false</externalId>
+        <label>Reception Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <description>Financial Security Region</description>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>SP_Area_Summary1__c</fullName>
         <externalId>false</externalId>
         <label>SP-Area-Summary</label>
@@ -97,7 +264,233 @@
         <visibleLines>25</visibleLines>
     </fields>
     <fields>
+        <fullName>Security_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Security Status</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Close to Expiry Date</fullName>
+                    <default>false</default>
+                    <label>Close to Expiry Date</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Expired</fullName>
+                    <default>false</default>
+                    <label>Expired</label>
+                </value>
+                <value>
+                    <fullName>Released</fullName>
+                    <default>false</default>
+                    <label>Released</label>
+                </value>
+                <value>
+                    <fullName>Encashed</fullName>
+                    <default>false</default>
+                    <label>Encashed</label>
+                </value>
+                <value>
+                    <fullName>Not Active yet</fullName>
+                    <default>false</default>
+                    <label>Not Active yet</label>
+                </value>
+                <value>
+                    <fullName>Encashment in progress</fullName>
+                    <default>false</default>
+                    <label>Encashment in progress</label>
+                </value>
+                <value>
+                    <fullName>Inactive_Addendum</fullName>
+                    <default>false</default>
+                    <label>Inactive_Addendum</label>
+                </value>
+                <value>
+                    <fullName>Pending to be Released</fullName>
+                    <default>false</default>
+                    <label>Pending to be Released</label>
+                </value>
+                <value>
+                    <fullName>Pending Validation</fullName>
+                    <default>false</default>
+                    <label>Pending Validation</label>
+                </value>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Security_Type__c</fullName>
+        <description>Type of Financial Security Requested</description>
+        <externalId>false</externalId>
+        <label>Security Type</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bank Guarantee</fullName>
+                    <default>false</default>
+                    <label>Bank Guarantee</label>
+                </value>
+                <value>
+                    <fullName>CCG</fullName>
+                    <default>false</default>
+                    <label>CCG</label>
+                </value>
+                <value>
+                    <fullName>Cross Border Guarantee</fullName>
+                    <default>false</default>
+                    <label>Cross Border Guarantee</label>
+                </value>
+                <value>
+                    <fullName>CWA Mutual Fund</fullName>
+                    <default>false</default>
+                    <label>CWA Mutual Fund</label>
+                </value>
+                <value>
+                    <fullName>DIP</fullName>
+                    <default>false</default>
+                    <label>DIP</label>
+                </value>
+                <value>
+                    <fullName>Financial Guarantee</fullName>
+                    <default>false</default>
+                    <label>Financial Guarantee</label>
+                </value>
+                <value>
+                    <fullName>GDI</fullName>
+                    <default>false</default>
+                    <label>GDI</label>
+                </value>
+                <value>
+                    <fullName>Hong Kong Trust Fund</fullName>
+                    <default>false</default>
+                    <label>Hong Kong Trust Fund</label>
+                </value>
+                <value>
+                    <fullName>Insurance Bond</fullName>
+                    <default>false</default>
+                    <label>Insurance Bond</label>
+                </value>
+                <value>
+                    <fullName>Ireland Trust Fund</fullName>
+                    <default>false</default>
+                    <label>Ireland Trust Fund</label>
+                </value>
+                <value>
+                    <fullName>Joint Bank Guarantee (India)</fullName>
+                    <default>false</default>
+                    <label>Joint Bank Guarantee (India)</label>
+                </value>
+                <value>
+                    <fullName>Letter Of Credit</fullName>
+                    <default>false</default>
+                    <label>Letter Of Credit</label>
+                </value>
+                <value>
+                    <fullName>Letter Of Undertaking</fullName>
+                    <default>false</default>
+                    <label>Letter Of Undertaking</label>
+                </value>
+                <value>
+                    <fullName>Manifestacion de Bienes</fullName>
+                    <default>false</default>
+                    <label>Manifestacion de Bienes</label>
+                </value>
+                <value>
+                    <fullName>MCBG</fullName>
+                    <default>false</default>
+                    <label>MCBG</label>
+                </value>
+                <value>
+                    <fullName>MCPG</fullName>
+                    <default>false</default>
+                    <label>MCPG</label>
+                </value>
+                <value>
+                    <fullName>Others</fullName>
+                    <default>false</default>
+                    <label>Others</label>
+                </value>
+                <value>
+                    <fullName>OTOC</fullName>
+                    <default>false</default>
+                    <label>OTOC</label>
+                </value>
+                <value>
+                    <fullName>Parent Company Guarantee</fullName>
+                    <default>false</default>
+                    <label>Parent Company Guarantee</label>
+                </value>
+                <value>
+                    <fullName>Recapitalization</fullName>
+                    <default>false</default>
+                    <label>Recapitalization</label>
+                </value>
+                <value>
+                    <fullName>Standby Letter Of Credit</fullName>
+                    <default>false</default>
+                    <label>Standby Letter Of Credit</label>
+                </value>
+                <value>
+                    <fullName>Statement Of Assignment</fullName>
+                    <default>false</default>
+                    <label>Statement Of Assignment</label>
+                </value>
+                <value>
+                    <fullName>Surety Bond</fullName>
+                    <default>false</default>
+                    <label>Surety Bond</label>
+                </value>
+                <value>
+                    <fullName>TAANZ Bonding Scheme</fullName>
+                    <default>false</default>
+                    <label>TAANZ Bonding Scheme</label>
+                </value>
+                <value>
+                    <fullName>Time Deposit</fullName>
+                    <default>false</default>
+                    <label>Time Deposit</label>
+                </value>
+                <value>
+                    <fullName>Time Deposit Pledge</fullName>
+                    <default>false</default>
+                    <label>Time Deposit Pledge</label>
+                </value>
+                <value>
+                    <fullName>Transit Account</fullName>
+                    <default>false</default>
+                    <label>Transit Account</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>ServiceDate</fullName>
+    </fields>
+    <fields>
+        <fullName>SourceId__c</fullName>
+        <externalId>false</externalId>
+        <label>SourceId</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Subtotal</fullName>
@@ -107,6 +500,14 @@
     </fields>
     <fields>
         <fullName>UnitPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>Validity_Start_Date__c</fullName>
+        <description>Date as from when the financial security is valid</description>
+        <externalId>false</externalId>
+        <label>Validity Start Date</label>
+        <required>false</required>
+        <type>Date</type>
     </fields>
     <validationRules>
         <fullName>Item_Locked_for_Closed_or_Submitted_Opp</fullName>

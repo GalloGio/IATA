@@ -19,18 +19,18 @@
          }; 
     </script>
 
-    <apex:attribute name="trackedObject" type="SObject" assignTo="{!trackedObj}" required="true" description="The record that is being tracked" />
-    <apex:attribute name="trackedApiName" type="String" assignTo="{!trackedObjApiName}" required="true" description="The object type that is being tracked" />
-    <apex:attribute name="trackerApiName" type="String" assignTo="{!trackerObjApiName}" required="true" description="The object type that is used for tracking" />
+    <apex:attribute name="trackedObjectId" type="String" assignTo="{!trackedObjId}" required="true" description="The record id that is being tracked"/>
+    <apex:attribute name="trackedApiName" type="String" assignTo="{!trackedObjApiName}" required="true" description="The object type that is being tracked"/>
+    <apex:attribute name="trackerApiName" type="String" assignTo="{!trackerObjApiName}" required="true" description="The object type that is used for tracking"/>
 
     <apex:pageBlock >
         <apex:pageBlockTable value="{!historyRecords}" var="row" >
-            <apex:column >
+            <apex:column width="10%">
                 <apex:facet name="header">Date</apex:facet>
                 <apex:outputText value="{!row.createdDate}" />
             </apex:column>
                         
-            <apex:column >
+            <apex:column width="15%">
                 <apex:facet name="header">User</apex:facet>
                 <a href="#" onClick="openTab('{!row.createdById}', '{!row.createdByName}'); return false">{!row.createdByName}</a>
             </apex:column>
@@ -38,19 +38,21 @@
             <apex:column >
                 <apex:facet name="header">Action</apex:facet>
                     <!-- <apex:outputPanel rendered="{!AND(row.fieldName <> 'created',row.fieldName <> 'Parent')}"> -->
-                    <apex:outputPanel rendered="{!AND(row.fieldName <> 'created')}">
-
-                        <b>{!row.fieldName}</b> changed from&nbsp;
+                    <apex:outputPanel rendered="{!AND(row.fieldName <> 'created', row.oldValue <> row.newValue)}">
+                        <b>{!row.fieldName}</b> changed from
                          <b>
                              <apex:outputField rendered="{!row.isLookUpValueOld}" value="{!row.oldObj[row.fieldAPIName]} "/>
                              <apex:outputText rendered="{!!row.isLookUpValueOld}" value="{!row.oldValue}"/>
                         </b> 
-                         to&nbsp;
+                         to
                         <b>
                             <apex:outputField rendered="{!row.isLookUpValueNew}"  value="{!row.newObj[row.fieldAPIName]}"/>
                             <apex:outputText rendered="{!!row.isLookUpValueNew}" value="{!row.newValue}"/>
-                        </b>
-                        
+                        </b>                       
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!AND(row.fieldName <> 'created', row.oldValue == row.newValue)}">
+                        <b>{!row.fieldName}</b> changed                    
                     </apex:outputPanel>
             </apex:column>
         </apex:pageBlockTable>

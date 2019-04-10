@@ -19,36 +19,55 @@ public with sharing class CaseDueDiligence {
         '3 Digit Form'
     };
     private static final DateTime TEN_MONTHS_AGO = Date.today().addMonths(-10);
+    private static final set<String> LIST_IGNORED_STATUSES = new set<String>{'Closed_Rejected','Closed_Withdrawn','Closed - Dispute','Closed_ Not Accepted','Closed_Disapproved','Archived'};
+
+    /**
+        Checks if input id belongs to a Recycle group
+        uses a static variable to avoid unnecessary calls to group object
+    **/
+    private static set<Id> LIST_RECYCLE_GROUPS;
+    public static Boolean isRecycleGroup(Id userOrGroupId) {
+        if (userOrGroupId.getSObjectType() == Schema.Group.SObjectType) {
+            if (LIST_RECYCLE_GROUPS==null) {
+                LIST_RECYCLE_GROUPS = new map<Id,Group>([SELECT Id FROM Group WHERE Name LIKE 'Recycle Bin%']).keyset();
+            }
+            return LIST_RECYCLE_GROUPS.contains(userOrGroupId);
+        }
+        return false;
+    }
 
     /**
         Validates the Due diligence on case trigger before update when a case is closing
-        If the validation faile it will prevent the closing
+        If the validation fails it will prevent its closing
     **/
     public static void beforeUpdate(map<Id,Case> mapNews, map<Id,Case> mapOlds) {
         // Check Due dilligence for joining cases being closed
-        list<Case> listClosedCasesToCheck = new list<Case>();
         list<Id> listAccountId = new list<Id>();
         for (Case newCase: mapNews.values()) {
             Case oldCase = mapOlds.get(newCase.Id);
             //if case belongs to Airline Joining (2 RTs) and it is being closed now...
             if ((newCase.RecordTypeId == RT_ICCS_ASP_ID || newCase.RecordTypeId == RT_CODING_ID)
                     && newCase.Status.containsIgnoreCase('closed')
-                    && !oldCase.Status.containsIgnoreCase('closed')) {
-                listClosedCasesToCheck.add(newCase);
+                    && !oldCase.Status.containsIgnoreCase('closed')
+                    && !LIST_IGNORED_STATUSES.contains(newCase.Status)
+                    && !isRecycleGroup(newCase.OwnerId)
+                    ) {
                 listAccountId.add(newCase.AccountId);
             }
         }
         //validate clearance level for found accounts
         if (!listAccountId.isEmpty()) {
             map<Id,Account> mapAccount = new map<Id,Account>(
-                [SELECT Id, Date_of_last_clearance__c, Clearance_level__c
+                [SELECT Id, Date_of_last_clearance__c, Clearance_level__c,
+                    Top_Parent__r.Date_of_last_clearance__c, Top_Parent__r.Clearance_level__c
                 FROM Account
                 WHERE Id IN :listAccountId]);
             
             for (Case newCase: mapNews.values()) {
                 Account account = mapAccount.get(newCase.AccountId);
+                Account topParent = account.Top_Parent__r==null? account: account.Top_Parent__r;
                 try {
-                    validate(newCase,account);
+                    validate(newCase,topParent);
                 } catch(Exception e) {
                     newCase.addError(e.getMessage());
                 }
@@ -57,7 +76,7 @@ public with sharing class CaseDueDiligence {
     }
 
     /**
-        Returns tru if the case has a valid due diligence
+        Returns true if the case has a valid due diligence
     **/
     public static Boolean isValid(Case cse, Account account) {
         try {

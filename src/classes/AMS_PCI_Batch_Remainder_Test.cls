@@ -44,6 +44,7 @@ private class AMS_PCI_Batch_Remainder_Test {
 		cse.ContactId = admin.Id;
 		cse.AccountId = agency.Id;
 		cse.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+		cse.Origin = 'Massive PCI Creation';
 		insert cse;
 		Test.setCreatedDate(cse.Id, DateTime.now().addDays(-30));
 	}
