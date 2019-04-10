@@ -90,8 +90,9 @@ private class ANG_AgentsNotificationRhcTest {
 		nt.Type__c = 'Information';
 		nt.Notification_color__c = '#007FFF';
 		nt.Expire_in_days__c = 180;
+		nt.Admins_Users__c = 'Administrators';
 		nt.Message__c = 
-			'We would like to inform you that your Risk Status has been updated.' +
+			'We would like to inform you that your Risk Status has been updated. ' +
 			'Your risk information now stands as follow:' +
 			'<br><br>Risk Status: #RISK_STATUS#' +
 			'<br>Cash conditions limited to Financial Security: #CASH_CONDITION#'+
