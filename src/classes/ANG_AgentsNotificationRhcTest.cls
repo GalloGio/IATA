@@ -12,7 +12,7 @@ private class ANG_AgentsNotificationRhcTest {
 
 		insert cntry;
 
- 		Portal_Applications__c par = new Portal_Applications__c(
+		Portal_Applications__c par = new Portal_Applications__c(
 			Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE
 		);
 
@@ -22,9 +22,9 @@ private class ANG_AgentsNotificationRhcTest {
 			[SELECT 
 				Id 
 			 FROM 
-			 	User 
+				User 
 			 WHERE 
-			 	 IsActive = TRUE 
+				 IsActive = TRUE 
 			 AND Profile.Name = 'System Administrator' 
 			 AND UserRoleId <> NULL 
 			 LIMIT 1
@@ -81,37 +81,37 @@ private class ANG_AgentsNotificationRhcTest {
 	@isTest
 	public static void riskAndRhcInformationUpdateNotificationTest(){
 
-        Test.startTest();
+		Test.startTest();
 
-        Notification_Template__c nt = new Notification_Template__c();
-        nt.Identifier__c = 'Risk_Information_Update';
-        nt.Language__c = 'English';
-        nt.Subject__c = 'Risk Information Update';
-        nt.Type__c = 'Information';
-        nt.Notification_color__c = '#007FFF';
-        nt.Expire_in_days__c = 180;
-        nt.Message__c = 
-        	'We would like to inform you that your Risk Status has been updated.' +
-        	'Your risk information now stands as follow:' +
-        	'<br><br>Risk Status: #RISK_STATUS#' +
-        	'<br>Cash conditions limited to Financial Security: #CASH_CONDITION#'+
-        	'<br>RHC Amount: #RHC_AMOUNT#'+
-        	'<br>RHC Effective Date: #RHC_EFFECTIVE_DATE#'+
-        	'<p>Please check more details on the RHC Information page.' +
-        	'<br>Thank you</p>'+
+		Notification_Template__c nt = new Notification_Template__c();
+		nt.Identifier__c = 'Risk_Information_Update';
+		nt.Language__c = 'English';
+		nt.Subject__c = 'Risk Information Update';
+		nt.Type__c = 'Information';
+		nt.Notification_color__c = '#007FFF';
+		nt.Expire_in_days__c = 180;
+		nt.Message__c = 
+			'We would like to inform you that your Risk Status has been updated.' +
+			'Your risk information now stands as follow:' +
+			'<br><br>Risk Status: #RISK_STATUS#' +
+			'<br>Cash conditions limited to Financial Security: #CASH_CONDITION#'+
+			'<br>RHC Amount: #RHC_AMOUNT#'+
+			'<br>RHC Effective Date: #RHC_EFFECTIVE_DATE#'+
+			'<p>Please check more details on the RHC Information page.' +
+			'<br>Thank you</p>'+
 			'<p>IATA – Global Delivery Center</p>';
 
 		insert nt;
 
-        Account acct = 
-        	[SELECT 
-        		Id 
-        	 FROM 
-        	 	Account 
-        	 WHERE 
-        	 	Name = 'Risk Status Update Acct' 
-        	 LIMIT 1
-        	];
+		Account acct = 
+			[SELECT 
+				Id 
+			 FROM 
+				Account 
+			 WHERE 
+				Name = 'Risk Status Update Acct' 
+			 LIMIT 1
+			];
 
 		Financial_Institution__c fi = new Financial_Institution__c(
 			Name = 'Financial Institution', 
@@ -120,26 +120,26 @@ private class ANG_AgentsNotificationRhcTest {
 			Institution_Type__c = 'Bank'
 		);
 
-        insert fi;
+		insert fi;
 
-        Case cc = new Case(AccountId = acct.Id);
-        insert cc;
+		Case cc = new Case(AccountId = acct.Id);
+		insert cc;
 
-      	Financial_Security__c fs = new Financial_Security__c(
-      		CurrencyIsoCode = 'EUR', 
-      		Account__c = acct.Id, 
-      		Amount__c = 5000, 
-      		Expiry_date__c = System.Today().AddDays(100), 
-      		Financial_Institution__c = fi.Id, 
-      		Security_Status__c = 'Active', 
-      		Security_Type__c = 'Bank Guarantee', 
-      		Region__c = 'Europe', 
-      		Reception_Date__c = System.today(), 
-      		Reasonforrequest__c = 'New Application',
-      		Reception_Case__c = cc.Id
-     	);
+		Financial_Security__c fs = new Financial_Security__c(
+			CurrencyIsoCode = 'EUR', 
+			Account__c = acct.Id, 
+			Amount__c = 5000, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = cc.Id
+		);
 
-        insert fs; 
+		insert fs; 
 
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
 			ANG_AccountId__c = acct.Id,
@@ -157,9 +157,9 @@ private class ANG_AgentsNotificationRhcTest {
 				Id, 
 				Message__c 
 			 FROM 
-			 	Notification__c 
+				Notification__c 
 			 WHERE 
-			 	Contact__r.AccountId = :acct.Id 
+				Contact__r.AccountId = :acct.Id 
 			 LIMIT 1
 			];
 
@@ -177,9 +177,9 @@ private class ANG_AgentsNotificationRhcTest {
 				Id, 
 				Message__c 
 			 FROM 
-			 	Notification__c 
+				Notification__c 
 			 WHERE 
-			 	 Contact__r.AccountId = :acct.Id 
+				 Contact__r.AccountId = :acct.Id 
 			 AND Id != :no.Id 
 			 LIMIT 1
 			];
