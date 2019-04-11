@@ -7,6 +7,12 @@
         <publicGroups>
             <publicGroup>GCS_L1L2_Queues_Members</publicGroup>
         </publicGroups>
+        <users>
+            <user>quliyevaa@iata.org</user>
+            <user>shahb@iata.org</user>
+            <user>planzern@iata.org</user>
+            <user>osmanix@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
