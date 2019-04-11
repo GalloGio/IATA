@@ -442,13 +442,16 @@ public with sharing class ISSP_AvailableServices{
                 list<Portal_Applications__c> listApps = Database.query(queryString);
 
                 // Second search based in Custom Matadata for all those remaining apps
-                list<Portal_Applications__c> listRestOfRequestableApps = [
-                    SELECT Name, Application_icon__c, Service_Description__c, CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c
-                    FROM Portal_Applications__c
-                    WHERE Id NOT IN :listApps
-                    AND Requestable__c = true];
-                Account account = currentPortalUser.contact.account;
-                listRestOfRequestableApps = getVisibleApplications(listRestOfRequestableApps,account);
+                list<String> listValidAppNames = getVisibleApplicationNames(currentPortalUser.contact.account);
+                queryString = 'SELECT ' + query
+                    + ' FROM Portal_Applications__c'
+                    + ' WHERE Id NOT IN :listApps'
+                    + ' AND Requestable__c = true'
+                    + ' AND Name IN :listValidAppNames';
+                ISSP_Utilities.log('Second search SQL String: ' + queryString);
+                list<Portal_Applications__c> listRestOfRequestableApps = Database.query(queryString);
+
+                // combine first and second search of apps
                 listApps.addAll(listRestOfRequestableApps);
 
                 setCon = new ApexPages.StandardSetController(listApps);
@@ -460,14 +463,14 @@ public with sharing class ISSP_AvailableServices{
     }
 
     /**
-        From input Portal_Applications__c list return only those records that are visible
+        Returns a list of all visible application names for the input account
         according to the Custom Metadata Portal_Application_Setting__mdt
     **/
     @TestVisible
-    private list<Portal_Applications__c> getVisibleApplications(list<Portal_Applications__c> listApps, Account account) {
-        if (account==null) return new list<Portal_Applications__c>();
+    private list<String> getVisibleApplicationNames(Account account) {
         // Get the list of services visible for thi input account based on the Custom metadata Portal_Application_Setting__mdt
-        set<String> setVisibleApplicationNames = new set<String>();
+        list<String> listVisibleApplicationNames = new list<String>();
+        if (account==null) return listVisibleApplicationNames;
         for (Portal_Application_Setting__mdt setting: [
                 SELECT id, MasterLabel,
                     (SELECT Sector__c, Category__c
@@ -477,17 +480,10 @@ public with sharing class ISSP_AvailableServices{
                     AND Category__c = :account.Category__c)
                 FROM Portal_Application_Setting__mdt]) {
             if (setting.Portal_Application_Visibilities__r.size()>0) {
-                setVisibleApplicationNames.add(setting.MasterLabel);
+                listVisibleApplicationNames.add(setting.MasterLabel);
             }
         }
-        //filter input Portal_Applications__c and return only those defined in setVisibleApplicationNames
-        list<Portal_Applications__c> listVisibleApps = new list<Portal_Applications__c>();
-        for (Portal_Applications__c app: listApps) {
-            if (setVisibleApplicationNames.contains(app.Name)) {
-                listVisibleApps.add(app);
-            }
-        }
-        return listVisibleApps;
+        return listVisibleApplicationNames;
     }
 
     public class ServiceWrapper {

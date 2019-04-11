@@ -924,10 +924,9 @@ public class ISSP_AvailableServices_Test {
 
         Test.startTest();
         ISSP_AvailableServices controller = new ISSP_AvailableServices();
-        list<Portal_Applications__c> result = controller.getVisibleApplications(listApps,account);
+        list<String> result = controller.getVisibleApplicationNames(account);
         Test.stopTest();
 
         System.assertEquals(result.size(),1);
-        System.assertEquals(result[0].Name,'Join SIS e-Invoicing');
     }
 }
