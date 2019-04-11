@@ -390,11 +390,12 @@
                             <apex:outputPanel layout="block" styleClass="col-md-12 text-normal" id="modalChooseAccreditationPanel">
                                 <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId">
                                     <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" rendered="{!hqAccount.Country_ISO_Code__c != 'CN'}"/>
-                                    <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" rendered="{!hqAccount.Country_ISO_Code__c != 'CN'}"/>
 
                                     <apex:selectOption itemValue="China_Domestic" itemLabel="{!$Label.ISSP_China_Domestic}" id="chinaDomesticCheck" rendered="{!hqAccount.Country_ISO_Code__c == 'CN'}"/>
                                 
                                     <apex:selectOption itemValue="China_International" itemLabel="{!$Label.ISSP_China_International}" id="chinaInternationalCheck" rendered="{!hqAccount.Country_ISO_Code__c == 'CN'}"/> 
+
+                                    <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck"/>
                                 </apex:selectRadio>
                             </apex:outputPanel>
                         </div>
