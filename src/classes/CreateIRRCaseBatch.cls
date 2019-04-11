@@ -1,13 +1,13 @@
 global class CreateIRRCaseBatch implements Database.Batchable<SObject>, Database.Stateful {
     
-    global Set<Id> caseIds {get;set;}
+    global Map<Id,String> mapCases {get;set;}
 
-    global CreateIRRCaseBatch(Set<Id> caseIds) {
-        this.caseIds = caseIds;
+    global CreateIRRCaseBatch(Map<Id,String> mapCases) {
+        this.mapCases = mapCases;
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        Set<Id> caseIds = this.caseIds;
+        Set<Id> caseIds = this.mapCases.keySet();
         String queryStr = 'SELECT Id, AccountId, Account.Name, Account.IATA_ISO_Country__r.ISO_Code__c, ContactId, Type_of_customer__c, BSPCountry__c, Region__c FROM Case WHERE Id IN :caseIds';
         return Database.getQueryLocator(queryStr);
     }
@@ -20,9 +20,10 @@ global class CreateIRRCaseBatch implements Database.Batchable<SObject>, Database
         
         for(Case parentCase : scope) {            
             Case cse = new Case();
-            cse.Subject = parentCase.Account.Name + ' - ' + parentCase.Account.IATA_ISO_Country__r.ISO_Code__c + ' - IRR Threshold reached for FS Request';
+            
+            cse.Subject = parentCase.Account.Name + ' - ' + parentCase.Account.IATA_ISO_Country__r.ISO_Code__c;
             cse.CaseArea__c = 'Risk Management Process';
-            cse.Reason1__c = 'Financial Security Request';
+            mapReasonType(cse, mapCases.get(parentCase.Id));
             cse.AccountId = parentCase.AccountId;
             cse.ContactId = parentCase.ContactId;
             cse.Type_of_customer__c = parentCase.Type_of_customer__c;
@@ -34,6 +35,16 @@ global class CreateIRRCaseBatch implements Database.Batchable<SObject>, Database
             cases.add(cse);
         }
         insert cases;
+    }
+
+    private static void mapReasonType(Case cse, String irrReason) {
+        if(irrReason == 'FS') {
+            cse.Reason1__c = 'Financial Security Request';
+            cse.Subject += ' - FS request';
+        } else if(irrReason == 'FA') {
+            cse.Reason1__c = 'Adhoc review';
+            cse.Subject += ' - FA request';
+        }
     }
 
     global void finish(Database.BatchableContext BC) {

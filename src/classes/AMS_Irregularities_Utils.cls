@@ -98,27 +98,27 @@ public class AMS_Irregularities_Utils{
 	**/
 	public static void checkIRRTreshold(List<Account> accounts, Set<Id> countriesIds, Map<Id,Id> mapAccountCase, Map<Id,Decimal> mapCurrentIrr) {
 		Id irrFsRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularities_for_FS_Request');
-		Map<Id,Map<String,Decimal>> mapCountryTreshold = new Map<Id,Map<String,Decimal>>();
+		Map<Id,Map<String,AMS_Country_Specific_Attribute__c>> mapCountryTreshold = new Map<Id,Map<String,AMS_Country_Specific_Attribute__c>>();
 		
-		for(AMS_Country_Specific_Attribute__c attr : [SELECT IATA_ISO_Country__c, Location_Class__c, Threshold__c FROM AMS_Country_Specific_Attribute__c WHERE IATA_ISO_Country__c IN :countriesIds AND RecordTypeId = :irrFsRT]) {
-			Map<String,Decimal> mapClassTreshold = 	mapCountryTreshold.get(attr.IATA_ISO_Country__c);
+		for(AMS_Country_Specific_Attribute__c attr : [SELECT IATA_ISO_Country__c, Location_Class__c, Threshold__c, Reason__c FROM AMS_Country_Specific_Attribute__c WHERE IATA_ISO_Country__c IN :countriesIds AND RecordTypeId = :irrFsRT]) {
+			Map<String,AMS_Country_Specific_Attribute__c> mapClassTreshold = 	mapCountryTreshold.get(attr.IATA_ISO_Country__c);
 			if(mapClassTreshold == null) {
-				mapClassTreshold = new Map<String,Decimal>();
+				mapClassTreshold = new Map<String,AMS_Country_Specific_Attribute__c>();
 				mapCountryTreshold.put(attr.IATA_ISO_Country__c, mapClassTreshold);
 			}
-			mapClassTreshold.put(attr.Location_Class__c, attr.Threshold__c);			
+			mapClassTreshold.put(attr.Location_Class__c, attr);			
 		}
 
-		Set<Id> caseIds = new Set<Id>();
+		Map<Id,String> mapCases = new Map<Id,String>();
 		for(Account acc : accounts) {
-			Map<String,Decimal> mapClassTreshold = mapCountryTreshold.get(acc.IATA_ISO_Country__c);
+			Map<String,AMS_Country_Specific_Attribute__c> mapClassTreshold = mapCountryTreshold.get(acc.IATA_ISO_Country__c);
 			Id caseId = mapAccountCase.get(acc.Id);
 
 			if(caseId == null || mapClassTreshold == null) {
 				continue;
 			}
 
-			Decimal classTreshold =  mapClassTreshold.get(acc.Location_Class__c);
+			AMS_Country_Specific_Attribute__c classTreshold =  mapClassTreshold.get(acc.Location_Class__c);
 			if(classTreshold == null) {
 				continue;
 			}
@@ -126,13 +126,18 @@ public class AMS_Irregularities_Utils{
 			Decimal prevIRR = mapCurrentIrr.get(acc.Id);//Avoid to create a case when the irregularities decrease
 			System.debug('prevIRR: ' + prevIRR);
 			System.debug('currIRR: ' + acc.Accumulated_Irregularities__c);
-			if(classTreshold <= acc.Accumulated_Irregularities__c && prevIRR < classTreshold) {
-				caseIds.add(caseId);
+			if(classTreshold.Threshold__c <= acc.Accumulated_Irregularities__c && prevIRR < classTreshold.Threshold__c) {
+				String irrReason;
+				if(classTreshold.Reason__c == 'Financial Security Request') {
+					mapCases.put(caseId, 'FS');
+				} else if(classTreshold.Reason__c == 'Adhoc Review') {
+					mapCases.put(caseId, 'FA');
+				}				
 			}			
 		}
 
-		if(!caseIds.isEmpty()) {
-			Database.executeBatch(new CreateIRRCaseBatch(caseIds), 1);
+		if(!mapCases.isEmpty()) {
+			Database.executeBatch(new CreateIRRCaseBatch(mapCases), 1);
 		}
 	}
 }

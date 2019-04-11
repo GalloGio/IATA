@@ -405,6 +405,30 @@ J-Joint Vent</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Financial Security Request</fullName>
+                    <default>false</default>
+                    <label>Financial Security Request</label>
+                </value>
+                <value>
+                    <fullName>Adhoc review</fullName>
+                    <default>false</default>
+                    <label>Adhoc review</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Threshold__c</fullName>
         <defaultValue>0</defaultValue>
         <externalId>false</externalId>
@@ -950,6 +974,17 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+                <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
