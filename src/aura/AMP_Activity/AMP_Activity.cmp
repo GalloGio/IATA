@@ -77,9 +77,9 @@
         <td class="allignTop">
             <!-- <ui:inputText value="{!v.activity.Account_Issue_or_Priority__c}" /> -->
             <c:LookupSObject aura:id="accountIssueLookup"
-                             preselectedSearchString="{!v.activity.Account_Issue_or_Priority__r.Name}"
-                             searchConditions="{!' WHERE Account__c = \'' + v.accountId + '\''}"
-                             label="Objective"
+                             preselectedSearchString="{!v.activity.Account_Issue_or_Priority__r.Name}"  
+                             searchConditions="{!' WHERE Account__c = \'' + v.accountId + '\' and recordtype.developername = \'Account_Issues_and_Priorities\' '}"
+                             label="Objective"   
                              pluralLabel="Objectives"
                              sObjectAPIName="Objective__c"
                              listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#connected_apps"

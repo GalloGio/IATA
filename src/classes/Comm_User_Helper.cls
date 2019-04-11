@@ -6,6 +6,7 @@ global without sharing class Comm_User_Helper {
   public static final string CNS = 'CNS';
   public static final String ONEIDENTITY = 'IDENTITY';
   public static final string FRED = 'FRED';
+  public static final string NDCMM = 'NDCMM';
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
@@ -160,7 +161,7 @@ global without sharing class Comm_User_Helper {
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
 
-        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED){
+        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED || community == NDCMM){
             
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -180,7 +181,7 @@ global without sharing class Comm_User_Helper {
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
 
-                if(community == ISSP || community == ONEIDENTITY || community == FRED ){
+                if(community == ISSP || community == ONEIDENTITY || community == FRED  || community == NDCMM ){
                     link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?' + encodedPart;
 
                     if(community == ISSP){
@@ -189,6 +190,9 @@ global without sharing class Comm_User_Helper {
                     }else if(community == FRED){
                         template = 'Identity_Portal_FRED_New_User';            
                         link += '&serviceName=FRED';
+                    }else if(community == NDCMM){
+                        template = 'Identity_Portal_FRED_New_User';            
+                        link += '&serviceName=NDCMM';
                     }
                     else {
                       template = 'Identity_Portal_New_User';
@@ -198,12 +202,9 @@ global without sharing class Comm_User_Helper {
                     emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link,Comm_User_Helper.ONEIDENTITY, community); 
 
                 }else if(community == 'CNS'){
-                    link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&'+encodedPart;
-                    template = 'ISSP_New_Member_Welcome_Email_2_CNS'; 
-                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');                   
+                    link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&'+encodedPart; template = 'ISSP_New_Member_Welcome_Email_2_CNS';  emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');                   
                 }
-                Comm_User_Helper.sendEmail( template ,emailWrap, con, community);
-                permissionASS(new list<Id>{userId});
+                Comm_User_Helper.sendEmail( template ,emailWrap, con, community); permissionASS(new list<Id>{userId});
             }
         
         }else if(community == IEC){
@@ -292,11 +293,7 @@ global without sharing class Comm_User_Helper {
                 // Build the header image URL from the document information
               imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();            
             // If there is a service name, that should determine the community name
-            if(!String.isBlank(serviceName)) {
-                communityName = serviceName;
-                if(serviceName == 'FRED'){
-                    communityName += '+';
-                }
+            if(!String.isBlank(serviceName)) { communityName = serviceName; if(serviceName == 'FRED'){ communityName += '+'; }
             }
             else communityName = 'Identity';
         }
@@ -343,15 +340,7 @@ global without sharing class Comm_User_Helper {
         if (bccCS){
             String bccEmail = UserInfo.getUserEmail();
             system.debug('bccEmail: ' + bccEmail);
-            ew = new EmailMessageWrapper( noreplyemail,
-                                            con.Email,
-                                            null,
-                                            bccEmail,
-                                            null,
-                                            new map<string,string>(),
-                                            null,
-                                            mapBodyParamsIssp
-                                            );
+            ew = new EmailMessageWrapper( noreplyemail, con.Email, null, bccEmail, null,  new map<string,string>(), null, mapBodyParamsIssp );
         }
         else{
             
