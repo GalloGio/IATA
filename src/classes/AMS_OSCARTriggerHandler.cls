@@ -3040,10 +3040,11 @@ public class AMS_OSCARTriggerHandler {
                 Boolean isNewAccreditaion = AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c);
                 Boolean isNewgenAccreditation = AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c);//ENHC0012583
                 Boolean isCorrection = oscar.Process__c == AMS_Utils.COR;
-                Boolean isChangeOfLocation = oscar.Process__c == AMS_Utils.AGENCYCHANGES && String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c.contains(AMS_Utils.Location);
+                Boolean isChangeOfLocation = oscar.Process__c == AMS_Utils.AGENCYCHANGES && String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c.contains(AMS_Utils.Location);               
                 if(isNewAccreditaion || isCorrection || isChangeOfLocation || isNewgenAccreditation) { //ENHC0012583 (|| isNewgenAccreditation)
                 	allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
                 	validateShippingAddress(oscar, allOnlineAccr);
+                    validateBillingAddress(oscar, allOnlineAccr);
                 }
                 /*** AMSU-121 End ***/ 
 
@@ -3099,7 +3100,19 @@ public class AMS_OSCARTriggerHandler {
             oscar.addError('Incomplete shipping address.');
         }        
     }
-    /*** AMSU-121 End ***/ 
+    /*** AMSU-121 End ***/
+
+    private static void validateBillingAddress(AMS_OSCAR__c oscar, Map<Id, AMS_Pax_Accreditation_Form__c> accreditations) {
+        AMS_Pax_Accreditation_Form__c accreditation = accreditations.get(oscar.AMS_Online_Accreditation__c);
+        if(accreditation != null) {
+            Id isoState = accreditation.IATA_ISO_State__c;
+            Id isoCountry = accreditation.Branch_Office_Country__c;
+
+            if(!Test.isRunningTest() && (isoState == null || isoCountry == null)) {
+                oscar.addError('Incomplete Billing address.');
+            }
+        }        
+    } 
 
     public static Set<Id> checkProcessAndStatusToMigrateOwners(String typeOfChange, String process, Set<Id> accountsList)
     {
