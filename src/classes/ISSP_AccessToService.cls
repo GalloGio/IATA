@@ -494,28 +494,20 @@ public with sharing class ISSP_AccessToService{
         } else {
             Contact contact = null;
 
-            List<Contact> cl = [Select Id, User_Portal_Status__c From Contact Where id =: contactId];
+            List<Contact> cl = [Select Id, User_Portal_Status__c, Email, Name From Contact Where id =: contactId];
 
-            if(cl.size() != 0) {
+            if(!cl.isEmpty()) {
                 contact = cl[0];
-            }
-
-            if (this.contactStatus == 'PA') {
-                // Pending Approval
-                if (contact != null) {
+            
+                if (this.contactStatus == 'PA') {
+                    // Pending Approval
                     contact.User_Portal_Status__c = 'Approved User';
                     update contact;
                     ISSP_EditPortalServiceAccessExt.updateUserProfile(contact.Id);
-                }
-            } else if (this.contactStatus == 'NO') {
-                // No USer
-                if (contact != null) {
-                    Set <Id> idSet = new Set <Id>();
-                    idSet.add(contact.Id);
-
+                } else if (this.contactStatus == 'NO') {
+                    // No USer
                     ISSP_ContactList ctrl = new ISSP_ContactList();
-
-                    ctrl.processMultiplePortalUserStatusChange(idSet, 'Approved User', 'Active');
+                    ctrl.processMultiplePortalUserStatusChange(cl, 'Approved User', 'Active');
                 }
             }
 
