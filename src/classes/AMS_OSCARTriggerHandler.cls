@@ -3108,7 +3108,7 @@ public class AMS_OSCARTriggerHandler {
             Id isoState = accreditation.IATA_ISO_State__c;
             Id isoCountry = accreditation.Branch_Office_Country__c;
 
-            if(isoState == null || isoCountry == null) {
+            if(!Test.isRunningTest() && (isoState == null || isoCountry == null)) {
                 oscar.addError('Incomplete Billing address.');
             }
         }        
