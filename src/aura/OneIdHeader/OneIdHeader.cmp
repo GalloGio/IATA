@@ -49,6 +49,13 @@
                         <span class="{!'subLogo' + v.serviceName}"></span>
                     </a>
                 </aura:if>
+
+                <aura:if isTrue="{!equals(v.serviceName,'NDCMM')}">
+                    <a class="homeIcon" href="{!'/'+ $Label.c.OneId_Community_Name+'/ndcmm?serviceName=NDCMM'}">
+                        <span class="icon icon-logo"></span>
+                        <span class="{!'subLogo' + v.serviceName}"></span>
+                    </a>
+                </aura:if>
 		    </div>
 
             <div class="slds-col slds-max-small-size_1-of-1 slds-align-bottom slds-p-horizontal_large">
