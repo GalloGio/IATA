@@ -579,7 +579,7 @@
             </processMetadataValues>
             <field>CurrencyIsoCode</field>
             <value>
-                <elementReference>myVariable_current.Case_Currency_lightning__c</elementReference>
+                <elementReference>myVariable_current.CurrencyIsoCode</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
