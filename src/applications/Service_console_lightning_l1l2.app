@@ -1040,7 +1040,6 @@
     <tabs>standard-OmniSupervisorLightning</tabs>
     <tabs>standard-File</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>Service_console_lightning_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <fieldName>Cargo_Agency__c</fieldName>
