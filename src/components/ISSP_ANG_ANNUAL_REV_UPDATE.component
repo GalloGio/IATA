@@ -346,6 +346,8 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
+                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" style="margin-left: 17px;" onkeyup="copyStateToOriginalBox();"/>
+
                     <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
                         <apex:selectOptions value="{!countryList}"/>
                     </apex:selectList>
@@ -1057,6 +1059,8 @@
                 showForms();
             });
 
+            $('[id$="shippingStateInput"]').attr('name', 'shippingStateInput');
+
             // checks initial state
             initFieldsSettings();
             showForms();
@@ -1068,7 +1072,6 @@
         function toggleCurrencyCode(c) {
             $('[id$=y2CurrencyCode]').html(' ' + c);
         }
-
 
         function showCurrCorporateDetails() {
             if($('[id$="ownershipCheckbox"]').prop("checked")) {
@@ -1102,23 +1105,42 @@
             resetPCHint();
         }
 
+        function copyStateToOriginalBox() {
+            $('.shipping_state__c').val($('[id$="shippingStateInput"]').val());
+        }
+
         function initFieldsSettings() {
             $(".country__c").val("{!ca.isocountry.Name}");
             $(".country__c").attr('readonly', true);
             $(".country__c").attr('disabled','disabled');
 
-            if('{!ca.isReadonly}'=='false'){
-               $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
-               var oldElemt=$('#shipping_country__c > input');
-               oldElemt.attr('Style','display:none;');
-               $('#shipping_country__c').css("padding-right",0);
-               if($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length>0){
-                   $('[id$="ShippingCountryList"]').addClass('error');
-               }
-            }else{
-                 $('[id$="ShippingCountryList"]').css('display','none');
-                 $('#shipping_country__c > input').attr('disabled','disabled');
-             }
+            if ('{!ca.isReadonly}'=='false') {
+                $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+               
+                $('#shipping_country__c > input').attr('Style','display:none;');
+
+                $('#shipping_country__c').css("padding-right",0);
+
+                if($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length>0){
+                    $('[id$="ShippingCountryList"]').addClass('error');
+                }
+
+                $('[id$="shipping_state__c"]').parent().attr('class', 'row');
+
+                $('#shipping_state__c').after($('[id$="shippingStateInput"]'));
+                $('.shipping_state__c').attr('style', 'display: none;');
+                $('.shipping_state__c').css("padding-right", 0);
+
+                if ($('[id$="shippingStateInput"]').parent().find('.errorMsg').length > 0) {
+                    $('[id$="shippingStateInput"]').addClass('error');
+                    $('[id$="shippingStateInput"]').after($('[id$="shippingStateInput"]').parent().find('.errorMsg'));
+                    $('[id$="shippingStateInput"]').parent().find('.errorMsg').children().first().attr('style','padding-left: 180px;');
+                }
+            } else {
+                $('[id$="ShippingCountryList"]').css('display','none');
+                $('[id$="shippingStateInput"]').css('display','none');
+                $('#shipping_country__c > input').attr('disabled','disabled');
+            }
             
             $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
                 return "* " + $(this).text();
