@@ -9749,7 +9749,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label>Menurut Rumus</label>
+        <label>Jumlah Penjaminan Yang Disediakan</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
@@ -15551,6 +15551,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>My_Renewals</name>
     </customLabels>
     <customLabels>
+        <label><!-- NDC Troubleshooting --></label>
+        <name>NDC_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
         <label><!-- New --></label>
         <name>New</name>
     </customLabels>
@@ -16133,6 +16137,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_My available applications --></label>
         <name>OneId_My_available_applications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Sharepoint_URL --></label>
+        <name>OneId_NDCMM_Sharepoint_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting --></label>
+        <name>OneId_NDCMM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting_Link --></label>
+        <name>OneId_NDCMM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Name --></label>
