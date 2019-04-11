@@ -11,6 +11,9 @@ public with sharing class ISSP_AMS_EBulletin {
     public List<String> weeklyCountry {get; set;}
     public List<String> dailyCountryName {get; set;}
     public List<String> weeklyCountryName {get; set;}
+	
+	public String dailyFileDownload {get; set;}
+    public String weeklyFileDownload {get; set;}
 
     public List<WrapperReports> dailyFileDownloadList {get; set;}
     public Boolean isAvailableToShowDaily{get;set;}
