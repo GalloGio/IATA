@@ -1,12 +1,11 @@
-Dear {!Case.OwnerFullName},
+Dear {!IATA_Process_Orchestrator_Step_Action__c.Approver__c}, 
 
-It was submitted a new code request for your validation.
+There is a new code request for your approval. 
 
-Case: {!Case.CaseNumber}
-Account: {!Case.Account}
-Subject: {!Case.Subject}
-Description: {!Case.Description}
+Case:{!IATA_Process_Orchestrator_Step_Action__c.Associated_Case__c} 
+Account: {!IATA_Process_Orchestrator_Step_Action__c.Account__c} 
+Subject: {!IATA_Process_Orchestrator_Step_Action__c.Subject__c} 
 
-Please click in the link to access the case: {!Case_Detail__c.Link}
+Please click in the link to access the case detail and the approval page: {!IATA_Process_Orchestrator_Step_Action__c.Link} 
 
-Kind Regards
+Best Regards

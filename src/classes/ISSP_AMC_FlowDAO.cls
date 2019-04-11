@@ -219,11 +219,20 @@ return recordTypes;
             relatedCase.Coding_Application_Status__c = parentCase.Coding_Application_Status__c;
             relatedCase.Priority = parentCase.Priority;
             relatedCase.Origin = parentCase.Origin;
+            relatedCase.Assign__c = true;
             //relatedCase.Account.Site = parentCase.Account.Site;
             relatedCase.AccountId = parentCase.AccountId;
             relatedCase.ContactId = parentCase.ContactId;
             string descriptionB = 'Dear Team,' + '\n' + 'Please process DD for new applicant. Attached you will find usual documentation.' + '\n' + 'Thank you,' + '\n' + 'Coding Team';
             string descriptionC = 'Dear Colleagues,' + '\n' + 'Would you please raise a PPA for this customer with the following items (using current year price list):' + '\n' + 'Application Fee x 1' + '\n' + 'Assignment Fee x 1' + '\n' + 'BRgds,' + '\n' + 'Coding Team';
+
+            
+            //Fetching the assignment rules on case
+            AssignmentRule AR = new AssignmentRule();
+            AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
+            //Creating the DMLOptions for "Assign using active assignment rules" checkbox
+            Database.DMLOptions dmlOpts = new Database.DMLOptions();
+            dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
 
             if(stage == 'Stage B'){
                 relatedCase.CaseArea__c = 'Corporate Compliance';
@@ -239,8 +248,8 @@ return recordTypes;
                 }
                 relatedCase.CaseArea__c = 'Invoicing';
                 //relatedCase.Reason = 'Customer Charge Request';
-                relatedCase.Reason = 'Customer charge request';
-                relatedCase.Reason1__c = 'Customer charge request';
+                relatedCase.Reason = 'Customer Charge Request';
+                relatedCase.Reason1__c = 'Customer Charge Request';
                 relatedCase.Subject = 'Charge Request for ' + parentCase.Account.Name + ' – ' + parentCase.Account.ACLI_SAP_Id__c;
                 relatedCase.Status = 'Open';
                 relatedCase.Description = descriptionC;
@@ -256,6 +265,8 @@ return recordTypes;
             }
 
             try{
+                //Setting the DMLOption on Case instance
+                relatedCase.setOptions(dmlOpts);
                 insert relatedCase;
             }catch(Exception e){
                 System.debug(LoggingLevel.ERROR,
