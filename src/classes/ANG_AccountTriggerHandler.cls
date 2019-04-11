@@ -603,6 +603,7 @@ public class ANG_AccountTriggerHandler {
 		Set<Id> iepAccounts = new Set<Id>();
 		Map<Id,Account> iepModelAAccounts = new Map<Id,Account>();
 		Map<Id,Account> iepModelBAccounts = new Map<Id,Account>();
+		Map<Id,Account> iepModelBPlusAccounts = new Map<Id,Account>();
 
 		for(Account a :triggerNew){
 
@@ -613,7 +614,7 @@ public class ANG_AccountTriggerHandler {
 
 		if(iepAccounts.isEmpty()) return;
 
-		Map<Id,Account> iepCountriesAccs = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.ANG_IEP_Model__c FROM Account WHERE Id IN :iepAccounts AND (IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B')]);
+		Map<Id,Account> iepCountriesAccs = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.ANG_IEP_Model__c FROM Account WHERE Id IN :iepAccounts AND (IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B+')]);
 		
 		for(Id iepAcc: iepAccounts){
 
@@ -623,6 +624,8 @@ public class ANG_AccountTriggerHandler {
 					iepModelAAccounts.put(iepAcc, newMap.get(iepAcc));
 				else if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model B')
 					iepModelBAccounts.put(iepAcc, newMap.get(iepAcc));
+				else if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model B+')
+					iepModelBPlusAccounts.put(iepAcc, newMap.get(iepAcc));
 			}
 
 		}
@@ -631,5 +634,7 @@ public class ANG_AccountTriggerHandler {
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelAAccounts, 'A');
 		if(!iepModelBAccounts.isEmpty())
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBAccounts, 'B');
+		if(!iepModelBAccounts.isEmpty())
+			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBPlusAccounts, 'B+');
 	}
 }
