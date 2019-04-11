@@ -346,7 +346,7 @@ public class ANG_AccountTriggerHandler {
 			else if(a.ANG_CashCondition__c != oldAcct.ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
 			if(a.Status__c != oldAcct.Status__c && oldAcct.Status__c == AMS_Utils.ACC_S0_TERMINATED) changedStatus.add(a.Id);
 			
-			if(a.Financial_Assessment_Points__c != oldAcct.Financial_Assessment_Points__c){
+			if((a.Financial_Assessment_Points__c != oldAcct.Financial_Assessment_Points__c) || (a.ANG_HE_RiskStatus__c != oldAcct.ANG_HE_RiskStatus__c)){
 				changedStatus.add(a.Id);
 			}
 
