@@ -4663,6 +4663,21 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <value>IATA Alpha/Numeric Code</value>
     </labels>
     <labels>
+        <fullName>IATA_GDPR_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_GDPR_URL</shortDescription>
+        <value>https://customer-portal-iata.force.com/dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_White_Logo</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA GDPR White Logo</shortDescription>
+        <value>https://iata--c.eu12.content.force.com/servlet/servlet.ImageServer?id=0151r0000066HTS&amp;oid=00D2000000008TF&amp;lastMod=1554880895000</value>
+    </labels>
+    <labels>
         <fullName>ICAddressDoctor_adns</fullName>
         <categories>1ID</categories>
         <language>en_US</language>
@@ -30808,6 +30823,13 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
     </labels>
     <labels>
+        <fullName>OneId_NDCMM_Terms_Of_Use_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Terms_Of_Use_Link</shortDescription>
+        <value>http://identity.iata.org/servlet/servlet.FileDownload?file=0151r0000066GgB</value>
+    </labels>
+    <labels>
         <fullName>OneId_NDCMM_Troubleshooting</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -31171,6 +31193,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Type</value>
     </labels>
     <labels>
+        <fullName>OneId_URL_To_GDPR</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_URL_To_GDPR</shortDescription>
+        <value>https://customer-portal-iata.force.com/identity/s/login/?language=en_US&amp;serviceName=dataprivacy</value>
+    </labels>
+    <labels>
         <fullName>OneId_URL_javaScript</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -31240,6 +31270,22 @@ Please check your mailbox to finalize the registration process.</value>
         <protected>false</protected>
         <shortDescription>OneId_Your request has been successfully sent</shortDescription>
         <value>Your request has been successfully sent</value>
+    </labels>
+    <labels>
+        <fullName>OneId_dataprivacy_Troubleshooting</fullName>
+        <categories>One Identity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Text for link tor online help on OneIdentity login page for data privacy portal</shortDescription>
+        <value>Online Help</value>
+    </labels>
+    <labels>
+        <fullName>OneId_dataprivacy_Troubleshooting_Link</fullName>
+        <categories>One Identity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link on online help link in One Identity login page for data privacy portal</shortDescription>
+        <value>https://www.iata.org/pages/contact.aspx</value>
     </labels>
     <labels>
         <fullName>Oneid_request_acess_to_a_new_service</fullName>
@@ -33487,6 +33533,22 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>SurveyCustomerRecoveriesAnnFARRELL</shortDescription>
         <value>005w0000003XCG8</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Community_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of the GDPR community in the URL</shortDescription>
+        <value>dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Network_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
+        <value>Data Privacy</value>
     </labels>
     <labels>
         <fullName>Taxes</fullName>
