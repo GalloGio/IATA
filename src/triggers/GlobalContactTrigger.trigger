@@ -418,6 +418,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     ISSP_PortalUserStatusChange.futureDeactivateUsers(contactsForUserdeActivateIdSet);
                 }
                 
+                Set<Id> contactIdSet = new Set<Id>();
+                
                 if (contactsToDisable_TD.size() > 0){
 
                     list<Portal_Application_Right__c> portalAppList = [SELECT Id, Right__c, Contact__c, Portal_Application__r.Name
