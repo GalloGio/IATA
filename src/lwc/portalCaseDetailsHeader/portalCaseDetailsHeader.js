@@ -7,6 +7,9 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import { getParamsFromPage } from'c/navigationUtils';
 
+//custom label
+import CSP_PendingCustomerCase_Warning from '@salesforce/label/c.CSP_PendingCustomerCase_Warning';
+
 export default class PortalHomeCalendar extends LightningElement {
 
     @track loading = true;
@@ -17,6 +20,9 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstRecipients;
     @track newRecipient = '';
     @track haveRecipients = false;
+
+    @track pendingCustomerCase = false;
+    pendingCustomerCaseWarningLabel = CSP_PendingCustomerCase_Warning;
 
     connectedCallback() {
         //get the parameters for this page
@@ -52,6 +58,7 @@ export default class PortalHomeCalendar extends LightningElement {
             }
 
             this.loading = false;
+            this.pendingCustomerCase = results.Status === 'Pending customer';
         })
         .catch(error => {
             console.log('error: ' , error);

@@ -4,6 +4,13 @@
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </template>
         <template if:false={loading}>
+            <div if:true={pendingCustomerCase} class="WarningRectangle">
+                <span class="slds-icon_container slds-p-left_medium" title="info">
+                    <lightning-icon icon-name="utility:info_alt" size="small">
+                    </lightning-icon>
+                </span>
+                <span class="text-uppercase slds-p-left_medium text-bold text-xxxsmall text-gray">{pendingCustomerCaseWarningLabel}</span>
+            </div>
             <div class="slds-grid slds-wrap customCardTitleBox">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-around_medium" >
                     <span style="color: #9a9eb0;">Case Number</span><br/>

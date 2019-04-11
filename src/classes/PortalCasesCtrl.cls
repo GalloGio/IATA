@@ -283,7 +283,7 @@ public with sharing class PortalCasesCtrl {
         Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, 
                         CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
                         Subtopic__c, Region__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
-                        Description,E2CP__AdditionalCC__c,Account_Concerned__c
+                        Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status
 
                         FROM Case 
                         WHERE Id = :caseId];
