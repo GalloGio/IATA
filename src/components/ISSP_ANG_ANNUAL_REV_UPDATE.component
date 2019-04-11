@@ -209,7 +209,7 @@
             <!-- /CHECKBOXES -->
         </apex:pageBlockSection>
 
-        <apex:pageBlockSection columns="2" collapsible="false" id="Section2">
+        <apex:pageBlockSection columns="2" collapsible="false" id="Section2" >
 
             <!-- left part-->
             <apex:pageBlockSection columns="1">
@@ -309,7 +309,7 @@
                     }
                 </script>
 
-                <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block">
+                <apex:outputPanel styleClass="agencyLocationComponent" id="newAddress" layout="block" style="width: 120%">
                     <apex:outputLabel value="{!$Label.Billing_address}:"/>
 
                     <DSE:DS_DataQuality id="BranchAddress"
@@ -331,7 +331,7 @@
                     <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress()" />
                 </apex:outputPanel>
 
-                <apex:outputPanel styleClass="agencyLocationComponent" id="newAddressShipping" layout="block">
+                <apex:outputPanel styleClass="agencyLocationComponent" id="newAddressShipping" layout="block" style="width: 120%">
                     <apex:outputLabel value="{!$Label.ISSP_Shipping_Address}:"/>
 
                     <DSE:DS_DataQuality id="ShippingAddress"
@@ -346,7 +346,7 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
-                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" style="margin-left: 17px;" onkeyup="copyStateToOriginalBox();"/>
+                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateToOriginalBox();"/>
 
                     <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
                         <apex:selectOptions value="{!countryList}"/>
@@ -354,7 +354,7 @@
                 </apex:outputPanel>
 
 
-                <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail">
+                <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail" layout="block" style="width: 120%">
                     <DSE:DS_DataQuality id="BranchEmail"
                         RecordRef="{!ca.fw.newform}"
                         FieldGroupName="Branch Email"
@@ -1061,6 +1061,8 @@
 
             $('[id$="shippingStateInput"]').attr('name', 'shippingStateInput');
 
+            locationSecctionStyle();
+
             // checks initial state
             initFieldsSettings();
             showForms();
@@ -1068,6 +1070,13 @@
                 setReadonly();
             }
         });
+
+        function locationSecctionStyle() {
+            $('[id$="newAddress"]' + " :input").attr("style", 'width: 200px;');
+            $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
+            $('[id$="newEmail"]' + " :input").attr("style", 'width: 200px;');
+            $('[id$="shippingStateInput"]').attr('style', 'margin-left: 15px; width: 200px');
+        }
 
         function toggleCurrencyCode(c) {
             $('[id$=y2CurrencyCode]').html(' ' + c);
