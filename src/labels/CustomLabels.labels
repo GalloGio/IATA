@@ -24138,6 +24138,21 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Validating VAT number...</value>
     </labels>
     <labels>
+        <fullName>ISSP_PAX_Validating_VAT_Number_2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Validating VAT Number 2</shortDescription>
+        <value>Validating VAT number 2...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Validating_VAT_Number_2_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Validating VAT Number 2 error</shortDescription>
+        <value>Invalid VAT Number 2</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number_error</fullName>
         <language>en_US</language>
         <protected>false</protected>
