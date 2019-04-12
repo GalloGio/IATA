@@ -249,9 +249,12 @@
                         <td style="width: 20%;">
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
                         </td>
-                        <td style="vertical-align: top !important;">
+                        <td style="vertical-align: top !important;" rendered="{!NOT(isSpecialIATACodeSearchCountry)}">
                           <apex:outputText style="display:{!IF(rhcAgencyInfo.ANG_CashCondition__c,'','none')}; margin-left: 15px;" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC}"/>
                           <apex:outputText style="display:{!IF(NOT(rhcAgencyInfo.ANG_CashCondition__c),'','none')}; margin-left: 15px;" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_FORMULA}"/>
+                        </td>
+                        <td style="vertical-align: top !important;" rendered="{!isSpecialIATACodeSearchCountry}">
+                          <apex:outputText style="margin-left: 15px;" value="{!RHCValueForSpecialCountry}"/>
                         </td>
                       </tr>
 
