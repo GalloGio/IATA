@@ -95,6 +95,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static void handleNewGenChangesProcess(List<AMS_Oscar__c> oscars){
 
+		System.debug('[ANG_AgencyChangesHelper.handleNewGenChangesProcess] oscars List = ' +oscars);
+
 		ANG_AgencyChangesConfigHelper.ChangesConfig config = null;
 
 		AMS_OSCAR__c oscar = oscars[0];
@@ -191,7 +193,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 
 				}
-
+				System.debug('[ANG_AgencyChangesHelper] oscar.Process__c = ' +oscar.Process__c);
 				//if(Pattern.matches(AMS_Utils.ANG_OWNERSHIP + '|' + AMS_Utils.ANG_MINOR_SHAREHOLDING + '|' + AMS_Utils.ANG_MAJOR_SHAREHOLDING, oscar.ANG_Type_Of_Change__c))
 				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c))
 					changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
@@ -226,37 +228,49 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 
 				if(oscar.Process__c == AMS_Utils.NGCORRECTION){
-
+					System.debug('[ANG_AgencyChangesHelper] Oscar Process is NGCORRECTION');
+					
 					List<Account> accountsToUpdate = new List<Account>();
-
+					
+					for(Id accId : accountIdsInvolvedSet){
+						accountsToUpdate.add(changesContainer.accountsMap.get(accId));
+					}
+					
+					System.debug('[ANG_AgencyChangesHelper] accountsToUpdate = ' +accountsToUpdate);
+					System.debug('[ANG_AgencyChangesHelper] oscar.Account__c = ' +oscar.Account__c);
+					
+					
 					if (!new Set<String>{'COR','CAD','LET'}.contains(oscar.AMS_Correction_change_code__c))
 						oscar.addError('To pass sanity check a correction change code is required.');
 
 					if(oscar.AMS_Correction_change_code__c == 'COR' || oscar.AMS_Correction_change_code__c == 'CAD'){
+						System.debug('[ANG_AgencyChangesHelper] oscar.AMS_Correction_change_code__c = ' +oscar.AMS_Correction_change_code__c);
 						AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
 						changeCode.status  = null;
-
 						if(oscar.AMS_Correction_change_code__c == 'COR') {
 							changeCode.name = 'COR';
 							changeCode.memoText = 'Correction';
 							changeCode.publishedOnEBulletin = false;
+							changesContainer.accountsToApplyChangeCodes.addAll(accountsToUpdate);
+							System.debug('[ANG_AgencyChangesHelper]##AC: accountsToUpdate= ' + accountsToUpdate);
 						}
 						else if(oscar.AMS_Correction_change_code__c == 'CAD'){
 							changeCode.name = 'CAD';
 							changeCode.memoText = 'Minor Changes';
+							changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
 						}
-
+						
 						List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: oscar.Account__c AND Active__c = TRUE];
-
+						System.debug('[ANG_AgencyChangesHelper] accountActiveChangeCode = ' +accountActiveChangeCode);
+						
 						if(accountActiveChangeCode.size() > 0){
 							changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
 							changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
 							changeCode.status = AMS_Utils.getIATANumericStatus(accountActiveChangeCode[0].Account__r.Status__c);
 						}
 
-						//changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
-						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
+						System.debug('[ANG_AgencyChangesHelper] accountsToApplyChangeCodes = ' +changesContainer.accountsToApplyChangeCodes); 
 						changesContainer.changeCodesToCreateDef.add(changeCode);				
 					}
 
@@ -272,6 +286,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 						//changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
 						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
+						System.debug('[ANG_AgencyChangesHelper] changesContainer.accountsToApplyChangeCodes = ' +changesContainer.accountsToApplyChangeCodes);
 						changesContainer.changeCodesToCreateDef.add(changeCode);	
 					}
 
@@ -1457,6 +1472,12 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static AChangeStructure ANGcreateAAChangeCodes(List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges, List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts, ANG_AgencyChangesHelper.AChangeStructure changesContainer) {
 
+		System.debug('[ANG_AgencyChangesHelper].ANGcreateAAChangeCodes List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = '+ objectChanges);//param 1
+		System.debug('[ANG_AgencyChangesHelper].ANGcreateAAChangeCodes List<AMS_OSCAR_JSON.ChangeCode> changeCodes = '+ changeCodes);//param 2
+		System.debug('[ANG_AgencyChangesHelper].ANGcreateAAChangeCodes oscars = '+oscars);//param 3
+		System.debug('[ANG_AgencyChangesHelper].ANGcreateAAChangeCodes oscarAgencies = '+oscarAgencies);//param 5
+		System.debug('[ANG_AgencyChangesHelper].ANGcreateAAChangeCodes changesContainer:'+ changesContainer);////param 6
+
 		Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
 
 		Set<Account> accountsToUpdate = new Set<Account>();
@@ -1490,63 +1511,41 @@ public with sharing class ANG_AgencyChangesHelper {
 				accountsChecker.put(acct, false);
 				isActive = true;
 			}
-
+			
+			AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult;
+			
             if(objectChanges != null && !objectChanges.isEmpty()){
 				if(objectChanges.size() == 1)
 					objectChangesByChangeCode = objectChanges.get(0);
 				else
 					objectChangesByChangeCode = objectChanges.get(index);
+			
 			}
             
-			AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
+            if(cc.Name == 'COR'){
+            	for(Account ac : oscarAgencies){//when changeCode = COR, same change code for all Acc
+            		changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), ac, isActive, fOPs.get(accId));
+            		changesContainer.addChangeCode(changeCodeResult.changeCode);
 
-			changesContainer.addChangeCode(changeCodeResult.changeCode);
+					aaccHistoryToProcess.put(accId, changeCodeResult);
+		
+					if (!accountsToUpdate.contains(changeCodeResult.acct)){
+						changesContainer.addAccount(changeCodeResult.acct);
+					}
+            	}
+            }
+            else{
+				changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
+            	changesContainer.addChangeCode(changeCodeResult.changeCode);
 
-			aaccHistoryToProcess.put(accId, changeCodeResult);
-
-			if (!accountsToUpdate.contains(changeCodeResult.acct)){
-				changesContainer.addAccount(changeCodeResult.acct);
-			}
-
-			index++;
-		}
-
-		/*for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
-
-			Integer index = 0;
-
-			for(Id acctId: oscarAgencies){
-
-				Account acct = changesContainer.accountsMap.get(acctId) != null ?  changesContainer.accountsMap.get(acctId) : new Account(Id = acctId);
-
-				Boolean isActive = false;
-
-				if (!accountsChecker.containsKey(acct)) {
-					accountsChecker.put(acct, false);
-					isActive = true;
-				}
-
-				if(objectChanges != null && !objectChanges.isEmpty())
-					objectChangesByChangeCode = objectChanges.get(index);
-
-				system.debug('[ANG_AgencyChangesHelper] Change Codes Check:'+ cc);
-				AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), acct, isActive, fOPs.get(acctId));
-
-				system.debug('[ANG_AgencyChangesHelper] Change Codes Check2:'+ cc);
-				changesContainer.addChangeCode(changeCodeResult.changeCode);
-
-				aaccHistoryToProcess.put(acct.Id, changeCodeResult);
-
-				//changesContainer.addChangeCode(changeCodeResult.changeCode);
-
+				aaccHistoryToProcess.put(accId, changeCodeResult);
+	
 				if (!accountsToUpdate.contains(changeCodeResult.acct)){
 					changesContainer.addAccount(changeCodeResult.acct);
 				}
-				system.debug('[ANG_AgencyChangesHelper] HELLO:'+ index);
-			}
-
+            }
 			index++;
-		}*/
+		}
 
 		if(changesContainer.changeCodesToCreate != null && !changesContainer.changeCodesToCreate.isEmpty())
 		{

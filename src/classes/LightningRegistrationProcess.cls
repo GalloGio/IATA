@@ -686,6 +686,20 @@ public without sharing class LightningRegistrationProcess{
             database.upsert(psa); 
             System.debug('End Assigning PermissionSet'); 
     }
+
+    @future 
+    public Static Void assignGDPRPermissionSet (Id userId) {
+            System.debug('Assigning GDPR PermissionSet');
+            // Assign GDPR permission set to user
+            PermissionSet ps = [SELECT Id,Name FROM PermissionSet WHERE Name = 'GDPR'];
+            list<PermissionSetAssignment> gdprAssignment = [SELECT Assignee.name FROM PermissionSetAssignment WHERE PermissionSetId =: ps.Id and AssigneeId =: userId];
+            // Assign only when user doesn't have the permission set yet
+            if(gdprAssignment.isEmpty()){ 
+                PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = ps.Id, AssigneeId = userId);
+                database.upsert(psa); 
+            }
+            System.debug('End Assigning GDPR PermissionSet'); 
+    }
     
     @future
     public static void setFederationId (String userid, String email) {
