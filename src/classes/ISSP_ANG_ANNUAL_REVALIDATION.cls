@@ -1789,63 +1789,56 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			currentAccount.newContact.Accredited_employer_2__c = null;
 		}
 
-
         currentAccount.newContact.AddressCountry__c = amsContactCountry;
 
         try {
+            if (contactType == 'Current Owner') {
+            	if (currentAccount.newContact.AddressCountry__c == null) {
+            		currentAccount.newContact.AddressCountry__c.addError(Label.ISSP_YouMustEnter);
+                	contactSaved = false;
+            	}
 
-            if (currentAccount.newContact.AddressCountry__c == null && contactType == 'Current Owner') {
-                currentAccount.newContact.AddressCountry__c.addError(Label.ISSP_YouMustEnter);
-                contactSaved = false;
-            }
+            	if ((currentAccount.newContact.Agency_owner__c == true || currentAccount.newContact.Agency_role__c == true) 
+            	&& (currentAccount.newContact.Time_devoted_to_Agency_business__c < 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c == null || currentAccount.newContact.Time_devoted_to_Agency_business__c > 100)) {
+                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted));
+                	contactSaved = false;
+                	return;
+            	}
 
-            if (contactType == 'Current Owner' && (currentAccount.newContact.Agency_owner__c == true || currentAccount.newContact.Agency_role__c == true)  && (currentAccount.newContact.Time_devoted_to_Agency_business__c < 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c == null))  {
-                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted);
-                ApexPages.addMessage(myMsg);
-                contactSaved = false;
-                return;
-            }
+            	if (currentAccount.newContact.Agency_owner__c == false && currentAccount.newContact.Agency_role__c == false) {
+                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_NoC_Type_Of_Person));
+                	contactSaved = false;
+                	return;
+            	}
 
-            if (contactType == 'Current Owner' && currentAccount.newContact.Agency_owner__c == false && currentAccount.newContact.Agency_role__c == false) {
-                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_NoC_Type_Of_Person);
-                ApexPages.addMessage(myMsg);
-                contactSaved = false;
-                return;
+            	if (currentAccount.newContact.Agency_owner__c == true && (currentAccount.newContact.Financial_interest__c <= 0 || currentAccount.newContact.Financial_interest__c == null)) {
+                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_FIN_Interest));
+                	contactSaved = false;
+                	return;
+            	}
             }
 
             //Only one owner allowed for Sole Proprietorships
-            //if (cntOwners >= 1 && currentAccount.newContact.Agency_owner__c == true && legalStatusAfterChange == 'sole proprietorship') {
             if (cntOwners >= 1 && currentAccount.newContact.Agency_owner__c == true && legalStatus == 'sole proprietorship') {
                 myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Sole_Owner_Exists);
                 ApexPages.addMessage(myMsg);
                 contactSaved = false;
             }
 
-            if (currentAccount.newContact.Agency_owner__c == true && contactType == 'Current Owner' && (currentAccount.newContact.Financial_interest__c <= 0 || currentAccount.newContact.Financial_interest__c == null))  {
-                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_FIN_Interest);
-                ApexPages.addMessage(myMsg);
-                contactSaved = false;
-                return;
-            }
-
-
             //Only Max of 3 IFAP Contacts allowed
             if (cntIFAPContacts >= MAX_IFAP_Contacts && currentAccount.newContact.Financial_Assessment_Contact__c == true) {
-                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Max_FinContacts1 + ' ' + MAX_IFAP_CONTACTS + ' ' + Label.ISSP_AMS_Step3_ErrMsg_Max_FinContacts2);
-                ApexPages.addMessage(myMsg);
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Max_FinContacts1 + ' ' + MAX_IFAP_CONTACTS + ' ' + Label.ISSP_AMS_Step3_ErrMsg_Max_FinContacts2));
                 contactSaved = false;
             }
 
             if (cntEmailContacts > 0) {
-                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_Unique_Email);
-                ApexPages.addMessage(myMsg);
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_Unique_Email));
                 contactSaved = false;
             }
 
             if (!contactSaved) {
                 return;
             }
-
 
             if (currentAccount.newContact.Agencies_prev_worked_for__c != 'none' && currentAccount.newContact.Agencies_prev_worked_for__c != null) {
                 if (currentAccount.newContact.Prev_Job1_Position__c == null) {
