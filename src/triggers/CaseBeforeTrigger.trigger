@@ -159,6 +159,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*DigitalGenius trigger - turn off*/
         //if (Trigger.isUpdate)  dgAI2.DG_PredictionTriggerHandler.doFeedback(trigger.new);
 
+        assingDefaultEmail(trigger.new); //assigns default email
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ //FLAG
             system.debug('trgCaseIFAP');
@@ -2180,6 +2181,21 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             } else {
                 return 'The New Deadline date must be greater than today.';
             }
+        }
+    }
+    private static void assingDefaultEmail(list<case> caseList){  
+        // assigns default email address to be used on send email quick action
+        //follows same logic as current classic functionality
+
+        for(case c: caselist){
+            RecordType caseRTDevName=RecordTypeSingleton.getInstance().getRecordTypeById('case',c.recordtypeId);
+
+            string email=IDFS_Util.getRecordTypeEmail (caseRTDevName!=null?caseRTDevName.developerName:'', c.BSPCountry__c, c.Case_Group__c);
+
+            //if no default email address per case type, checks on country level 
+            // ====== -No longer needed ====
+            //if(String.isEmpty(email))email=IDFS_Util.getIATACountryEmail (c.BSPCountry__c);
+            c.defaultEmailAddress__c=email;
         }
     }
     /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
