@@ -615,7 +615,7 @@
                   <span>
 
                       <apex:outputPanel rendered="{! NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay') || Serv.recordService.Name == iccsPortalApplicationName)}">
-                          <apex:outputLabel escape="false" value="{!IF(AND(isAdmin, NOT(Serv.recordService.Cannot_be_managed_by_portal_admin__c)), $Label.ISSP_ServiceAccessConfirm, $Label.ISSP_ServiceRequestConfirm + ' ' + IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name))}" rendered="{!!Serv.recordService.Confirm_Box__c}"/>
+                          <apex:outputLabel escape="false" value="{!Serv.popupLabel}" rendered="{!!Serv.recordService.Confirm_Box__c}"/>
 
                         <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
                       </apex:outputPanel>
@@ -749,12 +749,12 @@
                 <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" 
                   value="{!$Label.ISSP_Confirm}" 
                   styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" 
-                  oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!AND(isAdmin, Serv.addUsersEnable)}' == 'true' ? 'AUTO' : 'SKIP', '', 'false');}" 
+                  oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!Serv.addUsersEnable}' == 'true' ? 'AUTO' : 'SKIP', '', 'false');}" 
                   rerender="display_messages"/>
             
                 <apex:outputPanel rendered="{!Serv.recordService.Name<>'Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay') || Serv.recordService.Name == iccsPortalApplicationName)}"
                   id="serviceSubmitButton">
-                  <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!AND(isAdmin, Serv.addUsersEnable)}' == 'true' ? 'AUTO' : 'SKIP', '', 'false');"
+                  <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!Serv.addUsersEnable}' == 'true' ? 'AUTO' : 'SKIP', '', 'false');"
                      class="btn_iata_success btn-block btn">
                      {!$Label.ISSP_Confirm}
                   </a>

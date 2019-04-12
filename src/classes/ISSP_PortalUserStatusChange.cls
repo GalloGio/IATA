@@ -695,9 +695,40 @@ public with sharing class ISSP_PortalUserStatusChange {
      
     @future(callout=true)
     public static void futureUpdateUsers(set<string> conIdSet) {
-        map<Id,Contact> contactMap = new map<Id,Contact>([select Id,email,firstName,lastname,Title,Preferred_Language__c,Status__c from Contact where Id in:conIdSet]);
+        
+        Map<Id,Contact> contactMap = new Map<Id,Contact>(
+        	[SELECT 
+        		Id,
+        		email,
+        		firstName,
+        		lastname,
+        		Title,
+        		Preferred_Language__c,
+        		Status__c, 
+        		(SELECT
+        			Id,
+        			Right__c
+        		 FROM
+        		 	Portal_Application_Rights__r 
+        		 WHERE 
+        		 	 Kavi_user__c = true 
+        		 AND Portal_Application__r.Name = 'Standards Setting Workspace'
+        		 )
+        	 FROM 
+        	 	Contact 
+        	 WHERE
+        	 	Id IN :conIdSet
+        	]
+        );
+        
+        
         if(!contactMap.values().isEmpty()){
+
+	        List<User> usersToPushHL = new List<User>();
+	        Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
+
             list<User> userList = [select Id,ContactId, ContactKaviId__c,languagelocalekey,email,firstname,lastname,Title,IsActive,IsPortalEnabled,username from User where ContactId in:contactMap.keySet() OR ContactKaviId__c in:contactMap.keySet()];
+
             for(User user : userList){
                 //Code extension to consider internal users
                 Contact con = new Contact();
@@ -719,9 +750,21 @@ public with sharing class ISSP_PortalUserStatusChange {
                     user.IsActive = false;
                 else
                     user.IsActive = true;
+                    
+                List<Portal_Application_Right__c> parLst = (List<Portal_Application_Right__c>) con.getSObjects('Portal_Application_Rights__r');
+                
+                System.debug(LoggingLevel.FINE, '____ [cls ISSP_PortalUserStatusChange - futureUpdateUsers] Portal Application Rights associated: ' + parLst);
+                
+                if(parLst != null && !parLst.isEmpty()){
+                	String access = parLst.get(0).Right__c;
+                	usersToPushHL.add(user);
+                	activeUserMap.put(user.Id, access == 'Access Granted');
+                }
+				                
              }
 
-            ISSP_WS_KAVI.updateKaviUsers(conIdSet, userList);
+            HigherLogicIntegrationHelper.pushPersonMembers(usersToPushHL, activeUserMap);
+            
             update userList;
             
         }
@@ -1197,28 +1240,6 @@ public with sharing class ISSP_PortalUserStatusChange {
     
     @future
     public static void updateUser(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
-        updateUserSync(conId, isActive, email, profileId, firstCommunity);
-    }
-
-    /*** AMSU-163 ***/
-    public static void updateUserSync(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
-        list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Email, u.Contact.Email, u.Community__c, u.ProfileId
-                                            from User u where contactId =:conId];
-        if (!usersToUpdate.isEmpty()){
-            for(User u : usersToUpdate){
-                u.IsActive = isActive;
-                u.IsPortalEnabled = true;
-                if (profileId != ''){
-                    u.ProfileId = profileId;
-                }
-                u.Email = email;
-                string userName = ISSP_Utilities.buildPortalUserName(email);
-                u.Username = userName;
-                if(firstCommunity != '')
-                    u.Community__c = firstCommunity;
-            }
-
-            update usersToUpdate;
-        }
-    }
+        ISSP_PortalUserStatusChangeHelper.updateUserSync(conId, isActive, email, profileId, firstCommunity);
+    }    
 }

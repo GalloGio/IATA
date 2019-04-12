@@ -31,6 +31,13 @@
         <value>Restricted Profile - automated process</value>
     </labels>
     <labels>
+        <fullName>AMP_Services_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMP Services Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
         <fullName>AMS_AttchNotifyOwner</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -243,6 +250,13 @@
         <value>Issue Billing Document</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action20</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action20</shortDescription>
+        <value>Open related Financial Security</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action3</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -385,6 +399,27 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
         <value>Application Disapproval</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_ENDORSEMENT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>GDI Endorsement</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_fees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_fees</shortDescription>
+        <value>GDI fees</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
@@ -766,11 +801,46 @@
         <value>Notice of Termination</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP46</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP46</shortDescription>
+        <value>Request invoice</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP47</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP47</shortDescription>
+        <value>Issue billing document</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP48</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP48</shortDescription>
+        <value>Confirm payment received</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP49</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP49</shortDescription>
+        <value>Request endorsement details</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP5</shortDescription>
         <value>Application Reconsideration</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP50</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP50</shortDescription>
+        <value>Confirm Financial Security Information</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
@@ -1263,6 +1333,94 @@ IATA Customer Service</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
         <value>Portal Service Role</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Agreement</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Agreement</shortDescription>
+        <value>I agree</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Breadcrumb</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Breadcrumb</shortDescription>
+        <value>The list of Financial Institutions providing Financial Security Insurance in your country</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Navigate_Portal</shortDescription>
+        <value>Go to GDI Portal</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Display_Records</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Display_Records</shortDescription>
+        <value>Display records per page:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_First</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_First</shortDescription>
+        <value>First Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Last</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Last</shortDescription>
+        <value>Last Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Next</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Next</shortDescription>
+        <value>Next Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Previous</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Previous</shortDescription>
+        <value>Previous Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Terms_Conditions</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Terms_Conditions</shortDescription>
+        <value>By applying for your Financial Security to be provided to IATA by Euler Hermes, you consent to IATA sharing with Euler Hermes information it holds which is relevant to your financial standing, whether obtained directly from you when applying for IATA Accreditation or which IATA has maintained throughout your period of membership of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningError</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningError</shortDescription>
+        <value>Sorry, there was an issue setting up your GDI access. Try again and if the issue persists please contact Customer Support</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningWait</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningWait</shortDescription>
+        <value>Please wait. You&apos;ll be redirected to the GDI Portal in a few moments.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_HeadEntity</fullName>
@@ -2008,6 +2166,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG Oscar Risk values Warning</shortDescription>
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OnGoing_OSCAR_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_OnGoing_OSCAR_Warning</shortDescription>
+        <value>Please finalize any ongoing OSCAR process before proceeding with the conversion.</value>
     </labels>
     <labels>
         <fullName>ANG_PCI_COMPLIANT</fullName>
@@ -2771,7 +2936,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -2792,7 +2957,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - RecordType</shortDescription>
-        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope</value>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global</value>
     </labels>
     <labels>
         <fullName>Case_Area_ICH</fullName>
@@ -3021,6 +3186,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Actual Amount Blocked</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_AddCountry_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_AddCountry_Monthly_Survey</shortDescription>
+        <value>Add to Survey</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Airlines_Charges</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3047,6 +3219,27 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_All_Others_Country</shortDescription>
         <value>All Others Country</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Annual_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Annual_Survey</shortDescription>
+        <value>Annual Survey</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Annual_Surveys</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Annual_Surveys</shortDescription>
+        <value>Annual Surveys</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Annual_Top_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Annual_Top_Text</shortDescription>
+        <value>To determine the industry-wide amount of blocked or delayed sales funds in and from countries that are subject to currency and repatriation restrictions, IATA conducts this Survey of Remittances of Foreign Balances (RFB) annually. We therefore ask you to complete the following table with data as of 31 December {0} for sales of previous months.</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Attachments_Description</fullName>
@@ -3098,6 +3291,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Go back to currency center home</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Back_ReportingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Back_ReportingActions</shortDescription>
+        <value>Go Back To Reporting Actions</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Blocked_Funds</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3140,6 +3340,27 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>CASS PROFILE</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Cancel_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Cancel_Confirmation_Question</shortDescription>
+        <value>If you leave you will loose all changes made since you last saved. Are you sure you want to leave?</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Cancel_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Cancel_Confirmation_Title</shortDescription>
+        <value>Leave survey form</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Cancel_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Cancel_Monthly_Survey</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Countries</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3166,6 +3387,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Currency</shortDescription>
         <value>CURRENCY</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_DeleteCountry_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_DeleteCountry_Confirmation_Question</shortDescription>
+        <value>Are you sure you want to delete this country?</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_DeleteCountry_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_DeleteCountry_Confirmation_Title</shortDescription>
+        <value>Delete country</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Details</fullName>
@@ -3219,6 +3454,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Economic_Profile</shortDescription>
         <value>ECONOMIC PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Edit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Edit</shortDescription>
+        <value>Edit</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Exchange_Rates_Directory</fullName>
@@ -3305,6 +3547,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Issue Started</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Link</shortDescription>
+        <value>Link</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Manage_Notifications</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3326,6 +3575,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>You will receive a notification every time an update feed is posted for the countries checked in the list below.</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Monthly_Survey</shortDescription>
+        <value>Monthly Survey</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Monthly_Surveys</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Monthly_Surveys</shortDescription>
+        <value>Monthly Surveys</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Next_Action</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3338,6 +3601,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Number_of_Airlines_Reporting</shortDescription>
         <value># of Airlines Reporting the Issue</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Open</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Open</shortDescription>
+        <value>View</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Preferences_Save_Error</fullName>
@@ -3375,6 +3645,34 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>REPATRIATION PROCESS</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Reporting_And_Actions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Reporting_And_Actions</shortDescription>
+        <value>Reporting &amp; Actions</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Request_Update</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Request_Update</shortDescription>
+        <value>Request Update</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Request_Update_Hover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Request_Update_Hover</shortDescription>
+        <value>Dummy text</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Save_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Save_Monthly_Survey</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Save_Preferences</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3410,6 +3708,34 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Subject</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Submission_Confirmation_Question</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Submission_Confirmation_Question</shortDescription>
+        <value>By pressing continue you will be submitting all countries data. Are you sure you want to continue?</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Submission_Confirmation_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Submission_Confirmation_Title</shortDescription>
+        <value>Confirm survey submission</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Submit_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Submit_Monthly_Survey</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Survey</shortDescription>
+        <value>Survey</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Treasury_Dashboard</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3422,6 +3748,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Unfollow</shortDescription>
         <value>Unfollow</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_UpcomingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_UpcomingActions</shortDescription>
+        <value>Upcoming Actions &amp; Events</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Update_Feeds</fullName>
@@ -6724,6 +7057,38 @@ The sum of percentage cannot exceed 100%</value>
         <value>ID Card Application Attachments</value>
     </labels>
     <labels>
+        <fullName>IDCard_BSP_Agent_Billing_Reports_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Agent_Billing_Reports_Procedures</shortDescription>
+        <value>Learn about the Agent reporting process in the Billing and Settlement Plan (BSP) and how to interpret billing reports. This course will enable travel agent users to understand the BSP Agent reporting process, show how to identify BSP Reporting documents and correct any discrepancies, if and when they occur. You will be shown the BSP reporting calendar for Travel Agents and the range of Billing Reports issued by BSP in the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-billing-agent-tttg46.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Agent_Remittance_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Agent_Remittance_Procedures</shortDescription>
+        <value>Examine the Agent Remittance process of the Billing and Settlement Plan (BSP), including the reporting calendar and debt identification. This module will familiarize you with the Agent BSP Remittance process; BSP Reporting calendar for Agents; and how to find, verify and timelines for the amount a travel agent owes to the BSP. You will also learn what to do if the amount due does not seem to be correct, the importance of timely remittance, and the consequences of failing to settle by the remittance date. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-agent-remittance-tttg47.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Essentials_for_Travel_Agents</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Essentials_for_Travel_Agents</shortDescription>
+        <value>BSP Essentials for Travel Agents is a training course providing essential knowledge of the Billing and Settlement Plan (BSP), specifically for travel agents. It is designed to raise the learner’s awareness of the BSP system and processes, and improve an Agent’s efficiency and level of knowledge. This course is intended to explain elements of the BSP system that are common to all parts of the world and is divided into five learning modules covering the fundamental components of the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-essentials-tttg49.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Standard_Documents_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Standard_Documents_Procedures</shortDescription>
+        <value>The course will enable travel agent users to understand ticketing authority, know the main standard traffic documents used in the BSP system, issue a virtual MPD, provide refunds, understand document enquiries and accept credit card payments for commercial transactions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-documents-procedures-tttg45.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Back</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7489,6 +7854,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_IndustryEntrySuperior</shortDescription>
         <value>Entry industry date must be superior to birth date</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Intro_to_the_BSP_System_Language</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Intro_to_the_BSP_System_Language</shortDescription>
+        <value>Learn how the IATA Billing and Settlement Plan (BSP) works and how it benefits a travel agency. This course will enable travel agent users to describe the BSP system and how it works; explain the benefits of being a BSP travel agency; identify BSP participants and explain their roles; identify the steps in reporting airline ticket transactions; find information on BSP procedures; and learn common BSP terms and definitions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-system-language-tttg43.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlBSPlink_Description</fullName>
@@ -10477,6 +10850,20 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Apply_New_Office</shortDescription>
         <value>Apply for a New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</shortDescription>
+        <value>Apply for New Travel Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</shortDescription>
+        <value>Apply for New Cargo Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Apply_New_Travel_Head_Entity</fullName>
@@ -17864,7 +18251,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</shortDescription>
-        <value>According to Formula</value>
+        <value>Financial Security Amount Provided</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
@@ -19197,6 +19584,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Email</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOthers_Invalid_Contact</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Invalid Contact</shortDescription>
+        <value>This contact cannot be added because it belongs to another account</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CNS_Documents</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -20024,11 +20419,32 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Currency Center</value>
     </labels>
     <labels>
+        <fullName>ISSP_CurrencyCenterReportingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reporting Actions Page</shortDescription>
+        <value>ISSP_CurrencyCenterReportingActions</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CurrencyCenter_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CurrencyCenter_Description</shortDescription>
         <value>The IATA Currency Center is a new, dynamic, web based information tool that provides currency information from an economic, financial markets and IATA perspective for different set of countries. In this first version you will find information related to blocked funds countries and watch list  countries. The onboarding of all other countries will follow!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CurrencyCenter_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CurrencyCenter Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CurrencyCenter_Last_Updated_On</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CurrencyCenter Last Updated On</shortDescription>
+        <value>Last updated on</value>
     </labels>
     <labels>
         <fullName>ISSP_Currency_Filter</fullName>
@@ -20068,7 +20484,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CustomFooter_Small</shortDescription>
-        <value>© International Air Transport Association (IATA) 2017. All rights reserved.</value>
+        <value>© International Air Transport Association (IATA) 2019. All rights reserved.</value>
     </labels>
     <labels>
         <fullName>ISSP_DDS_BTN_OPTOIN</fullName>
@@ -21092,7 +21508,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>EmailsFailure</shortDescription>
-        <value>dev@balink.net</value>
+        <value>sfdcadmin@iata.org</value>
     </labels>
     <labels>
         <fullName>ISSP_Emergency_Support</fullName>
@@ -21268,6 +21684,147 @@ Please add below all your company valid email domains, including different ones 
         <value>Frequently Asked Questions</value>
     </labels>
     <labels>
+        <fullName>ISSP_FDS_AllCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountries</shortDescription>
+        <value>All Operational Calendars</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountriesWithServices</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountriesWithServices</shortDescription>
+        <value>All Countries where my airline participates</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_ChooseCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_ChooseCountries</shortDescription>
+        <value>All Operational Calendards for specific countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Countries</shortDescription>
+        <value>Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountriesSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountriesSelected</shortDescription>
+        <value>Selected Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountryName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountryName</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CustomFilterBtn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CustomFilterBtn</shortDescription>
+        <value>Multi-download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_DownloadOpts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_DownloadOpts</shortDescription>
+        <value>I want to download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FileFormat</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FileFormat</shortDescription>
+        <value>Format</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FillAllFields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FillAllFields</shortDescription>
+        <value>Please fill all mandatory filters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Filters</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Filters</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_NoResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_NoResults</shortDescription>
+        <value>No results for your search.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Operations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Operations</shortDescription>
+        <value>Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_OperationsSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_OperationsSelected</shortDescription>
+        <value>Selected Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_PopupTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_PopupTitle</shortDescription>
+        <value>Multi Calendar Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Remittance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Remittance</shortDescription>
+        <value>Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_RemittanceSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_RemittanceSelected</shortDescription>
+        <value>Selected Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_SelectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_SelectAll</shortDescription>
+        <value>Select All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_UnselectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_UnselectAll</shortDescription>
+        <value>Unselect All</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Fax</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -21385,6 +21942,30 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Type_Of_Participation</shortDescription>
         <value>Filter by type of participation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions</shortDescription>
+        <value>Insurance Providers</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Header</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
+        <value>Financial Institution Insurance Providers</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Subheader</shortDescription>
+        <value>The following Financial Institutions provide Financial Security Insurance in your country</value>
     </labels>
     <labels>
         <fullName>ISSP_Financial_Securities_Converted_Total_Amount</fullName>
@@ -22802,7 +23383,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>SALUTATION</value>
+        <value>Salutation</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_SECTOR</fullName>
@@ -23362,7 +23943,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CountryFilter</shortDescription>
-        <value>Country/ Teritory</value>
+        <value>Country/ Territory</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Country_Filter_Required</fullName>
@@ -23387,6 +23968,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_DownloadDate</shortDescription>
         <value>Download Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_DownloadWarning</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_DownloadWarning</shortDescription>
+        <value>This operation may take few minutes. Please wait.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_EnableFilters</fullName>
@@ -23745,7 +24334,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your password has now been changed. Please sign in again.</value>
+        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -23771,7 +24360,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <shortDescription>ISSP_Payment_Link_Description</shortDescription>
         <value>Payment Link can be used to pay IATA invoices by credit card.&lt;br/&gt;
 &lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
-Please note that many IATA invoices for accredited agents are collected through the BPS/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
+Please note that many IATA invoices for accredited agents are collected through the BSP/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Link_Description_CNS</fullName>
@@ -24158,6 +24747,84 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_ProductSubcategory</shortDescription>
         <value>Product Subcategory</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Agreement</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Agreement</shortDescription>
+        <value>Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_ApplicationProcessing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_ApplicationProcessing</shortDescription>
+        <value>Application Processing</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Application_Approved</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Application_Approved</shortDescription>
+        <value>Application Approved</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Application_Review</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Application_Review</shortDescription>
+        <value>Application Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_ChangeProcessing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_ChangeProcessing</shortDescription>
+        <value>Change Processing</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_FinalValidation</fullName>
+        <categories>ISSP: ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_FinalValidation</shortDescription>
+        <value>Final&lt;br/&gt;Validation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Financial_Security</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Financial_Security</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Payment</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Payment</shortDescription>
+        <value>Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_SanityCheck</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_SanityCheck</shortDescription>
+        <value>Sanity Check</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Submitted</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Submitted</shortDescription>
+        <value>Submitted</value>
     </labels>
     <labels>
         <fullName>ISSP_Public</fullName>
@@ -24775,6 +25442,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Related contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_Release_Version</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Release_Version</shortDescription>
+        <value>Release Version</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Relocate_Contact</fullName>
         <categories>ISSP, IFAP</categories>
         <language>en_US</language>
@@ -25074,8 +25749,15 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership AutoBilling Helptext</shortDescription>
-        <value>As part of this service, IS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis IS will generate a Revenue Recognition File (File Format defined in the IS Participation Guide) containing the billing records of coupons included in the Auto-Billing Invoices.
-The Auto-Billed invoices are automatically closed and finalized by IS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, IS generates an Invoice Posting File which includes details of all Auto-Billed invoices.</value>
+        <value>As part of this service, SIS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis SIS will generate a Revenue Recognition File containing the billing records of coupons included in the Auto-Billing Invoices.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_AutoBilling_Helptext2</fullName>
+        <categories>ISSP SIS Membership2</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership AutoBilling Helptext2</shortDescription>
+        <value>This Revenue Recognition File along with the optional ISR data is forwarded to the billing entity. SIS allows the billing entity to correct/update the values of the Auto-Billing invoices though the IS-WEB. Any update made on IS-WEB is reported back to the billing entity in the next Revenue Recognition File. The Auto-Billed invoices are automatically closed and finalized by SIS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, SIS generates an IS-IDEC file for the billing entity called Invoice Posting File which includes details of all Auto-Billed invoices. The billing entity can use it to carry out any account postings for such invoices within its Revenue Accounting/General Ledger System.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_BankMandateDescription</fullName>
@@ -25084,7 +25766,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_BankMandateDescription</shortDescription>
         <value>Download this document and upload a signed version:
- &lt;a target=&quot;#&quot; href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Bank-Details-Form.pdf&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
+ &lt;a target=&quot;#&quot; href=&quot;https://iata--c.eu12.content.force.com/servlet/servlet.FileDownload?file=0151r000005g5rF&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</fullName>
@@ -25140,7 +25822,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description ISPA</shortDescription>
-        <value>Joining SIS instantly connects you with more than 420 airlines and intermodal entities exchanging interline billing data electronically. SIS eliminates the paper from the interline billing and settlement processes increasing efficiency and reducing costs; it enables processing automation which helps reduce billing duplication and simplifies reconciliation.</value>
+        <value>Joining SIS instantly connects you with more than 420 airlines and intermodal entities exchanging interline billing data electronically. SIS eliminates the paper from the interline billing and settlement processes increasing efficiency and reducing costs; it enables processing automation which helps reduce billing duplication and simplifies reconciliation.
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/IS-Participation-Agreement.zip&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Description_ISUA</fullName>
@@ -25148,7 +25832,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description ISUA</shortDescription>
-        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(&lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Introduction_to_SIS.pdf&quot; target=&quot;_blank&quot;&gt;pdf&lt;/a&gt;)</value>
+        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(&lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Introduction_to_SIS.pdf&quot; target=&quot;_blank&quot;&gt;pdf&lt;/a&gt;)
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Standard_Participation_Agreement_for_SIS_e-Invoicing_Services-Non_transportation_ISUA.pdf&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Description_TOU</fullName>
@@ -25156,7 +25842,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
-        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;http://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xls&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.</value>
+        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xlsx&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Standard_Participation_Agreement_for_SIS_e-Invoicing_Services-Invoice_Receiver_TOU.pdf&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Digital_Signature_Application_Helptext</fullName>
@@ -25369,7 +26057,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Subtitle2</shortDescription>
-        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with A&amp;A, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®.</value>
+        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with &lt;a href=&quot;https://www.atpco.net/&quot; target=&quot;#&quot;&gt;A&amp;A&lt;/a&gt;, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®. Subscribers to these services are restricted to &lt;a href=&quot;https://www.atpco.net/&quot; target=&quot;#&quot;&gt;A&amp;A&lt;/a&gt; members only.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section4_Title</fullName>
@@ -25385,7 +26073,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</fullName>
@@ -25401,7 +26089,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Title</shortDescription>
-        <value>Section 5 - iiNET</value>
+        <value>Section 5</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</fullName>
@@ -25409,7 +26097,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</shortDescription>
-        <value>After this application is reviewed, we will provide the set of documents needed to complete you ICH membership</value>
+        <value>After this application is reviewed, we will provide the set of documents needed to complete your ICH membership</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section6_Title</fullName>
@@ -25521,7 +26209,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section2_Subtitle1</shortDescription>
-        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
+        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section2_Title</fullName>
@@ -25561,7 +26249,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</fullName>
@@ -25577,7 +26265,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Title</shortDescription>
-        <value>Section 4 - iiNET</value>
+        <value>Section 4</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</fullName>
@@ -25801,7 +26489,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_TOU_Section1_Subtitle1</shortDescription>
-        <value>Airline Head Office Information:</value>
+        <value>Head Office Information:</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_TOU_Section1_Subtitle2</fullName>
@@ -25809,7 +26497,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_TOU_Section1_Subtitle2</shortDescription>
-        <value>Airline Information to be included in the invoices produced by SIS</value>
+        <value>Information to be included in the invoices produced by SIS</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_TOU_Section1_Title</fullName>
@@ -25913,7 +26601,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Who_requested_to_join_TOU</shortDescription>
-        <value>Who requested your Company to join SIS as TOU?</value>
+        <value>Who requested your Company to join SIS as Invoice Receiver?</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Your_Current</fullName>
@@ -27603,6 +28291,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Submission of the documents successfully completed!</value>
     </labels>
     <labels>
+        <fullName>Industry_Activities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Industry_Activities</shortDescription>
+        <value>Industry Activities</value>
+    </labels>
+    <labels>
         <fullName>InputRequiredMessage</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -28721,6 +29416,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Last name</value>
     </labels>
     <labels>
+        <fullName>Line_of_Business_LoB</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Line of Business (LoB)</shortDescription>
+        <value>Line of Business (LoB)</value>
+    </labels>
+    <labels>
         <fullName>LiveAgentButtonLanguage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28967,6 +29669,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Add</value>
     </labels>
     <labels>
+        <fullName>MultiselectPicklist_AddAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_AddAll</shortDescription>
+        <value>Add All</value>
+    </labels>
+    <labels>
         <fullName>MultiselectPicklist_Down</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28979,6 +29688,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>MultiselectPicklist_Remove</shortDescription>
         <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_RemoveAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_RemoveAll</shortDescription>
+        <value>Remove All</value>
     </labels>
     <labels>
         <fullName>MultiselectPicklist_Up</fullName>
@@ -28994,6 +29710,29 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>My_Renewals</shortDescription>
         <value>Renewals &gt; Publications</value>
+    </labels>
+    <labels>
+        <fullName>NEW_HO_SanityCheck</fullName>
+        <categories>NEW_HO_SanityCheck</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NEW_HO_SanityCheck</shortDescription>
+        <value>Sanity Check</value>
+    </labels>
+    <labels>
+        <fullName>NEW_HO_Submitted</fullName>
+        <categories>NEW_HO_Submitted</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NEW_HO_Submitted</shortDescription>
+        <value>Submitted</value>
+    </labels>
+    <labels>
+        <fullName>NDC_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NDC Troubleshooting</shortDescription>
+        <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
         <fullName>New</fullName>
@@ -29137,6 +29876,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No special characters</shortDescription>
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
+    </labels>
+    <labels>
+        <fullName>Not_Applicable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not Applicable</shortDescription>
+        <value>Not Applicable</value>
     </labels>
     <labels>
         <fullName>Notions_Essentl_Tarif_Billet_Description</fullName>
@@ -29373,7 +30119,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_0</shortDescription>
-        <value>BETA AGREEMENT</value>
+        <value>USER AGREEMENT</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_1</fullName>
@@ -29381,7 +30127,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_1</shortDescription>
-        <value>By clicking &quot;I have read and accept the Terms and Conditions of Use&quot; or accessing the FRED+ System, you (&quot;User&quot;) agree to enter into a legally binding agreement with the International Air Transport Association (&quot;IATA&quot;) requiring you to abide by the provisions contained in this agreement (&quot;Beta Agreement&quot;).  If you do not agree to the terms contained herein, do not click that you accept and do not access or otherwise use any of the services related to the FRED+ System.</value>
+        <value>By clicking &quot;I have read and accept the Terms and Conditions of Use&quot; or accessing the FRED+ System, you (&quot;User&quot;) agree to enter into a legally binding agreement with the International Air Transport Association (&quot;IATA&quot;) on the terms specified in this agreement (&quot;Agreement&quot;).  If you do not agree to the terms contained herein, do not click that you accept and do not access or otherwise use any of the services related to the FRED+ System.  IATA reserves the right to amend this Agreement from time to time.  User&apos;s continued use of the System following amendments means User has consented to these amendments.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_10</fullName>
@@ -29389,7 +30135,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_10</shortDescription>
-        <value>ARTICLE 2	BETA DISCLAIMER</value>
+        <value>1.2	This Agreement shall commence from the time that User is granted access to the System and first accesses the System via an authorised employee or representative. The term of the Agreement shall be taken to continue indefinitely until such time as it is terminated or otherwise comes to an end in accordance with law.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_11</fullName>
@@ -29397,7 +30143,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_11</shortDescription>
-        <value>2.1	The User accepts and acknowledges the System is not a finished product and may contain defects, design flaws, and other functional problems.  IATA will not be held responsible for any data that is uploaded onto the System and subsequently lost or destroyed.</value>
+        <value>ARTICLE 2	USE OF THE SYSTEM</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_12</fullName>
@@ -29405,7 +30151,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_12</shortDescription>
-        <value>2.2	The User accepts and acknowledges that at the conclusion of the Beta Period, all data uploaded by the User onto the System will be deleted from the System, and IATA will not be responsible for storing, preserving, or otherwise making this data available for recovery by the User.</value>
+        <value>2.1	IATA grants User access to the System on a complimentary basis by making available one or more accounts for User. Access is granted to User at IATA&apos;s sole discretion and IATA reserves the right to terminate or suspend accounts.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_13</fullName>
@@ -29413,7 +30159,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_13</shortDescription>
-        <value>ARTICLE 3	NO WARRANTY</value>
+        <value>2.2	User shall access the System using electronic credentials issued by IATA for its account(s).</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_14</fullName>
@@ -29421,7 +30167,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_14</shortDescription>
-        <value>3.1	The System and all of its components are provided &quot;as is&quot; and &quot;as available without any warranty, representation or conditions whatsoever, express or implied.</value>
+        <value>2.3	User shall be solely responsible for ensuring any individual(s) who access the System through User&apos;s account are authorised to act on behalf and bind User, and User accepts all responsibility for any actions taken by such individual(s) in relation to the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_15</fullName>
@@ -29429,7 +30175,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_15</shortDescription>
-        <value>TO THE MAXIMUM EXTENT ALLOWED UNDER APPLICABLE LEGISLATION, IATA DISCLAIMS ANY WARRANTY, REPRESENTATION OR CONDITION, EXPRESS OR IMPLIED, IN RESPECT OF THE SYSTEM AND ITS COMPONENTS, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES, REPRESENTATIONS, CONDITIONS AND WARRANTIES OF QUALITY, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.</value>
+        <value>2.4	When using the System, User shall be entitled to access and use the information therein for the Purpose only.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_16</fullName>
@@ -29437,7 +30183,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_16</shortDescription>
-        <value>WITHOUT LIMITING THE GENERALITY OF THE FOREGOING, IATA DOES NOT REPRESENT, NOR WARRANT, THAT THE SYSTEM WILL BE UNINTERRUPTED OR ERROR FREE, THAT ANY DEFICIENCIES WILL BE CORRECTED, OR THAT THE SERVER, THE SYSTEMS OR THE NETWORK UNDERLYING SAME ARE, OR WILL BE, FREE FROM VIRUSES OR OTHER HARMFUL COMPONENTS. IATA DOES NOT MAKE ANY WARRANTY OR REPRESENTATION CONCERNING THE CONTENT, USER CONTENT OR ANY OTHER INFORMATION, DATA OR OTHER ITEMS OFFERED BY WAY OF THE SYSTEM, INCLUDING WITHOUT LIMITATION, WITH RESPECT TO THE CORRECTNESS, ACCURACY, COMPLIANCE, USEFULNESS, RELIABILITY OR ANY OTHER QUALITY THEREOF. IATA UNDERTAKES NO OBLIGATION TO CONTINUE TO MAINTAIN THE SYSTEM IN OPERATION OR TO PRODUCE NEW VERSIONS OF, OR IMPROVEMENTS TO, THE SYSTEM.</value>
+        <value>2.5	The System shall be accessible by User 24 hours per day, 365 days per year, subject to scheduled down time, necessary support and maintenance or the occurrence of any force majeure event.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_17</fullName>
@@ -29445,7 +30191,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_17</shortDescription>
-        <value>3.2	The User expressly acknowledges and agrees that its use of the System is at its own risk and that IATA shall not be liable for any errors, deficiencies or omissions in connection with the use of the System. In particular, the User has sole responsibility for adequate protection and backup of data and equipment used in connection with the System and will not make a claim against IATA for lost data, re-run time, inaccurate output, work delays or lost profits resulting from the use of the System. IATA also bears no responsibility for exposed User data in case of theft or loss of the computer equipment or mobile device used to access the System.</value>
+        <value>2.6	User and other third parties shall not without the prior written permission of IATA:</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_18</fullName>
@@ -29453,7 +30199,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_18</shortDescription>
-        <value>3.3	Any material downloaded or otherwise obtained through the System is done at the User&apos;s own discretion and risk, and the User is solely responsible for any damage to its computer system or other equipment, or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by the User from IATA or through the System will create any warranty not expressly stated in this Beta Agreement.</value>
+        <value>(a)	Re-sell, make mass, automated or systematic extractions from, or otherwise transfer to any other person or organisation, the System or information contained therein;</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_19</fullName>
@@ -29461,7 +30207,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_19</shortDescription>
-        <value>ARTICLE 4	LIMITATION OF LIABILITY</value>
+        <value>(b)	Store information from the System in such a manner that enables such stored information to be retrieved, manually, mechanically or systematically by any third party; or include it within, or merge it with, or permit such inclusion in or merger with, another archival or searchable system;</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_2</fullName>
@@ -29469,7 +30215,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_2</shortDescription>
-        <value>Terms and Conditions</value>
+        <value>FRED+ System Terms of Use</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_20</fullName>
@@ -29477,7 +30223,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_20</shortDescription>
-        <value>4.1	To the maximum extent allowed under applicable legislation, and except for damages related to physical prejudice resulting from an intentional or gross fault, or damages resulting from bodily or moral prejudice, IATA does not undertake any liability towards the User or any other person with respect to direct, indirect, incidental, special, consequential, punitive, or exemplary damages, including but not limited to, damages for loss of profits, revenue, goodwill, use, data, electronically transmitted orders, or other economic advantage resulting or arising from access to, use of, or inability to use, the System or its components, even if IATA is advised of the possibility of such damages or even if such damages are reasonably foreseeable.</value>
+        <value>(c)	Make use of any kind of device or application that enables retrieval of previously accessed information from the System without the need for access; and</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_21</fullName>
@@ -29485,7 +30231,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_21</shortDescription>
-        <value>4.2	Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, and accordingly some of the above limitations or exclusions may not apply to a specific User.</value>
+        <value>(d)	Advertise, report, or distribute to any third party the information generated by the System, including but not limited to, any reports generated by the benchmarking functions of the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_22</fullName>
@@ -29493,7 +30239,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_22</shortDescription>
-        <value>ARTICLE 5	PRIVACY POLICY</value>
+        <value>ARTICLE 3	REPRESENTATIONS, WARRANTIES, DISCLAIMERS AND LIMITATION OF LIABILITY</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_23</fullName>
@@ -29501,7 +30247,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_23</shortDescription>
-        <value>5.1	The User accepts and acknowledges that IATA&apos;s Privacy Policy (found at https://www.iata.org/Pages/privacy.aspx) applies to the System, and by signing the Beta Agreement the User agrees to be bound by the terms contained therein.</value>
+        <value>3.1	User represents and warrants that User has the right to transmit any data User uploads onto the System, and in respect to the reporting functionality contained within the System, that User has the appropriate authority to submit, view, and/or transfer the respective data as applicable.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_24</fullName>
@@ -29509,7 +30255,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_24</shortDescription>
-        <value>ARTICLE 6	CONFIDENTIALITY</value>
+        <value>3.2	In the event a User uploads, submits, or transmits data onto the System on behalf of an affiliated entity, including but not limited to a subsidiary or group company, User represents and warrants that User has the appropriate legal authority to do so.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_25</fullName>
@@ -29517,7 +30263,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_25</shortDescription>
-        <value>6.1	The User will not disclose to a third party any data contained on the System or any comments regarding the System without the prior written approval of IATA.  The User will maintain the confidentiality of the System and any data contained therein with at least the same degree of care the User uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
+        <value>3.3	The System and all of its components are provided &quot;as is&quot; and as available without any warranty, representation or conditions whatsoever, express or implied.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_26</fullName>
@@ -29525,7 +30271,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_26</shortDescription>
-        <value>6.2	IATA will not disclose to a third party any User data contained on the System or any comments regarding the information uploaded by the User onto the System without the User&apos;s prior written approval.  IATA will maintain the confidentiality of the System and any data contained therein with at least the same degree of care that IATA uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
+        <value>TO THE MAXIMUM EXTENT ALLOWED UNDER APPLICABLE LEGISLATION, IATA DISCLAIMS ANY WARRANTY, REPRESENTATION OR CONDITION, EXPRESS OR IMPLIED, IN RESPECT OF THE SYSTEM AND ITS COMPONENTS, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES, REPRESENTATIONS, CONDITIONS AND WARRANTIES OF QUALITY, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_27</fullName>
@@ -29533,7 +30279,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_27</shortDescription>
-        <value>ARTICLE 7	IP RIGHTS</value>
+        <value>WITHOUT LIMITING THE GENERALITY OF THE FOREGOING, IATA DOES NOT REPRESENT, NOR WARRANT, THAT THE SYSTEM WILL BE UNINTERRUPTED OR ERROR FREE, THAT ANY DEFICIENCIES WILL BE CORRECTED, OR THAT THE SERVER, THE SYSTEMS OR THE NETWORK UNDERLYING SAME ARE, OR WILL BE, FREE FROM VIRUSES OR OTHER HARMFUL COMPONENTS. IATA DOES NOT MAKE ANY WARRANTY OR REPRESENTATION CONCERNING THE CONTENT, USER CONTENT OR ANY OTHER INFORMATION, DATA OR OTHER ITEMS OFFERED BY WAY OF THE SYSTEM, INCLUDING WITHOUT LIMITATION, WITH RESPECT TO THE CORRECTNESS, ACCURACY, COMPLIANCE, USEFULNESS, RELIABILITY OR ANY OTHER QUALITY THEREOF. IATA UNDERTAKES NO OBLIGATION TO CONTINUE TO MAINTAIN THE SYSTEM IN OPERATION OR TO PRODUCE NEW VERSIONS OF, OR IMPROVEMENTS TO, THE SYSTEM.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_28</fullName>
@@ -29541,7 +30287,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_28</shortDescription>
-        <value>7.1	IATA owns and operates the System.  During the Beta Period, and subject to the terms and conditions of these Terms of Use, IATA grants to the User a non-exclusive, personal, non-assignable, non-transferrable, non-sublicensable license to access and use the System.  Except for the rights specifically granted hereinabove to the User, this does not transfer to the User any right (of ownership or otherwise) in or to the System, or any of the services or information accessible thereon. As between the User and IATA, IATA shall be considered the sole and exclusive owner of all components of the System. Any improvements, developments, modifications, changes, supplements, augmentations or works that may be derived from, created or otherwise made by the User in connection with the System shall be the exclusive property of IATA and the User hereby irrevocably and forever assigns to IATA all of his or her worldwide right, title and interest in and to same.</value>
+        <value>3.4	IATA makes no representation or warranty as to the accuracy or completeness of any data uploaded onto the System, or to the continued availability of data contained therein, and does not accept responsibility for any act, interpretation, opinion, or conclusion that User or any party authorised to view the data may form as a result of examining the data contained within the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_29</fullName>
@@ -29549,7 +30295,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_29</shortDescription>
-        <value>For greater certainty, the license granted to the User under the preceding paragraph shall not grant to the User any license or right to use names, words, titles, logos, slogans, graphics or designs that constitute trademarks, service marks or trade names, and which are made available in connection with the System (collectively, the &quot;Marks&quot;), regardless of whether such Marks are the property of IATA or of third parties, without the prior written consent of IATA.</value>
+        <value>3.5	User expressly acknowledges and agrees that its use of the System is at its own risk and that IATA shall not be liable for any errors, deficiencies or omissions in connection with the use of the System. In particular, User has sole responsibility for adequate protection and backup of data and equipment used in connection with the System and will not make a claim against IATA for lost data, re-run time, inaccurate output, work delays or lost profits resulting from the use of the System. IATA also bears no responsibility for exposed User data in case of theft or loss of the computer equipment or mobile device used to access the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_3</fullName>
@@ -29557,7 +30303,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_3</shortDescription>
-        <value>I.	IATA has developed the FRED+ System (the &quot;System&quot;) for use by airline operators, regulators, and authorized verifiers to fulfill their CORSIA reporting requirements.</value>
+        <value>WHEREAS</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_30</fullName>
@@ -29565,7 +30311,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_30</shortDescription>
-        <value>ARTICLE 8	TERMINATION</value>
+        <value>3.6	Any material downloaded or otherwise obtained through the System is done at User&apos;s own discretion and risk, and User is solely responsible for any damage to its computer system or other equipment, or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by User from IATA or through the System will create any warranty not expressly stated in this Agreement.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_31</fullName>
@@ -29573,7 +30319,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_31</shortDescription>
-        <value>8.1	Both parties reserve the right, at their sole discretion, to terminate the Beta Agreement at any time by providing the other party written notice.  Notification by email will be considered sufficient written notice under this Beta Agreement.</value>
+        <value>3.7	TO THE MAXIMUM EXTENT ALLOWED UNDER APPLICABLE LEGISLATION, IATA DISCLAIMS ANY LIABILITY TOWARDS USER OR ANY OTHER PERSON WITH RESPECT TO DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO, DAMAGES FOR LOST PROFITS, REVENUE, GOODWILL, USE, DATA, ELECTRONICALLY TRANSMITTED ORDERS, OR OTHER ECONOMIC ADVANTAGE RESULTING OR ARISING FROM ACCESS TO, USE OF, OR INABILITY TO USE THE SYSTEM OR ITS COMPONENTS, EVEN IF IATA IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES OR EVEN IF SUCH DAMAGES ARE REASONABLY FORESEEABLE.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_32</fullName>
@@ -29581,7 +30327,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_32</shortDescription>
-        <value>ARTICLE 9	CHANGES</value>
+        <value>3.8	User accepts and acknowledges that User remains solely responsible for its reporting obligations under CORSIA and applicable national law, and IATA assumes no liability in the event data submissions are in any way interrupted, disrupted, or unavailable through the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_33</fullName>
@@ -29589,7 +30335,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_33</shortDescription>
-        <value>9.1	IATA may modify this Beta Agreement and its Privacy Policy from time to time.  If any material changes are made, IATA will provide the User notice through the System or through other means. The User will have the opportunity to review the changes before they become effective.  If the User objects to any changes, the User may close its account and cease to access the System.  The User&apos;s continued use of the System after receiving notice about any changes to these terms means that the User has consented to the updated terms.</value>
+        <value>ARTICLE 4	DATA SECURITY</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_34</fullName>
@@ -29597,7 +30343,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_34</shortDescription>
-        <value>ARTICLE 10	ENTIRE AGREEMENT</value>
+        <value>4.1	IATA will store and process the data uploaded onto the System and may use the services of a contractor or partner to do so. IATA will require that appropriate security measures be established and maintained by any contractor or partner maintaining the database(s) containing User data to safeguard against unauthorised access of User data by third parties.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_35</fullName>
@@ -29605,7 +30351,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_35</shortDescription>
-        <value>10.1	This Beta Agreement constitutes the entire and only agreement between the parties regarding the System and all other prior negotiations, representations, agreements, and understandings are superseded hereby. No agreements altering or supplementing the terms hereof may be made except by means of a written document signed by the duly authorized representatives of the parties.</value>
+        <value>ARTICLE 5	PRIVACY POLICY</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_36</fullName>
@@ -29613,7 +30359,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_36</shortDescription>
-        <value>ARTICLE 11	APPLICABLE LAW</value>
+        <value>5.1	User accepts and acknowledges that IATA&apos;s Privacy Policy (located at https://www.iata.org/Pages/privacy.aspx) applies to the System, and by signing this Agreement, User agrees to be bound by the terms contained therein.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_37</fullName>
@@ -29621,7 +30367,23 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_37</shortDescription>
-        <value>11.1	The validity, interpretation, construction and performance of this Beta Agreement shall be governed by and construed in accordance with the laws of England and Wales.  The courts of these jurisdictions shall have exclusive jurisdiction over any judicial proceedings arising directly or indirectly from, or associated with, the use of the System.</value>
+        <value>ARTICLE 6	CONFIDENTIALITY</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_38</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_38</shortDescription>
+        <value>6.1	Except as required to fulfill the Purpose, User will not disclose to a third party any data contained on the System without the prior written approval of IATA.  User will maintain the confidentiality of the System and any data contained therein with at least the same degree of care User uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_39</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_39</shortDescription>
+        <value>6.2	Except as required to fulfill the Purpose, IATA will not disclose to a third party any User data contained on the System without the User&apos;s prior written approval, unless the data has been de-identified and is disclosed in an aggregated format.  IATA will maintain the confidentiality of the System and any data contained therein with at least the same degree of care that IATA uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_4</fullName>
@@ -29629,7 +30391,87 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_4</shortDescription>
-        <value>II.	Prior to its general release, IATA seeks to grant the User access to the System to explore the functionality of the System and help to identify any possible areas of improvement within the System.</value>
+        <value>IATA has developed the FRED+ System (the &quot;System&quot;) for use by aircraft operators, regulators and authorised verifiers to fulfill their CORSIA requirements and related reporting and administrative requirements (the &quot;Purpose&quot;);</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_40</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_40</shortDescription>
+        <value>ARTICLE 7	INTELLECTUAL PROPERTY RIGHTS</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_41</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_41</shortDescription>
+        <value>7.1	IATA owns, or is otherwise entitled to use and sub-licence, the System and hereby reserves to itself all Intellectual Property Rights in the System.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_42</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_42</shortDescription>
+        <value>7.2	IATA grants to User a non-exclusive, non-assignable, non-transferrable, non-sublicensable license to access and use the System.  Except for the rights specifically granted hereinabove to User, this does not transfer to User any right (of ownership or otherwise) in or to the System, or any of the services or information accessible thereon.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_43</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_43</shortDescription>
+        <value>7.3	Any improvements, developments, modifications, changes, supplements, augmentations or works that may be derived from, created or otherwise made by User in connection with the System shall be the exclusive property of IATA and User hereby irrevocably and forever assigns to IATA all of his or her worldwide right, title and interest in and to same. IATA reserves the right to use de-identified and aggregated data from the System for the purpose of improvements to the functionality of the System and for the delivery of related industry products and services. User hereby irrevocably assigns to IATA its worldwide right, title and interest to and in this data.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_44</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_44</shortDescription>
+        <value>7.4	The license granted to User under this Article shall not grant to User any license or right to use names, words, titles, logos, slogans, graphics or designs that constitute trademarks, service marks or trade names, and which are made available in connection with the System (collectively, the &quot;Marks&quot;), regardless of whether such Marks are the property of IATA or of third parties, without the prior written consent of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_45</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_45</shortDescription>
+        <value>ARTICLE 8	TERMINATION</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_46</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_46</shortDescription>
+        <value>8.1	Both parties reserve the right, at their sole discretion, to terminate the Agreement at any time by providing the other party thirty days (30) written notice.  Notification by email will be considered sufficient written notice under this Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_47</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_47</shortDescription>
+        <value>8.2	Either party may terminate the Agreement immediately by written notice if either shall become insolvent, be declared bankrupt or shall enter into any liquidation proceedings (other than for the purpose of reconstruction or amalgamation).</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_48</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_48</shortDescription>
+        <value>8.3	IATA reserves the right at its sole discretion to temporarily suspend User&apos;s access to the System at any time without prior notice.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_49</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_49</shortDescription>
+        <value>ARTICLE 9	AMENDMENTS</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_5</fullName>
@@ -29637,7 +30479,87 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_5</shortDescription>
-        <value>III.	The User wishes to serve as a beta tester for the System.</value>
+        <value>User wishes to use the System for the Purpose;</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_50</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_50</shortDescription>
+        <value>9.1	IATA may amend this Agreement and its Privacy Policy from time to time.  If amendments are made, IATA will provide User notice through the System or through other means. If User does not consent to any of these amendments, User may close its account and cease to access the System. User&apos;s continued use of the System following amendment to these terms means that User has agreed to the amendment(s).</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_51</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_51</shortDescription>
+        <value>ARTICLE 10	ENTIRE AGREEMENT</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_52</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_52</shortDescription>
+        <value>10.1	This Agreement constitutes the entire and only agreement between the parties regarding the System and all other prior negotiations, representations, agreements, and understandings are superseded hereby.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_53</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_53</shortDescription>
+        <value>ARTICLE 11	APPLICABLE LAW AND FORUM</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_54</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_54</shortDescription>
+        <value>11.1	This Agreement is construed under and shall be governed by the laws of England.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_55</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_55</shortDescription>
+        <value>11.2	If any dispute arises out of, or in connection with the performance of this Agreement, the parties shall endeavour to settle the same amicably. In the event that such amicable solution is not possible, the dispute shall be settled by the competent court in England. The courts of England shall have exclusive jurisdiction.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_56</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_56</shortDescription>
+        <value>ARTICLE 12	GENERAL</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_57</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_57</shortDescription>
+        <value>12.1	Neither party shall assign this Agreement or its respective rights and obligations under this Agreement without the prior written consent of the other party.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_58</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_58</shortDescription>
+        <value>12.2	The failure by either party at any time to require performance by the other party&apos;s rights to require such performance at any time thereafter.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_59</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_59</shortDescription>
+        <value>12.3	If any term, or provision of this Agreement shall be held illegal, unenforceable, or in conflict with any law of a government having jurisdiction over this Agreement, the validity of the remaining portions or provisions of the Agreement shall not be affected thereby and shall remain in force.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_6</fullName>
@@ -29645,7 +30567,47 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_6</shortDescription>
-        <value>THE PARTIES AGREE AS FOLLOWS:</value>
+        <value>IATA wishes to make the System available for use subject to this Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_60</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_60</shortDescription>
+        <value>12.4	The performance of this Agreement by either party is subject to circumstances beyond the parties&apos; reasonable control, including, not limited to, war, government regulations that were not foreseeable at the time this Agreement was entered into, disaster, epidemics, terrorist acts or other emergencies making it impractical, illegal, or impossible for a party to perform its obligations under this Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_61</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_61</shortDescription>
+        <value>12.5	Words importing the singular shall include the plural and vice versa.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_62</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_62</shortDescription>
+        <value>12.6	The headings of Sections are for convenience only and shall not be used to interpret provisions of this Agreement or otherwise affect the substantive provisions.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_63</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_63</shortDescription>
+        <value>ARTICLE 13	PRIORITY</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_64</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_64</shortDescription>
+        <value>13.1	In the event any terms contained in this Agreement conflict with the terms contained in IATA&apos;s General Terms of Use for its public website (located at https://www.iata.org/Pages/terms.aspx), the terms contained in this Agreement will govern.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_7</fullName>
@@ -29653,7 +30615,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_7</shortDescription>
-        <value>ARTICLE 1	TERM AND SCOPE</value>
+        <value>THE PARTIES AGREE AS FOLLOWS:</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_8</fullName>
@@ -29661,7 +30623,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_8</shortDescription>
-        <value>1.1	IATA grants the User a non-exclusive, non-transferable license to access the System during the beta stage which will conclude on 31 December 2018 (the &quot;Beta Period&quot;) subject to the provisions below.</value>
+        <value>ARTICLE 1	TERM AND SCOPE</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_9</fullName>
@@ -29669,7 +30631,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_9</shortDescription>
-        <value>1.2	In consideration for receiving access to the System, the User agrees to provide general feedback to IATA regarding the overall performance of the System.</value>
+        <value>1.1	IATA grants User a non-exclusive, non-transferable license to access the System subject to this Agreement. In consideration for access to the System, User agrees to abide by the terms of the Agreement.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_Of_Use_Link</fullName>
@@ -29694,6 +30656,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
         <value>https://fred.iata.org/contact</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_URL</shortDescription>
+        <value>Your password has now been changed. Please go to &lt;a href=&quot;https://fred.iata.org&quot;&gt; FRED.iata.org&lt;/a&gt; to sign in again.</value>
     </labels>
     <labels>
         <fullName>OneId_ForgotPassword</fullName>
@@ -29825,7 +30794,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISSP_Troubleshooting_Link</shortDescription>
-        <value>https://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting</value>
+        <value>https://portal.iata.org/faq/articles/en_US/FAQ/Customer-Portal-Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_International_Air_Transport_Association_IATA</fullName>
@@ -29924,6 +30893,34 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <protected>false</protected>
         <shortDescription>OneId_My available applications</shortDescription>
         <value>My available applications</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Sharepoint_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
+        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Terms_Of_Use_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Terms_Of_Use_Link</shortDescription>
+        <value>http://identity.iata.org/servlet/servlet.FileDownload?file=0151r0000066GgB</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting</shortDescription>
+        <value>Online Help</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting_Link</shortDescription>
+        <value>/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
         <fullName>OneId_Name</fullName>
@@ -30346,12 +31343,35 @@ Please check your mailbox to finalize the registration process.</value>
         <value>Your request has been successfully sent</value>
     </labels>
     <labels>
+        <fullName>OneId_dataprivacy_Troubleshooting</fullName>
+        <categories>One Identity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Text for link tor online help on OneIdentity login page for data privacy portal</shortDescription>
+        <value>Online Help</value>
+    </labels>
+    <labels>
+        <fullName>OneId_dataprivacy_Troubleshooting_Link</fullName>
+        <categories>One Identity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link on online help link in One Identity login page for data privacy portal</shortDescription>
+        <value>https://www.iata.org/pages/contact.aspx</value>
+    </labels>
+    <labels>
         <fullName>Oneid_request_acess_to_a_new_service</fullName>
         <categories>Oneid</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Oneid_request_acess_to_a_new_service</shortDescription>
         <value>REQUEST ACCESS TO A NEW SERVICE</value>
+    </labels>
+    <labels>
+        <fullName>Only_Allow_Broadcast_Tool_for_IATA_Members</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Only Allow Broadcast Tool for IATA Members</shortDescription>
+        <value>The chatter broadcast tool is only available for IATA Member Airlines.</value>
     </labels>
     <labels>
         <fullName>Only_one_subscription_can_be_purchased</fullName>
@@ -33350,5 +34370,44 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_GDPR_URL</shortDescription>
+        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/gdprportal</value>
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_White_Logo</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA GDPR White Logo</shortDescription>
+        <value>https://iata--gdprsalim--c.cs106.content.force.com/servlet/servlet.ImageServer?id=0150D000000EJAd&amp;oid=00D0D0000000PrE&amp;lastMod=1547018185000</value>
+    </labels>
+     <labels>
+        <fullName>TECH_GDPR_Community_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of the GDPR community in the URL</shortDescription>
+        <value>dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Network_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
+        <value>Data Privacy</value>
+    </labels>
+    <labels>
+        <fullName>OneId_URL_To_GDPR</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_URL_To_GDPR</shortDescription>
+        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/identity/s/login/?language=en_US&amp;serviceName=GDPR</value>
     </labels>
 </CustomLabels>

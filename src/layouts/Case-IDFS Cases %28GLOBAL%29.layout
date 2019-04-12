@@ -9,6 +9,33 @@
     <customConsoleComponents>
         <subtabComponents>
             <containers>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
+                <region>Right</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Editing</label>
+                    <page>dgAI2__DG_OnDemandCase</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Portal</label>
+                    <page>dgec__DG_WelcomeEmailPromts</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Chat</label>
+                    <page>dglc__DG_LiveChat</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Suggestion</label>
+                    <page>DG_ProposedTemplate</page>
+                </sidebarComponents>
+                <style>Accordion</style>
+                <unit>Pixel</unit>
+                <width>300</width>
+            </containers>
+            <containers>
                 <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
                 <region>Left</region>
                 <sidebarComponents>
@@ -38,6 +65,13 @@
         <editHeading>false</editHeading>
         <label>Description Information</label>
         <layoutColumns>
+            <layoutItems>
+                <height>45</height>
+                <page>DetailPageMessageClassicCase</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>50%</width>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Case_Remarks__c</field>
@@ -550,7 +584,7 @@
     <showEmailCheckbox>true</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
-    <showKnowledgeComponent>true</showKnowledgeComponent>
+    <showKnowledgeComponent>false</showKnowledgeComponent>
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>

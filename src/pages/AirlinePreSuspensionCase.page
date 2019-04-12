@@ -47,7 +47,9 @@
                 <apex:inputField value="{!asrecord.ICH_participant__c}" required="true" rendered="{!IF(mode=='edit', true, false)}" />
                 <apex:outputField value="{!asrecord.ICH_participant__c}" rendered="{!IF(mode=='edit', false, true)}" />
 
-                <apex:inputField value="{!asrecord.Participates_in_IATA_Governance_Groups__c}" required="true" rendered="{!IF(mode=='edit', true, false)}" />
+                <apex:selectList value="{!asrecord.Participates_in_IATA_Governance_Groups__c}" size="5" multiselect="true" rendered="{!mode=='edit'}">
+                    <apex:selectOptions value="{!GroupNamesOptions}"/>
+                </apex:selectList>
                 <apex:outputField value="{!asrecord.Participates_in_IATA_Governance_Groups__c}" rendered="{!IF(mode=='edit', false, true)}" />
 
             </apex:pageBlockSection>

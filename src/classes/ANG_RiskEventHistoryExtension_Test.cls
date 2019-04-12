@@ -55,8 +55,8 @@ public class ANG_RiskEventHistoryExtension_Test {
 
 	static testmethod void testPageInitialization(){
  	// tests the page construction and paginator reset/initializing
-		Account acc1 = [SELECT Id,Location_Type__c FROM Account WHERE Name ='acc1'];
-		Account acc2 = [SELECT Id,Location_Type__c FROM Account WHERE Name ='acc2'];
+		Account acc1 = [SELECT Id,Location_Type__c,ANG_Accreditation_Model__c FROM Account WHERE Name ='acc1'];
+		Account acc2 = [SELECT Id,Location_Type__c,ANG_Accreditation_Model__c FROM Account WHERE Name ='acc2'];
 
 		generateRiskEvent(acc1.Id,[SELECT Id FROM ANG_Risk_Event_Type__c WHERE Name = 'Risk Type 1'].Id, System.today(),[SELECT Id FROM Case limit 1].Id);
 

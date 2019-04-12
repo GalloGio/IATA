@@ -8,7 +8,7 @@ public class ANG_UserProvisioningRequestHandler {
 	public ANG_UserProvisioningRequestHandler() {}
 
 	public void onAfterUpdate() {
-		checkIataEasyPayUserProvisioning();
+		checkUserProvisioning();
 	}
 
 	/*public void onAfterInsert() {
@@ -16,15 +16,15 @@ public class ANG_UserProvisioningRequestHandler {
 	}*/
 
 	//
-	// Find all failing EasyPay Provisioning request and delete their portal service access requests (Status = "Access requested")
+	// Find all failing EasyPay or GDI Provisioning request and delete their portal service access requests (Status = "Access requested")
 	//
-	public void checkIataEasyPayUserProvisioning() {
+	public void checkUserProvisioning() {
 
 		Set<String> connectedAppRoles = new Set<String>();
 		Set<String> iepNames = new Set<String>();
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {	
-			if(role.Connected_App__c != null && role.Connected_App__c.contains('IATA EasyPay')) {
+			if(role.Connected_App__c != null && (role.Connected_App__c.contains('IATA EasyPay') || role.Connected_App__c.contains('Global Default Insurance (GDI)'))) {
 				connectedAppRoles.add(role.Connected_App_Provisioning_Name__c);
 				iepNames.add(role.Connected_App__c);
 			}
@@ -47,7 +47,8 @@ public class ANG_UserProvisioningRequestHandler {
         List<Portal_Application_Right__c> parList = [Select id,
         												    contact__c,
         												    Application_Name__c,
-        												    ANG_Portal_Service_Role__c
+        												    ANG_Portal_Service_Role__c,
+        												    Right__c
                                                        From Portal_Application_Right__c 
                                                       Where contact__c in : contactsIds 
                                                         and Application_Name__c in : iepNames
@@ -63,6 +64,7 @@ public class ANG_UserProvisioningRequestHandler {
 			}
 
 			List<Portal_Application_Right__c> parToDelete = new List<Portal_Application_Right__c>();
+			List<Portal_Application_Right__c> parToUpdate = new List<Portal_Application_Right__c>();
 			List<ISSP_Web_Service_Log__c> logs = new List<ISSP_Web_Service_Log__c>();
 
 			for(UserProvisioningRequest newUp : triggerNew) {
@@ -74,10 +76,16 @@ public class ANG_UserProvisioningRequestHandler {
 											  newUp.Id));
 
 					parToDelete.add(parMap.get(userContact.get(newUp.SalesforceUserId)+newUp.AppName));
+				} else if (connectedAppRoles.contains(newUp.AppName) && newUp.State == 'Completed' && oldMap.get(newUp.Id) != null && oldMap.get(newUp.Id).State != 'Completed') {
+					if (newUp.AppName == 'ANG GDI User Provisioning') {
+						parMap.get(userContact.get(newUp.SalesforceUserId) + newUp.AppName).Right__c = 'Access Granted';
+						parToUpdate.add(parMap.get(userContact.get(newUp.SalesforceUserId) + newUp.AppName));
+					}
 				}
 			}
 
 			delete parToDelete;
+			update parToUpdate;
 			insert logs;
 		}
 	}

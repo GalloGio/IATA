@@ -17,7 +17,7 @@ private class RCRMContractRevenueStreamControllerTest {
                 pm.LastName = 'Manager';
                 pm.Alias = 'pman';
                 pm.Email = 'pmanager@test.com';
-                pm.Username = 'pmanager@test.com';
+                pm.Username = DateTime.now().getTime() +'pmanager@test.com';
                 pm.CommunityNickname = 'pman';
                 pm.ProfileId = PMProfile.Id;
                 pm.TimeZoneSidKey = 'America/Mexico_City';

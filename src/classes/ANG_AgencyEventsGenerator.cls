@@ -17,16 +17,18 @@ public class ANG_AgencyEventsGenerator{
     }
 
     public void run(Boolean runDelayed){
+        set<string> setAccountValidForSAP = new set<string>();
+
         if(ANG_ConversionHelper.isMigrationTool && cmType !='ChangeCode' ) return; //in case of migrating account, prevents following code to be run
         
         Set<String> setAccntId = new Set<String>();
-        Set<String> setAccntIdWithSAPUpdate = new Set<String>();
         
     	for(sObject obj: newRecList)	setAccntId.add(String.ValueOf(obj.get(accField)));
-    	
-    	for(AMS_Agency_Updates__c aau: [select Account__c, id from AMS_Agency_Updates__c where Integration_System__c = 'SAP PI' and Account__c in :setAccntId and Update_Type__c not in ('Update_Sent','Invalid','Deleted')]){
-    		setAccntIdWithSAPUpdate.add(string.valueOf(aau.Account__c).left(15));
-    	}
+
+        for(Account Accnt:[select id, Status__c, (select id from AMS_Agency_Updates__r where Integration_System__c = 'SAP PI' and Update_Type__c not in ('Update_Sent','Invalid','Deleted')) from Account where id in :setAccntId]){
+            if(AMS_UTILS.ACTIVEAGENCYSTATUS.contains(Accnt.Status__c) && accnt.AMS_Agency_Updates__r.size()==0)
+                setAccountValidForSAP.add(string.valueOf(accnt.id).left(15));
+        }
         
         List<ANG_CalloutMapping__c> calloutmappingList = new List<ANG_CalloutMapping__c>();
 
@@ -52,7 +54,7 @@ public class ANG_AgencyEventsGenerator{
                             ConfigurationID__c=cm.id
                         );
                         
-                        if(cm.Integration_System__c == 'Mulesoft' || (cm.Integration_System__c == 'SAP PI' && !setAccntIdWithSAPUpdate.contains( String.ValueOf(obj.get(accField)).left(15) ))){
+                        if(cm.Integration_System__c == 'Mulesoft' || ( cm.Integration_System__c == 'SAP PI' && setAccountValidForSAP.contains(String.ValueOf(obj.get(accField)).left(15)) )){
 	                        insertedRecordsSet.add(String.valueOf(auRec.account__c)+auRec.Update_Type__c+auRec.Integration_System__c);
     	                    agencyEventsList.add(auRec);
                         }

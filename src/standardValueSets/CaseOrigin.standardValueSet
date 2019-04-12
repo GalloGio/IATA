@@ -1132,6 +1132,11 @@
         <label>E-mail to Case - YMQ - ITDI</label>
     </standardValue>
     <standardValue>
+        <fullName>Escalation</fullName>
+        <default>false</default>
+        <label>Escalation</label>
+    </standardValue>
+    <standardValue>
         <fullName>Exact Target commercial TEST</fullName>
         <default>false</default>
         <label>Exact Target commercial TEST</label>
@@ -1167,6 +1172,11 @@
         <label>Funds Management</label>
     </standardValue>
     <standardValue>
+        <fullName>GDI Portal</fullName>
+        <default>false</default>
+        <label>GDI Portal</label>
+    </standardValue>
+    <standardValue>
         <fullName>IATA Americas - ID Card (CA)</fullName>
         <default>false</default>
         <label>IATA Americas - ID Card (CA)</label>
@@ -1192,6 +1202,11 @@
         <label>Massive FOP Creation</label>
     </standardValue>
     <standardValue>
+        <fullName>Massive PCI Creation</fullName>
+        <default>false</default>
+        <label>Massive PCI Creation</label>
+    </standardValue>
+    <standardValue>
         <fullName>Monthly Report</fullName>
         <default>false</default>
         <label>Monthly Report</label>
@@ -1215,6 +1230,11 @@
         <fullName>Other</fullName>
         <default>false</default>
         <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>PCI automatic renewal</fullName>
+        <default>false</default>
+        <label>PCI automatic renewal</label>
     </standardValue>
     <standardValue>
         <fullName>Phone</fullName>

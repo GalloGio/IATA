@@ -69,11 +69,11 @@
                         </tr>
                         <tr>
                             <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>
-                            <td colspan="2">{!newForm.Account_Name__c}</td>
+                            <td colspan="2">{!hqAccount.Name}</td>
                         </tr>
                         <tr>
                             <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
-                            <td colspan="2">{!newForm.Trade_Name__c}</td>
+                            <td colspan="2">{!hqAccount.TradeName__c}</td>
                         </tr>
                         <tr>
                             <td class="label">{!$Label.ANG_ISSP_AccreditationTypeTitle}</td>
@@ -81,27 +81,27 @@
                         </tr>                        
                         <tr>
                             <td class="label">{!$Label.ISSP_Office_Phone}</td>
-                            <td colspan="2">{!newForm.Branch_Office_Phone__c}</td>
+                            <td colspan="2">{!hqAccount.Phone}</td>
                         </tr>
                         <tr>
                             <td class="label">{!$ObjectType.Account.fields.Email__c.Label}</td>
-                            <td colspan="2">{!newForm.Branch_Office_Email__c}</td>
+                            <td colspan="2">{!hqAccount.Email__c}</td>
                         </tr>
                         <tr>
                             <td class="label">{!$ObjectType.Account.fields.Mobile__c.Label}</td>
-                            <td colspan="2">{!newForm.Mobile__c}</td>
+                            <td colspan="2">{!hqAccount.Mobile__c}</td>
                         </tr>
                         <tr>
                             <td class="label">{!$ObjectType.Account.fields.Website.Label}</td>
-                            <td colspan="2">{!newForm.Website__c}</td>
+                            <td colspan="2">{!hqAccount.Website}</td>
                         </tr>
                         <tr>
                             <td class="label">{!$ObjectType.Account.fields.Fax.Label}</td>
-                            <td colspan="2">{!newForm.Branch_Office_FAX__c}</td>
+                            <td colspan="2">{!hqAccount.Fax}</td>
                         </tr>                    
                         <tr style="display: {!IF(isocountry.Hide_Tax_Number_VAT__c,'none','')}">
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}</td>
-                            <td colspan="2">{!newForm.ISSP_AMS_VAT_number__c}</td>
+                            <td colspan="2">{!newForm.ISSP_AMS_VAT_number_input__c}</td>
                         </tr>
                         <tr>
                             <td class="label" width="40%">{!$Label.ISSP_AMS_Step3_Office_FullAddress}</td>

@@ -1,0 +1,8 @@
+Dear colleague,
+
+A new request for SIS membership has been submitted by {!Account.Name}:
+
+Case number: {!Case.CaseNumber}
+Type of membership: {!Case.Type}
+
+Automated email.

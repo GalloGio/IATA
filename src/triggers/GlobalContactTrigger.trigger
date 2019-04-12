@@ -1,5 +1,7 @@
 trigger GlobalContactTrigger on Contact (after delete, after insert, after undelete, after update, before delete, before insert, before update) {   
 
+    if(!AMS_TriggerExecutionManager.checkExecution(Contact.getSObjectType(), 'GlobalContactTrigger')) { return; }
+
     ID standardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
     boolean Contacts = true;
@@ -35,7 +37,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
     if(Trigger.isBefore){
         /*Share trigger code*/
         if(Trigger.isInsert || Trigger.isUpdate){
-
+           
             /*AMP_ContactTrigger BeforeTrigger*/
             if(AMP_ContactTrigger){
                 system.debug('AMP_ContactTrigger BeforeTrigger');
@@ -153,6 +155,12 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             }
             /*Contacts Trigger.BeforeInsert*/
 
+            //GDPR Portal//
+                GDPR_ContactHandler handler = new GDPR_ContactHandler();
+                handler.onBeforeInsert();
+            //GDPR Portal//
+
+
         }
         /*Trigger.BeforeInsert*/
 
@@ -256,6 +264,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             }
             /*Contacts Trigger.BeforeUpdate*/
 
+            //GDPR Portal
+                GDPR_ContactHandler handler = new GDPR_ContactHandler();
+                handler.onBeforeUpdate();
+            //GDPR Portal    
         }
         /*Trigger.BeforeUpdate*/
 
@@ -632,12 +644,18 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
         /****************************************************************************************************************************************************/    
         /*Trigger.AfterDelete*/
         else if (Trigger.isDelete) {
+        
             /*Contacts Trigger.AfterDelete*/
             if(Contacts) {
                 system.debug('Contacts AfterDelete');
                 ContactHandler.afterDelete(Trigger.old);
             }
             /*Contacts Trigger.AfterDelete*/
+
+            //GDPR Portal//
+                GDPR_ContactHandler handler = new GDPR_ContactHandler();
+                handler.onAfterDelete();
+            //GDPR Portal//
         }
         /*Trigger.AfterDelete*/
 

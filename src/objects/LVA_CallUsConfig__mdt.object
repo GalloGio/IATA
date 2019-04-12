@@ -66,6 +66,7 @@
         <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>NamespacePrefix</columns>
+        <columns>Topic__c</columns>
         <columns>IsoCountry__c</columns>
         <columns>Sector__c</columns>
         <columns>Business_Hours_Name__c</columns>

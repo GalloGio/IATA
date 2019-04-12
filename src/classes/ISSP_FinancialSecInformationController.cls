@@ -22,6 +22,7 @@ public class ISSP_FinancialSecInformationController {
 
 	private void loadRecords() {
 		Set<String> typesToExclude = new Set<String> {'Manifestacion de Bienes', 'Others'};
+		Set<String> statusToInclude = new Set<String> {'Active', 'Close to Expiry Date', 'Expired', 'Encashment in progress'}; /* WMO-412 */
 		Date minRangeDate = Date.today().addDays(-7);
 		Id accountId = [SELECT Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()].Contact.AccountId;
 
@@ -30,6 +31,7 @@ public class ISSP_FinancialSecInformationController {
 													convertCurrency(Amount__c) convertedAmount
 									   		   FROM Financial_Security__c 
 						   			   		   WHERE Security_Type__c NOT IN :typesToExclude 
+						   			   		   		AND Security_Status__c IN :statusToInclude
 						   			   		   		AND (Expiry_Date__c > :minRangeDate OR Unlimited_Security__c = true) 
                                                    	AND Account__c = :accountId AND Account__r.RecordType.DeveloperName = 'IATA_Agency'
 						   			   		   	ORDER BY Expiry_Date__c DESC];
@@ -44,8 +46,8 @@ public class ISSP_FinancialSecInformationController {
 			if(fs.Security_Status__c <> 'Expired') {
 				this.totalConvertedAmount += (Decimal) fs.get('convertedAmount');
 				this.totalSecuredAmount += fs.Amount__c;
-				currencyCodes.add(fsw.CurrencyIsoCode);
-				this.currencyCode = fsw.CurrencyIsoCode;
+				currencyCodes.add(fs.CurrencyIsoCode);
+				this.currencyCode = fs.CurrencyIsoCode;
 			}
 		}
 
@@ -53,23 +55,11 @@ public class ISSP_FinancialSecInformationController {
 	}
 
 	public class FinSecWrapper {
-		public String financialInstitution {get;set;}
-		public String securityType {get;set;}
-		public String securityStatus {get;set;}
-		public Decimal amount {get;set;}
-		public String currencyIsoCode {get;set;}
-		public Date validityStartDate {get;set;}
-		public Date expiryDate {get;set;}
+		public Financial_Security__c record {get;set;}
 		public String cssRow {get;set;}
 
 		public FinSecWrapper(Financial_Security__c fs) {
-			this.financialInstitution = fs.Financial_Institution__r.Name;
-			this.securityType = fs.Security_Type__c;
-			this.securityStatus = fs.Security_Status__c;
-			this.amount = fs.Amount__c;
-			this.currencyIsoCode = fs.CurrencyIsoCode;
-			this.validityStartDate = fs.Validity_Start_Date__c;
-			this.expiryDate = fs.Expiry_Date__c;
+			this.record = fs;
 			this.cssRow = setCSSRow(fs.Security_Status__c);
 		}
 

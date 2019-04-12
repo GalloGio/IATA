@@ -160,7 +160,7 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         contact.FirstName = 'firstname';
         contact.LastName = 'lastname';
         contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
-        contact.Email = 'test@email.com';
+        contact.Email = DateTime.now().getTime() + 'test@email.com';
         insert contact;
         
         User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
@@ -191,7 +191,7 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         contact.FirstName = 'firstname';
         contact.LastName = 'lastname';
         contact.User_Portal_Status__c = ISSP_Constant.APPROVED_CONTACT_STATUS;
-        contact.Email = 'test@email.com';
+        contact.Email = DateTime.now().getTime() + 'test@email.com';
         insert contact;
         
         User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
@@ -222,7 +222,7 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         contact.FirstName = 'firstname';
         contact.LastName = 'lastname';
         contact.User_Portal_Status__c = 'Rejected';
-        contact.Email = 'test@email.com';
+        contact.Email = DateTime.now().getTime() + 'test@email.com';
         insert contact;
         
         User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);

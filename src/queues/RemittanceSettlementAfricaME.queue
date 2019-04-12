@@ -6,9 +6,10 @@
     <queueMembers>
         <publicGroups>
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>AllInternalUsers</publicGroup>
         </publicGroups>
         <users>
-            <user>martinsp@iata.org</user>
+            <user>martinsp@iata.org.inactive</user>
         </users>
     </queueMembers>
     <queueSobject>

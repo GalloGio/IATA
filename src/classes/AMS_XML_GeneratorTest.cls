@@ -421,7 +421,8 @@ private class AMS_XML_GeneratorTest {
                                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                                     , ANG_Accreditation_Model__c, Remittance_frequency__c,
                                     ANG_RiskStatus__c, ANG_IEP_Status_FF__c, Segmentation__c, Purge_Flag__c, Is_Branch_Abroad__c,
-                                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c,
+                    Expiry_Date__c //AMSU-207
                                     FROM Account where id =  :ag1.Id
                                             ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
 
@@ -451,7 +452,8 @@ private class AMS_XML_GeneratorTest {
                                  Abbreviated_name__c, Abbreviated_address__c, Status__c,
                                  Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c, ANG_Accreditation_Model__c, Remittance_frequency__c,
                                  ANG_RiskStatus__c, ANG_IEP_Status_FF__c, Segmentation__c, Purge_Flag__c, Is_Branch_Abroad__c,
-                                 IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c,
+                    Expiry_Date__c //AMSU-207
                                  FROM Account where id in :sAgIDs
                                  ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
 
