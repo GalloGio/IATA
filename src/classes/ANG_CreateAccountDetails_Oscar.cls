@@ -32,7 +32,7 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
         }
 
         if(String.isBlank(offerDateStr)){
-            ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'empty offerDate')), 400);
+            ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'empty offerExchangeRateDate')), 400);
             return;
         }
 
