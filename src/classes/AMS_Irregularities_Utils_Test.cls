@@ -96,6 +96,7 @@ private class AMS_Irregularities_Utils_Test {
         attr.IATA_ISO_Country__c = country.Id;
         attr.Location_Class__c = 'P';
         attr.Threshold__c = 1;
+        attr.Reason__c = 'Financial Security Request';
         insert attr;
 
         Case cse = new Case();
