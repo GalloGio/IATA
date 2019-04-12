@@ -2,7 +2,7 @@
 private class AMS_UpdateExpiryDateTest {
 	static testMethod void test_UpdateExpiryDate() {
 		
-		TestData.ForUpdateExpiryDate testData = new TestData.ForUpdateExpiryDate();
+		//TestData.ForUpdateExpiryDate testData = new TestData.ForUpdateExpiryDate();
 		
 		System.runAs(testData.user) {
 		/*
