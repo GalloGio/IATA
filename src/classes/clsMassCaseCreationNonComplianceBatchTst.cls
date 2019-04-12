@@ -3,7 +3,7 @@ private class clsMassCaseCreationNonComplianceBatchTst {
 	
 
 	static testMethod void testClsMassCaseCreationNonComplianceBatch(){
-
+		/*
 		//Data test preparation
 
 		//create Iata_Iso_Country
@@ -67,7 +67,7 @@ private class clsMassCaseCreationNonComplianceBatchTst {
          
 		System.assertEquals(20, caseListAfterBatch.size());
 
-		/*
+		
 		Id recordType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
 		Case case1 = [SELECT ID, New_IFAP_Deadline_date__c, BSPCountry__c, Region__c,Subject,CaseArea__c FROM Case Where Subject = 'subject1' AND RecordTypeId =:recordType];

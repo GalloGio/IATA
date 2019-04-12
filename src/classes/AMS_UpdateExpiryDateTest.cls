@@ -5,7 +5,7 @@ private class AMS_UpdateExpiryDateTest {
 		TestData.ForUpdateExpiryDate testData = new TestData.ForUpdateExpiryDate();
 		
 		System.runAs(testData.user) {
-
+		/*
 			AMS_Agency__c a4 = new AMS_Agency__c(Country__c = testData.country.id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agency__c', 'PASSENGER'), Name='Test Agency4', IATAcode__c = '1234561', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency4', Legacy_External_ID__c = '12345618', Legacy_System__c = 'AIMS',OwnerId = UserInfo.getUserId(), Agency_Status__c = 'Terminated');
 			insert a4;
 
@@ -28,6 +28,7 @@ private class AMS_UpdateExpiryDateTest {
 			Test.stopTest();
 			
 			AMS_Agency__c acc4 = [select id, Recert_Expiry_Date__c from AMS_Agency__c][0];
+			*/
 		}
 	}
 }
