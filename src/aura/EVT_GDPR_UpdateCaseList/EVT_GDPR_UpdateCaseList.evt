@@ -1,0 +1,2 @@
+<!--EVT_GDPR_UpdateCaseList-->
+<aura:event type="APPLICATION" description="Event used in GDPR portal to notify when case list need to be reloaded" />
