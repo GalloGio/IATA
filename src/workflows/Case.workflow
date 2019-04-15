@@ -18492,7 +18492,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <description>This rule is designed to update the Previous Case Owner field of the case, until the owner of the case is changed to a complaint queue. The objective is to get the last non-complaint / non-customer recovery owner in this field.</description>
-        <formula>OR (   ISNEW(),   AND (     ISCHANGED( OwnerId ),     Reopen_Count__c = 0 ,     Customer_recovery__c = false ,     IsComplaint__c = false ,     RecordType.DeveloperName &lt;&gt; &#39;ProcessEuropeSCE&#39; ,     RecordType.DeveloperName &lt;&gt; &#39;IDFS_Airline_Participation_Process&#39;   ) )</formula>
+        <formula>OR (   ISNEW(),   AND (     ISCHANGED( OwnerId ),     Reopen_Count__c = 0 ,     Customer_recovery__c = false ,     IsComplaint__c = false ,     RecordType.DeveloperName &lt;&gt; &apos;ProcessEuropeSCE&apos; ,     RecordType.DeveloperName &lt;&gt; &apos;IDFS_Airline_Participation_Process&apos;   ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
