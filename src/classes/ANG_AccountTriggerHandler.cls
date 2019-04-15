@@ -638,7 +638,7 @@ public class ANG_AccountTriggerHandler {
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelAAccounts, 'A');
 		if(!iepModelBAccounts.isEmpty())
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBAccounts, 'B');
-		if(!iepModelBAccounts.isEmpty())
+		if(!iepModelBPlusAccounts.isEmpty())
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBPlusAccounts, 'B+');
 	}
 }
