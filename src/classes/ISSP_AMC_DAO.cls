@@ -1151,12 +1151,12 @@ public class ISSP_AMC_DAO {
                             hasError = true;
                         }
                         if(participation.X2_other_airlines_in_the_airport__c == null || String.isEmpty(participation.X2_other_airlines_in_the_airport__c)){
-                            errorSectionFields += '<li>' + Label.ISSP_AMC_2 + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
-                            hasError = true;
+                            /*errorSectionFields += '<li>' + Label.ISSP_AMC_2 + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
+                            hasError = true;*/
                         }
                         if(participation.X3_other_airlines_in_the_airport__c == null || String.isEmpty(participation.X3_other_airlines_in_the_airport__c)){
-                            errorSectionFields += '<li>' + Label.ISSP_AMC_3 + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>'; 
-                            hasError = true;
+                            /*errorSectionFields += '<li>' + Label.ISSP_AMC_3 + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>'; 
+                            hasError = true;*/
                         }
                         
                         if(hasError){
@@ -1217,38 +1217,45 @@ public class ISSP_AMC_DAO {
 
                     }
 
-                    if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CURRENTSTRUCTURELOCATION){
+                    /*if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CURRENTSTRUCTURELOCATION){
                         if(parOnlineRecord.AmazonFile__c == null){
                             parOnlineRecord.Status__c = 'Incomplete';
                             fileErrorMessages.add(Label.ISSP_AMC_CURRENT_STRUCTURE_LOCATION_TEXT);
                         }
-                    }
+                    }*/
+
                     if(participation.Date_when_airport_has_been_operational__c != null){
                         if(!String.isEmpty(participation.Date_when_airport_has_been_operational__c)){
                             if(Date.parse(participation.Date_when_airport_has_been_operational__c) > Date.today()){
                                 if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CAALETTEROPENINGDATE){
-                                    if(parOnlineRecord.AmazonFile__c == null){
+                                    
+                                    /*if(parOnlineRecord.AmazonFile__c == null){
                                         parOnlineRecord.Status__c = 'Incomplete';
                                         fileErrorMessages.add(Label.ISSP_AMC_CAALETTEROPENINGDATE_TEXT);
-                                    }
+                                    }*/
+
                                 }
                             }
                         }
                         else if(String.isEmpty(participation.Date_when_airport_has_been_operational__c)){
                             if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CAALETTEROPENINGDATE){
-                                if(parOnlineRecord.AmazonFile__c == null){
+                                
+                                /*if(parOnlineRecord.AmazonFile__c == null){
                                     parOnlineRecord.Status__c = 'Incomplete';
                                     fileErrorMessages.add(Label.ISSP_AMC_CAALETTEROPENINGDATE_TEXT);
-                                }
+                                }*/
+
                             }
                         }
                     }
-                    if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS){
+
+                    /*if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS){
                         if(parOnlineRecord.AmazonFile__c == null){
                             parOnlineRecord.Status__c = 'Incomplete';
                             fileErrorMessages.add(Label.ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS_TEXT);
                         }
-                    }
+                    }*/
+
                     if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_TRAFFIC_AGREEMENT_VALID_IATA_CODE){
                         if(parOnlineRecord.AmazonFile__c == null){
                             parOnlineRecord.Status__c = 'Incomplete';

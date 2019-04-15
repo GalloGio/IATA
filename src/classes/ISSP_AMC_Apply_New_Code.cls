@@ -30,6 +30,14 @@ public class ISSP_AMC_Apply_New_Code {
 	public Boolean hasPrefixCode {get;set;}
 	public Boolean hasLocationCode {get;set;}
 	public Boolean hasBaggageCode {get;set;}
+	public ISSP_AMC_Files__c amcFiles {get;set;}
+
+	//public List<ISSP_AMC_Files__c> code {get;set;}
+   
+    public void getRequirementsFiles()
+    {
+    	amcFiles = ISSP_AMC_Files__c.getInstance();
+    }
 
 
 
@@ -72,6 +80,7 @@ public class ISSP_AMC_Apply_New_Code {
 		hasPrefixCode = true;
 		hasBaggageCode = true;
 		getAccountInfo();
+		getRequirementsFiles();
 		system.debug('DB hasDesignatorValue'+hasDesignatorValue);
 		system.debug('DB hasAccountingCode'+hasAccountingCode);
 		system.debug('DB hasPrefixCode'+hasPrefixCode);

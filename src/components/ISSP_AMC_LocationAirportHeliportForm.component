@@ -195,9 +195,9 @@
                             {!$Label.ISSP_AMC_2}
                         </div> 
                         <div class="col-md-7">
-                            <div class="{!IF(AND(hasError, OR(participation.X2_other_airlines_in_the_airport__c == null, participation.X2_other_airlines_in_the_airport__c == "")), 'has-error has-feedback', '')}">
+                            <div class="">
                                 <apex:inputText id="it2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')"  styleClass="form-control allchar" value="{!participation.X2_other_airlines_in_the_airport__c}"/>
-                                <span class="{!IF(AND(hasError, OR(participation.X2_other_airlines_in_the_airport__c == null, participation.X2_other_airlines_in_the_airport__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                <span class="" aria-hidden="true"> </span>
                                 <span class="sr-only">(error)</span>
                                 
                                 <div style="color: #a94442" class="errormessage"></div>
@@ -212,9 +212,9 @@
                             {!$Label.ISSP_AMC_3}
                         </div>
                         <div class="col-md-7">  
-                            <div class="{!IF(AND(hasError, OR(participation.X3_other_airlines_in_the_airport__c == null, participation.X3_other_airlines_in_the_airport__c == "")), 'has-error has-feedback', '')}">
+                            <div class="">
                                 <apex:inputText id="it3" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!participation.X3_other_airlines_in_the_airport__c}"/>
-                                <span class="{!IF(AND(hasError, OR(participation.X3_other_airlines_in_the_airport__c == null, participation.X3_other_airlines_in_the_airport__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                <span class="" aria-hidden="true"> </span>
                                 <span class="sr-only">(error)</span>
                                 
                                 <div style="color: #a94442" class="errormessage"></div>

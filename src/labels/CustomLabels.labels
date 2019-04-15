@@ -10427,7 +10427,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE_DESC</shortDescription>
-        <value>This code is meant for transportion documents (e.g. the accounting code 076 at the beginning of a ticket number identifies it to be a traffic document of Middle East Airlines). The same number can be used for cargo documentation and is known as an &quot;airline prefix&quot;.</value>
+        <value>Airline accounting codes and airline prefixes are essential for the identification of passenger and cargo traffic documents, processing of passenger accounting transactions, cargo transactions and other commercial/traffic purposes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_ACCOUNT_PREFIX_CODE</fullName>
@@ -10537,7 +10537,7 @@ Systems (CASS)?</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_AIRLINE_DESIGNATORS_DESC</shortDescription>
-        <value>Airline as well as railway, bus and ferry companies, computer reservations systems (CRSs) and ULD owners/leasing companies may be assigned an &lt;strong&gt;IATA two-character designator code.&lt;/strong&gt;</value>
+        <value>Those companies assigned an airline designator are to use such designator for reservations, schedules, timetables, telecommunications, ticketing, cargo documentation, legal, tariffs and/or other commercial/traffic purposes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE</fullName>
@@ -10767,7 +10767,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_BAGAGE_TAG_RANGE_DESC</shortDescription>
-        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify an airport (e.g. GVA = Geneva). Bus or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
+        <value>Baggage tag issuer codes, combined with the tag serial number, are used to identify each piece of checked luggage through all baggage handling processes. They help provide a unique identifier during the complete journey. This unique identifier forms the basis of what is known as the “License Plate”.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_BAGGAGE_REASON_FOR_USE_1</fullName>
@@ -11600,7 +11600,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_LOCATION_IDENTIFIER_DESC</shortDescription>
-        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify an airport (e.g. GVA = Geneva). Bus or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
+        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify a location like an airport. Bus or ferry stations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_LOCATION_NAME</fullName>
