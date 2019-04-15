@@ -325,11 +325,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                     ISSP_AMS_Gross_Amnt_First_year__c, ISSP_AMS_Gross_Amnt_Second_year__c, ISSP_AMS_IATA_Registered_Cargo_Agent__c, ISSP_AMS_Legal_Reg_Name_Address__c, ISSP_AMS_Legal_Status__c,
                     ISSP_AMS_License_No__c, ISSP_AMS_Min_Paidup_capital__c, ISSP_AMS_Online_Agency_Application__c, ISSP_AMS_Online_Agency_URL__c, ISSP_AMS_Paidup_capital__c, Total_International_Sales__c,
                     ISSP_AMS_Pax_Office_Open_Date__c, ISSP_AMS_Cargo_Office_Open_Date__c, ISSP_AMS_Premises_located_at_airport__c, ISSP_AMS_Previous_default__c, ISSP_AMS_Prev_default_explanation__c, ISSP_AMS_Principal_business_Org__c, Branch_Office_Phone_National__c, Branch_Office_Fax_National__c,
-                    ISSP_AMS_Registered_Capital__c, ISSP_AMS_IBAN__c, ISSP_AMS_SWIFT__c, ISSP_AMS_Trade_Reg_No__c, ISSP_AMS_VAT_number__c, ISSP_AM_Means_Identified_Travel_Agency__c, ISSP_AMS_where_incorporated__c,
+                    ISSP_AMS_Registered_Capital__c, ISSP_AMS_IBAN__c, ISSP_AMS_SWIFT__c, ISSP_AMS_Trade_Reg_No__c, ISSP_AMS_VAT_number__c, VAT_Number_2__c, ISSP_AM_Means_Identified_Travel_Agency__c, ISSP_AMS_where_incorporated__c,
                     ISSP_AMS_Entity_with_listed_shares__c, ISSP_AMS_when_incorporated__c, ISSP_AMS_Portal_admin__c, ISSP_AMS_Invoicing_Contact__c, Cargo_Agent_Account__c, ISSP_AMS_Total_Ownership__c, Validation_ERRORS__c, IsGSA__c, INVALID_Tax_number__c,
                     International_Sales_in_last_Year__c, Sales_Period_From__c, Sales_Period_To__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Street_name_number__c, Branch_Office_Country__c, Branch_Office_Country__r.name, Branch_Office_Email__c,
                     Branch_Office_Fax__c, Branch_Office_Postal_code__c, Wholly_managed_by_this_Head_Office__c, Wholly_owned_by_this_Head_Office__c, AMS_Agency_Id__c, ISSP_Branch_AccountId__c, ISSP_AMS_Date_of_incorporation__c,
-                    ISSP_AMS_Date_of_Association__c, ISSP_AMS_Business_Activities__c, ISSP_AMS_Is_Make_Declarations__c, ISSP_AMS_Nominee_Trustee__c, ISSP_AMS_VAT_number_input__c, ISSP_AMS_Number_of_Years_Traded__c, ISSP_AMS_Type_of_License__c,
+                    ISSP_AMS_Date_of_Association__c, ISSP_AMS_Business_Activities__c, ISSP_AMS_Is_Make_Declarations__c, ISSP_AMS_Nominee_Trustee__c, ISSP_AMS_VAT_number_input__c, ISSP_AMS_VAT_number_2_input__c, ISSP_AMS_Number_of_Years_Traded__c, ISSP_AMS_Type_of_License__c,
                     ISSP_AMS_State_Names_Addresses__c, ISSP_AMS_Is_Applicant_Parent__c, ISSP_AMS_For_whom_Nominee__c, ISSP_AMS_Date_legal_establishment__c, Give_full_details__c, List_the_airport_s_to_be_authorized__c, Does_your_firm_intend_to_request__c,
                     Operation_Type__c, Has_your_firm_ever_held_a_Cargo_Agency__c, Date_issued__c, Name_under_which_it_was_issued__c, Reason_for_cancellation__c, Is_your_firm_an_approved_IATA_Passenger__c, IATA_Agents_Numeric_Code__c,
                     Does_the_air_transportation_which_your__c, State_the_percentage_of_your_gross__c, Does_your_firm_sell_air_cargo__c, What_percentage_of_your_sales__c, Is_your_firm_a_General_Sales_Agent_GSA__c, List_carriers__c,
@@ -607,13 +607,16 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 	}
 
+    //standart set for vat2?
 	private void keepConfirmedData() {
 		if (!currentAccount.fw.newform.Notify_Change_Legal_Details__c) {
 			currentAccount.fw.newform.Account_Name__c = currentAccount.account.Name;
 			currentAccount.fw.newform.Trade_Name__c = currentAccount.account.TradeName__c;
 			currentAccount.fw.newform.ISSP_AMS_VAT_number__c = currentAccount.account.VAT_Number__c;
+            currentAccount.fw.newform.VAT_number_2__c = currentAccount.account.VAT_Number_2__c;
 		} else {
 			currentAccount.fw.newform.ISSP_AMS_VAT_number__c = currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c;
+            currentAccount.fw.newform.VAT_number_2__c = currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c;
 		}
 
 		if (!currentAccount.fw.newform.Notify_Change_Location__c) {
@@ -946,12 +949,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		accountStagingFieldMapping(a, newForm);
 
-		if (isoCountry.EU_Country__c) {
-			if (a.VAT_Number__c != null)
-				newForm.ISSP_AMS_VAT_number_input__c = a.VAT_Number__c.substring(2);
-		} else {
-			newForm.ISSP_AMS_VAT_number_input__c = a.VAT_Number__c;
-		}
+        if (isoCountry.EU_Country__c) {
+            if (a.VAT_Number__c != null)
+                newForm.ISSP_AMS_VAT_number_input__c = a.VAT_Number__c.substring(2);
+            if (a.VAT_Number_2__c != null)
+                newForm.ISSP_AMS_VAT_number_2_input__c = a.VAT_Number_2__c.substring(2);
+        } else {
+            newForm.ISSP_AMS_VAT_number_input__c = a.VAT_Number__c;
+            newForm.ISSP_AMS_VAT_number_2_input__c = a.VAT_Number_2__c;
+        }
 
 		newform.Website__c = a.Website;
 		newForm.Branch_Office_Phone_National__c = a.Phone;
@@ -1322,6 +1328,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
 					errorFound = true;
 				}
+                
+                if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c == null && currentAccount.isocountry.Tax_Number_2_VAT_field_2_mandatory__c) {
+					currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newForm.INVALID_Tax_Number_2__c && currentAccount.isocountry.Tax_Number_2_VAT_field_2_mandatory__c) {
+					currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_2_error);
+					errorFound = true;
+				}
 
 			}
 
@@ -1363,50 +1377,53 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					currentAccount.fw.newform.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
 				}
-
-				if (currentAccount.fw.newform.Shipping_Street__c == null) {
-					currentAccount.fw.newform.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				} else if (currentAccount.fw.newform.Shipping_Street__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Street__c).matches()) {
-					currentAccount.fw.newform.Shipping_Street__c.addError(Label.ISSP_EnterValidString);
-            		errorFound = true;
-				}
-
-				if (currentAccount.fw.newform.Shipping_City__c == null) {
-					currentAccount.fw.newform.Shipping_City__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				} else if (currentAccount.fw.newform.Shipping_City__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_City__c).matches()) {
-					currentAccount.fw.newform.Shipping_City__c.addError(Label.ISSP_EnterValidString);
-            		errorFound = true;
-				}
-
-				if (currentAccount.fw.newform.Shipping_Country__c == null) {
-					currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				} else if (currentAccount.fw.newform.Shipping_Country__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Country__c).matches()) {
-					currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
-            		errorFound = true;
-				}
-
-
-				if (shippingCountryInfo != null && shippingCountryInfo.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Shipping_Postal_Code__c == null) {
-					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				} else if (currentAccount.fw.newform.Shipping_Postal_Code__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
-					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
-            		errorFound = true;
-				} else if (shippingCountryPostalCodeRegex != null && currentAccount.fw.newform.Shipping_Postal_Code__c != null && !shippingCountryPostalCodeRegex.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
-					currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
-            		errorFound = true;
-				}
-
-				if (shippingCountryInfo != null && shippingCountryInfo.State_Province_Mandatory__c && currentAccount.fw.newform.Shipping_State__c == null) {
-					currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				} else if (currentAccount.fw.newform.Shipping_State__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_State__c).matches()) {
-					currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_EnterValidString);
-            		errorFound = true;
-				}
+                
+                if(currentAccount.shippingSameAsBilling == false) {
+                    
+                    if (currentAccount.fw.newform.Shipping_Street__c == null) {
+                        currentAccount.fw.newform.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    } else if (currentAccount.fw.newform.Shipping_Street__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Street__c).matches()) {
+                        currentAccount.fw.newform.Shipping_Street__c.addError(Label.ISSP_EnterValidString);
+                        errorFound = true;
+                    }
+                    
+                    if (currentAccount.fw.newform.Shipping_City__c == null) {
+                        currentAccount.fw.newform.Shipping_City__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    } else if (currentAccount.fw.newform.Shipping_City__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_City__c).matches()) {
+                        currentAccount.fw.newform.Shipping_City__c.addError(Label.ISSP_EnterValidString);
+                        errorFound = true;
+                    }
+                    
+                    if (currentAccount.fw.newform.Shipping_Country__c == null) {
+                        currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    } else if (currentAccount.fw.newform.Shipping_Country__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Country__c).matches()) {
+                        currentAccount.fw.newform.Shipping_Country__c.addError(Label.ISSP_EnterValidString);
+                        errorFound = true;
+                    }
+                    
+                    
+                    if (shippingCountryInfo != null && shippingCountryInfo.IEC_Zip_Postal_Code_required__c && currentAccount.fw.newform.Shipping_Postal_Code__c == null) {
+                        currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    } else if (currentAccount.fw.newform.Shipping_Postal_Code__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
+                        currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_EnterValidString);
+                        errorFound = true;
+                    } else if (shippingCountryPostalCodeRegex != null && currentAccount.fw.newform.Shipping_Postal_Code__c != null && !shippingCountryPostalCodeRegex.matcher(currentAccount.fw.newform.Shipping_Postal_Code__c).matches()) {
+                        currentAccount.fw.newform.Shipping_Postal_Code__c.addError(Label.ISSP_InvalidPostalCode);
+                        errorFound = true;
+                    }
+                    
+                    if (shippingCountryInfo != null && shippingCountryInfo.State_Province_Mandatory__c && currentAccount.fw.newform.Shipping_State__c == null) {
+                        currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    } else if (currentAccount.fw.newform.Shipping_State__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_State__c).matches()) {
+                        currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_EnterValidString);
+                        errorFound = true;
+                    }
+                }
 
 				if (currentAccount.fw.newform.Branch_Office_Phone_National__c == null || currentAccount.fw.newform.Branch_Office_Phone_National__c == '') {
 					currentAccount.fw.newform.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
@@ -1506,29 +1523,32 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				}
 			}
 
-			if (countryCheckList.Registration_required__c) {
-        		if (currentAccount.fw.newForm.ISSP_AMS_Trade_Reg_No__c == null) {
-        			currentAccount.fw.newform.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-        		}
-
-        		if (currentAccount.fw.newForm.ISSP_AMS_Date_Registration_granted__c == null) {
-        			currentAccount.fw.newform.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-        		}        		
-        	}
-
-        	if (countryCheckList.License_required__c) {
-				if (currentAccount.fw.newForm.ISSP_AMS_License_No__c == null) {
-        			currentAccount.fw.newform.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-        		}
-
-        		if (currentAccount.fw.newForm.ISSP_AMS_Date_license_granted__c == null) {
-        			currentAccount.fw.newform.ISSP_AMS_Date_license_granted__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-        		}
-        	}
+            //tim - check countrylist for null
+            if (countryCheckList != null) {
+                if (countryCheckList.Registration_required__c) {
+                    if (currentAccount.fw.newForm.ISSP_AMS_Trade_Reg_No__c == null) {
+                        currentAccount.fw.newform.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+                    
+                    if (currentAccount.fw.newForm.ISSP_AMS_Date_Registration_granted__c == null) {
+                        currentAccount.fw.newform.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }        		
+                }
+                
+                if (countryCheckList.License_required__c) {
+                    if (currentAccount.fw.newForm.ISSP_AMS_License_No__c == null) {
+                        currentAccount.fw.newform.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+                    
+                    if (currentAccount.fw.newForm.ISSP_AMS_Date_license_granted__c == null) {
+                        currentAccount.fw.newform.ISSP_AMS_Date_license_granted__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+                }
+            }
 
 /*
 			check with Adrian

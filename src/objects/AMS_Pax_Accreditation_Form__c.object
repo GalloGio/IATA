@@ -2536,6 +2536,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Current_VAT_Number_2__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
+HO_Account__r.VAT_Number_2__c,
+SAAM_Case__r.Account_Concerned__r.VAT_Number_2__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current VAT Number 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Current_VAT_Number__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
@@ -3111,6 +3125,15 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>INVALID Tax Number</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>INVALID_Tax_Number_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>INVALID Tax Number 2</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -3945,6 +3968,17 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <fullName>ISSP_AMS_Type_of_License__c</fullName>
         <externalId>false</externalId>
         <label>* Type of License</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ISSP_AMS_VAT_Number_2_Input__c</fullName>
+        <externalId>false</externalId>
+        <label>* VAT Number 2</label>
         <length>30</length>
         <required>false</required>
         <trackHistory>false</trackHistory>

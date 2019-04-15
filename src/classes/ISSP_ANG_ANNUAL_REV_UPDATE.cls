@@ -12,6 +12,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public string txtHelpCurrency {get; set;}
     public string txtHelpTaxNumber {get; set;}
     public String vatNumber {get; set;}
+    public String vatNumber2 {get; set;}
+    
     public list<selectOption> countryList{get{
                 if(countryList==null){
                     countryList= new list<selectOption>();
@@ -124,6 +126,25 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
             upsert ca.fw.newform;
         }
     }
+    
+    public void validateVATNumber2() {
+        if (new ISSP_ANG_ANNUAL_REVALIDATION().vatNumberValidation(this.vatNumber2, ca.isocountry.ISO_Code__c)) {
+            ca.fw.newForm.INVALID_Tax_Number_2__c = false;
+            ca.errorFound = false;
+            
+            upsert ca.fw.newform;
+        } else {
+            ca.fw.newForm.ISSP_AMS_VAT_number_2_input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
+            ca.fw.newForm.INVALID_Tax_Number_2__c = true;
+            ca.errorFound = true;
+
+            upsert ca.fw.newform;
+        }
+    }
+    
+    public void toggleCheckbox(){
+        
+    }
 
     public void newAgencyContact() {
         ca.newContact = new AMS_Accreditation_Contact__c();
@@ -147,6 +168,51 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
             if(!aux.isEmpty()) return aux[0]; else return null;
         }
         set{}
+    }
+    
+    public Boolean displayShipping{
+        
+        get{
+            if(displayShipping == null) {
+                displayShipping = false;
+                if(ca.Account.BillingStreet == ca.Account.ShippingStreet &&
+                   ca.Account.BillingCity == ca.Account.ShippingCity &&
+                   ca.Account.BillingPostalCode == ca.Account.ShippingPostalCode &&
+                   ca.Account.BillingState == ca.Account.ShippingState &&
+                   ca.Account.BillingCountry == ca.Account.ShippingCountry) {
+                       displayShipping = true;
+                       ca.fw.newform.shipping_street__c = '';
+                       ca.fw.newform.shipping_city__c = '';
+                       ca.fw.newform.shipping_postal_code__c = '';
+                       ca.fw.newform.shipping_state__c = '';
+                       ca.fw.newform.shipping_country__c = '';
+                   } else if(ca.Account.ShippingStreet == null &&
+                             ca.Account.ShippingCity == null &&
+                             ca.Account.ShippingPostalCode == null &&
+                             ca.Account.ShippingState == null &&
+                             ca.Account.ShippingCountry == null) {
+                                 displayShipping = true;
+                                 ca.fw.newform.shipping_street__c = '';
+                                 ca.fw.newform.shipping_city__c = '';
+                                 ca.fw.newform.shipping_postal_code__c = '';
+                                 ca.fw.newform.shipping_state__c = '';
+                                 ca.fw.newform.shipping_country__c = '';
+                             }
+                
+            }
+            ca.shippingSameAsBilling = displayShipping;
+            return displayShipping;
+        }
+        set{
+            displayShipping = value;
+            if (displayShipping == false){
+                ca.fw.newform.shipping_street__c = '';
+                ca.fw.newform.shipping_city__c = '';
+                ca.fw.newform.shipping_postal_code__c = '';
+                ca.fw.newform.shipping_state__c = '';
+                ca.fw.newform.shipping_country__c = '';
+            }
+        }
     }
 
 }

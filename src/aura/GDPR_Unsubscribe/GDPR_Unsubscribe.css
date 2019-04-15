@@ -1,0 +1,8 @@
+.THIS .cbx {
+    display: inline-block;
+}
+
+.THIS .redMsg {
+    color:red;
+    font-weight: bold;
+}
