@@ -6,21 +6,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>ValidatedFromAddress</field>
-        <formula>IF(
-Contains($Setup.CsDfEm__c.agMgRt__c,Case.RecordType.DeveloperName),$Setup.CsDfEm__c.agMgEm__c , 
-IF(
-Contains($Setup.CsDfEm__c.arMgRT__c,Case.RecordType.DeveloperName),$Setup.CsDfEm__c.arMgEM__c,
-IF(
-Contains($Setup.CsDfEm__c.caUsRT__c,Case.RecordType.DeveloperName),$Setup.CsDfEm__c.caUsEm__c,
-IF(
-Contains($Setup.CsDfEm__c.cnsRT__c,Case.RecordType.DeveloperName),$Setup.CsDfEm__c.cnsEM__c,
-IF(
-Contains($Setup.CsDfEm__c.efRT__c,Case.RecordType.DeveloperName),$Setup.CsDfEm__c.efEM__c,
-IF(
-Contains($Setup.CsDfEm__c.icsRT__c,Case.RecordType.DeveloperName),$Setup.CsDfEm__c.icsEM__c,
-IF(
-Contains($Setup.CsDfEm__c.iinRT__c,Case.RecordType.DeveloperName),$Setup.CsDfEm__c.iinEM__c,
-NULL )))))))</formula>
+        <formula>Case.defaultEmailAddress__c</formula>
     </fieldOverrides>
     <label>Send Email</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
