@@ -8685,9 +8685,9 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Update_case_field_tracking</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
+        <description>clears field tracking message</description>
         <formula>NOT(ISNULL(Field_Update_tracking_lightning__c))&amp;&amp;
-ISCHANGED(Id) &amp;&amp;
 LastModifiedById&lt;&gt;OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -18501,7 +18501,8 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Update_case_field_tracking</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
+        <description>Updates field tracking field if a case is updated by someone who is not the case owner</description>
         <formula>(
 ISCHANGED(CaseArea__c)||
 ISCHANGED(Reason1__c)||
