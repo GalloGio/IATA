@@ -303,70 +303,7 @@ public virtual class vfIECEBC_Controller {
 			return productRatePlanIdUpgradeList;
 		} // end getter
 		private set;
-	} // productRatePlanUpgradeList getter/setter.
-	
-	
-	/*
-	// ========================================================================
-	// potential additional requirements (these methods were needed before)
-	// the following might be added to vfIECEBC_Controller:
-	// Zuora__SubscriptionProductCharge__c.Product_Rate_Plan_Charge__c, Zuora__Subscription__c
-	// Zuora__SubscriptionProductCharge__c: currently not needed unless we are updating the old record
-	// productRatePlanInfo: current Product_Rate_Plan_Information__c
-	
-	
-	// ========================================================================
-	public Map<Id,zqu__ProductRatePlanCharge__c> productRatePlanChargeIdToObjectMap
-	{
-		
-		get{
-			if ( productRatePlanChargeIdToObjectMap == null) 
-			{
-				Map<Id,zqu__ProductRatePlanCharge__c> newMap = new Map<Id, zqu__ProductRatePlanCharge__c>();
-				for (zqu__ProductRatePlanCharge__c prpc : productRatePlanChargeUpgradeList)
-				{
-					newMap.put(prpc.Id, prpc);
-				}
-				productRatePlanChargeIdToObjectMap = newMap;
-			}
-			return productRatePlanChargeIdToObjectMap;
-		}
-		private set;
-	} // end of productRatePlanChargeIdToObjectMap getter/setter
-	
-	
-	// ========================================================================
-	// current Zuora__SubscriptionProductCharge__c 
-	// retrieved based on the current subscription
-	// assumption:
-	//   relationship between Subscription and SubscriptionProductCharge is 1:1 
-	public Zuora__SubscriptionProductCharge__c subscriptionProductCharge
-	{
-		get{
-			if ( subscriptionProductCharge == null )
-			{ 
-				List<Zuora__SubscriptionProductCharge__c> subscriptionProductChargeList = [select Id
-					, Zuora__Product__c, Zuora__Product__r.Name
-					, Zuora__Price__c
-					, Zuora__ProductDescription__c 
-					, Zuora__ProductName__c
-					, Product_Rate_Plan_Charge__c, Product_Rate_Plan_Charge__r.Name
-					, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c
-					, Zuora__Subscription__c
-					, Zuora__EffectiveEndDate__c
-					from Zuora__SubscriptionProductCharge__c 
-					where Zuora__Subscription__c = : subscription.Id
-						and Product_Rate_Plan_Charge__c = : productRatePlan.Id];
-				subscriptionProductCharge = (subscriptionProductChargeList.size() == 0) ? null : subscriptionProductChargeList[0];
-			}
-			return subscriptionProductCharge;
-		}
-		set;
-	}
-*/
-
-	
-	
+	} // productRatePlanUpgradeList getter/setter.	
 	
 	// ========================================================================
 	// Supporting methods for EBC AddOns
@@ -556,7 +493,6 @@ public virtual class vfIECEBC_Controller {
 		system.debug('subscriptionId :: ' + subscriptionId);
 		system.debug('productRatePlanId :: ' + productRatePlanId);
 		system.debug('creditAmount :: ' + creditAmount);
-		//String theToken = IECEBC_Utility.generatePaymentToken(ebcCampaignId + '-' + paidProductRatePlanId + '-' + campaignPaymentOption);
 		String objectId = (subscriptionId == null) ? '' : subscriptionId;
 		objectId += (productRatePlanId == null) ? '' : productRatePlanId;
 		objectId += (ebcPaymentCampaignOption == null) ? '' : ('-' + ebcPaymentCampaignOption); 
