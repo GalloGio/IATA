@@ -58,6 +58,49 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         set;
     }
 
+    public List<SelectOption> billingStateList {
+        get {
+            if (billingStateList == null) {
+                billingStateList = new List<SelectOption>();
+
+                billingStateList.add(new SelectOption('',''));
+
+                for (IATA_ISO_State__c state: [SELECT Id, Name
+                                            FROM IATA_ISO_State__c
+                                            WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c]) {
+                    billingStateList.add(new SelectOption(state.Id, state.Name));
+                }
+            }
+            return billingStateList;
+        }   
+        set;
+    }
+
+    public Boolean countryRequiresStatePicklist {
+        get {
+            List<String> countriesWithState = new List<String>{'AE', 'AU', 'BR', 'CA', 'CN', 'IN', 'MX', 'VE'};
+            return countriesWithState.contains(ca.isocountry.ISO_Code__c);
+        }
+        set;
+    }
+
+    /*public static Map<String, IATA_ISO_State__c> isoStateByName {
+        get {
+
+        }
+        set;
+    }*/
+
+    public String stateInfo {
+        get {
+            if (stateInfo == null) {
+                stateInfo = '\'\'';
+            }
+            return stateInfo;
+        }
+        set;
+    }
+
 	public ISSP_ANG_ANNUAL_REV_UPDATE() {
         applyLanguage = UserInfo.getLanguage();
 
