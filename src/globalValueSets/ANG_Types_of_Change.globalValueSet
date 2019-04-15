@@ -78,7 +78,6 @@
     <customValue>
         <fullName>Letter Generation</fullName>
         <default>false</default>
-        <isActive>true</isActive>
         <label>Letter Generation</label>
     </customValue>
     <masterLabel>ANG Types of Change</masterLabel>
