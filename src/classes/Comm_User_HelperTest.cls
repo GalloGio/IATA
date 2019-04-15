@@ -170,5 +170,54 @@ private class Comm_User_HelperTest {
         }       
         system.assertEquals(res1,true);  
     }
-    
+
+    @isTest static void test_addDefaultAppRights() {
+
+        list<Portal_Application_Visibility__mdt> listSettingVisibility =
+            [SELECT Id, Sector__c, Category__c, Parent__r.MasterLabel
+            FROM Portal_Application_Visibility__mdt
+            WHERE Auto_grant_service__c = true
+            LIMIT 1];
+
+        if (listSettingVisibility.isEmpty()) return;
+        Portal_Application_Visibility__mdt settingVisibility = listSettingVisibility[0];
+
+        Portal_Applications__c app = new Portal_Applications__c();
+        app.Name = settingVisibility.Parent__r.MasterLabel;
+        insert app;
+
+        ID Hq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
+        insert isoCountry;
+
+        Account account = new Account(name ='myAirline',
+                                     IATACode__c = '123',
+                                     Airline_designator__c='AA',
+                                     industry = 'pluto',
+                                     IATA_ISO_Country__c=isoCountry.id,
+                                     Sector__c = settingVisibility.Sector__c,
+                                     Category__c = settingVisibility.Category__c,
+                                     recordtypeID = Hq );
+        insert account;
+
+        Contact con = new Contact(FirstName = 'myName',
+                                  LastName = 'lstname',
+                                  Salutation = 'sig',
+                                  Email = 'myemail@iata.org',
+                                  accountid = account.id);
+        insert con;
+
+        test.startTest();
+        Comm_User_Helper.addDefaultAppRights(con,account);
+        test.stopTest();
+
+        list<Portal_Application_Right__c> listRights = [
+            SELECT Id
+            FROM Portal_Application_Right__c
+            WHERE Contact__c = :con.Id
+            AND Application_Name__c = :settingVisibility.Parent__r.MasterLabel
+            AND Right__c = 'Access Granted'];
+        System.assertEquals(1,listRights.size());
+    }
 }

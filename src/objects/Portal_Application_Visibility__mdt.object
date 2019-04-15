@@ -3,6 +3,14 @@
     <description>Child object for Portal_Application_Setting__mdt.
 Each record stands for a combination of values (account sector and category) where the application is visible</description>
     <fields>
+        <fullName>Auto_grant_service__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Auto-grant service</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Category__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
