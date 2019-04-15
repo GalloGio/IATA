@@ -18346,12 +18346,12 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>1. IATA Accredited Head Entity Details</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Local_Details_Copy_Address2</fullName>
+        <fullName>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</fullName>
         <categories>ISSP, ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Branch to Shipping</shortDescription>
-        <value>Copy Billing Address to Shipping Address</value>
+        <shortDescription>Shipping same as Billing</shortDescription>
+        <value>Shipping address is same as Billing address</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
