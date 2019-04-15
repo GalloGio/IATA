@@ -115,7 +115,7 @@
         <name>rightsidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Service console case record page</masterLabel>
+    <masterLabel>Service console sidra level1 level2</masterLabel>
     <sobjectType>Case</sobjectType>
     <template>
         <name>flexipage:recordHomePinnedHeaderTemplateDesktop</name>
