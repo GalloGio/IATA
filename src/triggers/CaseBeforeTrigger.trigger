@@ -1049,24 +1049,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
         /*trgCaseIFAP Trigger.isInsert*/
         if (trgCaseIFAP) {
-            if (!CaseChildHelper.noValidationsOnTrgCAseIFAP) {
+            // only consider IFAP cases
+            if (!CaseChildHelper.noValidationsOnTrgCAseIFAP && !IFAPCaseList.isEmpty()) {
                 System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP Trigger.isInsert]');
 
                 Map<ID, List<Case>> mapAccountCases = new Map<ID, List<Case>>();
                 Map<Case, Case> insertedCases = new Map<Case, Case>();
 
                 //accountHasClosedCases
-                if(!IFAPaccountIds.isEmpty()){
-                    for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c 
-                                            WHERE c.AccountId IN :IFAPaccountIds AND c.Status = 'Closed' AND c.RecordTypeId = : IFAPcaseRecordTypeID]){
+                for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c 
+                                        WHERE c.AccountId IN :IFAPaccountIds AND c.Status = 'Closed' AND c.RecordTypeId = : IFAPcaseRecordTypeID]){
 
-                        if(!mapAccountCases.containsKey(currentCase.AccountId)){
-                            mapAccountCases.put(currentCase.AccountId, new List<Case>());
-                        }
-                        mapAccountCases.get(currentCase.AccountId).add(currentCase);
+                    if(!mapAccountCases.containsKey(currentCase.AccountId)){
+                        mapAccountCases.put(currentCase.AccountId, new List<Case>());
                     }
+                    mapAccountCases.get(currentCase.AccountId).add(currentCase);
                 }
-                // only consider IFAP cases
+
                 for (Case newCase : IFAPCaseList) {
                     //fill map with only new cases to be used in IFAP_BusinessRules.IsStatusCanBeSelected
                     insertedCases.put(newCase, null);
@@ -1578,13 +1577,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
 
-                Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCasesWithOldCase, CaseHelper.currentUserProfile, CaseHelper.isIfapAuthorizedUser);
-
                 if(!caseList.isEmpty()){
+
+                    Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCasesWithOldCase, CaseHelper.isIfapAuthorizedUser);
+
                     for(Case IFAPupdatedCase : caseList){
                         if(mapCase.containsKey(IFAPupdatedCase.id))
                             if(mapCase.get(IFAPupdatedCase.id) == false){
-                                System.debug('IFAP_BusinessRules.IsStatusCanBeSelected............trg');
                                 IFAPupdatedCase.addError('The following case status cannot be selected: ' + IFAPupdatedCase.status);
                             }
                     }
