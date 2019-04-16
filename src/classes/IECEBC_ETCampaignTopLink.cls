@@ -10,10 +10,7 @@ public class IECEBC_ETCampaignTopLink {
         String type = 'Click';
         String LastDate = lastFetch.formatGmt('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
         
-       
-        
         List<String> subscribersEmailList = new List<String>();
-        //Map<String, IECEBC_ETHelper.SubscriberProperties> subscribersEmailMap = new Map<String, IECEBC_ETHelper.SubscriberProperties>();
         HttpRequest req = new HttpRequest();
         Http http = new Http();
         
@@ -67,7 +64,6 @@ public class IECEBC_ETCampaignTopLink {
                 List<Map<String, String>> TopLinkClicksMap = new List<Map<String, String>>();
             
             TopLinkClicksMap = IECEBC_ETHelper.parseListMap(res, elements);
-           // system.debug('les elements sont: '+subscribersEmailMap);
                       
             Pattern subKeyPattern = Pattern.compile('^(' + EBC_Campaign__c.sobjecttype.getDescribe().getKeyPrefix() + '[a-zA-Z0-9]{15})_(.*)');
             
@@ -85,13 +81,11 @@ public class IECEBC_ETCampaignTopLink {
                     continue; // Subscriber Key does not match the supported syntax.
                 }
                 
-                //String eventDate = ListMap.get('EventDate');
                 String URL = ListMap.get('URL');
                 if (URL.toLowerCase().startsWith(IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c.toLowerCase() + '/iecebc_optout')) {
                     URL = 'Unsubscribe';
                 }
                 String campaign = subKeyMatcher.group(1);
-                //String email = subKeyMatcher.group(2);                     
                 
                 EBC_Click_Event__c EventClickLink = new EBC_Click_Event__c();
                 

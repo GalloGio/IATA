@@ -104,9 +104,6 @@ global  class AWSTools {
 	 	
 	 }
 
-	// public S3.Status DeleteObject(String Bucket,String Key,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) 
-	// public S3.CopyObjectResult CopyObject(String SourceBucket,String SourceKey,String DestinationBucket,String DestinationKey,String MetadataDirective,S3.MetadataEntry[] Metadata,S3.AccessControlList AccessControlList,DateTime CopySourceIfModifiedSince,DateTime CopySourceIfUnmodifiedSince,String[] CopySourceIfMatch,String[] CopySourceIfNoneMatch,String StorageClass,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) 
-	 
 	 /**
 	 * Ask to S3 rename a file by copying with the new name and deleting the old file
 	 */
