@@ -4663,6 +4663,21 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <value>IATA Alpha/Numeric Code</value>
     </labels>
     <labels>
+        <fullName>IATA_GDPR_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_GDPR_URL</shortDescription>
+        <value>https://customer-portal-iata.force.com/dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_White_Logo</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA GDPR White Logo</shortDescription>
+        <value>https://iata--c.eu12.content.force.com/servlet/servlet.ImageServer?id=0151r0000066HTS&amp;amp;oid=00D2000000008TF&amp;amp;lastMod=1554880895000</value>
+    </labels>
+    <labels>
         <fullName>ICAddressDoctor_adns</fullName>
         <categories>1ID</categories>
         <language>en_US</language>
@@ -17483,6 +17498,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Filter by Geographic Area</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_GeneratedReports</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_GeneratedReports</shortDescription>
+        <value>Generated Reports</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_GeographicArea</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -17725,14 +17747,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_btn_DownloadDailyReport</shortDescription>
-        <value>Download Daily Report</value>
+        <value>Generate Daily Report</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</shortDescription>
-        <value>Download Weekly Report</value>
+        <value>Generate Weekly Report</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</fullName>
@@ -18251,7 +18273,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</shortDescription>
-        <value>Financial Security Amount Provided</value>
+        <value>According to Formula</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
@@ -20597,6 +20619,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Download</shortDescription>
         <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_DownloadAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_DownloadAll</shortDescription>
+        <value>Download All</value>
     </labels>
     <labels>
         <fullName>ISSP_Download_Now</fullName>
@@ -24761,7 +24790,7 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ProgressBar_ApplicationProcessing</shortDescription>
-        <value>Application Processing</value>
+        <value>Application&lt;br/&gt;Processing</value>
     </labels>
     <labels>
         <fullName>ISSP_ProgressBar_Application_Approved</fullName>
@@ -29712,6 +29741,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Renewals &gt; Publications</value>
     </labels>
     <labels>
+        <fullName>NDC_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NDC Troubleshooting</shortDescription>
+        <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
+    </labels>
+    <labels>
         <fullName>NEW_HO_SanityCheck</fullName>
         <categories>NEW_HO_SanityCheck</categories>
         <language>en_US</language>
@@ -29726,13 +29762,6 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>NEW_HO_Submitted</shortDescription>
         <value>Submitted</value>
-    </labels>
-    <labels>
-        <fullName>NDC_Troubleshooting</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NDC Troubleshooting</shortDescription>
-        <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
         <fullName>New</fullName>
@@ -31270,6 +31299,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>OneId_Type</shortDescription>
         <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>OneId_URL_To_GDPR</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_URL_To_GDPR</shortDescription>
+        <value>https://customer-portal-iata.force.com/identity/s/login/?language=en_US&amp;amp;serviceName=dataprivacy</value>
     </labels>
     <labels>
         <fullName>OneId_URL_javaScript</fullName>
@@ -33606,6 +33643,22 @@ title,Title,Name</value>
         <value>005w0000003XCG8</value>
     </labels>
     <labels>
+        <fullName>TECH_GDPR_Community_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of the GDPR community in the URL</shortDescription>
+        <value>dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Network_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
+        <value>Data Privacy</value>
+    </labels>
+    <labels>
         <fullName>Taxes</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -34370,44 +34423,5 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-    <labels>
-        <fullName>IATA_GDPR_URL</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA_GDPR_URL</shortDescription>
-        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/gdprportal</value>
-    </labels>
-    <labels>
-        <fullName>IATA_GDPR_White_Logo</fullName>
-        <categories>Email</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA GDPR White Logo</shortDescription>
-        <value>https://iata--gdprsalim--c.cs106.content.force.com/servlet/servlet.ImageServer?id=0150D000000EJAd&amp;oid=00D0D0000000PrE&amp;lastMod=1547018185000</value>
-    </labels>
-     <labels>
-        <fullName>TECH_GDPR_Community_Name</fullName>
-        <categories>GDPR</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Name of the GDPR community in the URL</shortDescription>
-        <value>dataprivacy</value>
-    </labels>
-    <labels>
-        <fullName>TECH_GDPR_Network_Name</fullName>
-        <categories>GDPR</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
-        <value>Data Privacy</value>
-    </labels>
-    <labels>
-        <fullName>OneId_URL_To_GDPR</fullName>
-        <categories>GDPR</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_URL_To_GDPR</shortDescription>
-        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/identity/s/login/?language=en_US&amp;serviceName=GDPR</value>
     </labels>
 </CustomLabels>

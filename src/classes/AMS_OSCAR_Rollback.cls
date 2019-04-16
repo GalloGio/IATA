@@ -297,7 +297,8 @@ public without sharing class AMS_OSCAR_Rollback {
 			mapIdToOwner.put(owner.Id, owner);
 		}
 
-		Id ownerRTId = AMS_Utils.AccountRoleOwnershipRT;
+		Id ownerRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');	
+
 		List<AMS_Account_Role__c> ownersToCheck = [SELECT Id, Account__c FROM AMS_Account_Role__c 
 												   WHERE Account__c IN :mapAccountToOwners.keySet() AND RecordTypeId = :ownerRTId AND Active__c = true];
 
