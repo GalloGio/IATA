@@ -715,8 +715,6 @@ private class ISSP_APProcess_Test
                                                                 Name = 'test1');
         insert csCity;
 
-        insert new Case_Reason_Service__c(Name='CASS HOT', Service__c='CASS HOT');
-
         Test.startTest();
         System.runAs(newUser)
         {
@@ -848,6 +846,7 @@ private class ISSP_APProcess_Test
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'CASS';
             testCase.CaseArea__c = 'Airline Joining';
+            testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
             insert testCase;
             System.debug('testCase Id: ' + testCase.Id);
 
@@ -956,6 +955,7 @@ private class ISSP_APProcess_Test
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
             testCase.CaseArea__c = 'Airline Change';
+            testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
             insert testCase;
             System.debug('testCase Id: ' + testCase.Id);
 
@@ -1062,6 +1062,7 @@ private class ISSP_APProcess_Test
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
             testCase.CaseArea__c = 'Airline Change';
+            testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
             insert testCase;
             System.debug('testCase Id: ' + testCase.Id);
 
