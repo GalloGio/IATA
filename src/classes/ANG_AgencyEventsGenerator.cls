@@ -25,10 +25,12 @@ public class ANG_AgencyEventsGenerator{
         
     	for(sObject obj: newRecList)	setAccntId.add(String.ValueOf(obj.get(accField)));
 
-        for(Account Accnt:[select id, Status__c, (select id from AMS_Agency_Updates__r where Integration_System__c = 'SAP PI' and Update_Type__c not in ('Update_Sent','Invalid','Deleted')) from Account where id in :setAccntId]){
-            if(AMS_UTILS.ACTIVEAGENCYSTATUS.contains(Accnt.Status__c) && accnt.AMS_Agency_Updates__r.size()==0)
-                setAccountValidForSAP.add(string.valueOf(accnt.id).left(15));
-        }
+        if(!setAccntId.isEmpty()){
+		for(Account Accnt:[select id, Status__c, (select id from AMS_Agency_Updates__r where Integration_System__c = 'SAP PI' and Update_Type__c not in ('Update_Sent','Invalid','Deleted')) from Account where id in :setAccntId]){
+            		if(AMS_UTILS.ACTIVEAGENCYSTATUS.contains(Accnt.Status__c) && accnt.AMS_Agency_Updates__r.size()==0)
+                		setAccountValidForSAP.add(string.valueOf(accnt.id).left(15));
+        	}
+	}
         
         List<ANG_CalloutMapping__c> calloutmappingList = new List<ANG_CalloutMapping__c>();
 

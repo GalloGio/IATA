@@ -1,6 +1,6 @@
 public with sharing class CaseValidationDueDiligenceForAP {
 
-    public static final Id RT_INTERNAL_CASE_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('InternalCasesEuropeSCE').getRecordTypeId();
+    public static final Id RT_INTERNAL_CASE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','InternalCasesEuropeSCE');
     public String message {get;set;}
     public Boolean doRefresh {get;set;}
     private Case cse;
