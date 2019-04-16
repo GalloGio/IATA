@@ -324,6 +324,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_Non_Compliant__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>State_Province_Picklist__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -2693,6 +2693,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>State_Province_Picklist__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This checkbox defines whether the state is a text input or selectlist on the Annual Revalidation Form</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This checkbox defines whether the state is a text input or selectlist on the Annual Revalidation Form</inlineHelpText>
+        <label>State/Province Picklist</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sub_Region__c</fullName>
         <externalId>false</externalId>
         <label>Sub Region</label>
