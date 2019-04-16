@@ -49,6 +49,7 @@ public class TIP_Utils{
 	public static String PARTNER_STATUS_ACTIVE='Active';
 	public static String PARTNER_STATUS_INACTIVE='Inactive';
 	public static String PARTNER_STATUS_IN_PROGRESS='In Progress';
+	public static String PARTNER_STATUS_TERMINATED='Terminated';
 	
 
 	//Partner Product status
@@ -57,6 +58,7 @@ public class TIP_Utils{
 	public static String PARTNER_PRODUCT_STATUS_IN_PROGRESS='IN_PROGRESS';
 	public static String PARTNER_PRODUCT_STATUS_REJECTED='REJECTED';
 	public static String PARTNER_PRODUCT_STATUS_DRAFT='DRAFT';
+	public static String PARTNER_PRODUCT_STATUS_TERMINATED='TERMINATED';	
 
 	//Partner Product status
 	public static String PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP='OPEN_LOOP';
@@ -79,6 +81,18 @@ public class TIP_Utils{
 	//BIN Range RT's
 	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('TIP_BIN_Range__c', 'Unenrolled_Known');
 	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('TIP_BIN_Range__c', 'Enrolled');
+
+    public static final String REPORT_TYPE_TIP_AUTO_REPORTS  = 'TIP_AUTO_REPORTS';
+    public static final String REQUEST_TYPE_TIP_AUTO_REPORTS = 'TIP_AUTO_REPORTS'; 
+    
+    public static final String REMOTE_INVOCATION_STATUS_COMPLETED    = 'Completed';
+    public static final String REMOTE_INVOCATION_STATUS_FAILED       = 'Failed'; 
+    public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
+    public static final String REMOTE_INVOCATION_STATUS_IN_PROGRESS  = 'In Progress';  
+
+    public static final String REMOTE_INVOCATION_ARTEFACT_STATUS_COMPLETED    = 'Completed';
+    public static final String REMOTE_INVOCATION_ARTEFACT_STATUS_FAILED       = 'Failed'; 
+    public static final String REMOTE_INVOCATION_ARTEFACT_STATUS_IN_PROGRESS  = 'In Progress';  
 
 	//TIP-49 - validate IATA code is unique for payment providers
   	/*public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
