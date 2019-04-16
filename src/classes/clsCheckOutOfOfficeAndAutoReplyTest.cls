@@ -23,37 +23,30 @@
 private class clsCheckOutOfOfficeAndAutoReplyTest {
 
     static testMethod void isCaseFromAddressExcludedTest() {
-        
+        List<Case> caseList = new List<Case>();
         Case aCase = new Case();
+        caseList.add(aCase);
                 
-        for(String excludedAddress : new String[]{'servicedesk@kaleconsultants.com','sis_servicedesk@kaleconsultants.com','sishelp@iata.org','sisoperations@iata.org','noreply@iata.org','ach@airlines.org','aia@atpco.net','ichsystems@iata.org','iinetcare@iata.org','rousselb@iata.org','Postmaster','Mailer-Deamon','No-reply'}){
-        	
+        for(String excludedAddress : new String[]{'servicedesk@kaleconsultants.com','sis_servicedesk@kaleconsultants.com','sishelp@iata.org','sisoperations@iata.org','noreply@iata.org','ach@airlines.org','aia@atpco.net','ichsystems@iata.org','iinetcare@iata.org','rousselb@iata.org','Postmaster','Mailer-Deamon','No-reply'}){	
         	aCase.SuppliedEmail = 'sishelp@iata.org';
-        	clsCheckOutOfOfficeAndAutoReply.IsFromAddressExcluded(aCase, 'SIS');
-        	
-        	
+        	clsCheckOutOfOfficeAndAutoReply.IsFromAddressExcluded(caseList, 'SIS');        	
         }
-       
-        
+
         
         aCase.SuppliedEmail = 'toto@tito.com';
-        clsCheckOutOfOfficeAndAutoReply.IsFromAddressExcluded(aCase, 'SIS');
-        
+        clsCheckOutOfOfficeAndAutoReply.IsFromAddressExcluded(caseList, 'SIS');   
     }
     
     static testMethod void isCaseSubjectExcludedTest() {
-                Case aCase = new Case();
-                
-       
-        	
-        	aCase.Subject = 'FAILURE NOTICE';
-        	clsCheckOutOfOfficeAndAutoReply.IsSubjectExcluded(aCase, 'SIS');
-        	
-        	
+        List<Case> caseList = new List<Case>();
+        Case aCase = new Case();
+        caseList.add(aCase);
+            
+    	aCase.Subject = 'FAILURE NOTICE';
+    	clsCheckOutOfOfficeAndAutoReply.IsSubjectExcluded(caseList, 'SIS');
         
         aCase.Subject = 'WATHEVER';
-        clsCheckOutOfOfficeAndAutoReply.IsSubjectExcluded(aCase, 'SIS');
-      
+        clsCheckOutOfOfficeAndAutoReply.IsSubjectExcluded(caseList, 'SIS');
     }
     
 }

@@ -612,14 +612,6 @@ public class ams2gdp_BusinessLogic {
 
 
 		Map<String, Integer> rankByAccount = new Map<String, Integer>();
-		Map<String, String> recordTypes = new Map<String, String>();
-
-		for(RecordType rt : [SELECT Id, Name FROM RecordType WHERE IsActive=true AND SobjectType ='Agency_Owner__c'])
-		    recordTypes.put(rt.Name, rt.Id);
-
-		System.debug('recordTypes >>'+recordTypes);
-				
-		//Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Agency_Owner__c');
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 
 
@@ -675,7 +667,7 @@ public class ams2gdp_BusinessLogic {
 		                                     , Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(a.Account__c)
 		                                     , Related_Account__c=a.Account__c
 		                                     , Owner_ID__c = rank
-		                                     , RecordTypeId = recordTypes.get('GDP')
+		                                     , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
 		                                    ));
 		        
 		    
