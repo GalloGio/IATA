@@ -20,7 +20,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public Boolean mustPreventApply {get; private set;}
 	public Boolean renderConfirmButton {
 		get {
-			return (actionValue != '' && modeValue != '' && actionValue == previousActionValue && ((previousModeValue == 'BSP' && bspValue == previousBspValue && modeValue == 'BSP') || (previousModeValue == 'IATA_Code' && iataCode == previousIataCode && modeValue == 'IATA_Code')));
+			return (!mustPreventApply && actionValue != '' && modeValue != '' && actionValue == previousActionValue && ((previousModeValue == 'BSP' && bspValue == previousBspValue && modeValue == 'BSP') || (previousModeValue == 'IATA_Code' && iataCode == previousIataCode && modeValue == 'IATA_Code')));
 		}
 		private set;
 	}
@@ -179,15 +179,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 				bspAttributes.add(bsp.bspAttribute);
 			}
     		//insert new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
-    	}
-    	else if (actionValue == 'Apply_RHC_regardless'){
-    		for(ANG_BSP_Attributes__c bsp : bspAttributes){
-    			if(bsp.RHC_Amnt_Calc_Type__c != 'formula'){
-    				mustPreventApply = true;
-    				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please proceed to revert existing conditions before applying new conditions.');
-            		ApexPages.addMessage(myMsg);
-    			}
-    		}
     	}
 
     	
