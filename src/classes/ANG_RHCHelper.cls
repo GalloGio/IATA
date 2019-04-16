@@ -24,6 +24,11 @@ public class ANG_RHCHelper {
 
     public static final String RHC_AMOUNT_CALC_TYPE_FIXED_PERC = 'Fixed Percentage';
     public static final String RHC_AMOUNT_CALC_TYPE_FORMULA = 'Formula';
+    
+    private static final Set<String> skipPercentageCalcBspSet = new Set<String>{
+		'BSP-HK', 
+		'BSP-MO'
+	};
 
 	// *********************************************************
 	// *********************** Methods *************************
@@ -197,7 +202,19 @@ public class ANG_RHCHelper {
 
 			//If the field "RHC Amount Calculation Type" is "Fixed Percentage", 
 			//then apply RHC amount and forecasted = % of FS from the BSP Attributes record
-			if(bspAttrRhc != NULL && bspAttrRhc.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_FIXED_PERC){
+			Boolean fixedPercentageCalc = 
+				bspAttrRhc != NULL && 
+				bspAttrRhc.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_FIXED_PERC;
+
+			//If the current BSP is Hong Kong or Macau and 
+			//the agent does not have financial assessment points
+			//skips the fixed percentage calculation
+			Boolean skipFixedPercentageCalc = 
+				fixedPercentageCalc &&
+				(acct.Financial_Assessment_Points__c == NULL) && 
+				skipPercentageCalcBspSet.contains(bspAttrRhc.BSP__r.Name);
+			
+			if(fixedPercentageCalc && !skipFixedPercentageCalc){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: ' + RHC_AMOUNT_CALC_TYPE_FIXED_PERC);
 				double fsPercentage = (bspAttrRhc.FS_Percentage__c == null) ? 0 : bspAttrRhc.FS_Percentage__c;
 				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
@@ -262,6 +279,7 @@ public class ANG_RHCHelper {
 			[SELECT
 				Id,
 				BSP__c,
+				BSP__r.Name,
 				UniqueKey__c,
 				RecordTypeId,
 				Risk_Status__c,

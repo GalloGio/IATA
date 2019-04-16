@@ -100,7 +100,7 @@ public class ANG_RHCAlertTriggerHandler{
         Set<String> notificationTemplates = new Set<String>();
         map<id,ANG_Risk_Alert__c> riskAlertMap = new map<id,ANG_Risk_Alert__c>();
         List<ANG_Risk_Alert__c> orangeRiskAlerts = new List<ANG_Risk_Alert__c>();
-        raAccMap= new map<id,account>();
+        raAccMap = new map<id,account>();
         for(ANG_Risk_Alert__c a : triggerNew){
             
             //NEWGEN-5198
@@ -127,7 +127,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         //prevent breaking already existing logic
         raAccMap.clear();
-            
+
             if(alertsToNotify.isEmpty()) return; //no match, no need to go further
 
             //Fetch email templates and RHC Information 

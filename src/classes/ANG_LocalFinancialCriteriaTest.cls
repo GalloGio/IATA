@@ -792,4 +792,66 @@ private class ANG_LocalFinancialCriteriaTest {
 
     }
 
+    @isTest static void rhcSkipFixedPercentageCalcTypeTest() {
+        
+        Account acct =
+            [SELECT 
+                Id,
+                Name,
+                ANG_HE_RiskStatus__c, 
+                Financial_Assessment_Points__c 
+             FROM 
+                Account
+             WHERE
+                Name = 'Agent MO'
+            ];
+
+        Financial_Security__c fs = createFinancialData(acct.Id);
+
+        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+            ANG_AccountId__c = acct.Id,
+            CurrencyIsoCode = 'EUR',
+            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+            RHC_Amount_Equals_FS_Percent__c = 200
+        );
+
+        insert rhcInfo;
+
+        ANG_RHC_Information__c rhcUpdated = 
+            [SELECT 
+                ANG_RHC_Amount__c, 
+                ANG_RHC_Amount_Forecasted__c 
+             FROM 
+                ANG_RHC_Information__c 
+             WHERE 
+                Id = :rhcInfo.Id
+            ];
+
+        Decimal expectedMinRHCAmount = ANG_Risk_Helper.currencyConverter(COUNTRY_CURRENCY, COUNTRY_MIN_RHC_AMOUNT, rhcInfo.CurrencyIsoCode);
+
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedMinRHCAmount);
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+
+        rhcInfo.ANG_RME_Amount__c = 2000;
+        rhcInfo.ANG_RHC_Amount_Provisional__c = 2000;
+        update rhcInfo;
+
+        rhcUpdated = 
+            [SELECT 
+                ANG_RHC_Amount__c, 
+                ANG_RHC_Amount_Forecasted__c,
+                ANG_Exceeding_Financial_Security__c
+             FROM 
+                ANG_RHC_Information__c 
+             WHERE 
+                Id = :rhcInfo.Id
+            ];
+
+        Decimal expectedAmount = rhcUpdated.ANG_Exceeding_Financial_Security__c + rhcInfo.ANG_RME_Amount__c;
+
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+
+    }
+
 }
