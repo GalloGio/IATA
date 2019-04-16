@@ -111,11 +111,14 @@ public class IDCardPortalControllerTest {
 
         insert idCardAppToInsert;
 
-        Id contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[1]);
-        Id contactId2 = IDCardUtil.CreateContactWhenNewCardIsApproved(idCardApplicationClone);
-        Id contactId3 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
+        Contact contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[1]);
+        Contact contactId2 = IDCardUtil.CreateContactWhenNewCardIsApproved(idCardApplicationClone);
+        Contact contactId3 = IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[3]);
 
-        List<Contact> relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c FROM Contact WHERE Id IN (:contactId1, :contactId2, :contactId3)];
+        List<Contact> relatedContact = new List<Contact>();
+        relatedContact.add(contactId1);
+        relatedContact.add(contactId2);
+        relatedContact.add(contactId3);
         system.debug('Related Contact: ' + relatedContact);
         List<ID_Card__c> idCardToInsert = new List<ID_Card__c>();
 

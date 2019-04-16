@@ -163,8 +163,8 @@ private class OneId_NDCMM_AccountSelection_CTRL_TEST {
         User guestUser = [select Id from User where Name = 'identity Site Guest User'];
         
         system.runAs(guestUser) {
-            OneId_RegistrationProcessController.UserInformation info = OneId_RegistrationProcessController.getUserInformationFromEmail(airlineContact.Email, 'NDCMM');
-            OneId_RegistrationProcessController.registration(airline, airlineContact, 'NDCMM');
+            //OneId_RegistrationProcessController.UserInformation info = OneId_RegistrationProcessController.getUserInformationFromEmail(airlineContact.Email, 'NDCMM');
+            //OneId_RegistrationProcessController.registration(airline, airlineContact, 'NDCMM');
         }
     }
 

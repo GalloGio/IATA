@@ -127,15 +127,6 @@ public with sharing class IECEBC_TestUtility {
 				, Contact.IATA_Code__c
 				from User
 				where Id = : oUser.Username];
-		//System.assertNotEquals( 0, lUser.size(), 'oUser record is not ready in the storage yet: ' + oUser);
-		//System.assertNotEquals( null, lUser[0].ContactId, 'ContactId should not be null');
-		//oUser = lUser[0];
-		
-		//oContact = oUser.Contact; // related Contact record of the community user
-		//oAccount = oUser.Contact.Account; // temp Account
-		
-		
-		
 		
 		List<Contact> lContact = [select Id, Name, FirstName, LastName, Email, Title, Phone
 									, IATA_Code__c
@@ -423,46 +414,10 @@ public with sharing class IECEBC_TestUtility {
 																			   );
 		insert oSubscriptionProductCharge;
 
-		/*
-		
-		Map<Id, Zuora__SubscriptionProductCharge__c> subProdChargeIdToObjectMap = new Map<Id, Zuora__SubscriptionProductCharge__c>([select Id, Name
-						, Zuora__Subscription__r.Name
-						, Zuora__Subscription__r.Zuora__Status__c
-						, Zuora__Subscription__r.Zuora__CustomerAccount__c
-						//, Zuora__Subscription__r.Zuora__Account__c
-						, Zuora__Subscription__r.Zuora__NextRenewalDate__c
-						//, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
-						, Zuora__Subscription__r.Zuora__TermEndDate__c 
-						//, Zuora__Subscription__r.Product_Rate_Plan_Information__c
-						//, Zuora__EffectiveEndDate__c
-						//, Zuora__Price__c
-						//, Zuora__ProductName__c
-						//, Zuora__RatePlanName__c
-						//, Product_Rate_Plan_Charge__c
-						//, Product_Rate_Plan_Charge__r.zqu__ListPrice__c
-						//, Product_Rate_Plan_Charge__r.zqu__Deleted__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c
-						, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Name
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_Cost_Per_Email__c
-						, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.Name
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__Description__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c
-						//, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.ProductCategory__c
-						
-					from Zuora__SubscriptionProductCharge__c
-					where Zuora__Subscription__r.Zuora__CustomerAccount__c in : billingAccountIdToObjectMap.keyset()
-						and Product_Rate_Plan_Charge__r.zqu__Deleted__c = false
-						and Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c in : availableEbcRatePlanIdSet
-						and Zuora__Subscription__r.Zuora__Status__c = 'Active'
-						and Zuora__Subscription__r.Zuora__TermEndDate__c >= TODAY
-					]);
-
- * 
- */
 		return oSubscription;
 	} // end of createEbcSubscription
+
+	
     public static Product_Rate_Plan_Information__c CreateSampleProductRatePlanInfo(String sName, Boolean triable, zqu__ProductRatePlan__c oProductRatePlan, Product_Information__c oProductInfo) {
         Product_Rate_Plan_Information__c prpi = new Product_Rate_Plan_Information__c();
             prpi.Name = sName;

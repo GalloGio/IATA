@@ -251,9 +251,7 @@ global class AmazonFinancialCtrl {
       case check = [Select id, status FROM Case where Id =: cse.id limit 1];
         if (check.status <> 'Submitted') {
           TransformationHelper.NoStatusValidation = true;
-          //CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
           cse.status = 'Submitted';
-          //  cse.IsComplaint__c = true;
           update cse;
           TransformationHelper.NoStatusValidation = false;
 
