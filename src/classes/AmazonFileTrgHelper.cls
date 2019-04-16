@@ -1,7 +1,7 @@
 public class AmazonFileTrgHelper {
 
-    public static final ID RT_CERTIFICATE_ID = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByDeveloperName().get('Certificate').getRecordTypeId();
-    private static final ID RT_SAAM_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('ProcessEuropeSCE').getRecordTypeId();
+    public static final ID RT_CERTIFICATE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'Certificate');
+    private static final ID RT_SAAM_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
     public static String sapNumberRequiredJSON{
         get{
@@ -56,12 +56,12 @@ public class AmazonFileTrgHelper {
 
     public static void AfterInsert(list<AmazonFile__c> listNews) {
         runProcessFromActionField(listNews);
-        sendMailToPortalUsers(listNews, null);
+		sendMailToPortalUsers(listNews, null);
     }
     
     public static void AfterUpdate(map<Id,AmazonFile__c> mapNews, map<Id,AmazonFile__c> mapOlds) {
         runProcessFromActionField(mapNews, mapOlds);
-        sendMailToPortalUsers(mapNews, mapOlds);
+		sendMailToPortalUsers(mapNews, mapOlds);
     }
 
     public static void AfterUndelete(map<Id,AmazonFile__C> trgNewMap){
@@ -380,7 +380,7 @@ public class AmazonFileTrgHelper {
         update updOscar;
     }
 
-    /*** AMSU-139 ***/
+	/*** AMSU-139 ***/
     public static void checkApprover(List<AmazonFile__c> records, Map<Id,AmazonFile__c> oldMap) {
         String usrName = UserInfo.getName();
         Set<String> statusToCheck = new Set<String> {AMS_Utils.REJECTED, AMS_Utils.REJECTED_CLOSED, AMS_Utils.ACCEPTED};
@@ -622,7 +622,7 @@ public class AmazonFileTrgHelper {
             System.debug('Error sending an email sendMassEmail(' + templateName + ',' + listCase + '): ' + e.getMessage());
         }
     }
-
+	
     public static void sendMailToPortalUsers(map<Id,AmazonFile__c> mapNews, map<Id,AmazonFile__c> mapOlds) {
         List<AmazonFile__c> listNews = new List<AmazonFile__c>();
         for(Id key : mapNews.keyset()) {

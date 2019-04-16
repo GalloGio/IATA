@@ -24,13 +24,9 @@ public  class AccountTriggerHelper {
       a.Type = a.Category__c ;
 
     }
-    // SectorCatToIndType = true;
   }
 
-
-
   public static void AccountNoDuplicateBranch (list<Account> triggerNew, map<Id, Account> triggerOldMap) {
-
 
     ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
     map<Integer, Account> TriggerNewAcctsMap = new map<Integer, Account>();
@@ -60,14 +56,11 @@ public  class AccountTriggerHelper {
     */
   public static void CopyCountry (list<Account> TriggerNewList, map<Id, Account> triggeroldmap ) {
 
-
-
-
     list<Account> triggerNew = new list<Account>();
 
     for (Account a : TriggerNewList) {
 
-      if (
+      if(
         (trigger.isInsert  ||
          (a.IATA_ISO_Country__c <> NULL &&
           !a.Is_AIMS_Account__c && trigger.isUpdate &&
@@ -88,9 +81,6 @@ public  class AccountTriggerHelper {
     }
 
     if (!triggerNew.isEmpty()) {
-
-
-
       set<String> developerNames = new set<String> {'IATA_Agency' , 'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA', 'IATA', 'Others', 'Standard_Account'};
       map<Id, String> developerNamePerRecordTypeIds = new map<Id, String>();
       set<id> recordTypeIds = new set<id>();
@@ -99,8 +89,6 @@ public  class AccountTriggerHelper {
       set<Id> IataIDs = new set<Id>();
       set<string> billingNames = new set<String>();
       map<string, list<Integer>> AccIDsPerCountryName = new map<string, list<Integer>>();
-
-
 
       for (String rtName : developerNames) {
         ID rT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', rtName);
@@ -142,7 +130,6 @@ public  class AccountTriggerHelper {
                      )
                     )
                    ) { // AIMS LOGIC THAT IS THE OPPOSITE
-          //  throw new transformationException('a.BillingCountry  ' + a.BillingCountry);
           if (AccIDsPerCountryName.get(a.BillingCountry) == null)
             AccIDsPerCountryName.put(a.BillingCountry, new list<Integer>());
           AccIDsPerCountryName.get(a.BillingCountry).add(i);
@@ -152,8 +139,6 @@ public  class AccountTriggerHelper {
 
         }
       }
-
-
 
       if (!AccountPerInteger.isEmpty() ) {
 
@@ -180,74 +165,60 @@ public  class AccountTriggerHelper {
           }
         }
 
-
         for (String cName : AccIDsPerCountryName.keySet()) { // aims logic
           for (integer j : AccIDsPerCountryName.get(cName)) {
-            //   throw new transformationException('PEOPLES REPUBLIC OF CHINA  ' + cName  +'      '+  IdPerMapISOCountriesName.get(cName.trim().tolowerCase()));
             if (IdPerMapISOCountriesName.get(cName.trim().tolowerCase())<> null)
               AccountPerInteger.get(j).IATA_ISO_Country__c = IdPerMapISOCountriesName.get(cName.trim().tolowerCase()); // to do trim and to lower and errors????????
 
           }
         }
       }
-
     }
-
-
   }
-
 
 
   public static void copyInfoFromHqToBranchOnInsertAndUpdate(list<Account> triggerNew, map<Id, Account> triggerOldMap) {
 
+    Set<string> fieldsToCheck = new Set<String> {'Type',
+                                                'Area_of_Operation__c',
+                                                'Type_of_Service__c',
+                                                'BSP_CI_Valid__c',
+                                                'BSP_FOC_Valid__c',
+                                                'CASS_CI_Valid__c',
+                                                'CASS_FOC_Valid__c',
+                                                'Airline_designator__c',
+                                                'IATACode__c',
+                                                'TradeName__c',
+                                                'ACLI_Status__c'
+                                              };
 
-    //  throw new transformationException('' +triggerNew);
-
-    set<string> fieldsToCheck = new set<String> {
-      'Type',
-      'Area_of_Operation__c',
-      'Type_of_Service__c',
-      'BSP_CI_Valid__c',
-      'BSP_FOC_Valid__c',
-      'CASS_CI_Valid__c',
-      'CASS_FOC_Valid__c',
-      'Airline_designator__c',
-      'IATACode__c',
-      'TradeName__c',
-      'ACLI_Status__c'
-    };
-
-    ID hqRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
     ID brRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
     ID StandardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
     map<Id, list<Account>> branchesPerParentIDs = new map<Id, list<Account>>();
-    //      throw new transformationException('' +triggerisInsert  );
+
     for (Account a : triggernew) {
+
       for (String field : fieldsToCheck) {
-        if ( // this first part is regarding the real branches
 
-          a.parentId <> null &&
-
-          (a.RecordTypeId == brRT  || ( a.RecordTypeId == StandardRT && a.industry == 'Airline' )) &&
-          //    a.ParentId <> triggeroldmap.get(a.id).ParentId &&
-
-          (
-            (  trigger.isInsert)
+        // this first part is regarding the real branches
+        if(a.parentId <> null 
+          &&(a.RecordTypeId == brRT || (a.RecordTypeId == StandardRT && a.industry == 'Airline')) 
+          &&(
+            (trigger.isInsert)
             ||
-            (trigger.isUpdate  &&  a.ParentId <> triggeroldmap.get(a.id).ParentId)
+            (trigger.isUpdate && a.ParentId <> triggeroldmap.get(a.id).ParentId)
             ||
-            (trigger.isUpdate  && a.RecordTypeId <> triggeroldmap.get(a.id).RecordTypeId)
+            (trigger.isUpdate && a.RecordTypeId <> triggeroldmap.get(a.id).RecordTypeId)
           )
-
-        ) {
+        ){
+          
           if (branchesPerParentIDs.get(a.parentId) == null)
             branchesPerParentIDs.put(a.parentID, new list<Account>());
           branchesPerParentIDs.get(a.ParentId).add(a);
         }
       }
     }
-
 
     if (!branchesPerParentIDs.isEmpty()) {
       set<ID> parentIDS = branchesPerParentIDs.keyset();
@@ -258,7 +229,9 @@ public  class AccountTriggerHelper {
 
       fieldsINtheQuery = fieldsINtheQuery.replace('*,', '');
 
-      string query = 'SELECT id,recordTypeID,ParentId,name,' + fieldsINtheQuery + ' FROM Account   WHERE  ID IN:parentIDS' ; //Id IN:parentIDS OR
+      string query = 'SELECT id,recordTypeID,ParentId,name,' + fieldsINtheQuery 
+                   + ' FROM Account '
+                   + ' WHERE ID IN :parentIDS';
 
       List<Account> AcctsDB = database.query(query);
 
@@ -268,34 +241,26 @@ public  class AccountTriggerHelper {
           for (String field : fieldsToCheck) {
             branch.put(field, a.get(field));
           }
-          string site = transformationHelper.buildSiteForAcli(a.IATACode__c, a.Airline_designator__c ,
-                        branch.IATA_ISO_Country__r.ISO_Code__c,
-                        null);
+          string site = transformationHelper.buildSiteForAcli(a.IATACode__c, a.Airline_designator__c, branch.IATA_ISO_Country__r.ISO_Code__c, null);
           Branch.site = site;
           Branch.Site_index__c = site;
         }
       }
-
     }
-
-
   }
 
 
   public static void CopyFromHqToBRAfterUpdate(map<id, Account> triggerNew) {
 
-
-    set<string> fieldsToCheck = new set<String> {    'Area_of_Operation__c',
-        'Type_of_Service__c', 'Type',
-        'BSP_CI_Valid__c', 'BSP_FOC_Valid__c', 'CASS_CI_Valid__c',
-        'CASS_FOC_Valid__c', 'Airline_designator__c', 'IATACode__c',
-        'TradeName__c',  'ACLI_Status__c', 'Airline_Prefix__c'
+    set<string> fieldsToCheck = new set<String> { 'Area_of_Operation__c', 'Type_of_Service__c', 'Type',
+                                                  'BSP_CI_Valid__c', 'BSP_FOC_Valid__c', 'CASS_CI_Valid__c',
+                                                  'CASS_FOC_Valid__c', 'Airline_designator__c', 'IATACode__c',
+                                                  'TradeName__c', 'ACLI_Status__c', 'Airline_Prefix__c'
                                                 };
 
     ID hqRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
     ID brRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
     ID StandardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-
 
     map<Id, Account> parentAcctPerIds = new map<Id, Account>();
     for (Account a : triggerNew.values()) {
@@ -305,7 +270,6 @@ public  class AccountTriggerHelper {
         }
       }
     }
-
 
     if (parentAcctPerIds <> null && parentAcctPerIds.size() > 0) {
 
@@ -319,7 +283,7 @@ public  class AccountTriggerHelper {
 
       string query = 'SELECT id,recordTypeID,parent.id,name,' + fieldsINtheQuery + ' FROM Account WHERE parent.id IN :parentidS and (recordtypeID =\'' + brRT + '\'OR recordtypeID =\'' + StandardRT + '\')';
 
-      system.debug('wuery -->' + query);
+      system.debug('query -->' + query);
 
       List<Account> AcctsDB = database.query(query);
 
@@ -328,7 +292,6 @@ public  class AccountTriggerHelper {
         for (String field : fieldsToCheck) {
           a.put(field, parentAcctPerIds.get(a.parent.id).get(field));
         }
-        //a.name =parentAcctPerIds.get(a.parent.id).TradeName__c <> null ? parentAcctPerIds.get(a.parent.id).tradename__c : parentAcctPerIds.get(a.parent.id).name;
         childrenTOUpdate.add(a);
 
       }

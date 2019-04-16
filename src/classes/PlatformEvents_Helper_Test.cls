@@ -47,7 +47,7 @@ private class PlatformEvents_Helper_Test {
         
         	delete con;
 
-        	undelete con;
+        	//undelete con;
 
         test.stopTest();
     }

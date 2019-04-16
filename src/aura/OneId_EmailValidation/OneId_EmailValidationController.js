@@ -1,4 +1,12 @@
 ({
+    doInit : function(component, event, helper){
+        // disable email if service = NDCMM and is not guest user
+        if(component.get("v.serviceName") == 'NDCMM' && !component.get("v.isGuest")){
+            // email should be disabled
+            component.find("email").set("v.disabled", true);
+        }
+    },
+    
 	checkTerms: function(component, event, helper) {
         // Check fields validity
         if (component.get("v.Terms") && helper.validateEmail(component)) {
@@ -17,5 +25,9 @@
                 component.find("email").set("v.disabled", true);
             }
         }
+    },
+    
+    next : function(component, event, helper){
+        helper.next(component);
     }
 })

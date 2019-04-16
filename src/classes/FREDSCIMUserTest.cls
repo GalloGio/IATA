@@ -42,9 +42,24 @@ private class FREDSCIMUserTest {
 		
         SCIMUser obj = SCIMUser.parse(json);        
         FREDSCIMUser test = new FREDSCIMUser(obj.username, obj.name.familyName,obj.name.givenName, obj.externalid, UserInfo.getUserEmail());
-		
-		FRED_UserProvisioningRequestHandler.increaseCodeCoverage();
-        
     }
-    
+   
+    @isTest
+	static void UserProvisioningRequestUpdateTrigger(){	 
+                  
+        Test.startTest();
+        
+	        UserProvisioningRequest u = new UserProvisioningRequest();
+	        u.SalesforceUserId = UserInfo.getUserId();
+	        u.ConnectedAppId = [SELECT id FROM ConnectedApplication WHERE name = 'FRED_Provisioning' LIMIT 1].id;
+	        u.State = 'New';
+	        u.Operation = 'Create';
+	        u.ApprovalStatus = 'Required';
+	
+	        database.insert(u);
+	        u.state = 'Completed';
+	        database.update(u);
+
+        Test.stopTest();
+	}
 }
