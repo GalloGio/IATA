@@ -22,7 +22,7 @@ private class ISSP_TIP_Home_Controller_Test {
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
+        parent.sector__c = 'Travel Agent';	
         parent.Location_Type__c = 'HO';
         //parent.RecordTypeId = TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID;
         parent.Account_Role__c = 'Payment Provider';
@@ -224,7 +224,7 @@ private class ISSP_TIP_Home_Controller_Test {
         test.stopTest();
     }
 
-    //------------------------------test for enrolment methods-------------------
+    //------------------------------test for enrolment methods------------------- 
     @isTest
     static void testEditContact() {
         setupTest();
