@@ -39,6 +39,33 @@ public with sharing class SidraLiteHelperForIFAP {
         if ( STATUS_NOT_VALID.contains(parentCase.Status) ){
             throw new SidraLiteException('A SIDRA lite case cannot be created when the parent case status is ' + parentCase.Status);
         }
+
+        /*NEWGEN-5320*/
+        verifyNewgenBusinessRules(parentCase);
+        
+    }
+
+    public static void verifyNewgenBusinessRules(Case parentCase){
+
+        Set<String> statusIFAP = new set<String>{'Agent Notified (Mail)','Agent Notified (Email)','Financial Statements Uploaded','Sanity Check Failure'};
+
+        boolean firstRule = parentCase.FA_Second_Deadline_Date__c < System.today();
+        boolean secondRule = STATUS_FOR_FA.contains(parentCase.Status);
+
+        Account acct= [Select Id, ANG_IsNewGenAgency__c, (Select Id from Financial_Securities__r where Security_Status__c IN ('Active','Close to Expiry Date')) from Account where Id=:parentCase.accountId];
+
+        boolean thirdRule = !acct.Financial_Securities__r.isEmpty();
+        
+        if(firstRule && secondRule && thirdRule && acct.ANG_IsNewGenAgency__c)
+            throw new SidraLiteException('Invalid action, you need to click on the button in order to apply Cash condition true.');
+
+        firstRule = parentCase.Financial_Review_Result__c <> null && parentCase.Financial_Review_Result__c <> '';
+        
+        secondRule = parentCase.Assessment_Performed_Date__c > parentCase.FA_Second_Deadline_Date__c;
+
+        if(firstRule && secondRule && acct.ANG_IsNewGenAgency__c)
+            throw new SidraLiteException('Invalid action, you need to click on the button in order to remove Cash condition.');
+
     }
 
     /**
