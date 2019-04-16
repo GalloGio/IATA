@@ -1,4 +1,4 @@
-public with sharing class CaseHelper {
+public class CaseHelper {
 
 	public static Profile currentUserProfile{
         get{
