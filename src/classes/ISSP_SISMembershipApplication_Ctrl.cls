@@ -1,11 +1,10 @@
 global class ISSP_SISMembershipApplication_Ctrl {
 
     public static final String APP_NAME = 'Join SIS e-Invoicing';
-    public static final Id CASE_RT_AIRLINE_PARTICIPATION = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('IDFS_Airline_Participation_Process').getRecordTypeId();
-    public static final Map<String,Schema.RecordTypeInfo> MAP_AP_RT = Schema.SObjectType.AP_Process_Form__c.getRecordTypeInfosByDeveloperName();
-    public static final Id AP_RT_ISPA = MAP_AP_RT.get('SIS_Application_ISPA').getRecordTypeId();
-    public static final Id AP_RT_ISUA = MAP_AP_RT.get('SIS_Application_ISUA').getRecordTypeId();
-    public static final Id AP_RT_TOU  = MAP_AP_RT.get('SIS_Application_TOU').getRecordTypeId();
+    public static final Id CASE_RT_AIRLINE_PARTICIPATION = RecordTypeSingleton.getInstance().getRecordTypeId('Case','IDFS_Airline_Participation_Process');
+    public static final Id AP_RT_ISPA = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_ISPA');
+    public static final Id AP_RT_ISUA = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_ISUA');
+    public static final Id AP_RT_TOU  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_TOU');
     public static final Map<Id,String> MAP_RECORDTYPE_FORMS = new Map<Id,String>{
         AP_RT_ISPA => 'ISPA',
         AP_RT_ISUA => 'ISUA',
