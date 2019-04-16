@@ -798,6 +798,8 @@ public class AmazonFileTrgHelper {
 
                 ID templateId = PortalServiceAccessTriggerHandler.getEmailTemplateIdByName(ENV.EmailTemplateData.ISSP_TIP_notifyNewExternalReports);
 
+                OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+
                 EmailTemplate emailTemplate = [Select Id, Subject, HtmlValue, Body
                                                  From EmailTemplate
                                                 Where DeveloperName = :ENV.EmailTemplateData.ISSP_TIP_notifyNewExternalReports];
@@ -839,6 +841,10 @@ public class AmazonFileTrgHelper {
                         email.setTargetObjectId(userId);
                     else
                         email.setTargetObjectId(key);
+
+                    if ( owea.size() > 0 ) {
+                        email.setOrgWideEmailAddressId(owea[0].Id);
+                    }
 
                     email.setSaveAsActivity(false);
 
