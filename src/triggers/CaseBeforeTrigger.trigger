@@ -1579,7 +1579,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
                 if(!caseList.isEmpty()){
 
-                    Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCasesWithOldCase, CaseHelper.isIfapAuthorizedUser);
+                    Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCasesWithOldCase, CaseHelper.currentUserProfile, CaseHelper.isIfapAuthorizedUser);
 
                     for(Case IFAPupdatedCase : caseList){
                         if(mapCase.containsKey(IFAPupdatedCase.id))
