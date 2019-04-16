@@ -251,7 +251,10 @@ public class ISSP_AMC_DAO {
             caseRecord.RecordTypeId = recordTypeId;
             caseRecord.Status = ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN;
             caseRecord.Visible_on_ISS_Portal__c = true;
+            caseRecord.Assign__c = true;
             
+            system.debug('DB Case Assign ' + caseRecord.Assign__c);
+
             if(isToInsert){
                 insert caseRecord;
             }
@@ -459,7 +462,21 @@ public class ISSP_AMC_DAO {
                 //TODO  
 
                 caseRecord.Status = ISSP_AMC_Constants.AMC_CASE_STATUS_SUBMITTED;
+                
+                
+                //Fetching the assignment rules on case
+                AssignmentRule AR = new AssignmentRule();
+                AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
+                //Creating the DMLOptions for "Assign using active assignment rules" checkbox
+                Database.DMLOptions dmlOpts = new Database.DMLOptions();
+                dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+                //Setting the DMLOption on Case instance
+                caseRecord.setOptions(dmlOpts);
                 update caseRecord;
+
+
+
+                system.debug('DB Case Assign 2' + caseRecord.Assign__c);
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO,'Request Submited'));
 
                 caseUrl = '/ISSP_Case?caseId=' + caseRecord.Id + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
@@ -1136,7 +1153,7 @@ public class ISSP_AMC_DAO {
                         String errorSectionFields = '<ul>';
 
 
-                        if(participation.Date_when_airport_has_been_operational__c == null){
+                        if(participation.Date_when_airport_has_been_operational__c == null || String.isEmpty(participation.Date_when_airport_has_been_operational__c)){
                             errorSectionFields += '<li>' + Label.ISSP_AMC_AIRPORT_OPERATIONAL_QUESTION + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
                             hasError = true;                            
                         }

@@ -48,7 +48,7 @@
 	                </div>
 	                <div class="row">
 	                    <div class="col-md-7 col-md-offset-5">
-	                        <apex:outputLink value="https://{!amcFiles.Airline_Designator__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
+	                        <apex:outputLink value="{!amcFiles.Airline_Designator__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
 	                    </div>
 	                </div>
 	                <div class="col-md-12">
@@ -75,7 +75,7 @@
 	                </div>
 	                <div class="row">
 	                    <div class="col-md-7 col-md-offset-5">
-	                        <apex:outputLink value="https://{!amcFiles.Accounting_Prefix__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
+	                        <apex:outputLink value="{!amcFiles.Accounting_Prefix__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
 	                    </div>
 	                </div>
 	                <div class="col-md-12">
@@ -118,7 +118,7 @@
 	                </div>
 	                <div class="row">
 	                    <div class="col-md-7 col-md-offset-5">
-	                        <apex:outputLink value="https://{!amcFiles.Baggage_Tag_Range_Code__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
+	                        <apex:outputLink value="{!amcFiles.Baggage_Tag_Range_Code__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
 	                    </div>
 	                </div>
 	                <div class="col-md-12">
