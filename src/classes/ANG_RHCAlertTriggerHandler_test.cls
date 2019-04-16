@@ -937,7 +937,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    test.StartTest();
 
 	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-		    Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+		    Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
 		    ang_Severity__c='Red',
 		    ANG_Account__c = a.Id
 	    );
@@ -1004,7 +1004,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    test.StartTest();
 	    
 	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-		    Recordtypeid=Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+		    Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
 		    ang_Severity__c='Red',
 		    ANG_Account__c = a.Id
 	    );
