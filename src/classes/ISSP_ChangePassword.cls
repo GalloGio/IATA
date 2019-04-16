@@ -102,6 +102,9 @@ public without sharing class ISSP_ChangePassword {
                     else if(serviceName == 'FRED'){                            
                         pageRef = null;   
                     }
+                    else if(serviceName == 'NDCMM'){
+                        pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/ndcmm?serviceName=NDCMM' + commParam));
+                    }
                     else{
                         pageref = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam));
                     }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>svetlanat@iata.org</email>
+    <name>Cases - ACC Europe Bank Guarantees</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HubMadridACC</publicGroup>
+            <publicGroup>IDFSEuropeallusers</publicGroup>
+        </publicGroups>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>
