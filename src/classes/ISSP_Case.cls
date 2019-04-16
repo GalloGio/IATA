@@ -743,6 +743,9 @@ public without sharing class ISSP_Case {
             else if (filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Completed')){
                 returnVal='Assigned';
             }
+            else if (filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Submitted')){
+                returnVal='Submitted';
+            }
             /*
             else if (filedName.equalsIgnoreCase('CaseType') && fieldValueToMapp.equals('Solution Provided')){
 
