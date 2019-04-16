@@ -110,7 +110,7 @@ private class ISSP_TIP_Home_Controller_Test {
             insert newCase;
             PageReference pageRef = Page.ISSP_TIP_Home;
             Test.setCurrentPage(pageRef);
-            //controller = new ISSP_TIP_Home_Controller();
+            controller = new ISSP_TIP_Home_Controller();
         }
     }
 
