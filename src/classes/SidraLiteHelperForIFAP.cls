@@ -207,7 +207,10 @@ public with sharing class SidraLiteHelperForIFAP {
                     throw new SidraLiteException('Cannot udpate a 2nd FA non-compliance case. The 2nd FA Deadline is ' + parentCase.FA_Second_Deadline_Date__c.format());
                 }
                 parentCase.secondFAnonComplianceDate__c = Date.today();
-                parentCase.FA_Third_Deadline_Date__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+                //NEWGEN-5298: Only applied for Newgen Agents - FA_Third_Deadline_Date__c = Today + 365 days
+                if(account.ANG_IsNewGenAgency__c) parentCase.FA_Third_Deadline_Date__c = Date.today().addDays(365);
+
+                else parentCase.FA_Third_Deadline_Date__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
                 if (SidraLiteUtil.isAccountActive(account) || SidraLiteUtil.isLastSidraCase(childCase) ) {
                     childCase.SIDRA_Lite_Default_Date__c = Date.today();
                 }
