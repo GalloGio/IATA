@@ -1,174 +1,119 @@
 public with sharing class ANG_ProgressBarHelper {
 
-	private static final String PROGRESS = 'inProgress';
-	private static final String DONE = 'done';
-	private static final String NOT_DONE = 'notDone';
-	private static final String ERROR = 'error';
+    private static final String PROGRESS = 'inProgress';
+    private static final String DONE = 'done';
+    private static final String NOT_DONE = 'notDone';
+    private static final String ERROR = 'error';
 
-	public List<ANG_ProgressNode> progressNodes{get; set;}
+    public List<ANG_ProgressNode> progressNodes{get; set;}
+    public ANG_ProgressNode selectedNode{get;set;}
 
-	public ANG_ProgressBarHelper(String recordType, Map<String, String> objectsIds) {
+    public ANG_ProgressBarHelper(Case cse) {
+        this.progressNodes = new List<ANG_ProgressNode>();
 
-		recordType = '%' + recordType + '%';
+        ANG_ProgressBarSetting__mdt setting = getProgressBarSetting(cse);
+        if (setting==null) {
+            System.debug('ANG_ProgressBarHelper: No valid ANG_ProgressBarSetting__mdt found.');
+            return;
+        }
 
-		List<ANG_ProgressBarSettings__c> settings =	[Select ValueOk__c,
-															ValueProgress__c,
-															Name,
-															Label__c,
-															Order__c,
-															RecordType__c,
-															ValueError__c,
-															Label_Translatable__c
-													   From ANG_ProgressBarSettings__c
-													  Where RecordType__c like : recordType
-												      Order by Order__c];
+        System.debug('ANG_ProgressBarHelper: Using setting ' + setting);
+        list<ANG_ProgressBarStep__mdt > listSteps = [
+            SELECT MasterLabel,
+                   Description__c,
+                   ValueProgress__c,
+                   ValueOk__c,
+                   ValueError__c,
+                   IconProgress__c,
+                   IconOk__c,
+                   IconError__c,
+                   IconNotDone__c,
+                   Is_Visible__c,
+                   Order__c
+            FROM ANG_ProgressBarStep__mdt
+            WHERE Parent__c = :setting.Id
+            ORDER BY Order__c ASC];
 
-		progressNodes = new List<ANG_ProgressNode>();
+        for(ANG_ProgressBarStep__mdt step : listSteps) {
+            System.debug('ANG_ProgressBarHelper: Processing step ' + step);
 
-		for(ANG_ProgressBarSettings__c setting : settings) {
+            if(step.Is_Visible__c==null || processStatus(step.Is_Visible__c, cse.Id)) {
 
-			List<String> ValuesProgress = new List<String>();
-			List<String> ValuesOk = new List<String>();
-			List<String> ValuesError = new List<String>();
+                Boolean isDone = false;
+                Boolean isError = false;
+                Boolean isProgress = processStatus(step.ValueProgress__c, cse.Id);
 
-			if(setting.ValueProgress__c != null)
-				ValuesProgress = setting.ValueProgress__c.split('\\|');
+                if(!isProgress) {
+                    isDone = processStatus(step.ValueOk__c, cse.Id);
+                }
 
-			if(setting.ValueOk__c != null)
-				ValuesOk = setting.ValueOk__c.split('\\|');
+                if(!isProgress && !isDone) {
+                    isError = processStatus(step.ValueError__c, cse.Id);
+                }
 
-			if(setting.ValueError__c != null)
-				ValuesError = setting.ValueError__c.split('\\|');
+                String status;
+                if(isProgress) {
+                    status = PROGRESS;
+                } else if(isDone) {
+                    status = DONE;
+                } else if(isError) {
+                    status = ERROR;
+                } else {
+                    status = NOT_DONE;
+                }
 
-			Boolean isDone = false;
-			Boolean isError = false;
-			Boolean isProgress = processValues(ValuesProgress, objectsIds);
+                ANG_ProgressNode node =
+                    new ANG_ProgressNode(step, status);
+                this.progressNodes.add(node);
 
-			if(!isProgress) {
-				isDone = processValues(ValuesOk, objectsIds);
-			}
+                // Select first node in progress
+                if(this.selectedNode==null && status==PROGRESS) {
+                    this.selectedNode = node;
+                }
 
-			if(!isProgress && !isDone) {
-				isError = processValues(ValuesError, objectsIds);				
-			}
+            }
+        }
+    }
 
-			String status;
-			if(isProgress) {
-				status = PROGRESS;
-			} else if(isDone) {
-				status = DONE;
-			} else if(isError) {
-				status = ERROR;
-			} else {
-				status = NOT_DONE;
-			}
+    /**
+        Finds the Progress bar setting matching the input case, if exists
+    **/
+    private ANG_ProgressBarSetting__mdt getProgressBarSetting(Case cse) {
+        list<ANG_ProgressBarSetting__mdt> listSetting =[
+            SELECT Id, Condition__c
+            FROM ANG_ProgressBarSetting__mdt
+            WHERE RecordType__c = :cse.RecordType.DeveloperName];
 
-			progressNodes.add(new ANG_ProgressNode(setting.Label__c, 
-												   setting.Label_Translatable__c,
-												   status,
-											       setting.Order__c));	
-		}
-	}
+        for (ANG_ProgressBarSetting__mdt setting: listSetting) {
+            String query = 'SELECT Id FROM Case WHERE Id=\'' + cse.Id + '\'';
+            if (setting.Condition__c!=null) {
+                query+= ' AND ' + setting.Condition__c;
+            }
+            System.debug('Test Setting ' + setting + ' with query: ' + query);
+            List<sObject> listResult = Database.query(query);
+            if (!listResult.isEmpty()) return setting;
+        }
+        return null;
+    }
 
-	private Boolean processValues(List<String> values, Map<String, String> objectsIds) {
+    /**
+        Executes a condition for a specific step
+    **/
+    private Boolean processStatus(String condition, Id sobjectId) {
+        String query = 'SELECT Id'
+        + ' FROM ' + sobjectId.getSobjectType()
+        + ' WHERE Id = \'' + sobjectId + '\'';
+        if (!String.isEmpty(condition)) {
+            query += ' AND (' + condition + ')';
+        }
 
-		List<String> operators = new List<String>();
-		for(String aux : values) {
+        try {
+            List<sObject> listResult = Database.query(query);
+            return !listResult.isEmpty();
+        } catch (Exception e) {
+            System.debug('processStatus returned false because there was an error in the query: ' + query);
+            return false;
+        }
+    }
 
-			if (aux.toUpperCase() == 'AND' || aux.toUpperCase() == 'OR') {
-				operators.add(aux.toUpperCase());
-			} else {
-
-				//Separate the object.field from the value
-				List<String> aux2 = aux.split('=');
-
-				// If there is no equal sign then it's always false.
-				if(aux2.size() == 1) {
-					return false;
-				}
-
-				String objField = aux2[0];
-				String val = aux2[1];
-
-				//Separate object from field
-				List<String> aux3 = objField.split('\\.');
-
-				String obj = aux3[0].toUpperCase();
-				String field = aux3[1];
-
-				//Check if the field has the value
-				Boolean status = executeSOQLQuery(obj,
-											   	  field,
-											   	  val,
-											   	  objectsIds);
-
-				operators.add(String.valueOf(status));
-			}
-		}
-		return evaluate(operators);
-	}
-
-	private Boolean evaluate(List<String> operators) {
-		Boolean rc = false;
-		Boolean isAnd = false;
-		for(String op : operators) {
-			if(op == 'AND' || op == 'OR') {
-				isAnd = (op == 'AND');
-			} else {
-				if(isAnd) {
-					rc = (rc && Boolean.valueOf(op));
-				} else {
-					rc = (rc || Boolean.valueOf(op));
-				}
-			}
-		}
-		return rc;
-	}
-
-	private Boolean executeSOQLQuery(String soqlObject,
-								     String soqlField,
-									 String value,
-									 Map<String, String> objectsIds) {
-
-		if(objectsIds.containsKey(soqlObject)) {
-
-			if(objectsIds.get(soqlObject) != null) {
-				Boolean flagNotin = value.contains('<notin>');
-				if(flagNotin) {
-					value = value.replace('<notin>','');
-				}
-
-				Set<String> okSet = new Set<String>(value.split(';'));
-
-				String soqlStr = 'Select ' + soqlField + ' From ' + soqlObject + ' Where id = \'' + objectsIds.get(soqlObject) + '\'';
-
-				List<sObject> sobjList = Database.query(soqlStr);
-
-				if(!sobjList.isEmpty()) {
-					SObject so = sobjList[0];
-					Object v = so.get(soqlField);
-
-					String testValue;
-					Boolean isBoolean = false;
-					if(v instanceof Boolean) {
-						isBoolean = true;
-						testValue = String.valueOf((Boolean)v);
-					} else {
-						testValue = (String)v;	
-					}				
-
-					if(isBoolean) {
-						return (okSet.contains(testValue));
-					} else {
-						return ((!flagNotin && okSet.contains(testValue)) || (flagNotin && !okSet.contains(testValue)));
-					}
-
-				}
-			}
-			return false;
-		} else {
-			System.debug(LoggingLevel.ERROR, 'Missing id for the sObject : ' + soqlObject);
-			return false;
-		}
-	}
 }
