@@ -4663,6 +4663,21 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <value>IATA Alpha/Numeric Code</value>
     </labels>
     <labels>
+        <fullName>IATA_GDPR_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_GDPR_URL</shortDescription>
+        <value>https://customer-portal-iata.force.com/dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_White_Logo</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA GDPR White Logo</shortDescription>
+        <value>https://iata--c.eu12.content.force.com/servlet/servlet.ImageServer?id=0151r0000066HTS&amp;amp;oid=00D2000000008TF&amp;amp;lastMod=1554880895000</value>
+    </labels>
+    <labels>
         <fullName>ICAddressDoctor_adns</fullName>
         <categories>1ID</categories>
         <language>en_US</language>
@@ -18251,7 +18266,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</shortDescription>
-        <value>Financial Security Amount Provided</value>
+        <value>According to Formula</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_IATA_CODE_SEARCH_HE</fullName>
@@ -24749,6 +24764,84 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Product Subcategory</value>
     </labels>
     <labels>
+        <fullName>ISSP_ProgressBar_Agreement</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Agreement</shortDescription>
+        <value>Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_ApplicationProcessing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_ApplicationProcessing</shortDescription>
+        <value>Application&lt;br/&gt;Processing</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Application_Approved</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Application_Approved</shortDescription>
+        <value>Application Approved</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Application_Review</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Application_Review</shortDescription>
+        <value>Application Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_ChangeProcessing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_ChangeProcessing</shortDescription>
+        <value>Change Processing</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_FinalValidation</fullName>
+        <categories>ISSP: ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_FinalValidation</shortDescription>
+        <value>Final&lt;br/&gt;Validation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Financial_Security</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Financial_Security</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Payment</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Payment</shortDescription>
+        <value>Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_SanityCheck</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_SanityCheck</shortDescription>
+        <value>Sanity Check</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Submitted</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Submitted</shortDescription>
+        <value>Submitted</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Public</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -29641,6 +29734,22 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>https://identity.iata.org/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
+        <fullName>NEW_HO_SanityCheck</fullName>
+        <categories>NEW_HO_SanityCheck</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NEW_HO_SanityCheck</shortDescription>
+        <value>Sanity Check</value>
+    </labels>
+    <labels>
+        <fullName>NEW_HO_Submitted</fullName>
+        <categories>NEW_HO_Submitted</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NEW_HO_Submitted</shortDescription>
+        <value>Submitted</value>
+    </labels>
+    <labels>
         <fullName>New</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -30808,6 +30917,13 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
     </labels>
     <labels>
+        <fullName>OneId_NDCMM_Terms_Of_Use_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Terms_Of_Use_Link</shortDescription>
+        <value>http://identity.iata.org/servlet/servlet.FileDownload?file=0151r0000066GgB</value>
+    </labels>
+    <labels>
         <fullName>OneId_NDCMM_Troubleshooting</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -31171,6 +31287,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Type</value>
     </labels>
     <labels>
+        <fullName>OneId_URL_To_GDPR</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_URL_To_GDPR</shortDescription>
+        <value>https://customer-portal-iata.force.com/identity/s/login/?language=en_US&amp;amp;serviceName=dataprivacy</value>
+    </labels>
+    <labels>
         <fullName>OneId_URL_javaScript</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -31240,6 +31364,22 @@ Please check your mailbox to finalize the registration process.</value>
         <protected>false</protected>
         <shortDescription>OneId_Your request has been successfully sent</shortDescription>
         <value>Your request has been successfully sent</value>
+    </labels>
+    <labels>
+        <fullName>OneId_dataprivacy_Troubleshooting</fullName>
+        <categories>One Identity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Text for link tor online help on OneIdentity login page for data privacy portal</shortDescription>
+        <value>Online Help</value>
+    </labels>
+    <labels>
+        <fullName>OneId_dataprivacy_Troubleshooting_Link</fullName>
+        <categories>One Identity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link on online help link in One Identity login page for data privacy portal</shortDescription>
+        <value>https://www.iata.org/pages/contact.aspx</value>
     </labels>
     <labels>
         <fullName>Oneid_request_acess_to_a_new_service</fullName>
@@ -33487,6 +33627,22 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>SurveyCustomerRecoveriesAnnFARRELL</shortDescription>
         <value>005w0000003XCG8</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Community_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of the GDPR community in the URL</shortDescription>
+        <value>dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Network_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
+        <value>Data Privacy</value>
     </labels>
     <labels>
         <fullName>Taxes</fullName>
