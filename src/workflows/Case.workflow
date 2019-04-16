@@ -8687,8 +8687,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>clears field tracking message</description>
-        <formula>NOT(ISNULL(Field_Update_tracking_lightning__c))&amp;&amp;
-LastModifiedById&lt;&gt;OwnerId</formula>
+        <formula>NOT(ISBLANK(Field_Update_tracking_lightning__c))&amp;&amp;
+LastModifiedById==OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
