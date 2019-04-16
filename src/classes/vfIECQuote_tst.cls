@@ -46,24 +46,10 @@ private class vfIECQuote_tst {
 		
 		oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'PRPC', 42);
 		insert oProductRatePlanCharge;
-
-		// create user
-		/*
-		oAccount = IECTestUtil.createSampleAccount();
-		insert oAccount;
-		
-		oBillingAccount = IECTestUtil.createSampleBillingAccount(oAccount);
-		insert oBillingAccount;
-		
-		oContact = IECTestUtil.createSampleContact(oAccount);
-		insert oContact;
-		*/
-		
-		
 	}
 
+
     static testMethod void testPage() {
-        
         setupData(false);
 		
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
@@ -139,25 +125,55 @@ private class vfIECQuote_tst {
 			
 			// Test #3 - generate the quote and opportunity
 			try {
-
-        zqu__Quote_Template__c zqt = new zqu__Quote_Template__c(Name = 'sqt',zqu__Template_Id__c = 'asdsad');
-        insert zqt;
-        
-       IEC_Settings__c iecs = IEC_Settings__c.getOrgDefaults();
-      // throw new transformationException(' iecs ' +iecs);
-      // iecs.id = IEC_Settings__c.getInstance().id;
-       iecs.Quote_Template_ID_New_Subscription__c=zqt.id;// [Customer_Permission_Set_Id__c, PaymentMethod_Bank_Transfer_Zuora_ID__c, PaymentMethod_Other_Zuora_ID__c, Quote_Template_Zuora_ID_New_Subscription__c, SchdlIECCompileUsage_Class_ID__c, CAC_Web_Service_API_Gateway__c, CAC_Web_Service_Usage_Url__c, SchdlCACWSUsageUpdate_Class_ID__c);
-       // 
-        update iecs;
-				
+		        zqu__Quote_Template__c zqt = new zqu__Quote_Template__c(Name = 'sqt',zqu__Template_Id__c = 'asdsad');
+		        insert zqt;
+		        
+		        IEC_Settings__c iecs = IEC_Settings__c.getOrgDefaults();
+		        iecs.Quote_Template_ID_New_Subscription__c=zqt.id;
+		       
+		        update iecs;
+						
 				pgCont.generateQuote();
 				system.assert(pgCont.oQuote != null, 'The quote should be generated');
-			}
-			catch (Exception ex) {
+
+			}catch (Exception ex) {
 	        	system.assert(false, 'Should be able to generate the quote. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
 	        }
 	        
 	        Test.stopTest();
     	}
+    }
+
+
+    static testMethod void testPageUpdateContactInfoCheckError() {
+
+    	setupData(false);
+    	Account account = IECTestUtil.createSampleAccount();
+    	insert account;
+    	Contact c = IECTestUtil.createSampleContact(account);
+    	insert c;
+		
+		User usr = IECTestUtil.createSampleUser(c);
+		PageReference pgRef;
+		
+    	System.runAs(usr) {
+    
+			pgRef = Page.IECQuote;
+			Test.setCurrentPage(pgRef);
+
+	        vfIECQuote pgCont = new vfIECQuote();
+	        Test.startTest();
+	        pgCont.oBillingAddress = new IECAddress__c();
+
+	        pgCont.updateContactInfo();
+
+			Test.stopTest();
+	    }
+
+	    //Check error messages 
+	    System.assert(ApexPages.getMessages().get(0).getDetail().contains('The following field is required: Address'));
+	    System.assert(ApexPages.getMessages().get(1).getDetail().contains('The following field is required: City'));
+	    System.assert(ApexPages.getMessages().get(2).getDetail().contains('The following field is required: Country'));
+
     }
 }

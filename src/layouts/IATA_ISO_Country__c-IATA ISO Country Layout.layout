@@ -194,6 +194,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>LVA_CountryLanguage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CNS_Country__c</field>
             </layoutItems>
             <layoutItems>

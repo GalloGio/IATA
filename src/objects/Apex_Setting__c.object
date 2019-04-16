@@ -30,6 +30,8 @@
         <columns>NAME</columns>
         <columns>Number_1__c</columns>
         <columns>Text_1__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>all values</label>
         <language>en_US</language>

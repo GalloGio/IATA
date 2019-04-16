@@ -17,6 +17,7 @@ public with sharing class OneId_AddressDoctor {
         @AuraEnabled public String houseNumber {get;set;}
         @AuraEnabled public String locality {get;set;}
         @AuraEnabled public String postalCode {get;set;}
+        @AuraEnabled public String countryCode {get;set;}
         @AuraEnabled public String province {get;set;}
         @AuraEnabled public String deliveryAddressLines {get;set;}
         @AuraEnabled public String countrySpecificLocalityLine {get;set;}
@@ -26,41 +27,37 @@ public with sharing class OneId_AddressDoctor {
 
     @AuraEnabled
     public static List<AddressInfo> quickSearch(String userInput, String countryCode) {
+
+        System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] inputs - ' + userInput + '/' + countryCode);
+
         Map<String, String> addressInformation = new Map<String, String>();
         addressInformation.put('Country', countryCode);
         addressInformation.put('Street', userInput);
 
         AddressResponse r = getAddressInformation(addressInformation, 'FASTCOMPLETION');
 
-        System.debug(loggingLevel.FINE, '____ [cls OneId_AddressDoctor - quickSearch] response - ' + r);
+        System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] response - ' + r);
         return r.addresses;
     }
 
-    public static Boolean isValidAddress(AddressInfo info, String countryCode) {
+    public static List<AddressInfo> validate(AddressInfo info) {
+
+        System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] inputs - ' + info);
 
     	Map<String, String> addressInformation = new Map<String, String>();
-    	addressInformation.put('Country', countryCode);
     	if(String.isNotEmpty(info.street)) addressInformation.put('Street', info.street);
     	if(String.isNotEmpty(info.locality)) addressInformation.put('Locality', info.locality);
     	if(String.isNotEmpty(info.postalCode)) addressInformation.put('PostalCode', info.postalCode);
-    	if(String.isNotEmpty(info.province)) addressInformation.put('Province', info.province);
+        if(String.isNotEmpty(info.province)) addressInformation.put('Province', info.province);
+        if(String.isNotEmpty(info.countryCode)) addressInformation.put('Country', info.countryCode);
 
-        AddressResponse r = getAddressInformation(addressInformation, 'CERTIFIED');
+        AddressResponse r = getAddressInformation(addressInformation, 'INTERACTIVE');
 
-        Set<String> validResponses = new Set<String>{'V4','V3','C4'};
-        return validResponses.contains(r.processStatus);
-        /*
-        Dom.XmlNode resultData = resultDataSet.getChildren()[0]; // 1st result of suggestion
+        System.debug(loggingLevel.DEBUG, '____ [cls OneId_AddressDoctor - quickSearch] response - ' + r);
 
-        if(resultData != null) {
-            Dom.XmlNode resultNode = resultData.getChildElement('ResultPercentage', adns);
-                String resultPercentage = resultNode.getText();
-            if(resultPercentage=='100.00') { // If we have 100%, it's a valid address
-                return true;
-            }
-        }
-        return false; // Otherwise, it's not a correct address*/
-
+        Set<String> validResponses = new Set<String>{'V4','V3','V2','C4'};
+        if(validResponses.contains(r.processStatus) || r.addresses.size() > 1) return r.addresses;
+        else return new List<AddressInfo>();
     }
 
     public static AddressResponse getAddressInformation(Map<String, String> addressInformation, String mode) {

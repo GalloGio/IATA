@@ -1,25 +1,22 @@
 <apex:page standardController="User" extensions="UserInlineHistoryController" showHeader="true" sidebar="true">
 
-<apex:pageBlock >
-<apex:pageBlockTable value="{!historiesList}" var="row" >
-    <apex:column >
-        <apex:facet name="header">Date</apex:facet>
-        <apex:outputText value=" {!row.createdDate}" />
-    </apex:column>
-                
-    <apex:column >
-        <apex:facet name="header">User</apex:facet>
-        <apex:outputText value="{!row.createdByName}"/>
-    </apex:column>
-
-    <apex:column >
-        <apex:facet name="header">Action</apex:facet>
-        <apex:outputPanel >
-            <b>{!row.What}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
-        </apex:outputPanel>
-    </apex:column>
-                
-</apex:pageBlockTable>
-</apex:pageBlock>
+    <apex:variable var="isClassic" value="{! $User.UIThemeDisplayed == 'Theme2' || $User.UIThemeDisplayed == 'Theme3' }"/>
+    <apex:outputPanel rendered="{!isClassic}">
+        <c:ANG_GenericHistoryViewer trackedObjectId="{!User.Id}" trackerApiName="User_History__c" trackedApiName="User"/>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!!isClassic}">     
+        <apex:includeLightning />
+        <div id="lightning" /> 
+        <script>
+            $Lightning.use("c:GenericHistoryViewerApp", function() {
+                $Lightning.createComponent("c:GenericHistoryViewer",
+                    { trackedObjectId : "{!User.Id}",
+                      trackerApiName : "User_History__c",
+                      trackedApiName : "User" },
+                    "lightning"
+                );
+            });
+        </script>
+    </apex:outputPanel>
 
 </apex:page>

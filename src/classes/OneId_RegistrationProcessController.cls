@@ -503,6 +503,11 @@ public without sharing class OneId_RegistrationProcessController {
     public static Boolean checkAddress(String info, String countryCode) {
         return OneId_AddressDoctor.isValidAddress((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class), countryCode);
     }
+    @AuraEnabled
+    public static List<OneId_AddressDoctor.AddressInfo> checkAddress(String info) {
+        System.debug(loggingLevel.FINE, '____ [cls OneId_RegistrationProcessController - checkAddress] info - ' + info);
+        return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
+    }
 
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName){
@@ -737,8 +742,15 @@ public without sharing class OneId_RegistrationProcessController {
 
             }
             //End ACLI
+            else if(!isAlreadyContact){
+                checkConAvailable(con);
+                system.debug('::: Is not a contact already: ' + con);
             else{
                 checkConAvailable(con);
+                updateContactInFuture(String.valueOf(con.Id), con.Community__c, String.valueOf(con.User_Portal_Status__C), con.Email, con.AccountId);
+                system.debug('::: Is contact already UPDATING: ' + con);
+                //update con;
+
             }
 
 
