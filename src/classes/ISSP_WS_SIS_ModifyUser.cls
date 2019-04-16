@@ -36,8 +36,7 @@ public class ISSP_WS_SIS_ModifyUser {
             ISSP_WS_SIS_ModifyUser.UpdateSisUserResponse_element response_x;
             Map<String, ISSP_WS_SIS_ModifyUser.UpdateSisUserResponse_element> response_map_x = new Map<String, ISSP_WS_SIS_ModifyUser.UpdateSisUserResponse_element>();
             response_map_x.put('response_x', response_x);
-            if(!Test.isRunningTest()) {
-	            WebServiceCallout.invoke(
+	        WebServiceCallout.invoke(
 	              this,
 	              request_x,
 	              response_map_x,
@@ -50,11 +49,7 @@ public class ISSP_WS_SIS_ModifyUser {
 	              'ISSP_WS_SIS_ModifyUser.UpdateSisUserResponse_element'}
 	            );
 	            response_x = response_map_x.get('response_x');
-            }
-            else{
-            	response_x = new ISSP_WS_SIS_ModifyUser.UpdateSisUserResponse_element();
-            	response_x.UpdateSisUserResult = '<IsSuccess>true</IsSuccess><ErrorCode>001</ErrorCode><ErrorDescription>test</ErrorDescription>';
-            }
+            
             return response_x.UpdateSisUserResult;
         }
     }

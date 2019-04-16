@@ -339,8 +339,8 @@ System.debug('mCountries 1: ' + bulletin_0.mCountries);
             
             
 
-            bulletin_0.dailyFileDownload = 'test';
-            bulletin_0.weeklyFileDownload = 'test';
+            String dailyFileDownloadListJSONTest = bulletin_0.dailyFileDownloadListJSON;
+            String weeklyFileDownloadListJSONTest = bulletin_0.weeklyFileDownloadListJSON;
             bulletin_0.todayPeriod = 'test';
             bulletin_0.pDateStart = '01/01/2017';
             bulletin_0.pWeekStart = '01/01/2017';
