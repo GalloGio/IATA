@@ -14,51 +14,49 @@ public without sharing class OneId_RegistrationProcessController {
     public static String getCommunityName(){
         return OneIdUtils.getCommunityUrlName();
     }
-    
-    @AuraEnabled
+	
+	@AuraEnabled
     public static List<Account> getAccountsBySectorAndCategory(String sector, String cat, String country, String userInput) {
         String recordTypesSet = '';
+        String categoryFilter = '';
 
-        if(sector == 'Airline'){
-            recordTypesSet = '(\'IATA_Airline\',\'Operator\')';
-        }
-        else if(sector == 'Travel Agent'){
-            if(cat == 'IATA Passenger Sales Agent'){
-                recordTypesSet = '(\'IATA_Agency\')';
-            }
-            else if(cat == 'Non IATA Travel Agent'){
-                recordTypesSet = '(\'Non_IATA_Agency\')';
-            }
-        }
-        else if(sector == 'Airline Supplier'){
-            recordTypesSet = '(\'Others\')';
-        }        
-
-        if(recordTypesSet == ''){
-            System.debug('NDCMM - invalid sector-category combination : "' + sector + '" - "' + cat + '"');
-            return new List<Account>();
-        }
-
-        if(cat == 'Global Distribution System'){
-            cat = 'GDS';
-        }
-
+		if(sector == 'Airline'){
+			recordTypesSet = '(\'IATA_Airline\',\'Operator\')';
+			categoryFilter = ' AND Category__c = \'' + cat + '\'';
+		}
+		else if(sector == 'Travel Agent'){
+			if(cat == 'IATA Passenger Sales Agent'){
+				recordTypesSet = '(\'IATA_Agency\',\'Standard_Account\')';
+			}
+			else if(cat == 'Non-IATA Travel Agent'){
+				recordTypesSet = '(\'Non_IATA_Agency\',\'Standard_Account\')';
+			}
+			categoryFilter = ' AND Category__c = \'' + cat + '\'';
+		}
+		else if(sector == 'Airline Supplier'){
+			recordTypesSet = '(\'Others\',\'Standard_Account\')';
+			categoryFilter = ' AND Category__c in (\'GDS\',\'Content Aggregator\')';
+		}
+		
+		if(recordTypesSet == ''){
+			System.debug('NDCMM - invalid sector-category combination : "' + sector + '" - "' + cat + '"');
+			return new List<Account>();
+		}
 
         String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry FROM Account WHERE ';
         queryStr += ' RecordType.DeveloperName in ' + recordTypesSet;
         queryStr += ' AND Sector__c = \'' + sector + '\'';
-        queryStr += ' AND Category__c = \'' + cat + '\'';
+        queryStr += categoryFilter;
         queryStr += ' AND IATA_ISO_Country__c = \'' + country + '\'';
         queryStr += ' AND Name like \'%' + userInput + '%\'';
+
         system.debug(queryStr);
+
         list<Account> accs = Database.query(queryStr);
-
         system.debug(accs);
-
         return accs;
     }
-
-
+    
     @AuraEnabled
     public static String findLocation(String ipAddress){
 
@@ -75,7 +73,7 @@ public without sharing class OneId_RegistrationProcessController {
 
         }catch(Exception e){
             System.debug('Exception findLocation LightningRegistrationProcess...' + e);
-            return e.getMessage();
+    		return e.getMessage();
         }
     }    
 
@@ -95,8 +93,6 @@ public without sharing class OneId_RegistrationProcessController {
             if(!userInformation.isServiceUser){
                 User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
 
-                system.debug('DB RITS guestUser' + guestUser);
-                system.debug('DB RITS ' + usr.AccountId);
                 Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
 
         
@@ -116,52 +112,52 @@ public without sharing class OneId_RegistrationProcessController {
             User usr = [SELECT ContactId, AccountId 
                         FROM User 
                         WHERE Id =: UserInfo.getUserId()];
+
             getNDCMMUserInformation(userInformation, usr.ContactId, usr.AccountId);
         }
         return userInformation;
     }
 
-        private static void getNDCMMUserInformation(UserInformation userInformation, Id contactId, Id accountId){
+    private static void getNDCMMUserInformation(UserInformation userInformation, Id contactId, Id accountId){
         // Step 1 : check if user requested access to NDC Matchmaker Service
         // Step 1.1 : Retrieve the NDC Matchmaker Portal Service Id
-        /*One_Id_Service_Provider_Config__c oneIdService = [SELECT Portal_Service__c 
+        One_Id_Service_Provider_Config__c oneIdService = [SELECT Portal_Service__c 
                                                           FROM One_Id_Service_Provider_Config__c 
                                                           WHERE Service_Provider_Name__c = 'NDCMM' 
-                                                          AND RecordType.DeveloperName = 'Service_Provider' LIMIT 1];*/      
-
+                                                          AND RecordType.DeveloperName = 'Service_Provider' LIMIT 1];
+        
         // Step 1.2 : Retrieve the Portal Service Access record
-        /*List<Portal_Application_Right__c> portalApplicationRights = [SELECT Right__c, Access_Pending_Detail__c 
+        List<Portal_Application_Right__c> portalApplicationRights = [SELECT Right__c, Access_Pending_Detail__c 
                                                                      FROM Portal_Application_Right__c 
                                                                      WHERE Portal_Application__c =: oneIdService.Portal_Service__c 
-                                                                     AND Contact__c =: contactId];*/     
-
-        //userInformation.isServiceUser = !portalApplicationRights.isEmpty(); 
-
+                                                                     AND Contact__c =: contactId];
+        
+        userInformation.isServiceUser = !portalApplicationRights.isEmpty();
+        
         // if access has already been requested yet, we can stop here
         if(userInformation.isServiceUser){
             //Don't return now because we need contact info to pass to email component
             //return userInformation;
-        }       
-
-        Account acc = [SELECT Name, Sector__c, Category__c, RecordType.DeveloperName FROM Account WHERE Id =: accountId];      
-
+        }
+        
+        Account acc = [SELECT Name, Sector__c, Category__c, RecordType.DeveloperName FROM Account WHERE Id =: accountId];
+        
         // Step 2 : check if user's Account is eligible
-        userInformation.isServiceEligible = isNDCMMEligible(acc);       
-
+        userInformation.isServiceEligible = isNDCMMEligible(acc);
+        
         // if account is not eligible, we can stop here
         if(!userInformation.isServiceEligible){
             return;
-        }        
-
+        }
+        
         // Step 3 : set Contact and Account
         userInformation.con = [SELECT Id, Email, Salutation, FirstName, LastName, Title, Membership_Function__c, Phone, MobilePhone, Fax
                                FROM Contact 
-                               WHERE Id =: contactId];      
-
-        userInformation.acc = acc;      
+                               WHERE Id =: contactId];
+        
+        userInformation.acc = acc;		
     }
-
-
+    
     public class UserInformation {
         @AuraEnabled
         Boolean isGuest {get; set;}
@@ -192,27 +188,27 @@ public without sharing class OneId_RegistrationProcessController {
 
         userInformation.isContactInserted = conList.size() > 0;
         //setting default value. If contact and email don't exist, user will be eligible
-        userInformation.isServiceEligible = !(userInformation.isContactInserted && userInformation.isEmailAddressAvailable);       
-
+        userInformation.isServiceEligible = !(userInformation.isContactInserted && userInformation.isEmailAddressAvailable);
+        
         if((!conList.isEmpty()) && userInformation.isEmailAddressAvailable){
             //String UID = Comm_User_Helper.NewGuid();
             //Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
             //Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
 
             if(serviceName != 'FRED' && serviceName != 'NDCMM'){
-                isAlreadyContact = true;
-                Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);          
-
-                if(userCreated == true){
-                    userInformation.isContactInserted = true;
-                    userInformation.isServiceEligible = true;
-                    userInformation.con = conList.get(0);
-                    System.Debug('User CREATED with success!');
-                }
-                else {
-                    userInformation.isContactInserted = false;
-                    System.Debug('User NOT created!');
-                }
+	            isAlreadyContact = true;
+    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
+            
+	            if(userCreated == true){
+		            userInformation.isContactInserted = true;
+   	    	        userInformation.isServiceEligible = true;
+	                userInformation.con = conList.get(0);
+            	    System.Debug('User CREATED with success!');
+            	}
+            	else {
+                	userInformation.isContactInserted = false;
+                	System.Debug('User NOT created!');
+            	}
             }
             else if(serviceName == 'FRED'){
                 userInformation.isContactInserted = true;
@@ -239,7 +235,6 @@ public without sharing class OneId_RegistrationProcessController {
             }
         }
 
-        
         if(!userInformation.isEmailAddressAvailable){
             // Retrieve existing user information
             List<User> usrs = [SELECT Id, ContactId, AccountId FROM User where Email =: email];
@@ -266,7 +261,7 @@ public without sharing class OneId_RegistrationProcessController {
                     }
                 }
                 if(serviceName == 'NDCMM'){
-                    getNDCMMUserInformation(userInformation, usrs[0].ContactId, usrs[0].AccountId);
+	                getNDCMMUserInformation(userInformation, usrs[0].ContactId, usrs[0].AccountId);
                 }
             }
             userInformation.isContactInserted = false;
@@ -276,14 +271,14 @@ public without sharing class OneId_RegistrationProcessController {
         return userInformation;            
     }
 
-        private static Boolean isNDCMMEligible(Account acc){
+    private static Boolean isNDCMMEligible(Account acc){
         Boolean isEligible =  (acc.Sector__c == 'Airline' 
                                && (acc.RecordType.DeveloperName == 'IATA_Airline' || acc.RecordType.DeveloperName == 'Operator'))
-            || (acc.Sector__c == 'Travel Agent'
-                && ((acc.Category__c == 'IATA Passenger Sales Agent'&& acc.RecordType.DeveloperName == 'IATA_Agency') || (acc.Category__c == 'Non IATA Travel Agent' && acc.RecordType.DeveloperName == 'Non_IATA_Agency')))
+            || (acc.Sector__c == 'Travel Agent' 
+                && ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
             || (acc.Sector__c == 'Airline Supplier' 
                 && (acc.Category__c == 'GDS' || acc.Category__c == 'Content Aggreagator')
-                && acc.RecordType.DeveloperName == 'Others');
+                && (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
         return isEligible;
     }
 
@@ -335,7 +330,7 @@ public without sharing class OneId_RegistrationProcessController {
                  Email = email,
                  Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
                  ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-                 ContactId = !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+                 ContactId =  !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
                  TimeZoneSidKey = 'GMT',
                  LanguageLocaleKey = 'en_US',
                  EmailEncodingKey = 'UTF-8',
@@ -356,9 +351,10 @@ public without sharing class OneId_RegistrationProcessController {
         }
     }
 
-    @AuraEnabled
-    public static List<Contact> returnExistingContact(String email) {        
 
+    @AuraEnabled
+    public static List<Contact> returnExistingContact(String email) {
+        
         // Method to search contact that already exists in SALESFORCE
         List<Contact> conList = [SELECT id, Preferred_Language__c, Salutation, FirstName, LastName, Email, Account.Id, Account.Sector__c, RecordTypeId, ISO_Country__c, IATA_ISO_Shipping_Country__c, Primary_Contact__c, User_Portal_Status__c, Status__c, BSP_CASS_Payment_contact__c, Invoicing_Contact__c, Title, Phone, MobilePhone, Fax, Membership_Function__c FROM Contact WHERE Email =: email];
 
@@ -436,7 +432,7 @@ public without sharing class OneId_RegistrationProcessController {
         for (String name : contactFields) {
             SObjectField f = accountFields.get(name);
             if (f!=null){
-                labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
+            	labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
             }
         }
         return labels;
@@ -508,7 +504,6 @@ public without sharing class OneId_RegistrationProcessController {
         return OneId_AddressDoctor.isValidAddress((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class), countryCode);
     }
 
-
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName){
         system.debug('OneId registration process starting...');
@@ -555,7 +550,7 @@ public without sharing class OneId_RegistrationProcessController {
             }    
 
             if(serviceName == 'FRED'){
-                //con.User_Portal_Status__c = ISSP_CONSTANT.NEW_CONTACT_STATUS;
+                //con.User_Portal_Status__c = 'Pending Approval';
                 con.Community__c = 'FRED Customer Portal';
             }
 
@@ -610,39 +605,42 @@ public without sharing class OneId_RegistrationProcessController {
                 }
                 
             }
-
+            
             // We need to create a Case
-            if(serviceName == 'NDCMM'){               
-
+            if(serviceName == 'NDCMM'){
+                
                 //Fetching the assignment rules on case
-                List<AssignmentRule> arList = [SELECT Id FROM AssignmentRule WHERE SobjectType = 'Case' AND Active = true limit 1];              
-
+                List<AssignmentRule> arList = [SELECT Id FROM AssignmentRule WHERE SobjectType = 'Case' AND Active = true limit 1];
+                
                 //Creating the DMLOptions for "Assign using active assignment rules" checkbox
                 Database.DMLOptions dmlOpts = new Database.DMLOptions();
                 if(arList.size() > 0) {
                     dmlOpts.assignmentRuleHeader.assignmentRuleId = arList[0].id;
                 }
+
                 Case cse = new Case(
-                    Subject = 'NDC Matchmaker - Validate Contact',
+                	Subject = 'NDC Matchmaker - Validate Account and Contact',
+                	Status = 'New',
                     AccountId = acc.Id,
                     ContactId = con.Id,
                     Origin = 'Portal',
                     RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId()
                 );
-                cse.setOptions(dmlOpts);
-                insert cse;               
 
+                cse.setOptions(dmlOpts);
+                insert cse;
+                
                 // We also need to create a Portal Application Right
                 // This part has to be made generic for all services in the future
-                //One_Id_Service_Provider_Config__c oneIdService = [select Portal_Service__c from One_Id_Service_Provider_Config__c where Service_Provider_Name__c = 'NDCMM' and RecordType.DeveloperName = 'Service_Provider' limit 1];              
-
-                Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
-                    //Portal_Application__c = oneIdService.Portal_Service__c,
+		        One_Id_Service_Provider_Config__c oneIdService = [select Portal_Service__c from One_Id_Service_Provider_Config__c where Service_Provider_Name__c = 'NDCMM' and RecordType.DeveloperName = 'Service_Provider' limit 1];
+                
+				Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
+                	Portal_Application__c = oneIdService.Portal_Service__c,
                     Right__c = 'Access Requested',
                     Contact__c = con.Id
                 );
                 insert portalApplicationRight;
-            }          
+            }            
         } catch(exception ex){            
             Database.rollback(sp);
             System.debug(ex);
@@ -655,15 +653,14 @@ public without sharing class OneId_RegistrationProcessController {
         system.debug('createContactAndAccount starting contact -->  ' + con);
         system.debug('createContactAndAccount starting account -- ' + acc);
         
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');      
-
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        
         if(con.RecordType == null){
             con.RecordTypeId = rtId;
-        }        
+        }
+        
         try {
             if(acc.Id == null) {
-                //acc.phone = null;
-                //acc.name = acc.Legal_name__c;
                 acc.Reason_for_creation__c = 'Created by customer';
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
@@ -775,65 +772,13 @@ public without sharing class OneId_RegistrationProcessController {
             
             system.debug('aqui userID ' + u);
 
-            //User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);            
-            /*system.debug('aqui user ' + u);
-            if(servName == 'FRED') {
-                // JIRA ISI-51 + ISI-14: Self registration primary or secondary 
-                String profileID = '';
-                list<Profile> fredProfiles = [SELECT Id FROM profile WHERE name like '%Fred%' ORDER BY Name];
-                // Check if primary user exists on request account
-                list<User> primaryUsers = [SELECT ProfileId FROM User WHERE Contact.AccountId =: con.accountId AND Profile_Name__c like '%Primary%'];
-                if(primaryUsers.isEmpty()) {
-                   // Create primary as primary exists yet
-                   profileID = fredProfiles[0].Id;
-                } else {
-                    // Create secondary as primary exists
-                    profileID = fredProfiles[1].Id;
-                }
-                u.ProfileID = profileID;
-            }
-            
-            if(servName == 'ISSP' || servName == 'FRED')
-                u.Community__c = servName;
-
-            String password = Comm_User_Helper.generateRandomString(6) + '1a';
-            System.debug('password ' + password);
-            System.debug('con ' + con.accountId);
-            System.debug('u ' + u);
-            System.debug('servName ' + servName);
-            //String userId = Site.createPortalUser(u, con.accountId, password, false);
-            
-            System.debug('userId ' + userId);
-            
-            sendWelcomeEmail(con, u, password, servName);*/
-
             return u;
-            
 
         } catch (Exception e) {
             return e.getMessage() + '\nStack Trace:' + e.getStackTraceString() + ' \nline: ' + e.getLineNumber();
         }
 
     }
-
-    /*public static void sendWelcomeEmail(Contact con, User u, String password, String serviceName){
-        System.debug('sendWelcomeEmail starting... ');
-        String cleanUsername = u.userName.replace('+', Comm_User_Helper.plusReplacer);
-        String encodedPart ='c='+EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+u.UID__c), 'UTF-8');
-        String template = 'Identity_Portal_New_User';
-        string prefix = OneIdUtils.getSiteCompleteUrl();
-        String link = prefix + '/s/IdentityFirstLogin?' + encodedPart;
-
-        if(serviceName == Comm_User_Helper.ISSP){ // OneIdEnh CSP-ID002: change the login URL for the customer portal
-            template = 'Identity_Portal_ISSP_New_User';
-            link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
-        } 
-
-        Map<String,String> emailWrap = new Map<String,String>();
-        
-        emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
-        Comm_User_Helper.sendEmail(template, emailWrap, con, Comm_User_Helper.ONEIDENTITY);
-    }*/
 
     @future
     public static void updatePortalUseProfile(String userId){
@@ -887,10 +832,9 @@ public without sharing class OneId_RegistrationProcessController {
     @AuraEnabled
     public static void checkConAvailable (Contact con){
         
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');   
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');     
         Contact [] ec = [Select id, email, AccountId, RecordType.Id, User_Portal_Status__c, Community__c, Invoicing_Contact__c, BSP_CASS_Payment_contact__c FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
         System.debug('Contact Information : ' + con + ' Contact query: ' + ec);
-
         
         if(ec.size() > 0){
             System.debug('Update Contact');
@@ -901,7 +845,7 @@ public without sharing class OneId_RegistrationProcessController {
             } catch(Exception e) {
                 System.debug('Update Contact FAILED ::: ' +  e.getMessage());
             }
-
+            
         } else {
             System.debug('Insert new contact'); 
             System.debug(con);
@@ -909,7 +853,7 @@ public without sharing class OneId_RegistrationProcessController {
                 database.insert(con);
             } catch(Exception e) {
                 System.debug('Insert Contact FAILED ::: ' + e.getMessage());
-            }                       
+            }           
         }
     }
 
