@@ -2,11 +2,9 @@
 private class ISSP_PortalUserStatusChangeTest {
 
     public static testMethod void testISSP_PortalUserStatusChangeTest() {
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
+
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         insert con;
@@ -22,13 +20,8 @@ private class ISSP_PortalUserStatusChangeTest {
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');
         ISSP_PortalUserStatusChange.preformAction(actionName,controler.con.Id,controler.con.User_Portal_Status__c);
 
-        //ISSP_PortalUserStatusChange.isUserDisabel(con.Id);
-        //ISSP_PortalUserStatusChange.disabelUser(con.Id);
         Set<String> setIds = new Set<String>();
         setIds.add(con.Id);
-
-        //ISSP_PortalUserStatusChange.futureDeactivateUsers(setIds);
-        //ISSP_PortalUserStatusChange.futureUpdateUsers(setIds);
 
         controler.con.User_Portal_Status__c = 'Approved Admin';
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');
@@ -44,11 +37,9 @@ private class ISSP_PortalUserStatusChangeTest {
     }
 
     public static testMethod void testISSP_PortalUserStatusChangeTest2() {
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
+
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
@@ -63,12 +54,9 @@ private class ISSP_PortalUserStatusChangeTest {
 
     public static testMethod void testISSP_PortalUserStatusChangeTest3() {
 
-        //ISSP_ObjectFactory.fiilIncludedFields();
         String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
-        //Account acc = (Account)ISSP_ObjectFactory.createSObject('Account',false,4);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
-        //Contact contact = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = acc.Id;
         contact.User_Portal_Status__c = 'Pending Approval';
@@ -105,11 +93,8 @@ private class ISSP_PortalUserStatusChangeTest {
     }
 
     public static testMethod void testISSP_PortalUserStatusChangeTest4() {
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
@@ -130,17 +115,13 @@ private class ISSP_PortalUserStatusChangeTest {
     }
 
     public static testMethod void testISSP_PortalUserStatusChangeTest5() {
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
         con.Email = 'test1@test.com';
         insert con;
-        //Contact con2 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,2);
         Contact con2 = ISSP_ObjectFactory.createNewContact();
         con2.AccountId= acc.Id;
         con2.User_Portal_Status__c = 'Pending Approval';

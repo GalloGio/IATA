@@ -18,7 +18,6 @@ public class S3FormController {
 		} catch( Exception ee) { 
 			this.record = new 	AWS_S3_Object__c(); 
 		}
-		//as3 = new S3.AmazonS3(credentials.key,credentials.secret);
     }
     
     

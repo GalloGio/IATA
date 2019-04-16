@@ -42,12 +42,7 @@ global class ISSP_Ctrl_AccountStatements {
 	public Id amazonRecordTypeId
 	{
 		get{
-			Id RecordTypeId;
-			RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File');
-			if (rtInfo != null) {
-				RecordTypeId = rtInfo .getRecordTypeId();
-			}
-			return RecordTypeId;
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c','File');
 		}
 	}
 	public static final String amazonFileStartName

@@ -2,8 +2,8 @@ public with sharing class CaseDueDiligence {
 
     public class DueDiligenceException extends Exception {}
 
-    private static final Id RT_ICCS_ASP_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('IDFS_Airline_Participation_Process').getRecordTypeId();
-    private static final Id RT_CODING_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('Airline_Coding_Application').getRecordTypeId();
+    private static final Id RT_ICCS_ASP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','IDFS_Airline_Participation_Process');
+    private static final Id RT_CODING_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','Airline_Coding_Application');
     private static final set<String> REASONS_FOR_BSP_CASS = new set<String>{
         'BSP Direct - Member',
         'BSP Direct - Non-Member',
