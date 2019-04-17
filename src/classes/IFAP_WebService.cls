@@ -17,6 +17,12 @@ global class IFAP_WebService {
     public static final String CASE_STATUS_SANITY_CHECK_FAILURE = 'Sanity Check Failure';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUSTED = 'Financial Security Requested';
 
+    public static final String INVALID_ACTION_TRIGGER_SIDRA_LITE = 'Invalid action, you need to trigger SIDRA Lite action in order to put the agent Under review.';
+    public static final String INVALID_ACTION_REINSTATE_AGENT = 'Invalid action, you need to reinstate the agent from the SIDRA lite related case.';
+    public static final String INVALID_ACTION_REMOVE_CASH_CONDITIONS = 'Invalid action, you need to remove Cash conditions using the appropriate button.';
+    public static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED = 'Conditions are not satisfied to apply Cash Condition on the agent.';
+    public static final String CASH_CONDITION_SUCCESSFULLY_APPLIED = 'Cash condition applied successfully on the agent.';
+    public static final String UNABLE_TO_APPLY_CASH_CONDITION = 'Unable to apply cash condition on the agent.';
 
     WebService static String FinancialSecurityInfo(String caseNumber, String currencyCode, Decimal amount) {
 
@@ -263,4 +269,127 @@ global class IFAP_WebService {
             return 'Failed, ' + e.getMessage();
         }
     }
+
+	webservice static String applyCashCondition(Id caseId, Id accountId){
+
+        try {
+
+            Account acct =
+                [SELECT 
+                    Id,
+                    ANG_IsNewgenAgency__c,
+                    (SELECT 
+                        Id, 
+                        Status, 
+                        FA_Second_Deadline_Date__c, 
+                        Financial_Review_Result__c,
+                        Assessment_Performed_Date__c
+                    FROM 
+                        Cases 
+                    WHERE 
+                        Id = :caseId
+                    ),
+                    (SELECT 
+                        Id, 
+                        Security_Status__c 
+                    FROM 
+                        Financial_Securities__r
+                    )
+                FROM 
+                    Account 
+                WHERE 
+                    Id = :accountId
+                LIMIT 1
+                ];
+
+            Case cse = acct.Cases.get(0);
+
+            String message = isValidForApplyingCashCondition(acct, cse, acct.Financial_Securities__r);
+
+            if('VALID' != message){
+                return message;
+            }
+
+            message = applyCashConditionAction(acct, cse);
+
+            if(message != 'SUCCESS'){
+                return UNABLE_TO_APPLY_CASH_CONDITION + ' Technical Error: ' + message;
+            }
+
+            return CASH_CONDITION_SUCCESSFULLY_APPLIED;
+
+        }
+        catch(Exception e){
+            system.debug(LoggingLevel.ERROR, e.getStackTraceString());
+            system.debug(LoggingLevel.ERROR, e.getMessage());
+            return UNABLE_TO_APPLY_CASH_CONDITION + ' Technical Error: ' + e.getMessage();
+        }
+
+	}
+
+	private static String applyCashConditionAction(Account acct, Case cse){
+
+        Savepoint sp = Database.setSavePoint();
+
+        try {
+            acct.ANG_HE_CashCondition__c = true;
+            update acct;
+
+            cse.secondFAnonComplianceDate__c = System.today();
+            cse.FA_Third_Deadline_Date__c    = System.today().addDays(365);
+            update cse;
+        }
+        catch(Exception e){
+            system.debug(LoggingLevel.ERROR, e.getStackTraceString());
+            system.debug(LoggingLevel.ERROR, e.getMessage());
+            Database.rollback(sp);
+            return e.getMessage();
+        }
+
+        return 'SUCCESS';
+
+	}
+
+	private static String isValidForApplyingCashCondition(Account acct, Case cse, List<Financial_Security__c> fsLst){
+
+		Set<String> caseStatusSet = new Set<String>{
+			'Agent Notified (Email)',
+			'Agent Notified (Mail)',
+			'Sanity Check Failure'
+		};
+
+		Set<String> fsStatusSet = new Set<String>{
+			ANG_Risk_Helper.SECURITY_STATUS_ACTIVE, 
+			ANG_Risk_Helper.SECURITY_STATUS_CLOSE_EXPIRY_DATE
+		};
+
+		Boolean agentHasFs = false;
+
+		for(Financial_Security__c fs : fsLst){
+			if(fsStatusSet.contains(fs.Security_Status__c)){
+				agentHasFs = true;
+				break;
+			}
+		}
+
+		if(acct.ANG_IsNewgenAgency__c && cse.FA_Second_Deadline_Date__c < System.Today() && caseStatusSet.contains(cse.Status) && !agentHasFs){
+			return INVALID_ACTION_TRIGGER_SIDRA_LITE;
+		}
+
+		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !agentHasFs){
+			return INVALID_ACTION_REINSTATE_AGENT;
+		}
+
+		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && agentHasFs){
+			return INVALID_ACTION_REMOVE_CASH_CONDITIONS;
+		}
+
+		if(!acct.ANG_IsNewgenAgency__c || cse.FA_Second_Deadline_Date__c >= System.Today() || !caseStatusSet.contains(cse.Status) || !agentHasFs){
+			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED;
+		}
+
+		return 'VALID';
+
+	}
+
 }
