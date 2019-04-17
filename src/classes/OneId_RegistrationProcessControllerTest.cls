@@ -537,7 +537,8 @@ private class OneId_RegistrationProcessControllerTest {
         String info = JSON.serialize(add);
 
         Test.setMock(HttpCalloutMock.class, new OneId_AddressDoctorMockImpl());
-        OneId_RegistrationProcessController.checkAddress(info, 'PT');
+        OneId_RegistrationProcessController.checkAddress(info);
+        //OneId_RegistrationProcessController.checkAddress(info, 'PT');
 
 
         Test.stopTest();
