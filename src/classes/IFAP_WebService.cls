@@ -272,81 +272,81 @@ global class IFAP_WebService {
 
 	webservice static String applyCashCondition(Id caseId, Id accountId){
 
-        try {
+		try {
 
-            Account acct =
-                [SELECT 
-                    Id,
-                    ANG_IsNewgenAgency__c,
-                    (SELECT 
-                        Id, 
-                        Status, 
-                        FA_Second_Deadline_Date__c, 
-                        Financial_Review_Result__c,
-                        Assessment_Performed_Date__c
-                    FROM 
-                        Cases 
-                    WHERE 
-                        Id = :caseId
-                    ),
-                    (SELECT 
-                        Id, 
-                        Security_Status__c 
-                    FROM 
-                        Financial_Securities__r
-                    )
-                FROM 
-                    Account 
-                WHERE 
-                    Id = :accountId
-                LIMIT 1
-                ];
+			Account acct =
+				[SELECT 
+					Id,
+					ANG_IsNewgenAgency__c,
+					(SELECT 
+						Id, 
+						Status, 
+						FA_Second_Deadline_Date__c, 
+						Financial_Review_Result__c,
+						Assessment_Performed_Date__c
+					FROM 
+						Cases 
+					WHERE 
+						Id = :caseId
+					),
+					(SELECT 
+						Id, 
+						Security_Status__c 
+					FROM 
+						Financial_Securities__r
+					)
+				FROM 
+					Account 
+				WHERE 
+					Id = :accountId
+				LIMIT 1
+				];
 
-            Case cse = acct.Cases.get(0);
+			Case cse = acct.Cases.get(0);
 
-            String message = isValidForApplyingCashCondition(acct, cse, acct.Financial_Securities__r);
+			String message = isValidForApplyingCashCondition(acct, cse, acct.Financial_Securities__r);
 
-            if('VALID' != message){
-                return message;
-            }
+			if('VALID' != message){
+				return message;
+			}
 
-            message = applyCashConditionAction(acct, cse);
+			message = applyCashConditionAction(acct, cse);
 
-            if(message != 'SUCCESS'){
-                return UNABLE_TO_APPLY_CASH_CONDITION + ' Technical Error: ' + message;
-            }
+			if(message != 'SUCCESS'){
+				return UNABLE_TO_APPLY_CASH_CONDITION + ' Technical Error: ' + message;
+			}
 
-            return CASH_CONDITION_SUCCESSFULLY_APPLIED;
+			return CASH_CONDITION_SUCCESSFULLY_APPLIED;
 
-        }
-        catch(Exception e){
-            system.debug(LoggingLevel.ERROR, e.getStackTraceString());
-            system.debug(LoggingLevel.ERROR, e.getMessage());
-            return UNABLE_TO_APPLY_CASH_CONDITION + ' Technical Error: ' + e.getMessage();
-        }
+		}
+		catch(Exception e){
+			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+			return UNABLE_TO_APPLY_CASH_CONDITION + ' Technical Error: ' + e.getMessage();
+		}
 
 	}
 
 	private static String applyCashConditionAction(Account acct, Case cse){
 
-        Savepoint sp = Database.setSavePoint();
+		Savepoint sp = Database.setSavePoint();
 
-        try {
-            acct.ANG_HE_CashCondition__c = true;
-            update acct;
+		try {
+			acct.ANG_HE_CashCondition__c = true;
+			update acct;
 
-            cse.secondFAnonComplianceDate__c = System.today();
-            cse.FA_Third_Deadline_Date__c    = System.today().addDays(365);
-            update cse;
-        }
-        catch(Exception e){
-            system.debug(LoggingLevel.ERROR, e.getStackTraceString());
-            system.debug(LoggingLevel.ERROR, e.getMessage());
-            Database.rollback(sp);
-            return e.getMessage();
-        }
+			cse.secondFAnonComplianceDate__c = System.today();
+			cse.FA_Third_Deadline_Date__c    = System.today().addDays(365);
+			update cse;
+		}
+		catch(Exception e){
+			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+			Database.rollback(sp);
+			return e.getMessage();
+		}
 
-        return 'SUCCESS';
+		return 'SUCCESS';
 
 	}
 
