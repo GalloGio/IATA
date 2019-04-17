@@ -36,7 +36,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
@@ -45,7 +45,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
@@ -54,7 +54,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
@@ -63,7 +63,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
@@ -124,7 +124,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ComplaintIDFS</recordType>
@@ -133,7 +133,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ComplaintIDFS</recordType>
@@ -142,7 +142,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ComplaintIDFS</recordType>
@@ -151,7 +151,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ComplaintIDFS</recordType>
@@ -160,7 +160,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesMENA</recordType>
@@ -169,7 +169,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesMENA</recordType>
@@ -178,7 +178,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesMENA</recordType>
@@ -187,7 +187,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesMENA</recordType>
@@ -196,7 +196,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesAmericas</recordType>
@@ -205,7 +205,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesAmericas</recordType>
@@ -214,7 +214,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesAmericas</recordType>
@@ -223,7 +223,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesAmericas</recordType>
@@ -232,7 +232,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
@@ -241,7 +241,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
@@ -250,7 +250,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
@@ -259,7 +259,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
@@ -268,7 +268,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_China_North_Asia</recordType>
@@ -277,7 +277,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_China_North_Asia</recordType>
@@ -286,7 +286,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_China_North_Asia</recordType>
@@ -295,7 +295,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_China_North_Asia</recordType>
@@ -304,7 +304,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesEurope</recordType>
@@ -313,7 +313,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesEurope</recordType>
@@ -322,7 +322,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesEurope</recordType>
@@ -331,7 +331,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesEurope</recordType>
@@ -340,7 +340,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_Global</recordType>
@@ -349,7 +349,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_Global</recordType>
@@ -358,7 +358,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_Global</recordType>
@@ -367,7 +367,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_Global</recordType>
@@ -376,7 +376,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CS_Process_IDFS_ISS</recordType>
@@ -385,7 +385,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CS_Process_IDFS_ISS</recordType>
@@ -394,7 +394,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CS_Process_IDFS_ISS</recordType>
@@ -403,7 +403,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CS_Process_IDFS_ISS</recordType>
@@ -412,7 +412,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesMENA</recordType>
@@ -421,7 +421,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesAmericas</recordType>
@@ -430,7 +430,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
@@ -439,7 +439,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_China_North_Asia</recordType>
@@ -448,7 +448,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesEurope</recordType>
@@ -457,7 +457,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ComplaintIDFS</recordType>
@@ -466,7 +466,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page</content>
+        <content>Service_console_level1level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CS_Process_IDFS_ISS</recordType>
@@ -763,7 +763,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.External_Cases_ACCA</recordType>
@@ -772,7 +772,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.External_Cases_ACCA</recordType>
@@ -781,7 +781,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.External_Cases_ACCA</recordType>
@@ -790,7 +790,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.External_Cases_ACCA</recordType>
@@ -799,7 +799,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Internal_Cases_ACCA</recordType>
@@ -808,7 +808,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Internal_Cases_ACCA</recordType>
@@ -817,7 +817,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Internal_Cases_ACCA</recordType>
@@ -826,7 +826,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Internal_Cases_ACCA</recordType>
@@ -835,7 +835,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Internal_Cases_ACCA</recordType>
@@ -844,7 +844,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.External_Cases_ACCA</recordType>
@@ -853,7 +853,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SEDA</recordType>
@@ -862,7 +862,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SIDRA</recordType>
@@ -871,7 +871,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SIDRA</recordType>
@@ -880,7 +880,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SIDRA</recordType>
@@ -889,7 +889,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SIDRA</recordType>
@@ -898,7 +898,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SIDRA</recordType>
@@ -907,7 +907,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
@@ -916,7 +916,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
@@ -925,7 +925,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
@@ -934,7 +934,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
@@ -943,7 +943,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
@@ -952,7 +952,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ProcessEuropeSCE</recordType>
@@ -961,7 +961,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ProcessEuropeSCE</recordType>
@@ -970,7 +970,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ProcessEuropeSCE</recordType>
@@ -979,7 +979,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ProcessEuropeSCE</recordType>
@@ -988,7 +988,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ProcessEuropeSCE</recordType>
@@ -997,7 +997,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SEDA</recordType>
@@ -1006,7 +1006,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SEDA</recordType>
@@ -1015,7 +1015,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SEDA</recordType>
@@ -1024,7 +1024,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_case_record_page1</content>
+        <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SEDA</recordType>
@@ -1040,6 +1040,7 @@
     <tabs>standard-OmniSupervisorLightning</tabs>
     <tabs>standard-File</tabs>
     <uiType>Lightning</uiType>
+    <utilityBar>Service_console_lightning_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <fieldName>Cargo_Agency__c</fieldName>
