@@ -11474,7 +11474,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_COORDINATES_FORMAT</shortDescription>
-        <value>Please insert coordinates in the format dd°mm’ss.ss&quot;[N,S], dd°mm’ss.ss&quot;[W,E]</value>
+        <value>Please identify the location on the map below and coordinates will be completed automatically.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_COUNTRY</fullName>
