@@ -61,6 +61,17 @@
             </componentInstanceProperties>
             <componentName>flexipage:visualforcePage</componentName>
         </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>height</name>
+                <value>300</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>pageName</name>
+                <value>DG_ProposedTemplate</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:visualforcePage</componentName>
+        </componentInstances>
         <name>Facet-v4m53i63o1g</name>
         <type>Facet</type>
     </flexiPageRegions>
