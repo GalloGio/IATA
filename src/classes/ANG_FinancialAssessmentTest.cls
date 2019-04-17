@@ -1,0 +1,203 @@
+@isTest
+private class ANG_FinancialAssessmentTest {
+	
+	@testSetup static void setup(){
+
+        Test.startTest();
+
+		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
+			Name = 'BSP-SG',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP
+		);
+
+        AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
+			Name = 'BSP-PT',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP
+		);
+
+        insert new List<AMS_Settlement_System__c>{bspSG, bspPT};
+
+		IATA_ISO_Country__c countryWW = new IATA_ISO_Country__c(
+			Name = 'All Countries',
+			ISO_Code__c = 'WW'
+		);
+
+		IATA_ISO_Country__c countrySG = new IATA_ISO_Country__c (
+			Name = 'Singapore', 
+			ISO_Code__c = 'SG',
+			AMS_Settlement_System__c = bspSG.Id,
+			ANG_Enable_NewGen__c = true
+		);
+
+        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (
+			Name = 'Portugal', 
+			ISO_Code__c = 'PT',
+			AMS_Settlement_System__c = bspPT.Id,
+			ANG_Enable_NewGen__c = false
+		);
+
+        insert new List<IATA_ISO_Country__c>{countryWW, countrySG, countryPT};
+
+		Id recTypeCSA = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
+
+        AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c(
+        	CurrencyIsoCode = 'EUR',
+        	RecordTypeId = recTypeCSA,
+        	IATA_ISO_Country__c = countryWW.Id,
+        	ANG_Minimum_RHC_Amount__c = 5000
+        );
+
+        insert csa;
+
+        Account agentSG = new Account(
+        	Name = 'Agent SG',
+        	IATACode__c ='999999999',
+        	Status__c = AMS_Utils.ACC_S9_APPROVED,
+        	Location_Type__c = AMS_Utils.HE,
+        	RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+        	IATA_ISO_Country__c = countrySG.Id,
+        	Location_Class__c = 'P',
+        	Remittance_frequency__c = 'M',
+        	ANG_HE_RiskStatus__c = 'A',
+            Type = 'IATA Passenger Sales Agent',
+            BillingCountry = 'Singapore'
+        );
+
+        Account agentPT = new Account(
+        	Name = 'Agent PT',
+        	IATACode__c ='999999998',
+        	Status__c = AMS_Utils.ACC_S9_APPROVED,
+        	Location_Type__c = AMS_Utils.HO,
+        	RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+        	IATA_ISO_Country__c = countryPT.Id,
+        	Location_Class__c = 'P',
+        	Remittance_frequency__c = 'M',
+            Type = 'IATA Passenger Sales Agent',
+            BillingCountry = 'Portugal'
+        );
+
+		insert new List<Account>{agentSG, agentPT};
+
+        Contact contSG = new Contact(
+            FirstName = 'Agent',
+            LastName = 'Singapore',
+            Type_of_Contact__c = 'IFAP Contact',
+            AccountId = agentSG.Id,
+            Email = 'agent.singapore@test.com',
+            Financial_Assessment_Contact__c = true
+        );
+
+        Contact contPT = new Contact(
+            FirstName = 'Agent',
+            LastName = 'Portugal',
+            Type_of_Contact__c = 'IFAP Contact',
+            AccountId = agentPT.Id,
+            Email = 'agent.portugal@test.com',
+            Financial_Assessment_Contact__c = true
+        );
+        
+        insert new List<Contact>{contSG, contPT};
+        
+        Case caseSG = new Case(
+            ContactId = contSG.Id,
+            AccountId = agentSG.Id,
+            Subject = 'Financial Review',
+            Description = 'Financial Review - 2018',
+            Status = 'Agent Notified (Mail)',
+            RecordTypeId = AMS_Utils.RECTYPE_IFAP,
+            IFAP_Financial_Year__c = '2018',
+            Deadline_Date__c = System.today().addDays(-7)
+        );
+        
+        Case casePT = new Case(
+            ContactId = contPT.Id,
+            AccountId = agentPT.Id,
+            Subject = 'Financial Review',
+            Description = 'Financial Review - 2018',
+            Status = 'Agent Notified',
+            RecordTypeId = AMS_Utils.RECTYPE_IFAP,
+            IFAP_Financial_Year__c = '2018',
+            Deadline_Date__c = System.today().addDays(-7)
+        );
+
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+
+        insert new List<Case>{caseSG, casePT};
+
+        Financial_Institution__c fi = new Financial_Institution__c(
+			Name = 'Financial Institution', 
+			Region__c = 'Asia & Pacific', 
+			Country__c = 'Singapore', 
+			Institution_Type__c = 'Bank'
+		);
+
+        insert fi;
+
+        Case cc = new Case(AccountId = agentSG.Id);
+        insert cc;
+
+      	Financial_Security__c fs = new Financial_Security__c(
+      		CurrencyIsoCode = 'EUR', 
+      		Account__c = agentSG.Id, 
+      		Amount__c = 10000, 
+      		Expiry_date__c = System.Today().addDays(100), 
+      		Financial_Institution__c = fi.Id, 
+      		Security_Status__c = 'Not Active yet', 
+      		Security_Type__c = 'Bank Guarantee', 
+      		Region__c = 'Asia & Pacific', 
+      		Reception_Date__c = System.today(), 
+      		Reasonforrequest__c = 'New Application',
+      		Reception_Case__c = cc.Id
+     	);
+
+        insert fs; 
+        Test.stopTest();
+    }
+
+
+    @isTest
+    static void updateThirdDeadlineDateForNewgenAgents(){
+    	Case ifapCase = [SELECT id, AccountId, Status
+    					 FROM Case 
+    					 WHERE Account.ANG_IsNewGenAgency__c = TRUE 
+    					 LIMIT 1];
+   
+    	CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+
+    	ifapCase.Status = 'Agent Notified (Mail)';
+    	ifapCase.Financial_Review_Type__c = 'Annual';
+    	ifapCase.FA_Letter_Sent__c = true;    	
+    	update ifapCase; 
+
+    	Case sidraCase = createSIDRALite(ifapCase);
+    	sidraCase.BSP_CASS__c = 'BSP';
+    	insert sidraCase;
+
+    	ifapCase.FA_Second_Deadline_Date__c = Date.today().addDays(-1);
+    	ifapCase.secondFAnonComplianceDate__c = null;
+    	update ifapCase;
+
+    	Test.startTest();
+  		WSSidraLite.updateSecondAndThirdDeadline(ifapCase.id);
+    	Test.stopTest();
+
+    	//For Newgen Agents -> Check the parentCase.FA_Third_Deadline_Date__c
+    	Case parentCase = [SELECT id, AccountId, Status, FA_Third_Deadline_Date__c
+    					 FROM Case WHERE Account.ANG_IsNewGenAgency__c = TRUE LIMIT 1];
+
+    	System.assertEquals(Date.today().addDays(365), parentCase.FA_Third_Deadline_Date__c);
+
+    }
+
+    private static Case createSIDRALite(Case parent) {
+        Case cse = new Case(
+            RecordtypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE,
+            ParentId = parent.Id,
+            accountId = parent.accountId,
+            BSPCountry__c = 'BSP-SG',
+            SIDRA_Lite_Reason__c = SidraLiteHelperForIFAP.isFS(parent)? 'Financial Security Non-compliance': 'Financial Review Non-compliance'
+        );
+        return cse;
+    }
+
+}
