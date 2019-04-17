@@ -4971,6 +4971,14 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Clear_Case_New_Interaction_tracking</fullName>
+        <field>New_interaction__c</field>
+        <name>Clear Case New Interaction tracking</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Clear_interaction_date</fullName>
         <description>clear interaction date when clearing the new interaction</description>
         <field>New_Interaction_Date__c</field>
@@ -7226,6 +7234,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Case_New_Interaction_tracking</fullName>
+        <field>New_interaction__c</field>
+        <literalValue>The case has been recently updated.</literalValue>
+        <name>Update Case New Interaction tracking</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Case_Status_Sanity_Check_Failure</fullName>
         <field>Status</field>
         <literalValue>Sanity Check Failure</literalValue>
@@ -7349,15 +7366,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <name>Update case Visible field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_case_field_tracking</fullName>
-        <field>Field_Update_tracking_lightning__c</field>
-        <formula>IF(ISBLANK(Field_Update_tracking_lightning__c),&quot;The case has been recently updated&quot;,&quot;&quot;)</formula>
-        <name>Update case field tracking</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -8682,13 +8690,12 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <rules>
         <fullName>Clear field tracking</fullName>
         <actions>
-            <name>Update_case_field_tracking</name>
+            <name>Clear_Case_New_Interaction_tracking</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
         <description>clears field tracking message</description>
-        <formula>NOT(ISBLANK(Field_Update_tracking_lightning__c))&amp;&amp;
-LastModifiedById==OwnerId</formula>
+        <formula>ISPICKVAL(New_interaction__c,&#39;The case has been recently updated.&#39;) &amp;&amp; LastModifiedById==OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -18498,29 +18505,12 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
     <rules>
         <fullName>Update Tracking Field</fullName>
         <actions>
-            <name>Update_case_field_tracking</name>
+            <name>Update_Case_New_Interaction_tracking</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
         <description>Updates field tracking field if a case is updated by someone who is not the case owner</description>
-        <formula>(
-ISCHANGED(CaseArea__c)||
-ISCHANGED(Reason1__c)||
-ISCHANGED(BSPCountry__c)||
-ISCHANGED(Case_Remarks__c)||
-ISCHANGED(Attachment_received_possible_POP__c)||
-ISCHANGED(Region__c)||
-ISCHANGED(AccountId)||
-ISCHANGED(ContactId)||
-ISCHANGED(Origin)||
-ISCHANGED(OwnerId)||
-ISCHANGED(ParentId)||
-ISCHANGED(Priority)||
-ISCHANGED(Subject)||
-ISCHANGED(Status)
-
-) &amp;&amp;
-LastModifiedById&lt;&gt;OwnerId</formula>
+        <formula>( ISCHANGED(CaseArea__c)|| ISCHANGED(Reason1__c)|| ISCHANGED(BSPCountry__c)|| ISCHANGED(Case_Remarks__c)|| ISCHANGED(Attachment_received_possible_POP__c)|| ISCHANGED(Region__c)|| ISCHANGED(AccountId)|| ISCHANGED(ContactId)|| ISCHANGED(Origin)|| ISCHANGED(OwnerId)|| ISCHANGED(ParentId)|| ISCHANGED(Priority)|| ISCHANGED(Subject)|| ISCHANGED(Status)  ) &amp;&amp; LastModifiedById&lt;&gt;OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
