@@ -15,6 +15,10 @@
             <role>MADHubCSManagerA</role>
             <role>MADHubCSstaffA</role>
         </roles>
+        <users>
+            <user>suwal@iata.org</user>
+            <user>sughayerm@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

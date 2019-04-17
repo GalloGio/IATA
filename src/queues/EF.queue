@@ -11,6 +11,9 @@
             <role>E_F</role>
             <role>IDFSEFServicesA</role>
         </roles>
+        <users>
+            <user>chretienc@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
