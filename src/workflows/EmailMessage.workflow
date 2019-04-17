@@ -627,7 +627,7 @@ NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Comment&quot;)) )</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 3 AND 4 and 2 and 5</booleanFilter>
+        <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
         <criteriaItems>
             <field>EmailMessage.Incoming</field>
             <operation>equals</operation>
@@ -636,7 +636,7 @@ NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Comment&quot;)) )</formula>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication,Airline Coding Application,Invoicing Collection Cases</value>
+            <value>Internal Cases (IDFS ISS),SAAM,New Process (IDFS ISS),IDFS Airline Participation Process,IATA Financial Review,ID Card Application,SIDRA Lite,OSCAR Communication,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IsClosed</field>
@@ -652,6 +652,11 @@ NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Comment&quot;)) )</formula>
             <field>EmailMessage.FromAddress</field>
             <operation>notEqual</operation>
             <value>noreply.ifap@iata.org</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Invoicing Collection Cases</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
