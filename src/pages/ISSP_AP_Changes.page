@@ -222,7 +222,7 @@
                     </apex:pageBlockSection>
                     
                     <!-- BRAZIL / MEXICO - START -->
-                <apex:pageBlockSection title="Additional Tax Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
+                <apex:pageBlockSection title="Additional Tax Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" columns="1" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
                 
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="{!CASE(apcountryisocode, 'BR','CNPJ', 'RFC')} # to be entered in IATA Systems"/>
@@ -248,18 +248,10 @@
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSection title="Please enclose" columns="1" rendered="{!apcountryisocode='BR'}">
-                        1) A copy of the CNPJ Certification<br/>
-                        2) The ANAC Authorization or Publication provided by the Offical Gazetta
-                        
-                        <apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fileName}" />
-                        <apex:commandButton id="btnUpload" value="Upload File" action="{!UploadFile}" />
-                    </apex:pageBlockSection>
-                    
-                    <!-- Attachment List -->
-                    <apex:pageBlockSection title="Attachments" rendered="{!apcountryisocode='BR'}">
-                        <apex:pageBlockTable value="{!attachList}" var="attach" >
-                            <apex:column value="{!attach.Name}" />
-                        </apex:pageBlockTable>
+                        <apex:iframe scrolling="false" height="160px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR&onlyOne=true"/>
+                        <apex:iframe scrolling="false" height="160px"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR&onlyOne=true"/>
                     </apex:pageBlockSection>
                 </apex:pageBlockSection>
                 <!--  END OF Brazil / MEX  -->
