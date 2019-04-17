@@ -40,7 +40,7 @@
                 //Get the Map div by ID, if it causes issues, get map by styleclass
                 zoom: 2,                              
                 streetViewControl: false,
-                draggable: false,
+                //draggable: false,
                 fullscreenControl: false,                   // Map options, more on google documentation
                 zoomControl: true,
                 timezone: true,
@@ -52,6 +52,8 @@
               geocoder = new google.maps.Geocoder;
               infowindow = new google.maps.InfoWindow;
             }
+
+
             //Starts the map, necessary to change if coords already exist in draft
             function initMap() {
               var element = document.getElementsByClassName("formap");
@@ -68,10 +70,80 @@
               }
 
 
-              
-              
+              map.addListener('click', function(e) {
+                placeMarkerAndPanTo(e.latLng, map);
+              });
 
             }
+
+            function placeMarkerAndPanTo(latLng, map) {
+              deleteMarkers();
+              var marker = new google.maps.Marker({
+                position: latLng,
+                map: map
+              });
+
+             ddToDms(marker.getPosition().lat(),marker.getPosition().lng())
+              markers.push(marker);
+              map.panTo(latLng);
+            }
+
+            // This function returns the coordinate
+            // conversion string in DD to DMS.
+            function ddToDms(lat, lng) {
+
+               var lat = lat;
+               var lng = lng;
+               var latResult, lngResult, dmsResult;
+
+               lat = parseFloat(lat);  
+               lng = parseFloat(lng);
+
+               latResult = (lat >= 0)? 'N' : 'S';
+
+               // Call to getDms(lat) function for the coordinates of Latitude in DMS.
+               // The result is stored in latResult variable.
+               //latResult += getDms(lat);
+
+               lngResult = (lng >= 0)? 'E' : 'W';
+
+               // Call to getDms(lng) function for the coordinates of Longitude in DMS.
+               // The result is stored in lngResult variable.
+               //lngResult += getDms(lng);
+
+               // Joining both variables and separate them with a space.
+               //dmsResult = latResult + ' ' + lngResult;
+
+               dmsResult = getDms(lat) + latResult + ' '+ getDms(lng) + lngResult ;
+
+               console.log('COORDS ' + dmsResult);
+
+               // Return the resultant string
+
+               var element = document.getElementsByClassName("formap");
+               element[0].value= dmsResult;
+               timeZone(lat,lng);
+               return dmsResult;
+            }
+
+            function getDms(val) {
+
+              var valDeg, valMin, valSec, result;
+
+              val = Math.abs(val);
+
+              valDeg = Math.floor(val);
+              result = valDeg + "º";
+
+              valMin = Math.floor((val - valDeg) * 60);
+              result += valMin + "'";
+
+              valSec = Math.round((val - valDeg - valMin / 60) * 3600 * 1000) / 1000;
+              result += valSec + '"';
+
+              return result;
+            }
+
 
 
             // Method to change the Map, according to coords inputed
@@ -84,13 +156,13 @@
               var element = document.getElementsByClassName("formap");
 
               var input = element[0].value;           // Gets the input coordinates
-              locFilter = /([0-9]?\d(°|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|90(°|\s)0?0(’|')0?0"?)[NnSs],\s{1,}([0-9]?[0-9]?\d(°|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|180(°|\s)0?0(’|')0?0"?)[EeWw]$/;
+              /*locFilter = /([0-9]?\d(°|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|90(°|\s)0?0(’|')0?0"?)[NnSs],\s{1,}([0-9]?[0-9]?\d(°|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|180(°|\s)0?0(’|')0?0"?)[EeWw]$/;
               locFilter2 = /([0-9]?\d(º|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|90(º|\s)0?0(’|')0?0"?)[NnSs],\s{1,}([0-9]?[0-9]?\d(º|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|180(º|\s)0?0(’|')0?0"?)[EeWw]$/;
               locFilter3 = /([0-9]?\d(º|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|90(º|\s)0?0(’|')0?0"?)\s[NnSs],\s{1,}([0-9]?[0-9]?\d(º|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|180(º|\s)0?0(’|')0?0"?)\s[EeWw]$/;
               locFilter4 = /([0-9]?\d(º|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|90(º|\s)0?0(’|')0?0"?)\s[NnSs],\s{1,}([0-9]?[0-9]?\d(º|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|180(º|\s)0?0(’|')0?0"?)[EeWw]$/;
               locFilter5 = /([0-9]?\d(º|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|90(º|\s)0?0(’|')0?0"?)[NnSs],\s{1,}([0-9]?[0-9]?\d(º|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|180(º|\s)0?0(’|')0?0"?)\s[EeWw]$/;
 
-              if(locFilter.test(input) || locFilter2.test(input) || locFilter3.test(input) || locFilter4.test(input) || locFilter5.test(input)){
+              if(locFilter.test(input) || locFilter2.test(input) || locFilter3.test(input) || locFilter4.test(input) || locFilter5.test(input)){*/
                 if (input.includes('N') && input.includes('W')  || 
                     input.includes('N') && input.includes('E') || 
                     input.includes('S') && input.includes('W') ||
@@ -150,7 +222,7 @@
                 });
 
                 }
-              }
+              
               else if(!input || input.length === 0){
                   msg[0].innerHTML ='';
                   if(needToValidate == true){
@@ -503,7 +575,7 @@
                             
                             <div class="col-sm-3"> 
                               <div class="{!IF(AND(hasError, OR(participation.GPS_Coordinates__c == null, participation.GPS_Coordinates__c == "")), 'has-error has-feedback', '')}">                  
-                                <apex:inputText id="gpsCoordinates" onchange="changemap(true),cleanTimeZone()" styleClass="form-control formap" value="{!participation.GPS_Coordinates__c}"/>
+                                <apex:inputField id="gpsCoordinates" onchange="changemap(false),cleanTimeZone()" styleClass="form-control formap" value="{!participation.GPS_Coordinates__c}" html-disabled="true"/>
                                 <span class="{!IF(AND(hasError, OR(participation.GPS_Coordinates__c == null, participation.GPS_Coordinates__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"></span>
                                 <span class="sr-only">(error)</span>
 
