@@ -40,7 +40,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
                 postalCodeRegexByCountryMap = new Map<String,IATA_ISO_Country__c>();
                 
                 for (IATA_ISO_Country__c cnt: [SELECT id, Name, Postal_Code_Format_regEx__c, State_Province_Mandatory__c, 
-                                                IEC_Zip_Postal_Code_required__c
+                                                IEC_Zip_Postal_Code_required__c, State_Province_Picklist__c
                                             FROM IATA_ISO_Country__c 
                                             WHERE Region__c != '' AND Iso_code__c NOT IN ('IO','TF','GS','UM','UP','VI') 
                                             ORDER BY Name ASC]) {
@@ -135,14 +135,14 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         upsert ca.fw.newform;
     }
 
-    /*public void currentShippingCountryStates() {
+    public void currentShippingCountryStates() {
         System.debug('rui2: ' + ca.fw.newform.Shipping_Country__c);
         shippingStateList = new List<SelectOption>{new SelectOption('', '')};
 
-        for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c)) {
+        for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
             shippingStateList.add(new SelectOption(state.Name, state.Name));
         }
-    }*/
+    }
     
     public void validateVATNumber2() {
         if (new ISSP_ANG_ANNUAL_REVALIDATION().vatNumberValidation(this.vatNumber2, ca.isocountry.ISO_Code__c)) {

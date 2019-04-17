@@ -350,9 +350,11 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
-                    <apex:selectList id="billingStateList" size="1" value="{!ca.fw.newform.State_Province__c}" style="width:100%" onchange="copyStateToBillingBox();" rendered="{!ca.isocountry.State_Province_Picklist__c}">
+                    <apex:selectList id="billingStateList" size="1" value="{!ca.fw.newform.State_Province__c}" style="width:100%" onchange="copyStateToBillingBox();">
                         <apex:selectOptions value="{!billingStateList}"/>
                     </apex:selectList>
+
+                    <apex:inputText id="billingStateText" value="{!ca.fw.newform.State_Province__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: inline-start; margin-left: 15px;"/>
 
                 </apex:outputPanel>
                 
@@ -379,10 +381,10 @@
                                         rendered="{! !displayShipping}">
                     </DSE:DS_DataQuality>
 
-                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" rendered="{!NOT(ca.isocountry.State_Province_Picklist__c)}"/>
+                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: inline-start; margin-left: 15px;"/>
 
-                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width:100%" onchange="copyStateListSelection();" rendered="{!ca.isocountry.State_Province_Picklist__c}">
-                        <apex:selectOption itemValue="" itemLabel=""/>
+                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px;" onchange="copyStateListSelection();">
+                        <apex:selectOptions value="{!shippingStateList}"/>
                     </apex:selectList>
 
                     <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();" rendered="{! !displayShipping}">
@@ -394,26 +396,19 @@
                             $('[id$="ShippingCountryList"]').val('');
                             $('#shipping_country__c > input').val('');
 
-                            
-
                             if ('{!displayShipping}' == 'false') {
                                 $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
-                                $('.shipping_state__c').attr('style', 'display: none;');
-                                $('#shipping_country__c > input').attr('style','display: none;');
                                 $('[id$="shippingStateInput"]').attr('style', 'width: 200px; margin-left: 15px;');
+                                initFieldsSettings();
                             } else {
                                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
                                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
                             }
-
-                            initFieldsSettings();
                         }
                     </script>
                 </apex:outputPanel>
 
-                <!-- <apex:actionFunction name="changeStateOptions" action="{!currentShippingCountryStates}" reRender="newAddressShipping">
-                    <apex:param value="" name="countryName" assignTo="{!selectedShippingCountry}" />
-                </apex:actionFunction> -->
+                <apex:actionFunction name="changeStateOptions" action="{!currentShippingCountryStates}" reRender="ShippingStateList"/>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail" layout="block" style="width: 120%">
                     <DSE:DS_DataQuality id="BranchEmail"
@@ -1064,11 +1059,15 @@
 
             locationSecctionStyle();
 
-            if ('{!displayShipping}') {
-                $('[id$="ShippingStateList"]').attr('style', 'display: none;');
-                $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+            if ({!ca.isocountry.State_Province_Picklist__c}) {
+                $('[id$="billingStateText"]').attr('style', 'display: none;');
+            } else {
+                $('[id$="billingStateList"]').attr('style', 'display: none;');
             }
 
+            $('[id$="ShippingStateList"]').attr('style', 'display: none;');
+            $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+            
             // checks initial state
             initFieldsSettings();
             showForms();
@@ -1121,19 +1120,15 @@
             initFieldsSettings();
 
             if (stateMap[dropdownValue] != undefined) {
-                $('[id$="ShippingStateList"]').children().remove();
+                console.log('rui33');
+                $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+                $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px;');
+                
 
-                var option = document.createElement("option");
-                option.value = '';
-                option.text = '';
-                $('[id$="ShippingStateList"]').append(option);
-
-                $.each(stateMap[dropdownValue], function(i, value) {
-                    var option = document.createElement("option");
-                    option.value = stateMap[dropdownValue][i].Name;
-                    option.text = stateMap[dropdownValue][i].Name;
-                    $('[id$="ShippingStateList"]').append(option);
-                });
+                changeStateOptions();
+            } else {
+                console.log('rui44');
+                $('[id$="shippingStateInput"]').attr('style', 'display: block; width: 200px; float: inline-start; margin-left: 15px;');
             }
         }
 
@@ -1146,7 +1141,7 @@
         }
 
         function copyStateListSelection() {
-            $('.shipping_state__c').val($('[id$="ShippingCountryList"]').val());
+            $('.shipping_state__c').val($('[id$="ShippingStateList"]').val());
         }
 
         function initFieldsSettings() {
@@ -1163,7 +1158,7 @@
                     $('[id$="ShippingCountryList"]').addClass('error');
                 }
 
-                if ('{!ca.isocountry.State_Province_Picklist__c}' == 'true') {
+                if ({!ca.isocountry.State_Province_Picklist__c}) {
                     $('[id$="billingStateList"]').prependTo('#state_province__c');
                     $('.state_province__c').attr('style', 'display: none;');
                     $('.state_province__c').css("padding-right", 0);
@@ -1171,12 +1166,20 @@
                     if ($('[id$="billingStateList"]').parent().find('.errorMsg').length > 0) {
                         $('[id$="billingStateList"]').addClass('error');
                     }
+                } else {
+                    $('[id$="state_province__c"]').parent().attr('class', 'row');
+
+                    $('[id$="billingStateText"]').prependTo($('[id$="state_province__c"]').parent());
+                    $('.state_province__c').attr('style', 'display: none;');
+                    $('.state_province__c').css("padding-right", 0);
+
+                    if ($('[id$="billingStateText"]').parent().find('.errorMsg').length > 0) {
+                        $('[id$="billingStateText"]').addClass('error');
+                    }
                 }
 
-                console.log('rui3', stateMap[$('[id$="ShippingCountryList"]').val()]);
-
                 if (stateMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
-                    console.log('rui1');
+                    $('[id$="shippingStateInput"]').attr('style', 'display: none;');
                     $('[id$="ShippingStateList"]').prependTo('#shipping_state__c');
                     $('.shipping_state__c').attr('style', 'display: none;');
                     $('.shipping_state__c').css("padding-right", 0);
@@ -1185,12 +1188,11 @@
                         $('[id$="ShippingStateList"]').addClass('error');
                     }
                 } else {
-                    console.log('rui2');
                     $('[id$="ShippingStateList"]').attr('style', 'display: none;');
-                    $('[id$="shippingStateInput"]').attr('style', 'display: block;');
+
                     $('[id$="shipping_state__c"]').parent().attr('class', 'row');
 
-                    $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent().parent());
+                    $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent());
                     $('.shipping_state__c').attr('style', 'display: none;');
                     $('.shipping_state__c').css("padding-right", 0);
 
@@ -1209,15 +1211,21 @@
             }
             
             $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
-                return "* " + $(this).text();
+                if (!~$(this).text().indexOf("*")) {
+                    return "* " + $(this).text();
+                }
             });
      
             $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
-                return "* " + $(this).text();
+                if (!~$(this).text().indexOf("*")) {
+                    return "* " + $(this).text();
+                }
             });
             
             $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
-                return "* " + $(this).text();
+                if (!~$(this).text().indexOf("*")) {
+                    return "* " + $(this).text();
+                }
             });
 
             if ($('[id$="ShippingCountryList"]').val() != undefined && countryMap[$('[id$="ShippingCountryList"]').val()] != undefined) 
