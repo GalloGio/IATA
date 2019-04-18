@@ -174,6 +174,9 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
     public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
+	
+    public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
+    public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 

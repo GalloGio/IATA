@@ -63,6 +63,7 @@ private class AirlineSuspensionCaseTest {
         system.debug(controller.AirlineSuspensionDocFolderId);
 		
         // save the presuspension part and check the locked values are correctly in place afterwards
+        controller.EditSuspension();
         PageReference pref = controller.SaveSuspension();
 
         Airline_Suspension__c asrecord = [SELECT Id, ICCS_membership_Status_locked_value__c, IATA_member_locked_value__c FROM Airline_Suspension__c WHERE Case__c =: cs.Id];
@@ -85,6 +86,16 @@ private class AirlineSuspensionCaseTest {
 		controller.CreateCountrySuspensionCases();
         controller.CloseAllChildSuspensionCases();
         controller.getGroupNamesOptions();
+
+        // change parent account to IATA Member and save the presuspension
+        acct_hq.Membership_status__c = 'IATA member';
+        update acct_hq;
+        asrecord.SVP_FDS_Approval__c = null;
+        update asrecord;
+        std = new ApexPages.StandardController(cs);
+        controller = new AirlineSuspensionCaseController(std);
+        controller.EditSuspension();
+        controller.SaveSuspension();
 
         test.stopTest();
     }

@@ -53,9 +53,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -170,6 +167,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BSP_non_air__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Purge_Flag__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

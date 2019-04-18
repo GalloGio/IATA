@@ -9,6 +9,13 @@
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
             <publicGroup>IDFSAmericasCustomerService</publicGroup>
         </publicGroups>
+        <roles>
+            <role>MADHubCSManagerA</role>
+        </roles>
+        <users>
+            <user>suwal@iata.org</user>
+            <user>sughayerm@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

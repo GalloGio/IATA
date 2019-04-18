@@ -7,6 +7,7 @@
     <customButtons>Cancel_Assessment</customButtons>
     <customButtons>Close_Case_c</customButtons>
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
+    <customButtons>Apply_Cash_Condition</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Share</excludeButtons>

@@ -65,6 +65,15 @@
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GDPR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>contains</operation>
+                <value>GDPR</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Due_Diligence_Publications</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -1729,7 +1738,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
 ),
 AND(
 RecordType.DeveloperName = &apos;OSCAR_Communication&apos;,
-ISPICKVAL(Reason1__c,&quot;PCI automatic renewal&quot;),
+ISPICKVAL( Origin,&quot;PCI automatic renewal&quot;),
 ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
 )
 )</formula>
@@ -2622,6 +2631,20 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>TSP_Certification_process</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - TSP Certification</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 AND (2 OR 3)</booleanFilter>
@@ -2648,7 +2671,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - TSP Certification,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink,E-mail to Case - ACCA Bug Fix</value>
+                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink,E-mail to Case - ACCA Bug Fix</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
