@@ -1,0 +1,10 @@
+<aura:component  implements="forceCommunity:availableForAllPageTypes" access="global">
+    <div class="row bg-black70 bar">
+      <div class="logoDiv">
+        <img src="{!$Resource.GDPR_Portal + '/img/iata-logo-other.svg'}" alt="IATA Logo" class="logo-small gdpr" />
+      </div>
+      <div class="col gdprTxt">
+        <h2>Our mission is to represent, lead and serve the airline industry</h2>
+      </div>
+    </div>
+</aura:component>

@@ -4,6 +4,53 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>NDC_Matchmaker</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>NDC Management</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_SIS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - SIS Help Desk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Web</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>SIS</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_ICH</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - SIS Help Desk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Web</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>ICH</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Vendor_Relations_Business_Analytics</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -15,6 +62,15 @@
                 <field>Case.CaseArea__c</field>
                 <operation>equals</operation>
                 <value>Vendor Relations – Business Analytics</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GDPR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>contains</operation>
+                <value>GDPR</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -737,68 +793,111 @@
             <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND( 
+OR( 
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
 RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
+OR( 
 TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;01:00:00.000&quot;), 
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;) 
+) 
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Emergency_SIN_GDC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>OR(
-  AND(
-    RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    OR(
-      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;),
-      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;)
-    )
-  ),
-  AND(
-    OR(
-      RecordType.DeveloperName = &quot;CasesEurope&quot;,
-      RecordType.DeveloperName = &quot;CasesAmericas&quot;,
-      RecordType.DeveloperName = &quot;CasesMENA&quot;
-    ),
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    OR(
-      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;),
-      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;)
-    )
-  ),
-  AND(  
-    RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    OR(
-      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;),
-      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;)
-    )
-  )
+            <formula>OR( 
+AND( 
+RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;) 
+) 
+), 
+AND( 
+OR( 
+RecordType.DeveloperName = &quot;CasesEurope&quot;, 
+RecordType.DeveloperName = &quot;CasesAmericas&quot;, 
+RecordType.DeveloperName = &quot;CasesMENA&quot; 
+), 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;) 
+) 
+), 
+AND( 
+RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;) 
+) 
+) 
 )</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Emergency_MAD_GDC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>OR(
-  AND(
-    OR(
-      RecordType.DeveloperName = &quot;CasesEurope&quot;,
-      RecordType.DeveloperName = &quot;CasesAmericas&quot;,
-      RecordType.DeveloperName = &quot;CasesMENA&quot;
-    ),
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;),
-    TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;)
-  ),
-  AND(
-    OR(
-      RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
-      RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;
-    ),
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;),
-    TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
-  )
+            <formula>OR( 
+AND( 
+OR( 
+RecordType.DeveloperName = &quot;CasesEurope&quot;, 
+RecordType.DeveloperName = &quot;CasesAmericas&quot;, 
+RecordType.DeveloperName = &quot;CasesMENA&quot; 
+), 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;) 
+) 
+), 
+AND( 
+OR( 
+RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, 
+RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot; 
+), 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;) 
+) 
+) 
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -1296,6 +1395,25 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>NewGen_Support</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>NewGen ISS</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>GDI,IATA Easy Pay,New Accreditation Models,Remittance Holding Capacity</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>PwC_Lithuania_DC</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -1610,12 +1728,19 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
         <ruleEntry>
             <assignedTo>CasesRussia</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND( 
+            <formula>OR(
+AND( 
 ISPICKVAL(Country_concerned_by_the_query__c , &quot;Russian Federation&quot;), 
 ISPICKVAL(Account.Location_Class__c, &quot;P&quot;), 
 NOT(CONTAINS( TEXT(Reason) ,&quot;Certificate&quot;)),
 !(RecordType.DeveloperName=&apos;ID_Card_Application&apos;),
 ISPICKVAL( Status , &quot;Open&quot;) 
+),
+AND(
+RecordType.DeveloperName = &apos;OSCAR_Communication&apos;,
+ISPICKVAL( Origin,&quot;PCI automatic renewal&quot;),
+ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
+)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -2506,6 +2631,20 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>TSP_Certification_process</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - TSP Certification</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 AND (2 OR 3)</booleanFilter>
@@ -2532,7 +2671,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - TSP Certification,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink,E-mail to Case - ACCA Bug Fix</value>
+                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink,E-mail to Case - ACCA Bug Fix</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordType__c</field>

@@ -53,6 +53,7 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -60,6 +61,13 @@
         <editHeading>true</editHeading>
         <label>Agency Information</label>
         <layoutColumns>
+            <layoutItems>
+                <height>45</height>
+                <page>DetailPageMessagesClassic</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
@@ -160,8 +168,15 @@
                 <behavior>Edit</behavior>
                 <field>BSP_non_air__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Purge_Flag__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Segmentation__c</field>
@@ -261,6 +276,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Record_Sharing_Criteria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Special_remarks__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
