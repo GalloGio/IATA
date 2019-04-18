@@ -26,6 +26,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
     @track data;
     @track columns;
     @track loading = true;
+
     fieldLabels = [
         'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned_by_the_query__c', 'Portal_Case_Status__c'
     ];
@@ -51,7 +52,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         })
         .catch(error => {
             this.error = error;
-        });      
+        }); 
     }
 
     @wire(getRecentCases, { seeAll : false })
