@@ -248,7 +248,7 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 				ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE B');
 
 				ISSP_AMC_FlowDAO.loadURL();
-				//ISSP_AMC_FlowDAO.apiCall();
+				ISSP_AMC_ApiCallLightningComponent.makeAPICall();
 				//ISSP_AMC_FlowDAO.updateStepAction(Id stepActionId, String stepStatus);
 
 
