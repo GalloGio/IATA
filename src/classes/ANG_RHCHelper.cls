@@ -432,8 +432,8 @@ public class ANG_RHCHelper {
 				Id,
 				CurrencyIsoCode,
 				ANG_AccountId__c,
-				ANG_RHC_Effective_Date__c,
 				ANG_RHC_Amount_Forecasted__c,
+				ANG_Forecasted_RHC_Effective_date__c,
 				ANG_AccountId__r.ANG_HE_RiskStatus__c,
 				ANG_AccountId__r.ANG_HE_CashCondition__c
 			 FROM
@@ -463,7 +463,7 @@ public class ANG_RHCHelper {
 				riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
 				riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c;
 				riuw.currencyIsoCode = rhc.CurrencyIsoCode;
-				riuw.rhcForecastedEffectiveDate = rhc.ANG_RHC_Effective_Date__c;
+				riuw.rhcForecastedEffectiveDate = rhc.ANG_Forecasted_RHC_Effective_date__c;
 				riuw.templateLanguage = contactMap.get(contactId).Preferred_Language__c;
 				riuwLst.add(riuw);
 			}
