@@ -161,8 +161,7 @@ private class vfIECGADAdvanced_tst {
             System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
 	        pgCont.saveFilter();
             System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
-            
-            /*
+
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Maximum5Filters));
 
 	        //Test 004: Save filter while 4 already exists
@@ -233,7 +232,7 @@ private class vfIECGADAdvanced_tst {
 	        // Misc Coverage
 	        pgCont.OnChangeCountry();
 	        pgCont.onClickOKError();
-*/
+
     	}
         System.debug('Unit Test: Finish: TestGADAdvanced');
     }
@@ -260,6 +259,7 @@ private class vfIECGADAdvanced_tst {
 
 	        // Test 002: Accessing page with no subscription for CAC
 	        pgCont.pageLoad();
+
 			//system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_No_Application_Access));
     	}
         System.debug('Unit Test: Finish: TestGADAdvanced_Errors');

@@ -141,6 +141,10 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Active --></label>
+        <name>AMP_Services_Active</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
@@ -1831,6 +1835,10 @@
         <name>CurrencyCenter_Annual_Surveys</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Annual_Top_Text --></label>
+        <name>CurrencyCenter_Annual_Top_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Attachments_Description --></label>
         <name>CurrencyCenter_Attachments_Description</name>
     </customLabels>
@@ -2573,6 +2581,14 @@
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
         <name>IATA_Alpha</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA_GDPR_URL --></label>
+        <name>IATA_GDPR_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA GDPR White Logo --></label>
+        <name>IATA_GDPR_White_Logo</name>
     </customLabels>
     <customLabels>
         <label><!-- ICAddressDoctor_adns --></label>
@@ -9354,6 +9370,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
+        <name>ISSP_AMS_eBulletin_GeneratedReports</name>
+    </customLabels>
+    <customLabels>
         <label>Área geográfica</label>
         <name>ISSP_AMS_eBulletin_GeographicArea</name>
     </customLabels>
@@ -10446,6 +10466,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CCOthers Invalid Contact --></label>
+        <name>ISSP_CCOthers_Invalid_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CNS_Documents --></label>
         <name>ISSP_CNS_Documents</name>
     </customLabels>
@@ -10959,6 +10983,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Descargas</label>
         <name>ISSP_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_DownloadAll --></label>
+        <name>ISSP_DownloadAll</name>
     </customLabels>
     <customLabels>
         <label>Descargar!</label>
@@ -11511,6 +11539,86 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Preguntas frecuentes</label>
         <name>ISSP_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountries --></label>
+        <name>ISSP_FDS_AllCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountriesWithServices --></label>
+        <name>ISSP_FDS_AllCountriesWithServices</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_ChooseCountries --></label>
+        <name>ISSP_FDS_ChooseCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Countries --></label>
+        <name>ISSP_FDS_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountriesSelected --></label>
+        <name>ISSP_FDS_CountriesSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountryName --></label>
+        <name>ISSP_FDS_CountryName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CustomFilterBtn --></label>
+        <name>ISSP_FDS_CustomFilterBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Download --></label>
+        <name>ISSP_FDS_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_DownloadOpts --></label>
+        <name>ISSP_FDS_DownloadOpts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FileFormat --></label>
+        <name>ISSP_FDS_FileFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FillAllFields --></label>
+        <name>ISSP_FDS_FillAllFields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Filters --></label>
+        <name>ISSP_FDS_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_NoResults --></label>
+        <name>ISSP_FDS_NoResults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Operations --></label>
+        <name>ISSP_FDS_Operations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_OperationsSelected --></label>
+        <name>ISSP_FDS_OperationsSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_PopupTitle --></label>
+        <name>ISSP_FDS_PopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Remittance --></label>
+        <name>ISSP_FDS_Remittance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_RemittanceSelected --></label>
+        <name>ISSP_FDS_RemittanceSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_SelectAll --></label>
+        <name>ISSP_FDS_SelectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_UnselectAll --></label>
+        <name>ISSP_FDS_UnselectAll</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Fax --></label>
@@ -12594,6 +12702,10 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_DownloadWarning --></label>
+        <name>ISSP_OperationalCalendar_DownloadWarning</name>
+    </customLabels>
+    <customLabels>
         <label>Activar filtros</label>
         <name>ISSP_OperationalCalendar_EnableFilters</name>
     </customLabels>
@@ -12994,6 +13106,46 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
     <customLabels>
         <label>Subcategoría de producto</label>
         <name>ISSP_ProductSubcategory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Agreement --></label>
+        <name>ISSP_ProgressBar_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_ApplicationProcessing --></label>
+        <name>ISSP_ProgressBar_ApplicationProcessing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Application_Approved --></label>
+        <name>ISSP_ProgressBar_Application_Approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Application_Review --></label>
+        <name>ISSP_ProgressBar_Application_Review</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_ChangeProcessing --></label>
+        <name>ISSP_ProgressBar_ChangeProcessing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_FinalValidation --></label>
+        <name>ISSP_ProgressBar_FinalValidation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Financial_Security --></label>
+        <name>ISSP_ProgressBar_Financial_Security</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Payment --></label>
+        <name>ISSP_ProgressBar_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_SanityCheck --></label>
+        <name>ISSP_ProgressBar_SanityCheck</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Submitted --></label>
+        <name>ISSP_ProgressBar_Submitted</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Public --></label>
@@ -14776,6 +14928,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
+        <label><!-- Industry_Activities --></label>
+        <name>Industry_Activities</name>
+    </customLabels>
+    <customLabels>
         <label><!-- InputRequiredMessage --></label>
         <name>InputRequiredMessage</name>
     </customLabels>
@@ -15308,6 +15464,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>Last_name</name>
     </customLabels>
     <customLabels>
+        <label><!-- Line of Business (LoB) --></label>
+        <name>Line_of_Business_LoB</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LiveAgentButtonLanguage --></label>
         <name>LiveAgentButtonLanguage</name>
     </customLabels>
@@ -15444,6 +15604,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
+        <label><!-- MultiselectPicklist_AddAll --></label>
+        <name>MultiselectPicklist_AddAll</name>
+    </customLabels>
+    <customLabels>
         <label>Abajo</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
@@ -15452,12 +15616,28 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>MultiselectPicklist_Remove</name>
     </customLabels>
     <customLabels>
+        <label><!-- MultiselectPicklist_RemoveAll --></label>
+        <name>MultiselectPicklist_RemoveAll</name>
+    </customLabels>
+    <customLabels>
         <label>Arriba</label>
         <name>MultiselectPicklist_Up</name>
     </customLabels>
     <customLabels>
         <label><!-- My_Renewals --></label>
         <name>My_Renewals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NDC Troubleshooting --></label>
+        <name>NDC_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NEW_HO_SanityCheck --></label>
+        <name>NEW_HO_SanityCheck</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NEW_HO_Submitted --></label>
+        <name>NEW_HO_Submitted</name>
     </customLabels>
     <customLabels>
         <label><!-- New --></label>
@@ -15534,6 +15714,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- No special characters --></label>
         <name>No_special_characters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Not Applicable --></label>
+        <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
@@ -16040,6 +16224,22 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_My_available_applications</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_NDCMM_Sharepoint_URL --></label>
+        <name>OneId_NDCMM_Sharepoint_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Terms_Of_Use_Link --></label>
+        <name>OneId_NDCMM_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting --></label>
+        <name>OneId_NDCMM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting_Link --></label>
+        <name>OneId_NDCMM_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Name --></label>
         <name>OneId_Name</name>
     </customLabels>
@@ -16223,6 +16423,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>OneId_Type</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_URL_To_GDPR --></label>
+        <name>OneId_URL_To_GDPR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId URL javaScript --></label>
         <name>OneId_URL_javaScript</name>
     </customLabels>
@@ -16255,8 +16459,20 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>OneId_Your_request_has_been_successfully_sent</name>
     </customLabels>
     <customLabels>
+        <label><!-- Text for link tor online help on OneIdentity login page for data privacy portal --></label>
+        <name>OneId_dataprivacy_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Link on online help link in One Identity login page for data privacy portal --></label>
+        <name>OneId_dataprivacy_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Oneid_request_acess_to_a_new_service --></label>
         <name>Oneid_request_acess_to_a_new_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Only Allow Broadcast Tool for IATA Members --></label>
+        <name>Only_Allow_Broadcast_Tool_for_IATA_Members</name>
     </customLabels>
     <customLabels>
         <label><!-- Only one subscription can  be purchased --></label>
@@ -17469,6 +17685,14 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Name of the GDPR community in the URL --></label>
+        <name>TECH_GDPR_Community_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Name of GDPR  Network. Usually name of the community - Query on network objec --></label>
+        <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
         <label><!-- Taxes --></label>

@@ -45,9 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -109,6 +109,16 @@
                     <fullName>pdf</fullName>
                     <default>false</default>
                     <label>pdf</label>
+                </value>
+                <value>
+                    <fullName>txt</fullName>
+                    <default>false</default>
+                    <label>txt</label>
+                </value>
+                <value>
+                    <fullName>zip</fullName>
+                    <default>false</default>
+                    <label>zip</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
