@@ -136,7 +136,6 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     }
 
     public void currentShippingCountryStates() {
-        System.debug('rui2: ' + ca.fw.newform.Shipping_Country__c);
         shippingStateList = new List<SelectOption>{new SelectOption('', '')};
 
         for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {

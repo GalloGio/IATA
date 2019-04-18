@@ -1120,14 +1120,11 @@
             initFieldsSettings();
 
             if (stateMap[dropdownValue] != undefined) {
-                console.log('rui33');
                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
                 $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px;');
                 
-
                 changeStateOptions();
             } else {
-                console.log('rui44');
                 $('[id$="shippingStateInput"]').attr('style', 'display: block; width: 200px; float: inline-start; margin-left: 15px;');
             }
         }
@@ -1168,6 +1165,7 @@
                     }
                 } else {
                     $('[id$="state_province__c"]').parent().attr('class', 'row');
+                    $('[id$="billingStateText"]').attr('style', 'width: 200px; margin-left: 15px;');
 
                     $('[id$="billingStateText"]').prependTo($('[id$="state_province__c"]').parent());
                     $('.state_province__c').attr('style', 'display: none;');
