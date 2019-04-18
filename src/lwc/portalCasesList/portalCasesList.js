@@ -9,6 +9,8 @@ import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import CSP_Question1 from '@salesforce/label/c.CSP_Question1';
 import CSP_Question2 from '@salesforce/label/c.CSP_Question2';
 import Created_By from '@salesforce/label/c.Created_By';
+import CSP_View_My_Cases from '@salesforce/label/c.CSP_View_My_Cases';
+import CSP_View_My_Company_Cases from '@salesforce/label/c.CSP_View_My_Cases';
 
 export default class PortalCasesList extends LightningElement {
     label = {
@@ -34,7 +36,7 @@ export default class PortalCasesList extends LightningElement {
     @track pageSize = 10;
     @track pageList = [];
     @track seeAll = false;
-    @track caseListName = 'My Cases';
+    @track caseListName = CSP_View_My_Company_Cases;
     recentCases;
     @track cacheableAllData = '';
     @track cacheableData = '';
@@ -49,7 +51,7 @@ export default class PortalCasesList extends LightningElement {
                 this.columns = [
                     {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_blank'}},
                     {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text'},
-                    {label: results.Subject, fieldName: 'Subject', type: 'text', initialWidth: 380, cellAttributes: {class: 'slds-text-title_bold'}},
+                    {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 380, typeAttributes: {label: {fieldName: 'Subject'}, target:'_blank'}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
                     {label: Created_By, fieldName: 'CreatedBy', type: 'text'},
                     {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
                     {label: results.Country_concerned__c, fieldName: 'Country', type: 'text'},
@@ -93,6 +95,10 @@ export default class PortalCasesList extends LightningElement {
         return (this.data && this.data.length) > 0 ? true : false;
     }
 
+    get isAdminUser() {
+        return this.isAdmin;
+    }
+
     rerenderCases() {
         if(this.isAdmin) {
             this.loading = true;
@@ -102,12 +108,12 @@ export default class PortalCasesList extends LightningElement {
             if(!this.seeAll) {
                 this.columns.splice(3, 0, this.columnsAux); /*Inserting 'Created By' column*/
                 this.seeAll = true;
-                this.caseListName = 'My Company Cases';
+                this.caseListName = CSP_View_My_Cases;
                 this.pageNumber = 1;            
             } else {
                 this.columns.splice(3, 1); /*Removing 'Created By' column*/
                 this.seeAll = false;
-                this.caseListName = 'My Cases';
+                this.caseListName = CSP_View_My_Company_Cases;
                 this.pageNumber = 1;
             }
         }

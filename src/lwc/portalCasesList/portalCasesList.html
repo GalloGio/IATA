@@ -15,7 +15,7 @@
                 <lightning-button label="Filter" class="filterButton"></lightning-button>
         </lightning-layout-item>         
         <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="3" large-device-size="3">
-            <lightning-button label={caseListName} class="containedButton" onclick={rerenderCases}></lightning-button>
+            <lightning-button label={caseListName} class="containedButton" onclick={rerenderCases} if:true={isAdmin}></lightning-button>
         </lightning-layout-item>                            
     </lightning-layout>
     <div class="customCardWhite">        
