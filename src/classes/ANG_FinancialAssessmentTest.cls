@@ -270,4 +270,37 @@ private class ANG_FinancialAssessmentTest {
 
 	}
 
+
+	/**
+	 * Verify when a IFAP Case is being set the Financial_Review_Result__c field
+	 * and its Status = Financial Security Requested
+	 * Financial_Review_Result__c and Financial_Assessment_Points__c(just for HK and MK) must be copied into the Account 
+	 *
+	 * ANG_CaseTriggerHandler.updateFinancialReviewResultOnAccount 
+	 */
+	@isTest
+	static void copyFinancialReviewResultWhenFSRequestedCaseStatus(){
+
+		Case cse = [SELECT Id, AccountId FROM Case WHERE Account.ANG_IsNewGenAgency__c = TRUE LIMIT 1];
+
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+
+		Test.startTest();
+
+		cse.Status = AMS_Utils.CASE_STATUS_FINANCIAL_SECURITY_REQUESTED;
+		cse.Financial_Review_Result__c = 'Satisfactory - No Action';
+		cse.Financial_Assessment_Points__c = 100;
+		cse.Assessment_Performed_Date__c = Date.today();
+		update cse;
+
+		Test.stopTest();	
+
+		Account accountUpdated = [SELECT id, Financial_Assessment_Points__c, Financial_Review_Result__c, Assessment_Performed_Date__c
+								  FROM Account WHERE ANG_IsNewGenAgency__c = TRUE LIMIT 1];
+
+		System.assertEquals('Satisfactory - No Action', accountUpdated.Financial_Review_Result__c);
+		System.assertEquals(100, accountUpdated.Financial_Assessment_Points__c);
+		System.assertEquals(Date.today(), accountUpdated.Assessment_Performed_Date__c);
+	}
+
 }
