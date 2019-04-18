@@ -1182,6 +1182,9 @@ if(ApexPages.currentPage() != null){
 		//System.debug('### WMO356 ### Topic: ' + topic);
 		//System.debug('### WMO356 ### Topic Label: ' + topiclabel);
 		
+        if(!topic.isNumeric()){
+            topic = '0';
+        }
 		Integer index = Integer.valueOf(topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 		System.debug(selectDataCategory);
