@@ -2584,6 +2584,14 @@
         <name>IATA_Alpha</name>
     </customLabels>
     <customLabels>
+        <label><!-- IATA_GDPR_URL --></label>
+        <name>IATA_GDPR_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA GDPR White Logo --></label>
+        <name>IATA_GDPR_White_Logo</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ICAddressDoctor_adns --></label>
         <name>ICAddressDoctor_adns</name>
     </customLabels>
@@ -9336,6 +9344,10 @@ and
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
+        <name>ISSP_AMS_eBulletin_GeneratedReports</name>
+    </customLabels>
+    <customLabels>
         <label>Área geográfica</label>
         <name>ISSP_AMS_eBulletin_GeographicArea</name>
     </customLabels>
@@ -9740,7 +9752,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label>Quantidade de segurança financeira fornecida</label>
+        <label>De acordo com a fórmula</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
@@ -10944,6 +10956,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
     <customLabels>
         <label>Baixar</label>
         <name>ISSP_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_DownloadAll --></label>
+        <name>ISSP_DownloadAll</name>
     </customLabels>
     <customLabels>
         <label>Baixe agora!</label>
@@ -13062,6 +13078,46 @@ Por favor note que muitas invoices IATA para agentes acreditados são cobradas a
     <customLabels>
         <label>Subcategoria de Produto</label>
         <name>ISSP_ProductSubcategory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Agreement --></label>
+        <name>ISSP_ProgressBar_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_ApplicationProcessing --></label>
+        <name>ISSP_ProgressBar_ApplicationProcessing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Application_Approved --></label>
+        <name>ISSP_ProgressBar_Application_Approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Application_Review --></label>
+        <name>ISSP_ProgressBar_Application_Review</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_ChangeProcessing --></label>
+        <name>ISSP_ProgressBar_ChangeProcessing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_FinalValidation --></label>
+        <name>ISSP_ProgressBar_FinalValidation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Financial_Security --></label>
+        <name>ISSP_ProgressBar_Financial_Security</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Payment --></label>
+        <name>ISSP_ProgressBar_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_SanityCheck --></label>
+        <name>ISSP_ProgressBar_SanityCheck</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Submitted --></label>
+        <name>ISSP_ProgressBar_Submitted</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Public --></label>
@@ -15549,6 +15605,14 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>NDC_Troubleshooting</name>
     </customLabels>
     <customLabels>
+        <label><!-- NEW_HO_SanityCheck --></label>
+        <name>NEW_HO_SanityCheck</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NEW_HO_Submitted --></label>
+        <name>NEW_HO_Submitted</name>
+    </customLabels>
+    <customLabels>
         <label><!-- New --></label>
         <name>New</name>
     </customLabels>
@@ -16137,6 +16201,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_NDCMM_Sharepoint_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_NDCMM_Terms_Of_Use_Link --></label>
+        <name>OneId_NDCMM_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_NDCMM_Troubleshooting --></label>
         <name>OneId_NDCMM_Troubleshooting</name>
     </customLabels>
@@ -16328,6 +16396,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>OneId_Type</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_URL_To_GDPR --></label>
+        <name>OneId_URL_To_GDPR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId URL javaScript --></label>
         <name>OneId_URL_javaScript</name>
     </customLabels>
@@ -16358,6 +16430,14 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customLabels>
         <label><!-- OneId_Your request has been successfully sent --></label>
         <name>OneId_Your_request_has_been_successfully_sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Text for link tor online help on OneIdentity login page for data privacy portal --></label>
+        <name>OneId_dataprivacy_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Link on online help link in One Identity login page for data privacy portal --></label>
+        <name>OneId_dataprivacy_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- Oneid_request_acess_to_a_new_service --></label>
@@ -17578,6 +17658,14 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customLabels>
         <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Name of the GDPR community in the URL --></label>
+        <name>TECH_GDPR_Community_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Name of GDPR  Network. Usually name of the community - Query on network objec --></label>
+        <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
         <label><!-- Taxes --></label>
