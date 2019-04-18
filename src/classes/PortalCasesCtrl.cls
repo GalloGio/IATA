@@ -1,6 +1,19 @@
 public with sharing class PortalCasesCtrl {
  
-    public static User myUser;
+    public static User myUser {
+        get {
+            if(myUser == null) {
+                myUser = [
+                    SELECT Id, AccountId, ContactId, Contact.AccountId, Contact.Financial_Assessment_Contact__c
+                    FROM User 
+                    WHERE Id = :UserInfo.getUserId()
+                ];
+            }
+            return myUser;
+        }
+        set;
+    }
+
     public static Boolean isAdmin;
     public static Boolean seeAllCases;
     public static String currentListViewName;
@@ -44,25 +57,20 @@ public with sharing class PortalCasesCtrl {
             currentListViewName = '3_MyRecentCases';
 
             apUser = false;
-            myUser = [
-                SELECT Id, ContactId, Contact.AccountId, Contact.Financial_Assessment_Contact__c
-                FROM User 
-                WHERE Id = :UserInfo.getUserId()
-            ];
             System.debug('____ [cls PortalCasesCtrl - initialization] myUser - ' + myUser);
 
             if(myUser.ContactId != null) {
-				List <Portal_Application_Right__c> appRightList = [
+                List <Portal_Application_Right__c> appRightList = [
                     SELECT Id
                     FROM Portal_Application_Right__c
                     WHERE Contact__c = :myUser.ContactId
                     AND Right__c = 'Access Granted'
                     AND Portal_Application__r.Name = 'Airline Participation'
                 ];
-		        if(!appRightList.isEmpty()) {
+                if(!appRightList.isEmpty()) {
                     System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - initialization] appRightList - ' + appRightList);
-		            apUser = true;
-		        }
+                    apUser = true;
+                }
 
                 myAccountId = myUser.Contact.AccountId;
             }
@@ -98,7 +106,7 @@ public with sharing class PortalCasesCtrl {
         isAdmin = (seeAllCases && adminProfile);
 
         for(ISSPCaseListView__c caseListViewItem : csCaseListViews) {
-			Boolean resultPermission1 = true; 
+            Boolean resultPermission1 = true; 
             if(!theProfilePermissionFilter.isDataEmpty(caseListViewItem, 'Profiles_Id__c')) {
                 resultPermission1 = theProfilePermissionFilter.isUserPermittedFor(caseListViewItem, 'Profiles_Id__c');
             }
@@ -148,15 +156,13 @@ public with sharing class PortalCasesCtrl {
     */
     private static PagedResult getCases() {
         String queryString;
-        Map<Id, String> casesMap;
-        Map<Id, String> caseURL;
         Set<String> fieldPathSet = new Set<String>{'CaseNumber'};
 
         for(Schema.FieldSetMember f : getFields()) { 
             fieldPathSet.add(f.getFieldPath());
         }
 
-        String query = ' CaseArea__c, Reason1__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
+        String query = ' CaseArea__c, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
         Boolean hasStatus = false;
         
         for(String fieldPath : fieldPathSet) {
@@ -189,6 +195,16 @@ public with sharing class PortalCasesCtrl {
         System.debug('____ [cls PortalCasesCtrl - getCases] queryResult - ' + result.records.size() + ' record(s) - ' + result.records);
 
         /* Generate Case URL */
+        result.url = JSON.serialize(setCaseURLs((List<Case>)result.records));
+        
+        return result;
+    }
+
+    private static Map<Id, String> setCaseURLs(List<Case> records) {
+        Map<Id, String> casesMap;
+        Map<Id, String> caseURL;
+        
+        /* Generate Case URL */
         recordTypesSet = new Set<String>{
             'FDS ASP Management',
             'FDS ICCS Bank Account Management',
@@ -214,20 +230,21 @@ public with sharing class PortalCasesCtrl {
                 LIMIT 1
             ];
 
-            System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - getCases] appRightList - ' + appRightList);
+            System.debug('____ [cls PortalCasesCtrl - getCases] appRightList - ' + appRightList);
         }
 
         casesMap = new Map<Id, String>();
         caseURL = new Map<Id, String>();
-        for(Case record : (List<Case>) result.records) {
+        System.debug('____ [cls PortalCasesCtrl - getCases] before records');
+        for(Case record : records) {
             casesMap = pageLoad(record);
             caseURL.putAll(casesMap);
         }
-
-        result.url = JSON.serialize(caseURL);
-        /* Generate Case URL */
+        System.debug('____ [cls PortalCasesCtrl - getCases] after records');
         
-        return result;
+        System.debug('____ [cls PortalCasesCtrl - getCases] caseURL - ' + caseURL);
+
+        return caseURL;
     }
 
     /* 
@@ -291,6 +308,13 @@ public with sharing class PortalCasesCtrl {
     * @return Map<Id, String>
     */ 
     private static Map<Id, String> pageLoad(Case record) {
+        if(record.CNSCase__c == true) {
+            return new Map<Id, String>{
+                record.Id =>
+                OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Case?caseId=' + record.Id + '&communityName=CNS') 
+            };
+        }
+
         /* Transparency in Payment's portal access assignment */
         if((appRightList != null && !appRightList.isEmpty()) && record.Status == TIP_Utils.CASE_STATUS_DRAFT && record.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS) {
             if(record.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) {
@@ -377,19 +401,16 @@ public with sharing class PortalCasesCtrl {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static List<Case> getFilteredCases(String searchKey) {
-        User userLogged = [SELECT AccountId FROM User WHERE Id = :UserInfo.getUserId()];
+    public static PagedResult getFilteredCases(String searchKey) {
         Boolean isAdmin = ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
 
-        Id accountId = userLogged.AccountId;
-
-        String finalQuery = 'SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, CreatedDate, LastModifiedDate, Portal_Case_Status__c ' +
+        String finalQuery = 'SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, CreatedDate, LastModifiedDate, Portal_Case_Status__c, Status, CaseArea__c, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, CreatedBy.Name ' +
             'FROM Case ' +
             'WHERE Visible_on_ISS_Portal__c = true AND ' + 
                 '(CaseNumber LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\' OR Subject LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\') ';
 
         if(isAdmin) {
-            finalQuery += 'AND AccountId = \''+ userLogged.AccountId +'\' ';
+            finalQuery += 'AND AccountId = \''+ myUser.AccountId +'\' ';
         } else {
             finalQuery += 'AND is_Portal_user_equal_case_contact__c = \'true\' ';
         }
@@ -398,10 +419,18 @@ public with sharing class PortalCasesCtrl {
 
         List<Case> queryResult = Database.query(finalQuery);
 
-        System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - getFilteredCases] finalQuery - ' + finalQuery);
+        System.debug('____ [cls PortalCasesCtrl - getFilteredCases] finalQuery - ' + finalQuery);
         System.debug('____ [cls PortalCasesCtrl - getFilteredCases] queryResult - ' + queryResult);
 
-        return queryResult;
+        result = new PagedResult();
+        result.records = queryResult;
+        result.totalItemCount = result.records.size();
+        result.userAdmin = adminProfile;
+
+        /* Generate Case URL */
+        result.url = JSON.serialize(setCaseURLs(queryResult));
+
+        return result;
     } 
 
     /* 
@@ -414,7 +443,7 @@ public with sharing class PortalCasesCtrl {
         Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, 
                         CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
                         Subtopic__c, Region__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
-                        Description,E2CP__AdditionalCC__c,Account_Concerned__c
+                        Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status
 
                         FROM Case 
                         WHERE Id = :caseId];
