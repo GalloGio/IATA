@@ -270,6 +270,50 @@ private class ANG_FinancialAssessmentTest {
 
 	}
 
+    @isTest
+    static void updateThirdDeadlineDateForNewgenAgents(){
+    	Case ifapCase = [SELECT id, AccountId, Status
+    					 FROM Case 
+    					 WHERE Account.ANG_IsNewGenAgency__c = TRUE 
+    					 LIMIT 1];
+   
+    	CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+
+    	ifapCase.Status = 'Agent Notified (Mail)';
+    	ifapCase.Financial_Review_Type__c = 'Annual';
+    	ifapCase.FA_Letter_Sent__c = true;    	
+    	update ifapCase; 
+
+    	Case sidraCase = createSIDRALite(ifapCase);
+    	sidraCase.BSP_CASS__c = 'BSP';
+    	insert sidraCase;
+
+    	ifapCase.FA_Second_Deadline_Date__c = Date.today().addDays(-1);
+    	ifapCase.secondFAnonComplianceDate__c = null;
+    	update ifapCase;
+
+    	Test.startTest();
+  		WSSidraLite.updateSecondAndThirdDeadline(ifapCase.id);
+    	Test.stopTest();
+
+    	//For Newgen Agents -> Check the parentCase.FA_Third_Deadline_Date__c
+    	Case parentCase = [SELECT id, AccountId, Status, FA_Third_Deadline_Date__c
+    					 FROM Case WHERE Account.ANG_IsNewGenAgency__c = TRUE LIMIT 1];
+
+    	System.assertEquals(Date.today().addDays(365), parentCase.FA_Third_Deadline_Date__c);
+
+    }
+
+    private static Case createSIDRALite(Case parent) {
+        Case cse = new Case(
+            RecordtypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE,
+            ParentId = parent.Id,
+            accountId = parent.accountId,
+            BSPCountry__c = 'BSP-SG',
+            SIDRA_Lite_Reason__c = SidraLiteHelperForIFAP.isFS(parent)? 'Financial Security Non-compliance': 'Financial Review Non-compliance'
+        );
+        return cse;
+    }
 
 	/**
 	 * Verify when a IFAP Case is being set the Financial_Review_Result__c field
@@ -302,5 +346,6 @@ private class ANG_FinancialAssessmentTest {
 		System.assertEquals(100, accountUpdated.Financial_Assessment_Points__c);
 		System.assertEquals(Date.today(), accountUpdated.Assessment_Performed_Date__c);
 	}
+
 
 }
