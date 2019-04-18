@@ -273,9 +273,9 @@ private class ANG_FinancialAssessmentTest {
 				Id, 
 				ANG_HE_CashCondition__c 
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Id = :cse.AccountId
+				Id = :cse.AccountId
 			 LIMIT 1
 			];
 
@@ -287,9 +287,9 @@ private class ANG_FinancialAssessmentTest {
 				FA_Third_Deadline_Date__c,
 				secondFAnonComplianceDate__c
 			 FROM 
-			 	Case 
+				Case 
 			 WHERE 
-			 	Id = :cse.Id
+				Id = :cse.Id
 			 LIMIT 1
 			];
 
@@ -411,9 +411,9 @@ private class ANG_FinancialAssessmentTest {
 				Id, 
 				ANG_HE_CashCondition__c 
 			 FROM 
-			 	Account 
+				Account 
 			 WHERE 
-			 	Id = :cse.AccountId
+				Id = :cse.AccountId
 			 LIMIT 1
 			];
 

@@ -428,17 +428,17 @@ global class IFAP_WebService {
 
     }
 
-    private static String isValidForRemovingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
+	private static String isValidForRemovingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
 
 		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
 			return INVALID_ACTION_REINSTATE_AGENT;
 		}
 
-        if(!acct.ANG_IsNewgenAgency__c || cse.Assessment_Performed_Date__c <= cse.FA_Second_Deadline_Date__c || String.isBlank(cse.Financial_Review_Result__c)){
+		if(!acct.ANG_IsNewgenAgency__c || cse.Assessment_Performed_Date__c <= cse.FA_Second_Deadline_Date__c || String.isBlank(cse.Financial_Review_Result__c)){
 			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE;
 		}
 
-        return 'VALID';
+		return 'VALID';
 
     }
 
