@@ -742,8 +742,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 
             HigherLogicIntegrationHelper.pushPersonMembers(usersToPushHL, activeUserMap);
             
-            update userList;
-            
+            WithoutSharingOperations.updateUserList(userList);
         }
     }
     
