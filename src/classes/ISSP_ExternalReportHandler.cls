@@ -18,6 +18,15 @@ public class ISSP_ExternalReportHandler {
         }
     }
 
+    public static void afterUpdate(List<ISSP_External_Report__c> extRepList) {
+        //
+        // TODO - Bulkify this 
+        //        
+        for(ISSP_External_Report__c er : extRepList) {       
+            setExternalRecordSharing(er);   
+        }
+    }
+
     private static void setExternalRecordSharing(ISSP_External_Report__c er) {
     	//Handling sharing settings for Contacts related to the givin Account
         List<Contact> SharingContacts_List = new List<Contact>([select Id , Name , AccountID From Contact Where AccountId = :er.Account__c OR Account.Top_Parent__c = :er.Account__c]);
