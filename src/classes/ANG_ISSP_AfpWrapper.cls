@@ -17,6 +17,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public Boolean isIEPFlag {get; set;}
 	public Boolean isCashFlag {get; set;}
 	public String iepModel {get; set;}
+	public Boolean isChinaAgent {get; set;}
 
 	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services, Account account, Boolean isSearch) {
 		this.isCash = NO;
@@ -30,6 +31,8 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.isCashFlag = false;
 		this.iepModel = '';
 
+		isChinaAgent = account.IATA_ISO_Country__r.ISO_Code__c == 'CN';
+
 		if (account.IATA_ISO_Country__r.ANG_IEP_Model__c != null) {
 			this.iepModel = account.IATA_ISO_Country__r.ANG_IEP_Model__c;
 		}
@@ -41,43 +44,24 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		if(this.isCashless) {
 			Boolean hasAccess = false;
 			for(Portal_Application_Right__c par: services) {
-				System.debug('par.Application_Name__c-->' + par.Application_Name__c);
-
 				if(par.Application_Name__c == Ams_Utils.IATA_ACCREDITATION_AND_CHANGES && par.Right__c == Ams_Utils.PORTAL_APP_ACCESS_GRANTED) {
 					hasAccess = true;
 					break;
 				}
 			}
-			if(hasAccess) {
-				this.cashlessMessage = System.Label.ANG_ISSP_AFP_CashlessMessage;
-				
-			} else {
-				this.cashlessMessage = System.Label.ANG_ISSP_AFP_CashlessMessageNoAccess;
-				
-			}
 
-			System.debug('this.cashlessMessage--->' + this.cashlessMessage);
-			System.debug('this.cashlessMessage--->' + this.cashlessMessage);
+			this.cashlessMessage = hasAccess ? System.Label.ANG_ISSP_AFP_CashlessMessage : System.Label.ANG_ISSP_AFP_CashlessMessageNoAccess;
 		}
 
 		Boolean access = false;
-			for(Portal_Application_Right__c par: services) {
-				System.debug('par.Application_Name__c-->' + par.Application_Name__c);
-
-				if(par.Application_Name__c == Ams_Utils.IATA_ACCREDITATION_AND_CHANGES && par.Right__c == Ams_Utils.PORTAL_APP_ACCESS_GRANTED) {
-					access = true;
-					break;
-				}
+		for(Portal_Application_Right__c par: services) {
+			if(par.Application_Name__c == Ams_Utils.IATA_ACCREDITATION_AND_CHANGES && par.Right__c == Ams_Utils.PORTAL_APP_ACCESS_GRANTED) {
+				access = true;
+				break;
 			}
+		}
 
-			if(access) {
-				
-				this.creditCardMessage = System.Label.ANG_ISSP_AFP_NoCreditCardMessage;
-			} else {
-				
-				this.creditCardMessage = System.Label.ANG_ISSP_AFP_CreditCardNoAccess;				
-			}
-
+		this.creditCardMessage = access ? System.Label.ANG_ISSP_AFP_NoCreditCardMessage : System.Label.ANG_ISSP_AFP_CreditCardNoAccess;
 
 		if(authorizations.size() > 0) {
 			for(Agency_Authorization__c auth : authorizations) {
@@ -120,9 +104,8 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				this.iepLink = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
 			}
 		} else if(account.ANG_IEP_Status_FF__c == Ams_Utils.NO_IEP_ACCOUNT) {
-
             String currentUserProfileId = UserInfo.getProfileId();
-            List <Profile> profileList = [SELECT Name FROM Profile WHERE Id = :currentUserProfileId];
+            List<Profile> profileList = [SELECT Name FROM Profile WHERE Id = :currentUserProfileId];
 
             Boolean isAdmin = false;
 
@@ -164,9 +147,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
         		this.modalErrorMessageFlag = '-';
         	}		       
 
-			this.iepLinkLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
-
-			
+			this.iepLinkLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;			
 		}
 	}
 }
