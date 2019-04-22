@@ -1083,6 +1083,22 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>Associate Entity(s) :</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_BOP</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BOP</shortDescription>
+        <value>BOP</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_BOP_Access</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BOP Access Link</shortDescription>
+        <value>Access BOP</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_CASE_REASON_OPT_OUT</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
