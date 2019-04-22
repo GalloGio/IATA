@@ -729,7 +729,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
-&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;ICCS&quot;,&quot;ICCS&quot;,
 Name 
 )</formula>
@@ -779,6 +779,7 @@ Name
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
 &quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_ICE_Description,
+&quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

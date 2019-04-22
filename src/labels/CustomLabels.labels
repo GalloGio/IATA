@@ -2035,6 +2035,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Risk Description</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_RHC_Information_China</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP RHC Information China</shortDescription>
+        <value>Risk Profile</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_RHC_Information</fullName>
         <language>en_US</language>
         <protected>false</protected>
