@@ -1116,6 +1116,7 @@ global class ANG_OscarProcessHelper {
 
 			changeCode.name = changeCodeConfig.Name;
 			changeCode.reasonCode = changeCodeConfig.Reason_Code__c;
+			changeCode.publishedOnEBulletin = changeCodeConfig.Published_in_bulletin__c;
 			String memoTextTemp = changeCodeConfig.Bulletin_Memo_Text__c;
 
 			System.debug('theOscar.SIDRA_lite_reason__c is ' + theOscar.SIDRA_lite_reason__c);
