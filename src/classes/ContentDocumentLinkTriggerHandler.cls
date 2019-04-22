@@ -67,7 +67,9 @@ public with sharing class ContentDocumentLinkTriggerHandler {
                 }       
             }
 
-            insert documentsToInsert; 
+            if(!documentsToInsert.isEmpty()) {
+                insert documentsToInsert;
+            }
         }
     }
 }

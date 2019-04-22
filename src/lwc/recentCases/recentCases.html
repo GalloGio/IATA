@@ -5,9 +5,9 @@
             {label.CSP_RecentCases}
         </div>
         <div slot="actions">
-            <lightning-button variant="base" label={label.CSP_SeeAll} title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
+            <lightning-button variant="base" label={label.CSP_SeeAll} title="See All" icon-name="utility:forward" icon-position="right" onclick={seeAllCases}></lightning-button>
         </div>        
-        <div class="slds-m-around__medium">
+        <div class="slds-m-around_medium">
             <template if:true={loading}>
                 <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
             </template>            

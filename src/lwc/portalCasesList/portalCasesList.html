@@ -1,0 +1,68 @@
+<template> 
+    <lightning-layout multiple-rows>
+        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="6" large-device-size="6">
+            <div class="bottomLightGrayBorder slds-m-around_small">
+                <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+                <lightning-input name="newRecipientTextInput"
+                    placeholder="Search cases number, subject or status"
+                    class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchCasesList"
+                    onkeyup={handleKeyUp}
+                    onchange={handleInputChange}>
+                </lightning-input>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="3" large-device-size="3">
+                <lightning-button label="Filter" class="filterButton"></lightning-button>
+        </lightning-layout-item>         
+        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="3" large-device-size="3">
+            <lightning-button label={caseListName} class="containedButton" onclick={rerenderCases} if:true={isAdmin}></lightning-button>
+        </lightning-layout-item>                            
+    </lightning-layout>
+    <div class="customCardWhite">        
+        <div class="slds-m-around_medium">
+            <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>            
+            <template if:false={loading}>
+                <div if:true={dataRecords}>
+                    <!-- DATA RECORDS -->
+                    <lightning-datatable
+                        key-field="Id"
+                        data={data}
+                        columns={columns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                    <!-- DATA RECORDS -->
+
+                    <!-- PAGINATION -->
+                    <c-paginator 
+                        page-number={pageNumber}
+                        page-size={pageSize}
+                        total-pages={totalPages}
+                        page-list={pageList}
+                        onprevious={handlePreviousPage}
+                        onnext={handleNextPage}
+                        onselected={handleSelectedPage}
+                        onfirst={handleFirstPage}
+                        onlast={handleLastPage}>
+                    </c-paginator>
+                    <!-- PAGINATION -->
+                </div>
+                <div if:false={dataRecords}>
+                    <div class="slds-text-align_center">
+                        <div class="slds-text-heading_medium">
+                            <h1>{label.CSP_NoCases1}</h1>
+                        </div>
+                        <div class="slds-text-body_regular">
+                            <h1>{label.CSP_NoCases2}</h1> 
+                        </div>
+                        <div class="slds-m-top_medium">
+                            <h1><lightning-formatted-url value="www.salesforce.com" label={label.CSP_Question1}></lightning-formatted-url></h1>
+                            <h1><lightning-formatted-url value="www.salesforce.com" label={label.CSP_Question2}></lightning-formatted-url></h1>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>    
+    </div>      
+</template>
