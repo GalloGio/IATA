@@ -141,25 +141,22 @@ public without sharing class IECCustomer {
      * 2015-11-09 Thai: make public in order to allow CSR initiate customer for different actions
      */
     public IECCustomer(Id ContactId) {
-        try {
-            RelatedContact = IECUserManager.getContactById(ContactId);
-            RelatedAccount = IECUserManager.getAccountById(RelatedContact.AccountId);
-            RelatedUser = IECUserManager.getUserByContactId(ContactId);
-            if (!Test.isRunningTest()) {
-                RelatedZuoraAccount = IECZuoraHelper.getZuoraAccountBySFAccountId(RelatedContact.AccountId, RelatedContact.Id);
-                RelatedBillingAccount = IECZuoraHelper.getBillingAccountByContactId(ContactId); 
-            }
-            else {
-            	RelatedZuoraAccount = IECTestUtil.createSampleZuoraAccount('99999', RelatedContact.AccountId, RelatedContact.Id);
-            	//RelatedBillingAccount = IECTestUtil.createSampleBillingAccount(RelatedAccount, RelatedContact);
-            	RelatedBillingAccount = IECZuoraHelper.getBillingAccountByContactId(ContactId); 
-            }
+        
+        RelatedContact = IECUserManager.getContactById(ContactId);
+        RelatedAccount = IECUserManager.getAccountById(RelatedContact.AccountId);
+        RelatedUser = IECUserManager.getUserByContactId(ContactId);
 
-            AccountExistsInZuora = (RelatedZuoraAccount != null);
+        if (!Test.isRunningTest()) {
+            RelatedZuoraAccount = IECZuoraHelper.getZuoraAccountBySFAccountId(RelatedContact.AccountId, RelatedContact.Id);
+            RelatedBillingAccount = IECZuoraHelper.getBillingAccountByContactId(ContactId); 
         }
-        catch (Exception ex) {
-            throw ex;
+        else {
+        	RelatedZuoraAccount = IECTestUtil.createSampleZuoraAccount('99999', RelatedContact.AccountId, RelatedContact.Id);
+        	RelatedBillingAccount = IECZuoraHelper.getBillingAccountByContactId(ContactId); 
         }
+
+        AccountExistsInZuora = (RelatedZuoraAccount != null);
+        
     }
     
     /**
@@ -167,19 +164,14 @@ public without sharing class IECCustomer {
      * Returns null if not logged in.
      */
     public static IECCustomer getCurrentIECCustomer() {
-        try {
-            Id idContact = IECUserManager.getContactId();
-
-            if (idContact == null)
-                return null;
-            else {
-                if (singleton == null) 
-                    singleton = new IECCustomer(IECUserManager.getContactId());
-                return singleton;
-            }
-        }
-        catch (Exception ex) {
-            throw ex;
+        
+        Id idContact = IECUserManager.getContactId();
+        if (idContact == null)
+            return null;
+        else {
+            if (singleton == null) 
+                singleton = new IECCustomer(IECUserManager.getContactId());
+            return singleton;
         }
     }
 
@@ -188,8 +180,6 @@ public without sharing class IECCustomer {
             if (RelatedZuoraAccount != null) {
             	if (!Test.isRunningTest())
                 	RelatedZuoraAccount = IECZuoraHelper.getZuoraAccountBySFAccountId(RelatedContact.AccountId, RelatedContact.Id);
-                //PaymentMethods = IECSubscriptionManager.getPaymentMethodsFromZuora((String)RelatedZuoraAccount.getValue('Id'));
-                //analysePaymentMethods();
                 return true;
             }
             return false;

@@ -78,10 +78,7 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			Zuora__CustomerAccount__c baRec = spcRec.Zuora__Subscription__r.Zuora__CustomerAccount__r; // Id, Name
 			billingAccountIdToObjectMap.put(baRec.Id, baRec);
 		}
-		
-		//system.debug( 'subProdChargeIdToObjectMap.values:' +subProdChargeIdToObjectMap.values() );
-		//system.debug( 'billingAccountIdToObjectMap.values:' +billingAccountIdToObjectMap.values() );
-		
+				
 		prepareEBCAccountNotification(billingAccountIdToObjectMap, subProdChargeIdToObjectMap );
 		
 		// Insert error logs if applicable
@@ -96,7 +93,6 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 	// ========================================================================
 	// when this batch is finish, call next job on the line
 	global void finish(Database.BatchableContext BC) {
-		//System.debug( 'BtchEBCCreateAccountNotificationOnStatus: finish()');
 		
 		// Insert error logs if applicable
 		if (!logs.isEmpty()) {
@@ -110,9 +106,7 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 	// use callBatchEBCCreateNotification to do standard call to this batch class.
 	// this will simplify debugging and scheduling this job
 	//
-	public static void callBatchEBCCreateNotification()
-	{
-		//System.debug( 'BtchEBCCreateNotificationForRenewal.callBatchEBCCreateNotification');
+	public static void callBatchEBCCreateNotification()	{
 	
 		BtchEBCCreateNotificationForRenewal btchProc = new BtchEBCCreateNotificationForRenewal();
 		
@@ -126,28 +120,10 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			+ ', Zuora__Subscription__r.Zuora__CustomerAccount__r.Name '
 			+ ', Zuora__Subscription__r.Zuora__CustomerAccount__r.Contact__c '
 			+ ', Zuora__Subscription__r.Zuora__CustomerAccount__r.eBroadcast_Email_Balance__c '
-			// + ', Zuora__Subscription__r.Zuora__Account__c '
 			+ ', Zuora__Subscription__r.Zuora__NextRenewalDate__c '
-			// + ', Zuora__Subscription__r.Zuora__SubscriptionEndDate__c '
 			+ ', Zuora__Subscription__r.Zuora__TermEndDate__c '
-			//+ ', Zuora__Subscription__r.Product_Rate_Plan_Information__c '
-			//+ ', Zuora__EffectiveEndDate__c '
-			//+ ', Zuora__Price__c '
-			//+ ', Zuora__ProductName__c '
-			//+ ', Zuora__RatePlanName__c '
-			//+ ', Product_Rate_Plan_Charge__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ListPrice__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__Deleted__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c '
 			+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Name '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_Cost_Per_Email__c '
 			+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.Name '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__Description__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c '
-			//+ ', Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.ProductCategory__c '
-						
 			+ ' from Zuora__SubscriptionProductCharge__c '
 			+ ' where Product_Rate_Plan_Charge__r.zqu__Deleted__c = false '
 			+ '   and Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c in ' + availableEbcRatePlanIdSetString 
@@ -174,13 +150,11 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 		Map<Id, EBC_Account_Notification__c> billingAccountIdToEbcAccountNotificationMap = new Map<Id,EBC_Account_Notification__c>();
 		Map<Id, EBC_Preference__c> ebcPreferenceIdToObjectMap = new Map<Id, EBC_Preference__c>([ select Id, Name 
 							, Billing_Account__c
-							//, Monthly_Account_Status__c
 							, PrimaryContact_Email__c
 							, PrimaryContact_Name__c
 							from EBC_Preference__c
 							where Billing_Account__c in : billingAccountIdToObjectMap.keySet()
 						]);
-		//System.debug( 'ebcPreferenceToObject: ' + ebcPreferenceIdToObjectMap.values());
 		
 		for (EBC_Preference__c ebcPref : ebcPreferenceIdToObjectMap.values()) 
 		{
@@ -188,13 +162,7 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 
 			EBC_Account_Notification__c accNotification = new EBC_Account_Notification__c( Billing_Account__c = billingAcct.Id
 																						, Name = billingAcct.Name
-																						//, Email__c = billingAcct.Contact__r.Email
 																						, Email_Balance__c = billingAcct.eBroadcast_Email_Balance__c
-																						//, Storage_Usage__c = billingAcct.eBroadcast_Storage_Usage__c
-																						//, Account_Level_Add_On__c = '' // default is none (billingAcct.eBroadcast_Add_On_Access__c) ? 'Extra Added' : ''
-																						//, Service_Level_Add_On__c = ''
-																						//, EBC_Subscription_Type__c = EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO // default to pay as you go 
-																						//, EBC_Rate_Plan_Name__c = EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO // default to prepaid, to be updated by related Zuora__SubscriptionProductCharge__c
 																						, Notification_Type__c = EBC_ACCOUNT_NOTIFICATION_TYPE_RENEWAL
 																						, Notification_Date__c = Date.today()
 																						, EBC_Account_Status__c = EBC_ACCOUNT_STATUS_ACTIVE // (selected billingAcct.eBroadcast_Product_Access__c should  be true)
@@ -203,8 +171,6 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 																						, EBC_Dashboard_URL__c = ebcDashboardUrl
 																						);
 			
-			
-			//accNotification.Storage_Capacity__c = (billingAcct.eBroadcast_Storage__c == null) ? billingAcct.eBroadcast_Storage__c : IECEBC_Utility.ebcSetup.Default_Storage_Capacity__c;
 			accNotification.Primary_Contact_Name__c = ebcPref.PrimaryContact_Name__c;
 			accNotification.Email__c = ebcPref.PrimaryContact_Email__c;
 			
@@ -234,49 +200,15 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			} // end if accNotification
 		} //  end for Zuora__SubscriptionProductCharge__c
 		
-/*		
-		// collect the campaign statistics for relevant BillingAccounts
-		List<AggregateResult> campaignAggrList = [select Related_Billing_Account__c 
-				, sum(Total_Count__c) numOfEmailSent
-				, count(Id) numOfCampaigns
-				, calendar_year(Activity_Date_Time__c) year, calendar_month(Activity_Date_Time__c) month
-			from EBC_Activity__c
-			where Related_Billing_Account__c in : billingAccountIdToEbcAccountNotificationMap.keySet()
-				and Activity_Date_Time__c = LAST_MONTH
-				//and Activity_Type__c = 'Sent'
-				and EBC_Campaign__r.Status__c = 'SENT'
-			group by Related_Billing_Account__c
-					, calendar_year(Activity_Date_Time__c)
-					, calendar_month(Activity_Date_Time__c)
-			order by calendar_year(Activity_Date_Time__c), calendar_month(Activity_Date_Time__c)
-					, Related_Billing_Account__c
-			];
-
-		for (AggregateResult campaignAggr : campaignAggrList)
-		{
-			String billingAccountId = (String) campaignAggr.get('Related_Billing_Account__c');
-			if (billingAccountId != null) {
-				EBC_Account_Notification__c accNotification = billingAccountIdToEbcAccountNotificationMap.get(billingAccountId);
-				
-				Integer numOfEmailSent = (Integer) campaignAggr.get('numOfEmailSent');
-				accNotification.Number_of_Email_Recipients_Last_Month__c = numOfEmailSent;
-				
-				Integer numOfCampaigns =  (Integer) campaignAggr.get('numOfCampaigns');
-				accNotification.Number_of_Campaigns_Last_Month__c = numOfcampaigns;
-			} // end if
-		} // end of for campaignAggr
-*/		
 		// collect the user name relevant BillingAccounts
 		Map<Id,User> userIdToObjectMap = new Map<Id,User> ([select Id, ContactId, Email
 				from User
 				where IsPortalEnabled = true
 					and contactId in : contactIdToAccountNotificationMap.keySet()]);
-		for (User usr : userIdToObjectMap.values())
-		{
+		for (User usr : userIdToObjectMap.values())	{
 			EBC_Account_Notification__c acctNot = contactIdToAccountNotificationMap.get(usr.ContactId);
 			acctNot.UserName__c = usr.Email;
 		}
-		// System.debug( 'billingAccountIdToEbcAccountNotification: ' + billingAccountIdToEbcAccountNotificationMap.values());
 		
 		// insert new EBC Account Notification records
 		try {

@@ -37,7 +37,12 @@ global class ISSP_BO_Email_Interface implements Messaging.InboundEmailHandler {
 				for (Portal_Application_Right__c thisAccess : accessList){
 					contactIds.add(thisAccess.Contact__c);
 				}
-				List <Contact> contactList = [SELECT Id FROM Contact WHERE Id IN :contactIds];
+
+				String queryString = 'SELECT ' + String.join(ISSP_NotificationUtilities.getAllContactFields(), ',') 
+							      + ' FROM Contact  WHERE Id IN :contactIds';
+
+				List <Contact> contactList = Database.query(queryString);
+
 				ISSP_Notifications_Trigger__c notificationsTrigger = ISSP_Notifications_Trigger__c.getValues('Management Information Report');
 				if (notificationsTrigger != null){
 					List<Notification_template__c> lstNotificationTemplate = [SELECT Name, Message__c, Admins_Users__c, 
