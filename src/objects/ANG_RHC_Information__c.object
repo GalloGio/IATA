@@ -448,7 +448,7 @@ alert(result[0].description);
         <description>Request Provisional RHC</description>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Request Provisional</masterLabel>
+        <masterLabel>Request RHC calculation</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)} 
