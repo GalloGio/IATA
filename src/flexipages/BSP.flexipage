@@ -26,6 +26,9 @@ ACCA</description>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentName>AttachmentPanelUpdated</componentName>
+        </componentInstances>
+        <componentInstances>
             <componentInstanceProperties>
                 <name>relatedListComponentOverride</name>
                 <value>NONE</value>
@@ -33,6 +36,13 @@ ACCA</description>
             <componentName>force:relatedListContainer</componentName>
         </componentInstances>
         <name>Facet-5998ad2e-70e0-49ae-8ea5-4a5c5f967925</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentName>runtime_sales_activities:activityPanel</componentName>
+        </componentInstances>
+        <name>Facet-90d8689c-80b2-4dfa-9e39-4634a40c8f29</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -63,6 +73,17 @@ ACCA</description>
             <componentInstanceProperties>
                 <name>title</name>
                 <value>Standard.Tab.relatedLists</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-90d8689c-80b2-4dfa-9e39-4634a40c8f29</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Standard.Tab.activity</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
