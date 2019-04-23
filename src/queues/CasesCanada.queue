@@ -11,11 +11,11 @@
             <publicGroup>IDFSAmericasRS</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>DistributionCustomerExperienceHOI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionCustomerExperienceHO</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
-            <role>MADHubCSManagerA</role>
-            <role>MADHubCSstaffA</role>
+            <role>MADHubCSManager</role>
+            <role>MADHubCSstaff</role>
         </roles>
         <users>
             <user>suwal@iata.org</user>
