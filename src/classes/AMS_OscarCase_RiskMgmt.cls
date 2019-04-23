@@ -253,6 +253,13 @@ public class AMS_OscarCase_RiskMgmt {
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
 
 					if(CCToBeGenerated){
+						//NEWGEN-2719 check if we need to skip CC creation depending on previous ifap status
+						if(conf.Change_Code__c == 'NFS' && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP && allAccsMap.get(c.AccountId).ANG_IsNewGenAgency__c 
+							&& !allAccsMap.get(c.AccountId).Cases.isEmpty() && IFAP_BusinessRules.isPreviousIFAPStatusEquals(allAccsMap.get(c.AccountId).Cases, 'Closed_Non compliance')){
+
+							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NFS change code'));
+
+						}else{	
 						//mapCasePerAccount.put(c.AccountId, c);
 						list<AMS_ChangeCodes__c> ls;
 						if(mapChangeCodeToCreate.KeySet().contains(c.Id))
