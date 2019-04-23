@@ -907,7 +907,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_sidra_level1_level2</content>
+        <content>BSP</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
@@ -916,7 +916,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_sidra_level1_level2</content>
+        <content>BSP</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
@@ -925,7 +925,7 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_sidra_level1_level2</content>
+        <content>BSP</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
@@ -934,21 +934,12 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Service_console_sidra_level1_level2</content>
+        <content>BSP</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
         <type>Flexipage</type>
         <profile>GCS - Staff - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Service_console_sidra_level1_level2</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
