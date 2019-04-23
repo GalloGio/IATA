@@ -13,10 +13,10 @@ public static String findRecycleQueue(String searchKey) {
 
     if(caseList.isEmpty())return '';
     //Recycle Queues are always set as "Recycle Bin + (Region of Case)"
-    String queueName = 'Recycle Bin ' + caseList.get(0).Region__c;
+    String queueName = 'RecycleBin' + caseList.get(0).Region__c;
 
     //Grabs the Queue
-    list<Group> groupList = [select Id from Group where Type = 'Queue' and Name =: queueName LIMIT 1];
+    list<Group> groupList = [select Id from Group where Type = 'Queue' and developername =: queueName LIMIT 1];
 
     if(!groupList.isEmpty()){
         //Returns Queue Id to Web Component to assign the Owner of the Case
