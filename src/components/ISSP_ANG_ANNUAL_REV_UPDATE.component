@@ -1289,6 +1289,7 @@
             $('[id$="copyCheckBox"]').prop('disabled', true);
             $('[id$="copyCheckBox"]').prop('disabled', true);
             $('[id$="vatinput"]').prop('disabled', true);
+            $('[id$="vat2input"]').prop('disabled', true);
 
             $('[id$="PhysicalStreet"]').prop('disabled', true);
             $('[id$="PostalStreet"]').prop('disabled', true);
