@@ -146,12 +146,15 @@ public class ServiceRenderedCaseLogic {
     map<String,Case> KeyPerCase = new map<String,Case>();
         
     for(Case c: casesOkConsumer ){
-      accountIds.add(c.AccountId);
-      keyPerCase.put( c.accountID  + separator +
-                      c.Provider__c + separator 
-                       +
-                       ServicesPerReason.get( c.reason1__c).service__C
-                      , C );
+        Case_Reason_Service__c caseService = ServicesPerReason.get( c.reason1__c);
+        if (caseService.Create_custom_service_rendered__c) {
+            accountIds.add(c.AccountId);
+            keyPerCase.put( c.accountID  + separator +
+                            c.Provider__c + separator 
+                            +
+                            ServicesPerReason.get( c.reason1__c).service__C
+                            , C );
+        }
     }
 
     set<String> servicesFromDb = new set<String>();   
