@@ -350,7 +350,7 @@
                         FormControlStyle="apcontainer">
                     </DSE:DS_DataQuality>
 
-                    <apex:selectList id="billingStateList" size="1" value="{!ca.fw.newform.State_Province__c}" style="width:100%" onchange="copyStateToBillingBox();">
+                    <apex:selectList id="billingStateList" size="1" value="{!ca.fw.newform.State_Province__c}" style="width:100%; margin-left: 15px;" onchange="copyStateToBillingBox();">
                         <apex:selectOptions value="{!billingStateList}"/>
                     </apex:selectList>
 
@@ -383,7 +383,7 @@
 
                     <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: inline-start; margin-left: 15px;"/>
 
-                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px;" onchange="copyStateListSelection();">
+                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px;" onchange="copyStateListSelection();">
                         <apex:selectOptions value="{!shippingStateList}"/>
                     </apex:selectList>
 
@@ -1121,7 +1121,7 @@
 
             if (stateMap[dropdownValue] != undefined) {
                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-                $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px;');
+                $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px; margin-left: 15px;');
                 
                 changeStateOptions();
             } else {
@@ -1134,6 +1134,7 @@
         }
 
         function copyStateToBillingBox() {
+            console.log('iasd');
             $(".state_province__c").val($('[id$="billingStateList"]').val());
         }
 
@@ -1155,8 +1156,12 @@
                     $('[id$="ShippingCountryList"]').addClass('error');
                 }
 
+                $('[id$="state_province__c"]').parent().attr('class', 'row');
+
                 if ({!ca.isocountry.State_Province_Picklist__c}) {
-                    $('[id$="billingStateList"]').prependTo('#state_province__c');
+                    $('[id$="billingStateList"]').attr('style', 'width: 200px; margin-left: 15px;');
+
+                    $('[id$="billingStateList"]').prependTo($('[id$="state_province__c"]').parent());
                     $('.state_province__c').attr('style', 'display: none;');
                     $('.state_province__c').css("padding-right", 0);
 
@@ -1164,7 +1169,6 @@
                         $('[id$="billingStateList"]').addClass('error');
                     }
                 } else {
-                    $('[id$="state_province__c"]').parent().attr('class', 'row');
                     $('[id$="billingStateText"]').attr('style', 'width: 200px; margin-left: 15px;');
 
                     $('[id$="billingStateText"]').prependTo($('[id$="state_province__c"]').parent());
@@ -1176,9 +1180,11 @@
                     }
                 }
 
+                $('[id$="shipping_state__c"]').parent().attr('class', 'row');
+
                 if (stateMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
                     $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-                    $('[id$="ShippingStateList"]').prependTo('#shipping_state__c');
+                    $('[id$="ShippingStateList"]').prependTo($('[id$="shipping_state__c"]').parent());
                     $('.shipping_state__c').attr('style', 'display: none;');
                     $('.shipping_state__c').css("padding-right", 0);
 
@@ -1187,8 +1193,6 @@
                     }
                 } else {
                     $('[id$="ShippingStateList"]').attr('style', 'display: none;');
-
-                    $('[id$="shipping_state__c"]').parent().attr('class', 'row');
 
                     $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent());
                     $('.shipping_state__c').attr('style', 'display: none;');
@@ -1368,7 +1372,7 @@
                 var select = document.getElementById('calYearPicker');
                 if (!select) return;
                 select.innerHTML = '';
-                var startYear = new Date().getFullYear() - pastYearsToAdd; ;
+                var startYear = new Date().getFullYear() - pastYearsToAdd;
 
                 for (var year = startYear; year < startYear + futureYearsToAdd + 1; year++) {
                     select.options[select.options.length] = new Option(year, year);
