@@ -16672,6 +16672,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Please enter the % of time devoted to Agency Business</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</shortDescription>
+        <value>Please enter a value between 0 and 100 on the % of time devoted to Agency Business</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_HO_Full_Address</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
