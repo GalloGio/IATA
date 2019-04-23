@@ -122,11 +122,7 @@
   display: inline-block;
 }
 
-.headerButtonProfileContainer:hover .openProfile{
-  display: block;
-}
-
-.openProfile:hover {
+.headerButtonProfileContainer:hover .openProfile, .openProfile:hover{
   display: block;
 }
 
