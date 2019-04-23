@@ -9,7 +9,7 @@
         </publicGroups>
         <roles>
             <role>E_F</role>
-            <role>IDFSEFServicesA</role>
+            <role>IDFSEFServices</role>
         </roles>
         <users>
             <user>chretienc@iata.org</user>

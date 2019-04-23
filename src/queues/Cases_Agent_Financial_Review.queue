@@ -8,101 +8,101 @@
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>CountryManagerBoliviaI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>IDFSEuropeRegionalOfficeI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerBolivia</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>IDFSEuropeRegionalOffice</roleAndSubordinateInternal>
             <roleAndSubordinateInternal>MAD_Hub_ARM_Staff</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
-            <role>APAgencyManagementA</role>
-            <role>APAgencyManagementStaffA</role>
+            <role>APAgencyManagement</role>
+            <role>APAgencyManagementStaff</role>
             <role>A_P_Agency_Risk_Management_Staff</role>
-            <role>APBankingManagerA</role>
-            <role>APCustomerServiceManagerA</role>
-            <role>AfricaMEAccManagerA</role>
-            <role>AfricaMEAccStaffA</role>
+            <role>APBankingManager</role>
+            <role>APCustomerServiceManager</role>
+            <role>AfricaMEAccManager</role>
+            <role>AfricaMEAccStaff</role>
             <role>Africa_ME_ARM_staff</role>
-            <role>AfricaMEBankingManagerA</role>
-            <role>AfricaMECSManagerA</role>
-            <role>AfricaMEFirstLevelCSStaffA</role>
-            <role>AfricaMEHeadofServiceCentreA</role>
-            <role>AfricaMEOperationsManagerA</role>
-            <role>AfricaMEOperationsStaffA</role>
-            <role>AmericasAgencyManagementManagerA</role>
-            <role>AmericasAgencyManagementStaffA</role>
+            <role>AfricaMEBankingManager</role>
+            <role>AfricaMECSManager</role>
+            <role>AfricaMEFirstLevelCSStaff</role>
+            <role>AfricaMEHeadofServiceCentre</role>
+            <role>AfricaMEOperationsManager</role>
+            <role>AfricaMEOperationsStaff</role>
+            <role>AmericasAgencyManagementManager</role>
+            <role>AmericasAgencyManagementStaff</role>
             <role>Americas_Agency_Risk_Management_Staff</role>
-            <role>ChinaNAsiaAgencyManagementMgrA</role>
-            <role>ChinaNAsiaAgencyManagementStaffA</role>
+            <role>ChinaNAsiaAgencyManagementMgr</role>
+            <role>ChinaNAsiaAgencyManagementStaff</role>
             <role>China_N_Asia_Agency_Risk_Management_Staff</role>
             <role>China_N_Asia_Business_Delivery_Manager</role>
-            <role>ChinaNAsiaCustomerServiceManagerA</role>
-            <role>ChinaNAsiaCustomerServiceStaffA</role>
-            <role>ChinaNorthAsiaHubLeaderA</role>
+            <role>ChinaNAsiaCustomerServiceManager</role>
+            <role>ChinaNAsiaCustomerServiceStaff</role>
+            <role>ChinaNorthAsiaHubLeader</role>
             <role>CountryManagerGermany</role>
-            <role>CountryManagerDominicanReplublicA</role>
+            <role>CountryManagerDominicanReplublic</role>
             <role>CountryManagerRomaniaMoldova</role>
-            <role>CountryManagerHongKongA</role>
+            <role>CountryManagerHongKong</role>
             <role>CountryManagerBulgaria</role>
-            <role>CountryManagerMongoliaA</role>
-            <role>CountryManagerNordicBalticA</role>
-            <role>CountryManagerPolandA</role>
-            <role>CountryManagerSpainAndorraA</role>
-            <role>CountryManagerSwitzerlandLiechtA</role>
+            <role>CountryManagerMongolia</role>
+            <role>CountryManagerNordicBaltic</role>
+            <role>CountryManagerPoland</role>
+            <role>CountryManagerSpainAndorra</role>
+            <role>CountryManagerSwitzerlandLiecht</role>
             <role>CountryManagerTurkey</role>
             <role>CountryManagerUkraine</role>
-            <role>CountryManagerUnitedKingdomA</role>
-            <role>DistributionAgencyManagementHOA</role>
-            <role>DistributionAgencyRiskMgmtHOA</role>
-            <role>DistributionAirlineManagementHOA</role>
+            <role>CountryManagerUnitedKingdom</role>
+            <role>DistributionAgencyManagementHO</role>
+            <role>DistributionAgencyRiskMgmtHO</role>
+            <role>DistributionAirlineManagementHO</role>
             <role>Distribution_Business_Delivery_HO</role>
-            <role>DistributionCustomerExperienceHOA</role>
-            <role>DistributionInvoicingManagementHOA</role>
-            <role>DistributionRSHOA</role>
-            <role>DistributionManagementHOA</role>
-            <role>IDFSAfricaMERegionalOfficeA</role>
-            <role>IDFSAmericasRegionalOfficeA</role>
-            <role>IDFSAsiaPacificRegionalOfficeA</role>
-            <role>IDFSChinaNorthAsiaRegionalOfficeA</role>
-            <role>IDFSEuropeRegionalOfficeA</role>
-            <role>MADHubACCstaffA</role>
-            <role>MADHubACCManagerA</role>
+            <role>DistributionCustomerExperienceHO</role>
+            <role>DistributionInvoicingManagementHO</role>
+            <role>DistributionRSHO</role>
+            <role>DistributionManagementHO</role>
+            <role>IDFSAfricaMERegionalOffice</role>
+            <role>IDFSAmericasRegionalOffice</role>
+            <role>IDFSAsiaPacificRegionalOffice</role>
+            <role>IDFSChinaNorthAsiaRegionalOffice</role>
+            <role>IDFSEuropeRegionalOffice</role>
+            <role>MADHubACCstaff</role>
+            <role>MADHubACCManager</role>
             <role>MAD_Hub_ARM_Staff</role>
             <role>MAD_Hub_Business_Delivery_Manager</role>
             <role>MAD_Hub_Business_Delivery_Staff</role>
-            <role>MADHubCSManagerA</role>
-            <role>MADHubSOSManagerA</role>
-            <role>MADHubSOSstaffA</role>
-            <role>ManagementItalyA</role>
-            <role>StaffBeluxA</role>
-            <role>StaffCanadaA</role>
-            <role>StaffCentralAmericaA</role>
+            <role>MADHubCSManager</role>
+            <role>MADHubSOSManager</role>
+            <role>MADHubSOSstaff</role>
+            <role>ManagementItaly</role>
+            <role>StaffBelux</role>
+            <role>StaffCanada</role>
+            <role>StaffCentralAmerica</role>
             <role>StaffGermany</role>
-            <role>StaffCroatiaA</role>
-            <role>StaffCzechRepublicSlovakiaA</role>
-            <role>StaffDominicanRepublicA</role>
+            <role>StaffCroatia</role>
+            <role>StaffCzechRepublicSlovakia</role>
+            <role>StaffDominicanRepublic</role>
             <role>StaffRomaniaMoldova</role>
-            <role>StaffGreeceA</role>
-            <role>StaffHongKongA</role>
-            <role>StaffHungaryA</role>
-            <role>StaffIndiaA</role>
-            <role>StaffIndonesiaA</role>
-            <role>StaffJapanA</role>
+            <role>StaffGreece</role>
+            <role>StaffHongKong</role>
+            <role>StaffHungary</role>
+            <role>StaffIndia</role>
+            <role>StaffIndonesia</role>
+            <role>StaffJapan</role>
             <role>StaffBulgaria</role>
-            <role>StaffMalaysiaA</role>
-            <role>StaffNetherlandsA</role>
-            <role>StaffNewZealandA</role>
-            <role>StaffNordicBalticA</role>
-            <role>StaffPolandA</role>
-            <role>StaffRussiaA</role>
-            <role>StaffSerbiaA</role>
-            <role>StaffKoreaA</role>
+            <role>StaffMalaysia</role>
+            <role>StaffNetherlands</role>
+            <role>StaffNewZealand</role>
+            <role>StaffNordicBaltic</role>
+            <role>StaffPoland</role>
+            <role>StaffRussia</role>
+            <role>StaffSerbia</role>
+            <role>StaffKorea</role>
             <role>StaffAustralia</role>
             <role>StaffItaly</role>
-            <role>StaffSpainAndorraA</role>
-            <role>StaffSwitzerlandLiechtensteinA</role>
-            <role>StaffTaiwanA</role>
+            <role>StaffSpainAndorra</role>
+            <role>StaffSwitzerlandLiechtenstein</role>
+            <role>StaffTaiwan</role>
             <role>StaffTurkey</role>
             <role>StaffUkraine</role>
-            <role>StaffUnitedKingdomA</role>
+            <role>StaffUnitedKingdom</role>
         </roles>
     </queueMembers>
     <queueSobject>
