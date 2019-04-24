@@ -17,17 +17,22 @@ global class AmazonFinancialCtrl {
 
 
 
-  public boolean canUploadAndDelete {
-    get {
-      if (cse == null || cse.id == null) return true;
-      Case thiscse = [Select id, Status from Case where id = :cse.id];
-      return (thiscse.Status.equals('Agent Notified (Mail)') ||
-      thiscse.Status.equals('Agent Notified (Email)') ||
-	  thiscse.Status.equals('Action Needed') ||
-      thiscse.Status.equals('Sanity Check Failure'));
-    }
-    set;
-  }
+  	public boolean canUploadAndDelete {
+    	get {
+      		if (cse == null || cse.id == null) {
+      			return true;
+      		}
+
+      		Case thiscse = [Select id, Status from Case where id = :cse.id];
+      
+      		return (thiscse.Status.equals('Agent Notified (Mail)') ||
+      			thiscse.Status.equals('Agent Notified (Email)') ||
+	  			thiscse.Status.equals('Action Needed') ||
+      			thiscse.Status.equals('Sanity Check Failure') ||
+      			(thiscse.Status.equals('Closed_Non compliance') && thiscse.Case_Group__c.equals('IFAP')));
+    	}
+    	set;
+  	}
 
 
   public boolean hasMessage {get{return (ApexPages.hasmessages());} private set;}
