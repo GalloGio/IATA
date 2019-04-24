@@ -5,14 +5,14 @@
     <name>AGM Internal</name>
     <queueMembers>
         <roles>
-            <role>APAgencyManagement</role>
-            <role>APAgencyManagementStaff</role>
-            <role>AmericasAgencyManagementManager</role>
-            <role>AmericasAgencyManagementStaff</role>
-            <role>ChinaNAsiaAgencyManagementMgr</role>
-            <role>ChinaNAsiaAgencyManagementStaff</role>
-            <role>DistributionAgencyManagementHO</role>
-            <role>MADHubACCManager</role>
+            <role>APAgencyManagementA</role>
+            <role>APAgencyManagementStaffA</role>
+            <role>AmericasAgencyManagementManagerA</role>
+            <role>AmericasAgencyManagementStaffA</role>
+            <role>ChinaNAsiaAgencyManagementMgrA</role>
+            <role>ChinaNAsiaAgencyManagementStaffA</role>
+            <role>DistributionAgencyManagementHOA</role>
+            <role>MADHubACCManagerA</role>
             <role>MAD_Hub_ARM_Staff</role>
         </roles>
     </queueMembers>

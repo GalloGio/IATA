@@ -11,7 +11,7 @@
             <publicGroup>IDFSAmericasHUB</publicGroup>
         </publicGroups>
         <roles>
-            <role>MADHubCSManager</role>
+            <role>MADHubCSManagerA</role>
         </roles>
         <users>
             <user>suwal@iata.org</user>
