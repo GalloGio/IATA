@@ -1,0 +1,5 @@
+.THIS .slds-listbox_vertical {
+    overflow: visible !important; 
+    z-index: 2147483647 !important;
+    overflow-y: visible !important;
+}
