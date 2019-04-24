@@ -10,7 +10,7 @@
             <publicGroup>IDFSAmericasCustomerService</publicGroup>
         </publicGroups>
         <roles>
-            <role>MADHubCSManagerA</role>
+            <role>MADHubCSManager</role>
         </roles>
         <users>
             <user>suwal@iata.org</user>
