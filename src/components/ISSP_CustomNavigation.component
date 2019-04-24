@@ -3,6 +3,22 @@
                 >
 <apex:attribute name="communityName" type="string" description="communityName" />
 
+<div rendered="{!NOT(issPortalNavigationBar)}">
+  <apex:includeScript value="/lightning/lightning.out.js"/>
+  <script>
+      $Lightning.use("c:portalHeaderApp", function() {
+          $Lightning.createComponent(
+              "c:portalHeader",
+              {},
+              "headerBar",
+              function(cmp) {
+              });
+          });
+  </script>
+  <div id="headerBar"/>
+</div>
+
+<div rendered="{!issPortalNavigationBar}">
 <apex:form id="Mainfrm">
 <apex:actionFunction action="{!redirectChangePassword}" name="checkRedirectChangePassword" />
 <apex:actionFunction action="{!redirectTC_Accept}" name="checkRedirectTC_Accept" />
@@ -812,5 +828,5 @@ background-color:#428bca;
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
+  </div>
 </apex:component>
