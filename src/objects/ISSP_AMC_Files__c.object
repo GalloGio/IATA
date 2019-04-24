@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Custom Setting to store links for ACLI Requirement Files</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Accounting_Prefix__c</fullName>
+        <description>Accouting &amp; Prefix Code Requirement File</description>
+        <externalId>false</externalId>
+        <label>Accounting &amp; Prefix</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Designator__c</fullName>
+        <description>Airline Designator Requirement File</description>
+        <externalId>false</externalId>
+        <label>Airline Designator</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Baggage_Tag_Range_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Baggage Tag Range Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <label>ISSP AMC Files</label>
+    <visibility>Public</visibility>
+</CustomObject>
