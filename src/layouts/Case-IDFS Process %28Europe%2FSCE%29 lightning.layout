@@ -698,6 +698,11 @@
             <sortOrder>15</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Case.Log_a_call_lightning</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>16</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>E2CP__New_Comment_Lightning</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>0</sortOrder>
