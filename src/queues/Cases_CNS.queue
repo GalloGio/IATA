@@ -5,7 +5,7 @@
     <name>Cases - CNS</name>
     <queueMembers>
         <roles>
-            <role>MADHubCSManager</role>
+            <role>MADHubCSManagerA</role>
         </roles>
         <users>
             <user>kokidkoa@iata.org</user>

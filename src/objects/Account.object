@@ -5778,6 +5778,18 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Baggage_Tag_Range_Code__c</fullName>
+        <description>Numeric code for the Baggage Tag Range.</description>
+        <externalId>false</externalId>
+        <label>Baggage Tag Range Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>BillingAddress</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -6158,14 +6170,14 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Fuel Supplier</label>
                 </value>
                 <value>
-                    <fullName>GDS</fullName>
-                    <default>false</default>
-                    <label>GDS</label>
-                </value>
-                <value>
                     <fullName>General Aviation</fullName>
                     <default>false</default>
                     <label>General Aviation</label>
+                </value>
+                <value>
+                    <fullName>Global Distribution System</fullName>
+                    <default>false</default>
+                    <label>Global Distribution System</label>
                 </value>
                 <value>
                     <fullName>Governmental Aviation</fullName>
@@ -6625,7 +6637,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
-                <valueName>GDS</valueName>
+                <valueName>Global Distribution System</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
@@ -35798,10 +35810,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -35811,6 +35819,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -55262,10 +55274,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -55275,6 +55283,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70395,10 +70407,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -70408,6 +70416,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -79641,10 +79653,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -79654,6 +79662,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85579,10 +85591,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -85592,6 +85600,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -92060,10 +92072,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -92073,6 +92081,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
