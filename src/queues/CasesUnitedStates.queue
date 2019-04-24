@@ -9,11 +9,11 @@
             <publicGroup>AllInternalUsers</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>AmericasCustomerServiceManager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>AmericasCustomerServiceManagerI</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <roles>
-            <role>MADHubCSManager</role>
-            <role>MADHubCSstaff</role>
+            <role>MADHubCSManagerA</role>
+            <role>MADHubCSstaffA</role>
         </roles>
         <users>
             <user>suwal@iata.org</user>
