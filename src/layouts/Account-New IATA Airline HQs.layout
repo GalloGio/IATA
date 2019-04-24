@@ -511,7 +511,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Participation on Main IATA Industry Groups</label>
+        <label>Participation in Main IATA Industry Groups</label>
         <layoutColumns>
             <layoutItems>
                 <height>310</height>
