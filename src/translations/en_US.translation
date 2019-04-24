@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
-	<customApplications>
-		<label><!-- ACLI --></label>
+    <customApplications>
+        <label><!-- ACLI --></label>
         <name>ACLI</name>
     </customApplications>
     <customApplications>
@@ -19187,10 +19187,6 @@
     <customLabels>
         <label><!-- doubleHash --></label>
         <name>doubleHash</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP_AMC_RAIL_FERRY_BUS --></label>
-        <name>i</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_replacementHeadText --></label>
