@@ -3,6 +3,10 @@
     <label>Join_SIS_eInvoicing_Airline_PAX_Only</label>
     <protected>false</protected>
     <values>
+        <field>Auto_grant_service__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>Category__c</field>
         <value xsi:type="xsd:string">Passenger Only</value>
     </values>

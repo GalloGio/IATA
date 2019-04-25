@@ -3,6 +3,10 @@
     <label>Join_SIS_eInvoicing_Infra_Partner_Ap_Aut</label>
     <protected>false</protected>
     <values>
+        <field>Auto_grant_service__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>Category__c</field>
         <value xsi:type="xsd:string">Airport Authority</value>
     </values>

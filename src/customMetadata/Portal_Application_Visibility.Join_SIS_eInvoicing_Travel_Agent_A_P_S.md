@@ -3,6 +3,10 @@
     <label>Join_SIS_eInvoicing_Travel_Agent_A_P_S</label>
     <protected>false</protected>
     <values>
+        <field>Auto_grant_service__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Category__c</field>
         <value xsi:type="xsd:string">Airline Point of Sale</value>
     </values>

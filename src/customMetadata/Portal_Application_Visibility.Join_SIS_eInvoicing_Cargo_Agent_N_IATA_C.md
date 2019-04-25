@@ -3,6 +3,10 @@
     <label>Join_SIS_eInvoicing_Cargo_Agent_N_IATA_C</label>
     <protected>false</protected>
     <values>
+        <field>Auto_grant_service__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Category__c</field>
         <value xsi:type="xsd:string">Non-IATA Cargo Agent</value>
     </values>
