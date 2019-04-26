@@ -369,7 +369,11 @@ private class ANG_FinancialAssessmentTest {
 				Account.ANG_IsNewGenAgency__c = TRUE 
 			 LIMIT 1
 			];
-
+        
+        Account acct = new Account(Id = cse.AccountId);
+		acct.ANG_HE_CashCondition__c = FALSE;
+		update acct;
+        
 		String message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
 
@@ -409,10 +413,13 @@ private class ANG_FinancialAssessmentTest {
 		fs.Security_Status__c = 'Active';
 		update fs;
 
-		Account acct = new Account(Id = cse.AccountId);
-		acct.ANG_HE_CashCondition__c = true;
+        message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
+		system.assertEquals(IFAP_WebService.AGENT_DOES_NOT_HAVE_CASH_CONDITION, message); 
+        
+        acct = new Account(Id = cse.AccountId);
+		acct.ANG_HE_CashCondition__c = TRUE;
 		update acct;
-
+        
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_REMOVED, message); 
 
