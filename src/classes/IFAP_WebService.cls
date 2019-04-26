@@ -278,10 +278,11 @@ global class IFAP_WebService {
 				[SELECT 
 					Id,
 					ANG_IsNewgenAgency__c,
-					(SELECT 
-						Id, 
-						Status, 
-						FA_Second_Deadline_Date__c, 
+					(SELECT
+						Id,
+						Status,
+                        Deadline_Date__c,
+						FA_Second_Deadline_Date__c,
 						Financial_Review_Result__c,
 						Assessment_Performed_Date__c
 					FROM 
@@ -336,7 +337,7 @@ global class IFAP_WebService {
 			update acct;
 
 			cse.secondFAnonComplianceDate__c = System.today();
-			cse.FA_Third_Deadline_Date__c    = System.today().addDays(365);
+			cse.FA_Third_Deadline_Date__c    = cse.Deadline_Date__c.addDays(365);
 			update cse;
 		}
 		catch(Exception e){

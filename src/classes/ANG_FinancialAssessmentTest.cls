@@ -266,7 +266,24 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, message); 
+		System.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, message);
+
+		cse =
+			[SELECT
+				Id,
+				Deadline_Date__c,
+				FA_Third_Deadline_Date__c,
+				secondFAnonComplianceDate__c,
+				AccountId
+			 FROM
+				Case
+			 WHERE
+				Id = :cse.Id
+			 LIMIT 1
+			];
+
+		System.assertEquals(cse.secondFAnonComplianceDate__c, System.today());
+		System.assertEquals(cse.FA_Third_Deadline_Date__c, cse.Deadline_Date__c.addDays(365));
 
 	}
 
