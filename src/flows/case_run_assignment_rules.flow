@@ -13,6 +13,9 @@
         <locationY>200</locationY>
         <actionName>Run_Assignment__Invocable_StandardAssignmentFutureV2</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>myRule_1_A2</targetReference>
+        </connector>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -209,9 +212,6 @@
         <label>myDecision</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision2</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_1</name>
@@ -253,90 +253,7 @@
             <label>assignment rule</label>
         </rules>
     </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision2</name>
-        <label>myDecision2</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_3</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Escalated Internally</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Boolean</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Assign__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_3_A1</targetReference>
-            </connector>
-            <label>status = escalated internally</label>
-        </rules>
-    </decisions>
-    <interviewLabel>case_run_assignment_rules-12_InterviewLabel</interviewLabel>
+    <interviewLabel>case_run_assignment_rules-14_InterviewLabel</interviewLabel>
     <label>case run assignment rules</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -394,10 +311,10 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_3_A1</name>
-        <label>uncheck &quot;assign using active assignment rule&quot;</label>
-        <locationX>300</locationX>
-        <locationY>200</locationY>
+        <name>myRule_1_A2</name>
+        <label>UpdateAssignField</label>
+        <locationX>100</locationX>
+        <locationY>300</locationY>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
