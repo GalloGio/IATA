@@ -27,6 +27,7 @@ global class IFAP_WebService {
     public static final String UNABLE_TO_REMOVE_CASH_CONDITION = 'Unable to remove cash condition from the agent.';
     public static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE = 'Conditions are not satisfied to remove Cash Condition from the agent.';
     public static final String AGENT_HAS_ALREADY_CASH_CONDITION = 'Agent has already cash condition.';
+    public static final String AGENT_DOES_NOT_HAVE_CASH_CONDITION = 'Agent does not have cash condition.';
 
     WebService static String FinancialSecurityInfo(String caseNumber, String currencyCode, Decimal amount) {
 
@@ -444,6 +445,10 @@ global class IFAP_WebService {
 		if(!acct.ANG_IsNewgenAgency__c || cse.Assessment_Performed_Date__c <= cse.FA_Second_Deadline_Date__c || String.isBlank(cse.Financial_Review_Result__c)){
 			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE;
 		}
+
+        if(!acct.ANG_HE_CashCondition__c){
+            return AGENT_DOES_NOT_HAVE_CASH_CONDITION;
+        }
 
 		return 'VALID';
 
