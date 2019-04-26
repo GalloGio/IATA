@@ -275,33 +275,34 @@ global class IFAP_WebService {
 
     private static Account fetchAccountInformation(Id caseId, Id accountId){
 
-        Account acct =
-            [SELECT 
-                Id,
-                ANG_IsNewgenAgency__c,
-                (SELECT 
-                    Id, 
-                    Status, 
-                    FA_Second_Deadline_Date__c, 
-                    Financial_Review_Result__c,
-                    Assessment_Performed_Date__c
-                FROM 
-                    Cases 
-                WHERE 
-                    Id = :caseId
-                ),
-                (SELECT 
-                    Id, 
-                    Security_Status__c 
-                FROM 
-                    Financial_Securities__r
-                )
-             FROM 
-                Account 
-             WHERE 
-                Id = :accountId
-             LIMIT 1
-            ];
+			Account acct =
+				[SELECT 
+					Id,
+					ANG_IsNewgenAgency__c,
+					(SELECT
+						Id,
+						Status,
+                        Deadline_Date__c,
+						FA_Second_Deadline_Date__c,
+						Financial_Review_Result__c,
+						Assessment_Performed_Date__c
+					FROM 
+						Cases 
+					WHERE 
+						Id = :caseId
+					),
+					(SELECT 
+						Id, 
+						Security_Status__c 
+					FROM 
+						Financial_Securities__r
+					)
+				FROM 
+					Account 
+				WHERE 
+					Id = :accountId
+				LIMIT 1
+				];
 
         return acct;
 
@@ -364,7 +365,7 @@ global class IFAP_WebService {
 			update acct;
 
 			cse.secondFAnonComplianceDate__c = System.today();
-			cse.FA_Third_Deadline_Date__c    = System.today().addDays(365);
+			cse.FA_Third_Deadline_Date__c    = cse.Deadline_Date__c.addDays(365);
 			update cse;
 		}
 		catch(Exception e){
