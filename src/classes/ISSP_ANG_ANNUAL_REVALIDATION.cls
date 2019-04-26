@@ -105,6 +105,29 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     public Boolean isAddCompanyModal {get; set;}
     public string txtHelpCurrency {get; set;}
     public Boolean ownerWithSameIATACode {get; set;}
+    
+    public List<SelectOption> contactStateList {get;set;}
+    public Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {get; set;}
+    public String stateListByCountryName {
+        get {
+            if (stateListByCountryNameMap == null) {
+                stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
+                
+                for (IATA_ISO_State__c state: [SELECT Id, Name, IATA_ISO_Country__r.Name
+                                               FROM IATA_ISO_State__c
+                                               WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true]) {
+                                                   if (!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Name)) {
+                                                       stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Name, new List<IATA_ISO_State__c>());
+                                                   }
+                                                   stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Name).add(state);
+                                               }
+            }
+            return JSON.serialize(stateListByCountryNameMap);
+        }
+        set;
+    }
+    
+    
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 		this.setHe = true;
@@ -215,14 +238,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	private Boolean checkPreviousOwnership() {
 		Decimal percentage = 0;
-
-		for (AMS_Account_Role__c ar: [SELECT Percentage__c 
-									FROM AMS_Account_Role__c 
-									WHERE Account__c = :currentAccount.account.Id 
-										AND Active__c = true 
-										AND RecordTypeId = :ownershipId]) {
-			percentage += ar.Percentage__c;
-		}
+        
+        for (AMS_Account_Role__c ar: [SELECT Percentage__c 
+                                      FROM AMS_Account_Role__c 
+                                      WHERE Account__c = :currentAccount.account.Id 
+                                      AND Active__c = true 
+                                      AND RecordTypeId = :ownershipId]) {
+                                          percentage += ar.Percentage__c;
+                                      }
 
 		return percentage == 100;
 	}
@@ -941,7 +964,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     private static List<AMS_Accreditation_Contact__c> dynamicAccredContactListQuery(AccredContactEnum paramCodeWhere, Set<Id> newFormIds) {
     	String query = 'SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, ';
     	query += 'Agency_role__c, Email__c,Phone__c, Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c,';
-        query += 'Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c,';
+        query += 'Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressState__c, AddressCountry__c, AddressPostcode__c,';
         query += 'Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c, PhoneNational__c, FAX__c, Company_Name_Local__c ';
         query += 'FROM AMS_Accreditation_Contact__c ';
         query += 'WHERE AMS_Pax_Accreditation_Form__c IN :newFormIds AND RecordTypeId = ';
@@ -1618,9 +1641,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
             	if (currentAccount.newContact.Agency_owner__c == true || currentAccount.newContact.Agency_role__c == true) {
             		if (currentAccount.newContact.Time_devoted_to_Agency_business__c == null) {
-            			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted));
-                		contactSaved = false;
-                		return;
+                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted));
+                	contactSaved = false;
+                	return;
             		} else if (currentAccount.newContact.Time_devoted_to_Agency_business__c < 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c > 100) {
             			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid));
                 		contactSaved = false;
@@ -1736,6 +1759,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     public boolean validateCharactersInPersonWindow() {
         boolean errorFound = false;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
+        IATA_ISO_Country__c contactCountryInfo = ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap.get(amsContactCountry.toUpperCase());
+        
+        if (contactCountryInfo != null && contactCountryInfo.State_Province_Mandatory__c && currentAccount.newContact.AddressState__c == null) {
+            currentAccount.newContact.AddressState__c.addError(Label.ISSP_YouMustEnter);
+            errorFound = true;
+        } else if (currentAccount.newContact.AddressState__c != null && !p.matcher(currentAccount.newContact.AddressState__c).matches()) {
+            currentAccount.newContact.AddressState__c.addError(Label.ISSP_EnterValidString);
+            errorFound = true;
+        }
 
         if (currentAccount.newContact.First_name__c != null && !p.matcher(currentAccount.newContact.First_name__c).matches()) {
             currentAccount.newContact.First_name__c.addError(Label.ISSP_EnterValidString);
@@ -1943,5 +1975,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
             return null;
         }
+    }
+    
+    public PageReference getContactStates() {
+        contactStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
+        String countryName = Apexpages.currentPage().getParameters().get('countryName');
+        for (IATA_ISO_State__c state: stateListByCountryNameMap.get(countryName)) {
+            contactStateList.add(new SelectOption(state.Name, state.Name));
+        }
+        return null;
     }
 }

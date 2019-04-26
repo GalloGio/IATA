@@ -18028,6 +18028,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Signatory:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_State</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS State</shortDescription>
+        <value>State/Province</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_State_Names_Addresses_Field_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28224,6 +28231,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP SELECT COUNTRY</shortDescription>
         <value>- Select Country -</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SELECT_STATE</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SELECT_STATE</shortDescription>
+        <value>- Select State -</value>
     </labels>
     <labels>
         <fullName>ISSP_SELECT_THREE_or_MORE</fullName>
