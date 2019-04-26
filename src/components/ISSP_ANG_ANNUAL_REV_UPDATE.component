@@ -381,11 +381,11 @@
                                         rendered="{! !displayShipping}">
                     </DSE:DS_DataQuality>
 
-                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: inline-start; margin-left: 15px;"/>
-
-                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px;" onchange="copyStateListSelection();">
+                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px; float: inline-start;" onchange="copyStateListSelection(); copyShippingState();">
                         <apex:selectOptions value="{!shippingStateList}"/>
                     </apex:selectList>
+
+                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: inline-start; margin-left: 15px;"/>
 
                     <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();" rendered="{! !displayShipping}">
                         <apex:selectOptions value="{!countryList}"/>
@@ -399,6 +399,7 @@
                             if ('{!displayShipping}' == 'false') {
                                 $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
                                 $('[id$="shippingStateInput"]').attr('style', 'width: 200px; margin-left: 15px;');
+                                $('[id$="ShippingStateList"]').attr('style', 'width: 200px; margin-left: 15px;');
                                 initFieldsSettings();
                             } else {
                                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
@@ -1055,8 +1056,6 @@
                 showForms();
             });
 
-            $('[id$="shippingStateInput"]').attr('name', 'shippingStateInput');
-
             locationSecctionStyle();
 
             if ({!ca.isocountry.State_Province_Picklist__c}) {
@@ -1065,9 +1064,11 @@
                 $('[id$="billingStateList"]').attr('style', 'display: none;');
             }
 
-            $('[id$="ShippingStateList"]').attr('style', 'display: none;');
-            $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-            
+            if ($('[id$="disableCheckBoxBranch"]')[0].checked) {
+                $('[id$="ShippingStateList"]').attr('style', 'display: none;');
+                $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+            }
+
             // checks initial state
             initFieldsSettings();
             showForms();
@@ -1081,6 +1082,7 @@
             $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
             $('[id$="newEmail"]' + " :input").attr("style", 'width: 200px;');
             $('[id$="shippingStateInput"]').attr('style', 'margin-left: 15px; width: 200px;');
+            $('[id$="ShippingStateList"]').attr('style', 'margin-left: 15px; width: 200px;');
         }
 
         function toggleCurrencyCode(c) {
@@ -1121,12 +1123,14 @@
 
             if (stateMap[dropdownValue] != undefined) {
                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-                $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px; margin-left: 15px;');
+                $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px; margin-left: 15px; float: inline-start;');
                 
                 changeStateOptions();
             } else {
-                $('[id$="shippingStateInput"]').attr('style', 'display: block; width: 200px; float: inline-start; margin-left: 15px;');
-            }
+                if (!$('[id$="disableCheckBoxBranch"]')[0].checked) {
+                    $('[id$="shippingStateInput"]').attr('style', 'display: block; width: 200px; float: inline-start; margin-left: 15px;');
+                }
+            }            
         }
 
         function copyStateInputBox() {
@@ -1134,13 +1138,18 @@
         }
 
         function copyStateToBillingBox() {
-            console.log('iasd');
             $(".state_province__c").val($('[id$="billingStateList"]').val());
         }
 
         function copyStateListSelection() {
             $('.shipping_state__c').val($('[id$="ShippingStateList"]').val());
         }
+
+        function copyShippingState() {
+            $('[id$="shippingStateInput"]').val($('[id$="ShippingStateList"]').val());
+
+            $('[id$="shippingStateInput"]').change();
+        }
 
         function initFieldsSettings() {
             $(".country__c").val("{!ca.isocountry.Name}");
@@ -1180,30 +1189,38 @@
                     }
                 }
 
-                $('[id$="shipping_state__c"]').parent().attr('class', 'row');
+                if (!$('[id$="disableCheckBoxBranch"]')[0].checked) {
+                    $('[id$="shipping_state__c"]').parent().attr('class', 'row');
 
-                if (stateMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
-                    $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-                    $('[id$="ShippingStateList"]').prependTo($('[id$="shipping_state__c"]').parent());
-                    $('.shipping_state__c').attr('style', 'display: none;');
-                    $('.shipping_state__c').css("padding-right", 0);
+                    if (stateMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
+                        $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+                        $('[id$="ShippingStateList"]').prependTo($('[id$="shipping_state__c"]').parent());
+                        $('.shipping_state__c').attr('style', 'display: none;');
+                        $('.shipping_state__c').css("padding-right", 0);
 
-                    if ($('[id$="ShippingStateList"]').parent().find('.errorMsg').length > 0) {
-                        $('[id$="ShippingStateList"]').addClass('error');
+                        $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent());
+                        $('.shipping_state__c').attr('style', 'display: none;');
+                        $('.shipping_state__c').css("padding-right", 0);
+
+                        if ($('[id$="ShippingStateList"]').parent().find('.errorMsg').length > 0) {
+                            $('[id$="ShippingStateList"]').addClass('error');
+                        }
+                    } else {
+                        $('[id$="ShippingStateList"]').attr('style', 'display: none;');
+
+                        $('[id$="shipping_state__c"]').parent().attr('class', 'row');
+
+                        $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent());
+                        $('.shipping_state__c').attr('style', 'display: none;');
+                        $('.shipping_state__c').css("padding-right", 0);
+
+                        if ($('[id$="shippingStateInput"]').parent().find('.errorMsg').length > 0) {
+                            $('[id$="shippingStateInput"]').addClass('error');
+                            $('[id$="shippingStateInput"]').after($('[id$="shippingStateInput"]').parent().find('.errorMsg'));
+                            $('[id$="shippingStateInput"]').parent().find('.errorMsg').children().first().attr('style','padding-left: 180px;');
+                        }
                     }
-                } else {
-                    $('[id$="ShippingStateList"]').attr('style', 'display: none;');
-
-                    $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent());
-                    $('.shipping_state__c').attr('style', 'display: none;');
-                    $('.shipping_state__c').css("padding-right", 0);
-
-                    if ($('[id$="shippingStateInput"]').parent().find('.errorMsg').length > 0) {
-                        $('[id$="shippingStateInput"]').addClass('error');
-                        $('[id$="shippingStateInput"]').after($('[id$="shippingStateInput"]').parent().find('.errorMsg'));
-                        $('[id$="shippingStateInput"]').parent().find('.errorMsg').children().first().attr('style','padding-left: 180px;');
-                    }
-                }
+                }   
             } else {
                 $('[id$="billingStateList"]').css('display','none');
                 $('[id$="ShippingStateList"]').css('display','none');
@@ -1315,6 +1332,7 @@
 
             $('[id$="multiSelectId"]' + " :input").attr("disabled", true);
             $('#shipping_country__c > input').css('display','block');
+            $('[id$="billingStateText"]').css('display', 'none');
         }
 
         var natmobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemMobile.locationmobileinput}']");
