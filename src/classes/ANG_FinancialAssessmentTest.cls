@@ -465,10 +465,10 @@ private class ANG_FinancialAssessmentTest {
     	Test.stopTest();
 
     	//For Newgen Agents -> Check the parentCase.FA_Third_Deadline_Date__c
-    	Case parentCase = [SELECT id, AccountId, Status, FA_Third_Deadline_Date__c
+    	Case parentCase = [SELECT id, AccountId, Status, Deadline_Date__c, FA_Third_Deadline_Date__c
     					 FROM Case WHERE Account.ANG_IsNewGenAgency__c = TRUE LIMIT 1];
 
-    	System.assertEquals(Date.today().addDays(365), parentCase.FA_Third_Deadline_Date__c);
+    	System.assertEquals(parentCase.Deadline_Date__c.addDays(365), parentCase.FA_Third_Deadline_Date__c);
 
     }
 
