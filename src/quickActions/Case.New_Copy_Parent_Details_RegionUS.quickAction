@@ -100,7 +100,6 @@
         <field>Origin</field>
         <literalValue>IATA Internal User</literalValue>
     </fieldOverrides>
-    </fieldOverrides>
     <fieldOverrides>
         <field>Phone_Redirected_to_Web__c</field>
         <formula>Case.Phone_Redirected_to_Web__c</formula>
