@@ -26,6 +26,7 @@ global class IFAP_WebService {
     public static final String CASH_CONDITION_SUCCESSFULLY_REMOVED = 'Cash condition successfully removed from the agent.';
     public static final String UNABLE_TO_REMOVE_CASH_CONDITION = 'Unable to remove cash condition from the agent.';
     public static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE = 'Conditions are not satisfied to remove Cash Condition from the agent.';
+    public static final String AGENT_HAS_ALREADY_CASH_CONDITION = 'Agent has already cash condition.';
 
     WebService static String FinancialSecurityInfo(String caseNumber, String currencyCode, Decimal amount) {
 
@@ -279,6 +280,7 @@ global class IFAP_WebService {
 				[SELECT 
 					Id,
 					ANG_IsNewgenAgency__c,
+                    ANG_HE_CashCondition__c,
 					(SELECT
 						Id,
 						Status,
@@ -386,6 +388,10 @@ global class IFAP_WebService {
 			'Agent Notified (Mail)',
 			'Sanity Check Failure'
 		};
+
+        if(acct.ANG_HE_CashCondition__c){
+            return AGENT_HAS_ALREADY_CASH_CONDITION;
+        }
 
 		if(acct.ANG_IsNewgenAgency__c && cse.FA_Second_Deadline_Date__c < System.Today() && caseStatusSet.contains(cse.Status) && !hasAgentFS){
 			return INVALID_ACTION_TRIGGER_SIDRA_LITE;
