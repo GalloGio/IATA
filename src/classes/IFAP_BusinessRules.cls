@@ -236,7 +236,7 @@ public with sharing class IFAP_BusinessRules {
                 if (oldCaseStatus == ACTION_NEEDED && caseStatus != FINANCIAL_STATEMENTS_UPLOADED){
                     mapCaseActionNeeded.put(updateCase.Id, updateCase); 
                 }
-                if (caseStatus == CLOSEDOPTOUT){
+                if (caseStatus == CLOSEDOPTOUT || caseStatus == CLOSED_NON_COMPLIANCE){
                     mapCaseStatusCanBeSelected.put(updateCase.id, true); 
                     continue;
                 }

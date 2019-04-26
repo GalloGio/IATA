@@ -55,17 +55,20 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
         system.debug('AMS_2_MDM_Batch: countryIsoCodes - ' + countryIsoCodes);    
 
-        //WMO-456 added special remarks
+        //FM AMSU-116
+        //List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c 
+        //                                                                        FROM AMS_Change_Codes_Billable_Setup__c where Country_To_Exclude__c in :countryIsoCodes];
         List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = new List<AMS_Change_Codes_Billable_Setup__c>();
-        for(AMS_Change_Codes_Billable_Setup__c bchangeCodeExclude : [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c, Special_Remarks__c 
-                                                                                FROM AMS_Change_Codes_Billable_Setup__c]) {
-
-            if(countryIsoCodes.contains(bchangeCodeExclude.Country_To_Exclude__c) || String.isNotBlank(bchangeCodeExclude.Special_Remarks__c)) 
-                lChangeCodesBillableSetup.add(bchangeCodeExclude); 
+            
+            
+       for(AMS_Change_Codes_Billable_Setup__c bchangeCodeExclude :[SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c, Accreditation_Model_To_Exclude__c, Applicable_only_for_Accreditation_Model__c, Special_Remarks__c 
+                                                                                FROM AMS_Change_Codes_Billable_Setup__c]){
+            if(countryIsoCodes.contains(bchangeCodeExclude.Country_To_Exclude__c) || bchangeCodeExclude.Applicable_only_for_Accreditation_Model__c || String.isNotBlank(bchangeCodeExclude.Special_Remarks__c))
+                lChangeCodesBillableSetup.add(bchangeCodeExclude);                                                    
         }
 
         //lstAccount = [SELECT Id, Name, Location_Class__c, Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys];
-        lstAccount = [SELECT Id, Name, Location_Class__c, Location_Type__c,Country_ISO_Code__c, Special_Remarks__c FROM Account WHERE id in :setAccountKeys]; //FM AMSU-116 //WMO-456
+        lstAccount = [SELECT Id, Name, Location_Class__c, Location_Type__c,Country_ISO_Code__c, ANG_Accreditation_Model__c, ANG_IsNewGenAgency__c, Special_Remarks__c FROM Account WHERE id in :setAccountKeys]; //FM AMSU-116
         system.debug('AMS_2_MDM_Batch: lstAccount - ' + lstAccount);
         for(Account auxAccount :lstAccount){
             //system.debug('AMS_2_MDM_Batch: auxAccount - ' + auxAccount);
@@ -121,8 +124,20 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                     if(au.Change_Code__c == ccbs.Change_Code__c && (excludeByCountry || excludeSpecialRemarks)){  //FM AMSU-116 //WMO-456                        
                         bToSend = false;                            
                     }
+
+    
+                    Set<String> aModelToExcludeSet = new set<String>();
                     
-                }
+                    Map<String,String> accreditationModelMap = new Map<String,String>{'Cashless' => 'CL', 'Cash' => 'CA' , 'Multicountry' => 'MC'};
+
+                    if(ccbs.Accreditation_Model_To_Exclude__c != null)
+                        aModelToExcludeSet = new set<String>(ccbs.Accreditation_Model_To_Exclude__c.split(';'));
+                    
+                    if(au.Change_Code__c == ccbs.Change_Code__c && 
+                        auxAccAccount.ANG_IsNewGenAgency__c && 
+                        aModelToExcludeSet.contains(accreditationModelMap.get(auxAccAccount.ANG_Accreditation_Model__c)))
+                        bToSend = false;
+                    }
 
                 if(bToSend){
                     sLog += au.Account__r.IATACode__c + ',';

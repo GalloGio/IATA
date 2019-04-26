@@ -1,0 +1,182 @@
+<!--
+    Component Name: ISSP_AMC_Application_And_Changes.component
+    Related Classes: ISSP_AMC_Application_And_Changes.cls
+
+    Copyright @Right IT Services
+
+    Purpose:
+
+    VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+    1.0         Filipa Martins       26-10-2018      INITIAL DEVELOPMENT
+ -->
+<apex:component controller="ISSP_AMC_Application_And_Changes">
+
+    <head>
+        <style>
+            .subtitle{
+                color: #00305b;
+                font-weight: bold;
+                font-family: "Arial";
+                font-size: 1.5em;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button {
+                padding : 0px;
+                margin-left: 0px;
+                display: inline;
+                border: 0px;
+            }
+
+            .redFringe{
+                background-color: #eb3014;
+                width: 44px;
+                float: left;
+                min-height: 6px;
+            }
+
+            .pagination{
+                display: flex !important;
+            }
+        </style>
+    </head>
+    <div>
+        <h2 class="subtitle">{!$Label.ISSP_AMS_Step0_Ongoing_Drafts}</h2>
+        <div class="redFringe"></div>
+    </div>
+    
+    <div class="panel-body" style="padding-top: 25px;">
+    <apex:form >
+        <!-- NO RESULTS -->
+        <apex:outputPanel rendered="{!AMCDraftCases.size <= 0}">
+            <apex:outputText styleClass="bg-info" value="{!$Label.ISSP_AMC_No_Pending}"/>
+        </apex:outputPanel>
+        
+        <!-- WITH RESULTS -->
+        <apex:outputPanel rendered="{!AMCDraftCases.size > 0}">
+        
+            <div class="table-responsive-md">
+                <table id="ongoingCasesTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">{!$Label.ISSP_AMC_CASE_NUMBER}</th>
+                            <th scope="col">{!$Label.ISSP_AMC_SUBJECT}</th>
+                            <th scope="col">{!$Label.ISSP_AMC_STATUS}</th>
+                            <th scope="col">{!$Label.ISSP_AMC_DATE_TIME_OPENED}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat var="caseItem" value="{!AMCDraftCases}">
+                            <tr>
+                                <td>
+                                    <!-- AIRLINE DESIGNATORS -->
+                                        <!-- DRAFT -->
+                                        <apex:commandLink action="{!navigateAirlineDesignators}"  rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
+                                            {!caseItem.CaseNumber}
+                                        </apex:commandLink>
+                                    <!-- END: AIRLINE DESIGNATORS -->
+                                    <!-- ACCOUNTING OR PREFIX CODE -->
+                                        <!-- DRAFT -->
+                                        <apex:commandLink action="{!navigateAccountingOrPrefixCode}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
+                                            {!caseItem.CaseNumber}
+                                        </apex:commandLink>
+                                    <!-- END: ACCOUNTING OR PREFIX CODE -->
+                                    <!-- LOCATION IDENTIFIER value="/ISSP_AMC_Location_Identifier?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home"-->
+                                        <apex:commandLink action="{!navigateLocationIdentifier}" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
+                                            <apex:param name="locationCaseNumber" value="{!caseItem.CaseNumber}"/>
+                                            {!caseItem.CaseNumber}
+                                        </apex:commandLink>
+                                    <!-- END: LOCATION IDENTIFIER -->
+                                    <!-- BAGGAGE TAG RANGE -->
+                                        <!-- DRAFT -->
+                                        <apex:commandLink action="{!navigateBaggageTagRange}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
+                                            {!caseItem.CaseNumber}
+                                        </apex:commandLink>
+                                    <!-- END: BAGGAGE TAG RANGE -->
+
+                                    <!-- NOT OPEN /ISSP_Case?caseId={!caseItem.Id}&mid=M1S2&retURL=%2FISSP_AMC_Home -->
+                                    <apex:commandLink action="{!navigateToManageCases}" rendered="{!OR(caseItem.Status != 'Open', NOT(OR(caseItem.Reason1__c == 'Designator Form', caseItem.Reason1__c == '3 Digit Form', caseItem.Reason1__c == 'Location ID Form', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')) )}" onclick="startLoading();">
+                                        {!caseItem.CaseNumber}
+                                        <apex:param name="caseId" value="{!caseItem.Id}" assignTo="{!caseManageId}" />
+                                    </apex:commandLink>
+                                </td>
+                                <td><apex:outputText value="{!caseItem.Subject}" /></td>
+                                <td><apex:outputText value="{!caseItem.Status}" /></td>
+                                <td>
+                                    <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                        <apex:param value="{!caseItem.CreatedDate}" />
+                                    </apex:outputText>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+
+
+                </table>
+            </div>
+            
+        </apex:outputPanel>
+        <apex:outputPanel id="appandchanges">
+        <apex:outputPanel id="popupDeleteSection" rendered="{!IF(isThereACase == true,true,false)}">
+            <div class="test">
+            <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                <apex:outputPanel styleClass="Content" layout="black" > 
+                    <center>
+                        <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
+                            <div>
+                                <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,false,true)}">
+                                    <apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+                                    disabled="{!noPermissionToViewCase}"/>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,true,false)}">
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You have no Permission">
+                                        <button class="btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                            {!$Label.ISSP_AMC_VIEW_CASE}
+                                        </button>
+                                    </span>
+                                </apex:outputPanel>
+                                    
+                                    
+                                <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appandchanges" styleClass="btn btn_iata_primary"/>
+                            
+                            </div>
+                        </center>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel id="popupDeleteSection2" rendered="{!IF(isThereAParticipation == true,true,false)}">
+            <div class="test">
+            <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                <apex:outputPanel styleClass="Content" layout="black" > 
+                    <center>
+                        <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE_EDIT}{!caseNum}." />
+                            <div>
+
+                                <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,false,true)}">
+                                    <apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+                                    disabled="{!noPermissionToViewCase}"/>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,true,false)}">
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You have no Permission">
+                                        <button class="btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                            {!$Label.ISSP_AMC_EDIT_CASE}
+                                        </button>
+                                    </span>
+                                </apex:outputPanel>
+
+                                <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appandchanges" styleClass="btn btn_iata_primary"/>
+                            
+                            </div>
+                        </center>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+        
+        </apex:outputPanel>
+    </apex:form>
+    </div>
+</apex:component>

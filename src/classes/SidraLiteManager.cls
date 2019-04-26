@@ -525,8 +525,55 @@ public with sharing class SidraLiteManager {
             if (SidraLiteUtil.isCargoCASS(account)) {
                 parentCase.FA_Second_Deadline_Date__c = parentCase.firstFAnonComplianceDate__c.addDays(30);
             }
+
+            /*NEWGEN-5301*/
+            evaluateAnotherIfapCases(parentCase, cse, account);
+
         }
         return parentCase;
+    }
+
+       /*
+    Check:
+        - the agent is newgen
+        - the agent is still opted in for financial review
+        - the agent fails to provide Financial Statements (on the IFAP Case) by the First deadline date (<FA Deadline Date> is in the past)
+        - the agent is in his second year non compliance (has another IFAP case for the previous financial year in status "Closed_non compliance")
+    
+    if true:
+
+          -<First FA non-Compliance Date> = TODAY
+          -<Second FA non-Compliance Date> = TODAY
+          -<FA Second Deadline Date> = TODAY
+          -<FA Third Deadline Date> = End of the following month
+    */
+    public static void evaluateAnotherIfapCases(Case parentCaseIfap, Case childCaseSidra, Account account){
+		
+        System.debug('[SidraLiteHelperForIFAP] Starting evaluateAnotherIfapCases.');
+        
+        if(!account.ANG_IsNewGenAgency__c)
+            return;
+
+        String previousYear = String.valueOf(Date.today().year() - 1);
+
+        List<Case> previousIFAPs = [Select Id from Case where accountId =:parentCaseIfap.AccountId and RecordtypeId = :SidraLiteManager.RECORDTYPE_IFAP and IFAP_Financial_Year__c =:previousYear and Status = 'Closed_Non compliance'];
+
+        if(previousIFAPs.isEmpty()){
+            System.debug('[SidraLiteHelperForIFAP] [evaluateAnotherIfapCases] - There are no previous iFAPs');
+            return;
+        }
+        
+
+        parentCaseIfap.firstFAnonComplianceDate__c = System.today();
+        parentCaseIfap.secondFAnonComplianceDate__c = System.today();
+        parentCaseIfap.FA_Second_Deadline_Date__c  = System.today();
+  
+        Date newDate = Date.newInstance(System.today().year(),System.today().month(),1);
+
+        parentCaseIfap.FA_Third_Deadline_Date__c  = newDate.addMonths(2).addDays(-1);
+
+        System.debug('[SidraLiteHelperForIFAP] [evaluateAnotherIfapCases] - parentCaseIfap update:'+parentCaseIfap);
+
     }
 
     public static Case getRelatedCase(Case parentCase) {
