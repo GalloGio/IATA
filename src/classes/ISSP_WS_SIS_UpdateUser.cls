@@ -103,6 +103,8 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
             if (!checkFullHierarchy(SISMemberID, topParentId)) {
                 throw new ISSP_WS_SIS_Common.WSException('024',''); // SIS ID is not in any of the accounts of the entire hierarchy
             }
+            contact.SIS_ID__c = SISMemberID;
+            updateContact = true;
         }
         //check if contact is active
         if (contact.User_Portal_Status__c == 'Rejected'

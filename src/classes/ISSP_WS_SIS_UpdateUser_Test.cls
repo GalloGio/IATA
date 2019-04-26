@@ -247,7 +247,10 @@ private class ISSP_WS_SIS_UpdateUser_Test {
         Test.stopTest();
         
         System.assertEquals(true, response.IsSuccess,'Should be a success but was ' + response.ErrorCode);
-        
+
+        contact = [SELECT SIS_Id__c FROM Contact WHERE Id = :contact.Id];
+        System.assertEquals(inputData.SISMemberID, contact.SIS_Id__c);
+
         checkLogs(true);
     }
     
