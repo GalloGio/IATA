@@ -43,6 +43,7 @@ public class ANG_RHCInformationTriggerHandler{
 	public void onAfterUpdate(){
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
 		refreshRMEData();
+		handleRhcUpdate();
 	}
 
 	public void onBeforeDelete(){}
@@ -162,4 +163,21 @@ public class ANG_RHCInformationTriggerHandler{
 		ANG_RHC_Information__c rhc = rhcLst.get(0);
 		rhc.ANG_RHC_Amount__c = rhc.ANG_RHC_Amount_Forecasted__c;
 	}
+
+	private void handleRhcUpdate(){
+
+		Set<Id> toNotify = new Set<Id>();
+		
+		for(ANG_RHC_Information__c rhc : triggerNew){
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount_Forecasted__c != oldMap.get(rhc.Id).ANG_RHC_Amount_Forecasted__c){
+				toNotify.add(rhc.ANG_AccountId__c);
+			}
+		}
+
+		if(!toNotify.isEmpty()){
+			ANG_RHCHelper.handleRiskOrForecastedRhcAmountUpdates(toNotify);
+		}
+
+	}
+
 }
