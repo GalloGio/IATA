@@ -1270,10 +1270,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                         errorFound = true;
                     }
                     
-                    if (shippingCountryInfo != null && shippingCountryInfo.State_Province_Mandatory__c && currentAccount.fw.newform.Shipping_State__c == null) {
+                    if (shippingCountryInfo != null && shippingCountryInfo.State_Province_Mandatory__c && String.isBlank(currentAccount.fw.newform.Shipping_State__c)) {
                         currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
-                    } else if (currentAccount.fw.newform.Shipping_State__c != null && !iso8859.matcher(currentAccount.fw.newform.Shipping_State__c).matches()) {
+                    } else if (!String.isBlank(currentAccount.fw.newform.Shipping_State__c) && !iso8859.matcher(currentAccount.fw.newform.Shipping_State__c).matches()) {
                         currentAccount.fw.newform.Shipping_State__c.addError(Label.ISSP_EnterValidString);
                         errorFound = true;
                     }
@@ -1315,10 +1315,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
-				if (currentAccount.isocountry.State_Province_Mandatory__c && currentAccount.fw.newform.State_Province__c == null) {
+				if (currentAccount.isocountry.State_Province_Mandatory__c && String.isBlank(currentAccount.fw.newform.State_Province__c)) {
 					currentAccount.fw.newform.State_Province__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
-				} else if (currentAccount.fw.newform.State_Province__c != null && !iso8859.matcher(currentAccount.fw.newform.State_Province__c).matches()) {
+				} else if (!String.isBlank(currentAccount.fw.newform.State_Province__c) && !iso8859.matcher(currentAccount.fw.newform.State_Province__c).matches()) {
 					currentAccount.fw.newform.State_Province__c.addError(Label.ISSP_EnterValidString);
             		errorFound = true;
 				}
