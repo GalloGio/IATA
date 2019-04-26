@@ -2735,6 +2735,14 @@ Payment required on receipt of this Payment Advice
         <value>Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_CompanyProfile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CompanyProfile</shortDescription>
+        <value>Company Profile</value>
+    </labels>
+    <labels>
         <fullName>CSP_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2765,6 +2773,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_ForYou</shortDescription>
         <value>For You</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LogOut</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LogOut</shortDescription>
+        <value>Log Out</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -2839,12 +2855,28 @@ Payment required on receipt of this Payment Advice
         <value>See All</value>
     </labels>
     <labels>
+        <fullName>CSP_Settings</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Settings</shortDescription>
+        <value>Settings</value>
+    </labels>
+    <labels>
         <fullName>CSP_Status</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Status</shortDescription>
         <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Support</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Support</shortDescription>
+        <value>Support</value>
     </labels>
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
