@@ -60,7 +60,8 @@ private class ANG_FinancialAssessmentTest {
 			Remittance_frequency__c = 'M',
 			ANG_HE_RiskStatus__c = 'A',
 			Type = 'IATA Passenger Sales Agent',
-			BillingCountry = 'Singapore'
+			BillingCountry = 'Singapore',
+			ANG_HE_CashCondition__c = TRUE
 		);
 
 		Account agentPT = new Account(
@@ -219,6 +220,14 @@ private class ANG_FinancialAssessmentTest {
 			];
 
 		String message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
+		system.assertEquals(IFAP_WebService.AGENT_HAS_ALREADY_CASH_CONDITION, message); 
+
+		Account acct = new Account();
+		acct.Id = cse.AccountId;
+		acct.ANG_HE_CashCondition__c = FALSE;
+		update acct;
+
+		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
@@ -268,7 +277,7 @@ private class ANG_FinancialAssessmentTest {
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
 		System.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, message);
 
-		Account acct = 
+		Account updAcct = 
 			[SELECT 
 				Id, 
 				ANG_HE_CashCondition__c 
@@ -279,7 +288,7 @@ private class ANG_FinancialAssessmentTest {
 			 LIMIT 1
 			];
 
-		system.assert(acct.ANG_HE_CashCondition__c);
+		system.assert(updAcct.ANG_HE_CashCondition__c);
 
 		Case updCse = 
 			[SELECT
