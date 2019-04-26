@@ -98,7 +98,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Origin</field>
-        <formula>TEXT(Case.Origin)</formula>
+        <literalValue>IATA Internal User</literalValue>
     </fieldOverrides>
     <fieldOverrides>
         <field>Phone_Redirected_to_Web__c</field>
@@ -175,6 +175,10 @@
     <fieldOverrides>
         <field>Topic__c</field>
         <formula>TEXT( Case.Topic__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Type</field>
+        <formula>TEXT( Case.Type)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Type_of_customer__c</field>
@@ -326,6 +330,15 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>true</emptySpace>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>true</emptySpace>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Assign__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>

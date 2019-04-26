@@ -146,7 +146,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Origin</field>
-        <formula>TEXT(Case.Origin)</formula>
+        <literalValue>IATA Internal User</literalValue>
     </fieldOverrides>
     <fieldOverrides>
         <field>Payment_Date__c</field>
@@ -388,6 +388,19 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>true</emptySpace>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>true</emptySpace>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>true</emptySpace>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Assign__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
