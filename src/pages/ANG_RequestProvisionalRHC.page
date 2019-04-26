@@ -44,7 +44,7 @@
             </apex:repeat>
              
          </apex:pageBlockSection>
-          <apex:outputLabel>
+          <apex:outputLabel >
             <div style="text-align:center;color:green;">
 				<apex:outputText rendered="{!hasChanged}"><b>The Provisional RHC Amount has been requested with success.</b></apex:outputText>
             </div>
@@ -57,7 +57,7 @@
           	<apex:pageBlockButtons location="bottom">
             <apex:commandButton value="Request Provisional RHC" action="{!requestProvisionalRHC}"  id="requestProvisional" rerender="infoBlock,editSection">
             </apex:commandButton>
-                <apex:commandButton value="Save/Confirm Forecasted RHC Information" action="{!save}"  id="acceptButton" disabled="{!!hasChanged}" rerender="infoBlock,editSection">
+                <apex:commandButton value="Confirm Forecasted RHC" action="{!save}"  id="acceptButton" disabled="{!!hasChanged}" rerender="infoBlock,editSection">
             </apex:commandButton>
             <apex:commandButton value="Cancel" id="cancel" onclick="closeTab();return false;">
             </apex:commandButton>

@@ -1,0 +1,241 @@
+<!--
+	Component Name: ISSP_AMC_Apply_New_Code.component
+	Related Classes: ISSP_AMC_Apply_New_Code.cls
+
+	Copyright @Right IT Services
+
+	Purpose: 
+
+	VERSION  	AUTHOR				DATE    		DETAIL/CHANGE REFERENCE
+ 	1.0		  	João Ferreira		25-10-2018   	INITIAL DEVELOPMENT
+ -->
+<apex:component controller="ISSP_AMC_Apply_New_Code" allowDML="true">
+
+
+	<div class="container">
+		<apex:form id="appnewcodeFrm">
+			<div class="row">
+				<section name="left-side-agency-accred" class="col-md-12">
+					<header>
+                        <div>
+                            <h2 class="subtitle">{!$Label.ISSP_AMC_APPLY_NEW_CODE}</h2>
+                            <div class="redFringe"></div>
+                        </div>
+                    </header>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	                <div class="row">
+	                    <div class="col-md-5">
+	                    	<apex:outputPanel rendered="{!!hasDesignatorValue}">
+	                    		<apex:commandButton styleClass="btn btn_iata_primary" action="{!navigateAirlineDesignators}" value="{!$Label.ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE}" status="Loading" rerender="appnewcodeFrm" disabled="{!hasDesignatorValue}" />
+	                    	</apex:outputPanel>
+	                        
+
+
+	                        <apex:outputPanel rendered="{!hasDesignatorValue}">
+                                <span class=" d-inline-block" tabindex="0" data-toggle="tooltip" title="You already have an Airline Designator Code">
+                                    <button class=" d-inline-block btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                        {!$Label.ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE}
+                                    </button>
+                                </span>
+                            </apex:outputPanel>
+
+	                    </div>
+	                    <div class="col-md-7">
+	                        <apex:outputText value="{!$Label.ISSP_AMC_AIRLINE_DESIGNATORS_DESC}" escape="false"/>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-7 col-md-offset-5">
+	                        <apex:outputLink value="{!amcFiles.Airline_Designator__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
+	                    </div>
+	                </div>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	                <div class="row">
+	                    <div class="col-md-5">
+	                    	<apex:outputPanel rendered="{!!hasAccountingCode}">
+		                        <apex:commandButton styleClass="btn btn_iata_primary" action="{!navigateAccountingOrPrefixCode}" value="{!$Label.ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE}" status="Loading" rerender="appnewcodeFrm" disabled="{!hasAccountingCode}"/>
+		                    </apex:outputPanel>
+
+	                        <apex:outputPanel rendered="{!hasAccountingCode}">
+                                <span class=" d-inline-block" tabindex="0" data-toggle="tooltip" title="You already have an Accounting and Prefix Code">
+                                    <button class=" d-inline-block btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                        {!$Label.ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE}
+                                    </button>
+                                </span>
+                            </apex:outputPanel>
+
+	                    </div>
+	                    <div class="col-md-7">
+	                        <apex:outputText value="{!$Label.ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE_DESC}" escape="false"/>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-7 col-md-offset-5">
+	                        <apex:outputLink value="{!amcFiles.Accounting_Prefix__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
+	                    </div>
+	                </div>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	                <div class="row">
+	                    <div class="col-md-5">
+	                        <apex:commandButton styleClass="btn btn_iata_primary" action="{!navigateLocationIdentifier}" value="{!$Label.ISSP_AMC_Location_Identifier_Code}" status="Loading" rerender="appnewcodeFrm" />
+	                    </div>
+	                    <div class="col-md-7">
+	                        <apex:outputText value="{!$Label.ISSP_AMC_LOCATION_IDENTIFIER_DESC}" escape="false"/>
+	                    </div>
+	                </div>
+	                <!--<div class="row">
+	                    <div class="col-md-7 col-md-offset-5">
+	                        <apex:commandLink value="{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}"/>
+	                    </div>
+	                </div> -->
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	                <div class="row">
+	                    <div class="col-md-5">
+	                    	<apex:outputPanel rendered="{!!hasBaggageCode}">
+		                        <apex:commandButton styleClass="btn btn_iata_primary" action="{!navigateBaggageTagRange}" value="{!$Label.ISSP_AMC_BAGGAGE_TAG_RANGE_CODE}" status="Loading" rerender="appnewcodeFrm" disabled="{!hasBaggageCode}"/>
+		                    </apex:outputPanel>
+
+	                        <apex:outputPanel rendered="{!hasBaggageCode}">
+                                <span class=" d-inline-block" tabindex="0" data-toggle="tooltip" title="You already have a Baggage Tag Range Code">
+                                    <button class=" d-inline-block btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                        {!$Label.ISSP_AMC_BAGGAGE_TAG_RANGE_CODE}
+                                    </button>
+                                </span>
+                            </apex:outputPanel>
+
+	                    </div>
+	                    <div class="col-md-7">
+	                        <apex:outputText value="{!$Label.ISSP_AMC_BAGAGE_TAG_RANGE_DESC}" escape="false"/>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-7 col-md-offset-5">
+	                        <apex:outputLink value="{!amcFiles.Baggage_Tag_Range_Code__c}">{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}</apex:outputLink>
+	                    </div>
+	                </div>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+				
+					<apex:outputPanel id="popupDeleteSection" rendered="{!IF(isThereACase == true,true,false)}">
+						<div class="test">
+                      	<apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+	                        <apex:outputPanel styleClass="Content" layout="black" > 
+		                        <center>
+		                           	<apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
+		                           		<div>
+
+                                               <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,false,true)}">
+                                                   <apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+		                           			        disabled="{!noPermissionToViewCase}"/>
+                                               </apex:outputPanel>
+
+                                               <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,true,false)}">
+                                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You have no Permission">
+                                                        <button class="btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                                            {!$Label.ISSP_AMC_VIEW_CASE}
+                                                        </button>
+                                                    </span>
+                                               </apex:outputPanel>
+                                               
+                                                
+		                           			<apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
+		                           		</div>
+		                           	</center>
+	                            </apex:outputPanel>
+	                        </apex:outputPanel>
+						</div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="popupDeleteSection2" rendered="{!IF(isThereAParticipation == true,true,false)}">
+						<div class="test">
+                      	<apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+	                        <apex:outputPanel styleClass="Content" layout="black" > 
+		                        <center>
+		                           	<apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE_EDIT}{!caseNum}." />
+		                           		<div>
+		                           			<!--<apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+		                           			disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+		                           			-->
+    
+                                                <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,false,true)}">
+                                                   <apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+		                           			        disabled="{!noPermissionToViewCase}"/>
+                                               </apex:outputPanel>
+
+                                               <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,true,false)}">
+                                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You have no Permission">
+                                                        <button class="btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                                            {!$Label.ISSP_AMC_EDIT_CASE}
+                                                        </button>
+                                                    </span>
+                                               </apex:outputPanel>
+
+                                                <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
+                                        </div>
+		                           	</center>
+	                            </apex:outputPanel>
+	                        </apex:outputPanel>
+						</div>
+                    </apex:outputPanel>
+	            </section>
+			</div>
+		</apex:form>
+	</div>
+
+<style type="text/css">
+.test {
+				background: radial-gradient(rgba(0, 0, 0,.8), rgba(0, 0, 0, .5)4%);
+		        position: fixed;
+		        z-index: 9998;
+		        margin: auto;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+			}
+	
+	.PopupBackground {
+				
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			/* bring your own prefixes */
+			transform: translate(-50%, -50%);
+
+	        position: fixed;
+	        z-index: 9998;
+	        margin: auto;
+			color: black;
+			text-align: center;
+			background-color: white;
+			border: 1px solid rgba(0,0,0,.2);
+		    border-radius: 6px;
+		    outline: 0;
+		    padding: 1%;
+	}
+
+
+	.content{
+        background-color: white;
+        border-width: 8px;
+        border-style: solid;
+        z-index: 9999;
+        padding:10px;
+        position: fixed;
+        margin: auto;
+        
+    }
+    
+</style>
+
+
+</apex:component>

@@ -20,9 +20,12 @@ global class IFAP_WebService {
     public static final String INVALID_ACTION_TRIGGER_SIDRA_LITE = 'Invalid action, you need to trigger SIDRA Lite action in order to put the agent Under review.';
     public static final String INVALID_ACTION_REINSTATE_AGENT = 'Invalid action, you need to reinstate the agent from the SIDRA lite related case.';
     public static final String INVALID_ACTION_REMOVE_CASH_CONDITIONS = 'Invalid action, you need to remove Cash conditions using the appropriate button.';
-    public static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED = 'Conditions are not satisfied to apply Cash Condition on the agent.';
+    public static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY = 'Conditions are not satisfied to apply Cash Condition on the agent.';
     public static final String CASH_CONDITION_SUCCESSFULLY_APPLIED = 'Cash condition applied successfully on the agent.';
     public static final String UNABLE_TO_APPLY_CASH_CONDITION = 'Unable to apply cash condition on the agent.';
+    public static final String CASH_CONDITION_SUCCESSFULLY_REMOVED = 'Cash condition successfully removed from the agent.';
+    public static final String UNABLE_TO_REMOVE_CASH_CONDITION = 'Unable to remove cash condition from the agent.';
+    public static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE = 'Conditions are not satisfied to remove Cash Condition from the agent.';
 
     WebService static String FinancialSecurityInfo(String caseNumber, String currencyCode, Decimal amount) {
 
@@ -270,9 +273,7 @@ global class IFAP_WebService {
         }
     }
 
-	webservice static String applyCashCondition(Id caseId, Id accountId){
-
-		try {
+    private static Account fetchAccountInformation(Id caseId, Id accountId){
 
 			Account acct =
 				[SELECT 
@@ -303,9 +304,36 @@ global class IFAP_WebService {
 				LIMIT 1
 				];
 
-			Case cse = acct.Cases.get(0);
+        return acct;
 
-			String message = isValidForApplyingCashCondition(acct, cse, acct.Financial_Securities__r);
+    }
+
+    private static Boolean hasAgentFinancialSecurity(List<Financial_Security__c> fsLst){
+
+        Set<String> fsStatusSet = new Set<String>{
+			ANG_Risk_Helper.SECURITY_STATUS_ACTIVE, 
+			ANG_Risk_Helper.SECURITY_STATUS_CLOSE_EXPIRY_DATE
+		};
+
+		for(Financial_Security__c fs : fsLst){
+			if(fsStatusSet.contains(fs.Security_Status__c)){
+				return true;
+			}
+		}
+
+        return false;
+
+    }
+
+	webservice static String applyCashCondition(Id caseId, Id accountId){
+
+		try {
+
+			Account acct = fetchAccountInformation(caseId, accountId);
+
+			Case cse = acct.Cases.get(0);
+            
+			String message = isValidForApplyingCashCondition(acct, cse, hasAgentFinancialSecurity(acct.Financial_Securities__r));
 
 			if('VALID' != message){
 				return message;
@@ -351,7 +379,7 @@ global class IFAP_WebService {
 
 	}
 
-	private static String isValidForApplyingCashCondition(Account acct, Case cse, List<Financial_Security__c> fsLst){
+	private static String isValidForApplyingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
 
 		Set<String> caseStatusSet = new Set<String>{
 			'Agent Notified (Email)',
@@ -359,38 +387,76 @@ global class IFAP_WebService {
 			'Sanity Check Failure'
 		};
 
-		Set<String> fsStatusSet = new Set<String>{
-			ANG_Risk_Helper.SECURITY_STATUS_ACTIVE, 
-			ANG_Risk_Helper.SECURITY_STATUS_CLOSE_EXPIRY_DATE
-		};
-
-		Boolean agentHasFs = false;
-
-		for(Financial_Security__c fs : fsLst){
-			if(fsStatusSet.contains(fs.Security_Status__c)){
-				agentHasFs = true;
-				break;
-			}
-		}
-
-		if(acct.ANG_IsNewgenAgency__c && cse.FA_Second_Deadline_Date__c < System.Today() && caseStatusSet.contains(cse.Status) && !agentHasFs){
+		if(acct.ANG_IsNewgenAgency__c && cse.FA_Second_Deadline_Date__c < System.Today() && caseStatusSet.contains(cse.Status) && !hasAgentFS){
 			return INVALID_ACTION_TRIGGER_SIDRA_LITE;
 		}
 
-		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !agentHasFs){
+		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
 			return INVALID_ACTION_REINSTATE_AGENT;
 		}
 
-		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && agentHasFs){
+		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && hasAgentFS){
 			return INVALID_ACTION_REMOVE_CASH_CONDITIONS;
 		}
 
-		if(!acct.ANG_IsNewgenAgency__c || cse.FA_Second_Deadline_Date__c >= System.Today() || !caseStatusSet.contains(cse.Status) || !agentHasFs){
-			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED;
+		if(!acct.ANG_IsNewgenAgency__c || cse.FA_Second_Deadline_Date__c >= System.Today() || !caseStatusSet.contains(cse.Status) || !hasAgentFS){
+			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY;
 		}
 
 		return 'VALID';
 
 	}
+
+    webservice static String removeCashCondition(Id caseId, Id accountId){
+
+        Account acct = fetchAccountInformation(caseId, accountId);
+
+        Case cse = acct.Cases.get(0);
+
+        String message = isValidForRemovingCashCondition(acct, cse, hasAgentFinancialSecurity(acct.Financial_Securities__r));
+
+        if('VALID' != message){
+            return message;
+        }
+
+        message = removeCashConditionAction(acct);
+
+        if(message != 'SUCCESS'){
+            return UNABLE_TO_REMOVE_CASH_CONDITION + ' Technical Error: ' + message;
+        }
+
+        return CASH_CONDITION_SUCCESSFULLY_REMOVED;
+
+    }
+
+	private static String isValidForRemovingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
+
+		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
+			return INVALID_ACTION_REINSTATE_AGENT;
+		}
+
+		if(!acct.ANG_IsNewgenAgency__c || cse.Assessment_Performed_Date__c <= cse.FA_Second_Deadline_Date__c || String.isBlank(cse.Financial_Review_Result__c)){
+			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE;
+		}
+
+		return 'VALID';
+
+    }
+
+    private static String removeCashConditionAction(Account acct){
+
+		try {
+			acct.ANG_HE_CashCondition__c = false;
+			update acct;
+		}
+		catch(Exception e){
+			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+			return e.getMessage();
+		}
+
+		return 'SUCCESS';
+
+    }
 
 }

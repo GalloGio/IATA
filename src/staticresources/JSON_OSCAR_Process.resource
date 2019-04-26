@@ -3702,7 +3702,7 @@
                     "ActionLabel": "AMS_OSCAR_Action6_Corr",
                     "args": ["oscarid"]
                   }
-				],
+        ],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -5669,7 +5669,7 @@
                       "oscarid"
                     ]
                   },
-				  {
+          {
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
@@ -6117,6 +6117,72 @@
                 "DisplayFields": [
                 "New_docs_Received__c",
                 "ANG_Share_documentation_with_vendor__c",
+                  "STEP6__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
+            "Steps": [
+              {
+                "Name": "STEP17",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "performAML",
+                    "ActionLabel": "AMS_OSCAR_Action4",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
+                  },
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP17__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "IEP.MODEL.B.PLUS.ACCOUNT.SETUP",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+            "Steps": [
+              {
+                "Name": "STEP6",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+                  }
+                ],
+                "DisplayFields": [
+                "New_docs_Received__c",
                   "STEP6__c"                  
                 ],
                 "IsDependent": false
@@ -6629,25 +6695,25 @@
                 "IsDependent": false
               },
               {
-                "Name": "STEP48",
+                "Name": "STEP9",
                 "Required": [],
                 "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_passed"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_succeeded"
                   },
                   {
                     "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_failed"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_failed"
                   },
                   {
                     "Status": "Not Applicable",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_notApplicable"
                   }
                 ],
                 "DisplayFields": [
-                  "STEP48__c"                  
+                  "STEP9__c"                
                 ],
                 "IsDependent": false
               }
