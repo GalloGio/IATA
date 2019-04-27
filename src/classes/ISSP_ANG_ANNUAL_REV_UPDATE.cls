@@ -67,7 +67,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public List<SelectOption> billingStateList {
         get {
             if (billingStateList == null) {
-                billingStateList = new List<SelectOption>{new SelectOption('','')};
+                billingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
 
                 for (IATA_ISO_State__c state: [SELECT Id, Name
                                             FROM IATA_ISO_State__c
@@ -135,8 +135,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     }
 
     public void currentShippingCountryStates() {
-        shippingStateList = new List<SelectOption>{new SelectOption('', '')};
-
+        shippingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
         for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
             shippingStateList.add(new SelectOption(state.Name, state.Name));
         }
