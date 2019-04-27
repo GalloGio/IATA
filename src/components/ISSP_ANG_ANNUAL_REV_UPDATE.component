@@ -360,6 +360,7 @@
                 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="disableShipping" layout="block">
                     <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Shipping_Same_As_Billing}" />
+                    &nbsp; &nbsp; &nbsp;
                         <apex:inputCheckbox id="disableCheckBoxBranch" value="{!displayShipping}">
                             <apex:actionSupport event="onchange" rerender="newAddressShipping" oncomplete="toggleAddress();"/>
                         </apex:inputCheckbox>
