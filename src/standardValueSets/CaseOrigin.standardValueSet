@@ -382,6 +382,11 @@
         <label>E-mail to Case - CZ &amp; Slovakia</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - DIP Communications</fullName>
+        <default>false</default>
+        <label>E-mail to Case - DIP Communications</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - DKR</fullName>
         <default>false</default>
         <label>E-mail to Case - DKR</label>
