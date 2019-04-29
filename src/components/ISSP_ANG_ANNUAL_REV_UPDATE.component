@@ -227,7 +227,9 @@
                 <apex:pageBlockSection columns="1">
                 <apex:pageBlockSectionItem labelStyle="width:80%;font-weight:" dataStyle="width:10%;{!IF(AND(ca.errorFoundCheckBoxes, ca.fw.newform.Confirm_Location_Details_are_correct__c==false,ca.fw.newform.Notify_Change_Location__c==false, ca.fw.newform.Scope_of_Change__c != 'HO - All Branches'), 'border:2px red solid !important;margin-right:5px;', 'margin-right:5px')}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" style="color:black;font-size:110%"/>
-                    <apex:inputCheckbox disabled="{!ca.isReadonly}" id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!ca.fw.newform.Notify_Change_Location__c}"/>
+                    <apex:inputCheckbox disabled="{!ca.isReadonly}" id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!ca.fw.newform.Notify_Change_Location__c}">
+                        <apex:actionSupport event="onchange" onsubmit="resetShipping();" reRender=""/>
+                    </apex:inputCheckbox>
                 </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -395,6 +397,7 @@
                     <script type="text/javascript">
                         function toggleAddress(){
                             $('[id$="ShippingCountryList"]').val('');
+                            $('[id$="ShippingStateList"]').val('');
                             $('#shipping_country__c > input').val('');
 
                             if ('{!displayShipping}' == 'false') {
@@ -406,10 +409,29 @@
                                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
                             }
                         }
+                    
+                    	function resetShipping(){
+                        	if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
+                                resetShippingAction();
+                            }
+                        }
+                    
+                    	function resetShippingAddress(){
+                        	if ('{!displayShipping}' == 'false') {
+                                $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
+                                $('[id$="shippingStateInput"]').attr('style', 'width: 200px; margin-left: 15px;');
+                                initFieldsSettings();
+                                copyToADShippingCntr();
+                            } else {
+                                $('[id$="ShippingStateList"]').attr('style', 'display: none;');
+                                $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+                            }
+                        }
                     </script>
                 </apex:outputPanel>
 
                 <apex:actionFunction name="changeStateOptions" action="{!currentShippingCountryStates}" reRender="ShippingStateList"/>
+                <apex:actionFunction name="resetShippingAction" action="{!resetCheckbox}" reRender="disableCheckBoxBranch, newAddressShipping" oncomplete="resetShippingAddress();"/>
 
                 <apex:outputPanel styleClass="agencyLocationComponent" id="newEmail" layout="block" style="width: 120%">
                     <DSE:DS_DataQuality id="BranchEmail"
