@@ -6,6 +6,8 @@ public with sharing class RecordSharingController {
     * @return List<ConnectionWrapper> Wrapper Class to populate a datatable with information of two sObjects, PartnerNetworkConnection and PartnerNetworkRecordConnection.
     */
 
+    private static set<string> disableButtonStatusSet= new set<string>{'Received','Inactive','Converted','Deleted'};
+
     @AuraEnabled(cacheable=true)
     public static List<ConnectionWrapper> getNetworkRecordConnection(Id recordId) {
         List<PartnerNetworkRecordConnection> recordConnection;
@@ -37,7 +39,7 @@ public with sharing class RecordSharingController {
                     connectionRef.ConnectionName,
                     connectionRef.PrimaryContactId, 
                     rec.StartDate,
-                    rec.Status == 'Sent' ? false : true,
+                    disableButtonStatusSet.contains(rec.Status),
                     rec.Id)
                 );
             }
