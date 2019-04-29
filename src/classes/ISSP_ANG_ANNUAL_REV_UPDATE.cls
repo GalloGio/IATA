@@ -220,4 +220,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         }
     }
 
+    public void resetCheckbox() {
+        displayShipping = null;
+    }
+
 }
