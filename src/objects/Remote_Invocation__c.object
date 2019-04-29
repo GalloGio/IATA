@@ -108,7 +108,7 @@
                     <label>TIP_AUTO_REPORTS</label>
                 </value>
                 <value>
-                    <fullName>SAP_PPA</fullName>
+                    <fullName>SAP_PPA_RETURN</fullName>
                     <default>false</default>
                     <label>SAP PPA</label>
                 </value>
@@ -389,7 +389,7 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>SAP_PPA</fullName>
+                <fullName>SAP_PPA_RETURN</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -10,7 +10,10 @@ public without sharing class RemoteInvocationTriggerHandler {
     public static final String NEWGEN_EASY_PAY = 'ANG_IEP_MODEL_A';
     public static final String TIP_IFG_REPORT  = 'TIP_IFG_REPORT';
     public static final String NEWGEN_GDI_ENDO = 'GDI_ENDORSEMENT';
-    public static final String NEWGEN_SAP_PPA  = 'SAP_PPA';
+    public static final String NEWGEN_SAP_PPA  = 'SAP_PPA_RETURN';
+
+    //Remote Invocation Record Type
+    public static final String NEWGEN_SAP_PPA_RT  = 'SAP_PPA';
 
     public List<String> requestTypeListBefore = new List<String>{NEWGEN_EASY_PAY, NEWGEN_SAP_PPA};
 
@@ -22,7 +25,7 @@ public without sharing class RemoteInvocationTriggerHandler {
     public static final ID RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_EASY_PAY);
     public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', TIP_IFG_REPORT);
     public static final ID RECTYPE_GDI    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_GDI_ENDO);
-    public static final ID RECTYPE_SAP_PPA = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_SAP_PPA);
+    public static final ID RECTYPE_SAP_PPA = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_SAP_PPA_RT);
  
 
     //to store the remote invocations with errors
