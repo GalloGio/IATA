@@ -173,6 +173,8 @@ public without sharing class OneId_RegistrationProcessController {
         Contact con {get;set;}
         @AuraEnabled
         Account acc {get;set;}
+        @AuraEnabled
+        Boolean accessRequested {get; set;}
     }
 
     @AuraEnabled
@@ -278,6 +280,41 @@ public without sharing class OneId_RegistrationProcessController {
                 && (acc.Category__c == 'GDS' || acc.Category__c == 'Content Aggreagator')
                 && (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
         return isEligible;
+    }
+
+
+    @AuraEnabled
+    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
+        // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
+        Savepoint sp = Database.setSavepoint();
+
+        try {
+            User testingUser = new User(LastName = 'DUMMY',
+                 FirstName='DUMMY',
+                 Alias = 'DUMMY',
+                 CommunityNickname = 'DUMMY',
+                 Email = email,
+                 Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
+                 ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
+                 ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+                 TimeZoneSidKey = 'GMT',
+                 LanguageLocaleKey = 'en_US',
+                 EmailEncodingKey = 'UTF-8',
+                 LocaleSidKey = 'en_US',
+                 License_Cost_center__c = 'ISF005CH01'
+            );
+            system.debug(testingUser);
+            insert testingUser;
+
+            // Rollback to avoid creation of the user
+            Database.rollback(sp);
+            return true;
+
+        } catch(Exception e) {
+            System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
+            Database.rollback(sp);
+            return false;
+        }
     }
     
     @AuraEnabled
@@ -671,13 +708,46 @@ public without sharing class OneId_RegistrationProcessController {
                     newRight.Portal_Application__c = appListId;
                     insert newRight;
                }
-            }else if(!isAlreadyContact){
+
+            //Start ACLI
+                // ACLI Requirement: The first user registering under a new airline account will get it automatically.
+            }else if(acc.Sector__c == 'Airline' && isNewAcc &&
+                        acc.RecordTypeId == Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId() ){
+
+                System.debug('Adding ACLI service');
+                con.Primary_Contact__c = true;
+                con.User_Portal_Status__c = 'Approved Admin';
+
+                checkConAvailable(con);
+
+                con.account=acc;
+
+                //ACLI Requirement: if first user on an Airline account then the user gets automatically the Coding Service
+                Id appListId;
+                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c)){
+                    appListId = serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c;
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
+                }
+
+
+            }
+            //End ACLI
+            else if(!isAlreadyContact){
                 checkConAvailable(con);
                 system.debug('::: Is not a contact already: ' + con);
-            }else{
+            }
+            else{
+                checkConAvailable(con);
                 updateContactInFuture(String.valueOf(con.Id), con.Community__c, String.valueOf(con.User_Portal_Status__C), con.Email, con.AccountId);
                 system.debug('::: Is contact already UPDATING: ' + con);
                 //update con;
+
             }
 
 
@@ -820,448 +890,99 @@ public without sharing class OneId_RegistrationProcessController {
         }
         return null;
     }
-  
-  
-  public static void increaseCodeCoverage(){
-      Integer i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
+    
+    /* Manuel Conde commented this... 
+
+    public static void increaseCodeCoverage(){
+        Integer i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
     }
+
+     */
 
 }
