@@ -88,8 +88,12 @@
                 <value>1440</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
+                <name>reportFilter</name>
+                <value>FK_CNTC_ID</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
                 <name>reportName</name>
-                <value>A1_YTD_Satisfaction_per_CSR2</value>
+                <value>YTD_Overall_satisfaction1</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>showRefreshButton</name>
