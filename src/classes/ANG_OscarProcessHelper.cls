@@ -2218,7 +2218,7 @@ global class ANG_OscarProcessHelper {
 		//sending email with url for portal    
         for (Account acc: accs){
         
-            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : (model == 'B+' ? AMS_Utils.IEPMODELBPLUSACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP))), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
+            if(model != 'B+') AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
 
         }
         return oscarsToInsert;
