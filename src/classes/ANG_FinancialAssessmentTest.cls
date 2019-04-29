@@ -60,7 +60,8 @@ private class ANG_FinancialAssessmentTest {
 			Remittance_frequency__c = 'M',
 			ANG_HE_RiskStatus__c = 'A',
 			Type = 'IATA Passenger Sales Agent',
-			BillingCountry = 'Singapore'
+			BillingCountry = 'Singapore',
+			ANG_HE_CashCondition__c = TRUE
 		);
 
 		Account agentPT = new Account(
@@ -219,6 +220,14 @@ private class ANG_FinancialAssessmentTest {
 			];
 
 		String message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
+		system.assertEquals(IFAP_WebService.AGENT_HAS_ALREADY_CASH_CONDITION, message); 
+
+		Account acct = new Account();
+		acct.Id = cse.AccountId;
+		acct.ANG_HE_CashCondition__c = FALSE;
+		update acct;
+
+		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
@@ -266,9 +275,9 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, message); 
+		System.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, message);
 
-		Account acct = 
+		Account updAcct = 
 			[SELECT 
 				Id, 
 				ANG_HE_CashCondition__c 
@@ -279,11 +288,12 @@ private class ANG_FinancialAssessmentTest {
 			 LIMIT 1
 			];
 
-		system.assert(acct.ANG_HE_CashCondition__c);
+		system.assert(updAcct.ANG_HE_CashCondition__c);
 
 		Case updCse = 
 			[SELECT
-				Id, 
+				Id,
+				Deadline_Date__c,
 				FA_Third_Deadline_Date__c,
 				secondFAnonComplianceDate__c
 			 FROM 
@@ -294,7 +304,7 @@ private class ANG_FinancialAssessmentTest {
 			];
 
 		system.assertEquals(updCse.secondFAnonComplianceDate__c, System.today());
-		system.assertEquals(updCse.FA_Third_Deadline_Date__c, System.today().addDays(365));
+		system.assertEquals(updCse.FA_Third_Deadline_Date__c, updCse.Deadline_Date__c.addDays(365));
 
 	}
 
@@ -359,7 +369,11 @@ private class ANG_FinancialAssessmentTest {
 				Account.ANG_IsNewGenAgency__c = TRUE 
 			 LIMIT 1
 			];
-
+        
+        Account acct = new Account(Id = cse.AccountId);
+		acct.ANG_HE_CashCondition__c = FALSE;
+		update acct;
+        
 		String message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
 
@@ -399,10 +413,13 @@ private class ANG_FinancialAssessmentTest {
 		fs.Security_Status__c = 'Active';
 		update fs;
 
-		Account acct = new Account(Id = cse.AccountId);
-		acct.ANG_HE_CashCondition__c = true;
+        message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
+		system.assertEquals(IFAP_WebService.AGENT_DOES_NOT_HAVE_CASH_CONDITION, message); 
+        
+        acct = new Account(Id = cse.AccountId);
+		acct.ANG_HE_CashCondition__c = TRUE;
 		update acct;
-
+        
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_REMOVED, message); 
 
@@ -448,10 +465,10 @@ private class ANG_FinancialAssessmentTest {
     	Test.stopTest();
 
     	//For Newgen Agents -> Check the parentCase.FA_Third_Deadline_Date__c
-    	Case parentCase = [SELECT id, AccountId, Status, FA_Third_Deadline_Date__c
+    	Case parentCase = [SELECT id, AccountId, Status, Deadline_Date__c, FA_Third_Deadline_Date__c
     					 FROM Case WHERE Account.ANG_IsNewGenAgency__c = TRUE LIMIT 1];
 
-    	System.assertEquals(Date.today().addDays(365), parentCase.FA_Third_Deadline_Date__c);
+    	System.assertEquals(parentCase.Deadline_Date__c.addDays(365), parentCase.FA_Third_Deadline_Date__c);
 
     }
 

@@ -52,18 +52,18 @@ public with sharing class SidraLiteHelperForIFAP {
         boolean firstRule = parentCase.FA_Second_Deadline_Date__c < System.today();
         boolean secondRule = STATUS_FOR_FA.contains(parentCase.Status);
 
-        Account acct= [Select Id, ANG_IsNewGenAgency__c, (Select Id from Financial_Securities__r where Security_Status__c IN ('Active','Close to Expiry Date')) from Account where Id=:parentCase.accountId];
+        Account acct= [Select Id, ANG_IsNewGenAgency__c,ANG_CashCondition__c, (Select Id from Financial_Securities__r where Security_Status__c IN ('Active','Close to Expiry Date')) from Account where Id=:parentCase.accountId];
 
         boolean thirdRule = !acct.Financial_Securities__r.isEmpty();
         
-        if(firstRule && secondRule && thirdRule && acct.ANG_IsNewGenAgency__c)
+        if(firstRule && secondRule && thirdRule && acct.ANG_IsNewGenAgency__c && !acct.ANG_CashCondition__c)
             throw new SidraLiteException('Invalid action, you need to click on the button in order to apply Cash condition true.');
 
         firstRule = parentCase.Financial_Review_Result__c <> null && parentCase.Financial_Review_Result__c <> '';
         
         secondRule = parentCase.Assessment_Performed_Date__c > parentCase.FA_Second_Deadline_Date__c;
 
-        if(firstRule && secondRule && acct.ANG_IsNewGenAgency__c)
+        if(firstRule && secondRule && acct.ANG_IsNewGenAgency__c && acct.ANG_CashCondition__c)
             throw new SidraLiteException('Invalid action, you need to click on the button in order to remove Cash condition.');
 
     }
@@ -235,7 +235,7 @@ public with sharing class SidraLiteHelperForIFAP {
                 }
                 parentCase.secondFAnonComplianceDate__c = Date.today();
                 //NEWGEN-5298: Only applied for Newgen Agents - FA_Third_Deadline_Date__c = Today + 365 days
-                if(account.ANG_IsNewGenAgency__c) parentCase.FA_Third_Deadline_Date__c = Date.today().addDays(365);
+                if(account.ANG_IsNewGenAgency__c) parentCase.FA_Third_Deadline_Date__c = parentCase.Deadline_Date__c.addDays(365);
 
                 else parentCase.FA_Third_Deadline_Date__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
                 if (SidraLiteUtil.isAccountActive(account) || SidraLiteUtil.isLastSidraCase(childCase) ) {
