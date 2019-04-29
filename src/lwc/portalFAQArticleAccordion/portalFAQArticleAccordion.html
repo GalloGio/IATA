@@ -1,0 +1,13 @@
+<template>
+    <div class="customCardWhite">
+    <h1 class="slds-text-heading_small">Popular Articles</h1>
+    <lightning-accordion>
+        <template for:each={articles} for:item="article">
+            <lightning-accordion-section label={article.Title} key={article.Id}>
+                <lightning-formatted-rich-text data-name={article.Title} data-label={article.Title} value={article.Answer__c}></lightning-formatted-rich-text>
+                <c-portal-f-a-q-reach-us-banner></c-portal-f-a-q-reach-us-banner>
+            </lightning-accordion-section>            
+        </template>        
+    </lightning-accordion>
+    </div>
+</template>
