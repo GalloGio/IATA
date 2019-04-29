@@ -1,6 +1,7 @@
 @isTest
 private class BtchGDPReplicateAccount_Test {
     static testMethod void test_AllMethod() {
+	/*
         TestData.ForReplicateAccount testData = new TestData.ForReplicateAccount();
         System.runAs(testData.user) {
             TestUtilities.createIECGDPReplicationSetting(true);
@@ -16,5 +17,6 @@ private class BtchGDPReplicateAccount_Test {
             // } catch(Exception e) {}
             Test.stopTest(); 
         }
+		*/
     }
 }

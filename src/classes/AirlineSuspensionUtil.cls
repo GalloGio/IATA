@@ -23,7 +23,8 @@ public with sharing class AirlineSuspensionUtil {
         }
 
         try {
-            insert lstASRecords;
+	    if(!lstASRecords.isEmpty())
+                insert lstASRecords;
         } catch (Exception e) {
             system.debug(e.getMessage());
         }
