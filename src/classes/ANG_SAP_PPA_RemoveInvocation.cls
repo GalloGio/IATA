@@ -136,7 +136,9 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 					osc.Billing_Document_Number__c = mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c;
 
 					ri.Status__c = 'Completed';
+					ri.Status_Detail__c = '';
 					remoteInovArt.Request_Result__c = 'Completed';
+					remoteInovArt.Status_Detail__c = '';
 					rmtInvocationArtListToUpdate.add(remoteInovArt);
 					oscarsToUpdate.add(osc);
 				}		
