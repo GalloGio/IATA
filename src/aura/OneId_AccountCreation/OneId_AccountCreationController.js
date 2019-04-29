@@ -30,6 +30,54 @@
             c.set("v.accountLabels", a.getReturnValue());
         });
         $A.enqueueAction(action);
+
+        //Data Quality//
+        var action = c.get("c.getStates");
+        var country = c.get("v.country").Name;        
+        
+        action.setParams({"country": country});
+        
+        action.setCallback(this, function(response){
+            let fetchedStates = [""];
+            let res = response.getReturnValue();
+            let states = res.states;
+            let idAndAlternateNames = res.idAndAlternateNames;             
+            let stateCities = {};
+            let allCities = [];
+
+            for(var i = 0; i < states.length; i++){
+                
+                fetchedStates.push(states[i].Name);
+                stateCities[states[i].Name] = states[i].IATA_ISO_Cities__r;                
+                allCities.push(states[i].IATA_ISO_Cities__r);                
+            }
+
+            let allCitiesMerged = [].concat.apply([], allCities);
+
+            stateCities["All"] = allCitiesMerged;
+            
+            c.set('v.cities', stateCities);
+            c.set('v.states', fetchedStates);
+            c.set('v.allCities', allCitiesMerged);
+            c.set('v.idAndAlternateNames', idAndAlternateNames);
+
+            h.setCities(c, null);
+
+        });
+
+        $A.enqueueAction(action);
+
+        var action = c.get("c.getAllCities");
+
+        action.setParams({"country": country});
+
+        action.setCallback(this, function(response){
+            c.set('v.allCitiesAllCountries', JSON.stringify(response.getReturnValue()));
+        });
+        
+        $A.enqueueAction(action);
+        
+        //Data Quality//
     },
     sectorChanged : function (c, e, h) {
         h.setCategory(c);
@@ -50,12 +98,12 @@
 
         c.set("v.account."+addressType+"Street", addressObj.street);
         
-        if(!$A.util.isEmpty(addressObj.locality)){
+       /* if(!$A.util.isEmpty(addressObj.locality)){
             c.set("v.account."+addressType+"City", addressObj.locality);
         }
         if(!$A.util.isEmpty(addressObj.province)){
             c.set("v.account."+addressType+"State", addressObj.province);
-        }
+        }*/
         if(!$A.util.isEmpty(addressObj.postalCode)){
             c.set("v.account."+addressType+"PostalCode", addressObj.postalCode);
         }
@@ -69,48 +117,146 @@
     },
 
     validateAddress : function (c, e, h) {
+        
         var mode = e.currentTarget.dataset.mode;
-        c.set("v.valid"+mode, 2); //set spinner
+        let addDocComponent = c.find('addDocComponent'+mode);       
+        let cityState = c.find(mode+'State');        
+        let cityElement = c.find(mode+'City');        
+        let streetElement = addDocComponent.find('Street');        
+        c.set('v.cityInAnotherCountry'+mode,false);        
+        mode==='Billing'?c.set('v.errorStateProvince', false):c.set('v.errorShippingStateProvince', false); 
+        
+        c.set('v.cityDoesNotExist'+mode, false);
+        c.set('v.cityInAnotherState'+mode, false);
+        c.set('v.'+mode+'CityEmpty', false);
+        c.set('v.'+mode+'StreetEmpty', false);
+        c.set('v.'+mode+'CityStreetEmpty', false);
+        c.set('v.validationError', false);
+        
+        cityElement.set('v.errors', null);
+        streetElement.set('v.errors', null);
+        //Data quality//
+		
+		let currentState = cityState.get('v.value');
+        // console.log('@@MAC1 '+currentState);
 
-        var addressInfo = {
-            street : c.get("v.account."+mode+"Street"),
-            locality : c.get("v.account."+mode+"City"),
-            postalCode : c.get("v.account."+mode+"PostalCode"),
-            province : c.get("v.account."+mode+"State"),
-            countryCode : c.get("v.country.ISO_Code__c")
-        };
-        var action = c.get("c.checkAddress");
-        action.setParams({"info": $A.util.json.encode(addressInfo)});
+		let currentCity = cityElement.get('v.value');
+		// console.log('@@MAC2 '+currentCity);
+        
+        let currentStreet = streetElement.get('v.value');
+	    // console.log('@@MAC3 '+currentStreet);
+        
 
-        action.setCallback(this, function(a) {
-            var addresses = a.getReturnValue();
-
-            var isValidAddress = addresses.length > 0;
-
-            c.set("v.valid"+mode, isValidAddress ? 1 : -1);
-
-            if(isValidAddress){
-                if(addresses.length == 1){
-                    var cmpEvent = c.getEvent("addressSelected");
-                    cmpEvent.setParams({
-                        "addressType" : mode,
-                        "addressSelected" : addresses[0] });
-                    cmpEvent.fire();  
-
-                    c.set("v.valid"+mode, 1);
-                    h.copyBillingToShipping(c);
-                }else{
-                    c.set("v.suggestions", addresses);
-                    c.set("v.suggestionsMode", mode);
-                }
-            }else{
-                
-                c.set("v.suggestionsMode", "hidden");
-                c.set("v.valid"+mode, -1);
-                h.copyBillingToShipping(c);
+        
+		//CHECK IF THERE IS A CITY AND A STREET//
+        if(currentCity && currentStreet){
+            currentCityLowerCase = currentCity.toLowerCase();
+            currentStreetLowerCase = currentStreet.toLowerCase();
+            if(currentState) { currentState = currentState.toLowerCase(); }
+        
+            //THE FOLLOWING LOGIC WAS MOVED INSIDE THIS CONDITION//
+        
+            
+            c.set("v.valid"+mode, 2); //set spinner
+        
+            let citiesAvailable = c.get('v.cities');            
+            let citiesToSearch = citiesAvailable["All"];
+            let cityAndStateMatch = false;
+            let cityMatch = false;
+            
+            for(var i = 0; i < citiesToSearch.length; i++){                
+                if(citiesToSearch[i]){
+                    let cityName = citiesToSearch[i]["Name"].toLowerCase();
+                    let cityState = citiesToSearch[i]["IATA_ISO_State__r"].Name.toLowerCase();			
+                    if(cityName===currentCityLowerCase&&cityState===currentState) cityAndStateMatch=true;
+                    if(cityName===currentCityLowerCase&&cityState!==currentState) cityMatch=true;
+                }                
             }
-        });
-        $A.enqueueAction(action);
+            
+            let allCitiesAllCountries = c.get('v.allCitiesAllCountries');
+            let cityExistsInOtherCountry = false;
+            cityExistsInOtherCountry = allCitiesAllCountries.toLowerCase().includes(currentCityLowerCase);
+            
+            if(!cityAndStateMatch && !cityMatch && cityExistsInOtherCountry){
+                c.set('v.cityInAnotherCountry'+mode, true);
+                c.set('v.invalidCity', currentCity);
+
+            }else if(!cityAndStateMatch && !cityMatch){
+            
+                c.set('v.cityDoesNotExist'+mode, true);        
+                c.set('v.invalidCity', currentCity);
+                
+            }else if(cityMatch){
+
+                c.set('v.cityInAnotherState'+mode, true);
+                c.set('v.invalidCity', currentCity);
+            
+            }else{
+                c.set('v.cityDoesNotExist'+mode, false);
+                c.set('v.cityInAnotherState'+mode, false);
+                c.set('v.invalidCity', '');                    
+            }
+            
+            var addressInfo = {
+                street : c.get("v.account."+mode+"Street"),
+                locality : c.get("v.account."+mode+"City"),
+                postalCode : c.get("v.account."+mode+"PostalCode"),
+                province : c.get("v.account."+mode+"State"),
+                countryCode : c.get("v.country.ISO_Code__c")
+            };
+
+            var action = c.get("c.checkAddress");
+
+            action.setParams({"info": $A.util.json.encode(addressInfo)});
+    
+            action.setCallback(this, function(a) {
+                var addresses = a.getReturnValue();              
+                var isValidAddress = addresses.length > 0;
+    
+                c.set("v.valid"+mode, isValidAddress ? 1 : -1);
+    
+                if(isValidAddress){
+                    if(addresses.length == 1){
+                        var cmpEvent = c.getEvent("addressSelected");
+                        cmpEvent.setParams({
+                            "addressType" : mode,
+                            "addressSelected" : addresses[0] });
+                        cmpEvent.fire();  
+    
+                        c.set("v.valid"+mode, 1);
+                        h.copyBillingToShipping(c);
+                    }else{
+                        c.set("v.suggestions", addresses);
+                        c.set("v.suggestionsMode", mode);
+                    }
+                }else{
+                    
+                    c.set("v.suggestionsMode", "hidden");
+                    c.set("v.valid"+mode, -1);
+                    h.copyBillingToShipping(c);
+                }
+            });
+
+            $A.enqueueAction(action);
+        //THE PREVIOUS LOGIC WAS MOVED INSIDE THIS CONDITION//
+
+        //IF THERE IS NO CITY AND THERE IS A STREET//
+        }else if(!currentCity && currentStreet){
+            
+            c.set('v.'+mode+'CityEmpty', true);
+        
+        //IF THERE IS NO STREET AND THERE IS A CITY//
+        }else if(currentCity && !currentStreet){
+            
+            c.set('v.'+mode+'StreetEmpty', true);            
+        
+        }else{
+
+            c.set('v.'+mode+'CityStreetEmpty', true);
+        
+        }
+  
+		//Data quality//
     },
     
     copyBilling: function (c, e, h) {
@@ -118,20 +264,96 @@
         h.copyBillingToShipping(c);
     },
     
-    updateAddress: function (c, e, h) {
-        //change of addres makes the validation null
-        c.set("v.validBilling", 0);
-
-        //check if information need to be passed to shipping as well
-        h.copyBillingToShipping(c);
+    updateAddress: function (c, e, h) {  
+        
+        let localId = e.getSource().getLocalId();
+        let mode = localId.includes('Billing')?'Billing':'Shipping';        
+        h.clearWarnings(c,e,h, mode);
+        h.clearContextLabelWarnings(c,e,h, mode);
+        h.updateAddress(c,e,h,mode);        
     },
-
+    updateState: function(c,e,h){
+        //data quality//
+        
+        let mode = e.currentTarget.getAttribute('data-mode');
+        c.set('v.predictions'+mode, []); 
+         
+       // c.set('v.account.BillingStreet', '');
+       // c.set('v.account.BillingPostalCode', '');       
+        let hierarchyCities = c.get('v.hierarchyCities'+mode);
+        let selectedHierarchy = e.currentTarget.getAttribute('data-attriVal');
+        c.set('v.account.'+mode+'City', hierarchyCities[selectedHierarchy].CityName);
+        c.set('v.account.'+mode+'State', hierarchyCities[selectedHierarchy].StateName);
+                
+        //data quality//
+    },
     validateNumber : function(c, e, h){
         var input = c.find(e.getSource().getLocalId());
         input.set("v.value", input.get("v.value").replace(/[^0-9+]|(?!^)\+/g, ''));
     },
 
     validateRequiredFields: function(c) {
+       console.log('@MAC 1');
+        //data quality//
+        let copyAddress = c.get('v.copyAddress');        
+        c.set('v.account.Data_quality_feedback__c',null);
+        
+        let modes = ['Billing', 'Shipping'];
+        //c.set('v.cityDoesNotExist', false);
+        //c.set('v.cityInAnotherState', false);
+        
+        let billingCityDoesNotExist = c.get('v.cityDoesNotExistBilling');
+        let billingCityInAnotherState = c.get('v.cityInAnotherStateBilling');
+        let billingCityInAnotherCountry = c.get('v.cityInAnotherCountryBilling');
+        let shippingCityDoesNotExist = c.get('v.cityDoesNotExistShipping');
+        let shippingCityInAnotherState = c.get('v.cityInAnotherStateShipping');
+        let shippingCityInAnotherCountry = c.get('v.cityInAnotherCountryShipping');
+        
+        for(let i = 0 ; i < modes.length ; i++){            
+            
+            if(copyAddress && i === 1){
+                break;
+            }            
+            let stateElement = c.find(modes[i]+'State');
+            let cityElement = c.find(modes[i]+'City');
+            let addDocComponent = c.find('addDocComponent'+modes[i]);
+            let streetElement = addDocComponent.find('Street');
+            
+            
+            let state = stateElement.get('v.value');
+            let city = cityElement.get('v.value');
+            let street = streetElement.get('v.value');
+            
+            let emptyState = $A.util.isEmpty(state);
+            let emptyCity =  $A.util.isEmpty(city);
+            let emptyStreet =$A.util.isEmpty(street);
+        
+
+            if( emptyCity || emptyStreet ){
+                c.set('v.valid'+modes[i], 0);
+
+                if(emptyState && modes[i] === 'Billing'){
+                    c.set('v.errorStateProvince', true);
+                }else if(emptyState && modes[i] === 'Shipping'){
+                    c.set('v.errorShippingStateProvince', true);
+                }else{
+                    c.set('v.errorStateProvince', false);
+                    c.set('v.errorShippingStateProvince', false);
+                }
+                if(emptyCity){
+                    cityElement.set('v.errors', [{message:'The '+modes[i]+' city is compulsory. Please fill in the '+modes[i]+' city field.'}]);
+                }else{
+                    cityElement.set('v.errors', null);
+                }
+                if(emptyStreet){
+                    streetElement.set('v.errors', [{message:'The '+modes[i]+' street is compulsory. Please fill in the '+modes[i]+' street field.'}]);
+                }else{
+                    streetElement.set('v.errors', null);
+                }            
+            }
+        }                   
+        
+          //data quality//
         var regExpEmailformat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
         var category = c.find("categorySelection");
         
@@ -185,6 +407,119 @@
             c.set("v.validationError", false);
         }
         
+        
+        //data quality//
+        if(isAllFilled){
+            
+            let dataQualityFeedback = ''; 
+            
+            if(billingCityInAnotherCountry){            
+                    
+                if(dataQualityFeedback){
+                    
+                    dataQualityFeedback+=';Billing city found in another country'; 
+                    
+                }else{
+                    
+                    dataQualityFeedback='Billing city found in another country';                    
+                }
+            }
+            
+            if(billingCityInAnotherState){            
+                    
+                if(dataQualityFeedback){
+                    
+                    dataQualityFeedback+=';Billing city found in another state'; 
+                    
+                }else{
+                    
+                    dataQualityFeedback='Billing city found in another state';                    
+                }
+            }
+            
+            if(billingCityDoesNotExist){
+
+                if(dataQualityFeedback){
+            
+                    dataQualityFeedback+=';Billing city not found in our Database'; 
+            
+                }else{
+            
+                    dataQualityFeedback='Billing city not found in our Database';
+            
+                }
+            }
+            
+            if(c.get("v.validBilling") === -1){
+
+                if(dataQualityFeedback){
+            
+                    dataQualityFeedback+=';Billing address not found by address doctor'; 
+            
+                }else{
+            
+                    dataQualityFeedback='Billing address not found by address doctor';
+            
+                }
+            }
+
+
+            if(shippingCityInAnotherCountry){            
+                    
+                if(dataQualityFeedback){
+                    
+                    dataQualityFeedback+=';Shipping city found in another country'; 
+                    
+                }else{
+                    
+                    dataQualityFeedback='Shipping city found in another country';                    
+                }
+            }
+
+            if(shippingCityInAnotherState){            
+                    
+                if(dataQualityFeedback){
+                    
+                    dataQualityFeedback+=';Shipping city found in another state'; 
+                    
+                }else{
+                    
+                    dataQualityFeedback='Shipping city found in another state';                    
+                }
+            }
+            
+            if(shippingCityDoesNotExist){
+
+                if(dataQualityFeedback){
+            
+                    dataQualityFeedback+=';Shipping city not found in our Database'; 
+            
+                }else{
+            
+                    dataQualityFeedback='Shipping city not found in our Database';
+            
+                }
+            }
+            
+            if(c.get("v.validShipping") === -1){
+                
+                if(dataQualityFeedback){
+                    
+                    dataQualityFeedback+=';Shipping address not found by address doctor'; 
+            
+                }else{
+                    
+                    dataQualityFeedback='Shipping address not found by address doctor';
+            
+                }
+            }
+            
+            c.set('v.account.Comment_data_quality_feedback__c','Registration errors.');
+            c.set('v.account.Data_quality_feedback__c', dataQualityFeedback);
+            
+        }
+        
+        //data quality//
         return isAllFilled;        
     },
     closeModal: function(c){
@@ -204,5 +539,29 @@
             "addressSelected" : response[index] });
         cmpEvent.fire();
         c.set("v.suggestionsMode", "hidden");   
+    },
+
+    getPredictions: function(c, e, h){                
+      
+        h.getPredictions(c, e, h);
+        
+    },
+
+    setCities: function(c, e, h){
+        
+        h.setCities(c);
+    },
+
+    setCitiesUpdateAddress: function(c,e,h){
+        
+        /*let selectedIndex = e.currentTarget.selectedIndex;
+        let selectedValue = e.currentTarget.options[selectedIndex].text;
+        let mode = e.currentTarget.getAttribute('data-mode');
+        
+        c.set('v.account.'+mode+'State', selectedValue);
+*/
+        h.clearWarnings(c,e,h);
+        h.setCities(c,e);
+        h.updateAddress(c,e,h);
     }
 })

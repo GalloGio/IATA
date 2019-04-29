@@ -53,8 +53,9 @@
 	},
 
 	submit : function(c){	    
-		
+		console.log('SUBMIT');
 		if(c.get("v.search") || c.find("creationComponent").validateRequiredFields()){
+			console.log('INSIDE IF SUBMIT');
 			var spinner = c.find("loading");
 			$A.util.toggleClass(spinner, "slds-hide");
 

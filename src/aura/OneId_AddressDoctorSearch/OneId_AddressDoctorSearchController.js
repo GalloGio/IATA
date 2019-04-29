@@ -68,5 +68,11 @@
             "addressSelected" : { 'street' : c.get("v.inputValue") } 
         });
         cmpEvent.fire();
+    },
+
+    updateAddress: function(c,e,h){
+        let cmpEvent = c.getEvent('updateAddress');
+        cmpEvent.setParams( {"addressType": c.get('v.type')} );
+        cmpEvent.fire();
     }
 })

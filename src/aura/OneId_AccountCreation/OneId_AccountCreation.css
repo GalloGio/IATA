@@ -10,11 +10,29 @@
 	color: orange;
 }
 
+.THIS .text-header{
+	color: blue;
+}
+
 .THIS .button-bordered{
 	border: 1px solid rgb(217, 219, 221);
 	padding: 3px;
 }
 
+.THIS .slds-icon-action-minority{
+	background-color: blue;
+	color: white;
+}
+
 .THIS .suggestion-list{
 	display: contents;
+}
+
+.THIS .autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+
+.THIS .check_addr_msg{
+	margin: 0px;
 }

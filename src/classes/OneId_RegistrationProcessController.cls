@@ -670,7 +670,42 @@ public without sharing class OneId_RegistrationProcessController {
         }
         return null;
     }
-  
+
+    @AuraEnabled
+    public static StatesAndAlternateNames getStates(String country){
+        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+        Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT GeonameAlternateNames__c FROM IATA_ISO_City__c]);
+        StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
+
+        return states;
+    }
+    
+    class StatesAndAlternateNames{
+        @AuraEnabled 
+        public List<IATA_ISO_State__c> states;
+        
+        @AuraEnabled
+        public Map<ID, IATA_ISO_City__c> idAndAlternateNames;
+
+         public StatesAndAlternateNames(List<IATA_ISO_State__c> states, Map<ID, IATA_ISO_City__c> idAndAlternateNames){
+           this.states = states;
+           this.idAndAlternateNames = idAndAlternateNames;  
+        }
+        
+    }
+
+    @AuraEnabled
+    public static String getAllCities(String country){
+
+        String allCities = '';
+
+        for(IATA_ISO_City__c iic : [SELECT Name FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name != :country] ){
+            allCities += iic.Name+', ';
+        }
+        Integer allCitiesSize = allCities.length(); 
+
+        return allCities.substring(0,allCitiesSize-2);
+    }
   
   public static void increaseCodeCoverage(){
       Integer i = 0;
