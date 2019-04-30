@@ -586,11 +586,11 @@ public class ams2gdp_BusinessLogic {
  	 * @return Map<String,List<Agency_Owner__c>> String = { I, U, D}
  	 * @author Aku Luukka <luukkaa@iata.org>
  	 */
- 	public static Map<String,List<Agency_Owner__c>>  getAgencyOwnersToDelete(List<AMS_Account_Role__c> roles)
+  	public static Map<String,List<Agency_Owner__c>>  getAgencyOwnersToDelete(List<AMS_Account_Role__c> roles)
  	{
 		Map<String,List<Agency_Owner__c>> CRUD_map = new Map<String,List<Agency_Owner__c>>();
 		Set<String> accountIds = new Set<String>();
-		List<Boolean> recordexists = new List<Boolean>();
+		List<Id> recordexists = new List<Id>();
 		for(AMS_Account_Role__c a: roles)
 		{
 		    if(a.Account__c == null) continue;
@@ -628,49 +628,48 @@ public class ams2gdp_BusinessLogic {
 		List<Agency_Owner__c> toDelete = new List<Agency_Owner__c>();
 		List<Agency_Owner__c> toUpdate = new List<Agency_Owner__c>();
 		Integer i=-1;
-        for(AMS_Account_Role__c a: roles)recordexists.add(false);
-		
-
+        for(AMS_Account_Role__c a: roles)recordexists.add(null);
 		for(Agency_Owner__c r:result){
-		    i=-1;
-		    Boolean recordisin=false;
-		    for(AMS_Account_Role__c a:roles){
-		        i++;
-		        String key = a.Id;
-		        if (recordexists[i]) continue;
-		        if ((r.Name==a.Unified_Owner_Name__c && r.Related_Account__c==a.Account__c) || r.AMS_GDP_Key__c==key+'GDP'){
-		            //find if exist
-		            recordexists[i]=true;
-		            recordisin=true;
-		            
-		            break;
-		        }
-		    }
-		    if (!recordisin) toDelete.add(r);
-		}
+            i=-1;
+            Boolean recordisin=false;
+            String ReferenceName=r.Name;
+            if (ReferenceName!=null) ReferenceName=ReferenceName.ToLowerCase();
+            for(AMS_Account_Role__c a:roles){
+                i++;
+                String key = a.Id;
+                String Name =a.Unified_Owner_Name__c;
+                if (Name!=null) Name=Name.ToLowerCase();
+                if (((ReferenceName==Name && r.Related_Account__c==a.Account__c) || r.AMS_GDP_Key__c==key+'GDP') && recordexists[i]==null) {
+                    //find if exist
+                    recordexists[i]=r.Id;
+                    recordisin=true;
+                    break;
+                }
+            }
+            if (!recordisin) toDelete.add(r);
+        }
 		//those are the records to update and to delete
 		if (toDelete.size()>0) CRUD_map.put('D',toDelete);
 		System.debug('toDelete>>'+toDelete);
 		i=-1;
 		for(AMS_Account_Role__c a:roles){
 		    i++;
-		    
 		    Integer rank = (rankByAccount.containsKey(a.Account__c)) ? rankByAccount.get(a.Account__c)+1 : 1;
 		    rankByAccount.put(a.Account__c, rank);
-		    
 		    //-- Mapping Key
 		    String key = a.Id;
 		    String name = a.Unified_Owner_Name__c;
-		    toUpdate.add(new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
-		                                     , Name =  name
-		                                     , Percent__c=a.Percentage__c
-		                                     , Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(a.Account__c)
-		                                     , Related_Account__c=a.Account__c
-		                                     , Owner_ID__c = rank
-		                                     , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
-		                                    ));
-		        
-		    
+            Agency_Owner__c newowner = new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
+                                             , Name =  name
+                                             , Percent__c=a.Percentage__c
+                                             , Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(a.Account__c)
+                                             , Related_Account__c=a.Account__c
+                                             , Owner_ID__c = rank
+                                             , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
+                                            );
+            if (recordexists[i]!=null) newowner.Id=recordexists[i];
+            toUpdate.add(newowner);
+            	    
 		}
 		//those are the records to upsert
 		System.debug('toUpdate>>'+toUpdate);
