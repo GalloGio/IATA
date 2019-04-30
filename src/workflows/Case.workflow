@@ -199,7 +199,7 @@
         <description>BSPlink Email alert</description>
         <protected>false</protected>
         <recipients>
-            <recipient>mcbrideg@iata.org</recipient>
+            <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -674,7 +674,7 @@
         <description>DPC: Notification on new CSR</description>
         <protected>false</protected>
         <recipients>
-            <recipient>mcbrideg@iata.org</recipient>
+            <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
