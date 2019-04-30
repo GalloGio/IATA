@@ -24,13 +24,8 @@ private class GDP_FileDefRatePlanCACWizardTest {
 	// core data  preparation
 	// create zqu__ZProduct, zqu__ProductRatePlan__c, zqu__ProductRatePlanCharge__c
 	// testUser
-	@testSetup private static void testDataPreparation() 
-	{
-		//Product_Category__c oProductCategory;
-		//Product_Information__c oProductInfo;
-		//Zuora__Subscription__c subscription;
-		//Zuora__SubscriptionProductCharge__c subscriptionCharge;
-		
+	@testSetup private static void testDataPreparation(){
+			
 		User testUser = IECTestUtil.createSampleGuestUserAndLogin();
 		
 		Contact oContact = [Select Id, Name, AccountId from Contact where Id = :testUser.ContactId limit 1];

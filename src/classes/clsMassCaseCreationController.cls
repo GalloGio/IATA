@@ -244,8 +244,6 @@ public with sharing class clsMassCaseCreationController {
 
       string agentType = Apexpages.currentPage().getParameters().get('agenttype');
       string agentStatus = Apexpages.currentPage().getParameters().get('agentstatus');
-      //string country = Apexpages.currentPage().getParameters().get('country');
-      //string country = Apexpages.currentPage().getParameters().get('ISOCountry');
       string country = aISOCountry.IATA_ISO_Country__c;
       string email = Apexpages.currentPage().getParameters().get('email');
       yearend = Apexpages.currentPage().getParameters().get('yearend');  //phase 1 release 2
@@ -257,7 +255,6 @@ public with sharing class clsMassCaseCreationController {
       PageReference secondPage = Page.DownloadAgents;
       secondPage.getParameters().put('agentType', agentType);
       secondPage.getParameters().put('agentStatus', agentStatus);
-      //Apexpages.getParameters().put('country', country);
       secondPage.getParameters().put('ISOCountry', country);     
       secondPage.getParameters().put('email', email);
       secondPage.getParameters().put('yearend', yearend);
@@ -267,10 +264,7 @@ public with sharing class clsMassCaseCreationController {
 
       XlsUrl = secondPage.getUrl();
       for (Contact cont : Database.query(q)) {
-        /*
-        if (exclClosedCases.equals('false') || (exclClosedCases.equals('true') && !IFAP_BusinessRules.accountHasClosedCases(cont.AccountId, targetFinancialYear)))
-            displayList.add(new cContact(cont, targetFinancialYear));
-        */
+
         Boolean hasClosedCases = agentHasClosedCases(cont.AccountId);
         if (exclClosedCases.equals('false') || (exclClosedCases.equals('true') && !hasClosedCases))
           displayList.add(new cContact(cont, hasClosedCases));
@@ -294,24 +288,19 @@ public with sharing class clsMassCaseCreationController {
   public PageReference runSearch() {
     String agentType = Apexpages.currentPage().getParameters().get('agenttype');
     String agentStatus = Apexpages.currentPage().getParameters().get('agentstatus');
-    //String country = Apexpages.currentPage().getParameters().get('country');
-    //String country = Apexpages.currentPage().getParameters().get('ISOcountry');
+
     String country = aISOCountry.IATA_ISO_Country__c;
     system.debug('country on class : ' + country);
     system.debug('country page new : ' + Apexpages.currentPage().getParameters().get('ISOcountry'));
     selectedCountry = country;
     String email = Apexpages.currentPage().getParameters().get('email');
     String yearend = Apexpages.currentPage().getParameters().get('yearend');  //phase 1 release 2
-    //String openCasesFlag = Apexpages.currentPage().getParameters().get('opencasesflag');  // phase 4
     String targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
     String exclOpenCases = Apexpages.currentPage().getParameters().get('exclOpenCases');  // phase 4
     String exclClosedCases = Apexpages.currentPage().getParameters().get('exclClosedCases');  // phase 4
 
     isCreateCasesIsDisabled = true;
     isSendEmailIsDisabled = true;
-
-    //preset Deadline date to current date + 30
-    // CaseParameter.Deadline_Date__c =  Date.today()+ 30;     
 
     // validate target financial year
     if (targetFinancialYear == null || targetFinancialYear == '') {
@@ -590,7 +579,6 @@ public with sharing class clsMassCaseCreationController {
       selectedID = ContactCheckedList.KeySet();
 
       //Assessment Perform is considered as Closed Status
-      //List<Case> cases = [Select C.ID, c.ContactId From Case c Where c.RecordTypeId = '01220000000Q4Yd' and (c.Status <> 'Assessment Performed' AND c.Status <> 'Closed' AND c.Status <> 'Assessment Cancelled') AND c.ContactId IN :selectedID];
       for (Case aCase : [Select C.ID, c.ContactId,
       c.contact.accountID
       , c.accountID
@@ -875,24 +863,6 @@ public with sharing class clsMassCaseCreationController {
       else
         displayList.add(new cContact(cont));
     }
-
-
-    /*
-     String query = soql + ' order by ' + sortField + ' ' + sortDir + ' limit '+inPageSize +' offset '+ offset;
-     System.debug('Query is '+query);
-
-    try{
-      System.debug('try');
-
-     for (Contact cont : Database.query(query)){
-             displayList.add(new cContact(cont));
-         }
-     }
-     catch(Exception e){
-         ApexPages.addMessages(e);
-     }
-     */
-
   }
 
 
@@ -973,7 +943,6 @@ public with sharing class clsMassCaseCreationController {
       ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please enter the Financial year in order to preview the email template'));
 
     if (nbrFoundRecords == 0) {
-      //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please enter the Financial year'));
       emailTemplatePreviewURL = '';
       return null;
     }
@@ -1020,7 +989,6 @@ public with sharing class clsMassCaseCreationController {
       selected = false;
       OpenCases = false;
 
-      //nbrClosedCases = IFAP_BusinessRules.accountNbrClosedCase(c.AccountId, financialYear);
       hasClosedCases = (pHasClosedCases ? 'Yes' : 'No');
     }
   }

@@ -1,6 +1,6 @@
 global with sharing class AmazonCertificateListController {
 
-    public static final ID RT_CERTIFICATE_ID = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByDeveloperName().get('Certificate').getRecordTypeId();
+    public static final ID RT_CERTIFICATE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'Certificate');
     public static String CREDENTIAL_NAME = WrapperAttach.CREDENTIAL_NAME;
 
     public Account account {get;set;}

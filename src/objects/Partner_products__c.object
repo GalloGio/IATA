@@ -441,6 +441,11 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
                     <default>false</default>
                     <label>Draft</label>
                 </value>
+                <value>
+                    <fullName>TERMINATED</fullName>
+                    <default>false</default>
+                    <label>Terminated</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -585,14 +590,6 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
                 <fullName>CC</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>CC VA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EP</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>PP_Pay_in_Model__c</picklist>
@@ -674,6 +671,10 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
             </values>
             <values>
                 <fullName>REJECTED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
