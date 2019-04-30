@@ -575,10 +575,8 @@ global class AMS_OSCAR_Webservice {
     private static String fetchAMLCaseReason(String process){
         if (process == AMS_Utils.AGENCYCHANGES)
             return 'Agent Change of Ownership';
-        else if (process == AMS_Utils.IEPBANKACCOUNTSETUP || process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP)
+        else if (process == AMS_Utils.IEPBANKACCOUNTSETUP || process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP || process == AMS_Utils.IEPMODELBPLUSACCOUNTSETUP)
             return 'IEP Due Diligence';
-        else if (process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP)
-            return 'IATA Easy Pay';
         else
             return 'New Accredited Agent';
     }
