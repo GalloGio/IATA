@@ -22,6 +22,31 @@
         </outputParameters>
     </actionCalls>
     <decisions>
+        <name>Is_Expired</name>
+        <label>Is Expired?</label>
+        <locationX>535</locationX>
+        <locationY>59</locationY>
+        <defaultConnector>
+            <targetReference>Sent_Acknowledge</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>record.Security_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Expired</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Expired</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Sent_Acknowledge</name>
         <label>Send Acknowledge?</label>
         <locationX>334</locationX>
@@ -68,7 +93,7 @@
         <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Sent_Acknowledge</targetReference>
+            <targetReference>Is_Expired</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -83,6 +108,7 @@
         <queriedFields>LastModifiedDate</queriedFields>
         <queriedFields>Acknowledge_Sent_Date__c</queriedFields>
         <queriedFields>Acknowledgment_sent__c</queriedFields>
+        <queriedFields>Security_Status__c</queriedFields>
     </recordLookups>
     <screens>
         <name>Error</name>
@@ -95,6 +121,22 @@
         <fields>
             <name>Error_Message</name>
             <fieldText>Financial Security acknowledgement has already been sent</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Expired</name>
+        <label>Error_Expired</label>
+        <locationX>789</locationX>
+        <locationY>58</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Expired_Message</name>
+            <fieldText>You cannot sent an acknowledgment if the status of Financial Security is expired.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -117,6 +159,7 @@
         <showHeader>true</showHeader>
     </screens>
     <startElementReference>Get_Record</startElementReference>
+    <status>Active</status>
     <variables>
         <name>acknowledgeResult</name>
         <dataType>String</dataType>
@@ -124,7 +167,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue></stringValue>
+            <stringValue/>
         </value>
     </variables>
     <variables>

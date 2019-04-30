@@ -2663,7 +2663,7 @@ NOT( ISPICKVAL( Security_Type__c , &quot;Manifestacion de Bienes&quot;) )
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Send Acknowledgement</masterLabel>
-        <openType>sidebar</openType>
+        <openType>replace</openType>
         <protected>false</protected>
         <url>/flow/Send_Acknowledgement_For_Financial_Security?recordId={!Financial_Security__c.Id}&amp;retURL=/{!Financial_Security__c.Id}</url>
     </webLinks>
