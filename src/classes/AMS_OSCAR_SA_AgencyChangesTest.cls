@@ -112,15 +112,35 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         update oscar;
 
         /*** AMSU-180 ***/
+        Id cId;
+        if(typeOfChange == 'Ownership to IATA Agent' && targetAgency <> null) {
+            Contact c = new Contact(
+                FirstName= 'test',
+                LastName= 'owner',
+                Email= 'owner.test2@test.com'
+            );
+            insert c;
+            cId = c.Id;
+            AMS_Account_Role__c targetOwner = new AMS_Account_Role__c(
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'),
+                Percentage__c = 100,
+                Contact__c = c.Id,
+                Account__c = targetAgency.Id
+            );
+            insert targetOwner;
+        }
+
         AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
             Name= 'test owner',
             First_name__c= 'test',
             Last_name__c = 'owner',
-            Email__c= 'owner.test@test.com',
+            Email__c= 'owner.test2@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Contact__c = cId,
+            Agency_Owner__c= true,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')
         );
         insert owner;
 

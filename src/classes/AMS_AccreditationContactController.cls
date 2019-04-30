@@ -351,7 +351,7 @@ public with sharing class AMS_AccreditationContactController {
         //AMSU-180
         if(!calculateTotalOwnership() && !isCertificationOSCAR)
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% before saving.'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownership rate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% and less than 100.01% before saving.'));
             return null;
         }
         
@@ -608,7 +608,7 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership < 99.99) //AMSU-180
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && (ownership < 99.99 || ownership > 100)) //AMSU-180//WMO-492
         {
             return false;
         } else

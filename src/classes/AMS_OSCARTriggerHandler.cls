@@ -2877,9 +2877,9 @@ public class AMS_OSCARTriggerHandler {
 
     public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
 
-        Map<Id, Integer> contacts = null;
+        Map<Id, Map<String,Double>> contacts = null;
         
-        Map<Id, Integer> allPercentages = null;
+        Map<Id, Double> allPercentages = null;
 
         for(AMS_OSCAR__c oscar: oscars){
 
@@ -2894,40 +2894,49 @@ public class AMS_OSCARTriggerHandler {
                     allPercentages = getAllOWnersPercentage(oscars);
                 }
 
-                if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
-                    continue;
-                else    
-                    if(!validate100Ownership(oscar,allPercentages)){//AMSU-180
-                        Double requiredOwnership = 99.99;
-                        String errorMessage = 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
+                Map<String,Double> contactDetails = contacts.get(oscar.AMS_Online_Accreditation__c);
+                String errorMessage = 'Agency must have at least 99.99% ownership and less than 100.01%. Please correct agency owners before passing the Sanity Check.';
+                if(contactDetails <> null && contactDetails.get('numberOfContacts') > 0) {
+                    Double sumPercentage = contactDetails.get('sumOfPercentages');
+                    if(!(sumPercentage >= 99.99 && sumPercentage <= 100)) {
                         oscar.addError(errorMessage);
                     }
+                } else {
+                    if(!validate100Ownership(oscar,allPercentages)){//AMSU-180//WMO-492                       
+                        oscar.addError(errorMessage);
+                    }
+                }
 
             }
         }
 
     }
 
-    public static Map<Id, Integer> getAccreditationContacts(List<AMS_Oscar__c> oscars){
+    public static Map<Id, Map<String,Double>> getAccreditationContacts(List<AMS_Oscar__c> oscars){
 
         Set<Id> onlineForms = new Set<Id>();
 
         for(AMS_OSCAR__c oscar : oscars)
             onlineForms.add(oscar.AMS_Online_Accreditation__c);
 
-        List<AggregateResult> sumPercentageAR = [select AMS_Pax_Accreditation_Form__r.Id, count(Id) numberOfContacts from AMS_Accreditation_Contact__c  where AMS_Pax_Accreditation_Form__c in :onlineForms group by AMS_Pax_Accreditation_Form__r.Id];
+        List<AggregateResult> sumPercentageAR = [select AMS_Pax_Accreditation_Form__r.Id, count(Id) numberOfContacts, sum(Financial_interest__c) sumOfPercentages from AMS_Accreditation_Contact__c  where AMS_Pax_Accreditation_Form__c in :onlineForms and Agency_owner__c = true group by AMS_Pax_Accreditation_Form__r.Id];
 
-        Map<Id,Integer> toReturn = new Map<Id,Integer>();
+        Map<Id,Map<String,Double>> toReturn = new Map<Id,Map<String,Double>>();
 
         for(AggregateResult ar: sumPercentageAR){
-            toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('numberOfContacts')));
+            Map<String,Double> figures = new Map<String,Double>();
+            Double nrContacts = Double.valueOf(ar.get('numberOfContacts'));
+            Double sumPercentage = ar.get('sumOfPercentages') == null ? 0 : Double.valueOf(ar.get('sumOfPercentages'));
+            figures.put('numberOfContacts', nrContacts);
+            figures.put('sumOfPercentages', sumPercentage);
+            toReturn.put((Id)ar.get('Id'), figures);
         }
 
         return toReturn;
 
     }
 
-    public static Map<Id, Integer> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
+    public static Map<Id, Double> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
 
         Set<Id> accounts = new Set<Id>();
 
@@ -2936,19 +2945,19 @@ public class AMS_OSCARTriggerHandler {
 
         List<AggregateResult> sumPercentageAR = [select Account__r.Id, SUM(Percentage__c) percentage from AMS_Account_Role__c  where Account__c in :accounts and Active__c = true group by Account__r.Id];
 
-        Map<Id,Integer> toReturn = new Map<Id,Integer>();
+        Map<Id,Double> toReturn = new Map<Id,Double>();
 
         for(AggregateResult ar: sumPercentageAR){
-            toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('percentage')));
+            toReturn.put((Id)ar.get('Id'), Double.valueOf(ar.get('percentage')));
         }
 
         return toReturn;
 
     }
 
-    public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages){
-
-        return percentages.get(oscar.Account__c) < 99.99;//AMSU-180
+    public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Double> percentages){
+        Double percentage = percentages.get(oscar.Account__c);//WMO-492
+        return percentage >= 99.99 && percentage <= 100;//AMSU-180
 
     }
 
