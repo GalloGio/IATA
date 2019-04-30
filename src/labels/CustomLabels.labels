@@ -33389,6 +33389,22 @@ title,Title,Name</value>
         <value>Emergency Query</value>
     </labels>
     <labels>
+        <fullName>csp_Concern</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Concern</shortDescription>
+        <value>Concern</value>
+    </labels>
+    <labels>
+        <fullName>csp_Query</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Query</shortDescription>
+        <value>Query</value>
+    </labels>
+    <labels>
         <fullName>days_left</fullName>
         <language>en_US</language>
         <protected>false</protected>
