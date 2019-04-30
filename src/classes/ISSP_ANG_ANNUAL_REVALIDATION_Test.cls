@@ -370,6 +370,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Last_name__c = 'a';
 		ctrl.currentAccount.newContact.AddressStreet__c = 'a';
 		ctrl.currentAccount.newContact.AddressCity__c = 'a';
+        ctrl.currentAccount.newContact.AddressState__c = 'a';
 		ctrl.currentAccount.newContact.AddressPostcode__c = 'a';
 		ctrl.currentAccount.newContact.Job_title__c = 'a';
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = 'some';
@@ -417,7 +418,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.currentAccount.newContact = new AMS_Accreditation_Contact__c();
 		ctrl.contactType = 'Person';
-
+        ctrl.amsContactCountry = 'Country';
+        
 		ctrl.createAgencyContact();
 
 		ctrl.saveDraft();
@@ -950,7 +952,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
     }
     
     @isTest
-    static void test8() {
+    static void test8() {        
         insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)(([.])(([a-zA-Z]{2,3}))([.]){0,1}([a-zA-Z]{2,3}){0,1})');
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
