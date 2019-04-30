@@ -144,6 +144,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     if (Trigger.isInsert || Trigger.isUpdate) {
+	// assigns default email address to be used on send email quick action
+        //follows same logic as current classic functionality      
+        for(Case c: trigger.new){
+            RecordType caseRTDevName=RecordTypeSingleton.getInstance().getRecordTypeById('Case',c.recordtypeId);
+            string email=IDFS_Util.getRecordTypeEmail(caseRTDevName.developerName, c.BSPCountry__c, c.Case_Group__c);
+            c.defaultEmailAddress__c=email;
+        }
 
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ 
@@ -2205,5 +2212,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
         }
     }
+    
     /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
 }
