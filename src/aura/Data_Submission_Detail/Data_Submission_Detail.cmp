@@ -1,0 +1,40 @@
+<aura:component description="Data_Submission_Detail">
+
+    <aura:attribute name="data" type="Object[]" description="Data submission record to display" />
+
+    <aura:registerEvent name="Data_Submission_Event" type="c:Data_Submission_Event"/>
+
+    <div class="chooseButton" style="padding-left: 0.75rem;">
+        <button class="btn btn-primary btn-grey" onclick="{! c.fireBackEvt }">Back</button>
+    </div>
+
+    <aura:iteration items="{!v.data}" var="field">
+        <aura:if isTrue="{! not(empty(field.value))}">
+
+            <aura:if isTrue="{!or(not(empty(field.value)), not(empty(field.label)))}">
+                <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                    <label class="slds-form-element__label labels" >{!field.label}</label>
+                    <aura:if isTrue="{!field.field_type == 'TEXTAREA'}">
+                        <!--<lightning:textarea value="{!field.value}" style="display: inline;" readonly="true"/>-->
+                        <p><lightning:formattedText value="{!field.value}"/></p>
+
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!field.field_type == 'DATETIME'}"><br/>
+                                <ui:outputDateTime value="{!field.value}" format="DD/MM/YYYY"/>
+
+                                <aura:set attribute="else">
+
+                                    <!--<ui:inputText value="{!field.value}" class="slds-input required-input fields" disabled="true"  />-->
+                                    <p><lightning:formattedText value="{!field.value}"/></p>
+                                </aura:set>
+
+                            </aura:if>
+
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </aura:if>
+        </aura:if>
+    </aura:iteration>
+
+</aura:component>

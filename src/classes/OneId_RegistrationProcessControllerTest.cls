@@ -189,8 +189,8 @@ private class OneId_RegistrationProcessControllerTest {
             Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Travel Agent', Category__c='Non-IATA Travel Agent',IATA_ISO_Country__c = country.Id);
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(a,c,serviceName);
-            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@registest.com');
+            OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>());
+            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@lls.com', OneId_RegistrationProcessController.returnExistingContact('xpto@lls.com'));
             OneId_RegistrationProcessController.getAccountLabels();
             OneId_RegistrationProcessController.getSectors();
 
@@ -235,7 +235,7 @@ private class OneId_RegistrationProcessControllerTest {
             
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(a,c,serviceName);
+            OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>());
 
         Test.stopTest();
 
@@ -279,7 +279,7 @@ private class OneId_RegistrationProcessControllerTest {
             Account acc1child = new Account(Name='testAccount1 child', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO', ParentId = acc1.Id);
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(acc1child,c,serviceName);
+            OneId_RegistrationProcessController.registration(acc1child,c,serviceName, new Map<String, String>());
 
         Test.stopTest();
 
@@ -323,7 +323,7 @@ private class OneId_RegistrationProcessControllerTest {
             
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(acc1,c,serviceName);
+            OneId_RegistrationProcessController.registration(acc1,c,serviceName, new Map<String, String>());
 
         Test.stopTest();
 
@@ -371,6 +371,7 @@ private class OneId_RegistrationProcessControllerTest {
            OneId_RegistrationProcessController.permissionNewAgency(user.Id);
            OneId_RegistrationProcessController.permissionCSPortal(user.Id);
            OneId_RegistrationProcessController.portalServiceNewAgency(contact.Id);
+           OneId_RegistrationProcessController.permissionGADMPortal(user.Id);
 
         Test.stopTest();
 
@@ -405,9 +406,9 @@ private class OneId_RegistrationProcessControllerTest {
          insert pa;
          
          ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
-             TIP_Portal_Service_Id__c=String.valueOf(pa.id).substring(0, 15)
+             TIP_Portal_Service_Id__c=pa.id
          );
-         insert ipsi;
+             
              
          String serviceName = 'ISSP';        
     
@@ -420,16 +421,40 @@ private class OneId_RegistrationProcessControllerTest {
          
              Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
 
-             OneId_RegistrationProcessController.registration(a,c,serviceName);
-			 //OneId_RegistrationProcessController.increaseCodeCoverage();
+             OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>());
+			 OneId_RegistrationProcessController.increaseCodeCoverage();
            
          Test.stopTest();
      }
 
     @isTest
-    public static void testRegistrationACLI() {
+    public static void testRegistrationGADM() {
 
         // Prepare test data
+        Account_Roles__c accountRoles = new Account_Roles__c();
+        accountRoles.Name = 'GADM Participant';
+        insert accountRoles;
+
+        Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
+
+        Contact_Roles__c contactRoles = new Contact_Roles__c();
+        contactRoles.Name = 'GADM User';
+        contactRoles.RecordTypeId = externalRecordTypeId;
+        insert contactRoles;
+
+        Contact_Roles__c contactRoles2 = new Contact_Roles__c();
+        contactRoles2.Name = 'Power User';
+        contactRoles2.RecordTypeId = externalRecordTypeId;
+        insert contactRoles2;
+
+        Portal_Applications__c portalApplications = new Portal_Applications__c();
+        portalApplications.Name = 'GADM';
+        insert portalApplications;
+
+        Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
+        accountRoleServices.Portal_Service__c = portalApplications.Id;
+        accountRoleServices.Account_Roles__c = accountRoles.Id;
+        insert accountRoleServices;
 
         ISSP_CS__c setting = new ISSP_CS__c();
         setting.Name = 'DefaultNewAccountOwnerId';
@@ -441,106 +466,30 @@ private class OneId_RegistrationProcessControllerTest {
         setting2.Value__c = 'customer-portal-iata.force.com';
         insert setting2;
 
-        Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)' ][0].Id;
+        Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)' ][0].Id;
 
         ISSP_CS__c setting3 = new ISSP_CS__c();
-        setting3.Name = 'ISS_Portal_Airline_User';
+        setting3.Name = 'ISS_Portal_Agency_User';
         setting3.Value__c = profileId;
         insert setting3;
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
         insert country ;
 
-        Portal_Applications__c pa = new Portal_Applications__c(name = ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI);
-        insert pa;
+        Account acc1 = new Account(Name='testAccount1', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
+        insert acc1;
 
-        ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
-                ACLI_IATA_Airlines_and_Location_Codes__c=String.valueOf(pa.id).substring(0, 15)
-        );
-        insert ipsi;
-
-        String serviceName = 'ISSP';
-
-        
-        Contact c;
-        
-
-        User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
-
-
-            System.runAs(myUser)
-            {
-                User user1 = ISSP_AMC_ParticipationFactory.portalSetup();       
-                System.runAs(user1){
-                    PortalType portalType = PortalType.PowerPartner;
-                    User userWithRole = null;
-                    Boolean doInsert = true;
-                    Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Airline', Category__c='Passenger and Cargo',IATA_ISO_Country__c = country.Id,BillingCountry='Portugal',IATA_ISO_Shipping_Country__c=country.Id);
-
-                    c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
-
-                    Test.startTest();
-
-                        OneId_RegistrationProcessController.registration(a,c,serviceName);
-
-                        OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
-
-                    Test.stopTest();
-                }
-            }
-
-        
-
-        List<User> aUser = [select id, profile.name from user where contactId = :c.id];
-
-        System.debug(aUser);
-    }
-
-    @isTest
-    public static void getCoverageOnOthersCode() {
-        insert new IATA_ISO_Country__c(ISO_Code__c='FR');
-        IATA_ISO_Country__c isoCountry = [select id from IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'][0];
-        list<Account> accs = new list<Account>{
-                new Account(
-                        name= 'Air France',
-                        recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'IATA_Airline'][0].Id,
-                        IATA_ISO_Country__c = isoCountry.Id
-
-                ),
-                new Account(
-                        name= 'FR',
-                        recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'ICAO_Member_State'][0].Id,
-                        IATA_ISO_Country__c = isoCountry.Id
-
-                ),
-                new Account(
-                        name= 'Verifier1',
-                        recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'Verifiers'][0].Id,
-                        IATA_ISO_Country__c = isoCountry.Id
-
-                )
-        };
-        Insert accs;
-
-        // Insert an invitation
-        Invitation__c invitation = new Invitation__c(AccountId__c=accs[2].Id); // the verifier account inserted previously
-        insert invitation;
+        String serviceName = 'GADM';
 
         Test.startTest();
 
-        OneId_RegistrationProcessController.loadInvitationInfo(invitation.id);
-        OneId_AddressDoctor.AddressInfo add = new OneId_AddressDoctor.AddressInfo();
-        add.addressComplete = 'Rua da Treta, 22, ';
-        add.houseNumber = '22';
-        add.street = 'Rua da Treta';
-        add.postalCode = '1700-121';
-        String info = JSON.serialize(add);
+        Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-        Test.setMock(HttpCalloutMock.class, new OneId_AddressDoctorMockImpl());
-        OneId_RegistrationProcessController.checkAddress(info);
-        //OneId_RegistrationProcessController.checkAddress(info, 'PT');
-
+        OneId_RegistrationProcessController.registration(acc1,c,serviceName, new Map<String, String>{'isPowerUser' =>'true'});
 
         Test.stopTest();
     }
+
+
+
 }

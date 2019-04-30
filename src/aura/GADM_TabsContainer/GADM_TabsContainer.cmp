@@ -1,0 +1,57 @@
+<aura:component controller="GADM_TabsContainerController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable,lightning:isUrlAddressable" access="global">
+
+    <aura:attribute name="doDisplayTab" type="Boolean" default="true"/> <!--Set to true-->
+    <aura:attribute name="tabId" type="String" default="1"/>
+    <aura:attribute name="version" type="String" default="1" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <aura:handler event="c:EVT_GADM_DisplayTab" action="{!c.handleApplicationEvent}"/>
+
+    <!--TRACK USAGE EVENT-->
+    <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event"/>
+
+    <div class="body_content">
+        <aura:if isTrue="{!v.doDisplayTab}">
+            <lightning:tabset class="bar" aura:id="tabs" selectedTabId="{!v.tabId}" onselect="{! c.trackUsage}">
+                <lightning:tab class="element first" label="HOME" id="1">
+                    <c:Service_Notification_List/>
+                    <!--<c:IATA_ServiceList/>
+                    <c:GDPR_UserInfo/>-->
+                </lightning:tab>
+                <lightning:tab class="element" label="DATA SUBMISSION" id="2">
+                    <c:File_Upload/>
+                    <!--<c:DropZone/>-->
+                    <!--<c:GDPR_Subscriptions/>-->
+                </lightning:tab>
+                <lightning:tab class="element" label="DATA SUBMISSION RESULTS" id="3">
+                    <!--<c:NewGADM_DataSubmissionTab></c:NewGADM_DataSubmissionTab>-->
+                    <!--<c:Data_Submission_Container/>-->
+                    <c:Data_Submission_List/>
+                    <!--<c:GDPR_Interests/>-->
+                </lightning:tab>
+                <lightning:tab class="element" label="USER MANAGEMENT" id="4">
+                    <c:GADM_ExternalUserContactList/>
+                    <!--<c:GDPR_RequestList/>
+                    <c:GDPR_RequestListDPO/>
+                    <c:GDPR_WebToCase/>-->
+                </lightning:tab>
+                <lightning:tab class="element" label="PORTAL USAGE" id="5">
+                    <!--<c:GDPR_RequestList/>
+                    <c:GDPR_RequestListDPO/>
+                    <c:GDPR_WebToCase/>-->
+                    <!--<c:NewGADM_DashboardsTab></c:NewGADM_DashboardsTab>-->
+                </lightning:tab>
+                <lightning:tab class="element" label="DASHBOARDS" id="6">
+                    <c:PBI_Container/>
+                    <!--<c:NewGADM_DashboardsTab></c:NewGADM_DashboardsTab>-->
+                    <!--<c:PowerBI_Embedded_Container/>-->
+                    <!--<c:GDPR_RequestList/>
+                    <c:GDPR_RequestListDPO/>
+                    <c:GDPR_WebToCase/>-->
+                </lightning:tab>
+            </lightning:tabset>
+        </aura:if>
+    </div>
+
+</aura:component>

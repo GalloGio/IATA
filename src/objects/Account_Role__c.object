@@ -43,16 +43,27 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Used to extend the role of any existing account type e.g. an airline that also acts as a payment provider. A record type should be created for each type of account role required.</description>
+    <description>Represents a context within which an Account may interact with IATA; this is not a functional role but more a categorisation of the Account according to IATA&apos;s main customer types such as &apos;Airlines&apos; and &apos;Agencies&apos;.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
-    <enableLicensing>false</enableLicensing>
-    <enableReports>true</enableReports>
+    <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Account_Roles__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -197,11 +208,6 @@
                     <default>false</default>
                     <label>Inactive</label>
                 </value>
-                <value>
-                    <fullName>Terminated</fullName>
-                    <default>false</default>
-                    <label>Terminated</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -218,6 +224,15 @@
         <unique>true</unique>
     </fields>
     <label>Account Role</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Account_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
@@ -284,13 +299,19 @@
                 <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Terminated</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_Roles__c</lookupDialogsAdditionalFields>
+        <lookupFilterFields>Account_Roles__c</lookupFilterFields>
+        <lookupFilterFields>Account_Name__c</lookupFilterFields>
+        <lookupFilterFields>NAME</lookupFilterFields>
+        <searchFilterFields>Account__c</searchFilterFields>
+        <searchFilterFields>Account_Roles__c</searchFilterFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account_Roles__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
@@ -304,7 +325,11 @@
     <validationRules>
         <fullName>Primary_Contact_Mandatory</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(!(ISBLANK(TEXT(Status__c))), Primary_Contact_Count__c == 0)</errorConditionFormula>
+        <errorConditionFormula>AND(
+	!(ISBLANK(TEXT(Status__c))), 
+	Primary_Contact_Count__c == 0,
+	RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;
+)</errorConditionFormula>
         <errorMessage>Please first save without the Effective From Date, ensure that a Primary Contact is identified (Account Contact Role), and only then enter the Effective From Date.</errorMessage>
     </validationRules>
     <validationRules>

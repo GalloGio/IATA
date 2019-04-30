@@ -1,0 +1,132 @@
+.THIS.container {
+    min-height:300px;
+}
+
+.THIS .drop_zone {
+    background-color: #FFFFFF;
+    outline: 2px dashed grey;
+    outline-offset: -10px;
+    border: solid 10px #F2F2F2;
+    height: 300px;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.THIS .chooseButton {
+    display: table;
+    margin: 0 auto;
+}
+
+.THIS .dragDropMessage {
+    position: relative;
+    margin-top: 20%;
+
+}
+
+.THIS .lookup {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.THIS .fileTable {
+    margin: 30px auto;
+    width: 75%;
+    padding: 10px;
+}
+
+.THIS thead p {
+    font-family: AktivGrotesk-Regular;
+    font-size: 18px;
+    color: #666666;
+}
+
+.THIS .listHeader {
+    font-family: AktivGrotesk-Bold;
+    font-size: 18px;
+    color: #666666;
+    line-height: 22px;
+    margin-bottom: 10px;
+}
+
+.THIS tbody td p{
+    font-family: AktivGrotesk-Regular;
+    font-size: 14px;
+    color: #666666;
+}
+
+.THIS .listText {
+    font-family: AktivGrotesk-Regular;
+    font-size: 15px;
+    color: #666666;
+    width:92%;
+    float:left;
+}
+
+.THIS .listIcon {
+    float: right;
+}
+
+.THIS .listRow {
+    line-height: 2rem;
+}
+
+
+.THIS .submitButton {
+    margin: 0 auto;
+    display: table;
+}
+
+.THIS .is-dragover {
+    background-color: #F2F2F2;
+}
+
+
+.THIS .dragDropMessage p{
+    font-family: AktivGrotesk-Bold;
+    font-size: 22px;
+    color: #666666;
+    text-align: center;
+    line-height: 2rem;
+}
+
+.THIS.box__dragndrop {
+    display: inline;
+}
+
+
+.THIS .box__uploading {
+    display: none;
+}
+
+.THIS .box__success {
+    display: none;
+}
+
+.THIS .box__error {
+    display: none;
+}
+
+.THIS #myFile {
+    display: none;
+}
+
+.THIS .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.THIS .gadmContent {
+    width: 100%;
+}
+
+.THIS .designedActors {
+    margin-top: 2rem;
+}
+
+.THIS .noRight {
+    margin:auto;
+}

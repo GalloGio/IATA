@@ -62,7 +62,8 @@
 			action.setParams({
 					"con" : c.get("v.contact"),
 					"acc" : c.get("v.account"),
-					"serviceName" : c.get("v.serviceName")
+					"serviceName" : c.get("v.serviceName"),
+					"serviceSpecificParams" : {"isPowerUser" : c.get("v.isGadmPowerUser")}
 			});
 			
 			action.setCallback(this, function(resp){

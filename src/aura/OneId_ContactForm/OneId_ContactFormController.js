@@ -31,5 +31,15 @@
                  });
             cmpEvent.fire();
 		}
-	}
+	},
+
+	checkPowerUser : function(component, event) {
+	    let isPowerUser = event.getSource().get('v.value');
+	    let gadmPowerUserEvent = component.getEvent('GADM_PowerUser');
+	    gadmPowerUserEvent.setParams({
+	        'isPowerUser' : isPowerUser
+        });
+        gadmPowerUserEvent.fire();
+    },
+
 })

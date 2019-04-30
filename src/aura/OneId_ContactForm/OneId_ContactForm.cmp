@@ -12,6 +12,7 @@
     <aura:handler name="change" value="{!v.userCountry}" action="{!c.changedCountry}"/>
 
     <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
+    <aura:registerEvent name="GADM_PowerUser" type="c:GADM_PowerUser_EVT"/>
     
     <ltng:require 
         styles="{!$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.css'}"
@@ -55,7 +56,13 @@
                 <li class="slds-form-element__help">{!$Label.c.OneId_JobFunction_Help_Msg}</li>
             </ul>
         </div>
-        
+
+        <aura:if isTrue="{! v.serviceName == 'GADM'}">
+            <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
+                <label class="slds-form-element__label" >{!$Label.c.GADM_Power_User}</label>
+                <ui:inputCheckbox  class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" click="{! c.checkPowerUser}"/>
+            </div>
+        </aura:if>
         
         <div aura:id="phoneContainer" class="slds-col--padded slds-m-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2">
             <label class="slds-form-element__label" >

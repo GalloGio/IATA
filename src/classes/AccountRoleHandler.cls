@@ -8,10 +8,12 @@ public class AccountRoleHandler {
 
     public void onBeforeInsert() {
         updatePaymentProviderStatus();
+        updateAccountName();
     }
 
     public void onBeforeUpdate() {
         updatePaymentProviderStatus();
+        updateAccountName();
     }
 
     public void onAfterUpdate() {
@@ -20,6 +22,21 @@ public class AccountRoleHandler {
 
     public void onAfterDelete() {
         manageAccountAsPaymentProvider();
+    }
+
+    public void updateAccountName(){
+        Set<Id> accIds = new Set<Id>();
+        for(Account_Role__c ar : triggerNew) {
+            accIds.add(ar.Account__c);
+        }
+
+        Map<Id, Account> accsNameMap = new Map<Id, Account>([SELECT Id, Name From Account WHERE Id=:accIds]);
+        for(Account_Role__c ar : triggerNew) {
+            Account acc = accsNameMap.get(ar.Account__c);
+            if (acc != null){
+                ar.Account_Name__c = acc.Name;
+            }
+        }
     }
 
     public void updatePaymentProviderStatus() {
