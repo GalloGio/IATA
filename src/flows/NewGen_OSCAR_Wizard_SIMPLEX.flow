@@ -713,22 +713,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>TypeOfOscarProcessAssignment_acc_china</name>
-        <label>TypeOfOscarProcessAssignment</label>
-        <locationX>1017</locationX>
-        <locationY>420</locationY>
-        <assignmentItems>
-            <assignToReference>Type_of_OSCAR_process_man</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Type_of_HE_Process_China</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>TypeOfOscarProcessAssignment_not</name>
         <label>TypeOfOscarProcessAssignment</label>
         <locationX>1572</locationX>
@@ -926,28 +910,6 @@
             <targetReference>No_Process_Available</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
-        <rules>
-            <name>HEAccountChina</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>AccountToProcess.Location_Type__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>HE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>accountToProcessCountryRec.Enable_NewGen_Pilot__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Process_Chooser_HE_China</targetReference>
-            </connector>
-            <label>HEAccountChina</label>
-        </rules>
         <rules>
             <name>HEAccount</name>
             <conditionLogic>and</conditionLogic>
@@ -1396,7 +1358,8 @@
             <label>StagingAreaNotNeeded</label>
         </rules>
     </decisions>
-    <description>China Pilot Release
+    <description>China Pilot Release - REVERTED (NEWGEN-5092)
+China Pilot Release
 NewGen - Sprint 12 - OPT IN OUT
 NewGen - Sprint 7 - Release 3 
 
@@ -3347,37 +3310,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <name>Type_of_HE_Process</name>
             <choiceReferences>NewProcessHE</choiceReferences>
             <choiceReferences>NewProcessHECash</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Please choose a process :</fieldText>
-            <fieldType>RadioButtons</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Process_Chooser_HE_China</name>
-        <label>Process Chooser - HE CHINA</label>
-        <locationX>1101</locationX>
-        <locationY>305</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>TypeOfOscarProcessAssignment_acc_china</targetReference>
-        </connector>
-        <fields>
-            <name>ProcessChooserAccredited_0_0</name>
-            <fieldText>OSCAR WIZARD
-              
-This is a wizard designed to help you create a new OSCAR process.
-
-OSCAR stands for Online Solution for Customer Application Request, and must be linked to an existing Account.</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Type_of_HE_Process_China</name>
-            <choiceReferences>NewProcessHE</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Please choose a process :</fieldText>
             <fieldType>RadioButtons</fieldType>
