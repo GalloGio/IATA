@@ -120,7 +120,7 @@
                                 <apex:outputPanel rendered="{!AND(!isCNSAccount, con.Account.Category__c!= null)}" layout="block">
                                     <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Category__c.Label}</label>
                                     <div class="col-lg-7">
-                                        {!con.Account.Category__c}
+                                        <apex:outputField value="{!con.Account.Category__c}"/> <!-- WMO-391 -->
                                     </div>
                                 </apex:outputPanel>
                             </div>

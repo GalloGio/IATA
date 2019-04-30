@@ -818,14 +818,14 @@
                     <apex:outputPanel layout="block" rendered="{!AND(hqFound, !createAgency)}" >
                     <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.Category__c.Label}</label>
-                        <apex:outputText styleclass="form-control" id="categoryFieldHQ" value="{!hqAccount.Category__c}" />
+                        <apex:outputField styleclass="form-control" id="categoryFieldHQ" value="{!hqAccount.Category__c}" />
                     </div>
                     </apex:outputPanel>
                     <!-- TF - SP08 -->
                     <apex:outputPanel layout="block" rendered="{!AND(!hqFound, createAgency)}" >
                     <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.Category__c.Label}</label>
-                        <apex:outputText styleclass="form-control" id="categoryFieldAgency" value="{!acc.Category__c}" />
+                        <apex:outputField styleclass="form-control" id="categoryFieldAgency" value="{!acc.Category__c}" />
                     </div>
                     </apex:outputPanel>
                     <div class="form-group col-lg-6" id="categoryDiv1" style="display:none" >

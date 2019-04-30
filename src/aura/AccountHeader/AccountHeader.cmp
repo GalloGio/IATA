@@ -155,7 +155,9 @@
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Category</p>
                     </dt>
-                    <dd>{!v.account.Category__c}</dd>
+                    <dd>
+                        <force:outputField value="{!v.account.Category__c}"/>
+                    </dd>
                 </dl>
             </div>
 
