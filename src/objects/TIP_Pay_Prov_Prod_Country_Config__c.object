@@ -45,9 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -78,6 +78,15 @@
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
         <label>BSP Country</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>IATA_ISO_Country__c.ISO_Code__c</field>
+                <operation>equals</operation>
+                <valueField>IATA_ISO_Country__c.BSP_Country_free_text__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Payment Product Country Configs</relationshipLabel>
         <relationshipName>TIP_Payment_Product_Country_Configs</relationshipName>
@@ -192,6 +201,30 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Payment Product Country Configs</pluralLabel>
+    <recordTypes>
+        <fullName>TIP_Payment_Product_Country_Config</fullName>
+        <active>true</active>
+        <label>TIP Payment Product Country Config</label>
+        <picklistValues>
+            <picklist>TIP_Status__c</picklist>
+            <values>
+                <fullName>ACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DRAFT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN_PROGRESS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>

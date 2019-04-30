@@ -2,7 +2,8 @@
 global class ANG_MasterData_Interface{
 
     public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY'};
-    
+    public static final Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB};
+
     @HttpGet
     global static void doGet(){
         try{
@@ -24,10 +25,11 @@ global class ANG_MasterData_Interface{
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
                                             VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c,
+                                            GDI_Status__c,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r), //RHC Information
-                                            (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId = :AMS_Utils.RECTYPE_IEPMODELA ORDER BY LastModifiedDate DESC), //OSCAR
+                                            (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC), //OSCAR
                                             (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles1__r where Active__c = true and RecordType.Name = 'Ownership') // List of Ownwer
                                      from Account 
                                      where recordtype.developername = 'IATA_Agency' and IATACode__c =:IATACode];
@@ -180,13 +182,15 @@ global class ANG_MasterData_Interface{
         public boolean isNewGenAgency;
         public list<Owner> owners;
         public list<DueDiligence> dueDiligence;
-
+        public list<string> externalSystems; //NEWGEN-4276
         
         
 
 
         /*Constructor*/
         public MasterDataPayload(Account acc, boolean getChildren, String changeCode){
+            set<string> setIEPStatusToPublish = new set<string>{'Open','In Progress'};
+            set<string> setGDIStatusToPublish = new set<string>{'Open','In Progress'};
             try{
                 this.isBranchAbroad = acc.Is_Branch_Abroad__c;
                 this.PurgeCode = acc.Purge_Flag__c;
@@ -282,6 +286,16 @@ global class ANG_MasterData_Interface{
                     this.owners.add(new Owner(role, (double)role.Percentage__c));
                 }
 
+
+                //externalSystems - NEWGEN-4276
+                this.externalSystems = new list<string>();
+                //EasyPay
+                if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c))
+                    this.externalSystems.add(acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name);
+
+                //GDI - note: we do publish HE/HO only
+                if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c))
+                   this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
             }
             catch(exception e){
                 throw e;

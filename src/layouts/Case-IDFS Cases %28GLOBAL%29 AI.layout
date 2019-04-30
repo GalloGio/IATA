@@ -48,6 +48,13 @@
         <label>Description Information</label>
         <layoutColumns>
             <layoutItems>
+                <height>45</height>
+                <page>DetailPageMessageClassicCase</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>50%</width>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Case_Remarks__c</field>
             </layoutItems>
@@ -495,6 +502,10 @@
         <fields>EndTime</fields>
         <fields>Status</fields>
         <relatedList>RelatedLiveChatTranscriptList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Case_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

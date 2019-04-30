@@ -127,15 +127,6 @@ public with sharing class IECEBC_TestUtility {
 				, Contact.IATA_Code__c
 				from User
 				where Id = : oUser.Username];
-		//System.assertNotEquals( 0, lUser.size(), 'oUser record is not ready in the storage yet: ' + oUser);
-		//System.assertNotEquals( null, lUser[0].ContactId, 'ContactId should not be null');
-		//oUser = lUser[0];
-		
-		//oContact = oUser.Contact; // related Contact record of the community user
-		//oAccount = oUser.Contact.Account; // temp Account
-		
-		
-		
 		
 		List<Contact> lContact = [select Id, Name, FirstName, LastName, Email, Title, Phone
 									, IATA_Code__c

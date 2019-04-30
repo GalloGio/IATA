@@ -2,8 +2,8 @@ public with sharing class CaseDueDiligence {
 
     public class DueDiligenceException extends Exception {}
 
-    private static final Id RT_ICCS_ASP_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('IDFS_Airline_Participation_Process').getRecordTypeId();
-    private static final Id RT_CODING_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('Airline_Coding_Application').getRecordTypeId();
+    private static final Id RT_ICCS_ASP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','IDFS_Airline_Participation_Process');
+    private static final Id RT_CODING_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','Airline_Coding_Application');
     private static final set<String> REASONS_FOR_BSP_CASS = new set<String>{
         'BSP Direct - Member',
         'BSP Direct - Non-Member',
@@ -42,7 +42,6 @@ public with sharing class CaseDueDiligence {
     **/
     public static void beforeUpdate(map<Id,Case> mapNews, map<Id,Case> mapOlds) {
         // Check Due dilligence for joining cases being closed
-        list<Case> listClosedCasesToCheck = new list<Case>();
         list<Id> listAccountId = new list<Id>();
         for (Case newCase: mapNews.values()) {
             Case oldCase = mapOlds.get(newCase.Id);
@@ -50,24 +49,25 @@ public with sharing class CaseDueDiligence {
             if ((newCase.RecordTypeId == RT_ICCS_ASP_ID || newCase.RecordTypeId == RT_CODING_ID)
                     && newCase.Status.containsIgnoreCase('closed')
                     && !oldCase.Status.containsIgnoreCase('closed')
-                    && !LIST_IGNORED_STATUSES.contains(oldCase.Status)
+                    && !LIST_IGNORED_STATUSES.contains(newCase.Status)
                     && !isRecycleGroup(newCase.OwnerId)
                     ) {
-                listClosedCasesToCheck.add(newCase);
                 listAccountId.add(newCase.AccountId);
             }
         }
         //validate clearance level for found accounts
         if (!listAccountId.isEmpty()) {
             map<Id,Account> mapAccount = new map<Id,Account>(
-                [SELECT Id, Date_of_last_clearance__c, Clearance_level__c
+                [SELECT Id, Date_of_last_clearance__c, Clearance_level__c,
+                    Top_Parent__r.Date_of_last_clearance__c, Top_Parent__r.Clearance_level__c
                 FROM Account
                 WHERE Id IN :listAccountId]);
             
             for (Case newCase: mapNews.values()) {
                 Account account = mapAccount.get(newCase.AccountId);
+                Account topParent = account.Top_Parent__r==null? account: account.Top_Parent__r;
                 try {
-                    validate(newCase,account);
+                    validate(newCase,topParent);
                 } catch(Exception e) {
                     newCase.addError(e.getMessage());
                 }
@@ -76,7 +76,7 @@ public with sharing class CaseDueDiligence {
     }
 
     /**
-        Returns tru if the case has a valid due diligence
+        Returns true if the case has a valid due diligence
     **/
     public static Boolean isValid(Case cse, Account account) {
         try {

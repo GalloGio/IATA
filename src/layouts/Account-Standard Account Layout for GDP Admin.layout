@@ -2,6 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -542,8 +543,8 @@
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
-        <fields>CORE.USERS.ALIAS</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
+        <fields>VER_Number_2__c</fields>
         <relatedList>RelatedContactList</relatedList>
         <sortField>FULL_NAME</sortField>
         <sortOrder>Asc</sortOrder>

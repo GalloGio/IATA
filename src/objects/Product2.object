@@ -2217,6 +2217,11 @@ SIS Charge Code Type.</description>
                     <label>Cargo Claims and Loss Prevention Handbook</label>
                 </value>
                 <value>
+                    <fullName>Cargo Country Statistics</fullName>
+                    <default>false</default>
+                    <label>Cargo Country Statistics</label>
+                </value>
+                <value>
                     <fullName>Cargo Interchange Message Procedures (Cargo-IMP)</fullName>
                     <default>false</default>
                     <label>Cargo Interchange Message Procedures (Cargo-IMP)</label>
@@ -2525,6 +2530,11 @@ SIS Charge Code Type.</description>
                     <fullName>Standard Computerized Airplane Performance (SCAP)</fullName>
                     <default>false</default>
                     <label>Standard Computerized Airplane Performance (SCAP)</label>
+                </value>
+                <value>
+                    <fullName>Standard Procedures for Preloading Advance Cargo Information (PLACI)</fullName>
+                    <default>false</default>
+                    <label>Standard Procedures for Preloading Advance Cargo Information (PLACI)</label>
                 </value>
                 <value>
                     <fullName>Standard Schedules Information</fullName>
@@ -5377,30 +5387,6 @@ The product will only appear on the Online Store when the date entered in this f
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>AllProducts</fullName>
-        <columns>PRODUCT2.NAME</columns>
-        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
-        <columns>Product_Manager__c</columns>
-        <columns>Product_Section__c</columns>
-        <columns>Product_Segment__c</columns>
-        <columns>PRODUCT2.FAMILY</columns>
-        <columns>Line_of_Business__c</columns>
-        <columns>PRODUCT2.QTY_SCHEDULE_ENABLED</columns>
-        <columns>PRODUCT2.REV_SCHEDULE_ENABLED</columns>
-        <columns>PRODUCT2.CREATED_DATE</columns>
-        <columns>PRODUCT2.LAST_UPDATE</columns>
-        <columns>RCRM_Product__c</columns>
-        <columns>PRODUCT2.RECORD_TYPE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>PRODUCT2.ACTIVE</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>All Active Products</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>E_F_Products</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
@@ -7450,7 +7436,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>FSS %28FDS Division%29</fullName>
+                <fullName>FSS Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7478,7 +7464,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>IFG %28FDS Division%29</fullName>
+                <fullName>IFG Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7494,7 +7480,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>MER %28MER Division%29</fullName>
+                <fullName>MER Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7562,7 +7548,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>SFO %28SFO Division%29</fullName>
+                <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13601,7 +13587,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>FSS %28FDS Division%29</fullName>
+                <fullName>FSS Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13629,7 +13615,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>IFG %28FDS Division%29</fullName>
+                <fullName>IFG Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13645,7 +13631,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>MER %28MER Division%29</fullName>
+                <fullName>MER Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13717,7 +13703,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>SFO %28SFO Division%29</fullName>
+                <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13829,6 +13815,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Country Statistics</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14073,6 +14063,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Procedures for Preloading Advance Cargo Information %28PLACI%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16717,7 +16711,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>FSS %28FDS Division%29</fullName>
+                <fullName>FSS Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16749,7 +16743,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>IFG %28FDS Division%29</fullName>
+                <fullName>IFG Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16765,7 +16759,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>MER %28MER Division%29</fullName>
+                <fullName>MER Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16837,7 +16831,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>SFO %28SFO Division%29</fullName>
+                <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
             <values>

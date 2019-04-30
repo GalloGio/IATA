@@ -231,7 +231,7 @@ private class AMS_OSCARTriggerHandlerTest {
         insert fop;
 
         Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', 
-                                    Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin',
+                                    Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, //User_Portal_Status__c = 'Approved Admin',
                                     Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);    
         insert co1;
          

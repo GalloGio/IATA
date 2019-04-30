@@ -289,7 +289,7 @@ public without sharing class Order_Svc
                 requestByOrder.put(ord.Id, createSalesOrderRequestObject(ord, items, chargesByItem, sapTable, locationById));
 
             }
-            else if(!System.isFuture() && !System.isBatch() && !System.isScheduled())
+            else if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
             {   errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(sapTable), 'Order '+ord, 'Error - SAP_Order_Number__c NOT blank'));
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING ,Label.Warning_SalesOrder_Already_Created));
             }
@@ -319,7 +319,7 @@ public without sharing class Order_Svc
                 }
                 else
                 {
-                    if(!System.isFuture() && !System.isBatch() && !System.isScheduled())
+                    if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING ,Label.Warning_No_Shippable_Product));
                 }
             }

@@ -382,6 +382,11 @@
         <label>E-mail to Case - CZ &amp; Slovakia</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - DIP Communications</fullName>
+        <default>false</default>
+        <label>E-mail to Case - DIP Communications</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - DKR</fullName>
         <default>false</default>
         <label>E-mail to Case - DKR</label>
@@ -1132,6 +1137,11 @@
         <label>E-mail to Case - YMQ - ITDI</label>
     </standardValue>
     <standardValue>
+        <fullName>Escalation</fullName>
+        <default>false</default>
+        <label>Escalation</label>
+    </standardValue>
+    <standardValue>
         <fullName>Exact Target commercial TEST</fullName>
         <default>false</default>
         <label>Exact Target commercial TEST</label>
@@ -1165,6 +1175,11 @@
         <fullName>Funds Management</fullName>
         <default>false</default>
         <label>Funds Management</label>
+    </standardValue>
+    <standardValue>
+        <fullName>GDI Portal</fullName>
+        <default>false</default>
+        <label>GDI Portal</label>
     </standardValue>
     <standardValue>
         <fullName>IATA Americas - ID Card (CA)</fullName>

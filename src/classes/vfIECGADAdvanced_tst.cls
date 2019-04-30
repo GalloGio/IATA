@@ -161,9 +161,79 @@ private class vfIECGADAdvanced_tst {
             System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
 	        pgCont.saveFilter();
             System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
-            
+
+	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Maximum5Filters));
+
+	        //Test 004: Save filter while 4 already exists
+	        delete filter1;
+	        pgCont.ctrSavedFilters.loadFilters();
+	        pgCont.saveFilter();
+
+	        //Test 006: Load sub-continent
+	        options = pgCont.getListOptionsSubContinent();
+	        
+	        //Test 007: Load country - SubContinent:All
+	        pgCont.filter.Sub_Continent__c = 'All';
+	        options = pgCont.getListOptionsCountry();
+
+			//Test 008: Load country - SubContinent:X
+	        pgCont.filter.Sub_Continent__c = gdpGeoDetail.Sub_Continent__c;
+	        options = pgCont.getListOptionsCountry();
+	        
+	        //Test 009: Load state - SubContinent:All, Country:All
+	        pgCont.filter.Sub_Continent__c = 'All';
+	        pgCont.filter.Country__c = 'All';
+	        options = pgCont.getListOptionsState();
+
+			//Test 010: Load state - SubContinent:X, Country:All
+	        pgCont.filter.Sub_Continent__c = gdpGeoDetail.Sub_Continent__c;
+	        pgCont.filter.Country__c = 'All';
+	        options = pgCont.getListOptionsState();
+
+			//Test 011: Load state - SubContinent:X, Country:Y
+	        pgCont.filter.Sub_Continent__c = gdpGeoDetail.Sub_Continent__c;
+	        pgCont.filter.Country__c = iataCountry.Name;
+	        options = pgCont.getListOptionsState();
+	        
+	        //Test 012: Load area of activity
+	        options = pgCont.getListOptionsAreaofActivity();
+	        
+	        //Test 013: Load agency program - Area Of Activity: All
+	        pgCont.filter.Area_of_Activity__c = 'All';
+	        options = pgCont.getListOptionsAgencyProgram();
+	        
+	        //Test 014: Load agency program - Area Of Activity: X
+	        pgCont.filter.Area_of_Activity__c = iecAgencyType.Area_of_Activity__c;
+	        options = pgCont.getListOptionsAgencyProgram();
+
+	        //Test 015: Search Agencies
+	        IEC_Application_Filter__c filterSystem = IECTestUtil.CreateSampleApplicationFilter(baseCont.loggedCustomer.RelatedContact);
+	        filterSystem.System_Generated__c = true;
+	        insert filterSystem;
+
+	        pgCont.filter = IECTestUtil.CreateSampleApplicationFilter(baseCont.loggedCustomer.RelatedContact);
+	        pgCont.searchAgencies();
+
+			//Test 016: Handle Brackets for Array variables
+	        IEC_Application_Filter__c filter = new IEC_Application_Filter__c();
+	        filter.Country__c = 'All';
+	        stringArray = pgCont.sCountry;
+	        filter.Country__c = '(All)';
+	        stringArray = pgCont.sCountry;
+
+
+			//Test 017: Load saved filter from URL
+	    	pgRef = Page.IECGADAdvanced;
+	    	Test.setCurrentPage(pgRef);
+	    	
+	    	pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(filter3.Id));
+	    	pgCont.pageLoad();
+
+	        // Misc Coverage
+	        pgCont.OnChangeCountry();
+	        pgCont.onClickOKError();
+
     	}
-    	
         System.debug('Unit Test: Finish: TestGADAdvanced');
     }
 
@@ -189,6 +259,7 @@ private class vfIECGADAdvanced_tst {
 
 	        // Test 002: Accessing page with no subscription for CAC
 	        pgCont.pageLoad();
+
 			//system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_No_Application_Access));
     	}
         System.debug('Unit Test: Finish: TestGADAdvanced_Errors');

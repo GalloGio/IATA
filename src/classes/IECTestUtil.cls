@@ -541,11 +541,12 @@ public without sharing class IECTestUtil {
     }
     
     public static Zuora.zObject createSampleZuoraAccount(String zId, String CrmId, String CrmContactId) {
+
         Zuora.zObject acc = new Zuora.zObject('Account');
         acc.setValue('Id', zId);
         acc.setValue('CrmId', CrmId);
         acc.setValue('CRMContactID__c', CrmContactId);
-        acc.setValue('Name', 'Sample_Account_Name' /*+ System.currentTimeMillis()*/);
+        acc.setValue('Name', 'Sample_Account_Name');
         acc.setValue('AccountNumber', 'A0987654321');
         acc.setValue('Currency', 'USD');
         acc.setValue('BillCycleDay', 1);
@@ -558,6 +559,7 @@ public without sharing class IECTestUtil {
         //acc.setValue('IATA_Area__c', 'Area 1');
         
         // Sample Account is used for subscription preview. Since we don't want to hit CyberSource, set Other as the default payment method
+
         acc.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_Other_ZuoraID);
         
         return acc;
@@ -704,30 +706,10 @@ public without sharing class IECTestUtil {
             , Area_of_Activity__c = 'Sample Area of Activity'
         );
     }
-    /*
-    public static GDP_Account__c CreateSampleGDPAccount(String IATACode, Id CountryId, String Status) {
-        return new GDP_Account__c(
-            Name = IATACode
-            , Class__c = 'Domestic'
-            , Country_ISO_Code__c = CountryId
-            , Status__c = Status
-            , Trade_Name__c = 'Agency Trading Name'
-        );
-    }
-    */
+    
     public static IECAddress__c CreateSampleIECAddress(Contact oContact, String sType) {
         //*** modified by Thai (2016-02-29) to create address and necessary relations instead of preparing a new address
         
-        //return new IECAddress__c(
-        //    Address_Type__c = sType
-        //    , Country__c = 'CA'
-        //    , City__c = 'Montreal'
-        //    , Contact__c = oContact.Id
-        //    , State__c = 'QC'
-        //    , Street__c = '123 main street'
-        //    , ZipCode__c = 'h1q2w3'
-        //);
-
         //*** get ISO country
         IATA_ISO_Country__c country;
         try

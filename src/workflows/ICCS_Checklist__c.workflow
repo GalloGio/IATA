@@ -9,7 +9,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>martinsp@iata.org</recipient>
+            <recipient>martinsp@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -24,7 +24,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>martinsp@iata.org</recipient>
+            <recipient>martinsp@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
