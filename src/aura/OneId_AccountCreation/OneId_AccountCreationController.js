@@ -129,6 +129,8 @@
 
         //check if information need to be passed to shipping as well
         h.copyBillingToShipping(c);
+    	
+        validateRequiredFields(c);
     },
 
     validateNumber : function(c, e, h){
@@ -188,6 +190,14 @@
             isAllFilled = false;
         }else{
             c.set("v.validationError", false);
+        }
+        
+        if(isAllFilled){
+          c.getEvent("newAccountSet")
+            .setParams({
+                "state" : "newAccountSet",
+                "account" : c.get("v.account")
+            }).fire();             
         }
         
         return isAllFilled;        

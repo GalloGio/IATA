@@ -74,7 +74,7 @@ public without sharing class ISSP_ChangePassword {
         try {                    
             // validate fields
             errorMessage = new list<string>();
-              
+ 
             if (errorMessage.size() > 0) {
                 return null;
             }
@@ -101,6 +101,9 @@ public without sharing class ISSP_ChangePassword {
                     }
                     else if(serviceName == 'FRED'){                            
                         pageRef = null;   
+                    }
+                    else if(serviceName == 'NDCMM'){
+                        pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/ndcmm?serviceName=NDCMM' + commParam));
                     }
                     else{
                         pageref = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam));

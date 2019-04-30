@@ -38,6 +38,24 @@
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
+    <fields>
+        <fullName>Contact_Triggers__c</fullName>
+        <description>Naming convention for field Label: sObject_API_Name+&apos; Triggers&apos;. Used in contact trigger context</description>
+        <externalId>false</externalId>
+        <label>Contact Triggers</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Lead_Triggers__c</fullName>
+        <description>Naming convention for field Label: sObject_API_Name+&apos; Triggers&apos;. Used in lead trigger context</description>
+        <externalId>false</externalId>
+        <label>Lead Triggers</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
     <label>AMS Trigger Execution Manager</label>
     <listViews>
         <fullName>All</fullName>

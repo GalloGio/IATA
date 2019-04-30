@@ -169,10 +169,11 @@ public class AMS_AgencyChangesTest {
 
 		
 		// Create the Staging area for the Contact
+		ID rtPerson = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 		List<AMS_Accreditation_Contact__c> theStagingConts= new List<AMS_Accreditation_Contact__c>();
 		if(theContact!=null)
 			theStagingConts.add(new AMS_Accreditation_Contact__c(First_name__c = theContact.FirstName, Last_Name__c = theContact.LastName, Email__c = theContact.Email, Contact__c = theContact.Id, 
-								AMS_Pax_Accreditation_Form__c = theStagingAcc.Id, Phone__c = theContact.Phone));
+								AMS_Pax_Accreditation_Form__c = theStagingAcc.Id, Phone__c = theContact.Phone, RecordTypeId = rtPerson));
 		if(owners!=null)
 			for(Contact c : owners.keyset())
 				theStagingConts.add(new AMS_Accreditation_Contact__c(First_name__c = c.FirstName, Last_Name__c = c.LastName, Email__c = c.Email, AMS_Pax_Accreditation_Form__c = theStagingAcc.Id, 
@@ -263,7 +264,12 @@ public class AMS_AgencyChangesTest {
 		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = theOscar.Id, Account__c = BR2.Id));
 		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = theOscar.Id, Account__c = BR3.Id));
 		insert agenciesinvolved;*/
-		AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c LIMIT 1];
+		AMS_OSCAR__c oscar = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c FROM AMS_OSCAR__c LIMIT 1];
+		AMS_Pax_Accreditation_Form__c staging = [SELECT Id FROM AMS_Pax_Accreditation_Form__c];
+		oscar.AMS_Online_Accreditation__c = staging.Id;
+		oscar.Process__c = 'MAJOR.CHANGES';
+		update oscar;
+
 		AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
 
 		List<AMS_Process_Detail__c> accountsToMigrate = [SELECT Id FROM AMS_Process_Detail__c WHERE Oscar__c =: oscar.Id];
@@ -337,12 +343,4 @@ public class AMS_AgencyChangesTest {
 		Test.stopTest();
 	}
 	
-	@isTest
-	static void testChangeOfOwnershipNonIATABuysHOandSomeBranches(){}
-	@isTest
-	static void testChangeOfOwnershipIATABuysAllHierarchy(){}
-	@isTest
-	static void testChangeOfOwnershipIATABuysSomeBranches(){}
-	@isTest
-	static void testChangeOfOwnershipIATABuysHOandSomeBranches(){}
 }
