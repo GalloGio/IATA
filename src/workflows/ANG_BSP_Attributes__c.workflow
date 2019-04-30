@@ -26,10 +26,7 @@
         </actions>
         <active>true</active>
         <description>Generate Unique Key for BSP Attributes</description>
-        <formula>OR( 
-  RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;, 
-  RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;,
-  RecordType.DeveloperName = &apos;Remittance_Frequency&apos;)</formula>
+        <formula>OR(    RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;,    RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;,   RecordType.DeveloperName = &apos;Remittance_Frequency&apos;)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>
