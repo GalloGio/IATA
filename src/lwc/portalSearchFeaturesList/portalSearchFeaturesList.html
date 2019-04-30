@@ -4,7 +4,7 @@
         <c-portal-custom-card-container>
 
             <span slot="cardTitle">
-                {label.CSP_Documents}
+                {label.CSP_Features_Title}
             </span>
     
             <span slot="cardButton" if:true={dataRecords}>
@@ -24,20 +24,15 @@
                 </template>
                 <template if:false={loading}>
                     <div if:true={dataRecords}>
-                        <lightning-datatable
-                            key-field="Id"
-                            data={data}
-                            columns={columns}
-                            hide-checkbox-column>
-                        </lightning-datatable>
+                        {dataRecords}
                     </div>
                     <div if:false={dataRecords}>
                         <div class="slds-text-align_center">
                             <div class="slds-text-heading_medium">
                                 <h3>{label.CSP_NoSearchResults}</h3>
                             </div>
-                        </div>
-                    </div>
+                        </div>                            
+                    </div>                        
                 </template>
             </span>
 

@@ -3,16 +3,17 @@
     <aura:attribute name="newHeader" type="Aura.Component[]" required="false"/>
     <aura:attribute name="newFooter" type="Aura.Component[]" required="false"/>
     <div>
-        <div class="newHeader">
+        <div class="navBar">
             <c:portalHeader/>
         </div>
-        <div class="mainContentArea">
-            <div class="slds-grid slds-grid_align-center">
-                <div class="slds-col slds-size_2-of-3 slds-large-size_2-of-3 slds-medium-size_1-of-1 slds-small-size_1-of-1">
-                    {!v.body}
-                </div>
-            </div>
+        <div class="newHeader">
+            {!v.newHeader}
         </div>
+
+        <div class="mainContentArea">
+            {!v.body}
+        </div>
+
         <div class="newFooter">
             {!v.newFooter}
         </div>

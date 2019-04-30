@@ -1,10 +1,10 @@
 <template>
 
-    <div if:true={rendered}>
+    <div if:true={showComponent}>
         <c-portal-custom-card-container>
 
             <span slot="cardTitle">
-                {label.CSP_Documents}
+                {label.CSP_Services_Title}
             </span>
     
             <span slot="cardButton" if:true={dataRecords}>
@@ -13,7 +13,7 @@
                     title={label.CSP_SeeAll}
                     icon-name="utility:forward" 
                     icon-position="right" 
-                    onclick={goToSeeAllFAQsButtonClick}
+                    onclick={goToSeeAllServicesButtonClick}
                     class="slds-p-right_small blueCustomButtonLink">
                 </lightning-button>
             </span>
@@ -36,8 +36,8 @@
                             <div class="slds-text-heading_medium">
                                 <h3>{label.CSP_NoSearchResults}</h3>
                             </div>
-                        </div>
-                    </div>
+                        </div>                            
+                    </div>                        
                 </template>
             </span>
 

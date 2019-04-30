@@ -2767,12 +2767,36 @@ Payment required on receipt of this Payment Advice
         <value>Need more help?</value>
     </labels>
     <labels>
+        <fullName>CSP_FAQs_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_FAQs_Title</shortDescription>
+        <value>FAQs</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Features_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Features_Title</shortDescription>
+        <value>Features</value>
+    </labels>
+    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_ForYou</shortDescription>
         <value>For You</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Home_WelcomeTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
+        <value>Hi [username], welcome on board</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>
@@ -2847,12 +2871,28 @@ Payment required on receipt of this Payment Advice
         <value>Recent Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Search_Home_Placeholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Home_Placeholder</shortDescription>
+        <value>Find services, cases, support and more</value>
+    </labels>
+    <labels>
         <fullName>CSP_SeeAll</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_SeeAll</shortDescription>
         <value>See All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_Title</shortDescription>
+        <value>Services</value>
     </labels>
     <labels>
         <fullName>CSP_Settings</fullName>

@@ -1,0 +1,28 @@
+<template>
+
+    <div class="slds-grid slds-grid_align-center customTriangle" style={backgroundStyle} >
+        <div class="slds-col slds-size_10-of-12 slds-large-size_10-of-12 slds-medium-size_1-of-1 slds-small-size_1-of-1 searchDivStyle">
+
+            <div class="text-white text-xlarge text-bold titlePadding">
+                {label.CSP_Home_WelcomeTitle}
+            </div>
+
+            <div class="slds-p-vertical_small">
+                &nbsp;
+            </div>
+
+            <div class="background-white">
+                <c-portal-search-bar-global-component 
+                    search-bar-placeholder={label.CSP_Search_Home_Placeholder} 
+                    show-cases="true" 
+                    show-services="true" 
+                    show-f-a-qs="true" 
+                    show-documents="true" 
+                    show-portal-features="true">
+                </c-portal-search-bar-global-component>
+            </div>
+
+        </div>
+    </div>
+    
+</template>
