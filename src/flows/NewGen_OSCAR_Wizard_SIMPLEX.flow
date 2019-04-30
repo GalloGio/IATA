@@ -42,32 +42,28 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
-    <apexPluginCalls>
-        <name>AMS_FillCaseTypeOfCustomer</name>
-        <label>AMS_FillCaseTypeOfCustomer</label>
-        <locationX>900</locationX>
-        <locationY>819</locationY>
-        <apexClass>AMS_FillCaseTypeOfCustomer</apexClass>
+    <actionCalls>
+        <description>FillCaseTypeCustomer</description>
+        <name>FillCaseTypeCustomer</name>
+        <label>FillCaseTypeCustomer</label>
+        <locationX>971</locationX>
+        <locationY>793</locationY>
+        <actionName>ANG_FillCaseTypeOfCustomer</actionName>
+        <actionType>apex</actionType>
         <connector>
             <targetReference>OscarCaseCreation</targetReference>
         </connector>
         <inputParameters>
-            <name>Category_Input</name>
+            <name>accountId</name>
             <value>
-                <elementReference>AccountToProcess.Category__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>LocationType_Input</name>
-            <value>
-                <elementReference>AccountToProcess.Location_Type__c</elementReference>
+                <elementReference>AccountToProcess.Id</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
             <assignToReference>CaseTypeOfCustomer</assignToReference>
-            <name>typeOfCustomer</name>
+            <name>output</name>
         </outputParameters>
-    </apexPluginCalls>
+    </actionCalls>
     <assignments>
         <name>AccountToCopyOwnersFrom</name>
         <label>AccountToCopyOwnersFrom</label>
@@ -652,23 +648,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>TradeNameAssignment</name>
-        <label>TradeNameAssignment</label>
-        <locationX>1730</locationX>
-        <locationY>12</locationY>
-        <assignmentItems>
-            <assignToReference>AccountTradeName</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AccountToProcess.TradeName__c</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>TypeOfOscarProcessAssigment</name>
         <label>TypeOfOscarProcessAssigment</label>
-        <locationX>527</locationX>
-        <locationY>343</locationY>
+        <locationX>487</locationX>
+        <locationY>344</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
@@ -683,13 +666,29 @@
     <assignments>
         <name>TypeOfOscarProcessAssigment_0</name>
         <label>TypeOfOscarProcessAssigment</label>
-        <locationX>296</locationX>
-        <locationY>379</locationY>
+        <locationX>362</locationX>
+        <locationY>469</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Type_of_OSCAR_change_0</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>TypeOfOscarProcessAssigmentNoFOP</name>
+        <label>TypeOfOscarProcessAssigmentNoFOP</label>
+        <locationX>181</locationX>
+        <locationY>473</locationY>
+        <assignmentItems>
+            <assignToReference>Type_of_OSCAR_process_man</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TypeOfOscarNoFOP</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -999,9 +998,35 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Is Account on China ?</description>
+        <name>Is_Account_on_China</name>
+        <label>Is Account on China</label>
+        <locationX>263</locationX>
+        <locationY>188</locationY>
+        <defaultConnector>
+            <targetReference>Process_Chooser_Changes_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Account_is_From_China</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountFromChina</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>No_FOP_Choice</targetReference>
+            </connector>
+            <label>Account is From China</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>IsAccountCashAndHE</name>
         <label>IsAccountCashAndHE</label>
-        <locationX>468</locationX>
+        <locationX>731</locationX>
         <locationY>113</locationY>
         <defaultConnector>
             <targetReference>Process_Chooser_Changes</targetReference>
@@ -1025,7 +1050,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Process_Chooser_Changes_0</targetReference>
+                <targetReference>Is_Account_on_China</targetReference>
             </connector>
             <label>AccountIsCashandisHE</label>
         </rules>
@@ -1033,7 +1058,7 @@
     <decisions>
         <name>isAccountSuitableForAccreditation</name>
         <label>isAccountSuitableForAccreditation</label>
-        <locationX>770</locationX>
+        <locationX>1033</locationX>
         <locationY>21</locationY>
         <defaultConnector>
             <targetReference>No_Process_Available</targetReference>
@@ -1405,6 +1430,12 @@ NEWGEN-1963 - FOP
         <name>AccountForTheCase</name>
         <dataType>String</dataType>
         <expression>{!AccountToProcess.Id}</expression>
+    </formulas>
+    <formulas>
+        <description>Is account from China</description>
+        <name>AccountFromChina</name>
+        <dataType>Boolean</dataType>
+        <expression>{!AccountToProcess.IATA_ISO_Country__r.AMS_Settlement_System__r.Name} = &apos;BSP-CN&apos;</expression>
     </formulas>
     <formulas>
         <name>AccountRoleFirstName</name>
@@ -2722,7 +2753,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
         <locationY>934</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AMS_FillCaseTypeOfCustomer</targetReference>
+            <targetReference>FillCaseTypeCustomer</targetReference>
         </connector>
         <filters>
             <field>DeveloperName</field>
@@ -3142,7 +3173,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <screens>
         <name>ContactChooserScreen</name>
         <label>ContactChooserScreen</label>
-        <locationX>1592</locationX>
+        <locationX>1855</locationX>
         <locationY>631</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3167,9 +3198,46 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <description>No FOP Choice</description>
+        <name>No_FOP_Choice</name>
+        <label>No FOP Choice</label>
+        <locationX>180</locationX>
+        <locationY>322</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>TypeOfOscarProcessAssigmentNoFOP</targetReference>
+        </connector>
+        <fields>
+            <name>NOFOPDisplayText</name>
+            <fieldText>OSCAR WIZARD
+              
+This is a wizard designed to help you create a new OSCAR process.
+
+OSCAR stands for Online Solution for Customer Application Request, and must be linked to an existing Account.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>TypeOfOscarNoFOP</name>
+            <choiceReferences>Agency_Changes</choiceReferences>
+            <choiceReferences>VoluntaryRelinquishment</choiceReferences>
+            <choiceReferences>NewProcessCertificate</choiceReferences>
+            <choiceReferences>NewProcessOscarCorrection</choiceReferences>
+            <choiceReferences>NewProcessBankAccount</choiceReferences>
+            <choiceReferences>NewProcessOPTINOUT</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Please choose a process :</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>No_Process_Available</name>
         <label>No Process Available</label>
-        <locationX>1125</locationX>
+        <locationX>1388</locationX>
         <locationY>8</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
@@ -3185,7 +3253,7 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBankAccountValue}  , &apos;New_Gen
     <screens>
         <name>Process_Chooser_AE</name>
         <label>Process Chooser - AE</label>
-        <locationX>1570</locationX>
+        <locationX>1833</locationX>
         <locationY>144</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
