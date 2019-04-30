@@ -6302,7 +6302,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Non-IATA Cargo Agent</label>
+                    <label>Non-IATA Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Passenger Agent</fullName>
