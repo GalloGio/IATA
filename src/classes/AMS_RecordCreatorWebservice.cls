@@ -266,11 +266,14 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
  
-         if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
+        if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
 
-         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
+
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI))
+            return AMS_Utils.RECTYPE_GDI;
             
         return null;
 
@@ -374,15 +377,6 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
-
-        //commented as per NEWGEN-3265
-        /*if(processType.equalsIgnoreCase(OPTINOPTOUT)){
-        
-            Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
-            stagingToAccount.put(accreditationId, new Set<Id>{accountId});
-            AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount);
-
-        }*/
         
         return oscar.id;
     }

@@ -1,0 +1,973 @@
+<apex:page standardController="Country_Profile__c" extensions="ISSP_CurrencyCenterCountryController" action="{!checkAccess}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" renderAs="pdf">
+    <html>
+    <head>
+        <link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/country_profile.css')}" />
+
+        <style>
+body, div, h4, span, p {
+  font-family: Helvetica, sans-serif !important;
+  font-size: 13px;
+}
+.header-logo {
+    width: 100%;
+    display: block;
+    margin: auto;
+}
+.header-blocked-funds, .header-watch-list, .header-all-others {
+  height: 90px !important;
+  margin-left: 0px !important;
+  padding-left: 15px !important;
+  padding-top: 5px !important
+}
+.summary-col {
+  margin-top: 1px !important;
+  margin-left: 1px !important;
+}
+.container {
+  width: 710px !important;
+}
+.panel-heading .panel-title {
+  color: white !important;
+  padding-left: 10px !important;
+}
+.panel-heading .panel-title > a {
+  color: white !important;
+}
+
+table {
+  font-size: 13px !important;
+}
+
+p {
+  margin: 10px 0px !important;
+}
+.disclaimer {
+  margin-top: 30px;
+  font-weight: normal;
+  font-size: 8px;
+}
+.disclaimer p {
+  font-size: 8px;
+}
+</style>
+
+    </head>
+    <body>
+    <div class="container">
+
+        <div class="header-logo"><img  class="header-logo" src="{!URLFOR($Resource.CurrencyCenter_Style, '/IATA_CurrencyCenter_logo_RGB_Larger.png')}"/></div>
+        <apex:outputText rendered="false">{!Country_Profile__c.Listed_In__c}</apex:outputText>
+        <apex:repeat value="{!countriesToReport}" var="country">
+            <apex:outputPanel rendered="{!countriesToReport[0].Id != country.Id}">
+                <div style="page-break-after:always;"/>
+            </apex:outputPanel>
+            <!-- Header -->
+            <div class="row">
+                <div class="col-xs-12 header-{! IF(country.Listed_In__c == 'Blocked Funds', 'blocked-funds', IF(country.Listed_In__c == 'Watch List', 'watch-list', 'all-others')) }">
+
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="row country-title {! IF(country.Listed_In__c == 'Blocked Funds', 'blocked-funds', IF(country.Listed_In__c == 'Watch List', 'watch-list', 'all-others')) }">
+                                <div class="country-name">
+                                        {!country.Name}
+                                </div>
+                                <div class="country-type">
+                                        {! IF(country.Listed_In__c == 'Blocked Funds', $Label.CurrencyCenter_Blocked_Funds_Country, IF(country.Listed_In__c == 'Watch List', $Label.CurrencyCenter_Watch_List_Country, $Label.CurrencyCenter_All_Others_Country)) }
+                                </div>
+                                <div class="country-type">
+                                {! DAY(TODAY()) } {!CASE(MONTH(TODAY()),
+                                        1, 'Jan',
+                                        2, 'Feb',
+                                        3, 'Mar',
+                                        4, 'Apr',
+                                        5, 'May',
+                                        6, 'Jun',
+                                        7, 'Jul',
+                                        8, 'Aug',
+                                        9, 'Sep',
+                                        10, 'Oct',
+                                        11, 'Nov',
+                                        12, 'Dec',
+                                        '-')} {! YEAR(TODAY()) }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-map">
+                            <!-- Google map -->
+                            <div id="country_js_map"></div><!-- style="height:257px;width:340px;"-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <!-- Summary -->
+                <div class="col-md-6 col-xs-8 summary-col">
+                    <div class="summary-title fontArial">Summary</div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Region__c.Label}" styleClass=" fontArial"/></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false" value="{!country.Region__c}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Currency__c.Label}" styleClass=" {!IF(CONTAINS(isChangedString,'Currency__c'),'fieldChanged','')}"/></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false"  value="{!country.Currency__c}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Actual_Amount_Blocked__c.Label}" styleClass=" {!IF(CONTAINS(isChangedString,'Actual_Amount_Blocked__c'),'fieldChanged','')}"/></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false"  value="{!country.Actual_Amount_Blocked__c}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Issue_Started__c.Label}" styleClass=" {!IF(CONTAINS(isChangedString,'Issue_Started__c'),'fieldChanged','')}"/></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false"  value="{0,date,dd MMM yyyy}"><apex:param value="{!country.Issue_Started__c}"/></apex:outputText></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Cause_of_Issue__c.Label}" styleClass=" {!IF(CONTAINS(isChangedString,'Cause_of_Issue__c'),'fieldChanged','')}"/></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false"  value="{!country.Cause_of_Issue__c}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Number_of_Months_Blocked__c.Label}" styleClass=" {!IF(CONTAINS(isChangedString,'Number_of_Months_Blocked__c'),'fieldChanged','')}"/></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false"  value="{!country.Number_of_Months_Blocked__c}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Number_of_Airlines_Reporting_Issues__c.Label}" styleClass=" {!IF(CONTAINS(isChangedString,'Number_of_Airlines_Reporting_Issues__c'),'fieldChanged','')}"/></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false"  value="{!country.Number_of_Airlines_Reporting_Issues__c}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Local_Task_Force__c.Label}" styleClass=" {!IF(CONTAINS(isChangedString,'Local_Task_Force__c'),'fieldChanged','')}"/></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false"  value="{!country.Local_Task_Force__c}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.IATA_Area_Manager__c.Label}" /></div>
+                        <div class="col-xs-6 customValueStyle"><apex:outputText escape="false"  value="{!country.IATA_Area_Manager__c} [{!country.Contact_Email__c}]"/></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ACCORDIONS ROW -->
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6 col-xs-12 summary-col">
+                    <div class="row">
+                        <!-- GENERAL INFORMATION PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel {!IF(isGeneralInformationChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_generalInformation">
+                                    <h4 class="panel-title fontArial">
+                                        <a data-toggle="collapse" data-target="#collapse_generalInformation" href="">
+                                                {!$Label.CurrencyCenter_General_Information}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_generalInformation" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_gi__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_gi__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-12">
+                                                <!-- actual value for update (general information) -->
+                                                <apex:outputText escape="false" value="{!country.Update_gi__c}"/>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.History_of_Blocked_Funds_in_Country__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'History_of_Blocked_Funds_in_Country__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.History_of_Blocked_Funds_in_Country__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Presence_of_BSP__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Presence_of_BSP__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{0,date,dd MMM yyyy}"><apex:param value="{!country.Presence_of_BSP__c}"/></apex:outputText></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Presence_of_CASS__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Presence_of_CASS__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{0,date,dd MMM yyyy}"><apex:param value="{!country.Presence_of_CASS__c}"/></apex:outputText></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Presence_of_ICCS__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Presence_of_ICCS__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{0,date,dd MMM yyyy}"><apex:param value="{!country.Presence_of_ICCS__c}"/></apex:outputText></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Market_Size__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Market_Size__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Market_Size__c}"/></div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END GENERAL INFORMATION PANEL -->
+                        <!-- NEXT ACTION PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel  {!IF(isNextActionChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_nextAction">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_nextAction" href="">
+                                                {!$Label.CurrencyCenter_Next_Action}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_nextAction" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <p>
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                <apex:repeat value="{!futureActionList}" var="a">
+
+                                                    <apex:outputPanel rendered="{!a.isTask}">
+                                                        <tr>
+                                                            <td><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!a.task.ActivityDate}"/></apex:outputText></td>
+                                                            <apex:outputPanel rendered="{!a.isNewlyUpdated}">
+                                                                <td><span class="fieldChanged">{!a.task.Subject}</span></td>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!NOT(a.isNewlyUpdated)}">
+                                                                <td>{!a.task.Subject}</td>
+                                                            </apex:outputPanel>
+                                                        </tr>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel rendered="{!NOT(a.isTask)}">
+                                                        <tr>
+                                                            <td><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!a.event.ActivityDate}"/></apex:outputText></td>
+                                                            <apex:outputPanel rendered="{!a.isNewlyUpdated}">
+                                                                <td><span class="fieldChanged">{!a.event.Subject}</span></td>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!NOT(a.isNewlyUpdated)}">
+                                                                <td>{!a.event.Subject}</td>
+                                                            </apex:outputPanel>
+                                                        </tr>
+                                                    </apex:outputPanel>
+
+                                                </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END NEXT ACTION PANEL -->
+                        <!-- ACTION SUMMARY PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel  {!IF(isNextActionChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_actionSummary">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_actionSummary" href="">
+                                                {!$Label.CurrencyCenter_Action_Summary}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_actionSummary" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <p>
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                <apex:repeat value="{!pastActionList}" var="a">
+
+                                                    <apex:outputPanel rendered="{!a.isTask}">
+                                                        <tr>
+                                                            <td><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!a.task.ActivityDate}"/></apex:outputText></td>
+                                                            <apex:outputPanel rendered="{!a.isNewlyUpdated}">
+                                                                <td><span class="fieldChanged">{!a.task.Subject}</span></td>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!NOT(a.isNewlyUpdated)}">
+                                                                <td>{!a.task.Subject}</td>
+                                                            </apex:outputPanel>
+                                                        </tr>
+                                                    </apex:outputPanel>
+
+                                                    <apex:outputPanel rendered="{!NOT(a.isTask)}">
+                                                        <tr>
+                                                            <td><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!a.event.ActivityDate}"/></apex:outputText></td>
+                                                            <apex:outputPanel rendered="{!a.isNewlyUpdated}">
+                                                                <td><span class="fieldChanged">{!a.event.Subject}</span></td>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!NOT(a.isNewlyUpdated)}">
+                                                                <td>{!a.event.Subject}</td>
+                                                            </apex:outputPanel>
+                                                        </tr>
+                                                    </apex:outputPanel>
+
+                                                </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END ACTION SUMMARY PANEL -->
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-xs-12 summary-col">
+                    <div class="row">
+                        <!-- BSP PROFILE PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel {!IF(isBspCassChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_bspCassProfile">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_bspCassProfile" href="">
+                                                {!$Label.CurrencyCenter_BSP_Profile}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_bspCassProfile" class="panel-collapse collapse">
+                                    <!-- START PANEL -->
+                                    <div class="panel-body bsp-cass-section">
+                                        <div class="tab-content">
+                                            <div id="BSPtab" class="tab-pane fade in active">
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_General_Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_General_Update__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-12">
+                                                        <!-- actual value for general update (BSP) -->
+                                                        <apex:outputText escape="false" value="{!country.BSP_General_Update__c}"/>
+                                                    </div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Launch_Date__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Launch_Date__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{0,date,dd MMM yyyy}"><apex:param value="{!country.BSP_Launch_Date__c}"/></apex:outputText></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_ICCS_Availability__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_ICCS_availability__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_ICCS_Availability__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Airlines_participating__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Airlines_participating__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Airlines_participating__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Clearing_Bank__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Clearing_Bank__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Clearing_Bank__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Currency_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Currency_1__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Currency_1__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Settlement_Frequency_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Settlement_Frequency_1__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Settlement_Frequency_1__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Average_Monthly_Volume_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Average_Monthly_Volume_1__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Average_Monthly_Volume_1__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Currency_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Currency_2__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Currency_2__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Settlement_Frequency_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Settlement_Frequency_2__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Settlement_Frequency_2__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Average_Monthly_Volume_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Average_Monthly_Volume_2__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Average_Monthly_Volume_2__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Payment_Card_Profile_Acceptance__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Payment_Card_Profile_Acceptance__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.BSP_Payment_Card_Profile_Acceptance__c}"/></div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- END PANEL -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END BSP PROFILE PANEL -->
+                        <!-- CASS PROFILE PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel {!IF(isBspCassChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_bspCassProfile">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_bspCassProfile" href="">
+                                                {!$Label.CurrencyCenter_CASS_Profile}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_bspCassProfile" class="panel-collapse collapse">
+                                    <!-- START PANEL -->
+                                    <div class="panel-body bsp-cass-section">
+                                        <div class="tab-content">
+                                            <div id="CASStab" class="tab-pane fade">
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_General_Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_General_Update__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-12">
+                                                        <!-- actual value for general update (CASS) -->
+                                                        <apex:outputText escape="false" value="{!country.CASS_General_Update__c}"/>
+                                                    </div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Launch_Date__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Launch_Date__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{0,date,dd MMM yyyy}"><apex:param value="{!country.CASS_Launch_Date__c}"/></apex:outputText></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_ICCS_Availability__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_ICCS_Availability__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_ICCS_Availability__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Airlines_Participating__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Airlines_Participating__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_Airlines_Participating__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Clearing_Bank__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Clearing_Bank__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_Clearing_Bank__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Currency_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Currency_1__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_Currency_1__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Settlement_Frequency_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Settlement_Frequency_1__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_Settlement_Frequency_1__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Average_Monthly_Volume_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Average_Monthly_Volume_1__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_Average_Monthly_Volume_1__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Currency_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Currency_2__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_Currency_2__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Settlement_Frequency_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Settlement_Frequency_2__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_Settlement_Frequency_2__c}"/></div>
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p>
+                                                    <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Average_Monthly_Volume_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Average_Monthly_Volume_2__c'),'fieldChanged','')}"/></div>
+                                                    <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.CASS_Average_Monthly_Volume_2__c}"/></div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- END PANEL -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END CASS PROFILE PANEL -->
+                        <!-- AIRLINES CHARGES PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel {!IF(isAirlinesChargesChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_airlinesCharges">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_airlinesCharges" href="">
+                                                {!$Label.CurrencyCenter_Airlines_Charges}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_airlinesCharges" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Update__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-12 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Update__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Fuel__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Fuel__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Fuel__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Airport__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Airport__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Airport__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Ground_Handling__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Ground_Handling__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Ground_Handling__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Catering__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Catering__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Catering__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Crew_Accommodation__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Crew_Accommodation__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Crew_Accommodation__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Pax_Accommodation__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Pax_Accommodation__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Pax_Accommodation__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Ground_Transport__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Ground_Transport__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Ground_Transport__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Line_Maintenance__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Line_Maintenance__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.AC_Line_Maintenance__c}"/></div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END AIRLINES CHARGES PANEL -->
+
+                        <!-- ECONOMIC PROFILE PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel panel {!IF(isEconomicProfileChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_economicProfile">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_economicProfile" href="">
+                                                {!$Label.CurrencyCenter_Economic_Profile}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_economicProfile" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.General_profile_e__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'General_profile_e__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-12 customValueStyle">
+                                                <!-- actual value for general profile (summary) -->
+                                                <apex:outputText escape="false" value="{!country.General_profile_e__c}"/>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <!--<hr class="dashedLineCustom"/>-->
+                                        <div class="row horizontal-separator"></div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_e__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_e__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-12">
+                                                <!-- actual value for update -->
+                                                <apex:outputText escape="false" value="{!country.Update_e__c}"/>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <!--<hr class="dashedLineCustom"/>-->
+                                        <div class="row horizontal-separator"></div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.GDP_Growth_yoy__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'GDP_Growth_yoy__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.GDP_Growth_yoy__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Non_Performing_Loans_share_of_total__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Non_Performing_Loans_share_of_total__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Non_Performing_Loans_share_of_total__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Foreign_Exchange_Reserves_change_yoy__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Foreign_Exchange_Reserves_change_yoy__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Foreign_Exchange_Reserves_change_yoy__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Inflation_yoy__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Inflation_yoy__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Inflation_yoy__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Current_Account_Balance_of_GDP__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Current_Account_Balance_of_GDP__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Current_Account_Balance_of_GDP__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Foreign_Exchange_Reserves_months__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Foreign_Exchange_Reserves_months__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Foreign_Exchange_Reserves_months__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Sovereign_Credit_Rating__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Sovereign_Credit_Rating__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Sovereign_Credit_Rating__c}"/></div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END ECONOMIC PROFILE PANEL -->
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-xs-12  summary-col">
+                    <div class="row">
+                        <!-- CURRENCY PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel {!IF(isCurrencyChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_currency" >
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_currency" href="">
+                                                {!$Label.CurrencyCenter_Currency}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_currency" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.General_Profile_c__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'General_Profile_c__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-12 customValueStyle">
+                                                <!-- actual value for general profile (summary) -->
+                                                <apex:outputText escape="false" value="{!country.General_Profile_c__c}"/>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <!--<hr class="dashedLineCustom"/>-->
+                                        <div class="row horizontal-separator"></div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_c__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_c__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-12">
+                                                <!-- actual value for update -->
+                                                <apex:outputText escape="false" value="{!country.Update_c__c}"/>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <!--<hr class="dashedLineCustom"/>-->
+                                        <div class="row horizontal-separator"></div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Currency_Exchange_Rate__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Currency_Exchange_Rate__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Currency_Exchange_Rate__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Spot_1m_Change__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Spot_1m_Change__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Spot_1m_Change__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Spot_12m_Change__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Spot_12m_Change__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Spot_12m_Change__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Forward_NDF__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Forward_NDF__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Forward_NDF__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle">
+                                                <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Credit_Spread__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Credit_Spread__c'),'fieldChanged','')}"/>
+                                            </div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Credit_Spread__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Devaluation_Risk__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Devaluation_Risk__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Devaluation_Risk__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <!--<hr class="dashedLineCustom"/>-->
+                                        <div class="row horizontal-separator"></div>
+                                        <h4 class="panel-title">{!$Label.CurrencyCenter_Fares_And_Ticketing}</h4>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.International_Fares_Currency__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'International_Fares_Currency__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.International_Fares_Currency__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Acceptability_Of_Currency__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Acceptability_Of_Currency__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-5 customValueStyle"><apex:outputText escape="false"  value="{!country.Acceptability_Of_Currency__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Alerts__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Alerts__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Alerts__c}"/></div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END CURRENCY PANEL -->
+                        <!-- REPATRIATION PROCESS PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel {!IF(isRepatriationChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_repatriationProcess">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_repatriationProcess" href="">
+                                                {!$Label.CurrencyCenter_Repatriation_Process}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_repatriationProcess" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_rp__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_rp__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-12 customValueStyle">
+                                                <!-- actual value for update (repatriation process) -->
+                                                <apex:outputText escape="false" value="{!country.Update_rp__c}"/>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Formal_FX_Repatriation_Procedure__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Formal_FX_Repatriation_Procedure__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Formal_FX_Repatriation_Procedure__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Quotas_or_Restrictions__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Quotas_or_Restrictions__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Quotas_or_Restrictions__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Withholding_Tax_on_FX_Cross_Border__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Withholding_Tax_on_FX_Cross_Border__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Withholding_Tax_on_FX_Cross_Border__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Documentation_Forms__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Documentation_Forms__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Documentation_Forms__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.ICCS_Simplified_Process__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'ICCS_Simplified_Process__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.ICCS_Simplified_Process__c}"/></div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END REPATRIATION PROCESS PANEL -->
+                        <!-- IMPORTANT CONTACTS PANEL -->
+                        <div class="col-xs-12 section">
+                            <div class="panel {!IF(isImportantContactsChanged,'panel-changed','panel-standard')}">
+                                <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_importantContacts">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#collapse_importantContacts" href="">
+                                                {!$Label.CurrencyCenter_Important_Contacts}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse_importantContacts" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_ic__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_ic__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-12 customValueStyle">
+                                                <!-- actual value for update (important contacts) -->
+                                                <apex:outputText escape="false" value="{!country.Update_ic__c}"/>
+                                            </div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Central_Bank__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Central_Bank__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Central_Bank__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.International_Banks_Domestic_Banks__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'International_Banks_Domestic_Banks__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.International_Banks_Domestic_Banks__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Minister_of_Transport_and_Tourism__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Minister_of_Transport_and_Tourism__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Minister_of_Transport_and_Tourism__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Civil_Aviation_Authority__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Civil_Aviation_Authority__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Civil_Aviation_Authority__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Travel_Agent_Association__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Travel_Agent_Association__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Travel_Agent_Association__c}"/></div>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                            <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Local_BAR__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Local_BAR__c'),'fieldChanged','')}"/></div>
+                                            <div class="col-sm-8 customValueStyle"><apex:outputText escape="false"  value="{!country.Local_BAR__c}"/></div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END IMPORTANT CONTACTS PANEL -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ICCS ACCORDION ROW -->
+            <div class="row">
+            <div class="col-lg-12 col-xs-12 summary-col">
+                <!-- ICCS PANEL -->
+                <div class="panel {!IF(isIccsChanged,'panel-changed','panel-standard')}">
+                    <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_iccs">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-target="#collapse_iccs" href="">
+                                    {!$Label.CurrencyCenter_ICCS}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse_iccs" class="panel-collapse collapse">
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Availability__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Availability__c'),'fieldChanged','')}"/></div>
+                                        <div class="col-sm-9 customValueStyle"><apex:outputText escape="false"  value="{!country.Availability__c}"/></div>
+                                    </div>
+                                    <div class="row row-buttons">
+                                        <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Status_and_Figures__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Status_and_Figures__c'),'fieldChanged','')}"/></div>
+                                        <div class="col-sm-9 customValueStyle"><apex:outputText escape="false"  value="{!country.Status_and_Figures__c}"/></div>
+                                    </div>
+                                    <div class="row row-buttons">
+                                        <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Tax_Fees_on_Cross_Border_Payments__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Tax_Fees_on_Cross_Border_Payments__c'),'fieldChanged','')}"/></div>
+                                        <div class="col-sm-9 customValueStyle"><apex:outputText escape="false"  value="{!country.Tax_Fees_on_Cross_Border_Payments__c}"/></div>
+                                    </div>
+                                    <div class="row row-buttons">
+                                        <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.FX_Bank_Partners__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'FX_Bank_Partners__c'),'fieldChanged','')}"/></div>
+                                        <div class="col-sm-9 customValueStyle"><apex:outputText escape="false"  value="{!country.FX_Bank_Partners__c}"/></div>
+                                    </div>
+                                    <div class="row row-buttons">
+                                        <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Clearing_Currency__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Clearing_Currency__c'),'fieldChanged','')}"/></div>
+                                        <div class="col-sm-9 customValueStyle"><apex:outputText escape="false"  value="{!country.Clearing_Currency__c}"/></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.History__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'History__c'),'fieldChanged','')}"/></div>
+                                        <div class="col-sm-9 customValueStyle"><apex:outputText escape="false"  value="{!country.History__c}"/></div>
+                                    </div>
+                                    <div class="row row-buttons">
+                                        <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update__c'),'fieldChanged','')}"/></div>
+                                        <div class="col-sm-9 customValueStyle"><apex:outputText escape="false"  value="{!country.Update__c}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- END ICCS PANEL -->
+            </div>
+        </div>
+        </apex:repeat>
+
+        <div class="row">
+            <div class="col-xs-12 disclaimer">
+                <apex:outputText styleClass="disclaimer" escape="false" value="{!$Label.CurrencyCenter_Disclaimer_1}{!$Label.CurrencyCenter_Disclaimer_2}{!$Label.CurrencyCenter_Disclaimer_3}"/>
+            </div>
+        </div>
+    </div>
+    </body>
+    </html>
+</apex:page>

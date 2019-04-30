@@ -13,13 +13,14 @@ public without sharing class ISSP_UserTriggerHandler {
         Set <Id> contactKaviAdd = new Set <Id>();
 
         for(User oneUser: newUserList) {
+        	
             if (oldUserMap.containsKey(oneUser.Id)){
                 if (oneUser.Email != oldUserMap.get(oneUser.Id).Email){
                     oneUser.ISSP_Old_Email__c = oldUserMap.get(oneUser.Id).Email;
                 }
             }
 
-            if(oldUserMap.get(oneUser.Id).Username != oneUser.Username ||
+			if(oldUserMap.get(oneUser.Id).Username != oneUser.Username ||
                oldUserMap.get(oneUser.Id).Phone != oneUser.Phone ||
                oldUserMap.get(oneUser.Id).Fax != oneUser.Fax ||
                oldUserMap.get(oneUser.Id).City != oneUser.City ||
@@ -29,27 +30,22 @@ public without sharing class ISSP_UserTriggerHandler {
                oldUserMap.get(oneUser.Id).Mobilephone != oneUser.Mobilephone ||
                oldUserMap.get(oneUser.Id).Street != oneUser.Street){
               
-               if(oneUser.contactId != null)
+               if(oneUser.contactId != null){
                  contactIdSet.add(oneUser.contactId);
-
+               }
+               
                //Code added to consider Kavi internal users
                if(oneUser.ContactKaviId__c != null){
                    contactIdSet.add(oneUser.ContactKaviId__c);
-                  }
                }
+               
             }
+        }
 
-        List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c FROM Portal_Application_Right__c
-                            WHERE Application_Name__c = 'Standards Setting Workspace'
-                            AND Right__c = 'Access Granted'
-                            AND Contact__c IN :contactIdSet];
-         
-        for (Portal_Application_Right__c thisRecord : appRightList)
-             contactKaviAdd.add(thisRecord.Contact__c);
+        if(contactIdSet.size() > 0){
+            HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, contactIdSet, null);
+        }
         
-        if(contactKaviAdd.size()>0)
-            ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('update',contactKaviAdd);
-
         setPortalUserName(newUserList);
     }
 
@@ -127,7 +123,10 @@ public without sharing class ISSP_UserTriggerHandler {
     public static void changeEmailFromContact (Map<Id, String> conEmailMap, Map<Id, String> conFirstNameMap, Map<Id, String> conLastNameMap, Set<Id> conEmailIdSet){
         system.debug('In ISSP_UserTriggerHandler.changeEmailFromContact');
         
-        List <User> userList = [SELECT Id, Email, ContactId FROM User WHERE ContactId IN :conEmailIdSet];
+        List <User> userList = [SELECT Id, Email, ContactId, ContactKaviId__c
+                                FROM User 
+                                WHERE ContactId IN :conEmailIdSet OR ContactKaviId__c IN :conEmailIdSet];
+
         List <User> updateUserList = new List <User>();
         if (!userList.isEmpty()){
             for (User thisUser : userList){
@@ -136,16 +135,8 @@ public without sharing class ISSP_UserTriggerHandler {
                         thisUser.Email = conEmailMap.get(thisUser.ContactId);
                         updateUserList.add(thisUser);
                     }
-                }
-            }
-        }
-
-        //Code extension to consider also Kavi internal users
-        List <User> userList2 = [SELECT Id, Email, ContactKaviId__c FROM User WHERE ContactKaviId__c IN :conEmailIdSet];
-        //List <User> updateUserList = new List <User>();
-        if (!userList2.isEmpty()){
-            for (User thisUser : userList2){
-                if (conEmailMap.containsKey(thisUser.ContactKaviId__c)){
+                //Code extension to consider also Kavi internal users
+                }else if (conEmailMap.containsKey(thisUser.ContactKaviId__c)){
                     if (thisUser.Email != conEmailMap.get(thisUser.ContactKaviId__c)){
                         thisUser.Email = conEmailMap.get(thisUser.ContactKaviId__c);
                         updateUserList.add(thisUser);
@@ -153,9 +144,9 @@ public without sharing class ISSP_UserTriggerHandler {
                 }
             }
         }
+
         //End of Extension
         if (!updateUserList.isEmpty()){
-            system.debug('Will update user: ' + updateUserList.size());
             update updateUserList;
         }
         
@@ -163,18 +154,23 @@ public without sharing class ISSP_UserTriggerHandler {
         Boolean callSIS = ISSP_WS_SIS_Callout_Common.SIS_CALLOUTS_ENABLED && !preventSISIntegration;
         system.debug('CALLING WEB SERVICE: ' + callSIS);
         if (callSIS) {
-            List <Portal_Application_Right__c> appRightList = [
-                SELECT Id, Contact__c FROM Portal_Application_Right__c
-                WHERE Application_Name__c = 'SIS'
-                AND Right__c = 'Access Granted'
-                AND Contact__c IN :conEmailIdSet];
+            List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c 
+                                                               FROM Portal_Application_Right__c
+                                                               WHERE Application_Name__c = 'SIS'
+                                                                    AND Right__c = 'Access Granted'
+                                                                    AND Contact__c IN :conEmailIdSet];
 
             if (!appRightList.isEmpty()) {
                 list<Id> listContactId = new list<Id>();
                 for (Portal_Application_Right__c thisRecord : appRightList){
                     listContactId.add(thisRecord.Contact__c);
                 }
-                ISSP_WS_Utilities.invokeSisModifyUser(listContactId);
+	        	if(Test.isRunningTest()){
+	        		ISSP_WS_Utilities.invokeSisModifyUser(listContactId);
+	        	}
+	        	else{
+	                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listContactId, 'invokeSisModifyUser'));
+	        	}
             }
         }
     }
@@ -183,10 +179,20 @@ public without sharing class ISSP_UserTriggerHandler {
         Boolean callSIS = ISSP_WS_SIS_Callout_Common.SIS_CALLOUTS_ENABLED && !preventSISIntegration;
         if (callSIS) {
             if (!contactIdAddSet.isEmpty()) {
-                ISSP_WS_Utilities.invokeSisActivateUsers(new list<Id>(contactIdAddSet));
+	        	if(Test.isRunningTest()){
+	        		ISSP_WS_Utilities.invokeSisActivateUsers(new list<Id>(contactIdAddSet));
+	        	}
+	        	else{
+	                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(new list<Id>(contactIdAddSet), 'invokeSisActivateUsers'));
+	        	}
             }
             if (!contactRemoveIdSet.isEmpty()) {
-                ISSP_WS_Utilities.invokeSisDeactivateUsers(new list<Id>(contactRemoveIdSet));
+	        	if(Test.isRunningTest()){
+	        		ISSP_WS_Utilities.invokeSisDeactivateUsers(new list<Id>(contactRemoveIdSet));
+	        	}
+	        	else{
+	                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(new list<Id>(contactRemoveIdSet), 'invokeSisDeactivateUsers'));
+	        	}
             }
         }
     }
@@ -743,12 +749,11 @@ public without sharing class ISSP_UserTriggerHandler {
         Deactivate SIS permission for input contacts and send an email to helpdesk
     **/
     public static void alertSISContactsChangingAccount(set<Id> setContactId){
-        List <Portal_Application_Right__c> appRightList = [
-            SELECT Id, Contact__c, Access_Status_Reason__c
-            FROM Portal_Application_Right__c
-            WHERE Application_Name__c = 'SIS'
-            AND Right__c = 'Access Granted'
-            AND Contact__c IN :setContactId];
+        List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c, Access_Status_Reason__c
+                                                           FROM Portal_Application_Right__c
+                                                           WHERE Application_Name__c = 'SIS'
+                                                            AND Right__c = 'Access Granted'
+                                                            AND Contact__c IN :setContactId];
         if (appRightList.isEmpty()) return;
         
         Boolean isSandbox = [SELECT Id, IsSandbox FROM Organization LIMIT 1].IsSandbox;
@@ -764,9 +769,11 @@ public without sharing class ISSP_UserTriggerHandler {
         EmailTemplate templateOK;
         EmailTemplate templateERROR;
         for (EmailTemplate template : [SELECT Id, Name FROM EmailTemplate
-            WHERE Name IN ('ISSP WS SIS send alert on Account change', 'ISSP WS SIS send alert on Account change Error')]) {
-            if (template.Name == 'ISSP WS SIS send alert on Account change') templateOK = template;
-            if (template.Name == 'ISSP WS SIS send alert on Account change Error') templateERROR = template;
+                                       WHERE Name IN ('ISSP WS SIS send alert on Account change', 'ISSP WS SIS send alert on Account change Error')]) {
+            if (template.Name == 'ISSP WS SIS send alert on Account change') 
+                templateOK = template;
+            if (template.Name == 'ISSP WS SIS send alert on Account change Error') 
+                templateERROR = template;
         }
         
         // deny access to all application rights

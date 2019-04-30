@@ -145,16 +145,15 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
         					if (acliAcc.updateAccount(SFacc) ) {
 	    			    		// create the updated account with info from ACLI
 	        					mapAccountsToUpsertPerSapId.put( acliAcc.AcliSAPId, SFacc );
+
+			        			// add the old account data to the backup
+			        			backUp += AcliAccount.lineOfAcliFromACct(SFacc);	        				
         					}
 	        			}
 	        			else{
 							acliFileInconsistencies += '"' + acliAcc.AcliSAPId + '","' + acliAcc.AirlineName + '","' + acliAcc.legalName + '","' + 'Ongoing coding application process."\r\n';
 							continue;
 	        			}
-
-		        		// add the old account data to the backup
-    		    		backUp += AcliAccount.lineOfAcliFromACct(SFacc);
-        		
         		
         				///// Handle the SAP Account record upsert
         				if (mapSapAccountsPerSapId.get(SFacc.ACLI_SAP_Id__c) != null) {
