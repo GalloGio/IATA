@@ -34,7 +34,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Status</field>
-        <formula>TEXT(Case.Status)</formula>
+        <formula>&quot;&quot;</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Subject</field>
@@ -91,6 +91,16 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Visible_on_ISS_Portal__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Case_record_type__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Create_a_new_task__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
