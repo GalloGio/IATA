@@ -192,7 +192,7 @@ public class TIP_Utils{
 				if(pp.Payment_Provider_Account_Role__c != mapAccountRole.get(pp.Provider__c))
 					prodToUpdate.add(new Partner_products__c(id=pp.Id, Payment_Provider_Account_Role__c = mapAccountRole.get(pp.Provider__c)));
 			}
-		}
+		} 
 		
 		if(!prodToUpdate.isEmpty())	update prodToUpdate;
 	}
