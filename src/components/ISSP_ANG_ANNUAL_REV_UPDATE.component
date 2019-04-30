@@ -364,7 +364,7 @@
                     <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Shipping_Same_As_Billing}" />
                     &nbsp; &nbsp; &nbsp;
                         <apex:inputCheckbox id="disableCheckBoxBranch" value="{!displayShipping}">
-                            <apex:actionSupport event="onchange" rerender="newAddressShipping" oncomplete="toggleAddress();"/>
+                            <apex:actionSupport event="onchange" rerender="newAddressShipping" oncomplete="resetShippingAddress();"/>
                         </apex:inputCheckbox>
                 </apex:outputPanel>
 
@@ -395,21 +395,7 @@
                     </apex:selectList>
 
                     <script type="text/javascript">
-                        function toggleAddress(){
-                            $('[id$="ShippingCountryList"]').val('');
-                            $('[id$="ShippingStateList"]').val('');
-                            $('#shipping_country__c > input').val('');
-
-                            if ('{!displayShipping}' == 'false') {
-                                $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
-                                $('[id$="shippingStateInput"]').attr('style', 'width: 200px; margin-left: 15px;');
-                                $('[id$="ShippingStateList"]').attr('style', 'width: 200px; margin-left: 15px;');
-                                initFieldsSettings();
-                            } else {
-                                $('[id$="ShippingStateList"]').attr('style', 'display: none;');
-                                $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-                            }
-                        }
+                        
                     
                     	function resetShipping(){
                         	if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
@@ -418,15 +404,31 @@
                         }
                     
                     	function resetShippingAddress(){
-                        	if ('{!displayShipping}' == 'false') {
+                            //initFieldsSettings();
+
+                            if ($('[id$="disableCheckBoxBranch"]')[0].checked) {
+
+                                $('[id$="ShippingStateList"]').attr('style', 'display: none;');
+                                $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+                                $('[id$="shippingStateInput"]').val('');
+                                $('[id$="ShippingCountryList"]').val('');
+                            } else {
+                                $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
+                                populateShippingCountry();
+                                copyToADShippingCntr();
+
+                                $('[id$="shippingStateInput"]').attr('style', 'width: 200px; margin-left: 15px;');
+                            }
+
+                        	/*if ('{!displayShipping}' == 'false') {
                                 $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
                                 $('[id$="shippingStateInput"]').attr('style', 'width: 200px; margin-left: 15px;');
-                                initFieldsSettings();
+                                //initFieldsSettings();
                                 copyToADShippingCntr();
                             } else {
                                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
                                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-                            }
+                            }*/
                         }
                     </script>
                 </apex:outputPanel>
@@ -448,35 +450,30 @@
                     </DSE:DS_DataQuality>
                 </apex:outputPanel>
 
-                <apex:pageBlockSectionItem labelStyleClass="agencyLocationComponent pageBlockSectionItem" dataStyleClass="agencyLocationComponent pageBlockSectionItem" id="locationItemWebsite">
+                <apex:outputPanel styleClass="agencyLocationComponent" id="locationItemWebsite" layout="block" style="width: 120%">
+                    <apex:outputLabel value="{!$Label.ISSP_Registration_Website}" styleClass="col-lg-6 adlabel adlabelpos"/>
+                    <apex:inputField id="Website__c" value="{!ca.fw.newform.Website__c}" styleClass="col-lg-5 col-md-1 col-sm-1 col-xs-1" style="margin-left: 5px; width: 200px;"/>
+                </apex:outputPanel>
+
+                <!--<apex:pageBlockSectionItem labelStyleClass="agencyLocationComponent pageBlockSectionItem" dataStyleClass="agencyLocationComponent pageBlockSectionItem" id="locationItemWebsite">
                         <apex:outputLabel value="{!$Label.ISSP_Registration_Website}"/>
                         <apex:inputField id="Website__c" value="{!ca.fw.newform.Website__c}"/>
-                </apex:pageBlockSectionItem>
+                </apex:pageBlockSectionItem>-->
 
-                <apex:pageBlockSectionItem labelStyle="width:37%" labelStyleClass="agencyLocationComponent pageBlockSectionItem"
-                                            dataStyleClass="phone-input agencyLocationComponent pageBlockSectionItem" id="locationItemPhone">
+                <apex:outputPanel styleClass="agencyLocationComponent" id="locationItemPhone" layout="block" style="width: 120%">
+                    <apex:outputLabel value="* {!$Label.ISSP_Registration_BusinessPhone}" styleClass="col-lg-6 adlabel adlabelpos"/>
+                    <apex:inputField value="{!ca.fw.newform.Branch_Office_Phone_National__c}" onblur="setInternationalAccountPhoneInfo('phone'); $('.branch_office_phone__c').change(); updatePhoneInfo();" id="locationphoneinput" style="margin-left: 5px; width: 200px;" styleClass="col-lg-5 col-md-1 col-sm-1 col-xs-1"/>
+                </apex:outputPanel>
 
-                    <apex:outputLabel style="margin-right:4%" value="* {!$Label.ISSP_Registration_BusinessPhone}"/>
-                    <apex:inputField value="{!ca.fw.newform.Branch_Office_Phone_National__c}"
-                                        onblur="setInternationalAccountPhoneInfo('phone'); $('.branch_office_phone__c').change(); updatePhoneInfo();" id="locationphoneinput"
-                                        style="width:80%"/>
-                </apex:pageBlockSectionItem>
+                <apex:outputPanel styleClass="agencyLocationComponent" id="locationItemMobile" layout="block" style="width: 120%">
+                    <apex:outputLabel value="{!$Label.ISSP_Registration_MobilePhone}" styleClass="col-lg-6 adlabel adlabelpos"/>
+                    <apex:inputField value="{!ca.fw.newform.MobileNational__c}" onblur="setInternationalAccountPhoneInfo('mobile');" id="locationmobileinput" style="margin-left: 5px; width: 200px;" styleClass="col-lg-5 col-md-1 col-sm-1 col-xs-1"/>
+                </apex:outputPanel>
 
-                <apex:pageBlockSectionItem labelStyle="width:37%" labelStyleClass="agencyLocationComponent pageBlockSectionItem"
-                                        dataStyleClass="phone-input agencyLocationComponent pageBlockSectionItem" id="locationItemMobile">
-
-                    <apex:outputLabel style="margin-right:4%" value="{!$Label.ISSP_Registration_MobilePhone}"/>
-                    <apex:inputField value="{!ca.fw.newform.MobileNational__c}" onblur="setInternationalAccountPhoneInfo('mobile');" id="locationmobileinput"
-                                        styleClass="col-lg-9"/>
-                </apex:pageBlockSectionItem>
-
-                <apex:pageBlockSectionItem labelStyle="width:37%" labelStyleClass="agencyLocationComponent pageBlockSectionItem"
-                                            dataStyleClass="phone-input agencyLocationComponent pageBlockSectionItem" id="locationItemFax">
-
-                    <apex:outputLabel value="Fax"/>
-                    <apex:inputField value="{!ca.fw.newform.Branch_Office_Fax_National__c}" onblur="setInternationalAccountPhoneInfo('fax');updateFaxInfo();"
-                                        id="locationfaxinput" styleClass="col-lg-9"/>
-                </apex:pageBlockSectionItem>
+                <apex:outputPanel styleClass="agencyLocationComponent" id="locationItemFax" layout="block" style="width: 120%">
+                    <apex:outputLabel value="Fax" styleClass="col-lg-6 adlabel adlabelpos"/>
+                    <apex:inputField value="{!ca.fw.newform.Branch_Office_Fax_National__c}" onblur="setInternationalAccountPhoneInfo('fax');updateFaxInfo();" id="locationfaxinput" style="margin-left: 5px; width: 200px;" styleClass="col-lg-5 col-md-1 col-sm-1 col-xs-1"/>
+                </apex:outputPanel>
 
                 <apex:inputHidden value="{!ca.fw.newform.Branch_Office_Phone__c}" id="locationphone"/>
                 <apex:inputHidden value="{!ca.fw.newform.Mobile__c}" id="locationmobile"/>
@@ -1137,7 +1134,9 @@
 
         function copyToADShippingCntr(){
             var dropdownValue = $('[id$="ShippingCountryList"]').val();
-            $('#shipping_country__c > input').val(dropdownValue == null ? "{!ca.account.ShippingCountry}" : dropdownValue);
+            console.log('oiio: ', dropdownValue);
+            $('#shipping_country__c > input').val(dropdownValue == null || dropdownValue == '' ? "{!ca.account.ShippingCountry}" : dropdownValue);
+            
             $('#shipping_country__c > input').change();
             populateShippingAsterisks();
             resetPCHint();
@@ -1368,8 +1367,8 @@
             $('[id$="billingStateText"]').css('display', 'none');
         }
 
-        var natmobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemMobile.locationmobileinput}']");
-        var mobileacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationmobile}']");
+        var natmobileacct1 = $j('[id$="locationmobileinput"]');
+        var mobileacct1 = $j('[id$="locationmobile"]');
 
         natmobileacct1.intlTelInput({
             nationalMode: true,
@@ -1378,8 +1377,8 @@
             utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
 
-        var natfaxacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemFax.locationfaxinput}']");
-        var faxacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.addressSection.locationfax}']");
+        var natfaxacct1 = $j('[id$="locationfaxinput"]');
+        var faxacct1 = $j('[id$="locationfax"]');
 
         natfaxacct1.intlTelInput({
             nationalMode: true,
@@ -1388,9 +1387,9 @@
             utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
 
-        var natphoneacct1 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationItemPhone.locationphoneinput}']");
+        var natphoneacct1 = $j('[id$="locationphoneinput"]');
         var phoneacct1 = $j('.branch_office_phone__c');
-        var phoneacct2 = $j("input[name='{!$Component.step1Form.step1Block.update.updateComponent.Section2.addressSection.locationphone}']");
+        var phoneacct2 = $j('[id$="locationphone"]');
 
         natphoneacct1.intlTelInput({
             nationalMode: true,
