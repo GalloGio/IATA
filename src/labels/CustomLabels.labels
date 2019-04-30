@@ -33395,6 +33395,46 @@ title,Title,Name</value>
         <value>contacting us.</value>
     </labels>
     <labels>
+        <fullName>csp_Accreditation_Process</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accreditation Process</shortDescription>
+        <value>Accreditation Process</value>
+    </labels>
+    <labels>
+        <fullName>csp_Financial_Review</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Review</shortDescription>
+        <value>Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>csp_IATA_Payment</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Payment</shortDescription>
+        <value>IATA Payment</value>
+    </labels>
+    <labels>
+        <fullName>csp_Sales_Payment</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Payment</shortDescription>
+        <value>Sales Payment</value>
+    </labels>
+    <labels>
+        <fullName>csp_Emergency_Query</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency Query</shortDescription>
+        <value>Emergency Query</value>
+    </labels>
+    <labels>
         <fullName>days_left</fullName>
         <language>en_US</language>
         <protected>false</protected>
