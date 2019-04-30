@@ -61,7 +61,7 @@ global   class  ArchiveAttachmentListController {
         }
         return this.archivedAttachments;
     }
-
+    
     @TestVisible
     private void loadAttachmentFromCaseId(){
     // this.listAmazon.clear();
