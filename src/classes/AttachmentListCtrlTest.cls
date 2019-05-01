@@ -5,7 +5,8 @@ private  class AttachmentListCtrlTest {
 		WrapperAttachTest.loadTestCredentials();
         
 
-        insert new AWSKey__c(
+        insert new list <AWSKey__c>{
+            new AWSKey__c(
 				name = 'sandbox',
 				Key__c = 'asd',
 				Secret__c = 'asd',
@@ -13,7 +14,17 @@ private  class AttachmentListCtrlTest {
 				IAS_Access_Point__c = 'asd',
 				Bucket__c = 'asd',
 				AWS_ENDPOINT_URL__c = 'asd'
-			);
+			),
+            new AWSKey__c(
+				name = 'production',
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+			)};
+
         
 	}
 
@@ -143,8 +154,18 @@ private  class AttachmentListCtrlTest {
         Case cse = new Case();
         insert cse;
         
-        AttachmentListCtrl.UploadFile file=AttachmentListCtrl.createUploadFile(cse.id, 'testFilename', 'asd',12, '', 'GenericAttach');
-       
+        
+        //filename too big
+        string filename='7Ss2YCdGrhtP5SO3688fnGsLjhDeoZmpOWzSY8k5GMccAZIoDDjPoP8bYntk9KTNu8G5Oydfs1KRqShek';
+        AttachmentListCtrl.UploadFile file2=AttachmentListCtrl.createUploadFile(cse.id,filename, 'asd',219, '', 'GenericAttach');
+        system.assertEquals(file2.isSuccess,false);
+        system.assertEquals(file2.errorMessage,Label.File_name_too_long);
+
+       AttachmentListCtrl.UploadFile file3=AttachmentListCtrl.createUploadFile(cse.id,'testname', 'asd',219, '', 'GenericAttach');
+        system.assertEquals(file3.isSuccess,true);
+
+
+
         boolean fileAmazon=AttachmentListCtrl.createAmazonFileObject('aaaakkk', 12, cse.id, 'File', '', '');
         system.assertEquals(fileAmazon,true);
 
