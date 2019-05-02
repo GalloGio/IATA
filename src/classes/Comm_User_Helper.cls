@@ -194,7 +194,6 @@ global without sharing class Comm_User_Helper {
                         }else if(community == NDCMM){
                             template = 'Identity_Portal_FRED_New_User';
                             link += '&serviceName=NDCMM';
-                        }
                         }else if(community == GADM) {
                             link += '&serviceName=GADM';
                             template = 'Identity_Portal_New_User';
