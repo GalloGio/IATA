@@ -4668,6 +4668,7 @@
                   }
                 ],
                 "DisplayFields": [
+                  "ANG_FA_Opt_out__c",
                   "STEP11__c"
                 ],
                 "IsDependent": false
