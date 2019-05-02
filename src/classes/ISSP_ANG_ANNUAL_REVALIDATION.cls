@@ -486,6 +486,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			keepConfirmedData();
+			addVATPrefix();
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
@@ -505,6 +506,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				currentAccount.fw.newform.status__c = FORM_STATUS_COMPLETED;
 				migrateExtraFields();
 				keepConfirmedData();
+				addVATPrefix();
 			}
 
 			// The form is always saved despite having errors.
@@ -1943,5 +1945,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
             return null;
         }
+    }
+
+    private void addVATPrefix() {
+    	if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c)) {
+    		currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c;
+    	}
+
+    	if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c)) {
+    		currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c;
+    	}
     }
 }
