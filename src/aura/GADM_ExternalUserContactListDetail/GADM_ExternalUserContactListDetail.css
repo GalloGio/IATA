@@ -1,0 +1,21 @@
+.THIS.page_container{
+    width:40%;
+    margin:0 auto;
+}
+
+.THIS .secondColumn {
+    width:50px;
+}
+
+.THIS .field {
+    height: 40px !important;
+}
+
+.THIS .checkbox {
+    margin-top:5px;
+}
+
+.THIS .evenRows {
+    height: 6px;
+    background-color: #F2F2F2;
+}

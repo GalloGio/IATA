@@ -100,7 +100,7 @@ public class GADMwrapper_CTRL_TEST {
 
     }
 
-    @IsTest
+    /*@IsTest
     private static void isAccessGrantedTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'test.gadm@testgadm.com'];
@@ -117,9 +117,9 @@ public class GADMwrapper_CTRL_TEST {
 
         System.assertEquals(false, testResult, 'GADM User role is not granted so access should not be granted!');
 
-    }
+    }*/
 
-    @IsTest
+    /*@IsTest
     private static void isAccessGranted2Test() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'test.gadm@testgadm.com'];
@@ -140,9 +140,9 @@ public class GADMwrapper_CTRL_TEST {
 
         System.assertEquals(true, testResult, 'GADM User role not granted so access should be granted!');
 
-    }
+    }*/
 
-    @IsTest
+    /*@IsTest
     private static void isAccessGrantedNullUserIdTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'test.gadm@testgadm.com'];
@@ -159,7 +159,7 @@ public class GADMwrapper_CTRL_TEST {
 
         System.assertEquals(false, testResult, 'Access should be denied if userId = null!');
 
-    }
+    }*/
 
     @IsTest
     private static void getUserRolesTest() {

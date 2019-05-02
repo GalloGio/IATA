@@ -1,0 +1,154 @@
+<aura:component controller="GADM_ExternalUserContactListDetail_CTRL" description="GADM_ExternalUserContactListDetail">
+
+    <aura:attribute name="contact" type="Object"/>
+    <!--ACCOUNTS-->
+    <aura:attribute name="managingUserAccessGrantedAccounts" type="List"/>
+    <aura:attribute name="accessGrantedAccounts" type="List"/>
+    <!--ROLES-->
+    <aura:attribute name="roles" type="List"/>
+    <aura:attribute name="managingUserRoles" type="List"/>
+    <aura:attribute name="userGrantedRoles" type="List"/>
+    <!--CHANGES IN ROLES-->
+
+    <!--CHANGES IN ACCOUNTS-->
+
+    <!--SHOW TABLE-->
+    <aura:attribute name="displayTable" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{! c.doInit}"/>
+    <aura:registerEvent name="Back_EVT" type="c:GADM_ExternalUserContactList_EVT"/>
+
+
+    <div class="page_container">
+
+        <aura:if isTrue="{! v.displayTable}">
+
+            <lightning:recordViewForm recordId="{! v.contact.Id}" objectApiName="Contact" class="slds-hide">
+
+                <div class="slds-grid slds-grid_align-space">
+                    <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium">
+                        <!-- Auto Number -->
+                        <lightning:outputField variant="label-hidden" fieldName="Salutation" />
+
+                        <!-- Lookup -->
+                        <lightning:outputField variant="label-hidden" fieldName="FirstName" />
+
+                        <!-- Boolean -->
+                        <lightning:outputField variant="label-hidden" fieldName="LastName" />
+
+                    </div>
+                </div>
+            </lightning:recordViewForm>
+
+
+        <div class="slds-p-bottom_large">
+
+            <h2 class="slds-p-bottom_large">{! v.contact.Salutation}&nbsp; {! v.contact.LastName}, {! v.contact.FirstName} </h2>
+
+            <div class="slds-p-bottom_small">
+                <label class="slds-form-element__label" >EMAIL</label>
+                <ui:inputText value="{!v.contact.Email}" class="slds-input field" />
+            </div>
+
+            <div class="slds-p-bottom_small">
+                <label class="slds-form-element__label" >PHONE</label>
+                <ui:inputText value="{!v.contact.Phone}" class="slds-input field" />
+            </div>
+
+            <div class="slds-p-bottom_small">
+                <label class="slds-form-element__label" >ACCOUNT</label>
+                <ui:inputText value="{!v.contact.Account.Name}" class="slds-input field" />
+            </div>
+
+            <div class="slds-p-bottom_small">
+                <label class="slds-form-element__label" >IATA CODE</label>
+                <ui:inputText value="{!v.contact.Account.IATACode__c}" class="slds-input field" />
+            </div>
+
+            <div class="">
+                <label class="slds-form-element__label" >REGION</label>
+                <ui:inputText value="{!v.contact.Account.Region__c}" class="slds-input field" />
+            </div>
+
+
+        </div>
+
+        <!--ROLES-->
+        <div class="slds-p-bottom_large">
+
+            <div class="slds-grid slds-wrap slds-p-bottom--large" >
+                <aura:iteration items="{!v.roles}" var="role">
+                    <div class="slds-size--1-of-1 slds-grid">
+                        <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!role.checked}" onchange="{c.changeRole}"  disabled="{! (role.Name == 'Power User' || role.isEditable == false)}" /></div>
+                        <div class="label slds-col--padded slds-size--7-of-8">{!role.Name}</div>
+                    </div>
+                </aura:iteration>
+            </div>
+
+        </div>
+
+        <!--ACCOUNTS-->
+        <div class="slds-p-bottom_large">
+
+            <table class="slds-table slds-no-row-hover">
+                <colgroup>
+                    <col class=""/>
+                    <col class="secondColumn"/>
+                </colgroup>
+                <thead>
+                <tr class="slds-text-heading_label">
+                    <th scope="col"><div class="slds-truncate tableHeader" title="Account">Account</div><div class="headerBottom_first"></div></th>
+                    <th scope="col"><div class="slds-truncate tableHeader" title="Active">Active</div><div class="headerBottom_center"></div></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <!-- Use the Apex model and controller to fetch server side data -->
+                <aura:iteration items="{!v.managingUserAccessGrantedAccounts}" var="account" indexVar="index">
+                    <tr class="{! if(index % 2 == 1, 'oddLine', if(index == 0, 'evenLine headerTop', 'evenLine'))}">
+
+                        <td class="right2px"><div class="slds-truncate" title="{!account.Name}">{!account.Name}</div></td>
+                        <td><div class="slds-truncate"><lightning:input type="checkbox" checked="{!account.checked}" onchange="{c.changeAccount}"/></div></td>
+
+                    </tr>
+                </aura:iteration>
+
+                </tbody>
+
+            </table>
+
+            <aura:if isTrue="{! v.managingUserAccessGrantedAccounts.length % 2 == 0}">
+                <div class="evenRows"></div>
+            </aura:if>
+
+        </div>
+
+
+
+
+        <div  class="slds-grid slds-wrap">
+
+            <div class="slds-size--1-of-2 slds-p-right_small">
+                <button class="btn btn-primary btn-grey slds-float--right" onclick="{! c.Save }">Save</button>
+            </div>
+
+            <div class="slds-size--1-of-2 slds-p-left_small">
+                <button class="btn btn-primary btn-grey " onclick="{! c.back }">Back</button>
+            </div>
+
+        </div>
+
+        </aura:if>
+
+        <div aura:id="spinner" class="slds-hide">
+            <lightning:spinner alternativeText="Loading"/>
+        </div>
+
+
+
+
+
+
+    </div>
+
+</aura:component>
