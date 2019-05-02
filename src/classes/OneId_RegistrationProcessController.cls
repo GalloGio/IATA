@@ -506,6 +506,11 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
+    public static boolean registration(Account acc, Contact con, String serviceName){
+        return registration(acc, con, serviceName, new Map<String, String>());
+    }
+
+    @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> serviceSpecificParams){
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
