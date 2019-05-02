@@ -77,3 +77,11 @@
 .lower_panel_size{
     width:65%;
 }
+
+.chatButton button{
+    width: 130px;
+}
+
+.goLeft{
+    float: left;
+}
