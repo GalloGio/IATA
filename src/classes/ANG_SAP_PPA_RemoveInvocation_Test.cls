@@ -74,8 +74,12 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 
 		AMS_Oscar__c updatedOscar = [SELECT Billing_Document_Number__c FROM AMS_Oscar__c limit 1];
 
-		//Check assert Equals
+		//Check External_ID be copied to oscar field Billing_Document_Number__c
 		System.assertEquals(artifact.External_ID__c, updatedOscar.Billing_Document_Number__c);
+
+		Remote_Invocation_Artefact__c updatedRmtInvArt = [SELECT Payment_type__c,External_ID__c, Object_Id_Created__c FROM Remote_Invocation_Artefact__c limit 1];
+
+		System.assertEquals(updatedRmtInvArt.Object_Id_Created__c, artifact.External_ID__c);
 	}
 
 
