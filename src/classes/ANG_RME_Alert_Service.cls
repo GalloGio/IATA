@@ -276,6 +276,9 @@ global class ANG_RME_Alert_Service {
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
+			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
+			Decimal rounded = toRound.setScale(2, RoundingMode.HALF_UP);
+			system.debug(rounded);
 
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
@@ -291,7 +294,7 @@ global class ANG_RME_Alert_Service {
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW4', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
-			else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+			else if (result.res.storedRHCValue != rounded){
 				result.isSuccess = false;
 				log.Error_Code__c = 'RHC Value Mismatch';
 				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');

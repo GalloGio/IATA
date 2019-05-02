@@ -810,6 +810,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Full_Name_Unique__c</fields>
+        <fields>Document_Date__c</fields>
+        <fields>Source__c</fields>
+        <fields>Size_MB__c</fields>
+        <fields>OWNER.ALIAS</fields>
         <relatedList>AmazonFile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
