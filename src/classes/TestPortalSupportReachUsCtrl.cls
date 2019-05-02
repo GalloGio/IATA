@@ -21,7 +21,6 @@ public with sharing class TestPortalSupportReachUsCtrl {
         parent.IATACode__c = '100';
         
         insert parent;
-        System.debug('parent Id: ' + parent.Id);
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'test2';
         child.Name = 'test2';
@@ -31,55 +30,39 @@ public with sharing class TestPortalSupportReachUsCtrl {
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr ;
         insert child;
-        System.debug('child Id: ' + child.Id);
         
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = child.Id;
         con.Email = 'Test@test11.com';
         insert con;
         
-        System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
         
-        list<ISSP_FAQ2Case_Permissions__c> listFaq2CasePermissions = new list<ISSP_FAQ2Case_Permissions__c>{
-            new ISSP_FAQ2Case_Permissions__c(
-                Name = '1',
-                ISO_Country__c = 'All',
-                Sector_Permission__c = 'All',
-                Topic__c = 'CNS_Portal,CNS_CASS_Operations_Cargo,CNS_Endorsement_Cargo_Agent,TASF',
-                Subtopic__c = ''),
-                new ISSP_FAQ2Case_Permissions__c(
-                    Name = '2',
-                    ISO_Country__c = 'All',
-                    Sector_Permission__c = 'All',
-                    Topic__c = '',
-                    Subtopic__c = 'CGO_Accreditations_Fees,CGO_Changes_to_my_Agency,CGO_Closure_of_my_Agency,New_Cargo_Agency_Application,PAX_Accreditation_Fees,PAX_Changes_to_my_Agency,PAX_Closure_of_my_Agency,ID_CardNew_Travel_Agency_Application,PORTAL_General_Information')
-                };
-                    insert listFaq2CasePermissions;
+        LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
+        labs.Name = 'AgencyEnglishEurope';
+        labs.ButtonId__c = '5731r00000003vK';
+        labs.Button_Per_Topic__c = false;
+        labs.DeploymentId__c = '572w0000000CdgF';
+        labs.Language__c = 'en';
+        labs.Region__c = 'Europe';
+        labs.Sectors__c = 'Cargo Agent, Travel Agent';
+        insert labs;
+        
+        LiveAgentButtonSettings__c labsWTopic = new LiveAgentButtonSettings__c();
+        labsWTopic.Name = 'BIS - AirportIS';
+        labsWTopic.ButtonId__c = '5731r0000004GMG';
+        labsWTopic.Button_Per_Topic__c = true;
+        labsWTopic.DeploymentId__c = '572w0000000CdgF';
+        labsWTopic.Language__c = 'en';
+        labsWTopic.Topic__c = 'AirportIS__c';
+        insert labsWTopic;
         
         test.startTest();
         
         System.runAs(newUser) {
-            Boolean newisCNS = PortalSupportReachUsCtrl.isCNS;
-            
-            Map<String,String> myMap = new Map<String,String>();
-            
-            myMap = PortalSupportReachUsCtrl.getTopicPickListValues();
-            
-            Map<String,String> myMap2 = new Map<String,String>();
-            
-            Set <String> topicValueSet = myMap.keySet();
-            
-            string topic = null;
-            for (string setElement : topicValueSet) {
-                topic = setElement;
-                break;
-            }
-            
-            myMap2 = PortalSupportReachUsCtrl.getSubTopicPickListValues(topic);
             
             Map<String,String> myMapEs = new Map<String,String>();
             Map<String,String> myMapKo = new Map<String,String>();
@@ -111,6 +94,10 @@ public with sharing class TestPortalSupportReachUsCtrl {
             newUser.LanguageLocaleKey ='it';
             update newUser;
             myMapIT = PortalSupportReachUsCtrl.getCountryList();
+            
+            List<LiveAgentButtonSettings__c> labstest = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','en'); 
+            List<LiveAgentButtonSettings__c> labstests = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','');
+            
             test.stopTest();
         }
     }

@@ -39,7 +39,7 @@
         <div class="slds-col slds-size_2-of-3 slds-large-size_2-of-3 slds-medium-size_1-of-1 slds-small-size_1-of-1">
             <div class="customCard">
 
-                <c:portalSupportReachUsTest onfilterChange="{!c.handlefilterChangeEvent}"
+                <c:portalSupportReachUs onfilterChange="{!c.handlefilterChangeEvent}"
                     ontoggleSpinner="{!c.toggleSpinner}" onshowoptions="{!c.showoptions}"
                     oncloseoptions="{!c.closeoptions}" />
 
