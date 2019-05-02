@@ -568,8 +568,22 @@ global class AMS_OSCAR_Webservice {
                 
                 List<ANG_Agency_Risk_Event__c> rskEventLst = [SELECT Id from ANG_Agency_Risk_Event__c where ANG_OscarId__c = :oscarId];
                 
-                if(rskEventLst.isEmpty())
+                if(rskEventLst.isEmpty()){
+
+                    if(isNGNewAccreditation){
+
+                        ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :oscar[0].Account__c LIMIT 1];
+
+                        if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c){
+                            AMS_OscarTriggerHandler.applyRHCForecast = true;                
+                            update rhcInfo;
+                            AMS_OscarTriggerHandler.applyRHCForecast = false;
+                        }
+                    }
+                    
                     return 'No risk event is needed for this OSCAR.';
+
+                } 
                 else
                     return rskEventLst.size() + ' Risk(s) Event(s) generated successfully';
 
