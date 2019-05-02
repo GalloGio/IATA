@@ -282,6 +282,7 @@ public class AMS_OscarCase_RiskMgmt {
 						}
 					}
 				}
+			}
 
 			System.debug('mapChangeCodeToCreate:'+mapChangeCodeToCreate);
 			system.debug(logginglevel.error, 'DTULLO 226 setOperationCalendarExtID --> ' + setOperationCalendarExtID);
@@ -823,7 +824,8 @@ public class AMS_OscarCase_RiskMgmt {
 			if(sFieldToCheck=='Parent.Status')
 				sValue = NewCaseValues.Parent.Status;
 			else if(sFieldToCheck=='LastYearIFAP.Status'){
-				sValue = lastIFAP.Status;
+				//Account must have an IFAP Case from last year to be possible to generate NOT change code
+				if(lastIFAP != null) sValue = lastIFAP.Status;
 			}
 			else {
 				sValue = (string)NewCaseValues.get(sFieldToCheck);
@@ -966,7 +968,8 @@ public class AMS_OscarCase_RiskMgmt {
 				((Field3==null || Field3.toUpperCase() == 'PARENT.STATUS' || Field3.toUpperCase() ==  'CHANGECODE' || Field3.toUpperCase()== 'EXISTS') || (Field3 != null && NewCaseValues.get(Field3) == OldCaseValues.get(Field3))) &&
 				((Field4==null || Field4.toUpperCase() == 'PARENT.STATUS' || Field4.toUpperCase() ==  'CHANGECODE' || Field4.toUpperCase()== 'EXISTS') || (Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4))) &&
 				((Field5==null || Field5.toUpperCase() == 'PARENT.STATUS' || Field5.toUpperCase() ==  'CHANGECODE' || Field5.toUpperCase()== 'EXISTS') || (Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5))) &&
-				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
+				//NEWGEN-5318 - avoid validation when Field6 Value = LASTYEARIFAP.STATUS
+				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && Field6.toUpperCase() != 'LASTYEARIFAP.STATUS' && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
 				)
 				return false;
 		}
