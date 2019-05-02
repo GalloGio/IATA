@@ -1,4 +1,4 @@
-<aura:component controller="LiveAgentChatButton" implements="forceCommunity:availableForAllPageTypes" access="global">
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
 
     <aura:attribute name="organizationId" type="String" required="true" />
     <aura:attribute name="deploymentUrl" type="String" required="true" />
