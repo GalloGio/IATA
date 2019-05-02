@@ -71,7 +71,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
                 for (IATA_ISO_State__c state: [SELECT Id, Name
                                             FROM IATA_ISO_State__c
-                                            WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c]) {
+                                            WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c
+                                            ORDER BY Name]) {
                     billingStateList.add(new SelectOption(state.Name, state.Name));
                 }
             }
@@ -87,7 +88,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
                 for (IATA_ISO_State__c state: [SELECT Id, Name, IATA_ISO_Country__r.Informatica_Value__c
                                             FROM IATA_ISO_State__c
-                                            WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true]) {
+                                            WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true
+                                            ORDER BY Name]) {
                     if (!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase())) {
                         stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase(), new List<IATA_ISO_State__c>());
                     }
