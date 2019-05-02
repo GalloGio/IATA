@@ -1,0 +1,76 @@
+<template>
+
+    <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" onclick={closeSearch}></div>
+
+    <div class="mainContentDiv">
+
+        <!-- Search Bar div -->
+        <div class="slds-p-vertical_small customCardWhite searchBarRow">
+            <div class="searchBarIcon">
+                <lightning-icon
+                    icon-name="utility:search"
+                    size="small"
+                    alternative-text="Search" class="slds-p-left_small">
+                </lightning-icon>
+            </div>
+            <div class="searchBarBarContainer">
+                <div style="width:100%;">
+                    <lightning-input
+                        name="enter-search"
+                        type="text"
+                        placeholder={placeholder}
+                        onclick={onclickSearchInput}
+                        onchange={onchangeSearchInput}
+                        onkeyup={onkeyupSearchInput}
+                        value={searchText}
+                        class="hideInputLabel borderlessInput searchInputPlaceHolder">
+                    </lightning-input>
+                </div>
+            </div>
+            <div>
+                <lightning-button class="outlinedButton slds-p-right_small" variant="neutral" label="Filter" title="Filter" 
+                    icon-name="utility:rows" icon-position="right" onclick={enablefilters}>
+                </lightning-button>
+            </div>
+        </div>
+        
+        <!-- RESULTS DIV -->
+        <div if:true={showHoverResults} class="resultsContentDiv"> 
+            
+            <!-- COMPONENTS SECTION -->
+            <div class="slds-grid slds-wrap">
+
+                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3">
+                    <div class="slds-m-around_medium">
+                        <c-portal-search-cases-list filtering-object-parent={filteringObject}></c-portal-search-cases-list>
+                    </div>
+
+                    <div class="slds-m-around_medium">
+                        <c-portal-search-f-a-q-list filtering-object-parent={filteringObject}></c-portal-search-f-a-q-list>
+                    </div>
+
+                    <div class="slds-m-around_medium">
+                        <c-portal-search-documents-list filtering-object-parent={filteringObject}></c-portal-search-documents-list>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-3">
+                    <div class="slds-m-around_medium">
+                        <c-portal-search-services-list filtering-object-parent={filteringObject}></c-portal-search-services-list>
+                    </div>
+                    <div class="slds-m-around_medium">
+                        <c-portal-search-features-list filtering-object-parent={filteringObject}></c-portal-search-features-list>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+
+
+
+
+    </div>
+
+
+</template>

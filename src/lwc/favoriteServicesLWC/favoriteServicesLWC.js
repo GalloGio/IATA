@@ -1,7 +1,12 @@
 import { LightningElement, track, api } from 'lwc';
-import csp_Request_New_Service from '@salesforce/label/c.csp_Request_New_Service';
+
 import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavoriteServicesList';
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
+import { updateRecord } from 'lightning/uiRecordApi';
+
+//import labels 
+import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
+import csp_Request_New_Service from '@salesforce/label/c.csp_Request_New_Service';
 
 export default class FavoriteServicesLWC extends LightningElement {
     //track variables
@@ -21,7 +26,8 @@ export default class FavoriteServicesLWC extends LightningElement {
 
     // Expose the labels to use in the template.
     label = {
-        csp_Request_New_Service
+        csp_Request_New_Service,
+        CSP_SeeAll
     };
 
     //Same as doInit() function on old aura components
@@ -77,10 +83,10 @@ export default class FavoriteServicesLWC extends LightningElement {
             for (let j = 0; j < this.globaList[i].length; j++) {
                 for (let k = 0; k < this.globaList[i][j].length; k++) {
                     if (this.globaList[i][j].length === 1) {
-                        this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-around_small slds-card_boundary';
+                        this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-around_small aroundLightGrayBorder';
                     }
                     if (this.globaList[i][j].length === 2) {
-                        this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-around_small slds-card_boundary';
+                        this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-around_small aroundLightGrayBorder';
                     }
                 }
             }
@@ -192,15 +198,30 @@ export default class FavoriteServicesLWC extends LightningElement {
 
     //method that controls the redirection of the service's links
     redirect(event) {
-
         //attributes stored on element that is related to the event
         const appUrlData = event.target.attributes.getNamedItem('data-appurl');
         const appFullUrlData = event.target.attributes.getNamedItem('data-appfullurl');
         const openWindowData = event.target.attributes.getNamedItem('data-openwindow');
         const requestable = event.target.attributes.getNamedItem('data-requestable');
+        const recordId = event.target.attributes.getNamedItem('data-recordid');
+        
+        // update Last Visit Date on record
+        // Create the recordInput object
+        const fields = {};
+        fields.Id = recordId.value;
+        fields.Last_Visit_Date__c = new Date().toISOString();
+        const recordInput = { fields };
 
+        updateRecord(recordInput)
+            .then(() => {
+                console.info('Updated Last Visit Date successfully!');
+            })
+            .catch(error => {
+                console.error('err ', error.body.message);
+            });
+        
         let myUrl = appUrlData.value;
-
+        
         //verifies if the event target contains all data for correct redirection
         if (openWindowData !== undefined) {
             //determines if the link is to be opened on a new window or on the current
@@ -240,6 +261,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                 //redirects on the same page
                 window.location.href = myUrl;
             }
+            
         }
     }
 

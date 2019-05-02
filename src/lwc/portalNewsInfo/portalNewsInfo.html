@@ -1,38 +1,55 @@
 <template>
-    <lightning-card>
-        <div slot="title">
-            <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+
+    <c-portal-custom-card-container>
+
+        <span slot="cardTitle">
             {label.CSP_ForYou}
-        </div>
-        <template if:true={loading}>
-            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-        </template>
-        <template if:false={loading}>
-            <div class="slds-m-around_x-small">
-                <template if:true={dataRecords}>
-                    <div class="infoBanner">
-                        <img src={bannerImages} class="carouselBanner">
-                    </div>
+        </span>
+
+        <!--<span slot="cardButton">
+            <lightning-button variant="base" 
+                label={label.CSP_SeeAll} 
+                title={label.CSP_SeeAll}
+                icon-name="utility:forward" 
+                icon-position="right" 
+                onclick={seeAllCases}
+                class="slds-p-right_small blueCustomButtonLink">
+            </lightning-button>
+        </span>-->
+
+        <span slot="cardBody">
+            <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            <template if:false={loading}>
+                <div class="slds-m-around_x-small">
+                    <template if:true={dataRecords}>
+                        <div class="infoBanner">
+                            <img src={bannerImages} class="carouselBanner">
+                        </div>
+                    </template>
+                </div>
+            </template>
+            
+            <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
+                <lightning-layout-item padding="around-small">
+                    <lightning-icon icon-name="utility:chevronleft" onclick={handlePrevious} size="small"
+                        class="cursorPointer" variant="light"></lightning-icon>
+                </lightning-layout-item>
+                <template for:each={sliderIcons} for:item="sliderIcon">
+                    <lightning-layout-item padding="around-small" key={sliderIcon.id}>
+                        <lightning-icon icon-name="utility:record" size="xx-small" variant={sliderIcon.variant}>
+                        </lightning-icon>
+                    </lightning-layout-item>
                 </template>
-            </div>
-        </template>
-        
-        <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
-            <lightning-layout-item padding="around-small">
-                <lightning-icon icon-name="utility:chevronleft" onclick={handlePrevious} size="small"
-                    class="cursorPointer" variant="light"></lightning-icon>
-            </lightning-layout-item>
-            <template for:each={sliderIcons} for:item="sliderIcon">
-                <lightning-layout-item padding="around-small" key={sliderIcon.id}>
-                    <lightning-icon icon-name="utility:record" size="xx-small" variant={sliderIcon.variant}>
+                <lightning-layout-item padding="around-small">
+                    <lightning-icon icon-name="utility:chevronright" size="small" onclick={handleNext} variant="light"
+                        class="cursorPointer">
                     </lightning-icon>
                 </lightning-layout-item>
-            </template>
-            <lightning-layout-item padding="around-small">
-                <lightning-icon icon-name="utility:chevronright" size="small" onclick={handleNext} variant="light"
-                    class="cursorPointer">
-                </lightning-icon>
-            </lightning-layout-item>
-        </lightning-layout>        
-    </lightning-card>  
+            </lightning-layout>
+        </span>
+
+    </c-portal-custom-card-container>
+
 </template>
