@@ -422,7 +422,7 @@ private class OneId_RegistrationProcessControllerTest {
              Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
 
              OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>());
-			 OneId_RegistrationProcessController.increaseCodeCoverage();
+			 //OneId_RegistrationProcessController.increaseCodeCoverage();
            
          Test.stopTest();
      }

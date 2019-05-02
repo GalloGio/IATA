@@ -19,8 +19,7 @@ public without sharing class File_Upload_CTRL {
         if(String.isNotBlank(userId)) {
             List<User> users = [SELECT Id, UserType FROM User WHERE Id = :userId];
             if(users[0].UserType == 'PowerPartner') {//external user
-                Contact con = Contact_Roles_Helper.getContactFromUser(userId);
-                List<Account> userActors = Contact_Roles_Helper.getUserAccounts(con.Id);
+                List<Account> userActors = Contact_Roles_Helper.getUserAccounts(userId);
 
                 info.userId = userId;
                 info.actors = userActors;
