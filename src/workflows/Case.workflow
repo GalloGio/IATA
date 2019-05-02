@@ -19256,9 +19256,9 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <criteriaItems>
-            <field>Case.Status</field>
+            <field>Case.IsClosed</field>
             <operation>equals</operation>
-            <value>Closed</value>
+            <value>True</value>
         </criteriaItems>
         <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
