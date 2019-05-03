@@ -100,7 +100,9 @@ public without sharing class AMS_Utils {
     public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOINTERNATIONAL = 'Conversion to International'; //ACAMBAS - NEWGEN-4445
-    
+    public static final String OPT_OUT_ACCREDITATION_CFG_RT_NAME = 'Opt_out_at_Accreditation';
+    public static final String FA_OPT_OUT = 'Opt-Out';
+     
     public static final Map<String, List<String>> OSCARBackupProcessMap = new Map<String, List<String>>{
         NGCHANGES => new List<String>{'Step4__c'},
         NGCHINACONVERSION => new List<String>{'Step4__c', 'Step3__c'}
