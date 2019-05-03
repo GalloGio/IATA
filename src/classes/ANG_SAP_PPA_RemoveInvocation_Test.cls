@@ -58,7 +58,7 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 
 		Remote_Invocation__c ri = [SELECT Status__c, Internal_ID__c FROM Remote_Invocation__c limit 1];
 
-        Remote_Invocation_Artefact__c artifact = [SELECT Payment_type__c,External_ID__c FROM Remote_Invocation_Artefact__c limit 1 ];
+        Remote_Invocation_Artefact__c artifact = [SELECT Payment_type__c,External_ID__c, Internal_ID__c FROM Remote_Invocation_Artefact__c limit 1 ];
 
 		test.StartTest();
 
@@ -77,9 +77,9 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 		//Check External_ID be copied to oscar field Billing_Document_Number__c
 		System.assertEquals(artifact.External_ID__c, updatedOscar.Billing_Document_Number__c);
 
-		Remote_Invocation_Artefact__c updatedRmtInvArt = [SELECT Payment_type__c,External_ID__c, Object_Id_Created__c FROM Remote_Invocation_Artefact__c limit 1];
+		Remote_Invocation_Artefact__c updatedRmtInvArt = [SELECT Payment_type__c, Object_Id_Created__c FROM Remote_Invocation_Artefact__c limit 1];
 
-		System.assertEquals(updatedRmtInvArt.Object_Id_Created__c, artifact.External_ID__c);
+		System.assertEquals(artifact.Internal_ID__c, updatedRmtInvArt.Object_Id_Created__c);
 	}
 
 

@@ -135,8 +135,8 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 					osc.Payment_Type__c = remoteInovArt.Payment_type__c;
 					osc.Billing_Document_Number__c = mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c;
 
-					//NEWGEN-5450
-					remoteInovArt.Object_Id_Created__c = mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c;
+					//NEWGEN-5450-BugFix - Fill the Object_Id_Created__c with the value of the Internal_ID__c
+					remoteInovArt.Object_Id_Created__c = mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).Internal_ID__c;
 
 					ri.Status__c = 'Completed';
 					ri.Status_Detail__c = '';
