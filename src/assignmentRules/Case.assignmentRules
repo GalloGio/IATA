@@ -2598,7 +2598,11 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>CustomerServiceEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND( AccountId = &apos;00120000003mA4e&apos;, ContactId = &apos;003w000001B9pKt&apos;,  ISPICKVAL(Origin, &apos;E-mail to Case - Service Centre Europe&apos;),   ISPICKVAL(Region__c, &apos;Europe&apos;))</formula>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - Service Centre Europe</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_MITA_YMQ</assignedTo>
