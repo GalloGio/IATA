@@ -131,6 +131,9 @@ public without sharing class AMS_Utils {
     public static final Set<String> oscarPCICompliantValidationAttachement = new Set <String>{'Yes','Nil CC','Corporate Card'};
     public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
 
+    public static final Set<String> setChinaCountries = new Set <String>{"CN"};
+
+
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
 
