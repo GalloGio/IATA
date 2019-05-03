@@ -720,6 +720,20 @@
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_DIP_Communications_ARM_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SAAM</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - DIP Communications</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Agency_Risk_Management_Americas_T1</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -2143,9 +2157,33 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_Airline_Coding_Draft</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Status</field>
+                <operation>equals</operation>
+                <value>Open</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Airline Coding Application</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Coding Application</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>notContain</operation>
+                <value>Voluntary Withdrawal</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_Airline_Coding_YMQ</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5 AND 6) OR 7</booleanFilter>
+            <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5 AND 6) OR 7 OR (8 AND 9 AND 10) OR (8 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
@@ -2180,6 +2218,31 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
                 <field>Case.CaseArea__c</field>
                 <operation>equals</operation>
                 <value>Coding &amp; MITA,Airline Coding</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Airline Coding Application</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>3 Digit Form,Baggage Tag Identifier Codes,Designator Form,Location ID Form</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status</field>
+                <operation>notEqual</operation>
+                <value>Open</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>contains</operation>
+                <value>Accounting Code,Designator Code,Baggage Tag Range Code,Prefix Code</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>contains</operation>
+                <value>Voluntary withdrawal</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -2535,7 +2598,11 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>CustomerServiceEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND( AccountId = &apos;00120000003mA4e&apos;, ContactId = &apos;003w000001B9pKt&apos;,  ISPICKVAL(Origin, &apos;E-mail to Case - Service Centre Europe&apos;),   ISPICKVAL(Region__c, &apos;Europe&apos;))</formula>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - Service Centre Europe</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_MITA_YMQ</assignedTo>

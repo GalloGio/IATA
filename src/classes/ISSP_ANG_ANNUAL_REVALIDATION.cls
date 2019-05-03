@@ -487,6 +487,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		try {
 			keepConfirmedData();
 			currentAccount.fw.newform.Saved_At_Least_Once__c = true;
+			addVATPrefix();
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
@@ -1619,9 +1620,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
             	if ((currentAccount.newContact.Agency_owner__c == true || currentAccount.newContact.Agency_role__c == true) 
             	&& (currentAccount.newContact.Time_devoted_to_Agency_business__c < 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c == null || currentAccount.newContact.Time_devoted_to_Agency_business__c > 100)) {
-                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted));
-                	contactSaved = false;
-                	return;
+            			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted));
+                		contactSaved = false;
+                		return;
             	}
 
             	if (currentAccount.newContact.Agency_owner__c == false && currentAccount.newContact.Agency_role__c == false) {
