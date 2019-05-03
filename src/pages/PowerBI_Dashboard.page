@@ -1,0 +1,51 @@
+<apex:page id="PowerBI_Dashboard" controller="PowerBI_Dashboard_CTRL" showHeader="false" showChat="false" sideBar="false" action="{!redirect}">
+
+    <apex:includeScript value="{!$Resource.PBIJS}"/>
+
+        <div>
+            <div id="dashboard" style="height:800px;"></div>
+        </div>
+
+        <style type="text/css">
+
+            iframe {
+                border:none;
+            }
+
+        </style>
+
+
+        <script>
+
+        var element = document.getElementById('dashboard');
+
+
+        var models = window['powerbi-client'].models;
+        var obj = "{!objectId}";
+        var token = "{!accessToken}";
+        console.log('models:: ' + models);
+        console.log('objectId:: ' + obj);
+        console.log('accessToken:: ' + token);
+		console.log('embedUrl'+ "{!embedUrl}");
+        var embedConfiguration = {
+            id: "{!objectId}",
+            type: "report",
+            embedUrl: "{!embedUrl}",
+            tokenType: models.TokenType.Embed,
+            accessToken: "{!accessToken}",
+            settings : {
+                filterPaneEnabled: false,
+                navContentPaneEnabled: false,
+                background: models.BackgroundType.Transparent
+            }
+        };
+
+        //var embedContainer = $('#embedContainer')[0];
+        var report = powerbi.embed(element, embedConfiguration);
+
+
+        </script>
+
+
+
+</apex:page>

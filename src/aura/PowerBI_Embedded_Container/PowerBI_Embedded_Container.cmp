@@ -1,0 +1,36 @@
+<aura:component controller="PowerBI_Embedded_Container_CTRL" description="PowerBI_Embedded_Container">
+    <!--<ltng:require styles="{!$Resource.Screen}"/>-->
+    <aura:attribute type="Aura.Component[]" name="workspacesArea" />
+    <aura:attribute type="Aura.Component[]" name="dashboardArea" />
+    <aura:attribute name="accessToken" type="String"/>
+    <aura:attribute name="workspaces" type="List"/>
+
+    <aura:attribute name="dashboardShown" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler name="dashboardClicked" event="c:dashboardClicked" action="{!c.handleDashboardClicked}"/>
+
+    <!-- this is required for proper component dependency handling -->
+    <aura:dependency resource="markup://c:PowerBI_Embedded_Dashboard_List" />
+    <aura:dependency resource="markup://c:PowerBI_Embedded_Dashboard" />
+
+    <div class="body_container">
+
+        <aura:if isTrue="{!v.dashboardShown}">
+            <div class="chooseButton" style="padding-bottom: 0.50rem;">
+                <button class="btn btn-primary btn-grey" onclick="{! c.hideDashboard}">Back</button>
+            </div>
+            <div>{!v.dashboardArea}</div>
+            <aura:set attribute="else">
+                {! v.workspacesArea }
+            </aura:set>
+        </aura:if>
+
+        <div aura:id="spinner" class="slds-hide">
+            <lightning:spinner alternativeText="Loading"/>
+        </div>
+
+    </div>
+
+
+</aura:component>
