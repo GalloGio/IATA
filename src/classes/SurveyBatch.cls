@@ -126,7 +126,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
                                AND Instant_Survey_Feedback_requested__c = false
                                AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
-                               AND CaseArea__c != 'E&F Operations' AND Reason1__c != 'Debt Recovery' AND Reason1__c != 'Dispute' //ICSC-36 exclude Cases with Reason =  Debt Recovery or Dispute
                                    ORDER BY ClosedDate DESC]);
 
     CasesPart1 = new Set<Id>();
@@ -175,7 +174,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
 
-    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name, Reason1__c
+    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name, Reason1__c, Origin
                                FROM Case
                                WHERE Id IN :lstCaseIds
                                AND RecordType.DeveloperName IN :lstRecordTypesInScope]);
@@ -325,7 +324,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       System.debug('::: RoleName : ' + RoleName + 'ProfileName : ' + ProfileName);
 
       // Conditions requested on INC428523
-      if((c.Reason1__c == 'Debt Recovery' && RoleName.contains('E&F')) || (c.Origin == 'E&F Client – Email to Case') || (RoleName.contains('E&F Client Services'))){
+      if(((c.Reason1__c == 'Debt Recovery' || c.Reason1__c == 'Dispute') && RoleName.contains('E&F')) || (c.Origin == 'E&F Client – Email to Case') || (RoleName.contains('E&F Client Services'))){
         System.debug('Bypass case due to match conditions : c.Reason1__c = Debt Recovery AND RoleName.contains(E&F) OR c.Origin = E&F Client – Email to Case OR RoleName.contains(E&F Client Services)');
         continue;
       }

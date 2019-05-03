@@ -8,9 +8,10 @@
     <aura:attribute name="Terms" type="Boolean" />
     <aura:attribute name="serviceName" type="String" />
    
-	<aura:attribute name="isEmailAddressAvailable" type="Boolean" default="true"/>
-	<aura:attribute name="isServiceUser" type="Boolean" />
-	<aura:attribute name="isServiceEligible" type="Boolean" />
+    <aura:attribute name="isGuest" type="Boolean" default="true"/>
+    <aura:attribute name="isEmailAddressAvailable" type="Boolean" default="true"/>
+    <aura:attribute name="isServiceUser" type="Boolean" />
+    <aura:attribute name="isServiceEligible" type="Boolean" />
 
     <div class="slds-grid slds-gutters slds-wrap ">
         <div class="slds-col slds-col--padded">
@@ -18,7 +19,6 @@
                 <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_MyProfile_EMAIL}</label>
                 <ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.contact.Email}" class="slds-input" required="true" />
             </div>
-            
             <aura:if isTrue="{! and(v.serviceName=='FRED',v.isEmailAddressAvailable == false)}">
                 <ul class="has-error uiInputDefaultError uiInput uiInputEmail uiInput--default uiInput--input">
                     <li class="form-element__help">
@@ -46,11 +46,41 @@
                 &nbsp;
             </aura:if>
             
-            <div class="slds-size--1-of-1">
-                <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" />
-                <a class="terms" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
-            </div>
-        </div>
+            <aura:if isTrue="{! and(v.serviceName == 'NDCMM', v.isGuest)}">
+                <ul class="has-error uiInputDefaultError uiInput uiInputEmail uiInput--default uiInput--input">
+                    <li class="form-element__help">
+                        <aura:if isTrue="{! v.isServiceUser == true}">
+                            This Email is already registered with us. Please fill your credentials in the <a href="{!'/' + $Label.c.OneId_Community_Name + '/login?language=en_US&amp;serviceName=NDCMM'}">login</a> page to be redirected to NDC Matchmaker.
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{! and(v.isServiceEligible == true, !v.isEmailAddressAvailable)}">
+                                    This Email is already registered with us. Please fill your credentials in the <a href="{!'/' + $Label.c.OneId_Community_Name + '/login?language=en_US&amp;serviceName=NDCMM&amp;startURL=registration'}">login</a> page before completing the registration process.
+                                    <aura:set attribute="else">
+                                        <aura:if isTrue="{! v.isServiceEligible == false}">
+	                                        This Email is already registered with us, but the related account is not eligible for NDC Matchmaker tool. Please contact the <a href="{!'/' + $Label.c.OneId_Community_Name + '/troubleshooting?serviceName=NDCMM'}">NDC Team</a>.
+                                        </aura:if>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </li>
+                </ul>
+                <br/>
+                &nbsp;
+            </aura:if>
+            
+            <aura:if isTrue="{! v.serviceName != 'NDCMM' || v.isGuest}">
+            	<div class="slds-size--1-of-1">
+            	    <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" />
+            	    <a class="terms" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
+            	</div>
+            	    
+            	<aura:set attribute="else">
+            	   	<div class="slds-grid slds-grid_align-end">
+            			<ui:button label="Next" press="{!c.next}" />
+        			</div>
+                </aura:set>
+            </aura:if>
+	    </div>
     </div>
     <div aura:id="loading" class="slds-hide">
         <lightning:spinner />

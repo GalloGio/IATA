@@ -161,7 +161,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <externalId>false</externalId>
         <label>Change Code</label>
         <length>3</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -524,7 +524,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>RCR,CHO</value>
+            <value>NEW</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
@@ -667,6 +667,41 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <value>NOT</value>
         </filters>
         <label>Risk Change Code (R4) - NOT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>TIDS_Billable_CC</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Billable__c</columns>
+        <columns>Published_in_bulletin__c</columns>
+        <columns>Billable_Location_Class__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Risk_ChangeCode__c</columns>
+        <columns>Skip_Agency_Update__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Billable_Location_Class__c</field>
+            <operation>contains</operation>
+            <value>T</value>
+        </filters>
+        <label>TIDS Billable CC</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>TOSCA_CC</fullName>
+        <columns>Change_Code__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>NAME</columns>
+        <columns>Billable__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>contains</operation>
+            <value>NEW,CAD,CER,CHL,FIN,LSP,LSW</value>
+        </filters>
+        <label>TOSCA_CC</label>
         <language>en_US</language>
     </listViews>
     <visibility>Protected</visibility>

@@ -59,7 +59,7 @@ public class ISSP_OperationalCalendarControllerTest {
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
         contact.LastName = 'test';
-        contact.Email = 'test@email.com';
+        contact.Email = 'test@email.com' + (Math.random()*1000000000);
         insert contact;
         contact.Account = account;
         
@@ -355,6 +355,38 @@ public class ISSP_OperationalCalendarControllerTest {
             controller.selectedType = 'BSP International';
             controller.findDisclaimerLabel();
             System.assertEquals('label', controller.disclaimerLabelName);
+        }
+        Test.StopTest();
+    }
+
+    @isTest
+    public static void testMassExport() {
+        User user = createAirlineUserCASS();
+        String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.contact.account.Location_Class__c);
+        list<Operational_Calendar__c> listOpCalendar = new list<Operational_Calendar__c>();
+        listOpCalendar.add(new Operational_Calendar__c(
+            Visible_on_the_portal__c = true,
+            Operation_Currency__c = 'EUR',
+            Settlement_Day__c = Date.today(),
+            Airline_Input_Upload_Cut_Off__c = Date.today(),
+            Airline_Correction_Response_Cut_Off__c = Date.today(),
+            Remittance_Day__c = Date.today(),
+            Billing_Availability__c = Date.today(),
+            Agent_Correction_Cut_Off__c = Date.today(),
+            HAR_Day__c = Date.today(),
+            First_Day__c = Date.today(),
+            ISS_operation__c = [SELECT Id FROM AMS_Settlement_System__c LIMIT 1].Id,
+            Operation_Type__c = operationType,
+            frequency_code__c = user.contact.account.Remittance_frequency__c
+        ));
+        insert listOpCalendar;
+        
+        Test.StartTest();
+        System.runAs(user) {
+            ISSP_OperationalCalendarController.IS_AIRLINE = true;
+            ISSP_OperationalCalendarController.IS_AGENT = false;
+            ISSP_OperationalCalendarController controller = new ISSP_OperationalCalendarController();
+            ISSP_OperationalCalendarController.createZipFile('all', new List<String> {operationType}, new List<String>(), new List<Id>(), null);
         }
         Test.StopTest();
     }

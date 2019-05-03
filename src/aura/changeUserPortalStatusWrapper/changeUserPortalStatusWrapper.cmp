@@ -1,0 +1,4 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:attribute name="recordId" type="Id" />
+    <c:changeUserPortalStatus recordId="{!v.recordId}" oncloseQuickAction="{!c.closeModal}"></c:changeUserPortalStatus>
+</aura:component>

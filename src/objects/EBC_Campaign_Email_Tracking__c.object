@@ -46,9 +46,9 @@
     <description>Hold campaign send statistic that retrieved from Exacttarget Marketing cloud</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -379,6 +379,25 @@
         <columns>LAST_ACTIVITY</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Brand_Awareness_Campaign_to_IATA_Agents</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Campaign__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>NumberofOpens__c</columns>
+        <columns>NumberofUniqueOpens__c</columns>
+        <columns>NumberofClicks__c</columns>
+        <columns>NumberofUniqueClicks__c</columns>
+        <columns>NumberBounced__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EBC_Campaign__c</field>
+            <operation>equals</operation>
+            <value>Brand Awareness Campaign to IATA Agents in Europe</value>
+        </filters>
+        <label>Brand Awareness Campaign to IATA Agents</label>
         <language>en_US</language>
     </listViews>
     <nameField>

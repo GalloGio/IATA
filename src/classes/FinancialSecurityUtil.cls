@@ -105,7 +105,7 @@ public with sharing class FinancialSecurityUtil {
             //• Status = Not yet active, Active, Close to expiry AND
             //• Unlimited Validity = True OR Validity start date not empty
             if( (fs.Security_Status__c == 'Close to Expiry Date' || fs.Security_Status__c == 'Not Active yet' || fs.Security_Status__c == 'Active') 
-                && (fs.Unlimited_Security__c == true || fs.Validity_Start_Date__c != null) ){
+                && (fs.Unlimited_Security__c == true || fs.Validity_Start_Date__c != null) && fs.Security_Type__c != 'Others') { /* WMO-400 */
                 fsToValidate.add(fs);
                 accountIds.add(fs.Account__c);
             }

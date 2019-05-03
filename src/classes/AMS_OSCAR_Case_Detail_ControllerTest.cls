@@ -264,8 +264,144 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
                 
         controller.getRfPicklistValuesAMS();
 
+		Test.stopTest();
+	}
+
+	@isTest static void chinaConversionHideStagingAreaTest(){
+
+		Case c = 
+			[SELECT 
+				Id, 
+				OSCAR__c 
+			 FROM 
+			 	Case 
+			 WHERE 
+			 	Oscar__c IN 
+			 		(SELECT 
+			 			Id
+			 		 FROM 
+			 		 	AMS_OSCAR__c
+			 		 WHERE 
+			 		 	AMS_Online_Accreditation__c != ''
+			 		) 
+			 LIMIT 1];
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+		
+		oscar.id = c.OSCAR__c;
+		oscar.Process__c = AMS_Utils.NGCHINACONVERSION;
+		
+		update oscar;
+		
+		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+		pg.getParameters().put('id', c.Id);
+		Test.setCurrentPage(pg);
+		
+		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+
+        System.assert(!controller.isChangeOfLocation, 'Should not be a change of location');
+
+		System.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
+
+	}
+
+	@isTest static void chinaConversionShowOscarOnGoingWarningTest(){
+	        
+		Case c = 
+			[SELECT 
+				Id, 
+				OSCAR__c, 
+				AccountId 
+			 FROM 
+			 	Case 
+			 WHERE 
+			 	Oscar__c IN 
+			 		(SELECT 
+			 			Id 
+			 		 FROM 
+			 		 	AMS_OSCAR__c 
+			 		 WHERE 
+			 		 	AMS_Online_Accreditation__c != ''
+			 		) 
+			 LIMIT 1];
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+		
+		oscar.id = c.OSCAR__c;
+		oscar.Process__c = AMS_Utils.NGCHINACONVERSION;
+		
+		update oscar;
+
+		Account account = 
+			[SELECT 
+				Id, 
+				RecordType.DeveloperName 
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	 Id != :c.AccountId 
+			 AND RecordType.DeveloperName = 'Standard_Account'
+			][0];
+
+		AMS_OSCAR__c pendingOscar = new AMS_OSCAR__c();
+		pendingOscar.Account__c = account.Id;
+		pendingOscar.Process__c = AMS_Utils.AGENCYCHANGES;
+		insert pendingOscar;
+
+        Test.startTest();
+
+		Case oscarCase = new Case(
+			Oscar__c = pendingOscar.Id, 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
+	        AccountId = account.Id
+	    );
+        insert oscarCase;
+		
+        AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(
+            Hierarchy_Name__c='Test Hierarchy'
+       	);
+        
+        insert hierarchy;
+        
+        AMS_Agencies_relationhip__c agenciesRel = new AMS_Agencies_relationhip__c(
+            Relationship_details__c='Test',
+            Hierarchy__c = hierarchy.id,
+            Child_Account__c = account.id,
+            Parent_Account__c = c.AccountId
+       	);
+        
+        insert agenciesRel;
+        
+		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+		pg.getParameters().put('id', c.Id);
+		Test.setCurrentPage(pg);
+		
+		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+		
+		system.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
+
+        ApexPages.Message[] pageMessages = ApexPages.getMessages();
+		
+        system.debug(pageMessages);
+        
+		System.assertNotEquals(0, pageMessages.size());
+
+		Boolean messageFound = false;
+
+		for(ApexPages.Message message : pageMessages) {
+			
+			system.debug('MESSAGE DETAIL: ' + message.getDetail());
+			
+			if(message.getDetail().contains(Label.ANG_OnGoing_OSCAR_Warning)){
+				messageFound = true;
+			}
+
+		}
+
+		System.assertEquals(messageFound, true, 'The warning message \'' + Label.ANG_OnGoing_OSCAR_Warning + '\' should be shown');
 
         Test.stopTest();
-    }
-    
+        
+	}
+
 }
