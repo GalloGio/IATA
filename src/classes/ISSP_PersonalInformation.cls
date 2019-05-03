@@ -81,6 +81,26 @@ public with sharing class ISSP_PersonalInformation {
     public string iataCode {get;set;}
     public string accountType {get;private set;}
     public list<String> errorMessage {get; set;}
+
+    //this checks if there's an open Annual Revalidation case on the user's account
+    public Boolean revCaseOpen {
+        get{
+            List<Case> revCases = [SELECT Id 
+                                   FROM Case 
+                                   WHERE AccountId =: con.Account.Id 
+                                   AND Reason1__c = 'Annual revalidation' 
+                                   AND Status != 'Closed' 
+                                   AND Status != 'Closed_Rejected' 
+                                   AND Status != 'Closed_Withdrawn'];
+            if(revCases.size() > 0) {
+                revCaseOpen = true;
+            } else {
+                revCaseOpen = false;
+            }
+            return revCaseOpen;
+        } 
+        set;
+    }
     
     
     public ISSP_PersonalInformation(){ 
