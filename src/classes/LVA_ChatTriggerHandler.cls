@@ -18,13 +18,11 @@ public without sharing class LVA_ChatTriggerHandler {
     }
     
     public void onAfterInsert(){
+        ProcessLiveChatTranscript(triggerNew);
     }
     
-    public void onBeforeUpdate(){
-    }
-    public void onAfterUpdate(){  
-        processLiveChat();      
-    }
+    public void onBeforeUpdate(){}
+    public void onAfterUpdate(){}
     
   //  public void onBeforeDelete(){}
   //  public void onAfterDelete(){}
@@ -68,7 +66,7 @@ public without sharing class LVA_ChatTriggerHandler {
 
 
    
-    public void processLiveChat(){
+    /*public void processLiveChat(){
         List<LiveChatTranscript> lctlist= new List<LiveChatTranscript>(); 
         List<case> caseToUpdateList= new List<case>(); 
 
@@ -82,7 +80,7 @@ public without sharing class LVA_ChatTriggerHandler {
         
         if(!caseToUpdateList.isEmpty()) update caseToUpdateList;  
 
-    }
+    }*/
 
      public static void ProcessLiveChatTranscript(List<LiveChatTranscript> liveChatTranscripts){
         List<CaseComment> ccs = new List<CaseComment>();
