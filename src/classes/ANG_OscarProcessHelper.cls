@@ -2223,4 +2223,51 @@ global class ANG_OscarProcessHelper {
         }
         return oscarsToInsert;
     }
+
+	public static Set<String> fetchOptOutFromFinancialReviewCountriesCfg(Set<Id> countryIdSet){
+
+        Set<String> optOutCountryConfig = new Set<String>();
+
+        if(!countryIdSet.isEmpty()){
+            for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIdSet)){
+                for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
+                    if(att != null && att.RecordType.DeveloperName == AMS_Utils.OPT_OUT_ACCREDITATION_CFG_RT_NAME){
+                        optOutCountryConfig.add(country.Id + '.' + att.Location_Class__c);
+                    }
+                }
+            }
+        }
+
+        return optOutCountryConfig;
+
+    }
+
+	public static void updateCaseStatusForAccounts(Set<Id> accountIdSet, Id recordTypeId, String newCaseStatus){
+
+		//Fetch all the IFAP cases related with the given accounts
+		//that are not in the given 'newCaseStatus' status 
+		List<Case> ifapLst = new List<Case>(
+			[SELECT 
+				Id,
+				Status 
+				FROM 
+				Case 
+				WHERE 
+					AccountId IN :accountIdSet 
+				AND RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP 
+				AND Status != :newCaseStatus
+			]
+		);
+
+		//Updates the status to the given 'newCaseStatus' for every IFAP
+		for(Case c : ifapLst){
+			c.Status = newCaseStatus;
+		}
+
+		if(!ifapLst.isEmpty()){
+			update ifapLst;
+		}
+
+	}
+
 }

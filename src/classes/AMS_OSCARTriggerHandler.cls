@@ -272,34 +272,12 @@ public class AMS_OSCARTriggerHandler {
                 update acctLst;
             }
 
-            //Fetch all the IFAP cases related with the OSCAR's accounts
-            //that are not in the 'Closed Opt Out' status 
-            List<Case> ifapLst = new List<Case>(
-                [SELECT 
-                    Id,
-                    Status 
-                 FROM 
-                    Case 
-                 WHERE 
-                     AccountId IN :accountIdSet 
-                 AND RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP 
-                 AND Status != :IFAP_BusinessRules.CLOSEDOPTOUT
-                ]
-            );
-
-            //Updates the status to 'Closed Opt Out' for every IFAP
-            for(Case c : ifapLst){
-                c.Status = IFAP_BusinessRules.CLOSEDOPTOUT;
-            }
-
-            if(!ifapLst.isEmpty()){
-                update ifapLst;
-            }
+            ANG_OscarProcessHelper.updateCaseStatusForAccounts(accountIdSet, AMS_Utils.RECTYPE_CASEIFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
 
         }
 
     }
-	
+
     /*** AMSU-193 ***/
     public static void prepopulateRFrequencyStgArea(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
         Set<String> countryCodes = new Set<String>();
@@ -875,26 +853,14 @@ public class AMS_OSCARTriggerHandler {
         for(AMS_OSCAR__c oscar: oscarLst){
             if(Trigger.isUpdate && oscar.process__c == AMS_Utils.NEWHESTANDARD && oldMap.get(oscar.Id).STEP6__c != AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
                 AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
-                system.debug('STAGING AREA: ' + stgArea);
-                system.debug('STAGING AREA:Branch_Office_Country__c: ' + stgArea.Branch_Office_Country__c);
-                
                 countryIdSet.add(stgArea.Branch_Office_Country__c);
             }
         }
 
-        Set<String> optOutCountryConfig = new Set<String>();
-    	
-        if(!countryIdSet.isEmpty()){
-            for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIdSet)){
-                for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                    if(att != null && att.RecordType.DeveloperName == AMS_Utils.OPT_OUT_ACCREDITATION_CFG_RT_NAME){
-                        optOutCountryConfig.add(country.Id + '.' + att.Location_Class__c);
-                    }
-                }
-            }
-        }
+        Set<String> optOutCountryConfig = ANG_OscarProcessHelper.fetchOptOutFromFinancialReviewCountriesCfg(countryIdSet);
 
         for(AMS_OSCAR__c oscar : oscarLst){
+
             if(
                 oscar.Process__c == AMS_Utils.AGENCYCHANGES
                 && oscar.Type_of_change__c != null
@@ -926,7 +892,6 @@ public class AMS_OSCARTriggerHandler {
                 AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
 
                 String optOutCfgKey = stgArea.Branch_Office_Country__c + '.' + stgArea.Location_Class__c;
-
                 //If for the associated country we have a 'Opt out at Accreditation' configuration record 
                 //on AMS Country Specific Attributes the agent should be opt out from financial review
                 if(optOutCountryConfig.contains(optOutCfgKey)){
