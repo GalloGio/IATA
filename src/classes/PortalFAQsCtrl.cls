@@ -1,4 +1,4 @@
-public without sharing class PortalFAQsCtrl {
+public with sharing class PortalFAQsCtrl {
 
     @AuraEnabled(cacheable=true)    
     public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getCategoryTiles() {
