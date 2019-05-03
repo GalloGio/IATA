@@ -180,32 +180,34 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         get{
             if(displayShipping == null) {
                 displayShipping = false;
-                if(ca.Account.BillingStreet == ca.Account.ShippingStreet &&
-                   ca.Account.BillingCity == ca.Account.ShippingCity &&
-                   ca.Account.BillingPostalCode == ca.Account.ShippingPostalCode &&
-                   ca.Account.BillingState == ca.Account.ShippingState &&
-                   ca.Account.BillingCountry == ca.Account.ShippingCountry) {
-                       displayShipping = true;
-                       ca.fw.newform.shipping_street__c = '';
-                       ca.fw.newform.shipping_city__c = '';
-                       ca.fw.newform.shipping_postal_code__c = '';
-                       ca.fw.newform.shipping_state__c = '';
-                       ca.fw.newform.shipping_country__c = '';
-                   } else if(ca.Account.ShippingStreet == null &&
-                             ca.Account.ShippingCity == null &&
-                             ca.Account.ShippingPostalCode == null &&
-                             ca.Account.ShippingState == null &&
-                             ca.Account.ShippingCountry == null) {
-                                 displayShipping = true;
-                                 ca.fw.newform.shipping_street__c = '';
-                                 ca.fw.newform.shipping_city__c = '';
-                                 ca.fw.newform.shipping_postal_code__c = '';
-                                 ca.fw.newform.shipping_state__c = '';
-                                 ca.fw.newform.shipping_country__c = '';
-                             }
+                if(ca.fw.newform.Saved_At_Least_Once__c = true) {
+                    displayShipping = ca.fw.newform.Shipping_Same_As_Billing__c;
+                }else if(ca.Account.BillingStreet == ca.Account.ShippingStreet &&
+                         ca.Account.BillingCity == ca.Account.ShippingCity &&
+                         ca.Account.BillingPostalCode == ca.Account.ShippingPostalCode &&
+                         ca.Account.BillingState == ca.Account.ShippingState &&
+                         ca.Account.BillingCountry == ca.Account.ShippingCountry) {
+                             displayShipping = true;
+                             ca.fw.newform.shipping_street__c = '';
+                             ca.fw.newform.shipping_city__c = '';
+                             ca.fw.newform.shipping_postal_code__c = '';
+                             ca.fw.newform.shipping_state__c = '';
+                             ca.fw.newform.shipping_country__c = '';
+                         } else if(ca.Account.ShippingStreet == null &&
+                                   ca.Account.ShippingCity == null &&
+                                   ca.Account.ShippingPostalCode == null &&
+                                   ca.Account.ShippingState == null &&
+                                   ca.Account.ShippingCountry == null) {
+                                       displayShipping = true;
+                                       ca.fw.newform.shipping_street__c = '';
+                                       ca.fw.newform.shipping_city__c = '';
+                                       ca.fw.newform.shipping_postal_code__c = '';
+                                       ca.fw.newform.shipping_state__c = '';
+                                       ca.fw.newform.shipping_country__c = '';
+                                   }
                 
             }
-            ca.shippingSameAsBilling = displayShipping;
+            ca.fw.newform.Shipping_Same_As_Billing__c = displayShipping;
             return displayShipping;
         }
         set{

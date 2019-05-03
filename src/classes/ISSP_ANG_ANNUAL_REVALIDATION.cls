@@ -486,6 +486,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			keepConfirmedData();
+			currentAccount.fw.newform.Saved_At_Least_Once__c = true;
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
@@ -1234,7 +1235,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
                 
-                if(currentAccount.shippingSameAsBilling == false) {
+                if(currentAccount.fw.newform.Shipping_Same_As_Billing__c == false) {
                     if (currentAccount.fw.newform.Shipping_Street__c == null) {
                         currentAccount.fw.newform.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
