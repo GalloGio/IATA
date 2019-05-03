@@ -426,10 +426,12 @@ private class ANG_ConversionHelperOfficialTest {
         insert ctry ;
 
         Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Account parent = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='HO',Name='Test5 Agency OK',Short_Name__c='Test5 Agency OK', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+        insert parent;
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='HO1',Short_Name__c='HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='ST',Name='ST1',Short_Name__c='ST1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
-        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='BR2',Short_Name__c='BR2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-3));
+        Account a3 = new Account(ParentId = parent.Id, IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='BR2',Short_Name__c='BR2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-3));
         Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='ST',Name='ST2',Short_Name__c='ST2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-3));
          
 		insert new List<Account>{a1,a2,a3,a4};
@@ -446,8 +448,8 @@ private class ANG_ConversionHelperOfficialTest {
 
 		ANG_ConversionHelper.printStatistics(finalStruct);
 
-		System.assertEquals(4,finalStruct.totalHierarchies);
-		System.assertEquals(3,finalStruct.totalValidHierarchies);
+		System.assertEquals(5,finalStruct.totalHierarchies);
+		System.assertEquals(4,finalStruct.totalValidHierarchies);
 		System.assertEquals(1,finalStruct.totalInvalidHierarchies);
 		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
 
@@ -493,12 +495,12 @@ private class ANG_ConversionHelperOfficialTest {
 		System.assertEquals(AMS_Utils.ACC_S0_TERMINATED,accountsMap.get('ST2').Status__c);
 
 		System.assertEquals(null,accountsMap.get('HO1').Top_Parent__c);
-		System.assertEquals(null,accountsMap.get('BR2').Top_Parent__c);
+		System.assertNotEquals(null,accountsMap.get('BR2').Top_Parent__c);
 		System.assertEquals(null,accountsMap.get('ST1').Top_Parent__c);
 		System.assertEquals(null,accountsMap.get('ST2').Top_Parent__c);
 
 		System.assertEquals(null,accountsMap.get('HO1').ParentId);
-		System.assertEquals(null,accountsMap.get('BR2').ParentId);
+		System.assertNotEquals(null,accountsMap.get('BR2').ParentId);
 		System.assertEquals(null,accountsMap.get('ST1').ParentId);
 		System.assertEquals(null,accountsMap.get('ST2').ParentId);
 

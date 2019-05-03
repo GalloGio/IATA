@@ -98,7 +98,7 @@ private class ANG_ConversionHelperEnhancedTest {
 	
 		insert new List<Account>{topParent,a2,a3,a4,a5,a6,a7};
 
-		Account childAcc = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='BR',Name='Agency BR1 TERMINATED',Short_Name__c='Agency BR1 TERMINATED', Sector__c = 'Travel Agent', Category__c = 'IATA Passenger Sales Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-4), Top_Parent__c = topParent.Id);
+		Account childAcc = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='BR',Name='Agency BR1 TERMINATED',Short_Name__c='Agency BR1 TERMINATED', Sector__c = 'Travel Agent', Category__c = 'IATA Passenger Sales Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-4), ParentId = topParent.Id, Top_Parent__c = topParent.Id);
 
 		insert childAcc;
 
