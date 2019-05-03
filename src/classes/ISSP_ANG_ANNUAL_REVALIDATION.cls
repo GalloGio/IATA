@@ -488,7 +488,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			keepConfirmedData();
 			addVATPrefix();
 			upsert currentAccount.fw.newform;
-			undoVATPrefix();
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
 
@@ -514,7 +513,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			upsert currentAccount.fw.newform;
 
 			if(!errorFound) {
-				undoVATPrefix();
 				iataCodesInProgress.remove(currentAccount.account.IataCode__c);
 				iataCodesConfirmed.add(currentAccount.account.IataCode__c);
 
@@ -1952,24 +1950,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     private void addVATPrefix() {
     	if (currentAccount.isoCountry.EU_Country__c) {
 	    	if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c)) {
-	    		currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c;
+	    		currentAccount.fw.newForm.ISSP_AMS_VAT_number__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c;
 	    	}
 
 	    	if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c)) {
-	    		currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c;
+	    		currentAccount.fw.newForm.VAT_Number_2__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c;
 	    	}
 	    }
-    }
-
-    private void undoVATPrefix() {
-    	if (currentAccount.isoCountry.EU_Country__c) {
-    		if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c)) {
-    			currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c = currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c.substring(2);
-    		}
-
-    		if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c)) {
-    			currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c = currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c.substring(2);
-    		}
-    	}
     }
 }
