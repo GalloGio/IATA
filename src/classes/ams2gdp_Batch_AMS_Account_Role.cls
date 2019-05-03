@@ -140,7 +140,7 @@ global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObjec
    			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
    		}
    		List<Database.UpsertResult> save_results = new List<Database.UpsertResult>();
-        if (records2Save.size()>0) save_results = Database.upsert(records2Save,Agency_Owner__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
+        if (records2Save.size()>0) save_results = Database.upsert(records2Save,false);
 
 		//--Check if there is orphan GDP records 
 		for(Agency_Owner__c ao: records2Save)
