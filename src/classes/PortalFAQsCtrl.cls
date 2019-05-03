@@ -1,4 +1,4 @@
-public with sharing class PortalFAQsCtrl {
+public without sharing class PortalFAQsCtrl {
 
     @AuraEnabled(cacheable=true)    
     public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getCategoryTiles() {
@@ -67,8 +67,10 @@ public with sharing class PortalFAQsCtrl {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<FAQ__kav> getArticlesFromSubtopic(String selectedSubtopic){
-        String query = 'SELECT Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\' WITH DATA CATEGORY FAQs__c BELOW '+ selectedSubtopic +'__c';
+    public static List<FAQ__kav> getArticlesFromSubtopic(String selectedParams) {
+        String query = 'SELECT Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\' WITH DATA CATEGORY FAQs__c BELOW ' + selectedParams + ' ORDER BY ArticleTotalViewCount DESC LIMIT 10';
+        System.debug('____ [cls DescribeDataCategoryGroupStructures - getArticlesFromSubtopic] query - ' + query);
+
         List<FAQ__kav> articleList = Database.query(query);
         
         return articleList;
