@@ -433,7 +433,7 @@ public with sharing class AttachmentListCtrl {
     
     public class ReturnWrapper {
         @AuraEnabled
-        String severity {get; set;}
+        @testvisible String severity {get; set;}
         @AuraEnabled
         String extraDetails {get; set;}
         
@@ -522,11 +522,11 @@ public with sharing class AttachmentListCtrl {
         }
 
         //check file size
-        if (filesize > MAX_FILE_SIZE) {
+       /* if (filesize > MAX_FILE_SIZE) {
             upf.isSuccess = false;
             upf.errorMessage =  Label.Overall_maximum_size;
             return upf;
-        }
+        }*/
 
         //Check file name length: no more than 80 characters
         if (filenameupload.length() > 80) {
