@@ -67,7 +67,7 @@
                         const accessToken = oauth.access_token;
                         //this.getDatasetDetail(component, event, accessToken, '472737e1-7e1a-4ded-988e-dbcac9293415');
                         //this.getReportDataset(component, event, accessToken, groupId);
-                        this.getEmbedToken(component, event, accessToken, federationId, groupId, reportId, '472737e1-7e1a-4ded-988e-dbcac9293415');
+                        this.getEmbedToken(component, event, accessToken, federationId, groupId, reportId, '');
                     }else{
                         console.log('getAccessToken error - no access token');
                         this.showToast('error', 'Unexpected error!', 'Unable to get application access token.');

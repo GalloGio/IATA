@@ -208,7 +208,7 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
     }
 
 
-    /*@AuraEnabled      //TODO: - dataset details
+    @AuraEnabled      //TODO: - dataset details
     public static String getDataset(String accessToken, String datasetId) {
         Http h = new Http();
         HttpRequest req = new HttpRequest();
@@ -225,11 +225,11 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         System.debug('getDataset result.getBody():: ' + result);
 
         return result;
-    }*/
+    }
 
 
 
-    /*@AuraEnabled          //THIS WILL RETURN FEDERATION ID //TODO:get dataseteId for report
+    @AuraEnabled          //THIS WILL RETURN FEDERATION ID //TODO:get dataseteId for report
     public static String getReportsDetails(String accessToken, String reportId) {
 
         //groupId = 'bb322fe5-1f26-4bc6-892a-811d6a625ba1';
@@ -251,7 +251,7 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         System.debug('getReportsDetails result.getBody():: ' + result);
 
         return result;
-    }*/
+    }
 
     @AuraEnabled
     public static EmbedTokenResult getEmbedToken(String accessToken, String federationId, String groupId, String reportId, String datasetId) {

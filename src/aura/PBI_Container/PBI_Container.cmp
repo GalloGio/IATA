@@ -13,6 +13,8 @@
     <aura:attribute name="selectedDashboardCategory" type="List"/>
     <aura:attribute name="showDashboardCategory" type="Boolean" default="false"/>
 
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+
 
     <aura:handler name="backListEvent" event="c:PowerBI_Embedded_Dashboard_List_Back_EVT" action="{!c.backEvent}"/>
 
@@ -91,7 +93,7 @@
         </aura:if>
 
 
-        <aura:if isTrue="{! v.showDashboard}">
+        <!--<aura:if isTrue="{! v.showDashboard}">
 
             <div class="back_button">
                 <button class="btn btn-primary btn-grey" onclick="{! c.hideDashboard}">Back</button>
@@ -99,12 +101,15 @@
 
             <div aura:id="iframe"></div>
 
-        </aura:if>
+        </aura:if>-->
 
         <!--SPINNER-->
-        <div aura:id="spinner" class="slds-hide">
-            <lightning:spinner alternativeText="Loading..."/>
-        </div>
+        <aura:if isTrue="{! v.showSpinner}">
+
+                <lightning:spinner alternativeText="Loading..."/>
+
+        </aura:if>
+
 
     </div>
 

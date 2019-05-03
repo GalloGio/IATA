@@ -2,6 +2,7 @@
 
     getAvailableDashboards : function(component, event) {
         debugger;
+        this.toggleSpinner(component, event);
         let action = component.get('c.getAvailableDashboardCategoriesForUser');
         action.setParams({
             'userId' : $A.get('$SObjectType.CurrentUser.Id')
@@ -18,6 +19,7 @@
                     }
 
                     component.set('v.dashboardCategories', dashboards);
+                    this.toggleSpinner(component, event);
 
                     /*let withCategories = [];
                     let categories = new Set();
@@ -55,13 +57,16 @@
                     component.set('v.dashboardsWithRoles', withRoles);*/
 
                 }else{
-                    console.log('getAvailableDashboards error');
                     //TODO:handle error
+                    console.log('getAvailableDashboards error');
+                    this.toggleSpinner(component, event);
                 }
 
             }else{
-                console.log('getAvailableDashboards error');
                 //TODO:handle error
+                console.log('getAvailableDashboards error');
+                this.toggleSpinner(component, event);
+
             }
         });
         $A.enqueueAction(action);
@@ -209,8 +214,7 @@
     },
 
     toggleSpinner : function(component, event) {
-        var spinner = component.find('spinner');
-        $A.util.toggleClass(spinner, 'slds-hide');
+        component.set('v.showSpinner', !component.get('v.showSpinner'));
     },
 
 
