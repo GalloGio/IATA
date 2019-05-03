@@ -356,7 +356,7 @@
                         <apex:selectOptions value="{!billingStateList}"/>
                     </apex:selectList>
 
-                    <apex:inputText id="billingStateText" value="{!ca.fw.newform.State_Province__c}" onkeyup="copyBillingStateInputBox();" style="width: 200px; float: inline-start; margin-left: 15px;"/>
+                    <apex:inputText id="billingStateText" value="{!ca.fw.newform.State_Province__c}" onkeyup="copyBillingStateInputBox();" style="width: 200px; float: left; margin-left: 15px;"/>
 
                 </apex:outputPanel>
                 
@@ -384,11 +384,11 @@
                                         rendered="{! !displayShipping}">
                     </DSE:DS_DataQuality>
 
-                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px; float: inline-start;" onchange="copyStateListSelection(); copyShippingState();">
+                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px; float: left;" onchange="copyStateListSelection(); copyShippingState();">
                         <apex:selectOptions value="{!shippingStateList}"/>
                     </apex:selectList>
 
-                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: inline-start; margin-left: 15px;"/>
+                    <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: left; margin-left: 15px;"/>
 
                     <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();" rendered="{! !displayShipping}">
                         <apex:selectOptions value="{!countryList}"/>
@@ -1124,12 +1124,12 @@
 
             if (stateMap[dropdownValue] != undefined) {
                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-                $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px; margin-left: 15px; float: inline-start;');
+                $('[id$="ShippingStateList"]').attr('style', 'display: block; width: 200px; margin-left: 15px; float: left;');
                 
                 changeStateOptions();
             } else {
                 if (!$('[id$="disableCheckBoxBranch"]')[0].checked) {
-                    $('[id$="shippingStateInput"]').attr('style', 'display: block; width: 200px; float: inline-start; margin-left: 15px;');
+                    $('[id$="shippingStateInput"]').attr('style', 'display: block; width: 200px; float: left; margin-left: 15px;');
                 }
             }            
         }

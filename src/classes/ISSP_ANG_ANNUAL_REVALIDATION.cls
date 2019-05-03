@@ -486,6 +486,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			keepConfirmedData();
+			currentAccount.fw.newform.Saved_At_Least_Once__c = true;
 			addVATPrefix();
 			upsert currentAccount.fw.newform;
 
@@ -1236,7 +1237,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
                 
-                if(currentAccount.shippingSameAsBilling == false) {
+                if(currentAccount.fw.newform.Shipping_Same_As_Billing__c == false) {
                     if (currentAccount.fw.newform.Shipping_Street__c == null) {
                         currentAccount.fw.newform.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
@@ -1948,12 +1949,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     }
 
     private void addVATPrefix() {
-    	if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c)) {
-    		currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c;
-    	}
+    	if (currentAccount.isoCountry.EU_Country__c) {
+	    	if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c)) {
+	    		currentAccount.fw.newForm.ISSP_AMS_VAT_number__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c;
+	    	}
 
-    	if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c)) {
-    		currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c;
-    	}
+	    	if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c)) {
+	    		currentAccount.fw.newForm.VAT_Number_2__c = currentAccount.isocountry.ISO_Code__c + currentAccount.fw.newForm.ISSP_AMS_VAT_Number_2_Input__c;
+	    	}
+	    }
     }
 }
