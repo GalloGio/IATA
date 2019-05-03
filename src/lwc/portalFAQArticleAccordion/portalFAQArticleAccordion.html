@@ -1,13 +1,16 @@
 <template>
-    <div class="customCardWhite">
-    <h1 class="slds-text-heading_small">Popular Articles</h1>
-    <lightning-accordion>
+    <div class="customCardWhite">        
         <template for:each={articles} for:item="article">
-            <lightning-accordion-section label={article.Title} key={article.Id}>
-                <lightning-formatted-rich-text data-name={article.Title} data-label={article.Title} value={article.Answer__c}></lightning-formatted-rich-text>
-                <c-portal-f-a-q-reach-us-banner></c-portal-f-a-q-reach-us-banner>
-            </lightning-accordion-section>            
-        </template>        
-    </lightning-accordion>
+            <div class="slds-p-around_small customCardTitleBox cursorPointer" onclick={articleSelected} key={article.Id} data-item={article.label}>
+                <lightning-icon class="darkBlueIcon" if:true={article.open} icon-name="utility:chevrondown" size="xx-small" data-item={article.label}></lightning-icon>
+                <lightning-icon class="darkBlueIcon" if:false={article.open} icon-name="utility:chevronright" size="xx-small" data-item={article.label}></lightning-icon>
+                <span class="slds-p-left_small text-bold" data-item={article.label}>{article.label}</span>
+                    
+                    <div if:true={article.open} class="slds-p-around_large text-xsmall" style="transition: height 0.3s ease;" key={article.Id} data-item={article.label}>
+                        <lightning-formatted-rich-text value={article.value}></lightning-formatted-rich-text>
+                        <c-portal-f-a-q-reach-us-banner category={category} topic={topic} sub-topic={subTopic}></c-portal-f-a-q-reach-us-banner>
+                    </div>
+            </div>
+        </template>
     </div>
 </template>

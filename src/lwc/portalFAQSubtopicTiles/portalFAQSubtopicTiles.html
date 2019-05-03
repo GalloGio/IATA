@@ -4,15 +4,19 @@
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </template>
         <template if:false={loading}>
-            <lightning-accordion onsectiontoggle={handleSectionToggle}>
-                <template for:each={topicTiles} for:item="topic">
-                    <lightning-accordion-section name={topic.value} label={topic.label} key={topic.Id} class="iconProperties">
-                        <template for:each={subTopicTiles} for:item="subtopic">
-                            <div data-name={subtopic.value} data-label={subtopic.label} key={subtopic.Id} onclick={handleSubTopic}>{subtopic.label}</div>
-                        </template> 
-                    </lightning-accordion-section>
-                </template>
-            </lightning-accordion>
+            <template for:each={topicTiles} for:item="topic">
+                <div class="slds-p-around_small customCardTitleBox cursorPointer" onclick={topicSelected} key={topic.value} data-item={topic.value}>
+                    <lightning-icon class="darkBlueIcon" if:true={topic.open} icon-name="utility:chevrondown" size="xx-small" data-item={topic.value}></lightning-icon>
+                    <lightning-icon class="darkBlueIcon" if:false={topic.open} icon-name="utility:chevronright" size="xx-small" data-item={topic.value}></lightning-icon>
+                    <span class="slds-p-left_small text-bold" data-item={topic.value}>{topic.label}</span>
+                        
+                        <div if:true={topic.open} style="transition: height 0.3s ease;" key={topic.value} data-item={topic.value}>
+                            <template for:each={subTopicTiles} for:item="subtopic">
+                                <div class={subtopic.class} data-name={subtopic.value} data-label={subtopic.label} key={subtopic.value} onclick={subTopicSelected}>{subtopic.label}</div>
+                            </template>
+                        </div>
+                </div>
+            </template>            
         </template>  
     </div>   
 </template>
