@@ -191,7 +191,7 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			if ((accNotification != null) 
 				&& (accNotification.Subscription_End_Date__c == null || accNotification.Subscription_End_Date__c < subProdCharge.Zuora__Subscription__r.Zuora__TermEndDate__c))
 			{   // we select the subscription with last end date, 
-				// and it is safe to assume it is an EBC Subscription, i.e (subProdCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.ProductCategory__c == 'eBroadcast')
+				// and it is safe to assume it is an EBC Subscription, i.e (subProdCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__Product__r.ProductCategory__c == 'eBroadcast')
 				// this is for the EBC Subscription
 				accNotification.EBC_Subscription_Type__c = subProdCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.EBC_SubscriptionType__c;
 				accNotification.EBC_Rate_Plan_Name__c = subProdCharge.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Name;

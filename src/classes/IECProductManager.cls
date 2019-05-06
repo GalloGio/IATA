@@ -103,7 +103,7 @@ public with sharing class IECProductManager {
         if (IECConstants.isProductCategoryCode(sProductCategoryCode) == false)
             throw new IECApplicationException(IECConstants.Error_InvalidProductCode + ': ' + sProductCategoryCode);
             
-        return [SELECT Id, IsDeleted, Product_Audience__c, Name, Related_Product__c, Related_Product_Category__c
+        return [SELECT Id, IsDeleted, Product_Audience__c, Name, New_Related_Product__c, Related_Product_Category__c
                     , Has_Most_Popular_Counter__c 
                 FROM Product_Information__c
                 WHERE IsDeleted = false
@@ -161,7 +161,7 @@ public with sharing class IECProductManager {
 
         List<string> listAvailableProductAudience = getAvailableProductAudienceByClientType(sClientType);
         
-        return [SELECT Id, IsDeleted, Product_Audience__c, Name, Related_Product__c, Related_Product_Category__c
+        return [SELECT Id, IsDeleted, Product_Audience__c, Name, New_Related_Product__c, Related_Product_Category__c
                     , Has_Most_Popular_Counter__c 
                 FROM Product_Information__c
                 WHERE IsDeleted = false
@@ -174,14 +174,14 @@ public with sharing class IECProductManager {
      */
     public static List<Product_Rate_Plan_Information__c> getProductRatePlansInformationByProductInformation(Product_Information__c oProductInformation) {
         return [SELECT Name, Display_As_Monthly_Fee__c, Is_Most_Popular__c, Long_Description__c, Monthly_Price__c, Order__c, Short_Description__c
-                    , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__ZProduct__c
+                    , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__Product__c
                     , Product_Rate_Plan__r.zqu__ZuoraId__c, Related_Product_Information__r.Related_Product_Category__r.Button_Type__c, Is_Triable__c 
                 FROM Product_Rate_Plan_Information__c
                 WHERE Related_Product_Information__c = :oProductInformation.Id
                     AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                     AND Active__c = true
                     //AND User_Interface_Display__c = 'YES'
-                    AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                    AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                     AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                     AND Product_Rate_Plan__r.zqu__Deleted__c = false
                 ORDER BY Order__c];
@@ -189,18 +189,13 @@ public with sharing class IECProductManager {
 
     public static List<Product_Rate_Plan_Information__c> getProductRatePlansInformations(Set<Id> ids) {
         return [SELECT Name, Display_As_Monthly_Fee__c, Is_Most_Popular__c, Long_Description__c, Monthly_Price__c, Order__c, Short_Description__c
-                    , Rate_Plan_ID__c, Product_Rate_Plan__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__ZProduct__c
+                    , Rate_Plan_ID__c, Product_Rate_Plan__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__Product__c
                     , Product_Rate_Plan__r.zqu__ZuoraId__c, Related_Product_Information__r.Related_Product_Category__r.Button_Type__c, Is_Triable__c 
                 FROM Product_Rate_Plan_Information__c
                 WHERE Id IN  :ids 
                     
                 ORDER BY Order__c];
-            /*AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
-                    AND Active__c = true
-                    //AND User_Interface_Display__c = 'YES'
-                    AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
-                    AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
-                    AND Product_Rate_Plan__r.zqu__Deleted__c = false*/
+            
     }
     
     /**
@@ -208,7 +203,7 @@ public with sharing class IECProductManager {
      */
     public static List<Product_Rate_Plan_Information__c> getProductRatePlansInformationById(Id idProductRatePlan) {
         return [SELECT Display_As_Monthly_Fee__c, Is_Most_Popular__c, Long_Description__c, Monthly_Price__c, Order__c, Short_Description__c
-                    , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__ZProduct__c
+                    , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__Product__c
                     , Product_Rate_Plan__r.zqu__ZuoraId__c, Is_Triable__c, Subscription_Usage_Qty__c
                     , Related_Product_Information__r.Related_Product_Category__c
                     , Related_Product_Information__r.Related_Product_Category__r.Name
@@ -219,13 +214,13 @@ public with sharing class IECProductManager {
                     , Related_Product_Information__r.Related_Product_Category__r.Product_Icon__c
                     , Related_Product_Information__r.Related_Product_Category__r.Show_price_on_eCommerce__c
                     , Related_Product_Information__c 
-                    , Related_Product_Information__r.Related_Product__r.zqu__SKU__c
+                    , Related_Product_Information__r.New_Related_Product__r.zqu__SKU2__c
                 FROM Product_Rate_Plan_Information__c
                 WHERE Id = :idProductRatePlan
                     AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                     AND Active__c = true
                     //AND User_Interface_Display__c = 'YES'
-                    AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                    AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                     AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                     AND Product_Rate_Plan__r.zqu__Deleted__c = false
                 ORDER BY Order__c];
@@ -240,19 +235,19 @@ public with sharing class IECProductManager {
         
         List<Product_Rate_Plan_Information__c> lstRatePlan =
                 [SELECT Display_As_Monthly_Fee__c, Is_Most_Popular__c, Long_Description__c, Monthly_Price__c, Order__c, Short_Description__c
-                    , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__ZProduct__c
+                    , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__Product__c
                     , Product_Rate_Plan__r.zqu__ZuoraId__c, Is_Triable__c
                     , Related_Product_Information__r.Related_Product_Category__c
                     , Related_Product_Information__r.Related_Product_Category__r.Button_Type__c
                     , Related_Product_Information__r.Related_Product_Category__r.Display_Name__c
                     , Related_Product_Information__c 
-                    , Related_Product_Information__r.Related_Product__r.zqu__SKU__c
+                    , Related_Product_Information__r.New_Related_Product__r.zqu__SKU2__c
                 FROM Product_Rate_Plan_Information__c
                 WHERE Product_Rate_Plan__r.zqu__ZuoraId__c = :sZuoraIdProductRatePlan
                     AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                     AND Active__c = true
                     //AND User_Interface_Display__c = 'YES'
-                    AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                    AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                     AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                     AND Product_Rate_Plan__r.zqu__Deleted__c = false
                 ORDER BY Order__c];
@@ -268,8 +263,8 @@ public with sharing class IECProductManager {
      */
     public static List<zqu__ProductRatePlan__c> getZuoraRatePlansFromIDs(Set<String> setZuoraRatePlanIds) {
         List<zqu__ProductRatePlan__c> ratePlans = 
-            [Select z.Id, z.zqu__ZuoraId__c, z.zqu__ZProduct__r.zqu__Description__c, z.zqu__ZProduct__r.Name
-                , z.zqu__ZProduct__r.ProductCategory__c, z.zqu__ZProduct__c, z.zqu__Description__c, z.Name
+            [Select z.Id, z.zqu__ZuoraId__c, z.zqu__Product__r.Description, z.zqu__Product__r.Name
+                , z.zqu__Product__r.ProductCategory__c, z.zqu__Product__c, z.zqu__Description__c, z.Name
                 , (Select Name, zqu__ListPrice__c, zqu__Description__c From zqu__R00N40000001mFVKEA2__r where zqu__Deleted__c = false) 
              From zqu__ProductRatePlan__c z 
              where z.zqu__ZuoraId__c IN : setZuoraRatePlanIds];
@@ -600,7 +595,7 @@ public with sharing class IECProductManager {
         // return associated product rate plan info
         if (String.isNotBlank(sClientType))
             return [SELECT Name, Display_As_Monthly_Fee__c, Is_Most_Popular__c, Long_Description__c, Monthly_Price__c, Order__c, Short_Description__c
-                        , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__ZProduct__c
+                        , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__Product__c
                         , Product_Rate_Plan__r.zqu__ZuoraId__c, Is_Triable__c
                         , Related_Product_Information__r.Related_Product_Category__r.Button_Type__c
                         , Related_Product_Information__r.Related_Product_Category__r.Display_Name__c
@@ -610,14 +605,14 @@ public with sharing class IECProductManager {
                         AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                         AND Active__c = true
                         //AND User_Interface_Display__c = 'YES'
-                        AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                        AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                         AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                         AND Product_Rate_Plan__r.zqu__Deleted__c = false
                         AND Related_Product_Information__r.Product_Audience__c IN :IECProductManager.getAvailableProductAudienceByClientType(sClientType)
                     ORDER BY Order__c];
         else
             return [SELECT Name, Display_As_Monthly_Fee__c, Is_Most_Popular__c, Long_Description__c, Monthly_Price__c, Order__c, Short_Description__c
-                        , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__ZProduct__c
+                        , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__Product__c
                         , Product_Rate_Plan__r.zqu__ZuoraId__c, Is_Triable__c
                         , Related_Product_Information__r.Related_Product_Category__r.Button_Type__c
                         , Related_Product_Information__r.Related_Product_Category__r.Display_Name__c
@@ -627,7 +622,7 @@ public with sharing class IECProductManager {
                         AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                         AND Active__c = true
                         //AND User_Interface_Display__c = 'YES'
-                        AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                        AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                         AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                         AND Product_Rate_Plan__r.zqu__Deleted__c = false
                     ORDER BY Order__c];
@@ -658,7 +653,7 @@ public with sharing class IECProductManager {
         // return associated product rate plan info
         if (String.isNotBlank(sClientType))
             lstPrpi = [SELECT Name, Display_As_Monthly_Fee__c, Is_Most_Popular__c, Long_Description__c, Monthly_Price__c, Order__c, Short_Description__c
-                        , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__ZProduct__c
+                        , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__Product__c
                         , Product_Rate_Plan__r.zqu__ZuoraId__c, Is_Triable__c
                         , Related_Product_Information__r.Related_Product_Category__r.Button_Type__c
                         , Related_Product_Information__r.Related_Product_Category__r.Display_Name__c
@@ -668,7 +663,7 @@ public with sharing class IECProductManager {
                         AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                         AND Active__c = true
                         //AND User_Interface_Display__c = 'YES'
-                        AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                        AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                         AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                         AND Product_Rate_Plan__r.zqu__Deleted__c = false
                         AND Related_Product_Information__r.Product_Audience__c IN :IECProductManager.getAvailableProductAudienceByClientType(sClientType)
@@ -676,7 +671,7 @@ public with sharing class IECProductManager {
 
         else
             lstPrpi = [SELECT Name, Display_As_Monthly_Fee__c, Is_Most_Popular__c, Long_Description__c, Monthly_Price__c, Order__c, Short_Description__c
-                        , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__ZProduct__c
+                        , Rate_Plan_ID__c, User_Interface_Display__c, Product_Rate_Plan__r.Name, Product_Rate_Plan__r.zqu__Product__c
                         , Product_Rate_Plan__r.zqu__ZuoraId__c, Is_Triable__c
                         , Related_Product_Information__r.Related_Product_Category__r.Button_Type__c
                         , Related_Product_Information__r.Related_Product_Category__r.Display_Name__c
@@ -686,7 +681,7 @@ public with sharing class IECProductManager {
                         AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                         AND Active__c = true
                         //AND User_Interface_Display__c = 'YES'
-                        AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                        AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                         AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                         AND Product_Rate_Plan__r.zqu__Deleted__c = false
                     ORDER BY Order__c];
