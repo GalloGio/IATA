@@ -2,13 +2,13 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
     <label>GADM</label>
-    <tab>standard-Account</tab>
-    <tab>standard-Contact</tab>
-    <tab>standard-report</tab>
-    <tab>Data_Submission__c</tab>
-    <tab>GADM_Account_Service_Detail__c</tab>
-    <tab>Contact_Role_Service_Access__c</tab>
-    <tab>Service_Notification__c</tab>
-    <tab>Contact_Roles__c</tab>
-    <tab>Data_Submisssion</tab>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>Data_Submission__c</tabs>
+    <tabs>GADM_Account_Service_Detail__c</tabs>
+    <tabs>Contact_Role_Service_Access__c</tabs>
+    <tabs>Service_Notification__c</tabs>
+    <tabs>Contact_Roles__c</tabs>
+    <tabs>Data_Submisssion</tabs>
 </CustomApplication>
