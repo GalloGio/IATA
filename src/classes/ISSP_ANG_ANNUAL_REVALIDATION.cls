@@ -528,14 +528,24 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	
 	private void migrateExtraFields() {
 		String isoCountryForm = currentAccount.fw.newform.Shipping_Country__c;
+		String billingStateForm = currentAccount.fw.newform.State_Province__c;
 
-		if (String.isEmpty(isoCountryForm)) return;
-
-		for(IATA_ISO_Country__c ctr : IATAIsoCountryDAO.getIsoCountries()){
-			if(ctr.Name.toupperCase() == isoCountryForm.toupperCase()){
-				currentAccount.fw.newform.Shipping_ISO_Country__c = ctr.Id;
-				break;
+		if (!String.isEmpty(isoCountryForm)) {
+			for(IATA_ISO_Country__c ctr : IATAIsoCountryDAO.getIsoCountries()){
+				if(ctr.Name.toupperCase() == isoCountryForm.toupperCase()){
+					currentAccount.fw.newform.Shipping_ISO_Country__c = ctr.Id;
+					break;
+				}
 			}
+		}
+
+		if (currentAccount.isoCountry.State_Province_Picklist__c && !String.isEmpty(billingStateForm)) {
+			IATA_ISO_State__c state = [SELECT Id, Name
+                                    FROM IATA_ISO_State__c
+                                    WHERE IATA_ISO_Country__c = :currentAccount.account.IATA_ISO_Country__c
+                                    	AND Name = :billingStateForm];
+
+            currentAccount.fw.newform.IATA_ISO_State__c = state.Id;
 		}
 	}
 
