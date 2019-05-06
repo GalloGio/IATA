@@ -46,6 +46,25 @@
   border: none;
 }
 
+.THIS .containedButtonOfflineLiveAgent{
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 40px;
+  width: 60px;
+  word-break: normal;
+  border: none;
+}
+
 .THIS.exampleHolder{
   position: relative;
   white-space: nowrap;

@@ -101,7 +101,7 @@
                                             </button>
                                             <button aura:id="liveAgentOfflineNoCountryId"
                                                 id="liveAgentOfflineNoCountryId"
-                                                class="containedButtonLiveAgent uiButton contactSupport disabled"
+                                                class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
                                                 style="display:none;">
                                                 {!v.liveAgentOnlineNoCountryLanguage}
                                             </button>
@@ -120,7 +120,7 @@
                                             </button>
                                             <button aura:id="liveAgentOfflineWithCountryId"
                                                 id="liveAgentOfflineWithCountryId"
-                                                class="containedButtonLiveAgent uiButton contactSupport disabled"
+                                                class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
                                                 style="display:none;">
                                                 {!v.liveAgentOnlineWithCountryLanguage}
                                             </button>
@@ -138,7 +138,7 @@
                                                 {!v.liveAgentOnlineDefaultIdLanguage}
                                             </button>
                                             <button id="liveAgentOfflineDefaultId" aura:id="liveAgentOfflineDefaultId"
-                                                class="containedButtonLiveAgent uiButton contactSupport disabled"
+                                                class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
                                                 style="display:none;">
                                                 {!v.liveAgentOnlineDefaultIdLanguage}
                                             </button>
