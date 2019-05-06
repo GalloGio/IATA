@@ -182,7 +182,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         get{
             if(displayShipping == null) {
                 displayShipping = false;
-                if(ca.fw.newform.Saved_At_Least_Once__c = true) {
+                if(ca.fw.newform.Saved_At_Least_Once__c == true) {
                     displayShipping = ca.fw.newform.Shipping_Same_As_Billing__c;
                 }else if(ca.Account.BillingStreet == ca.Account.ShippingStreet &&
                          ca.Account.BillingCity == ca.Account.ShippingCity &&
