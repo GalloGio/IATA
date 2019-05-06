@@ -10,39 +10,33 @@
     <aura:attribute name="liveAgentOnlineNoCountry" type="String" />
     <aura:attribute name="onlineText" type="String" required="true" default="" />
     <aura:attribute name="offlineText" type="String" required="true" default="No Chat" />
-    <aura:attribute name="isInvalidInput" type="Boolean" />
     <aura:attribute name="liveAgentOnlineDefaultIdLanguage" type="String" />
     <aura:attribute name="liveAgentOnlineWithCountryLanguage" type="String" />
     <aura:attribute name="liveAgentOnlineNoCountryLanguage" type="String" />
     <aura:attribute name="isTopicLiveAgent" type="Boolean" default="false" />
     <aura:attribute name="isNoCountryLiveAgent" type="Boolean" default="false" />
     <aura:attribute name="isWithCountryLiveAgent" type="Boolean" default="false" />
-    <aura:attribute name="showOptions" type="Boolean" default="false"/>
+    <aura:attribute name="showOptions" type="Boolean" default="false" />
     <aura:attribute name="userSessionData" type="Boolean" default="true" />
+
     <aura:attribute name="contact" type="Contact" />
-    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="topic" type="String" />
+    <aura:attribute name="subTopic" type="String" />
+    <aura:attribute name="caseRecordType" type="String" />
+    <aura:attribute name="country" type="String" />
 
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    
     <ltng:require scripts="{!$Resource.jquery_3_4_0_min + '/jquery_3_4_0_min.js'}" afterScriptsLoaded="{!c.doInit}" />
-
-    <aura:if isTrue="{!v.isInvalidInput}">
-        <ui:message title="Warning" severity="warning" closable="false">
-            Live Agent Chat Button configuration data is empty.
-        </ui:message>
-    </aura:if>
 
     <aura:if isTrue="{!v.loaded}">
         <lightning:spinner alternativeText="Loading" style="height:250vh;" />
     </aura:if>
-
     <div class="slds-grid slds-grid_align-center">
-
         <div class="slds-col slds-size_2-of-3 slds-large-size_2-of-3 slds-medium-size_1-of-1 slds-small-size_1-of-1">
             <div class="customCard">
-
-                <c:portalSupportReachUs onfilterChange="{!c.handlefilterChangeEvent}"
-                    ontoggleSpinner="{!c.toggleSpinner}" onshowoptions="{!c.showoptions}"
-                    oncloseoptions="{!c.closeoptions}" />
-
+                <c:portalSupportReachUs ontoggleSpinner="{!c.toggleSpinner}" onalldatachange="{!c.handleLiveAgentChangeEvent}"
+                    onshowoptions="{!c.showOptions}" oncloseoptions="{!c.closeOptions}" />
                 <aura:if isTrue="{!v.showOptions}">
                     <ltng:require scripts="{!$Resource.deployment}" />
                     <div class="slds-text-align_center slds-p-vertical_xx-large">
@@ -56,7 +50,7 @@
                         <div class="slds-p-top_large">
                             <div
                                 class="slds-grid grid-margin-bottom-justified slds-grid_vertical slds-align_absolute-center lower_panel_size">
-                                <div class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_2-of-2 slds-small-size_2-of-2 
+                                <div class="slds-col tile-column slds-size_2-of-2 slds-small-size_2-of-2 
                                                             slds-medium-size_2-of-2 slds-large-size_4-of-6
                                                             slds-m-bottom_large 
                                                             cursorPointer customCardWhite">
@@ -73,7 +67,7 @@
                     </div>
                     <div
                         class="slds-grid grid-margin-bottom-justified slds-wrap slds-p-bottom_xx-large slds-align_absolute-center ">
-                        <div class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+                        <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
                                             slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                             slds-m-horizontal_small customCard" style="height: 170px; width: 250px;">
                             <div class="slds-text-title_bold noPointerEvents slds-p-around_small ">
@@ -86,8 +80,7 @@
                                 class="containedButton cursorPointer slds-medium-size_1-of-3">
                             </lightning:button>
                         </div>
-
-                        <div class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
+                        <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
                                 slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                 slds-m-horizontal_small customCard" style="height: 170px; width: 250px;">
                             <div class="slds-text-title_bold noPointerEvents slds-p-around_small ">
@@ -110,7 +103,7 @@
                                                 id="liveAgentOfflineNoCountryId"
                                                 class="containedButtonLiveAgent uiButton contactSupport disabled"
                                                 style="display:none;">
-                                                {!v.offlineText}
+                                                {!v.liveAgentOnlineNoCountryLanguage}
                                             </button>
                                         </div>
                                     </div>
@@ -129,7 +122,7 @@
                                                 id="liveAgentOfflineWithCountryId"
                                                 class="containedButtonLiveAgent uiButton contactSupport disabled"
                                                 style="display:none;">
-                                                {!v.offlineText}
+                                                {!v.liveAgentOnlineWithCountryLanguage}
                                             </button>
                                         </div>
                                     </div>
@@ -147,21 +140,16 @@
                                             <button id="liveAgentOfflineDefaultId" aura:id="liveAgentOfflineDefaultId"
                                                 class="containedButtonLiveAgent uiButton contactSupport disabled"
                                                 style="display:none;">
-                                                {!v.offlineText}
+                                                {!v.liveAgentOnlineDefaultIdLanguage}
                                             </button>
                                         </div>
                                     </div>
                                 </aura:if>
                             </div>
-
                         </div>
                     </div>
                 </aura:if>
-
             </div>
         </div>
     </div>
-
-
-
 </aura:component>

@@ -1,26 +1,22 @@
 .THIS .disabled{
-  background-color: #c2cacf !important;
-  cursor: default !important;
+  background-color: #c2cacf;
+  cursor: default ;
   pointer-events: none;
 }
 
 .THIS .disabled:hover{
-  background-color: #c2cacf !important;
-  cursor: default !important;
+  background-color: #c2cacf ;
+  cursor: default ;
   pointer-events: none;
 }
 
 .THIS .disabled:focus{
-  background-color: #c2cacf !important;
-  cursor: default !important;
+  background-color: #c2cacf ;
+  cursor: default ;
   pointer-events: none;
 }
 
-.THIS .toggle {
-  display: none !important;
-}
-
-.THIS .column-backgroundwhite-textblack-aligned-wborder{
+.THIS .tile-column{
   background: #fff;
   color: rgb(0, 0, 0);
   text-align: center;

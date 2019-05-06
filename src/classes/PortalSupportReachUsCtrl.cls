@@ -9,7 +9,6 @@ public static Map<String,String> getCountryList(){
 	list<IATA_ISO_Country__c> isoList = new list<IATA_ISO_Country__c>();
 	List<IATA_ISO_Country__c> isoCountriesByCaseBSPNotNull = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
 
-
 	if (currentLanguage == 'es') {
 		isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(isoCountriesByCaseBSPNotNull, 'IATA_Country_SP__c');
 	}
@@ -85,12 +84,11 @@ public static Map<String,String> getCountryList(){
 	return options;
 }
 
-
 //Gets Custom Setting LiveAgentButtonSettings and grabs correct buttons to display
 //Grab Account information for distinguish of other buttons to show
 //Check the Sector of the Account. Related to Contact.
 @AuraEnabled (cacheable=true)
-public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicName, String country){
+public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicName, String country, Contact contactInfo){
 
 	//lower cases the country value;
 	country = country.toLowerCase();
@@ -99,11 +97,7 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 	topicName = topicName + '__c';
 	List<LiveAgentButtonSettings__c> liveAgentSettings = new List<LiveAgentButtonSettings__c>();
 
-	//Grabs User info
-	User user = [SELECT Id,ContactId FROM User WHERE Id =:Userinfo.getUserId()];
-
-	//Grabs User's associated Contact
-	Contact con = [SELECT ID, Account.Region_formula__c, Account.Sector__c FROM Contact WHERE ID = :user.ContactId];
+	Contact con = contactInfo;
 
 	//Make sector ready for LIKE search
 	String sector = con.Account.Sector__c != null ? con.Account.Sector__c : '';
@@ -129,6 +123,67 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 			liveAgentSettings.add(buttonSettings);
 		}
 	}
+
+	//return Live Agent Settings
 	return liveAgentSettings;
+}
+
+
+//sets a Map with the Type of Case and Country for the Live Agent Case
+@AuraEnabled (cacheable=true)
+public static Map<String,String> getCaseTypeAndCountry(Contact contactInfo, String country){
+
+	Map<String,String> caseInformation = new Map<String,String>();
+	Set<String> newset = new Set<String>();
+
+	if(country != null && country != '') {
+		newset.add(country.toUpperCase());
+	}else{
+		newset.add(contactInfo.Account.Country_ISO_Code__c);
+	}
+
+	//Sets the region of either the Country selected from the picklist or the one from the user's account.
+	IATA_ISO_Country__c IATA_ISO_country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(newset)[0];
+
+	String recordType;
+
+	if(IATA_ISO_country != null) {
+		if (IATA_ISO_country.Region__c == 'Europe') {
+			recordType = 'CasesEurope';
+		}else if(IATA_ISO_country.Region__c == 'Americas') {
+			recordType =  'CasesAmericas';
+		}else if(IATA_ISO_country.Region__c == 'Africa & Middle East') {
+			recordType = 'CasesMENA';
+		}else if(IATA_ISO_country.Region__c == 'Asia & Pacific') {
+			recordType = 'ExternalCasesIDFSglobal';
+		}else if(IATA_ISO_country.Region__c == 'China & North Asia') {
+			recordType = 'Cases_China_North_Asia';
+		}
+	}else{
+		recordType = 'InternalCasesEuropeSCE';
+	}
+
+	ID recordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', recordType);
+
+	caseInformation.put('RecordType', recordTypeID);
+
+	//Sets the Country from either the Country selection or the User's Account's
+	caseInformation.put('Country',IATA_ISO_country.Name);
+
+	//return the map with the info
+	return caseInformation;
+
+}
+
+@AuraEnabled (cacheable=true)
+public static Contact getContactInfo(){
+	//Grabs User info
+	User user = [SELECT Id,ContactId FROM User WHERE Id =:Userinfo.getUserId()];
+
+	//Grabs User's associated Contact
+	return [SELECT ID, FirstName, Name, Email, Phone, Account.Name, Account.Sector__c,
+	        Account.Category__c, Account.id, Account.Country_ISO_Code__c,
+	        Account.Region_formula__c FROM Contact WHERE ID = : user.ContactId];
+
 }
 }

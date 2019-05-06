@@ -1,7 +1,11 @@
 import { LightningElement, track } from 'lwc';
 import getLiveAgentButton from '@salesforce/apex/PortalSupportReachUsCtrl.getLiveAgentButton';
+import getContactInfo from '@salesforce/apex/PortalSupportReachUsCtrl.getContactInfo';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
+import getCaseTypeAndCountry from '@salesforce/apex/PortalSupportReachUsCtrl.getCaseTypeAndCountry';
+
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
+
 import { getParamsFromPage } from 'c/navigationUtils';
 
 
@@ -58,6 +62,11 @@ export default class PortalSupportReachUs extends LightningElement {
     pageParams;
     liveAgentButtonInfo;
     myResult;
+    contact;
+    allData = {};
+    categorization = {};
+    recordTypeAndCountry;
+    myliveAgentButtonInfo;
 
     //label construct
     label = {
@@ -98,11 +107,12 @@ export default class PortalSupportReachUs extends LightningElement {
 
         this.getCountryList();
 
+        this.getContact();
+
     }
 
     //get the Topic Values for picklist
     getAllPickListValues() {
-        this.toggleSpinner();
         //returns object
         getAllPickListValues()
             .then(result => {
@@ -145,7 +155,6 @@ export default class PortalSupportReachUs extends LightningElement {
                         this.pageParams.subtopic = '';
                     }
                 }
-                this.toggleSpinner();
             })
             .catch(error => {
                 //throws error
@@ -157,7 +166,6 @@ export default class PortalSupportReachUs extends LightningElement {
 
     //gets Country for picklist
     getCountryList() {
-        this.toggleSpinner();
         getCountryList()
             .then(result => {
                 let myResult = JSON.parse(JSON.stringify(result));
@@ -173,13 +181,20 @@ export default class PortalSupportReachUs extends LightningElement {
                 //set global with the options for later use
                 this.countryOptions = myTopicOptions;
 
-                this.toggleSpinner();
             })
             .catch(error => {
                 //throws error
                 this.error = error;
                 // eslint-disable-next-line no-console
                 console.log('Error: ', error);
+            });
+    }
+
+    //gets Contact Info
+    getContact() {
+        getContactInfo()
+            .then(result => {
+                this.contact = JSON.parse(JSON.stringify(result));
             });
     }
 
@@ -375,55 +390,38 @@ export default class PortalSupportReachUs extends LightningElement {
     //handles the support button click 
     supportOptionsHandler() {
         //fire event to activate spinner on Aura Wrapper
-        let toggleParentSpinner = new Promise((resolve, reject) => {
+        this.toggleSpinner();
 
-            this.toggleSpinner();
+        getCaseTypeAndCountry({ contactInfo: this.contact, country: this.countryValue })
+            .then(result => {
+                this.recordTypeAndCountry = JSON.parse(JSON.stringify(result));
+                this.getLiveAgentButtonInfo();
+            });
+    }
 
-            let error = false;
-            if (!error)
-                resolve();
-            else
-                reject();
-        });
+    //Gets all live agent information depending on the selected data
+    getLiveAgentButtonInfo() {
+        getLiveAgentButton({ topicName: this.topic, country: this.countryValue, contactInfo: this.contact })
+            .then(result => {
 
-        //fire event to activate spinner on Aura Wrapper
-        let toggleParentSpinner2 = new Promise((resolve, reject) => {
+                this.myliveAgentButtonInfo = JSON.parse(JSON.stringify(result));
+                this.sendDataForLiveAgent();
+                //fire event to activate spinner on Aura Wrapper
+                this.toggleSpinner();
+            });
+    }
 
-            this.toggleSpinner();
+    //Sends all data selected to Live Agent so call can be performed
+    sendDataForLiveAgent() {
 
-            let error = false;
-            if (!error)
-                resolve();
-            else
-                reject();
-        });
-
-        //Grabs Live Agent/s settings and gives it to parent aura wrapper.
-        let willGiveLiveAgent = new Promise((resolve, reject) => {
-            getLiveAgentButton({ topicName: this.topic, country: this.countryValue })
-                .then(result => {
-                    let myliveAgentButtonInfo;
-                    myliveAgentButtonInfo = JSON.parse(JSON.stringify(result));
-                    // Fire the custom event
-                    const filterchange = new CustomEvent('filterChange', {
-                        detail: { myliveAgentButtonInfo },
-                    });
-                    // Fire the custom event
-                    this.dispatchEvent(filterchange);
-
-                    //this.toggleSpinner();
-                    // Wraps a variable to send parameters through an event to Aura Parent Component (PortalSupportReachUsWrapper).
-                });
-
-            let error = false;
-            if (!error)
-                resolve();
-            else
-                reject();
-        });
+        let allData = {};
+        let categorization = {};
+        let recordTypeAndCountry = this.recordTypeAndCountry;
+        let myliveAgentButtonInfo = this.myliveAgentButtonInfo;
+        let contact = this.contact;
 
         //Shows Options Panel
-        let willShowPanel = new Promise((resolve, reject) => {
+        let showOptionsPanel = new Promise((resolve, reject) => {
             const showoptions = new CustomEvent('showoptions');
             // Fire the custom event
             this.dispatchEvent(showoptions);
@@ -435,8 +433,42 @@ export default class PortalSupportReachUs extends LightningElement {
                 reject();
         });
 
+        //receive topic and subtopic
+        let provideTopic_SubTopic = new Promise((resolve, reject) => {
+
+            categorization.Topic = this.topic;
+            categorization.SubTopic = this.subTopic;
+
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+
+        //retrieves data and sends through an event to wrapper aura component.
+        let provideAllDataToWrapper = new Promise((resolve, reject) => {
+            allData.myliveAgentButtonInfo = myliveAgentButtonInfo;
+            allData.recordTypeAndCountry = recordTypeAndCountry;
+            allData.categorization = categorization;
+            allData.contact = contact;
+
+            // Fire the custom event
+            const allDataChange = new CustomEvent('alldatachange', {
+                detail: { allData },
+            });
+            // Fire the custom event
+            this.dispatchEvent(allDataChange);
+
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+
         //Performs a document scroll down.
-        let scrollDown = new Promise((resolve, reject) => {
+        let scrollWindowDown = new Promise((resolve, reject) => {
             window.scrollTo({ top: document.lastChild.scrollHeight, left: 0, behavior: 'smooth' });
 
             let error = false;
@@ -448,12 +480,15 @@ export default class PortalSupportReachUs extends LightningElement {
 
         let willScrollDown = function () {
             //Show Spinner, Show Options Panel, Get Live Agent, Scroll window down, Hide Spinner
-            Promise.all([toggleParentSpinner, willShowPanel, willGiveLiveAgent, scrollDown, toggleParentSpinner2]);
+            Promise.all([
+                showOptionsPanel,
+                provideTopic_SubTopic,
+                provideAllDataToWrapper,
+                scrollWindowDown]);
         }
 
         //Execute async actions
         willScrollDown();
-
     }
 
     //method to execute spinner on aura wrapper
@@ -462,7 +497,7 @@ export default class PortalSupportReachUs extends LightningElement {
         // Fire the custom event
         this.dispatchEvent(toggleSpinner);
     }
-    
+
     //method to close options panel on aura wrapper
     closeOptionsPanel() {
         const closeOptions = new CustomEvent('closeoptions');
