@@ -5193,7 +5193,6 @@
               "Actions": [],
               "Automations": [],
               "DisplayFields": [
-                "Is_using_credit_card__c",
                 "Requested_Bank_Guarantee_amount__c",
                 "Requested_Bank_Guarantee_currency__c",
                 "Send_FS_request__c",
