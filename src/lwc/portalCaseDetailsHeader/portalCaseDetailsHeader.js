@@ -57,8 +57,12 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.haveRecipients = false;
             }
 
+            console.log('results.Status: ' , results.Status);
+
             this.loading = false;
             this.pendingCustomerCase = results.Status === 'Pending customer';
+
+            console.log('pendingCustomerCase: ' , this.pendingCustomerCase);
         })
         .catch(error => {
             console.log('error: ' , error);
