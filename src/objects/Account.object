@@ -99991,8 +99991,7 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
 		ISCHANGED(AOC_Expiry_Date__c),
 		ISCHANGED(Legal_name__c),
 		ISCHANGED(Area_of_Operation__c),
-		ISCHANGED(Membership_SITA__c),
-		ISCHANGED(MITA_Member__c)
+		ISCHANGED(Membership_SITA__c)
 	)
 )</errorConditionFormula>
         <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
