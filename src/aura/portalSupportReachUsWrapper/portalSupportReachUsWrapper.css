@@ -1,26 +1,22 @@
 .THIS .disabled{
-  background-color: #c2cacf !important;
-  cursor: default !important;
+  background-color: #c2cacf;
+  cursor: default ;
   pointer-events: none;
 }
 
 .THIS .disabled:hover{
-  background-color: #c2cacf !important;
-  cursor: default !important;
+  background-color: #c2cacf ;
+  cursor: default ;
   pointer-events: none;
 }
 
 .THIS .disabled:focus{
-  background-color: #c2cacf !important;
-  cursor: default !important;
+  background-color: #c2cacf ;
+  cursor: default ;
   pointer-events: none;
 }
 
-.THIS .toggle {
-  display: none !important;
-}
-
-.THIS .column-backgroundwhite-textblack-aligned-wborder{
+.THIS .tile-column{
   background: #fff;
   color: rgb(0, 0, 0);
   text-align: center;
@@ -36,6 +32,25 @@
   border-radius: 1px;
   box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
   background-color: #3333ff;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 40px;
+  width: 60px;
+  word-break: normal;
+  border: none;
+}
+
+.THIS .containedButtonOfflineLiveAgent{
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
   font-size: 16px;
   font-weight: 500;
   font-style: normal;
