@@ -5,7 +5,16 @@ import getCategoryTiles from '@salesforce/apex/PortalFAQsCtrl.getCategoryTiles';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
 
-export default class PortalFAQTopicTiles extends NavigationMixin(LightningElement) {
+//import labels
+import CSP_FAQ_HeaderTitle from '@salesforce/label/c.CSP_FAQ_HeaderTitle';
+import CSP_FAQ_Subtitle from '@salesforce/label/c.CSP_FAQ_Subtitle';
+
+export default class PortalFAQCategoryTiles extends NavigationMixin(LightningElement) {
+
+    label = {
+        CSP_FAQ_HeaderTitle,
+        CSP_FAQ_Subtitle
+    };
 
     @track lstTiles = [];
 
@@ -18,7 +27,7 @@ export default class PortalFAQTopicTiles extends NavigationMixin(LightningElemen
         .then(results => {
             //because proxy.......
             let resultsAux = JSON.parse(JSON.stringify(results));
-            console.log(resultsAux);
+            //console.log(resultsAux);
 
             //let lstCategories = [];
 
