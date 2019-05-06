@@ -1,0 +1,23 @@
+<template>
+
+    <div class="text-medium text-darkGray text-bold">
+        {label.CSP_FAQ_HeaderTitle}
+    </div>
+    <div class="text-xsmall text-gray">
+        {label.CSP_FAQ_Subtitle}
+    </div>
+
+    <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-vertical_large">
+
+        <template for:each={lstTiles} for:item="tile" for:index="index">
+            <div key={tile.categoryName} class={tile.class} style="text-align: center;" >
+                <div class="customCardWhite cursorPointer" style="min-height:150px" onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                    <img src={tile.imageURL} data-item={tile.categoryName}/>
+                    <div class="text-small text-black text-bold" data-item={tile.categoryName}>{tile.categoryLabel}</div>
+                </div>
+            </div>
+        </template>
+
+    </div>
+    
+</template>
