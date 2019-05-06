@@ -3344,26 +3344,40 @@ public class AMS_OSCARTriggerHandler {
             updatedOSCAR.STEP35__c = 'In Progress';
         }
 
-        /*  NEWGEN-2809
-        if(oldOSCAR.STEP35__c <> updatedOscar.STEP35__c && updatedOscar.STEP35__c == 'Passed'){
+       
 
-            Integer resultComparisson = AMS_Utils.compareRates(updatedOscar.Requested_Bank_Guarantee_currency__c,updatedOscar.Requested_Bank_Guarantee_amount__c,updatedOscar.Received_Bank_Guarantee_currency__c,updatedOscar.Received_Bank_Guarantee_amount__c);
-        
-            if(resultComparisson == -1){
-                updatedOSCAR.addError('There was a problem using the rates for the Requestest Bank Garantee Amount and Received Bank Garantee Amount. Please check the values.');
+        //NEWGEN-5374 Set the Requested Bank Guarantee Amount(oscar) to Financial_Security_Amount__c (Case)
+        if(oldOSCAR.STEP35__c <> updatedOscar.STEP35__c && updatedOscar.STEP35__c == 'Passed' && updatedOscar.Process__c == AMS_Utils.NEWAE){
+
+            if(updatedOscar.Requested_Bank_Guarantee_amount__c != null){
+                Decimal convertedValue = updatedOscar.Requested_Bank_Guarantee_amount__c;
+                //check currency 
+                
+                /* To be tested later
+                if(updatedOscar.Requested_Bank_Guarantee_currency__c != updatedOscar.CurrencyIsoCode){
+                    convertedValue = ANG_Risk_Helper.currencyConverter(updatedOscar.CurrencyIsoCode, updatedOscar.Requested_Bank_Guarantee_amount__c, updatedOscar.CurrencyIsoCode != null ? updatedOscar.CurrencyIsoCode : fs.ANG_Financial_Security_Currency__c)
+                }
+                */
+                Case currentCase = new Case(id = updatedOscar.Oscar_Communication_Case_Id__c);
+                currentCase.Financial_Security_Amount__c = convertedValue;
+
+                update currentCase;
+
             }
-
-            if(resultComparisson == -2){
-                updatedOSCAR.addError('There was a problem with the amounts. Please check the values.');
-            }
-
-            if(resultComparisson == 2){
-                updatedOSCAR.addError('You cannot proceed because the amount of bank guarantee requested is minor than the amount of bank guarantee provided.');
-            }
-
-
         }
-        */
+
+        /* NEWGEN-2809
+        Integer resultComparisson = AMS_Utils.compareRates(updatedOscar.Requested_Bank_Guarantee_currency__c,updatedOscar.Requested_Bank_Guarantee_amount__c,updatedOscar.Received_Bank_Guarantee_currency__c,updatedOscar.Received_Bank_Guarantee_amount__c);
+        if(resultComparisson == -1){
+            updatedOSCAR.addError('There was a problem using the rates for the Requestest Bank Garantee Amount and Received Bank Garantee Amount. Please check the values.');
+        }
+        if(resultComparisson == -2){
+            updatedOSCAR.addError('There was a problem with the amounts. Please check the values.');
+        }
+        if(resultComparisson == 2){
+            updatedOSCAR.addError('You cannot proceed because the amount of bank guarantee requested is minor than the amount of bank guarantee provided.');
+        } */
+
         
         if(AMS_Utils.oscarNewGenNewAppProcesses.contains(updatedOscar.Process__c) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
 
