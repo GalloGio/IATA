@@ -1,9 +1,9 @@
 @isTest
 private class ANG_FinancialReviewAutomaticOptOutTest {
 
-    @testSetup static void setup() {
+	@testSetup static void setup() {
 
-        Test.startTest();
+		Test.startTest();
 
 		AMS_ChangeCodes__c chgFin = new AMS_ChangeCodes__c();
 		chgFin.Name = 'FIN-AMS';
@@ -50,68 +50,68 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			ANG_Enable_NewGen__c = true
 		);
 
-        insert new List<IATA_ISO_Country__c>{countryWW, countryCN};
+		insert new List<IATA_ISO_Country__c>{countryWW, countryCN};
 
 		Id recTypeCSA = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', AMS_Utils.OPT_OUT_ACCREDITATION_CFG_RT_NAME);
 
-        AMS_Country_Specific_Attribute__c csaLocD = new AMS_Country_Specific_Attribute__c(
-        	RecordTypeId = recTypeCSA,
-            Location_Class__c = 'D',
-        	IATA_ISO_Country__c = countryCN.Id
-        );
+		AMS_Country_Specific_Attribute__c csaLocD = new AMS_Country_Specific_Attribute__c(
+			RecordTypeId = recTypeCSA,
+			Location_Class__c = 'D',
+			IATA_ISO_Country__c = countryCN.Id
+		);
 
-        AMS_Country_Specific_Attribute__c csaLocP = new AMS_Country_Specific_Attribute__c(
-        	RecordTypeId = recTypeCSA,
-            Location_Class__c = 'P',
-        	IATA_ISO_Country__c = countryCN.Id
-        );
+		AMS_Country_Specific_Attribute__c csaLocP = new AMS_Country_Specific_Attribute__c(
+			RecordTypeId = recTypeCSA,
+			Location_Class__c = 'P',
+			IATA_ISO_Country__c = countryCN.Id
+		);
 
-        insert new List<AMS_Country_Specific_Attribute__c>{csaLocD, csaLocP};
+		insert new List<AMS_Country_Specific_Attribute__c>{csaLocD, csaLocP};
 
-        Id standardAcctRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-	 	Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id standardAcctRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account agentCN = new Account(
-        	Name = 'Agent CN',
+			Name = 'Agent CN',
 			IATACode__c = '999999999',
-        	Location_Type__c = AMS_Utils.HE,
+			Location_Type__c = AMS_Utils.HE,
 			//Status__c = AMS_Utils.ACC_S9_APPROVED,
-        	RecordTypeId = standardAcctRecTypeId,
-        	IATA_ISO_Country__c = countryCN.Id,
-        	Location_Class__c = 'P',
+			RecordTypeId = standardAcctRecTypeId,
+			IATA_ISO_Country__c = countryCN.Id,
+			Location_Class__c = 'P',
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'China'
-        );
+		);
 
-        insert agentCN;
+		insert agentCN;
 
 		Account agentAeCN = new Account(
 			Name = 'Agent AE CN',
 			IATACode__c = '999999998',
-        	Location_Type__c = AMS_Utils.AE,
-        	RecordTypeId = standardAcctRecTypeId,
-        	IATA_ISO_Country__c = countryCN.Id,
-        	Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.AE,
+			RecordTypeId = standardAcctRecTypeId,
+			IATA_ISO_Country__c = countryCN.Id,
+			Location_Class__c = 'P',
 			ParentId = agentCN.Id
 		);
 
 		Account agentAe2CN = new Account(
 			Name = 'Agent AE 2 CN',
 			IATACode__c = '999999997',
-        	Location_Type__c = AMS_Utils.AE,
-        	RecordTypeId = standardAcctRecTypeId,
-        	IATA_ISO_Country__c = countryCN.Id,
-        	Location_Class__c = 'P',
+			Location_Type__c = AMS_Utils.AE,
+			RecordTypeId = standardAcctRecTypeId,
+			IATA_ISO_Country__c = countryCN.Id,
+			Location_Class__c = 'P',
 			ParentId = agentCN.Id
 		);
 
 		Account cashlessAgent = new Account(
 			Name = 'Agent Cashless CN',
 			IATACode__c = '999999996',
-        	Location_Type__c = AMS_Utils.HE,
-        	RecordTypeId = agencyRecordTypeId,
-        	IATA_ISO_Country__c = countryCN.Id,
-        	Location_Class__c = 'D',
+			Location_Type__c = AMS_Utils.HE,
+			RecordTypeId = agencyRecordTypeId,
+			IATA_ISO_Country__c = countryCN.Id,
+			Location_Class__c = 'D',
 			Status__c = AMS_Utils.ACC_S9_APPROVED,
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'China',
@@ -123,10 +123,10 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		Account cashlessAgentAE = new Account(
 			Name = 'Agent Cashless AE CN',
 			IATACode__c = '999999995',
-        	Location_Type__c = AMS_Utils.AE,
-        	RecordTypeId = agencyRecordTypeId,
-        	IATA_ISO_Country__c = countryCN.Id,
-        	Location_Class__c = 'D',
+			Location_Type__c = AMS_Utils.AE,
+			RecordTypeId = agencyRecordTypeId,
+			IATA_ISO_Country__c = countryCN.Id,
+			Location_Class__c = 'D',
 			Status__c = AMS_Utils.ACC_S9_APPROVED,
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'China',
@@ -137,10 +137,10 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		Account cashlessAgent2AE = new Account(
 			Name = 'Agent Cashless 2 AE CN',
 			IATACode__c = '999999994',
-        	Location_Type__c = AMS_Utils.AE,
-        	RecordTypeId = agencyRecordTypeId,
-        	IATA_ISO_Country__c = countryCN.Id,
-        	Location_Class__c = 'D',
+			Location_Type__c = AMS_Utils.AE,
+			RecordTypeId = agencyRecordTypeId,
+			IATA_ISO_Country__c = countryCN.Id,
+			Location_Class__c = 'D',
 			Status__c = AMS_Utils.ACC_S9_APPROVED,
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'China',
@@ -172,15 +172,15 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		insert new List<AMS_Agencies_relationhip__c>{r1, r2};
 
-        Contact co1 = new Contact(
-            AccountId = agentCN.id, 
-            Firstname = 'John', 
-            Lastname = 'Test', 
-            Phone = '666123456', 
-            MobilePhone = '911111111', 
-            Email = 'test.john@test.com', 
-            Financial_Assessment_Contact__c = false
-        );
+		Contact co1 = new Contact(
+			AccountId = agentCN.id, 
+			Firstname = 'John', 
+			Lastname = 'Test', 
+			Phone = '666123456', 
+			MobilePhone = '911111111', 
+			Email = 'test.john@test.com', 
+			Financial_Assessment_Contact__c = false
+		);
 
 		Contact co2 = new Contact(
 			FirstName = 'Agent',
@@ -192,54 +192,54 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		);
 
 		Contact co3 = new Contact(
-            AccountId = cashlessAgent.id, 
-            Firstname = 'Cashless', 
-            Lastname = 'Agent', 
-            Phone = '666122222', 
-            MobilePhone = '911111112', 
-            Email = 'cashless.agent@test.com', 
-            Financial_Assessment_Contact__c = false
-        );
+			AccountId = cashlessAgent.id, 
+			Firstname = 'Cashless', 
+			Lastname = 'Agent', 
+			Phone = '666122222', 
+			MobilePhone = '911111112', 
+			Email = 'cashless.agent@test.com', 
+			Financial_Assessment_Contact__c = false
+		);
 		
 		insert new List<Contact>{co1, co2, co3};
 
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
-            Process__c = AMS_Utils.NEWHESTANDARD, 
-            Account__c = agentCN.Id,
-            RecordTypeId = AMS_Utils.RECTYPE_NEWHE
-        );
+			Process__c = AMS_Utils.NEWHESTANDARD, 
+			Account__c = agentCN.Id,
+			RecordTypeId = AMS_Utils.RECTYPE_NEWHE
+		);
 
 		insert oscar;
 
 		//Since the trigger is not bulkified 
 		//we have to insert oscars's separately
 		AMS_OSCAR__c changesOscar = new AMS_OSCAR__c(
-            Process__c = AMS_Utils.NGCHANGES, 
-            Account__c = cashlessAgent.Id,
-            RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES
-        );
+			Process__c = AMS_Utils.NGCHANGES, 
+			Account__c = cashlessAgent.Id,
+			RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES
+		);
 
 		insert changesOscar;
 
 		Case oscarCase = new Case(
-            Oscar__c = oscar.Id, 
-            RecordTypeId = caseRT,
-            AccountId = agentCN.Id,
-            ContactId = co1.Id
-        );
+			Oscar__c = oscar.Id, 
+			RecordTypeId = caseRT,
+			AccountId = agentCN.Id,
+			ContactId = co1.Id
+		);
 
 		insert oscarCase;
 		
 		Test.stopTest();
 
 		Case changesOscarCase = new Case(
-            Oscar__c = changesOscar.Id, 
-            RecordTypeId = caseRT,
-            AccountId = cashlessAgent.Id,
-            ContactId = co3.Id
-        );
+			Oscar__c = changesOscar.Id, 
+			RecordTypeId = caseRT,
+			AccountId = cashlessAgent.Id,
+			ContactId = co3.Id
+		);
 
 		insert changesOscarCase;
 
@@ -318,40 +318,40 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		);
 
 		insert new List<AMS_Accreditation_Contact__c>{owner, ownerChg};
-        
+		
 		Case cseIfap = new Case(
 			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
 			Status = 'Open',
 			Region__c = 'Asia & Pacific', 
 			Origin= 'Agent Financial Review Notification', 
-            Subject =  'Financial Review Case', 
+			Subject =  'Financial Review Case', 
 			AccountId = oscar.Account__c, 
-            BSPCountry__c = 'CN', 
+			BSPCountry__c = 'CN', 
 			IFAP_Area__c = 'Area 3', 
 			IFAP_Financial_Year__c =  String.valueOf(Date.today().year()),
-            Deadline_Date__c = Date.today().addDays(360), 
+			Deadline_Date__c = Date.today().addDays(360), 
 			Contactid = co2.id, 
 			Assessment_Performed_Date__c = Date.today()
-        );
+		);
 
 		Case cseChgIfap = new Case(
 			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
 			Status = 'Open',
 			Region__c = 'Asia & Pacific', 
 			Origin= 'Agent Financial Review Notification', 
-            Subject =  'Financial Review Case', 
+			Subject =  'Financial Review Case', 
 			AccountId = changesOscar.Account__c, 
-            BSPCountry__c = 'CN', 
+			BSPCountry__c = 'CN', 
 			IFAP_Area__c = 'Area 3', 
 			IFAP_Financial_Year__c =  String.valueOf(Date.today().year()),
-            Deadline_Date__c = Date.today().addDays(360), 
+			Deadline_Date__c = Date.today().addDays(360), 
 			Contactid = co2.id, 
 			Assessment_Performed_Date__c = Date.today()
-        );
+		);
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
-          
-        insert new List<Case>{cseIfap, cseChgIfap};
+		  
+		insert new List<Case>{cseIfap, cseChgIfap};
 
 	}
 
@@ -364,7 +364,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 FROM 
 				AMS_OSCAR__c
 			 WHERE
-			 	Process__c = :AMS_Utils.NEWHESTANDARD
+				Process__c = :AMS_Utils.NEWHESTANDARD
 			 LIMIT 1
 			];
 		
@@ -419,7 +419,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 FROM 
 				AMS_OSCAR__c
 			 WHERE
-			 	Process__c = :AMS_Utils.NEWHESTANDARD
+				Process__c = :AMS_Utils.NEWHESTANDARD
 			 LIMIT 1
 			];
 
@@ -436,7 +436,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 FROM 
 				AMS_OSCAR__c
 			 WHERE
-			 	Id = :oscar.Id
+				Id = :oscar.Id
 			 LIMIT 1
 			];
 
@@ -453,7 +453,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 FROM 
 				AMS_OSCAR__c
 			 WHERE
-			 	Process__c = :AMS_Utils.NEWHESTANDARD
+				Process__c = :AMS_Utils.NEWHESTANDARD
 			 LIMIT 1
 			];
 
@@ -473,7 +473,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 FROM 
 				AMS_OSCAR__c
 			 WHERE
-			 	Id = :oscar.Id
+				Id = :oscar.Id
 			 LIMIT 1
 			];
 
@@ -511,10 +511,10 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		//force delete the configuration so the Opt Out field is set as 'N/A'
 		delete csaLst;
 
-        ANG_AgencyChangesConfig__c chgCfg = new ANG_AgencyChangesConfig__c(
+		ANG_AgencyChangesConfig__c chgCfg = new ANG_AgencyChangesConfig__c(
 			Name = 'ChangeAccreditationType', 
 			TC_Accreditation_Type__c = true,
-            TCA_Sanity_check__c = 'CHI', 
+			TCA_Sanity_check__c = 'CHI', 
 			TCA_Application_withdrawal__c = 'CWD'
 		);
 
@@ -552,7 +552,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 FROM 
 				AMS_OSCAR__c 
 			 WHERE
-			 	Id = :oscar.Id
+				Id = :oscar.Id
 			 LIMIT 1
 			];
 
@@ -564,10 +564,10 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		
 		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 
-        ANG_AgencyChangesConfig__c chgCfg = new ANG_AgencyChangesConfig__c(
+		ANG_AgencyChangesConfig__c chgCfg = new ANG_AgencyChangesConfig__c(
 			Name = 'ChangeAccreditationType', 
 			TC_Accreditation_Type__c = true,
-            TCA_Sanity_check__c = 'CHI', 
+			TCA_Sanity_check__c = 'CHI', 
 			TCA_Application_withdrawal__c = 'CWD'
 		);
 
@@ -604,7 +604,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 FROM 
 				AMS_OSCAR__c 
 			 WHERE
-			 	Id = :oscar.Id
+				Id = :oscar.Id
 			 LIMIT 1
 			];
 
@@ -641,7 +641,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 FROM 
 				AMS_OSCAR__c
 			 WHERE
-			 	Id = :oscarId 
+				Id = :oscarId 
 			 LIMIT 1
 			];
 
@@ -655,9 +655,9 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 				Name,
 				ANG_FA_Opt_Out__c
 			 FROM
-			 	Account
+				Account
 			 WHERE
-			 	ParentId = :oscar.Account__c
+				ParentId = :oscar.Account__c
 			]
 		);
 
@@ -670,11 +670,11 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 				Id,
 				Status
 			 FROM
-			 	Case
+				Case
 			 WHERE
-			 	AccountId = :oscar.Account__c
+				AccountId = :oscar.Account__c
 			 AND
-			 	RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP
+				RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP
 			]
 		); 
 
