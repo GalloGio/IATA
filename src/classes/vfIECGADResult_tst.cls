@@ -127,8 +127,8 @@ public with sharing class vfIECGADResult_tst {
         insert oSubscription;
         
         // create dummy subscription charge
-        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, dtSubscriptionEnddate.addYears(-1).addDays(1), oProduct, oProductRatePlan);
-        insert oSubscriptionCharge;
+        //oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, dtSubscriptionEnddate.addYears(-1).addDays(1), oProduct, oProductRatePlan);
+        //insert oSubscriptionCharge;
         
         oSubscriptionHist = IECTestUtil.createSampleSubscriptionHistory(oAccount.Id, oContact.Id, oSubscription.Name, oProductCategory.Id, oProductInfo.Id, oProductRatePlanInfo.Id, IECConstants.PaymentType.CREDIT_CARD, oTC);
         insert oSubscriptionHist;

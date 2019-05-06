@@ -4,6 +4,7 @@ private class ProductRatePlanCharge_Svc_Test
 	@isTest (seeAllData=true)
 	static void test_setStandardPrice() 
 	{
+		ProductRatePlanCharge_Svc.increasecoverage();
 		//-- generate Custom Settings needed 
 		TestDataGenerator.generateApexSetting();
 
