@@ -166,13 +166,26 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				System.debug('[ANG_AgencyChangesHelper] changesContainer are:'+changesContainer);
 				System.debug('[ANG_AgencyChangesHelper] Checkpoint1 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
-
-				//if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.ANG_Type_Of_Change__c))				
-				if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c))
-					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
 					
 				//Set default value as "Not Applicable" 	
-				oscar.ANG_FA_Opt_out__c = 'Not Applicable';				
+				oscar.ANG_FA_Opt_out__c = AMS_Utils.NOT_APPLICABLE;				
+
+				//if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.ANG_Type_Of_Change__c))				
+				if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)){
+					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
+
+					String currentAccreditationModel = changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c;
+
+					if((oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) && (currentAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
+						Set<String> optOutCountryConfig = AMS_Utils.fetchOptOutFromFinancialReviewCountriesCfg(new Set<Id>{oscarOnlineAccreditation.Branch_Office_Country__c});
+						String optOutCfgKey = oscarOnlineAccreditation.Branch_Office_Country__c + '.' + oscarOnlineAccreditation.Location_Class__c;
+						//If for the associated country we have a 'Opt out at Accreditation' configuration record 
+						//on AMS Country Specific Attributes the agent should be opt out from financial review
+						if(optOutCountryConfig.contains(optOutCfgKey)){
+							oscar.ANG_FA_Opt_out__c = AMS_Utils.FA_OPT_OUT;
+						}
+					}
+				}
 
 				//if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.ANG_Type_Of_Change__c))
 				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE,AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
@@ -315,6 +328,11 @@ public with sharing class ANG_AgencyChangesHelper {
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
+				
+				Boolean applyOptOutFA = 
+					containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE}, oscar.ANG_Type_Of_Change__c) &&
+					(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) && 
+					(oscar.ANG_FA_Opt_out__c == AMS_Utils.FA_OPT_OUT);
 
 				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
@@ -338,17 +356,22 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 
 				//NEWGEN-1088 apply FA opt-out = false when changing to cash or to cashless
-				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)) {
+				} else if (containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c) && !applyOptOutFA) {
 
 	    			changesContainer= applyFAOptOut(oscar, changesContainer, changesContainer.accountsMap.values(), FALSE);
 	    		
 	    		//all other major changes
-				}else if (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c)){
+				}else if (applyOptOutFA || (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c))){
 
 					String hierTopParent = changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c == null ? changesContainer.accountsMap.get(oscar.Account__c).Id : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c;
 					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c FROM Account WHERE Id = :hierTopParent OR Top_Parent__c = :hierTopParent]);
 
 					changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);
+
+					if(applyOptOutFA){ 
+						ANG_OscarProcessHelper.updateCaseStatusForAccounts(new Set<Id>{oscar.Account__c}, AMS_Utils.RECTYPE_CASEIFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
+					}
+
 				}				
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
@@ -1350,7 +1373,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static AMS_Pax_Accreditation_Form__c getAccreditation(Id oscarOnlineAccredId){
 		return [SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
-				ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
+				ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
 				Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,

@@ -335,7 +335,7 @@
                 <emptySpace>false</emptySpace>
                 <field>Amount__c</field>
                 <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>            
+            </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Has_the_agent_been_contacted__c</field>

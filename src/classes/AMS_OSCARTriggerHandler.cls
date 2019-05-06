@@ -229,8 +229,55 @@ public class AMS_OSCARTriggerHandler {
 
         /*** AMSU-193 ***/
         prepopulateRFrequencyStgArea((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+        handleAgentsAutomaticallyOptOutFromFA();
     }
 	
+    public static void handleAgentsAutomaticallyOptOutFromFA(){
+        
+        List<AMS_OSCAR__c> oscarLst = (List<AMS_OSCAR__c>) Trigger.new;
+        Map<Id, AMS_OSCAR__c> oldOscarMap = (Map<Id, AMS_OSCAR__c>) Trigger.oldMap;
+
+        Set<Id> accountIdSet = new Set<Id>();
+
+        for(AMS_OSCAR__c oscar : oscarLst){
+            AMS_OSCAR__c oldOscar = oldOscarMap.get(oscar.Id);
+            //If agent is opt out we will need to update the accounts 
+            if(oscar.Process__c == AMS_Utils.NEWHESTANDARD && oscar.ANG_FA_Opt_out__c == AMS_Utils.FA_OPT_OUT && oldOscar.RPM_Approval__c != oscar.RPM_Approval__c && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL){
+                accountIdSet.add(oscar.Account__c);
+            }
+        }
+
+        if(!accountIdSet.isEmpty()){
+            
+            //Fetch all the accounts from the hierarchies
+            List<Account> acctLst = new List<Account>(
+                [SELECT
+                    Id,
+                    ANG_FA_Opt_out__c
+                FROM  
+                    Account
+                WHERE
+                    Id IN :accountIdSet
+                OR
+                    ParentId IN :accountIdSet
+                ]
+            );
+
+            //Updates the FA Opt Out field on each account
+            for(Account acct : acctLst){
+                acct.ANG_FA_Opt_out__c = true;
+            }
+
+            if(!acctLst.isEmpty()){
+                update acctLst;
+            }
+
+            ANG_OscarProcessHelper.updateCaseStatusForAccounts(accountIdSet, AMS_Utils.RECTYPE_CASEIFAP, IFAP_BusinessRules.CLOSEDOPTOUT);
+
+        }
+
+    }
+
     /*** AMSU-193 ***/
     public static void prepopulateRFrequencyStgArea(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
         Set<String> countryCodes = new Set<String>();
@@ -796,9 +843,24 @@ public class AMS_OSCARTriggerHandler {
     private static void prepopulateValues() {
         //AMS-1674 - [Agency changes] when "Type of change" include "Location type" the "Change of location type behavior" shoule be pre-populated
 
+        List<AMS_OSCAR__c> oscarLst = (List<AMS_OSCAR__c>) Trigger.New;
         Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
-        for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
+        Set<Id> countryIdSet = new Set<Id>();
+
+        allOnlineAccr = (allOnlineAccr == NULL) ? getAllAccreditations(oscarLst) : allOnlineAccr;
+
+        for(AMS_OSCAR__c oscar: oscarLst){
+            if(Trigger.isUpdate && oscar.process__c == AMS_Utils.NEWHESTANDARD && oldMap.get(oscar.Id).STEP6__c != AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
+                AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
+                countryIdSet.add(stgArea.Branch_Office_Country__c);
+            }
+        }
+
+        Set<String> optOutCountryConfig = ANG_OscarProcessHelper.fetchOptOutFromFinancialReviewCountriesCfg(countryIdSet);
+
+        for(AMS_OSCAR__c oscar : oscarLst){
+
             if(
                 oscar.Process__c == AMS_Utils.AGENCYCHANGES
                 && oscar.Type_of_change__c != null
@@ -818,10 +880,23 @@ public class AMS_OSCARTriggerHandler {
                 
                 oscar.Process_Start_Date__c = System.today();
 
-                if(oscar.ANG_FA_Opt_out__c == 'Opt-Out'){
-                    oscar.STEP11__c = 'Not Applicable';
+                if(oscar.ANG_FA_Opt_out__c == AMS_Utils.FA_OPT_OUT){
+                    oscar.STEP11__c = AMS_Utils.NOT_APPLICABLE;
                 }
 
+            }
+            else if(Trigger.isUpdate && oscar.Process__c == AMS_Utils.NEWHESTANDARD && oldMap.get(oscar.Id).STEP6__c != AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
+                //By default the FA Opt Out field should have the N/A value   
+                oscar.ANG_FA_Opt_out__c = AMS_Utils.NOT_APPLICABLE;
+                
+                AMS_Pax_Accreditation_Form__c stgArea = allOnlineAccr.get(oscar.AMS_Online_Accreditation__c);
+
+                String optOutCfgKey = stgArea.Branch_Office_Country__c + '.' + stgArea.Location_Class__c;
+                //If for the associated country we have a 'Opt out at Accreditation' configuration record 
+                //on AMS Country Specific Attributes the agent should be opt out from financial review
+                if(optOutCountryConfig.contains(optOutCfgKey)){
+                    oscar.ANG_FA_Opt_out__c = AMS_Utils.FA_OPT_OUT;
+                }
             }
 
         }
@@ -2725,7 +2800,7 @@ public class AMS_OSCARTriggerHandler {
     //AMSU-184 - add Branch_Office_Country__r.ISO_Code__c
     private static Map<Id, AMS_Pax_Accreditation_Form__c> getAccreditations(Set<Id> oscarOnlineAccredIds){
         return new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
-                ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.ISO_Code__c, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
+                ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.ISO_Code__c, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
                 Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
                 Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
                 Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
@@ -3569,11 +3644,11 @@ public class AMS_OSCARTriggerHandler {
             // ********* GENERIC VALIDATIONS FOR NEW APPLICATIONS**********
             // ************************************************************
             if(updatedOSCAR.Process__c != AMS_Utils.NGCHANGES){
-                if((oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)) && !updatedOscar.Is_NewGen_Pilot__c){
+                if((oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)) && !AMS_Utils.setChinaCountries.contains(updatedOSCAR.Country_ISO_Code__c)){
                     updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
                 }
 
-                if((oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed') && !updatedOscar.Is_NewGen_Pilot__c) {
+                if((oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed') && !AMS_Utils.setChinaCountries.contains(updatedOSCAR.Country_ISO_Code__c)) {
                     updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
                 }
             }
@@ -4147,7 +4222,7 @@ public class AMS_OSCARTriggerHandler {
                 statusForCC = 'Non-Active';
         }
 
-        if(oscar.Is_NewGen_Pilot__c) {
+        if(AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c)) {
             statusForCC = 'Non-Active';
             statusForIEP = 'Non-Active';
         }
