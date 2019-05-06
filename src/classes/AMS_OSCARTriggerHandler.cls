@@ -232,7 +232,7 @@ public class AMS_OSCARTriggerHandler {
         handleAgentsAutomaticallyOptOutFromFA();
     }
 	
-    public static void handleAgentsAutomaticallyOptOutFromFA(){
+    private static void handleAgentsAutomaticallyOptOutFromFA(){
         
         List<AMS_OSCAR__c> oscarLst = (List<AMS_OSCAR__c>) Trigger.new;
         Map<Id, AMS_OSCAR__c> oldOscarMap = (Map<Id, AMS_OSCAR__c>) Trigger.oldMap;

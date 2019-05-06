@@ -162,6 +162,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(!sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation))
 					return;
 
+				String prevAccreditationModel = changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c;
+
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				System.debug('[ANG_AgencyChangesHelper] changesContainer are:'+changesContainer);
@@ -174,10 +176,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)){
 					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
 
-					String currentAccreditationModel = changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c;
-
-					if((oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) && (currentAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
-						Set<String> optOutCountryConfig = AMS_Utils.fetchOptOutFromFinancialReviewCountriesCfg(new Set<Id>{oscarOnlineAccreditation.Branch_Office_Country__c});
+					if((oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) && (prevAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
+						Set<String> optOutCountryConfig = ANG_OscarProcessHelper.fetchOptOutFromFinancialReviewCountriesCfg(new Set<Id>{oscarOnlineAccreditation.Branch_Office_Country__c});
 						String optOutCfgKey = oscarOnlineAccreditation.Branch_Office_Country__c + '.' + oscarOnlineAccreditation.Location_Class__c;
 						//If for the associated country we have a 'Opt out at Accreditation' configuration record 
 						//on AMS Country Specific Attributes the agent should be opt out from financial review

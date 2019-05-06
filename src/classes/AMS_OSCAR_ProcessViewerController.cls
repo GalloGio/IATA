@@ -200,12 +200,14 @@ public class AMS_OSCAR_ProcessViewerController {
 
     public Boolean blockFAoptOut{
         get{
+            if(oscar.Process__c == AMS_Utils.NEWHESTANDARD){ return true; }
             return (oscar.ANG_Type_Of_Change__c != null && oscar.ANG_Type_Of_Change__c.contains(AMS_Utils.ANG_ACCREDITATION_TYPE));
         }
     }
 
     public Boolean hideFAoptOut{
         get{
+            if(oscar.Process__c == AMS_Utils.NEWHESTANDARD){ return false; }
             return !ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c);
         }
     }
