@@ -257,39 +257,45 @@ global without sharing class Comm_User_Helper {
         Portal_Application_Setting__mdt
     **/
     public static void addDefaultAppRights(Contact contact, Account account) {
-
-        // Find app names with Auto Grant Service
-        list<String> listAppNames = new list<String>();
-        for (Portal_Application_Setting__mdt setting: [
-                SELECT id, MasterLabel,
-                    (SELECT Sector__c, Category__c
-                    FROM Portal_Application_Visibilities__r
-                    WHERE Auto_grant_service__c = true
-                    AND Sector__c = :account.Sector__c
-                    AND Category__c = :account.Category__c)
-                FROM Portal_Application_Setting__mdt]) {
-            if (setting.Portal_Application_Visibilities__r.size()>0) {
-                listAppNames.add(setting.MasterLabel);
+        try {
+            if (account==null) {
+                account = [SELECT Id,Sector__c,Category__c 
+                    FROM Account
+                    WHERE Id = :contact.AccountId];
+                contact.Account = account;
             }
-        }
 
-        // give right to all found apps
-        list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
-        for ( Portal_Applications__c app: [SELECT Id FROM Portal_Applications__c WHERE Name IN :listAppNames]) {
-            Portal_Application_Right__c newRight = new Portal_Application_Right__c();
-            newRight.Contact__c = contact.Id;
-            newRight.Portal_Application__c = app.Id;
-            newRight.Right__c = 'Access Granted';
-            listAppRight.add(newRight);
-        }
+            // Find app names with Auto Grant Service
+            list<String> listAppNames = new list<String>();
+            for (Portal_Application_Setting__mdt setting: [
+                    SELECT id, MasterLabel,
+                        (SELECT Sector__c, Category__c
+                        FROM Portal_Application_Visibilities__r
+                        WHERE Auto_grant_service__c = true
+                        AND Sector__c = :account.Sector__c
+                        AND Category__c = :account.Category__c)
+                    FROM Portal_Application_Setting__mdt]) {
+                if (setting.Portal_Application_Visibilities__r.size()>0) {
+                    listAppNames.add(setting.MasterLabel);
+                }
+            }
 
-        //insert rights
-        if (!listAppRight.isEmpty()) {
-            try {
+            // give right to all found apps
+            list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
+            for ( Portal_Applications__c app: [SELECT Id FROM Portal_Applications__c WHERE Name IN :listAppNames]) {
+                Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                newRight.Contact__c = contact.Id;
+                newRight.Portal_Application__c = app.Id;
+                newRight.Right__c = 'Access Granted';
+                listAppRight.add(newRight);
+            }
+
+            //insert rights
+            if (!listAppRight.isEmpty()) {
                 insert listAppRight;
-            } catch (Exception e) {
-                System.debug('Failed App Right insert to contact ' + contact.Id + ': ' + e.getMessage());
             }
+        } catch (Exception e) {
+            System.debug('ERROR in Comm_User_Helper.addDefaultAppRights, couldn\'t create app rights for ' + contact + ':\n ' + e.getMessage());
         }
     }
 

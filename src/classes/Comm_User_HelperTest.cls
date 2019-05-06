@@ -171,7 +171,7 @@ private class Comm_User_HelperTest {
         system.assertEquals(res1,true);  
     }
 
-    @isTest static void test_addDefaultAppRights() {
+    @isTest static void test_addDefaultAppRights_OK() {
 
         list<Portal_Application_Visibility__mdt> listSettingVisibility =
             [SELECT Id, Sector__c, Category__c, Parent__r.MasterLabel
@@ -209,7 +209,7 @@ private class Comm_User_HelperTest {
         insert con;
 
         test.startTest();
-        Comm_User_Helper.addDefaultAppRights(con,account);
+        Comm_User_Helper.addDefaultAppRights(con,null);
         test.stopTest();
 
         list<Portal_Application_Right__c> listRights = [
@@ -219,5 +219,11 @@ private class Comm_User_HelperTest {
             AND Application_Name__c = :settingVisibility.Parent__r.MasterLabel
             AND Right__c = 'Access Granted'];
         System.assertEquals(1,listRights.size());
+    }
+
+    @isTest static void test_addDefaultAppRights_Error() {
+        test.startTest();
+        Comm_User_Helper.addDefaultAppRights(null,null);
+        test.stopTest();
     }
 }
