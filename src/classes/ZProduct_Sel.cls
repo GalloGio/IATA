@@ -46,7 +46,7 @@ public class ZProduct_Sel extends Selector
 		for(String i: zuoraIds)
 			whereItems.add('Id = \'' + i + '\'');
 		
-		String zoql = 'SELECT Id, SAPProductMaterialNo__c FROM Product WHERE ' + String.join(whereItems, ' OR ');
+		String zoql = 'SELECT Id, SAP_Material_Number__c FROM Product WHERE ' + String.join(whereItems, ' OR ');
     	return zoql;
 	}
 
@@ -84,7 +84,7 @@ public class ZProduct_Sel extends Selector
 
 	/****************************************************************************************************
 	    Created by CGI, David D 2015-09-22
-	        Method return Map of ratePlanId with corresponding ZProduct
+	        Method return Map of ratePlanId with corresponding Product
 	****************************************************************************************************/
 	public Map<Id, Id> getProductIdByPlan(List<zqu__ProductRatePlan__c> zRatePlans)
 	{
@@ -92,7 +92,7 @@ public class ZProduct_Sel extends Selector
 		
 		for(zqu__ProductRatePlan__c zRatePlan : zRatePlans)
 		{
-			productIdByPlanId.put(zRatePlan.Id, zRatePlan.zqu__ZProduct__c);
+			productIdByPlanId.put(zRatePlan.Id, zRatePlan.zqu__Product__c);
 		}
 		
 		return productIdByPlanId;
