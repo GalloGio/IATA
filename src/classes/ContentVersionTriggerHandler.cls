@@ -3,30 +3,16 @@ public class ContentVersionTriggerHandler {
 	/* */
 	public static Set<Id> getAllActiveCurrencyCenterContactIds() {
 		Set<Id> setOfContacts = new Set<Id>();
- 
-		Map<Id, Account> airlineMap = new Map<Id, Account>([SELECT Id, Name, IATACode__c, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c FROM Account WHERE recordType.developerName = 'iata_airline']);
-		System.debug('ContentVersionTriggerHandler.afterInsertContentVersionTriggerHandler> airlineMap = ' + airlineMap);
- 
-		List<Portal_Application_Right__c> parList = [SELECT Id, Name, Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted' AND Application_Start_URL__c = '/ISSP_CurrencyCenterHome'];
+
+		List<Portal_Application_Right__c> parList = [SELECT Id, Name, Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted' AND Portal_Application__r.ServiceName__c = 'Currency Center' AND Contact__r.Status__c = 'Active' AND Contact__r.Account.recordType.developerName = 'iata_airline'];
 		System.debug('ContentVersionTriggerHandler.afterInsertContentVersionTriggerHandler> parList ' + parList);
- 
-		Set<Id> ccContacts = new Set<Id>();
+
 		for (Portal_Application_Right__c par : parList){
-			ccContacts.add(par.Contact__c);
+			setOfContacts.add(par.Contact__c);
 		}
- 
-		List<Contact> accountsContacts = [SELECT Id, Name, AccountId FROM Contact WHERE Status__c = 'Active' AND AccountId in :(airlineMap.keySet()) AND Id in :ccContacts];
-		System.debug('ContentVersionTriggerHandler.afterInsertContentVersionTriggerHandler> accountsContacts = ' + accountsContacts);
- 
-		if(!accountsContacts.isEmpty()) {
-			for(Contact con: accountsContacts) {
-				setOfContacts.add(con.Id);
-			}
-		}
- 
-		System.debug('ContentVersionTriggerHandler.afterInsertContentVersionTriggerHandler> setOfContacts ' + setOfContacts);
-		return setOfContacts;
- 
+
+		System.debug('ContentVersionTriggerHandler.afterInsertContentVersionTriggerHandler> setOfContacts ' + setOfContacts); 
+		return setOfContacts; 
 	}
 
     /*All the logic for after insert should go into this*/
