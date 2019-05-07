@@ -156,6 +156,37 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.New_interaction__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>The case has been recently updated.</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
@@ -170,11 +201,11 @@
                 <stringValue>NOW()</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_A1_8547576811</name>
+        <name>formula_3_myRule_1_A1_7944319575</name>
         <dataType>DateTime</dataType>
         <expression>NOW()</expression>
     </formulas>
-    <interviewLabel>New_Interaction_date-3_InterviewLabel</interviewLabel>
+    <interviewLabel>New_Interaction_date-4_InterviewLabel</interviewLabel>
     <label>New Interaction date</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -209,6 +240,9 @@
             </value>
         </processMetadataValues>
         <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
             <name>isChildRelationship</name>
             <value>
                 <booleanValue>false</booleanValue>
@@ -219,6 +253,9 @@
             <value>
                 <stringValue>[Case]</stringValue>
             </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
         </processMetadataValues>
         <name>myRule_1_A1</name>
         <label>New interaction date received</label>
@@ -264,7 +301,7 @@
             </processMetadataValues>
             <field>New_Interaction_Date__c</field>
             <value>
-                <elementReference>formula_3_myRule_1_A1_8547576811</elementReference>
+                <elementReference>formula_3_myRule_1_A1_7944319575</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
