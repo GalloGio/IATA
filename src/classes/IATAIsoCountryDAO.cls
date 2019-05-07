@@ -65,7 +65,8 @@ public class IATAIsoCountryDAO {
                                                         ORDER BY Name),
 
                                                         (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c, RecordType.Name, 
-                                                        		Threshold__c, RecordType.DeveloperName
+                                                        		Threshold__c, RecordType.DeveloperName, Block_notification_on_RHC_amount_update__c, 
+                                                        		Block_notification_on_Risk_Status_update__c
 													   	FROM AMS_Country_Specific_Attributes__r)
 
 											  	FROM IATA_ISO_Country__c ]);
