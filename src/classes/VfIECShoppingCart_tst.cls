@@ -10,8 +10,8 @@ public class VfIECShoppingCart_tst {
     private static Product_Category__c oProductCategory;
     private static Product_Information__c oProductInfo;
     private static Product_Information__c oProductInfo2;
-    private static zqu__ZProduct__c oProduct;
-    private static zqu__ZProduct__c oProduct2;
+    private static Product2 oProduct;
+    private static Product2 oProduct2;
     private static zqu__ProductRatePlan__c oProductRatePlan;
     private static zqu__ProductRatePlan__c oProductRatePlan2;
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -21,22 +21,15 @@ public class VfIECShoppingCart_tst {
     
     static void Init() {
         // create dummy Zuora product
-        oProduct = IECTestUtil.CreateSampleProduct('Product1');
+        oProduct = IECTestUtil.CreateSampleProduct2('Product1');
         oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
         oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_CACPRO;
         insert oProduct;
         
         // create dummy Zuora rate plan
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct);
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct);
         oProductRatePlan.zqu__Deleted__c = false;
         insert oProductRatePlan;
-        
-        /*
-        // create dummy Zuora rate plan charge
-        zqu__ProductRatePlanCharge__c charge = IECTestUtil.CreateSampleProductRatePlanCharge(ratePlan, 'Charge 1', 42);
-        charge.zqu__Deleted__c = false;
-        insert charge;
-        */
         
         // create dummy product category
         oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_CACPRO, true);
@@ -44,7 +37,7 @@ public class VfIECShoppingCart_tst {
         insert oProductCategory;
         
         // create dummy product info
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('My product', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo2('My product', oProductCategory, oProduct);
         insert oProductInfo;
         
         // create dummy rate plan information
