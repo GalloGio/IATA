@@ -1180,6 +1180,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		errorFound = true;
 				}
 
+                if (currentAccount.isocountry.Hide_Tax_Number_VAT__c == false) {
 				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c == null && currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
@@ -1187,7 +1188,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
 					errorFound = true;
 				}
+           	 	}
                 
+                if (currentAccount.isocountry.Hide_Tax_Number_2_VAT_field_2__c == false) {
                 if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c == null && currentAccount.isocountry.Tax_Number_2_VAT_field_2_mandatory__c) {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c.addError(Label.ISSP_YouMustEnter);
 					errorFound = true;
@@ -1195,6 +1198,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_2_error);
 					errorFound = true;
 				}
+			}
 			}
 
 			if (currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null) {
