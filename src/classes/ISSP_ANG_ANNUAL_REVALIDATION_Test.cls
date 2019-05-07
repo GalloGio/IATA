@@ -417,7 +417,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.currentAccount.newContact = new AMS_Accreditation_Contact__c();
 		ctrl.contactType = 'Person';
-
+        ctrl.amsContactCountry = 'Country';
+        
 		ctrl.createAgencyContact();
 
 		ctrl.saveDraft();
@@ -950,7 +951,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
     }
     
     @isTest
-    static void test8() {
+    static void test8() {        
         insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)(([.])(([a-zA-Z]{2,3}))([.]){0,1}([a-zA-Z]{2,3}){0,1})');
 
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
@@ -1045,10 +1046,17 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         
         upd.validateVATNumber();
         upd.validateVATNumber2();
-        
+                
         Boolean c = upd.displayShipping;
         system.assertEquals(true, c);
         upd.displayShipping = false;
+        upd.resetCheckbox();
+        
+        List<SelectOption> bsl = upd.billingStateList;
+        List<SelectOption> ssl = upd.shippingStateList;
+        string slbcn = upd.stateListByCountryName;
+        upd.currentShippingCountryStates();
+        string si = upd.stateInfo;
         
         Test.stopTest();
     }

@@ -139,9 +139,11 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public void currentShippingCountryStates() {
         shippingStateList = new List<SelectOption>{new SelectOption('', '')};
 
+            if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
         for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
             shippingStateList.add(new SelectOption(state.Name, state.Name));
         }
+    }
     }
     
     public void validateVATNumber2() {
