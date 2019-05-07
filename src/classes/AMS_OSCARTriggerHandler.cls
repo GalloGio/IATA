@@ -3344,23 +3344,18 @@ public class AMS_OSCARTriggerHandler {
             updatedOSCAR.STEP35__c = 'In Progress';
         }
 
-       
-
         //NEWGEN-5374 Set the Requested Bank Guarantee Amount(oscar) to Financial_Security_Amount__c (Case)
-        if(oldOSCAR.STEP35__c <> updatedOscar.STEP35__c && updatedOscar.STEP35__c == 'Passed' && updatedOscar.Process__c == AMS_Utils.NEWAE){
+        if(oldOSCAR.STEP34__c <> updatedOscar.STEP34__c && updatedOscar.STEP34__c == 'Passed' && updatedOscar.Process__c == AMS_Utils.NEWAE){
 
             if(updatedOscar.Requested_Bank_Guarantee_amount__c != null){
                 Decimal convertedValue = updatedOscar.Requested_Bank_Guarantee_amount__c;
-                //check currency 
                 
-                /* To be tested later
+                //check currency 
                 if(updatedOscar.Requested_Bank_Guarantee_currency__c != updatedOscar.CurrencyIsoCode){
-                    convertedValue = ANG_Risk_Helper.currencyConverter(updatedOscar.CurrencyIsoCode, updatedOscar.Requested_Bank_Guarantee_amount__c, updatedOscar.CurrencyIsoCode != null ? updatedOscar.CurrencyIsoCode : fs.ANG_Financial_Security_Currency__c)
+                    convertedValue = ANG_Risk_Helper.currencyConverter(updatedOscar.Requested_Bank_Guarantee_currency__c, convertedValue, updatedOscar.CurrencyIsoCode != null ? updatedOscar.CurrencyIsoCode : updatedOscar.Requested_Bank_Guarantee_currency__c);
                 }
-                */
-                Case currentCase = new Case(id = updatedOscar.Oscar_Communication_Case_Id__c);
-                currentCase.Financial_Security_Amount__c = convertedValue;
-
+                
+                Case currentCase = new Case(id = updatedOscar.Oscar_Communication_Case_Id__c, Financial_Security_Amount__c = convertedValue);
                 update currentCase;
 
             }
