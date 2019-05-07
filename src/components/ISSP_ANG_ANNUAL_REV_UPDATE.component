@@ -1136,18 +1136,22 @@
 
         function copyStateInputBox() {
             $('.shipping_state__c').val($('[id$="shippingStateInput"]').val());
+            $('.shipping_state__c').change();
         }
 
         function copyBillingStateInputBox() {
             $('.state_province__c').val($('[id$="billingStateText"]').val());
+            $('.state_province__c').change();
         }
 
         function copyStateToBillingBox() {
             $(".state_province__c").val($('[id$="billingStateList"]').val());
+            $('.state_province__c').change();
         }
 
         function copyStateListSelection() {
             $('.shipping_state__c').val($('[id$="ShippingStateList"]').val());
+            $('.shipping_state__c').change();
         }
 
         function copyShippingState() {
@@ -1168,7 +1172,7 @@
             $(".country__c").attr('disabled','disabled');
 
             if ('{!ca.isReadonly}'=='false') {
-                $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+                $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c').first();
                 $('#shipping_country__c > input').attr('style','display: none;');
                 $('#shipping_country__c').css("padding-right",0);
 
@@ -1181,7 +1185,7 @@
                 if ({!ca.isocountry.State_Province_Picklist__c}) {
                     $('[id$="billingStateList"]').attr('style', 'width: 200px; margin-left: 15px;');
 
-                    $('[id$="billingStateList"]').prependTo($('[id$="state_province__c"]').parent());
+                    $('[id$="billingStateList"]').prependTo($('[id$="state_province__c"]').parent().first());
                     $('.state_province__c').attr('style', 'display: none;');
                     $('.state_province__c').css("padding-right", 0);
 
@@ -1191,7 +1195,7 @@
                 } else {
                     $('[id$="billingStateText"]').attr('style', 'width: 200px; margin-left: 15px;');
 
-                    $('[id$="billingStateText"]').prependTo($('[id$="state_province__c"]').parent());
+                    $('[id$="billingStateText"]').prependTo($('[id$="state_province__c"]').parent().first());
                     $('.state_province__c').attr('style', 'display: none;');
                     $('.state_province__c').css("padding-right", 0);
 
@@ -1205,11 +1209,11 @@
 
                     if (stateMap[$('[id$="ShippingCountryList"]').val()] != undefined) {
                         $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-                        $('[id$="ShippingStateList"]').prependTo($('[id$="shipping_state__c"]').parent());
+                        $('[id$="ShippingStateList"]').prependTo($('[id$="shipping_state__c"]').parent().first());
                         $('.shipping_state__c').attr('style', 'display: none;');
                         $('.shipping_state__c').css("padding-right", 0);
 
-                        $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent());
+                        $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent().first());
                         $('.shipping_state__c').attr('style', 'display: none;');
                         $('.shipping_state__c').css("padding-right", 0);
 
@@ -1221,7 +1225,7 @@
 
                         $('[id$="shipping_state__c"]').parent().attr('class', 'row');
 
-                        $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent());
+                        $('[id$="shippingStateInput"]').prependTo($('[id$="shipping_state__c"]').parent().first());
                         $('.shipping_state__c').attr('style', 'display: none;');
                         $('.shipping_state__c').css("padding-right", 0);
 
