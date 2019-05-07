@@ -14,7 +14,8 @@ public with sharing class DAL_ISSP {
     public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
         return
             [SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
-                IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c
+                IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
+                Profile.Name
                FROM User 
               WHERE (Username=: nameOrEmail 
                  OR email =: nameOrEmail)
