@@ -130,7 +130,7 @@
 
             <!--Line 5 VAT Number -->
 
-            <apex:outputPanel >
+            <apex:outputPanel rendered="{! !ca.isocountry.Hide_Tax_Number_VAT__c}">
 
                 <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                     <apex:param name="vatno" value="" assignto="{!vatNumber}" />
@@ -166,7 +166,7 @@
             
             <!--vat number 2-->
             
-            <apex:outputPanel >
+            <apex:outputPanel rendered="{! !ca.isocountry.Hide_Tax_Number_2_VAT_field_2__c}">
                 
                 <apex:actionfunction name="validateVAT2" action="{!validateVATNumber2}" status="actValidVAT2" rerender="VATNumber2Input">
                     <apex:param name="vatno2" value="" assignto="{!vatNumber2}" />
