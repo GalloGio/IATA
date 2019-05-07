@@ -7927,9 +7927,6 @@ system.debug('aqui sectorValue ' + sectorValue);
 		get{
 			if(hierarchy == null) {
 				hierarchy = new Map<Id, HierarchyItem>();
-
-				Set<Id> accountIds = new Set<Id>();
-				accountIds.add(vHQAccountId);		
 				
 				List<Account> acc = getBranchList(false);
 				for(Account a : acc){
