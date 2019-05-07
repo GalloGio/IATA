@@ -316,10 +316,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			for (AMS_Pax_Accreditation_Form__c newForm : newForms) {
 				formsMap.put(newForm.IATACode__c, new ANG_AnnualRevFormWrapper(newForm,
-																			   getFormPreviousOwners(newForm.id, auxPreviousOwners),
-                                                                               getFormCurrentOwners(newForm.id, auxCurrentOwners),
-																		       getFormCurrentCompanies(newForm.id, auxCurrentCompanies),
-																		       getFormPreviousCompanies(newForm.id, auxPreviousCompanies)));
+																			   getFormOwners(newForm.id, auxPreviousOwners),
+                                                                               getFormOwners(newForm.id, auxCurrentOwners),
+																		       getFormOwners(newForm.id, auxCurrentCompanies),
+																		       getFormOwners(newForm.id, auxPreviousCompanies)));
 			}
         }
 	}
@@ -420,10 +420,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				delete this.currentAccount.fw.newform;
 
 				this.currentAccount.fw.newform = createNewForm(currentAccount.account.IataCode__c);
-				this.currentAccount.fw.previousOwners = getFormPreviousOwners_2(currentAccount.account.Id, lstAccreditationContact);
-				this.currentAccount.fw.previousCompanies = getFormPreviousCompanies_2(currentAccount.account.Id, lstAccreditationContact);
-				this.currentAccount.fw.currentOwners = getFormCurrentOwners_2(currentAccount.account.Id, lstAccreditationContact);
-				this.currentAccount.fw.currentCompanies = getFormCurrentCompanies_2(currentAccount.account.Id, lstAccreditationContact);
+				this.currentAccount.fw.previousOwners = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContPreviousOwner);
+				this.currentAccount.fw.previousCompanies = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContPreviousCompanyOwner);
+				this.currentAccount.fw.currentOwners = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContCurrentOwner);
+				this.currentAccount.fw.currentCompanies = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContCurrentCompanyOwner);
 
 				iataCodesConfirmed.remove(currentAccount.account.IataCode__c);
 
@@ -585,10 +585,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			currentAccount.fw.deleteOwners();
 
-			this.currentAccount.fw.previousOwners = getFormPreviousOwners_2(currentAccount.account.Id, lstAccreditationContact);
-			this.currentAccount.fw.previousCompanies = getFormPreviousCompanies_2(currentAccount.account.Id, lstAccreditationContact);
-			this.currentAccount.fw.currentOwners = getFormCurrentOwners_2(currentAccount.account.Id, lstAccreditationContact);
-			this.currentAccount.fw.currentCompanies = getFormCurrentCompanies_2(currentAccount.account.Id, lstAccreditationContact);
+			this.currentAccount.fw.previousOwners = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContPreviousOwner);
+			this.currentAccount.fw.previousCompanies = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContPreviousCompanyOwner);
+			this.currentAccount.fw.currentOwners = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContCurrentOwner);
+			this.currentAccount.fw.currentCompanies = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContCurrentCompanyOwner);
 
 			currentAccount.fw.saveOwners();
 		}
@@ -606,10 +606,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			this.currentAccount.fw.newform = createNewForm(this.currentAccount.account.IataCode__c);
 
-			this.currentAccount.fw.previousOwners = getFormPreviousOwners_2(currentAccount.account.Id, lstAccreditationContact);
-			this.currentAccount.fw.previousCompanies = getFormPreviousCompanies_2(currentAccount.account.Id, lstAccreditationContact);
-			this.currentAccount.fw.currentOwners = getFormCurrentOwners_2(currentAccount.account.Id, lstAccreditationContact);
-			this.currentAccount.fw.currentCompanies = getFormCurrentCompanies_2(currentAccount.account.Id, lstAccreditationContact);
+			this.currentAccount.fw.previousOwners = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContPreviousOwner);
+			this.currentAccount.fw.previousCompanies = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContPreviousCompanyOwner);
+			this.currentAccount.fw.currentOwners = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContCurrentOwner);
+			this.currentAccount.fw.currentCompanies = getFormOwners_2(currentAccount.account.Id, lstAccreditationContact, rtAccreditContCurrentCompanyOwner);
 
 			iataCodesInProgress.remove(this.currentAccount.account.IataCode__c);
 
@@ -700,11 +700,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
     public Pagereference securityCheck() {
-
         if (newCase == null || (newCase != null && !newCase.Owner.Name.startsWith('Annual Revalidation'))) {
-
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
-
         } else {
 			// If the case is not visible in the portal then set it visible in the portal.
 			setCaseVisibleInPortal(newCase);
@@ -718,7 +715,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	//	iataCodesConfirmed - UPDATE_COMPLETED_STATUS
 	//	iataCodesInProgress - UPDATE_PROGRESS_STATUS
 	@TestVisible private void setIataCodesOkNotOk(AMS_OSCAR__c oscar) {
-
 		iataCodesOk = new Set<String>();
 		iataCodesConfirmed = new Set<String>();
 		iataCodesInProgress = new Set<String>();
@@ -819,10 +815,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			account a = accountsMap.get(iataCode);
 
 			formsMap.put(iataCode, new ANG_AnnualRevFormWrapper(createNewForm(iataCode),
-																getFormPreviousOwners_2(a.id, lstAccreditationContact),
-																getFormCurrentOwners_2(a.id, lstAccreditationContact),
-																getFormCurrentCompanies_2(a.id, lstAccreditationContact),
-																getFormPreviousCompanies_2(a.id, lstAccreditationContact)));
+																getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContPreviousOwner),
+																getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContCurrentOwner),
+																getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContCurrentCompanyOwner),
+																getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContPreviousCompanyOwner)));
 		}
 	}
 
@@ -835,10 +831,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		newForm.SAAM_Case__c = newCase.Id;
 
-		if(a.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER))
+		if(a.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER)) {
 			newForm.Operation_Type__c = 'Travel_Agent';
-		else
+		} else {
 			newForm.Operation_Type__c = 'Cargo_Agent';
+		}
 
 		if (newCase.IFAP_Country_ISO__c == 'CN' && a.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER)) {
 			if (a.Category__c == 'Domestic Agent') {
@@ -857,10 +854,13 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		accountStagingFieldMapping(a, newForm);
 
         if (isoCountry.EU_Country__c) {
-            if (a.VAT_Number__c != null)
+            if (a.VAT_Number__c != null) {
                 newForm.ISSP_AMS_VAT_number_input__c = a.VAT_Number__c.substring(2);
-            if (a.VAT_Number_2__c != null)
+            }
+
+            if (a.VAT_Number_2__c != null) {
                 newForm.ISSP_AMS_VAT_number_2_input__c = a.VAT_Number_2__c.substring(2);
+            }
         } else {
             newForm.ISSP_AMS_VAT_number_input__c = a.VAT_Number__c;
             newForm.ISSP_AMS_VAT_number_2_input__c = a.VAT_Number_2__c;
@@ -999,43 +999,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_COMPANIES, newFormIds);
     }
 
-    private static List<AMS_Accreditation_Contact__c> getFormPreviousOwners(Id formId, List<AMS_Accreditation_Contact__c> previousOwners) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
+    private static List<AMS_Accreditation_Contact__c> getFormOwners(Id formId, List<AMS_Accreditation_Contact__c> owners) {
+    	List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
-		for(AMS_Accreditation_Contact__c ac : previousOwners) {
-			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				aux.add(ac);
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormCurrentOwners(Id formId, List<AMS_Accreditation_Contact__c> currentOwners) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : currentOwners) {
-			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				aux.add(ac);
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormCurrentCompanies(Id formId, List<AMS_Accreditation_Contact__c> currentCompanies) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : currentCompanies) {
-			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
-				aux.add(ac);
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormPreviousCompanies(Id formId, List<AMS_Accreditation_Contact__c> previousCompanies) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : previousCompanies) {
+		for(AMS_Accreditation_Contact__c ac : owners) {
 			if(ac.AMS_Pax_Accreditation_Form__c == formId) {
 				aux.add(ac);
 			}
@@ -1044,44 +1011,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     }
 
 	// Get the owners from the not yet saved owners list.
-    private static List<AMS_Accreditation_Contact__c> getFormPreviousOwners_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
+    private static List<AMS_Accreditation_Contact__c> getFormOwners_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact, String recordTypeId) {
+    	List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
 
 		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousOwner) {
-				aux.add(ac.clone(false, false, false, false));
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormCurrentOwners_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContCurrentOwner) {
-				aux.add(ac.clone(false, false, false, false));
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormCurrentCompanies_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContCurrentCompanyOwner) {
-				aux.add(ac.clone(false, false, false, false));
-			}
-		}
-		return aux;
-    }
-
-	private static List<AMS_Accreditation_Contact__c> getFormPreviousCompanies_2(String accountId, List<AMS_Accreditation_Contact__c> lstAccreditationContact) {
-		List<AMS_Accreditation_Contact__c> aux = new List<AMS_Accreditation_Contact__c>();
-
-		for(AMS_Accreditation_Contact__c ac : lstAccreditationContact) {
-			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == rtAccreditContPreviousCompanyOwner) {
+			if(ac.AMS_OwnershipId__c == accountId && ac.RecordTypeId == recordTypeId) {
 				aux.add(ac.clone(false, false, false, false));
 			}
 		}
@@ -1475,14 +1409,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				errorFound = true;
 			}
 
-			
-
 			currentAccount.errorFound = errorFound;
 		}
 	}
 
 	public void resetErrors() {
-
 		if(currentAccount != null) {
 			currentAccount.errorFoundCheckBoxes = false;
 			currentAccount.errorFound = false;
@@ -1576,9 +1507,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         AMS_Accreditation_Contact__c contactToUpsert = currentAccount.newContact;
 
-
-        if (contactToUpsert.AMS_Pax_Accreditation_Form__c == null)
+        if (contactToUpsert.AMS_Pax_Accreditation_Form__c == null) {
             contactToUpsert.AMS_Pax_Accreditation_Form__c = this.currentAccount.fw.newForm.Id;
+        }
 
         cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                      WHERE AMS_Pax_Accreditation_Form__c = :this.currentAccount.fw.newForm.Id AND Agency_owner__c = true AND Id != :currentAccount.newContact.Id And RecordType.Name = :contactType];
@@ -1641,16 +1572,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             		}
             	}
 
-            	if (currentAccount.newContact.Agency_owner__c == false && currentAccount.newContact.Agency_role__c == false) {
-                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_NoC_Type_Of_Person));
-                	contactSaved = false;
-                	return;
-            	}
-
-            	if (currentAccount.newContact.Agency_owner__c == true && (currentAccount.newContact.Financial_interest__c <= 0 || currentAccount.newContact.Financial_interest__c == null)) {
-                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_FIN_Interest));
-                	contactSaved = false;
-                	return;
+            	if (currentAccount.newContact.Agency_owner__c == false) {
+            		if (currentAccount.newContact.Agency_role__c == false) {
+            			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_NoC_Type_Of_Person));
+                		contactSaved = false;
+                		return;
+            		}
+            	} else {
+            		if (currentAccount.newContact.Financial_interest__c <= 0 || currentAccount.newContact.Financial_interest__c == null) {
+            			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_FIN_Interest));
+                		contactSaved = false;
+                		return;
+            		}
             	}
             }
 
@@ -1714,7 +1647,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                         contactSaved = false;
                         return;
                     }
-
                 }
             }
 
@@ -1742,12 +1674,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         } catch (DmlException ex) { contactSaved = false; ApexPages.addMessages(ex); }
 
-
         iatacode = '';
 	}
 
-    public boolean validateCharactersInPersonWindow() {
-        boolean errorFound = false;
+    public Boolean validateCharactersInPersonWindow() {
+        Boolean errorFound = false;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         if (currentAccount.newContact.First_name__c != null && !p.matcher(currentAccount.newContact.First_name__c).matches()) {
@@ -1816,8 +1747,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                               And Id != :currentAccount.newContact.Id];
     }
 
-    public boolean validateCharactersInCompanyWindow() {
-        boolean errorFound = false;
+    public Boolean validateCharactersInCompanyWindow() {
+        Boolean errorFound = false;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         if (currentAccount.newContact.Name != null && !p.matcher(currentAccount.newContact.Name).matches()) {
@@ -1856,7 +1787,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         get {
             List<SelectOption> options = new List<SelectOption>();
 
-            list<IATA_ISO_Country__c> isoList;
+            List<IATA_ISO_Country__c> isoList;
             if (applyLanguage == 'es') {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
             } else if (applyLanguage == 'fr') {
@@ -1868,15 +1799,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
             for (IATA_ISO_Country__c iso : isoList) {
                 if (applyLanguage == 'es') {
-                    if (iso.IATA_Country_SP__c != null)
+                    if (iso.IATA_Country_SP__c != null) {
                         options.add(new SelectOption(iso.IATA_Country_SP__c , iso.IATA_Country_SP__c));
-                    else
+                    }else {
                         options.add(new SelectOption(iso.Name , iso.Name));
+                    }
                 } else if (applyLanguage == 'fr') {
-                    if (iso.IATA_Country_FR__c != null)
+                    if (iso.IATA_Country_FR__c != null) {
                         options.add(new SelectOption(iso.IATA_Country_FR__c, iso.IATA_Country_FR__c));
-                    else
+                    } else {
                         options.add(new SelectOption(iso.Name, iso.Name));
+                    }
                 } else {
                     options.add(new SelectOption(iso.Name, iso.Name));
                 }
@@ -1929,11 +1862,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
         if (agentaccounts!= null && !agentaccounts.isEmpty()) {
         	generalAccount = agentaccounts[0];
-            String agentAddress;
 
             TravelAgentPrevAccount = agentaccounts[0];
 
-            agentAddress = AMS_Utils.notNull(TravelAgentPrevAccount.BillingStreet) + ' \r\n' +
+            String agentAddress = AMS_Utils.notNull(TravelAgentPrevAccount.BillingStreet) + ' \r\n' +
                             AMS_Utils.notNull(TravelAgentPrevAccount.BillingCity) + '' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingState) +
                             ' \r\n' + AMS_Utils.notNull(TravelAgentPrevAccount.BillingCountry);
 
