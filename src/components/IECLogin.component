@@ -43,15 +43,10 @@
 	          
 	            <apex:outputPanel layout="block" rendered="{!not(resetPassword) && NOT(isUserLoggedIn)}">
 	            	<div class="loginSection_centerUnique">
+					<h2 class="checkout-info__heading">Please log in</h2>
 					
-					<apex:outputText escape="false" style="font-size: larger; font-weight: bold;" value="Kindly note that our store is currently undergoing maintenance"/>
-                	<br/>
-                	<br/>
-
-                	For a better customer experience, please contact Direct Sales to order at <a href="mailto:custserv@iata.org">custserv@iata.org</a> or visit our store tomorrow.
-
-					<!-- <h2 class="checkout-info__heading">Please log in</h2>
 					
+					<!-- p class="checkout-info__subHeading">All fields are required</p -->
 					
 					<h4 style="margin-bottom: 0px;">Email</h4>
 					<apex:inputText value="{!username}" id="username" rendered="{!sPrefillUsername == null || sPrefillUsername == ''}" styleClass="login__input" html-placeholder="Enter you email here" onKeyPress="return submitLoginEnter(event)"/><br/>                            
@@ -70,7 +65,7 @@
 	               	</apex:outputPanel>
 	                	
 	                 <br/>       	
-	                <apex:commandButton action="{!login}" value="Login" styleClass="tab-container__anchor  customButton" rerender="{!componentIdToRerender}" /> -->
+	                <apex:commandButton action="{!login}" value="Login" styleClass="tab-container__anchor  customButton" rerender="{!componentIdToRerender}" />
 	                </div>
 	            </apex:outputPanel>
 	            
