@@ -1055,7 +1055,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         List<SelectOption> bsl = upd.billingStateList;
         List<SelectOption> ssl = upd.shippingStateList;
         string slbcn = upd.stateListByCountryName;
-        upd.currentShippingCountryStates();
         string si = upd.stateInfo;
         
         Test.stopTest();
