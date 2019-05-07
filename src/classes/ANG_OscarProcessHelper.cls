@@ -2244,9 +2244,9 @@ global class ANG_OscarProcessHelper {
 
 	public static void updateCaseStatusForAccounts(Set<Id> accountIdSet, Id recordTypeId, String newCaseStatus){
 
-		//Fetch all the IFAP cases related with the given accounts
+		//Fetch all the cases with the 'recordTypeId' related with the given accounts
 		//that are not in the given 'newCaseStatus' status 
-		List<Case> ifapLst = new List<Case>(
+		List<Case> caseLst = new List<Case>(
 			[SELECT 
 				Id,
 				Status 
@@ -2254,18 +2254,18 @@ global class ANG_OscarProcessHelper {
 				Case 
 				WHERE 
 					AccountId IN :accountIdSet 
-				AND RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP 
+				AND RecordTypeId = :recordTypeId
 				AND Status != :newCaseStatus
 			]
 		);
 
-		//Updates the status to the given 'newCaseStatus' for every IFAP
-		for(Case c : ifapLst){
+		//Updates the status to the given 'newCaseStatus' for every case
+		for(Case c : caseLst){
 			c.Status = newCaseStatus;
 		}
 
-		if(!ifapLst.isEmpty()){
-			update ifapLst;
+		if(!caseLst.isEmpty()){
+			update caseLst;
 		}
 
 	}
