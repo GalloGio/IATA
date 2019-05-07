@@ -12,9 +12,9 @@ private class vfIECUpgrade_tst {
     private static Product_Information__c oProductInfo;
     private static Product_Information__c oProductInfo2;
     private static Product_Information__c oProductInfo3;
-    private static zqu__ZProduct__c oProduct;
-    private static zqu__ZProduct__c oProduct2;
-    private static zqu__ZProduct__c oProduct3;
+    private static Product2 oProduct;
+    private static Product2 oProduct2;
+    private static Product2 oProduct3;
     private static zqu__ProductRatePlan__c oProductRatePlan;
     private static zqu__ProductRatePlan__c oProductRatePlan2;
     private static zqu__ProductRatePlan__c oProductRatePlan3Trial;
@@ -39,24 +39,24 @@ private class vfIECUpgrade_tst {
         oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
         insert oProductCategory;
         
-        oProduct = IECTestUtil.CreateSampleProduct('PTST');
-        oProduct2 = IECTestUtil.CreateSampleProduct('PTST2');
-        oProduct3 = IECTestUtil.CreateSampleProduct('PTST3');
+        oProduct = IECTestUtil.CreateSampleProduct2('PTST');
+        oProduct2 = IECTestUtil.CreateSampleProduct2('PTST2');
+        oProduct3 = IECTestUtil.CreateSampleProduct2('PTST3');
 
         insert new List<sObject> {oProduct, oProduct2, oProduct3};
         
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
-        oProductInfo2 = IECTestUtil.CreateSampleProductInfo('PITST2', oProductCategory, oProduct2);
+        oProductInfo2 = IECTestUtil.CreateSampleProductInfo2('PITST2', oProductCategory, oProduct2);
         oProductInfo2.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT; //ProductInformationAudience_MEMBERAIRLINE
-        oProductInfo3 = IECTestUtil.CreateSampleProductInfo('PITST3', oProductCategory, oProduct3);
+        oProductInfo3 = IECTestUtil.CreateSampleProductInfo2('PITST3', oProductCategory, oProduct3);
         oProductInfo3.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 
         insert new List<sObject> {oProductInfo, oProductInfo2, oProductInfo3};
         
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
-        oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('PRPTST2', false, oProduct2);
-        oProductRatePlan3Trial = IECTestUtil.CreateSampleProductRatePlan('PRPTST3', true, oProduct3);
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
+        oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('PRPTST2', false, oProduct2);
+        oProductRatePlan3Trial = IECTestUtil.CreateSampleProductRatePlan2('PRPTST3', true, oProduct3);
 
         insert new List<sObject> {oProductRatePlan, oProductRatePlan2, oProductRatePlan3Trial};
         
@@ -127,7 +127,7 @@ private class vfIECUpgrade_tst {
         insert oSubscription1;
         
          // create dummy subscription charge
-        oSubscriptionCharge1 = IECTestUtil.createSampleSubscriptionCharge(oSubscription1.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        oSubscriptionCharge1 = IECTestUtil.createSampleSubscriptionCharge2(oSubscription1.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         insert oSubscriptionCharge1;
     }
     
@@ -162,7 +162,7 @@ private class vfIECUpgrade_tst {
         insert oSubscription2;
         
         // create dummy subscription charge
-        oSubscriptionCharge2 = IECTestUtil.createSampleSubscriptionCharge(oSubscription2.Id, Date.today().addMonths(-6), oProduct3, oProductRatePlan3Trial);
+        oSubscriptionCharge2 = IECTestUtil.createSampleSubscriptionCharge2(oSubscription2.Id, Date.today().addMonths(-6), oProduct3, oProductRatePlan3Trial);
         insert oSubscriptionCharge2;
     }
 

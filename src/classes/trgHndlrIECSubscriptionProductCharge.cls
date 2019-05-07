@@ -27,12 +27,14 @@ public with sharing class trgHndlrIECSubscriptionProductCharge {
         Map<String, zqu__ProductRatePlanCharge__c> mapRatePlanCharge = new Map<String, zqu__ProductRatePlanCharge__c>();
         for (zqu__ProductRatePlanCharge__c ratePlanCharge:
             [SELECT Id, Name, zqu__ProductRatePlan__c, zqu__ProductRatePlan__r.Name
-                , zqu__ProductRatePlan__r.zqu__ZProduct__r.Name, zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__SKU__c
+                , zqu__ProductRatePlan__r.zqu__Product__r.Name, zqu__ProductRatePlan__r.zqu__Product__r.zqu__SKU2__c
             FROM zqu__ProductRatePlanCharge__c
             WHERE Name IN :setRatePlanChargeName
                 AND zqu__ProductRatePlan__r.Name IN :setRatePlanName])
         {
-            string key = ratePlanCharge.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.zqu__ZProduct__r.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__SKU__c;
+
+            string key = ratePlanCharge.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.zqu__Product__r.Name + '|' + ratePlanCharge.zqu__ProductRatePlan__r.zqu__Product__r.zqu__SKU2__c;
+            
             if(!mapRatePlanCharge.containsKey(key))
                 mapRatePlanCharge.put(key, ratePlanCharge);
         }
@@ -71,7 +73,7 @@ public with sharing class trgHndlrIECSubscriptionProductCharge {
             WHERE Product_Rate_Plan__c IN :mapParentSubscription_to_RatePlanId.values()
                 AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
                 AND Active__c = true                
-                AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
+                AND Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__Product__r.zqu__EffectiveEndDate__c >= TODAY
                 AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                 AND Product_Rate_Plan__r.zqu__Deleted__c = false])
         {

@@ -489,7 +489,7 @@ public class AMS_OSCARTriggerHandler {
             }
         }
 
-        if(!mapExpiryDates.isEmpty()) {
+        if(!mapExpiryDates.isEmpty() && !System.isBatch()) {//WMO-440
             asyncUpdateAccPCI(mapExpiryDates);
         }
     }
