@@ -56,7 +56,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public String countryInfoByCountryNameMapString {
         get {
             if (countryInfoByCountryNameMapString == null) {
-                countryInfoByCountryNameMapString = '\'\'';//characters to avoid crashing stringfy method on vf page
+                List<SelectOption> countryListPopulated = countryList;
             }
 
             return countryInfoByCountryNameMapString;
