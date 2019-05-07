@@ -15,49 +15,6 @@ public without sharing class IECQuoteList_Ctrl_Test {
 ****************************************************************************************************/
 @isTest
 static void test_AllMethod() {
-    /*TestDataGenerator.generateApexSetting();
-    TestDataGenerator.generateISOCountryState();
-    
-    //*** generate accounts
-    String strClientType = IECConstants.Account_ClientType_MemberAirline;
-    List<Account> lstAccount = TestDataGenerator.generateAccounts(1, false);
-    lstAccount[0].RecordTypeId = IECUserManager.getAccountRecordTypeForIEC(strClientType);
-    insert lstAccount;
-
-    //*** generate contacts
-    List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
-
-    //*** generate portal contacts
-    List<User> lstUser = new List<User> {TestDataGenerator.generatePortalUser('ISS Portal', lstContact[0].Id, true)};
-
-    //*** generate products
-    List<zqu__ZProduct__c> lstZProduct = TestDataGenerator.generateZProducts(1, true);
-    List<zqu__ProductRatePlan__c> lstZRatePlan = TestDataGenerator.generateZRatePlans(lstZProduct[0].Id, 1, true);
-    List<zqu__ProductRatePlanCharge__c> lstZRatePlanCharge = TestDataGenerator.generateZCharges(lstZRatePlan[0].Id, 1, false);
-    lstZRatePlanCharge[0].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_PER_UNIT;
-    insert lstZRatePlanCharge;
-    List<Product2> lstProduct = TestDataGenerator.generateProducts(1, false);
-    lstProduct[0].SAP_Status_Code__c = 'A';
-    lstProduct[0].Post_to_Ecommerce_Date__c = System.today().addDays(-7);
-    lstProduct[0].ZProduct__c = lstZProduct[0].Id;
-    insert lstProduct;
-    List<PricebookEntry> lstPriceBook = new List<PricebookEntry>{new PricebookEntry(Pricebook2Id=Test.getStandardPricebookId(), Product2Id=lstProduct[0].Id, UnitPrice=10)};
-    insert lstPriceBook;
-
-    //*** generate order
-    List<Order> lstOrder = TestDataGenerator.generateOrder(1, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, false);
-    lstOrder[0].Type = 'Quote';
-    lstOrder[0].EffectiveDate = system.today().addDays(-3);
-    lstOrder[0].EndDate = system.today().addDays(-2);
-    insert lstOrder;
-    List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 1, true);
-
-    //*** test
-    system.runAs(lstUser[0]) {
-        Test.setCurrentPageReference(new PageReference('/apex/IECQuoteList'));
-        IECQuoteList_Ctrl cls = new IECQuoteList_Ctrl();
-        //system.Assert(cls.lstQuotes[0].isExpired, 'Wrong data: ' + cls.lstQuotes);
-    }*/
 
     IECQuoteList_Ctrl clsBeforeLog = new IECQuoteList_Ctrl();
     clsBeforeLog.pageLoad();
