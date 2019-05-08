@@ -4,7 +4,8 @@
         
         <template for:each={lstBreadcrumbs} for:item="breadcrumb" for:index="index">
             <span key={breadcrumb.DeveloperName} class="text-xsmall" >
-                <span class={breadcrumb.TextClass} onclick={navigateToBreadcrumb} data-item={breadcrumb.DeveloperName}>{breadcrumb.RealLabel}</span>
+                <span if:true={breadcrumb.clickable} class={breadcrumb.TextClass} onclick={navigateToBreadcrumb} data-item={breadcrumb.DeveloperName}>{breadcrumb.RealLabel}</span>
+                <span if:false={breadcrumb.clickable} class={breadcrumb.TextClass} >{breadcrumb.RealLabel}</span>
 
                 <span if:true={breadcrumb.showSeparator} class="slds-m-horizontal_small">
                     <span class={breadcrumb.separatorClass} > > </span>
