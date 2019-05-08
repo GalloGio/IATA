@@ -1,8 +1,8 @@
 @RestResource(urlMapping='/ANG_GetMasterData/*')
 global class ANG_MasterData_Interface{
 
-    public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY'};
-    public static final Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB};
+    public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY', AMS_Utils.MBPDD_CHANGE_CODE};
+    public static final Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB, AMS_Utils.IEPMODELBPLUSACCOUNTSETUP};
 
     @HttpGet
     global static void doGet(){
@@ -234,10 +234,12 @@ global class ANG_MasterData_Interface{
 
                 /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
                 if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
-                    if(changeCode == 'MaddY')
+                    if(changeCode == 'MaddY'){
                         this.dueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
-                    else
-                        this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
+                    }
+                    else {
+                        this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ? acc.oscars__r[0].step17__c : 'Failed')));                    
+                    }
                 }
 
                 //Risk Info
