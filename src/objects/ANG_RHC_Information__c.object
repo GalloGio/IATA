@@ -473,7 +473,7 @@ try{
 
         function openPrimarytab(result) {
             var primaryTabId = result.id;
-			sforce.console.openSubtab(primaryTabId , &apos;/apex/ANG_RequestProvisionalRHC?id={!ANG_RHC_Information__c.Id}&apos;, true, &apos;Request Provisional&apos;, null);
+			sforce.console.openSubtab(primaryTabId , &apos;/apex/ANG_RequestProvisionalRHC?id={!ANG_RHC_Information__c.Id}&apos;, true, &apos;Request Provisional RHC&apos;, null);
         };
                                 
     } else {
