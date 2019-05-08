@@ -1,6 +1,6 @@
 public class PlatformEvents_Helper {
 
-    private static Map<String, Schema.SObjectType> schemaInfoMap;
+    private static Map<String, Schema.SObjectType> schemaInfoMap = new Map<String, Schema.SObjectType>();
 
     private static Schema.SObjectType getSchemaInfo(String objectName) {
 
