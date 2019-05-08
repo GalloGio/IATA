@@ -1108,7 +1108,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                 Zuora.zApi.AmendResult oresult =
                     (!Test.isRunningTest()
                         ? IECZuoraHelper.amendApiCall(amendRequest)
-                        : IECEBC_TestUtility.CreateSampleAmendResult());
+                        : IECTestUtil.CreateSampleAmendResult());
                         
                 if (Zuora.zApi.currentLogger != null) {
                     system.debug('SOAP Upgrade Request >>> ' + Zuora.zApi.currentLogger.request );

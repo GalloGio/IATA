@@ -123,7 +123,7 @@ public class ANG_RHCAlertTriggerHandler{
             }
         }
 
-        if(!orangeRiskAlerts.isEmpty())sendNotificationToSeniors(orangeRiskAlerts,'RTS_Notification_Manager_orange');
+        if(!orangeRiskAlerts.isEmpty())sendNotificationToSeniors(orangeRiskAlerts,'RTS_Notification_Manager_orange',false);
 
         //prevent breaking already existing logic
         raAccMap.clear();
@@ -495,12 +495,11 @@ public class ANG_RHCAlertTriggerHandler{
             }
 
             contactsPerAccount.put(acc.id,acc.contacts);
-        }
-       
+        }       
 
         if(!redAlerts.isEmpty()){
             // NEWGEN-2005
-            sendNotificationToSeniors(redAlerts,'RTS_Notification_Manager');
+            sendNotificationToSeniors(redAlerts,'RTS_Notification_Manager',true);
             // END - NEWGEN-2005
 
             AssignmentRule AR = new AssignmentRule();
@@ -717,13 +716,31 @@ public class ANG_RHCAlertTriggerHandler{
     }
 
     // NEWGEN-2005
-    private void sendNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts, String emailTemplate) {
-        List<RTS_Senior_Manager__c> sManagers = RTS_Senior_Manager__c.getAll().values();
+    private void sendNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts, String emailTemplate, boolean isRedAlert) {
+        List<String> toAddresses = new List<String>();
+        List<RTS_Senior_Manager__c> sManagersRed = RTS_Senior_Manager__c.getAll().values();
+        List<RTS_Orange_Senior_Manager__c> sManagersOrange = RTS_Orange_Senior_Manager__c.getAll().values();
 
-        if(sManagers.isEmpty()){
+        if(sManagersRed.isEmpty() || sManagersOrange.isEmpty()){
             System.debug('Warning: No RTS Senior Managemrs found');
             return;
         }
+
+        if(isRedAlert) {
+            for (RTS_Senior_Manager__c sManager: sManagersRed) {
+                if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
+                    toAddresses.add(sManager.Email__c);
+            }
+
+            } else {
+
+                for (RTS_Orange_Senior_Manager__c sManager: sManagersOrange) {
+                    if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
+                    toAddresses.add(sManager.Email__c);
+                }
+        }
+
+        system.debug('toAddresses: ' + toAddresses);
 
         if(String.isEmpty(emailTemplate)){System.debug('Warning: No email Template defined');return;}
 
@@ -733,12 +750,6 @@ public class ANG_RHCAlertTriggerHandler{
         if (eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
             System.debug('Warning: No email template or org wide email found');
             return;
-        }
-
-        List<String> toAddresses = new List<String>();
-        for (RTS_Senior_Manager__c sManager: sManagers) {
-            if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
-                toAddresses.add(sManager.Email__c);
         }
 
         if(toAddresses.isEmpty()){

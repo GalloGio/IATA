@@ -14,7 +14,7 @@
 private class GDP_FileDefRatePlanCACWizardTest {
 	
 	// ========================================================================
-	// name for the zqu__Product
+	// name for the Product
 	private static final String PRODUCT_NAME_01 = 'Test Product 01';
 	// name for the zqu__ProductRatePlan
 	private static final String PRODUCT_RATE_PLAN_NAME_01 = 'Test Rate Plan 01 With No File Desc';
@@ -22,7 +22,7 @@ private class GDP_FileDefRatePlanCACWizardTest {
     
 	// ========================================================================
 	// core data  preparation
-	// create zqu__ZProduct, zqu__ProductRatePlan__c, zqu__ProductRatePlanCharge__c
+	// create Product, zqu__ProductRatePlan__c, zqu__ProductRatePlanCharge__c
 	// testUser
 	@testSetup private static void testDataPreparation(){
 			
@@ -36,16 +36,16 @@ private class GDP_FileDefRatePlanCACWizardTest {
 		
 		// --------------------------------------------------------------------
 		// create zuora product
-		zqu__ZProduct__c oProduct = IECTestUtil.CreateSampleProduct(PRODUCT_NAME_01);
+		Product2 oProduct = IECTestUtil.CreateSampleProduct2(PRODUCT_NAME_01);
 		oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
 		oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
 		insert oProduct;
 		
 		// --------------------------------------------------------------------
 		// create zuora rate plan
-		zqu__ProductRatePlan__c oProductRatePlan1 = IECTestUtil.CreateSampleProductRatePlan(PRODUCT_RATE_PLAN_NAME_01, false, oProduct);
-		zqu__ProductRatePlan__c oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan(PRODUCT_RATE_PLAN_NAME_02, false, oProduct);
-		zqu__ProductRatePlan__c oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 3', false, oProduct);
+		zqu__ProductRatePlan__c oProductRatePlan1 = IECTestUtil.CreateSampleProductRatePlan2(PRODUCT_RATE_PLAN_NAME_01, false, oProduct);
+		zqu__ProductRatePlan__c oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2(PRODUCT_RATE_PLAN_NAME_02, false, oProduct);
+		zqu__ProductRatePlan__c oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 3', false, oProduct);
 		List<zqu__ProductRatePlan__c> productRatePlanList = new List<zqu__ProductRatePlan__c> {oProductRatePlan1, oProductRatePlan2, oProductRatePlan3};
 		insert productRatePlanList;
 		
