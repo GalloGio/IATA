@@ -83,7 +83,7 @@
 							<apex:outputPanel rendered="{! cell.name == 'applyNow'}">
 								<td>
 									<apex:outputLink styleClass="btn btn_iata_primary" 
-										value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}">{! $Label.ANG_ISSP_ProductComparisonApplyNow}</apex:outputLink>
+										value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}{!IF(helper.chinaAgent, '&typeOfAgency=' + helper.chinaLocClass, '')}">{! $Label.ANG_ISSP_ProductComparisonApplyNow}</apex:outputLink>
 								</td>
 							</apex:outputPanel>
 
@@ -95,7 +95,7 @@
 
 							<apex:outputPanel rendered="{! cell.name == 'link'}">
 								<td>
-									<a href="/ISSP_Country_Requirements?comp=true&accredType={! cell.attribute}">{! $Label.ANG_ISSP_ProductComparisonViewHere}</a>
+									<a href="/ISSP_Country_Requirements?comp=true&accredType={! cell.attribute}{!IF(helper.chinaAgent, '&chinaAccred=' + helper.chinaLocClass, '')}">{! $Label.ANG_ISSP_ProductComparisonViewHere}</a>
 								</td>
 							</apex:outputPanel>
 

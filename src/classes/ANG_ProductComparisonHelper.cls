@@ -14,7 +14,7 @@ public with sharing class ANG_ProductComparisonHelper {
     public String type {get; set;}
     public String costTooltip {get; set;}
     private User currentUser {get; set;}
-    private String chinaLocClass {
+    public String chinaLocClass {
     	get {
     		String chinaTypeOfAccred = '';
 
@@ -26,6 +26,8 @@ public with sharing class ANG_ProductComparisonHelper {
     	}
     	set;
     }
+
+    public Boolean chinaAgent {get; set;}
        
     public ANG_ProductComparisonHelper(String type) {
 
@@ -42,7 +44,7 @@ public with sharing class ANG_ProductComparisonHelper {
 					WHERE Id = :UserInfo.getUserId() 
 					LIMIT 1];
 
-		Boolean chinaAgent = currentUser.Contact.Account.Country_ISO_Code__c == 'CN';
+		chinaAgent = currentUser.Contact.Account.Country_ISO_Code__c == 'CN';
 
     	Map<String, String> mapProductLabels = new Map<String, String>();
     	Map<String, String> mapTooltipLabels = new Map<String, String>();
