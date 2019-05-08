@@ -100033,14 +100033,14 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
         <active>true</active>
         <description>Only airlines can be IATA members.</description>
         <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	OR(
-		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-		RecordType.DeveloperName=&apos;Operator&apos;
-	),
-	ISCHANGED(Membership_status__c),
-	$Permission.Airline_HQ_MER_Membership,
-	NOT(ISPICKVAL(Sector__c,&quot;Airline&quot;))
+NOT(ISNEW()),
+OR(
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+RecordType.DeveloperName=&apos;Operator&apos;
+),
+$Permission.Airline_HQ_MER_Membership,
+NOT(ISPICKVAL(Sector__c,&apos;Airline&apos;)),
+NOT(ISPICKVAL(Membership_status__c,&apos;Non-IATA member&apos;))
 )</errorConditionFormula>
         <errorDisplayField>Membership_status__c</errorDisplayField>
         <errorMessage>Only airlines can be IATA members.</errorMessage>
@@ -100076,8 +100076,7 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
 		ISCHANGED(AOC_Expiry_Date__c),
 		ISCHANGED(Legal_name__c),
 		ISCHANGED(Area_of_Operation__c),
-		ISCHANGED(Membership_SITA__c),
-		ISCHANGED(MITA_Member__c)
+		ISCHANGED(Membership_SITA__c)
 	)
 )</errorConditionFormula>
         <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
