@@ -72,6 +72,8 @@ public class ANG_RHCAlertTriggerHandler{
                                             , (SELECT 
                                                 Id
                                                 , Name
+                                                , Guaranteed_amount__c
+                                                , IATA_ISO_Country__r.Name
                                                 , Short_Name__c
                                                 , IATACode__c
                                                 , ANG_IsNewGenAgency__c
@@ -97,8 +99,16 @@ public class ANG_RHCAlertTriggerHandler{
         Set<String> emailTemplateNames = new Set<String>();
         Set<String> notificationTemplates = new Set<String>();
         map<id,ANG_Risk_Alert__c> riskAlertMap = new map<id,ANG_Risk_Alert__c>();
-
+        List<ANG_Risk_Alert__c> orangeRiskAlerts = new List<ANG_Risk_Alert__c>();
+        raAccMap = new map<id,account>();
         for(ANG_Risk_Alert__c a : triggerNew){
+            
+            //NEWGEN-5198
+            if(a.ANG_Severity__c == 'Orange'){
+                orangeRiskAlerts.add(a);
+                raAccMap.put(a.id,accounts.get(a.ANG_Account__c));
+            }
+
             String key = countries.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
             if(!configs.containsKey(key)) key = DEFAULT_CODE + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
             
@@ -112,6 +122,11 @@ public class ANG_RHCAlertTriggerHandler{
                 if(String.isNotEmpty(config.ANG_EmailTemplate_NG__c)) emailTemplateNames.add(config.ANG_EmailTemplate_NG__c);
             }
         }
+
+        if(!orangeRiskAlerts.isEmpty())sendNotificationToSeniors(orangeRiskAlerts,'RTS_Notification_Manager_orange',false);
+
+        //prevent breaking already existing logic
+        raAccMap.clear();
 
             if(alertsToNotify.isEmpty()) return; //no match, no need to go further
 
@@ -480,12 +495,11 @@ public class ANG_RHCAlertTriggerHandler{
             }
 
             contactsPerAccount.put(acc.id,acc.contacts);
-        }
-       
+        }       
 
         if(!redAlerts.isEmpty()){
             // NEWGEN-2005
-            sendNotificationToSeniors(redAlerts);
+            sendNotificationToSeniors(redAlerts,'RTS_Notification_Manager',true);
             // END - NEWGEN-2005
 
             AssignmentRule AR = new AssignmentRule();
@@ -702,15 +716,35 @@ public class ANG_RHCAlertTriggerHandler{
     }
 
     // NEWGEN-2005
-    private void sendNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts) {
-        List<RTS_Senior_Manager__c> sManagers = RTS_Senior_Manager__c.getAll().values();
+    private void sendNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts, String emailTemplate, boolean isRedAlert) {
+        List<String> toAddresses = new List<String>();
+        List<RTS_Senior_Manager__c> sManagersRed = RTS_Senior_Manager__c.getAll().values();
+        List<RTS_Orange_Senior_Manager__c> sManagersOrange = RTS_Orange_Senior_Manager__c.getAll().values();
 
-        if(sManagers.isEmpty()){
+        if(sManagersRed.isEmpty() || sManagersOrange.isEmpty()){
             System.debug('Warning: No RTS Senior Managemrs found');
             return;
         }
 
-        List<EmailTemplate> eTemplates = [SELECT Id, Subject,Body FROM EmailTemplate WHERE DeveloperName = 'RTS_Notification_Manager'];
+        if(isRedAlert) {
+            for (RTS_Senior_Manager__c sManager: sManagersRed) {
+                if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
+                    toAddresses.add(sManager.Email__c);
+            }
+
+            } else {
+
+                for (RTS_Orange_Senior_Manager__c sManager: sManagersOrange) {
+                    if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
+                    toAddresses.add(sManager.Email__c);
+                }
+        }
+
+        system.debug('toAddresses: ' + toAddresses);
+
+        if(String.isEmpty(emailTemplate)){System.debug('Warning: No email Template defined');return;}
+
+        List<EmailTemplate> eTemplates = [SELECT Id, Subject,Body FROM EmailTemplate WHERE DeveloperName = :emailTemplate];
         List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 
         if (eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
@@ -718,15 +752,9 @@ public class ANG_RHCAlertTriggerHandler{
             return;
         }
 
-        List<String> toAddresses = new List<String>();
-        for (RTS_Senior_Manager__c sManager: sManagers) {
-            if (sManager.Active__c && String.isNotBlank(sManager.Email__c))
-                toAddresses.add(sManager.Email__c);
-        }
-
         if(toAddresses.isEmpty()){
              System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
-             return;
+             return; 
         }
 
         EmailTemplate template = eTemplates.get(0);

@@ -144,6 +144,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     if (Trigger.isInsert || Trigger.isUpdate) {
+	// assigns default email address to be used on send email quick action
+        //follows same logic as current classic functionality      
+        for(Case c: trigger.new){
+            RecordType caseRTDevName=RecordTypeSingleton.getInstance().getRecordTypeById('Case',c.recordtypeId);
+            string email=IDFS_Util.getRecordTypeEmail(caseRTDevName.developerName, c.BSPCountry__c, c.Case_Group__c);
+            c.defaultEmailAddress__c=email;
+        }
 
         /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ 
@@ -508,7 +515,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 // get a map of relevant cases per Account Id
                 Map<Id, Case> mapCasesPerAccountId = new Map<Id, Case>(); // for ICCS ASP
                 Map<Id, list<Case>> mapACCasesPerAccountId = new Map<Id, list<Case>>(); // for Airline coding, new from Oct 2015
-                List<Case> cases = new List<Case>([SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c 
+                // WMO-517
+                List<Case> cases = new List<Case>([SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c, Owner.Name 
                                                FROM Case 
                                                WHERE ((RecordTypeId = :RT_ICCS_ASP_Id AND CaseArea__c = :FDS) 
                                                OR RecordTypeId = :AirlineCodingRTId) 
@@ -536,12 +544,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         c.addError('There is already an open FDS ASP creation case on the selected Account. There can be only one open case of this type on an Account.');
                     }
                     // New from Oct 2015: if there's already another Airline Coding case open, raise an error
-                    // Mod from 2016/04/05: this restriction is only when the case has the same Reason1__c 
+                    // Mod from 2016/04/05: this restriction is only when the case has the same Reason1__c
+                    // WMO-517 exclued cases in recycle bin
                     if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
                         system.debug('##ROW##');
                         set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form'};
                         for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
-                            if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c)) {
+                            if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c) && !cse.Owner.Name.contains('Recycle')) {
                                 c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');
                             }
                         }
@@ -1049,24 +1058,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
         /*trgCaseIFAP Trigger.isInsert*/
         if (trgCaseIFAP) {
-            if (!CaseChildHelper.noValidationsOnTrgCAseIFAP) {
+            // only consider IFAP cases
+            if (!CaseChildHelper.noValidationsOnTrgCAseIFAP && !IFAPCaseList.isEmpty()) {
                 System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP Trigger.isInsert]');
 
                 Map<ID, List<Case>> mapAccountCases = new Map<ID, List<Case>>();
                 Map<Case, Case> insertedCases = new Map<Case, Case>();
 
                 //accountHasClosedCases
-                if(!IFAPaccountIds.isEmpty()){
-                    for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c 
-                                            WHERE c.AccountId IN :IFAPaccountIds AND c.Status = 'Closed' AND c.RecordTypeId = : IFAPcaseRecordTypeID]){
+                for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c 
+                                        WHERE c.AccountId IN :IFAPaccountIds AND c.Status = 'Closed' AND c.RecordTypeId = : IFAPcaseRecordTypeID]){
 
-                        if(!mapAccountCases.containsKey(currentCase.AccountId)){
-                            mapAccountCases.put(currentCase.AccountId, new List<Case>());
-                        }
-                        mapAccountCases.get(currentCase.AccountId).add(currentCase);
+                    if(!mapAccountCases.containsKey(currentCase.AccountId)){
+                        mapAccountCases.put(currentCase.AccountId, new List<Case>());
                     }
+                    mapAccountCases.get(currentCase.AccountId).add(currentCase);
                 }
-                // only consider IFAP cases
+
                 for (Case newCase : IFAPCaseList) {
                     //fill map with only new cases to be used in IFAP_BusinessRules.IsStatusCanBeSelected
                     insertedCases.put(newCase, null);
@@ -1578,13 +1586,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
 
-                Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCasesWithOldCase, CaseHelper.currentUserProfile, CaseHelper.isIfapAuthorizedUser);
-
                 if(!caseList.isEmpty()){
+
+                    Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCasesWithOldCase, CaseHelper.currentUserProfile, CaseHelper.isIfapAuthorizedUser);
+
                     for(Case IFAPupdatedCase : caseList){
                         if(mapCase.containsKey(IFAPupdatedCase.id))
                             if(mapCase.get(IFAPupdatedCase.id) == false){
-                                System.debug('IFAP_BusinessRules.IsStatusCanBeSelected............trg');
                                 IFAPupdatedCase.addError('The following case status cannot be selected: ' + IFAPupdatedCase.status);
                             }
                     }
@@ -2204,5 +2212,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }
         }
     }
+    
     /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
 }

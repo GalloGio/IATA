@@ -8,7 +8,7 @@ private class vfIECSubscriptionInfo_tst {
 	private static Product_Information__c oProductInfo;
 	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
 	private static Terms_and_Conditions__c oTC;
-	private static zqu__ZProduct__c oProduct;
+	private static Product2 oProduct;
 	private static zqu__ProductRatePlan__c oProductRatePlan;
 	private static Zuora__Subscription__c oSubscription;
 	private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge;
@@ -24,14 +24,14 @@ private class vfIECSubscriptionInfo_tst {
 		oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_GAD, true);
 		insert oProductCategory;
 		
-		oProduct = IECTestUtil.CreateSampleProduct('PTST');
+		oProduct = IECTestUtil.CreateSampleProduct2('PTST');
 		insert oProduct;
 		
-		oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+		oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
 		oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
 		insert oProductInfo;
 
-		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
 		insert oProductRatePlan;
 
 		oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', false, oProductRatePlan, oProductInfo);
@@ -60,7 +60,7 @@ private class vfIECSubscriptionInfo_tst {
 		insert oSubscription;
 		
 		// create dummy subscription charge
-        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, dtSubscriptionEnddate.addYears(-1).addDays(1), oProduct, oProductRatePlan);
+        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, dtSubscriptionEnddate.addYears(-1).addDays(1), oProduct, oProductRatePlan);
         insert oSubscriptionCharge;
 		
 		oSubscriptionHist = IECTestUtil.createSampleSubscriptionHistory(oAccount.Id, oContact.Id, oSubscription.Name, oProductCategory.Id, oProductInfo.Id, oProductRatePlanInfo.Id, IECConstants.PaymentType.CREDIT_CARD, oTC);
