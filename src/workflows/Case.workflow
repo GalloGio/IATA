@@ -8695,7 +8695,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>clears field tracking message</description>
-        <formula>ISPICKVAL(New_interaction__c,&#39;The case has been recently updated.&#39;) &amp;&amp; LastModifiedById==OwnerId</formula>
+        <formula>ISPICKVAL(New_interaction__c,&#39;The case has been recently updated.&#39;) &amp;&amp; ( LastModifiedById==OwnerId || ISCHANGED(OwnerId ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -18510,7 +18510,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <description>Updates field tracking field if a case is updated by someone who is not the case owner</description>
-        <formula>( ISCHANGED(CaseArea__c)|| ISCHANGED(Reason1__c)|| ISCHANGED(BSPCountry__c)|| ISCHANGED(Case_Remarks__c)|| ISCHANGED(Attachment_received_possible_POP__c)|| ISCHANGED(Region__c)|| ISCHANGED(AccountId)|| ISCHANGED(ContactId)|| ISCHANGED(Origin)|| ISCHANGED(ParentId)|| ISCHANGED(Priority)|| ISCHANGED(Subject)|| ISCHANGED(Status)  ) &amp;&amp; LastModifiedById&lt;&gt;OwnerId</formula>
+        <formula>CONTAINS($Label.CaseRTtrackedByCS,RecordType.DeveloperName) &amp;&amp; ( ISCHANGED(CaseArea__c)|| ISCHANGED(Reason1__c)|| ISCHANGED(BSPCountry__c)|| ISCHANGED(Case_Remarks__c)|| ISCHANGED(Attachment_received_possible_POP__c)|| ISCHANGED(Region__c)|| ISCHANGED(AccountId)|| ISCHANGED(ContactId)|| ISCHANGED(Origin)|| ISCHANGED(ParentId)|| ISCHANGED(Priority)|| ISCHANGED(Subject)|| ISCHANGED(Status)  ) &amp;&amp; LastModifiedById&lt;&gt;OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
