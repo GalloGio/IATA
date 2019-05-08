@@ -176,7 +176,7 @@ public with sharing class SidraLiteHelperForInvoicing {
                   if (parentCase.New_IFAP_Deadline_date__c >= Date.today() ) {
                       throw new SidraLiteException('Cannot update if New Deadline Date is future');
                   }
-                  if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
+                  if ((SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) && (!SidraLiteUtil.SidraLiteCaseMustNotBeUpdated(childCase))) {
                       childCase.SIDRA_Lite_Default_Date__c = Date.today();
                       childCase.Reason_for_Default__c = ANNUAL_FEES;
                       childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
