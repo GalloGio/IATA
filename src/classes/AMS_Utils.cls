@@ -334,6 +334,8 @@ public without sharing class AMS_Utils {
     public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
     public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
 
+    public static final String MBPDD_CHANGE_CODE = 'MBPDD';
+    
     public static String ENCRYPTION_KEY {
         get {
             return Test.isRunningTest() ? 'hasd==aSDFclDDGasjdhfclx' : AMS_SAP_Settings__c.getOrgDefaults().Encryption_Key__c;
