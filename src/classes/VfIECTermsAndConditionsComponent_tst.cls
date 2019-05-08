@@ -13,13 +13,13 @@ private class VfIECTermsAndConditionsComponent_tst {
         insert myProdCat;
         
         // create dummy Zuora product
-    	zqu__ZProduct__c prod = IECTestUtil.CreateSampleProduct('My Product');
+    	Product2 prod = IECTestUtil.CreateSampleProduct2('My Product');
     	prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
     	prod.ProductCategory__c = IECConstants.ProductCategory_SF_CACPRO;
     	insert prod;
         
         // create dummy product info
-        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo('My product', myProdCat, prod);
+        Product_Information__c myProdInfo = IECTestUtil.CreateSampleProductInfo2('My product', myProdCat, prod);
         insert myProdInfo;
 
         // create a Terms & Conditions

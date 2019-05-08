@@ -9,79 +9,88 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
     // generate data to be called in test methods
     @testSetup static void generateTestData()
     {
+
+         // Salesforce product
+        List<Product2> lstProduct = TestDataGenerator.generateProducts(4, false);
+        for (Integer ix = 0; ix < lstProduct.size(); ix++)
+        {
+            lstProduct[ix].SAP_Material_Number__c = 'SAP-' + String.valueOf(10 + ix + 1);
+            lstProduct[ix].SAP_Sales_Channel_Code__c = '03';
+            lstProduct[ix].SAP_Division_Code__c = '01';
+            lstProduct[ix].zqu__ZuoraId__c = 'p' + ix;
+            lstProduct[ix].zqu__Deleted__c = false;
+            lstProduct[ix].zqu__SKU2__c = 'SKU ' + ix;
+            lstProduct[ix].zqu__EffectiveStartDate__c = System.today();
+            lstProduct[ix].zqu__EffectiveEndDate__c = System.today().addDays(365);
+        }
+        lstProduct[0].zqu__Deleted__c = true;
+
+        insert lstProduct;
+
+
         // Zuora pricing
-        Map<String, zqu__ZProduct__c> mapZProduct = new Map<String, zqu__ZProduct__c>();
-        mapZProduct.put('p1', new zqu__ZProduct__c(Name='Deleted product', zqu__ZuoraId__c='p1', zqu__Deleted__c=true, zqu__SKU__c='SKU 1'
-                                  , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)));
-        mapZProduct.put('p2', new zqu__ZProduct__c(Name='Product for deleted children', zqu__ZuoraId__c='p2', zqu__Deleted__c=false, zqu__SKU__c='SKU 2'
-                                  , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)));
-        mapZProduct.put('p3', new zqu__ZProduct__c(Name='Product 3', zqu__ZuoraId__c='p3', zqu__Deleted__c=false, zqu__SKU__c='SKU 3'
-                                  , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)));
-        mapZProduct.put('p4', new zqu__ZProduct__c(Name='Product 4', zqu__ZuoraId__c='p4', zqu__Deleted__c=false, zqu__SKU__c='SKU 4'
-                                  , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)));
-        insert mapZProduct.values();
         Map<String, zqu__ProductRatePlan__c> mapZRatePlan = new Map<String, zqu__ProductRatePlan__c>();
-        mapZRatePlan.put('p1r1', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p1').Id, zqu__ZuoraId__c='p1r1'
+        mapZRatePlan.put('p1r1', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(0).Id, zqu__ZuoraId__c='p1r1'
                                      , Name='Deleted product, Plan', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c=null, Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p2r1', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p2').Id, zqu__ZuoraId__c='p2r1'
+        mapZRatePlan.put('p2r1', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(1).Id, zqu__ZuoraId__c='p2r1'
                                      , Name='Product for deleted children, Deleted plan', zqu__Deleted__c=true
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c=null, Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p2r2', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p2').Id, zqu__ZuoraId__c='p2r2'
+        mapZRatePlan.put('p2r2', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(1).Id, zqu__ZuoraId__c='p2r2'
                                      , Name='Product for deleted children, Plan for deleted charge', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c=null, Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p2r3', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p2').Id, zqu__ZuoraId__c='p2r3'
+        mapZRatePlan.put('p2r3', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(1).Id, zqu__ZuoraId__c='p2r3'
                                      , Name='Product for deleted children, Plan for deleted tier', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c=null, Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3r1', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r1'
+        mapZRatePlan.put('p3r1', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r1'
                                      , Name='Product 3, Expired plan', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today().addDays(-5), zqu__EffectiveEndDate__c=system.today().addDays(-1)
                                      , CustomerType__c=null, Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3r2', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r2'
+        mapZRatePlan.put('p3r2', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r2'
                                      , Name='Product 3, Unit Price', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c=null, Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3r3', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r3'
+        mapZRatePlan.put('p3r3', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r3'
                                      , Name='Product 3, Volume Price', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c=null, Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3r4', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r4'
+        mapZRatePlan.put('p3r4', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r4'
                                      , Name='Product 3, Discount Amount', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 1', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3r5', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r5'
+        mapZRatePlan.put('p3r5', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r5'
                                      , Name='Product 3, Discount Percentage', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 2', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3r6', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r6'
+        mapZRatePlan.put('p3r6', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r6'
                                      , Name='Product 3, Coupon Amount', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 3', Couponcode__c='Coupon 1', Region__c='Region 1', Country__c='Country 1', IsFreeShipping__c='Yes', IsPreSale__c='Yes'));
-        mapZRatePlan.put('p3r7', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r7'
+        mapZRatePlan.put('p3r7', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r7'
                                      , Name='Product 3, Coupon Percentage', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 3', Couponcode__c='Coupon 2', Region__c='Region 2', Country__c='Country 2', IsFreeShipping__c='Yes', IsPreSale__c='Yes'));
-        mapZRatePlan.put('p3r8', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r8'
+        mapZRatePlan.put('p3r8', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r8'
                                      , Name='Product 3, Unit Price 2', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 4', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3r9', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3r9'
+        mapZRatePlan.put('p3r9', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3r9'
                                      , Name='Product 3, Unit Price 3', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 5', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3rX', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3rX'
+        mapZRatePlan.put('p3rX', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3rX'
                                      , Name='Product 3, Unit Price X', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 6', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p3rY', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p3').Id, zqu__ZuoraId__c='p3rY'
+        mapZRatePlan.put('p3rY', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(2).Id, zqu__ZuoraId__c='p3rY'
                                      , Name='Product 3, Unit Price Y', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c='Type 7', Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
-        mapZRatePlan.put('p4r1', new zqu__ProductRatePlan__c(zqu__ZProduct__c=mapZProduct.get('p4').Id, zqu__ZuoraId__c='p4r1'
+        mapZRatePlan.put('p4r1', new zqu__ProductRatePlan__c(zqu__Product__c=lstProduct.get(3).Id, zqu__ZuoraId__c='p4r1'
                                      , Name='Product 4, Unit Price', zqu__Deleted__c=false
                                      , zqu__EffectiveStartDate__c=system.today(), zqu__EffectiveEndDate__c=system.today().addDays(365)
                                      , CustomerType__c=null, Couponcode__c=null, Region__c=null, Country__c=null, IsFreeShipping__c=null, IsPreSale__c=null));
@@ -191,18 +200,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
                          , zqu__Currency__c='CAD', zqu__StartingUnit__c=1, zqu__Price__c=100));
         insert lstZTier;
         
-        // Salesforce product
-        List<Product2> lstProduct = TestDataGenerator.generateProducts(4, false);
-        for (Integer ix = 0; ix < lstProduct.size(); ix++)
-        {
-            lstProduct[ix].SAP_Material_Number__c = 'SAP-' + String.valueOf(10 + ix + 1);
-            lstProduct[ix].SAP_Sales_Channel_Code__c = '03';
-            lstProduct[ix].SAP_Division_Code__c = '01';
-        }
-        insert lstProduct;
-        for (Integer ix = 0; ix < lstProduct.size(); ix++)
-            lstProduct[ix].ZProduct__c = mapZProduct.get('p' + (ix + 1)).Id;
-        update lstProduct;
+       
         
         // filter
         insert new IEC_ZuoraPricing2SAP_Filter__c(SAP_Sales_Channel_Code__c='03', SAP_Division_Code__c='01');
@@ -213,7 +211,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
     @isTest static void testGetTrackingProduct()
     {
         // reformat data for test
-        List<Product2> lstProduct = [select SAP_Material_Number__c, ZProduct__c, ZProduct__r.zqu__ZuoraId__c from Product2 order by SAP_Material_Number__c];
+        List<Product2> lstProduct = [select SAP_Material_Number__c, zqu__ZuoraId__c from Product2 order by SAP_Material_Number__c];
         for (Integer ix = 3; ix < lstProduct.size(); ix++)
             lstProduct[ix].SAP_Division_Code__c = '02';
         update lstProduct;
@@ -222,9 +220,9 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
         update filter;
         
         IEC_ZuoraPricing2SAP_Svc svc = new IEC_ZuoraPricing2SAP_Svc();
-        Map<Id, Product2> mapZProductId_Product = svc.getTrackingProduct();
-        system.assert(mapZProductId_Product.containsKey(lstProduct[0].ZProduct__c) &&
-                      mapZProductId_Product.containsKey(lstProduct[1].ZProduct__c) && 
+        Map<Id, Product2> mapZProductId_Product = svc.getTrackingProduct2();
+        system.assert(mapZProductId_Product.containsKey(lstProduct[0].Id) &&
+                      mapZProductId_Product.containsKey(lstProduct[1].Id) && 
                       mapZProductId_Product.size() == 2, 'Wrong filter ' + String.join(mapZProductId_Product.values(), '\n'));
     }
 
@@ -256,11 +254,11 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.Region__c
                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsFreeShipping__c
                      , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.IsPreSale__c
-                     , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c
-                     , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.LastModifiedDate
-                     , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.zqu__Deleted__c
+                     , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c
+                     , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__r.LastModifiedDate
+                     , zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__r.zqu__Deleted__c
                 from zqu__ProductRatePlanChargeTier__c
-                where zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c in :mapZProductId_Product.keySet()
+                where zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c in :mapZProductId_Product.keySet()
                   and zqu__ProductRatePlanCharge__r.zqu__Type__c in ('One-Time', 'Recurring')
                   and zqu__ProductRatePlanCharge__r.zqu__Model__c in ('Per Unit', 'Per Unit Pricing', 'Volume', 'Volume Pricing'
                                                                     , 'Discount-Fixed Amount', 'Discount-Percentage')
@@ -291,12 +289,13 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
     @isTest static void testTrackPricing()
     {
         IEC_ZuoraPricing2SAP_Svc svc = new IEC_ZuoraPricing2SAP_Svc();
-        Map<Id, Product2> mapZProductId_Product = svc.getTrackingProduct();
-        
+        Map<Id, Product2> mapZProductId_Product = svc.getTrackingProduct2();
+
         // cover insert
         Map<String, zqu__ProductRatePlanChargeTier__c> mapZId_Tier = getZuoraPricing(mapZProductId_Product);
         svc.trackPricing(mapZId_Tier.values(), mapZProductId_Product);
         Map<String, IEC_ZuoraPricing2SAP_Tracking__c> mapKey_Tracking = getTracking();
+
         for (String key : mapKey_Tracking.keySet())
             system.assertEquals(mapKey_Tracking.get(key).Operation__c, svc.sapOperation.get(IEC_ZuoraPricing2SAP_Svc.sapOT.INS), 'Should have operation INSERT');
         system.assertEquals(mapKey_Tracking.containsKey(svc.buildTrackingKey(mapZId_Tier.get('p1r1c1t1'))), false, 'Should not found deleted product');
@@ -391,7 +390,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
         trackingToUpdate.SendingTimestamp__c = system.now();
         lstUpdate.add(trackingToUpdate);
         tierToUpdate = mapZId_Tier.get('p4r1c1t1');
-        lstUpdate.add(new zqu__ZProduct__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c, Name='PPP'));
+        lstUpdate.add(new Product2(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c, Name='PPP'));
         trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1')));
         trackingToUpdate.SendingTimestamp__c = system.now();
         lstUpdate.add(trackingToUpdate);
@@ -488,7 +487,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveEndDate__c=system.today().addDays(100)));
             mapKey.put('EffectiveTo', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1')))));
             tierToUpdate = mapZId_Tier.get('p4r1c1t1');
-            lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).Id, SAP_Material_Number__c='ZZZ'));
+            lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c).Id, SAP_Material_Number__c='ZZZ'));
             mapKey.put('Material', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1')))));
             // ensure update will happen
             for (IEC_ZuoraPricing2SAP_Tracking__c tracking : mapKey_Tracking.values())
@@ -498,7 +497,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             }
             lstUpdate.sort();   // prevent error of 10 chunks in a single operation
             update lstUpdate;
-            mapZProductId_Product = svc.getTrackingProduct();
+            mapZProductId_Product = svc.getTrackingProduct2();
             mapZId_Tier = getZuoraPricing(mapZProductId_Product);
             svc.trackPricing(mapZId_Tier.values(), mapZProductId_Product);
             mapKey_Tracking = getTracking();
@@ -591,7 +590,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             lstUpdate.add(new zqu__ProductRatePlan__c(Id=tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__c, zqu__EffectiveEndDate__c=system.today().addDays(50)));
             mapKey.put('EffectiveTo', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p3rYc1t1')))));
             tierToUpdate = mapZId_Tier.get('p4r1c1t1');
-            lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).Id, SAP_Material_Number__c='YYY'));
+            lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c).Id, SAP_Material_Number__c='YYY'));
             mapKey.put('Material', svc.buildDiscardKey(mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1')))));
             // ensure update will happen and arrange for scenario
             for (IEC_ZuoraPricing2SAP_Tracking__c tracking : mapKey_Tracking.values())
@@ -603,7 +602,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             }
             lstUpdate.sort();   // prevent error of 10 chunks in a single operation
             update lstUpdate;
-            mapZProductId_Product = svc.getTrackingProduct();
+            mapZProductId_Product = svc.getTrackingProduct2();
             mapZId_Tier = getZuoraPricing(mapZProductId_Product);
             svc.trackPricing(mapZId_Tier.values(), mapZProductId_Product);
             mapKey_Tracking = getTracking();
@@ -671,7 +670,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             // cover exceptions
             lstUpdate.clear();
             tierToUpdate = mapZId_Tier.get('p4r1c1t1');
-            lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__ZProduct__c).Id, SAP_Material_Number__c='CCC'));
+            lstUpdate.add(new Product2(Id=mapZProductId_Product.get(tierToUpdate.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__c).Id, SAP_Material_Number__c='CCC'));
             trackingToUpdate = mapKey_Tracking.get(svc.buildTrackingKey(mapZId_Tier.get('p4r1c1t1')));
             trackingToUpdate.LatestSourceTimestamp__c = system.now().addDays(-1);
             lstUpdate.add(trackingToUpdate);
@@ -679,7 +678,7 @@ private class IEC_ZuoraPricing2SAP_Svc_Test
             trackingToUpdate.Key__c = svc.buildDiscardKey(trackingToUpdate);
             trackingToUpdate.Id = null;
             insert trackingToUpdate;   // to cause exception on update first following by insert
-            mapZProductId_Product = svc.getTrackingProduct();
+            mapZProductId_Product = svc.getTrackingProduct2();
             mapZId_Tier = getZuoraPricing(mapZProductId_Product);
             svc.trackPricing(mapZId_Tier.values(), mapZProductId_Product);
             mapKey_Tracking = getTracking();
