@@ -15,7 +15,7 @@ public class OneId_RegistrationHelper_GADM_TEST {
         insert contactRoles;
 
         Contact_Roles__c contactRoles2 = new Contact_Roles__c();
-        contactRoles2.Name = 'Power User';
+        contactRoles2.Name = 'Service Power User';
         contactRoles2.RecordTypeId = externalRecordTypeId;
         insert contactRoles2;
 
