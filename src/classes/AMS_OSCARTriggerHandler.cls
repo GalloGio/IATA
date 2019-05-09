@@ -3357,7 +3357,7 @@ public class AMS_OSCARTriggerHandler {
                     configID = cm.id;
                     break;
                 }
-                else if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && cm.Change_Code__c == AMS_Utils.MBPDD_CHANGE_CODE){
+                else if(updatedOscar.Process__c == AMS_Utils.IEPMODELBPLUSACCOUNTSETUP && cm.Change_Code__c == AMS_Utils.MBPDD_CHANGE_CODE){
                     configID = cm.Id;
                     break;
                 }
