@@ -530,13 +530,13 @@ public class ANG_RHCHelper {
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
 			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
-			htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', String.valueOf(wrap.rhcForecastedEffectiveDate));
+			htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcForecastedEffectiveDate == null ? '' :String.valueOf(wrap.rhcForecastedEffectiveDate)));
 		   
 			String plainBody = template.Body;
 			plainBody = plainBody.replace('#RISK_STATUS#', wrap.riskStatus);
 			plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
 			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
-			plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', String.valueOf(wrap.rhcForecastedEffectiveDate));
+			plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcForecastedEffectiveDate == null ? '' :String.valueOf(wrap.rhcForecastedEffectiveDate)));
 
 			emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
 
@@ -574,7 +574,7 @@ public class ANG_RHCHelper {
 							.replace('#RISK_STATUS#', riuw.riskStatus)
 							.replace('#CASH_CONDITION#', riuw.cashConditions)
 							.replace('#RHC_AMOUNT#', String.valueOf(riuw.rhcAmountForecasted) + ' ' + riuw.CurrencyIsoCode)
-							.replace('#RHC_EFFECTIVE_DATE#', String.valueOf(riuw.rhcForecastedEffectiveDate));
+							.replace('#RHC_EFFECTIVE_DATE#', (riuw.rhcForecastedEffectiveDate == null ? '' :String.valueOf(riuw.rhcForecastedEffectiveDate)));
 			notifications.add(nt);
 		}
 
