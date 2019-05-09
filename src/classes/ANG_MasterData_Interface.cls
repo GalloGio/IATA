@@ -2,7 +2,7 @@
 global class ANG_MasterData_Interface{
 
     public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY', AMS_Utils.MBPDD_CHANGE_CODE};
-    public static final Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB, AMS_Utils.IEPMODELBPLUSACCOUNTSETUP};
+    public static final Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB, AMS_Utils.RECTYPE_IEPMODELBPLUS};
 
     @HttpGet
     global static void doGet(){
