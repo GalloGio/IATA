@@ -33,7 +33,7 @@
             <column>Contact.Account_Contacts_Role__r$Contact_Roles__c</column>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>Power User</value>
+            <value>Service Power User</value>
         </criteriaItems>
         <criteriaItems>
             <column>Contact.Account_Contacts_Role__r.Contact_Role_Service_Accesses__r$Status__c</column>
