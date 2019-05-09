@@ -122,6 +122,10 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                 isNoticeOfChange = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isNoticeOfChange'));
             }
 
+            if (ApexPages.currentPage().getParameters().containsKey('chinaAccred')) {
+                agencyType = ApexPages.currentPage().getParameters().get('chinaAccred');
+            }
+
             countryIsoCode = user.contact.Account.IATA_ISO_Country__r.ISO_Code__c;
             
             category = user.contact.Account.Category__c;

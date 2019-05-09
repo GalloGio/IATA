@@ -423,6 +423,10 @@ public without sharing class ISSP_AMS_Accreditation {
         else
             Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Application_Summary.pdf');
 
+        if (ApexPages.currentPage().getParameters().containsKey('typeOfAgency')) {
+            newForm.Local_Agent_Type__c = ApexPages.currentPage().getParameters().get('typeOfAgency');
+        }
+
         //AS - NoC V2.0 - Now Other Change will always be for 3 types of changes
         if(isBankAccountChange) {
             newForm.Is_change_bank_account_details__c = true;
@@ -528,6 +532,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
+
+                    if (isocountry.ISO_Code__c == 'CN') {
+                        sector += ' - ' + newForm.Local_Agent_Type__c;
+                    }
 
                     if (isNoticeOfChange) {
                         sectorDisplay = Label.ISSP_AMS_NoC_Request_for_Change;
@@ -754,6 +762,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 setFacilityList();
 
             sector = sectorValue.replace('_', ' ');
+
+            if (isocountry.ISO_Code__c == 'CN') {
+                sector += ' - ' + newForm.Local_Agent_Type__c;
+            } 
 
             if(isNoticeOfChange) {
                 SYSTEM.DEBUG('Accreditation Attachment NoC Sector: ' + sectorValue);
@@ -3748,7 +3760,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, Country_ISO_Code__c
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
@@ -3763,7 +3775,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                             Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                             ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                             Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Country_ISO_Code__c
                                FROM Account
                                WHERE Id = :vAccountConcernedId
                                           LIMIT 1
