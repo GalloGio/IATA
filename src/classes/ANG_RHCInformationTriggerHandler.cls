@@ -184,7 +184,7 @@ public class ANG_RHCInformationTriggerHandler{
 				Boolean sendNotification = true;
 				
 				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{mapAccountIDsPerIsoCountriesIDs.get(rhc.ANG_AccountId__c)}).get(0).AMS_Country_Specific_Attributes__r)
-					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && !att.Block_notification_on_RHC_amount_update__c) sendNotification = false;
+					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_RHC_amount_update__c) sendNotification = false;
 				
 				if(sendNotification) toNotify.add(rhc.ANG_AccountId__c);
 			}
