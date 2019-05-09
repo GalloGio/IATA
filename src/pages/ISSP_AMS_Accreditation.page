@@ -306,7 +306,7 @@
 
                     if( $('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
                         console.log('Travel China Domestic: ' + isChinaDomestic());
-                        if(isAllowedCountry=='f' || isChinaDomestic() ) {
+                        if(isAllowedCountry=='f' || (isChinaDomestic() && !{!isocountry.ANG_Enable_NewGen__c})) {
                             bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Pax)}", function(result) {
                                 if(result) {
                                     window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
