@@ -79,6 +79,10 @@ public class ANG_FinancialSecurityTriggerHandler{
 		set;
 	}
 
+	/**
+	 * Get all the Parent account ID 
+	 * to be used on the query to load all the account hiearchy
+ 	 */
 	private Set<ID> parentIDSet{
 		get{
 			if(parentIDSet == null){
@@ -95,15 +99,13 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 
 	/**
-	 * Get current Parent Id for China accounts
-	 * To be used on calculation of RHC for China
+	 * Build map<ID, Account> for the accounts 
+	 * financial Security modified/inserted
 	 */
 	private Map<Id, Account> mapAccount{
 		get{
 			if(mapAccount == null){
 				mapAccount = new Map<Id, Account>();
-				
-				//Load all the Parent Accounts for China - calculate the Total FS
 				for(Account acc : [SELECT Id, ParentId, Location_Type__c FROM Account WHERE Id IN :accIdSet]) 
 					mapAccount.put(acc.id, acc);
 			}	
@@ -149,9 +151,6 @@ public class ANG_FinancialSecurityTriggerHandler{
 			Map<ID, Decimal> minimumFinancialSecurityPerAccount = new Map<ID, Decimal>();
 			//List of accounts to be matched with the RHC Information objects
 			List<Account> parentAccount = new List<Account>();
-
-			System.debug('JR Debug accIdSet: ' + accIdSet);
-			System.debug('JR Debug parentIDSet: ' + parentIDSet);
 
 			//Get all accounts in the hierarchy 
 			Map<ID, Account> accountList 
@@ -242,7 +241,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 		else return currentFS; 
 	}
 
-
+/* NEWGEN-5374 - Code merged in the previous method calculateFSTotal_updateMinimumFS
 	private void updateMinimumFS(){
 		set<Id> accIdFsSet= new set<id>();
 
@@ -268,7 +267,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 		}			
 		doDml();
 	}
-
+*/
 	private void doDml(){
 		if(!map2Insert.values().isEmpty())upsert map2Insert.values() ANG_UniqueKey__c;
 	}
