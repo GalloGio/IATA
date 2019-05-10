@@ -2102,12 +2102,62 @@
         <label>RelatedListForAccount</label>
     </fieldSets>
     <fieldSets>
-        <fullName>zqu__Lookup_Popup_Window</fullName>
-        <availableFields>
-            <field>AccountId</field>
+        <fullName>zqu__Compare_Contact_Details</fullName>
+        <description>Used to compare a quote&apos;s contacts on the Update Zuora Account Information page.</description>
+        <displayedFields>
+            <field>FirstName</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
-        </availableFields>
+        </displayedFields>
+        <displayedFields>
+            <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingStreet</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>zqu__County__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingCity</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingState</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingCountry</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>MailingPostalCode</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Contact Details</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Lookup_Popup_Window</fullName>
         <availableFields>
             <field>AssistantName</field>
             <isFieldManaged>false</isFieldManaged>
@@ -2120,11 +2170,6 @@
         </availableFields>
         <availableFields>
             <field>Birthdate</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>zqu__County__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -2330,16 +2375,6 @@
         </availableFields>
         <availableFields>
             <field>Salutation</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>SystemModstamp</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Title</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -13501,6 +13536,32 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             <group>IDFSEuropeRegionalOffice</group>
             <group>IDFSUnitedKingdom</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Active_Currency_Center_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <filters>
+            <field>Available_Services__c</field>
+            <operation>includes</operation>
+            <value>Currency Center</value>
+        </filters>
+        <filters>
+            <field>CONTACT.EMAIL</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Active Currency Center Contacts</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Agent_Credit_Risk_Manager_Contacts</fullName>

@@ -3077,7 +3077,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <relationshipLabel>AMS Online Accreditations</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
