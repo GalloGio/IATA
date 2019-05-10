@@ -510,6 +510,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				addVATPrefix();
 			}
 
+			currentAccount.fw.newform.Saved_At_Least_Once__c = True;
+			
 			// The form is always saved despite having errors.
 			upsert currentAccount.fw.newform;
 
