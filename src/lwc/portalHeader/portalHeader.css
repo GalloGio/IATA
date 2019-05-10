@@ -2,8 +2,35 @@
   height: 98px;
 }
 
+.customWhiteBackground {
+  background-color: #FFFFFF;
+}
+
 .customBlueBackground {
   background-color: #1e32fa;
+}
+
+.text-xsmall{
+  font-size: 16px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+.customCardWhite{
+  box-shadow: 5px 5px 20px #e2e2e2;
+  border-radius: 1px;
+  border: solid 1px #e2e2e2;
+  background-color: #FFFFFF;
+}
+
+.text-white{
+  color: #FFFFFF;
+}
+
+.text-black{
+  color: #000000;
 }
 
 .headerBar {
@@ -93,13 +120,6 @@
   height: 24px;
 }
 
-.openNotifications {
-  display: none;
-  position: fixed;
-  top: 69px;
-  z-index: 10;
-}
-
 .notificationNumber {
   background-color: #fac832;
   font-size: 11px;
@@ -130,7 +150,7 @@
   display: none;
   position: fixed;
   top: 69px;
-  z-index: 20;
+  z-index: 9005;
 }
 
 .profileOption {
@@ -186,3 +206,79 @@
   height: 24px;
   display: inline-block;
 }
+
+.removeMarginBottom {
+  margin-bottom: -8px;
+}
+
+.openNotifications {
+  display: none;
+  position: absolute;
+  top: 40px;
+  z-index: 10000;
+  min-width: 310px;
+  width: 40%;
+  height: 550px;
+  max-height: 550px;
+  right: 0px;
+}
+.notificationOption {
+  display: block;
+  font-weight: 500;
+}
+
+.slds-tabs_default__content {
+  overflow-y: auto;
+  max-height: 432px;
+  padding: 0;
+}
+
+.notificationUnreaded {
+  background-color: #f7f8fa;
+}
+
+.notificationReaded {
+  background-color: white;
+}
+
+.notificationBox {
+  height: 82px;
+}
+
+.notificationTitle {
+  background-color: #e1e3e6;
+  padding: 3px;
+}
+
+.notificationBody {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%;
+}
+
+.circle {
+  display: block;
+  height: 8px;
+  width: 8px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  border: 2px solid rgba(51, 51, 255, 0.4);
+  float: right;
+  margin-top: 5px;
+}
+
+.circle:hover {
+  display: block;
+  height: 8px;
+  width: 8px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  border: 2px solid rgba(51, 51, 255, 0.4);
+  float: right;
+  margin-top: 5px;
+  background-color: rgba(51, 51, 255, 0.4);
+}
+
+
+

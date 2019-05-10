@@ -1,4 +1,7 @@
 <template>
+    
+    <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style="z-index: 9999;" onclick={close}></div>
+
     <div class="customWhiteBackground headerContainer">
         <div class="slds-grid slds-wrap">
             <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth"></div>
@@ -10,15 +13,15 @@
             <div class="slds-col customBlueBackground headerBar headerBarRight">
                 <span>
                     <div class="slds-grid slds-m-top_xx-small">
-                        <div class="slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton" onclick={navigateToServices}>
+                        <div class="removeMarginBottom slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton" onclick={navigateToServices}>
                             <div class="headerButtonService slds-m-right_small"></div>
                             <span class="text-xsmall text-white slds-p-right_x-small floatRight tabText slds-show_medium">{labels.ISSP_Services}</span>
                         </div>
-                        <div class="slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton" onclick={navigateToSupport}>
+                        <div class="removeMarginBottom slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton" onclick={navigateToSupport}>
                                 <div class="headerButtonSupport slds-m-right_small"></div>
                             <span class="text-xsmall text-white slds-p-right_x-small floatRight tabText slds-show_medium">{labels.CSP_Support}</span>
                         </div>
-                        <div class="slds-col_bump-left slds-p-vertical_xx-small headerBarButton headerButtonProfileContainer">
+                        <div class="removeMarginBottom slds-col_bump-left slds-p-vertical_xx-small headerBarButton headerButtonProfileContainer" >
                             <div class="slds-m-left_x-small headerButtonProfile"></div>
                             <div class="floatRight">
                                 <span class="text-xsmall text-white slds-p-left_small slds-p-right_x-small floatLeft tabText slds-show_large">{labels.ICCS_Profile}</span>
@@ -32,18 +35,107 @@
                                 <span class="slds-p-around_small text-xsmall text-black profileOption" onclick={logOut}>{labels.CSP_LogOut}</span>
                             </div>
                         </div>
-                        <div class="slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer" style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
+                        <div class="removeMarginBottom slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer" style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
                             <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray" style={notificationNumberStyle}>{numberOfNotifications}</div>
                             <div class="headerButtonNotifications slds-m-right_x-small" style={headerButtonNotificationsStyle}></div>
                             <div class="headerButtonNotificationsCloseIcon slds-m-left_xx-small slds-m-right_xxx-small" style={headerButtonNotificationsCloseIconStyle}>
                                 <lightning-icon class="darkBlueIcon" icon-name="utility:close" size="xx-small">
                                 </lightning-icon>
                             </div>
-                            <div class="openNotifications customCardWhite" style={openNotificationsStyle}>
-                                <span class="slds-p-around_small text-xsmall text-black profileOption">TODO</span>
-                            </div>
                         </div>
-                        <div class="headerBarLeftRightWidth"></div>
+                        
+                        <div class="openNotifications customCardWhite slds-m-horizontal_medium" style={openNotificationsStyle}>
+                            <div class="slds-m-around_large text-bold text-medium text-black"> Notification Center </div>
+                                <lightning-tabset>
+                                    <lightning-tab label="All Notifications">
+
+                                        <div class="notificationUnreaded text-bold notificationBox">
+                                            <div class="slds-p-top_small">
+                                                <span class="text-xxsmall slds-m-left_large notificationTitle">Announcement</span>
+                                                <span class="text-xxsmall slds-m-left_large">24 Jan 2019, 16:14</span>
+                                                <span class="circle cursorPointer slds-m-right_small" data-item = "button" onclick={onClickAllNotificationsView}></span>
+                                            </div>
+                                            <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small">
+                                                <span class="cursorPointer" data-item = "body" onclick={onClickAllNotificationsView}>
+                                                    New DGR 60th edition is available now asdasda ad asd asd ajd ssda ad asd a dad ad as
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="notificationReaded text-bold notificationBox">
+                                            <div class="slds-p-top_small">
+                                                <span class="text-xxsmall slds-m-left_large notificationTitle">Task</span>
+                                                <span class="text-xxsmall slds-m-left_large">24 Jan 2019, 16:14</span>
+                                            </div>
+                                            <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small">
+                                                New DGR 60th edition is available now asdasda ad asd asd ajd ssda ad asd a dad ad as
+                                            </div>
+                                        </div>
+
+                                        <div class="notificationUnreaded text-bold notificationBox">
+                                            <div class="slds-p-top_small">
+                                                <span class="text-xxsmall slds-m-left_large notificationTitle">Announcement</span>
+                                                <span class="text-xxsmall slds-m-left_large">24 Jan 2019, 16:14</span>
+                                                <span class="circle slds-m-right_small" ></span>
+                                            </div>
+                                            <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small">
+                                                New DGR 60th edition is available now asdasda ad asd asd ajd ssda ad asd a dad ad as
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="notificationUnreaded text-bold notificationBox">
+                                            <div class="slds-p-top_small">
+                                                <span class="text-xxsmall slds-m-left_large notificationTitle">Announcement</span>
+                                                <span class="text-xxsmall slds-m-left_large">24 Jan 2019, 16:14</span>
+                                                <span class="circle slds-m-right_small" ></span>
+                                            </div>
+                                            <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small">
+                                                New DGR 60th edition is available now asdasda ad asd asd ajd ssda ad asd a dad ad as
+                                            </div>
+                                        </div>
+
+                                        <div class="notificationReaded text-bold notificationBox">
+                                            <div class="slds-p-top_small">
+                                                <span class="text-xxsmall slds-m-left_large notificationTitle">Task</span>
+                                                <span class="text-xxsmall slds-m-left_large">24 Jan 2019, 16:14</span>
+                                            </div>
+                                            <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small">
+                                                New DGR 60th edition is available now asdasda ad asd asd ajd ssda ad asd a dad ad as
+                                            </div>
+                                        </div>
+
+                                        <div class="notificationUnreaded text-bold notificationBox">
+                                            <div class="slds-p-top_small">
+                                                <span class="text-xxsmall slds-m-left_large notificationTitle">Announcement</span>
+                                                <span class="text-xxsmall slds-m-left_large">24 Jan 2019, 16:14</span>
+                                                <span class="circle slds-m-right_small" ></span>
+                                            </div>
+                                            <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small">
+                                                New DGR 60th edition is available now asdasda ad asd asd ajd ssda ad asd a dad ad as
+                                            </div>
+                                        </div>   
+
+                                       
+                                    </lightning-tab>
+                                    <lightning-tab label="Announcements">
+                                        <template for:each={notificationsList} for:item='not'>
+                                            <div key={not.id} class="notificationUnreaded text-bold notificationBox">
+                                                    <div class="slds-p-top_small">
+                                                        <span class="text-xxsmall slds-m-left_large notificationTitle">Announcement</span>
+                                                        <span class="text-xxsmall slds-m-left_large">{not.CreatedDate}</span>
+                                                        <span class="circle cursorPointer slds-m-right_small" data-item ={not.id}  onclick={onClickAllNotificationsView}></span>
+                                                    </div>
+                                                    <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small">
+                                                        <span class="cursorPointer" data-item ={not.id} onclick={onClickAllNotificationsView}>
+                                                            {not.Subject__c}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                        </template>
+                                    </lightning-tab>
+                                </lightning-tabset>
+                        </div>
                     </div>
                 </span>
             </div>

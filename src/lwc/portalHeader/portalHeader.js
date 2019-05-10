@@ -5,6 +5,7 @@ import { NavigationMixin } from 'lightning/navigation';
 
 //notification apex method
 import getNotificationsCount from '@salesforce/apex/CSP_Utils.getNotificationsCount';
+import getNotifications from '@salesforce/apex/CSP_Utils.getNotifications';
 
 //custom labels
 import ISSP_Services from '@salesforce/label/c.ISSP_Services';
@@ -37,6 +38,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track numberOfNotifications;
     @track openNotifications = false;
 
+    @track notificationsList;
+    @track currentURL;
+    @track showBackdrop = false;
+
     //style variables for notifications
     @track headerButtonNotificationsContainerStyle;
     @track headerButtonNotificationsCloseIconStyle;
@@ -46,6 +51,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     connectedCallback() { 
 
+        getNotifications().then(result => {
+            this.notificationsList = result;
+        });
+
         getNotificationsCount().then(result => {
 
             this.numberOfNotifications = result;
@@ -53,7 +62,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
                 this.notificationNumberStyle = 'display: none;';
             }
-        });        
+        });
+        
+        
+        
     }
 
     //navigation methods
@@ -65,17 +77,32 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             },
         });
     }
+    
+    // Check if we are in the Old/New Portal
+    navigationCheck(pageNameToNavigate, currentService){
+        this.currentURL = window.location.href;
+        if ( !this.currentURL.includes("/csportal/s") ) {
+            window.history.pushState("", "", '/csportal/s/' + currentService);
+            location.reload();
+        } else {
+            this.navigateToOtherPage(pageNameToNavigate);
+        }
+
+    }
 
     navigateToHomePage() {
-        this.navigateToOtherPage("home");
+        this.navigationCheck("home", "");
+        //this.navigateToOtherPage("home");
     }
 
     navigateToServices() {
-        //this.navigateToOtherPage("");
+        this.navigationCheck("services", "services");
+        //this.navigateToOtherPage("services");
     }
 
     navigateToSupport() {
-        this.navigateToOtherPage("support");
+        this.navigationCheck("support", "support");
+        //this.navigateToOtherPage("support");
     }
 
     navigateToMyProfile() {
@@ -104,20 +131,28 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //method to change the style when the user clicks on the notifications
     toggleNotifications() {
 
-        /*this.openNotifications = !this.openNotifications;
+        this.openNotifications = !this.openNotifications;
 
         if(this.openNotifications) {
-            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff;';
+            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000;';
             this.headerButtonNotificationsCloseIconStyle = 'display: block;';
             this.headerButtonNotificationsStyle = 'display: none;';
             this.notificationNumberStyle = 'display: none;';
             this.openNotificationsStyle = 'display: block;';
+            this.showBackdrop = true;
        } else {
-            this.headerButtonNotificationsContainerStyle = '';
-            this.headerButtonNotificationsCloseIconStyle = 'display: none;';
+            this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
             this.headerButtonNotificationsStyle = 'display: block;';
             this.notificationNumberStyle = 'display: block;';
             this.openNotificationsStyle = 'display: none;';
-        }*/
+            this.showBackdrop = false;
+        }
     }
+
+    onClickAllNotificationsView(event){
+        let selectedCategory = event.target.dataset.item;
+        console.log(selectedCategory);
+    }
+
 }
