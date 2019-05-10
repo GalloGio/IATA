@@ -392,7 +392,7 @@
 
                     <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: left; margin-left: 15px;"/>
 
-                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();" rendered="{! !displayShipping}">
+                    <apex:selectList id="ShippingCountryList" size="1" value="{!ca.fw.newform.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr(); defineTypeOfStateInput(); clearState();" rendered="{! !displayShipping}">
                         <apex:selectOptions value="{!countryList}"/>
                     </apex:selectList>
 
@@ -416,6 +416,7 @@
                                 $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
                                 populateShippingCountry();
                                 copyToADShippingCntr();
+                                defineTypeOfStateInput();
 
                                 if (isToClean) {
                                     $('[id$="ShippingCountryList"]').val('');
@@ -1078,6 +1079,7 @@
             } else {
                 populateShippingCountry();
                 copyToADShippingCntr();
+                defineTypeOfStateInput();
             }
 
             // checks initial state
@@ -1121,6 +1123,7 @@
                 $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
             }
             copyToADShippingCntr();
+            defineTypeOfStateInput();
         } 
 
         function copyToADShippingCntr(){
@@ -1133,6 +1136,10 @@
             resetPCHint();
 
             initFieldsSettings();
+        }
+
+        function defineTypeOfStateInput() {
+            var dropdownValue = $('[id$="ShippingCountryList"]').val();
 
             if (stateMap[dropdownValue] != undefined) {
                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
@@ -1142,8 +1149,16 @@
             } else {
                 if (!$('[id$="disableCheckBoxBranch"]')[0].checked) {
                     $('[id$="shippingStateInput"]').attr('style', 'display: block; width: 200px; float: left; margin-left: 15px;');
+
+                    $('.shipping_state__c').val('');
+                    $('.shipping_state__c').change();
                 }
-            }            
+            }
+        }
+
+        function clearState() {
+            $('[id$="shippingStateInput"]').val('');
+            $('[id$="ShippingStateList"]').val('');
         }
 
         function copyStateInputBox() {
