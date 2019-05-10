@@ -423,6 +423,9 @@
                                     $('#shipping_country__c > input').val('');
                                 }
                             }
+
+                            $('[id$="ShippingCountryList"]').val($('#shipping_country__c > input').val().toUpperCase());
+                            populateShippingAsterisks();
                         }
                     </script>
                 </apex:outputPanel>
@@ -1061,8 +1064,14 @@
                     }
                 });
 
-                if($(this).attr("data-group")=='agencyLocation') populateShippingCountry();
+                if($(this).attr("data-group")=='agencyLocation') {
+                    populateShippingCountry();
+                }
                 showForms();
+            });
+
+            $($('[id$="disableCheckBoxBranch"]')[0].checked).change(function () {
+                resetShippingAddress();
             });
 
             locationSecctionStyle();
@@ -1079,7 +1088,7 @@
             } else {
                 populateShippingCountry();
                 copyToADShippingCntr();
-                defineTypeOfStateInput();
+                defineTypeOfStateInput(); 
             }
 
             // checks initial state
