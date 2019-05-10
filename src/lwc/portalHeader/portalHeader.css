@@ -1,0 +1,188 @@
+.headerContainer {
+  height: 98px;
+}
+
+.customBlueBackground {
+  background-color: #1e32fa;
+}
+
+.headerBar {
+  height: 40px;
+  margin-top: 29px;
+  margin-bottom: 29px;
+}
+
+.headerBarLeft {
+  display: inline-block;
+  position: relative;
+}
+
+.headerBarLeft::after {
+  content:"";
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-right: 20px solid #ffffff;
+  border-bottom: 20px solid transparent;
+  position: absolute;
+  right: 0;
+}
+
+.headerBarLogo {
+  margin-top: 10px;
+  margin-bottom: 29px;
+}
+
+.headerBarLogo:hover {
+  cursor: pointer;
+}
+
+.headerBarRight {
+  position: relative;
+  display: grid;
+}
+
+.headerBarRight::after {
+  content:"";
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-left: 20px solid #ffffff;
+  border-bottom: 20px solid transparent;
+  position: absolute;
+  left: 0;
+}
+
+.headerBarLeftRightWidth {
+  width: 10%;
+}
+
+.floatRight {
+  float: right;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.headerBarButton:hover {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.headerBarButton:hover span.tabText{
+  color: #1e32fa;
+  font-weight: 500;
+}
+
+.headerButtonNotificationsContainer:hover {
+  cursor: pointer;
+}
+
+.headerButtonNotifications {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
+  width: 24px;
+  height: 24px;
+}
+
+.headerButtonNotificationsCloseIcon {
+  display: none;
+  width: 24px;
+  height: 24px;
+}
+
+.openNotifications {
+  display: none;
+  position: fixed;
+  top: 69px;
+  z-index: 10;
+}
+
+.notificationNumber {
+  background-color: #fac832;
+  font-size: 11px;
+  text-align: center;
+  z-index: 2;
+  float: right;
+  position: relative;
+}
+
+.headerBarButton:hover div.headerButtonProfile{
+  background-color: #1e32fa;
+}
+
+.headerButtonProfile {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonProfileContainer:hover .openProfile, .openProfile:hover{
+  display: block;
+}
+
+.openProfile {
+  display: none;
+  position: fixed;
+  top: 69px;
+  z-index: 20;
+}
+
+.profileOption {
+  display: block;
+  font-weight: 500;
+}
+
+.profileOption:hover {
+  background-color: #f0f2f5;
+}
+
+.customCardWhite {
+  border: none;
+  box-shadow: 5px 10px 20px #e2e2e2;
+}
+
+.headerBarButton:hover div.headerButtonSupport{
+  background-color: #1e32fa;
+}
+
+.headerButtonSupport {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerBarButton:hover div.headerButtonService{
+  background-color: #1e32fa;
+}
+
+.headerButtonService {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerBarButton:hover div.headerButtonArrow{
+  background-color: #1e32fa;
+  transform: rotate(180deg);
+}
+
+.headerButtonArrow {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}

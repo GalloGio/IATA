@@ -1,0 +1,18 @@
+<template>
+    <div class="customCardWhite">
+        <template if:true={loading}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <template if:false={loading}>
+            <lightning-accordion onsectiontoggle={handleSectionToggle}>
+                <template for:each={topicTiles} for:item="topic">
+                    <lightning-accordion-section name={topic.value} label={topic.label} key={topic.Id} class="iconProperties">
+                        <template for:each={subTopicTiles} for:item="subtopic">
+                            <div data-name={subtopic.value} data-label={subtopic.label} key={subtopic.Id} onclick={handleSubTopic}>{subtopic.label}</div>
+                        </template> 
+                    </lightning-accordion-section>
+                </template>
+            </lightning-accordion>
+        </template>  
+    </div>   
+</template>

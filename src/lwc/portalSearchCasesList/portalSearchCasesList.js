@@ -67,7 +67,7 @@ export default class PortalSearchCasesList extends LightningElement {
         if(this.toggleComponent()) {
             this.loading = true;
             getFilteredCases({ searchKey : this.filteringObject.searchText })
-            .then(results => {
+           .then(results => {
                 if(results.records && results.records.length > 0) {
                     let allDataAux = JSON.parse(JSON.stringify(results));
                     let urlMap = JSON.parse(allDataAux.url);
@@ -89,7 +89,7 @@ export default class PortalSearchCasesList extends LightningElement {
                 this.error = error;
                 this.loading = false;
                 this.dataRecords = false;
-            });            
+            });
         }
     }   
 }

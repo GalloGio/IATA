@@ -2735,6 +2735,14 @@ Payment required on receipt of this Payment Advice
         <value>Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_CompanyProfile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CompanyProfile</shortDescription>
+        <value>Company Profile</value>
+    </labels>
+    <labels>
         <fullName>CSP_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2759,12 +2767,44 @@ Payment required on receipt of this Payment Advice
         <value>Need more help?</value>
     </labels>
     <labels>
+        <fullName>CSP_FAQs_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_FAQs_Title</shortDescription>
+        <value>FAQs</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Features_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Features_Title</shortDescription>
+        <value>Features</value>
+    </labels>
+    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_ForYou</shortDescription>
         <value>For You</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Home_WelcomeTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
+        <value>Hi [username], welcome on board</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LogOut</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LogOut</shortDescription>
+        <value>Log Out</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -2831,6 +2871,14 @@ Payment required on receipt of this Payment Advice
         <value>Recent Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Search_Home_Placeholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Home_Placeholder</shortDescription>
+        <value>Find services, cases, support and more</value>
+    </labels>
+    <labels>
         <fullName>CSP_SeeAll</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2839,12 +2887,36 @@ Payment required on receipt of this Payment Advice
         <value>See All</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_Title</shortDescription>
+        <value>Services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Settings</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Settings</shortDescription>
+        <value>Settings</value>
+    </labels>
+    <labels>
         <fullName>CSP_Status</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Status</shortDescription>
         <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Support</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Support</shortDescription>
+        <value>Support</value>
     </labels>
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
@@ -33363,7 +33435,371 @@ title,Title,Name</value>
         <value>contacting us.</value>
     </labels>
     <labels>
-        <fullName>days_left</fullName>
+        <fullName>csp_Accreditation_Process</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Accreditation Process</shortDescription>
+        <value>Accreditation Process</value>
+    </labels>
+    <labels>
+        <fullName>csp_ActionForCategoryPicklist</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Select the main category of your issue.</value>
+    </labels>
+    <labels>
+        <fullName>csp_ActionIndicator</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Specify basic case details to see support options.</value>
+    </labels>
+    <labels>
+        <fullName>csp_Call_Panel_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Call Us</value>
+    </labels>
+    <labels>
+        <fullName>csp_Call_Panel_sub_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Call center is available from 09 AM to 05 PM.</value>
+    </labels>
+    <labels>
+        <fullName>csp_Case_Panel_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Solve with a Case</value>
+    </labels>
+    <labels>
+        <fullName>csp_Case_Panel_sub_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Let us know your question.</value>
+    </labels>
+    <labels>
+        <fullName>csp_Chat_Panel_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Chat with Us</value>
+    </labels>
+    <labels>
+        <fullName>csp_Chat_Panel_sub_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Ask your question to an IATA Specialist</value>
+    </labels>
+    <labels>
+        <fullName>csp_ChooseOption</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Please choose one of the paths below.</value>
+    </labels>
+    <labels>
+        <fullName>csp_Compliment_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Compliment</value>
+    </labels>
+    <labels>
+        <fullName>csp_Concern</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Concern</shortDescription>
+        <value>Concern</value>
+    </labels>
+    <labels>
+        <fullName>csp_Concern_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Concern</shortDescription>
+        <value>Concern</value>
+    </labels>
+    <labels>
+        <fullName>csp_CountryOrRegionIndicator</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Select the country or region the problem belongs to</value>
+    </labels>
+    <labels>
+        <fullName>csp_Emergency_Query</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency Query</shortDescription>
+        <value>Emergency Query</value>
+    </labels>
+    <labels>
+        <fullName>csp_Financial_Review</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Review</shortDescription>
+        <value>Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>csp_IATA_Payment</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Payment</shortDescription>
+        <value>IATA Payment</value>
+    </labels>
+    <labels>
+        <fullName>csp_IntentionOnThisPage</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>What do you want to do?</value>
+    </labels>
+    <labels>
+        <fullName>csp_IsEmergency</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Is this a case of emergency?</value>
+    </labels>
+    <labels>
+        <fullName>csp_Options_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>How do you want to go on?</value>
+    </labels>
+    <labels>
+        <fullName>csp_Process</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Process</shortDescription>
+        <value>Process</value>
+    </labels>
+    <labels>
+        <fullName>csp_Query</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Query</shortDescription>
+        <value>Query</value>
+    </labels>
+    <labels>
+        <fullName>csp_Request_New_Service</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Request New Service</value>
+    </labels>
+    <labels>
+        <fullName>csp_Sales_Payment</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Payment</shortDescription>
+        <value>Sales Payment</value>
+    </labels>
+    <labels>
+        <fullName>csp_Sub_Topic_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency Query</shortDescription>
+        <value>Sub-Topic</value>
+    </labels>
+    <labels>
+        <fullName>csp_Suggest_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Suggest</value>
+    </labels>
+    <labels>
+        <fullName>csp_Suggestion_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>These might help</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportCategoriesInfo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Basic Information</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_AskTile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Ask</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_BasicInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Basic Information</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_Category</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_ComplimentTile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Compliment</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_ConcernTile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Concern</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_IsEmergency</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Is this a case of emergency?</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_PlzChoosePath</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Please choose one of the paths below.</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_SelectCategory</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Select the main category of your issue.</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_SelectCountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Select the country or region the problem belongs to</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_SelectTopic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Select the topic covering the problem.</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_ShowSupportOptions</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Show Support Options</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_SpecifyCaseDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Specify basic case details to see support options.</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_SuggestTile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Suggest</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_Topic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Topic</value>
+    </labels>
+    <labels>
+        <fullName>csp_SupportReachUs_WhatDoYouWant</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>What do you want to do?</value>
+    </labels>
+    <labels>
+        <fullName>csp_Support_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Support Options</value>
+    </labels>
+    <labels>
+        <fullName>csp_btn_Support_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Show Support Options</value>
+    </labels>
+    <labels>
+        <fullName>csp_toSelectSubTopic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Select the topic covering the problem.</value>
+    </labels>        
+    <labels>
+    <fullName>days_left</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>days left</shortDescription>

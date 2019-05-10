@@ -1,7 +1,7 @@
 <template>
-    <div class="slds-m-bottom_xx-large slds-p-bottom_xx-large">
+    <div class="">
         <template if:true={isLoaded}>
-            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            <!--lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner-->
         </template>
         <div class="slds-theme_shade customCard">
             <template if:false={loading}>
@@ -71,14 +71,22 @@
                 <div class="slds-align_absolute-center">
                     <div class="basicInfoBox">
                         <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Category}</p>
+                            <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
+                                label={label.csp_SupportReachUs_ActionForCategoryPicklist} value={category}
+                                options={categoryOptions} dropdown-alignment="auto" onchange={categoryHandler}
+                                placeholder="Select Category" size=5>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large" if:true={topicCB}>
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Topic_Label}</p>
                             <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
                                 label={label.csp_SupportReachUs_ActionForCategoryPicklist} value={topic}
-                                options={topicoptions} dropdown-alignment="auto" onchange={topicHandler}
+                                options={topicOptions} dropdown-alignment="auto" onchange={topicHandler}
                                 placeholder="Select Topic" size=5>
                             </lightning-combobox>
                         </div>
-                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large " if:true={subTopicCB}>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large" if:true={subTopicCB}>
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Sub_Topic_Label}</p>
                             <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
                                 label={label.csp_SupportReachUs_toSelectSubTopicPicklist} value={subTopic}
@@ -86,7 +94,7 @@
                                 onchange={subTopicHandler} data-id="topicCB">
                             </lightning-combobox>
                         </div>
-                        <div class="slds-p-horizontal_xx-large slds-p-bottom_xx-large " if:true={countryCB}>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_xx-large" if:true={countryCB}>
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</p>
                             <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
                                 label={label.csp_SupportReachUs_CountryOrRegionIndicator} value={countryValue}
@@ -110,49 +118,6 @@
                                 class="containedButton cursorPointer">
                             </lightning-button>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div if:true={supOptionsPanel}>
-                <div class="slds-text-align_center slds-p-vertical_xx-large">
-                    <h1 class="text-large text-bold">{label.csp_SupportReachUs_Support_Label}</h1>
-                    <h2 class="text-xsmall slds-p-top_small">{label.csp_SupportReachUs_Options_Label}</h2>
-                </div>
-                <div class="slds-p-bottom_xx-large lower_gray_panel_half_border">
-                    <div class="slds-p-vertical_large slds-text-align_center">
-                        <h2 class="text-medium text-bold">{label.csp_SupportReachUs_Suggestion_label}</h2>
-                    </div>
-                    <div class="slds-p-top_large">
-                        <div
-                            class="slds-grid grid-margin-bottom-justified slds-grid_vertical slds-align_absolute-center lower_panel_size">
-                            <div class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_2-of-2 slds-small-size_2-of-2 
-                                                slds-medium-size_2-of-2 slds-large-size_4-of-6
-                                                slds-m-bottom_large 
-                                                cursorPointer customCardWhite">
-                                <div class="noPointerEvents slds-p-around_small 
-                                            slds-text-align_left text-small">
-                                    <p>Lorem ipsum dolor sit amet</p>
-                                    <lightning-icon icon-name="utility:forward" size="xx-small"
-                                        class="tileNewServiceIcon slds-current-color blue_arrow slds-float_right">
-                                    </lightning-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="slds-grid grid-margin-bottom-justified slds-wrap slds-p-bottom_xx-large">
-                    <div class="slds-col column-backgroundwhite-textblack-aligned-wborder slds-size_1-of-2 slds-small-size_1-of-3 
-                                slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                slds-m-horizontal_small customCard" style="height: 145px; width: 200px;">
-                        <div class="slds-text-title_bold noPointerEvents slds-p-around_small">
-                            <p></p>{label.csp_SupportReachUs_Case_Panel_label}</p>
-                        </div>
-                        <div class="noPointerEvents slds-p-around_small">
-                            {label.csp_SupportReachUs_Case_Panel_sub_label}
-                        </div>
-                        <button class="slds-button slds-button_neutral">
-                            {label.csp_SupportReachUs_btn_Support_Label}
-                        </button>
                     </div>
                 </div>
             </div>

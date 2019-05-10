@@ -1,8 +1,9 @@
 import { LightningElement, track } from 'lwc';
-import getTopicPickListValues from '@salesforce/apex/PortalSupportReachUsCtrl.getTopicPickListValues';
-import getSubTopicPickListValues from '@salesforce/apex/PortalSupportReachUsCtrl.getSubTopicPickListValues';
+import getLiveAgentButton from '@salesforce/apex/PortalSupportReachUsCtrl.getLiveAgentButton';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
+import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 import { getParamsFromPage } from 'c/navigationUtils';
+
 
 // Import custom labels
 import csp_SupportReachUs_IntentionOnThisPage from '@salesforce/label/c.csp_IntentionOnThisPage';
@@ -30,7 +31,9 @@ import csp_SupportReachUs_Chat_Panel_label from '@salesforce/label/c.csp_Chat_Pa
 import csp_SupportReachUs_Chat_Panel_sub_label from '@salesforce/label/c.csp_Chat_Panel_sub_label';
 import csp_SupportReachUs_Call_Panel_label from '@salesforce/label/c.csp_Call_Panel_label';
 import csp_SupportReachUs_Call_Panel_sub_label from '@salesforce/label/c.csp_Call_Panel_sub_label';
+import csp_SupportReachUs_Chat_With_Us from '@salesforce/label/c.LVA_ChatWithUs';
 import csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL from '@salesforce/label/c.ISSP_Topics_To_Exclude_Country_PL';
+import csp_SupportReachUs_Category from '@salesforce/label/c.csp_SupportReachUs_Category'
 
 
 
@@ -38,18 +41,23 @@ export default class PortalSupportReachUs extends LightningElement {
     //track variables
     @track isLoaded = true;
     @track caseDetails;
+    @track categoryOptions;
+    @track category;
     @track topic;
-    @track topicoptions;
+    @track topicOptions;
     @track subTopicOptions;
     @track subTopic;
+    @track topicCB = false;
     @track subTopicCB = false;
+    @track countryCB = false;
     @track optionsButton = false;
     @track supOptionsPanel = false;
-    @track countryCB = false;
-    @track countryValue;
+    @track countryValue = '';
 
     //global variables
     pageParams;
+    liveAgentButtonInfo;
+    myResult;
 
     //label construct
     label = {
@@ -78,51 +86,65 @@ export default class PortalSupportReachUs extends LightningElement {
         csp_SupportReachUs_Chat_Panel_sub_label,
         csp_SupportReachUs_Call_Panel_label,
         csp_SupportReachUs_Call_Panel_sub_label,
-        csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL
+        csp_SupportReachUs_Chat_With_Us,
+        csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL,
+        csp_SupportReachUs_Category
     }
 
     //old doInit() in aura. Fires once the component is loaded.
     connectedCallback() {
 
-        this.getTopicPickListValues();
+        this.getAllPickListValues();
 
         this.getCountryList();
+
     }
 
-    //get the Topic Values for picklist ฅ/ᐠ｡ᆽ｡ᐟ\ 
-    getTopicPickListValues() {
-
-        getTopicPickListValues()
+    //get the Topic Values for picklist
+    getAllPickListValues() {
+        this.toggleSpinner();
+        //returns object
+        getAllPickListValues()
             .then(result => {
-                let myResult = JSON.parse(JSON.stringify(result));
+                this.myResult = JSON.parse(JSON.stringify(result));
 
-                // eslint-disable-next-line no-console
-                console.log('Topics: ', myResult);
+                //Auxiliary Map
+                const map = new Map();
+                //Array to consume category options
+                let myCategoryOptions = [];
 
-                //first element on the picklist
-                let myTopicOptions = [{ label: 'Select Topic', value: '' }];
+                //Set first value on the list
+                myCategoryOptions = [{ label: 'Select Category', value: '' }];
 
-                //ex: {label: My Topic, value: my_topic__c}
-                Object.keys(myResult).forEach(function (el) {
-                    myTopicOptions.push({ label: myResult[el], value: el });
-                });
-
-                //set global with the options for later use
-                this.topicoptions = myTopicOptions;
-
-                //gets parameters from URL if any
-                this.pageParams = getParamsFromPage();
-                if ('T' in this.pageParams) {
-                    if (this.pageParams.T in myResult) {
-                        this.topic = this.pageParams.T;
-                        this.subTopicCB = true;
-                        this.subTopicValuesGetter();
-                    } else {
-                        this.subTopicCB = false;
-                        this.pageParams.ST = '';
+                for (const item of this.myResult) {
+                    if (!map.has(item.categoryLabel) && item.categoryLabel !== 'All') {
+                        map.set(item.categoryLabel, true);
+                        myCategoryOptions.push({
+                            label: item.categoryLabel,
+                            value: item.categoryName
+                        });
                     }
                 }
-                //stop the spinner.
+
+                this.categoryOptions = myCategoryOptions;
+                //eslint-disable-next-line no-console
+
+                //Set the category if in URL
+                this.pageParams = getParamsFromPage();
+                if ('category' in this.pageParams && this.pageParams.category !== '') {
+                    const checkCategory = obj => obj.value === this.pageParams.category;
+                    if (myCategoryOptions.some(checkCategory)) {
+                        this.category = this.pageParams.category;
+                        this.topicCB = true;
+                        this.topicValuesGetter();
+                    } else {
+                        this.topicCB = false;
+                        this.subTopicCB = false;
+                        this.pageParams.category = '';
+                        this.pageParams.topic = '';
+                        this.pageParams.subtopic = '';
+                    }
+                }
                 this.toggleSpinner();
             })
             .catch(error => {
@@ -133,9 +155,9 @@ export default class PortalSupportReachUs extends LightningElement {
             })
     }
 
-    //gets Country for picklist ʕ •ᴥ•ʔ
+    //gets Country for picklist
     getCountryList() {
-
+        this.toggleSpinner();
         getCountryList()
             .then(result => {
                 let myResult = JSON.parse(JSON.stringify(result));
@@ -150,6 +172,8 @@ export default class PortalSupportReachUs extends LightningElement {
 
                 //set global with the options for later use
                 this.countryOptions = myTopicOptions;
+
+                this.toggleSpinner();
             })
             .catch(error => {
                 //throws error
@@ -159,22 +183,31 @@ export default class PortalSupportReachUs extends LightningElement {
             });
     }
 
-    //handles topic selection ᘛ⁐̤ᕐᐷ
-    topicHandler(event) {
-        this.topic = event.target.value;
-        if (this.topic !== "") {
+    categoryHandler(event) {
+        //set category global value
+        this.category = event.target.value;
+        if (this.category !== "") {
             //Show subTopic Picklist/Combobox
-            this.subTopicCB = true;
+            this.topicCB = true;
+            //Set inital value topic Picklist/Combobox
+            this.topic = '';
             //Set inital value subTopic Picklist/Combobox
             this.subTopic = '';
             //Remove Parameters. Reload is necessary
-            this.pageParams.ST = '';
+            //this.pageParams.topic = '';
+
             //Set inital value country Picklist/Combobox
             this.countryValue = '';
+
         } else {
-            //Hide subTopic Picklist/Combobox
-            this.subTopicCB = false;
+            //Hide Topic Picklist/Combobox
+            this.topicCB = false;
         }
+        //Event to close the options area (on aura wrapper)
+        this.closeOptionsPanel();
+
+        //Hide Subtopic Picklist/Combobox
+        this.subTopicCB = false;
 
         //Hide Options Button
         this.optionsButton = false;
@@ -183,48 +216,125 @@ export default class PortalSupportReachUs extends LightningElement {
         //Hide Country Picklist/Combobox
         this.countryCB = false;
 
-        //go get subtopics! ▼・ᴥ・▼
-        this.subTopicValuesGetter();
+        //get topics
+        this.topicValuesGetter();
     }
 
-    //Good boy! Fetch the subtopic values ▼・ᴥ・▼
-    subTopicValuesGetter() {
-        getSubTopicPickListValues({ topicValue: this.topic })
-            .then(result => {
-                let myResult = JSON.parse(JSON.stringify(result));
-                // eslint-disable-next-line no-console
-                console.log('Sub-Topics: ', myResult);
+    //Set the topic values
+    topicValuesGetter() {
 
-                //first element on the picklist
-                let myTopicOptions = [{ label: 'Select Sub-Topic', value: '' }];
+        //Auxiliary Map
+        const map = new Map();
+        //Array to consume the Topic options
+        let myTopicOptions = [];
 
-                //ex: {label: My SubTopic, value: my_subtopic__c}
-                Object.keys(myResult).forEach(function (el) {
-                    myTopicOptions.push({ label: myResult[el], value: el });
+        //first element on the picklist
+        myTopicOptions = [{ label: 'Select Topic', value: '' }];
+
+        for (const item of this.myResult) {
+            if (!map.has(item.topicLabel) && item.categoryName === this.category) {
+                map.set(item.topicLabel, true);
+                myTopicOptions.push({
+                    label: item.topicLabel,
+                    value: item.topicName
                 });
+            }
+        }
 
-                //set the options
-                this.subTopicOptions = myTopicOptions;
+        //set the options of picklist
+        this.topicOptions = myTopicOptions;
 
-                //set value according to the url parameters
-                if ('ST' in this.pageParams) {
+        //set Topic value if included in URL
+        if ('topic' in this.pageParams && this.pageParams.topic !== '') {
+            const checkTopic = obj => obj.value === this.pageParams.topic;
+            if (myTopicOptions.some(checkTopic)) {
 
-                    if (this.pageParams.ST in myResult) {
-                        this.subTopic = this.pageParams.ST;
-                        let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
+                this.topic = this.pageParams.topic;
+                this.subTopicCB = true;
+                this.subTopicValuesGetter();
+            } else {
+                this.subTopicCB = false;
+                this.pageParams.subtopic = '';
+            }
+        } else {
+            this.pageParams.subtopic = '';
+        }
+    }
 
-                        this.countryCB = true;
-                        if (countryExclusion.includes(this.topic)) {
-                            this.countryCB = false;
-                            this.optionsButton = true;
-                        }
-                    } else {
-                        this.optionsButton = false;
-                        this.supOptionsPanel = false;
-                    }
+    //handles topic selection
+    topicHandler(event) {
+        //set topic globally
+        this.topic = event.target.value;
+        if (this.topic !== "") {
+            //Show subTopic Picklist/Combobox
+            this.subTopicCB = true;
+            //Set inital value subTopic Picklist/Combobox
+            this.subTopic = '';
+            //Set inital value country Picklist/Combobox
+            this.countryValue = '';
+        } else {
+            //Hide subTopic Picklist/Combobox
+            this.subTopicCB = false;
+        }
+
+        //Close the options area (on aura wrapper)
+        this.closeOptionsPanel();
+
+        //Hide Options Button
+        this.optionsButton = false;
+        //Hide Options Panel
+        this.supOptionsPanel = false;
+        //Hide Country Picklist/Combobox
+        this.countryCB = false;
+        //get subtopics
+        this.subTopicValuesGetter();
+
+    }
+
+    //Set the subtopic values 
+    subTopicValuesGetter() {
+
+        //Auxiliary Map
+        const map = new Map();
+        //Array to consume SubTopic Options
+        let mySubTopicOptions = [];
+
+        //first element on the picklist
+        mySubTopicOptions = [{ label: 'Select Sub-Topic', value: '' }];
+
+        for (const item of this.myResult) {
+            if (!map.has(item.childs) && item.topicName === this.topic) {
+                Object.keys(item.childs).forEach(function (el) {
+                    mySubTopicOptions.push({
+                        label: el, value: item.childs[el]
+                    });
+                })
+            }
+        }
+
+        //set the options
+        this.subTopicOptions = mySubTopicOptions;
+
+        //set value of Subtopic if in URL
+        if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
+            const checkSubTopic = obj => obj.value === this.pageParams.subtopic;
+            if (mySubTopicOptions.some(checkSubTopic)) {
+                this.subTopic = this.pageParams.subtopic;
+
+                //Excluded country list. 
+                let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
+
+                this.countryCB = true;
+                if (countryExclusion.includes(this.topic)) {
+                    this.countryCB = false;
+                    this.optionsButton = true;
                 }
-
-            });
+                this.subTopicValuesGetter();
+            } else {
+                this.countryCB = false;
+                this.pageParams.subtopic = '';
+            }
+        }
     }
 
     //handles sub-topic selection (ᵔᴥᵔ)
@@ -237,7 +347,7 @@ export default class PortalSupportReachUs extends LightningElement {
 
             //required to not show the country picklist if the selected value is included here
             let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
-            if (countryExclusion.includes(this.topic)) {
+            if (countryExclusion.includes(this.topic + '__c')) {
                 this.countryCB = false;
                 this.optionsButton = true;
             }
@@ -245,9 +355,11 @@ export default class PortalSupportReachUs extends LightningElement {
             this.optionsButton = false;
             this.supOptionsPanel = false;
         }
+        this.closeOptionsPanel();
+
     }
 
-    //handles country selection (ᵔᴥᵔ)
+    //handles country selection
     countryHandler(event) {
         this.countryValue = event.target.value;
         if (this.countryValue !== "") {
@@ -256,17 +368,76 @@ export default class PortalSupportReachUs extends LightningElement {
             this.optionsButton = false;
         }
         this.supOptionsPanel = false;
+
+        this.closeOptionsPanel();
     }
 
-    //handles the support button click [include new functionality here]
+    //handles the support button click 
     supportOptionsHandler() {
+        //fire event to activate spinner on Aura Wrapper
+        let toggleParentSpinner = new Promise((resolve, reject) => {
 
-        //equivalent to document.
-        let myTemplate = this.template;
+            this.toggleSpinner();
 
-        //promise for async execution. check JS documentation
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+
+        //fire event to activate spinner on Aura Wrapper
+        let toggleParentSpinner2 = new Promise((resolve, reject) => {
+
+            this.toggleSpinner();
+
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+
+        //Grabs Live Agent/s settings and gives it to parent aura wrapper.
+        let willGiveLiveAgent = new Promise((resolve, reject) => {
+            getLiveAgentButton({ topicName: this.topic, country: this.countryValue })
+                .then(result => {
+                    let myliveAgentButtonInfo;
+                    myliveAgentButtonInfo = JSON.parse(JSON.stringify(result));
+                    // Fire the custom event
+                    const filterchange = new CustomEvent('filterChange', {
+                        detail: { myliveAgentButtonInfo },
+                    });
+                    // Fire the custom event
+                    this.dispatchEvent(filterchange);
+
+                    //this.toggleSpinner();
+                    // Wraps a variable to send parameters through an event to Aura Parent Component (PortalSupportReachUsWrapper).
+                });
+
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+
+        //Shows Options Panel
         let willShowPanel = new Promise((resolve, reject) => {
-            this.supOptionsPanel = true;
+            const showoptions = new CustomEvent('showoptions');
+            // Fire the custom event
+            this.dispatchEvent(showoptions);
+
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+
+        //Performs a document scroll down.
+        let scrollDown = new Promise((resolve, reject) => {
+            window.scrollTo({ top: document.lastChild.scrollHeight, left: 0, behavior: 'smooth' });
 
             let error = false;
             if (!error)
@@ -276,20 +447,27 @@ export default class PortalSupportReachUs extends LightningElement {
         });
 
         let willScrollDown = function () {
-            //execute this, then when it finishes execute scroll action. Good for DOM!
-            willShowPanel
-                .then(() => {
-                    window.scrollTo({ top: myTemplate.lastChild.scrollHeight, left: 0, behavior: 'smooth' });
-                });
+            //Show Spinner, Show Options Panel, Get Live Agent, Scroll window down, Hide Spinner
+            Promise.all([toggleParentSpinner, willShowPanel, willGiveLiveAgent, scrollDown, toggleParentSpinner2]);
         }
 
-        //do it NOW! ᕦ(ò_óˇ)ᕤ
+        //Execute async actions
         willScrollDown();
+
     }
 
-    //method that controls the loading spinner action
+    //method to execute spinner on aura wrapper
     toggleSpinner() {
-        this.isLoaded = !this.isLoaded;
+        const toggleSpinner = new CustomEvent('toggleSpinner');
+        // Fire the custom event
+        this.dispatchEvent(toggleSpinner);
+    }
+    
+    //method to close options panel on aura wrapper
+    closeOptionsPanel() {
+        const closeOptions = new CustomEvent('closeoptions');
+        // Fire the custom event
+        this.dispatchEvent(closeOptions);
     }
 
     //clickhandler for the panels
@@ -313,7 +491,5 @@ export default class PortalSupportReachUs extends LightningElement {
         mod.classList.remove('default_panel');
         mod.classList.add('active_panel');
     }
-
-
 
 }

@@ -1,0 +1,28 @@
+<template>
+    <div class="customBorderlessCardWhite">
+
+        <!-- Header Part -->
+        <div class="slds-m-vertical_small">
+            <div style="display: flex;justify-content: center;align-items: center;">
+                <div class="triangleRight" style="width:20px;">
+                    &nbsp;
+                </div>
+                <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                    <div style="width:100%;">
+                        <span class="text-small text-darkGray slds-p-left_small"><slot name="cardTitle"></slot></span>
+                    </div>
+                </div>
+                <div class="text-xxsmall">
+                    <slot name="cardButton"></slot>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Body Part -->
+        <slot name="cardBody"></slot>
+
+        
+    </div>
+    
+</template>
