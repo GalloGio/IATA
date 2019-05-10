@@ -8442,6 +8442,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>NewGen_PCI_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI</label>
+        <queue>NewGen_PCI</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>NewGen_PCI_Africa_Middle_East_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>NewGen PCI - Africa &amp; Middle East</label>
