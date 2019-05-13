@@ -81,7 +81,7 @@ public with sharing class ISSP_PersonalInformation {
     public string iataCode {get;set;}
     public string accountType {get;private set;}
     public list<String> errorMessage {get; set;}
-
+    
     //this checks if there's an open Annual Revalidation case on the user's account
     public Boolean revCaseOpen {
         get{
@@ -269,7 +269,7 @@ public with sharing class ISSP_PersonalInformation {
     public List<ISSP_AMS_Accreditation.AccountChanges> getAccountChangesList(){
         List<ISSP_AMS_Accreditation.AccountChanges> accChanges_List = new List<ISSP_AMS_Accreditation.AccountChanges>();
 
-        Account acc = [Select Phone,PhoneNational__c,Fax,FaxNational__c,Email__c,TradeName__c,WebSite From Account Where id=:con.Account.Id limit 1];
+        Account acc = [Select Phone, PhoneNational__c, Fax, FaxNational__c, Email__c, TradeName__c, WebSite, GDP_Opt_In__c From Account Where id=:con.Account.Id limit 1];
 
         if(acc.Phone != con.Account.Phone)
             accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Phone',acc.Phone,con.Account.Phone));
@@ -292,13 +292,16 @@ public with sharing class ISSP_PersonalInformation {
         if(acc.WebSite != con.Account.WebSite)
             accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('WebSite',acc.WebSite,con.Account.WebSite));
         
+        if(acc.GDP_Opt_In__c != con.Account.GDP_Opt_In__c)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('GDP_Opt_In__c',String.valueOf(acc.GDP_Opt_In__c),String.valueOf(con.Account.GDP_Opt_In__c)));
+        
         return accChanges_List;
     }
 	
 	public Pagereference saveContact(){
         try {
         	isEditMode = false;
-            update con;
+        	update con;
         	popContact();  
         	Pagereference homePage = Page.ISSP_Homepage;
         	homePage.setRedirect(true); 
@@ -314,7 +317,7 @@ public with sharing class ISSP_PersonalInformation {
                             IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
                             Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
                             IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-                            Website, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, RecordTypeId, RecordType.DeveloperName, DDS_Status__c,
+                            Website, GDP_Opt_In__c, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, RecordTypeId, RecordType.DeveloperName, DDS_Status__c,
                             Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c
                         FROM Account 
                         WHERE Id=:con.Account.Id LIMIT 1];
@@ -472,7 +475,7 @@ public with sharing class ISSP_PersonalInformation {
         					IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
                             Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
                             IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-                            Website, Status__c, Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c
+                            Website, GDP_Opt_In__c, Status__c, Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c
         					FROM Account
                             WHERE Id = :selectedBranchAccount];
         
