@@ -2184,7 +2184,7 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
 			fieldsOfObject.put('Dossier_Reception_Date__c',Date.today());
 
-			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar((model == 'A'? AMS_Utils.RECTYPE_IEPMODELA : (model == 'B'? AMS_Utils.AMS_Utils.RECTYPE_IEPMODELB : (model == 'B+'? AMS_Utils.AMS_Utils.RECTYPE_IEPMODELBPLUS : AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP))), acc.Id, fieldsOfObject);		
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar((model == 'A'? AMS_Utils.RECTYPE_IEPMODELA : (model == 'B'? AMS_Utils.RECTYPE_IEPMODELB : (model == 'B+'? AMS_Utils.RECTYPE_IEPMODELBPLUS : AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP))), acc.Id, fieldsOfObject);		
 	        oscarsToInsert.add(oscar);
 	        accOscarObjsMap.get(acc.Id).oscar = oscar;
 		}
