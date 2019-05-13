@@ -1,13 +1,5 @@
 public without sharing class GADMwrapper_CTRL {
 
-    /*@AuraEnabled
-    public static boolean isAccessGranted(Id userId) {
-        if(String.isNotBlank(userId)) {
-            return Contact_Roles_Helper.isAccessGranted('GADM User', 'GADM');
-        }
-        return false;
-    }*/
-
 
     @AuraEnabled
     public static Map<String, String> getUserRoles(Id userId) {

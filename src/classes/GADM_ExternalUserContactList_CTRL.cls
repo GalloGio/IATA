@@ -1,4 +1,4 @@
-public with sharing class Data_Submission_List_CTRL {
+public without sharing class GADM_ExternalUserContactList_CTRL {
 
 
     private static final Integer MAX_QUERY_RECORDS = 2000;
@@ -50,7 +50,7 @@ public with sharing class Data_Submission_List_CTRL {
             try {
                 String sobject_internal_name = parseSObjectName(namespace, sobject_name);
                 if(!Schema.getGlobalDescribe().get(sobject_internal_name).getDescribe().isAccessible()){
-                    throw new Data_Submission_List_CTRL.DynamicTableException('User doesn\'t have access to object: ' + Schema.getGlobalDescribe().get(sobject_internal_name).getDescribe().getName() + '.');
+                    throw new GADM_ExternalUserContactList_CTRL.DynamicTableException('User doesn\'t have access to object: ' + Schema.getGlobalDescribe().get(sobject_internal_name).getDescribe().getName() + '.');
                 }
                 parseFieldsString(namespace, sobject_internal_name, field_names);
                 setColumnsLabels(field_labels);
@@ -59,7 +59,7 @@ public with sharing class Data_Submission_List_CTRL {
                 setOverridedFieldTypeColumns(override_field_type);
             } catch (DynamicTableException e){
                 error_message = e.getMessage();
-                column_metadata = new Map<String, ColumnMetadata>(); 
+                column_metadata = new Map<String, ColumnMetadata>();
             }
         }
 
@@ -213,7 +213,7 @@ public with sharing class Data_Submission_List_CTRL {
                 throw new DynamicTableException('Unknown field: ' + field_name + '.');
             }
             if(!describe_field_result.isAccessible()){
-                throw new Data_Submission_List_CTRL.DynamicTableException('User doesn\'t have access to field: ' + describe_field_result.getName() + '.');
+                throw new GADM_ExternalUserContactList_CTRL.DynamicTableException('User doesn\'t have access to field: ' + describe_field_result.getName() + '.');
             }
             if(field_api_name != null){
                 field_api_name += '.' + describe_field_result.getName();
@@ -225,7 +225,6 @@ public with sharing class Data_Submission_List_CTRL {
         }
 
     }
-
 
     private class SObjectWrapper {
         String error_message;
@@ -242,5 +241,72 @@ public with sharing class Data_Submission_List_CTRL {
     }
 
     private class DynamicTableException extends Exception {}
+
+
+
+    public class UserInformation {
+        @AuraEnabled
+        public List<Contact_Roles__c> grantedRoles {get; set;}
+        @AuraEnabled
+        public List<Contact_Roles__c> grantedBusinessUnits {get; set;}
+        @AuraEnabled
+        public List<Account> visibleAccounts {get; set;}
+    }
+
+    @AuraEnabled
+    public static UserInformation getCurrentUserInformation(Id userId) {
+
+        UserInformation info = new UserInformation();
+        if(String.isNotBlank(userId)) {
+            info.grantedBusinessUnits = getBusinessUnits(userId);
+            info.grantedRoles = getGrantedRoles(userId);
+            info.visibleAccounts = getVisibleAccounts(userId);
+        }
+
+        return info;
+    }
+
+    //@AuraEnabled
+    private static List<Contact_Roles__c> getBusinessUnits(Id userId) {
+
+        List<Contact_Roles__c> businessUnitsToReturn = new List<Contact_Roles__c>();
+
+        if(String.isNotBlank(userId)) {
+            businessUnitsToReturn = Contact_Roles_Helper.getGrantedBusinessUnits(userId);
+        }
+
+        return businessUnitsToReturn;
+    }
+
+    //@AuraEnabled
+    private static List<Contact_Roles__c> getGrantedRoles(Id userId) {
+        List<Contact_Roles__c> grantedRoles = new List<Contact_Roles__c>();
+
+        if(String.isNotBlank(userId)) {
+            grantedRoles = Contact_Roles_Helper.getGrantedUserRoles(userId, 'GADM');
+        }
+
+        return grantedRoles;
+    }
+
+    private static List<Account> getVisibleAccounts(Id userId) {
+        List<Account> visibleAccounts = new List<Account>();
+
+        if(String.isNotBlank(userId)) {
+            visibleAccounts = Contact_Roles_Helper.getUserAccounts(userId);
+        }
+
+        return visibleAccounts;
+    }
+
+
+    @AuraEnabled
+    public static List<Contact_Roles_Helper.AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnitsIds) {
+
+        //return Contact_Roles_Helper.getAggregatedContactsVisibleToUser(userId);
+        return Contact_Roles_Helper.getContactsVisibleToUser(userId, isSuperUser, isGadmUser, businessUnitsIds);
+    }
+
+
 
 }

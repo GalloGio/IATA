@@ -5,7 +5,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
     private static void setup() {
         IATA_ISO_Country__c canada = createIataCountry('Canada', 'CA', 'Canada');
         Account testAccount = createTestAccount('Test Account', canada);
-        Contact testContact = createTestContact(testAccount);
+        Contact testContact = createTestContact(testAccount, 'testContactRoleServiceAccessTrigger@test.com');
         User testUser = createTestUser(testContact);
 
 
@@ -86,14 +86,14 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         return acc;
     }
 
-    private static Contact createTestContact(Account account) {
+    private static Contact createTestContact(Account account, String email) {
         Contact testContact = new Contact();
         testContact.AccountId = account.id;
         testContact.Firstname = 'teste3_4';
         testContact.Lastname='test3';
         testContact.Phone = '911111113';
         testContact.MobilePhone = '911111113';
-        testContact.Email = 'testContactRoleServiceAccessTrigger@test.com';
+        testContact.Email = email;
         testContact.BSP_CASS_Payment_contact__c = false;
         testContact.User_Portal_Status__c = 'Approved';
 
@@ -271,6 +271,48 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         Test.stopTest();
 
         System.assertEquals(true, errorMessage.contains('DUPLICATE_VALUE'), 'Updating duplicates should not be allowed!');
+    }
+
+
+    @IsTest
+    private static void fillAccountAndContactInsertTest() {
+
+        List<Contact> contacts = [SELECT Id FROM Contact];//testContact
+        List<Account> accounts = [SELECT Id FROM Account];//testAccount
+
+        Test.startTest();
+
+        List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Account__c, Contact__c FROM Contact_Role_Service_Access__c];
+
+        Test.stopTest();
+
+        System.assertEquals(false, accesses[0].Account__c == null, 'Field Account__c should be filled in trigger!');
+        System.assertEquals(false, accesses[0].Contact__c == null, 'Field Contact__c should be filled in trigger!');
+        System.assertEquals(true, accesses[0].Account__c == accounts[0].Id, 'Field Account__c filled incorrectly!');
+        System.assertEquals(true, accesses[0].Contact__c == contacts[0].Id, 'Field Contact__c filled incorrectly!');
+    }
+
+
+    @IsTest
+    private static void fillAccountAndContactUpdateTest() {
+
+        List<Contact> contacts = [SELECT Id FROM Contact];//testContact
+        List<Account> accounts = [SELECT Id FROM Account];//testAccount
+
+        Test.startTest();
+
+        List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Account__c, Contact__c, Status__c FROM Contact_Role_Service_Access__c];
+        accesses[0].Status__c = 'Granted';
+        update  accesses[0];
+
+        Test.stopTest();
+
+        System.assertEquals(false, accesses[0].Account__c == null, 'Field Account__c should be filled in trigger!');
+        System.assertEquals(false, accesses[0].Contact__c == null, 'Field Contact__c should be filled in trigger!');
+        System.assertEquals(true, accesses[0].Account__c == accounts[0].Id, 'Field Account__c filled incorrectly!');
+        System.assertEquals(true, accesses[0].Contact__c == contacts[0].Id, 'Field Contact__c filled incorrectly!');
+
+
     }
 
 }

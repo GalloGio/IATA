@@ -15,7 +15,7 @@ public class OneId_RegistrationHelper_GADM_TEST {
         insert contactRoles;
 
         Contact_Roles__c contactRoles2 = new Contact_Roles__c();
-        contactRoles2.Name = 'Service Power User';
+        contactRoles2.Name = 'Power User';
         contactRoles2.RecordTypeId = externalRecordTypeId;
         insert contactRoles2;
 
@@ -48,7 +48,10 @@ public class OneId_RegistrationHelper_GADM_TEST {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
         insert country ;
 
-        Account acc1 = new Account(Name='testAccount1', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
+        Account parentAcc = new Account(Name='parentAccount1', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
+        insert parentAcc;
+
+        Account acc1 = new Account(Name='testAccount1', Top_Parent__c = parentAcc.Id, Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
         insert acc1;
 
     }
@@ -56,7 +59,7 @@ public class OneId_RegistrationHelper_GADM_TEST {
     @IsTest
     private static void gadmRegistrationTest() {
 
-        Account acc1 = [SELECT Id, Name, Type, Sector__c, ParentId FROM Account];
+        Account acc1 = [SELECT Id, Name, Type, Sector__c, ParentId, Top_Parent__c FROM Account WHERE Name = 'testAccount1'];
 
         String serviceName = 'GADM';
 

@@ -302,7 +302,7 @@ public without sharing class PBI_Container_CTRL {
     @AuraEnabled
     public static Map<String, List<Contact_Role_Service_Permission__c>> getAvailableDashboardCategoriesForUser(Id userId) {
 
-        List<Contact_Roles__c> userRoles = Contact_Roles_Helper.getUserRoles(userId);
+        List<Contact_Roles__c> userRoles = Contact_Roles_Helper.getAllUserRoles(userId, 'GADM');
         Set<Id> roleIds = new Set<Id>();
 
         for(Contact_Roles__c role : userRoles) {

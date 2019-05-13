@@ -1,12 +1,23 @@
 ({
 
     initializeComponent : function(component, event, helper) {
+        debugger;
+        helper.getTableData(component, event);
+        /*component.set('v.PrivateMatchCriteria', component.get('v.MatchCriteria'));
+        component.set('v.SelectedRecordsMap', new Map());
+        helper.initializePageSizeSelectList(component);
+        helper.initializeColumnMetaData(component);
+        //helper.toggleTable(component);*/
+    },
+
+    /*getTableData : function(component, event) {
         component.set('v.PrivateMatchCriteria', component.get('v.MatchCriteria'));
         component.set('v.SelectedRecordsMap', new Map());
         helper.initializePageSizeSelectList(component);
         helper.initializeColumnMetaData(component);
         //helper.toggleTable(component);
-    },
+
+    },*/
 
     updateMatchCriteria : function(component, event, helper) {
         component.set('v.PrivateMatchCriteria', event.getParam('value'));
@@ -96,33 +107,56 @@
         navigate.fire();
     },
 	 handleDetailsShow: function(component,event,helper) {
+	     debugger;
          var rowNum = event.getSource().get("v.name");
          var rowData = component.get('v.AllRecords')[rowNum];
-         var pageNum = component.get('v.PageNumber');
+         /*var pageNum = component.get('v.PageNumber');
          var rowsPerPage = component.get('v.PageSize');
          var idx = (rowsPerPage * (pageNum-1)) + rowNum;
          console.log('idx: '+idx);
          var modalBody;
 
          var displayData= [];
-         var i = 0;
+         var i = 0;*/
 
 
-         for(let row in component.get("v.TableRows")) {
+         /*for(let row in component.get("v.TableRows")) {
 
              for(let col in component.get("v.TableColumns")) {
                 component.get("v.TableRows")[row][col]["label"] = component.get("v.TableColumns")[col].field_label;
             }
+         }*/
+
+
+         let selectedUserInfo = {};
+
+         selectedUserInfo.con = {};
+         selectedUserInfo.actorsData = {};
+         selectedUserInfo.rolesData= {};
+         selectedUserInfo.buData = {};
+
+         if(! $A.util.isEmpty(rowData.Contact)) {
+             selectedUserInfo.con = rowData.Contact;
+         }
+         if(! $A.util.isEmpty(rowData.ActorData)) {
+             selectedUserInfo.actorsData = rowData.ActorData;
+         }
+         if(! $A.util.isEmpty(rowData.RolesData)) {
+            selectedUserInfo.rolesData= rowData.RolesData;
+         }
+         if(! $A.util.isEmpty(rowData.BusinessUnitsData)) {
+             selectedUserInfo.buData = rowData.BusinessUnitsData;
          }
 
 
-         let id = rowData.Id;
-         let contact = {'Id' : rowData.Id, 'Name' : rowData.Name};
-         component.set('v.contact', contact);
+         /*let id = rowData.Id;
+         let contact = {'Id' : rowData.Id, 'Name' : rowData.Name};*/
+         console.log('selectedUserInfo:: ' + JSON.stringify(selectedUserInfo));
+         component.set('v.selectedUserInfo', selectedUserInfo);
          component.set("v.detailsShown", !component.get("v.detailsShown"));
 
-         console.log(JSON.stringify(component.get("v.TableRows")[rowNum]));
-         component.set("v.detailsData", component.get("v.TableRows")[rowNum]);
+         //console.log(JSON.stringify(component.get("v.TableRows")[rowNum]));
+         //component.set("v.detailsData", component.get("v.TableRows")[rowNum]);
 
 		 helper.toggleTable(component);
 		 helper.toggleDetails(component);
@@ -130,8 +164,15 @@
     },
     handleDetailsBackEvt: function(component,event,helper) {
          component.set("v.detailsShown", !component.get("v.detailsShown"));
-         helper.toggleTable(component);
-         helper.toggleDetails(component);
+         let dataModified = event.getParam('dataModified');
+         if(dataModified === true) {
+             helper.getTableData(component, event);
+         }else{
+             helper.toggleTable(component);
+             helper.toggleDetails(component);
+         }
+
+
 
     },
 

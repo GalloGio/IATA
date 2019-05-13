@@ -1,5 +1,13 @@
 ({
 
+    getTableData : function(component, event) {
+        component.set('v.PrivateMatchCriteria', component.get('v.MatchCriteria'));
+        component.set('v.SelectedRecordsMap', new Map());
+        this.initializePageSizeSelectList(component);
+        this.initializeColumnMetaData(component);
+        //this.toggleTable(component);
+    },
+
     initializePageSizeSelectList : function(component) {
         let page_size = component.get('v.PageSize');
         let available_page_sizes = component.get('v.AvailablePageSizes');
@@ -17,46 +25,199 @@
     initializeColumnMetaData : function(component) {
         this.toggleSpinner(component);
         let column_metadata = {"Name":{"field_type":"STRING","field_label":"Name","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Name"},
-                             "Id":{"field_type":"STRING","field_label":"Id","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Id"},
+                             "Contact":{"field_type":"STRING","field_label":"Contact","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Contact"},
                              "Actor":{"field_type":"STRING","field_label":"Actor","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Actor"},
-                             "Roles":{"field_type":"STRING","field_label":"Roles","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Roles"}};
+                             "ActorData":{"field_type":"STRING","field_label":"ActorData","field_is_sortable":false,"field_is_reference":false,"field_api_name":"ActorData"},
+                             "Roles":{"field_type":"STRING","field_label":"Roles","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Roles"},
+                             "RolesData":{"field_type":"STRING","field_label":"RolesData","field_is_sortable":false,"field_is_reference":false,"field_api_name":"RolesData"},
+                             "Business Units":{"field_type":"STRING","field_label":"Business Units","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Business Units"},
+                             "BusinessUnitsData":{"field_type":"STRING","field_label":"BusinessUnitsData","field_is_sortable":false,"field_is_reference":false,"field_api_name":"BusinessUnitsData"}};
 
         let table_columns = [{"is_selection_column":false,"field_name":"Name","field_api_name":"Name","field_label":"Name","field_type":"STRING","field_is_reference":false,"field_is_sortable":false},
                           {"is_selection_column":false,"field_name":"Actor","field_api_name":"Actor","field_label":"Actor","field_type":"STRING","field_is_reference":false,"field_is_sortable":false},
-                          {"is_selection_column":false,"field_name":"Roles","field_api_name":"Roles","field_label":"Roles","field_type":"STRING","field_is_reference":false,"field_is_sortable":false}];
+                          {"is_selection_column":false,"field_name":"Roles","field_api_name":"Roles","field_label":"Roles","field_type":"STRING","field_is_reference":false,"field_is_sortable":false},
+                          {"is_selection_column":false,"field_name":"Business Units","field_api_name":"Business Units","field_label":"Business Units","field_type":"STRING","field_is_reference":false,"field_is_sortable":false}];
 
         component.set('v.ColumnMetadata', column_metadata);
         component.set('v.TableColumns', table_columns);
-        this.retrieveRecords(component, true);
-        //this.toggleSpinner(component);
+        this.getCurrentUserInfo(component, event);
+        //this.getGrantedRoles(component);
+        //this.retrieveRecords(component, true);
     },
 
-    retrieveTotalRecords : function(component){
-        let action = component.get('c.getTotalRecords');
+
+    getCurrentUserInfo : function(component, event) {
+        let action = component.get('c.getCurrentUserInformation');
         action.setParams({
-           sobject_name: component.get('v.SObjectName'),
-           match_criteria: component.get('v.PrivateMatchCriteria')
+            'userId' : $A.get('$SObjectType.CurrentUser.Id')
         });
         action.setCallback(this, function(response){
-            let state = response.getState();
-            if(state === 'SUCCESS'){
-                let total_records = parseInt(response.getReturnValue());
-                component.set('v.TotalRecords', total_records);
-            } else if(state === 'ERROR'){
-                this.handleErrorMessage(component, response.getError());
-                this.toggleTable(component);
-                this.toggleSpinner(component);
+            const state = response.getState();
+            if(state === 'SUCCESS') {
+                const userInformation = response.getReturnValue();
+                if(! $A.util.isEmpty(userInformation)) {
+
+                    component.set('v.currentUserInfo', userInformation);
+
+                    let businessUnitsIds = [];
+                    if(! $A.util.isEmpty(userInformation.grantedBusinessUnits)) {
+                        let units = userInformation.grantedBusinessUnits;
+                        for(let i in units) {
+                            businessUnitsIds.push(units[i].Id);
+                        }
+                    }
+
+                    let grantedRoles = userInformation.grantedRoles;
+                    if(! $A.util.isEmpty(grantedRoles)) {
+
+                        let isPowerUser = false;
+                        let isSuperUser = false;
+                        let isGadmUser = false;
+
+                        for(let i in grantedRoles) {
+                            if(grantedRoles[i].Name === 'Service Power User') {
+                                isPowerUser = true;
+                                continue;
+                            }
+                            if(grantedRoles[i].Name === 'Service Super User') {
+                                isSuperUser = true;
+                                continue;
+                            }
+                            if(grantedRoles[i].Name === 'GADM User') {
+                                isGadmUser = true;
+                                continue;
+                            }
+                        }
+
+
+                        if(isPowerUser) {//Power User
+
+                            component.set('v.isPowerUser', isPowerUser);
+                            this.retrieveRecords(component, true, false, false, businessUnitsIds);
+
+                        }else if(isSuperUser && !isPowerUser) {//Super User
+
+                            component.set('v.isSuperUser', isSuperUser);
+                            this.retrieveRecords(component, true, true, false, businessUnitsIds);
+
+                        }else if(!isPowerUser && ! isSuperUser && isGadmUser) {//isGadmUser
+
+                            this.retrieveRecords(component, true, false, true, businessUnitsIds);
+
+                        }else{
+                            //TODO:show empty table
+                        }
+
+                    }else{
+                        //TODO:empty granted roles - show empty table
+                    }
+
+
+                }else{
+                    //TODO:error
+                }
+
+            }else{
+                //TODO:error
+                console.log('getCurrentUserInfo error');
             }
-            this.toggleTable(component);
-            this.toggleSpinner(component);
         });
         $A.enqueueAction(action);
     },
 
-    retrieveRecords : function(component, criteria_have_changed){
-        let action = component.get('c.getContactsVisibleToUser');
+    /*getGrantedRoles : function(component, event) {
+        let action = component.get('c.getGrantedRoles');
         action.setParams({
-            'userId' : $A.get("$SObjectType.CurrentUser.Id")
+            'userId' : $A.get('$SObjectType.CurrentUser.Id')
+        });
+        action.setCallback(this, function(response){
+            const state = response.getState();
+            if(state === 'SUCCESS') {
+                const grantedRoles = response.getReturnValue();
+                if(! $A.util.isEmpty(grantedRoles)) {
+
+                    let isPowerUser = false;
+                    let isSuperUser = false;
+                    let isGadmUser = false;
+
+                    for(let i in grantedRoles) {
+                        if(grantedRoles[i].Name === 'Power User') {
+                            isPowerUser = true;
+                            continue;
+                        }
+                        if(grantedRoles[i].Name === 'Super User') {
+                            isSuperUser = true;
+                            continue;
+                        }
+                        if(grantedRoles[i].Name === 'GADM User') {
+                            isGadmUser = true;
+                            continue;
+                        }
+                    }
+
+                    component.set('v.isPowerUser', isPowerUser);
+                    component.set('v.isSuperUser', isSuperUser);
+                    component.set('v.isGadmUser', isGadmUser);
+
+                    if(isPowerUser) {
+                        this.retrieveRecords(component, true, false, false);
+                    }
+                    else if(isSuperUser && !isPowerUser) {//is Super User
+                        this.getBusinessUnits(component, event, true);
+                    }else {//isGadmUser
+                        this.retrieveRecords(component, true, false, true);
+                    }
+
+                }else{
+                    //TODO:error
+
+                }
+            }else{
+                //TODO:error
+                this.toggleTable(component)
+            }
+        });
+        $A.enqueueAction(action);
+
+    },
+
+    getBusinessUnits : function(component, even) {
+        let action = component.get('c.getBusinessUnitsForSuperUser');
+        action.setCallback(this, function(response){
+            const state = response.getState();
+            if(state === 'SUCCESS') {
+                const businessUnits = response.getReturnValue();
+                if(! $A.util.isEmpty(businessUnits)) {
+
+                    let businessUnitsIds = [];
+                    for(let i in businessUnits) {
+                        businessUnitsIds.push(businessUnits[i].Id);
+                    }
+
+                    component.set('v.currentUserBusinessUnits', businessUnitsIds);
+                }
+
+                this.retrieveRecords(component, true, true, false);
+
+            }else{
+                //TODO:error
+                this.toggleTable(component);
+                this.toggleSpinner(component);
+            }
+        });
+        $A.enqueueAction(action);
+
+    },*/
+
+    retrieveRecords : function(component, criteria_have_changed, isSuperUser, isGadmUser, businessUnits){
+        debugger;
+        let action = component.get('c.getContactsVisibleToUser');
+        //let businessUnits = component.get('v.currentUserBusinessUnits');
+        action.setParams({
+            'userId' : $A.get("$SObjectType.CurrentUser.Id"),
+            'isSuperUser' : isSuperUser,
+            'isGadmUser' : isGadmUser,
+            'businessUnitsIds' : businessUnits
         });
         action.setCallback(this, function(response){
             let state = response.getState();
@@ -66,23 +227,62 @@
                     console.log('result:: ' + JSON.stringify(result));
                     let data = [];
                     for(let i = 0; i < result.length; i++) {
+
                         let roles = result[i].roles;
-                        let rolesString = roles[0];
-                        for(let j = 1; j < roles.length; j++) {
-                            rolesString += ', ' + roles[j]
+                        let rolesString = '';
+                        if(! $A.util.isEmpty(roles)) {
+                           rolesString = roles[0];
+                           for(let j = 1; j < roles.length; j++) {
+                               rolesString += ', ' + roles[j]
+                           }
                         }
+
+                        let rolesData = [];
+                        if(! $A.util.isEmpty(result[i].rolesData)) {
+                            rolesData = result[i].rolesData;
+                        }
+
+
+                        let businessUnits = result[i].businessUnits;
+                        let businessUnitsString = '';
+                        if(! $A.util.isEmpty(businessUnits)) {
+                           businessUnitsString = businessUnits[0];
+                           for(let j = 1; j < businessUnits.length; j++) {
+                               businessUnitsString += ', ' + businessUnits[j];
+                           }
+                        }
+
+                        let businessUnitData = [];
+                        if(! $A.util.isEmpty(result[i].buData)) {
+                            businessUnitData = result[i].buData;
+                        }
+
+
                         let actors = result[i].actors;
-                        let actorsString = actors[0];
-                        for(let j = 1; j < actors.length; j++) {
-                            actorsString += ', ' + actors[j]
+                        let actorsString = '';
+                        if(! $A.util.isEmpty(actors)) {
+                           actorsString = actors[0];
+                           for(let j = 1; j < actors.length; j++) {
+                               actorsString += ', ' + actors[j]
+                           }
+                        }
+
+                        let actorsData = [];
+                        if(! $A.util.isEmpty(result[i].actorsData)) {
+                            actorsData = result[i].actorsData;
+                        }
+
+                        let contact = {};
+                        if(! $A.util.isEmpty(result[i].con)) {
+                            contact = result[i].con;
                         }
 
                         let firstName = '';//firstName on Contact is NOT mandatory
-                        if(! $A.util.isEmpty(result[i].con.FirstName)) {
-                            firstName = ', ' + result[i].con.FirstName;
+                        if(! $A.util.isEmpty(contact.FirstName)) {
+                            firstName = ', ' + contact.FirstName;
                         }
 
-                        let row = {'Actor' : actorsString, 'Id' : result[i].con.Id, 'Name' : result[i].con.LastName + firstName, 'Roles' : rolesString};
+                        let row = {'Contact' : contact, 'Name' : contact.LastName + firstName, 'Actor' : actorsString, 'ActorData': actorsData, 'Roles' : rolesString, 'RolesData' : rolesData, 'Business Units' : businessUnitsString, 'BusinessUnitsData' : businessUnitData};
                         data.push(row);
                     }
 
@@ -105,6 +305,28 @@
                 this.handleErrorMessage(component, response.getError());
             }
 
+        });
+        $A.enqueueAction(action);
+    },
+
+    retrieveTotalRecords : function(component){
+        let action = component.get('c.getTotalRecords');
+        action.setParams({
+           sobject_name: component.get('v.SObjectName'),
+           match_criteria: component.get('v.PrivateMatchCriteria')
+        });
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            if(state === 'SUCCESS'){
+                let total_records = parseInt(response.getReturnValue());
+                component.set('v.TotalRecords', total_records);
+            } else if(state === 'ERROR'){
+                this.handleErrorMessage(component, response.getError());
+                this.toggleTable(component);
+                this.toggleSpinner(component);
+            }
+            this.toggleTable(component);
+            this.toggleSpinner(component);
         });
         $A.enqueueAction(action);
     },

@@ -1,2 +1,3 @@
 <aura:event type="COMPONENT" description="GADM_ExternalUserContactList_EVT">
+    <aura:attribute name="dataModified" type="Boolean" default="false"/>
 </aura:event>

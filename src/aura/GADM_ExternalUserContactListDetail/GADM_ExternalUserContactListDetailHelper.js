@@ -1,245 +1,179 @@
 ({
     handleInit : function(component, event) {
-        /*this.toggleSpinner(component);
-        let action = component.get('c.getAccounts');
-        action.setCallback(this, function(response){
-            const state = response.getState();
-            if(state === 'SUCCESS') {
-                const accounts = response.getReturnValue();
-                if(! $A.util.isEmpty(accounts)) {
-                    component.set('v.accounts', accounts);
-                    this.getUserAccount(component, event);
-                }
-            }else{
-                this.toggleSpinner(component);
-            }
-        });
-        $A.enqueueAction(action);*/
+        debugger;
         this.toggleSpinner(component);
-        this.getContactDetails(component, event);
+        this.prepareManagementData(component, event);
     },
 
 
-    getContactDetails : function(component, event) {
+    prepareManagementData : function(component, event) {
         debugger;
-        let action = component.get('c.getContactDetails');
-        let contactId = component.get('v.contact').Id;
+        let selectedUserInfo = component.get('v.selectedUserInfo');
+        let currentUserInfo = component.get('v.currentUserInfo');
+        let isSuperUser = component.get('v.isSuperUser');
+        let contact = selectedUserInfo.con;
+        component.set('v.contact', contact);
+
+        let action = component.get('c.prepareManagementData');
         action.setParams({
-            'contactId' : contactId
+            'currentUserData' : JSON.stringify(currentUserInfo),
+            'selectedUserData' : JSON.stringify(selectedUserInfo),
+            'isSuperUser' : isSuperUser
         });
-        action.setCallback(this, function(response){
-            const state = response.getState();
-            if(state === 'SUCCESS') {
-                const contact = response.getReturnValue();
-                if(! $A.util.isEmpty(contact)) {
-                    component.set('v.contact', contact);
-
-                    this.getAllRoles(component, event);
-
-                }else{
-                    //TODO:handle error
-                    this.toggleSpinner(component);
-                }
-            }else{
-                //TODO:handle error
-                this.toggleSpinner(component);
-            }
-        });
-        $A.enqueueAction(action);
-    },
-
-
-    getAllRoles : function(component, event) {
-        debugger;
-        let action = component.get('c.getAllRoles');
-        action.setCallback(this, function(response){
-            const state = response.getState();
-            if(state === 'SUCCESS') {
-                const roles = response.getReturnValue();
-                if(! $A.util.isEmpty(roles)) {
-                    component.set('v.roles', roles);
-                    for(let role in roles) {
-                        roles[role].checked = false;
-                        roles[role].isEditable = false;
-                    }
-
-                    this.getManagingUserRoles(component, event);
-
-                }else{
-                    //TODO:handle error
-                    this.toggleSpinner(component);
-                }
-
-            }else{
-                //TODO:handle error
-                this.toggleSpinner(component);
-            }
-        });
-        $A.enqueueAction(action);
-    },
-
-
-    getManagingUserRoles : function(component, event) {
-        let action = component.get('c.getManagingUserGrantedUserRoles');
-        action.setCallback(this, function(response){
-            const state = response.getState();
-            if(state === 'SUCCESS') {
-                const managingUserRoles = response.getReturnValue();
-                if(! $A.util.isEmpty(managingUserRoles)) {
-                    let allRoles = component.get('v.roles');
-                    for(let i = 0; i < allRoles.length; i ++) {
-                        for(let j = 0; j < managingUserRoles.length; j++) {
-                            if(allRoles[i].Id == managingUserRoles[j].Id) {
-                                allRoles[i].isEditable = true;
-                                break;
-                            }
-                        }
-                    }
-                    component.set('v.roles', allRoles);
-                    component.set('v.managingUserRoles', managingUserRoles);
-
-                    this.getUserGrantedRoles(component, event);
-
-                }else{
-                    //TODO:handle error
-                    this.toggleSpinner(component);
-                }
-
-            }else{
-                //TODO:handle error
-                this.toggleSpinner(component);
-            }
-        });
-        $A.enqueueAction(action);
-    },
-
-
-    getUserGrantedRoles : function(component, event) {
-        let action = component.get('c.getGrantedUserRoles');
-        let contact = component.get('v.contact');
-        action.setParams({
-            'contactId' : contact.Id
-        });
-        action.setCallback(this, function(response){
-            const state = response.getState();
-            if(state === 'SUCCESS') {
-                let userGrantedRoles = response.getReturnValue();
-                if(! $A.util.isEmpty(userGrantedRoles)) {
-
-                    let allRoles = component.get('v.roles');
-                    for(let i = 0 ; i < allRoles.length; i ++) {
-                        for(let j = 0; j < userGrantedRoles.length; j ++) {
-                            if(allRoles[i].Id == userGrantedRoles[j].Id) {
-                                allRoles[i].checked = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    component.set('v.roles', allRoles);
-                    component.set('v.userGrantedRoles', userGrantedRoles);
-
-                    this.getManagingUserAccountsWithGrantedAccess(component, event);
-
-                }else{
-                    //TODO:handle error
-                    this.toggleSpinner(component);
-                }
-            }else{
-                //TODO:handle error
-                let error = response.getError();
-                console.log(response.getError());
-                this.toggleSpinner(component);
-            }
-        });
-        $A.enqueueAction(action);
-
-    },
-
-    getManagingUserAccountsWithGrantedAccess : function(component, event) {
-        let action = component.get('c.getGrantedAccessAccountsForManagingUser');
-        /*let contactId = component.get('v.contact').Id;
-        action.setParams({
-            'contactId' : contactId
-        });*/
         action.setCallback(this, function(response){
             const state = response.getState();
             if(state === 'SUCCESS') {
                 const result = response.getReturnValue();
                 if(! $A.util.isEmpty(result)) {
-                    for(let account in result) {
-                        result[account].checked = false;
+
+                    let roles = result.roles;
+                    let rolesData = [];
+                    if(! $A.util.isEmpty(roles)) {
+                        for(let i in roles) {
+                            rolesData.push({value:roles[i], key:i});
+                        }
                     }
-                    component.set('v.managingUserAccessGrantedAccounts', result);
 
-                    this.getAccountsWithGrantedAccess(component, event);
+                    let businessUnits = result.businessUnits;
+                    let businessUnitsData = [];
+                    if(! $A.util.isEmpty(businessUnits)) {
+                        for(let i in businessUnits) {
+                            businessUnitsData.push({value: businessUnits[i], key:i});
+                        }
+                    }
 
-                }else{
-                    //TODO:handle error
+                    let actors = result.actors;
+                    let actorsData = [];
+                    if(! $A.util.isEmpty(actors)) {
+                        for(let i in actors) {
+                            actorsData.push({value:actors[i], key:i})
+                        }
+                    }
+
+                    component.set('v.dataActors', actorsData);
+                    component.set('v.dataBusinessUnits', businessUnitsData);
+                    component.set('v.dataRoles', rolesData);
+
+                    //save the copy and use it as original data
+                    let copy = JSON.stringify(result);
+                    component.set('v.copyData', copy);
+
+
+                    component.set('v.showTable', true);
                     this.toggleSpinner(component);
-                }
 
+                }
             }else{
-                //TODO:handle error
+                console.log('prepareManagementData error');
+                this.handleErrorMessage(component, 'Unable to get user data!');
                 this.toggleSpinner(component);
             }
-
         });
         $A.enqueueAction(action);
-
     },
 
 
-    getAccountsWithGrantedAccess : function(component, event) {
+    handleSave : function(component, event) {
         debugger;
-        let action = component.get('c.getGrantedAccessAccounts');
-        let contactId = component.get('v.contact').Id;
+        this.toggleSpinner(component);
+        let roles = component.get('v.dataRoles');
+        let businessUnits = component.get('v.dataBusinessUnits');
+        let actors = component.get('v.dataActors');
+        let originalData = component.get('v.copyData');
+
+        /*console.log('roles:: ', JSON.stringify(roles));
+        console.log('businessUnits:: ', JSON.stringify(businessUnits));
+        console.log('actors:: ', JSON.stringify(actors));
+        console.log('originalData:: ', JSON.stringify(originalData));*/
+
+
+        let dataRoles = {};
+        if(! $A.util.isEmpty(roles)) {
+            for(let i in roles) {
+                let key = roles[i].key;
+                let value =roles[i].value;
+                dataRoles[key] = value;
+            }
+        }
+
+        let dataBusinessUnits = {};
+        if(! $A.util.isEmpty(businessUnits)) {
+            for(let i in businessUnits) {
+                let key = businessUnits[i].key;
+                let value = businessUnits[i].value;
+                dataBusinessUnits[key] = value;
+            }
+        }
+
+        let dataActors = {};
+        if(! $A.util.isEmpty(actors)) {
+           for (let i in actors) {
+               let key = actors[i].key;
+               let value = actors[i].value;
+               dataActors[key] = value;
+           }
+        }
+
+        let changedData = {};
+        changedData.actors = dataActors;
+        changedData.roles = dataRoles;
+        changedData.businessUnits = dataBusinessUnits;
+
+        let selectedUserInfo = component.get('v.selectedUserInfo');
+        let action = component.get('c.saveManagementData');
         action.setParams({
-            'contactId' : contactId
+            'originalData' : originalData,
+            'modifiedData' : JSON.stringify(changedData),
+            'selectedUserInfo' : JSON.stringify(selectedUserInfo)
         });
         action.setCallback(this, function(response){
             const state = response.getState();
             if(state === 'SUCCESS') {
-                const userAccounts = response.getReturnValue();
-                if(! $A.util.isEmpty(userAccounts)) {
+                const result = response.getReturnValue();
+                if(! $A.util.isEmpty(result)) {
 
-                    let managingUserAccounts = component.get('v.managingUserAccessGrantedAccounts');
-                    for(let i = 0; i < managingUserAccounts.length; i++) {
-                        for(let j = 0; j < userAccounts.length; j++) {
-                            if(managingUserAccounts[i].Id === userAccounts[j].Id) {
-                                managingUserAccounts[i].checked = true;
-                                break;
-                            }
-                        }
+                    //result === true; all OK
+                    if(result) {
+
+                        component.set('v.dataModified', true);
+                        this.toggleSpinner(component);
+
+                    //result !== true; error occurred
+                    }else{
+
+                        console.log('handleSave - unable to save changes');
+                        this.handleErrorMessage(component, 'Unable to save data!');
+                        this.toggleSpinner(component);
                     }
-                    component.set('v.managingUserAccessGrantedAccounts', managingUserAccounts);
-
-                    component.set('v.accessGrantedAccounts', userAccounts);
-
-                    component.set('v.displayTable', true);
-                    this.toggleSpinner(component);
 
                 }else{
-                    //TODO:handle error
+                    console.log('handleSave - unable to save changes');
+                    this.handleErrorMessage(component, 'Unable to save data!');
                     this.toggleSpinner(component);
                 }
-
             }else{
-                //TODO:handle error
+                console.log('handleSave - unable to save changes');
+                this.handleErrorMessage(component, 'Unable to save data!');
                 this.toggleSpinner(component);
-            }
 
+            }
         });
         $A.enqueueAction(action);
+    },
 
+    handleErrorMessage : function(component, message){
+        let action = $A.get('e.force:showToast');
+        action.setParams({
+            title: 'User Management Error',
+            message: message,
+            type: 'error'
+        });
+        action.fire();
     },
 
 
-
-
     toggleSpinner : function(component) {
-        const spinner = component.find('spinner');
-        $A.util.toggleClass(spinner, 'slds-hide');
+        component.set('v.showSpinner', !component.get('v.showSpinner'));
     },
 
 

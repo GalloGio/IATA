@@ -99,67 +99,7 @@ public class GADMwrapper_CTRL_TEST {
 
 
     }
-
-    /*@IsTest
-    private static void isAccessGrantedTest() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'test.gadm@testgadm.com'];
-
-        Test.startTest();
-
-        Boolean testResult;
-
-        System.runAs(testUser) {
-            testResult = GADMwrapper_CTRL.isAccessGranted(testUser.Id);
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(false, testResult, 'GADM User role is not granted so access should not be granted!');
-
-    }*/
-
-    /*@IsTest
-    private static void isAccessGranted2Test() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'test.gadm@testgadm.com'];
-
-        Contact_Role_Service_Access__c serviceAccess = [SELECT Id, Status__c FROM Contact_Role_Service_Access__c LIMIT 1];
-        serviceAccess.Status__c = 'Granted';
-        update serviceAccess;
-
-        Test.startTest();
-
-        Boolean testResult;
-
-        System.runAs(testUser) {
-            testResult = GADMwrapper_CTRL.isAccessGranted(testUser.Id);
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(true, testResult, 'GADM User role not granted so access should be granted!');
-
-    }*/
-
-    /*@IsTest
-    private static void isAccessGrantedNullUserIdTest() {
-
-        User testUser = [SELECT Id FROM User WHERE Email = 'test.gadm@testgadm.com'];
-
-        Test.startTest();
-
-        Boolean testResult;
-
-        System.runAs(testUser) {
-            testResult = GADMwrapper_CTRL.isAccessGranted(null);
-        }
-
-        Test.stopTest();
-
-        System.assertEquals(false, testResult, 'Access should be denied if userId = null!');
-
-    }*/
+    
 
     @IsTest
     private static void getUserRolesTest() {

@@ -6,20 +6,15 @@
 
     back : function(component, event) {
         let myEvent = component.getEvent("Back_EVT");
+        myEvent.setParams({
+            'dataModified' : component.get('v.dataModified')
+        });
         myEvent.fire();
     },
 
-    changeRole : function(component, event) {
-        let checked = event.getSource().get('v.checked');
-        console.log('checked: ' + checked);
-    },
-
-    changeRole : function(component, event) {
-
-    },
-
-    changeAccount : function(component, event) {
-
+    save : function(component, event, helper) {
+        debugger;
+        helper.handleSave(component, event);
     },
 
 

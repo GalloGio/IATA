@@ -1,4 +1,4 @@
-<aura:component controller="Data_Submission_List_CTRL" implements="forceCommunity:availableForAllPageTypes" access="global" description="GADM_ExternalUserContactList">
+<aura:component controller="GADM_ExternalUserContactList_CTRL" implements="forceCommunity:availableForAllPageTypes" access="global" description="GADM_ExternalUserContactList">
     <!--Title-->
     <aura:attribute name="Title" type="String" default="" description="Title displayed above the table. If empty, title is not showed up." />
     <!--Page Size-->
@@ -23,7 +23,9 @@
 
     <aura:attribute name="detailsShown" type="Boolean" default="False"/>
     <aura:attribute name="detailsData" type="Object[]"/>
-    <aura:attribute name="contact" type="Object"/>
+    <aura:attribute name="selectedUserInfo" type="Object"/>
+    <aura:attribute name="isPowerUser" type="Boolean" default="false"/>
+    <aura:attribute name="isSuperUser" type="Boolean" default="false"/>
 
     <!--Private attributes-->
     <aura:attribute name="AllRecords" type="Object[]" access="private" />
@@ -50,6 +52,14 @@
     <aura:handler name="init" value="{!this}" action="{!c.initializeComponent}" />
     <aura:handler name="change" value="{!v.MatchCriteria}" action="{!c.updateMatchCriteria}" />
     <aura:handler name="Back_EVT" event="c:GADM_ExternalUserContactList_EVT" action="{!c.handleDetailsBackEvt}"/>
+
+    <!--USER ROLES
+    <aura:attribute name="isPowerUser" type="Boolean" default="false"/>
+    <aura:attribute name="isSuperUser" type="Boolean" default="false"/>
+    <aura:attribute name="isGadmUser" type="Boolean" default="false"/>-->
+
+    <!--CURRENT USER INFO-->
+    <aura:attribute name="currentUserInfo" type="Object" default=""/>
 
 
     <div class="page_container">
@@ -307,7 +317,7 @@
         <!--RECORD DETAIL-->
         <aura:if isTrue="{! v.detailsShown}">
             <div aura:id="detailContainer" class="slds-hide">
-                <c:GADM_ExternalUserContactListDetail Back_EVT="{!c.handleDetailsBackEvt}" contact="{!v.contact}"/>
+                <c:GADM_ExternalUserContactListDetail Back_EVT="{!c.handleDetailsBackEvt}" selectedUserInfo="{!v.selectedUserInfo}" currentUserInfo ="{! v.currentUserInfo}" isPowerUser="{! v.isPowerUser}" isSuperUser="{! v.isSuperUser}"/>
             </div>
         </aura:if>
 

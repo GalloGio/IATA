@@ -1,19 +1,41 @@
 <aura:component controller="GADM_ExternalUserContactListDetail_CTRL" description="GADM_ExternalUserContactListDetail">
 
+    <aura:attribute name="selectedUserInfo" type="Object"/>
+    <aura:attribute name="currentUserInfo" type="Object"/>
+    <aura:attribute name="isPowerUser" type="Boolean"/>
+    <aura:attribute name="isSuperUser" type="Boolean"/>
+
     <aura:attribute name="contact" type="Object"/>
+
+    <!--<aura:attribute name="businessUnits" type="List" default="[]"/>
+    <aura:attribute name="roles" type="List" default="[]"/>-->
+
+
+
+    <aura:attribute name="data" type="Object" default=""/>
+    <aura:attribute name="copyData" type="String" default=""/>
+    <aura:attribute name="dataRoles" type="List" default="[]"/>
+    <aura:attribute name="dataBusinessUnits" type="List" default="[]"/>
+    <aura:attribute name="dataActors" type="List" default="[]"/>
+
+
+    <aura:attribute name="dataModified" type="Boolean" default="false"/>
+
+
     <!--ACCOUNTS-->
-    <aura:attribute name="managingUserAccessGrantedAccounts" type="List"/>
-    <aura:attribute name="accessGrantedAccounts" type="List"/>
+    <!--<aura:attribute name="managingUserAccessGrantedAccounts" type="List"/>
+    <aura:attribute name="accessGrantedAccounts" type="List"/>-->
     <!--ROLES-->
-    <aura:attribute name="roles" type="List"/>
-    <aura:attribute name="managingUserRoles" type="List"/>
-    <aura:attribute name="userGrantedRoles" type="List"/>
+
+    <!--<aura:attribute name="managingUserRoles" type="List"/>
+    <aura:attribute name="userGrantedRoles" type="List"/>-->
     <!--CHANGES IN ROLES-->
 
     <!--CHANGES IN ACCOUNTS-->
 
     <!--SHOW TABLE-->
-    <aura:attribute name="displayTable" type="Boolean" default="false"/>
+    <aura:attribute name="showTable" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
 
     <aura:handler name="init" value="{!this}" action="{! c.doInit}"/>
     <aura:registerEvent name="Back_EVT" type="c:GADM_ExternalUserContactList_EVT"/>
@@ -21,29 +43,29 @@
 
     <div class="page_container">
 
-        <aura:if isTrue="{! v.displayTable}">
+        <aura:if isTrue="{! v.showTable}">
 
-            <lightning:recordViewForm recordId="{! v.contact.Id}" objectApiName="Contact" class="slds-hide">
+            <!--<lightning:recordViewForm recordId="{! v.contact.Id}" objectApiName="Contact" class="slds-hide">
 
                 <div class="slds-grid slds-grid_align-space">
                     <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium">
-                        <!-- Auto Number -->
+
                         <lightning:outputField variant="label-hidden" fieldName="Salutation" />
 
-                        <!-- Lookup -->
+
                         <lightning:outputField variant="label-hidden" fieldName="FirstName" />
 
-                        <!-- Boolean -->
+
                         <lightning:outputField variant="label-hidden" fieldName="LastName" />
 
                     </div>
                 </div>
-            </lightning:recordViewForm>
+            </lightning:recordViewForm>-->
 
 
         <div class="slds-p-bottom_large">
 
-            <h2 class="slds-p-bottom_large">{! v.contact.Salutation}&nbsp; {! v.contact.LastName}, {! v.contact.FirstName} </h2>
+            <h2 class="slds-p-bottom_x-large">{! v.contact.Salutation}&nbsp; {! v.contact.LastName}, {! v.contact.FirstName} </h2>
 
             <div class="slds-p-bottom_small">
                 <label class="slds-form-element__label" >EMAIL</label>
@@ -73,14 +95,31 @@
 
         </div>
 
+
         <!--ROLES-->
         <div class="slds-p-bottom_large">
 
             <div class="slds-grid slds-wrap slds-p-bottom--large" >
-                <aura:iteration items="{!v.roles}" var="role">
-                    <div class="slds-size--1-of-1 slds-grid">
-                        <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!role.checked}" onchange="{c.changeRole}"  disabled="{! (role.Name == 'Power User' || role.isEditable == false)}" /></div>
-                        <div class="label slds-col--padded slds-size--7-of-8">{!role.Name}</div>
+                <p>Roles:</p>
+                <aura:iteration items="{!v.dataRoles}" var="dataRole">
+                    <div class="slds-size--1-of-1 slds-grid roleLine">
+                        <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataRole.value.isChecked}"/></div>
+                        <div class="label slds-col--padded slds-size--7-of-8">{!dataRole.value.role.Name}</div>
+                    </div>
+                </aura:iteration>
+            </div>
+
+        </div>
+
+        <!--BUSINESS UNITS-->
+        <div class="slds-p-bottom_large">
+
+            <div class="slds-grid slds-wrap slds-p-bottom--large" >
+                <p>Business Units:</p>
+                <aura:iteration items="{!v.dataBusinessUnits}" var="dataBusinessUnit">
+                    <div class="slds-size--1-of-1 slds-grid roleLine">
+                        <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataBusinessUnit.value.isChecked}" disabled="{! !dataBusinessUnit.value.isEditable}" /></div>
+                        <div class="label slds-col--padded slds-size--7-of-8">{!dataBusinessUnit.value.businessUnit.Name}</div>
                     </div>
                 </aura:iteration>
             </div>
@@ -90,6 +129,18 @@
         <!--ACCOUNTS-->
         <div class="slds-p-bottom_large">
 
+            <div class="slds-grid slds-wrap slds-p-bottom--large" >
+                <p>Actors:</p>
+                <aura:iteration items="{!v.dataActors}" var="dataActor">
+                    <div class="slds-size--1-of-1 slds-grid roleLine">
+                        <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataActor.value.isChecked}" disabled="{! !dataActor.value.isEditable}" /></div>
+                        <div class="label slds-col--padded slds-size--7-of-8">{!dataActor.value.actor.Name}</div>
+                    </div>
+                </aura:iteration>
+            </div>
+
+        </div>
+        <!--<div class="slds-p-bottom_large">
             <table class="slds-table slds-no-row-hover">
                 <colgroup>
                     <col class=""/>
@@ -103,7 +154,7 @@
                 </thead>
 
                 <tbody>
-                <!-- Use the Apex model and controller to fetch server side data -->
+
                 <aura:iteration items="{!v.managingUserAccessGrantedAccounts}" var="account" indexVar="index">
                     <tr class="{! if(index % 2 == 1, 'oddLine', if(index == 0, 'evenLine headerTop', 'evenLine'))}">
 
@@ -121,31 +172,33 @@
                 <div class="evenRows"></div>
             </aura:if>
 
-        </div>
+        </div>-->
 
 
 
+            <!--SAVE & BACK BUTTONS-->
+            <div  class="slds-grid slds-wrap">
 
-        <div  class="slds-grid slds-wrap">
+                <div class="slds-size--1-of-2 slds-p-right_small">
+                    <button class="btn btn-primary btn-grey slds-float--right" onclick="{! c.save }">Save</button>
+                </div>
 
-            <div class="slds-size--1-of-2 slds-p-right_small">
-                <button class="btn btn-primary btn-grey slds-float--right" onclick="{! c.Save }">Save</button>
+                <div class="slds-size--1-of-2 slds-p-left_small">
+                    <button class="btn btn-primary btn-grey " onclick="{! c.back }">Back</button>
+                </div>
+
             </div>
-
-            <div class="slds-size--1-of-2 slds-p-left_small">
-                <button class="btn btn-primary btn-grey " onclick="{! c.back }">Back</button>
-            </div>
-
-        </div>
 
         </aura:if>
 
-        <div aura:id="spinner" class="slds-hide">
+        <!--<div aura:id="spinner" class="slds-hide">
             <lightning:spinner alternativeText="Loading"/>
-        </div>
+        </div>-->
 
-
-
+        <!--SPINNER-->
+        <aura:if isTrue="{! v.showSpinner}">
+            <lightning:spinner alternativeText="Loading"/>
+        </aura:if>
 
 
 

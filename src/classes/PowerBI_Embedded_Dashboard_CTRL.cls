@@ -26,6 +26,32 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         public String expiration {get; set;}
     }
 
+    private class ReportDetailResult {
+        @AuraEnabled
+        public String id {get; set;}
+        @AuraEnabled
+        public String name {get; set;}
+        @AuraEnabled
+        public String webUrl {get; set;}
+        @AuraEnabled
+        public String embedUrl {get; set;}
+        @AuraEnabled
+        public String datasetId {get; set;}
+    }
+
+    private class DatasetDetailResult {
+        @AuraEnabled
+        public String id {get; set;}
+        @AuraEnabled
+        public String name {get; set;}
+        @AuraEnabled
+        public String isRefreshable {get; set;}
+        @AuraEnabled
+        public String isEffectiveIdentityRequired {get; set;}
+        @AuraEnabled
+        public String isEffectiveIdentityRolesRequired {get; set;}
+    }
+
     private class RequestData{
         String accessLevel;
         List<IdentityData> identities;
@@ -209,7 +235,7 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
 
 
     @AuraEnabled      //TODO: - dataset details
-    public static String getDataset(String accessToken, String datasetId) {
+    public static DatasetDetailResult getDataset(String accessToken, String datasetId) {
         Http h = new Http();
         HttpRequest req = new HttpRequest();
 
@@ -220,8 +246,8 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         System.debug('request:: ' + req.toString());
         HttpResponse res = h.send(req);
 
-        //EmbedTokenResult result = (EmbedTokenResult)(JSON.deserialize(res.getBody(), EmbedTokenResult.class));
-        String result = res.getBody();
+        DatasetDetailResult result = (DatasetDetailResult)(JSON.deserialize(res.getBody(), DatasetDetailResult.class));
+        //String result = res.getBody();
         System.debug('getDataset result.getBody():: ' + result);
 
         return result;
@@ -229,8 +255,8 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
 
 
 
-    @AuraEnabled          //THIS WILL RETURN FEDERATION ID //TODO:get dataseteId for report
-    public static String getReportsDetails(String accessToken, String reportId) {
+    @AuraEnabled           //TODO:get dataseteId for report
+    public static ReportDetailResult getReportsDetails(String accessToken, String reportId) {
 
         //groupId = 'bb322fe5-1f26-4bc6-892a-811d6a625ba1';
         //String reportId = '39d42f7a-0a92-49cc-aef8-1a6c851143dd';
@@ -246,8 +272,8 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         HttpResponse res = h.send(req);
 
         //EmbedTokenResult result = (EmbedTokenResult)(JSON.deserialize(res.getBody(), EmbedTokenResult.class));
-        String result = res.getBody();
-        System.debug('embegetReportsDetailsdToken response:: ' + res.getBody());
+        ReportDetailResult result = (ReportDetailResult)(JSON.deserialize(res.getBody(), ReportDetailResult.class));
+
         System.debug('getReportsDetails result.getBody():: ' + result);
 
         return result;
@@ -261,8 +287,8 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
 
         IdentityData identityData = new IdentityData();
         identityData.username = federationId;
-        identityData.roles = new List<String>();
-        identityData.datasets = new List<String>{datasetId};//TODO:temporal static solution
+        identityData.roles = new List<String>{'SFDC'};
+        identityData.datasets = new List<String>{datasetId};
 
         RequestData requestData = new RequestData();
         requestData.identities = new List<IdentityData> {identityData};
