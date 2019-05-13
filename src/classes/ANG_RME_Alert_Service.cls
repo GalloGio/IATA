@@ -277,8 +277,10 @@ global class ANG_RME_Alert_Service {
 
 		if(result.isSuccess) {
 			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
-			Decimal rounded = toRound.setScale(2, RoundingMode.HALF_UP);
-			system.debug(rounded);
+			Integer decimalPlaces = (result.res.storedRHCValue).scale();
+			Decimal rounded = toRound.setScale(decimalPlaces, RoundingMode.HALF_UP);
+			
+			system.debug('rounded value :: ' + rounded + ' |  result storedRHCValue :: ' +  result.res.storedRHCValue + ' | Decimal Places :: ' +  decimalPlaces);
 
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
