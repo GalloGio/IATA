@@ -86,7 +86,9 @@ private class ANG_MasterData_Interface_test {
                         ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
                         recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
                         IATACode__c ='12223',
-                        IATA_ISO_Country__c = isoCntr1.Id
+                        IATA_ISO_Country__c = isoCntr1.Id,
+                        Is_PCI_Compliant__c = 'Yes',
+                        ANG_IEP_Status__c = 'Open'
                 );
 
                 insert accChild;
@@ -198,8 +200,6 @@ private class ANG_MasterData_Interface_test {
                 RestResponse response = doCallOutToWS('',false);
                 System.assertEquals(HTTP_STATUS_BAD_REQUEST, response.statusCode);       
         }
-
-
         
         @isTest static void dueDiligenceModelBPlusTest(){
                 

@@ -9,6 +9,22 @@ private class ANG_AccountTriggerHandlerTest {
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MAPDF', Change_Code__c = 'MAPDF', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MBDIL', Change_Code__c = 'MBDIL', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MBPDD', Change_Code__c = 'MBPDD', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
+		
+		customsettings.add(
+			new ANG_CalloutMapping__c(
+				Name = 'IEP_PCI_Compliance', 
+				Change_Code__c = 'IEPPC', 
+				CalloutClass__c = 'ANG_CalloutIEPMasterdata', 
+				Action__c = 'PUT',
+				Event_Type__C = 'MS_Update', 
+				Credential__c = '/agencies/v1/', 
+				Named_Credential__c = 'Mulesoft_Credential_Masterdata', 
+				Integration_System__c = 'Mulesoft', 
+				Type__c = 'Account', 
+				Field__c = 'Is_PCI_compliant__c'
+			)
+		);
+		
 		insert customsettings;
 
         Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
@@ -526,7 +542,7 @@ private class ANG_AccountTriggerHandlerTest {
 
         System.assertEquals(2, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = 'MAPDF' OR Change_Code__c ='MBDIL'].size());
     }
-	
+
 	@isTest static void dueDiligenceModelBPlusTest(){
 		
 		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'UK Test'];
@@ -575,6 +591,136 @@ private class ANG_AccountTriggerHandlerTest {
         System.assertEquals(1, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = :AMS_Utils.MBPDD_CHANGE_CODE].size());
 
 	}
+
+	@isTest static void pciCompliantUpdateTriggerMasterDataTest() {
+
+		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'Test' OR Name = 'Test2' ORDER BY NAME ASC];
+
+		List<Contact> cons = new List<Contact>();
+		Contact con1 = new Contact(LastName = 'con1',
+				Email = 'test1@istest.newgen', 
+				Preferred_Language__c = 'English',
+				BSP_CASS_Payment_contact__c = true, 
+				Financial_Assessment_Contact__c = true, 
+				AccountId = accs[0].Id
+		);
+		cons.add(con1);
+
+		Contact con2 = new Contact(LastName = 'con2',
+				Email = 'test2@istest.newgen', 
+				Preferred_Language__c = 'English',
+				BSP_CASS_Payment_contact__c = true, 
+				Financial_Assessment_Contact__c = true, 
+				AccountId = accs[1].Id
+		);
+		cons.add(con2);
+
+		insert cons;
+
+		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
+		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
+		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
+		insert pas;
+
+		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[1].Id, Contact__c = con2.Id ));
+		insert pars;
+
+        Test.startTest();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+
+        integer i=0;
+        for (Account a :accs){
+			a.Is_PCI_compliant__c = (Math.mod(i, 2) == 0) ? 'Corporate Card' : 'Nil CC';
+        	a.ANG_IEP_Status__c = 'In Progress';
+			i++;
+        }
+
+        update accs;
+
+		Test.stopTest();
+
+		List<AMS_Agency_Updates__c> agencyUpdLst = new List<AMS_Agency_Updates__c>(
+			[SELECT 
+				Id, 
+				Account__c, 
+				Change_Code__c
+			 FROM 
+			 	AMS_Agency_Updates__c
+			]
+		);
+
+		system.assert(agencyUpdLst.size() == accs.size(), 'Should have created ' + accs.size() + ' agency updates records');
+
+		for(AMS_Agency_Updates__c upd : agencyUpdLst){
+			system.assert(upd.Change_Code__c == 'IEPPC', 'Should have created an update for the IEPPC pci compliant callout entry');
+		}
+
+    }
+
+	@isTest static void pciCompliantUpdateDoNotTriggerMasterDataTest() {
+
+		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'Test' OR Name = 'Test2' ORDER BY NAME ASC];
+
+		List<Contact> cons = new List<Contact>();
+		Contact con1 = new Contact(LastName = 'con1',
+				Email = 'test1@istest.newgen', 
+				Preferred_Language__c = 'English',
+				BSP_CASS_Payment_contact__c = true, 
+				Financial_Assessment_Contact__c = true, 
+				AccountId = accs[0].Id
+		);
+		cons.add(con1);
+
+		Contact con2 = new Contact(LastName = 'con2',
+				Email = 'test2@istest.newgen', 
+				Preferred_Language__c = 'English',
+				BSP_CASS_Payment_contact__c = true, 
+				Financial_Assessment_Contact__c = true, 
+				AccountId = accs[1].Id
+		);
+		cons.add(con2);
+
+		insert cons;
+
+		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
+		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
+		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
+		insert pas;
+
+		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[1].Id, Contact__c = con2.Id ));
+		insert pars;
+
+        Test.startTest();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+
+        integer i=0;
+        for (Account a :accs){
+			a.Is_PCI_compliant__c = (Math.mod(i, 2) == 0) ? 'Corporate Card' : 'Nil CC';
+        	a.ANG_IEP_Status__c = 'No IEP Account';
+			i++;
+        }
+
+        update accs;
+
+		Test.stopTest();
+
+		List<AMS_Agency_Updates__c> agencyUpdLst = new List<AMS_Agency_Updates__c>(
+			[SELECT 
+				Id
+			 FROM 
+			 	AMS_Agency_Updates__c
+			]
+		);
+
+		system.assert(agencyUpdLst.size() == 0, 'Should NOT have created agency updates records');
+
+    }
 
     public class MockHttpResponseSuccessGenerator implements HttpCalloutMock {
 		// Implement this interface method
