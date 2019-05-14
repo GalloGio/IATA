@@ -406,7 +406,6 @@
                     
                     	function resetShippingAddress(){
                             if ($('[id$="disableCheckBoxBranch"]')[0].checked) {
-
                                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
                                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
                                 $('[id$="shippingStateInput"]').val('');
@@ -414,7 +413,6 @@
                                 isToClean = true;
                             } else {
                                 $('[id$="newAddressShipping"]' + " :input").attr("style", 'width: 200px;');
-                                populateShippingCountry();
                                 copyToADShippingCntr();
                                 defineTypeOfStateInput();
 
@@ -1085,10 +1083,6 @@
             if ($('[id$="disableCheckBoxBranch"]')[0].checked) {
                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
                 $('[id$="shippingStateInput"]').attr('style', 'display: none;');
-            } else {
-                populateShippingCountry();
-                copyToADShippingCntr();
-                defineTypeOfStateInput(); 
             }
 
             // checks initial state
@@ -1126,8 +1120,11 @@
 
         function populateShippingCountry() {
             if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
-                if ('{!ca.fw.newform.shipping_country__c}' !='') $('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}');
-                else $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
+                if ('{!ca.fw.newform.shipping_country__c}' != '') {
+                    $('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}'.toUpperCase());
+                } else {
+                    $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
+                }
             } else {
                 $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
             }
