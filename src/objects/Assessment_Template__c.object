@@ -114,6 +114,7 @@
         <columns>Country_Name__c</columns>
         <columns>Country_ISO_Code__c</columns>
         <columns>Passenger_Cargo__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
