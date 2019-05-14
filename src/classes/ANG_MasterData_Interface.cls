@@ -189,7 +189,7 @@ global class ANG_MasterData_Interface{
         public list<Owner> owners;
         public list<DueDiligence> dueDiligence;
         public list<string> externalSystems; //NEWGEN-4276
-        public String pciCompliant;
+        public String isPciDss;
 
         /*Constructor*/
         public MasterDataPayload(Account acc, boolean getChildren, String changeCode){
