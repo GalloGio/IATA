@@ -52,7 +52,7 @@ public without sharing class OneId_RegistrationHelper_GADM {
     public static void createContactRole(Contact con, Account_Role__c accountRole, Boolean isPowerUser) {
 
         Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
-        List<Contact_Roles__c> contactRoles = [SELECT Id, Name FROM Contact_Roles__c WHERE (Name = 'GADM User' OR Name = 'Power User') AND RecordTypeId = :externalRecordTypeId];
+        List<Contact_Roles__c> contactRoles = [SELECT Id, Name FROM Contact_Roles__c WHERE (Name = 'GADM User' OR Name = ' Service Power User') AND RecordTypeId = :externalRecordTypeId];
 
         Contact_Roles__c gadmUser = new Contact_Roles__c();
         Contact_Roles__c  powerUser = new Contact_Roles__c();
@@ -61,7 +61,7 @@ public without sharing class OneId_RegistrationHelper_GADM {
             if(role.Name == 'GADM User') {
                 gadmUser = role;
             }
-            if(role.Name == 'Power User') {
+            if(role.Name == 'Service Power User') {
                 powerUser = role;
             }
         }
@@ -90,7 +90,7 @@ public without sharing class OneId_RegistrationHelper_GADM {
 
         toInsert.add(accountContactRole);
 
-        //Power User
+        //Service Power User
         if(isPowerUser) {
             Account_Contact_Role__c accountContactRole3 = new Account_Contact_Role__c();
             accountContactRole3.Contact__c = con.Id;
