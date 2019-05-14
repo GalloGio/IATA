@@ -69,6 +69,19 @@
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>New_Related_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Related Product</inlineHelpText>
+        <label>New Related Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>New Products Information</relationshipLabel>
+        <relationshipName>New_Products_Information</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Product_Audience__c</fullName>
         <externalId>false</externalId>
         <label>Product Audience</label>
@@ -133,19 +146,6 @@
         <referenceTo>zqu__ZProduct__c</referenceTo>
         <relationshipLabel>Products Information</relationshipLabel>
         <relationshipName>Products_Information</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>New_Related_Product__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <inlineHelpText>Related Product</inlineHelpText>
-        <label>New Related Product</label>
-        <referenceTo>Product2</referenceTo>
-        <relationshipLabel>New Products Information</relationshipLabel>
-        <relationshipName>New_Products_Information</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>

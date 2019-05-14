@@ -19500,7 +19500,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>AMS_GDP_Synchronizer</name>
     </customTabs>
     <customTabs>
-        <label><!-- AMS PCI Compliant Mass Oscar Creation --></label>
+        <label><!-- OSCAR mass action --></label>
         <name>AMS_PCI_Compliant_Mass_Oscar_Creation</name>
     </customTabs>
     <customTabs>
