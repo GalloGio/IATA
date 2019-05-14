@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>ApplicationName__c</fullName>
+        <description>This is a picklist of applications that a case subject's email address can be excluded from. "ANY" stands for all applications. "SIS" stands for SIS applications. "TTBS" stands for TTBS applications</description>
         <externalId>false</externalId>
         <label>Application Name</label>
         <required>false</required>

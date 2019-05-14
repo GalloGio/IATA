@@ -56,6 +56,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Agents__c</fullName>
+        <description>Related Agent</description>
         <externalId>false</externalId>
         <label>Agents</label>
         <referenceTo>Agents__c</referenceTo>
@@ -68,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Priority__c</fullName>
+        <description>Represents the priority of the skill. Can be '0', '1', '2', '3'</description>
         <externalId>false</externalId>
         <label>Priority</label>
         <required>false</required>
@@ -101,6 +103,7 @@
     </fields>
     <fields>
         <fullName>Queue_Name__c</fullName>
+        <description>Name of the Auto Queue that the Skill is in</description>
         <externalId>false</externalId>
         <formula>Skills__r.Auto_queue__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -122,6 +125,7 @@
     </fields>
     <fields>
         <fullName>Skills__c</fullName>
+        <description>Related Skill</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Skills</label>
