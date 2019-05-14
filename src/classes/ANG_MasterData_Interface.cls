@@ -133,18 +133,6 @@ global class ANG_MasterData_Interface{
         }
     }
 
-    private class PciCompliant{
-        public String iataCode;
-        public String pciCompliant;
-
-        public pciCompliant(String iataCode, String pciCompliant){
-            this.iataCode = iataCode;
-            this.pciCompliant = pciCompliant;
-        }
-
-    }
-       
-
     private static final set<string> IGNORE_FIELDS_SET = new set<string>{'FormOfPayment'};
     private static final set<string> REMOVE_FIELDS_SET = new set<string>{'lsChildren', 'RHCInfo'};
 
@@ -202,7 +190,6 @@ global class ANG_MasterData_Interface{
         public list<DueDiligence> dueDiligence;
         public list<string> externalSystems; //NEWGEN-4276
         public String pciCompliant;
-        public List<PciCompliant> childrenPciCompliant;
 
         /*Constructor*/
         public MasterDataPayload(Account acc, boolean getChildren, String changeCode){
@@ -248,8 +235,6 @@ global class ANG_MasterData_Interface{
                 this.vatNumber = acc.VAT_Number__c;
                 this.topParentIATACode = acc.Top_Parent__r.IATACode__c;
                 this.dueDiligence = new List<DueDiligence>();
-                this.childrenPciCompliant = new List<PciCompliant>();
-                this.pciCompliant = pciCompliantFldMapping.get(acc.Is_PCI_compliant__c);
 
                 /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
                 if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
@@ -311,16 +296,15 @@ global class ANG_MasterData_Interface{
                 //externalSystems - NEWGEN-4276
                 this.externalSystems = new list<string>();
                 //EasyPay
-                if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c))
+                if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c)){
                     this.externalSystems.add(acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name);
+                    this.isPciDss = pciCompliantFldMapping.get(acc.Is_PCI_compliant__c);
+                }
 
                 //GDI - note: we do publish HE/HO only
                 if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c))
                    this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
             
-                for(Account acct : acc.ChildAccounts){
-                    this.childrenPciCompliant.add(new PciCompliant(acct.IATACode__c, pciCompliantFldMapping.get(acct.Is_PCI_compliant__c)));
-                }
 
             }
             catch(exception e){
