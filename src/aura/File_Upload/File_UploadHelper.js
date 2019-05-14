@@ -94,6 +94,10 @@
                                 this.showContent(component);
                                 this.toggleSpinner(component);
                             }
+                        }else{
+                            console.log('no actors retrieved');
+                            this.showToast(component, 'error', 'Unexpected error!', 'Unable to retrieve user information!');
+                            this.toggleSpinner(component);
                         }
                     }
 

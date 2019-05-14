@@ -1,18 +1,14 @@
 ({
     handleInit : function(component, event) {
-        debugger;
         this.toggleSpinner(component);
         this.prepareManagementData(component, event);
     },
 
 
     prepareManagementData : function(component, event) {
-        debugger;
         let selectedUserInfo = component.get('v.selectedUserInfo');
         let currentUserInfo = component.get('v.currentUserInfo');
         let isSuperUser = component.get('v.isSuperUser');
-        let contact = selectedUserInfo.con;
-        component.set('v.contact', contact);
 
         let action = component.get('c.prepareManagementData');
         action.setParams({
@@ -74,18 +70,11 @@
 
 
     handleSave : function(component, event) {
-        debugger;
         this.toggleSpinner(component);
         let roles = component.get('v.dataRoles');
         let businessUnits = component.get('v.dataBusinessUnits');
         let actors = component.get('v.dataActors');
         let originalData = component.get('v.copyData');
-
-        /*console.log('roles:: ', JSON.stringify(roles));
-        console.log('businessUnits:: ', JSON.stringify(businessUnits));
-        console.log('actors:: ', JSON.stringify(actors));
-        console.log('originalData:: ', JSON.stringify(originalData));*/
-
 
         let dataRoles = {};
         if(! $A.util.isEmpty(roles)) {

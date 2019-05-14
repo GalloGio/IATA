@@ -102,6 +102,7 @@
 
                         }else if(!isPowerUser && ! isSuperUser && isGadmUser) {//isGadmUser
 
+                            component.set('v.isGadmUser', isGadmUser);
                             this.retrieveRecords(component, true, false, true, businessUnitsIds);
 
                         }else{

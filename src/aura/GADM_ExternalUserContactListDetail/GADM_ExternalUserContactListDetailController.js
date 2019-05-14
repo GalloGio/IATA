@@ -13,7 +13,6 @@
     },
 
     save : function(component, event, helper) {
-        debugger;
         helper.handleSave(component, event);
     },
 
