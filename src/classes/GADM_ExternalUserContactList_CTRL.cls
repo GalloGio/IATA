@@ -272,7 +272,7 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
         List<Contact_Roles__c> businessUnitsToReturn = new List<Contact_Roles__c>();
 
         if(String.isNotBlank(userId)) {
-            businessUnitsToReturn = Contact_Roles_Helper.getGrantedBusinessUnits(userId);
+            businessUnitsToReturn = Contact_Roles_Helper.getGrantedBusinessUnits(userId, 'GADM');
         }
 
         return businessUnitsToReturn;

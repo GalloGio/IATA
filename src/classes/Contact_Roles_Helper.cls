@@ -179,14 +179,14 @@ public without sharing class Contact_Roles_Helper {
         return contactRolesToReturn;
     }
 
-    public static List<Contact_Roles__c> getGrantedBusinessUnits(Id userId) {
+    public static List<Contact_Roles__c> getGrantedBusinessUnits(Id userId, String serviceName) {
 
         List<Contact_Roles__c> contactRolesToReturn = new List<Contact_Roles__c>();
 
         Contact con = getContactFromUser(userId);
         if(con.Id != null) {
             Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
-            List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact_Roles__c, Contact_Role__r.Contact_Roles__r.Name FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : con.Id AND Contact_Role__r.RecordTypeId = :groupRecordTypeId AND Contact_Role__r.Contact_Roles__r.Category__c = 'Business Unit' AND Status__c = 'Granted'];
+            List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact_Roles__c, Contact_Role__r.Contact_Roles__r.Name FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : con.Id AND Contact_Role__r.RecordTypeId = :groupRecordTypeId AND Contact_Role__r.Contact_Roles__r.Category__c = 'Business Unit' AND Status__c = 'Granted' AND Contact_Role__r.Service_Rendered__c = :serviceName];
             if(! serviceAccesses.isEmpty()) {
                 for(Contact_Role_Service_Access__c crsa : serviceAccesses) {
                     contactRolesToReturn.add(new Contact_Roles__c(Id = crsa.Contact_Role__r.Contact_Roles__c, Name = crsa.Contact_Role__r.Contact_Roles__r.Name));

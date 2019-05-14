@@ -83,7 +83,8 @@
                         this.retrieveTotalRecords(component);
                         this.retrieveRecords(component, true);
                     }else{
-                        this.handleErrorMessage(component, 'Unexpected error!');
+                        //GADM Data Submission role is denied - show empty table
+                        this.toggleSpinner(component);
                         this.toggleTable(component);
                     }
 

@@ -253,6 +253,8 @@ public without sharing class Data_Submission_List_CTRL {
         @AuraEnabled
         public boolean isGadmUser {get; set;}
         @AuraEnabled
+        public boolean isDataSubmitter {get; set;}
+        @AuraEnabled
         public List<Account> visibleAccounts {get; set;}
         @AuraEnabled
         public String queryWhereClause {get; set;}
@@ -267,6 +269,7 @@ public without sharing class Data_Submission_List_CTRL {
         info.isPowerUser = false;
         info.isSuperUser = false;
         info.isGadmUser = false;
+        info.isDataSubmitter = false;
         info.visibleAccounts = new List<Account>();
 
         List<Contact_Roles__c> grantedRoles = Contact_Roles_Helper.getGrantedUserRoles(userId, 'GADM');
@@ -275,6 +278,7 @@ public without sharing class Data_Submission_List_CTRL {
             boolean isPowerUser= false;
             boolean isSuperUser = false;
             boolean isGadmUser = false;
+            boolean isDataSubmitter = false;
 
             for(Contact_Roles__c role : grantedRoles) {
                 if(role.Name == 'Service Power User') {
@@ -290,11 +294,17 @@ public without sharing class Data_Submission_List_CTRL {
                     isGadmUser = true;
                     continue;
                 }
+
+                if(role.Name == 'GADM Data Submitter') {
+                    isDataSubmitter = true;
+                    continue;
+                }
             }
 
             info.isPowerUser = isPowerUser;
             info.isSuperUser = (isSuperUser && !isPowerUser);
             info.isGadmUser = (isGadmUser && !isPowerUser && !isSuperUser);
+            info.isDataSubmitter = isDataSubmitter;
         }
 
         List<Account> visibleAccounts = Contact_Roles_Helper.getUserAccounts(userId);
@@ -302,7 +312,7 @@ public without sharing class Data_Submission_List_CTRL {
             info.visibleAccounts = visibleAccounts;
         }
 
-        info.queryWhereClause = buildWhereClause(userId, info.isPowerUser, info.isSuperUser, info.isGadmUser, info.visibleAccounts);
+        info.queryWhereClause = buildWhereClause(userId, info.isPowerUser, info.isSuperUser, info.isDataSubmitter, info.visibleAccounts);
 
 
         return info;
@@ -310,7 +320,7 @@ public without sharing class Data_Submission_List_CTRL {
     }
 
 
-    private static String buildWhereClause(Id userId, Boolean isPowerUser, Boolean isSuperUser, Boolean isGadmUser, List<Account> visibleAccounts) {
+    private static String buildWhereClause(Id userId, Boolean isPowerUser, Boolean isSuperUser, Boolean isDataSubmitter, List<Account> visibleAccounts) {
         String whereClause = '';
 
         if(isPowerUser || isSuperUser) {
@@ -328,7 +338,7 @@ public without sharing class Data_Submission_List_CTRL {
             if(accountsString.length() > 0) {
                 whereClause += 'Submitter__r.AccountId IN ' + accountsString;
             }
-        }else if(isGadmUser) {
+        }else if(isDataSubmitter) {
             whereClause += 'Submitter__c =\'' + userId + '\'';
         }
 
@@ -336,7 +346,7 @@ public without sharing class Data_Submission_List_CTRL {
         String startTime = now.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
 
 
-        if(isSuperUser || isGadmUser) {
+        if(isSuperUser || isDataSubmitter) {
             whereClause += ' AND Submission_date__c >=' + startTime;
         }
 

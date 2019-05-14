@@ -102,6 +102,10 @@ public class Data_Submission_List_CTRL_TEST {
         contactRoles3.Name = 'Service Super User';
         insert contactRoles3;
 
+        Contact_Roles__c contactRoles4 = new Contact_Roles__c();
+        contactRoles4.Name = 'GADM Data Submitter';
+        insert contactRoles4;
+
         Portal_Applications__c portalApplications = new Portal_Applications__c();
         portalApplications.Name = 'GADM';
         insert portalApplications;
@@ -177,6 +181,14 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole5.RecordTypeId = functionalRecordTypeId;
         insert accountContactRole5;
 
+        Account_Contact_Role__c accountContactRole5b = new Account_Contact_Role__c();
+        accountContactRole5b.Contact__c = testContact3.Id;
+        accountContactRole5b.Contact_Roles__c = contactRoles4.Id;
+        accountContactRole5b.Account_Role__c = accountRole.Id;
+        accountContactRole5b.Service_Rendered__c = 'GADM';
+        accountContactRole5b.RecordTypeId = functionalRecordTypeId;
+        insert accountContactRole5b;
+
         Account_Contact_Role__c accountContactRole6 = new Account_Contact_Role__c();
         accountContactRole6.Contact__c = testContact3.Id;
         accountContactRole6.Contact_Roles__c = contactRoles.Id;
@@ -219,6 +231,13 @@ public class Data_Submission_List_CTRL_TEST {
         serviceAccess3b.Service__c = portalApplications.Id;
         serviceAccess3b.Status__c = 'Granted';
         insert serviceAccess3b;
+
+        //grant access for user Leo, account Test account 2 and GADM Data Submitter role and GADM service
+        Contact_Role_Service_Access__c serviceAccess3c = new Contact_Role_Service_Access__c();
+        serviceAccess3c.Contact_Role__c = accountContactRole5b.Id;
+        serviceAccess3c.Service__c = portalApplications.Id;
+        serviceAccess3c.Status__c = 'Granted';
+        insert serviceAccess3c;
 
         //grant access for user Leo, account Test account 2 and Service Super User role and GADM service
         Contact_Role_Service_Access__c serviceAccess4 = new Contact_Role_Service_Access__c();
@@ -432,7 +451,7 @@ public class Data_Submission_List_CTRL_TEST {
     }
 
     @IsTest
-    private static void getUserInformation_GadmUserTest() {
+    private static void getUserInformation_GadmDataSubmitterTest() {
         User testUser = [SELECT Id FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
         User testUser2 = [SELECT Id FROM User WHERE Email = 'Pedro.Smith.test@somedomain.com'];
 
@@ -450,6 +469,7 @@ public class Data_Submission_List_CTRL_TEST {
 
         System.assertEquals(false, info.isSuperUser, 'Bad user info retrieved!');
         System.assertEquals(true, info.isGadmUser, 'Bad user info retrieved!');
+        System.assertEquals(true, info.isDataSubmitter, 'Bad user info retrieved!');
         System.assertEquals(false, info.isPowerUser, 'Bad user info retrieved!');
         System.assertEquals(1, info.visibleAccounts.size(), 'Incorrect number of visible accounts retrieved!');
         System.assertEquals(testAccount.Id, info.visibleAccounts[0].Id, 'Retrieved accountId does not match!');
