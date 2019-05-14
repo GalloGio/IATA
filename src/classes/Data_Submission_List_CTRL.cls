@@ -1,4 +1,4 @@
-public with sharing class Data_Submission_List_CTRL {
+public without sharing class Data_Submission_List_CTRL {
 
 
     private static final Integer MAX_QUERY_RECORDS = 2000;
@@ -31,6 +31,7 @@ public with sharing class Data_Submission_List_CTRL {
                 query += ' NULLS LAST';
             }
         }
+        System.debug('query:: ' +query);
         query += ' LIMIT ' + String.valueOf(MAX_QUERY_RECORDS);
         List<SObject> sobjects = new List<SObject>();
         try {
@@ -49,9 +50,9 @@ public with sharing class Data_Submission_List_CTRL {
             String namespace = retrieveNamespace();
             try {
                 String sobject_internal_name = parseSObjectName(namespace, sobject_name);
-                if(!Schema.getGlobalDescribe().get(sobject_internal_name).getDescribe().isAccessible()){
+                /*if(!Schema.getGlobalDescribe().get(sobject_internal_name).getDescribe().isAccessible()){
                     throw new Data_Submission_List_CTRL.DynamicTableException('User doesn\'t have access to object: ' + Schema.getGlobalDescribe().get(sobject_internal_name).getDescribe().getName() + '.');
-                }
+                }*/
                 parseFieldsString(namespace, sobject_internal_name, field_names);
                 setColumnsLabels(field_labels);
                 setSortableColumns(sortable_field_names);
@@ -184,9 +185,9 @@ public with sharing class Data_Submission_List_CTRL {
             } else {
                 throw new DynamicTableException('Unknown relationship: ' + relationship[0] + '.');
             }
-            if(!describe_field_result.isAccessible()){
+            /*if(!describe_field_result.isAccessible()){
                 throw new DynamicTableException('User doesn\'t have access to field: ' + describe_field_result.getName() + '.');
-            }
+            }*/
             if(field_api_name != null){
                 field_api_name += '.' + describe_field_result.getRelationshipName();
             } else {
@@ -212,9 +213,9 @@ public with sharing class Data_Submission_List_CTRL {
             } else {
                 throw new DynamicTableException('Unknown field: ' + field_name + '.');
             }
-            if(!describe_field_result.isAccessible()){
+            /*if(!describe_field_result.isAccessible()){
                 throw new Data_Submission_List_CTRL.DynamicTableException('User doesn\'t have access to field: ' + describe_field_result.getName() + '.');
-            }
+            }*/
             if(field_api_name != null){
                 field_api_name += '.' + describe_field_result.getName();
             } else {
@@ -242,5 +243,105 @@ public with sharing class Data_Submission_List_CTRL {
     }
 
     private class DynamicTableException extends Exception {}
+
+
+    public class UserInformation {
+        @AuraEnabled
+        public boolean isPowerUser {get; set;}
+        @AuraEnabled
+        public boolean isSuperUser {get; set;}
+        @AuraEnabled
+        public boolean isGadmUser {get; set;}
+        @AuraEnabled
+        public List<Account> visibleAccounts {get; set;}
+        @AuraEnabled
+        public String queryWhereClause {get; set;}
+
+    }
+
+
+    @AuraEnabled
+    public static UserInformation getUserInformation(Id userId) {
+
+        UserInformation info = new UserInformation();
+        info.isPowerUser = false;
+        info.isSuperUser = false;
+        info.isGadmUser = false;
+        info.visibleAccounts = new List<Account>();
+
+        List<Contact_Roles__c> grantedRoles = Contact_Roles_Helper.getGrantedUserRoles(userId, 'GADM');
+        if(! grantedRoles.isEmpty()) {
+
+            boolean isPowerUser= false;
+            boolean isSuperUser = false;
+            boolean isGadmUser = false;
+
+            for(Contact_Roles__c role : grantedRoles) {
+                if(role.Name == 'Service Power User') {
+                    isPowerUser = true;
+                    continue;
+                }
+                if(role.Name == 'Service Super User') {
+                    isSuperUser = true;
+                    continue;
+                }
+
+                if(role.Name == 'GADM User') {
+                    isGadmUser = true;
+                    continue;
+                }
+            }
+
+            info.isPowerUser = isPowerUser;
+            info.isSuperUser = (isSuperUser && !isPowerUser);
+            info.isGadmUser = (isGadmUser && !isPowerUser && !isSuperUser);
+        }
+
+        List<Account> visibleAccounts = Contact_Roles_Helper.getUserAccounts(userId);
+        if(! visibleAccounts.isEmpty()) {
+            info.visibleAccounts = visibleAccounts;
+        }
+
+        info.queryWhereClause = buildWhereClause(userId, info.isPowerUser, info.isSuperUser, info.isGadmUser, info.visibleAccounts);
+
+
+        return info;
+
+    }
+
+
+    private static String buildWhereClause(Id userId, Boolean isPowerUser, Boolean isSuperUser, Boolean isGadmUser, List<Account> visibleAccounts) {
+        String whereClause = '';
+
+        if(isPowerUser || isSuperUser) {
+            String accountsString = '';
+
+            if(! visibleAccounts.isEmpty()) {
+                accountsString = '(' +'\'' + visibleAccounts[0].Id + '\'';
+
+                for(Integer i = 1 ; i < visibleAccounts.size(); i++) {
+                    accountsString +=', \''+visibleAccounts[i].Id + '\'';
+                }
+                accountsString += ')';
+            }
+
+            if(accountsString.length() > 0) {
+                whereClause += 'Submitter__r.AccountId IN ' + accountsString;
+            }
+        }else if(isGadmUser) {
+            whereClause += 'Submitter__c =\'' + userId + '\'';
+        }
+
+        Datetime now = System.now().addMonths(-6);
+        String startTime = now.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+
+
+        if(isSuperUser || isGadmUser) {
+            whereClause += ' AND Submission_date__c >=' + startTime;
+        }
+
+
+        return whereClause;
+    }
 
 }

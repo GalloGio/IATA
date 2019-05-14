@@ -14,16 +14,19 @@
 
     <!--Criteria-->
     <aura:attribute name="SObjectName" type="String" required="true" default="Data_Submission__c" description="SObject from which records will be retrieved." />
-    <aura:attribute name="FieldNames" type="String[]" required="true" default="Name,User__r.Name,Status__c,Submission_date__c,Result__c" description="Fields, which should be retrieved. One field = one column." />
+    <aura:attribute name="FieldNames" type="String[]" required="true" default="Name,Submitter__r.Name,Status__c,Submission_date__c,Result__c" description="Fields, which should be retrieved. One field = one column." />
     <aura:attribute name="MatchCriteria" type="String" required="true" description="Only records which meet this criteria will be retrieved." />
-    <aura:attribute name="FieldLabels" type="String[]" default="" description="Custom labels for retrieved fields." />
-    <aura:attribute name="SortableFieldNames" type="String[]" default="Name,User__r.Name,Status__c,Submission_date__c" description="Which fields should be sortable? If not specified, all fields will be sortable." />
+    <aura:attribute name="FieldLabels" type="String[]" default="Submitter__r.Name:Submitter" description="Custom labels for retrieved fields." />
+    <aura:attribute name="SortableFieldNames" type="String[]" default="Name,Submitter__r.Name,Status__c,Submission_date__c" description="Which fields should be sortable? If not specified, all fields will be sortable." />
     <aura:attribute name="ReferenceFields" type="String[]" default="" description="Which fields should be linked converted into references to records? If not specified, none of fields will be converted." />
     <aura:attribute name="OverrideFieldType" type="String[]" description="Which fields should be converted to be another type? If not specified, none of fields will be converted." />
 
-
+    <!--Show properties-->
     <aura:attribute name="detailsShown" type="Boolean" default="False"/>
     <aura:attribute name="detailsData" type="Object[]"/>
+
+    <!--User info-->
+    <aura:attribute name="userInformation" type="Object" default=""/>
 
     <!--Private attributes-->
     <aura:attribute name="AllRecords" type="Object[]" access="private" />
@@ -50,9 +53,6 @@
     <aura:handler name="init" value="{!this}" action="{!c.initializeComponent}" />
     <aura:handler name="change" value="{!v.MatchCriteria}" action="{!c.updateMatchCriteria}" />
     <aura:handler name="detailsBackEvt" event="c:Data_Submission_Event" action="{!c.handleDetailsBackEvt}"/>
-    <!--Style-->
-    <!--<ltng:require styles="/resource/lightning/assets/styles/salesforce-lightning-design-system.css" />-->
-    <!--<ltng:require styles="{!$Resource.Screen}"/>-->
 
     <div class="page_container">
 
@@ -299,7 +299,7 @@
         </article>
         <aura:set attribute="else">
             <div class="recordError">
-                <ui:message title="DataTable Error" severity="error" closable="false">
+                <ui:message title="Data Submission Result Error" severity="error" closable="false">
                     {!v.ErrorMessage}
                 </ui:message>
             </div>

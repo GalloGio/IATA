@@ -115,13 +115,11 @@
 
          console.log(JSON.stringify(component.get("v.TableRows")[rowNum]));
          component.set("v.detailsData", component.get("v.TableRows")[rowNum]);
-		 //component.set("v.detailsShown", !component.get("v.detailsShown"));
 		 helper.toggleTable(component);
 		 helper.toggleDetails(component);
 
     },
     handleDetailsBackEvt: function(component,event,helper) {
-         //component.set("v.detailsShown", !component.get("v.detailsShown"));
          helper.toggleTable(component);
          helper.toggleDetails(component);
 

@@ -41,11 +41,13 @@ public class Data_Submission_List_CTRL_TEST {
 
         Contact testContact = createContact('Neo', 'Smith', acc);
         Contact testContact2 = createContact('Leo', 'Smith', acc2);
+        Contact testContact3 = createContact('Pedro', 'Smith', acc);
 
         Id profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'].Id;
 
         User testUser = createUser(testContact, profileId);
         User testUser2 = createUser(testContact2, profileId);
+        User testUser3 = createUser(testContact3, profileId);
 
         List<Data_Submission__c> listToInsert = new List<Data_Submission__c>();
 
@@ -93,12 +95,19 @@ public class Data_Submission_List_CTRL_TEST {
         insert contactRoles;
 
         Contact_Roles__c contactRoles2 = new Contact_Roles__c();
-        contactRoles2.Name = 'Power User';
+        contactRoles2.Name = 'Service Power User';
         insert contactRoles2;
+
+        Contact_Roles__c contactRoles3 = new Contact_Roles__c();
+        contactRoles3.Name = 'Service Super User';
+        insert contactRoles3;
 
         Portal_Applications__c portalApplications = new Portal_Applications__c();
         portalApplications.Name = 'GADM';
         insert portalApplications;
+
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
 
         //Account contact role for user Neo and Test Account
         Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
@@ -106,7 +115,16 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole.Contact_Roles__c = contactRoles.Id;
         accountContactRole.Account_Role__c = accountRole.Id;
         accountContactRole.Service_Rendered__c = 'GADM';
+        accountContactRole.RecordTypeId = functionalRecordTypeId;
         insert accountContactRole;
+
+        Account_Contact_Role__c accountContactRole1 = new Account_Contact_Role__c();
+        accountContactRole1.Contact__c = testContact.Id;
+        accountContactRole1.Contact_Roles__c = contactRoles.Id;
+        accountContactRole1.Account_Role__c = accountRole.Id;
+        accountContactRole1.Service_Rendered__c = 'GADM';
+        accountContactRole1.RecordTypeId = groupRecordTypeId;
+        insert accountContactRole1;
 
         //Account contact role for user Neo and Test Account
         Account_Contact_Role__c accountContactRole2 = new Account_Contact_Role__c();
@@ -114,6 +132,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole2.Contact_Roles__c = contactRoles2.Id;
         accountContactRole2.Account_Role__c = accountRole.Id;
         accountContactRole2.Service_Rendered__c = 'GADM';
+        accountContactRole2.RecordTypeId = functionalRecordTypeId;
         insert accountContactRole2;
 
         //Account contact role for user Neo and Test Account2
@@ -122,6 +141,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole2b.Contact_Roles__c = contactRoles.Id;
         accountContactRole2b.Account_Role__c = accountRole2.Id;
         accountContactRole2b.Service_Rendered__c = 'GADM';
+        accountContactRole2b.RecordTypeId = groupRecordTypeId;
         insert accountContactRole2b;
 
         //Account contact role for user Leo and Test Account2
@@ -130,7 +150,40 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole3.Contact_Roles__c = contactRoles.Id;
         accountContactRole3.Account_Role__c = accountRole2.Id;
         accountContactRole3.Service_Rendered__c = 'GADM';
+        accountContactRole3.RecordTypeId = functionalRecordTypeId;
         insert accountContactRole3;
+
+        Account_Contact_Role__c accountContactRole3b = new Account_Contact_Role__c();
+        accountContactRole3b.Contact__c = testContact2.Id;
+        accountContactRole3b.Contact_Roles__c = contactRoles.Id;
+        accountContactRole3b.Account_Role__c = accountRole2.Id;
+        accountContactRole3b.Service_Rendered__c = 'GADM';
+        accountContactRole3b.RecordTypeId = groupRecordTypeId;
+        insert accountContactRole3b;
+
+        Account_Contact_Role__c accountContactRole4 = new Account_Contact_Role__c();
+        accountContactRole4.Contact__c = testContact2.Id;
+        accountContactRole4.Contact_Roles__c = contactRoles3.Id;
+        accountContactRole4.Account_Role__c = accountRole2.Id;
+        accountContactRole4.Service_Rendered__c = 'GADM';
+        accountContactRole4.RecordTypeId = functionalRecordTypeId;
+        insert accountContactRole4;
+
+        Account_Contact_Role__c accountContactRole5 = new Account_Contact_Role__c();
+        accountContactRole5.Contact__c = testContact3.Id;
+        accountContactRole5.Contact_Roles__c = contactRoles.Id;
+        accountContactRole5.Account_Role__c = accountRole.Id;
+        accountContactRole5.Service_Rendered__c = 'GADM';
+        accountContactRole5.RecordTypeId = functionalRecordTypeId;
+        insert accountContactRole5;
+
+        Account_Contact_Role__c accountContactRole6 = new Account_Contact_Role__c();
+        accountContactRole6.Contact__c = testContact3.Id;
+        accountContactRole6.Contact_Roles__c = contactRoles.Id;
+        accountContactRole6.Account_Role__c = accountRole.Id;
+        accountContactRole6.Service_Rendered__c = 'GADM';
+        accountContactRole6.RecordTypeId = groupRecordTypeId;
+        insert accountContactRole6;
 
         //grant access for user Neo, account Test account and GADM User role and GADM service
         Contact_Role_Service_Access__c serviceAccess = new Contact_Role_Service_Access__c();
@@ -139,7 +192,7 @@ public class Data_Submission_List_CTRL_TEST {
         serviceAccess.Status__c = 'Granted';
         insert serviceAccess;
 
-        //grant access for user Neo, account Test account and Power User role and GADM service
+        //grant access for user Neo, account Test account and Service Power User role and GADM service
         Contact_Role_Service_Access__c serviceAccess2 = new Contact_Role_Service_Access__c();
         serviceAccess2.Contact_Role__c = accountContactRole2.Id;
         serviceAccess2.Service__c = portalApplications.Id;
@@ -159,6 +212,20 @@ public class Data_Submission_List_CTRL_TEST {
         serviceAccess3.Service__c = portalApplications.Id;
         serviceAccess3.Status__c = 'Granted';
         insert serviceAccess3;
+
+        //grant access for user Leo, account Test account 2 and Service Super User role and GADM service
+        Contact_Role_Service_Access__c serviceAccess3b = new Contact_Role_Service_Access__c();
+        serviceAccess3b.Contact_Role__c = accountContactRole4.Id;
+        serviceAccess3b.Service__c = portalApplications.Id;
+        serviceAccess3b.Status__c = 'Granted';
+        insert serviceAccess3b;
+
+        //grant access for user Leo, account Test account 2 and Service Super User role and GADM service
+        Contact_Role_Service_Access__c serviceAccess4 = new Contact_Role_Service_Access__c();
+        serviceAccess4.Contact_Role__c = accountContactRole5.Id;
+        serviceAccess4.Service__c = portalApplications.Id;
+        serviceAccess4.Status__c = 'Granted';
+        insert serviceAccess4;
 
     }
 
@@ -315,6 +382,77 @@ public class Data_Submission_List_CTRL_TEST {
 
         System.assertEquals(true, records.contains('Unknown field'));
 
+    }
+
+    @IsTest
+    private static void getUserInformation_PowerUserTest() {
+        User testUser = [SELECT Id FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
+
+        Test.startTest();
+
+        Data_Submission_List_CTRL.UserInformation info;
+
+        System.runAs(testUser) {
+            info = Data_Submission_List_CTRL.getUserInformation(testUser.Id);
+        }
+
+        Test.stopTest();
+
+
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account'];
+
+        System.assertEquals(false, info.isSuperUser, 'Bad user info retrieved!');
+        System.assertEquals(false, info.isGadmUser, 'Bad user info retrieved!');
+        System.assertEquals(true, info.isPowerUser, 'Bad user info retrieved!');
+        System.assertEquals(2, info.visibleAccounts.size(), 'Incorrect number of visible accounts retrieved!');
+    }
+
+    @IsTest
+    private static void getUserInformation_SuperUserTest() {
+        User testUser = [SELECT Id FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
+        User testUser2 = [SELECT Id FROM User WHERE Email = 'Leo.Smith.test@somedomain.com'];
+
+        Test.startTest();
+
+        Data_Submission_List_CTRL.UserInformation info;
+
+        System.runAs(testUser) {
+            info = Data_Submission_List_CTRL.getUserInformation(testUser2.Id);
+        }
+
+        Test.stopTest();
+
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account 2'];
+
+        System.assertEquals(true, info.isSuperUser, 'Bad user info retrieved!');
+        System.assertEquals(false, info.isGadmUser, 'Bad user info retrieved!');
+        System.assertEquals(false, info.isPowerUser, 'Bad user info retrieved!');
+        System.assertEquals(1, info.visibleAccounts.size(), 'Incorrect number of visible accounts retrieved!');
+        System.assertEquals(testAccount.Id, info.visibleAccounts[0].Id, 'Retrieved accountId does not match!');
+    }
+
+    @IsTest
+    private static void getUserInformation_GadmUserTest() {
+        User testUser = [SELECT Id FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
+        User testUser2 = [SELECT Id FROM User WHERE Email = 'Pedro.Smith.test@somedomain.com'];
+
+        Test.startTest();
+
+        Data_Submission_List_CTRL.UserInformation info;
+
+        System.runAs(testUser) {
+            info = Data_Submission_List_CTRL.getUserInformation(testUser2.Id);
+        }
+
+        Test.stopTest();
+
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account'];
+
+        System.assertEquals(false, info.isSuperUser, 'Bad user info retrieved!');
+        System.assertEquals(true, info.isGadmUser, 'Bad user info retrieved!');
+        System.assertEquals(false, info.isPowerUser, 'Bad user info retrieved!');
+        System.assertEquals(1, info.visibleAccounts.size(), 'Incorrect number of visible accounts retrieved!');
+        System.assertEquals(testAccount.Id, info.visibleAccounts[0].Id, 'Retrieved accountId does not match!');
     }
 
 }

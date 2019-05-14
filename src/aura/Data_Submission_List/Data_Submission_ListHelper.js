@@ -54,8 +54,7 @@
                     }
                     component.set('v.ColumnMetadata', column_metadata_wrapper.column_metadata);
                     component.set('v.TableColumns', table_columns);
-                    this.retrieveTotalRecords(component);
-                    this.retrieveRecords(component, true);
+                    this.getCurrentUserInformation(component, event);
                 }
             } else if(state === 'ERROR'){
                 this.handleErrorMessage(component, response.getError());
@@ -64,6 +63,43 @@
         });
         $A.enqueueAction(action);
     },
+
+    getCurrentUserInformation : function(component, event) {
+        let action = component.get('c.getUserInformation');
+        action.setParams({
+            'userId' : $A.get('$SObjectType.CurrentUser.Id')
+        });
+        action.setCallback(this, function(response){
+            const state = response.getState();
+            if(state === 'SUCCESS') {
+                const result = response.getReturnValue();
+                if(! $A.util.isEmpty(result)) {
+
+                    component.set('v.userInformation', result);
+                    let queryWhereString = result.queryWhereClause;
+
+                    if(! $A.util.isEmpty(queryWhereString)) {
+                        component.set('v.PrivateMatchCriteria', queryWhereString);
+                        this.retrieveTotalRecords(component);
+                        this.retrieveRecords(component, true);
+                    }else{
+                        this.handleErrorMessage(component, 'Unexpected error!');
+                        this.toggleTable(component);
+                    }
+
+                }else{
+                    this.handleErrorMessage(component, 'Unexpected error!');
+                    this.toggleTable(component);
+                }
+            }else{
+                this.handleErrorMessage(component, 'Unexpected error!');
+                this.toggleTable(component);
+            }
+        });
+        $A.enqueueAction(action);
+
+    },
+
 
     retrieveTotalRecords : function(component){
         let action = component.get('c.getTotalRecords');
