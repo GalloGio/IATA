@@ -8,6 +8,7 @@ private class ANG_AccountTriggerHandlerTest {
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'BTN_Bal', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/consumedrhc/{agencyId}/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MAPDF', Change_Code__c = 'MAPDF', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MBDIL', Change_Code__c = 'MBDIL', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
+		customsettings.add(new ANG_CalloutMapping__c(Name = 'MBPDD', Change_Code__c = 'MBPDD', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
 		insert customsettings;
 
         Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
@@ -36,6 +37,18 @@ private class ANG_AccountTriggerHandlerTest {
         		ANG_IEP_Model__c = 'Model B'
         	);
         countries.add(isoTest2);
+
+		IATA_ISO_Country__c ukCountry = new IATA_ISO_Country__c(
+        		Name = 'United Kingdom', 
+        		CurrencyIsoCode = 'EUR', 
+        		ISO_Code_Numeric__c = 999, 
+        		ISO_Code__c = 'UK',
+        		AIMS_Area_ID__c='1',
+        		ANG_Enable_NewGen__c = true,
+        		ANG_IEP_Model__c = 'Model B+'
+        	);
+
+        countries.add(ukCountry);
 
         insert countries;
 
@@ -76,6 +89,24 @@ private class ANG_AccountTriggerHandlerTest {
         		RecordTypeId = accRT
         	);
 		accs.add(a2);
+
+		Account a3 = new Account(
+        		Name ='UK Test', 
+        		Type = 'IATA Passenger Sales Agent',
+        		Sector__c='Travel Agent', 
+        		Location_Type__c = AMS_Utils.HE,
+        		Location_Class__c = 'P',
+        		ANG_FA_Opt_out__c = false,
+        		IATACode__c='12345699',
+        		IATA_ISO_Country__c = ukCountry.Id,
+        		BillingCountry='UK Test',
+        		ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+        		Status__c = AMS_Utils.ACC_S9_APPROVED,
+        		ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+        		Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+        		RecordTypeId = accRT
+        	);
+		accs.add(a3);
 
 		insert accs;
 
@@ -495,6 +526,55 @@ private class ANG_AccountTriggerHandlerTest {
 
         System.assertEquals(2, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = 'MAPDF' OR Change_Code__c ='MBDIL'].size());
     }
+	
+	@isTest static void dueDiligenceModelBPlusTest(){
+		
+		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'UK Test'];
+
+		List<Contact> cons = new List<Contact>();
+		Contact con1 = new Contact(LastName = 'con1',
+				Email = 'test1@istest.newgen', 
+				Preferred_Language__c = 'English',
+				BSP_CASS_Payment_contact__c = true, 
+				Financial_Assessment_Contact__c = true, 
+				AccountId = accs[0].Id
+		);
+		cons.add(con1);
+
+		insert cons;
+
+		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
+		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
+		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
+		insert pas;
+
+		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
+		insert pars;
+
+        Test.startTest();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+
+        for (Account a :accs){
+        	a.ANG_IEP_Status__c = 'In Progress';
+        }
+
+        update accs;
+
+        List<AMS_Oscar__c> oscars = [SELECT Id, STEP17__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.IEPMODELBPLUSACCOUNTSETUP];
+
+        for (AMS_Oscar__c oscar : oscars){
+        	oscar.STEP17__c = 'Passed';
+        }
+
+        update oscars;
+
+        Test.stopTest();
+
+        System.assertEquals(1, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = :AMS_Utils.MBPDD_CHANGE_CODE].size());
+
+	}
 
     public class MockHttpResponseSuccessGenerator implements HttpCalloutMock {
 		// Implement this interface method
