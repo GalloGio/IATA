@@ -298,7 +298,7 @@ global class ANG_MasterData_Interface{
                 //EasyPay
                 if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c)){
                     this.externalSystems.add(acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name);
-                    this.isPciDss = pciCompliantFldMapping.get(acc.Is_PCI_compliant__c);
+                    this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : 'No';
                 }
 
                 //GDI - note: we do publish HE/HO only
