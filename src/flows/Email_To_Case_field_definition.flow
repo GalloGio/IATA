@@ -513,7 +513,7 @@
             </processMetadataValues>
             <field>CaseArea__c</field>
             <value>
-                <stringValue>Risk Management</stringValue>
+                <stringValue>Risk Management Process</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
