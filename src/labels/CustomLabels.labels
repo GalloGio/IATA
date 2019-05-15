@@ -32262,7 +32262,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Portal Name to Redirect</shortDescription>
-        <value>/csportal/s</value>
+        <value>csportal</value>
     </labels>
     <labels>
         <fullName>Postal_code</fullName>
