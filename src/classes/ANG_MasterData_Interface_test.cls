@@ -262,4 +262,76 @@ private class ANG_MasterData_Interface_test {
 
         }
 
+        @isTest static void pciCompliantTest(){
+                
+            Account acct = 
+                [SELECT 
+                    Id,
+                    Name,
+                    IATACode__c,
+                    Is_PCI_Compliant__c
+                 FROM
+                    Account 
+                 WHERE 
+                    Name = 'Uk Test' 
+                 LIMIT 1
+                ];
+
+            Test.startTest();
+
+            RestResponse response = doCallOutToWS(acct.IATACode__c, true);
+            System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+            
+            String respBody = response.responseBody.toString();
+        
+            ANG_MasterData_Interface.MasterDataPayload payload = (ANG_MasterData_Interface.MasterDataPayload) JSON.deserialize(respBody, ANG_MasterData_Interface.MasterDataPayload.class);
+        
+            system.debug('PAYLOAD: ' + payload.isPciDss);
+            system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
+            system.assert(payload.isPciDss == 'No', 'Payload isPciDss element must be \'No\'');
+        
+            acct.Is_PCI_Compliant__c = 'Nil CC';
+            update acct;
+
+            response = doCallOutToWS(acct.IATACode__c, true);
+            System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+            
+            respBody = response.responseBody.toString();
+        
+            payload = (ANG_MasterData_Interface.MasterDataPayload) JSON.deserialize(respBody, ANG_MasterData_Interface.MasterDataPayload.class);
+        
+            system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
+            system.assert(payload.isPciDss == 'No', 'Payload isPciDss element must be \'No\'');
+
+            acct.Is_PCI_Compliant__c = 'Corporate Card';
+            update acct;
+
+            response = doCallOutToWS(acct.IATACode__c, true);
+            System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+            
+            respBody = response.responseBody.toString();
+        
+            payload = (ANG_MasterData_Interface.MasterDataPayload) JSON.deserialize(respBody, ANG_MasterData_Interface.MasterDataPayload.class);
+        
+            system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
+            system.assert(payload.isPciDss == 'Yes', 'Payload isPciDss element must be \'Yes\'');
+            
+            //When the IEP Status is not 'open' or 'in progress' 
+            //the pci compliant value must not be in the payload
+            acct.ANG_IEP_Status__c = 'No IEP Account';
+            update acct;
+
+            response = doCallOutToWS(acct.IATACode__c, true);
+            System.assertEquals(HTTP_STATUS_OK, response.statusCode, 'The service response must be ' + HTTP_STATUS_OK);
+            
+            respBody = response.responseBody.toString();
+        
+            payload = (ANG_MasterData_Interface.MasterDataPayload) JSON.deserialize(respBody, ANG_MasterData_Interface.MasterDataPayload.class);
+        
+            system.assert(payload.isPciDss == NULL, 'Payload isPciDss element must be NULL');
+
+            Test.stopTest();
+
+        }
+
 }
