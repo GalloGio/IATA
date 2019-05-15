@@ -238,7 +238,7 @@ public without sharing class ISSP_Login {
         String oneIDStatus = 'OFF';
         String identityLogin = '/identity/s/login'; // will work on sandboxes
 		String serviceName='ISSPs'; // default value old portal
-		String tempStart='%2FISSP_Homepagedd'; // default value old portal
+		String tempStart='%2FISSP_Homepage'; // default value old portal
 
 
         if(ISSP_CS__c.getValues('1ID redirect').value__c != null){
