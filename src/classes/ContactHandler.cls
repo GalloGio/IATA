@@ -35,9 +35,13 @@ public class ContactHandler{
 		Get all related account Id and calls the method to update some dependent fields from child contacts
 	**/
 	public static void findParentAcountsToUpdate(list<Contact> listNews) {
+
+		//if the iata code generation is running, the accounts were already updated
+		if(ANG_OscarProcessHelper.isIATACodeGenerationRunning) return;
+
 		list<Id> listAccountId = new list<Id>();
 		for (Contact contact: listNews) {
-			if (contact.AccountId!= null) {
+			if (contact.AccountId != null && (contact.Financial_Assessment_Contact__c || contact.User_Portal_Status__c == 'Approved Admin')) {
 				listAccountId.add(contact.AccountId);
 			}
 		}
