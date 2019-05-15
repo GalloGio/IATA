@@ -10,6 +10,7 @@ import { navigateToPage, getPageName } from'c/navigationUtils';
 import CSP_Breadcrumb_Home_Title from '@salesforce/label/c.CSP_Breadcrumb_Home_Title';
 import CSP_Breadcrumb_Support_Title from '@salesforce/label/c.CSP_Breadcrumb_Support_Title';
 import CSP_Breadcrumb_Support_ReachUs from '@salesforce/label/c.CSP_Breadcrumb_Support_ReachUs';
+import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
 
@@ -17,11 +18,21 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     labels = {
         CSP_Breadcrumb_Home_Title,
         CSP_Breadcrumb_Support_Title,
-        CSP_Breadcrumb_Support_ReachUs
+        CSP_Breadcrumb_Support_ReachUs,
+        CSP_Breadcrumb_FAQ_Title
     };
 
     //Used to replace last breadcrumb with given label
-    @api lastBreadcrumbLabel;
+    @api
+    get lastBreadcrumbLabel() {
+        return this.finalLabel;
+    }
+    set lastBreadcrumbLabel(value) {
+       this.finalLabel = value;
+       this.processLstBreadcrumbs();
+    }
+
+    @track finalLabel;
 
     //Used to display the breadcrumbs in brighter colors (white)
     @api showInWhite = false;
@@ -35,47 +46,61 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         this.pagename = getPageName();
         //console.log(this.pagename);
 
-        let classNameAllBreadCrumbs = 'text-linkBlue';
-        let classNameLastBreadCrumb = 'text-black';
+        this.classNameAllBreadCrumbs = 'text-linkBlue';
+        this.classNameLastBreadCrumb = 'text-black';
         if(this.showInWhite){
-            classNameAllBreadCrumbs = 'text-white';
-            classNameLastBreadCrumb = 'text-transparent';
+            this.classNameAllBreadCrumbs = 'text-white';
+            this.classNameLastBreadCrumb = 'text-transparent';
         }
 
         if(this.pagename !== undefined && this.pagename !== ''){
             getBreadcrumbs({ pageName : this.pagename })
                 .then(results => {
                     //console.log(results);
-                    let resultsAux = results;
-                    if(resultsAux !== undefined && resultsAux !== null && resultsAux.length > 0){
-                        for(let i = 0; i < resultsAux.length; i++){
-                            if(!resultsAux[i].Replace_With_Param__c){
-                                resultsAux[i].RealLabel = this.labels[resultsAux[i].MasterLabel];
-                                resultsAux[i].TextClass = classNameAllBreadCrumbs + ' cursorPointer';
-                            }
-                            
-                            resultsAux[i].separatorClass = classNameLastBreadCrumb;
-
-                            resultsAux[i].showSeparator = true;
-
-                            if(i === (resultsAux.length -1) && resultsAux[i].Replace_With_Param__c){
-                                resultsAux[i].RealLabel = this.lastBreadcrumbLabel;
-                            }
-
-                            if(i === (resultsAux.length -1)){
-                                resultsAux[i].showSeparator = false;
-                                resultsAux[i].TextClass = classNameLastBreadCrumb + ' cursorPointer';
-                            }
-                        }
-                    }
-                    //console.log(resultsAux);
-                    this.lstBreadcrumbs = resultsAux;
+                    this.results = results;
+                    this.processLstBreadcrumbs();
+                    
                 })
                 .catch(error => {
-                    console.log('error: ' , error);
+                    console.log('PortalBreadcrumbs connectedCallback getBreadcrumbs error: ' , error);
                 });
         }
 
+    }
+
+    processLstBreadcrumbs(){
+
+        //because proxy.......
+        if(this.results !== undefined){
+            let resultsAux = JSON.parse(JSON.stringify(this.results));
+
+            if(resultsAux !== undefined && resultsAux !== null && resultsAux.length > 0){
+                for(let i = 0; i < resultsAux.length; i++){
+                    if(!resultsAux[i].Replace_With_Param__c){
+                        resultsAux[i].RealLabel = this.labels[resultsAux[i].MasterLabel];
+                        resultsAux[i].TextClass = this.classNameAllBreadCrumbs + ' cursorPointer';
+                    }
+                    
+                    resultsAux[i].separatorClass = this.classNameLastBreadCrumb;
+
+                    resultsAux[i].showSeparator = true;
+                    resultsAux[i].clickable = true;
+
+                    if(i === (resultsAux.length -1) && resultsAux[i].Replace_With_Param__c){
+                        resultsAux[i].RealLabel = this.finalLabel;
+                    }
+
+                    if(i === (resultsAux.length -1)){
+                        resultsAux[i].showSeparator = false;
+                        resultsAux[i].TextClass = this.classNameLastBreadCrumb + '';
+                        resultsAux[i].clickable = false;
+                    }
+                }
+            }
+
+            this.lstBreadcrumbs = resultsAux;
+            //console.log('processLstBreadcrumbs', this.lstBreadcrumbs);
+        }
     }
 
     navigateToBreadcrumb(event){
