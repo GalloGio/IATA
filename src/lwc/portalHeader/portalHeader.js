@@ -97,7 +97,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     navigationCheck(pageNameToNavigate, currentService){
         this.currentURL = window.location.href;
         if ( !this.currentURL.includes(this.labels.PortalName) ) {
-            window.history.pushState("", "", this.labels.PortalName + currentService);
+            window.history.pushState("", "", "/" + this.labels.PortalName+ "/s/" + currentService);
             location.reload();
         } else {
             this.navigateToOtherPage(pageNameToNavigate);
@@ -183,7 +183,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 notificaion.viewed = true;
             })
             .catch(error => {
-                console.log('Portalheaer onClickAllNotificationsView increaseNotificationView error: ' , error);
+                const showError = new ShowToastEvent({
+                    title: 'Error',
+                    message: 'An error has occurred: ' + error,
+                    variant: 'error',
+                });
+                this.dispatchEvent(showError);
+                
             });
         }
         
