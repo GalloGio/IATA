@@ -6,6 +6,9 @@ import { NavigationMixin } from 'lightning/navigation';
 //notification apex method
 import getNotificationsCount from '@salesforce/apex/CSP_Utils.getNotificationsCount';
 import getNotifications from '@salesforce/apex/CSP_Utils.getNotifications';
+import getUserType from '@salesforce/apex/CSP_Utils.getUserType';
+import increaseNotificationView from '@salesforce/apex/CSP_Utils.increaseNotificationView';
+
 
 //custom labels
 import ISSP_Services from '@salesforce/label/c.ISSP_Services';
@@ -16,6 +19,7 @@ import CSP_CompanyProfile from '@salesforce/label/c.CSP_CompanyProfile';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 import CSP_Settings from '@salesforce/label/c.CSP_Settings';
 import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
+import PortalName from '@salesforce/label/c.PortalNameRedirect';
 
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
@@ -28,7 +32,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         CSP_CompanyProfile,
         CSP_Cases,
         CSP_Settings,
-        CSP_LogOut
+        CSP_LogOut,
+        PortalName
     }
     
     //links for images
@@ -42,17 +47,29 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track currentURL;
     @track showBackdrop = false;
 
+    //User Type
+    @track userAdmin;
+
     //style variables for notifications
     @track headerButtonNotificationsContainerStyle;
     @track headerButtonNotificationsCloseIconStyle;
     @track headerButtonNotificationsStyle;
     @track notificationNumberStyle;
     @track openNotificationsStyle;
+    @track displayBodyStyle;
+    @track displayNotificationStyle;
+    //
+    @track checkDisplayBodyStyle
 
     connectedCallback() { 
 
+        getUserType().then(result => {
+            this.userAdmin = result;
+        });
+
         getNotifications().then(result => {
-            this.notificationsList = result;
+            let resultsAux = JSON.parse(JSON.stringify(result));
+            this.notificationsList = resultsAux;
         });
 
         getNotificationsCount().then(result => {
@@ -63,9 +80,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 this.notificationNumberStyle = 'display: none;';
             }
         });
-        
-        
-        
+
     }
 
     //navigation methods
@@ -81,8 +96,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     // Check if we are in the Old/New Portal
     navigationCheck(pageNameToNavigate, currentService){
         this.currentURL = window.location.href;
-        if ( !this.currentURL.includes("/csportal/s") ) {
-            window.history.pushState("", "", '/csportal/s/' + currentService);
+        if ( !this.currentURL.includes(this.labels.PortalName) ) {
+            window.history.pushState("", "", this.labels.PortalName + currentService);
             location.reload();
         } else {
             this.navigateToOtherPage(pageNameToNavigate);
@@ -140,6 +155,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.notificationNumberStyle = 'display: none;';
             this.openNotificationsStyle = 'display: block;';
             this.showBackdrop = true;
+            this.displayBodyStyle = 'width: 35vw';
+            this.displayNotificationStyle = 'width: 100%'
        } else {
             this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
             this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
@@ -151,8 +168,28 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     onClickAllNotificationsView(event){
-        let selectedCategory = event.target.dataset.item;
-        console.log(selectedCategory);
+        let selectedNotificationId = event.target.dataset.item;
+
+        let notificaion = this.notificationsList.find(function(element) {
+            if (element.id === selectedNotificationId){
+                return element;
+            }
+            return null;
+        });
+
+        if (notificaion.typeNotification === 'Announcement' ){
+            increaseNotificationView({id : selectedNotificationId})
+            .then(results => {
+                notificaion.viewed = true;
+            })
+            .catch(error => {
+                console.log('Portalheaer onClickAllNotificationsView increaseNotificationView error: ' , error);
+            });
+        }
+        
+
+        
+    }
     }
 
 }
