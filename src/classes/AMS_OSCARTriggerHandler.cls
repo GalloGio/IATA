@@ -3345,7 +3345,7 @@ public class AMS_OSCARTriggerHandler {
         }
 
         //NEWGEN-5374 Set the Requested Bank Guarantee Amount(oscar) to Financial_Security_Amount__c (Case)
-        if(oldOSCAR.STEP34__c <> updatedOscar.STEP34__c && updatedOscar.STEP34__c == 'Passed' && updatedOscar.Process__c == AMS_Utils.NEWAE){
+        if(oldOSCAR.STEP34__c <> updatedOscar.STEP34__c && updatedOscar.STEP34__c == 'Passed' && (updatedOscar.Process__c == AMS_Utils.NEWAE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)){
 
             if(updatedOscar.Requested_Bank_Guarantee_amount__c != null){
                 Decimal convertedValue = updatedOscar.Requested_Bank_Guarantee_amount__c;

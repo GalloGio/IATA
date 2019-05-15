@@ -145,7 +145,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	private void calculateFSTotal_updateMinimumFS(){
 
 		if(!accIdSet.isEmpty()){
-			//Map only calculate the Total FS for countries that need to include all AEs
+			//Map used to calculate the Total FS 
 			Map<ID, Decimal> totalFinancialSecurityPerAccount = new Map<ID, Decimal>();
 			//Map used to calculate the Minimum FS 
 			Map<ID, Decimal> minimumFinancialSecurityPerAccount = new Map<ID, Decimal>();
@@ -182,7 +182,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 				for(Financial_Security__c fs : acc.Financial_Securities__r){
 					financialSecurityByAccountID.get(acc.id).add(fs);
 					
-					if(!newMap.containsKey(fs.id)) {
+					if(newMap != null && !newMap.containsKey(fs.id)) {
 						fsListToConvert.add(fs);
 						mapAccountbyId.put(acc.id, acc);
 					}
@@ -192,7 +192,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			//Align all the FS currencies with the RHC Information currency
 			if(!fsListToConvert.isEmpty() && !mapAccountbyId.isEmpty()) ANG_Risk_Helper.convertFSAmount(fsListToConvert, mapAccountbyId);
 
-			//apply the convertion to the FS values 
+			//Calculate the Minimum and Total FS
 			for(Account acc :accountList.values()){
 
 				if(!financialSecurityByAccountID.get(acc.id).isEmpty()){
@@ -205,8 +205,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 					//Minimum FS calculation
 					for(Financial_Security__c fs : financialSecurityByAccountID.get(acc.id)){
 
-
-						if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && fs.Security_Status__c=='Active'){
+						if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
 							String rhcCurrencyCode = accountList.get(accountID).RHC_Informations__r.get(0).CurrencyIsoCode;
 							minimumFinancialSecurityPerAccount.put(accountID, 
 								getCurrentFSValue(minimumFinancialSecurityPerAccount.get(accountID)) + ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c , fs.ANG_Minimum_Financial_Security__c, rhcCurrencyCode != null ? rhcCurrencyCode : fs.ANG_Financial_Security_Currency__c));
@@ -318,4 +317,15 @@ public class ANG_FinancialSecurityTriggerHandler{
 		return statuschangeMatrix.contains(oldValue+newValue);
 
 	}
+
+	/**
+	 * Called by ANG_CaseTriggerHandler when the Case field
+	 * Financial_Security_Amount__c is updated, fired the process 
+	 * to recalculate the FS Minimum Amount
+	 */
+	public void updateRHCInfoFSMinimumAmount(Set<Id> accountIDs){
+		accIdSet = accountIDs;
+		calculateFSTotal_updateMinimumFS();
+	}
+
 }
