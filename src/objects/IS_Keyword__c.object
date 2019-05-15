@@ -71,6 +71,7 @@
     <fields>
         <fullName>Keyword__c</fullName>
         <caseSensitive>false</caseSensitive>
+        <description>Keyword assigned to an incoming case from Email to Case</description>
         <externalId>false</externalId>
         <label>Keyword</label>
         <length>255</length>
@@ -81,6 +82,7 @@
     </fields>
     <fields>
         <fullName>Priority_Mapping__c</fullName>
+        <description>Show the related priority map</description>
         <externalId>false</externalId>
         <label>Priority Mapping</label>
         <referenceTo>Priority_Mapping__c</referenceTo>

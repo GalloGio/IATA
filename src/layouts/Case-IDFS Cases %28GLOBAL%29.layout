@@ -144,6 +144,10 @@
                 <field>SuppliedEmail</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SuppliedPhone</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Email_Domain_Validation__c</field>
             </layoutItems>
