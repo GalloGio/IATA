@@ -508,6 +508,13 @@ global class ANG_OscarProcessHelper {
                 acc.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
             }
 
+            //Initialize Risk Fields
+            if(acc.IATACode__c != null && (acc.ANG_Accreditation_Model__c == 'Cashless' || acc.ANG_Accreditation_Model__c == 'Cash')) {
+            	acc.ANG_HE_CashCondition__c = false;
+            	acc.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
+            	acc.ANG_HE_RiskStatus__c = 'Not Applicable';
+            }
+
             updaterObj.acctMap.put(acc.Id,acc);
 
             //Get the Accreditation Contacts to update the accounts fields Has_an_Administrator_User_Portal__c and Has_a_Financial_Assessment_Contact__c
