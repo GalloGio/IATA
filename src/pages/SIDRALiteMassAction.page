@@ -207,6 +207,8 @@ function selectedCases() {
 
         <apex:column value="{!wrapper.cse.Account.Category__c}" />
 
+        <apex:column value="{!wrapper.cse.IATA_Code__c}" />
+
         <apex:column value="{!wrapper.cse.Key_Customer_Case__c}" />
 
         <apex:column value="{!wrapper.cse.Reason1__c}" rendered="{!!filter.isIFAP}"/>
