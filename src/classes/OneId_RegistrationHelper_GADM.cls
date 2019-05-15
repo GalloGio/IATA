@@ -52,7 +52,14 @@ public without sharing class OneId_RegistrationHelper_GADM {
     public static void createContactRole(Contact con, Account_Role__c accountRole, Boolean isPowerUser) {
 
         Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
-        List<Contact_Roles__c> contactRoles = [SELECT Id, Name FROM Contact_Roles__c WHERE (Name = 'GADM User' OR Name = 'Service Power User') AND RecordTypeId = :externalRecordTypeId];
+        List<Contact_Role_Service__c> contactRoleServices = [SELECT Id, Contact_Role__c FROM Contact_Role_Service__c WHERE Contact_Role__r.RecordTypeId = :externalRecordTypeId AND Contact_Role__r.Name IN ('GADM User', 'Service Power user') AND Service__r.Name = 'GADM'];
+
+        Set<Id> roleIds = new Set<Id>();
+        for(Contact_Role_Service__c contactRoleService : contactRoleServices) {
+            roleIds.add(contactRoleService.Contact_Role__c);
+        }
+
+        List<Contact_Roles__c> contactRoles = [SELECT Id, Name FROM Contact_Roles__c WHERE Id =:roleIds];
 
         Contact_Roles__c gadmUser = new Contact_Roles__c();
         Contact_Roles__c  powerUser = new Contact_Roles__c();
@@ -67,7 +74,6 @@ public without sharing class OneId_RegistrationHelper_GADM {
         }
 
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
-        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
 
         List<Account_Contact_Role__c> toInsert = new List<Account_Contact_Role__c>();
         //GADM User - functional RecordType
@@ -79,16 +85,6 @@ public without sharing class OneId_RegistrationHelper_GADM {
         accountContactRole2.RecordTypeId = functionalRecordTypeId;
 
         toInsert.add(accountContactRole2);
-
-        //GADM User - group RecordType
-        Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
-        accountContactRole.Contact__c = con.Id;
-        accountContactRole.Contact_Roles__c = gadmUser.Id;
-        accountContactRole.Account_Role__c = accountRole.Id;
-        accountContactRole.Service_Rendered__c = 'GADM';
-        accountContactRole.RecordTypeId = groupRecordTypeId;
-
-        toInsert.add(accountContactRole);
 
         //Service Power User
         if(isPowerUser) {
@@ -111,15 +107,12 @@ public without sharing class OneId_RegistrationHelper_GADM {
         List<Portal_Applications__c> services = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM' LIMIT 1];
 
         for(Account_Contact_Role__c contactRole : toInsert) {
-            //Account contact role with RecordType = Group do not need Contact Role Service Access
-            if(contactRole.RecordTypeId == functionalRecordTypeId) {
-                Contact_Role_Service_Access__c serviceAccess = new Contact_Role_Service_Access__c();
-                serviceAccess.Contact_Role__c = contactRole.Id;
-                serviceAccess.Status__c = 'Pending';
-                serviceAccess.Service__c = services[0].Id;
+            Contact_Role_Service_Access__c serviceAccess = new Contact_Role_Service_Access__c();
+            serviceAccess.Contact_Role__c = contactRole.Id;
+            serviceAccess.Status__c = 'Pending';
+            serviceAccess.Service__c = services[0].Id;
 
-                contactRolesServiceAccessToInsert.add(serviceAccess);
-            }
+            contactRolesServiceAccessToInsert.add(serviceAccess);
 
         }
 

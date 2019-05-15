@@ -28,9 +28,16 @@ public without sharing class File_Upload_Lookup_CTRL {
         }
 
 
+        //filter out duplicates
+        Map<Id, String> resultsMap = new Map<Id, String>();
+
         List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Contact__c, Contact__r.Name FROM Contact_Role_Service_Access__c WHERE Contact__c = :contactIds AND Status__c = 'Granted' AND Contact_Role__r.Contact_Roles__r.Name = 'GADM User'];
         for(Contact_Role_Service_Access__c access : accesses) {
-            results.add(new Result(access.Contact__r.Name, access.Contact__c));
+            resultsMap.put(access.Contact__c, access.Contact__r.Name);
+        }
+
+        for(Id contactId : resultsMap.keySet()) {
+            results.add(new Result(resultsMap.get(contactId), contactId));
         }
 
         return results;
