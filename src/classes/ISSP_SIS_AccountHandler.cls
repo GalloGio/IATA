@@ -120,7 +120,6 @@ public with sharing class ISSP_SIS_AccountHandler {
     **/
     public static void beforeUpdate(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
         if (BLOCK_EXECUTION) return;
-        giveSISAppToAccountUsers(mapNews, mapOlds);
         validateFieldAvailableSISManagement(mapNews, mapOlds);
         updateSISStatusFields(mapNews, mapOlds);
         
@@ -310,30 +309,4 @@ public with sharing class ISSP_SIS_AccountHandler {
         }
     }
 
-    /**
-        Finds all suitable accounts to find portal users to give them SIS Joining App
-    **/
-    public static void giveSISAppToAccountUsers(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
-        list<Id> listAccountId = new list<Id>();
-        for (Account accountNew: mapNews.values()) {
-            Account accountOld = mapOlds.get(accountNew.Id);
-            if (accountNew.Sector__c!=accountOld.Sector__c ||
-                accountNew.Category__c!=accountOld.Category__c
-            ) {
-                String key = accountNew.Sector__c + ',' + accountNew.Category__c;
-                if (getValidSISSectorCategory().contains(key)) {
-                    listAccountId.add(accountNew.Id);
-                }
-            }
-        }
-        if (!listAccountId.isEmpty()) {
-            // give SIS Joining App to all interested users inside these accounts
-        	if(Test.isRunningTest()){
-        		ISSP_WS_Utilities.invokeGiveSISAppToAccountUsers(new list<Id>(listAccountId));
-        	}
-        	else{
-				System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listAccountId, 'invokeGiveSISAppToAccountUsers'));
-        	}
-        }
-    }
 }

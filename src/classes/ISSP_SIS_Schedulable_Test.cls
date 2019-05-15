@@ -36,10 +36,4 @@ private class ISSP_SIS_Schedulable_Test{
         Test.stopTest();
     }
 
-    @isTest
-    static void testInvokeGiveSISAppToAccountUsers(){
-        Test.startTest();
-        System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(new List<Id>{}, 'invokeGiveSISAppToAccountUsers'));
-        Test.stopTest();
-    }
 }
