@@ -109,15 +109,18 @@ public class ANG_CaseTriggerHandler {
 		}
 
 		if(!accsIds.isEmpty())
-			updateRHCInfoFSMinimumAmount(oldMap.keySet(), accsIds); //call method @future
+			updateRHCInfoFSMinimumAmount(accsIds); //call method @future
 	}
 
 	@future
-	private static void updateRHCInfoFSMinimumAmount(Set<Id> caseIds, Set<Id> accsIds){
-
-		List<ANG_RHC_Information__c> rhcInfos = new List<ANG_RHC_Information__c>();
+	private static void updateRHCInfoFSMinimumAmount(Set<Id> accsIds){
+		//NEWGEN-5374: For the scope of this story China could have FS on the branches accounts forcing the calculation of the financial Securities for the hierarchy
+		ANG_FinancialSecurityTriggerHandler fsTriggerHandler = new ANG_FinancialSecurityTriggerHandler();
+		fsTriggerHandler.updateRHCInfoFSMinimumAmount(accsIds);
 
 		//List<Financial_Security__c> financialSecurities = [SELECT Id, Account__c FROM Financial_Security__c WHERE Reception_Case__c IN newMap.keySet() AND Security_Status__c IN ('Close to Expiry Date','Active')];
+		/*
+		List<ANG_RHC_Information__c> rhcInfos = new List<ANG_RHC_Information__c>();
 		for(Account a : [SELECT Id, 
 							(SELECT Id, Financial_Security_Amount__c FROM Cases WHERE Id IN :caseIds),
 							(SELECT Id, Account__c, Release_Case__c FROM Financial_Securities__r WHERE Reception_Case__c IN :caseIds AND Security_Status__c IN ('Close to Expiry Date','Active')), 
@@ -136,6 +139,7 @@ public class ANG_CaseTriggerHandler {
 		if(rhcInfos.isEmpty()) return;
 
 		update rhcInfos;
+		*/
 	}
 
 }
