@@ -86,7 +86,7 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
-        <description>Represents the Status of the Voucher Process: Either "Started" or "Ender"</description>
+        <description>Represents the Status of the Voucher Process: Either &quot;Started&quot; or &quot;Ender&quot;</description>
         <externalId>false</externalId>
         <label>Status</label>
         <required>true</required>

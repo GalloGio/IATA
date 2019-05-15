@@ -115,7 +115,7 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
-        <description>Represents the state of the currency. Can be "Active" or "Inactive". By default all currencies are active</description>
+        <description>Represents the state of the currency. Can be &quot;Active&quot; or &quot;Inactive&quot;. By default all currencies are active</description>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>

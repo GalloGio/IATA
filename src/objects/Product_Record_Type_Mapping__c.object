@@ -66,7 +66,7 @@
     </fields>
     <fields>
         <fullName>Record_Type_for_Product__c</fullName>
-        <description>This field represents the corresponding Record Type for a Product. It can be "Publication", "GDP", "Unclassified"</description>
+        <description>This field represents the corresponding Record Type for a Product. It can be &quot;Publication&quot;, &quot;GDP&quot;, &quot;Unclassified&quot;</description>
         <externalId>false</externalId>
         <label>Record Type for Product</label>
         <required>false</required>

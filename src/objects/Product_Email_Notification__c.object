@@ -67,6 +67,7 @@
         <fullName>Internal_user__c</fullName>
         <description>Related user on Salesforce</description>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related user on Salesforce</description>
         <externalId>false</externalId>
         <label>Internal user</label>
         <referenceTo>User</referenceTo>

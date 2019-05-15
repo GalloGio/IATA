@@ -96,7 +96,7 @@
     </fields>
     <fields>
         <fullName>Type_of_Application__c</fullName>
-        <description>Represents 4 types of promotion applications: "New" promotions, promotions for "renewal", promotions for "reissue", promotions for "replacement"</description>
+        <description>Represents 4 types of promotion applications: &quot;New&quot; promotions, promotions for &quot;renewal&quot;, promotions for &quot;reissue&quot;, promotions for &quot;replacement&quot;</description>
         <externalId>false</externalId>
         <label>Type of Application</label>
         <required>false</required>

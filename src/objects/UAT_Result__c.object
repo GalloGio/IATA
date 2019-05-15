@@ -75,7 +75,7 @@
     </fields>
     <fields>
         <fullName>Result__c</fullName>
-        <description>Result of the UAT: "Pass" or "Fail"</description>
+        <description>Result of the UAT: &quot;Pass&quot; or &quot;Fail&quot;</description>
         <externalId>false</externalId>
         <label>Result</label>
         <required>false</required>
@@ -99,7 +99,7 @@
     </fields>
     <fields>
         <fullName>Sequence_Number__c</fullName>
-        <description>Related UAT's sequence number</description>
+        <description>Related UAT&apos;s sequence number</description>
         <externalId>false</externalId>
         <formula>UAT_Scenario__r.Scenario_Sequence_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

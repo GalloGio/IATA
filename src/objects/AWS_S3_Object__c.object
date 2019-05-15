@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Access__c</fullName>
-        <description>Represents the type of access to the object: "FULL_CONTROL" for both read an write permissions, "public-read" for read only permissions, "WRITE" for write permissions</description>
+        <description>Represents the type of access to the object: &quot;FULL_CONTROL&quot; for both read an write permissions, &quot;public-read&quot; for read only permissions, &quot;WRITE&quot; for write permissions</description>
         <externalId>false</externalId>
         <label>Access</label>
         <required>false</required>

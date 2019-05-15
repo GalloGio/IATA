@@ -55,8 +55,8 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Contact__c</fullName>
-        <description>Related Contact</description>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Contact</description>
         <externalId>false</externalId>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
@@ -81,7 +81,7 @@
     </fields>
     <fields>
         <fullName>Role__c</fullName>
-        <description>Represents the role of the contact related to a release task. The contact audience is split into 4 parts: "Test", "Developer", "Signoff Desginee", and "Other"</description>
+        <description>Represents the role of the contact related to a release task. The contact audience is split into 4 parts: &quot;Test&quot;, &quot;Developer&quot;, &quot;Signoff Desginee&quot;, and &quot;Other&quot;</description>
         <externalId>false</externalId>
         <label>Role</label>
         <required>false</required>

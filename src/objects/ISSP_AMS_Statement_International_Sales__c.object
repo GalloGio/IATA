@@ -81,6 +81,7 @@
         <fullName>IATA_Member_Airline__c</fullName>
         <description>Related IATA Member Airline's Account</description>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related IATA Member Airline&apos;s Account</description>
         <externalId>false</externalId>
         <label>IATA Member Airline</label>
         <referenceTo>Account</referenceTo>

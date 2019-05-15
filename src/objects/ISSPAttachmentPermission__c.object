@@ -69,6 +69,7 @@
         <fullName>ShowToPortalUsers__c</fullName>
         <description>Flag that makes the attachment visible to portal users when set</description>
         <defaultValue>false</defaultValue>
+        <description>Flag that makes the attachment visible to portal users when set</description>
         <externalId>false</externalId>
         <label>ShowToPortalUsers</label>
         <trackHistory>true</trackHistory>

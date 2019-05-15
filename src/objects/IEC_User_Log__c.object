@@ -98,7 +98,7 @@
     <fields>
         <fullName>User__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Related user who's logs are stored</description>
+        <description>Related user who&apos;s logs are stored</description>
         <externalId>false</externalId>
         <label>User</label>
         <referenceTo>User</referenceTo>

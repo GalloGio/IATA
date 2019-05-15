@@ -80,7 +80,7 @@
     </fields>
     <fields>
         <fullName>Recommended_Product_Number__c</fullName>
-        <description>Related Product's SAP Material Number</description>
+        <description>Related Product&apos;s SAP Material Number</description>
         <externalId>false</externalId>
         <formula>Related_Product__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -92,8 +92,8 @@
     </fields>
     <fields>
         <fullName>Related_Product__c</fullName>
-        <description>Related Product</description>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Product</description>
         <externalId>false</externalId>
         <label>Related Product</label>
         <referenceTo>Product2</referenceTo>
@@ -104,7 +104,7 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
-        <description>Type of the related product:"Associated" and "Substitution" products</description>
+        <description>Type of the related product:&quot;Associated&quot; and &quot;Substitution&quot; products</description>
         <externalId>false</externalId>
         <label>Type</label>
         <required>false</required>

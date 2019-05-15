@@ -79,6 +79,7 @@
         <fullName>Product__c</fullName>
         <description>Related Product</description>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Product</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>

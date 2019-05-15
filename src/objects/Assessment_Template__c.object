@@ -77,7 +77,7 @@
     </fields>
     <fields>
         <fullName>Passenger_Cargo__c</fullName>
-        <description>Represents if the template is for Passangers ("P") or for Cargo ("C")</description>
+        <description>Represents if the template is for Passangers (&quot;P&quot;) or for Cargo (&quot;C&quot;)</description>
         <externalId>false</externalId>
         <label>Passenger/Cargo</label>
         <required>false</required>

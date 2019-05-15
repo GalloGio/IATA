@@ -79,7 +79,7 @@
     </fields>
     <fields>
         <fullName>Code__c</fullName>
-        <description>Represents the code of the charge. Can be a "XF", "EF - Boarding Br", "EF - Landing" charge </description>
+        <description>Represents the code of the charge. Can be a &quot;XF&quot;, &quot;EF - Boarding Br&quot;, &quot;EF - Landing&quot; charge</description>
         <externalId>false</externalId>
         <label>Code</label>
         <required>false</required>
