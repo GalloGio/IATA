@@ -1,3 +1,0 @@
-<aura:event type="APPLICATION" description="EVT_GADM_DisplayTab">
-    <aura:attribute name="activeTabId" type="Integer"/>
-</aura:event>

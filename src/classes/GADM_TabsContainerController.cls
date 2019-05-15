@@ -18,4 +18,11 @@ public without sharing class GADM_TabsContainerController {
         return false;
     }
 
+    @AuraEnabled
+    public static List<Contact_Roles__c> getUserGrantedRoles(Id userId) {
+
+        return Contact_Roles_Helper.getGrantedUserRoles(userId, 'GADM');
+
+    }
+
 }
