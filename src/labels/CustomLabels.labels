@@ -2702,6 +2702,14 @@ Payment required on receipt of this Payment Advice
         <value>Home</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrumb_Services_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_Services_Title</shortDescription>
+        <value>Services</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_Support_ReachUs</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2918,6 +2926,14 @@ Payment required on receipt of this Payment Advice
         <value>Find services, cases, support and more</value>
     </labels>
     <labels>
+        <fullName>CSP_Search_Services_Placeholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Services_Placeholder</shortDescription>
+        <value>Type to service name to go</value>
+    </labels>
+    <labels>
         <fullName>CSP_Search_Support_Placeholder</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2932,6 +2948,94 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_SeeAll</shortDescription>
         <value>See All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_AccessRequested</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_AccessRequested</shortDescription>
+        <value>Access Requested</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_AccessRequestedTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_AccessRequestedTitle</shortDescription>
+        <value>Access Requested</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_AvailableServicesTabTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_AvailableServicesTabTitle</shortDescription>
+        <value>Available Services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_GoToService</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_GoToService</shortDescription>
+        <value>Go to Service</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_HeaderTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_HeaderTitle</shortDescription>
+        <value>Looking for a service?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_ManageService</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_ManageService</shortDescription>
+        <value>Manage Service</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_MyServicesHelpText</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_MyServicesHelpText</shortDescription>
+        <value>Your company&#39;s all services are listed below. You can manage users and update service access from the actions menu. You can select your favorite services which will also appear on your dashboard.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_MyServicesTabTile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_MyServicesTabTile</shortDescription>
+        <value>My Services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_RequestServiceBannerButton</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_RequestServiceBannerButton</shortDescription>
+        <value>See Available Services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_RequestServiceBannerSubtitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_RequestServiceBannerSubtitle</shortDescription>
+        <value>You can view detailed service information and request access to available services.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_RequestServiceBannerTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_RequestServiceBannerTitle</shortDescription>
+        <value>Service Request</value>
     </labels>
     <labels>
         <fullName>CSP_Services_Title</fullName>
