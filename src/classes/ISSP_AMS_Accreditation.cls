@@ -383,16 +383,20 @@ public without sharing class ISSP_AMS_Accreditation {
         defaultSectorValue = System.currentPageReference().getParameters().get('sectorValue');
         String defaultAmsLocationType = System.currentPageReference().getParameters().get('accredType');
 
-        if (defaultAmsLocationType != null && defaultAmsLocationType != '') amsLocationType = defaultAmsLocationType;
+        if (!String.isBlank(defaultAmsLocationType)) {
+            amsLocationType = defaultAmsLocationType;
+        }
 
         if (isocountry != null) {
             isEUcountry = isocountry.EU_Country__c;
 
-            if (isocountry.CASS_Country_free_text__c != 'No CASS')
+            if (isocountry.CASS_Country_free_text__c != 'No CASS') {
                 isCASSCountry = true;
+            }
 
-            if (isocountry.CASS_Import__c == 'Yes')
+            if (isocountry.CASS_Import__c == 'Yes') {
                 isCASSImport = true;
+            }
 
             amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
         }
@@ -433,10 +437,13 @@ public without sharing class ISSP_AMS_Accreditation {
             isHOcontact = false;
         }
 
-        if (isMultiCountryStarted) fetchMultiCountryApplicationForms();
+        if (isMultiCountryStarted) {
+            fetchMultiCountryApplicationForms();
+        }
 
-        if(hqAccount.Status__c == 'Terminated')
+        if (hqAccount.Status__c == 'Terminated') {
             isTerminatedAgent = true;
+        }
 
         hqCountryISOCode = hqAccount.IATA_ISO_Country__r.ISO_Code__c;
         newForm.HO_Account__c = vHQAccountId;
@@ -469,7 +476,9 @@ public without sharing class ISSP_AMS_Accreditation {
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage();
 
-        if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr') applyLanguage = 'en_US';
+        if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr') {
+            applyLanguage = 'en_US';
+        }
 
         //Labels set in controller remain in portal's user language
         lblStepA = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_ProgressBar_New: Label.ISSP_AMS_Step1_ProgressBar;
@@ -524,7 +533,9 @@ public without sharing class ISSP_AMS_Accreditation {
             isMultiCountryAccredittedAddingAEs();
         }
             
-        if (isMultiCountryNewAE) amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
+        if (isMultiCountryNewAE) {
+            amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
+        }
 
         if (isNoticeOfChange) {
             Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Change_Summary.pdf');
@@ -543,7 +554,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         //Verify to which step the user should go and retrieve information linked to the step
-        if (stepNumber == '1' || stepNumber == '') isStep1 = true;
+        if (stepNumber == '1' || stepNumber == '') {
+            isStep1 = true;
+        }
 
         newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'Selected Branches Only'; //Set default
 
@@ -593,7 +606,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 fetchAMSProcessForm();
                 if (modifyForm) newform.Status__c = 'InProgress';
 
-                if (mcformCountryISO == null) {
+                if (String.isBlank(mcformCountryISO)) {
                     mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
                 }
 
@@ -704,6 +717,8 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (mcformCountryISO == null) {
                         mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
                     }
+
+                    System.debug('hey1: ' + mcformCountryISO);
 
                     isocountry = (isMultiCountryNewAE ||  isMultiCountryAccredittedAddingAEs()) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
@@ -1015,7 +1030,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<SelectOption> legalNameOptions {
         get {
-            List<SelectOption> options = new List<SelectOption>();
+            List<SelectOption> options = new List<SelectOption>{new SelectOption('', '-- Select a Legal Name --')};
             String selectedBSP;
 
             for (String bsp: isosByBSPMap.keySet()) {
@@ -1030,8 +1045,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     break;
                 }
             }
-
-            options.add(new SelectOption('', '-- Select a Legal Name --'));
 
             if (accountsByBSP.get(selectedBSP) != null) {
                 for (AgencyInfoByISOWrapper agency: accountsByBSP.get(selectedBSP)) {
@@ -1650,8 +1663,9 @@ public without sharing class ISSP_AMS_Accreditation {
                         newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
                     }
 
-                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE) //NEWGEN-1249
+                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE) {
                         upsert newform;
+                    }
 
                     fetchAMSProcessForm();
 
@@ -1688,7 +1702,9 @@ public without sharing class ISSP_AMS_Accreditation {
                         if(newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null) // NEWGEN-1249 only with same legal entity have the owners from parent
                             if (!isMultiCountryNewAE) setOwners('Branch');
                     } else { //Insert current user as default contatc for HO applications
-                        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) newform.Status__c = 'InProgress';
+                        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+                            newform.Status__c = 'InProgress';
+                        }
                             
                         saveAMSForm();
                         insertDefaultContact();
@@ -1729,7 +1745,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
             newCase.Origin = 'Portal';
 
-            if (newCase.Status != 'Open - EDMC') newCase.Status = 'Draft';
+            if (newCase.Status != 'Open - EDMC') {
+                newCase.Status = 'Draft';
+            }
 
             if (isBankAccountChange) {
                 newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Change_of_Bank_Account_Details');
@@ -1745,8 +1763,9 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Visible_on_ISS_Portal__c = true;
 
             if (newForm.Scope_of_Change__c=='HO Only' || newForm.Scope_of_Change__c=='HO - All Branches') {
-                if(newCase.Account_Concerned__c != null)
+                if (newCase.Account_Concerned__c != null) {
                     changeOfAccountConcerned = true;
+                }
 
                 newCase.Account_Concerned__c = null;
                 newForm.Agency_Codes_Concerned__c = null;
@@ -1754,10 +1773,11 @@ public without sharing class ISSP_AMS_Accreditation {
                Boolean first = true;
                String agencyCodes;
                 for (SelectOption ac : agencyCodesConcerned) {
-                    if (!first) agencyCodes += ',';
-
-                    if (first) agencyCodes = ac.getValue();
-                    else agencyCodes += ac.getValue();
+                    if (first) {
+                        agencyCodes = ac.getValue();
+                    } else {
+                        agencyCodes += ',' + ac.getValue();
+                    }
 
                     first = false;
                 }
@@ -1883,7 +1903,9 @@ public without sharing class ISSP_AMS_Accreditation {
             upsert newForm;
 
             //Ownership area
-            if (isNewCase || newCase.Status == 'Open - EDMC') setOwners('NoC');
+            if (isNewCase || newCase.Status == 'Open - EDMC') {
+                setOwners('NoC');
+            }
         } //EO NoC
 
         selectPageName();
@@ -2185,7 +2207,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         SFDCAccount.Reason_for_creation__c = 'Created by customer';
 
-        if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE)) {
+        if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE)) {
             SFDCAccount.Name = newForm.Account_Name__c;
             SFDCAccount.TradeName__c = newForm.Trade_Name__c;
         } else {
@@ -2200,7 +2222,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         SFDCAccount.Sector__c = hqAccount.Sector__c;
 
-        if(hqAccount.Sector__c == AMS_Utils.SECTOR_PASSENGER) {
+        if (hqAccount.Sector__c == AMS_Utils.SECTOR_PASSENGER) {
             SFDCAccount.Category__c = 'Non-IATA Travel Agent';
         } else {
             SFDCAccount.Category__c = 'Non-IATA Cargo Agent';
@@ -2286,21 +2308,23 @@ public without sharing class ISSP_AMS_Accreditation {
         newHOAccount.ShippingPostalCode = newForm.Shipping_Postal_Code__c;
         newHOAccount.ShippingCountry = isocountry.Name;
 
-        if(newAccreditationModels) //NEWGEN - 1017
+        if (newAccreditationModels) {
             newHOAccount.Location_Type__c = AMS_Utils.HE;
-        else
+        } else {
             newHOAccount.Location_Type__c = AMS_Utils.HO;
+        }
         
         newHOAccount.Location_Class__c = getLocationClass();
 
-        if(sectorValue.StartsWith('Travel_Agent'))
+        if (sectorValue.StartsWith('Travel_Agent')) {
             newHOAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
-        else
+        } else {
             newHOAccount.Sector__c = AMS_Utils.SECTOR_CARGO;
+        }
 
         newHOAccount.Reason_for_creation__c = 'Created by customer';
 
-        if(newHOAccount.Sector__c == AMS_Utils.SECTOR_PASSENGER) {
+        if (newHOAccount.Sector__c == AMS_Utils.SECTOR_PASSENGER) {
             newHOAccount.Category__c = 'Non-IATA Travel Agent';
         } else {
             newHOAccount.Category__c = 'Non-IATA Cargo Agent';
@@ -2319,14 +2343,15 @@ public without sharing class ISSP_AMS_Accreditation {
         String locationClass = 'P';
 
         if (sectorValue.StartsWith('Cargo_Agent')) {
-            if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary')
+            if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary') {
                 locationClass = 'C';
-            else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE)
+            } else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE) {
                 locationClass = 'R';
-            else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT)
+            } else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_IMPORT_AGENT) {
                 locationClass = 'I';
-            else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER)
+            } else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_COURIER) {
                 locationClass = 'Q';
+            }
         }
 
         return locationClass;
@@ -2413,8 +2438,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
         newContact.AddressCountry__c = amsContactCountry;
 
-        if (legalstatus == 'sole proprietorship' && newContact.Agency_owner__c == true && amsOfficeType == AMS_Utils.HO)
+        if (legalstatus == 'sole proprietorship' && newContact.Agency_owner__c == true && amsOfficeType == AMS_Utils.HO) {
             newContact.Financial_interest__c = 100;
+        }
 
         try {
             if ((includedPageName == 'ISSP_AMS_Cargo_Form' || includedPageName == 'ISSP_AMS_Pax_Form' || includedPageName == 'ISSP_ANG_PAX_HE') 
@@ -2444,7 +2470,9 @@ public without sharing class ISSP_AMS_Accreditation {
                     contactSaved = false;
                 }
 
-                if (!contactSaved) return;
+                if (!contactSaved) {
+                    return;
+                }
             }
 
             if (isNoticeOfChange) {
@@ -2501,7 +2529,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 contactSaved = false;
             }
 
-            if (!contactSaved) return;
+            if (!contactSaved)  {
+                return;
+            }
 
             if (newContact.Agencies_prev_worked_for__c != 'none' && newContact.Agencies_prev_worked_for__c != null) {
                 if (newContact.Prev_Job1_Position__c == null) {
@@ -2559,13 +2589,14 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference securityCheck() {
-        if(con.Account.Sector__c != AMS_Utils.SECTOR_PASSENGER && con.Account.Sector__c != AMS_Utils.SECTOR_CARGO)
+        if(con.Account.Sector__c != AMS_Utils.SECTOR_PASSENGER && con.Account.Sector__c != AMS_Utils.SECTOR_CARGO) {
             return new Pagereference('/ISSP_Homepage?mid=M0S1' + commParam);
+        }
 
         if (newCase.Id != null && newCase.Status != 'Draft' && newCase.Status != 'Open - EDMC' && !createListOfClosedStatuses().contains(newCase.Status) && !isFinalStep && currentMCFormId == null && !isMultiCountryNewAE) {
             return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + '&mid=M1S2' + commParam);
         } else if ((newCase.Id != null && newCase.Status != 'Draft' && newCase.Status != 'Open - EDMC' && createListOfClosedStatuses().contains(newCase.Status) && !isFinalStep) || (isNoticeOfChange && !isEligableForChange)) {
-            string retURL = ApexPages.currentPage().getParameters().get('retURL');
+            String retURL = ApexPages.currentPage().getParameters().get('retURL');
             if (retURL == null) {
                 return new Pagereference('/ISSP_Homepage?mid=M0S1' +commParam);
             } else {
@@ -2579,11 +2610,13 @@ public without sharing class ISSP_AMS_Accreditation {
     public void createInternationalSales() {
         try {
             salesSaved = true;
-            if (newInternationalSales.AMS_Online_Accreditation__c == null) 
+            if (newInternationalSales.AMS_Online_Accreditation__c == null) {
                 newInternationalSales.AMS_Online_Accreditation__c = newForm.Id;
+            }
 
-            if (newInternationalSales.CurrencyIsoCode == '')
+            if (newInternationalSales.CurrencyIsoCode == '') {
                 newInternationalSales.CurrencyIsoCode = newForm.CurrencyIsoCode;
+            }
 
             newInternationalSales.IATA_Member_Airline__c = memberairlineid;
 
@@ -2625,8 +2658,10 @@ public without sharing class ISSP_AMS_Accreditation {
         AMS_Accreditation_Contact__c delContact = [SELECT Id
                                                 FROM AMS_Accreditation_Contact__c
                                                 WHERE Id = :editContactId];
-        if (delContact != null)
+        if (delContact != null) {
             delete delContact;
+        }
+
         refreshCntIFAPContacts();
     }
 
@@ -2634,8 +2669,9 @@ public without sharing class ISSP_AMS_Accreditation {
         AMS_Accreditation_Contact__c deleteTrainedStaff = [SELECT Id
                                                         FROM AMS_Accreditation_Contact__c
                                                         WHERE Id = :trainedStaffId];
-        if (deleteTrainedStaff != null)
+        if (deleteTrainedStaff != null) {
             delete deleteTrainedStaff;
+        }
     }
 
     public void deleteFacility() {
@@ -2748,20 +2784,25 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (!formUpdated) return;
 
-            if (accountConcerned.BillingStreet == newForm.Branch_Office_Street_name_number__c)
+            if (accountConcerned.BillingStreet == newForm.Branch_Office_Street_name_number__c) {
                 newForm.Branch_Office_Street_name_number__c = null;
+            }
 
-            if (accountConcerned.BillingCity == newForm.Branch_Office_City__c)
+            if (accountConcerned.BillingCity == newForm.Branch_Office_City__c) {
                 newForm.Branch_Office_City__c = null;
+            }
 
-            if (accountConcerned.BillingPostalCode == newForm.Branch_Office_Postal_code__c)
+            if (accountConcerned.BillingPostalCode == newForm.Branch_Office_Postal_code__c) {
                 newForm.Branch_Office_Postal_code__c = null;
+            }
 
-            if (accountConcerned.BillingState == newForm.State_Province__c)
+            if (accountConcerned.BillingState == newForm.State_Province__c) {
                 newForm.State_Province__c = null;
+            }
 
-            if (accountConcerned.Email__c == newForm.Branch_Office_Email__c)
+            if (accountConcerned.Email__c == newForm.Branch_Office_Email__c) {
                 newForm.Branch_Office_Email__c = null;
+            }
 
             if (accountConcerned.Phone == newForm.Branch_Office_Phone__c && accountConcerned.PhoneNational__c == newForm.Branch_Office_Phone_National__c) {
                 newForm.Branch_Office_Phone__c = null;
@@ -2797,39 +2838,52 @@ public without sharing class ISSP_AMS_Accreditation {
     public Pagereference goToStep2() {
         String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=2' + commParam;
 
-        if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-        else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        if (isNoticeOfChange) {
+            pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        }
 
         return new Pagereference(pageURL);
     }
 
     public Pagereference goToStep3Section1() {
-        if (isNoticeOfChange)
+        if (isNoticeOfChange) {
             return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam + '&step=3#nav_one' );
+        }
+
         return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id  + commParam +'&step=3#nav_one' );
     }
 
     public Pagereference goToStep3Section2() {
-        if (isNoticeOfChange)
+        if (isNoticeOfChange) {
             return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam + '&step=3#nav_two' );
+        }
+
         return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&step=3#nav_two');
     }
 
     public Pagereference goToStep3Section3() {
-        if (isNoticeOfChange)
+        if (isNoticeOfChange) {
             return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_three' );
+        }
+
         return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id  + commParam +'&step=3#nav_three');
     }
 
     public Pagereference goToStep3Section4() {
-        if (isNoticeOfChange)
+        if (isNoticeOfChange) {
             return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_four' );
+        }
+
         return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_four' );
     }
 
     public Pagereference goToStep3Section5() {
-        if (isNoticeOfChange)
+        if (isNoticeOfChange) {
             return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_five' );
+        }
+        
         return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_five' );
     }
 
@@ -2848,8 +2902,11 @@ public without sharing class ISSP_AMS_Accreditation {
     public Pagereference goToStep3() {
         String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3';
 
-        if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-        else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        if (isNoticeOfChange) {
+            pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        }
 
         return new Pagereference(pageURL);
     }
@@ -2870,29 +2927,36 @@ public without sharing class ISSP_AMS_Accreditation {
     public Pagereference goToStep5() {
         String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=5' + commParam;
 
-        if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-        else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        if (isNoticeOfChange) {
+            pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+            pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
+        }
         
         return new Pagereference(pageURL);
     }
 
     public Pagereference highLightPageForErrors() {
         if (newForm.Validation_ERRORS__c) {
-            if (!validateCharactersInForm() || !validateForm(true)) return null;
+            if (!validateCharactersInForm() || !validateForm(true)) {
+                return null;
+            }
         }
         return null;
     }
 
     public Pagereference saveAMSFormAndGoForward() {
         try {
-            newForm.Validation_ERRORS__c = FALSE;
+            newForm.Validation_ERRORS__c = false;
             saveAMSForm();
 
-            if (!validateCharactersInForm() || !validateForm(true))
+            if (!validateCharactersInForm() || !validateForm(true)) {
                 return null;
+            }
 
-            if (isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c)
+            if (isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c) {
                 return goToStep5(); //No File Upload for NoC that isn't change of bank details
+            }
 
             return goToStep4();
         } catch (DmlException ex) { ApexPages.addMessages(ex); }
@@ -2901,13 +2965,16 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Pagereference saveAMSFormAndGoToStep5() {
         try {
-            newForm.Validation_ERRORS__c = FALSE;
+            newForm.Validation_ERRORS__c = false;
 
-            if (!validateCharactersInForm()) return null;
+            if (!validateCharactersInForm()) {
+                return null;
+            }
 
             saveAMSForm();
             return goToStep5();
         } catch (DmlException ex) { ApexPages.addMessages(ex); }
+
         return null;
     }
 
@@ -2925,18 +2992,21 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Pagereference saveAMSFormAndGoToStep1() {
         try {
-            newForm.Validation_ERRORS__c = FALSE;
+            newForm.Validation_ERRORS__c = false;
 
-            if (!validateCharactersInForm()) return null;
+            if (!validateCharactersInForm()) {
+                return null;
+            }
 
             saveAMSForm();
             return goToStep1();
         } catch (DmlException ex) { ApexPages.addMessages(ex); }
+        
         return null;
     }
 
     public Pagereference saveAMSFormAndLeave() {
-        newForm.Validation_ERRORS__c = FALSE;
+        newForm.Validation_ERRORS__c = false;
         saveAMSForm();
         return redirectToCasesList();
     }
@@ -3049,7 +3119,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            newForm.Submitted_to_IATA__c = TRUE;
+            newForm.Submitted_to_IATA__c = true;
 
             //RB-INC381175: Oscar fields Shipping ISO Country & Shipping ISO State not populated by the account's equivalent fields
             if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP
@@ -3073,8 +3143,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            if (isMultiCountry) newForm.Status__c = 'Completed';
-            else newCase.Status = 'Open';
+            if (isMultiCountry) {
+                newForm.Status__c = 'Completed';
+            } else {
+                newCase.Status = 'Open';
+            }
 
             upsert newForm;
 
@@ -3086,7 +3159,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
             //Account concerned is set for NoC to display info on LHS of form STEP C
             //However, remove on Submit to IATA if same as acount of user i..e. Case Account, as it is not required
-            if(newCase.Account_Concerned__c == newCase.AccountId) newCase.Account_Concerned__c = null;
+            if (newCase.Account_Concerned__c == newCase.AccountId) {
+                newCase.Account_Concerned__c = null;
+            }
 
             // AMSU-110 assign Case via assignment rules -> re-trigger assignment rules on update
             Database.DMLOptions dmo = new Database.DMLOptions();
@@ -3096,30 +3171,30 @@ public without sharing class ISSP_AMS_Accreditation {
             String accountId = isNoticeOfChange ? accountConcerned.Id : vHQAccountId;
 
             String typeOfProcess = 'NEW.HO.1.0';
-            if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD)
+            if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
                 typeOfProcess = 'NEW.BR.ABROAD';
-            else if (!isNoticeOfChange && amsOfficeType == 'Branch' && newCase.Reason1__c != AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD)
+            } else if (!isNoticeOfChange && amsOfficeType == 'Branch' && newCase.Reason1__c != AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
                 typeOfProcess = 'NEW.BR';
-            else if (isNoticeOfChange && isBankAccountChange)
+            } else if (isNoticeOfChange && isBankAccountChange) {
                 typeOfProcess = 'BANK.ACCOUNT.CHANGES';
-            else if (isNoticeOfChange && !isBankAccountChange) {
+            } else if (isNoticeOfChange && !isBankAccountChange) {
                 //NEWGEN 683
-                if (getIsAccreditationModelNotNullOrLegacy())
+                if (getIsAccreditationModelNotNullOrLegacy()) {
                     typeOfProcess = AMS_UTILS.NGCHANGES;
-                else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE) //AMSU-140//AMSU-165
+                } else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_CHG_DATA_MAINTENANCE) {
                     typeOfProcess = AMS_Utils.COR;  
-                else
+                } else {
                     typeOfProcess = 'MAJOR.CHANGES';
-            }
-
-            else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD)
+                }
+            } else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD) {
                 typeOfProcess = 'ANG.NEW.HE.STANDARD.1.0';
-            else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE)
+            } else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE) {
                 typeOfProcess = 'ANG.NEW.HE.LITE.1.0';
-            else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD)
+            } else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
                 typeOfProcess = 'ANG.NEW.AE.1.0';
-            else if(newCase.Reason1__c == 'Corrections') //AMSU-140
+            } else if(newCase.Reason1__c == 'Corrections') {
                 typeOfProcess = AMS_Utils.COR;  
+            }
 
             if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && !isMultiCountry) {
                 OSCARIntegration(accountId, newForm.Id, typeOfProcess, newCase.Id);
@@ -3271,7 +3346,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public Pagereference goToDownloadPDF() {
         passedFormValidation = true;
 
-        if (!validateCharactersInForm() || !validateForm(true) ) {
+        if (!validateCharactersInForm() || !validateForm(true)) {
             newForm.Validation_ERRORS__c = TRUE;
             upsert newForm;
 
@@ -3305,8 +3380,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 'IATA_ISO_Country__c' => 'ISO_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c'};
         }
 
-        for (String accountApiName : mapAccountToAccrFormFields.keyset())
+        for (String accountApiName : mapAccountToAccrFormFields.keyset()) {
             newForm.put(mapAccountToAccrFormFields.get(accountApiName), sourceAccount.get(accountApiName));
+        }
     }
 
     public boolean validateCharactersInAgencyWindow() {
@@ -3740,35 +3816,37 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private string getCaseReason(string r, String accreditationModel) {
-        if (r == AMS_Utils.CASE_REASON_NEW_HO)
+        if (r == AMS_Utils.CASE_REASON_NEW_HO) {
             return Label.ISSP_AMS_Reason_New_HO;
-        else if (r == AMS_Utils.CASE_REASON_BR_IP)
+        } else if (r == AMS_Utils.CASE_REASON_BR_IP) {
             return Label.ISSP_AMS_Reason_New_Branch;
-        else if (r == AMS_Utils.CASE_REASON_BR_ABROAD)
+        } else if (r == AMS_Utils.CASE_REASON_BR_ABROAD) {
             return Label.ISSP_AMS_Reason_Branch_Abroad;
-        else if (r == AMS_Utils.CASE_REASON_HE_STANDARD)
+        } else if (r == AMS_Utils.CASE_REASON_HE_STANDARD) {
             return Label.ISSP_AMS_Head_Entity_Cash;
-        else if ( r == AMS_Utils.CASE_REASON_HE_LITE)
+        } else if ( r == AMS_Utils.CASE_REASON_HE_LITE) {
             return Label.ISSP_AMS_Head_Entity_No_Cash;
-        else if(r == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)
+        } else if(r == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
             return Label.ISSP_AMS_Head_Entity_Multicountry;
-        else if( r == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || r == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)
+        } else if( r == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || r == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) {
             return Label.ISSP_ANG_Assoc_Entity + getAccreditationModel(accreditationModel);
-        else if(r == AMS_Utils.CASE_REASON_OPT_OUT)
+        } else if(r == AMS_Utils.CASE_REASON_OPT_OUT) {
             return Label.ANG_ISSP_CASE_REASON_OPT_OUT;
-        else 
+        } else {
             return Label.ISSP_AMS_Reason_New_HO;
+        }
     }
 
     private String getAccreditationModel(String accreditationModel) {
-        if (accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH)
+        if (accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
             return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithCash;
-        else if (accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)
+        } else if (accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
             return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
-        else if (accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
+        } else if (accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
             return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry;
-        else
+        } else {
             return '';
+        }
     }
 
     private string getAgentTypeLabel(string agentType) {
@@ -3806,7 +3884,9 @@ public without sharing class ISSP_AMS_Accreditation {
             return Label.ISSP_ANG_OPTION_PAX_HE_standard;
         } else if (amsLocationType == AMS_Utils.TYPE_HE_LITE_NO_CASH) {
             return Label.ISSP_ANG_OPTION_PAX_HE_lite;
-        } else return Label.ISSP_AMS_OPTION_PAX_BRANCH;
+        } else {
+            return Label.ISSP_AMS_OPTION_PAX_BRANCH;
+        }
     }
 
     public AMS_Accreditation_Country_CheckList__c CountryCheckList {
@@ -6796,8 +6876,9 @@ public without sharing class ISSP_AMS_Accreditation {
             } else {
                 return new Pagereference(ISSP_CreateButtonURL_Lst[0].URL__c + '&topic=' + ISSP_CreateButtonURL_Lst[0].Topic__c + commParam);
             }
-
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     public PageReference redirectToCountryRequirementPage(){
