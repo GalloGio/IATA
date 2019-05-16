@@ -20,6 +20,11 @@
         <default>false</default>
         <label>EP</label>
     </customValue>
+    <customValue>
+        <fullName>BOP</fullName>
+        <default>false</default>
+        <label>BOP</label>
+    </customValue>
     <masterLabel>Form Of Payment Options</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
