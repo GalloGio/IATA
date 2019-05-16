@@ -91,7 +91,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
 
 		Map<String, Id> countryTemplates = DGRemailTemplates('DGR');
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+        OrgWideEmailAddress[] owea = [select Id, DisplayName, Address from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
 
@@ -369,11 +369,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
     }
 
-    private static List<OrgWideEmailAddress> getfromAddress(Id OrgWideEmailAddressId) {  
-    		  return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];   
-
-    } 
-
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
         Id templateId;
         Boolean templateToIATA = false;
@@ -523,8 +518,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                 if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);
                 for(Messaging.SingleEmailMessage mail: mailsToSend){
                     EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
-                    emailMsg.FromAddress = getfromAddress(owea.Id)[0].Address;
-                    emailMsg.FromName = getfromAddress(owea.Id)[0].DisplayName;
+                    emailMsg.FromAddress = owea.Address;
+                    emailMsg.FromName = owea.DisplayName;
                     emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
                     emailMsg.Subject = mail.getSubject();
                     emailMsg.HtmlBody = mail.getHtmlBody();
