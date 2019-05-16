@@ -2011,7 +2011,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
             memoText += ' - Branch';
         }else if (process == NEWHELITE || process == NEWHESTANDARD){
             if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
-        }else if (process == NEWAE){
+        }else if (process == NEWAE || process == MCAE){
             if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
         }else if (process == new_TIDS){
             memoText += ' - TIDS';
