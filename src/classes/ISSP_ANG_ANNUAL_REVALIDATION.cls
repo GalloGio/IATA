@@ -509,6 +509,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			keepConfirmedData();
+			clearShipping();
 			upsert currentAccount.fw.newform;
 
 		} catch(DmlException dm) { Database.rollback(sp); throw new AnnualRevException(dm.getMessage()); }
@@ -522,6 +523,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
+			clearShipping();
 			validateForm();
 
 			if(!errorFound) {
@@ -551,10 +553,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		if (String.isEmpty(isoCountryForm)) return;
 
-		for(IATA_ISO_Country__c ctr : IATAIsoCountryDAO.getIsoCountries()){
-			if(ctr.Name.toupperCase() == isoCountryForm.toupperCase()){
-				currentAccount.fw.newform.Shipping_ISO_Country__c = ctr.Id;
-				break;
+		if(currentAccount.fw.newform.Shipping_Same_As_Billing__c == False){
+			for(IATA_ISO_Country__c ctr : IATAIsoCountryDAO.getIsoCountries()){
+				if(ctr.Name.toupperCase() == isoCountryForm.toupperCase()){
+					currentAccount.fw.newform.Shipping_ISO_Country__c = ctr.Id;
+					break;
+				}
 			}
 		}
 	}
@@ -1984,5 +1988,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             contactStateList.add(new SelectOption(state.Name, state.Name));
         }
         return null;
+    }
+
+	private void clearShipping() {
+        if(currentAccount.fw.newform.Shipping_Same_As_Billing__c == True) {
+            currentAccount.fw.newform.shipping_street__c = '';
+            currentAccount.fw.newform.shipping_city__c = '';
+            currentAccount.fw.newform.shipping_postal_code__c = '';
+            currentAccount.fw.newform.shipping_state__c = '';
+            currentAccount.fw.newform.shipping_country__c = '';
+            currentAccount.fw.newform.Shipping_ISO_Country__c = null;
+            currentAccount.fw.newform.Shipping_ISO_State__c = null;
+        }
     }
 }
