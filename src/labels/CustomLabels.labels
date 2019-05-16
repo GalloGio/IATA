@@ -32433,6 +32433,13 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Please select the target Case:</value>
     </labels>
     <labels>
+        <fullName>PortalNameRedirect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal Name to Redirect</shortDescription>
+        <value>csportal</value>
+    </labels>
+    <labels>
         <fullName>Postal_code</fullName>
         <categories>IEC</categories>
         <language>en_US</language>

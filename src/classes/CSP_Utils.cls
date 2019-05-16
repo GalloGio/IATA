@@ -31,7 +31,7 @@ public without sharing class CSP_Utils {
     */
     public static List<Notification__c> getContactNotifications(String contactId) {
 
-        return [SELECT Id 
+        return [SELECT Id, Subject__c, CreatedDate, Number_of_views__c 
                 FROM Notification__c 
                 WHERE Contact__c =: contactId 
                     AND (Number_of_views__c = 0 OR Number_of_views__c = null) 
@@ -93,9 +93,47 @@ public without sharing class CSP_Utils {
             
             numNotifications += getContactsToApprove(topParentId).size() + getPortalAppRightsToApprove(topParentId).size();
         }
-
+        
         return numNotifications > 99 ? '99+' : String.valueOf(numNotifications);
     }
 
+
+    @AuraEnabled
+    public static List<NotificationCenter> getNotifications() {
+        
+        User loggedUser = [SELECT Id, ContactId , Contact.AccountId, Contact.Account.Top_Parent__c, Contact.User_Portal_Status__c
+                           FROM User
+                           WHERE Id =: UserInfo.getUserId()];
+
+        List<Notification__c> notificationList = getContactNotifications(loggedUser.ContactId);
+        List<NotificationCenter> notificationCenterList = new List<NotificationCenter>();
+
+        System.debug('NOT LIST: ' + notificationList);
+
+        for(Notification__c notification : notificationList){            
+            NotificationCenter notif = new NotificationCenter(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c);
+            notificationCenterList.add(notif);
+        }
+
+        return notificationCenterList;
+    }
+
+
+    public class NotificationCenter {
+        public Id id { get; set;}
+        public String subject { get; set;}
+        public Datetime createdDate { get; set;}
+        public Decimal numberOfViews { get; set;}
+
+        public NotificationCenter() {}
+
+        public NotificationCenter(Id id, String subject, Datetime createdDate, Decimal numberOfViews) {
+            this.id = id;
+            this.subject = subject;
+            this.createdDate = CreatedDate;
+            this.numberOfViews = numberOfViews;
+        }
+
+    }
 
 }
