@@ -73,16 +73,19 @@ public with sharing class ANG_ProductComparisonHelper {
 	    	
 	    	if(!setProdId.isEmpty()) {
 	    		List<Product2> lsProd = new List<Product2>();
-	    		for (Product2 p2: [SELECT Id, Name, ANG_Description_Label__c, ANG_Tooltip__c,
-	    							ANG_HE_Annual_fees__c, ANG_AE_Annual_fees__c,
-									ANG_HE_Application_Registration_Fees__c, ANG_HE_AnnualFees_Small_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c,
-									ANG_HE_AnnualFees_Large_Agents__c, ANG_AE_Application_Registration_Fees__c, ANG_AE_Fees_First_10_locations__c,
-									ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c,
-									ANG_Fees_GoStandard_GoLite__c, ANG_Fees_GoLite_GoStandard__c, ANG_Fees_GoGlobal_GoLite__c, ANG_Fees_GoGlobal_GoStandard__c, ANG_Fees_GoLite_GoGlobal__c, ANG_Fees_GoStandard_GoGlobal__c,
-	    							(SELECT id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c from Product_BOM__r ORDER BY Order__c)
-	    						FROM Product2 WHERE Id IN :setProdId ORDER BY Name DESC]) {
+	    		for (Product2 p2: [SELECT Id, Name, ANG_Description_Label__c, ANG_Tooltip__c, ANG_HE_Annual_fees__c, ANG_AE_Annual_fees__c,
+								ANG_HE_Application_Registration_Fees__c, ANG_HE_AnnualFees_Small_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c,
+								ANG_HE_AnnualFees_Large_Agents__c, ANG_AE_Application_Registration_Fees__c, ANG_AE_Fees_First_10_locations__c,
+								ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c, ANG_Fees_GoStandard_GoLite__c, 
+								ANG_Fees_GoLite_GoStandard__c, ANG_Fees_GoGlobal_GoLite__c, ANG_Fees_GoGlobal_GoStandard__c, ANG_Fees_GoLite_GoGlobal__c, ANG_Fees_GoStandard_GoGlobal__c,
+	    							(SELECT id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c, Order__c 
+	    							FROM Product_BOM__r 
+	    							ORDER BY Order__c)
+	    						FROM Product2 
+	    						WHERE Id IN :setProdId 
+	    						ORDER BY Name DESC]) {
 					if (!chinaAgent) {
-						if (p2.Name == 'Multicountry Accreditation' || p2.Name == 'Standard Accreditation with no Cash' || p2.Name == 'Standard Accreditation with Cash') {
+						if (p2.Name == 'Standard Accreditation with no Cash' || p2.Name == 'Standard Accreditation with Cash') {
 							lsProd.add(p2);
 						}
 					} else {
