@@ -1224,6 +1224,9 @@ public without sharing class AMS_Utils {
                     mapOscars.put(oscar.Id, oscar);
 
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar);
+            }
+
+            if(!AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.isEmpty()) {
 
                 for(Account accToUpdate : accountsToUpdate) {
 
