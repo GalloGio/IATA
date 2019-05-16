@@ -234,9 +234,7 @@ global without sharing class Comm_User_Helper {
             }
 
         }
-        if (newAgency || newAirline) {
-            addDefaultAppRights(con,con.Account);
-        }
+        addDefaultAppRights(con,con.Account);
 
         return userId;
         
@@ -255,6 +253,7 @@ global without sharing class Comm_User_Helper {
     /**
         Add application rights to the input contact based on the custom metadata
         Portal_Application_Setting__mdt
+        Only to the first contact added to an account
     **/
     public static void addDefaultAppRights(Contact contact, Account account) {
         try {
@@ -265,34 +264,42 @@ global without sharing class Comm_User_Helper {
                 contact.Account = account;
             }
 
-            // Find app names with Auto Grant Service
-            list<String> listAppNames = new list<String>();
-            for (Portal_Application_Setting__mdt setting: [
-                    SELECT id, MasterLabel,
-                        (SELECT Sector__c, Category__c
-                        FROM Portal_Application_Visibilities__r
-                        WHERE Auto_grant_service__c = true
-                        AND Sector__c = :account.Sector__c
-                        AND Category__c = :account.Category__c)
-                    FROM Portal_Application_Setting__mdt]) {
-                if (setting.Portal_Application_Visibilities__r.size()>0) {
-                    listAppNames.add(setting.MasterLabel);
+            list<Contact> listOtherContacts = [
+                SELECT Id FROM Contact
+                WHERE AccountId = :account.Id
+                AND Id != :contact.Id];
+            //if the account has no other contacts it means that current contact is the first one
+            // so we try to add permission to the applications (if needed)
+            if (listOtherContacts.isEmpty()) {
+                // Find app names with Auto Grant Service
+                list<String> listAppNames = new list<String>();
+                for (Portal_Application_Setting__mdt setting: [
+                        SELECT id, MasterLabel,
+                            (SELECT Sector__c, Category__c
+                            FROM Portal_Application_Visibilities__r
+                            WHERE Auto_grant_service__c = true
+                            AND Sector__c = :account.Sector__c
+                            AND Category__c = :account.Category__c)
+                        FROM Portal_Application_Setting__mdt]) {
+                    if (setting.Portal_Application_Visibilities__r.size()>0) {
+                        listAppNames.add(setting.MasterLabel);
+                    }
                 }
-            }
 
-            // give right to all found apps
-            list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
-            for ( Portal_Applications__c app: [SELECT Id FROM Portal_Applications__c WHERE Name IN :listAppNames]) {
-                Portal_Application_Right__c newRight = new Portal_Application_Right__c();
-                newRight.Contact__c = contact.Id;
-                newRight.Portal_Application__c = app.Id;
-                newRight.Right__c = 'Access Granted';
-                listAppRight.add(newRight);
-            }
+                // give right to all found apps
+                list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
+                for ( Portal_Applications__c app: [SELECT Id FROM Portal_Applications__c WHERE Name IN :listAppNames]) {
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = contact.Id;
+                    newRight.Portal_Application__c = app.Id;
+                    newRight.Right__c = 'Access Granted';
+                    listAppRight.add(newRight);
+                }
 
-            //insert rights
-            if (!listAppRight.isEmpty()) {
-                insert listAppRight;
+                //insert rights
+                if (!listAppRight.isEmpty()) {
+                    insert listAppRight;
+                }
             }
         } catch (Exception e) {
             System.debug('ERROR in Comm_User_Helper.addDefaultAppRights, couldn\'t create app rights for ' + contact + ':\n ' + e.getMessage());
