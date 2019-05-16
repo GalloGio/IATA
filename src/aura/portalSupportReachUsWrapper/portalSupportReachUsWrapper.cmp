@@ -27,7 +27,7 @@
 
     <aura:attribute name="loaded" type="Boolean" default="true" />
     
-    <ltng:require scripts="{!$Resource.jquery_3_4_0_min + '/jquery_3_4_0_min.js'}" afterScriptsLoaded="{!c.doInit}" />
+    <ltng:require scripts="{!$Resource.jquery2_1_4'}" afterScriptsLoaded="{!c.doInit}" />
 
     <aura:if isTrue="{!v.loaded}">
         <lightning:spinner alternativeText="Loading" style="height:250vh;" />
