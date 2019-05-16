@@ -20412,7 +20412,7 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
         <errorMessage>Only an admin can assign a Financial Assessment contact to a branch agency (BR).</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>has_Authorized_Signatory_External</fullName>
+        <fullName>Has_Authorized_Signatory_External</fullName>
         <active>true</active>
         <description>External users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
         <errorConditionFormula>AND(
@@ -20423,7 +20423,8 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
    ISCHANGED( Email )  
  ),
   $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
-    NOT( ISPICKVAL($User.UserType, &quot;Standard&quot; ))
+    NOT( ISPICKVAL($User.UserType, &quot;Standard&quot; )),
+   $User.ToU_accepted__c = TRUE
 )</errorConditionFormula>
         <errorMessage>Please be aware that this is an airline signatory contact and that changes to them have to be done by IATA for security reasons. Please log a query on the CS portal.</errorMessage>
     </validationRules>
