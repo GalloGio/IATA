@@ -195,8 +195,12 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 				System.debug('[ANG_AgencyChangesHelper] oscar.Process__c = ' +oscar.Process__c);
 				//if(Pattern.matches(AMS_Utils.ANG_OWNERSHIP + '|' + AMS_Utils.ANG_MINOR_SHAREHOLDING + '|' + AMS_Utils.ANG_MAJOR_SHAREHOLDING, oscar.ANG_Type_Of_Change__c))
-				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c))
+				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c)) {
 					changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
+
+					if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(oscar.Account__c))
+						changesContainer.accountsMap.get(oscar.Account__c).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(oscar.Account__c);
+				}
 
 				if(oscar.Process__c == AMS_Utils.NGCHANGES){
 					
@@ -1366,7 +1370,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, Covered_Ownership__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 

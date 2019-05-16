@@ -56,7 +56,7 @@ global class ANG_OscarProcessHelper {
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
-					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c, ANG_IsNewGenAgency__c ,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c, ANG_IsNewGenAgency__c , Covered_Ownership__c,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
@@ -629,6 +629,9 @@ global class ANG_OscarProcessHelper {
 																		new Map<Id,Id>{oscar.Id => acc.Top_Parent__c == null ? acc.Id : acc.Top_Parent__c});
 
 		System.debug('[ANG_OscarProcessHelper] Ownership migration completed.');
+
+		if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(acc.Id))
+			updaterObj.acctMap.get(acc.Id).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(acc.Id);
 
 		System.debug('[ANG_OscarProcessHelper] Starting RHC process.');
 
