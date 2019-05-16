@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AttachmentId__c</fullName>
         <description>ID of the archived attachment</description>
@@ -67,7 +68,6 @@
     </fields>
     <fields>
         <fullName>ShowToPortalUsers__c</fullName>
-        <description>Flag that makes the attachment visible to portal users when set</description>
         <defaultValue>false</defaultValue>
         <description>Flag that makes the attachment visible to portal users when set</description>
         <externalId>false</externalId>

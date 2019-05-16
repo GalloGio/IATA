@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>External_email_address__c</fullName>
         <description>Represents the external address of the recepient</description>
@@ -65,7 +66,6 @@
     </fields>
     <fields>
         <fullName>Internal_user__c</fullName>
-        <description>Related user on Salesforce</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Related user on Salesforce</description>
         <externalId>false</externalId>

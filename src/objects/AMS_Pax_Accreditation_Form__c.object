@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fieldSets>
         <fullName>AMS_CorrectionAllHierarchy</fullName>
         <description>This is used on the CORRECTION Process</description>
@@ -3121,19 +3122,19 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         </valueSet>
     </fields>
     <fields>
-        <fullName>INVALID_Tax_Number__c</fullName>
+        <fullName>INVALID_Tax_Number_2__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>INVALID Tax Number</label>
+        <label>INVALID Tax Number 2</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>INVALID_Tax_Number_2__c</fullName>
+        <fullName>INVALID_Tax_Number__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>INVALID Tax Number 2</label>
+        <label>INVALID Tax Number</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
