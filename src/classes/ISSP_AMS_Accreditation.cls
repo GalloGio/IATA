@@ -2685,6 +2685,7 @@ public without sharing class ISSP_AMS_Accreditation {
             saveAMSForm();
 
             if (!validateCharactersInForm() || !validateForm(true) ) {
+                isValError = true;
                 return null;
             }
 
