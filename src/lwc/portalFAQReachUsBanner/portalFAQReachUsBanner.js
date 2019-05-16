@@ -22,6 +22,7 @@ export default class PortalFAQReachUsBanner extends NavigationMixin(LightningEle
     };
 
     @track supportReachUsURL;
+    @api category;
     @api topic;
     @api subTopic;
 
@@ -39,15 +40,18 @@ export default class PortalFAQReachUsBanner extends NavigationMixin(LightningEle
     redirectToSupport(event) {
         event.preventDefault();
         event.stopPropagation();
-
+        
         let params = {};
+        if(this.category !== undefined && this.category !== null) {
+            params.category = this.category;
+        }
         if(this.topic !== undefined && this.topic !== null) {
-            params.T = this.topic;
+            params.topic = this.topic;
         }
         if(this.subTopic !== undefined && this.subTopic !== null) {
-            params.ST = this.subTopic;
+            params.subtopic = this.subTopic;
         }
-
+        
         navigateToPage(this.supportReachUsURL, params);
     }
 }

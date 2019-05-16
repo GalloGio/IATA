@@ -1,7 +1,6 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import getRecentCases from '@salesforce/apex/PortalCasesCtrl.getRecentCases';
 import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
-import { refreshApex } from '@salesforce/apex';
 import CSP_NoCases1 from '@salesforce/label/c.CSP_NoCases1';
 import CSP_NoCases2 from '@salesforce/label/c.CSP_NoCases2';
 import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
@@ -9,8 +8,8 @@ import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import CSP_Question1 from '@salesforce/label/c.CSP_Question1';
 import CSP_Question2 from '@salesforce/label/c.CSP_Question2';
 import Created_By from '@salesforce/label/c.Created_By';
-import CSP_View_My_Cases from '@salesforce/label/c.CSP_View_My_Cases';
-import CSP_View_My_Company_Cases from '@salesforce/label/c.CSP_View_My_Cases';
+import CSP_MyCases from '@salesforce/label/c.CSP_MyCases';
+import CSP_CompanyCases from '@salesforce/label/c.CSP_CompanyCases';
 
 export default class PortalCasesList extends LightningElement {
     label = {
@@ -20,7 +19,9 @@ export default class PortalCasesList extends LightningElement {
         CSP_SeeAll,
         CSP_Question1,
         CSP_Question2,
-        Created_By
+        Created_By,
+        CSP_MyCases,
+        CSP_CompanyCases
     };
     @track error;
     @track data;
@@ -36,8 +37,7 @@ export default class PortalCasesList extends LightningElement {
     @track pageSize = 10;
     @track pageList = [];
     @track seeAll = false;
-    @track caseListName = CSP_View_My_Company_Cases;
-    recentCases;
+    @track caseListName = CSP_CompanyCases;
     @track cacheableAllData = '';
     @track cacheableData = '';
     @track cacheablePage = '';
@@ -49,9 +49,9 @@ export default class PortalCasesList extends LightningElement {
         getSelectedColumns({ sObjectType : 'Case', sObjectFields : this.fieldLabels })
         .then(results => {
                 this.columns = [
-                    {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_blank'}},
+                    {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'}},
                     {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text'},
-                    {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 380, typeAttributes: {label: {fieldName: 'Subject'}, target:'_blank'}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
+                    {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 380, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
                     {label: Created_By, fieldName: 'CreatedBy', type: 'text'},
                     {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
                     {label: results.Country_concerned__c, fieldName: 'Country', type: 'text'},
@@ -63,32 +63,35 @@ export default class PortalCasesList extends LightningElement {
         })
         .catch(error => {
             this.error = error;
-        }); 
+        });
+        
+        this.renderCases();
     }
 
-    @wire(getRecentCases, { seeAll : '$seeAll' })
-    wiredRecentCases(results) {
-        this.recentCases = results;
-        if (results.data) {            
-            let allDataAux = JSON.parse(JSON.stringify(results.data));
-            let urlMap = JSON.parse(allDataAux.url);
-            
-            for(let i = 0; i < allDataAux.records.length; i++) {
-                let row = allDataAux.records[i];
-                row.CaseURL = urlMap[row.Id];
-                row.CreatedBy = row.CreatedBy.Name;
-                row.Country = row.Country_concerned_by_the_query__c;            
+    renderCases() {
+        getRecentCases({ limitView: false, seeAll: this.seeAll })
+            .then(results => {
+                let allDataAux = JSON.parse(JSON.stringify(results));
+                let urlMap = JSON.parse(allDataAux.url);
+                
+                for(let i = 0; i < allDataAux.records.length; i++) {
+                    let row = allDataAux.records[i];
+                    row.CaseURL = urlMap[row.Id];
+                    row.CreatedBy = row.CreatedBy.Name;
+                    row.Country = row.Country_concerned_by_the_query__c;            
+                }
+                
+                this.allData = allDataAux.records;     
+                this.totalPages = Math.ceil(allDataAux.totalItemCount / this.pageSize);
+                this.isAdmin = allDataAux.userAdmin;
+                this.loading = false;
+                this.buildData();
+            })
+            .catch(error => {
+                this.error = error;
+                this.loading = false;
             }
-
-            this.allData = allDataAux.records;     
-            this.totalPages = Math.ceil(allDataAux.totalItemCount / this.pageSize);
-            this.isAdmin = allDataAux.userAdmin;
-            this.loading = false;
-            this.buildData();
-        } else if (results.error) {
-            this.error = results.error;
-            this.loading = false;
-        }
+        );         
     }
 
     get dataRecords() {
@@ -105,20 +108,20 @@ export default class PortalCasesList extends LightningElement {
             /*Clear cacheable data when toggle between lists*/
             this.clearCache();
             
-            if(!this.seeAll) {
+            if(!this.seeAll) {                            
                 this.columns.splice(3, 0, this.columnsAux); /*Inserting 'Created By' column*/
+                this.caseListName = CSP_MyCases;
                 this.seeAll = true;
-                this.caseListName = CSP_View_My_Cases;
                 this.pageNumber = 1;            
             } else {
                 this.columns.splice(3, 1); /*Removing 'Created By' column*/
+                this.caseListName = CSP_CompanyCases;
                 this.seeAll = false;
-                this.caseListName = CSP_View_My_Company_Cases;
                 this.pageNumber = 1;
             }
         }
 
-        refreshApex(this.recentCases);
+        this.renderCases();
     }
 
     /*SEARCH METHODS*/

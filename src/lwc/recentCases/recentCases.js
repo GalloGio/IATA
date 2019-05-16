@@ -43,11 +43,11 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         getSelectedColumns({ sObjectType: 'Case', sObjectFields: this.fieldLabels })
             .then(results => {
                 this.columns = [
-                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_blank'} },
-                    { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text' },
+                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 127, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
+                    { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130, },
                     { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_blank'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
                     { label: results.Country_concerned__c, fieldName: 'Country', type: 'text' },
-                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', cellAttributes: { class: { fieldName: 'Portal_Case_Status__c' } } }
+                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'Portal_Case_Status__c' } } }
                 ];
             })
             .catch(error => {
@@ -56,7 +56,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
 
     }
 
-    @wire(getRecentCases, { seeAll: false })
+    @wire(getRecentCases, { limitView: true, seeAll: false })
     wiredRecentCases(results) {
         this.loading = true;
         if (results.data) {
