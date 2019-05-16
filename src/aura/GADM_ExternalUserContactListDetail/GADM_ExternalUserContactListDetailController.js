@@ -7,7 +7,8 @@
     back : function(component, event) {
         let myEvent = component.getEvent("Back_EVT");
         myEvent.setParams({
-            'dataModified' : component.get('v.dataModified')
+            'dataModified' : component.get('v.dataModified'),
+            'page' : 'detail'
         });
         myEvent.fire();
     },

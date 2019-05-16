@@ -36,29 +36,29 @@
 
                 <h2 class="slds-p-bottom_x-large">{! v.selectedUserInfo.con.Salutation}&nbsp; {! v.selectedUserInfo.con.LastName}, {! v.selectedUserInfo.con.FirstName} </h2>
 
-                <div class="slds-p-bottom_small">
+                <div class="slds-p-bottom_xx_small">
                     <label class="slds-form-element__label" >EMAIL</label>
-                    <ui:inputText value="{!v.selectedUserInfo.con.Email}" class="slds-input field" />
+                     <div class="slds-p-vertical_x-small slds-p-horizontal_x-small">{!v.selectedUserInfo.con.Email}</div>          
                 </div>
 
-                <div class="slds-p-bottom_small">
+                <div class="slds-p-bottom_xx_small">
                     <label class="slds-form-element__label" >PHONE</label>
-                    <ui:inputText value="{!v.selectedUserInfo.con.Phone}" class="slds-input field" />
+                    <div class="slds-p-vertical_x-small slds-p-horizontal_x-small">{!v.selectedUserInfo.con.Phone}</div>                    
                 </div>
 
                 <div class="slds-p-bottom_small">
                     <label class="slds-form-element__label" >ACCOUNT</label>
-                    <ui:inputText value="{!v.selectedUserInfo.con.Account.Name}" class="slds-input field" />
+                     <div class="slds-p-vertical_x-small slds-p-horizontal_x-small">{!v.selectedUserInfo.con.Account.Name}</div> 
                 </div>
 
                 <div class="slds-p-bottom_small">
                     <label class="slds-form-element__label" >IATA CODE</label>
-                    <ui:inputText value="{!v.selectedUserInfo.con.Account.IATACode__c}" class="slds-input field" />
+                     <div class="slds-p-vertical_x-small slds-p-horizontal_x-small">{!v.selectedUserInfo.con.Account.IATACode__c}</div> 
                 </div>
 
                 <div class="">
                     <label class="slds-form-element__label" >REGION</label>
-                    <ui:inputText value="{!v.selectedUserInfo.con.Account.Region__c}" class="slds-input field" />
+                     <div class="slds-p-vertical_x-small slds-p-horizontal_x-small">{!v.selectedUserInfo.con.Account.Region__c}</div> 
                 </div>
 
 
@@ -72,7 +72,7 @@
                     <p>Roles:</p>
                     <aura:iteration items="{!v.dataRoles}" var="dataRole">
                         <div class="slds-size--1-of-1 slds-grid roleLine">
-                            <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! v.isGadmUser}"/></div>
+                            <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! or(!dataRole.value.isEditable,v.isGadmUser)}"/></div>
                             <div class="label slds-col--padded slds-size--7-of-8">{!dataRole.value.role.Name}</div>
                         </div>
                     </aura:iteration>

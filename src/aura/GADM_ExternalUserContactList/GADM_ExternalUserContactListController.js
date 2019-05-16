@@ -162,18 +162,31 @@
 		 helper.toggleDetails(component);
 
     },
+    handleInvitationShow: function(component,event,helper) {
+        component.set("v.invitationShown", !component.get("v.invitationShown"));
+        helper.toggleTable(component);
+        helper.toggleInvitation(component);
+    },
     handleDetailsBackEvt: function(component,event,helper) {
-         component.set("v.detailsShown", !component.get("v.detailsShown"));
+         
          let dataModified = event.getParam('dataModified');
+         let page = event.getParam('page');
+        console.log('page'+page);
          if(dataModified === true) {
+             component.set("v.detailsShown", !component.get("v.detailsShown"));
              helper.getTableData(component, event);
          }else{
              helper.toggleTable(component);
-             helper.toggleDetails(component);
+             if(page === 'detail'){
+                 component.set("v.detailsShown", !component.get("v.detailsShown"));
+                 console.log('in detail');
+             	helper.toggleDetails(component);
+                 
+             } else if (page === 'invitation'){
+                component.set("v.invitationShown", !component.get("v.invitationShown"));
+             	helper.toggleInvitation(component);
+             }
          }
-
-
-
-    },
+    }
 
 })

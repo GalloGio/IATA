@@ -1,0 +1,9 @@
+.THIS .inblock{
+	display: block!important;
+}
+.THIS .functionsSelect{
+    display: inline-block !important;
+    border-radius: 0px;
+    float:none;
+    height:100px !important;
+}

@@ -550,5 +550,8 @@
         var detailsContainer = component.find('detailContainer');
         $A.util.toggleClass(detailsContainer, 'slds-hide');
     },
-
+	toggleInvitation : function(component) {
+        var invitationContainer = component.find('invitationContainer');
+        $A.util.toggleClass(invitationContainer, 'slds-hide');
+    }
 })

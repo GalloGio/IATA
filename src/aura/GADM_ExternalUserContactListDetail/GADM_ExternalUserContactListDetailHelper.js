@@ -9,12 +9,13 @@
         let selectedUserInfo = component.get('v.selectedUserInfo');
         let currentUserInfo = component.get('v.currentUserInfo');
         let isSuperUser = component.get('v.isSuperUser');
-
+		let isPowerUser = component.get('v.isPowerUser');
         let action = component.get('c.prepareManagementData');
         action.setParams({
             'currentUserData' : JSON.stringify(currentUserInfo),
             'selectedUserData' : JSON.stringify(selectedUserInfo),
-            'isSuperUser' : isSuperUser
+            'isSuperUser' : isSuperUser,
+            'isPowerUser' : isPowerUser
         });
         action.setCallback(this, function(response){
             const state = response.getState();
@@ -49,7 +50,7 @@
                     component.set('v.dataActors', actorsData);
                     component.set('v.dataBusinessUnits', businessUnitsData);
                     component.set('v.dataRoles', rolesData);
-
+					console.log(rolesData);
                     //save the copy and use it as original data
                     let copy = JSON.stringify(result);
                     component.set('v.copyData', copy);
@@ -71,6 +72,7 @@
 
     handleSave : function(component, event) {
         this.toggleSpinner(component);
+        component.set('v.showTable', false);
         let roles = component.get('v.dataRoles');
         let businessUnits = component.get('v.dataBusinessUnits');
         let actors = component.get('v.dataActors');
@@ -126,6 +128,14 @@
 
                         component.set('v.dataModified', true);
                         this.toggleSpinner(component);
+                        
+                        //redirect bach to list of all users
+                        let myEvent = component.getEvent("Back_EVT");
+                        myEvent.setParams({
+                            'dataModified' : component.get('v.dataModified'),
+                            'page' : 'detail'
+                        });
+                        myEvent.fire();
 
                     //result !== true; error occurred
                     }else{

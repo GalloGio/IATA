@@ -3,6 +3,11 @@
     margin:0 auto;
 }
 
+.THIS .no-click {
+    pointer-events: none;
+    border: 0px solid;
+}
+
 .THIS .secondColumn {
     width:50px;
 }

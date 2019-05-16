@@ -1,0 +1,106 @@
+<aura:component controller="Invite_User_CTRL">
+    <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
+    <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
+    <aura:attribute name="invitation" type="SObject" default="{ 'sobjectType': 'Invitation__c' }" />
+    <aura:attribute name="jobFunctionOptions" type="String[]" />    
+    <aura:attribute name="contactLabels" type="Map" />
+    <aura:attribute name="actors" type="List" default="[]" />
+	<aura:attribute name="emailInputError" type="string" default="" />
+    <aura:attribute name="newUser" type="boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:registerEvent name="Back_EVT" type="c:GADM_ExternalUserContactList_EVT"/>
+    
+    <div aura:id="spinner" class="slds-hide">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </div>
+        <div class="slds-grid slds-wrap ">
+            <div class="slds-col--padded slds-size--1-of-1">
+    <lightning:button variant="base" label="Back" title="Back" onclick="{! c.back }" class="btn btn-primary btn-grey" />
+                 </div>
+    </div>
+    <div>
+        <div class="slds-grid slds-wrap ">
+            <div class="slds-col--padded slds-size--1-of-1">
+                <div class="" aura:id="emailError">{!v.emailInputError}</div>
+                <ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.invitation.Email__c}" class="slds-input" required="true" />
+                <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey" />
+            </div>
+        </div>
+    </div>     
+           
+    <div aura:id="emailExists" class="slds-grid slds-wrap slds-hide"> 
+        <div class="slds-col--padded slds-size--1-of-1">        
+            <div>{!$Label.c.OneId_Registration_UserExist}</div>
+        <lightning:button aura:id="notifyUserButton" variant="base" label="Notify user" title="Notify user" onclick="{! c.inviteUser}" class="btn btn-primary btn-grey" />
+    </div>
+    </div>
+    <div aura:id="detail" class="slds-grid slds-wrap slds-hide">
+        <div class="slds-col--padded slds-size--1-of-1">
+            <lightning:combobox name="accounts" label="Actor" value="{!v.invitation.AccountId__c}" placeholder="Select Actor" options="{! v.actors }" />
+        </div>
+        <div class="slds-col--padded slds-size--1-of-1">
+            <label class="slds-form-element__label">{!v.contactLabels.Salutation}</label>
+            <ui:inputSelect aura:id="salutation" class="slds-select" value="{!v.invitation.Salutation__c}">
+                <ui:inputSelectOption text="" label="{!$Label.c.ISSP_Registration_None}" />
+                <ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}" />
+                <ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}" />
+                <ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}" />
+            </ui:inputSelect>
+        </div>
+        <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label">{!v.contactLabels.FirstName}</label>
+            <ui:inputText aura:id="firstName" value="{!v.invitation.First_Name__c}" class="slds-input" />
+        </div>
+
+        <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label">{!v.contactLabels.LastName}</label>
+            <ui:inputText aura:id="lastName" value="{!v.invitation.Last_Name__c}" class="slds-input" />
+        </div>
+
+        <div class="slds-col--padded slds-size--1-of-1">
+            <label class="slds-form-element__label">{!$Label.c.ISSP_Registration_JobTitle}</label>
+            <ui:inputText aura:id="title" value="{!v.invitation.Job_Title__c}" class="slds-input" />
+        </div>
+        <div class="slds-col--padded slds-size--1-of-1">
+            <label class="slds-form-element__label inblock">{!v.contactLabels.Membership_Function__c}</label>
+            <ui:inputSelect multiple="true" class="multiple required functionsSelect" aura:id="membershipFunction" value="{!v.invitation.Job_Function__c}">
+                <aura:iteration items="{!v.jobFunctionOptions}" var="function" indexVar="index" aura:id="function">
+                    <ui:inputSelectOption text="{!function}" label="{!function}" />
+                </aura:iteration>
+            </ui:inputSelect>
+            <ul aura:id="jobHelp inblock">
+                <li class="slds-form-element__help inblock">{!$Label.c.OneId_JobFunction_Help_Msg}</li>
+            </ul>
+        </div>
+
+        <aura:if isTrue="{! v.serviceName == 'GADM'}">
+            <div class="slds-col--padded  slds-size--1-of-1">
+                <label class="slds-form-element__label">{!$Label.c.GADM_Power_User}</label>
+                <ui:inputCheckbox class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" click="{! c.checkPowerUser}" />
+            </div>
+        </aura:if>
+
+        <div aura:id="phoneContainer" class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label">
+                {!v.contactLabels.Phone}
+            </label>
+            <ui:inputPhone aura:id="contactPhone" value="{!v.invitation.Business_Phone__c}" class="phoneFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
+        </div>
+
+        <div aura:id="mobilePhoneContainer" class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label">
+                {!v.contactLabels.MobilePhone}
+            </label>
+            <ui:inputPhone aura:id="contactMobilePhone" value="{!v.invitation.Mobile_Phone__c}" class="mobileFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
+        </div>
+
+        <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+            <label class="slds-form-element__label">{!v.contactLabels.Fax}</label>
+            <ui:inputPhone aura:id="contactFaxPhone" value="{!v.invitation.Business_Fax__c}" class="phoneFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}" />
+        </div>
+        <div class="slds-col--padded slds-size--1-of-1">
+            <lightning:button variant="base" label="Invite" title="Invite" onclick="{!c.inviteUser}" class="btn btn-primary btn-grey" />
+        </div>
+    </div>
+</aura:component>

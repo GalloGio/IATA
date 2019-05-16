@@ -301,6 +301,7 @@ public without sharing class Contact_Roles_Helper {
         if(isSuperUser) {//for Super User
             List<AggregatedRecordWrapper> SuAggregatedRecordWrappers = new List<AggregatedRecordWrapper>();
             for (AggregatedRecordWrapper wr: aggregatedRecordWrappers){
+                if (hasRole('Service Power User', wr.rolesData)) {continue;}
                 if (wr.buData == null || wr.buData.isEmpty()){
                     SuAggregatedRecordWrappers.add(wr);
                 }
@@ -335,7 +336,16 @@ public without sharing class Contact_Roles_Helper {
         return aggregatedRecordWrappers;
 
     }
-
+	
+    private static boolean hasRole(string roleName, Map<Id, Contact_Role_Service_Access__c> roles){
+        if (roles.isEmpty()) {return false;}
+        for(Contact_Role_Service_Access__c access: roles.values()){
+            if (access.Contact_Role__r.Contact_Roles__r.Name == roleName){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public class AggregatedRecordWrapper {
         @AuraEnabled

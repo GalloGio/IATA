@@ -20,7 +20,7 @@
     <aura:attribute name="ReferenceFields" type="String[]" default="" description="Which fields should be linked converted into references to records? If not specified, none of fields will be converted." />
     <aura:attribute name="OverrideFieldType" type="String[]" description="Which fields should be converted to be another type? If not specified, none of fields will be converted." />
 
-
+	<aura:attribute name="invitationShown" type="Boolean" default="False"/>
     <aura:attribute name="detailsShown" type="Boolean" default="False"/>
     <aura:attribute name="detailsData" type="Object[]"/>
     <aura:attribute name="selectedUserInfo" type="Object"/>
@@ -64,11 +64,9 @@
 
 
     <div class="page_container">
-
-        <!--TABLE-->
+		 <!--TABLE-->
         <div aura:id="tableContainer" class="slds-hide">
-
-            <aura:if isTrue="{!empty(v.ErrorMessage)}">
+			<aura:if isTrue="{!empty(v.ErrorMessage)}">
                 <article class="slds-card">
                     <aura:if isTrue="{!not(empty(v.Title))}">
                         <div class="slds-card__header slds-grid">
@@ -310,9 +308,13 @@
                 </ui:message>
                     </div>
                 </aura:set>
-
+			
+                
             </aura:if>
-
+            
+			<aura:if isTrue="{!or(v.IsPowerUser, v.isSuperUser)}">
+            		<lightning:button variant="base" label="Invite user" title="Invite user" onclick="{! c.handleInvitationShow }" class="btn btn-primary btn-grey" />
+                </aura:if>
         </div>
 
         <!--RECORD DETAIL-->
@@ -321,8 +323,12 @@
                 <c:GADM_ExternalUserContactListDetail Back_EVT="{!c.handleDetailsBackEvt}" selectedUserInfo="{!v.selectedUserInfo}" currentUserInfo ="{! v.currentUserInfo}" isPowerUser="{! v.isPowerUser}" isSuperUser="{! v.isSuperUser}" isGadmUser="{! v.isGadmUser}"/>
             </div>
         </aura:if>
-
-
+		<!--RECORD DETAIL-->
+        <aura:if isTrue="{! v.invitationShown}">
+            <div aura:id="invitationContainer" class="slds-hide">
+                <c:Invite_User Back_EVT="{!c.handleDetailsBackEvt}"/>
+            </div>
+        </aura:if>
         <!--SPINNER-->
         <div aura:id="spinner" class="slds-hide">
             <lightning:spinner alternativeText="Loading"/>

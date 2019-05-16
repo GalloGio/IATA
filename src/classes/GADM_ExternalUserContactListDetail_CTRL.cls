@@ -87,7 +87,7 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
     }*/
 
     @AuraEnabled
-    public static UserManagementData prepareManagementData(String currentUserData, String selectedUserData, Boolean isSuperUser) {
+    public static UserManagementData prepareManagementData(String currentUserData, String selectedUserData, Boolean isSuperUser, boolean isPowerUser) {
         GADM_ExternalUserContactList_CTRL.UserInformation currentUserInfo = (GADM_ExternalUserContactList_CTRL.UserInformation)JSON.deserialize(currentUserData, GADM_ExternalUserContactList_CTRL.UserInformation.class);
         Contact_Roles_Helper.AggregatedRecordWrapper selectedUserInfo = (Contact_Roles_Helper.AggregatedRecordWrapper)JSON.deserialize(selectedUserData, Contact_Roles_Helper.AggregatedRecordWrapper.class);
         System.debug('currentUserInfo:: ' + currentUserInfo);
@@ -142,24 +142,55 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
         managementData.actors = new Map<Id, GADM_ExternalUserContactListDetail_CTRL.Actor>();
 
         Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
-        List<Contact_Roles__c> standardGadmRoles = [SELECT Id, Name FROM Contact_Roles__c WHERE RecordTypeId = :externalRecordTypeId AND (Category__c = '' OR Category__c = null)];
+        List<Contact_Role_Service__c> contactRoleServices = [SELECT Id, Contact_Role__c FROM Contact_Role_Service__c WHERE Service__r.Name = 'GADM' AND Contact_Role__r.RecordTypeId = :externalRecordTypeId AND (Contact_Role__r.Category__c = '' OR Contact_Role__r.Category__c = null)];
 
+        Set<Id> contactRolesIds = new Set<Id>();
+        for(Contact_Role_Service__c service : contactRoleServices) {
+            contactRolesIds.add(service.Contact_Role__c);
+        }
+
+        List<Contact_Roles__c> standardGadmRoles = [SELECT Id, Name FROM Contact_Roles__c WHERE Id = :contactRolesIds];
+        System.debug('standardGadmRoles:: ' + standardGadmRoles);
+		
         for(Contact_Roles__c role : standardGadmRoles) {
             //power user role cannot be taken
             if(role.Name == 'Service Power User') {
-                continue;
+                if(isPowerUser){
+                    Role dataRole = new Role();
+                    dataRole.role = role;
+                    dataRole.isChecked = selectedUserRoles.contains(role);
+                    dataRole.isEditable = false;
+                    managementData.roles.put(role.Id, dataRole);
+                } else{
+                    continue;
+                }                
             }
-            if(role.Name == 'Service Super User') {
-                if(isSuperUser) {
+            else if(role.Name == 'Service Super User') {
+                if(isPowerUser){
+                    Role dataRole = new Role();
+                    dataRole.role = role;
+                    dataRole.isChecked = selectedUserRoles.contains(role);
+                    dataRole.isEditable = true;
+                    managementData.roles.put(role.Id, dataRole);
+                } else if(isSuperUser) {
+                    Role dataRole = new Role();
+                    dataRole.role = role;
+                    dataRole.isChecked = selectedUserRoles.contains(role);
+                    dataRole.isEditable = false;
+                    managementData.roles.put(role.Id, dataRole);
+                } else{
                     continue;
                 }
+            } else {
+                Role dataRole = new Role();
+                dataRole.role = role;
+                dataRole.isChecked = selectedUserRoles.contains(role);
+                dataRole.isEditable = true;
+                managementData.roles.put(role.Id, dataRole);
             }
-            Role dataRole = new Role();
-            dataRole.role = role;
-            dataRole.isChecked = selectedUserRoles.contains(role);
-            dataRole.isEditable = true;
+           
 
-            managementData.roles.put(role.Id, dataRole);
+            //managementData.roles.put(role.Id, dataRole);
         }
 
         /*for(Contact_Roles__c seRole : selectedUserRoles) {
