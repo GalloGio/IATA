@@ -333,6 +333,9 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	private void updateRHCInformation() {
+
+		if(ANG_OscarProcessHelper.isIATACodeGenerationRunning) return;
+
 		Map<Id, ANG_RHC_Information__c> rhcToUpdate = new Map<Id, ANG_RHC_Information__c>();
 		Map<Id, Boolean> changedConditions = new Map<Id, Boolean>();
 		Set<Id> changedStatus = new Set<Id>();
