@@ -53,8 +53,8 @@ public class ANG_AgencyEventsGenerator{
                     continue;
                 }
 
-                if((cmType=='ChangeCode' && String.valueOf(obj.get('Change_Code__c')) == cm.Change_Code__c && (cm.Change_Code__c != 'CWD' || runDelayed)) || (oldRecMap!= null &&  String.valueOf(obj.get(cm.field__c)) != String.valueOf(oldRecMap.get(String.valueOf(obj.get('id'))).get(cm.field__c)))){
-                    if(!insertedRecordsSet.contains(String.valueOf(obj.get(accField))+cm.Event_type__c+cm.Integration_System__c)){
+                if((cmType=='ChangeCode' && String.valueOf(obj.get('Change_Code__c')) == cm.Change_Code__c && (cm.Change_Code__c != 'CWD' || runDelayed)) || (oldRecMap!= null && VerifyFieldChanges(String.valueOf(oldRecMap.get(String.valueOf(obj.get('id'))).get(cm.field__c)), String.valueOf(obj.get(cm.field__c)), cm.fieldValue__c))){
+					if(!insertedRecordsSet.contains(String.valueOf(obj.get(accField))+cm.Event_type__c+cm.Integration_System__c)){
                         AMS_Agency_Updates__c auRec = new AMS_Agency_Updates__c(
                             Account__c = String.ValueOf(obj.get(accField)), 
                             Update_Type__c = cm.Event_type__c,
@@ -76,4 +76,15 @@ public class ANG_AgencyEventsGenerator{
         if(agencyEventsList.size()>0)insert agencyEventsList;
     }
 
+    private boolean VerifyFieldChanges(string fieldOldValue, string fieldNewValue, string AllowedValue){
+        if(fieldNewValue!=fieldOldValue){
+            if(string.isBlank(AllowedValue))
+                return true;
+            else{
+                if(fieldNewValue==AllowedValue)
+                    return true;
+            }
+        }
+        return false;
+    }
 }

@@ -10309,6 +10309,10 @@ and
         <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid --></label>
+        <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step3 HO Full Address --></label>
         <name>ISSP_AMS_Step3_HO_Full_Address</name>
     </customLabels>
@@ -11205,6 +11209,10 @@ and
         <name>ISSP_ANG_Local_Details_Copy_Address2</name>
     </customLabels>
     <customLabels>
+        <label><!-- Shipping same as Billing --></label>
+        <name>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
         <name>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</name>
     </customLabels>
@@ -11395,6 +11403,10 @@ and
     <customLabels>
         <label>คำร้องขอการเปลี่ยนแปลงประเภทการรับรอง และ/หรือแจ้งให้ IATA ทราบถึงการเปลี่ยนแปลงสถานที่ตั้ง ชื่อบริษัท สถานะทางกฎหมาย เจ้าของ/ผู้ถือหุ้น</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
     <customLabels>
         <label>ขั้นตอน A - ยืนยันรายละเอียดของเอเย่นต์</label>
@@ -14155,6 +14167,14 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
     <customLabels>
         <label><!-- ISSP PAX Validating VAT Number --></label>
         <name>ISSP_PAX_Validating_VAT_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 error --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2_error</name>
     </customLabels>
     <customLabels>
         <label><!-- c --></label>
