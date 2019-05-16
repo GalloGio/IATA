@@ -228,6 +228,10 @@
                 <field>Amount_disputed__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Currency__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>KPI_Prod__c</field>
             </layoutItems>

@@ -61,6 +61,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Change_of_Entity_Location_within_EU__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Sanity_check_results__c</field>
             </layoutItems>
             <layoutItems>
