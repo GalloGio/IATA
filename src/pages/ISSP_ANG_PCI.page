@@ -254,27 +254,47 @@
                             	</strong>
                            	</div>
 
-                            <apex:outputPanel >                              
-                                <apex:outputPanel id="branchaccountsel">                                
-                                    <div class="form-group">
-                                        <label for="approval focus" class="col-lg-3 control-label"></label>
-                                        <div class="col-lg-9">
-                                        	<br></br>
-                                            <apex:outputPanel >
-                                                <c:MultiselectPicklist leftLabel="{!$Label.ISSP_ANG_PCI_Choose_IATA_Code}" 
-                                                                        leftOptions="{!RelatedAccount}"
-                                                                        rightLabel="{!$Label.ISSP_ANG_PCI_Selected_IATA_Code}"
-                                                                        rightOptions="{!AgencyCodesConcerned}"
-                                                                        size="8"
-                                                                        width="300px"
-                                                                        btn_up_down="false"
-                                                />
-                                            </apex:outputPanel>
-                                        </div>
-                                    </div>
-                                </apex:outputPanel>
-                            </apex:outputPanel>
-                            <!--Multi select picklist End -->
+                             <!--##RN INC463820  -->
+                <apex:outputPanel id="branchaccountsel">
+                                    <apex:pageBlockSection id="table" columns="1" title="Select Accounts" rendered="{!hierarchyValues.size > 0}">
+
+                <apex:outputPanel id="buttonPanel">
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+                    <apex:outputText >Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                </apex:outputPanel>
+					
+                <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
+					<apex:column >
+						<apex:facet name="header">
+							<apex:inputCheckbox value="{!selectAll}">
+								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
+							</apex:inputCheckbox>
+						</apex:facet>
+						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
+					</apex:column>
+
+					<apex:column value="{!hi.acc['Name']}"/>
+                    <apex:column value="{!hi.acc['IATACode__c']}"/>
+                    <apex:column value="{!hi.acc['BillingCity']}"/>
+                    <apex:column value="{!hi.acc['BillingState']}"/>
+                    
+				</apex:pageBlockTable>
+				<apex:actionStatus id="blockEditing">
+					<apex:facet name="start">
+						<apex:outputPanel layout="none">
+							<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+							<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+						</apex:outputPanel>
+					</apex:facet>
+				</apex:actionStatus>
+			</apex:pageBlockSection>
+            </apex:outputPanel>
+			
+
+             <!--##RN INC463820  -->
 				        	
 				            	<apex:pageBlockButtons location="bottom" style="padding-left:218px">
 				                	<apex:actionStatus id="buttonLoadingStep1">
