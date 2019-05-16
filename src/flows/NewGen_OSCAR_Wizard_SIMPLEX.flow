@@ -1961,7 +1961,9 @@ NewGen - Sprint 7 - Release 3
 Added NEWGEN-1464 validation
 Added NEWGEN-1443 Is PCI Compliant in the OSCAR for corrections
 NEWGEN-2153 - Fixed issue with Bank Account Changes
-NEWGEN-1963 - FOP</description>
+NEWGEN-1963 - FOP
+
+8-April-2019 - Fixing connection between 2 and 3 box</description>
     <dynamicChoiceSets>
         <name>RecordChoiceContact</name>
         <dataType>String</dataType>

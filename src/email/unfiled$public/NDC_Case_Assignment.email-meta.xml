@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>NDC - Case Assignment</name>
+    <style>freeForm</style>
+    <subject>ASSIGNED CASE: {!Case.CaseNumber}</subject>
+    <textOnly>The following NDC Case has been created :
+
+
+Subject: {!Case.Subject}
+
+Case Number: {!Case.CaseNumber}
+
+Account Name: {!Case.Account}
+
+Contact Name: {!Case.Contact}
+
+
+Please copy-paste this URL to access the Case:
+{!Case.Link}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

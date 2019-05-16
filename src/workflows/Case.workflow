@@ -199,7 +199,7 @@
         <description>BSPlink Email alert</description>
         <protected>false</protected>
         <recipients>
-            <recipient>mcbrideg@iata.org</recipient>
+            <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -216,6 +216,18 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/EUR_CaseassignmentBanking</template>
+    </alerts>
+    <alerts>
+        <fullName>Case_changed</fullName>
+        <description>Case changed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GDPR_Templates/Case_changed</template>
     </alerts>
     <alerts>
         <fullName>Cases_Russia</fullName>
@@ -662,7 +674,7 @@
         <description>DPC: Notification on new CSR</description>
         <protected>false</protected>
         <recipients>
-            <recipient>mcbrideg@iata.org</recipient>
+            <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2287,6 +2299,18 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>SCEQOS/InstantSurveyCustomerService</template>
+    </alerts>
+    <alerts>
+        <fullName>NDC_Matchmaker_Email_Notification_on_Case_Creation</fullName>
+        <description>NDC Matchmaker Email Notification on Case Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>NDC_Matchmaker</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/NDC_Case_Assignment</template>
     </alerts>
     <alerts>
         <fullName>NewALmanagementprocess</fullName>
@@ -4862,6 +4886,16 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Change_owner_to_be_GDPR_Queue</fullName>
+        <field>OwnerId</field>
+        <lookupValue>GDPR</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change owner to be GDPR Queue</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Change_owner_to_global_KM_queue</fullName>
         <field>OwnerId</field>
         <lookupValue>Knowledge_Management_GVA</lookupValue>
@@ -5028,6 +5062,14 @@
         <name>Chg owner to Fraction (&lt;1USD) Closed</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Clear_Case_New_Interaction_tracking</fullName>
+        <field>New_interaction__c</field>
+        <name>Clear Case New Interaction tracking</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -7297,6 +7339,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Case_New_Interaction_tracking</fullName>
+        <field>New_interaction__c</field>
+        <literalValue>The case has been recently updated.</literalValue>
+        <name>Update Case New Interaction tracking</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Case_Status_Sanity_Check_Failure</fullName>
         <field>Status</field>
         <literalValue>Sanity Check Failure</literalValue>
@@ -8440,6 +8491,20 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Assign GDPR cases to queue</fullName>
+        <actions>
+            <name>Change_owner_to_be_GDPR_Queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>contains</operation>
+            <value>GDPR</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>Assign to AIR Tech Zone Queue</fullName>
         <actions>
             <name>Send_notification</name>
@@ -8740,6 +8805,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>Some countries for which we2case cases are created in AME have Europe as record type. This rule changes to the AME record type.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Clear field tracking</fullName>
+        <actions>
+            <name>Clear_Case_New_Interaction_tracking</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>clears field tracking message</description>
+        <formula>ISPICKVAL(New_interaction__c,&apos;The case has been recently updated.&apos;) &amp;&amp; LastModifiedById==OwnerId</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Clicktools Workflow_AM_CX_CHINESE</fullName>
@@ -12149,6 +12225,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>the query is reopened and assigned to GDC MAD complaint queue</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GDPR Case Updated</fullName>
+        <actions>
+            <name>Case_changed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT( ISNEW() ) &amp;&amp; RecordType__c = &apos;GDPR Request&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>I%26C_Update_Status to Action Needed</fullName>
@@ -16050,6 +16136,25 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>NDC Matchmaker Team Notification</fullName>
+        <actions>
+            <name>NDC_Matchmaker_Email_Notification_on_Case_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>New,Open</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>NDC Management</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>NFE System to product owner</fullName>
         <actions>
             <name>Assign_NFE_ACR_to_system_manager</name>
@@ -18617,6 +18722,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Update Tracking Field</fullName>
+        <actions>
+            <name>Update_Case_New_Interaction_tracking</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Updates field tracking field if a case is updated by someone who is not the case owner</description>
+        <formula>( ISCHANGED(CaseArea__c)|| ISCHANGED(Reason1__c)|| ISCHANGED(BSPCountry__c)|| ISCHANGED(Case_Remarks__c)|| ISCHANGED(Attachment_received_possible_POP__c)|| ISCHANGED(Region__c)|| ISCHANGED(AccountId)|| ISCHANGED(ContactId)|| ISCHANGED(Origin)|| ISCHANGED(ParentId)|| ISCHANGED(Priority)|| ISCHANGED(Subject)|| ISCHANGED(Status)  ) &amp;&amp; LastModifiedById&lt;&gt;OwnerId</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Web - Change Case Area to Accreditation</fullName>
         <actions>
             <name>Case_Area_Accreditation</name>
@@ -19140,9 +19256,9 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <criteriaItems>
-            <field>Case.Status</field>
+            <field>Case.IsClosed</field>
             <operation>equals</operation>
-            <value>Closed</value>
+            <value>True</value>
         </criteriaItems>
         <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

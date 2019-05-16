@@ -302,6 +302,7 @@ public class AMS_AgencyAChangeCodeHandler {
                             from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
 
         if(!oscarsToCopyData.isEmpty()){
+
             AMS_Utils.copyDataToAccount(oscarsToCopyData);
         
             //NEWGEN-4852 - Copy Parent Account (GE/HE) information to the staging area of AE in same BSP - Change Code FIN
@@ -318,6 +319,7 @@ public class AMS_AgencyAChangeCodeHandler {
             }       
 
         }else{
+            
             System.debug('Nothing to migrate here.');
         }
     }

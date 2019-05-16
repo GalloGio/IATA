@@ -449,7 +449,6 @@ public without sharing class ISSP_AMS_Accreditation {
         newForm.HO_Account__c = vHQAccountId;
 
         //Need to translate sector for display
-
         if(defaultSectorValue != '' && defaultSectorValue != null) {
             sectorValue = defaultSectorValue;
         } else {
@@ -1233,9 +1232,10 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getAgencyCodesConcerned() {
-        List<Account> accountList;
-        
-        if (newForm.Agency_Codes_Concerned__c != null) {
+        List <Account> accountList;
+        List<SelectOption> options = new List<SelectOption>();
+
+        if(newForm.Agency_Codes_Concerned__c != null)
             accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
         }
 
@@ -1267,7 +1267,16 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getOfficeTypes() {
-        Boolean isUKTerritory = (newCase.IFAP_Country_ISO__c == 'GB' || newCase.IFAP_Country_ISO__c == 'GI' || newCase.IFAP_Country_ISO__c == 'GG' || newCase.IFAP_Country_ISO__c == 'IM' || newCase.IFAP_Country_ISO__c == 'JE' || newCase.IFAP_Country_ISO__c == 'SH' || newCase.IFAP_Country_ISO__c == 'PN');
+        Boolean isUKTerritory;
+
+        isUKTerritory = false;
+
+        if(newCase.IFAP_Country_ISO__c == 'GB' || newCase.IFAP_Country_ISO__c == 'GI' || newCase.IFAP_Country_ISO__c == 'GG' || newCase.IFAP_Country_ISO__c == 'IM' || newCase.IFAP_Country_ISO__c == 'JE' || newCase.IFAP_Country_ISO__c == 'SH' || newCase.IFAP_Country_ISO__c == 'PN') {
+            isUKTerritory = true;
+        }
+
+        system.debug('sectorValue before get from URL: ' + sectorValue);
+        system.debug('defaultSectorValue before get from URL: ' + defaultSectorValue);
 
         List<SelectOption> options = new List<SelectOption>();
 
@@ -1610,7 +1619,8 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             newCase.recordTypeId = RECORD_TYPE_ID;
-            newCase.BSPCountry__c = isocountry.Case_BSP_Country__c;
+            newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
+            newCase.Country_concerned_by_the_query__c = isocountry.Name;
 
             if (isMultiCountryNewAE) {
                 newForm.Branch_Office_Country__c = isocountry.Id;
@@ -1631,6 +1641,8 @@ public without sharing class ISSP_AMS_Accreditation {
             } else {
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
             }
+
+            System.debug('1) newCase.Subject-->' + newCase.Subject);
 
             try {
                 String newIsoCountry = newCase.IFAP_Country_ISO__c;
@@ -1663,10 +1675,8 @@ public without sharing class ISSP_AMS_Accreditation {
                         newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
                     }
 
-                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE) {
+                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) //NEWGEN-1249
                         upsert newform;
-                    }
-
                     fetchAMSProcessForm();
 
                 }
@@ -1917,6 +1927,9 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void saveAMSForm() {
+        system.debug('Salesforce saveAMSForm sectorValue: ' + sectorValue);
+        system.debug('Salesforce saveAMSForm newCase.Reason1__c: ' + newCase.Reason1__c);
+
         newForm.Operation_Type__c = sectorValue;
         if (!isNoticeOfChange) {
             if (amsLocationType != null) {
@@ -3044,6 +3057,9 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference goToFinalStep() {
+
+        System.DEBUG('goToFinalStep  - newForm Legal Status 1: ' + newForm.ISSP_AMS_Legal_Status__c);
+
         if (!validateCharactersInForm() || !validateForm(true) ) {
             newForm.Validation_ERRORS__c = TRUE;
             upsert newForm;
@@ -3051,7 +3067,7 @@ public without sharing class ISSP_AMS_Accreditation {
             return goToStep3();
         }
 
-        if (!validateAttachedFiles()) {
+        if ( !validateAttachedFiles()) {
             newForm.Validation_ERRORS__c = TRUE;
             upsert newForm;
 
@@ -3941,6 +3957,12 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             String iso = (isMultiCountryNewAE) ? mcformCountryISO : newCase.IFAP_Country_ISO__c;
+			f(excludeIdentifierSetTravel.isEmpty()){
+                excludeIdentifierSetTravel = null;
+            }
+            //NEWGEN-583 end
+            system.debug('SFSF excludeIdentifierSetTravel ' + excludeIdentifierSetTravel);
+
 
             //Get distinct set of Languages for this country / operation requirements iur
             AggregateResult[] distinctReqmentLangs = [SELECT Language__c
@@ -5251,7 +5273,10 @@ public without sharing class ISSP_AMS_Accreditation {
             retNoCTravelCountryReqments(true);
         }
 
-        Map<String, String> folderMap = getMapAmazonFileIdentifiers();
+        system.debug('List_CountryReqments: ' + List_CountryReqments);
+
+        Map<String, String> folderMap = new Map<String, String>();
+        folderMap = getMapAmazonFileIdentifiers();
 
         for (AMS_Accreditation_Requirement__c thisReq : List_CountryReqments) {
             if (thisReq.File_to_Upload__c == 'Mandatory') {
@@ -6207,6 +6232,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 newForm.ISSP_AMS_Min_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
             }
+            if (newForm.ISSP_AMS_Amount_of_credit_requested__c == null && isocountry.EACP_Country__c) {
+                newForm.ISSP_AMS_Amount_of_credit_requested__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
 
             if (newForm.Total_Freight_Charges_monetary_value__c == null) {
                 newForm.Total_Freight_Charges_monetary_value__c.addError(Label.ISSP_YouMustEnter);
@@ -6615,10 +6644,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     //@future (callout = true)
     public static void OSCARIntegration(String accountId, String accreditationId, String typeOfProcess, String caseId) {
-        /** USE WS Method
-        ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice instanceWS = getWSInstance();
-        String createAccreditationResponse = instanceWS.createAccreditation(accountId, accreditationId, typeOfProcess, caseId);
-       **/
+        system.debug('createAccreditation(' + accountId + ', ' + accreditationId + ', ' + typeOfProcess + ', ' + caseId + ')');
 
         //FM 30-01-2017 - OSCAR Integration - do not create OSCAR when there's a existing case with "Open - EDMC" status and an OSCAR Record already assigned to the case
         List<Case> checkCase = [Select Id, OSCAR__c  from case where Id = :caseid AND OSCAR__c <> null AND status = 'Open - EDMC'];
@@ -7020,8 +7046,8 @@ public without sharing class ISSP_AMS_Accreditation {
                     lstAccreditationContact.add(ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtIdsPerDevNameAccredContact.get('Current_Owner'), rtIdsPerDevNameAccredContact.get('Current_Company_Owner')));
                 }
 
-                if (type.equalsIgnoreCase('Branch')) {
-                    lstAccreditationContact.add(ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtIdsPerDevNameAccredContact.get('Person'), rtIdsPerDevNameAccredContact.get('Company')));
+                if(type.equalsIgnoreCase('Branch')){
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
                 }
             }
             upsert lstAccreditationContact;

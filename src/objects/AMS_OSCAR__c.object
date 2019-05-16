@@ -413,7 +413,8 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Major shareholding&quot;), &quot;Major
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Minor shareholding&quot;), &quot;Minor shareholding&quot;+BR(), NULL)+
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Accreditation type&quot;), &quot;Accreditation type&quot;+BR(), NULL)+
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Location type to different legal entity&quot;), &quot;Location type to different legal entity&quot;+BR(), NULL)+ 
-IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL) + 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;+BR(), NULL) + 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Letter Generation&quot;), &quot;Letter Generation&quot;+BR(), NULL) + 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Conversion to GoLite&quot;), &quot;Conversion to GoLite&quot;, NULL) +
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Conversion to Domestic with Cash&quot;), &quot;Conversion to Domestic with Cash&quot;, NULL) + 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Conversion to International&quot;), &quot;Conversion to International&quot;, NULL)</formula>
@@ -8443,6 +8444,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <filterScope>Queue</filterScope>
         <label>Model A Onboarding - Europe</label>
         <queue>Model_A_Onboarding_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NewGen_PCI_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI</label>
+        <queue>NewGen_PCI</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -53158,6 +53168,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Legal status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Letter Generation</fullName>
                 <default>false</default>
             </values>
             <values>

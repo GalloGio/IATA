@@ -13,11 +13,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>luntrarum@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>matepiner@iata.org</recipient>
+            <recipient>martinsp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -41,11 +37,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>luntrarum@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>matepiner@iata.org</recipient>
+            <recipient>martinsp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -69,11 +61,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>luntrarum@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>matepiner@iata.org</recipient>
+            <recipient>martinsp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
