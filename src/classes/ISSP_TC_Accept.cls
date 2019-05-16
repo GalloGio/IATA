@@ -25,20 +25,6 @@ public  class ISSP_TC_Accept {
     
     //Language picklist
     public String selectedLanguage {get;set;}
-    
-    public Boolean issPortalNavigationBar {
-    get {
-        if(issPortalNavigationBar == null) {
-            User usr = [SELECT Id, Profile.Name FROM User WHERE Id =: UserInfo.getUserId()];
-
-            issPortalNavigationBar = ISSP_CS__c.getValues('CS Portal Redirect') == null || usr.Profile.Name.toUpperCase().contains('DPC') || usr.Profile.Name.toUpperCase().contains('PWC');
-        }
-
-        system.debug('SS## issPortalNavigationBar: ' + issPortalNavigationBar);
-        return issPortalNavigationBar;
-    }
-    set;
-    }
 
     public List<SelectOption> languages {
     get {
@@ -59,7 +45,20 @@ public  class ISSP_TC_Accept {
     }
     set;
     }
-    
+
+    public Boolean isPortalNavigationBar {
+    get {
+        if(isPortalNavigationBar == null) {
+            User usr = [SELECT Id, Profile.Name FROM User WHERE Id =: UserInfo.getUserId()];
+
+            isPortalNavigationBar = ISSP_CS__c.getValues('CS Portal Redirect') == null || usr.Profile.Name.toUpperCase().contains('DPC') || usr.Profile.Name.toUpperCase().contains('PWC');
+        }
+
+        system.debug('SS## isPortalNavigationBar: ' + isPortalNavigationBar);
+        return isPortalNavigationBar;
+    }
+    set;
+    }
 
     public ISSP_TC_Accept(){
         isBSP = false;

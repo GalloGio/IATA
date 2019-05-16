@@ -9,6 +9,8 @@ import getNotifications from '@salesforce/apex/CSP_Utils.getNotifications';
 import getUserType from '@salesforce/apex/CSP_Utils.getUserType';
 import increaseNotificationView from '@salesforce/apex/CSP_Utils.increaseNotificationView';
 
+// Toast
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 //custom labels
 import ISSP_Services from '@salesforce/label/c.ISSP_Services';
