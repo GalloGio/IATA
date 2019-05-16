@@ -237,6 +237,26 @@ public without sharing class ISSP_AMS_Accreditation {
     public String optInOutSuccessMessage {get; set;}
     public String optInOutBtn {get; set;}
     public String optInOutErrorNoDate {get; set;}
+    
+    //this checks if there's an open Annual Revalidation case on the user's account
+    public Boolean revCaseOpen {
+        get{
+            List<Case> revCases = [SELECT Id 
+                                   FROM Case 
+                                   WHERE AccountId =: con.Account.Id 
+                                   AND Reason1__c = 'Annual revalidation' 
+                                   AND Status != 'Closed' 
+                                   AND Status != 'Closed_Rejected' 
+                                   AND Status != 'Closed_Withdrawn'];
+            if(revCases.size() > 0) {
+                revCaseOpen = true;
+            } else {
+                revCaseOpen = false;
+            }
+            return revCaseOpen;
+        } 
+        set;
+    }
 
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
