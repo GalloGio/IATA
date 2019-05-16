@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object that holds the information to extract IATA Codes for Purging</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,9 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Limit__c</fullName>
-        <description>Max Limit of results (&lt;10000)</description>
+        <description>Number for limiting the number of records. Max Limit of results (&lt;10000)</description>
         <externalId>false</externalId>
         <label>Limit</label>
         <length>100</length>
@@ -65,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Order_Direction__c</fullName>
+        <description>Ascending or Descending direction of ordering</description>
         <externalId>false</externalId>
         <label>Order Direction</label>
         <required>true</required>
@@ -89,6 +92,7 @@
     </fields>
     <fields>
         <fullName>Order_by__c</fullName>
+        <description>Field to be ordered by</description>
         <externalId>false</externalId>
         <label>Order by</label>
         <length>50</length>
@@ -99,6 +103,7 @@
     </fields>
     <fields>
         <fullName>fields__c</fullName>
+        <description>API Names of the fields to query</description>
         <externalId>false</externalId>
         <label>fields</label>
         <length>32768</length>
@@ -108,6 +113,7 @@
     </fields>
     <fields>
         <fullName>object_name__c</fullName>
+        <description>API Name of the object that is queried</description>
         <externalId>false</externalId>
         <label>object name</label>
         <length>50</length>
@@ -118,7 +124,7 @@
     </fields>
     <fields>
         <fullName>where_condition__c</fullName>
-        <description>where condition clause</description>
+        <description>Condition filters for querying</description>
         <externalId>false</externalId>
         <label>where condition</label>
         <length>4000</length>
