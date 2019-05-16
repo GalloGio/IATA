@@ -11,6 +11,7 @@ import CSP_Breadcrumb_Home_Title from '@salesforce/label/c.CSP_Breadcrumb_Home_T
 import CSP_Breadcrumb_Support_Title from '@salesforce/label/c.CSP_Breadcrumb_Support_Title';
 import CSP_Breadcrumb_Support_ReachUs from '@salesforce/label/c.CSP_Breadcrumb_Support_ReachUs';
 import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
+import CSP_Breadcrumb_Services_Title from '@salesforce/label/c.CSP_Breadcrumb_Services_Title';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
 
@@ -19,7 +20,8 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Breadcrumb_Home_Title,
         CSP_Breadcrumb_Support_Title,
         CSP_Breadcrumb_Support_ReachUs,
-        CSP_Breadcrumb_FAQ_Title
+        CSP_Breadcrumb_FAQ_Title,
+        CSP_Breadcrumb_Services_Title
     };
 
     //Used to replace last breadcrumb with given label
