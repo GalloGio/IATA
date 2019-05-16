@@ -168,10 +168,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>BSP_non_air__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Purge_Flag__c</field>
             </layoutItems>
         </layoutColumns>

@@ -3423,7 +3423,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <assignedToType>Queue</assignedToType>
             <formula>OR(AND(Account_Concerned__c = &apos;0011r00002DnBrF&apos;,RecordType.DeveloperName=&apos;Inter_DPCs&apos;), 
 AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;InternalCasesEuropeSCE&apos;))</formula>
-            <template>All/IDFS_Caseassignmentqueue</template>
+            <team>iDPC Case Team</team>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Banking_GDC_Madrid</assignedTo>

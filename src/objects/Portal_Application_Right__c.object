@@ -59,6 +59,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fieldSets>
         <fullName>ISSPAccServiceListView</fullName>
         <description>ISSP_AccesstoService</description>
