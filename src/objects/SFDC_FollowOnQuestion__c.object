@@ -69,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Help__c</fullName>
+        <description>Link to Help page for Scripts</description>
         <externalId>false</externalId>
         <formula>(HYPERLINK(&quot;/servlet/servlet.FileDownload?file=015200000002o5K&quot;, &quot;Help for Scripts&quot;)) &amp; &quot; &quot; &amp; (IMAGE(&quot;/img/btn_help.gif&quot;, &quot;Help&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -80,6 +81,7 @@
     </fields>
     <fields>
         <fullName>QuestionOrder__c</fullName>
+        <description>Position of the question in the order</description>
         <externalId>false</externalId>
         <label>QuestionOrder</label>
         <precision>2</precision>
@@ -105,6 +107,7 @@
     <fields>
         <fullName>Script__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Script</description>
         <externalId>false</externalId>
         <label>Script</label>
         <referenceTo>SFDC_Script__c</referenceTo>

@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Contract__c</fullName>
+        <description>E&amp;F Contract</description>
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
@@ -68,6 +69,7 @@
     </fields>
     <fields>
         <fullName>FIR_Code_Name__c</fullName>
+        <description>Name of the FIR Code</description>
         <externalId>false</externalId>
         <formula>FIR_Code__r.FIR_Code_Name__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
