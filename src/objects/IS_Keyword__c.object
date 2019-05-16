@@ -70,6 +70,7 @@
     </fields>
     <fields>
         <fullName>Keyword__c</fullName>
+        <description>Keyword assigned to an incoming case from Email to Case</description>
         <caseSensitive>false</caseSensitive>
         <description>Keyword assigned to an incoming case from Email to Case</description>
         <externalId>false</externalId>

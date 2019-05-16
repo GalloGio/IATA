@@ -20133,6 +20133,18 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
 )</errorConditionFormula>
         <errorMessage>Only an admin can assign a Financial Assessment contact to a branch agency (BR).</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Change_Internal_User_To_Admin</fullName>
+        <active>true</active>
+        <description>Internal Users can&apos;t change Portal Status to Administrator.</description>
+        <errorConditionFormula>AND( 
+ISPICKVAL( $User.UserType , &quot;Standard&quot;), 
+ISPICKVAL( Account.Sector__c, &quot;General Public&quot;), 
+ISPICKVAL( User_Portal_Status__c, &quot;Approved Admin&quot;),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+        <errorMessage>Internal Users can&apos;t change Portal Status to Administrator.</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
         <availability>online</availability>
