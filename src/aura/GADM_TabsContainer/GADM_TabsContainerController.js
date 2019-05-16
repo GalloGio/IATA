@@ -8,9 +8,4 @@
         helper.handleTrackUsage(component, event);
     },
 
-    getUserInformation : function(component, event, helper) {
-        helper.handleGetUserInformation(component, event);
-    },
-
-
 })

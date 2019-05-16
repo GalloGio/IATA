@@ -49,7 +49,7 @@
 
                 <aura:if isTrue="{!v.isDashboardsVisible}">
                     <lightning:tab class="element" label="DASHBOARDS" id="5">
-                        <c:PBI_Container/>
+                        <c:PowerBI_Embedded_Container/>
                     </lightning:tab>
                 </aura:if>
 
