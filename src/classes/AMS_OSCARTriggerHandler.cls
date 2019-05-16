@@ -665,13 +665,13 @@ public class AMS_OSCARTriggerHandler {
 
         /*** AMSU-31 Start ***/
         if(!oscarsToCreateAuth.isEmpty()) {
-            List<Case> cases = [SELECT Id, CaseNumber, OSCAR__c, OSCAR__r.Name, Oscar__r.Account__c, Contact.Email FROM Case WHERE OSCAR__c IN :oscarsToCreateAuth];
+            List<Case> cases = [SELECT Id, CaseNumber, OSCAR__c, OSCAR__r.Name, Oscar__r.Account__c, Contact.Email, OSCAR__r.Country_ISO_Code__c FROM Case WHERE OSCAR__c IN :oscarsToCreateAuth];
             List<Agency_Authorization__c> agenciesAuth = new List<Agency_Authorization__c>(); 
             for(Case cse : cases) {
-                if(cse.CaseNumber != cse.OSCAR__r.Name) {
+                if(cse.CaseNumber != cse.OSCAR__r.Name || AMS_Utils.setChinaCountries.contains(cse.OSCAR__r.Country_ISO_Code__c)) {
                     continue;
                 }
-                Agency_Authorization__c agencyAuth = new Agency_Authorization__c(Account__c= cse.OSCAR__r.Account__c, Email_Used_for_BSP_Creation__c= cse.Contact.Email, Status__c = (AMS_Utils.setChinaCountries.contains(cse.OSCAR__r.Country_ISO_Code__c) ? 'Refer to ASD' : 'Active'));
+                Agency_Authorization__c agencyAuth = new Agency_Authorization__c(Account__c= cse.OSCAR__r.Account__c, Email_Used_for_BSP_Creation__c= cse.Contact.Email, Status__c = 'Active');
                 agenciesAuth.add(agencyAuth);
             }
 

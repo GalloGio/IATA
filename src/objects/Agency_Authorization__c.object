@@ -53,6 +53,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>ANG_FormOfPayment_ID__c</fullName>
         <externalId>false</externalId>
@@ -292,6 +293,10 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
         <label>Form Of Payment</label>
         <picklistValues>
             <picklist>ANG_FormOfPayment_ID__c</picklist>
+            <values>
+                <fullName>BOP</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>CA</fullName>
                 <default>false</default>
