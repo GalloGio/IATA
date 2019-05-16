@@ -1183,9 +1183,10 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private List<Account> getBranchList(Boolean fullHierarchy) {
-        List<String> selectedBranchCodes = new List<String>();
-
-        if(newForm.Agency_Codes_Concerned__c != null && !fullHierarchy) //Exclude already selected branches
+        List<String> selectedBranchCodes;
+        selectedBranchCodes = new List<String>();
+        
+         if(newForm.Agency_Codes_Concerned__c != null && !fullHierarchy) //Exclude already selected branches
             selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
 
         if (isHOcontact) {
@@ -1216,7 +1217,24 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getBranchAccounts() {
-        return getAccountOptions(getBranchList(false));
+        System.DeBUG('vHQAccountId for BR Accounts: ' + vHQAccountId);
+
+        List<SelectOption> options = new List<SelectOption>();
+        List <Account> accountList = new List<Account>();
+       
+        for(HierarchyItem hi:  hierarchyValues){
+                accountList.add(hi.acc);
+        }
+
+        SYSTEM.DEBUG('ALL Branch Size: ' + accountList.size());
+
+        for (Account thisAccount : accountList) { 
+            String theLabel;
+            theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
+
+            options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
+        }
+        return options;
     }
 
     public String getContactAccount() {
@@ -1232,9 +1250,17 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getAgencyCodesConcerned() {
-        List <Account> accountList;
+        List <Account> accountList = new List<Account>();
         List<SelectOption> options = new List<SelectOption>();
 
+        //SYSTEM.DEBUG('SPLIT size: ' + newForm.Agency_Codes_Concerned__c.split(',').size());
+        if(hierarchyValues.size() > 0){
+            for(HierarchyItem hi:  hierarchyValues){
+                if(hi.selected){
+                    accountList.add(hi.acc);
+                }
+            }
+        }
         if(newForm.Agency_Codes_Concerned__c != null)
             accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
         }
@@ -1748,7 +1774,15 @@ public without sharing class ISSP_AMS_Accreditation {
         } else { //This is a NoC
             Boolean changeOfAccountConcerned = false;
 
-            if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only') && agencyCodesConcerned.isEmpty()) {
+            changeOfAccountConcerned = false;
+
+            SYSTEM.DEBUG('Scope of Change: ' + newForm.Scope_of_Change__c);
+
+            if(agencyCodesConcerned.size()==0){
+                agencyCodesConcerned = getAgencyCodesConcerned();
+            }
+            
+            if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
                 return null;
             }
