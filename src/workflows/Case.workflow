@@ -12185,6 +12185,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>GDPR Case Updated</fullName>
+        <actions>
+            <name>Case_Updated</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT( ISNEW() ) &amp;&amp; RecordType__c = &apos;GDPR Request&apos; &amp;&amp; NOT( ISPICKVAL(Status, &quot;New&quot;)) &amp;&amp; ISCHANGED( Status )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>I%26C_Update_Status to Action Needed</fullName>
         <active>true</active>
         <formula>AND( RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,  ISPICKVAL(Status, &quot;Pending customer&quot;), OR( AND(ISPICKVAL(What_is_the_reason_for_non_payment__c, &quot;Will pay&quot;), ISBLANK(POP_Received_Date__c)), AND(ISPICKVAL(What_is_the_reason_for_non_payment__c, &quot;Needs to check invoices&quot;)), AND(ISPICKVAL(Has_the_agent_paid_invoice__c, &quot;Already paid&quot;),ISBLANK(POP_Received_Date__c))  ))</formula>
