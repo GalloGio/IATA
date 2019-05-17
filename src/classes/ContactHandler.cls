@@ -1,11 +1,27 @@
 public class ContactHandler{
 
 	/**
+		CODE BEFORE INSERT
+	**/
+	public static void beforeInsert( list<Contact> listNews) {
+		populateNotificationTemplate(listNews, null);
+		populateCanAllowPortalSelfReg(listNews);
+	}
+
+	/**
 		CODE AFTER INSERT
 	**/
 	public static void afterInsert( list<Contact> listNews) {
 		findParentAcountsToUpdate(listNews);
 		ANG_ActivatePortalUsers.activate(listNews);
+	}
+
+	/**
+		CODE AFTER UPDATE
+	**/
+	public static void beforeUpdate( list<Contact> listNews, Map<Id,Contact> mapOlds) {
+		populateNotificationTemplate(listNews, mapOlds);
+		populateCanAllowPortalSelfReg(listNews);
 	}
 
 	/**
@@ -139,6 +155,36 @@ public class ContactHandler{
 			}
 		}
 		return false;
+	}
+
+	private static void populateNotificationTemplate(List<Contact> listNewContacts, Map<Id,Contact> mapOldContacts) {
+
+		for(Contact con : listNewContacts) {
+			
+			if((con.User_Portal_Status__c != 'Approved Admin' 
+				&& con.User_Portal_Status__c != 'Approved User' 
+				&& con.User_Portal_Status__c != 'Pending Approval')
+				|| (mapOldContacts != null 
+				&& con.User_Portal_Status__c == mapOldContacts.get(con.Id).User_Portal_Status__c 
+				&& con.RecordTypeId == mapOldContacts.get(con.Id).RecordTypeId 
+				&& con.CNS_Contact__c == mapOldContacts.get(con.Id).CNS_Contact__c)
+				|| con.RecordTypeId != RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'))
+				break;
+
+			con.Notification_Template__c = con.CNS_Contact__c ? 'NT-0021' : 'NT-0033';
+
+		}
+
+	}
+
+	private static void populateCanAllowPortalSelfReg(List<Contact> listNewContacts) {
+
+		for(Contact con : listNewContacts) {
+
+			if(con.Financial_Assessment_Contact__c)
+				con.CanAllowPortalSelfReg = true;
+		}
+
 	}
 
 }
