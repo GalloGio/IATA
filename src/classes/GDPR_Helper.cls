@@ -224,14 +224,14 @@ public without sharing class GDPR_Helper {
             '</tr>'+
             '<tr >'+
             
-            '<td style="width:33%; text-align:center;">'+
+            '<td style="width:20%; text-align:center;">'+
                 '<span><a style="font-size:15px; text-decoration: none; color:#ffffff;" href="https://www.iata.org" target="_blank">www.IATA.org</a></span>'+
             '</td>'+
-            '<td style="width:33%; text-align:center;">'+
-                '<span style="font-size:15px;">© International Air Transportation Association (IATA) 2019. <p>All rights reserved.</p></span>'+
+            '<td style="width:60%; text-align:center;">'+
+                '<span style="font-size:15px;">© International Air Transportation Association (IATA) 2019. All rights reserved.</span>'+
             '</td>'+
 
-            '<td style="width:33%; text-align:center;">'+
+            '<td style="width:20%; text-align:center;">'+
                 '<a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>'+            
             '</td>'+
             
