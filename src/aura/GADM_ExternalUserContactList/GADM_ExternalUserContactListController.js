@@ -110,23 +110,6 @@
 	     debugger;
          var rowNum = event.getSource().get("v.name");
          var rowData = component.get('v.AllRecords')[rowNum];
-         /*var pageNum = component.get('v.PageNumber');
-         var rowsPerPage = component.get('v.PageSize');
-         var idx = (rowsPerPage * (pageNum-1)) + rowNum;
-         console.log('idx: '+idx);
-         var modalBody;
-
-         var displayData= [];
-         var i = 0;*/
-
-
-         /*for(let row in component.get("v.TableRows")) {
-
-             for(let col in component.get("v.TableColumns")) {
-                component.get("v.TableRows")[row][col]["label"] = component.get("v.TableColumns")[col].field_label;
-            }
-         }*/
-
 
          let selectedUserInfo = {};
 
@@ -148,15 +131,8 @@
              selectedUserInfo.buData = rowData.BusinessUnitsData;
          }
 
-
-         /*let id = rowData.Id;
-         let contact = {'Id' : rowData.Id, 'Name' : rowData.Name};*/
-         console.log('selectedUserInfo:: ' + JSON.stringify(selectedUserInfo));
          component.set('v.selectedUserInfo', selectedUserInfo);
          component.set("v.detailsShown", !component.get("v.detailsShown"));
-
-         //console.log(JSON.stringify(component.get("v.TableRows")[rowNum]));
-         //component.set("v.detailsData", component.get("v.TableRows")[rowNum]);
 
 		 helper.toggleTable(component);
 		 helper.toggleDetails(component);
@@ -178,8 +154,8 @@
          }else{
              helper.toggleTable(component);
              if(page === 'detail'){
-                 component.set("v.detailsShown", !component.get("v.detailsShown"));
-                 console.log('in detail');
+                component.set("v.detailsShown", !component.get("v.detailsShown"));
+                console.log('in detail');
              	helper.toggleDetails(component);
                  
              } else if (page === 'invitation'){

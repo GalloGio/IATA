@@ -108,7 +108,7 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
         List<Account> selectedUserActors = new List<Account>();
 
 
-        if(! roles.isEmpty()) {
+        if(roles != null && !roles.isEmpty()) {
             for(Id roleId : roles.keySet()) {
                 Contact_Roles__c role = new Contact_Roles__c();
                 role.Id = roleId;
@@ -117,7 +117,7 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
             }
         }
 
-        if(! businessUnits.isEmpty()) {
+        if(businessUnits != null && !businessUnits.isEmpty()) {
             for(Id buId : businessUnits.keySet()) {
                 Contact_Roles__c businessUnit = new Contact_Roles__c();
                 businessUnit.Id = buId;
@@ -126,7 +126,7 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
             }
         }
 
-        if(! actors.isEmpty()) {
+        if(actors != null && !actors.isEmpty()) {
             for(Id actorId : actors.keySet()) {
                 Account actor = new Account();
                 actor.Id = actorId;
@@ -140,6 +140,7 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
         managementData.roles = new Map<Id, GADM_ExternalUserContactListDetail_CTRL.Role>();
         managementData.businessUnits = new Map<Id, GADM_ExternalUserContactListDetail_CTRL.BusinessUnit>();
         managementData.actors = new Map<Id, GADM_ExternalUserContactListDetail_CTRL.Actor>();
+        managementData.currentUserIsSelectedUser = false;
 
         Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
         List<Contact_Role_Service__c> contactRoleServices = [SELECT Id, Contact_Role__c FROM Contact_Role_Service__c WHERE Service__r.Name = 'GADM' AND Contact_Role__r.RecordTypeId = :externalRecordTypeId AND (Contact_Role__r.Category__c = '' OR Contact_Role__r.Category__c = null)];
@@ -150,8 +151,6 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
         }
 
         List<Contact_Roles__c> standardGadmRoles = [SELECT Id, Name FROM Contact_Roles__c WHERE Id = :contactRolesIds];
-        System.debug('standardGadmRoles:: ' + standardGadmRoles);
-		
         for(Contact_Roles__c role : standardGadmRoles) {
             //power user role cannot be taken
             if(role.Name == 'Service Power User') {
@@ -246,9 +245,62 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
             }
         }
 
+        managementData = disableEditIfRunningUserIsSelectedUser(managementData, selectedUserInfo.con);
 
 
         return managementData;
+
+    }
+
+    private static UserManagementData disableEditIfRunningUserIsSelectedUser(UserManagementData managementData, Contact selectedContact) {
+
+        boolean isCurrentUserSelectedUser = false;
+
+        List<User> users = [SELECT Id FROM User WHERE ContactId = :selectedContact.Id LIMIT 1];
+        if(! users.isEmpty()) {
+
+            if(users[0].Id == UserInfo.getUserId()) {
+                isCurrentUserSelectedUser = true;
+            }
+        }
+
+        if(isCurrentUserSelectedUser) {
+
+            Map<Id, GADM_ExternalUserContactListDetail_CTRL.Role> roles = managementData.roles;
+            Map<Id, GADM_ExternalUserContactListDetail_CTRL.BusinessUnit> businessUnits = managementData.businessUnits;
+            Map<Id, GADM_ExternalUserContactListDetail_CTRL.Actor> actors = managementData.actors;
+
+            for(GADM_ExternalUserContactListDetail_CTRL.Role role: roles.values()) {
+                role.isEditable = false;
+            }
+
+            for(GADM_ExternalUserContactListDetail_CTRL.BusinessUnit businessUnit : businessUnits.values()) {
+                businessUnit.isEditable = false;
+            }
+
+            for(GADM_ExternalUserContactListDetail_CTRL.Actor actor : actors.values()) {
+                actor.isEditable = false;
+            }
+
+            managementData.currentUserIsSelectedUser = true;
+
+        }
+
+        return managementData;
+
+
+    }
+
+
+    @AuraEnabled
+    public static Contact_Roles_Helper.AggregatedRecordWrapper reloadData(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits, Contact selectedContact) {
+
+        List<Contact_Roles_Helper.AggregatedRecordWrapper> wrappers = Contact_Roles_Helper.getContactsVisibleToUser(userId, isSuperUser, isGadmUser, businessUnits, selectedContact);
+        System.debug('wrappers:: ' + wrappers);
+
+        Contact_Roles_Helper.AggregatedRecordWrapper selectedUserData = wrappers[0];
+
+        return selectedUserData;
 
     }
 
@@ -345,16 +397,16 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
 
             Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
             List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Contact_Roles__r.Category__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : con.Id AND Contact_Role__r.Contact_Roles__c = :rolesForAccessGrantedIds AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId  AND (Contact_Role__r.Contact_Roles__r.Category__c = null OR Contact_Role__r.Contact_Roles__r.Category__c = '') AND Service__r.Name = 'GADM' AND Status__c != 'Granted'];
-
+            System.debug('serviceAccesses:: ' +serviceAccesses);
             List<Contact_Role_Service_Access__c> accessGrantedToUpdate = new List<Contact_Role_Service_Access__c>();
-            List<Id> rolesToGranted = new List<Id>();
+            List<Id> rolesToUpdate = new List<Id>();
 
 
             if(! serviceAccesses.isEmpty()) {
                 for(Contact_Role_Service_Access__c access : serviceAccesses) {
                     if(rolesForAccessGrantedIds.contains(access.Contact_Role__r.Contact_Roles__c)) {
                         accessGrantedToUpdate.add(access);
-                        rolesToGranted.add(access.Contact_Role__r.Contact_Roles__c);
+                        rolesToUpdate.add(access.Contact_Role__r.Contact_Roles__c);
                     }/*else{
                         createNewRolesIds.add(access.Contact_Role__r.Contact_Roles__c);
                     }*/
@@ -366,9 +418,11 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
                 access.Status__c = 'Granted';
             }
 
+            System.debug('rolesToUpdate:: ' + rolesToUpdate);
             List<Id> createNewRolesIds = new List<Id>();
             for(Id newRoleToGrand : rolesForAccessGrantedIds) {
-                if(! rolesToGranted.contains(newRoleToGrand)){
+                if(! rolesToUpdate.contains(newRoleToGrand)){
+                    System.debug('in cycle for new');
                     createNewRolesIds.add(newRoleToGrand);
                 }
             }
@@ -377,40 +431,83 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
             if(! createNewRolesIds.isEmpty()) {
 
                 List<Portal_Applications__c> gadm = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
-                List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE RecordTypeId = :functionalRecordTypeId AND Contact__c = :con.Id AND Contact_Roles__r.Name = 'GADM User'];
 
-                Map<Id, Account_Contact_Role__c> accountContactRolesToCreate = new Map<Id, Account_Contact_Role__c>();
-                Map<id, Contact_Role_Service_Access__c> accessToCreate = new Map<Id, Contact_Role_Service_Access__c>();
+                //check if there are some Account Contact Roles without Account Contact Roles Service Access
+                List<Account_Contact_Role__c> existingAccountContactRoles = [SELECT Id, Contact_Roles__c FROM Account_Contact_Role__c WHERE RecordTypeId = :functionalRecordTypeId AND Contact__c = :con.Id AND Contact_Roles__c = :createNewRolesIds];
+                System.debug('roles - existingAccountContactRoles:: ' + existingAccountContactRoles);
+
+                Map<Id,Account_Contact_Role__c> accountContactRoleMap = new Map<Id, Account_Contact_Role__c>();
+                for(Account_Contact_Role__c accountContactRole : existingAccountContactRoles) {
+                    accountContactRoleMap.put(accountContactRole.Contact_Roles__c, accountContactRole);
+                }
+
+                Set<Id> accountContactRoleExists = new Set<Id>();
+                Set<Id> accountContactRoleMissing = new Set<Id>();
 
                 for(Id roleId : createNewRolesIds) {
-
-                    Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
-                    accountContactRole.Contact__c = con.Id;
-                    accountContactRole.Contact_Roles__c = roleId;
-                    accountContactRole.Service_Rendered__c = 'GADM';
-                    accountContactRole.RecordTypeId = functionalRecordTypeId;
-                    accountContactRole.Account_Role__c = accountContactRoles[0].Account_Role__c;
-                    accountContactRolesToCreate.put(roleId, accountContactRole);
-
-                    Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
-                    access.Service__c = gadm[0].Id;
-                    access.Status__c = 'Granted';
-                    accessToCreate.put(roleId, access);
+                    if(accountContactRoleMap.get(roleId) == null) {
+                        accountContactRoleMissing.add(roleId);
+                    }else{
+                        accountContactRoleExists.add(roleId);
+                    }
                 }
 
-                System.debug('accountContactRolesToCreate::' + accountContactRolesToCreate);
-                System.debug('accessToCreate::' + accessToCreate);
+                //if yes - use it and create new Account Contact Role Service Access
+                if(! accountContactRoleExists.isEmpty()) {
 
-                insert accountContactRolesToCreate.values();
+                    List<Contact_Role_Service_Access__c> accessToCreate = new List<Contact_Role_Service_Access__c>();
+                    for(Id roleId : accountContactRoleExists) {
+                        Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
+                        access.Service__c = gadm[0].Id;
+                        access.Status__c = 'Granted';
+                        access.Contact_Role__c = accountContactRoleMap.get(roleId).Id;
+                        accessToCreate.add(access);
+                    }
 
-                for(Id roleId : accountContactRolesToCreate.keySet()) {
-                    Account_Contact_Role__c acr = accountContactRolesToCreate.get(roleId);
-                    Contact_Role_Service_Access__c crsa = accessToCreate.get(roleId);
-                    crsa.Contact_Role__c = acr.Id;
+                    System.debug('bu - accessToCreate:: ' + accessToCreate);
+                    insert accessToCreate;
+
+
+                }
+                //if not - create new Account Contact Roles and new Account Contact Role Service Access for them
+                if(! accountContactRoleMissing.isEmpty()){
+                    List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE RecordTypeId = :functionalRecordTypeId AND Contact__c = :con.Id AND Contact_Roles__r.Name = 'GADM User'];
+
+                    Map<Id, Account_Contact_Role__c> accountContactRolesToCreate = new Map<Id, Account_Contact_Role__c>();
+                    Map<Id, Contact_Role_Service_Access__c> accessToCreate = new Map<Id, Contact_Role_Service_Access__c>();
+
+                    for(Id roleId : accountContactRoleMissing) {
+
+                        Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
+                        accountContactRole.Contact__c = con.Id;
+                        accountContactRole.Contact_Roles__c = roleId;
+                        accountContactRole.Service_Rendered__c = 'GADM';
+                        accountContactRole.RecordTypeId = functionalRecordTypeId;
+                        accountContactRole.Account_Role__c = accountContactRoles[0].Account_Role__c;
+                        accountContactRolesToCreate.put(roleId, accountContactRole);
+
+                        Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
+                        access.Service__c = gadm[0].Id;
+                        access.Status__c = 'Granted';
+                        accessToCreate.put(roleId, access);
+                    }
+
+                    System.debug('accountContactRolesToCreate::' + accountContactRolesToCreate);
+                    System.debug('accessToCreate::' + accessToCreate);
+
+                    insert accountContactRolesToCreate.values();
+
+                    for(Id roleId : accountContactRolesToCreate.keySet()) {
+                        Account_Contact_Role__c acr = accountContactRolesToCreate.get(roleId);
+                        Contact_Role_Service_Access__c crsa = accessToCreate.get(roleId);
+                        crsa.Contact_Role__c = acr.Id;
+                    }
+
+
+                    insert accessToCreate.values();
                 }
 
 
-                insert accessToCreate.values();
             }
 
             update accessGrantedToUpdate;
@@ -488,41 +585,85 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
 
                 List<Portal_Applications__c> gadm = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
                 Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
-                List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE RecordTypeId = :functionalRecordTypeId AND Contact__c = :con.Id AND Contact_Roles__r.Name = 'GADM User'];
-                System.debug('accountContactRoles:: ' + accountContactRoles);
 
-                Map<Id, Account_Contact_Role__c> accountContactRolesToCreate = new Map<Id, Account_Contact_Role__c>();
-                Map<id, Contact_Role_Service_Access__c> accessToCreate = new Map<Id, Contact_Role_Service_Access__c>();
+                //check if there are some Account Contact Roles without Account Contact Role Service Access
+                List<Account_Contact_Role__c> existingAccountContactRoles = [SELECT Id, Contact_Roles__c FROM Account_Contact_Role__c WHERE RecordTypeId = :groupRecordTypeId AND Contact__c = :con.Id AND Contact_Roles__c = :createNewBusinessUnitIds];
+                System.debug('bu - existingAccountContactRoles:: ' + existingAccountContactRoles);
+
+                Map<Id,Account_Contact_Role__c> accountContactRoleMap = new Map<Id, Account_Contact_Role__c>();
+                for(Account_Contact_Role__c accountContactRole : existingAccountContactRoles) {
+                    accountContactRoleMap.put(accountContactRole.Contact_Roles__c, accountContactRole);
+                }
+
+                Set<Id> accountContactRoleExists = new Set<Id>();
+                Set<Id> accountContactRoleMissing = new Set<Id>();
 
                 for(Id roleId : createNewBusinessUnitIds) {
-
-                    Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
-                    accountContactRole.Contact__c = con.Id;
-                    accountContactRole.Contact_Roles__c = roleId;
-                    accountContactRole.Service_Rendered__c = 'GADM';
-                    accountContactRole.RecordTypeId = groupRecordTypeId;
-                    accountContactRole.Account_Role__c = accountContactRoles[0].Account_Role__c;
-                    accountContactRolesToCreate.put(roleId, accountContactRole);
-
-                    Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
-                    access.Service__c = gadm[0].Id;
-                    access.Status__c = 'Granted';
-                    accessToCreate.put(roleId, access);
+                    if(accountContactRoleMap.get(roleId) == null) {
+                        accountContactRoleMissing.add(roleId);
+                    }else{
+                        accountContactRoleExists.add(roleId);
+                    }
                 }
 
-                System.debug('accountContactRolesToCreate::' + accountContactRolesToCreate);
-                System.debug('accessToCreate::' + accessToCreate);
+                //if there are some - create Contact Service Role Access for them
+                if(! accountContactRoleExists.isEmpty()) {
 
-                insert accountContactRolesToCreate.values();
+                    List<Contact_Role_Service_Access__c> accessToCreate = new List<Contact_Role_Service_Access__c>();
+                    for(Id roleId : accountContactRoleExists) {
+                        Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
+                        access.Service__c = gadm[0].Id;
+                        access.Status__c = 'Granted';
+                        access.Contact_Role__c = accountContactRoleMap.get(roleId).Id;
+                        accessToCreate.add(access);
+                    }
 
-                for(Id roleId : accountContactRolesToCreate.keySet()) {
-                    Account_Contact_Role__c acr = accountContactRolesToCreate.get(roleId);
-                    Contact_Role_Service_Access__c crsa = accessToCreate.get(roleId);
-                    crsa.Contact_Role__c = acr.Id;
+                    System.debug('bu - accessToCreate:: ' + accessToCreate);
+                    insert accessToCreate;
+
+                }
+
+                //if not - create Account Contact Roles and Contact Role Service Access for them
+                if(! accountContactRoleMissing.isEmpty()){
+
+                    List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE RecordTypeId = :functionalRecordTypeId AND Contact__c = :con.Id AND Contact_Roles__r.Name = 'GADM User'];
+                    System.debug('accountContactRoles:: ' + accountContactRoles);
+
+                    Map<Id, Account_Contact_Role__c> accountContactRolesToCreate = new Map<Id, Account_Contact_Role__c>();
+                    Map<id, Contact_Role_Service_Access__c> accessToCreate = new Map<Id, Contact_Role_Service_Access__c>();
+
+                    for(Id roleId : accountContactRoleMissing) {
+
+                        Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
+                        accountContactRole.Contact__c = con.Id;
+                        accountContactRole.Contact_Roles__c = roleId;
+                        accountContactRole.Service_Rendered__c = 'GADM';
+                        accountContactRole.RecordTypeId = groupRecordTypeId;
+                        accountContactRole.Account_Role__c = accountContactRoles[0].Account_Role__c;
+                        accountContactRolesToCreate.put(roleId, accountContactRole);
+
+                        Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
+                        access.Service__c = gadm[0].Id;
+                        access.Status__c = 'Granted';
+                        accessToCreate.put(roleId, access);
+                    }
+
+                    System.debug('accountContactRolesToCreate::' + accountContactRolesToCreate);
+                    System.debug('accessToCreate::' + accessToCreate);
+
+                    insert accountContactRolesToCreate.values();
+
+                    for(Id roleId : accountContactRolesToCreate.keySet()) {
+                        Account_Contact_Role__c acr = accountContactRolesToCreate.get(roleId);
+                        Contact_Role_Service_Access__c crsa = accessToCreate.get(roleId);
+                        crsa.Contact_Role__c = acr.Id;
+                    }
+
+
+                    insert accessToCreate.values();
                 }
 
 
-                insert accessToCreate.values();
             }
 
             update accessGrantedToUpdate;
@@ -557,9 +698,7 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
             //was not checked and now is - find out i crsa exist (and change to granted) or create new crsa
             if(! originalActors.get(origActorId).isChecked) {
                 if(modifiedActors.get(origActorId).isChecked) {
-                    System.debug('here! - origId::' + origActorId);
                     Account acc = originalActors.get(origActorId).actor;
-                    System.debug('acc::' + acc);
                     accIdtoCreate.add(acc.Id);
                 }
             }
@@ -607,6 +746,8 @@ public without sharing class GADM_ExternalUserContactListDetail_CTRL {
 
 
     public class UserManagementData {
+        @AuraEnabled
+        public boolean currentUserIsSelectedUser {get; set;}
         @AuraEnabled
         public Map<Id, Role> roles {get; set;}
         @AuraEnabled

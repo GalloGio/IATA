@@ -41,8 +41,6 @@
         component.set('v.ColumnMetadata', column_metadata);
         component.set('v.TableColumns', table_columns);
         this.getCurrentUserInfo(component, event);
-        //this.getGrantedRoles(component);
-        //this.retrieveRecords(component, true);
     },
 
 
@@ -65,6 +63,7 @@
                         for(let i in units) {
                             businessUnitsIds.push(units[i].Id);
                         }
+                        component.set('v.businessUnits', businessUnitsIds);
                     }
 
                     let grantedRoles = userInformation.grantedRoles;
@@ -103,7 +102,7 @@
                         }else if(!isPowerUser && ! isSuperUser && isGadmUser) {//isGadmUser
 
                             component.set('v.isGadmUser', isGadmUser);
-                            this.retrieveRecords(component, true, false, true, businessUnitsIds);
+                            this.retrieveRecords(component, true, false, true, businessUnitsIds/*, false, null*/);
 
                         }else{
                             //TODO:show empty table

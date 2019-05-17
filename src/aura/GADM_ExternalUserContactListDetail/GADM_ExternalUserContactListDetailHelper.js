@@ -47,6 +47,9 @@
                         }
                     }
 
+                    let isCurrentUseIsSelectedUser = result.currentUserIsSelectedUser;
+
+                    component.set('v.currentUserIsSelectedUser', isCurrentUseIsSelectedUser);
                     component.set('v.dataActors', actorsData);
                     component.set('v.dataBusinessUnits', businessUnitsData);
                     component.set('v.dataRoles', rolesData);
@@ -127,7 +130,9 @@
                     if(result) {
 
                         component.set('v.dataModified', true);
-                        this.toggleSpinner(component);
+
+                        //reload on same page
+                        //this.reloadAfterSave(component, event);
                         
                         //redirect bach to list of all users
                         let myEvent = component.getEvent("Back_EVT");
@@ -143,18 +148,62 @@
                         console.log('handleSave - unable to save changes');
                         this.handleErrorMessage(component, 'Unable to save data!');
                         this.toggleSpinner(component);
+                        component.set('v.showTable', true);
                     }
 
                 }else{
                     console.log('handleSave - unable to save changes');
                     this.handleErrorMessage(component, 'Unable to save data!');
                     this.toggleSpinner(component);
+                    component.set('v.showTable', true);
                 }
             }else{
                 console.log('handleSave - unable to save changes');
                 this.handleErrorMessage(component, 'Unable to save data!');
                 this.toggleSpinner(component);
+                component.set('v.showTable', true);
 
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
+
+    reloadAfterSave : function(component, event) {
+        let action = component.get('c.reloadData');
+        let selectedUserInfo = component.get('v.selectedUserInfo');
+        let selectedContact = selectedUserInfo.con;
+        let isSuperUser = component.get('v.isSuperUser');
+        let isGadmUser = component.get('v.isGadmUser');
+        let businessUnits = component.get('v.businessUnits');
+        action.setParams({
+            'userId' : $A.get('$SObjectType.CurrentUser.Id'),
+            'isSuperUser' : isSuperUser,
+            'isGadmUser' : isGadmUser,
+            'businessUnits' : businessUnits,
+            'selectedContact' : selectedContact
+        });
+        action.setCallback(this, function(response){
+            const state = response.getState();
+            if(state === 'SUCCESS') {
+
+                const result = response.getReturnValue();
+                if(! $A.util.isEmpty(result)) {
+
+                    component.set('v.selectedUserInfo', result);
+                    this.prepareManagementData(component, event);
+
+                }else{
+                    console.log('reloadAfterSave error - empty result');
+                    this.handleErrorMessage(component, 'Unable to save data!');
+                    this.toggleSpinner(component);
+                    component.set('v.showTable', true);
+                }
+            }else{
+                console.log('reloadAfterSave error');
+                this.handleErrorMessage(component, 'Unable to save data!');
+                this.toggleSpinner(component);
+                component.set('v.showTable', true);
             }
         });
         $A.enqueueAction(action);

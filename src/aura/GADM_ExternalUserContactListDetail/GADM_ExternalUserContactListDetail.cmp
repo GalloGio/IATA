@@ -6,6 +6,8 @@
     <aura:attribute name="isPowerUser" type="Boolean"/>
     <aura:attribute name="isSuperUser" type="Boolean"/>
     <aura:attribute name="isGadmUser" type="Boolean"/>
+    <aura:attribute name="businessUnits" type="List"/>
+    <aura:attribute name="currentUserIsSelectedUser" type="Boolean" default="false"/>
 
     <!--TABLE DATA-->
     <aura:attribute name="copyData" type="String" default=""/>
@@ -72,7 +74,7 @@
                     <p>Roles:</p>
                     <aura:iteration items="{!v.dataRoles}" var="dataRole">
                         <div class="slds-size--1-of-1 slds-grid roleLine">
-                            <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! or(!dataRole.value.isEditable,v.isGadmUser)}"/></div>
+                            <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! !dataRole.value.isEditable}"/></div>
                             <div class="label slds-col--padded slds-size--7-of-8">{!dataRole.value.role.Name}</div>
                         </div>
                     </aura:iteration>
@@ -87,7 +89,7 @@
                     <p>Business Units:</p>
                     <aura:iteration items="{!v.dataBusinessUnits}" var="dataBusinessUnit">
                         <div class="slds-size--1-of-1 slds-grid roleLine">
-                            <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataBusinessUnit.value.isChecked}" disabled="{! !dataBusinessUnit.value.isEditable || v.isGadmUser}" /></div>
+                            <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataBusinessUnit.value.isChecked}" disabled="{! !dataBusinessUnit.value.isEditable}" /></div>
                             <div class="label slds-col--padded slds-size--7-of-8">{!dataBusinessUnit.value.businessUnit.Name}</div>
                         </div>
                     </aura:iteration>
@@ -102,7 +104,7 @@
                     <p>Actors:</p>
                     <aura:iteration items="{!v.dataActors}" var="dataActor">
                         <div class="slds-size--1-of-1 slds-grid roleLine">
-                            <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataActor.value.isChecked}" disabled="{! !dataActor.value.isEditable || v.isGadmUser}" /></div>
+                            <div class="slds-col--padded slds-size--1-of-8"><lightning:input type="checkbox" checked="{!dataActor.value.isChecked}" disabled="{! !dataActor.value.isEditable}" /></div>
                             <div class="label slds-col--padded slds-size--7-of-8">{!dataActor.value.actor.Name}</div>
                         </div>
                     </aura:iteration>
@@ -115,7 +117,7 @@
             <div  class="slds-grid slds-wrap">
 
                 <!--SAVE BUTTON SHOW ONLY TO SUPER USER OR POWER USER-->
-                <aura:if isTrue="{! v.isPowerUser || v.isSuperUser}">
+                <aura:if isTrue="{! !v.currentUserIsSelectedUser}">
 
                     <div class="slds-size--1-of-2 slds-p-right_small">
                         <button class="btn btn-primary btn-grey slds-float--right" onclick="{! c.save }">Save</button>
@@ -124,7 +126,7 @@
                 </aura:if>
 
 
-                <div class="{! (v.isPowerUser || v.isSuperUser) ? 'slds-size--1-of-2 slds-p-left_small':'slds-size--1-of-1 center'}">
+                <div class="{! !v.currentUserIsSelectedUser ? 'slds-size--1-of-2 slds-p-left_small':'slds-size--1-of-1 center'}">
                     <button class="btn btn-primary btn-grey " onclick="{! c.back }">Back</button>
                 </div>
 

@@ -27,6 +27,7 @@
     <aura:attribute name="isPowerUser" type="Boolean" default="false"/>
     <aura:attribute name="isSuperUser" type="Boolean" default="false"/>
     <aura:attribute name="isGadmUser" type="Boolean" default="false"/>
+    <aura:attribute name="businessUnits" type="List" default="[]"/>
 
     <!--Private attributes-->
     <aura:attribute name="AllRecords" type="Object[]" access="private" />
@@ -320,7 +321,7 @@
         <!--RECORD DETAIL-->
         <aura:if isTrue="{! v.detailsShown}">
             <div aura:id="detailContainer" class="slds-hide">
-                <c:GADM_ExternalUserContactListDetail Back_EVT="{!c.handleDetailsBackEvt}" selectedUserInfo="{!v.selectedUserInfo}" currentUserInfo ="{! v.currentUserInfo}" isPowerUser="{! v.isPowerUser}" isSuperUser="{! v.isSuperUser}" isGadmUser="{! v.isGadmUser}"/>
+                <c:GADM_ExternalUserContactListDetail Back_EVT="{!c.handleDetailsBackEvt}" selectedUserInfo="{!v.selectedUserInfo}" currentUserInfo ="{! v.currentUserInfo}" isPowerUser="{! v.isPowerUser}" isSuperUser="{! v.isSuperUser}" isGadmUser="{! v.isGadmUser}" businessUnits="{!v.businessUnits}"/>
             </div>
         </aura:if>
 		<!--RECORD DETAIL-->
