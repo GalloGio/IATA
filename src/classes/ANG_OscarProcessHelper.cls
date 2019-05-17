@@ -1071,13 +1071,14 @@ global class ANG_OscarProcessHelper {
 
 			changeCode.name = changeCodeConfig.Name;
 			changeCode.reasonCode = changeCodeConfig.Reason_Code__c;
+			changeCode.publishedOnEBulletin = changeCodeConfig.Published_in_bulletin__c;
 			String memoTextTemp = changeCodeConfig.Bulletin_Memo_Text__c;
 			
 			System.debug('theOscar.SIDRA_lite_reason__c is ' + theOscar.SIDRA_lite_reason__c);
 
-			if(theOscar.SIDRA_lite_reason__c == null)
+			if(theOscar.SIDRA_lite_reason__c == null && memoTextTemp != null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','');
-			else
+			else if(memoTextTemp != null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','due to '+theOscar.SIDRA_lite_reason__c+'.');
 
 			changeCode.memoText = memoTextTemp;
@@ -2183,7 +2184,7 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
 			fieldsOfObject.put('Dossier_Reception_Date__c',Date.today());
 
-			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar((model == 'A'? AMS_Utils.RECTYPE_IEPMODELA : (model == 'B'? AMS_Utils.AMS_Utils.RECTYPE_IEPMODELB : (model == 'B+'? AMS_Utils.AMS_Utils.RECTYPE_IEPMODELBPLUS : AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP))), acc.Id, fieldsOfObject);		
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar((model == 'A'? AMS_Utils.RECTYPE_IEPMODELA : (model == 'B'? AMS_Utils.RECTYPE_IEPMODELB : (model == 'B+'? AMS_Utils.RECTYPE_IEPMODELBPLUS : AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP))), acc.Id, fieldsOfObject);		
 	        oscarsToInsert.add(oscar);
 	        accOscarObjsMap.get(acc.Id).oscar = oscar;
 		}
@@ -2219,7 +2220,7 @@ global class ANG_OscarProcessHelper {
 		//sending email with url for portal    
         for (Account acc: accs){
         
-            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : (model == 'B+' ? AMS_Utils.IEPMODELBPLUSACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP))), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
+            if(model != 'B+') AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
 
         }
         return oscarsToInsert;

@@ -184,6 +184,7 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>DSE__DS_OpportunityListFields</fullName>
         <availableFields>
@@ -3308,6 +3309,16 @@
         <fullName>NextStep</fullName>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
+    </fields>
+    <fields>
+        <fullName>Offer_exchange_rate_date__c</fullName>
+        <description>Offer exchange rate date coming from INT077 (external service)</description>
+        <externalId>false</externalId>
+        <label>Offer exchange rate date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Opportunity_Open_Duration__c</fullName>

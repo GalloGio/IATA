@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AIMS_updated__c</fullName>
         <externalId>false</externalId>
@@ -1546,8 +1547,8 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <description>Technical field. Used to match custom settings on Change Code generation.</description>
         <externalId>false</externalId>
         <formula>IF(Account__r.CNS_Agency__c,
-				&apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
-				&apos;AMS&apos;
+                &apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
+                &apos;AMS&apos;
 )</formula>
         <label>Business Process</label>
         <required>false</required>
@@ -2879,6 +2880,16 @@ Format: YYYY</inlineHelpText>
                     <default>false</default>
                     <label>N/A</label>
                 </value>
+                <value>
+                    <fullName>Partially paid</fullName>
+                    <default>false</default>
+                    <label>Partially paid</label>
+                </value>
+                <value>
+                    <fullName>Over paid</fullName>
+                    <default>false</default>
+                    <label>Over paid</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -3341,6 +3352,37 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>PPA</fullName>
+                    <default>false</default>
+                    <label>PPA</label>
+                </value>
+                <value>
+                    <fullName>SPDR</fullName>
+                    <default>false</default>
+                    <label>SPDR</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payment_requested__c</fullName>
@@ -8401,6 +8443,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>NewGen_PCI_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI</label>
+        <queue>NewGen_PCI</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>NewGen_PCI_Africa_Middle_East_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>NewGen PCI - Africa &amp; Middle East</label>
@@ -9473,7 +9524,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9496,6 +9555,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12832,7 +12906,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12859,6 +12941,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16146,7 +16243,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22872,7 +22977,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26219,7 +26332,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -31892,25 +32013,6 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>STEP45__c</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -33247,7 +33349,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33278,6 +33388,21 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPDR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36742,7 +36867,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40046,7 +40179,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43397,7 +43538,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64967,28 +65116,28 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>AMS_PCI_Expiry_Date_Required</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-	OR(
-		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
-		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
-	),
-	OR(
-		AND(
-			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
-			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
-			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
-			ISBLANK(ANG_PCI_compliance_expiry_date__c)
-		),
-		AND(
-			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
-			RecordType.DeveloperName = &apos;NEW&apos;,
+    OR(
+        TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
+        TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
+    ),
+    OR(
+        AND(
+            OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
+            TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
+            RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
+            ISBLANK(ANG_PCI_compliance_expiry_date__c)
+        ),
+        AND(
+            OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
+            RecordType.DeveloperName = &apos;NEW&apos;,
             ISPICKVAL(STEP6__c, &apos;Passed&apos;),
-			ISBLANK(ANG_PCI_compliance_expiry_date__c),
-			OR(
-				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
-				TEXT(Process__c) == &apos;NEW.BR&apos;
-			)
-		)	
-	)
+            ISBLANK(ANG_PCI_compliance_expiry_date__c),
+            OR(
+                TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
+                TEXT(Process__c) == &apos;NEW.BR&apos;
+            )
+        )   
+    )
 )</errorConditionFormula>
         <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
     </validationRules>

@@ -24,5 +24,9 @@
         <members>*</members>
         <name>FlexiPage</name>
     </types>
+	<types>
+        <members>*</members>
+        <name>LightningComponentBundle</name>
+    </types>
     <version>45.0</version>
 </Package>

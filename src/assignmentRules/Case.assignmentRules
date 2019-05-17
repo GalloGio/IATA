@@ -1887,6 +1887,30 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>NewGen_PCI</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>equals</operation>
+                <value>OSCAR Communication</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>FoP Management</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Massive FOP Creation,FoP automatic renewal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Region__c</field>
+                <operation>equals</operation>
+                <value>Europe,Africa,Americas</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Annual_Revalidation</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -2021,20 +2045,6 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Model_A_Onboarding_Africa_Mid_East</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Onboarding IEP Model A</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Africa &amp; Middle East</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Model_A_Onboarding_China_North_Asia</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -2049,20 +2059,6 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Model_A_Onboarding_Americas</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Onboarding IEP Model A</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Americas</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Model_A_Onboarding_Asia_Pacific</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -2074,20 +2070,6 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>Asia &amp; Pacific</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Model_A_Onboarding_Europe</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Onboarding IEP Model A</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Europe</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -2598,7 +2580,11 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>CustomerServiceEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND( AccountId = &apos;00120000003mA4e&apos;, ContactId = &apos;003w000001B9pKt&apos;,  ISPICKVAL(Origin, &apos;E-mail to Case - Service Centre Europe&apos;),   ISPICKVAL(Region__c, &apos;Europe&apos;))</formula>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - Service Centre Europe</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_MITA_YMQ</assignedTo>
@@ -3437,7 +3423,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <assignedToType>Queue</assignedToType>
             <formula>OR(AND(Account_Concerned__c = &apos;0011r00002DnBrF&apos;,RecordType.DeveloperName=&apos;Inter_DPCs&apos;), 
 AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;InternalCasesEuropeSCE&apos;))</formula>
-            <template>All/IDFS_Caseassignmentqueue</template>
+            <team>iDPC Case Team</team>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Banking_GDC_Madrid</assignedTo>
@@ -6166,6 +6152,20 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Africa_Mid_East</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Africa &amp; Middle East</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>CustomerServiceAmericas</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 AND 2 AND 3) OR (6 AND 4)) AND 5</booleanFilter>
@@ -6192,7 +6192,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>notEqual</operation>
-                <value>Bermuda,Canada,Argentina,Mexico,Paraguay,Panama,Uruguay</value>
+                <value>Bermuda,Canada,Argentina,Mexico,Paraguay,Panama,Uruguay,Guatemala</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>
@@ -6200,6 +6200,20 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <value>Dashboard: Key Controls Customer Service - Americas</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Americas</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Americas</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Airlines_A_P</assignedTo>
@@ -6264,6 +6278,20 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.SuppliedEmail</field>
                 <operation>contains</operation>
                 <value>aviareps.com,csair.nl,flybe.com,mea.aero,vietnamair.com.vn,transaero.ru,airmauritius.com,airchina.es,egyptair.nl,china-airlines.com,in.daksh.com,airindia.in,kenya-airways.com,tarom.ro,bintercanarias.es,transat.com,airlinebusiness.co.uk,thaiairways.co.in</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Europe</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Europe</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6785,7 +6813,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>CasesEgypt</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 OR 2) AND (3 AND 4)</booleanFilter>
+            <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>

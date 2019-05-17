@@ -53,6 +53,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Order__c</fullName>
         <externalId>false</externalId>
@@ -66,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Service_Publication__c</fullName>
+        <description>Represents either the current order is a service or a publication</description>
         <externalId>false</externalId>
         <label>Service/Publication</label>
         <required>false</required>

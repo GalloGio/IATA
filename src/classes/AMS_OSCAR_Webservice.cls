@@ -189,7 +189,7 @@ global class AMS_OSCAR_Webservice {
             Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, CaseArea__c = 'Corporate Compliance',
                                     Reason1__c = fetchAMLCaseReason(oscar.Process__c),
                                     ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, 
-                                    Subject = (oscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP || oscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP|| oscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP ? 'Due Diligence – ' + oscarCommCase.OSCAR__r.Account__r.Name : 'Due Diligence – ' + oscarCommCase.OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c),
+                                    Subject = (oscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP || oscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP|| oscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP || oscar.Process__c == AMS_Utils.IEPMODELBPLUSACCOUNTSETUP ? 'Due Diligence – ' + oscarCommCase.OSCAR__r.Account__r.Name : 'Due Diligence – ' + oscarCommCase.OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c),
                                     Region__c = oscar.Region__c, BSPCountry__c = oscarCommCase.OSCAR__r.Account__r.IATA_ISO_Country__r.Name);
 
             Database.DMLOptions dmo = new Database.DMLOptions();
@@ -518,7 +518,7 @@ global class AMS_OSCAR_Webservice {
 
             if(oscar!=null && oscar.size()>0){
 
-                if((oscar[0].Process__c == AMS_Utils.NEWHESTANDARD || oscar[0].Process__c == AMS_Utils.NEWGESTANDARD || (oscar[0].Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar[0].ANG_Type_Of_Change__c))) && oscar[0].RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
+                if((oscar[0].Process__c == AMS_Utils.NEWHESTANDARD || (oscar[0].Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar[0].ANG_Type_Of_Change__c))) && oscar[0].RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
                     return 'Error - In order to generate a risk event you need to have the Manager Approval.';
 
                 oscar[0].Risk_event_creation_date__c = System.today();
@@ -568,8 +568,22 @@ global class AMS_OSCAR_Webservice {
                 
                 List<ANG_Agency_Risk_Event__c> rskEventLst = [SELECT Id from ANG_Agency_Risk_Event__c where ANG_OscarId__c = :oscarId];
                 
-                if(rskEventLst.isEmpty())
+                if(rskEventLst.isEmpty()){
+
+                    if(isNGNewAccreditation){
+
+                        ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :oscar[0].Account__c LIMIT 1];
+
+                        if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c){
+                            AMS_OscarTriggerHandler.applyRHCForecast = true;                
+                            update rhcInfo;
+                            AMS_OscarTriggerHandler.applyRHCForecast = false;
+                        }
+                    }
+                    
                     return 'No risk event is needed for this OSCAR.';
+
+                } 
                 else
                     return rskEventLst.size() + ' Risk(s) Event(s) generated successfully';
 
@@ -616,10 +630,8 @@ global class AMS_OSCAR_Webservice {
     private static String fetchAMLCaseReason(String process){
         if (process == AMS_Utils.AGENCYCHANGES)
             return 'Agent Change of Ownership';
-        else if (process == AMS_Utils.IEPBANKACCOUNTSETUP || process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP)
+        else if (process == AMS_Utils.IEPBANKACCOUNTSETUP || process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP || process == AMS_Utils.IEPMODELBPLUSACCOUNTSETUP)
             return 'IEP Due Diligence';
-        else if (process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP)
-            return 'IATA Easy Pay';
         else
             return 'New Accredited Agent';
     }
