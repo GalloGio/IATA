@@ -565,7 +565,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				break;
 			}
 		}
-	}
 
 		if (currentAccount.isoCountry.State_Province_Picklist__c && !String.isEmpty(billingStateForm)) {
 			IATA_ISO_State__c state = [SELECT Id, Name
