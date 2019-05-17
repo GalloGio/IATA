@@ -56,7 +56,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public String countryInfoByCountryNameMapString {
         get {
             if (countryInfoByCountryNameMapString == null) {
-                countryInfoByCountryNameMapString = '\'\'';//characters to avoid crashing stringfy method on vf page
+                List<SelectOption> countryListPopulated = countryList;
             }
 
             return countryInfoByCountryNameMapString;
@@ -71,7 +71,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
                 for (IATA_ISO_State__c state: [SELECT Id, Name
                                             FROM IATA_ISO_State__c
-                                            WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c]) {
+                                            WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c
+                                            ORDER BY Name]) {
                     billingStateList.add(new SelectOption(state.Name, state.Name));
                 }
             }
@@ -87,7 +88,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
                 for (IATA_ISO_State__c state: [SELECT Id, Name, IATA_ISO_Country__r.Informatica_Value__c
                                             FROM IATA_ISO_State__c
-                                            WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true]) {
+                                            WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true
+                                            ORDER BY Name]) {
                     if (!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase())) {
                         stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Informatica_Value__c.toUpperCase(), new List<IATA_ISO_State__c>());
                     }
@@ -136,9 +138,12 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
     public void currentShippingCountryStates() {
         shippingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
-        for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
-            shippingStateList.add(new SelectOption(state.Name, state.Name));
-        }
+
+        if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
+        	for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
+            	shippingStateList.add(new SelectOption(state.Name, state.Name));
+        	}
+    	}
     }
     
     public void validateVATNumber2() {
@@ -179,32 +184,34 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
         get{
             if(displayShipping == null) {
                 displayShipping = false;
-                if(ca.Account.BillingStreet == ca.Account.ShippingStreet &&
-                   ca.Account.BillingCity == ca.Account.ShippingCity &&
-                   ca.Account.BillingPostalCode == ca.Account.ShippingPostalCode &&
-                   ca.Account.BillingState == ca.Account.ShippingState &&
-                   ca.Account.BillingCountry == ca.Account.ShippingCountry) {
-                       displayShipping = true;
-                       ca.fw.newform.shipping_street__c = '';
-                       ca.fw.newform.shipping_city__c = '';
-                       ca.fw.newform.shipping_postal_code__c = '';
-                       ca.fw.newform.shipping_state__c = '';
-                       ca.fw.newform.shipping_country__c = '';
-                   } else if(ca.Account.ShippingStreet == null &&
-                             ca.Account.ShippingCity == null &&
-                             ca.Account.ShippingPostalCode == null &&
-                             ca.Account.ShippingState == null &&
-                             ca.Account.ShippingCountry == null) {
-                                 displayShipping = true;
-                                 ca.fw.newform.shipping_street__c = '';
-                                 ca.fw.newform.shipping_city__c = '';
-                                 ca.fw.newform.shipping_postal_code__c = '';
-                                 ca.fw.newform.shipping_state__c = '';
-                                 ca.fw.newform.shipping_country__c = '';
-                             }
+                if(ca.fw.newform.Saved_At_Least_Once__c == true) {
+                    displayShipping = ca.fw.newform.Shipping_Same_As_Billing__c;
+                }else if(ca.Account.BillingStreet == ca.Account.ShippingStreet &&
+                         ca.Account.BillingCity == ca.Account.ShippingCity &&
+                         ca.Account.BillingPostalCode == ca.Account.ShippingPostalCode &&
+                         ca.Account.BillingState == ca.Account.ShippingState &&
+                         ca.Account.BillingCountry == ca.Account.ShippingCountry) {
+                             displayShipping = true;
+                             ca.fw.newform.shipping_street__c = '';
+                             ca.fw.newform.shipping_city__c = '';
+                             ca.fw.newform.shipping_postal_code__c = '';
+                             ca.fw.newform.shipping_state__c = '';
+                             ca.fw.newform.shipping_country__c = '';
+                         } else if(ca.Account.ShippingStreet == null &&
+                                   ca.Account.ShippingCity == null &&
+                                   ca.Account.ShippingPostalCode == null &&
+                                   ca.Account.ShippingState == null &&
+                                   ca.Account.ShippingCountry == null) {
+                                       displayShipping = true;
+                                       ca.fw.newform.shipping_street__c = '';
+                                       ca.fw.newform.shipping_city__c = '';
+                                       ca.fw.newform.shipping_postal_code__c = '';
+                                       ca.fw.newform.shipping_state__c = '';
+                                       ca.fw.newform.shipping_country__c = '';
+                                   }
                 
             }
-            ca.shippingSameAsBilling = displayShipping;
+            ca.fw.newform.Shipping_Same_As_Billing__c = displayShipping;
             return displayShipping;
         }
         set{
@@ -217,6 +224,15 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
                 ca.fw.newform.shipping_country__c = '';
             }
         }
+    }
+
+    public void resetCheckbox() {
+        displayShipping = null;
+        ca.fw.newform.shipping_street__c = ca.Account.ShippingStreet;
+        ca.fw.newform.shipping_city__c = ca.Account.ShippingCity;
+        ca.fw.newform.shipping_postal_code__c = ca.Account.ShippingPostalCode;
+        ca.fw.newform.shipping_state__c = ca.Account.ShippingState;
+        ca.fw.newform.shipping_country__c = ca.Account.ShippingCountry;
     }
 
 }

@@ -18,7 +18,6 @@ public with sharing class ANG_AnnualRevCurrentAccount {
 	public Boolean errorFoundCheckBoxes {get; set;}
 	public Boolean errorFound {get; set;}
 	public Boolean isReadonly {get; set;}
-    public Boolean shippingSameAsBilling {get; set;}
 	public AMS_Accreditation_Contact__c newContact {get; set;}
 
 	public String statusDesc {
