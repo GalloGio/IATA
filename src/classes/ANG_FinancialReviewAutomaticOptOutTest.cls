@@ -60,13 +60,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			IATA_ISO_Country__c = countryCN.Id
 		);
 
-		AMS_Country_Specific_Attribute__c csaLocP = new AMS_Country_Specific_Attribute__c(
-			RecordTypeId = recTypeCSA,
-			Location_Class__c = 'P',
-			IATA_ISO_Country__c = countryCN.Id
-		);
-
-		insert new List<AMS_Country_Specific_Attribute__c>{csaLocD, csaLocP};
+		insert new List<AMS_Country_Specific_Attribute__c>{csaLocD};
 
 		Id standardAcctRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
@@ -78,7 +72,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			//Status__c = AMS_Utils.ACC_S9_APPROVED,
 			RecordTypeId = standardAcctRecTypeId,
 			IATA_ISO_Country__c = countryCN.Id,
-			Location_Class__c = 'P',
+			Location_Class__c = 'D',
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'China'
 		);
@@ -91,7 +85,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Location_Type__c = AMS_Utils.AE,
 			RecordTypeId = standardAcctRecTypeId,
 			IATA_ISO_Country__c = countryCN.Id,
-			Location_Class__c = 'P',
+			Location_Class__c = 'D',
 			ParentId = agentCN.Id
 		);
 
@@ -101,7 +95,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Location_Type__c = AMS_Utils.AE,
 			RecordTypeId = standardAcctRecTypeId,
 			IATA_ISO_Country__c = countryCN.Id,
-			Location_Class__c = 'P',
+			Location_Class__c = 'D',
 			ParentId = agentCN.Id
 		);
 
@@ -249,7 +243,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Branch_Office_Country__c = agentCN.IATA_ISO_Country__c,
 			SAAM_Case__c = oscarCase.Id,
 			Remittance_frequency__c = 'M',
-			Location_Class__c = 'P',
+			Location_Class__c = 'D',
 			Location_Type__c = AMS_Utils.HE
 		);
 
