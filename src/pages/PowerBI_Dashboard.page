@@ -17,21 +17,31 @@
 
         <script>
 
-        var element = document.getElementById('dashboard');
+        let element = document.getElementById('dashboard');
 
+        let models = window['powerbi-client'].models;
+        let obj = "{!objectId}";
+        let token = "{!accessToken}";
+        let type = "{!tokenType}";
 
-        var models = window['powerbi-client'].models;
-        var obj = "{!objectId}";
-        var token = "{!accessToken}";
+        let typeOfToken = 0;
+        if(type === 'Aad') {
+            typeOfToken = models.TokenType.Aad;
+        }
+        if(type === 'Embed') {
+            typeOfToken = models.TokenType.Embed;
+        }
+
         console.log('models:: ' + models);
         console.log('objectId:: ' + obj);
         console.log('accessToken:: ' + token);
 		console.log('embedUrl'+ "{!embedUrl}");
+		console.log('tokenType'+ "{!tokenType}");
         var embedConfiguration = {
             id: "{!objectId}",
             type: "report",
             embedUrl: "{!embedUrl}",
-            tokenType: models.TokenType.Embed,
+            tokenType: typeOfToken,
             accessToken: "{!accessToken}",
             settings : {
                 filterPaneEnabled: false,
