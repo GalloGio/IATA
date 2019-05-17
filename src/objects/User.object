@@ -2523,9 +2523,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>IS_PORTAL_SELF_REGISTERED</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CORE.PROFILE.USERTYPE</field>
-            <operation>equals</operation>
-            <value>C,c</value>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>startsWith</operation>
+            <value>ISS</value>
         </filters>
         <label>Customer Portal Users</label>
         <language>en_US</language>
