@@ -509,7 +509,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		try {
 			keepConfirmedData();
-			clearShipping();
 			currentAccount.fw.newform.Saved_At_Least_Once__c = true;
 			addVATPrefix();
 			upsert currentAccount.fw.newform;
@@ -525,7 +524,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
-			clearShipping();
 			validateForm();
 
 			if(!errorFound) {
@@ -1937,18 +1935,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             contactStateList.add(new SelectOption(state.Name, state.Name));
         }
         return null;
-    }
-
-    private void clearShipping() {
-        if(currentAccount.fw.newform.Shipping_Same_As_Billing__c == True) {
-            currentAccount.fw.newform.shipping_street__c = '';
-            currentAccount.fw.newform.shipping_city__c = '';
-            currentAccount.fw.newform.shipping_postal_code__c = '';
-            currentAccount.fw.newform.shipping_state__c = '';
-            currentAccount.fw.newform.shipping_country__c = '';
-            currentAccount.fw.newform.Shipping_ISO_Country__c = null;
-            currentAccount.fw.newform.Shipping_ISO_State__c = null;
-        }
     }
 
     private void addVATPrefix() {
