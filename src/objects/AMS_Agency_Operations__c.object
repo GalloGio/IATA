@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to store the connection between an Operation and an Agency.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,9 +53,11 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
@@ -68,6 +71,7 @@
     <fields>
         <fullName>Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related AMS Agency</description>
         <externalId>false</externalId>
         <label>Agency (AMS)</label>
         <referenceTo>AMS_Agency__c</referenceTo>
@@ -81,6 +85,7 @@
     <fields>
         <fullName>Operation__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>Related AMS Operation Code</description>
         <externalId>false</externalId>
         <label>Operation</label>
         <referenceTo>AMS_Operation__c</referenceTo>

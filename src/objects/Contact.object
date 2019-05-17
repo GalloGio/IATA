@@ -96,6 +96,7 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_Oscar_Savepoint_Owner_fields</fullName>
         <description>Used to know which fields needed for rollback</description>
@@ -19975,6 +19976,18 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
 )</errorConditionFormula>
         <errorDisplayField>User_Portal_Status__c</errorDisplayField>
         <errorMessage>You should deactivate a user before changing his license</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Change_Internal_User_To_Admin</fullName>
+        <active>true</active>
+        <description>Internal Users can&apos;t change Portal Status to Administrator.</description>
+        <errorConditionFormula>AND( 
+ISPICKVAL( $User.UserType , &quot;Standard&quot;), 
+ISPICKVAL( Account.Sector__c, &quot;General Public&quot;), 
+ISPICKVAL( User_Portal_Status__c, &quot;Approved Admin&quot;),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+        <errorMessage>Internal Users can&apos;t change Portal Status to Administrator.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Change_id_card_holder_cont_name</fullName>
