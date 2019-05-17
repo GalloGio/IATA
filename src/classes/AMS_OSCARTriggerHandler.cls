@@ -3355,16 +3355,9 @@ public class AMS_OSCARTriggerHandler {
         if(oldOSCAR.STEP34__c <> updatedOscar.STEP34__c && updatedOscar.STEP34__c == 'Passed' && (updatedOscar.Process__c == AMS_Utils.NEWAE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)){
 
             if(updatedOscar.Requested_Bank_Guarantee_amount__c != null){
-                Decimal convertedValue = updatedOscar.Requested_Bank_Guarantee_amount__c;
-                String caseFSCurrency = updatedOscar.CurrencyIsoCode != null ? updatedOscar.CurrencyIsoCode : updatedOscar.Requested_Bank_Guarantee_currency__c;
-                //check currency 
-                if(updatedOscar.Requested_Bank_Guarantee_currency__c != caseFSCurrency){
-                    convertedValue = ANG_Risk_Helper.currencyConverter(updatedOscar.Requested_Bank_Guarantee_currency__c, convertedValue, caseFSCurrency);
-                }
-
                 Case currentCase = new Case(id = updatedOscar.Oscar_Communication_Case_Id__c, 
-                    Financial_Security_Amount__c = convertedValue, 
-                    Financial_Security_Currency__c = caseFSCurrency
+                    Financial_Security_Amount__c = updatedOscar.Requested_Bank_Guarantee_amount__c, 
+                    Financial_Security_Currency__c = updatedOscar.Requested_Bank_Guarantee_currency__c != null ? updatedOscar.Requested_Bank_Guarantee_currency__c : updatedOscar.CurrencyIsoCode
                 ); 
 
                 System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTriggerHandler - updated currentCase: ' + currentCase + ']');
