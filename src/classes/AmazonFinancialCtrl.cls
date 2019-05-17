@@ -32,7 +32,6 @@ global class AmazonFinancialCtrl {
     set;
   }
 
-
   public boolean hasMessage {get{return (ApexPages.hasmessages());} private set;}
   @TestVisible
   public IfapToolManager.Response response {get; private set;}
