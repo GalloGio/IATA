@@ -1940,6 +1940,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         return null;
     }
 
+    private void clearShipping() {
+        if(currentAccount.fw.newform.Shipping_Same_As_Billing__c == True) {
+            currentAccount.fw.newform.shipping_street__c = '';
+            currentAccount.fw.newform.shipping_city__c = '';
+            currentAccount.fw.newform.shipping_postal_code__c = '';
+            currentAccount.fw.newform.shipping_state__c = '';
+            currentAccount.fw.newform.shipping_country__c = '';
+            currentAccount.fw.newform.Shipping_ISO_Country__c = null;
+            currentAccount.fw.newform.Shipping_ISO_State__c = null;
+        }
+    }
+
     private void addVATPrefix() {
         if (currentAccount.isoCountry.EU_Country__c) {
             if (!String.isBlank(currentAccount.fw.newForm.ISSP_AMS_VAT_Number_Input__c)) {
