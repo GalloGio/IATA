@@ -349,8 +349,8 @@
                             
                     </section>
                         
-                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
-                        <header>
+                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c)), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                        <header> 
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
                                 <strong>{!$Label.ISSP_AMS_Step0_Other_Forms}</strong>
