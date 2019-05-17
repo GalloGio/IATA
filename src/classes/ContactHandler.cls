@@ -169,7 +169,7 @@ public class ContactHandler{
 				&& con.RecordTypeId == mapOldContacts.get(con.Id).RecordTypeId 
 				&& con.CNS_Contact__c == mapOldContacts.get(con.Id).CNS_Contact__c)
 				|| con.RecordTypeId != RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'))
-				break;
+				continue;
 
 			con.Notification_Template__c = con.CNS_Contact__c ? 'NT-0021' : 'NT-0033';
 

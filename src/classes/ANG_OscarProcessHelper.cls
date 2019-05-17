@@ -515,6 +515,14 @@ global class ANG_OscarProcessHelper {
             	acc.ANG_HE_RiskStatus__c = 'Not Applicable';
             }
 
+            //update status and reason according to NEW change code values to avoid another account update
+            acc.Previous_Reason__c = acc.Reason__c;
+            acc.Reason__c = '21-NEW APPLICATION';
+            acc.PreviousStatus__c = acc.Status__c;
+            acc.Status__c = AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING;
+            acc.Date_Organisation_Status_attained__c = Date.Today();
+
+
             updaterObj.acctMap.put(acc.Id,acc);
 
             //Get the Accreditation Contacts to update the accounts fields Has_an_Administrator_User_Portal__c and Has_a_Financial_Assessment_Contact__c
