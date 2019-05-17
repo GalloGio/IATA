@@ -260,16 +260,15 @@ public class AMS_OscarCase_RiskMgmt {
 							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NFS change code'));
 
 						}else{	
-							//mapCasePerAccount.put(c.AccountId, c);
-							list<AMS_ChangeCodes__c> ls;
-							if(mapChangeCodeToCreate.KeySet().contains(c.Id))
-								ls = mapChangeCodeToCreate.get(c.Id);
-							else
-								ls = new list<AMS_ChangeCodes__c>();
+						//mapCasePerAccount.put(c.AccountId, c);
+						list<AMS_ChangeCodes__c> ls;
+						if(mapChangeCodeToCreate.KeySet().contains(c.Id))
+							ls = mapChangeCodeToCreate.get(c.Id);
+						else
+							ls = new list<AMS_ChangeCodes__c>();
 
-							ls.add(conf);
-							mapChangeCodeToCreate.put(c.Id, ls);
-						}
+						ls.add(conf);
+						mapChangeCodeToCreate.put(c.Id, ls);
 					}
 				}
 			}
