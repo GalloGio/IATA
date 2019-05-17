@@ -1919,7 +1919,7 @@
                             <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Authorised_signatory__c}" />
                           </apex:pageBlockSectionItem>
-                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!AND(amsOfficeType=='HO', isocountry.ISO_Code__c != 'CN')}">
+                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!AND(amsOfficeType=='HO', newForm.Local_Agent_Type__c != 'Domestic')}">
                             <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
                           </apex:pageBlockSectionItem>

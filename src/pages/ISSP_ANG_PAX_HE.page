@@ -1713,7 +1713,7 @@
                     <apex:outputLabel style="width:1%;" > {!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
                     <apex:inputField value="{!newContact.Authorised_signatory__c}" />
                 </apex:pageBlockSectionItem>                
-                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:100%" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash', isocountry.ISO_Code__c != 'CN'),true,false)}">
+                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:100%" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash', newForm.Local_Agent_Type__c != 'Domestic'),true,false)}">
                     <apex:outputLabel style="width:1%;" >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
                     <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />   
                 </apex:pageBlockSectionItem>

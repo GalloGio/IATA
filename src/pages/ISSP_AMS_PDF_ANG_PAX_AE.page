@@ -376,7 +376,7 @@
                                                     <!-- <apex:inputCheckbox value="{!agencycon.Authorised_signatory__c}" disabled="true"/> -->
                                                 </td>
                                                 <!--<apex:outputText >type -> {!newForm.Agent_Type__c}</apex:outputText>-->
-                                                <td style="display:{!IF(OR(amsOfficeType != 'HO',newForm.Agent_Type__c=='Standard no Cash'),'none','')}" class="checkbox-td">
+                                                <td style="display:{!IF(OR(amsOfficeType != 'HO',newForm.Agent_Type__c=='Standard no Cash', newForm.Local_Agent_Type__c == 'Domestic'),'none','')}" class="checkbox-td">
                                                     <apex:outputText rendered="{!agencycon.Financial_Assessment_Contact__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
                                                     <!-- <apex:inputCheckbox value="{!agencycon.Financial_Assessment_Contact__c}" disabled="true"/> -->
                                                 </td>
