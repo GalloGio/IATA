@@ -51,6 +51,10 @@
         .hiddenStyle {
             display: none;
         }
+        
+        .textAlignLeft {
+        	text-align: left !important;
+        }
     </style>
 
     <script>
@@ -90,7 +94,7 @@
             <!--Line 2 Legal / Registered Name -->
             <apex:outputPanel >
                 <apex:pageBlockSection columns="2">
-                    <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem labelStyleClass="textAlignLeft">
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" />
                         <apex:outputField value="{!ca.account.Name}" />
                     </apex:pageBlockSectionItem>
@@ -116,7 +120,7 @@
             <!--Line 4 Trade Name -->
             <apex:outputPanel >
                 <apex:pageBlockSection columns="2">
-                    <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem labelStyleClass="textAlignLeft">
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
                         <apex:outputField value="{!ca.account.TradeName__c}" />
                     </apex:pageBlockSectionItem>
@@ -138,7 +142,7 @@
                 
                 <apex:pageBlockSection columns="2">
                 
-                    <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem labelStyleClass="textAlignLeft">
                         <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
                         <apex:outputField value="{!ca.account.VAT_Number__c}" />
                     </apex:pageBlockSectionItem>
@@ -174,7 +178,7 @@
                 
                 <apex:pageBlockSection columns="2">
                     
-                    <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem labelStyleClass="textAlignLeft">
                         <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_2_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_2_Input__c.Label, ca.isocountry.Tax_Number_2_label__c)}" />
                         <apex:outputField value="{!ca.account.VAT_Number_2__c}" />
                     </apex:pageBlockSectionItem>
