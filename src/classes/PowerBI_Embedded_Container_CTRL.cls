@@ -1,4 +1,4 @@
-public without sharing class PBI_Container_CTRL {
+public without sharing class PowerBI_Embedded_Container_CTRL {
 
 
     //private static String CUSTOM_SETTING_NAME = 'PowerBI account';
