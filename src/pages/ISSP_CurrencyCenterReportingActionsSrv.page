@@ -99,7 +99,7 @@
                                 <!-- ACAMBAS - WMO-545: Begin -->
                                 <apex:outputPanel id="notificationsSwitch" layout="block" style="float:right;">
                                     <script>$('.toggle').bootstrapToggle();</script>
-                                    <label class="whiteLabel">{!$Label.ISSP_Account_Statement_Notifications_Button}&nbsp;</label>
+                                    <label class="whiteLabel">{!$ObjectType.Portal_Application_Right__c.Fields.Enable_Notifications__c.Label}&nbsp;</label>
                                     <apex:inputfield styleclass="toggle" value="{!appRight.Enable_Notifications__c}" html-data-toggle="toggle" html-data-onstyle="blue" html-data-offstyle="white" html-data-size="small" onchange="updateAppRight();"/>
                                 </apex:outputPanel>
                                 <apex:actionFunction name="updateAppRight" action="{!updateAppRight}" rerender="notificationsSwitch"/>
