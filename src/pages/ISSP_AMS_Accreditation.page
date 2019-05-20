@@ -797,10 +797,17 @@
                                     <div class="form-group" id="countrySelection">
                                         <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
 
-                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;display:none">
-                                    <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
+                                    <apex:outputPanel rendered="{!isMultiCountryNewAE}">
+                                        <apex:selectList id="countrySelectedMC" required="false" styleClass="form-control" style="width:40%" value="{!mcformCountryISO}" size="1" onchange="checkMCAECountry();">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
-                                    </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
+                                        </apex:selectList>
+                                    </apex:outputPanel>    
+                                    <apex:outputPanel rendered="{!NOT(isMultiCountryNewAE)}">
+                                        <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                            <apex:selectOptions value="{!countryISOCodeList}"/>
+                                        </apex:selectList>
+                                    </apex:outputPanel>
                                 </div>
                                 <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
                                     <apex:outputText value="{!amsAllLangCountryLabel}"/>
