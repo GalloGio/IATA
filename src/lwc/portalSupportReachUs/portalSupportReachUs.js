@@ -344,7 +344,6 @@ export default class PortalSupportReachUs extends LightningElement {
                     this.countryCB = false;
                     this.optionsButton = true;
                 }
-                this.subTopicValuesGetter();
             } else {
                 this.countryCB = false;
                 this.pageParams.subtopic = '';
