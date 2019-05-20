@@ -53,6 +53,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Exclude_SAP_Material_Number__c</fullName>
         <description>List of SAP material number of products to exclude from interface.  Should be in format &apos;mat1&apos;,&apos;mat2&apos;,...</description>
