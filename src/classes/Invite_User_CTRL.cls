@@ -1,5 +1,4 @@
 public without sharing class Invite_User_CTRL {
-    
     @AuraEnabled
     public static string sendInvitation(string contactStr, string invitationStr) {
         Invitation__c invitation = null;

@@ -91,7 +91,7 @@ public class Contact_Roles_Helper_TEST {
         System.runAs(standardUser) {
             testContact = Contact_Roles_Helper.getContactFromUser(standardUser.Id);
         }
-
+        
         Test.stopTest();
 
         System.assertEquals(null, testContact.Id, 'Only empty contact should be returned if user does not have contact!');

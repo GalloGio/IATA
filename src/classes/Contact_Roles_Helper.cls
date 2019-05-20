@@ -198,16 +198,16 @@ public without sharing class Contact_Roles_Helper {
     }
 
 
-    //TODO: generic approach!
+    /*//TODO: generic approach!
     public static List<Contact_Roles__c> getUserRoles(Id userId, Id roleRecordTypeId, String category, String accessStatus) {
         List<Contact_Roles__c> contactRolesToReturn = new List<Contact_Roles__c>();
 
 
         return contactRolesToReturn;
-    }
+    }*/
 
 
-    public static List<AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits) {
+    public static List<AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits, Contact selectedContact) {
 
         Contact con = Contact_Roles_Helper.getContactFromUser(UserId);
 
@@ -223,19 +223,25 @@ public without sharing class Contact_Roles_Helper {
             accountContactIds.add(acr.Account_Role__c);
         }
         //all users contact roles
-        List<Account_Contact_Role__c> allUsersAccountContactRoles = [SELECT Id, Contact__c, Contact_Roles__r.Name, Contact_Roles__r.Category__c, Account_Role__r.Account__r.Name FROM Account_Contact_Role__c WHERE Account_Role__c = :accountContactIds AND RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = 'GADM'];
+        List<Account_Contact_Role__c> allUsersAccountContactRoles = [SELECT Id, Contact__c, Contact_Roles__r.Name, Contact_Roles__r.Category__c, Account_Role__r.Account__r.Name FROM Account_Contact_Role__c WHERE Account_Role__c = :accountContactIds AND (RecordTypeId = :groupRecordTypeId OR (RecordTypeId = :functionalRecordTypeId AND Contact_Roles__r.Name = 'GADM User'))  AND Service_Rendered__c = 'GADM'];
         System.debug('allUsersAccountContactRoles:: ' +allUsersAccountContactRoles);
 
         Set<Id> contactIds = new Set<Id>();//all users
-        //Map<Id, Set<String>> accountsMap = new Map<Id, Set<String>>();//all accounts
-        Map<Id, Map<Id, Account_Contact_Role__c>> accountsMap = new Map<Id, Map<Id, Account_Contact_Role__c>>();
+
+        Map<Id, Map<Id, Account_Contact_Role__c>> accountsMap = new Map<Id, Map<Id, Account_Contact_Role__c>>();//all actors
         Map<Id, Map<Id, Contact_Role_Service_Access__c>> rolesMap = new Map<Id, Map<Id, Contact_Role_Service_Access__c>>();//all roles
         Map<Id, Map<Id, Contact_Role_Service_Access__c>> businessUnitsMap = new Map<Id, Map<Id, Contact_Role_Service_Access__c>>();//all business units
 
-        //fill users
-        for(Account_Contact_Role__c acr : allUsersAccountContactRoles) {
-            contactIds.add(acr.Contact__c);
+        if(selectedContact != null) {
+            //fill selected user only
+            contactIds.add(selectedContact.Id);
+        }else{
+            //fill all users
+            for(Account_Contact_Role__c acr : allUsersAccountContactRoles) {
+                contactIds.add(acr.Contact__c);
+            }
         }
+
 
         //fill roles
         List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Contact_Roles__r.Category__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : contactIds AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId  AND (Contact_Role__r.Contact_Roles__r.Category__c = null OR Contact_Role__r.Contact_Roles__r.Category__c = '') AND Service__r.Name = 'GADM' AND Status__c = 'Granted'];
@@ -338,7 +344,7 @@ public without sharing class Contact_Roles_Helper {
     }
 	
     private static boolean hasRole(string roleName, Map<Id, Contact_Role_Service_Access__c> roles){
-        if (roles.isEmpty()) {return false;}
+        if (roles == null || roles.isEmpty()) {return false;}
         for(Contact_Role_Service_Access__c access: roles.values()){
             if (access.Contact_Role__r.Contact_Roles__r.Name == roleName){
                 return true;
