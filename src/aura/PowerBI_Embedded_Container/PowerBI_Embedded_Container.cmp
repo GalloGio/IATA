@@ -1,4 +1,4 @@
-<aura:component controller="PBI_Container_CTRL" description="PowerBI_Embedded_Container">
+<aura:component controller="PowerBI_Embedded_Container_CTRL" description="PowerBI_Embedded_Container">
 
     <aura:attribute type="List" name="workspaces" />
     <!--<aura:attribute name="accessToken" type="String" access="private"/>
