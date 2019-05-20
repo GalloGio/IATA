@@ -81,27 +81,24 @@ public without sharing class Location_Sel extends Selector
         
         map<Id,Location__c> locationMap = new map<Id,Location__c>();
 
-        if(!contactIds.isEmpty()) {
+        String query = String.format(
+            'SELECT {0}, ' + 
+            'Address__r.ISO_Country__r.Name,Address__r.ISO_Country__c,Address__r.ISO_Country__r.ISO_Code__c, ' + 
+            'Address__r.ISO_State__r.ISO_Code__c, Address__r.ISO_State__r.Name, Address__r.ISO_State__c, ' + 
+            'Address__r.Street__c,Address__r.City__c,Address__r.Country__c,Address__r.State__c,Address__r.ZipCode__c, Address__r.IEC_Zip_Postal_Code_required__c, ' +
+            'Address__r.ISO_Country__r.VAT_Validation_Required__c ' +
+            'FROM {1} ' + 
+            'WHERE Contact__c in :contactIds and Active__c = true '+
+            'ORDER BY Full_Address__c ' , 
+            new List<String>{
+                String.join(getDefaultFields(), ', '),
+                getSObjectType().getDescribe().getName()
+            }
+        );
 
-            String query = String.format(
-                'SELECT {0}, ' + 
-                'Address__r.ISO_Country__r.Name,Address__r.ISO_Country__c,Address__r.ISO_Country__r.ISO_Code__c, ' + 
-                'Address__r.ISO_State__r.ISO_Code__c, Address__r.ISO_State__r.Name, Address__r.ISO_State__c, ' + 
-                'Address__r.Street__c,Address__r.City__c,Address__r.Country__c,Address__r.State__c,Address__r.ZipCode__c, Address__r.IEC_Zip_Postal_Code_required__c, ' +
-                'Address__r.ISO_Country__r.VAT_Validation_Required__c ' +
-                'FROM {1} ' + 
-                'WHERE Contact__c in :contactIds and Active__c = true '+
-                'ORDER BY Full_Address__c ' , 
-                new List<String>{
-                    String.join(getDefaultFields(), ', '),
-                    getSObjectType().getDescribe().getName()
-                }
-            );
+        List<Location__c> locations = (List<Location__c>)Database.query(query);
 
-            List<Location__c> locations = (List<Location__c>)Database.query(query);
-
-            locationMap = new map<Id,Location__c>(locations);
-        }
+        locationMap = new map<Id,Location__c>(locations);
 
         return locationMap;
     }

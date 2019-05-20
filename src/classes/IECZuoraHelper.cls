@@ -1396,9 +1396,6 @@ public with sharing class IECZuoraHelper {
     }
 
     public static Map<Id, Zuora__CustomerAccount__c> getBillingAccountByContactId(Set<Id> setContactId) {
-
-    	if(setContactId.isEmpty()) return null;
-
     	Map<Id, Zuora__CustomerAccount__c> mapContactIdToBillingAccount = new Map<Id, Zuora__CustomerAccount__c>();
     	for (Zuora__CustomerAccount__c zAcc :
     		[SELECT CRMContactID__c
