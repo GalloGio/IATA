@@ -414,7 +414,6 @@ public with sharing class ISSP_AvailableServices{
             return 'WHERE ID = NULL';
         
         String queryConditions;
-System.debug('*** selectedList ' + selectedList);
         if(String.isNotBlank(selectedList)){
             queryConditions = ServiceListViewMap.get(selectedList).SOQL_Filter__c;
         }
