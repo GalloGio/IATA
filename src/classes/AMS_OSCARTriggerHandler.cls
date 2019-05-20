@@ -2929,6 +2929,7 @@ public class AMS_OSCARTriggerHandler {
         Set<Id> recordTypes = new Set<Id>();
         recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'));
         recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
+        recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company'));
         recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner'));
         List<AggregateResult> sumPercentageAR = [select AMS_Pax_Accreditation_Form__r.Id, count(Id) numberOfContacts, sum(Financial_interest__c) sumOfPercentages 
             from AMS_Accreditation_Contact__c  
