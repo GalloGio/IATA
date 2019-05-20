@@ -216,7 +216,7 @@
   position: absolute;
   top: 40px;
   z-index: 10000;
-  min-width: 310px;
+  min-width: 340px;
   height: 550px;
   max-height: 550px;
   right: 0px;
@@ -247,7 +247,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 90%;
+  width: 93.5%;
+  display: block;
 }
 
 .circle {
@@ -273,5 +274,49 @@
   background-color: rgba(51, 51, 255, 0.4);
 }
 
+.hrConfig {
+  margin: 0px;
+}
 
+.viewDetailConfig {
+  color: blue;
+}
 
+.viewDetailConfig:hover {
+  text-decoration: underline;
+}
+
+.modalNotificationDetail {
+  height: 640px;
+  z-index: 10005;
+}
+
+.modalBody {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 85px;
+  background-color:white;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 3px;
+  padding: 2px 0;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 5px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

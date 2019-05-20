@@ -2,12 +2,13 @@ import { LightningElement, track} from 'lwc';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
+import { navigateToPage } from'c/navigationUtils';
 
 //notification apex method
-import getNotificationsCount from '@salesforce/apex/CSP_Utils.getNotificationsCount';
-import getNotifications from '@salesforce/apex/CSP_Utils.getNotifications';
-import getUserType from '@salesforce/apex/CSP_Utils.getUserType';
-import increaseNotificationView from '@salesforce/apex/CSP_Utils.increaseNotificationView';
+import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
+import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
+import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
+import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -44,9 +45,20 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //notifications
     @track numberOfNotifications;
     @track openNotifications = false;
+    @track notification;
+
+    //notification Center Tab
+    @track allNotificationTab;
+    @track announcementTab;
+    @track taskTab;
+
+    //notification counter
+    @track notificationCounter = 0;
+    @track taskCounter = 0;
 
     @track notificationsList;
     @track currentURL;
+    @track baseURL;
     @track showBackdrop = false;
 
     //User Type
@@ -63,24 +75,51 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //
     @track checkDisplayBodyStyle
 
+    // MODAL
+    @track openmodel = false;
+
+    @track mainBackground = 'z-index: 9999;';
+
     connectedCallback() { 
 
-        getUserType().then(result => {
+        isAdmin().then(result => {
             this.userAdmin = result;
         });
 
         getNotifications().then(result => {
+            this.baseURL = window.location.href;
             let resultsAux = JSON.parse(JSON.stringify(result));
+
+            resultsAux.sort(function(a,b){
+                return new Date(b.createdDate) - new Date(a.createdDate);
+            });
+
             this.notificationsList = resultsAux;
-        });
 
-        getNotificationsCount().then(result => {
+            let notificationCounter = 0;
+            let taskCounter = 0;
+            resultsAux.forEach(function (element) {
+                if (element.type === 'Notification'){
+                    if ( element.viewed === false ) {
+                        notificationCounter++;
+                    }
+                } else {
+                    taskCounter++;
+                }
+            });
 
-            this.numberOfNotifications = result;
+            this.notificationCounter = notificationCounter;
+            this.taskCounter = taskCounter;
+
+            this.announcementTab = 'Announcements (' + notificationCounter + ')';
+            this.taskTab = 'Tasks (' + taskCounter + ')';
+            this.allNotificationTab = 'All Notifications (' + (notificationCounter + taskCounter) + ')';
+            this.numberOfNotifications = (notificationCounter + taskCounter);
 
             if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
                 this.notificationNumberStyle = 'display: none;';
             }
+
         });
 
     }
@@ -172,32 +211,85 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     onClickAllNotificationsView(event){
         let selectedNotificationId = event.target.dataset.item;
 
-        let notificaion = this.notificationsList.find(function(element) {
+        let notificationsListAux = JSON.parse(JSON.stringify(this.notificationsList));
+
+        let notification = notificationsListAux.find(function(element) {
             if (element.id === selectedNotificationId){
                 return element;
             }
             return null;
         });
 
-        if (notificaion.typeNotification === 'Announcement' ){
+        if (notification.typeNotification === 'Announcement' ){
             increaseNotificationView({id : selectedNotificationId})
             .then(results => {
-                notificaion.viewed = true;
+                let notificationCounter = this.notificationCounter;
+                let taskCounter = this.taskCounter;
+
+                notificationCounter--;
+                this.numberOfNotifications = notificationCounter + taskCounter;
+                this.announcementTab = 'Announcements (' + notificationCounter + ')';
+                this.allNotificationTab = 'All Notifications (' + (notificationCounter + taskCounter) + ')';
+                this.notificationCounter = notificationCounter;
+
+                this.numberOfNotifications = (notificationCounter + taskCounter);
+                if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+                    this.notificationNumberStyle = 'display: none;';
+                }
+
+                notification.viewed = true;
+                this.notificationsList = notificationsListAux;
+
             })
             .catch(error => {
                 const showError = new ShowToastEvent({
                     title: 'Error',
-                    message: 'An error has occurred: ' + error,
+                    message: 'An error has occurred: ' + error.getMessage,
                     variant: 'error',
                 });
                 this.dispatchEvent(showError);
-                
-            });
-        }
-        
 
-        
+            });
+        } else {
+            if (notification.type === "Portal Service"){
+                let params = {};
+                params.serviceId = notification.id;
+                this.currentURL = window.location.href;
+
+                if ( this.currentURL.includes(this.labels.PortalName) ) {
+                    this[NavigationMixin.GenerateUrl]({
+                        type: "standard__namedPage",
+                        attributes: {
+                            pageName: "manage-service"
+                        }})
+                    .then(url => navigateToPage(url, params) );
+                } else {
+                    goToManageService().then(results => {
+                        navigateToPage(results, params);
+                    });
+                }
+                
+            }
+        }
+
     }
+
+    openmodal(event) {
+        let selectedNotificationId = event.target.dataset.item;
+
+        this.notification = this.notificationsList.find(function(element) {
+            if (element.id === selectedNotificationId){
+                return element;
+            }
+            return null;
+        });
+
+        this.mainBackground = "z-index: 10004;"
+        this.openmodel = true
     }
+    closeModal() {
+        this.mainBackground = "z-index: 10000;"
+        this.openmodel = false
+    } 
 
 }
