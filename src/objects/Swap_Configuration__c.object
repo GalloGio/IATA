@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Relationship_Type__c</fullName>
         <description>Represents the type of relationship. It can either require to &quot;Swap&quot;, &quot;Upgrade&quot;, &quot;Suggestion&quot; Product Rate Plan Information</description>
