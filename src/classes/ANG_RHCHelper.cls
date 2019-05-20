@@ -409,6 +409,22 @@ public class ANG_RHCHelper {
 	}
 
 	public static void handleRiskOrForecastedRhcAmountUpdates(Set<Id> accountIdSet){
+		
+		if(System.isBatch() || System.isFuture()){
+			handleRiskOrForecastedRhcAmountUpdatesAction(accountIdSet);
+			return;
+		}
+		
+		handleRiskOrForecastedRhcAmountUpdatesAsync(accountIdSet);
+		
+	}
+
+	@future	
+	private static void handleRiskOrForecastedRhcAmountUpdatesAsync(Set<Id> accountIdSet){
+		handleRiskOrForecastedRhcAmountUpdatesAction(accountIdSet);
+	}
+	
+	private static void handleRiskOrForecastedRhcAmountUpdatesAction(Set<Id> accountIdSet){
 
 		Map<String, Set<Id>> contactsPerAccount = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(accountIdSet, new Set<String>{ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE});
 		
