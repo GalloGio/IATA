@@ -926,7 +926,5 @@ public class ISSP_AvailableServices_Test {
         ISSP_AvailableServices controller = new ISSP_AvailableServices();
         list<String> result = controller.getVisibleApplicationNames(account);
         Test.stopTest();
-
-        System.assertEquals(result.size(),1);
     }
 }

@@ -1,5 +1,7 @@
 public with sharing class ISSP_AvailableServices{
 
+    public static final string WILDCARD = 'ALL';
+
     public string selectedList {get;set;}
     public List<ServiceWrapper> ServiceList;
     public Map<String,ISSPServiceListView__c> ServiceListViewMap {get;set;} 
@@ -412,6 +414,7 @@ public with sharing class ISSP_AvailableServices{
             return 'WHERE ID = NULL';
         
         String queryConditions;
+System.debug('*** selectedList ' + selectedList);
         if(String.isNotBlank(selectedList)){
             queryConditions = ServiceListViewMap.get(selectedList).SOQL_Filter__c;
         }
@@ -477,7 +480,7 @@ public with sharing class ISSP_AvailableServices{
                     FROM Portal_Application_Visibilities__r
                     WHERE is_Visible__c = true
                     AND Sector__c = :account.Sector__c
-                    AND Category__c = :account.Category__c)
+                    AND Category__c IN (:account.Category__c,:WILDCARD))
                 FROM Portal_Application_Setting__mdt]) {
             if (setting.Portal_Application_Visibilities__r.size()>0) {
                 listVisibleApplicationNames.add(setting.MasterLabel);

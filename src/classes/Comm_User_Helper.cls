@@ -10,6 +10,7 @@ global without sharing class Comm_User_Helper {
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
+  public static final string WILDCARD = 'ALL';
 
   public static String EncryptString( String str) {
         Blob dataToEncrypt = Blob.valueOf(str);
@@ -279,7 +280,7 @@ global without sharing class Comm_User_Helper {
                             FROM Portal_Application_Visibilities__r
                             WHERE Auto_grant_service__c = true
                             AND Sector__c = :account.Sector__c
-                            AND Category__c = :account.Category__c)
+                            AND Category__c IN (:account.Category__c,:WILDCARD))
                         FROM Portal_Application_Setting__mdt]) {
                     if (setting.Portal_Application_Visibilities__r.size()>0) {
                         listAppNames.add(setting.MasterLabel);
