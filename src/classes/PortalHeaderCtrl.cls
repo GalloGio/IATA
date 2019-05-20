@@ -52,38 +52,6 @@ public without sharing class PortalHeaderCtrl {
     }
 
     /* 
-    * @description Return number of notifications for the respective user. It needs to be a string to let the result be 99+ for more than 99
-    * @return String
-    */
-    @AuraEnabled
-    public static String getNotificationsCount() {
-    
-        User loggedUser = [SELECT Id, ContactId , Contact.AccountId, Contact.Account.Top_Parent__c, Contact.User_Portal_Status__c
-                           FROM User
-                           WHERE Id =: UserInfo.getUserId()];
-
-        //check if the user is a portal user
-        if(loggedUser == null || loggedUser.ContactId == null) return null;
-
-        Integer numNotifications = 0;        
-        List<Notification__c> notifications = getAllContactNotifications(loggedUser, CSP_Utils.isAdmin());
-
-        if(!notifications.isEmpty())
-            numNotifications += notifications.size();
-
-        //Count also Users and Portal Service Requests to Approve for Admin Users
-        if(loggedUser.Contact.User_Portal_Status__c == 'Approved Admin') {
-
-            String topParentId = loggedUser.Contact.Account.Top_Parent__c == null ? loggedUser.Contact.AccountId : loggedUser.Contact.Account.Top_Parent__c;
-            
-            numNotifications += getContactsToApprove(topParentId).size() + getPortalAppRightsToApprove(topParentId).size();
-        }
-        
-        return numNotifications > 99 ? '99+' : String.valueOf(numNotifications);
-    }
-
-
-    /* 
     * @description Return list of notifications based on the user.
     * @return List<NotificationCenter>
     */

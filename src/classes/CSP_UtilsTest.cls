@@ -38,38 +38,5 @@ private class CSP_UtilsTest {
         System.assertEquals('Case Currency', result.get('CurrencyIsoCode'));
         System.assertEquals('Case Origin', result.get('Origin'));
     }
-
-    @IsTest
-    static void testGetNotificationsCountAdmin(){
-
-        User usr = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-        String notifications = '';
-        System.runAs(usr) {
-            Test.startTest();
-            notifications = CSP_Utils.getNotificationsCount();
-            Test.stopTest();
-        }
-
-        System.assertEquals('3', notifications);
-    }
-
-    @IsTest
-    static void testGetNotificationsCountNotAdmin(){
-
-        Contact con = [SELECT Id, User_Portal_Status__c FROM Contact WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-        con.User_Portal_Status__c = '';
-        con.Community__c = 'CS Portal';
-        update con;
-
-        User usr = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-
-        String notifications = '';
-        System.runAs(usr) {
-            Test.startTest();
-            notifications = CSP_Utils.getNotificationsCount();
-            Test.stopTest();
-        }
-
-        System.assertEquals('1', notifications);
-    }
+    
 }
