@@ -119,6 +119,41 @@ public without sharing class CSP_Utils {
     }
 
 
+    /* 
+    * @description Return the type of the User.
+    * @return String User Portal Status
+    */
+    @AuraEnabled
+    public static Boolean getUserType() {
+        
+        User loggedUser = [SELECT Id, ContactId , Contact.AccountId, Contact.Account.Top_Parent__c, Contact.User_Portal_Status__c
+                           FROM User
+                           WHERE Id =: UserInfo.getUserId()];
+        
+        if (loggedUser.Contact.User_Portal_Status__c == 'Approved Admin'){
+            return true;
+        } else {
+            return false;
+        }    
+    }
+
+    /* 
+    * @description Increase the number of views of 1 notification.
+    * @return true to confirm the action.
+    */
+    @AuraEnabled
+    public static Boolean increaseNotificationView(Id id) {
+        Notification__c notification = [SELECT id, Number_of_views__c FROM Notification__c WHERE id =:id];
+        if ( notification.Number_of_views__c != null ){
+            notification.Number_of_views__c++;
+        } else {
+            notification.Number_of_views__c = 1;
+        }
+
+        update notification;
+        return true;
+    }
+
     public class NotificationCenter {
         public Id id { get; set;}
         public String subject { get; set;}
