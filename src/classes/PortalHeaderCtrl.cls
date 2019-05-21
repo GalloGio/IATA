@@ -22,7 +22,7 @@ public without sharing class PortalHeaderCtrl {
 			whereClause += '(Contact__r.Account.Top_Parent__c =:topParentId OR Contact__r.AccountId =:topParentId)';
 		}
 		else {
-			whereClause += 'Contact__c =:loggedUser.contactId';
+			whereClause += 'Contact__c = \'' + loggedUser.contactId + '\'';
 		}
         whereClause += ' AND Archive__c = false ORDER BY Critical_notification__c DESC, CreatedDate DESC';
 
