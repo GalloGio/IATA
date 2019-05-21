@@ -30,7 +30,7 @@ public without sharing class CSP_Utils {
     */
     public static User getLoggedUser() {
         
-        User loggedUser = [SELECT Id, Contact.User_Portal_Status__c
+        User loggedUser = [SELECT Id, contactId, Contact.Account.Top_Parent__c, Contact.AccountId, Contact.User_Portal_Status__c
                            FROM User
                            WHERE Id =: UserInfo.getUserId()];
         
