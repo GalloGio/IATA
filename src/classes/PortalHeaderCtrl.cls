@@ -2,7 +2,7 @@ public without sharing class PortalHeaderCtrl {
 
     public static List<String> getQueryFields() {
 		return new List<String>{
-			'Id', 
+			'Id',
             'Subject__c', 
             'CreatedDate', 
             'Number_of_views__c', 
@@ -29,8 +29,6 @@ public without sharing class PortalHeaderCtrl {
         String notificationQuery = String.format('SELECT {0} FROM Notification__c WHERE {1}', 
 			new List<String>{String.join(getQueryFields(), ', '), whereClause}
 		);
-
-        System.debug('QUERY: ' + notificationQuery);
 
         List<Notification__c> notList = (List<Notification__c>) Database.query(notificationQuery);
         return notList;
@@ -86,20 +84,20 @@ public without sharing class PortalHeaderCtrl {
             
             for (Contact contact : userPortalAccessRequestList){
                 // USER ACCESS (CONTACT)
-                NotificationItem notif = new NotificationItem(contact.Id, contact.Name + ' ' + System.Label.UserRequestPortalAccess, contact.Owner.CreatedDate, false, 'Task', contact.Name + ' as requested Access to the Portal.', false, 'Portal Access');
+                NotificationItem notif = new NotificationItem(contact.Id, contact.Name + ' ' + System.Label.UserRequestPortalAccess, contact.Owner.CreatedDate, false, 'Task', contact.Name + ' ' + System.Label.UserRequestPortalAccess, false, System.Label.PortalAccess);
                 notificationItemList.add(notif);
             }
             
             for (Portal_Application_Right__c application : userPortalServiceAccessRequestList){
                 // PORTAL SERVICE
-                NotificationItem notif = new NotificationItem(application.Portal_Application__c, application.Contact__r.Name + ' ' + System.Label.UserRequestServiceAccess + ' ' + application.Portal_Application__r.Name + ' service', application.CreatedDate, false, 'Task', application.Contact__r.Name + ' as request access to ' + application.Portal_Application__r.Name, false, 'Portal Service');
+                NotificationItem notif = new NotificationItem(application.Portal_Application__c, application.Contact__r.Name + ' ' + System.Label.UserRequestServiceAccess + ' ' + application.Portal_Application__r.Name + ' service', application.CreatedDate, false, 'Task', application.Contact__r.Name + ' ' + System.Label.UserRequestServiceAccess + ' ' + application.Portal_Application__r.Name, false, System.Label.PortalService);
                 notificationItemList.add(notif);
                 }
 
         }
 
         for(Notification__c notification : notificationList){
-            NotificationItem notif = new NotificationItem(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c > 0, 'Announcement', notification.Message__c, true, 'Notification');
+            NotificationItem notif = new NotificationItem(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c > 0, 'Announcement', notification.Message__c, true, System.Label.Notification);
             notificationItemList.add(notif);
         }
 

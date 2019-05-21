@@ -2313,6 +2313,20 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>asmad@iata.org</value>
     </labels>
     <labels>
+        <fullName>All_Notifications_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>All_Notifications_Notification</shortDescription>
+        <value>All Notifications</value>
+    </labels>
+    <labels>
+        <fullName>Announcements_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Announcements_Notification</shortDescription>
+        <value>Announcements</value>
+    </labels>
+    <labels>
         <fullName>Ask_Delete_Attachment</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -29437,6 +29451,12 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No special characters</shortDescription>
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
+    <labels>
+        <fullName>Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Notification</shortDescription>
+        <value>Notification</value>
     </labels>
     <labels>
         <fullName>NotificationCenter_Title</fullName>
@@ -32279,11 +32299,25 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Please select the target Case:</value>
     </labels>
     <labels>
+        <fullName>PortalAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PortalAccess</shortDescription>
+        <value>Portal Access</value>
+    </labels>
+    <labels>
         <fullName>PortalNameRedirect</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Portal Name to Redirect</shortDescription>
         <value>csportal</value>
+    </labels>
+    <labels>
+        <fullName>PortalService</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PortalService</shortDescription>
+        <value>Portal Service</value>
     </labels>
     <labels>
         <fullName>Postal_code</fullName>
@@ -33123,6 +33157,13 @@ title,Title,Name</value>
         <value>005w0000003XCG8</value>
     </labels>
     <labels>
+        <fullName>Tasks_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tasks_Notification</shortDescription>
+        <value>Tasks</value>
+    </labels>
+    <labels>
         <fullName>Taxes</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -33294,6 +33335,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>ViewCart</shortDescription>
         <value>View cart</value>
+    </labels>
+    <labels>
+        <fullName>ViewDetails_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ViewDetails_Notification</shortDescription>
+        <value>View Details</value>
     </labels>
     <labels>
         <fullName>View_6_more</fullName>

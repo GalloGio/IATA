@@ -28,6 +28,10 @@ import NotificationCenter from '@salesforce/label/c.NotificationCenter_Title';
 import ViewDetails from '@salesforce/label/c.ViewDetails_Notification';
 import NotificationDetail from '@salesforce/label/c.NotificationDetail_Detail';
 
+import Announcement from '@salesforce/label/c.Announcements_Notification';
+import Tasks from '@salesforce/label/c.Tasks_Notification';
+import AllNotifications from '@salesforce/label/c.All_Notifications_Notification';
+
 export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     _labels = {
@@ -43,7 +47,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         MarkAsRead,
         NotificationCenter,
         ViewDetails,
-        NotificationDetail
+        NotificationDetail,
+        Announcement,
+        Tasks,
+        AllNotifications
     };
     get labels() {
         return this._labels;
@@ -126,9 +133,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.notificationCounter = notificationCounter;
             this.taskCounter = taskCounter;
 
-            this.announcementTab = 'Announcements (' + notificationCounter + ')';
-            this.taskTab = 'Tasks (' + taskCounter + ')';
-            this.allNotificationTab = 'All Notifications (' + (notificationCounter + taskCounter) + ')';
+            this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+            this.taskTab = this.labels.Tasks + ' (' + taskCounter + ')';
+            this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
             this.numberOfNotifications = (notificationCounter + taskCounter);
 
             if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
@@ -243,8 +250,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
                 notificationCounter--;
                 this.numberOfNotifications = notificationCounter + taskCounter;
-                this.announcementTab = 'Announcements (' + notificationCounter + ')';
-                this.allNotificationTab = 'All Notifications (' + (notificationCounter + taskCounter) + ')';
+                this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+                this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
                 this.notificationCounter = notificationCounter;
 
                 this.numberOfNotifications = (notificationCounter + taskCounter);
