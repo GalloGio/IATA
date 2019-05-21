@@ -15486,7 +15486,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>PCI DSS Compliant</value>
+            <value>PCI DSS Compliant,New HE multicountry</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>

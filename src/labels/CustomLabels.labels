@@ -243,6 +243,13 @@
         <value>Restore Forms of Payment</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action19</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action19</shortDescription>
+        <value>Define GE Hierarchy</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -399,6 +406,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
         <value>Application Disapproval</value>
+    </labels>
+    <labels>
+	<fullName>AMS_OSCAR_GOGLOBAL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GOGLOBAL</shortDescription>
+        <value>GoGlobal Hierarchy selection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_GDI_ENDORSEMENT</fullName>
@@ -801,6 +815,13 @@
         <value>Notice of Termination</value>
     </labels>
     <labels>
+	<fullName>AMS_OSCAR_STEP45</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP45</shortDescription>
+        <value>Confirm the hierarchy structure</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP46</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1201,6 +1222,13 @@ IATA Customer Service</value>
         <protected>false</protected>
         <shortDescription>ANG ISSP Conversion From</shortDescription>
         <value>Conversion From</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConversionFromGoGlobalTooltip</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Conversion From GoGlobal Tooltip</shortDescription>
+        <value>Conversion From GoGlobal Tooltip</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ConversionFromGoLiteTooltip</fullName>
@@ -1757,7 +1785,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature10</shortDescription>
-        <value>Feature 10</value>
+        <value>Quarterly Financial Review</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature10Tooltip</fullName>
@@ -1765,7 +1793,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature10Tooltip</shortDescription>
-        <value>Feature 10 Tooltip</value>
+        <value>Quarterly Financial Review Tooltip</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
@@ -1967,6 +1995,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>GoStandard</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</shortDescription>
+        <value>GoGlobal</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -2147,6 +2183,41 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG_ISSP_e_mail_address</shortDescription>
         <value>E-mail address</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Already Has Locations Only Allow AE Error</shortDescription>
+        <value>There cannot be an HE account in the same BSP of the GE account.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Already Has Locations Only Allow AE With Correct HE Error</shortDescription>
+        <value>The hierarchy already has locations in this BSP. The agency can only be an AE with the correct HE Parent Account in this BSP.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Already Has Locations Only Allow HE Error</shortDescription>
+        <value>The hierarchy does not have any location in this BSP. The agency can only be a HE in this BSP.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Process_Parent_Account_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Process Parent Account Error</shortDescription>
+        <value>Please process the Parent Account accreditation OSCAR before proceeding.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_NEW_GE_lock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_NEW_GE_lock</shortDescription>
+        <value>Only available after GoGlobal Hierarchy selection is completed</value>
     </labels>
     <labels>
         <fullName>ANG_NON_COMPLIANCE</fullName>
@@ -13521,6 +13592,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>New Associate Entity - GoLite</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Associate_Entity_Multicountry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
+        <value>New Associate Entity - GoGlobal</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15306,6 +15385,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>New Head Entity - GoStandard</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Head_Entity_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Head Entity Multicountry</shortDescription>
+        <value>New Head Entity - GoGlobal</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Head_Entity_No_Cash</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15381,6 +15467,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS IS GSA</shortDescription>
         <value>We regret to inform you that according to the current Passenger Sales Agency Rules, the applicant shall not trade as a General Sales Agent (GSA) for any carrier in the country where it is established.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_IS_Legal_Name_Selected_Null</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS IS Legal Name Null</shortDescription>
+        <value>Please select a legal name to copy the owners from if the Associate Entity is not a separate Legal Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_IS_Separate_Entity_Null</fullName>
@@ -19319,6 +19412,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>* Please indicate the GDS(s) with which you have signed a contract</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_Multicountry_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
+        <value>&lt;strong&gt;Head Entity - GoGlobal&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_Office_FullAddress</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -19436,6 +19536,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar CNS</shortDescription>
         <value>E. Submit to CNS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step5_ProgressBar_Validate_Data</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step5_ProgressBar_Validate_Data</shortDescription>
+        <value>E. Validate details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>
@@ -21266,7 +21374,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
-        <value>Annual fees for 2018</value>
+        <value>Annual fees for YYYY</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
@@ -21429,6 +21537,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP_ANG_StepFinal_AE_Thanks</shortDescription>
         <value>Thank you for submitting your Accreditation application for your Associate Entity.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Validate_Agency_Details</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Validate Agency Details</shortDescription>
+        <value>Validate Agency Details</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_VR_Disclaimer</fullName>
@@ -30401,6 +30517,14 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_UserInactivation_ServiceMsg_5</shortDescription>
         <value>The following contact is a Primary Contact for your Organization and so cannot be deactivated. Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;contact IATA Customer Service&lt;/a&gt; to designate a new Primary Contact.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Validated</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Validated</shortDescription>
+        <value>Validated</value>
     </labels>
     <labels>
         <fullName>ISSP_VR_Case_Submited</fullName>
