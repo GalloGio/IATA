@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Default_Cost_per_E_mail__c</fullName>
         <description>The field designates the default value that will be used when there are no pre-paid plans active.</description>
@@ -421,9 +422,9 @@
     <fields>
         <fullName>Member_Email_Block_Product__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
-        <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</description>
+        <description>This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for member</description>
         <externalId>false</externalId>
-        <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</inlineHelpText>
+        <inlineHelpText>This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for member</inlineHelpText>
         <label>Member Email Block Product</label>
         <referenceTo>zqu__ZProduct__c</referenceTo>
         <relationshipLabel>EBC Setups for Member Email Block Product</relationshipLabel>
@@ -513,14 +514,44 @@ There is no recurring charge for this.</inlineHelpText>
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Non_Member_Email_Block_Product__c</fullName>
+        <fullName>New_Member_Email_Block_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</inlineHelpText>
+        <label>Member Email Block Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>EBC Setups for Member Email Block Product</relationshipLabel>
+        <relationshipName>New_Member_Email_Block_EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>New_Non_Member_Email_Block_Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for non member</description>
         <externalId>false</externalId>
         <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for non member</inlineHelpText>
         <label>Non Member Email Block Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>EBC Setups (Non Member Email Block Product)</relationshipLabel>
+        <relationshipName>New_Non_Member_Email_Block_EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Non_Member_Email_Block_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for non member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the zproduct that will be the base of the Rate Plans for the Email Blocks, for non member</inlineHelpText>
+        <label>Non Member Email Block Product</label>
         <referenceTo>zqu__ZProduct__c</referenceTo>
-        <relationshipLabel>EBC Setups (Non Member Member Email Block Product)</relationshipLabel>
+        <relationshipLabel>EBC Setups (Non Member Email Block Product)</relationshipLabel>
         <relationshipName>Non_Member_Email_Block_EBC_Setups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
