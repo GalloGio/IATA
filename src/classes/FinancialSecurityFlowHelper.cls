@@ -1,4 +1,4 @@
-public with sharing class FinancialSecurityFlowHelper {
+public without sharing class FinancialSecurityFlowHelper {
 
     @InvocableMethod (Label='Send Acknowledge')
     public static List<String> sendAcknowledge(List<Id> recordIds) {
@@ -8,20 +8,26 @@ public with sharing class FinancialSecurityFlowHelper {
             List<Financial_Security__c> fs = [SELECT Id, Account__c, Account__r.Top_Parent__c, Unlimited_Security__c,
                                                 Acknowledgment_sent__c, Acknowledge_Sent_Date__c 
                                               FROM Financial_Security__c 
-                                              WHERE Id IN :recordIds];
+                                              WHERE Id IN :recordIds LIMIT 1];
 
-            for(Financial_Security__c f : fs) {
-                accountIds.add(f.Account__c);
-                if(f.Account__r.Top_Parent__c <> null) {
-                    accountIds.add(f.Account__r.Top_Parent__c);
+            List<Financial_Security__History> recordHistory = [SELECT Id 
+                                                               FROM Financial_Security__History
+                                                               WHERE ParentId = :fs[0].Id AND Field = 'Expiry_Date__c' AND 
+                                                                    CreatedDate > :fs[0].Acknowledge_Sent_Date__c];
+            
+            if(recordHistory.isEmpty()) {
+                return new List<String> {'Error:\n Financial Security acknowledgement has already been sent.'};
                 }
-                f.Acknowledgment_sent__c = true;
-                f.Acknowledge_Sent_Date__c = Datetime.now();
+
+            accountIds.add(fs[0].Account__c);
+            if(fs[0].Account__r.Top_Parent__c <> null) {
+                accountIds.add(fs[0].Account__r.Top_Parent__c);
             }
+            fs[0].Acknowledgment_sent__c = true;
+            fs[0].Acknowledge_Sent_Date__c = Datetime.now();
             
             update fs;
             Map<Id,List<Contact>> mapKeyContacts = getKeyContacts(accountIds);
-                        
                         
             return new List<String> {sendEmailNotification(fs, mapKeyContacts)};
         } catch(Exception e) {

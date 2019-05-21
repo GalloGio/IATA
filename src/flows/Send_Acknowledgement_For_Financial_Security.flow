@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Acknowledge</name>
         <label>Send Acknowledge</label>
-        <locationX>705</locationX>
-        <locationY>245</locationY>
+        <locationX>545</locationX>
+        <locationY>321</locationY>
         <actionName>FinancialSecurityFlowHelper</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -25,9 +25,9 @@
         <name>Is_Expired</name>
         <label>Is Expired?</label>
         <locationX>535</locationX>
-        <locationY>59</locationY>
+        <locationY>52</locationY>
         <defaultConnector>
-            <targetReference>Sent_Acknowledge</targetReference>
+            <targetReference>Send_Acknowledge</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -42,31 +42,6 @@
             </conditions>
             <connector>
                 <targetReference>Error_Expired</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Sent_Acknowledge</name>
-        <label>Send Acknowledge?</label>
-        <locationX>334</locationX>
-        <locationY>245</locationY>
-        <defaultConnector>
-            <targetReference>Error</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>record.Acknowledge_Sent_Date__c</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>record.LastModifiedDate</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_Acknowledge</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -111,26 +86,10 @@
         <queriedFields>Security_Status__c</queriedFields>
     </recordLookups>
     <screens>
-        <name>Error</name>
-        <label>Error</label>
-        <locationX>166</locationX>
-        <locationY>402</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Error_Message</name>
-            <fieldText>Financial Security acknowledgement has already been sent</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>Error_Expired</name>
         <label>Error_Expired</label>
         <locationX>789</locationX>
-        <locationY>58</locationY>
+        <locationY>50</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -145,8 +104,8 @@
     <screens>
         <name>Result_Message</name>
         <label>Result Message</label>
-        <locationX>719</locationX>
-        <locationY>414</locationY>
+        <locationX>818</locationX>
+        <locationY>321</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
