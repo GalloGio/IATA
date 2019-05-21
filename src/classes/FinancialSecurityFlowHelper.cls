@@ -41,9 +41,9 @@ public without sharing class FinancialSecurityFlowHelper {
         Map<Id,List<Contact>> res = new Map<Id,List<Contact>>();
 
         List<Account> accounts = [SELECT Id, Top_Parent__c, 
-                                    (SELECT Id, Preferred_Language__c
+                                    (SELECT Id, Preferred_Language__c, IsEmailBounced, Name, Email
                                      FROM Contacts 
-                                     WHERE IsEmailBounced = false AND (Financial_Assessment_Contact__c = true OR User_Portal_Status__c = 'Approved Admin'))
+                                     WHERE Financial_Assessment_Contact__c = true OR User_Portal_Status__c = 'Approved Admin')
                                   FROM Account
                                   WHERE Id IN :accountIds ORDER BY Top_Parent__c ASC NULLS FIRST];
 
@@ -72,6 +72,7 @@ public without sharing class FinancialSecurityFlowHelper {
 
         Map<String,Id> mapTemplates = getEmailTemplates(); 
         List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
+        List<Contact> invalidContacts = new List<Contact>();
         for(Financial_Security__c f : fs) {
             List<Contact> keyContacts = mapKeyContacts.get(f.Account__c);
             
@@ -80,6 +81,11 @@ public without sharing class FinancialSecurityFlowHelper {
             }
 
             for(Contact c : keyContacts) {
+
+                if(c.IsEmailBounced) {
+                    invalidContacts.add(c);
+                    continue;
+                }
 
                 String unlimited = f.Unlimited_Security__c ? 'Unlimited_' : '';
                 String templateDevName = 'AMS_FS_Notification_' + unlimited + c.Preferred_Language__c; 
@@ -102,10 +108,25 @@ public without sharing class FinancialSecurityFlowHelper {
 
         if(!mailsToSend.isEmpty()) {
             Messaging.sendEmail(mailsToSend);
-            return 'Financial Security acknowledgement was sent successfully.';
+            String res =  'Financial Security acknowledgement was sent successfully.';
+            if(!invalidContacts.isEmpty()) {
+                res += '\n\nWarning:\n' + messageForInvalidContacts(invalidContacts);
+            }
+            return res;
+        } else if(!invalidContacts.isEmpty()) {
+            return 'Error:\n ' + messageForInvalidContacts(invalidContacts);
         } else {
             return 'Error:\n No Approved Admin or Financial Assessment Contacts found for this Agency.';
         }
+    }
+
+    private static String messageForInvalidContacts(List<Contact> contacts) {
+        String res = 'The following email contacts are bounced\n';
+        for(Contact c : contacts) {
+            res += c.Name + ' - ' + c.Email + '\n';
+        }
+
+        return res;
     }
 
     private static Map<String,Id> getEmailTemplates() {
