@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Help_text__c</field>
-        <value xsi:type="xsd:string">Africa &amp; Middle East Insights (Latest news from the industry and IATA in AME region)</value>
+        <value xsi:type="xsd:string">Aviation and IATA news from the AME region</value>
     </values>
     <values>
         <field>Pardot_ID__c</field>
-        <value xsi:type="xsd:string">191786</value>
+        <value xsi:type="xsd:string">95572</value>
     </values>
     <values>
         <field>Section__c</field>

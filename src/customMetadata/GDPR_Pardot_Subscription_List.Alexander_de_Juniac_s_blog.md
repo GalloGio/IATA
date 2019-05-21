@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Help_text__c</field>
-        <value xsi:type="xsd:string">CEO blog</value>
+        <value xsi:type="xsd:string">IATA&apos;s Director General &amp; CEO&apos;s personal views on current aviation affairs</value>
     </values>
     <values>
         <field>Pardot_ID__c</field>
-        <value xsi:type="xsd:string">192121</value>
+        <value xsi:type="xsd:string">95398</value>
     </values>
     <values>
         <field>Section__c</field>

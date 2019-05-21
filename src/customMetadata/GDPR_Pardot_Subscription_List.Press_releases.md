@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Help_text__c</field>
-        <value xsi:type="xsd:string">Latest industry news including financial, freight and passenger data</value>
+        <value xsi:type="xsd:string">All IATA’s press releases, as they are issued</value>
     </values>
     <values>
         <field>Pardot_ID__c</field>
-        <value xsi:type="xsd:string">189413</value>
+        <value xsi:type="xsd:string">95410</value>
     </values>
     <values>
         <field>Section__c</field>

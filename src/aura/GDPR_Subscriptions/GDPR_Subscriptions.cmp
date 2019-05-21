@@ -49,7 +49,7 @@
             <a style="color: black;" onclick="{!c.redirectToSubscriptionTab}">Updates on products and services</a>
             </div>
             <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-                <p><b>Subscribe to any of our products and services updates.</b> You can personalize your area of activity of interest through the<a onclick="{!c.redirectToSubscriptionTab}">&nbsp;Interest’s tab</a></p> 
+                <p><b>Subscribe to any of our products and services updates.</b> You can personalize your areas of interest through the<a onclick="{!c.redirectToSubscriptionTab}">&nbsp;Interest’s tab</a>.</p> 
             </div>
     <div class="slds-grid slds-wrap" >
            <aura:iteration items="{!v.products}" var="i">

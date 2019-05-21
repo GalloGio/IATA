@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>Help_text__c</field>
-        <value xsi:type="xsd:string">Latest SP news</value>
+        <value xsi:type="xsd:string">News for and from IATA Strategic Partners</value>
     </values>
     <values>
         <field>Pardot_ID__c</field>
-        <value xsi:type="xsd:string">191143</value>
+        <value xsi:type="xsd:string">95408</value>
     </values>
     <values>
         <field>Section__c</field>

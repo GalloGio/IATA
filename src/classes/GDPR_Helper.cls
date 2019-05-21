@@ -228,7 +228,7 @@ public without sharing class GDPR_Helper {
                 '<span><a style="font-size:15px; text-decoration: none; color:#ffffff;" href="https://www.iata.org" target="_blank">www.IATA.org</a></span>'+
             '</td>'+
             '<td style="width:60%; text-align:center;">'+
-                '<span style="font-size:15px;">© International Air Transportation Association (IATA) 2019. All rights reserved.</span>'+
+                '<span style="font-size:15px;">© International Air Transportation Association (IATA). All rights reserved.</span>'+
             '</td>'+
 
             '<td style="width:20%; text-align:center;">'+
@@ -256,7 +256,7 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Thank you for your interest in content from IATA.<br/>'+ 
+                                'Thank you for your interest in IATA.<br/>'+ 
                                 'Please <a href="'+link+'">follow this link</a> to access our Signup & Privacy portal.<br/><br/>'+
                                 'All the best,<br/>'+
                                 'The IATA Team'+
@@ -270,7 +270,7 @@ public without sharing class GDPR_Helper {
         String htmlBody = '<html>'+
                             '<body>'+
                                 headerHtml()+
-                                'Thank you for your interest in content from IATA.<br/>'+ 
+                                'Thank you for your interest in IATA.<br/>'+ 
                                 'Please <a href="'+link+'">follow this link</a>  to access our Signup & Privacy portal.<br/><br/>'+
                                 'All the best,<br/>'+
                                 'The IATA Team'+
