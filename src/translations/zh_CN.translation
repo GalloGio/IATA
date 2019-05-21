@@ -10309,6 +10309,10 @@ and
         <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid --></label>
+        <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step3 HO Full Address --></label>
         <name>ISSP_AMS_Step3_HO_Full_Address</name>
     </customLabels>
@@ -11205,6 +11209,10 @@ and
         <name>ISSP_ANG_Local_Details_Copy_Address2</name>
     </customLabels>
     <customLabels>
+        <label><!-- Shipping same as Billing --></label>
+        <name>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
         <name>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</name>
     </customLabels>
@@ -11395,6 +11403,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents --></label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
     <customLabels>
         <label><!-- STEP 1 - Annual Revalidation --></label>
@@ -14153,6 +14165,14 @@ and
     <customLabels>
         <label><!-- ISSP PAX Validating VAT Number --></label>
         <name>ISSP_PAX_Validating_VAT_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 error --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2_error</name>
     </customLabels>
     <customLabels>
         <label><!-- c --></label>
@@ -19486,7 +19506,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>AMS_GDP_Synchronizer</name>
     </customTabs>
     <customTabs>
-        <label><!-- AMS PCI Compliant Mass Oscar Creation --></label>
+        <label><!-- OSCAR mass action --></label>
         <name>AMS_PCI_Compliant_Mass_Oscar_Creation</name>
     </customTabs>
     <customTabs>

@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</fullName>
         <description>Defines if an airline will accept EasyPay transactions in the BSP settlement.</description>

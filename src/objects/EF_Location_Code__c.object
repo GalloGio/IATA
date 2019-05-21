@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Contract_BA_Id__c</fullName>
         <description>Copy of Billing Agreement Contract Id to avoid queries on location Code trigger.</description>
@@ -68,6 +69,7 @@
     <fields>
         <fullName>Contract__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Contract</description>
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
@@ -79,9 +81,11 @@
     <fields>
         <fullName>EF_Airline_Billing_Agreement__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related E&amp;F Airline Billing Agreement</description>
         <externalId>false</externalId>
         <label>E&amp;F Airline Billing Agreement</label>
         <referenceTo>EF_Billing_Agreement__c</referenceTo>
+        <relationshipLabel>Location Codes</relationshipLabel>
         <relationshipName>Location_Codes</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -100,6 +104,7 @@
     </fields>
     <fields>
         <fullName>Location_Code__c</fullName>
+        <description>Related E&amp;F Related Records</description>
         <externalId>false</externalId>
         <label>Location Code</label>
         <lookupFilter>
@@ -112,6 +117,7 @@
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>EF_Related_Records__c</referenceTo>
+        <relationshipLabel>Location Codes</relationshipLabel>
         <relationshipName>Location_Codes</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>

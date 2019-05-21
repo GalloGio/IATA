@@ -52,14 +52,14 @@ private class Product_Svc_Test
         List<Product2> products = TestDataGenerator.generateProducts(3, false); 
         
         //-- 1st Product has ho Zuora Id : zcreate must be called 
-        products[0].Zuora_Id__c = null; //-- 
+        products[0].zqu__ZuoraId__c = null; //-- 
         products[0].Status__c = 'New';
         products[0].Product_Manager_lookup__c = UserInfo.getUserId();
 
         //-- 2nd Product has invalid date : api wil not be called for this product 
         products[1].SAP_Material_Number__c = null;
 
-        products[2].Zuora_Id__c = null;
+        products[2].zqu__ZuoraId__c = null;
 
         if (oProdInfo != null) {
             products[2].IEC_Product_Information__c = oProdInfo.Id;
@@ -72,7 +72,7 @@ private class Product_Svc_Test
 
         Map<Id, Product2> productMap = new Map<Id, Product2>(products);
 
-        products[0].Zuora_Id__c = null;
+        products[0].zqu__ZuoraId__c = null;
         products[0].Effective_From__c = system.today().addYears(2);
         products[0].Effective_To__c = system.today().addYears(3);
         products[0].Status__c = 'Active';
@@ -111,8 +111,8 @@ private class Product_Svc_Test
         //processZProductSaveResult(List<Product2> products, List<Zuora.zApi.SaveResult> results)
         List<Product2> products = TestDataGenerator.generateProducts(2, false); 
         List<Zuora.zObject> zobjects = TestDataGenerator.generateZProducts(2);
-        zobjects[0].setValue('SAPProductMaterialNo__c',products[0].SAP_Material_Number__c);
-        zobjects[1].setValue('SAPProductMaterialNo__c',products[1].SAP_Material_Number__c);
+        zobjects[0].setValue('SAP_Material_Number__c',products[0].SAP_Material_Number__c);
+        zobjects[1].setValue('SAP_Material_Number__c',products[1].SAP_Material_Number__c);
 
         //Inject error
         zobjects[1].setValue('EffectiveStartDate','');
@@ -211,7 +211,7 @@ private class Product_Svc_Test
         List<zqu__ProductRatePlan__c> lstprp = [select id from zqu__ProductRatePlan__c
                                                  where 
                                                  zqu__Deleted__c = false 
-                                                 and zqu__ZProduct__r.zqu__Deleted__c = false ];
+                                                 and zqu__Product__r.zqu__Deleted__c = false ];
 
         if(lstprp != null){
             //Create Product Rate Plan Information
@@ -251,7 +251,7 @@ private class Product_Svc_Test
         Test.startTest();
         
         List<Apex_Setting__c> lstProdToExcl = new List<Apex_Setting__c>();
-        lstProdToExcl.add(new Apex_Setting__c(Name='Product fields to exclude', Text_1__c='Zuora_Id__c,lastmodifieddate,systemmodstamp,lastmodifiedbyid,zproduct__c'));
+        lstProdToExcl.add(new Apex_Setting__c(Name='Product fields to exclude', Text_1__c='zqu__ZuoraId__c,lastmodifieddate,systemmodstamp,lastmodifiedbyid'));
         insert lstProdToExcl;
         Product_Svc.listToExclude();
         System.assertEquals(lstProdToExcl.size(), 1);

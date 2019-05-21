@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents a shopping cart containing Cart Items for IEC</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>CartGuid__c</fullName>
         <description>GUID of the shopping cart that will be stored in the cookie</description>
@@ -81,6 +83,7 @@
     </fields>
     <fields>
         <fullName>Total_Items_in_Cart__c</fullName>
+        <description>Sums the amount of items in IEC Shopping Cart</description>
         <externalId>false</externalId>
         <label>Total Items in Cart</label>
         <summarizedField>IEC_Cart_Item__c.Quantity__c</summarizedField>

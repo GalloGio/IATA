@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AIMS_updated__c</fullName>
         <externalId>false</externalId>
@@ -8380,6 +8381,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <filterScope>Queue</filterScope>
         <label>Model A Onboarding - Europe</label>
         <queue>Model_A_Onboarding_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>NewGen_PCI_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>NewGen PCI</label>
+        <queue>NewGen_PCI</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
