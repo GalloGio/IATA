@@ -607,7 +607,9 @@ public without sharing class ISSP_AMS_Accreditation {
                     isNewHOforAccredAgent = true; //Accrediedt Agent applying for HO of different Program e.g. Accred PAX applyiong for CGO HO
 
                 fetchAMSProcessForm();
-                if (modifyForm) newform.Status__c = 'InProgress';
+                if (modifyForm) {
+                    newform.Status__c = 'InProgress';
+                }
 
                 if (String.isBlank(mcformCountryISO)) {
                     mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
@@ -724,8 +726,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (mcformCountryISO == null) {
                         mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
                     }
-
-                    System.debug('hey1: ' + mcformCountryISO);
 
                     isocountry = (isMultiCountryNewAE ||  isMultiCountryAccredittedAddingAEs()) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
@@ -1273,7 +1273,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
         }
-        if(newForm.Agency_Codes_Concerned__c != null)
+        if(newForm.Agency_Codes_Concerned__c != null) {
             accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
         }
 
@@ -2903,6 +2903,7 @@ public without sharing class ISSP_AMS_Accreditation {
         if (isNoticeOfChange) {
             pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
         } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
+
             pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
 
@@ -4006,7 +4007,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             String iso = (isMultiCountryNewAE) ? mcformCountryISO : newCase.IFAP_Country_ISO__c;
-			f(excludeIdentifierSetTravel.isEmpty()){
+			if(excludeIdentifierSetTravel.isEmpty()){
                 excludeIdentifierSetTravel = null;
             }
             //NEWGEN-583 end
@@ -4110,14 +4111,24 @@ public without sharing class ISSP_AMS_Accreditation {
         query += 'Branch_Office_Country__r.Name, SAAM_Case__r.Reason1__c, Branch_Office_Country__r.ISO_Code__c, Branch_Office_Country__r.AMS_Settlement_System__c ';
         query += 'FROM AMS_Pax_Accreditation_Form__c ';
 
-        if (!String.isBlank(currentMCFormId)) {
+        System.debug('hey2: ' + currentMCFormId + ' ' + newCase.Id);
+
+        
+        System.debug('wth3232: ' + currentMCFormId.equals('null'));
+        
+
+        if (String.isNotBlank(currentMCFormId)) {
+            System.debug('wth: ' + (currentMCFormId == 'null'));
+
             query += 'WHERE Id = \'' + currentMCFormId + '\'';
         } else {
             query += 'WHERE SAAM_Case__c = \'' + newCase.Id + '\'';
         }
         
         List<AMS_Pax_Accreditation_Form__c> newForms = Database.query(query);
-        if (!newForms.isEmpty()) newForm = newForms[0];
+        if (!newForms.isEmpty()) {
+            newForm = newForms[0];
+        }
 
         if (!String.isBlank(currentMCFormId)) {
             mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
@@ -4884,9 +4895,9 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
-    public Void checkEligibilityForAChange() {
+    public void checkEligibilityForAChange() {
         if ((sector == AMS_Utils.SECTOR_PASSENGER && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) || (isocountry.ISO_Code__c == 'CN' && con.Account.Category__c == 'Domestic Agent' && isocountry.ANG_Enable_NewGen__c)) ||
-                (sector == AMS_Utils.SECTOR_CARGO && (con.Account.Category__c == 'Non-IATA Cargo Agent' || con.Account.Category__c == 'IATA Cargo Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == 'CASS Associates' || con.Account.Category__c == AMS_Utils.CATEGORY_COURIER || con.Account.Category__c == AMS_Utils.CATEGORY_IMPORT_AGENT)))
+                (sector == AMS_Utils.SECTOR_CARGO && (con.Account.Category__c == 'Non-IATA Cargo Agent' || con.Account.Category__c == 'IATA Cargo Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == 'CASS Associates' || con.Account.Category__c == AMS_Utils.CATEGORY_COURIER || con.Account.Category__c == AMS_Utils.CATEGORY_IMPORT_AGENT))) {
             isEligableForChange = true;
         }
     }
@@ -7098,7 +7109,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 if(type.equalsIgnoreCase('Branch')){
-                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtIdsPerDevNameAccredContact.get('Person'), rtIdsPerDevNameAccredContact.get('Company')));
                 }
             }
             upsert lstAccreditationContact;
@@ -7241,7 +7252,8 @@ public without sharing class ISSP_AMS_Accreditation {
                                                                             AE_separate_Legal_Entity__c, ISSP_Branch_AccountId__c, Branch_Office_Phone__c,
                                                                             Branch_Office_FAX__c, Branch_Office_Email__c, Branch_Office_City__c,
                                                                             State_Province__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
-                                                                            Same_Legal_Entity_Agency__c, Account_Name__c, Location_Type__c
+                                                                            Same_Legal_Entity_Agency__c, Account_Name__c, Location_Type__c,
+                                                                            Branch_Office_Country__r.ISO_Code__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
                                                                         ORDER BY Name ASC];
@@ -7279,11 +7291,13 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void deleteMCForm() {
-        List<AMS_Pax_Accreditation_Form__c> formToDelete = [SELECT Id, Status__c, Branch_Office_Country__r.AMS_Settlement_System__c 
+        List<AMS_Pax_Accreditation_Form__c> formToDelete = [SELECT Id, Status__c, Branch_Office_Country__r.AMS_Settlement_System__c,
+                                                                Branch_Office_Country__r.ISO_Code__c, AE_separate_Legal_Entity__c
                                                             FROM AMS_Pax_Accreditation_Form__c 
                                                             WHERE Id = :mcFormIdToDelete LIMIT 1];
 
         if (!formToDelete.isEmpty()) {
+
             deleteFormsFuture(new Set<Id>{formToDelete[0].Id});
 
             Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
@@ -7295,6 +7309,22 @@ public without sharing class ISSP_AMS_Accreditation {
                 } else {
                     checkSubmitMC(mCApplicationFormMap.values());
                 }
+            }
+
+            if (formToDelete[0].AE_separate_Legal_Entity__c == 'Yes') {
+                AMS_Pax_Accreditation_Form__c formToBeUpdated;
+
+                for (AMS_Pax_Accreditation_Form__c existingMCForm: mCApplicationFormMap.values()) {
+                    if (existingMCForm.Same_Legal_Entity_Agency__c == formToDelete[0].Id) {
+                        existingMCForm.AE_separate_Legal_Entity__c = 'Yes';
+                        existingMCForm.Status__c = 'InProgress';
+                        formToBeUpdated = existingMCForm;
+                        //identify that has to be updated, maybe with field;
+                        break;
+                    }
+                }
+
+                update formToBeUpdated;
             }
 
             multiCountryApplicationForms = new List<AMS_Pax_Accreditation_Form__c>(mCApplicationFormMap.values());
@@ -7343,5 +7373,140 @@ public without sharing class ISSP_AMS_Accreditation {
 
         newForm.ISSP_Branch_AccountId__c = null;
         update newForm;
+    }
+
+    public Map<Id, HierarchyItem> hierarchy{
+        get{
+            if(hierarchy == null) {
+                hierarchy = new Map<Id, HierarchyItem>();
+                
+                List<Account> acc = getBranchList(false);
+                for(Account a : acc){
+                    Boolean isSelected = false;
+                    hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
+                }                           
+            }
+            return hierarchy;
+        }
+        set;
+    }    
+
+    public Boolean selectAll{
+        get{
+            if(selectAll == null) selectAll = false;
+            return selectAll;
+        }
+        set;
+    }
+
+    public List<HierarchyItem> hierarchyValues{
+        get{
+            return hierarchy.values();
+        }
+    }
+
+    private Integer rowsPerPage = 100;
+
+    public Integer currentPage{
+        get{
+            if(currentPage == null){
+                currentPage = 0;
+            }
+            return currentPage;
+        }
+        set;
+    }
+    
+    public Integer totalPages{
+        get{
+            return hierarchyValuesForDisplay.size();
+        }
+    }
+    
+    public List<List<HierarchyItem>> hierarchyValuesForDisplay{
+        get{
+            if(hierarchyValuesForDisplay == null){
+                hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
+
+                // create as many sub-lists as necessary
+                for(Integer i = 0; i <= (hierarchy.values().size()-1)/rowsPerPage; i++){
+                    hierarchyValuesForDisplay.add(new List<HierarchyItem>());
+                }
+
+                // fill HierarchyItems in the sub-lists
+                Integer itemNumber = 0;
+                for(HierarchyItem item : hierarchy.values()){
+                    hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
+                }
+            }
+            System.debug(loggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
+            return hierarchyValuesForDisplay;
+        }
+        set;
+    }
+
+    // ***********************************
+    // ********** constructor ************
+    // ***********************************
+    /*public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
+        if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
+
+        oscarId = stdController.getId();
+        oscar = (AMS_OSCAR__c)stdController.getRecord();
+    }*/
+
+
+    // ***********************************
+    // *********** wrappers **************
+    // ***********************************
+    public class HierarchyItem{
+
+        public Account acc { get; set; }
+        public Boolean selected { get; set; }
+
+        public HierarchyItem(Account a, Boolean selected){
+            this.acc = a;
+            this.selected = selected;
+        }
+    }
+
+
+    // ***********************************
+    // ********* helper methods **********
+    // ***********************************
+
+    public void doSelectAll(){
+        for(HierarchyItem hi : hierarchyValues){
+            hi.selected = selectAll;
+        }
+    }
+
+    public Boolean getDisablePrevious() { 
+        //this will disable the previous and beginning buttons
+        return (currentPage <= 0);
+    }
+
+    public Boolean getDisableNext() { //this will disable the next and end buttons
+        return (currentPage >= hierarchyValuesForDisplay.size()-1);
+    }
+
+    public PageReference Beginning() { //user clicked beginning 
+        currentPage = 0;
+        return null;
+    }
+
+    public PageReference Previous() { //user clicked previous button
+        currentPage--;
+        return null;
+    }
+
+    public PageReference Next() { //user clicked next button
+        currentPage++;
+        return null;
+    }
+
+    public PageReference End() { //user clicked end
+        currentPage = hierarchyValuesForDisplay.size()-1;
+        return null;
     }
 }

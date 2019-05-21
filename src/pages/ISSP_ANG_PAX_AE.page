@@ -961,7 +961,7 @@
                         			</apex:outputPanel>
 	                           
                     				<apex:pageBlockSection >
-                    					<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
+                    					<apex:pageblocksectionitem rendered="{!IF(AND(isMultiCountryNewAE, newForm.AE_separate_Legal_Entity__c == 'No'), false, IF(NOT(isocountry.Hide_Tax_Number_VAT__c), false, true))}">
                     						<apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" for="VATInput"/>
                     						<apex:outputpanel id="VATNumberInput">
                         						<span style="margin-left:{!If(isEUcountry,'-28px', '-9px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>

@@ -105,7 +105,7 @@ public with sharing class ANG_ProductComparisonHelper {
 							lsProd.add(p2);
 						}
 						
-						if (this.multiCountryEnabled && p2.Name == 'Multicountry Accreditation'){ 
+						if (p2.Name == 'Multicountry Accreditation' && this.multiCountryEnabled){ 
 							lsProd.add(p2);
 						}
 					} else {
