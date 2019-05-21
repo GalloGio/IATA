@@ -24,7 +24,8 @@ public with sharing class IFAP_BusinessRules {
     private static final string REOPENED = 'Re-open/ed';
     private static final string SCF = 'Sanity Check Failure';
     private static final string SUBMITTED = 'Submitted';
-    public static final string CLOSEDOPTOUT = 'Closed Opt-out';
+    private static final string CLOSEDOPTOUT = 'Closed Opt-out';
+    private static final String CLOSED_NON_COMPLIANCE = 'Closed_Non compliance';
 
 
     /**
@@ -247,28 +248,26 @@ public with sharing class IFAP_BusinessRules {
                     }
                 }
 
-                if (caseStatus == AGENT_NOTIFIED_MAIL)
-                    if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_EMAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED){
-                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
-                        continue;
-                    }
-                    
-                if (caseStatus ==  AGENT_TO_BE_NOTIFIED)
-                    if (oldCaseStatus == ACTION_NEEDED){
-                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
-                        continue;
-                    }
-                if (caseStatus == ASSESSMENT_PERFORMED) {
-                    if (oldCaseStatus == QI_REJECTED){
-                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
-                        continue;
-                    }
-                    //special situation only for authorized users
-                    if (isAuthorizedUser && (oldCaseStatus == REOPENED || oldCaseStatus == CLOSED)){
-                        mapCaseStatusCanBeSelected.put(updateCase.id, true);
-                        continue;
-                    }
-                }
+            if (caseStatus == CLOSEDOPTOUT || caseStatus == CLOSED_NON_COMPLIANCE)
+                return true;
+
+            if (caseStatus == AGENT_NOTIFIED_MAIL)
+                if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_EMAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
+                    return true;
+
+            if (caseStatus ==  AGENT_TO_BE_NOTIFIED)
+                if (oldCaseStatus == ACTION_NEEDED)
+                    return true;
+
+            if (caseStatus == ASSESSMENT_PERFORMED) {
+                if (oldCaseStatus == QI_REJECTED)
+                    return true;
+
+                //special situation only for authorized users
+                if (isAuthorizedUser && (oldCaseStatus == REOPENED || oldCaseStatus == CLOSED))
+                    return true;
+
+            }
 
                 if (caseStatus == CLOSED){
                     //changing status to Closed is handled in the existing validation rule

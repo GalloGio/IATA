@@ -148,14 +148,14 @@
 										<p><b>{! $Label.ANG_ISSP_HeadEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_HE_Application_Registration_Fees__c.Label}: {! cell.fees.HE_Application_Registration_Fees}</p>
 										<!--p style="padding-left: 20px">{! $Label.ANG_ISSP_AnnualFees}</p-->
-										<p style="padding-left: 20px">{!$Label.ISSP_ANG_ProdCompAnnualFees} :</p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel} :</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Small_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Small_Agents}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Medium_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Medium_Agents}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Large_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Large_Agents}</p>
 										<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label}: {! cell.fees.AE_Application_Registration_Fees}</p>
 										<!--p style="padding-left: 20px">{! $Label.ANG_ISSP_AnnualFees}</p-->
-										<p style="padding-left: 20px">{!$Label.ISSP_ANG_ProdCompAnnualFees} :</p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel} :</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_First_10_locations__c.Label}: {! cell.fees.AE_Fees_First_10_locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Next_15_Locations__c.Label}: {! cell.fees.AE_Fees_Next_15_Locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Additional_Locations__c.Label}: {! cell.fees.AE_Fees_Additional_Locations}</p>
@@ -163,18 +163,21 @@
 									<apex:outputPanel rendered="{! cell.fees.HE_AnnualFees_Small_Agents == ''}">
 										<p><b>{! $Label.ANG_ISSP_HeadEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_HE_Application_Registration_Fees__c.Label}: {! cell.fees.HE_Application_Registration_Fees}</p>
-										<p style="padding-left: 20px">{!$Label.ISSP_ANG_ProdCompAnnualFees}: {! cell.fees.HE_Annual_Fees}</p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel}: {! cell.fees.HE_Annual_Fees}</p>
 
 										<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label}: {! cell.fees.AE_Application_Registration_Fees}</p>
-										<p style="padding-left: 20px">{!$Label.ISSP_ANG_ProdCompAnnualFees}: {! cell.fees.AE_Annual_Fees}</p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel}: </p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_First_10_locations__c.Label}: {! cell.fees.AE_Fees_First_10_locations}</p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Next_15_Locations__c.Label}: {! cell.fees.AE_Fees_Next_15_Locations}</p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Additional_Locations__c.Label}: {! cell.fees.AE_Fees_Additional_Locations}</p>
 									</apex:outputPanel>									
 								</td>
 								<td style="text-align: left; display: {!IF(helper.type == 'A','none','')}">
 									<apex:outputLabel value = "{! $Label.ANG_ISSP_ConversionFrom}" />
-									<!--&nbsp;
-									<apex:image value="/img/msg_icons/info16.png" title="{! cell.fees.ConversionFeesTooltip}" html-data-placement="right" html-data-toggle="tooltip"/-->
-									<p style="padding-left: 20px">{! cell.fees.ConversionFeesLabel}: {! cell.fees.ConversionFees}</p>
+									<apex:repeat value="{!cell.fees.ConversionFeesValuesList}" var="feeValue">
+										<p style="padding-left: 20px">{!feeValue}</p>
+									</apex:repeat>
 								</td>
 							</apex:outputPanel>
 						</apex:repeat>

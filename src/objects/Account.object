@@ -3437,7 +3437,13 @@
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
     &apos;Not Applicable&apos;,
-    IF(ISPICKVAL(Location_Type__c, &apos;HE&apos;),
+    IF(
+    	OR(
+
+            AND(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),NOT(ISPICKVAL(ANG_Accreditation_Model__c ,&apos;Multicountry&apos;))),
+            ISPICKVAL(Location_Type__c ,&apos;GE&apos;)
+        ),
+
         TEXT(ANG_HE_RiskHistoryAssessment__c),
 		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
 			&apos;&apos;,		
@@ -3456,7 +3462,12 @@
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
     &apos;Not Applicable&apos;,
-	IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+	IF(
+		OR(
+
+            AND(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),NOT(ISPICKVAL(ANG_Accreditation_Model__c ,&apos;Multicountry&apos;))),
+            ISPICKVAL(Location_Type__c ,&apos;GE&apos;)
+        ),
 		TEXT(ANG_HE_RiskStatus__c),
 		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
 			&apos;&apos;,			
@@ -13050,6 +13061,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Identify_as_Multicountry_Key_Hierarchy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>This field can only be amended from the Global Entity (GE)</inlineHelpText>
+        <label>Identify as Multicountry Key Hierarchy</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>In_a_Airport__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -13840,6 +13861,9 @@ J-Joint Vent</inlineHelpText>
         <fullName>Location_Type_Ordered__c</fullName>
         <externalId>false</externalId>
         <formula>case (TEXT(Location_Type__c) 
+						
+, &apos;GE&apos;, 0
+						
 , &apos;AO&apos;, 1 
 , &apos;EP&apos;, 1 
 , &apos;HO&apos;, 1 
@@ -13914,6 +13938,11 @@ J-Joint Vent</inlineHelpText>
                     <fullName>ES</fullName>
                     <default>false</default>
                     <label>ES</label>
+                </value>
+                <value>
+                    <fullName>GE</fullName>
+                    <default>false</default>
+                    <label>GE</label>
                 </value>
                 <value>
                     <fullName>HE</fullName>
@@ -14234,6 +14263,17 @@ J-Joint Vent</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Multicountry_Key_Hierarchy__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Location_Type__c , &apos;GE&apos;) ,
+  Identify_as_Multicountry_Key_Hierarchy__c ,
+  Top_Parent__r.Identify_as_Multicountry_Key_Hierarchy__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Multicountry Key Hierarchy</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>N_Code__c</fullName>
@@ -32680,6 +32720,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -88231,6 +88275,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HE</fullName>
                 <default>false</default>
             </values>
@@ -99844,6 +99892,21 @@ $Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
         <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Agent_Country_Not_Enabled_Multicountry</fullName>
+        <active>true</active>
+        <description>Validate for the selected country if it is a multicountry enabled</description>
+        <errorConditionFormula>OR(
+ AND(ISPICKVAL(Location_Type__c,&apos;GE&apos;), NOT(IATA_ISO_Country__r.Multicountry_Enabled__c)),
+
+AND(
+ OR(ISPICKVAL(Parent.Location_Type__c,&apos;GE&apos;),ISPICKVAL(Parent.Parent.Location_Type__c,&apos;GE&apos;)),
+
+ NOT(IATA_ISO_Country__r.Multicountry_Enabled__c)
+ )
+)</errorConditionFormula>
+        <errorMessage>The selected country is not enabled for multicountry.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
         <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
@@ -100203,7 +100266,7 @@ OR(
 RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos; 
 ), 
 TEXT(Location_Type__c) = &apos;AE&apos;, 
-TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;, 
+AND(TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;, TEXT(Parent.Location_Type__c) &lt;&gt; &apos;GE&apos;),
 NOT(OR(ISPICKVAL(Status__c, &quot;Terminated&quot;), 
 ISPICKVAL(Status__c, &quot;Not in operation&quot;), 
 ISPICKVAL(Status__c, &quot;New application pending&quot;), 
@@ -100214,7 +100277,7 @@ ISPICKVAL(Status__c, &quot;&quot;)
 TEXT(Location_Type__c) = &apos;AE&apos;, 
 TEXT(Parent.Location_Type__c) = &apos;AE&apos;)
 )</errorConditionFormula>
-        <errorMessage>An Associate Entity (with proper status) must have a parent account with location type HE (or has an AE as a parent)</errorMessage>
+        <errorMessage>An Associate Entity (with proper status) must have a parent account with location type HE OR GE (or has an AE as a parent)</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Field_Head_Office_Required</fullName>
@@ -100362,9 +100425,9 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
     <validationRules>
         <fullName>Location_Type_cannot_choose_HE_or_AE</fullName>
         <active>true</active>
-        <description>User cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</description>
-        <errorConditionFormula>AND(ISNEW(),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
-        <errorMessage>You cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
+        <description>User cannot set location type HE/GE/AE if the location class is not P/D and country is not NewGen.</description>
+        <errorConditionFormula>AND(ISNEW(),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;GE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
+        <errorMessage>You cannot set location type HE/GE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>MITA_Mandatory_Fields_For_Members</fullName>
@@ -100453,6 +100516,17 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <description>For a Virtual Branch Iso Country is mandatory</description>
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;, ISPICKVAL( Branch_Type__c , &apos;Virtual&apos;),  ISBLANK(  IATA_ISO_Country__c ) )</errorConditionFormula>
         <errorMessage>For a Virtual Branch Iso Country is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+    	<fullName>Edit_Identify_Multicountry_for_GE_only</fullName>
+    	<active>true</active>
+    	<description>The &quot;Identify as Multicountry Key Hierarchy&quot; field can only be edited in Accounts with location type GE.</description>
+        <errorConditionFormula>AND(
+  ISCHANGED( Identify_as_Multicountry_Key_Hierarchy__c ),
+  NOT(ISPICKVAL( Location_Type__c , &apos;GE&apos;))
+)</errorConditionFormula>
+        <errorDisplayField>Identify_as_Multicountry_Key_Hierarchy__c</errorDisplayField>
+        <errorMessage>This field can only be amended from the Global Entity (GE)</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>

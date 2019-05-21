@@ -3,6 +3,7 @@
     <customButtons>Request_Consumed_RHC</customButtons>
     <customButtons>Request_RHC_Calculation</customButtons>
     <customButtons>Confirm_RHC</customButtons>
+    <customButtons>Change_the_RHC_currency</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
