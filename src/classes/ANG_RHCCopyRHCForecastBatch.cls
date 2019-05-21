@@ -1,4 +1,4 @@
-public class ANG_RHCCopyRHCForecastBatch implements Database.Batchable<SObject>, Database.Stateful, Schedulable  {
+public class ANG_RHCCopyRHCForecastBatch implements Database.Batchable<SObject>, Database.AllowsCallouts, Database.Stateful, Schedulable {
 
     private final static Date TODAYSDATE = Date.today();
 

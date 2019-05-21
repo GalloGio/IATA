@@ -356,7 +356,7 @@ global class ANG_RME_Alert_Service {
 				log.Error_Code__c = 'RHC Value Mismatch';
 				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 			}*/
-			else{
+			else if(updateResults){
 				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
 				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
 				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
