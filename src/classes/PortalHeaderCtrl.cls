@@ -71,9 +71,7 @@ public without sharing class PortalHeaderCtrl {
     @AuraEnabled
     public static List<NotificationItem> getNotifications() {
         
-        User loggedUser = [SELECT Id, Contact.AccountId, Contact.Account.Top_Parent__c 
-                           FROM User
-                           WHERE Id =: UserInfo.getUserId()];
+        User loggedUser = CSP_Utils.getLoggedUser();
 
         // Get Notifications
         List<Notification__c> notificationList = getAllContactNotifications(loggedUser, CSP_Utils.isAdmin());

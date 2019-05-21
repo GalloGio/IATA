@@ -25,16 +25,25 @@ public without sharing class CSP_Utils {
     }
 
     /* 
-    * @description Return the type of the User.
-    * @return String User Portal Status
+    * @description Get Logged User.
+    * @return User
     */
-    @AuraEnabled
-    public static Boolean isAdmin() {
+    public static User getLoggedUser() {
         
         User loggedUser = [SELECT Id, Contact.User_Portal_Status__c
                            FROM User
                            WHERE Id =: UserInfo.getUserId()];
         
+        return loggedUser;
+    }
+
+    /* 
+    * @description Return the type of the User.
+    * @return String User Portal Status
+    */
+    @AuraEnabled
+    public static Boolean isAdmin() {
+        User loggedUser = getLoggedUser();
         return loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
     }
 
