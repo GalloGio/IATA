@@ -32317,7 +32317,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PortalService</shortDescription>
-        <value>Portal Service</value>
+        <value>Service</value>
     </labels>
     <labels>
         <fullName>Postal_code</fullName>
@@ -33274,14 +33274,14 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>UserRequestPortalAccess</shortDescription>
-        <value>requested Access to Portal.</value>
+        <value>{0} requested Access to Portal.</value>
     </labels>
     <labels>
         <fullName>UserRequestServiceAccess</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>UserRequestServiceAccess</shortDescription>
-        <value>requested access to</value>
+        <value>{0} requested access to {1} {2}</value>
     </labels>
     <labels>
         <fullName>User_name</fullName>

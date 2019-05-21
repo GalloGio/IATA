@@ -84,20 +84,20 @@ public without sharing class PortalHeaderCtrl {
             
             for (Contact contact : userPortalAccessRequestList){
                 // USER ACCESS (CONTACT)
-                NotificationItem notif = new NotificationItem(contact.Id, contact.Name + ' ' + System.Label.UserRequestPortalAccess, contact.Owner.CreatedDate, false, 'Task', contact.Name + ' ' + System.Label.UserRequestPortalAccess, false, System.Label.PortalAccess);
+                NotificationItem notif = new NotificationItem(contact.Id, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Name}), contact.Owner.CreatedDate, false, 'Task', contact.Name + ' ' + System.Label.UserRequestPortalAccess, false, 'Portal Access');
                 notificationItemList.add(notif);
             }
             
             for (Portal_Application_Right__c application : userPortalServiceAccessRequestList){
                 // PORTAL SERVICE
-                NotificationItem notif = new NotificationItem(application.Portal_Application__c, application.Contact__r.Name + ' ' + System.Label.UserRequestServiceAccess + ' ' + application.Portal_Application__r.Name + ' service', application.CreatedDate, false, 'Task', application.Contact__r.Name + ' ' + System.Label.UserRequestServiceAccess + ' ' + application.Portal_Application__r.Name, false, System.Label.PortalService);
+                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name, System.Label.PortalService}), application.CreatedDate, false, 'Task', application.Contact__r.Name + ' ' + System.Label.UserRequestServiceAccess + ' ' + application.Portal_Application__r.Name, false, 'Portal Service');
                 notificationItemList.add(notif);
                 }
 
         }
 
         for(Notification__c notification : notificationList){
-            NotificationItem notif = new NotificationItem(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c > 0, 'Announcement', notification.Message__c, true, System.Label.Notification);
+            NotificationItem notif = new NotificationItem(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c > 0, 'Announcement', notification.Message__c, true, 'Notification');
             notificationItemList.add(notif);
         }
 
