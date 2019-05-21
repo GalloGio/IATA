@@ -148,8 +148,8 @@
 
 .openProfile {
   display: none;
-  position: fixed;
-  top: 69px;
+  position: absolute;
+  margin-top: 3px;
   z-index: 9005;
 }
 
@@ -211,6 +211,10 @@
   margin-bottom: -8px;
 }
 
+.headerMarginRight {
+  margin-right: 130px;
+}
+
 .openNotifications {
   display: none;
   position: absolute;
@@ -220,18 +224,11 @@
   height: 550px;
   max-height: 550px;
   right: 0px;
+  margin-right: 130px;
 }
 .notificationOption {
   display: block;
   font-weight: 500;
-}
-
-.notificationUnreaded {
-  background-color: #f7f8fa;
-}
-
-.notificationReaded {
-  background-color: white;
 }
 
 .notificationBox {
@@ -278,10 +275,6 @@
   margin: 0px;
 }
 
-.viewDetailConfig {
-  color: blue;
-}
-
 .viewDetailConfig:hover {
   text-decoration: underline;
 }
@@ -289,6 +282,11 @@
 .modalNotificationDetail {
   height: 640px;
   z-index: 10005;
+}
+
+.modalBox {
+  max-width: 47rem;
+  width: 90%;
 }
 
 .modalBody {

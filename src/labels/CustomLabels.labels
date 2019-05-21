@@ -29238,6 +29238,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Make Public</value>
     </labels>
     <labels>
+        <fullName>MarkAsRead_Notification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MarkAsRead_Notification</shortDescription>
+        <value>Mark as read</value>
+    </labels>
+    <labels>
         <fullName>Media</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -29430,6 +29437,20 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No special characters</shortDescription>
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
+    </labels>
+    <labels>
+        <fullName>NotificationCenter_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NotificationCenter_Title</shortDescription>
+        <value>Notification Center</value>
+    </labels>
+    <labels>
+        <fullName>NotificationDetail_Detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NotificationDetail_Detail</shortDescription>
+        <value>Notification Detail</value>
     </labels>
     <labels>
         <fullName>Notions_Essentl_Tarif_Billet_Description</fullName>
@@ -33206,6 +33227,20 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Upload_Financial_Documents</shortDescription>
         <value>Upload Financial Documents</value>
+    </labels>
+    <labels>
+        <fullName>UserRequestPortalAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UserRequestPortalAccess</shortDescription>
+        <value>requested Access to Portal.</value>
+    </labels>
+    <labels>
+        <fullName>UserRequestServiceAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UserRequestServiceAccess</shortDescription>
+        <value>requested access to</value>
     </labels>
     <labels>
         <fullName>User_name</fullName>

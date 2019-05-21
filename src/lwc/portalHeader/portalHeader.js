@@ -23,11 +23,14 @@ import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 import CSP_Settings from '@salesforce/label/c.CSP_Settings';
 import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
 import PortalName from '@salesforce/label/c.PortalNameRedirect';
-
+import MarkAsRead from '@salesforce/label/c.MarkAsRead_Notification';
+import NotificationCenter from '@salesforce/label/c.NotificationCenter_Title';
+import ViewDetails from '@salesforce/label/c.ViewDetails_Notification';
+import NotificationDetail from '@salesforce/label/c.NotificationDetail_Detail';
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
 
-    labels = {
+    _labels = {
         ISSP_Services,
         CSP_Support,
         ICCS_Profile,
@@ -36,7 +39,17 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         CSP_Cases,
         CSP_Settings,
         CSP_LogOut,
-        PortalName
+        PortalName,
+        MarkAsRead,
+        NotificationCenter,
+        ViewDetails,
+        NotificationDetail
+    };
+    get labels() {
+        return this._labels;
+    }
+    set labels(value) {
+        this._labels = value;
     }
     
     //links for images
@@ -89,6 +102,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         getNotifications().then(result => {
             this.baseURL = window.location.href;
             let resultsAux = JSON.parse(JSON.stringify(result));
+
+            console.log('AUX: ' , resultsAux);
 
             resultsAux.sort(function(a,b){
                 return new Date(b.createdDate) - new Date(a.createdDate);
@@ -238,6 +253,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 }
 
                 notification.viewed = true;
+                notification.styles = 'background-color: white;';
                 this.notificationsList = notificationsListAux;
 
             })
@@ -276,7 +292,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     openmodal(event) {
         let selectedNotificationId = event.target.dataset.item;
-
         this.notification = this.notificationsList.find(function(element) {
             if (element.id === selectedNotificationId){
                 return element;
