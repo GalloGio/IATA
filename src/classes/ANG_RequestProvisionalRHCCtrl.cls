@@ -89,8 +89,6 @@ public with sharing class ANG_RequestProvisionalRHCCtrl {
                 
                 rhc.ANG_RME_Amount__c = rhc.ANG_RHC_Amount_Provisional__c;
 
-                ANG_RHCHelper.calculateRHCAmount(new List<ANG_RHC_Information__c>{rhc});
-
             }else{
                 if(buttonAlreadyPushed)
                     this.hasChanged = false;
