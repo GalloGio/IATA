@@ -1,83 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>GADM_Access_Denied</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM Access Denied</shortDescription>
-        <value>Your access to GADM service is denied.</value>
-    </labels>
-    <labels>
-        <fullName>GADM_Access_Pending</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM Access Pending</shortDescription>
-        <value>Your access to GADM service is pending.</value>
-    </labels>
-    <labels>
-        <fullName>GADM_Account_not_active</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM Account not active</shortDescription>
-        <value>Account is not active.</value>
-    </labels>
-    <labels>
-        <fullName>GADM_ChooseAnotherFile</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM_ChooseAnotherFile</shortDescription>
-        <value>Please select another file to upload.</value>
-    </labels>
-    <labels>
-        <fullName>GADM_ChooseFile</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM_ChooseFile</shortDescription>
-        <value>Please select file to upload.</value>
-    </labels>
-    <labels>
-        <fullName>GADM_FileAlreadyAttached</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM_FileAlreadyAttached</shortDescription>
-        <value>This file is already attached!</value>
-    </labels>
-    <labels>
-        <fullName>GADM_NoFile</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM_NoFile</shortDescription>
-        <value>No file selected!</value>
-    </labels>
-    <labels>
-        <fullName>GADM_No_Access</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM No Access</shortDescription>
-        <value>You do not have access to GADM service.</value>
-    </labels>
-    <labels>
-        <fullName>GADM_Power_User</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM Power User</shortDescription>
-        <value>GADM Power User</value>
-    </labels>
-    <labels>
-        <fullName>GADM_account_not_effective</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>GADM account not effective</shortDescription>
-        <value>Account is not effective.</value>
-    </labels>
-    <labels>
-        <fullName>OneId_GADM_Troubleshooting</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId GADM Troubleshooting</shortDescription>
-        <value>Troubleshooting</value>
-    </labels>
-    <labels>
         <fullName>ACCEPTED_PAYMENT_METHODS_MANDATORY</fullName>
         <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
         <language>en_US</language>
@@ -4639,6 +4562,83 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>FooterLeadMessage</shortDescription>
         <value>Our mission is to represent, lead and serve the airline industry</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Access_Denied</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Access Denied</shortDescription>
+        <value>Your access to GADM service is denied.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Access_Pending</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Access Pending</shortDescription>
+        <value>Your access to GADM service is pending.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Account_not_active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Account not active</shortDescription>
+        <value>Account is not active.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_ChooseAnotherFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_ChooseAnotherFile</shortDescription>
+        <value>Please select another file to upload.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_ChooseFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_ChooseFile</shortDescription>
+        <value>Please select file to upload.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_FileAlreadyAttached</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_FileAlreadyAttached</shortDescription>
+        <value>This file is already attached!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_NoFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_NoFile</shortDescription>
+        <value>No file selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_No_Access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM No Access</shortDescription>
+        <value>You do not have access to GADM service.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Power_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Power User</shortDescription>
+        <value>GADM Power User</value>
+    </labels>
+    <labels>
+        <fullName>GADM_account_contact_role_gadm_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM account contact role gadm user</shortDescription>
+        <value>User can have only one Account Contact Role with record type = &apos;Functional&apos; and role = &apos;GADM User&apos;!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_account_not_effective</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM account not effective</shortDescription>
+        <value>Account is not effective.</value>
     </labels>
     <labels>
         <fullName>GeneralPublicLocation</fullName>
@@ -33334,6 +33334,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_Fred_Select_Type_of_Company</shortDescription>
         <value>- Select the Type of Organization -</value>
+    </labels>
+    <labels>
+        <fullName>OneId_GADM_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId GADM Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_GSAWarning</fullName>

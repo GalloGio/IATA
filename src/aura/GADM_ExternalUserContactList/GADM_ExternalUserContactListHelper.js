@@ -125,90 +125,6 @@
         $A.enqueueAction(action);
     },
 
-    /*getGrantedRoles : function(component, event) {
-        let action = component.get('c.getGrantedRoles');
-        action.setParams({
-            'userId' : $A.get('$SObjectType.CurrentUser.Id')
-        });
-        action.setCallback(this, function(response){
-            const state = response.getState();
-            if(state === 'SUCCESS') {
-                const grantedRoles = response.getReturnValue();
-                if(! $A.util.isEmpty(grantedRoles)) {
-
-                    let isPowerUser = false;
-                    let isSuperUser = false;
-                    let isGadmUser = false;
-
-                    for(let i in grantedRoles) {
-                        if(grantedRoles[i].Name === 'Power User') {
-                            isPowerUser = true;
-                            continue;
-                        }
-                        if(grantedRoles[i].Name === 'Super User') {
-                            isSuperUser = true;
-                            continue;
-                        }
-                        if(grantedRoles[i].Name === 'GADM User') {
-                            isGadmUser = true;
-                            continue;
-                        }
-                    }
-
-                    component.set('v.isPowerUser', isPowerUser);
-                    component.set('v.isSuperUser', isSuperUser);
-                    component.set('v.isGadmUser', isGadmUser);
-
-                    if(isPowerUser) {
-                        this.retrieveRecords(component, true, false, false);
-                    }
-                    else if(isSuperUser && !isPowerUser) {//is Super User
-                        this.getBusinessUnits(component, event, true);
-                    }else {//isGadmUser
-                        this.retrieveRecords(component, true, false, true);
-                    }
-
-                }else{
-                    //TODO:error
-
-                }
-            }else{
-                //TODO:error
-                this.toggleTable(component)
-            }
-        });
-        $A.enqueueAction(action);
-
-    },
-
-    getBusinessUnits : function(component, even) {
-        let action = component.get('c.getBusinessUnitsForSuperUser');
-        action.setCallback(this, function(response){
-            const state = response.getState();
-            if(state === 'SUCCESS') {
-                const businessUnits = response.getReturnValue();
-                if(! $A.util.isEmpty(businessUnits)) {
-
-                    let businessUnitsIds = [];
-                    for(let i in businessUnits) {
-                        businessUnitsIds.push(businessUnits[i].Id);
-                    }
-
-                    component.set('v.currentUserBusinessUnits', businessUnitsIds);
-                }
-
-                this.retrieveRecords(component, true, true, false);
-
-            }else{
-                //TODO:error
-                this.toggleTable(component);
-                this.toggleSpinner(component);
-            }
-        });
-        $A.enqueueAction(action);
-
-    },*/
-
     retrieveRecords : function(component, criteria_have_changed, isSuperUser, isGadmUser, businessUnits){
         debugger;
         let action = component.get('c.getContactsVisibleToUser');
@@ -309,7 +225,7 @@
         $A.enqueueAction(action);
     },
 
-    retrieveTotalRecords : function(component){
+    /*retrieveTotalRecords : function(component){
         let action = component.get('c.getTotalRecords');
         action.setParams({
            sobject_name: component.get('v.SObjectName'),
@@ -329,7 +245,7 @@
             this.toggleSpinner(component);
         });
         $A.enqueueAction(action);
-    },
+    },*/
 
     updateTableRows : function(component) {
         this.updatePagination(component);
@@ -480,7 +396,7 @@
         component.find('lastButton').set('v.disabled', (!has_next));
     },
 
-    switchRow : function(component, index, is_checked){
+    /*switchRow : function(component, index, is_checked){
         let all_records = component.get('v.AllRecords');
         let first_record_on_page = component.get('v.FirstRecordOnPage');
         let selected_records_map = component.get('v.SelectedRecordsMap');
@@ -514,7 +430,7 @@
         component.set('v.AllRecordsSelected', is_checked);
         this.updateTableRows(component);
         this.updateSelectedRecords(component);
-    },
+    },*/
 
     updateSelectedRecords : function(component){
         let selected_records_map = component.get('v.SelectedRecordsMap');

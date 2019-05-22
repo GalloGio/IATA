@@ -25,13 +25,13 @@
         helper.retrieveRecords(component, true);
     },
 
-    selectRecord : function(component, event, helper){
+    /*selectRecord : function(component, event, helper){
         helper.switchRow(component, parseInt(event.srcElement.dataset.id), event.srcElement.checked);
     },
 
     selectAllRecords : function(component, event, helper){
         helper.switchAllRows(component, event.srcElement.checked);
-    },
+    },*/
 
     changeSort : function(component, event, helper){
         let clicked_element = event.srcElement;

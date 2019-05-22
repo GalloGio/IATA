@@ -30,6 +30,7 @@ public class OneId_RegistrationHelper_GADM_TEST {
         acc.Type = 'IATA Cargo Agent';
         acc.Status__c = 'Approved';
         acc.RecordTypeId = headquarters;
+        acc.ParentId = parentAcc.Id;
         acc.Top_Parent__c = parentAcc.Id;
         insert acc;
 
@@ -44,6 +45,8 @@ public class OneId_RegistrationHelper_GADM_TEST {
         acc2.Type = 'IATA Cargo Agent';
         acc2.Status__c = 'Approved';
         acc2.RecordTypeId = headquarters;
+        acc2.ParentId = parentAcc.Id;
+        acc2.Top_Parent__c = parentAcc.Id;
         insert acc2;
 
         Contact testContact = createContact('Neo', 'Smith', acc);
@@ -51,7 +54,7 @@ public class OneId_RegistrationHelper_GADM_TEST {
 
         Id profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'].Id;
 
-        User testUser = createUser(testContact, profileId);
+        //User testUser = createUser(testContact, profileId);
 
         List<Data_Submission__c> listToInsert = new List<Data_Submission__c>();
 
@@ -66,10 +69,21 @@ public class OneId_RegistrationHelper_GADM_TEST {
         }
 
         insert listToInsert;
+
+        Portal_Applications__c portalApplications = new Portal_Applications__c();
+        portalApplications.Name = 'GADM';
+        insert portalApplications;
+
         //GADM Participang Account Role
         Account_Roles__c accountRoles = new Account_Roles__c();
         accountRoles.Name = 'GADM Participant';
         insert accountRoles;
+
+
+        Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
+        accountRoleServices.Portal_Service__c = portalApplications.Id;
+        accountRoleServices.Account_Roles__c = accountRoles.Id;
+        insert accountRoleServices;
 
         Id defaultRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Default');
 
@@ -92,24 +106,40 @@ public class OneId_RegistrationHelper_GADM_TEST {
         contactRoles.RecordTypeId = externalRecordTypeId;
         insert contactRoles;
 
+        Contact_Role_Service__c roleService = new Contact_Role_Service__c();
+        roleService.Service__c = portalApplications.Id;
+        roleService.Contact_Role__c = contactRoles.Id;
+        insert roleService;
+
         Contact_Roles__c contactRoles2 = new Contact_Roles__c();
         contactRoles2.Name = 'Service Power User';
         contactRoles2.RecordTypeId = externalRecordTypeId;
         insert contactRoles2;
+
+        Contact_Role_Service__c roleService2 = new Contact_Role_Service__c();
+        roleService2.Service__c = portalApplications.Id;
+        roleService2.Contact_Role__c = contactRoles2.Id;
+        insert roleService2;
 
         Contact_Roles__c contactRoles3 = new Contact_Roles__c();
         contactRoles3.Name = 'Service Super User';
         contactRoles3.RecordTypeId = externalRecordTypeId;
         insert contactRoles3;
 
+        Contact_Role_Service__c roleService3 = new Contact_Role_Service__c();
+        roleService3.Service__c = portalApplications.Id;
+        roleService3.Contact_Role__c = contactRoles3.Id;
+        insert roleService3;
+
         Contact_Roles__c contactRoles4 = new Contact_Roles__c();
         contactRoles4.Name = 'GADM Data Submitter';
         contactRoles4.RecordTypeId = externalRecordTypeId;
         insert contactRoles4;
 
-        Portal_Applications__c portalApplications = new Portal_Applications__c();
-        portalApplications.Name = 'GADM';
-        insert portalApplications;
+        Contact_Role_Service__c roleService4 = new Contact_Role_Service__c();
+        roleService4.Service__c = portalApplications.Id;
+        roleService4.Contact_Role__c = contactRoles4.Id;
+        insert roleService4;
 
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
         Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');

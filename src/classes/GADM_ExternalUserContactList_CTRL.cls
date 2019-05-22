@@ -1,23 +1,23 @@
 public without sharing class GADM_ExternalUserContactList_CTRL {
 
 
-    private static final Integer MAX_QUERY_RECORDS = 2000;
+    //private static final Integer MAX_QUERY_RECORDS = 2000;
 
-    @AuraEnabled
+    /*@AuraEnabled
     public static String getColumnMetadata(String sobject_name, List<String> field_names, List<String> field_labels, List<String> sortable_field_names, List<String> reference_fields, List<String> override_field_type){
         return JSON.serialize(new ColumnMetadataWrapper(sobject_name, field_names, field_labels, sortable_field_names, reference_fields, override_field_type), true);
-    }
+    }*/
 
-    @AuraEnabled
+    /*@AuraEnabled
     public static Integer getTotalRecords(String sobject_name, String match_criteria){
         String query = 'SELECT COUNT() FROM ' + String.escapeSingleQuotes(sobject_name);
         if(String.isNotBlank(match_criteria)){
             query += ' WHERE ' + match_criteria;
         }
         return Database.countQuery(query);
-    }
+    }*/
 
-    @AuraEnabled
+    /*@AuraEnabled
     public static String getRecords(String sobject_name, List<String> field_names, String match_criteria, String sort_by_field, String sort_order){
         String query = 'SELECT ' + String.escapeSingleQuotes(String.join(field_names, ',')) + ' FROM ' + String.escapeSingleQuotes(sobject_name);
         if(String.isNotBlank(match_criteria)){
@@ -39,13 +39,13 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
             return JSON.serialize(new SObjectWrapper(e.getMessage()));
         }
         return JSON.serialize(new SObjectWrapper(sobjects));
-    }
+    }*/
 
-    private class ColumnMetadataWrapper {
+    /*private class ColumnMetadataWrapper {
         private Map<String, ColumnMetadata> column_metadata;
-        private String error_message;
+        private String error_message;*/
 
-        public ColumnMetadataWrapper(String sobject_name, List<String> field_names, List<String> field_labels, List<String> sortable_field_names, List<String> reference_fields, List<String> override_field_type){
+        /*public ColumnMetadataWrapper(String sobject_name, List<String> field_names, List<String> field_labels, List<String> sortable_field_names, List<String> reference_fields, List<String> override_field_type){
             String namespace = retrieveNamespace();
             try {
                 String sobject_internal_name = parseSObjectName(namespace, sobject_name);
@@ -61,17 +61,17 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
                 error_message = e.getMessage();
                 column_metadata = new Map<String, ColumnMetadata>();
             }
-        }
+        }*/
 
-        private String retrieveNamespace(){
+        /*private String retrieveNamespace(){
             String class_name = DataTableController.class.getName();
             if(class_name.countMatches('.') == 1){
                 return class_name.substringBefore('.') + '__';
             }
             return '';
-        }
+        }*/
 
-        private String parseSObjectName(String namespace, String sobject_name){
+        /*private String parseSObjectName(String namespace, String sobject_name){
             if(Schema.getGlobalDescribe().containsKey(sobject_name)){
                 return sobject_name;
             } else if(String.isNotBlank(namespace) && Schema.getGlobalDescribe().containsKey(namespace + sobject_name)){
@@ -79,16 +79,16 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
             } else {
                 throw new DynamicTableException('Unknown SObject: ' + sobject_name + '.');
             }
-        }
+        }*/
 
-        private void parseFieldsString(String namespace, String sobject_internal_name, List<String> field_names){
+        /*private void parseFieldsString(String namespace, String sobject_internal_name, List<String> field_names){
             column_metadata = new Map<String, ColumnMetadata>();
             for(String field_name : field_names){
                 column_metadata.put(field_name, new ColumnMetadata(namespace, sobject_internal_name, field_name));
             }
-        }
+        }*/
 
-        private void setColumnsLabels(List<String> field_labels){
+        /*private void setColumnsLabels(List<String> field_labels){
             for(String unconverted_field_label : field_labels){
                 String field_name = unconverted_field_label.substringBefore(':');
                 String field_label = unconverted_field_label.substringAfter(':');
@@ -97,9 +97,9 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
                 }
                 column_metadata.get(field_name).setFieldLabel(field_label);
             }
-        }
+        }*/
 
-        private void setSortableColumns(List<String> sortable_field_names){
+        /*private void setSortableColumns(List<String> sortable_field_names){
             if(!sortable_field_names.isEmpty()){
                 for(String field_name : sortable_field_names){
                     if(!column_metadata.containsKey(field_name)){
@@ -112,18 +112,18 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
                     column.setFieldIsSortable(true);
                 }
             }
-        }
+        }*/
 
-        private void setReferenceColumns(List<String> reference_fields){
+        /*private void setReferenceColumns(List<String> reference_fields){
             for(String field_name : reference_fields){
                 if(!column_metadata.containsKey(field_name)){
                     throw new DynamicTableException('Unknown field in reference string: ' + field_name + '.');
                 }
                 column_metadata.get(field_name).setFieldIsReference(true);
             }
-        }
+        }*/
 
-        private void setOverridedFieldTypeColumns(List<String> override_field_type){
+        /*private void setOverridedFieldTypeColumns(List<String> override_field_type){
             for(String unconverted_field_label : override_field_type){
                 String field_name = unconverted_field_label.substringBefore(':');
                 String field_type = unconverted_field_label.substringAfter(':');
@@ -132,11 +132,11 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
                 }
                 column_metadata.get(field_name).setFieldOverrideType(field_type);
             }
-        }
+        }*/
 
-    }
+    //}
 
-    private class ColumnMetadata {
+    /*private class ColumnMetadata {
         private String field_api_name;
         private String field_label;
         private String field_type;
@@ -240,7 +240,7 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
         }
     }
 
-    private class DynamicTableException extends Exception {}
+    private class DynamicTableException extends Exception {}*/
 
 
 

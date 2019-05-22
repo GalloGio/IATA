@@ -74,6 +74,7 @@ public without sharing class OneId_RegistrationHelper_GADM {
         }
 
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
 
         List<Account_Contact_Role__c> toInsert = new List<Account_Contact_Role__c>();
         //GADM User - functional RecordType
@@ -85,6 +86,16 @@ public without sharing class OneId_RegistrationHelper_GADM {
         accountContactRole2.RecordTypeId = functionalRecordTypeId;
 
         toInsert.add(accountContactRole2);
+
+        //GADM User - group RecordType
+        Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
+        accountContactRole.Contact__c = con.Id;
+        accountContactRole.Contact_Roles__c = gadmUser.Id;
+        accountContactRole.Account_Role__c = accountRole.Id;
+        accountContactRole.Service_Rendered__c = 'GADM';
+        accountContactRole.RecordTypeId = groupRecordTypeId;
+
+        toInsert.add(accountContactRole);
 
         //Service Power User
         if(isPowerUser) {
@@ -107,13 +118,15 @@ public without sharing class OneId_RegistrationHelper_GADM {
         List<Portal_Applications__c> services = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM' LIMIT 1];
 
         for(Account_Contact_Role__c contactRole : toInsert) {
-            Contact_Role_Service_Access__c serviceAccess = new Contact_Role_Service_Access__c();
-            serviceAccess.Contact_Role__c = contactRole.Id;
-            serviceAccess.Status__c = 'Pending';
-            serviceAccess.Service__c = services[0].Id;
+            //Account contact role with RecordType = Group do not need Contact Role Service Access
+            if(contactRole.RecordTypeId == functionalRecordTypeId) {
+                Contact_Role_Service_Access__c serviceAccess = new Contact_Role_Service_Access__c();
+                serviceAccess.Contact_Role__c = contactRole.Id;
+                serviceAccess.Status__c = 'Pending';
+                serviceAccess.Service__c = services[0].Id;
 
-            contactRolesServiceAccessToInsert.add(serviceAccess);
-
+                contactRolesServiceAccessToInsert.add(serviceAccess);
+            }
         }
 
         if(!contactRolesServiceAccessToInsert.isEmpty()) {
