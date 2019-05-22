@@ -149,8 +149,8 @@ private class AMS_ChangeCodesHelperTest {
 
 	}
 
-
-	static testMethod void testGenerateFOPStringForChina() {
+	@isTest
+    public static void testGenerateFOPStringForChina() {
 
 		Id accountAgencyRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		String changeCode = 'LSP';
