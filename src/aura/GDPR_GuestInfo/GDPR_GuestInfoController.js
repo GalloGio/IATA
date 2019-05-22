@@ -29,12 +29,12 @@
 					indiv.Email__c = email;
 					component.set('v.individual', indiv);
 				}else {
-					window.open($A.get('$Label.c.IATA_GDPR_URL')+'/s/invalid-token','_top');
+					window.open($A.get('$Label.c.IATA_GDPR_URL')+'invalid-token','_top');
 				}
 			});
 			$A.enqueueAction(action);
 		}else{
-			window.open($A.get('$Label.c.IATA_GDPR_URL')+'/s/landing','_top');
+			window.open($A.get('$Label.c.IATA_GDPR_URL')+'landing','_top');
 		}
 	},
 
