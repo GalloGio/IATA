@@ -24,6 +24,8 @@
     <!--Show properties-->
     <aura:attribute name="detailsShown" type="Boolean" default="False"/>
     <aura:attribute name="detailsData" type="Object[]"/>
+    <aura:attribute name="tabId" type="String"/>
+    <aura:attribute name="selectedTabId" type="String"/>
 
     <!--User info-->
     <aura:attribute name="userInformation" type="Object" default=""/>
@@ -53,6 +55,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.initializeComponent}" />
     <aura:handler name="change" value="{!v.MatchCriteria}" action="{!c.updateMatchCriteria}" />
     <aura:handler name="detailsBackEvt" event="c:Data_Submission_Event" action="{!c.handleDetailsBackEvt}"/>
+    <aura:handler name="change" value="{! v.selectedTabId}" action="{! c.showList}"/>
 
     <div class="page_container">
 

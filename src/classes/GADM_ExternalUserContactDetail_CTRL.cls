@@ -207,9 +207,9 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
 
 
     /*@AuraEnabled
-    public static Contact_Roles_Helper.AggregatedRecordWrapper reloadData(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits, Contact selectedContact) {
+    public static Contact_Roles_Helper.AggregatedRecordWrapper reloadData(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits, Boolean sortDesc, Contact selectedContact) {
 
-        List<Contact_Roles_Helper.AggregatedRecordWrapper> wrappers = Contact_Roles_Helper.getContactsVisibleToUser(userId, isSuperUser, isGadmUser, businessUnits, selectedContact);
+        List<Contact_Roles_Helper.AggregatedRecordWrapper> wrappers = Contact_Roles_Helper.getContactsVisibleToUser(userId, isSuperUser, isGadmUser, businessUnits, selectedContact, sortDesc);
         System.debug('wrappers:: ' + wrappers);
 
         Contact_Roles_Helper.AggregatedRecordWrapper selectedUserData = wrappers[0];

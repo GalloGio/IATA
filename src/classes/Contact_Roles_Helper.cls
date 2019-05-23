@@ -207,7 +207,7 @@ public without sharing class Contact_Roles_Helper {
     }*/
 
 
-    public static List<AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits, Contact selectedContact) {
+    public static List<AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits, Contact selectedContact, Boolean sortDesc) {
 
         Contact con = Contact_Roles_Helper.getContactFromUser(UserId);
 
@@ -287,7 +287,17 @@ public without sharing class Contact_Roles_Helper {
         System.debug('businessUnitsMap:: ' +businessUnitsMap);
         System.debug('isSuperUser:: ' + isSuperUser);
 
-        Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName, Salutation, Email, Phone, Account.Name, Account.IATACode__c, Account.Region__c FROM Contact WHERE Id = :contactIds ORDER BY LastName ASC]);
+
+        Map<Id, Contact> contactsMap = new Map<Id, Contact>();
+
+        if(! sortDesc) {
+            Map<Id, Contact> tempMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName, Salutation, Email, Phone, Account.Name, Account.IATACode__c, Account.Region__c FROM Contact WHERE Id = :contactIds ORDER BY LastName ASC ]);
+            contactsMap = tempMap;
+        }else{
+            Map<Id, Contact> tempMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName, Salutation, Email, Phone, Account.Name, Account.IATACode__c, Account.Region__c FROM Contact WHERE Id = :contactIds ORDER BY LastName DESC ]);
+            contactsMap = tempMap;
+        }
+
         System.debug('contactsMap:: ' + contactsMap);
 
         List<AggregatedRecordWrapper> aggregatedRecordWrappers = new List<Contact_Roles_Helper.AggregatedRecordWrapper>();

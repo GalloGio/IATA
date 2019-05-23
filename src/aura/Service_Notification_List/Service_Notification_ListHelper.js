@@ -8,12 +8,15 @@
                 if(! $A.util.isEmpty(messages)) {
 
                     component.set('v.messages', messages);
+                    component.set('v.showMessages', true);
 
                 }else{
                     console.log('loadMessages - empty list retrieved');
+                    component.set('v.showMessages', true);
                 }
             }else{
                 console.log('loadMessages error');
+                component.set('v.showMessages', true);
             }
         });
         $A.enqueueAction(action);

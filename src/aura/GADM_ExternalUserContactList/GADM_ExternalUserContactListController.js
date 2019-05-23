@@ -1,23 +1,8 @@
 ({
 
     initializeComponent : function(component, event, helper) {
-        debugger;
         helper.getTableData(component, event);
-        /*component.set('v.PrivateMatchCriteria', component.get('v.MatchCriteria'));
-        component.set('v.SelectedRecordsMap', new Map());
-        helper.initializePageSizeSelectList(component);
-        helper.initializeColumnMetaData(component);
-        //helper.toggleTable(component);*/
     },
-
-    /*getTableData : function(component, event) {
-        component.set('v.PrivateMatchCriteria', component.get('v.MatchCriteria'));
-        component.set('v.SelectedRecordsMap', new Map());
-        helper.initializePageSizeSelectList(component);
-        helper.initializeColumnMetaData(component);
-        //helper.toggleTable(component);
-
-    },*/
 
     updateMatchCriteria : function(component, event, helper) {
         component.set('v.PrivateMatchCriteria', event.getParam('value'));
@@ -51,7 +36,12 @@
         component.set('v.PageNumber', 1);
         component.set('v.SortByField', current_sort_field);
         component.set('v.SortOrder', sort_order);
-        helper.retrieveRecords(component, false);
+
+        let isSuperUser = component.get('v.isSuperUser');
+        let isGadmUser = component.get('v.isGadmUser');
+        let businessUnits = component.get('v.businessUnits');
+
+        helper.retrieveRecords(component, false, isSuperUser, isGadmUser, businessUnits, sort_order === 'DESC');
     },
 
     firstPage : function(component, event, helper) {
@@ -147,15 +137,15 @@
          
          let dataModified = event.getParam('dataModified');
          let page = event.getParam('page');
-        console.log('page'+page);
+
          if(dataModified === true) {
              component.set("v.detailsShown", !component.get("v.detailsShown"));
+             component.set('v.dataModified', true);
              helper.getTableData(component, event);
          }else{
              helper.toggleTable(component);
              if(page === 'detail'){
                 component.set("v.detailsShown", !component.get("v.detailsShown"));
-                console.log('in detail');
              	helper.toggleDetails(component);
                  
              } else if (page === 'invitation'){
@@ -163,6 +153,12 @@
              	helper.toggleInvitation(component);
              }
          }
-    }
+    },
+
+    showList : function(component, event, helper) {
+        helper.handleReload(component, event);
+
+    },
+
 
 })

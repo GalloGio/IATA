@@ -8,4 +8,8 @@
         helper.handleTrackUsage(component, event);
     },
 
+    activateTab : function(component, event, helper) {
+        helper.handleActivateTab(component, event);
+    },
+
 })

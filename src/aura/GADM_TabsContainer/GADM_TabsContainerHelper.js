@@ -105,4 +105,59 @@
         $A.enqueueAction(action);
     },
 
+    handleActivateTab : function(component, event) {
+        let tab = event.getSource();
+        switch(tab.get('v.id')) {
+
+            case "1" :
+                this.createNewComponent('c:Service_Notification_List', tab);
+                break;
+
+            case "2" :
+                this.createNewComponent('c:File_Upload', tab);
+                break;
+
+            case "3" :
+                this.createNewComponent('c:Data_Submission_List', tab);
+                break;
+
+            case "4" :
+                this.createNewComponent('c:GADM_ExternalUserContactList', tab);
+                break;
+
+            case "5" :
+                this.createNewComponent('c:PowerBI_Embedded_Container', tab);
+                break;
+        }
+    },
+
+
+    createNewComponent : function(name, target) {
+        let self = this;
+        $A.createComponent(
+        name,
+        {},
+        function(contentComponent, status, error){
+            if(status === 'SUCCESS') {
+                target.set('v.body', contentComponent);
+            }else if(status === 'ERROR'){
+                //show error
+                console.log('error:: ' + error);
+                self.showMessage('error', 'Unexpected error!', 'Unable to create component!');
+
+            }
+        });
+    },
+
+
+    showMessage : function(type, title, message) {
+        let action = $A.get('e.force:showToast');
+        action.setParams({
+            title: title,
+            message: message,
+            type: type
+        });
+        action.fire();
+    },
+
 })

@@ -301,10 +301,10 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
 
 
     @AuraEnabled
-    public static List<Contact_Roles_Helper.AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnitsIds) {
+    public static List<Contact_Roles_Helper.AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnitsIds, Boolean sortDesc) {
 
         //return Contact_Roles_Helper.getAggregatedContactsVisibleToUser(userId);
-        return Contact_Roles_Helper.getContactsVisibleToUser(userId, isSuperUser, isGadmUser, businessUnitsIds, null);
+        return Contact_Roles_Helper.getContactsVisibleToUser(userId, isSuperUser, isGadmUser, businessUnitsIds, null, sortDesc);
     }
 
 

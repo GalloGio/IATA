@@ -3,5 +3,4 @@
         helper.loadMessages(component, event);
     },
 
-
 })

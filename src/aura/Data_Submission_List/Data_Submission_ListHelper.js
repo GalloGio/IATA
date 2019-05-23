@@ -370,9 +370,54 @@
         $A.util.toggleClass(tableContainer, 'slds-hide');
     },
 
+    showTable : function(component) {
+        let tableContainer = component.find('tableContainer');
+        $A.util.removeClass(tableContainer, 'slds-hide');
+    },
+
     toggleDetails : function(component) {
         var detailsContainer = component.find('detailContainer');
         $A.util.toggleClass(detailsContainer, 'slds-hide');
+    },
+
+    hideDetail : function(component) {
+        let detailContainer = component.find('detailContainer');
+        $A.util.addClass(detailContainer, 'slds-hide');
+    },
+
+    handleReload : function(component, event) {
+        let tabId = component.get('v.tabId');
+        let selectedTabId = event.getParam('value');
+        if(tabId === selectedTabId) {
+
+            let tableContainer = component.find('tableContainer');
+            let isTabShown = !tableContainer.getElement().classList.contains('slds-hide');
+
+            let detailContainer = component.find('detailContainer');
+            let isDetailShown = !detailContainer.getElement().classList.contains('slds-hide');
+
+            if(isTabShown && !isDetailShown) {
+                this.toggleTable(component);
+                component.set('v.PageNumber', 1);
+                component.set('v.PageSize', 10);
+                component.set('v.PrivateMatchCriteria', component.get('v.MatchCriteria'));
+                component.set('v.SelectedRecordsMap', new Map());
+                this.initializePageSizeSelectList(component);
+                this.initializeColumnMetaData(component);
+
+            }else if(!isTabShown && isDetailShown) {
+                this.hideDetail(component);
+                component.set('v.PageNumber', 1);
+                component.set('v.PageSize', 10);
+                component.set('v.PrivateMatchCriteria', component.get('v.MatchCriteria'));
+                component.set('v.SelectedRecordsMap', new Map());
+                this.initializePageSizeSelectList(component);
+                this.initializeColumnMetaData(component);
+            }
+
+
+        }
+
     },
 
 })

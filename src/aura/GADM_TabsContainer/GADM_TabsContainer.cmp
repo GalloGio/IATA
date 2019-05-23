@@ -22,35 +22,29 @@
             <lightning:tabset  aura:id="tabs" selectedTabId="{!v.tabId}" onselect="{! c.trackUsage}">
 
                 <!--ALWAYS VISIBLE-->
-                <lightning:tab class="element first" label="HOME" id="1">
-                    <c:Service_Notification_List/>
-                </lightning:tab>
+                <lightning:tab class="element first" label="HOME" id="1" onactive="{! c.activateTab}"/>
 
 
                 <aura:if isTrue="{!v.isDataSubmissionVisible}">
-                    <lightning:tab class="element" label="DATA SUBMISSION" id="2">
-                        <c:File_Upload/>
-                    </lightning:tab>
+                    <lightning:tab class="element" label="DATA SUBMISSION" id="2" onactive="{! c.activateTab}"/>
                 </aura:if>
 
 
                 <aura:if isTrue="{! v.isDataSubmissionResultVisible}">
                     <lightning:tab class="element" label="DATA SUBMISSION RESULTS" id="3">
-                        <c:Data_Submission_List/>
+                        <c:Data_Submission_List tabId="3" selectedTabId="{! v.tabId}"/>
                     </lightning:tab>
                 </aura:if>
 
 
                 <!--ALWAYS VISIBLE-->
                 <lightning:tab class="element" label="USER MANAGEMENT" id="4">
-                    <c:GADM_ExternalUserContactList/>
+                    <c:GADM_ExternalUserContactList tabId="4" selectedTabId="{! v.tabId}"/>
                 </lightning:tab>
 
 
                 <aura:if isTrue="{!v.isDashboardsVisible}">
-                    <lightning:tab class="element" label="DASHBOARDS" id="5">
-                        <c:PowerBI_Embedded_Container/>
-                    </lightning:tab>
+                    <lightning:tab class="element" label="DASHBOARDS" id="5" onactive="{! c.activateTab}"/>
                 </aura:if>
 
             </lightning:tabset>

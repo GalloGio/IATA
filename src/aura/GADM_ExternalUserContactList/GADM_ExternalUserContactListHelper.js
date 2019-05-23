@@ -5,7 +5,6 @@
         component.set('v.SelectedRecordsMap', new Map());
         this.initializePageSizeSelectList(component);
         this.initializeColumnMetaData(component);
-        //this.toggleTable(component);
     },
 
     initializePageSizeSelectList : function(component) {
@@ -24,7 +23,7 @@
 
     initializeColumnMetaData : function(component) {
         this.toggleSpinner(component);
-        let column_metadata = {"Name":{"field_type":"STRING","field_label":"Name","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Name"},
+        let column_metadata = {"Name":{"field_type":"STRING","field_label":"Name","field_is_sortable":true,"field_is_reference":false,"field_api_name":"Name"},
                              "Contact":{"field_type":"STRING","field_label":"Contact","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Contact"},
                              "Actor":{"field_type":"STRING","field_label":"Actor","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Actor"},
                              "ActorData":{"field_type":"STRING","field_label":"ActorData","field_is_sortable":false,"field_is_reference":false,"field_api_name":"ActorData"},
@@ -33,7 +32,7 @@
                              "Business Units":{"field_type":"STRING","field_label":"Business Units","field_is_sortable":false,"field_is_reference":false,"field_api_name":"Business Units"},
                              "BusinessUnitsData":{"field_type":"STRING","field_label":"BusinessUnitsData","field_is_sortable":false,"field_is_reference":false,"field_api_name":"BusinessUnitsData"}};
 
-        let table_columns = [{"is_selection_column":false,"field_name":"Name","field_api_name":"Name","field_label":"Name","field_type":"STRING","field_is_reference":false,"field_is_sortable":false},
+        let table_columns = [{"is_selection_column":false,"field_name":"Name","field_api_name":"Name","field_label":"Name","field_type":"STRING","field_is_reference":false,"field_is_sortable":true},
                           {"is_selection_column":false,"field_name":"Actor","field_api_name":"Actor","field_label":"Actor","field_type":"STRING","field_is_reference":false,"field_is_sortable":false},
                           {"is_selection_column":false,"field_name":"Roles","field_api_name":"Roles","field_label":"Roles","field_type":"STRING","field_is_reference":false,"field_is_sortable":false},
                           {"is_selection_column":false,"field_name":"Business Units","field_api_name":"Business Units","field_label":"Business Units","field_type":"STRING","field_is_reference":false,"field_is_sortable":false}];
@@ -88,52 +87,52 @@
                             }
                         }
 
-
                         if(isPowerUser) {//Power User
 
                             component.set('v.isPowerUser', isPowerUser);
-                            this.retrieveRecords(component, true, false, false, businessUnitsIds);
+                            this.retrieveRecords(component, true, false, false, businessUnitsIds, false);
 
                         }else if(isSuperUser && !isPowerUser) {//Super User
 
                             component.set('v.isSuperUser', isSuperUser);
-                            this.retrieveRecords(component, true, true, false, businessUnitsIds);
+                            this.retrieveRecords(component, true, true, false, businessUnitsIds, false);
 
                         }else if(!isPowerUser && ! isSuperUser && isGadmUser) {//isGadmUser
 
                             component.set('v.isGadmUser', isGadmUser);
-                            this.retrieveRecords(component, true, false, true, businessUnitsIds/*, false, null*/);
+                            this.retrieveRecords(component, true, false, true, businessUnitsIds/*, false, null*/, false);
 
                         }else{
-                            //TODO:show empty table
+
+                            this.handleErrorMessage(component, 'Unknown user roles!');
                         }
 
                     }else{
-                        //TODO:empty granted roles - show empty table
+
+                        this.handleErrorMessage(component, 'Unable to get user roles!');
                     }
 
-
                 }else{
-                    //TODO:error
+
+                    this.handleErrorMessage(component, 'Empty user information retrieved!');
                 }
 
             }else{
-                //TODO:error
-                console.log('getCurrentUserInfo error');
+
+                this.handleErrorMessage(component, 'Unable to get user information!');
             }
         });
         $A.enqueueAction(action);
     },
 
-    retrieveRecords : function(component, criteria_have_changed, isSuperUser, isGadmUser, businessUnits){
-        debugger;
+    retrieveRecords : function(component, criteria_have_changed, isSuperUser, isGadmUser, businessUnits, sortDesc){
         let action = component.get('c.getContactsVisibleToUser');
-        //let businessUnits = component.get('v.currentUserBusinessUnits');
         action.setParams({
             'userId' : $A.get("$SObjectType.CurrentUser.Id"),
             'isSuperUser' : isSuperUser,
             'isGadmUser' : isGadmUser,
-            'businessUnitsIds' : businessUnits
+            'businessUnitsIds' : businessUnits,
+            'sortDesc' : sortDesc
         });
         action.setCallback(this, function(response){
             let state = response.getState();
@@ -211,11 +210,15 @@
                         component.set('v.SelectedRecordsMap', new Map());
                         component.set('v.AllRecordsSelected', false);
                         this.updateSelectedRecords(component);
+                        this.toggleTable(component);
+                        this.toggleSpinner(component);
                     }
                 }
                 this.updateTableRows(component);
-                this.toggleTable(component);
-                this.toggleSpinner(component);
+                if(component.get('v.dataModified')) {
+                    this.showSaveMessage(component, 'Changes saved.');
+                    component.set('v.dataModified', false);
+                }
 
             } else if(state === 'ERROR'){
                 this.handleErrorMessage(component, response.getError());
@@ -451,6 +454,16 @@
         component.set('v.ErrorMessage', message);
     },
 
+    showSaveMessage : function(component, message) {
+        let action = $A.get('e.force:showToast');
+        action.setParams({
+            title: 'Save successful',
+            message: message,
+            type: 'success'
+        });
+        action.fire();
+    },
+
     toggleSpinner : function(component) {
         var spinner = component.find('spinner');
         $A.util.toggleClass(spinner, 'slds-hide');
@@ -468,5 +481,31 @@
 	toggleInvitation : function(component) {
         var invitationContainer = component.find('invitationContainer');
         $A.util.toggleClass(invitationContainer, 'slds-hide');
-    }
+    },
+
+    handleReload : function(component, event) {
+        let tabId = component.get('v.tabId');
+        let selectedTabId = event.getParam('value');
+        if(tabId === selectedTabId) {
+            let tableContainer = component.find('tableContainer');
+            let isTabShown = !tableContainer.getElement().classList.contains('slds-hide');
+
+            let detailShown = component.get('v.detailsShown');
+
+            if(isTabShown && !detailShown) {
+                component.set('v.PageNumber', 1);
+                component.set('v.PageSize', 10);
+                this.toggleTable(component);
+                this.getTableData(component, event);
+            }else if(!isTabShown && detailShown) {
+                component.set('v.PageNumber', 1);
+                component.set('v.PageSize', 10);
+                component.set('v.detailsShown', false);
+                this.getTableData(component, event);
+            }
+        }
+
+    },
+
+
 })

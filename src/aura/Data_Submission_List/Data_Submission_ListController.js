@@ -94,6 +94,7 @@
         });
         navigate.fire();
     },
+
 	 handleDetailsShow: function(component,event,helper) {
          var rowNum = event.getSource().get("v.name");
          var pageNum = component.get('v.PageNumber');
@@ -109,11 +110,10 @@
          for(let row in component.get("v.TableRows")) {
 
              for(let col in component.get("v.TableColumns")) {
-             component.get("v.TableRows")[row][col]["label"] = component.get("v.TableColumns")[col].field_label;
-         }
+                component.get("v.TableRows")[row][col]["label"] = component.get("v.TableColumns")[col].field_label;
+            }
          }
 
-         console.log(JSON.stringify(component.get("v.TableRows")[rowNum]));
          component.set("v.detailsData", component.get("v.TableRows")[rowNum]);
 		 helper.toggleTable(component);
 		 helper.toggleDetails(component);
@@ -123,6 +123,10 @@
          helper.toggleTable(component);
          helper.toggleDetails(component);
 
+    },
+
+    showList : function(component, event, helper) {
+        helper.handleReload(component, event);
     },
 
 })
