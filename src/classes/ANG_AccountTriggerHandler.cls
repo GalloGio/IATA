@@ -651,7 +651,7 @@ public class ANG_AccountTriggerHandler {
 				&& acc.Status__c != 'Terminated' && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) {
 				
 				//Just go in the IsoCountryDao if the other conditions are true, to avoid a query
-				if(IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acc.IATA_ISO_Country__c}).get(0).ANG_Portal_Service__c != null)
+				if(IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acc.IATA_ISO_Country__c}).get(0).ANG_Portal_Service__c != null || IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acc.IATA_ISO_Country__c}).get(0).ANG_IEP_Model__c == 'Banking Model')
 					acc.ANG_IEP_Status__c = 'No IEP Account';
 			}
 		}
