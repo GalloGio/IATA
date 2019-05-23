@@ -959,6 +959,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
     </labels>
     <labels>
+        <fullName>ANG_AE_separate_Legal_Entity_MultiCountry</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_AE_separate_Legal_Entity_MultiCountry</shortDescription>
+        <value>* Is this Associate Entity a separate Legal entity for the selected BSP?</value>
+    </labels>
+    <labels>
         <fullName>ANG_Conversion_Tool_Error_10</fullName>
         <language>en_US</language>
         <protected>false</protected>
