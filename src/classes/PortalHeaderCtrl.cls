@@ -70,27 +70,28 @@ public without sharing class PortalHeaderCtrl {
     public static List<NotificationItem> getNotifications() {
         
         User loggedUser = CSP_Utils.getLoggedUser();
+        Boolean isAdmin = loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
 
         // Get Notifications
-        List<Notification__c> notificationList = getAllContactNotifications(loggedUser, CSP_Utils.isAdmin());
+        List<Notification__c> notificationList = getAllContactNotifications(loggedUser, isAdmin);
         List<NotificationItem> notificationItemList = new List<NotificationItem>();
 
         List<Contact> userPortalAccessRequestList = new List<Contact>();
         List<Portal_Application_Right__c> userPortalServiceAccessRequestList = new List<Portal_Application_Right__c>();
-        if ( CSP_Utils.isAdmin() ) {
+        if ( isAdmin ) {
             String topParentId = loggedUser.Contact.Account.Top_Parent__c == null ? loggedUser.Contact.AccountId : loggedUser.Contact.Account.Top_Parent__c;
             userPortalAccessRequestList = getContactsToApprove(topParentId);
             userPortalServiceAccessRequestList = getPortalAppRightsToApprove(topParentId);
             
             for (Contact contact : userPortalAccessRequestList){
                 // USER ACCESS (CONTACT)
-                NotificationItem notif = new NotificationItem(contact.Id, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Name}), contact.Owner.CreatedDate, false, 'Task', contact.Name + ' ' + System.Label.UserRequestPortalAccess, false, 'Portal Access');
+                NotificationItem notif = new NotificationItem(contact.Id, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Name}), contact.Owner.CreatedDate, false, 'Task', String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Name}), false, 'Portal Access');
                 notificationItemList.add(notif);
             }
             
             for (Portal_Application_Right__c application : userPortalServiceAccessRequestList){
                 // PORTAL SERVICE
-                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name, System.Label.PortalService}), application.CreatedDate, false, 'Task', application.Contact__r.Name + ' ' + System.Label.UserRequestServiceAccess + ' ' + application.Portal_Application__r.Name, false, 'Portal Service');
+                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name, System.Label.PortalService}), application.CreatedDate, false, 'Task', String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name, System.Label.PortalService}), false, 'Portal Service');
                 notificationItemList.add(notif);
                 }
 
@@ -109,7 +110,7 @@ public without sharing class PortalHeaderCtrl {
     * @return true to confirm the action.
     */
     @AuraEnabled
-    public static String increaseNotificationView(Id id) {
+    public static void increaseNotificationView(Id id) {
         Notification__c notification = [SELECT id, Number_of_views__c FROM Notification__c WHERE id =:id];
         if ( notification.Number_of_views__c != null ){
             notification.Number_of_views__c++;
@@ -118,7 +119,6 @@ public without sharing class PortalHeaderCtrl {
         }
 
         update notification;
-        return 'true';
     }
 
 
@@ -159,7 +159,7 @@ public without sharing class PortalHeaderCtrl {
             this.message = message;
             this.isNotification = isNotification;
             this.type = type;
-            this.styles = (viewed != true ? 'background-color: #f7f8fa;' : 'background-color: white;');
+            this.styles = (viewed != true ? 'unreadNotification' : 'readNotification');
         }
 
     }

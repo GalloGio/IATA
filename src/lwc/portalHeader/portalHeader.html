@@ -93,7 +93,7 @@
                                             <lightning-tab label={allNotificationTab} >
                                                 <template for:each={notificationsList} for:item='not'>
                                                     <hr key={not.id} class="hrConfig">
-                                                    <div key={not.id} style={not.styles}>
+                                                    <div key={not.id} class={not.styles}>
                                                         <div key={not.id} class="text-bold notificationBox" style={displayNotificationStyle} data-item ={not.id}>
                                                             <div class="slds-p-top_small" data-item ={not.id} >
                                                                 <span class="text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>
@@ -132,7 +132,7 @@
                                             <template for:each={notificationsList} for:item='not'>
                                                 <template if:true={not.isNotification}>
                                                     <hr key={not.id} class="hrConfig">
-                                                    <div key={not.id} style={not.styles}>
+                                                    <div key={not.id} class={not.styles}>
                                                         <div key={not.id} class="text-bold notificationBox" style={displayNotificationStyle} data-item ={not.id}>
                                                             <div class="slds-p-top_small" data-item ={not.id} >
                                                                 <span class="text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>
@@ -167,7 +167,7 @@
                                                 <template for:each={notificationsList} for:item='not'>
                                                     <template if:false={not.isNotification}>
                                                         <hr key={not.id} class="hrConfig">
-                                                        <div key={not.id} style={not.styles}>
+                                                        <div key={not.id} class={not.styles}>
                                                             <div key={not.id} class="text-bold notificationBox" style={displayNotificationStyle} data-item ={not.id} >
                                                                 <div class="slds-p-top_small" data-item ={not.id} >
                                                                     <span class="text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>

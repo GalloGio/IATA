@@ -212,7 +212,15 @@
 }
 
 .headerMarginRight {
-  margin-right: 130px;
+  margin-right: 10%;
+}
+
+.unreadNotification {
+  background-color: #f7f8fa;
+}
+
+.readNotification {
+  background-color: white;
 }
 
 .openNotifications {
@@ -224,7 +232,7 @@
   height: 550px;
   max-height: 550px;
   right: 0px;
-  margin-right: 130px;
+  margin-right: 10%;
 }
 .notificationOption {
   display: block;

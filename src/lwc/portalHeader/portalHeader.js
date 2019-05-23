@@ -260,7 +260,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 }
 
                 notification.viewed = true;
-                notification.styles = 'background-color: white;';
+                notification.styles = 'readNotification';
                 this.notificationsList = notificationsListAux;
 
             })
