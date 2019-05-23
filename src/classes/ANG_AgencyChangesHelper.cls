@@ -11,6 +11,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public List<Agency_Applied_Change_code__c> changeCodesToCreate;
 		public List<AMS_OSCAR_JSON.ChangeCode> changeCodesToCreateDef;
 		public List<Account> accountsToApplyChangeCodes;
+		public Set<Id> accountsToRecalculateRHC; 
 
 		public Set<Id> accountsChanged;
 
@@ -23,6 +24,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			accountsChanged = new Set<Id>();
 			changesStruct = new Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 			accountsToApplyChangeCodes = new List<Account>();
+			accountsToRecalculateRHC = new Set<Id>();
 		}
 
 		public void addAccount(Account account){
@@ -41,6 +43,10 @@ public with sharing class ANG_AgencyChangesHelper {
 		public void addChangeCodeDef(AMS_OSCAR_JSON.ChangeCode changeCodeDef, Account acc){
 			this.changeCodesToCreateDef.add(changeCodeDef);
 			this.accountsToApplyChangeCodes.add(acc);
+		}
+
+		public void addAccountToRecalculateRHC(Id accountId){
+			accountsToRecalculateRHC.add(accountId);
 		}
 
 		public Boolean runUpsert(){
@@ -83,6 +89,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
+
+			if(!accountsToRecalculateRHC.isEmpty()){
+				recalculateRHCInformation(accountsToRecalculateRHC);
+			}
 
 			return hasUpserted;
 		}
@@ -1001,8 +1011,9 @@ public with sharing class ANG_AgencyChangesHelper {
 					if(toReturn.accountsMap.containsKey(accId) && toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR){
 						involvedAccounts.put(accID,null);
 						
-						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue)
-							accountsToUpdateRHC.add(accId);
+						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue){
+							toReturn.addAccountToRecalculateRHC(accId);
+						}
 					}
 
 					acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
@@ -1016,9 +1027,6 @@ public with sharing class ANG_AgencyChangesHelper {
 				else
 					toReturn.changesStruct.get(acc.Id).changes.addAll(objectChangesList);
 			}
-
-			if(!accountsToUpdateRHC.isEmpty())
-				recalculateRHCInformation(accountsToUpdateRHC);
 
 			if(!involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
 
