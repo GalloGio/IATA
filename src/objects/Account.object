@@ -6362,7 +6362,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Non-IATA Cargo Agent</label>
+                    <label>Non-IATA Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Passenger Agent</fullName>
@@ -15743,7 +15743,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <value>
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Cargo Agent</label>
+                    <label>Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>
