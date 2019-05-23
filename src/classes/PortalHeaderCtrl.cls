@@ -91,7 +91,7 @@ public without sharing class PortalHeaderCtrl {
             
             for (Portal_Application_Right__c application : userPortalServiceAccessRequestList){
                 // PORTAL SERVICE
-                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name, System.Label.PortalService}), application.CreatedDate, false, 'Task', String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name, System.Label.PortalService}), false, 'Portal Service');
+                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), application.CreatedDate, false, 'Task', String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), false, 'Portal Service');
                 notificationItemList.add(notif);
                 }
 
