@@ -35,4 +35,12 @@
             <input type="button" class="btn btn_iata_primary" onClick="discardMultiCountry();" value="Discard Application" style="float: right;"/>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-8" id="infoSubmitMC">
+            <apex:outputText value="{!$Label.ANG_ISSP_Multicountry_Submit_Message1}"/>
+            &nbsp;
+            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ANG_ISSP_Multicountry_Submit_Message2}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+        </div>
+    </div>
 </apex:component>

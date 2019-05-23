@@ -353,6 +353,12 @@
                                 </div>
                             </div>
 
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-12">
+                                    <apex:outputText value="{!$Label.ANG_ISSP_Multicountry_Submit_Message_New_AE}"/>
+                                </div>
+                            </div>
+
                             <c:ISSP_MCStagingRecordTable/>
                         </section>
                             

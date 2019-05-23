@@ -330,7 +330,6 @@
                         //For pilot only English & Spanish HO applications for pilot countries alllowed
 
                     if( $('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
-                        console.log('Travel China Domestic: ' + isChinaDomestic());
                         if(isAllowedCountry=='f' || (isChinaDomestic() && !{!isocountry.ANG_Enable_NewGen__c})) {
                             bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Pax)}", function(result) {
                                 if(result) {
@@ -463,31 +462,34 @@
         }
 
         $( document ).ready(function() {
-            if ({!isMultiCountryNewAE}) {
-                $('[id$=isSameLegal]').insertAfter($('[id$=countrySelection'));
-            }
+            runMultiCountry();
         });
 
         function checkMCAECountry() {
             if({!isMultiCountryNewAE}) {
                 fetchLegalNames();
+            }
+        }
 
-                var isoSelected = $('[id$=countrySelectedMC]').find(':selected').val();
+        function populateLegalAndSeparateFields() {
+            var isoSelected = $('[id$=countrySelectedMC]').find(':selected').val();
 
-                if (isoSelected != '') {
-                    if ($.inArray(isoSelected, JSON.parse('{!hierarchyIsoCodesString}')) == -1) {
-                        $('[id$=legalNameSelection]').css('display', 'none');
-                        $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
-                        $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
-                    } else {
-                        $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
-                        if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
-                            $('[id$=legalNameSelection]').css('display', 'block');
-                        }
-                    }
+            if (isoSelected != '') {
+                if ($.inArray(isoSelected, JSON.parse('{!hierarchyIsoCodesString}')) == -1) {
+                    $('[id$=legalNameSelection]').css('display', 'block');
+                    $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
+                    $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
+                    $('[id$=newLegalName]').css('display', 'block');
+                    $('[id$=newLegalName]').val('');
                 } else {
-                    $('[id$=legalNameSelection]').css('display', 'none');
+                    $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
+                    if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
+                        $('[id$=legalNameSelection]').css('display', 'block');
+                        $('[id$=legalNameSelected]').css('display', 'block');
+                    }
                 }
+            } else {
+                $('[id$=legalNameSelection]').css('display', 'none');
             }
         }
 
@@ -495,9 +497,16 @@
             if({!isMultiCountryNewAE}) {
                 var isoSelected = $('[id$=countrySelectedMC]').find(':selected').val();
 
-                if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
-                    if (isoSelected != '') {
+                if (isoSelected != '') {
+                    if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
                         $('[id$=legalNameSelection]').css('display', 'block');
+                        $('[id$=legalNameSelected]').css('display', 'block');
+                        $('[id$=newLegalName]').css('display', 'none');
+                    } else {
+                        $('[id$=legalNameSelection]').css('display', 'block');
+                        $('[id$=legalNameSelected]').css('display', 'none');
+                        $('[id$=newLegalName]').css('display', 'block');
+                        $('[id$=newLegalName]').val('');
                     }
                 } else {
                     $('[id$=legalNameSelection]').css('display', 'none');
@@ -579,7 +588,7 @@
                             </apex:actionFunction>
                             <apex:actionFunction action="{!updateAmsCountry}" name="updateAmsCountry" oncomplete="getCountryFromController()" reRender="amscountrylabel">
                             </apex:actionFunction>
-                            <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" />
+                            <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
 
                             <apex:pageBlock id="step1Block" mode="edit" >
@@ -656,7 +665,7 @@
                                             <apex:outputpanel id="isSameLegal" rendered="{!OR(AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent', isHOAccredited), isMultiCountryNewAE)}">
                                                 <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
                                                     <div class="form-group" id='isLegal'>
-                                                        <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
+                                                        <label for="isLegal" class="col-lg-3 control-label">{!IF(isMultiCountryNewAE, $Label.ANG_AE_separate_Legal_Entity_MultiCountry, $Label.ANG_AE_separate_Legal_Entity)}</label>
 
                                                         <div style="width: 142px;padding-left:15px;padding-top:7px; float:left;margin-left:0px;">
                                                             <apex:selectradio id="separateLegalEntitySelect" style="width:100%;" label="{!$Label.ANG_AE_separate_Legal_Entity}" value="{!newForm.AE_separate_Legal_Entity__c}" onchange="enableDisableLegalName();">
@@ -817,15 +826,17 @@
                                 </div> 
                             </div>
 
-                                    <div class="form-group" id="legalNameSelection" style="display: none;">
+                                    <div class="form-group" id="legalNameSelection" style="display: {!IF(isMultiCountryNewAE, '', 'none')};">
                                         <label for="legalNameSelection" class="col-lg-3 control-label">* {!$Label.ISSP_AMS_Noc_Legal_Name}</label>
 
                                         <div class="col-lg-9" id="legalNames" style="padding-top:7px;">
                                             <apex:outputPanel rendered="{!isMultiCountryNewAE}">
-                                                <apex:selectList id="legalNameSelected" required="false" styleClass="form-control" style="width:40%" value="{!newForm.Same_Legal_Entity_Agency__c}" size="1">
+                                                <apex:selectList id="legalNameSelected" required="false" styleClass="form-control" style="width:40%; display: none;" value="{!newForm.Same_Legal_Entity_Agency__c}" size="1">
                                                     <apex:selectOptions value="{!legalNameOptions}"/>
                                                 </apex:selectList>
-                                            </apex:outputPanel>    
+
+                                                <apex:inputText id="newLegalName" required="false" styleClass="form-control" style="width:40%; display: none;" value="{!newForm.Account_Name__c}"/>
+                                            </apex:outputPanel>
                                         </div>
                                     </div>
 

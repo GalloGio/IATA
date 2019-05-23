@@ -944,7 +944,7 @@ public without sharing class ISSP_AMS_Accreditation {
         List<AMS_Pax_Accreditation_Form__c> separateLegalMCForms = new List<AMS_Pax_Accreditation_Form__c>();
 
         for (AMS_Pax_Accreditation_Form__c form: multiCountryApplicationForms) {
-            if (form.AE_separate_Legal_Entity__c == 'Yes') {
+            if (form.AE_separate_Legal_Entity__c == 'Yes' || form.AE_separate_Legal_Entity__c == null) {
                 separateLegalMCForms.add(form);
             }
         }
@@ -1195,10 +1195,9 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private List<Account> getBranchList(Boolean fullHierarchy) {
-        List<String> selectedBranchCodes;
-        selectedBranchCodes = new List<String>();
+        List<String> selectedBranchCodes = new List<String>();
         
-         if(newForm.Agency_Codes_Concerned__c != null && !fullHierarchy) //Exclude already selected branches
+        if(newForm.Agency_Codes_Concerned__c != null && !fullHierarchy) //Exclude already selected branches
             selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
 
         if (isHOcontact) {
@@ -1224,7 +1223,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private List<Account> getSelectedBranchList(List<String> branchCodes) {
         return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
                 FROM Account
-                WHERE IATACode__c IN : branchCodes
+                WHERE IATACode__c IN :branchCodes
                 ORDER BY Name, IATACode__c];
     }
 
@@ -1232,13 +1231,11 @@ public without sharing class ISSP_AMS_Accreditation {
         System.DeBUG('vHQAccountId for BR Accounts: ' + vHQAccountId);
 
         List<SelectOption> options = new List<SelectOption>();
-        List <Account> accountList = new List<Account>();
+        List<Account> accountList = new List<Account>();
        
-        for(HierarchyItem hi:  hierarchyValues){
-                accountList.add(hi.acc);
+        for(HierarchyItem hi: hierarchyValues){
+            accountList.add(hi.acc);
         }
-
-        SYSTEM.DEBUG('ALL Branch Size: ' + accountList.size());
 
         for (Account thisAccount : accountList) { 
             String theLabel;
@@ -4110,16 +4107,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         query += 'Branch_Office_Country__r.Name, SAAM_Case__r.Reason1__c, Branch_Office_Country__r.ISO_Code__c, Branch_Office_Country__r.AMS_Settlement_System__c ';
         query += 'FROM AMS_Pax_Accreditation_Form__c ';
-
-        System.debug('hey2: ' + currentMCFormId + ' ' + newCase.Id);
-
         
-        System.debug('wth3232: ' + currentMCFormId.equals('null'));
-        
-
         if (String.isNotBlank(currentMCFormId)) {
-            System.debug('wth: ' + (currentMCFormId == 'null'));
-
             query += 'WHERE Id = \'' + currentMCFormId + '\'';
         } else {
             query += 'WHERE SAAM_Case__c = \'' + newCase.Id + '\'';
