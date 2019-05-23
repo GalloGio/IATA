@@ -53,7 +53,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Agency_Applied_Change_Code__c</fullName>
         <description>Related Agency Applied Change Code</description>
