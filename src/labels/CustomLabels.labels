@@ -33281,7 +33281,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>UserRequestServiceAccess</shortDescription>
-        <value>{0} requested access to {1} {2}</value>
+        <value>{0} requested access to {1} service</value>
     </labels>
     <labels>
         <fullName>User_name</fullName>
