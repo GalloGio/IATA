@@ -411,78 +411,43 @@
 										
 										<apex:outputPanel > <!-- rendered="{!isSectionVisible}" -->
 
-											<h2 class="section" style="margin: 20px 0 20px 0;">{!wccsObject.typeReportMap[section].Reporting_Type__c} {!wccsObject.typeReportMap[section].Currency__c}</h2>
+											<table width="100%">
+                        <tr width="90%">
+                          <td>
+                            <h2 class="section" style="margin: 20px 0 20px 0;">{!wccsObject.typeReportMap[section].Reporting_Type__c} {!wccsObject.typeReportMap[section].Currency__c}
+                              <button onclick="hide(this, event)" style="background: transparent; margin: 20px 0 20px 0;">
+                                <span class="glyphicon glyphicon-chevron-up" style="font-size: 10px; color: #0075BC"></span>
+                              </button>
+                            </h2>
+                          </td>
+                          <td align="center">
+                            <!-- <apex:commandLink value="Delete Section" action="{!deleteSection}" reRender="sectionsPanel" style="margin-top: 20px;">
+                              <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+                                    <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+                            </apex:commandLink> -->
 
-											<!-- <apex:commandLink value="Delete Section" action="{!deleteSection}" reRender="sectionsPanel" style="margin-top: 20px;">
-												<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
-						            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
-											</apex:commandLink> -->
+                            <apex:commandLink id="deleteCountry" value="Delete Section" action="{!showPopupDeleteSection}" reRender="popupDeleteSection" style="margin-top: 20px; color:#FF0000" oncomplete="$('#deleteSectionModal').modal('show');"
+                                      rendered="{!IF(NOT(defaultSectionKey == (wccsObject.typeReportMap[section].Reporting_Type__c+'|'+wccsObject.typeReportMap[section].Currency__c)),true,false)}">
+                              <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+                                    <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+                            </apex:commandLink>
+                          </td>
+                        </tr>    
+                      </table>
 
-											<apex:commandLink id="deleteCountry" value="Delete Section" action="{!showPopupDeleteSection}" reRender="popupDeleteSection" style="margin-top: 20px;" oncomplete="$('#deleteSectionModal').modal('show');"
-															  rendered="{!IF(NOT(defaultSectionKey == (wccsObject.typeReportMap[section].Reporting_Type__c+'|'+wccsObject.typeReportMap[section].Currency__c)),true,false)}">
-												<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
-						            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
-											</apex:commandLink>
-
-											<!-- Reporting Type Table -->
-											<apex:outputPanel id="reportingTypePanel">
-												<div class="row scrollBarTable">
-													<table id="reportingTypeTable" class="totalTable reportTable" border="1">
-													  	<thead>
-													    	<tr class="dataRow">
-													      		<th class="headerRow">Total Amount</th>
-													      		<th class="headerRow">Sales Period (Start)</th>
-													      		<th class="headerRow">Sales Period (End)</th>
-													      		<th class="headerRow">Delay in Day</th>
-													      		<th class="headerRow">USD (Equivalent)</th>
-													      		<th class="headerRow">Currency Conversion Rate</th>
-													    	</tr>
-													  </thead> 
-													  <tbody>
-													      	<tr class="dataRow">
-													      		<th class="dataCell">
-													      			<apex:outputField value="{!wccsObject.typeReportMap[section].Total_Currency__c}" label="" id="totalCurrency"/>
-													      		</th>
-													      		<td class="dataCell">
-												      			 	<apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_Start_Date__c}" type="date" label="" styleClass="disableClass changeMin">
-					                                                	 <apex:actionSupport event="onchange" action="{!calculateDelayInDays}" reRender="sectionsPanel">
-						                                                	<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
-												            				<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
-                                            							</apex:actionSupport>
-					                                                </apex:inputField>
-													      		</td>
-															    <td class="dataCell">
-															    	 <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_End_Date__c}" type="date" label="" styleClass="disableClass" html-min="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}">
-															    	 	<apex:actionSupport event="onchange" action="{!none}" reRender="bankTable"/>
-															    	 </apex:inputField>
-															    </td>
-															    <td class="dataCell">
-															    	<apex:outputText value="{!wccsObject.typeReportMap[section].Delay_in_day__c}" label=""/>
-															    </td>
-															    <td class="dataCell">
-															    	<apex:outputField value="{!wccsObject.typeReportMap[section].Total_Amount_USD__c}" label="" id="totalUSD"/>
-															    </td>
-															    <td class="dataCell">
-															    	<apex:outputText value="{!wccsObject.typeReportMap[section].Average_Exchange_Rate__c}" label=""/>
-																</td>
-													    	</tr>  
-							            					
-													  	</tbody>
-													</table>
-												</div>
-											</apex:outputPanel>
 											
 
-												<apex:outputPanel id="bankPanelAccountBalance">
+                      <!-- Banks Table -->
+											<apex:outputPanel id="bankPanelAccountBalance">
 
-													<h3 style="color: #0075BC;">Bank Details
+													<!--h3 style="color: #0075BC;">Bank Details
 														<button onclick="hide(this, event)" style="background: transparent; margin: 20px 0 20px 0;">
                                                             <span class="glyphicon glyphicon-chevron-up" style="font-size: 10px; color: #0075BC"></span>
 														</button>
-													</h3>															
+													</h3-->															
 
 													<div class="row scrollBarTable">
-                                                        <apex:variable value="{!0}" var="numRow" id="indexVar"/>
+                            <apex:variable value="{!0}" var="numRow" id="indexVar"/>
 
 														<apex:pageBlocktable value="{!wccsObject.bankMap[section]}" var="item" id="bankTable" styleClass="totalTable bankAddBtn"><!-- bankTable-->
 															<apex:column >
@@ -558,7 +523,59 @@
 
 													</div>
 
-												</apex:outputPanel>
+											</apex:outputPanel>
+
+                      <div height="10px">&nbsp;</div>
+
+                      <!-- Reporting Type Table -->
+                      <apex:outputPanel id="reportingTypePanel">
+                        <div class="row scrollBarTable">
+                          <table id="reportingTypeTable" class="totalTable reportTable" border="1">
+                              <thead>
+                                <tr class="dataRow">
+                                    <th class="headerRow">Total Amount</th>
+                                    <th class="headerRow">Sales Period (Start)*</th>
+                                    <th class="headerRow">Sales Period (End)*</th>
+                                    <th class="headerRow">Delay in Day</th>
+                                    <th class="headerRow">USD (Equivalent)</th>
+                                    <th class="headerRow">Currency Conversion Rate</th>
+                                </tr>
+                            </thead> 
+                            <tbody>
+                                  <tr class="dataRow">
+                                    <th class="dataCell">
+                                      <apex:outputField value="{!wccsObject.typeReportMap[section].Total_Currency__c}" label="" id="totalCurrency"/>
+                                    </th>
+                                    <td class="dataCell">
+                                      <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_Start_Date__c}" type="date" label="" styleClass="disableClass required">
+                                          <apex:actionSupport event="onchange" action="{!calculateDelayInDays}" reRender="sectionsPanel" oncomplete="requireFields();">
+                                            <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"/>
+                                            <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"/>
+                                          </apex:actionSupport>
+                                      </apex:inputField>
+                                    </td>
+                                  <td class="dataCell">
+                                     <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_End_Date__c}" type="date" label="" styleClass="disableClass required" html-min="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}">
+                                      <!--apex:actionSupport event="onchange" action="{!none}" reRender="bankTable"/-->
+                                      <apex:actionSupport event="onchange" action="{!calculate}" reRender="reportingTypePanel, bankTable" oncomplete="requireFields();">
+                                      </apex:actionSupport>
+                                     </apex:inputField>
+                                  </td>
+                                  <td class="dataCell">
+                                    <apex:outputText value="{!wccsObject.typeReportMap[section].Delay_in_day__c}" label=""/>
+                                  </td>
+                                  <td class="dataCell">
+                                    <apex:outputField value="{!wccsObject.typeReportMap[section].Total_Amount_USD__c}" label="" id="totalUSD"/>
+                                  </td>
+                                  <td class="dataCell">
+                                    <apex:outputText value="{!wccsObject.typeReportMap[section].Average_Exchange_Rate__c}" label=""/>
+                                </td>
+                                </tr>  
+                                    
+                              </tbody>
+                          </table>
+                        </div>
+                      </apex:outputPanel>
 
 											<div class="bootstrapRow"><!-- class="surveyRow" -->
 												<div class="scrollBarTable" style="width: 50%"> <!-- surveyColumn -->
@@ -573,18 +590,22 @@
 															</td>
 														</tr>
 														<tr class="dataRow">
-															<th class="headerRow">Total Amount: </th>
+															<th class="headerRow" align="left">Total Amount: </th>
 															<td class="dataCell">
 																<apex:inputField value="{!wccsObject.typeReportMap[section].Last_Allocation_Amount__c}" label="" styleClass="disableClass">
-
-												                	<apex:actionSupport event="onchange" action="{!calculateLastAllocationUSD}" reRender="bankTable, reportingTypeTable" >
-												                		<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
-												            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
-												                	</apex:actionSupport>
-
-												                </apex:inputField>
+								                	<apex:actionSupport event="onchange" action="{!calculateLastAllocationUSD}" reRender="bankTable, reportingTypeTable" >
+								                		  <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+								            			    <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+								                	</apex:actionSupport>
+												        </apex:inputField>
 															</td>
 														</tr>
+                            <tr class="dataRow">
+                              <th class="headerRow" align="left">Exchange Rate (to USD): </th>
+                              <td class="dataCell">
+                                <apex:inputField value="{!wccsObject.typeReportMap[section].Average_Exchange_Rate__c}" label="" styleClass="disableClass"/>
+                              </td>
+                            </tr>
 													</table>
 												</div>
 												<div class="scrollBarTable" style="width: 50%">
@@ -1193,14 +1214,26 @@
 	    }
 
 		function hide(elemt, event) {
+      alert("hide!");
 			event.preventDefault();
+      alert("hide2!");
 			if(elemt.parentElement.nextElementSibling.classList.contains("hide")){
+        alert("hide3!");
 				elemt.parentElement.nextElementSibling.classList.remove("hide");
                 elemt.getElementsByTagName("span")[0].classList.remove("glyphicon-chevron-down");/*icon-minimize");*/
                 elemt.getElementsByTagName("span")[0].classList.add("glyphicon-chevron-up");/*icon-maximize");*/
 
 			} else {
-				elemt.parentElement.nextElementSibling.classList.add("hide");
+        alert("hide4!");
+        alert("elemt.parentElement.nextElementSibling: " + elemt.parentElement.nextElementSibling.innerHTML);
+        parentElem = elemt.parentElement;
+        nextElem1 = parentElem.nextElementSibling;
+        alert("nextElem1: " + nextElem1.innerHTML);
+        nextElem2 = nextElem1.nextElementSibling;
+        alert("nextElem2: " + nextElem2.innerHTML);
+				nextElem2.classList.add("hide");
+        elemt.parentElement.nextElementSibling.classList.add("hide");
+        elemt.parentElement.nextElementSibling.classList.add("hide");
                 elemt.getElementsByTagName("span")[0].classList.remove("glyphicon-chevron-up");
                 elemt.getElementsByTagName("span")[0].classList.add("glyphicon-chevron-down");
 			}

@@ -454,8 +454,8 @@
                                                 <thead>
                                                     <tr class="dataRow">
                                                         <th class="headerRow">Total Amount</th>
-                                                        <th class="headerRow">Sales Period (Start)</th>
-                                                        <th class="headerRow">Sales Period (End)</th>
+                                                        <th class="headerRow">Sales Period (Start)*</th>
+                                                        <th class="headerRow">Sales Period (End)*</th>
                                                         <th class="headerRow">ICCS</th>
                                                         <th class="headerRow">Average Exchange Rate (to USD)</th>
                                                         <th class="headerRow">USD (Equivalent)</th>
@@ -468,10 +468,16 @@
                                                             <apex:outputField value="{!wccsObject.typeReportMap[section].Total_Currency__c}" id="totalCurrency"/>
                                                         </td>
                                                         <td class="dataCell">
-                                                            <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_Start_Date__c}" type="date" styleClass="disableClass"/>
+                                                            <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_Start_Date__c}" type="date" styleClass="disableClass required">
+                                                                <apex:actionSupport event="onchange" action="{!calculate}" reRender="reportingTypePanel, bankTable" oncomplete="requireFields();">
+                                                                </apex:actionSupport>
+                                                            </apex:inputField>
                                                         </td>
                                                         <td class="dataCell">
-                                                            <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_End_Date__c}" styleClass="disableClass" type="date"  html-min="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}"/>
+                                                            <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_End_Date__c}" styleClass="disableClass required" type="date"  html-min="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}">
+                                                                <apex:actionSupport event="onchange" action="{!calculate}" reRender="reportingTypePanel, bankTable" oncomplete="requireFields();">
+                                                                </apex:actionSupport>
+                                                            </apex:inputField>
                                                         </td>
                                                         <td class="dataCell">
                                                             <apex:outputText value="{!wccsObject.typeReportMap[section].ICCS__c}"/>
