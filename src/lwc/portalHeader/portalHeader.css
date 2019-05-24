@@ -207,10 +207,6 @@
   display: inline-block;
 }
 
-.removeMarginBottom {
-  margin-bottom: -8px;
-}
-
 .headerMarginRight {
   margin-right: 10%;
 }
@@ -301,7 +297,7 @@
 }
 
 .modalBox {
-  max-width: 47rem;
+  max-width: 100vh;
   width: 90%;
 }
 

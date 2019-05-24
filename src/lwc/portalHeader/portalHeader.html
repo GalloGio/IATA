@@ -52,15 +52,15 @@
             <div class="slds-col customBlueBackground headerBar headerBarRight">
                 <span>
                     <div class="slds-grid slds-m-top_xx-small">
-                        <div class="removeMarginBottom slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton" onclick={navigateToServices}>
+                        <div class="slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton" onclick={navigateToServices}>
                             <div class="headerButtonService slds-m-right_small"></div>
                             <span class="text-xsmall text-white slds-p-right_x-small floatRight tabText slds-show_large">{labels.ISSP_Services}</span>
                         </div>
-                        <div class="removeMarginBottom slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton" onclick={navigateToSupport}>
+                        <div class="slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton" onclick={navigateToSupport}>
                                 <div class="headerButtonSupport slds-m-right_small"></div>
                             <span class="text-xsmall text-white slds-p-right_x-small floatRight tabText slds-show_large">{labels.CSP_Support}</span>
                         </div>
-                        <div class="removeMarginBottom slds-col_bump-left slds-p-vertical_xx-small headerBarButton headerButtonProfileContainer" >
+                        <div class="slds-col_bump-left slds-p-vertical_xx-small headerBarButton headerButtonProfileContainer" >
                             <div class="slds-m-left_x-small headerButtonProfile"></div>
                             <div class="floatRight">
                                 <span class="text-xsmall text-white slds-p-left_small slds-p-right_x-small floatLeft tabText slds-show_large">{labels.ICCS_Profile}</span>
@@ -74,7 +74,7 @@
                                 <span class="slds-p-around_small text-xsmall text-black profileOption" onclick={logOut}>{labels.CSP_LogOut}</span>
                             </div>
                         </div>
-                        <div class="removeMarginBottom headerMarginRight slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer" style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
+                        <div class="headerMarginRight slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer" style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
                             <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray" style={notificationNumberStyle}>{numberOfNotifications}</div>
                             <div class="headerButtonNotifications slds-m-right_x-small" style={headerButtonNotificationsStyle}></div>
                             <div class="headerButtonNotificationsCloseIcon slds-m-left_xx-small slds-m-right_xxx-small" style={headerButtonNotificationsCloseIconStyle}>
