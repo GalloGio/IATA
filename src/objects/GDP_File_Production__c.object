@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Duration__c</fullName>
         <description>Duration to produce the file in seconds, as send by the GSS Program through REST API /GSS/v0/ConfirmFileProduction</description>

@@ -54,6 +54,7 @@ Object used to store objectives that can be independent, related to other object
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>AM_Can_IATA_support_the_airline__c</fullName>
         <defaultValue>true</defaultValue>
