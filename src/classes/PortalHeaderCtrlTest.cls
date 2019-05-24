@@ -1,5 +1,5 @@
 @isTest
-private class CSP_UtilsTest {
+private class PortalHeaderCtrlTest {
 
     @TestSetup
     static void testSetup(){
@@ -28,15 +28,22 @@ private class CSP_UtilsTest {
     }
 
     @IsTest
-    static void testGetSelectedColumns(){
+    static void testGetNotifications(){
+        User usr = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+        Notification__c notification = [SELECT Id FROM Notification__c WHERE Archive__c = false LIMIT 1];
+        
+        System.runAs(usr){
+            Test.startTest();
+            List<PortalHeaderCtrl.NotificationItem> notItemList = PortalHeaderCtrl.getNotifications();
+            PortalHeaderCtrl.increaseNotificationView(notification.Id);
+            Test.stopTest();
 
-        Test.startTest();
-        Map<String, String> result = CSP_Utils.getSelectedColumns('Case', new List<String>{'CaseNumber', 'CurrencyIsoCode', 'Origin'});
-        Test.stopTest();
+            System.assertEquals( 3 , notItemList.size() );
+        }
+        
 
-        System.assertEquals('Case Number', result.get('CaseNumber'));
-        System.assertEquals('Case Currency', result.get('CurrencyIsoCode'));
-        System.assertEquals('Case Origin', result.get('Origin'));
+        
+
     }
-    
+
 }
