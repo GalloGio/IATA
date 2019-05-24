@@ -53,7 +53,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>AMS_Oscar_Savepoint_fields</fullName>
         <description>Determine which fields should be saved on serialized object</description>

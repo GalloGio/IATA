@@ -52,7 +52,6 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>AIMS_ID__c</fullName>
         <description>Used as unique identified for change codes coming from AIMS. It&apos;s concatenation of AGT REF, CHANGE CODE, DATETIME when CC was raised. Values coming from the query, no login in SFDC</description>
