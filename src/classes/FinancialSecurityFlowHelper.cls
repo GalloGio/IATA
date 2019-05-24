@@ -15,7 +15,7 @@ public without sharing class FinancialSecurityFlowHelper {
                                                                WHERE ParentId = :fs[0].Id AND Field = 'Expiry_Date__c' AND 
                                                                     CreatedDate > :fs[0].Acknowledge_Sent_Date__c];
             
-            if(recordHistory.isEmpty()) {
+            if(recordHistory.isEmpty() && fs[0].Acknowledge_Sent_Date__c <> null) {
                 return new List<String> {'Error:\n Financial Security acknowledgement has already been sent.'};
                 }
 

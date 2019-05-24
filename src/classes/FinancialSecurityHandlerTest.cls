@@ -53,8 +53,6 @@ private class FinancialSecurityHandlerTest {
         } else {
             system.assertEquals(null, fs.Renewal_Case__c);
         }  
-        
-        FinancialSecurityUtil.sendEmailAlert(null, fs, null, null);
 
         delete fs;
         undelete fs;
