@@ -935,8 +935,8 @@
 				                                	</div>
 			                                	<apex:outputPanel layout="none">
 			                                  		<div class="field-wrapper">
-			                                    		<apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}" style="width:174.4px" rendered="{!NOT(isMultiCountryNewAE)}"/>
-			                                    		<apex:outputLabel value="{!$Label.ANG_ISSP_ProductMulticountry}" style="width:174.4px" rendered="{!isMultiCountryNewAE}"/> <!--rui label -->
+			                                    		<apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}" style="width:174.4px"/>
+			                                    		
 			                                  		</div>
 			                                	</apex:outputPanel>
 			                              	</apex:outputPanel>
@@ -961,7 +961,7 @@
                         			</apex:outputPanel>
 	                           
                     				<apex:pageBlockSection >
-                    					<apex:pageblocksectionitem rendered="{!IF(AND(isMultiCountryNewAE, newForm.AE_separate_Legal_Entity__c == 'No'), false, IF(NOT(isocountry.Hide_Tax_Number_VAT__c), false, true))}">
+                    					<apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
                     						<apex:outputLabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" for="VATInput"/>
                     						<apex:outputpanel id="VATNumberInput">
                         						<span style="margin-left:{!If(isEUcountry,'-28px', '-9px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;"><apex:outputfield value="{!newCase.IFAP_Country_ISO__c}" rendered="{!isEUcountry}" /></span>
@@ -983,7 +983,7 @@
                          				<apex:pageBlockSection columns="1">
                          					<apex:outputPanel layout="block" style="height: 27px;"/>
 			                              	<DSE:DS_DataQuality id="BranchAddress" RecordRef="{!newForm}" FieldGroupName="Branch Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
-                         				</apex:pageBlockSection> <!-- rui -->
+                         				</apex:pageBlockSection>
                         
                         				<apex:pageBlockSection columns="1" id="subbranchsection">
                         					<apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
@@ -1205,11 +1205,11 @@
 
                     					<apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),$Label.ISSP_AMS_Step3_4_People,$Label.ISSP_AMS_Step3_4_Branch_People)}" styleClass="col-md-12" escape="false" />
 
+                              <apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="Text message (missing)" style="color: red;" styleClass="col-md-12" escape="false"/>
+
 					                    <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
 					                      {!$Label.ISSP_AMS_Not_Listed_Msg}
 					                    </div>
-
-                    					<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="hello"/> <!-- rui -->
                     
                     					<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
 

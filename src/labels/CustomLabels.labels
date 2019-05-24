@@ -13632,6 +13632,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>New Associate Entity - GoGlobal</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Multicountry_Submit_Button</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Multicountry_Submit_Button</shortDescription>
+        <value>Submit GoGlobal Application to IATA</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
         <language>en_US</language>
         <protected>false</protected>
