@@ -232,6 +232,22 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     onClickAllNotificationsView(event){
+        this.notificationsView(event);
+    }
+
+    openmodal(event) {
+        this.notificationsView(event);
+
+        this.mainBackground = "z-index: 10004;"
+        this.openmodel = true
+    }
+
+    closeModal() {
+        this.mainBackground = "z-index: 10000;"
+        this.openmodel = false
+    }
+
+    notificationsView(event) {
         let selectedNotificationId = event.target.dataset.item;
 
         let notificationsListAux = JSON.parse(JSON.stringify(this.notificationsList));
@@ -242,6 +258,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             }
             return null;
         });
+
+        this.notification = notification;
 
         if (notification.typeNotification === 'Announcement' ){
             increaseNotificationView({id : selectedNotificationId})
@@ -295,24 +313,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 
             }
         }
-
     }
-
-    openmodal(event) {
-        let selectedNotificationId = event.target.dataset.item;
-        this.notification = this.notificationsList.find(function(element) {
-            if (element.id === selectedNotificationId){
-                return element;
-            }
-            return null;
-        });
-
-        this.mainBackground = "z-index: 10004;"
-        this.openmodel = true
-    }
-    closeModal() {
-        this.mainBackground = "z-index: 10000;"
-        this.openmodel = false
-    } 
 
 }
