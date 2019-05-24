@@ -945,7 +945,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
         for (AMS_Pax_Accreditation_Form__c form: multiCountryApplicationForms) {
             if (form.AE_separate_Legal_Entity__c == 'Yes' || form.AE_separate_Legal_Entity__c == null) {
-                separateLegalMCForms.add(form);
+                if (form.Id != currentMCFormId) {
+                    separateLegalMCForms.add(form);
+                }
             }
         }
 
@@ -1070,6 +1072,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public void getLegalNameOptions() {
         List<SelectOption> options = legalNameOptions;
+        if (currentMCFormId == null) {
+           newForm.Account_Name__c = ''; 
+        }
     }
 
     public List<SelectOption> countryISOCodeList {

@@ -480,7 +480,6 @@
                     $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
                     $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
                     $('[id$=newLegalName]').css('display', 'block');
-                    $('[id$=newLegalName]').val('');
                 } else {
                     $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
                     if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
@@ -506,7 +505,6 @@
                         $('[id$=legalNameSelection]').css('display', 'block');
                         $('[id$=legalNameSelected]').css('display', 'none');
                         $('[id$=newLegalName]').css('display', 'block');
-                        $('[id$=newLegalName]').val('');
                     }
                 } else {
                     $('[id$=legalNameSelection]').css('display', 'none');
