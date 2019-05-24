@@ -920,6 +920,7 @@ public with sharing class SIDRAliteMassActionController {
 
         // create csv header
         String content = '"Id"';
+        content += ',"' + mapCaseFields.get('IATA_Code__c').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('CaseNumber').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('Subject').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('Status').getDescribe().getLabel() + '"';
@@ -939,7 +940,6 @@ public with sharing class SIDRAliteMassActionController {
         content += ',"' + mapCaseFields.get('ContactId').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('ContactId').getDescribe().getLabel() + ' Name"';
         content += ',"' + mapAccountFields.get('Category__c').getDescribe().getLabel() + '"';
-        content += ',"' + mapCaseFields.get('IATA_Code__c').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('Key_Customer_Case__c').getDescribe().getLabel() + '"';
         if (!filter.getIsIFAP())
             content += ',"' + mapCaseFields.get('Reason1__c').getDescribe().getLabel() + '"';
@@ -947,6 +947,7 @@ public with sharing class SIDRAliteMassActionController {
         // fill each line
         for (WrapperCase wrapper: this.listWrapperCase) {
             content += '"' + wrapper.cse.Id + '"';
+            content += ',"' + wrapper.cse.IATA_Code__c + '"';
             content += ',"' + wrapper.cse.CaseNumber + '"';
             content += ',"' + wrapper.cse.Subject + '"';
             content += ',"' + wrapper.cse.Status + '"';
@@ -964,7 +965,6 @@ public with sharing class SIDRAliteMassActionController {
             content += ',"' + wrapper.cse.ContactId + '"';
             content += ',"' + wrapper.cse.Contact.Name + '"';
             content += ',"' + wrapper.cse.Account.Category__c + '"';
-            content += ',"' + wrapper.cse.IATA_Code__c + '"';
             content += ',"' + (wrapper.cse.Key_Customer_Case__c!=null? 'true': 'false') + '"';
             if (!filter.getIsIFAP()) content += ',"' + wrapper.cse.Reason1__c + '"';
             content += '\n';

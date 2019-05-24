@@ -186,6 +186,8 @@ function selectedCases() {
           <input class="line-select" onchange="selectedCases();" type="checkbox"/>
         </apex:column>
 
+        <apex:column value="{!wrapper.cse.IATA_Code__c}" />
+
         <apex:column >
           <apex:facet name="header">{!$ObjectType.Case.fields.CaseNumber.label}</apex:facet>
           <apex:outputLink value="/{!wrapper.cse.Id}?retURL={!$CurrentPage.URL}">{!wrapper.cse.CaseNumber}</apex:outputLink>
@@ -206,8 +208,6 @@ function selectedCases() {
         <apex:column value="{!wrapper.cse.BSPCountry__c}" rendered="{!!filter.isIFAP}"/>
 
         <apex:column value="{!wrapper.cse.Account.Category__c}" />
-
-        <apex:column value="{!wrapper.cse.IATA_Code__c}" />
 
         <apex:column value="{!wrapper.cse.Key_Customer_Case__c}" />
 
