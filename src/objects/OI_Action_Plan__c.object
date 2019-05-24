@@ -120,6 +120,28 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Link_to_External_tracking_system__c</fullName>
+        <description>Data Governance</description>
+        <externalId>false</externalId>
+        <label>Link to External tracking system</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Link_to_report_or_dashboard_url__c</fullName>
+        <description>Data Governance</description>
+        <externalId>false</externalId>
+        <label>Link to report or dashboard (url)</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>Met_Due_Date__c</fullName>
         <externalId>false</externalId>
         <formula>IF ((Due_Date__c &gt;= Closure_Date__c), 1, 0)</formula>
@@ -147,6 +169,19 @@
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
+    <fields>
+        <fullName>Technical_Responsible_Perform__c</fullName>
+        <description>Data governance</description>
+        <externalId>false</externalId>
+        <label>Technical Responsible (Perform)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>OI Action Plan</label>
     <nameField>
         <displayFormat>OI Action Plan-{0000}</displayFormat>
@@ -156,6 +191,16 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>OI Action Plans</pluralLabel>
+    <recordTypes>
+        <fullName>Data_Governance</fullName>
+        <active>true</active>
+        <label>Data Governance</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>action_plan_std</fullName>
+        <active>true</active>
+        <label>Action plan standard</label>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>

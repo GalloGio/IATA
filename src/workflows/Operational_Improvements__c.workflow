@@ -77,6 +77,16 @@
         <template>Quality/OI_Rejected_by_RPM</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Auto_fill_OI_subject</fullName>
+        <description>used to fill in CPS issue check subject with a standard naming convention</description>
+        <field>Subject__c</field>
+        <formula>TEXT(Region__c) &amp; &quot; - &quot; &amp; TEXT(  OperationCPS__c ) &amp; &quot; - &quot; &amp; text(Country__c) &amp; &quot; - &quot;  &amp; &quot; - &quot; &amp; TEXT(YEAR( Reporting_Month__c )) &amp; &quot;/&quot; &amp; IF(MONTH(Reporting_Month__c)&lt;10,&quot;0&quot;&amp; TEXT(MONTH(Reporting_Month__c)),TEXT(MONTH(Reporting_Month__c))) &amp; &quot; - &quot; &amp; TEXT( Issue_Categorization__c )&amp; &quot; - &quot; &amp;TEXT( Issue_Sub_Category__c ) &amp; &quot; - USD &quot; &amp; TEXT( Amount_USD_auto__c )</formula>
+        <name>Auto fill OI subject</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>OI_Status_WF</fullName>
         <description>Update field Status WF</description>
         <field>OI_Status_WF__c</field>
@@ -157,6 +167,15 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Reset_approval_date_OI</fullName>
+        <description>used to reset the approval date of the Oi for CPS issues whenever data from the object is changed.</description>
+        <field>OI_Approval_date__c</field>
+        <name>Reset approval date OI</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Terminate_OI</fullName>
         <description>Set today as Termination Date to set the status as Terminated</description>
         <field>Terminated_Date__c</field>
@@ -177,6 +196,21 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
+    <rules>
+        <fullName>Auto fill subject</fullName>
+        <actions>
+            <name>Auto_fill_OI_subject</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Operational_Improvements__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CPS Checks</value>
+        </criteriaItems>
+        <description>fill in the subject of CPS OI as per agreed convention</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
     <rules>
         <fullName>Notify on OI creation</fullName>
         <actions>
