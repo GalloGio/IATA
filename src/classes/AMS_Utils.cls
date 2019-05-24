@@ -2661,4 +2661,28 @@ public without sharing class AMS_Utils {
         return res;
     }
     /*** AMSU-195 End ***/
+
+    public static String beautifyErrorMessage(String message){
+		
+		try {
+
+	        Pattern patt  = Pattern.compile('(.+)EXCEPTION, ((.+)):(.+)');
+	        Matcher match = patt.matcher(message);
+			
+			if(match.matches()){
+		        //Extract useful message from the exception message
+		        String userFriendlyMsg = match.group(3);
+		        return userFriendlyMsg;
+			}
+				        
+		}catch(Exception e){
+			//If something went wrong with the matcher 
+			//we just return the original message
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+		}
+
+		return message;
+
+    }
+
 }
