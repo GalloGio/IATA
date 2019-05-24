@@ -288,7 +288,7 @@ private class ANG_MasterData_Interface_test {
         
             system.debug('PAYLOAD: ' + payload.isPciDss);
             system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
-            system.assert(payload.isPciDss == 'No', 'Payload isPciDss element must be \'No\'');
+            system.assert(!payload.isPciDss, 'Payload isPciDss element must be \'FALSE\'');
         
             acct.Is_PCI_Compliant__c = 'Nil CC';
             update acct;
@@ -301,7 +301,7 @@ private class ANG_MasterData_Interface_test {
             payload = (ANG_MasterData_Interface.MasterDataPayload) JSON.deserialize(respBody, ANG_MasterData_Interface.MasterDataPayload.class);
         
             system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
-            system.assert(payload.isPciDss == 'No', 'Payload isPciDss element must be \'No\'');
+            system.assert(!payload.isPciDss, 'Payload isPciDss element must be \'FALSE\'');
 
             acct.Is_PCI_Compliant__c = 'Corporate Card';
             update acct;
@@ -314,7 +314,7 @@ private class ANG_MasterData_Interface_test {
             payload = (ANG_MasterData_Interface.MasterDataPayload) JSON.deserialize(respBody, ANG_MasterData_Interface.MasterDataPayload.class);
         
             system.assert(payload.isPciDss != NULL, 'Payload isPciDss element must NOT be empty');
-            system.assert(payload.isPciDss == 'Yes', 'Payload isPciDss element must be \'Yes\'');
+            system.assert(payload.isPciDss, 'Payload isPciDss element must be \'TRUE\'');
             
             //When the IEP Status is not 'open' or 'in progress' 
             //the pci compliant value must not be in the payload
