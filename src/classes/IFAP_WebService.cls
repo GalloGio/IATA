@@ -345,7 +345,7 @@ global class IFAP_WebService {
 			message = applyCashConditionAction(acct, cse);
 
 			if(message != 'SUCCESS'){
-				return UNABLE_TO_APPLY_CASH_CONDITION + '\n' + AMS_Utils.beautifyErrorMessage(message);
+				return UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
 			}
 
 			return CASH_CONDITION_SUCCESSFULLY_APPLIED;
@@ -354,7 +354,7 @@ global class IFAP_WebService {
 		catch(Exception e){
 			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
 			system.debug(LoggingLevel.ERROR, e.getMessage());
-			return UNABLE_TO_APPLY_CASH_CONDITION + '\n' + AMS_Utils.beautifyErrorMessage(e.getMessage());
+			return UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(e.getMessage()) + '.';
 		}
 
 	}
@@ -429,7 +429,7 @@ global class IFAP_WebService {
         message = removeCashConditionAction(acct);
 
         if(message != 'SUCCESS'){
-            return UNABLE_TO_REMOVE_CASH_CONDITION + '\n' + AMS_Utils.beautifyErrorMessage(message);
+            return UNABLE_TO_REMOVE_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
         }
 
         return CASH_CONDITION_SUCCESSFULLY_REMOVED;
