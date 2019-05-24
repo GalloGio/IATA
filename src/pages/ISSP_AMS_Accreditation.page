@@ -6,7 +6,8 @@
            standardStylesheets="true"
            applyBodyTag="false"
            applyHtmlTag="false"
-           action="{!securityCheck}">
+           action="{!securityCheck}"
+           >
 
     <html>
         <c:ISSP_Header communityName="{!communityName}" />
@@ -480,7 +481,7 @@
                     $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
                     $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
                     $('[id$=newLegalName]').css('display', 'block');
-                    $('[id$=newLegalName]').val('');
+                    $('[id$=legalNameSelected]').val('');
                 } else {
                     $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
                     if ($('[name$=separateLegalEntitySelect]:checked').val() == 'No') {
@@ -506,7 +507,7 @@
                         $('[id$=legalNameSelection]').css('display', 'block');
                         $('[id$=legalNameSelected]').css('display', 'none');
                         $('[id$=newLegalName]').css('display', 'block');
-                        $('[id$=newLegalName]').val('');
+                        $('[id$=legalNameSelected]').val('');
                     }
                 } else {
                     $('[id$=legalNameSelection]').css('display', 'none');
@@ -675,7 +676,7 @@
                                                         </div>
 
                                                         <div style="float: left;padding-top:10px;padding-right: 30px;">
-                                                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_ANG_Step1_Legal_Display_Help}" style="float:left" html-data-placement="right" html-data-toggle="tooltip" />
+                                                            <apex:image value="/img/msg_icons/info16.png" title="{!IF(isMultiCountryNewAE, $Label.ANG_AE_separate_Legal_Entity_MultiCountry, $Label.ISSP_ANG_Step1_Legal_Display_Help)}" style="float:left" html-data-placement="right" html-data-toggle="tooltip" />
                                                         </div>
                                                     </div>
                                                 </apex:outputpanel>

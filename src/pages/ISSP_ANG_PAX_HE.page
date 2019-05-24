@@ -248,7 +248,8 @@
         $j(".country__c").val("{!isocountry.Name}");
         $j(".country__c").attr('readonly', true);
         $j(".country__c").attr('disabled','disabled');
-        $j(".email-label label").text("{!$Label.ISSP_Office_Email} *");        
+        $j(".email-label label").text("{!$Label.ISSP_Office_Email}".replace("*", "") + " *");
+        //$j(".email-label label").text();        
         $j(".phoneLabelText").hide();
         $j("#phone").hide();
         $j("#branch_office_phone__c").hide();
@@ -941,12 +942,19 @@
                             var $j = jQuery.noConflict();
 
                             function mandatoryLabels() {
-                                var labelBillStreet = $j('.address-label')[0].childNodes[0],
+                                /*var labelBillStreet = $j('.address-label')[0].childNodes[0],
                                     labelBillCity = $j('.address-label')[1].childNodes[0];
-                                if (labelBillStreet)
-                                    labelBillStreet.textContent = labelBillStreet.textContent + ' *' ;
-                                if (labelBillCity)
-                                    labelBillCity.textContent = labelBillCity.textContent + ' *' ;                                
+                                if (labelBillStreet) {
+                                    if (!labelBillStreet.textContent.includes("*")) {
+                                       labelBillStreet.textContent = labelBillStreet.textContent + ' *' ; 
+                                    }
+                                    
+                                }
+                                if (labelBillCity) {
+                                    if (!labelBillCity.textContent.includes("*")) {
+                                        labelBillCity.textContent = labelBillCity.textContent + ' *' ;   
+                                    }
+                                }*/
                             }
 
                             document.onload = mandatoryLabels();
@@ -964,16 +972,24 @@
                                     $('[id$="ShippingCountryList"]').addClass('error');
                                 }
 
+                                $('[id$="billingstreet"]').parent().prev().children().text(function () {
+                                    return $(this).text().replace("*", "") + " *";
+                                });
+
+                                $('[id$="billingcity"]').parent().prev().children().text(function () {
+                                    return $(this).text().replace("*", "") + " *";
+                                });
+
                                 $('[id$="shippingcountry"]').parent().prev().children().text(function () {
-                                    return "* " + $(this).text();
+                                    return $(this).text().replace("*", "") + " *";
                                 });
                          
                                 $('[id$="shippingstreet"]').parent().prev().children().text(function () {
-                                    return "* " + $(this).text();
+                                    return $(this).text().replace("*", "") + " *";
                                 });
                                 
                                 $('[id$="shippingcity"]').parent().prev().children().text(function () {
-                                    return "* " + $(this).text();
+                                    return $(this).text().replace("*", "") + " *";
                                 });
                             });
 
@@ -1322,15 +1338,15 @@
                 }
 
                 $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
-                    return "* " + $(this).text();
+                    return $(this).text().replace("*", "") + " *";
                 });
          
                 $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
-                    return "* " + $(this).text();
+                    return $(this).text().replace("*", "") + " *";
                 });
                 
                 $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
-                    return "* " + $(this).text();
+                    return $(this).text().replace("*", "") + " *";
                 });
             });
 
