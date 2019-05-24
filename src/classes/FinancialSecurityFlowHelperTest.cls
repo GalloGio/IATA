@@ -38,6 +38,10 @@ private class FinancialSecurityFlowHelperTest {
     @isTest static void testMethod1() {
         Test.startTest();
         List<Financial_Security__c> finSecs = [SELECT Id FROM Financial_Security__c];
+        finSecs[0].Acknowledge_Sent_Date__c = Date.today().addDays(-1);
+        finSecs[0].Expiry_Date__c = Date.today().addDays(200);
+        update finSecs;
+        insert new Financial_Security__History(Field= 'Expiry_Date__c ', ParentId= finSecs[0].Id);
         FinancialSecurityFlowHelper.sendAcknowledge(new List<Id> {finSecs[0].Id});
         Test.stopTest();
         finSecs = [SELECT Id, Acknowledgment_sent__c, Acknowledge_Sent_Date__c FROM Financial_Security__c];
