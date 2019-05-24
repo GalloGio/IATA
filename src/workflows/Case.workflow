@@ -18729,26 +18729,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <description>Updates field tracking field if a case is updated by someone who is not the case owner</description>
-        <formula>AND(
-OR( RecordType.DeveloperName = &apos;CasesMENA&apos;,
-RecordType.DeveloperName = &apos;CasesAmericas&apos;,
-RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;,
-RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;,
-RecordType.DeveloperName = &apos;CasesEurope&apos;,
-RecordType.DeveloperName = &apos;Cases_Global&apos;),
-
-( ISCHANGED(CaseArea__c)||
-ISCHANGED(Reason1__c)||
-ISCHANGED(BSPCountry__c)||
-ISCHANGED(Case_Remarks__c)||
-ISCHANGED(Attachment_received_possible_POP__c)||
-ISCHANGED(Region__c)|| ISCHANGED(AccountId)||
-ISCHANGED(ContactId)|| ISCHANGED(Origin)||
-ISCHANGED(ParentId)|| ISCHANGED(Priority)||
-ISCHANGED(Subject)||
-ISCHANGED(Status) )
-&amp;&amp; LastModifiedById&lt;&gt;OwnerId
-)</formula>
+        <formula>CONTAINS($Label.CaseRTtrackedByCS,RecordType.DeveloperName) &amp;&amp; ( ISCHANGED(CaseArea__c)|| ISCHANGED(Reason1__c)|| ISCHANGED(BSPCountry__c)|| ISCHANGED(Case_Remarks__c)|| ISCHANGED(Attachment_received_possible_POP__c)|| ISCHANGED(Region__c)|| ISCHANGED(AccountId)|| ISCHANGED(ContactId)|| ISCHANGED(Origin)|| ISCHANGED(ParentId)|| ISCHANGED(Priority)|| ISCHANGED(Subject)|| ISCHANGED(Status)  ) &amp;&amp; LastModifiedById&lt;&gt;OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
