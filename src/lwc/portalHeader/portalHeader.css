@@ -215,6 +215,14 @@
   margin-right: 10%;
 }
 
+.notificationCenterTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.notificationCenterTextsize {
+  font-size: 14px;
+}
 .unreadNotification {
   background-color: #f7f8fa;
 }
@@ -325,4 +333,9 @@
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.closeButton {
+  font-size: 16px;
+  font-weight: bold;
 }

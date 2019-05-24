@@ -10,6 +10,7 @@ import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 
+
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
@@ -202,7 +203,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //user logout
     logOut() {
-        //window.location.replace("/secur/logout.jsp");
+        navigateToPage("/secur/logout.jsp");
     }
 
 

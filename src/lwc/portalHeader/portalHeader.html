@@ -16,14 +16,14 @@
                                     </lightning-icon>
                                     <span class="slds-assistive-text">Close</span>
                                 </button>
-                                <h2 class="slds-text-heading_medium slds-hyphenate"> {labels.NotificationDetail} </h2>
+                                <h2 class="notificationCenterTitle slds-text-heading_medium slds-hyphenate"> {labels.NotificationDetail} </h2>
                             </header>
                             <div class="modalBody slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                                 <div class="slds-p-top_small">
                                     <center>
                                         <b>
-                                            <span class="text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
-                                            <span class="text-xxsmall slds-m-left_large" >
+                                            <span class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
+                                            <span class="notificationCenterTextsize text-xxsmall slds-m-left_large" >
                                                 <lightning-formatted-date-time value={notification.createdDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
                                                 minute="2-digit"  hour12="true"></lightning-formatted-date-time>
                                             </span>
@@ -78,16 +78,16 @@
                             <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray" style={notificationNumberStyle}>{numberOfNotifications}</div>
                             <div class="headerButtonNotifications slds-m-right_x-small" style={headerButtonNotificationsStyle}></div>
                             <div class="headerButtonNotificationsCloseIcon slds-m-left_xx-small slds-m-right_xxx-small" style={headerButtonNotificationsCloseIconStyle}>
-                                <lightning-icon class="darkBlueIcon" icon-name="utility:close" size="xx-small">
-                                </lightning-icon>
+                                <div class="closeButton"> X </div>
                             </div>
                         </div>
                         
                         <div class="openNotifications customCardWhite slds-m-horizontal_medium" style={openNotificationsStyle}>
                             
                             <div style={displayBodyStyle}>
-                                <div class="slds-m-around_large text-bold text-medium text-black"> {labels.NotificationCenter} </div>
-                                    <lightning-tabset class="tabContent">
+                                <div class="slds-m-around_large notificationCenterTitle text-bold text-medium text-black"> {labels.NotificationCenter} </div>
+                                    <!--lightning-tabset class="tabContent" tabNotificationCenter-->
+                                    <lightning-tabset class="tabNotificationCenter">
                                         <template if:true={userAdmin}>
                                             <!-- ALL NOTIFICATION TAB-->
                                             <lightning-tab label={allNotificationTab} >
@@ -96,8 +96,8 @@
                                                     <div key={not.id} class={not.styles}>
                                                         <div key={not.id} class="text-bold notificationBox" style={displayNotificationStyle} data-item ={not.id}>
                                                             <div class="slds-p-top_small" data-item ={not.id} >
-                                                                <span class="text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>
-                                                                <span class="text-xxsmall slds-m-left_large" data-item ={not.id}>
+                                                                <span class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>
+                                                                <span class="notificationCenterTextsize text-xxsmall slds-m-left_large" data-item ={not.id}>
                                                                     <lightning-formatted-date-time value={not.createdDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
                                                                     minute="2-digit"  hour12="true"></lightning-formatted-date-time>
                                                                 </span>
@@ -135,8 +135,8 @@
                                                     <div key={not.id} class={not.styles}>
                                                         <div key={not.id} class="text-bold notificationBox" style={displayNotificationStyle} data-item ={not.id}>
                                                             <div class="slds-p-top_small" data-item ={not.id} >
-                                                                <span class="text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>
-                                                                <span class="text-xxsmall slds-m-left_large" data-item ={not.id}>
+                                                                <span class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>
+                                                                <span class="notificationCenterTextsize text-xxsmall slds-m-left_large" data-item ={not.id}>
                                                                     <lightning-formatted-date-time value={not.createdDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
                                                                     minute="2-digit"  hour12="true"></lightning-formatted-date-time>
                                                                 </span>
@@ -170,8 +170,8 @@
                                                         <div key={not.id} class={not.styles}>
                                                             <div key={not.id} class="text-bold notificationBox" style={displayNotificationStyle} data-item ={not.id} >
                                                                 <div class="slds-p-top_small" data-item ={not.id} >
-                                                                    <span class="text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>
-                                                                    <span class="text-xxsmall slds-m-left_large" data-item ={not.id}>
+                                                                    <span class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle" data-item ={not.id}>{not.typeNotification}</span>
+                                                                    <span class="notificationCenterTextsize text-xxsmall slds-m-left_large" data-item ={not.id}>
                                                                         <lightning-formatted-date-time value={not.createdDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
                                                                         minute="2-digit"  hour12="true"></lightning-formatted-date-time>
                                                                     </span>
