@@ -676,7 +676,7 @@
                                                         </div>
 
                                                         <div style="float: left;padding-top:10px;padding-right: 30px;">
-                                                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_ANG_Step1_Legal_Display_Help}" style="float:left" html-data-placement="right" html-data-toggle="tooltip" />
+                                                            <apex:image value="/img/msg_icons/info16.png" title="{!IF(isMultiCountryNewAE, $Label.ANG_AE_separate_Legal_Entity_MultiCountry, $Label.ISSP_ANG_Step1_Legal_Display_Help)}" style="float:left" html-data-placement="right" html-data-toggle="tooltip" />
                                                         </div>
                                                     </div>
                                                 </apex:outputpanel>

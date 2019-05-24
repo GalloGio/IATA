@@ -259,6 +259,18 @@
 	        $j(".labelText").hide();
 	        $j("#phone").hide();
 	        $j("#branch_office_phone__c").hide();
+
+          $j('[id$="shipping_city__c"]').parent().prev().children().text(function () {
+            return $j(this).text().replace("*", "") + " *";
+          });
+
+          $j('[id$="shipping_street__c"]').parent().prev().children().text(function () {
+            return $j(this).text().replace("*", "") + " *";
+          });
+
+          $j('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+            return $j(this).text().replace("*", "") + " *";
+          });
       	});
 
       	function closeModal() {
