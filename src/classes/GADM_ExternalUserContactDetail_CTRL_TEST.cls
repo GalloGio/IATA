@@ -488,7 +488,7 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
         System.runAs(testUser) {
 
             GADM_ExternalUserContactList_CTRL.UserInformation currentUserInfo = GADM_ExternalUserContactList_CTRL.getCurrentUserInformation(testUser.Id);
-            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>());
+            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>(), false);
 
             Contact_Roles_Helper.AggregatedRecordWrapper selectedUserInfo = new Contact_Roles_Helper.AggregatedRecordWrapper();
 
@@ -527,7 +527,7 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
         System.runAs(testUser) {
 
             GADM_ExternalUserContactList_CTRL.UserInformation currentUserInfo = GADM_ExternalUserContactList_CTRL.getCurrentUserInformation(testUser.Id);
-            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser.Id, false, false, new List<Id>{businessRole.Id});
+            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser.Id, false, false, new List<Id>{businessRole.Id}, false);
 
             Contact_Roles_Helper.AggregatedRecordWrapper selectedUserInfo = new Contact_Roles_Helper.AggregatedRecordWrapper();
 
@@ -580,7 +580,7 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
         System.runAs(testUser) {
 
             GADM_ExternalUserContactList_CTRL.UserInformation currentUserInfo = GADM_ExternalUserContactList_CTRL.getCurrentUserInformation(testUser.Id);
-            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>());
+            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>(), false);
 
             Contact_Roles_Helper.AggregatedRecordWrapper selectedUserInfo = new Contact_Roles_Helper.AggregatedRecordWrapper();
 
@@ -633,7 +633,7 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
         System.runAs(testUser) {
 
             GADM_ExternalUserContactList_CTRL.UserInformation currentUserInfo = GADM_ExternalUserContactList_CTRL.getCurrentUserInformation(testUser.Id);
-            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>());
+            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>(),false);
 
             Contact_Roles_Helper.AggregatedRecordWrapper selectedUserInfo = new Contact_Roles_Helper.AggregatedRecordWrapper();
 
@@ -689,7 +689,7 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
         System.runAs(testUser) {
 
             GADM_ExternalUserContactList_CTRL.UserInformation currentUserInfo = GADM_ExternalUserContactList_CTRL.getCurrentUserInformation(testUser.Id);
-            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>());
+            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>(), false);
 
             Contact_Roles_Helper.AggregatedRecordWrapper selectedUserInfo = new Contact_Roles_Helper.AggregatedRecordWrapper();
 
@@ -754,7 +754,7 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
                 businessUnitsIds.add(role.Id);
             }
 
-            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser.Id, false, false, new List<Id>(businessUnitsIds));
+            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser.Id, false, false, new List<Id>(businessUnitsIds), false);
 
             Contact_Roles_Helper.AggregatedRecordWrapper selectedUserInfo = new Contact_Roles_Helper.AggregatedRecordWrapper();
 
@@ -807,7 +807,7 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
         System.runAs(testUser) {
 
             GADM_ExternalUserContactList_CTRL.UserInformation currentUserInfo = GADM_ExternalUserContactList_CTRL.getCurrentUserInformation(testUser.Id);
-            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>());
+            List<Contact_Roles_Helper.AggregatedRecordWrapper> allUsersInfo = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>(), false);
 
             Contact_Roles_Helper.AggregatedRecordWrapper selectedUserInfo = new Contact_Roles_Helper.AggregatedRecordWrapper();
 

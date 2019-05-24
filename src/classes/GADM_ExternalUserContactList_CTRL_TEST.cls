@@ -425,7 +425,7 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
 
         System.runAs(testUser) {
 
-            wrapper = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>(businessUnits.keySet()));
+            wrapper = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>(businessUnits.keySet()), false);
             System.debug('wrapper:: ' + wrapper);
 
         }
