@@ -11,6 +11,7 @@ export default class PortalFAQPage extends NavigationMixin(LightningElement) {
     @track childs;
     @track topicTiles;
     @track accordionMap;
+    @track counter;
 
     connectedCallback() {
         //get the parameters for this page
@@ -19,10 +20,15 @@ export default class PortalFAQPage extends NavigationMixin(LightningElement) {
         if(pageParams !== undefined && pageParams.category !== undefined){              
             this.category = pageParams.category;
         }         
-    }         
+    }
+
+    topicSelected(event) {
+        console.log('event topicSelected');
+        this.topic = event.detail.options;
+    }
 
     subTopicSelected(event) {
-        this.topic = event.detail.topic;
-        this.subTopic = event.detail.subtopic;
+        console.log('event subTopicSelected');
+        this.subTopic = event.detail.options;
     }
 }

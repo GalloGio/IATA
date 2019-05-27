@@ -5,3 +5,13 @@
     border-left-color: #F04632;
     border-left-width: 5px;
 }
+
+.borderStyle {
+    border-bottom-style: solid;
+    border-bottom-color: #e6e6e6;
+    border-bottom-width: 1px;
+}
+
+.cardStyle {
+    background-color: #f7f8fa;
+}
