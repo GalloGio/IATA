@@ -264,23 +264,26 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         if (notification.typeNotification === 'Announcement' ){
             increaseNotificationView({id : selectedNotificationId})
             .then(results => {
-                let notificationCounter = this.notificationCounter;
-                let taskCounter = this.taskCounter;
 
-                notificationCounter--;
-                this.numberOfNotifications = notificationCounter + taskCounter;
-                this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
-                this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
-                this.notificationCounter = notificationCounter;
+                if (!notification.viewed){
+                    let notificationCounter = this.notificationCounter;
+                    let taskCounter = this.taskCounter;
 
-                this.numberOfNotifications = (notificationCounter + taskCounter);
-                if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
-                    this.notificationNumberStyle = 'display: none;';
+                    notificationCounter--;
+                    this.numberOfNotifications = notificationCounter + taskCounter;
+                    this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+                    this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
+                    this.notificationCounter = notificationCounter;
+
+                    this.numberOfNotifications = (notificationCounter + taskCounter);
+                    if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+                        this.notificationNumberStyle = 'display: none;';
+                    }
+
+                    notification.viewed = true;
+                    notification.styles = 'readNotification';
+                    this.notificationsList = notificationsListAux;
                 }
-
-                notification.viewed = true;
-                notification.styles = 'readNotification';
-                this.notificationsList = notificationsListAux;
 
             })
             .catch(error => {
