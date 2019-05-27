@@ -2700,6 +2700,14 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_ArticleHelpful</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ArticleHelpful</shortDescription>
+        <value>Was this article helpful?</value>
+    </labels>    
+    <labels>
         <fullName>CSP_Breadcrumb_FAQ_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2739,6 +2747,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Breadcrumb_Support_Title</shortDescription>
         <value>Support</value>
     </labels>
+    <labels>
+        <fullName>CSP_Cancel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>    
     <labels>
         <fullName>CSP_CaseMessage_HelpText</fullName>
         <categories>CS Portal</categories>
@@ -2836,6 +2852,22 @@ Payment required on receipt of this Payment Advice
         <value>Features</value>
     </labels>
     <labels>
+        <fullName>CSP_FeedbackBody</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_FeedbackBody</shortDescription>
+        <value>Please tell us how we can make this article more useful.</value>
+    </labels>    
+    <labels>
+        <fullName>CSP_FeedbackTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_FeedbackTitle</shortDescription>
+        <value>Feedback</value>
+    </labels>    
+    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2931,6 +2963,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_RecentCases</shortDescription>
         <value>Recent Cases</value>
     </labels>
+    <labels>
+        <fullName>CSP_RelatedArticles</fullName> 
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_RelatedArticles</shortDescription>
+        <value>Related Articles</value>
+    </labels>    
     <labels>
         <fullName>CSP_Search_Home_Placeholder</fullName>
         <categories>CS Portal</categories>
@@ -3076,6 +3116,14 @@ Payment required on receipt of this Payment Advice
         <value>Status</value>
     </labels>
     <labels>
+        <fullName>CSP_Submit</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Submit</shortDescription>
+        <value>Submit</value>
+    </labels>    
+    <labels>
         <fullName>CSP_Support</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3091,6 +3139,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Support_HeaderTitle</shortDescription>
         <value>What can we help you with</value>
     </labels>
+    <labels>
+        <fullName>CSP_ThanksFeedback</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ThanksFeedback</shortDescription>
+        <value>Thanks for your feedback!</value>
+    </labels>    
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
         <categories>CS Portal</categories>
