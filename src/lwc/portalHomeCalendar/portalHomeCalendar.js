@@ -57,8 +57,10 @@ export default class PortalHomeCalendar extends LightningElement {
             if((this.currentViewingWeek.lstDays[i].dayNumber+'') === itemNum){
                 this.lstEventsForCardFooter = this.currentViewingWeek.lstDays[i].lstEvents;
                 this.currentViewingWeek.lstDays[i].isSelected = true;
+                this.currentViewingWeek.lstDays[i].isSelectedClass = 'selectedDayBar';
             }else{
                 this.currentViewingWeek.lstDays[i].isSelected = false;
+                this.currentViewingWeek.lstDays[i].isSelectedClass = '';
             }
         }
         this.viewEvents = true;
@@ -95,6 +97,7 @@ export default class PortalHomeCalendar extends LightningElement {
                     if(results.lstWeeks[i].lstDays[j].isHighlighted){
                         isThisWeek = true;
                         results.lstWeeks[i].lstDays[j].isSelected = true;
+                        results.lstWeeks[i].lstDays[j].isSelectedClass = 'selectedDayBar';
                         this.lstEventsForCardFooter = results.lstWeeks[i].lstDays[j].lstEvents;
                         this.viewEvents = true;
                         break;
@@ -121,6 +124,7 @@ export default class PortalHomeCalendar extends LightningElement {
         this.viewEvents = false;
         for(let i = 0; i < this.currentViewingWeek.lstDays.length; i++){
             this.currentViewingWeek.lstDays[i].isSelected = false;
+            this.currentViewingWeek.lstDays[i].isSelectedClass = '';
         }
         if(currentWeekNum < totalNumber){
             this.currentViewingWeek = this.currentViewingMonth.lstWeeks[currentWeekNum];
@@ -158,6 +162,7 @@ export default class PortalHomeCalendar extends LightningElement {
         this.viewEvents = false;
         for(let i = 0; i < this.currentViewingWeek.lstDays.length; i++){
             this.currentViewingWeek.lstDays[i].isSelected = false;
+            this.currentViewingWeek.lstDays[i].isSelectedClass = '';
         }
         if(currentWeekNum > 0){
             this.currentViewingWeek = this.currentViewingMonth.lstWeeks[(currentWeekNum-1)];

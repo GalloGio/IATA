@@ -24,7 +24,7 @@
                 </div>
                 <div if:false={loading}>
     
-                    <div if:true={showCalendar}>
+                    <div if:true={showCalendar} class="cardBodyContent">
                         <div class="slds-p-horizontal_small">
                             <div class="slds-m-top_large slds-m-bottom_medium slds-grid slds-wrap text-xxsmall">
                                 <div class="slds-size_5-of-7">
@@ -41,25 +41,25 @@
                             <div class="slds-m-vertical_medium bottomLightGrayBorder"></div>
     
                             <div class="slds-grid slds-wrap slds-text-align_center text-xxsmall">
-                                <div class="slds-col slds-size_1-of-7 dayBar">
+                                <div class="slds-col slds-size_1-of-7 weekdayBar">
                                     {label.ISSP_Weekday_Short_Monday}
                                 </div>
-                                <div class="slds-col slds-size_1-of-7 dayBar">
+                                <div class="slds-col slds-size_1-of-7 weekdayBar">
                                     {label.ISSP_Weekday_Short_Tuesday}
                                 </div>
-                                <div class="slds-col slds-size_1-of-7 dayBar">
+                                <div class="slds-col slds-size_1-of-7 weekdayBar">
                                     {label.ISSP_Weekday_Short_Wednesday}
                                 </div>
-                                <div class="slds-col slds-size_1-of-7 dayBar">
+                                <div class="slds-col slds-size_1-of-7 weekdayBar">
                                     {label.ISSP_Weekday_Short_Thursday}
                                 </div>
-                                <div class="slds-col slds-size_1-of-7 dayBar">
+                                <div class="slds-col slds-size_1-of-7 weekdayBar">
                                     {label.ISSP_Weekday_Short_Friday}
                                 </div>
-                                <div class="slds-col slds-size_1-of-7 dayBar">
+                                <div class="slds-col slds-size_1-of-7 weekdayBar">
                                     {label.ISSP_Weekday_Short_Saturday}
                                 </div>
-                                <div class="slds-col slds-size_1-of-7 dayBar">
+                                <div class="slds-col slds-size_1-of-7 weekdayBar">
                                     {label.ISSP_Weekday_Short_Sunday}
                                 </div>
     
@@ -68,8 +68,8 @@
                                         <div if:true={dayItem.isEmpty}>
                                             &nbsp;
                                         </div>
-                                        <div if:false={dayItem.isEmpty} >
-                                            <div if:true={dayItem.isSelected} class="cursorPointer lightGrayBackgorund">
+                                        <div if:false={dayItem.isEmpty} class={dayItem.isSelectedClass} >
+                                            <div if:true={dayItem.isSelected} class="cursorPointer">
                                                 <div class="slds-p-around_xx-small slds-align_absolute-center" >
                                                     <div if:true={dayItem.isHighlighted} class="dayBoxSize selectedDay" data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
                                                         {dayItem.dayNumber}
@@ -92,21 +92,20 @@
                                             </div>
     
                                             <template for:each={dayItem.lstEvents} for:item="event">
-                                                <div if:true={dayItem.isSelected} key={event.className} class="slds-p-top_small lightGrayBackgorund">
+                                                <div if:true={dayItem.isSelected} key={event.className} class="eventClassNameContainer">
                                                     <div class={event.className} title={event.title}>&nbsp;</div>
                                                 </div>
-                                                <div if:false={dayItem.isSelected} key={event.className} class="slds-p-top_small">
+                                                <div if:false={dayItem.isSelected} key={event.className} class="eventClassNameContainer" >
                                                     <div class={event.className} title={event.title}>&nbsp;</div>
                                                 </div>
                                             </template>
-    
                                         </div>
                                     </div>
                                 </template>
     
                             </div>
                         </div>
-                        <div if:true={viewEvents} class="slds-p-around_medium lightGrayBackgorund" >
+                        <div if:true={viewEvents} class="slds-p-around_medium lightGrayBackgorund eventsList" >
                             <template for:each={lstEventsForCardFooter} for:item="eventTitle">
                                 <div key={eventTitle.className}>
                                     <span class={eventTitle.className} style="margin-right:8px;"></span>

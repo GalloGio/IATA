@@ -34,3 +34,25 @@
 .lightGrayBackgorund{
     background-color:#f7f8fa;
 }
+
+.weekdayBar {
+    height: 40px;
+}
+
+.selectedDayBar {
+    height: 82px;
+    background-color:#f7f8fa;
+}
+
+.eventsList {
+    height: 160px;
+}
+
+.cardBodyContent {
+    height: 334px; 
+    overflow: hidden;
+}
+
+.eventClassNameContainer {
+    height: 12px;
+}
