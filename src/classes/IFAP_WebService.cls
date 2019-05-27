@@ -17,17 +17,17 @@ global class IFAP_WebService {
     public static final String CASE_STATUS_SANITY_CHECK_FAILURE = 'Sanity Check Failure';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUSTED = 'Financial Security Requested';
 
-    public static final String INVALID_ACTION_TRIGGER_SIDRA_LITE = 'Invalid action, you need to trigger SIDRA Lite action in order to put the agent Under review.';
-    public static final String INVALID_ACTION_REINSTATE_AGENT = 'Invalid action, you need to reinstate the agent from the SIDRA lite related case.';
-    public static final String INVALID_ACTION_REMOVE_CASH_CONDITIONS = 'Invalid action, you need to remove Cash conditions using the appropriate button.';
-    public static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY = 'Conditions are not satisfied to apply Cash Condition on the agent.';
-    public static final String CASH_CONDITION_SUCCESSFULLY_APPLIED = 'Cash condition applied successfully on the agent.';
-    public static final String UNABLE_TO_APPLY_CASH_CONDITION = 'Unable to apply cash condition on the agent.';
-    public static final String CASH_CONDITION_SUCCESSFULLY_REMOVED = 'Cash condition successfully removed from the agent.';
-    public static final String UNABLE_TO_REMOVE_CASH_CONDITION = 'Unable to remove cash condition from the agent.';
-    public static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE = 'Conditions are not satisfied to remove Cash Condition from the agent.';
-    public static final String AGENT_HAS_ALREADY_CASH_CONDITION = 'Agent has already cash condition.';
-    public static final String AGENT_DOES_NOT_HAVE_CASH_CONDITION = 'Agent does not have cash condition.';
+    @TestVisible private static final String INVALID_ACTION_TRIGGER_SIDRA_LITE = 'Invalid action, you need to trigger SIDRA Lite action in order to put the agent Under review.';
+    @TestVisible private static final String INVALID_ACTION_REINSTATE_AGENT = 'Invalid action, you need to reinstate the agent from the SIDRA lite related case.';
+    @TestVisible private static final String INVALID_ACTION_REMOVE_CASH_CONDITIONS = 'Invalid action, you need to remove Cash conditions using the appropriate button.';
+    @TestVisible private static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY = 'Conditions are not satisfied to apply Cash Condition on the agent.';
+    @TestVisible private static final String CASH_CONDITION_SUCCESSFULLY_APPLIED = 'Cash condition applied successfully on the agent.';
+    @TestVisible private static final String UNABLE_TO_APPLY_CASH_CONDITION = 'Unable to apply cash condition on the agent.';
+    @TestVisible private static final String CASH_CONDITION_SUCCESSFULLY_REMOVED = 'Cash condition successfully removed from the agent.';
+    @TestVisible private static final String UNABLE_TO_REMOVE_CASH_CONDITION = 'Unable to remove cash condition from the agent.';
+    @TestVisible private static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE = 'Conditions are not satisfied to remove Cash Condition from the agent.';
+    @TestVisible private static final String AGENT_HAS_ALREADY_CASH_CONDITION = 'Agent has already cash condition.';
+    @TestVisible private static final String AGENT_DOES_NOT_HAVE_CASH_CONDITION = 'Agent does not have cash condition.';
 
     WebService static String FinancialSecurityInfo(String caseNumber, String currencyCode, Decimal amount) {
 
