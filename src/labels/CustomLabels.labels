@@ -33547,6 +33547,78 @@ title,Title,Name</value>
         <value>Select the country or region the problem belongs to</value>
     </labels>
     <labels>
+        <fullName>csp_CreateNewCaseMainInputBoxSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Provide all details that may help to investigate the issue.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputEmailsSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Add additional recipient e-mails.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputEmailsTopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Recipients</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Choose a subject for your issue.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputTopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainPicklistLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Related Account Code</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseTopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Create New Case</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseTopSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Create a case on any issue related to IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseTopSubSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Track the status of the case from Cases.</value>
+    </labels>
+    <labels>
         <fullName>csp_Emergency_Query</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -33632,6 +33704,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Emergency Query</shortDescription>
         <value>Sub-Topic</value>
+    </labels>
+    <labels>
+        <fullName>csp_Subtopic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Subtopic</value>
     </labels>
     <labels>
         <fullName>csp_Suggest_Label</fullName>
@@ -33791,12 +33871,57 @@ title,Title,Name</value>
         <value>Show Support Options</value>
     </labels>
     <labels>
+        <fullName>csp_CaseResponseGuarantee</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>You will have a response as soon as possible.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CaseBeingWorked</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>We're working on it right now.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CaseCreatedSuccess</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Your case is created successfully.</value>
+    </labels>
+    <labels>
         <fullName>csp_toSelectSubTopic</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Select the topic covering the problem.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CaseTracking</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>You can add comments, documents and recipients in case of update. You can track the status and do updates in </value>
+    </labels>
+    <labels>
+        <fullName>csp_ViewCaseSummary</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>View Case Summary</value>
+    </labels>
+    <labels>
+        <fullName>csp_GoToSupport</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>Go to Support</value>
     </labels>        
     <labels>
     <fullName>days_left</fullName>
