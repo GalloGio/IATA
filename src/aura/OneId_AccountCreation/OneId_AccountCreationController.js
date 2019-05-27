@@ -136,6 +136,9 @@
     validateRequiredFields: function(c) {
         var regExpEmailformat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
         var category = c.find("categorySelection");
+        var catValue = category.get("v.value");
+        var catOther = c.find("catOtherVal");
+        var catOtherValue = catOther.get("v.value");
         
         var email = c.find("email");
         var emailValue = email.get("v.value");
@@ -187,6 +190,16 @@
             c.set("v.validationError", false);
         }
         
+        if(!$A.util.isEmpty(category) && catValue == 'Other' && !$A.util.isEmpty(catOther) && $A.util.isEmpty(catOtherValue)) {            
+            catOther.set("v.errors",[{message: $A.get("$Label.c.ISSP_YouMustEnter")}]);
+            isAllFilled = false;
+        } else {
+            catOther.set("v.errors", false);
+        }
+        
+        /* MME TEMP for test purpose*/
+//        isAllFilled = true;
+        
         if(isAllFilled){
           c.getEvent("newAccountSet")
             .setParams({
@@ -199,6 +212,15 @@
     },
     closeModal: function(c){
         c.set("v.suggestionsMode", "hidden");
+    },
+    parseCategory: function(c){
+        var category = c.find("categorySelection");
+        var catValue = category.get("v.value");
+        if(!$A.util.isEmpty(catValue) && catValue == 'Other') {
+            c.set("v.categoryOther", true);
+        } else {
+            c.set("v.categoryOther", false);
+        }
     },
     suggestionSelected: function(c, e) {
         
