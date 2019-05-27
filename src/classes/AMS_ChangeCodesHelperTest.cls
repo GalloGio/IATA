@@ -171,16 +171,16 @@ private class AMS_ChangeCodesHelperTest {
 		insert cashfop;
 		Agency_Authorization__c creditCardfop = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Refer to ASD', RecordTypeId = formOfPaymentRT);
 		insert creditCardfop;
-		/*Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'BOP', Status__c = 'Refer to ASD', RecordTypeId = formOfPaymentRT);
+		Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'BOP', Status__c = 'Refer to ASD', RecordTypeId = formOfPaymentRT);
 		insert bopMethod;
-*/
+
 		List<Agency_Authorization__c> listAgencyAuth = [SELECT id, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorization__c];
 
 		Test.startTest();
 		String formOfPayments = AMS_ChangeCodesHelper.generateFOPString(listAgencyAuth, isNewgen, changeCode);
 		Test.stopTest();
 
-		System.assertEquals('Refer to ASD', formOfPayments);
+		System.assertEquals('BOP FoP: Refer to ASD - Refer to ASD', formOfPayments);
 	}
 
 
