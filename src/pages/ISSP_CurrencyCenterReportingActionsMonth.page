@@ -496,7 +496,15 @@
 													            <apex:inputField value="{!item.Sales_Period_End_Date__c}" style="width: 150px" type="date" styleClass="disableClass" html-min="{!YEAR(item.Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(item.Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(item.Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(item.Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(item.Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(item.Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(item.Sales_Period_Start_Date__c))}" html-max="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c))}"/>
 												            </apex:column>
 
-												            <apex:column rendered="{!surveyStatus=='Draft'}">
+                                    <apex:column >
+                                      <apex:facet name="header">
+                                        <apex:outputText escape="false" value="Total Amount (USD)"/>
+                                      </apex:facet>
+                                      <apex:inputField value="{!item.Total_Amount_USD__c}" style="width: 100px" styleClass="disableClass" id="totalAmountUSD">
+                                      </apex:inputField>
+                                    </apex:column>
+
+												            <apex:column rendered="{!surveyStatus=='Draft'}" width="20px">
 													            <!-- <apex:commandLink action="{!deleteRow}" id="removeRow" value="Delete Row" rerender="bankTable, reportingTypePanel" styleClass="removeRowDisableClass btnDisable">
 												            			<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
 												            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
@@ -534,9 +542,10 @@
                               <thead>
                                 <tr class="dataRow">
                                     <th class="headerRow">Total Amount</th>
-                                    <th class="headerRow">Sales Period (Start)*</th>
-                                    <th class="headerRow">Sales Period (End)*</th>
+                                    <th class="headerRow">Sales Period (Start) *</th>
+                                    <th class="headerRow">Sales Period (End) *</th>
                                     <th class="headerRow">Delay in Day</th>
+                                    <th class="headerRow">ICCS</th>
                                     <th class="headerRow">USD (Equivalent)</th>
                                     <th class="headerRow">Currency Conversion Rate</th>
                                 </tr>
@@ -565,6 +574,9 @@
                                     <apex:outputText value="{!wccsObject.typeReportMap[section].Delay_in_day__c}" label=""/>
                                   </td>
                                   <td class="dataCell">
+                                    <apex:outputText value="{!wccsObject.typeReportMap[section].ICCS__c}" label=""/>
+                                  </td>
+                                  <td class="dataCell">
                                     <apex:outputField value="{!wccsObject.typeReportMap[section].Total_Amount_USD__c}" label="" id="totalUSD"/>
                                   </td>
                                   <td class="dataCell">
@@ -584,15 +596,15 @@
 															<th class="headerRow" colspan="2">Last Allocation Details</th>
 														</tr>
 														<tr class="dataRow">
-															<th class="headerRow">Date: </th>
+															<th class="headerRow"><div align="left">Date: </div></th>
 															<td class="dataCell">
-																<apex:inputField value="{!wccsObject.typeReportMap[section].Last_Allocation_Date__c}" type="date" label="" styleClass="disableClass" html-max="{!YEAR(TODAY())}-{!IF(LEN(TEXT(MONTH(TODAY())))==1, LPAD(TEXT(MONTH(TODAY())), 2, TEXT(0)), MONTH(TODAY()))}-{!IF(LEN(TEXT(DAY(TODAY())))==1, LPAD(TEXT(DAY(TODAY())), 2, TEXT(0)), DAY(TODAY()))}"/>
+																<apex:inputField value="{!wccsObject.typeReportMap[section].Last_Allocation_Date__c}" type="date" label="" styleClass="disableClass" style="width:120px;" html-max="{!YEAR(TODAY())}-{!IF(LEN(TEXT(MONTH(TODAY())))==1, LPAD(TEXT(MONTH(TODAY())), 2, TEXT(0)), MONTH(TODAY()))}-{!IF(LEN(TEXT(DAY(TODAY())))==1, LPAD(TEXT(DAY(TODAY())), 2, TEXT(0)), DAY(TODAY()))}"/>
 															</td>
 														</tr>
 														<tr class="dataRow">
-															<th class="headerRow" align="left">Total Amount: </th>
+															<th class="headerRow"><div align="left">Total Amount: </div></th>
 															<td class="dataCell">
-																<apex:inputField value="{!wccsObject.typeReportMap[section].Last_Allocation_Amount__c}" label="" styleClass="disableClass">
+																<apex:inputField value="{!wccsObject.typeReportMap[section].Last_Allocation_Amount__c}" label="" styleClass="disableClass" style="width:120px;">
 								                	<apex:actionSupport event="onchange" action="{!calculateLastAllocationUSD}" reRender="bankTable, reportingTypeTable" >
 								                		  <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
 								            			    <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
@@ -601,9 +613,9 @@
 															</td>
 														</tr>
                             <tr class="dataRow">
-                              <th class="headerRow" align="left">Exchange Rate (to USD): </th>
+                              <th class="headerRow"><div align="left">Exchange Rate (to USD): </div></th>
                               <td class="dataCell">
-                                <apex:inputField value="{!wccsObject.typeReportMap[section].Average_Exchange_Rate__c}" label="" styleClass="disableClass"/>
+                                <apex:inputField style="width:120px;" value="{!wccsObject.typeReportMap[section].Average_Exchange_Rate__c}" label="" styleClass="disableClass"/>
                               </td>
                             </tr>
 													</table>
@@ -1217,18 +1229,27 @@
       alert("hide!");
 			event.preventDefault();
       alert("hide2!");
-			if(elemt.parentElement.nextElementSibling.classList.contains("hide")){
+      parentElem = elemt.parentElement;
+      alert("parentElem: " + parentElem.innerHTML);
+
+      grandParentElem = parentElem.parentElement;
+      alert("grandParentElem: " + grandParentElem.innerHTML);
+
+
+        nextElem1 = grandParentElem.nextElementSibling;
+        alert("nextElem1: " + nextElem1.innerHTML);
+
+			if(elemt.parentElement.nextElementSibling.classList != null) {
+        if(elemt.parentElement.nextElementSibling.classList.contains("hide")) {
         alert("hide3!");
 				elemt.parentElement.nextElementSibling.classList.remove("hide");
                 elemt.getElementsByTagName("span")[0].classList.remove("glyphicon-chevron-down");/*icon-minimize");*/
                 elemt.getElementsByTagName("span")[0].classList.add("glyphicon-chevron-up");/*icon-maximize");*/
-
+        }        
 			} else {
         alert("hide4!");
         alert("elemt.parentElement.nextElementSibling: " + elemt.parentElement.nextElementSibling.innerHTML);
-        parentElem = elemt.parentElement;
-        nextElem1 = parentElem.nextElementSibling;
-        alert("nextElem1: " + nextElem1.innerHTML);
+        
         nextElem2 = nextElem1.nextElementSibling;
         alert("nextElem2: " + nextElem2.innerHTML);
 				nextElem2.classList.add("hide");
