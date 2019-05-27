@@ -52,7 +52,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Airline__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
