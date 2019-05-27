@@ -13,13 +13,22 @@
 
         c.find("categorySelection").set("v.options", catoptions);
     },
-	copyBillingToShipping : function(c) {
-		if(c.get("v.copyAddress")) {
-			c.set("v.account.ShippingStreet", c.get("v.account.BillingStreet"));
+
+	copyBillingToShipping : function(c, e, h) {
+    
+        if(c.get("v.copyAddress")) {   
+            
+            if(c.get("v.account.BillingCountry") !== c.get("v.account.ShippingCountry")){
+                c.find("ShippingCountry").set("v.value", c.get("v.country.Id"));
+                h.setCountry(c,e,h);
+            }            
+            c.set("v.account.ShippingStreet", c.get("v.account.BillingStreet"));
 			c.set("v.account.ShippingCity", c.get("v.account.BillingCity"));
-			c.set("v.account.ShippingState", c.get("v.account.BillingState"));
+            c.set("v.account.ShippingState", c.get("v.account.BillingState"));            
             c.set("v.account.ShippingPostalCode", c.get("v.account.BillingPostalCode"));
-			c.set("v.validShipping", c.get("v.validBilling"));
+            c.set("v.validShipping", c.get("v.validBilling"));
+            
+            c.find("ShippingState").set("v.value", c.get("v.account.ShippingState"));            
 		}
 	},
 
@@ -37,13 +46,13 @@
         });
     },
     //Data quality
-    setCities: function(c,e){
+    setCities: function(c,e,m){
         
         
         let mode;
         let currentState;
-
-        if(e) mode = e.currentTarget.getAttribute('name');        
+        mode = m;
+                
        // console.log('setCities mode -> '+mode);
         if(mode){
             c.set('v.predictions'+mode, []);
@@ -52,7 +61,7 @@
             console.log('setCities currentstate -> '+currentState);
         } 
         
-        let citiesAvailable = c.get('v.cities');
+        let citiesAvailable = c.get('v.cities'+mode);
         let citiesOfThisState;
         
         if(currentState){
@@ -85,8 +94,8 @@
         //Data quality//
             
             let currentState = c.get('v.account.'+m+'State');
-            let citiesAvailable = c.get('v.cities');
-            let idAndAlternateNames = c.get('v.idAndAlternateNames');
+            let citiesAvailable = c.get('v.cities'+m);
+            let idAndAlternateNames = c.get('v.idAndAlternateNames'+m);
 
             let citiesToSearch = [];
             //console.log('All cities for state -> '+JSON.stringify(citiesAvailable) );
@@ -148,7 +157,7 @@
         //change of addres makes the validation null
         c.set("v.valid"+m, 0);        
         //check if information need to be passed to shipping as well
-        h.copyBillingToShipping(c);
+        h.copyBillingToShipping(c, e, h);
     },
 
     toggleInvalidCityWarning: function(c, e, h){
@@ -173,6 +182,133 @@
         let streetElement = addDocComponent.find('Street');    
         cityElement.set('v.errors', null);
         streetElement.set('v.errors', null);        
-        c.set('v.errorStateProvince', false);
+        c.set('v.error'+m+'StateProvince', false);
+    },
+
+    
+    
+    getStates : function(c,e,h,m,cn){
+
+        c.set('v.account.'+m+'State', null);
+        
+        var country = cn;
+
+       // if(m === 'Billing')
+        //    country = c.get("v.country").Name;
+        //if(m === 'Shipping')
+         //   country = c.get("v.countryShipping").Name;
+
+        console.log('@@MAC country-> '+country);
+        
+        var action = c.get("c.getStates");
+        action.setParams({"country": country});
+        
+        action.setCallback(this, function(response){
+            let fetchedStates = [""];
+            let res = response.getReturnValue();
+            let states = res.states;
+            let idAndAlternateNames = res.idAndAlternateNames;             
+            let stateCities = {};
+            let allCities = [];
+            let stateNameId = {};
+            let cityNameId = {};
+            
+            for(var i = 0; i < states.length; i++){
+                
+                fetchedStates.push(states[i].Name);
+                stateCities[states[i].Name] = states[i].IATA_ISO_Cities__r;                
+                allCities.push(states[i].IATA_ISO_Cities__r);                
+                stateNameId[states[i].Name] = states[i];
+            }
+
+            let allCitiesMerged = [].concat.apply([], allCities);            
+            let name = '';
+            let id;
+            for(var j = 0; j < allCitiesMerged.length; j++){
+
+                if(allCitiesMerged[j]){
+                    
+                    id = allCitiesMerged[j];
+                    name  = allCitiesMerged[j].Name;
+
+                    cityNameId[name] = id;
+                }            
+            }
+            
+            stateCities["All"] = allCitiesMerged;
+            
+            c.set('v.cities'+m, stateCities);
+            c.set('v.states'+m, fetchedStates);
+            c.set('v.allCities'+m, allCitiesMerged);
+            c.set('v.idAndAlternateNames'+m, idAndAlternateNames);
+            c.set('v.stateNameId'+m, stateNameId);
+            c.set('v.cityNameId'+m, cityNameId);
+            h.setCities(c, null, m);            
+
+        });
+
+        $A.enqueueAction(action);
+
+        var action = c.get("c.getAllCities");
+        
+        console.log('COUNTRY before inside callback -> '+country);
+        action.setParams({"country": country});
+
+        action.setCallback(this,  function(response){       
+            
+           // console.log('response -> '+JSON.stringify(response.getReturnValue());
+           
+            c.set("v.spinner", false);            
+            c.set('v.allCitiesAllCountries'+m, JSON.stringify(response.getReturnValue())); 
+           
+           // console.log('All cities all countries -> '+m+' -> '+c.get('v.allCitiesAllCountries'+m));
+        });
+
+        
+        
+        $A.enqueueAction(action);
+        
+    },
+
+    setCountry: function(c,e,h){
+        if(c.get("v.selectedCountry")){
+            
+            
+            c.set("v.countryShipping", c.get("v.countryInformation.countryMap")[c.get("v.selectedCountry")]);	
+            let countryName = c.get("v.countryShipping").Name;
+            
+            c.set("v.account.ShippingCountry", countryName);
+            
+            h.checkCountryStates(c,e,h,'Shipping',countryName);
+        }
+    },
+
+    checkCountryStates: function(c, e, h, m, cn){
+        c.set("v.countryHasStates"+m, false);
+        let cwsa = c.get("v.listOfCountriesWithStates");
+        console.log('@@MAC -> cwsa - '+cwsa);
+        for(let i = 0; i < cwsa.length; i++){
+            console.log('@@MAC -> cwsa[i] - '+cwsa[i]+'///  '+cn+' <- cn');
+            //cn is the country name
+            if(cwsa[i] === cn){
+                
+                c.set("v.countryHasStates"+m, true);
+            }
+        }
+
+        //country has states
+        let chs = c.get("v.countryHasStates"+m);
+        
+        if(chs) {
+            c.set("v.spinner", true);
+            h.getStates(c,e,h,m,cn);
+        }else{
+            c.set('v.cities'+m, null);
+            c.set('v.states'+m, null);
+            c.set('v.allCities'+m, null);
+            c.set('v.idAndAlternateNames'+m, null);
+            c.set('v.stateNameId'+m, null);
+            c.set('v.cityNameId'+m, null);
+        }
     }
 })

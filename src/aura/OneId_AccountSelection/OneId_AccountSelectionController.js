@@ -53,18 +53,27 @@
 	},
 
 	submit : function(c){	    
-		console.log('SUBMIT');
-		if(c.get("v.search") || c.find("creationComponent").validateRequiredFields()){
-			console.log('INSIDE IF SUBMIT');
+		
+		
+		if(c.get("v.search") || c.find("creationComponent").validateRequiredFields()){			
+			
 			var spinner = c.find("loading");
+			
 			$A.util.toggleClass(spinner, "slds-hide");
 
+			let cityAndStateIds = {	'billingCityId'  : c.get('v.billingCityId'),
+									'billingStateId' : c.get('v.billingStateId'),
+									'shippingCityId' : c.get('v.shippingCityId'),
+									'shippingStateId': c.get('v.shippingStateId') };
+
 			var action = c.get("c.registration");
+
 			action.setParams({
 					"con" : c.get("v.contact"),
 					"acc" : c.get("v.account"),
-					"serviceName" : c.get("v.serviceName")
-			});
+					"serviceName" : c.get("v.serviceName"),
+					"cityAndStateIds" : cityAndStateIds
+				});
 			
 			action.setCallback(this, function(resp){
 				var result = resp.getReturnValue();			

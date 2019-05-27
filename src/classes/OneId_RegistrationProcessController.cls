@@ -101,7 +101,7 @@ public without sharing class OneId_RegistrationProcessController {
 
             if(serviceName != 'FRED'){
 	            isAlreadyContact = true;
-    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
+    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName, null);
             
 	            if(userCreated == true){
 		            userInformation.isContactInserted = true;
@@ -355,11 +355,49 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
-    public static boolean registration(Account acc, Contact con, String serviceName){
+    public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
+        
+        System.debug('cityAndStateIds -> '+cityAndStateIds);
+        System.debug('billingCityId -> '+cityAndStateIds.get('billingCityId'));
+        System.debug('billingStateId -> '+cityAndStateIds.get('billingStateId'));
+
+        String billingCityId = (String) cityAndStateIds.get('billingCityId');
+        String billingStateId = (String) cityAndStateIds.get('billingStateId');
+        String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
+        String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
+
+        if(!String.isBlank(billingCityId)){
+            
+          acc.Geoname_Billing_City__c = billingCityId;
+           System.debug('acc.Geoname_Billing_City__c -> '+acc.Geoname_Billing_City__c);
+        }
+        if(!String.isBlank(billingStateId)){
+            
+            acc.ISO_State__c = billingStateId;
+            acc.IATA_ISO_Billing_State__c = billingStateId;            
+            System.debug('acc.ISO_State__c -> '+acc.ISO_State__c);
+        }
+
+        if(!String.isBlank(shippingCityId)){
+            
+          acc.Geoname_Shipping_City__c = shippingCityId;
+           System.debug('acc.Geoname_Shipping_City__c -> '+acc.Geoname_Shipping_City__c);
+        }
+        if(!String.isBlank(shippingStateId)){
+            
+           
+            acc.IATA_ISO_Shipping_State__c = shippingStateId;            
+            System.debug('acc.IATA_ISO_Shipping_State__c -> '+acc.IATA_ISO_Shipping_State__c);
+        }
+
+        
+
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
+
+       
 
         if(serviceName == null)
             serviceName = 'IDENTITY';
@@ -425,7 +463,7 @@ public without sharing class OneId_RegistrationProcessController {
 
         //create contact        
         con.ISO_Country__c = acc.IATA_ISO_Country__c;
-        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Country__c;
+        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
         con.Country__c = acc.IATA_ISO_Country__c;
         con.Preferred_Language__c = languageString;
         con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
@@ -487,10 +525,17 @@ public without sharing class OneId_RegistrationProcessController {
                 if (!String.isBlank(acc.BillingCountry)) {
                     List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
-                        acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                        acc.IATA_ISO_Country__c = cn[0].id;
                     }
                 }
-            
+                
+                if (!String.isBlank(acc.ShippingCountry)) {
+                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.ShippingCountry});
+                    if (cn.size()!=0) {
+                        acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                    }
+                }
+
                 database.insert(acc);
             }
           
@@ -696,17 +741,30 @@ public without sharing class OneId_RegistrationProcessController {
 
     @AuraEnabled
     public static String getAllCities(String country){
-
         String allCities = '';
-
+        
         for(IATA_ISO_City__c iic : [SELECT Name FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name != :country] ){
             allCities += iic.Name+', ';
         }
+        
         Integer allCitiesSize = allCities.length(); 
 
         return allCities.substring(0,allCitiesSize-2);
     }
   
+
+  @AuraEnabled
+  public static List<String> getCountriesWithStatesAvailable(){
+      
+      List<String> cwsa = new List<String>();
+      
+      for(DQ_CountriesWithState__mdt c : [SELECT Label FROM DQ_CountriesWithState__mdt]){
+          cwsa.add(c.Label);
+      }
+
+      return cwsa;
+  }
+
   public static void increaseCodeCoverage(){
       Integer i = 0;
       i = 0;

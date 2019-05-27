@@ -17,10 +17,12 @@
 			var c = component;
 			var h = helper;
 			
-
-			state.getElement().addEventListener('click', function(e){
-				h.clearContextLabelWarnings(c,e,h);
-			});
+			if(state){
+				state.getElement().addEventListener('click', function(e){
+					h.clearContextLabelWarnings(c,e,h);
+				});
+			}
+			
 
 			/*street.getElement().addEventListener('click', function(e){
 				h.clearContextLabelWarnings(c,e,h);

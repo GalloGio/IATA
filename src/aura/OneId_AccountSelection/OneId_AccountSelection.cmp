@@ -8,13 +8,17 @@
 	<aura:attribute type="String[]" name="states"/>
 	<aura:attribute type="String" name="state" default=""/>
 	<aura:attribute type="Object" name="cities"/>
-	<aura:attribute type="Object" name="allCities"/>
+	
 	<aura:attribute name="predictions" type="List" default="[]"/>
 	<aura:attribute type="Object" name="hierarchyCities"/>
 	<aura:attribute type="Object" name="idAndAlternateNames"/>
+	<aura:attribute type="String" name="billingCityId" />
+	<aura:attribute type="String" name="billingStateId" />
+	<aura:attribute type="String" name="shippingCityId" />
+	<aura:attribute type="String" name="shippingStateId" />
 	<!--Data Quality-->
 
-	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent' }" />
+	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent', 'Iso_state__c':'', 'Iata_Iso_City__c':'' }" />
 	<aura:attribute type="Contact" name="contact" default="{ 'sobjectType': 'Contact' }" />
 	<aura:attribute type="Boolean" name="search" default="true" />
 	<aura:attribute type="String" name="serviceName" />
@@ -28,8 +32,9 @@
 	<aura:attribute type="Map" name="accountLabels" access="private"/>
 	<aura:attribute type="Map" name="filters" default="{}" access="private"/>
 
-  	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" access="private"/>
+  	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation"/>
 	<aura:attribute type="IATA_ISO_Country__c" name="country" access="private"/>
+	<aura:attribute type="IATA_ISO_Country__c" name="countryShipping" access="private" default="{'sobjectType' : 'IATA_ISO_Country__c'}"/>
 	<aura:attribute type="String" name="selectedCountry" access="private"/>
   	<aura:attribute type="List" name="agencyTypes" access="private"/> 
 	<aura:attribute type="Boolean" name="showCreateNew" default="false" />
@@ -90,16 +95,22 @@
 			<c:OneId_AccountCreation aura:id="creationComponent"
 				account="{!v.account}"
 				country="{!v.country}"
+				countryShipping="{!v.countryShipping}"
 				changeName="{! !(v.customerType == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry)}"
 				changeSector="{!v.customerType == 'OtherCompany'}"
 				changeCategory="{!v.customerType == 'OtherCompany' || (v.customerType == 'Airline' &amp;&amp; (empty(v.account.IATA_ISO_Country__c) || v.account.IATA_ISO_Country__c == v.selectedCountry))}"
-				states="{!v.states}"
-				state="{!v.state}"
-				cities="{!v.cities}"
-				allCities="{!v.allCities}"
+				billingCityId="{!v.billingCityId}"
+				billingStateId="{!v.billingStateId}"
+				shippingCityId="{!v.shippingCityId}"
+				shippingStateId="{!v.shippingStateId}"
+				
+				
+				
+				
 				predictions="{!v.predictions}"
 				hierarchyCities="{!v.hierarchyCities}"
-				idAndAlternateNames="{!v.idAndAlternateNames}"
+				
+				countryInformation = "{!v.countryInformation}"
 				/>
 		</aura:set>
 	</aura:if>

@@ -2,31 +2,55 @@
 
 	<aura:attribute type="Account" name="account" required="true" />
 	<aura:attribute type="IATA_ISO_Country__c" name="country" required="true"/>
+	<aura:attribute type="IATA_ISO_Country__c" name="countryShipping" required="true"/>
 	<!--Data Quality-->
-	<aura:attribute type="String[]" name="states"/>
+	<aura:attribute type="String[]" name="statesShipping" default="[]"/>
+	<aura:attribute type="String[]" name="statesBilling" default="[]"/>
+
 	<aura:attribute type="String" name="state" default=""/>
-	<aura:attribute type="Object" name="cities"/>
-	<aura:attribute type="Object" name="allCities"/>
+	
+	<aura:attribute type="Object" name="citiesShipping"/>
+	<aura:attribute type="Object" name="citiesBilling"/>
+
+	<aura:attribute type="Object" name="allCitiesShipping"/>
+	<aura:attribute type="Object" name="allCitiesBilling"/>
+
 	<aura:attribute name="predictions" type="List" default="[]"/>
 	<aura:attribute name="predictionsBilling" type="List" default="[]"/>
 	<aura:attribute name="predictionsShipping" type="List" default="[]"/>
 	<aura:attribute type="Object" name="hierarchyCities"/>
 	<aura:attribute type="Object" name="hierarchyCitiesBilling"/>
 	<aura:attribute type="Object" name="hierarchyCitiesShipping"/>
-	<aura:attribute type="Object" name="idAndAlternateNames"/>
+	
+	<aura:attribute type="Object" name="idAndAlternateNamesBilling"/>
+	<aura:attribute type="Object" name="idAndAlternateNamesShipping"/>
+	
+	<aura:attribute type="Object" name="stateNameIdShipping" default="{}"/>
+	<aura:attribute type="Object" name="stateNameIdBilling" />
+	
+	<aura:attribute type="Object" name="cityNameIdShipping" default="{}"/>
+	<aura:attribute type="Object" name="cityNameIdBilling" />
+	
+	<aura:attribute type="String" name="billingCityId" />
+	<aura:attribute type="String" name="billingStateId" />
+	<aura:attribute type="String" name="shippingCityId" />
+	<aura:attribute type="String" name="shippingStateId" />
+
 	<aura:attribute type="Boolean" name="showListBilling" default="true"/>
 	<aura:attribute type="Boolean" name="showListShipping" default="true"/>
 	
 	<aura:attribute type="String"  name="invalidCity" />
-	<aura:attribute type="Boolean" name="errorStateProvince" />
-	<aura:attribute type="Boolean" name="errorShippingStateProvince" />
+	<!--<aura:attribute type="Boolean" name="errorBillingStateProvince" />
+	<aura:attribute type="Boolean" name="errorShippingStateProvince" />-->
 	<aura:attribute type="Boolean" name="BillingCityEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="BillingStreetEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="BillingCityStreetEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="ShippingCityEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="ShippingStreetEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="ShippingCityStreetEmpty" default="false"/>
-	<aura:attribute type="String" name="allCitiesAllCountries" />
+	<aura:attribute type="String" name="allCitiesAllCountriesBilling" />
+	<aura:attribute type="String" name="allCitiesAllCountriesShipping" />
+	<aura:attribute type="String" name="mode" />
 
 	<aura:attribute type="Boolean" name="cityInAnotherCountryBilling" default="false"/>
 	<aura:attribute type="Boolean" name="cityDoesNotExistBilling" default="false"/>
@@ -34,6 +58,18 @@
 	<aura:attribute type="Boolean" name="cityInAnotherCountryShipping" default="false"/>
 	<aura:attribute type="Boolean" name="cityDoesNotExistShipping" default="false"/>
 	<aura:attribute type="Boolean" name="cityInAnotherStateShipping" default="false"/>
+
+	<aura:attribute type="Boolean" name="cityInvalidWarning" default="false" />
+	<aura:attribute type="Boolean" name="stateInvalidWarning" default="false" />
+	<aura:attribute type="Boolean" name="cityDoesntExistWarning" default="false" />
+
+	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" />
+	<aura:attribute type="String" name="selectedCountry" access="private"/>
+
+	<aura:attribute type="Boolean" name="countryHasStatesBilling" default="false"/>
+	<aura:attribute type="Boolean" name="countryHasStatesShipping" default="false"/>
+	<aura:attribute type="String[]" name="listOfCountriesWithStates" />
+	<aura:attribute type="Boolean" name="spinner" default="false" />
 	<!--Data Quality-->
 
 	<aura:attribute type="Boolean" name="copyAddress" default="false"/>
@@ -160,6 +196,40 @@
 		
 	</aura:if>
 
+
+	<aura:if isTrue="{! and(or(v.cityInAnotherCountryBilling, v.cityInAnotherCountryShipping), v.cityInvalidWarning)}">			
+			<div class="warningBox">
+					<lightning:icon iconName="utility:warning" size="small" alternativeText="Indicates approval" variant="warning"/>
+					<div>
+						<p>The city {!v.invalidCity} is in our database but apparently it belongs to another country according to our database.</p>
+						<p>Review the country and/or city name(s). If you are sure that your input is correct, click submit.</p>		
+					</div>
+				</div>
+				<br/>						 
+		</aura:if>
+
+		<aura:if isTrue="{! and(or(v.cityInAnotherStateBilling, v.cityInAnotherStateShipping), v.stateInvalidWarning)}">			
+			<div class="warningBox">
+					<lightning:icon iconName="utility:warning" size="small" alternativeText="Indicates approval" variant="warning"/>
+					<div>
+						<p>The city {!v.invalidCity} is in our database but it is associated with another State/Province.</p>
+						<p>Review the state/province and/or the city name. If you are sure that your input is correct, click submit.</p>						
+						
+					</div>
+				</div>
+				<br/>						 
+		</aura:if>
+		<aura:if isTrue="{! and(or(v.cityDoesNotExistBilling, v.cityDoesNotExistShipping), v.cityDoesntExistWarning)}">
+			<div class="warningBox">
+				<lightning:icon iconName="utility:warning" size="small" alternativeText="Indicates approval" variant="warning"/>
+				<div>
+					<p>The city {!v.invalidCity} is not in our database (or it was spelled differently).</p>
+					<p>Review the city name. If you are sure that your input is correct, click submit.</p>										
+				</div>
+			</div>
+			<br/>				 
+		</aura:if>
+
 	<div class="slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small slds-p-horizontal_medium">
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds slds-order_2 slds-medium-order_1">
 			<div class="slds-form-element">
@@ -172,42 +242,7 @@
 		</div>
 		
 
-		<aura:if isTrue="{!or(v.cityInAnotherCountryBilling, v.cityInAnotherCountryShipping)}">			
-			<div style="border: 2px solid orange; border-radius: 5px; padding:5px; margin:auto;">
-					<lightning:icon iconName="utility:warning" size="small" alternativeText="Indicates approval" variant="warning"/>
-					<div>
-						<p>The city {!v.invalidCity} is in our database but apparently it belongs to another country according to our database.</p>
-						<p>Review the country and/or city name(s). If you are sure that your input is correct, click submit.</p>		
-										
-					</div>
-				</div>
-				<br/>
-				<br/>		 
-		</aura:if>
-
-		<aura:if isTrue="{! or(v.cityInAnotherStateBilling, v.cityInAnotherStateShipping)}">			
-			<div style="border: 2px solid orange; border-radius: 5px; padding:5px; margin:auto;">
-					<lightning:icon iconName="utility:warning" size="small" alternativeText="Indicates approval" variant="warning"/>
-					<div>
-						<p>The city {!v.invalidCity} is in our database but it is associated with another State/Province.</p>
-						<p>Review the state/province and/or the city name. If you are sure that your input is correct, click submit.</p>						
-						
-					</div>
-				</div>
-				<br/>
-				<br/>		 
-		</aura:if>
-		<aura:if isTrue="{! or(v.cityDoesNotExistBilling, v.cityDoesNotExistShipping)}">
-			<div style="border: 2px solid orange; border-radius: 5px; padding:5px; margin:auto;">
-				<lightning:icon iconName="utility:warning" size="small" alternativeText="Indicates approval" variant="warning"/>
-				<div>
-					<p>The city {!v.invalidCity} is not in our database (or it was spelled differently).</p>
-					<p>Review the city name. If you are sure that your input is correct, click submit.</p>										
-				</div>
-			</div>
-			<br/>
-			<br/>		 
-		</aura:if>
+		
 
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds-medium-size_1-of-2 slds-order_1 slds-medium-order_2">
 			<div class="slds-media slds-media_center slds-m-bottom_small">
@@ -271,32 +306,29 @@
 						<ui:inputText value="{!v.country.Name}" class="slds-input" disabled="true"/>
 					</div>
 				</div>
-		
 		<!--<div class="slds-form-element slds-m-bottom_small">
 			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingState}</label>
 			<div class="slds-form-element__control">
 				<ui:inputText value="{!v.account.BillingState}" class="slds-input" change="{!c.updateAddress}"/>
 			</div>
 		</div> -->
-				<div class="slds-form-element slds-m-bottom_small">
-					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingState}</label>
-					<div class="slds-form-element__control">
-						<lightning:select aura:id="BillingState" name="Billing" value="{!v.account.BillingState}" required="false" onchange="{! c.setCitiesUpdateAddress }">
-							<aura:iteration items="{!v.states}" var="state">
-								<option value="{!state}" text="{!state}"></option>
-							</aura:iteration>
-						</lightning:select>				
+				<aura:if isTrue="{!v.countryHasStatesBilling}">
+					<div class="slds-form-element slds-m-bottom_small">
+						<label class="slds-form-element__label">{!v.accountLabels.BillingState}</label>
+						<div class="slds-form-element__control">
+							<lightning:select aura:id="BillingState" name="Billing" value="{!v.account.BillingState}" required="false" onchange="{! c.setCitiesUpdateAddress }">
+								<aura:iteration items="{!v.statesBilling}" var="state">
+									<option value="{!state}" text="{!state}"></option>
+								</aura:iteration>
+							</lightning:select>				
+						</div>
 					</div>
-				</div>
-
-				<aura:if isTrue="{!v.errorStateProvince}">
-					<p style="color:rgb(194, 57, 52)">Required province/state missing</p>
 				</aura:if>
-
-				<aura:if isTrue="{!v.cityInAnotherStateBilling}">
-						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/>Review state/province and/or city name.
+				<!--
+				<aura:if isTrue="{!v.errorBillingStateProvince}">
+					<p class="errorMsg">Required province/state missing</p>
 				</aura:if>
-
+				-->
 				<div class="slds-form-element slds-m-bottom_small">
 					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingCity}</label>
 					<div class="slds-form-element__control">
@@ -318,9 +350,16 @@
 					</div>
 					
 					<aura:if isTrue="{!v.cityDoesNotExistBilling}">
-						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/> Enter a valid city.
+						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">Enter a valid city.</span>
 					</aura:if>
 				</div>
+				
+
+				<aura:if isTrue="{!v.cityInAnotherStateBilling}">
+						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">Review state/province and/or city name.</span>
+				</aura:if>
+
+				
 
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingStreet}</label>
 				<div class="slds-form-element__control">
@@ -340,46 +379,56 @@
 					<button onclick="{!c.validateAddress}" data-mode="Billing">
 						Check address		
 					</button>
+					<br/>
 				</aura:if>
-			</div>					
+			</div>
+			<div class="slds-grid">
 			<div class="slds-media slds-media_center slds-m-bottom_small check_addr_msg" >
-				<div class="slds-media__figure slds-media__figure_reverse slds-is-relative check_addr_msg">
+				
 
 					<aura:if isTrue="{!v.BillingCityStreetEmpty}">
 							<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
-							
-							<span style="color:red"><p>We cannot validate address without a billing city and street.</p><p>Please fill in the billing city field</p><br/></span>
+							<br/>
+							<span class="errorMsg">We cannot validate address without a billing city and street. Please fill in the field.</span>
 					</aura:if>
 
 					<aura:if isTrue="{!v.BillingCityEmpty}">
 							<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
-							
-							<span style="color:red"><p>We cannot validate address without a billing city.</p><p>Please fill in the billing city field</p><br/></span>
+							<br/>
+							<span class="errorMsg">We cannot validate address without a billing city.Please fill in the field.</span>
 					</aura:if>
 
 					<aura:if isTrue="{!v.BillingStreetEmpty}">
 							<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
-							
-							<span style="color:red"><p>We cannot validate address without a billing street.</p><p>Please fill in the billing street field</p><br/></span>
+							<br/>
+							<span class="errorMsg">We cannot validate address without a billing street. Please fill in the field.</span>
 					</aura:if>
 
 					<aura:if isTrue="{!v.validBilling == -1}">
 						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
 						<!--TO SHOW ONLY IF CITY IS OK AND STREET/POSTAL CODE IS NOT-->
-						<span style="color:red">We could not find that address</span>
+						<span class="errorMsg">We could not find that address. If you are sure that your input is correct, you can still submit.</span>
 					</aura:if>
 					<aura:if isTrue="{!v.validBilling == 1}">
 						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/ok.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
-						<span style="color:green">Matching address(es) was(were) found</span>
-					</aura:if>
+						<span class="validMsg">Matching address(es) was(were) found.</span>
+					</aura:if>					
 					<aura:if isTrue="{!v.validBilling == 2}">
 						<lightning:spinner size="small"/>
 					</aura:if>
-				</div>
+					<aura:if isTrue="{!v.validBilling == 3}">
+						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/>
+						<br/>
+						<span class="warningMsg">We are not able to check the address in the specified location.</span>
+					</aura:if>
+				
 			</div>
-			
+		</div>
 		</div>
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds-medium-size_1-of-2 slds-order_3">
+			<aura:if isTrue="{!v.spinner}">
+				<lightning:spinner size="large"/>
+			</aura:if>
 			<div class="slds-media slds-media_center slds-m-bottom_small">
 				<h3 class="slds-media__body slds-text-heading_small">{!v.accountLabels.ShippingAddress}</h3>
 				<!--<div class="slds-media__figure slds-media__figure_reverse slds-is-relative">
@@ -432,31 +481,50 @@
 				</div>
 			</div>
 		</div>-->
+
+		<!--
 			<div class="slds-form-element slds-m-bottom_small">
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingCountry}</label>
 				<div class="slds-form-element__control">
-					<ui:inputText value="{!v.country.Name}" class="slds-input" disabled="true"/>
+					<ui:inputText value="{!v.countryShipping.Name}" class="slds-input" disabled="true"/>
+				</div>
+			</div> -->
+			
+			
+			
+			<div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+					
+						
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingCountry}</label>
+				<div class="slds-form-element__control">
+					<lightning:select aura:id="ShippingCountry" name="" label="" value="{!v.selectedCountry}"  onchange="{!c.setCountry}" disabled="{!v.copyAddress}">
+						<option value=""></option>
+						<aura:iteration items="{!v.countryInformation.countryList}" var="country">
+							<option value="{!country.Id}">{!country.Name}</option>
+						</aura:iteration>
+					</lightning:select>
 				</div>
 			</div>
 			
-			
-			<div class="slds-form-element slds-m-bottom_small">
-					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingState}</label>
-					<div class="slds-form-element__control">
-						<lightning:select aura:id="ShippingState" name="Shipping" value="{!v.account.ShippingState}" required="false" disabled="{!v.copyAddress}" onchange="{! c.setCitiesUpdateAddress }">
-							<aura:iteration items="{!v.states}" var="state">
-								<option value="{!state}" text="{!state}" ></option>
-							</aura:iteration>
-						</lightning:select>				
+
+			<aura:if isTrue="{!v.countryHasStatesShipping}">
+				<div class="slds-form-element slds-m-bottom_small">
+						<label class="slds-form-element__label">{!v.accountLabels.ShippingState}</label>
+						<div class="slds-form-element__control">
+							<lightning:select aura:id="ShippingState" name="Shipping" value="{!v.account.ShippingState}" required="false" disabled="{!v.copyAddress}" onchange="{! c.setCitiesUpdateAddress }">
+								<aura:iteration items="{!v.statesShipping}" var="state">
+									<option value="{!state}" text="{!state}" ></option>
+								</aura:iteration>
+							</lightning:select>				
+						</div>
 					</div>
-				</div>
+			</aura:if>
+				<!--
 				<aura:if isTrue="{!v.errorShippingStateProvince}">
-					<p style="color:rgb(194, 57, 52)">Required province/state missing</p>
+					<p class="errorMsg">Required province/state missing</p>
 				</aura:if>
-				<aura:if isTrue="{!v.cityInAnotherStateShipping}">
-						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/>Review state/province and/or city name.
-				</aura:if>
-			<div class="slds-form-element slds-m-bottom_small">
+				-->
+				<div class="slds-form-element slds-m-bottom_small">
 					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingCity}</label>
 					<div class="slds-form-element__control">
 						<ui:inputText aura:id="ShippingCity" disabled="{!v.copyAddress}" value="{!v.account.ShippingCity}" class="slds-input" change="{!c.updateAddress}"/>
@@ -476,9 +544,14 @@
 						</aura:if>
 					</div>
 					<aura:if isTrue="{!v.cityDoesNotExistShipping}">
-						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/> Enter a valid city.
+						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">Enter a valid city.</span>
 					</aura:if>
-			</div>
+				</div>
+				
+				<aura:if isTrue="{!v.cityInAnotherStateShipping}">
+						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">Review state/province and/or city name.</span>
+				</aura:if>
+			
 
 			<div class="slds-form-element slds-m-bottom_small">
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingStreet}</label>
@@ -501,41 +574,49 @@
 					</button>
 				</aura:if>
 			</div>
+		
+			<div class="slds-grid">	
 			<div class="slds-media slds-media_center slds-m-bottom_small check_addr_msg">
-				<div class="slds-media__figure slds-media__figure_reverse slds-is-relative check_addr_msg">
+				
 
 					<aura:if isTrue="{! and(v.ShippingCityStreetEmpty,!v.copyAddress)}">
 							<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
 							
-							<span style="color:red"><p>&nbsp;We cannot validate address without a shipping city and street.</p><p>&nbsp;Please fill in the shipping city and the shipping street fields</p><br/></span>
+							<span class="errorMsg">We cannot validate address without a shipping city and street. Please fill in the fields.</span>
 					</aura:if>
 
 					<aura:if isTrue="{! and(v.ShippingCityEmpty,!v.copyAddress)}">
 							<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
 							
-							<span style="color:red"><p>&nbsp;We cannot validate address without a shipping city. Please fill in the shipping city field</p><br/></span>
+							<span class="errorMsg">We cannot validate address without a shipping city. Please fill in the field.</span>
 					</aura:if>
 
 					<aura:if isTrue="{! and(v.ShippingStreetEmpty,!v.copyAddress)}">
 							<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
 							
-							<span style="color:red"><p>&nbsp;We cannot validate address without a shipping street. Please fill in the shipping street field</p><br/></span>
+							<span class="errorMsg">We cannot validate address without a shipping street. Please fill in the field.</span>
 					</aura:if>
 
 					<aura:if isTrue="{!v.validShipping == -1}">
 						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
 						<!--TO SHOW ONLY IF CITY IS OK AND STREET/POSTAL CODE IS NOT-->
-						<span style="color:red">&nbsp;We could not find that address</span>
+						<span class="errorMsg">We could not find that address. If you are sure that your input is correct, you can still submit.</span>
 					</aura:if>
 					<aura:if isTrue="{!v.validShipping == 1}">
 						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/ok.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
-						<span style="color:green">&nbsp;Matching address(es) was(were) found</span>
+						<span class="validMsg" >Matching address(es) was(were) found.</span>
 					</aura:if>
 					<aura:if isTrue="{!v.validShipping == 2}">
 						<lightning:spinner size="small"/>
 					</aura:if>
-				</div>
+					<aura:if isTrue="{!v.validShipping == 3}">
+						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/>
+						<br/>
+						<span class="warningMsg">We are not able to check the address in the specified location.</span>
+					</aura:if>
+				
 			</div>
+		</div>
 		</div>
 	</div>
 

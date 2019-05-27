@@ -36,3 +36,27 @@
 .THIS .check_addr_msg{
 	margin: 0px;
 }
+
+.THIS .errorMsg{
+	color: rgb(194, 57, 52);
+    font-size: .75rem;
+}
+
+.THIS .validMsg{
+	color: rgb(57, 194, 52);
+    font-size: .75rem;
+}
+
+.THIS .warningMsg{
+	color: rgb(194, 150, 0);
+    font-size: .75rem;
+}
+
+.THIS.warningBox{
+	border: 2px solid orange; 
+	border-radius: 5px; 
+	padding:5px; 
+	margin:auto;
+	color:#706e6b;
+	font-size: .75rem;
+}
