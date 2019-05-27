@@ -2513,22 +2513,6 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <errorMessage>Expiry date of the Financial Security can&apos;t be less than the Validity start date.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Financial_Security_Validation_Case</fullName>
-        <active>true</active>
-        <description>Financial Security Validation Case should be filled when switching a bank guarantee to &quot;Active&quot;</description>
-        <errorConditionFormula>AND(
-ISPICKVAL(Security_Type__c, &quot;Bank Guarantee&quot;),
-ISPICKVAL(Security_Status__c, &quot;Active&quot;),
-ISBLANK(Financial_Security_Validation_Case__c),
-OR(
-  ISNEW(),
-  ISCHANGED(Security_Status__c)
-  )
-)</errorConditionFormula>
-        <errorDisplayField>Financial_Security_Validation_Case__c</errorDisplayField>
-        <errorMessage>Please fill &quot;Financial Security Validation Case&quot; before making it active.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Financial_Security_Validation_is_mandato</fullName>
         <active>true</active>
         <description>ACR 06749697 - A validation rule to force the user update the field &quot;Financial Security Validation&quot;</description>
