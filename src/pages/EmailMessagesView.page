@@ -212,10 +212,10 @@
                                 </td>
                                 <td class="pbButton">
                                 <input value="Send an Email" class="btn" name="newEmail" onclick="SendEmail();return false;" title="Send an Email" type="button"/>
-                                <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email" type="button"
-                                  style="display: {!IF($Permission.Can_send_a_tracked_email && ShowSendTrackedEmailButton,'','none')}"  />
-                                    <input value="Send an Email with Translation" class="btn" name="newEmail" onclick="SendEmailUnbabel();return false;"
-                                        title="Send an Email with Translation" type="button" />
+                                <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email"
+                                    type="button" style="display: {!IF($Permission.Can_send_a_tracked_email && ShowSendTrackedEmailButton,'','none')}" />
+                                <!-- <input value="Send an Email with Translation" class="btn" name="newEmail" onclick="SendEmailUnbabel();return false;" title="Send an Email with Translation"
+                                    type="button" /> -->
                                 </td>
                                 <td class="pbHelp">
                                     <span class="help" title="Emails Help (New Window)">
@@ -232,8 +232,8 @@
             </apex:facet>
             <apex:pageBlockButtons location="top" title="Emails">
                 <apex:commandButton onclick="SendEmail();return false;" value="Send an email" id="theButton" />
-                <apex:commandButton onclick="SendEmailUnbabel();return false;" value="Send an Email with Translation"
-                    id="theButtonUnbabel" />
+                <!-- <apex:commandButton onclick="SendEmailUnbabel();return false;" value="Send an Email with Translation"
+                    id="theButtonUnbabel" /> -->
             </apex:pageBlockButtons>
             <div style="height: 200px; overflow-y:auto; display:{!IF(EmailsAvailable==false,'none','block')}">
                 <!-- VERSION JFO -->
