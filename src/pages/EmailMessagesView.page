@@ -135,8 +135,6 @@
         }
 
         function SendEmailUnbabel() {
-            //var id = '{!unifiedList[0].emailId}';
-            //+ "&originalId=" + id + "&replyToAll=0"
             var redirectUrlOne = "{!$Label.SF_Base_URL}/apex/unbabelsc__UnbabelSendEmail?id=" + caseId;
 
             if (sforce.console.isInConsole()) {
