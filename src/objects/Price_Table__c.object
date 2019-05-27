@@ -53,7 +53,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Can_Pay_by_Cheque__c</fullName>
         <defaultValue>false</defaultValue>

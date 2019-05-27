@@ -17,7 +17,12 @@
 
                 c.find("sectorSelection").set("v.options", options);
             }else{
-                c.find("sectorSelection").set("v.options", [{label: sector, value : sector, selected : true}]);
+                var option = sectorsMap[sector];/* WMO-391 */
+                if(option) {
+                    c.find("sectorSelection").set("v.options", [{label: option.label, value : option.value, selected : true}]);
+                } else {
+                	c.find("sectorSelection").set("v.options", [{label: sector, value : sector, selected : true}]);
+            	}
             }
 
             h.setCategory(c);
