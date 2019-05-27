@@ -357,49 +357,36 @@ public without sharing class OneId_RegistrationProcessController {
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
         
-        System.debug('cityAndStateIds -> '+cityAndStateIds);
-        System.debug('billingCityId -> '+cityAndStateIds.get('billingCityId'));
-        System.debug('billingStateId -> '+cityAndStateIds.get('billingStateId'));
-
-        String billingCityId = (String) cityAndStateIds.get('billingCityId');
-        String billingStateId = (String) cityAndStateIds.get('billingStateId');
-        String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
-        String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
-
-        if(!String.isBlank(billingCityId)){
+        if(cityAndStateIds != null){
+            String billingCityId = (String) cityAndStateIds.get('billingCityId');
+            String billingStateId = (String) cityAndStateIds.get('billingStateId');
+            String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
+            String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
             
-          acc.Geoname_Billing_City__c = billingCityId;
-           System.debug('acc.Geoname_Billing_City__c -> '+acc.Geoname_Billing_City__c);
-        }
-        if(!String.isBlank(billingStateId)){
-            
-            acc.ISO_State__c = billingStateId;
-            acc.IATA_ISO_Billing_State__c = billingStateId;            
-            System.debug('acc.ISO_State__c -> '+acc.ISO_State__c);
-        }
+            if(!String.isBlank(billingCityId)){
+                acc.Geoname_Billing_City__c = billingCityId;                
+            }
 
-        if(!String.isBlank(shippingCityId)){
-            
-          acc.Geoname_Shipping_City__c = shippingCityId;
-           System.debug('acc.Geoname_Shipping_City__c -> '+acc.Geoname_Shipping_City__c);
-        }
-        if(!String.isBlank(shippingStateId)){
-            
-           
-            acc.IATA_ISO_Shipping_State__c = shippingStateId;            
-            System.debug('acc.IATA_ISO_Shipping_State__c -> '+acc.IATA_ISO_Shipping_State__c);
-        }
+            if(!String.isBlank(billingStateId)){
+                acc.ISO_State__c = billingStateId;
+                acc.IATA_ISO_Billing_State__c = billingStateId;                            
+            }
 
+            if(!String.isBlank(shippingCityId)){
+                acc.Geoname_Shipping_City__c = shippingCityId;                
+            }
+
+            if(!String.isBlank(shippingStateId)){
+                acc.IATA_ISO_Shipping_State__c = shippingStateId;                            
+            }
+        }
         
-
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
 
-       
-
-        if(serviceName == null)
+       if(serviceName == null)
             serviceName = 'IDENTITY';
 
         //it's general public account? create contact / user
@@ -725,6 +712,7 @@ public without sharing class OneId_RegistrationProcessController {
         return states;
     }
     
+    @TestVisible
     class StatesAndAlternateNames{
         @AuraEnabled 
         public List<IATA_ISO_State__c> states;
@@ -748,22 +736,22 @@ public without sharing class OneId_RegistrationProcessController {
         }
         
         Integer allCitiesSize = allCities.length(); 
-
-        return allCities.substring(0,allCitiesSize-2);
+        
+        return allCitiesSize > 0 ? allCities.substring(0,allCitiesSize-2):null;
     }
   
 
-  @AuraEnabled
-  public static List<String> getCountriesWithStatesAvailable(){
-      
-      List<String> cwsa = new List<String>();
-      
-      for(DQ_CountriesWithState__mdt c : [SELECT Label FROM DQ_CountriesWithState__mdt]){
-          cwsa.add(c.Label);
-      }
+    @AuraEnabled
+    public static List<String> getCountriesWithStatesAvailable(){
+        
+        List<String> cwsa = new List<String>();
+        
+        for(DQ_CountriesWithState__mdt c : [SELECT Label FROM DQ_CountriesWithState__mdt]){
+            cwsa.add(c.Label);
+        }
 
-      return cwsa;
-  }
+        return cwsa;
+    }
 
   public static void increaseCodeCoverage(){
       Integer i = 0;

@@ -27,7 +27,7 @@
 
         var action = c.get("c.getAccountLabels");
         action.setCallback(this, function(a) {
-            console.log('CALLBACK');
+            
             c.set("v.accountLabels", a.getReturnValue());
         });
         $A.enqueueAction(action);
@@ -39,8 +39,7 @@
 
             //list of countries that don't have states loaded            
             c.set("v.listOfCountriesWithStates", r.getReturnValue());
-            console.log('@@MAC v.listOfCountriesWithStates -> '+c.get("v.listOfCountriesWithStates"));
-        
+            
             h.checkCountryStates(c,e,h,'Billing',c.get("v.country").Name);
             //Set shipping country picklist equals to billing country since account.BillingCountry and account.ShippingCountry
             //are the same from the previous component
@@ -50,68 +49,6 @@
 
         $A.enqueueAction(action);
                 
-        //h.getStates(c,e,h,'Shipping');
-     /*   var action = c.get("c.getStates");
-        var country = c.get("v.country").Name;        
-        
-        action.setParams({"country": country});
-        
-        action.setCallback(this, function(response){
-            let fetchedStates = [""];
-            let res = response.getReturnValue();
-            let states = res.states;
-            let idAndAlternateNames = res.idAndAlternateNames;             
-            let stateCities = {};
-            let allCities = [];
-            let stateNameId = {};
-            let cityNameId = {};
-            
-            for(var i = 0; i < states.length; i++){
-                
-                fetchedStates.push(states[i].Name);
-                stateCities[states[i].Name] = states[i].IATA_ISO_Cities__r;                
-                allCities.push(states[i].IATA_ISO_Cities__r);                
-                stateNameId[states[i].Name] = states[i];
-            }
-
-            let allCitiesMerged = [].concat.apply([], allCities);            
-            let name = '';
-            let id;
-            for(var j = 0; j < allCitiesMerged.length; j++){
-
-                if(allCitiesMerged[j]){
-                    
-                    id = allCitiesMerged[j];
-                    name  = allCitiesMerged[j].Name;
-
-                    cityNameId[name] = id;
-                }            
-            }
-            
-            stateCities["All"] = allCitiesMerged;
-            
-            c.set('v.cities', stateCities);
-            c.set('v.states', fetchedStates);
-            c.set('v.allCities', allCitiesMerged);
-            c.set('v.idAndAlternateNames', idAndAlternateNames);
-            c.set('v.stateNameId', stateNameId);
-            c.set('v.cityNameId', cityNameId);
-            h.setCities(c, null);            
-
-        });
-
-        $A.enqueueAction(action);
-
-        var action = c.get("c.getAllCities");
-
-        action.setParams({"country": country});
-
-        action.setCallback(this, function(response){
-            c.set('v.allCitiesAllCountries', JSON.stringify(response.getReturnValue()));
-        });
-        
-        $A.enqueueAction(action);*/
-        
         //Data Quality//
     },
     sectorChanged : function (c, e, h) {
@@ -133,12 +70,16 @@
 
         c.set("v.account."+addressType+"Street", addressObj.street);
         
+        //Commented as per Data Quality project
+        //This way the only boxes that are filled according address doctor are Street and Postal Code
+
        /* if(!$A.util.isEmpty(addressObj.locality)){
             c.set("v.account."+addressType+"City", addressObj.locality);
         }
         if(!$A.util.isEmpty(addressObj.province)){
             c.set("v.account."+addressType+"State", addressObj.province);
         }*/
+
         if(!$A.util.isEmpty(addressObj.postalCode)){
             c.set("v.account."+addressType+"PostalCode", addressObj.postalCode);
         }
@@ -153,31 +94,32 @@
 
     validateAddress : function (c, e, h) {
         
+        //Data quality//
+        
         var mode = e.currentTarget.dataset.mode;
+        let currentState;
         let addDocComponent = c.find('addDocComponent'+mode);       
         let stateElement = c.find(mode+'State');        
         let cityElement = c.find(mode+'City');        
         let streetElement = addDocComponent.find('Street');        
+        
         c.set('v.cityInAnotherCountry'+mode,false);        
         c.set('v.error'+mode+'StateProvince', false);
-        
         c.set('v.cityDoesNotExist'+mode, false);
         c.set('v.cityInAnotherState'+mode, false);
         c.set('v.'+mode+'CityEmpty', false);
         c.set('v.'+mode+'StreetEmpty', false);
         c.set('v.'+mode+'CityStreetEmpty', false);
         c.set('v.validationError', false);
-        
         c.set('v.cityInvalidWarning', false);
         c.set('v.stateInvalidWarning', false);
         c.set('v.cityDoesntExistWarning', false);
         
         cityElement.set('v.errors', null);
         streetElement.set('v.errors', null);
-        //Data quality//
-        let currentState;
-
-		if(stateElement){
+        
+        if(stateElement){
+            
             //This verification is made because sometimes stateElement is an Array
             //for more info please refer to -> https://salesforce.stackexchange.com/questions/227712/lightning-component-findauraid-returns-an-array-consisting-of-one-element 
           
@@ -188,16 +130,9 @@
             }  
         } 
         
-        // console.log('@@MAC1 '+currentState);
-
-		let currentCity = cityElement.get('v.value');
-		// console.log('@@MAC2 '+currentCity);
-        
-        let currentStreet = streetElement.get('v.value');
-	    // console.log('@@MAC3 '+currentStreet);
-        
-
-        
+        let currentCity = cityElement.get('v.value');
+		let currentStreet = streetElement.get('v.value');
+	    
 		//CHECK IF THERE IS A CITY AND A STREET//
         if(currentCity && currentStreet){
 
@@ -353,19 +288,17 @@
         h.updateAddress(c,e,h,mode);        
     },
     updateState: function(c,e,h){
-        //data quality//
+        //Data quality//
         
         let mode = e.currentTarget.getAttribute('data-mode');
-        c.set('v.predictions'+mode, []); 
-         
-       // c.set('v.account.BillingStreet', '');
-       // c.set('v.account.BillingPostalCode', '');       
         let hierarchyCities = c.get('v.hierarchyCities'+mode);
         let selectedHierarchy = e.currentTarget.getAttribute('data-attriVal');
+        
+        c.set('v.predictions'+mode, []); 
         c.set('v.account.'+mode+'City', hierarchyCities[selectedHierarchy].CityName);
         c.set('v.account.'+mode+'State', hierarchyCities[selectedHierarchy].StateName);
                 
-        //data quality//
+        //Data quality//
     },
     validateNumber : function(c, e, h){
         var input = c.find(e.getSource().getLocalId());
@@ -374,21 +307,15 @@
 
     validateRequiredFields: function(c) {
         
+        //Data quality//
         
-        
-        //data quality//
-        let copyAddress = c.get('v.copyAddress');        
         c.set('v.account.Data_quality_feedback__c',null);
         
         let modes = ['Billing', 'Shipping'];
-        //c.set('v.cityDoesNotExist', false);
-        //c.set('v.cityInAnotherState', false);
-        
         let billingCityObj;
         let billingStateObj;
         let shippingCityObj;
         let shippingStateObj;
-
         let billingCityDoesNotExist = c.get('v.cityDoesNotExistBilling');
         let billingCityInAnotherState = c.get('v.cityInAnotherStateBilling');
         let billingCityInAnotherCountry = c.get('v.cityInAnotherCountryBilling');
@@ -432,15 +359,6 @@
             if( emptyCity || emptyStreet ){
                 c.set('v.valid'+modes[i], 0);
 
-              /*  if(emptyState && modes[i] === 'Billing'){
-                    c.set('v.errorBillingStateProvince', true);
-                }else if(emptyState && modes[i] === 'Shipping'){
-                    c.set('v.errorShippingStateProvince', true);
-                }else{
-                    c.set('v.errorBillingStateProvince', false);
-                    c.set('v.errorShippingStateProvince', false);
-                }*/
-
                 if(emptyCity){
                     cityElement.set('v.errors', [{message:'The '+modes[i]+' city is compulsory. Please fill in the '+modes[i]+' city field.'}]);
                 }else{
@@ -454,7 +372,7 @@
             }
         }                   
         
-          //data quality//
+        //Data quality//
         var regExpEmailformat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
         var category = c.find("categorySelection");
         
@@ -509,7 +427,7 @@
         }
         
         
-        //data quality//
+        //Data quality//
         if(isAllFilled){
             
             let dataQualityFeedback = ''; 
@@ -628,7 +546,7 @@
             
         }
         
-        //data quality//
+        //Data quality//
         return isAllFilled;        
     },
     closeModal: function(c){
@@ -664,12 +582,6 @@
 
     setCitiesUpdateAddress: function(c,e,h){
         
-        /*let selectedIndex = e.currentTarget.selectedIndex;
-        let selectedValue = e.currentTarget.options[selectedIndex].text;
-        let mode = e.currentTarget.getAttribute('data-mode');
-        
-        c.set('v.account.'+mode+'State', selectedValue);
-*/
         let m = e.currentTarget.getAttribute('name');   
         h.clearWarnings(c,e,h);
         h.setCities(c,e);
@@ -679,10 +591,7 @@
     //Only used by shipping at the moment
     setCountry : function (c,e,h) {
 
-		//var filters = c.get("v.filters");
-        
         h.setCountry(c,e,h);
-        
-        //h.getStates(c,e,h,'Shipping');
+
     },
 })

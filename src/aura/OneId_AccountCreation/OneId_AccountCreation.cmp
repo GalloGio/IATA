@@ -2,74 +2,99 @@
 
 	<aura:attribute type="Account" name="account" required="true" />
 	<aura:attribute type="IATA_ISO_Country__c" name="country" required="true"/>
+
+	
+	<!-- Attributes added in the scope of the project AMS Data Quality -->
+
+	<!-- Since shipping country is now changeable, this attribute keeps its value -->
 	<aura:attribute type="IATA_ISO_Country__c" name="countryShipping" required="true"/>
-	<!--Data Quality-->
+
+	<!-- Array including the name of the states for Billing or Shipping -->
 	<aura:attribute type="String[]" name="statesShipping" default="[]"/>
 	<aura:attribute type="String[]" name="statesBilling" default="[]"/>
-
-	<aura:attribute type="String" name="state" default=""/>
 	
+	<!-- Objects that hold all city objects per state per country for example in Canada (the ids in here are from a sandbox and are just an example)
+
+		{"Quebec":[{"IATA_ISO_State__c":"a441X0000004pEnQAI", 
+					 "Id":"a0M1X0000003XquUAE",
+					 "GeonameHierarchy_label__c":"Quebec > Montreal",
+					 "Name":"Montreal",
+					 "IATA_ISO_State__r":{"Name":"Quebec","Id":"a441X0000004pEnQAI"}},
+					 ...]}
+	-->
 	<aura:attribute type="Object" name="citiesShipping"/>
 	<aura:attribute type="Object" name="citiesBilling"/>
 
+	<!-- Objects that hold an array with all city objects associated with a country for example in Canada (the ids in here are from a sandbox and are just an example)
+
+		[{"IATA_ISO_State__c":"a441X0000004pEhQAI","Id":"a0M1X0000003VyvUAE","GeonameHierarchy_label__c":"Alberta > Irricana","Name":"Irricana","IATA_ISO_State__r":{"Name":"Alberta","Id":"a441X0000004pEhQAI"}},
+		 ...,
+		{"IATA_ISO_State__c":"a441X0000004pEzQAI","Id":"a0M1X0000003XyAUAU","GeonameHierarchy_label__c":"Nunavut > Arctic Bay","Name":"Arctic Bay","IATA_ISO_State__r":{"Name":"Nunavut","Id":"a441X0000004pEzQAI"}}]
+	-->
 	<aura:attribute type="Object" name="allCitiesShipping"/>
 	<aura:attribute type="Object" name="allCitiesBilling"/>
 
-	<aura:attribute name="predictions" type="List" default="[]"/>
-	<aura:attribute name="predictionsBilling" type="List" default="[]"/>
-	<aura:attribute name="predictionsShipping" type="List" default="[]"/>
-	<aura:attribute type="Object" name="hierarchyCities"/>
-	<aura:attribute type="Object" name="hierarchyCitiesBilling"/>
-	<aura:attribute type="Object" name="hierarchyCitiesShipping"/>
-	
+	<!-- Objects that hold the city Id as a key and that city's alternate names (names in other languages) as the value for example in Canada (the ids in here are from a sandbox and are just an example)
+
+		{"a0M1X0000003XLlUAM":{"GeonameAlternateNames__c":"La Pocatiere,La Pocatière,La Pokatjer,Ste. Anne de la Pocatiere,Ste. Anne de la Pocatière,la bwkaryh,la pwkatyyr  kbk,Ла Покатјер,لا بوكاريه,لا پوکاتییر، کبک","Id":"a0M1X0000003XLlUAM"},
+		 "a0M1X0000003XLmUAM":{"GeonameAlternateNames__c":"Drammondvill,Drammonvil',Dramondvil,Drummondville,XDM,de la meng shi,doramonbiru,drwmwndwyl,drwmwnfyl,Драммонвіль,Драммондвилл,Драмондвил,دروموندویل,درومونفيل,ڈرمنڈولے,ڈرمونڈویل,ドラモンビル,德拉蒙市","Id":"a0M1X0000003XLmUAM"}
+	-->
 	<aura:attribute type="Object" name="idAndAlternateNamesBilling"/>
 	<aura:attribute type="Object" name="idAndAlternateNamesShipping"/>
-	
+
+	<!-- Objects that hold the relationship between state name and state object-->
 	<aura:attribute type="Object" name="stateNameIdShipping" default="{}"/>
 	<aura:attribute type="Object" name="stateNameIdBilling" />
 	
+	<!-- Objects that hold the relationship between city name and city object-->
 	<aura:attribute type="Object" name="cityNameIdShipping" default="{}"/>
 	<aura:attribute type="Object" name="cityNameIdBilling" />
+
+	<aura:attribute name="predictionsBilling" type="List" default="[]"/>
+	<aura:attribute name="predictionsShipping" type="List" default="[]"/>
+
+	<aura:attribute type="Object" name="hierarchyCitiesBilling"/>
+	<aura:attribute type="Object" name="hierarchyCitiesShipping"/>
 	
 	<aura:attribute type="String" name="billingCityId" />
 	<aura:attribute type="String" name="billingStateId" />
+	
 	<aura:attribute type="String" name="shippingCityId" />
 	<aura:attribute type="String" name="shippingStateId" />
 
+	<!-- String with all city names in the database besides the one in the current country
+	-->
+	<aura:attribute type="String" name="allCitiesAllCountriesBilling" />
+	<aura:attribute type="String" name="allCitiesAllCountriesShipping" />
+		
+	<!--Flags for warnings-->
 	<aura:attribute type="Boolean" name="showListBilling" default="true"/>
 	<aura:attribute type="Boolean" name="showListShipping" default="true"/>
-	
-	<aura:attribute type="String"  name="invalidCity" />
-	<!--<aura:attribute type="Boolean" name="errorBillingStateProvince" />
-	<aura:attribute type="Boolean" name="errorShippingStateProvince" />-->
+	<aura:attribute type="Boolean" name="countryHasStatesBilling" default="false"/>
+	<aura:attribute type="Boolean" name="countryHasStatesShipping" default="false"/>
 	<aura:attribute type="Boolean" name="BillingCityEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="BillingStreetEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="BillingCityStreetEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="ShippingCityEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="ShippingStreetEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="ShippingCityStreetEmpty" default="false"/>
-	<aura:attribute type="String" name="allCitiesAllCountriesBilling" />
-	<aura:attribute type="String" name="allCitiesAllCountriesShipping" />
-	<aura:attribute type="String" name="mode" />
-
 	<aura:attribute type="Boolean" name="cityInAnotherCountryBilling" default="false"/>
 	<aura:attribute type="Boolean" name="cityDoesNotExistBilling" default="false"/>
 	<aura:attribute type="Boolean" name="cityInAnotherStateBilling" default="false"/>
 	<aura:attribute type="Boolean" name="cityInAnotherCountryShipping" default="false"/>
 	<aura:attribute type="Boolean" name="cityDoesNotExistShipping" default="false"/>
 	<aura:attribute type="Boolean" name="cityInAnotherStateShipping" default="false"/>
-
 	<aura:attribute type="Boolean" name="cityInvalidWarning" default="false" />
 	<aura:attribute type="Boolean" name="stateInvalidWarning" default="false" />
 	<aura:attribute type="Boolean" name="cityDoesntExistWarning" default="false" />
-
-	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" />
-	<aura:attribute type="String" name="selectedCountry" access="private"/>
-
-	<aura:attribute type="Boolean" name="countryHasStatesBilling" default="false"/>
-	<aura:attribute type="Boolean" name="countryHasStatesShipping" default="false"/>
-	<aura:attribute type="String[]" name="listOfCountriesWithStates" />
 	<aura:attribute type="Boolean" name="spinner" default="false" />
+
+	<aura:attribute type="String"  name="invalidCity" />
+	<aura:attribute type="String" name="selectedCountry" access="private"/>
+	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" />
+	<aura:attribute type="String[]" name="listOfCountriesWithStates" />
+	<aura:attribute type="String" name="mode" />
+	
 	<!--Data Quality-->
 
 	<aura:attribute type="Boolean" name="copyAddress" default="false"/>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>In this custom metadata the records represent countries that do not have Province/State in the database.</description>
+    <label>DQ_CountryWithStates</label>
+    <pluralLabel>DQ_CountriesWithStates</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

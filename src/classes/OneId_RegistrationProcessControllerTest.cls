@@ -189,7 +189,7 @@ private class OneId_RegistrationProcessControllerTest {
             Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Travel Agent', Category__c='Non-IATA Travel Agent',IATA_ISO_Country__c = country.Id);
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(a,c,serviceName);
+            OneId_RegistrationProcessController.registration(a,c,serviceName,null);
             OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@lls.com', OneId_RegistrationProcessController.returnExistingContact('xpto@lls.com'));
             OneId_RegistrationProcessController.getAccountLabels();
             OneId_RegistrationProcessController.getSectors();
@@ -235,7 +235,7 @@ private class OneId_RegistrationProcessControllerTest {
             
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(a,c,serviceName);
+            OneId_RegistrationProcessController.registration(a,c,serviceName,null);
 
         Test.stopTest();
 
@@ -279,7 +279,7 @@ private class OneId_RegistrationProcessControllerTest {
             Account acc1child = new Account(Name='testAccount1 child', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO', ParentId = acc1.Id);
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(acc1child,c,serviceName);
+            OneId_RegistrationProcessController.registration(acc1child,c,serviceName,null);
 
         Test.stopTest();
 
@@ -323,7 +323,7 @@ private class OneId_RegistrationProcessControllerTest {
             
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(acc1,c,serviceName);
+            OneId_RegistrationProcessController.registration(acc1,c,serviceName,null);
 
         Test.stopTest();
 
@@ -420,10 +420,45 @@ private class OneId_RegistrationProcessControllerTest {
          
              Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
 
-             OneId_RegistrationProcessController.registration(a,c,serviceName);
+             OneId_RegistrationProcessController.registration(a,c,serviceName,null);
 			 OneId_RegistrationProcessController.increaseCodeCoverage();
            
          Test.stopTest();
+     }
+
+     @isTest
+     static void amsDataQuality(){
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Canada',
+                                                               ISO_Code__c='CA')  ;
+        insert country ;
+
+        IATA_ISO_STATE__C state = new IATA_ISO_STATE__c (Name='Quebec',
+                                                         ISO_Code__c='CA-QC',
+                                                         IATA_ISO_Country__c=country.Id,
+                                                         GeonameName__c='Quebec',
+                                                         GeonameAsciiName__c='Quebec',
+                                                         GeonameId__c='6115047',
+                                                         GeonameISO3166__c='QC');
+         insert state;
+         IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Montreal', 
+                                                       IATA_ISO_State__c = state.ID,
+                                                       GeonameID__c = '6077243',
+                                                       GeonameAlternateNames__c = 'Lungsod ng Montreal,Lungsod ng Montréal,Monreal,Monreal\','+
+                                                                                  'Monreala,Monrealis,Monreyal,Monreāla,Mons Regius,Mont-real,Montreal,Montreal - Montreal,Montreal - Montréal,Montreal City,Montreali,Montrealo,'+
+                                                                                  'Montréal,YMQ,meng te li er,monreali,monteuliol,montorioru,mwntral,mwntryal,Μοντρεαλ,Μόντρεαλ,Монреал,Монреаль,Монтреал,מונטריאול,مونترآل,مونتریال,مونترېئال,'+
+                                                                                  'მონრეალი,ᒧᕆᐊᓪ,モントリオール,蒙特利尔,몬트리올' );
+        insert city;
+
+        //DQ_CountriesWithState__mdt countryWithStates = new DQ_CountriesWithState__mdt(Label='Canada');
+        //insert countryWithStates;
+
+        OneId_RegistrationProcessController.getStates('Canada');
+        OneId_RegistrationProcessController.getAllCities('Portugal');
+        OneId_RegistrationProcessController.getCountriesWithStatesAvailable();
+        OneId_RegistrationProcessController.registration(new Account(), new Contact(), null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
+                                                                                                                       'billingStateId' => String.valueOf(state.Id),
+                                                                                                                       'shippingCityId' => String.valueOf(city.Id),
+                                                                                                                       'shippingStateId' => String.valueOf(state.Id)});
      }
 
 }

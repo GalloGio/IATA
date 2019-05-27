@@ -52,13 +52,12 @@
         let mode;
         let currentState;
         mode = m;
-                
-       // console.log('setCities mode -> '+mode);
+       
         if(mode){
             c.set('v.predictions'+mode, []);
             
             currentState = c.get('v.account.'+mode+'State');
-            console.log('setCities currentstate -> '+currentState);
+            
         } 
         
         let citiesAvailable = c.get('v.cities'+mode);
@@ -78,14 +77,14 @@
             if(citiesOfThisState[i])
                 hierarchyCities[citiesOfThisState[i]["GeonameHierarchy_label__c"]] = {"CityName" : citiesOfThisState[i]["Name"], "StateName": citiesOfThisState[i]["IATA_ISO_State__r"].Name};  
         }
-        console.log('setCities hierarchy -> '+hierarchyCities);
+        
         if(mode){
             c.set('v.hierarchyCities'+mode, hierarchyCities);
         }else{
             c.set('v.hierarchyCitiesBilling', hierarchyCities);
             c.set('v.hierarchyCitiesShipping', hierarchyCities);
         }
-        console.log('Hierarchy citys -> '+hierarchyCities);
+        
     },
 
     getPredictions: function(c, e, h, v, m){                
@@ -96,15 +95,13 @@
             let currentState = c.get('v.account.'+m+'State');
             let citiesAvailable = c.get('v.cities'+m);
             let idAndAlternateNames = c.get('v.idAndAlternateNames'+m);
-
             let citiesToSearch = [];
-            //console.log('All cities for state -> '+JSON.stringify(citiesAvailable) );
+            
             if(currentState){            
                 let citiesOfThisState = citiesAvailable[currentState];
                 citiesToSearch = citiesOfThisState;        
             }else{
-             //let allCities = c.get('v.allCities');
-             //citiesToSearch = allCities;
+             
              citiesToSearch = citiesAvailable["All"];
              
             }
@@ -143,19 +140,22 @@
             }
             c.set('v.account.'+m+'City',v);
             c.set('v.showList'+m, true);
-       // console.log('cityNames -> '+cityNames);
+       
         //Data quality//
         
     },
 
     removeList: function(c, h, m){
+
         c.set('v.showList'+m, false);
+    
     },
 
     updateAddress: function(c,e,h,m){
       
-        //change of addres makes the validation null
+        //change of address makes the validation null
         c.set("v.valid"+m, 0);        
+
         //check if information need to be passed to shipping as well
         h.copyBillingToShipping(c, e, h);
     },
@@ -192,15 +192,8 @@
         c.set('v.account.'+m+'State', null);
         
         var country = cn;
-
-       // if(m === 'Billing')
-        //    country = c.get("v.country").Name;
-        //if(m === 'Shipping')
-         //   country = c.get("v.countryShipping").Name;
-
-        console.log('@@MAC country-> '+country);
-        
         var action = c.get("c.getStates");
+
         action.setParams({"country": country});
         
         action.setCallback(this, function(response){
@@ -235,6 +228,7 @@
                 }            
             }
             
+            
             stateCities["All"] = allCitiesMerged;
             
             c.set('v.cities'+m, stateCities);
@@ -251,17 +245,13 @@
 
         var action = c.get("c.getAllCities");
         
-        console.log('COUNTRY before inside callback -> '+country);
         action.setParams({"country": country});
 
         action.setCallback(this,  function(response){       
-            
-           // console.log('response -> '+JSON.stringify(response.getReturnValue());
            
             c.set("v.spinner", false);            
             c.set('v.allCitiesAllCountries'+m, JSON.stringify(response.getReturnValue())); 
            
-           // console.log('All cities all countries -> '+m+' -> '+c.get('v.allCitiesAllCountries'+m));
         });
 
         
@@ -286,10 +276,9 @@
     checkCountryStates: function(c, e, h, m, cn){
         c.set("v.countryHasStates"+m, false);
         let cwsa = c.get("v.listOfCountriesWithStates");
-        console.log('@@MAC -> cwsa - '+cwsa);
+        
         for(let i = 0; i < cwsa.length; i++){
-            console.log('@@MAC -> cwsa[i] - '+cwsa[i]+'///  '+cn+' <- cn');
-            //cn is the country name
+         
             if(cwsa[i] === cn){
                 
                 c.set("v.countryHasStates"+m, true);

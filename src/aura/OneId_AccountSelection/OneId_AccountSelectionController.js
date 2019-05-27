@@ -60,12 +60,12 @@
 			var spinner = c.find("loading");
 			
 			$A.util.toggleClass(spinner, "slds-hide");
-
+			//Data Quality//
 			let cityAndStateIds = {	'billingCityId'  : c.get('v.billingCityId'),
 									'billingStateId' : c.get('v.billingStateId'),
 									'shippingCityId' : c.get('v.shippingCityId'),
 									'shippingStateId': c.get('v.shippingStateId') };
-
+			//Data Quality//
 			var action = c.get("c.registration");
 
 			action.setParams({

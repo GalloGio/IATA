@@ -9,10 +9,6 @@
 				
 			var city = component.find(modes[i]+'City');		
 			var state = component.find(modes[i]+'State');
-			//console.log('@@MAC afterRender city -> '+city);
-			//console.log('@@MAC afterRender state-> '+state);
-			//var addDocComponent = component.find('addDocComponent');
-			//var street = addDocComponent.find(modes[i]+'Street');
 			var currentFocus = -1;
 			var c = component;
 			var h = helper;
@@ -23,12 +19,6 @@
 				});
 			}
 			
-
-			/*street.getElement().addEventListener('click', function(e){
-				h.clearContextLabelWarnings(c,e,h);
-			});*/
-
-		
 			city.getElement().addEventListener('click', function(e){			
 				h.clearContextLabelWarnings(c,e,h);
 			});
@@ -43,10 +33,11 @@
 				
 				
 				var x = document.getElementById("autocomplete-list-"+modes[i]);
-				//console.log(modes[i]);
+				
 				if (x) x = x.getElementsByTagName("div");
 				
 				if (e.keyCode == 40) {				
+					
 					/*If the arrow DOWN key is pressed,
 					increase the currentFocus variable:*/
 					currentFocus++;
@@ -75,7 +66,7 @@
 		}
 
 		addActive = function (x) {
-			//console.log('addActive');
+			
 			/*a function to classify an item as "active":*/
 			if (!x) return false;
 			/*start by removing the "active" class on all items:*/
@@ -87,7 +78,7 @@
 			}
 			
 		removeActive = function (x) {
-			//	console.log('removeActive');
+			
 			/*a function to remove the "active" class from all autocomplete items:*/
 			for (var i = 0; i < x.length; i++) {
 				x[i].classList.remove("autocomplete-active");

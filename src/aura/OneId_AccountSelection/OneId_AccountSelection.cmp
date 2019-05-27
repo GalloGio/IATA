@@ -5,17 +5,12 @@
 	<aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
 
 	<!--Data Quality-->
-	<aura:attribute type="String[]" name="states"/>
-	<aura:attribute type="String" name="state" default=""/>
-	<aura:attribute type="Object" name="cities"/>
-	
-	<aura:attribute name="predictions" type="List" default="[]"/>
-	<aura:attribute type="Object" name="hierarchyCities"/>
-	<aura:attribute type="Object" name="idAndAlternateNames"/>
+	<!--Passing these fields to the account creation component so they are accessible in account selection controller-->
 	<aura:attribute type="String" name="billingCityId" />
 	<aura:attribute type="String" name="billingStateId" />
 	<aura:attribute type="String" name="shippingCityId" />
 	<aura:attribute type="String" name="shippingStateId" />
+	<aura:attribute type="IATA_ISO_Country__c" name="countryShipping" access="private" default="{'sobjectType' : 'IATA_ISO_Country__c'}"/>
 	<!--Data Quality-->
 
 	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent', 'Iso_state__c':'', 'Iata_Iso_City__c':'' }" />
@@ -34,7 +29,7 @@
 
   	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation"/>
 	<aura:attribute type="IATA_ISO_Country__c" name="country" access="private"/>
-	<aura:attribute type="IATA_ISO_Country__c" name="countryShipping" access="private" default="{'sobjectType' : 'IATA_ISO_Country__c'}"/>
+	
 	<aura:attribute type="String" name="selectedCountry" access="private"/>
   	<aura:attribute type="List" name="agencyTypes" access="private"/> 
 	<aura:attribute type="Boolean" name="showCreateNew" default="false" />
@@ -102,14 +97,7 @@
 				billingCityId="{!v.billingCityId}"
 				billingStateId="{!v.billingStateId}"
 				shippingCityId="{!v.shippingCityId}"
-				shippingStateId="{!v.shippingStateId}"
-				
-				
-				
-				
-				predictions="{!v.predictions}"
-				hierarchyCities="{!v.hierarchyCities}"
-				
+				shippingStateId="{!v.shippingStateId}"				
 				countryInformation = "{!v.countryInformation}"
 				/>
 		</aura:set>
