@@ -18,7 +18,7 @@ global without sharing class ANG_CreateAccountDetails_Oscar {
             offerId = (String)reqBody.get('offerId');
             System.debug('##offerId: '+offerId);
 
-            offerDateStr = (String)reqBody.get('offerExchangeRateDate');
+            offerDateStr = (String)reqBody.get('offerDate');
 
             
         }catch(Exception e){
