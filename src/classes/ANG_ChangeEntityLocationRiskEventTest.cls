@@ -129,7 +129,8 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 			SAAM_Case__c = oscarCase.Id,
 			Remittance_frequency__c = 'M',
 			Location_Class__c = 'D',
-			Location_Type__c = AMS_Utils.HE
+			Location_Type__c = AMS_Utils.HE,
+			IATA_ISO_State__c = stt.Id
 		);
 
 		insert stagingArea;
@@ -156,7 +157,8 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 			Phone__c = '123456789',
 			Financial_interest__c = 100,
 			AMS_Pax_Accreditation_Form__c = oscar.AMS_Online_Accreditation__c,
-			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'),
+			Agency_Owner__c = true
 		);
 
 		insert owner;

@@ -136,11 +136,11 @@ global class ANG_MasterData_Interface{
     private static final set<string> IGNORE_FIELDS_SET = new set<string>{'FormOfPayment'};
     private static final set<string> REMOVE_FIELDS_SET = new set<string>{'lsChildren', 'RHCInfo'};
 
-    private static Map<String, String> pciCompliantFldMapping = new Map<String, String>{
-        'Yes' => 'Yes',
-        'No' => 'No',
-        'Nil CC' => 'No',
-        'Corporate Card' => 'Yes'
+    private static Map<String, Boolean> pciCompliantFldMapping = new Map<String, Boolean>{
+        'Yes' => TRUE,
+        'No' => FALSE,
+        'Nil CC' => FALSE,
+        'Corporate Card' => TRUE
     };
     
     @TestVisible
@@ -190,7 +190,7 @@ global class ANG_MasterData_Interface{
         public list<Owner> owners;
         public list<DueDiligence> dueDiligence;
         public list<string> externalSystems; //NEWGEN-4276
-        public String isPciDss;
+        public Boolean isPciDss;
 
         /*Constructor*/
         public MasterDataPayload(Account acc, boolean getChildren, String changeCode){
@@ -299,7 +299,7 @@ global class ANG_MasterData_Interface{
                 //EasyPay
                 if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c)){
                     this.externalSystems.add(acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name);
-                    this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : 'No';
+                    this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
                 }
 
                 //GDI - note: we do publish HE/HO only

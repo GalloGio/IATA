@@ -52,7 +52,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>ANG_Agency_Risk_Calculation__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>

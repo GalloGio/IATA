@@ -5,9 +5,9 @@ public class ANG_RHCHelper {
 		Id accountId;
 		String riskStatus;
 		String cashConditions;
-		Decimal rhcAmountForecasted;
+		String rhcAmountForecasted;
 		String currencyIsoCode;
-		Date rhcForecastedEffectiveDate;
+		String rhcForecastedEffectiveDate;
 		String templateLanguage;
 	}
 
@@ -443,6 +443,10 @@ public class ANG_RHCHelper {
 				ANG_AccountId__c IN :accountIdSet
 			]
 		);
+
+		if(rhcLst.isEmpty()){
+			return;
+		}
 		
 		Map<Id, ANG_RHC_Information__c> rhcMap = new Map<Id, ANG_RHC_Information__c>();
 		
@@ -456,17 +460,23 @@ public class ANG_RHCHelper {
 			
 			ANG_RHC_Information__c rhc = rhcMap.get(accountId);
 			
-			for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
-				RiskInformationUpdateWrapper riuw = new RiskInformationUpdateWrapper();
-				riuw.contactId = contactId;
-				riuw.accountId = accountId;
-				riuw.riskStatus = rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c;
-				riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
-				riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c;
-				riuw.currencyIsoCode = rhc.CurrencyIsoCode;
-				riuw.rhcForecastedEffectiveDate = rhc.ANG_Forecasted_RHC_Effective_date__c;
-				riuw.templateLanguage = contactMap.get(contactId).Preferred_Language__c;
-				riuwLst.add(riuw);
+			if(rhc != NULL){
+				
+				for(Id contactId : contactsPerAccount.get(String.valueOf(accountId).substring(0, 15))){
+					RiskInformationUpdateWrapper riuw = new RiskInformationUpdateWrapper();
+					riuw.contactId = contactId;
+					riuw.accountId = accountId;
+					riuw.riskStatus = rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c;
+					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
+					riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c.format();
+					riuw.currencyIsoCode = rhc.CurrencyIsoCode;
+					riuw.rhcForecastedEffectiveDate = (rhc.ANG_Forecasted_RHC_Effective_date__c.month() + '/' + 
+																						 rhc.ANG_Forecasted_RHC_Effective_date__c.day() + '/' + 
+																						 rhc.ANG_Forecasted_RHC_Effective_date__c.year());
+					riuw.templateLanguage = contactMap.get(contactId).Preferred_Language__c;
+					riuwLst.add(riuw);
+				}
+				
 			}
 
 		}

@@ -73,7 +73,6 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
-    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_ACCOUNT_FIELDS_TO_VALIDATE</fullName>
         <description>This field set is used to know which fields cannot contain non latin characters</description>
@@ -6363,7 +6362,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Non-IATA Cargo Agent</label>
+                    <label>Non-IATA Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Passenger Agent</fullName>
@@ -15744,7 +15743,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <value>
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Cargo Agent</label>
+                    <label>Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>
