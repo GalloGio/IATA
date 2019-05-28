@@ -22,4 +22,5 @@
     <tabs>CSS_Tracking__c</tabs>
     <tabs>Operational_Improvements__c</tabs>
     <tabs>AMS_Account_Role__c</tabs>
+    <tabs>standard-WaveHome</tabs>
 </CustomApplication>
