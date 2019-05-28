@@ -92,10 +92,7 @@
                                             </div>
     
                                             <template for:each={dayItem.lstEvents} for:item="event">
-                                                <div if:true={dayItem.isSelected} key={event.className} class="eventClassNameContainer">
-                                                    <div class={event.className} title={event.title}>&nbsp;</div>
-                                                </div>
-                                                <div if:false={dayItem.isSelected} key={event.className} class="eventClassNameContainer" >
+                                                <div key={event.className} class="eventClassNameContainer">
                                                     <div class={event.className} title={event.title}>&nbsp;</div>
                                                 </div>
                                             </template>
