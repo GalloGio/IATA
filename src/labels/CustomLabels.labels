@@ -2700,6 +2700,14 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_Add_New_Documents</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_New_Documents</shortDescription>
+        <value>Add New Documents</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_FAQ_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2882,6 +2890,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_NoSearchResults</shortDescription>
         <value>Nothing corresponds to your search criteria</value>
+    </labels>
+    <labels>
+        <fullName>CSP_No_Documents_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_No_Documents_Message</shortDescription>
+        <value>If necessary, you can add documents to the case.</value>
     </labels>
     <labels>
         <fullName>CSP_OperationalCalendar_HomeTileTitle</fullName>
@@ -3152,6 +3168,15 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_FAQ_Subtitle</shortDescription>
         <value>Please select one of the main FAQ categories that you need help with</value>
+    </labels>
+     <labels>
+        <fullName>CSP_Supported_File_Extensions</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Supported_File_Extensions</shortDescription>
+        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls,xlsx, tif, tiff, zip files, the size should
+                        be smaller than 50 MB.</value>
     </labels>
     <labels>
         <fullName>Campaign_already_created</fullName>
