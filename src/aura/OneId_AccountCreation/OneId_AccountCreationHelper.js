@@ -8,7 +8,9 @@
         if(c.get("v.changeCategory") && !$A.util.isEmpty(sectors)){
             catoptions = c.get("v.sectors")[sector].dependentValues;
         }else{
-            catoptions = [{label: category, value : category, selected : true}];
+            /* WMO-391 */
+            var categories = c.get("v.sectors")[sector].dependentValues;
+            catoptions = [{label: this.getCategoryLabel(categories, category) , value : category, selected : true}];
         }
 
         c.find("categorySelection").set("v.options", catoptions);
@@ -35,5 +37,16 @@
             preferredCountries: [country],
             placeholderNumberType : 'MOBILE'
         });
+    },
+    /* WMO-391*/
+    getCategoryLabel : function(categories, api_value) {
+        if(categories) {
+            for(var i=0; i<categories.length; i++) {
+                if(categories[i].value == api_value) {
+                    return categories[i].label;
+                }
+            }
+        }
+        return api_value;
     }
 })

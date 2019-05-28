@@ -52,7 +52,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fieldSets>
         <fullName>RelatedList</fullName>
         <description>This is used on the Risk Event HIstory related list on the account layout</description>
