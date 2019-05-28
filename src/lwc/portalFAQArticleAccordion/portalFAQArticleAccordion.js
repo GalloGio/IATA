@@ -8,8 +8,10 @@ import CSP_ArticleHelpful from '@salesforce/label/c.CSP_ArticleHelpful';
 import CSP_ThanksFeedback from '@salesforce/label/c.CSP_ThanksFeedback';
 import CSP_FeedbackTitle from '@salesforce/label/c.CSP_FeedbackTitle';
 import CSP_FeedbackBody from '@salesforce/label/c.CSP_FeedbackBody';
+import CSP_FeedbackBody2 from '@salesforce/label/c.CSP_FeedbackBody2';
 import CSP_Submit from '@salesforce/label/c.CSP_Submit';
 import CSP_Cancel from '@salesforce/label/c.CSP_Cancel';
+import csp_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
 
 export default class PortalFAQArticleAccordion extends LightningElement {
     label = {
@@ -17,8 +19,10 @@ export default class PortalFAQArticleAccordion extends LightningElement {
         CSP_ThanksFeedback,
         CSP_FeedbackTitle,
         CSP_FeedbackBody,
+        CSP_FeedbackBody2,
         CSP_Submit,
-        CSP_Cancel
+        CSP_Cancel,
+        csp_GoToSupport
     }
     @api category;
     @track _topic = [];
@@ -34,6 +38,7 @@ export default class PortalFAQArticleAccordion extends LightningElement {
     @track childs;
     @track searchRelated;
     @track counter;
+    @track renderConfirmation = false;
 
     @api
     get topic() {
@@ -241,7 +246,8 @@ export default class PortalFAQArticleAccordion extends LightningElement {
             sessionId: this.sessionCookie,
             isDeferred: this.isDeferred
         })
-            .then(result => {      
+            .then(result => {
+                this.renderConfirmation = true;      
                 let articleVals = JSON.parse(JSON.stringify(this.articles));
         
                 for(let i = 0; i < articleVals.length; i++) {
@@ -267,6 +273,10 @@ export default class PortalFAQArticleAccordion extends LightningElement {
         if(this.renderedModal) {
             this.feedbackStatus(event);
         }
+    }
+
+    redirectSupport() {
+        window.location.href = "/csportal/s/support-view-category?category=" + this.category;
     }
 
     setCookie(name, value, days) {
