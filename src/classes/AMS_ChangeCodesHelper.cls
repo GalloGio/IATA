@@ -279,7 +279,7 @@ public class AMS_ChangeCodesHelper {
         Id oscarId = null;
 
         if (oscar != null)
-            oscarId = oscar.Id;
+            oscarId = oscar.Id;        
         
         String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
@@ -636,17 +636,21 @@ public class AMS_ChangeCodesHelper {
         String authRelabel;
         Set<String> setFOPs = new Set<String>();
 
+        Boolean isChina = false;
+
         if(fOPs != null && !fOPs.isEmpty() && isNewGen){
             for(Agency_Authorization__c fop : fOPs) {
-                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : '')));
+                isChina = AMS_Utils.setChinaCountries.contains(fop.ISO_Country__c);
+                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : (fop.Authority__c == 'BOP Payment Method' ? 'BOP FoP: Refer to ASD' : ''))));
+
                 // if a payment method is being restricted do not display it on ebulletin
                 if( !(authRelabel == 'Credit Card' && (changeCodeName == 'CCA' || changeCodeName == 'FOP')) && !(authRelabel == 'Cash' && (changeCodeName == 'PCA' || changeCodeName == 'FOP'))) {
-                    setFOPs.add(authRelabel);                    
+                    setFOPs.add(isChina ? translateFoPforChina(authRelabel) : authRelabel);
                 }
             }
             // include payment method if it's being restored
-            if (changeCodeName == 'PCR' || changeCodeName == 'FPR') setFOPs.add('Cash');
-            if (changeCodeName == 'CCR' || changeCodeName == 'FPR') setFOPs.add('Credit Card'); 
+            if (changeCodeName == 'PCR' || changeCodeName == 'FPR') setFOPs.add(isChina ? translateFoPforChina(authRelabel) : 'Cash');
+            if (changeCodeName == 'CCR' || changeCodeName == 'FPR') setFOPs.add(isChina ? translateFoPforChina(authRelabel) : 'Credit Card'); 
 
             List<String> orderedFOPs = new List<String>(setFOPs);   
 
@@ -662,18 +666,32 @@ public class AMS_ChangeCodesHelper {
         return fopString;
     }
 
+    //NEWGEN-5383 - FoP management in bulletin for China - set specific FoP information for China
+    private static String translateFoPforChina(String formOfPayment){
+
+
+        if(formOfPayment == 'Credit Card' || formOfPayment == 'Cash') return 'Refer to ASD';
+        else if(formOfPayment == 'IATA EasyPay') return 'BOP FoP: Refer to ASD';
+        else return formOfPayment;
+    }
+
+
+
     public static Map<Id,List<Agency_Authorization__c>> fetchFormsOfPayment(Set<Id> accsIds){
+
+        Set<String> activeStatus = new Set<String>{'Active','Refer to ASD'};
 
         Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
 
         if(accsIds.isEmpty()) return fOPs;
-        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c = 'Active']){
+        for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c, ISO_Country__c 
+                                          FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c IN :activeStatus]){
             if(fOPs.keySet().contains(fop.Account__c))
                 fOPs.get(fop.Account__c).add(fop);
             else
-                    fOPs.put(fop.Account__c,new List<Agency_Authorization__c>{fop});
+                fOPs.put(fop.Account__c,new List<Agency_Authorization__c>{fop});
         }
 
         return fOPs;
