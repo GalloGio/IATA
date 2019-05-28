@@ -760,10 +760,13 @@ public class ANG_RHCAlertTriggerHandler{
         EmailTemplate template = eTemplates.get(0);
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setToAddresses(toAddresses);
-        mail.setSubject(template.Subject); 
         mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
         for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
             String tBody = template.Body;
+            String subjectName = String.isNotBlank(raAccMap.get(riskAlert.id).Name) ? (raAccMap.get(riskAlert.id).Name + ' - ') : '';
+            String subjectIATACode = String.isNotBlank(raAccMap.get(riskAlert.id).IATACode__c) ? (raAccMap.get(riskAlert.id).IATACode__c + ', ') : '';
+            String subjectCountry = String.isNotBlank(raAccMap.get(riskAlert.id).IATA_ISO_Country__r.Name) ? raAccMap.get(riskAlert.id).IATA_ISO_Country__r.Name : '';
+            mail.setSubject('Real Time Sales Monitoring – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectName + subjectIATACode + subjectCountry + ')'); 
             String agentSales = (riskAlert.ANG_Agent_Sales__c == null ? '' : String.valueOf(riskAlert.ANG_Agent_Sales__c));
             String iataCode = (raAccMap.get(riskAlert.id).IATACode__c == null ? '' : raAccMap.get(riskAlert.id).IATACode__c);
             String gAmount = (raAccMap.get(riskAlert.id).Guaranteed_amount__c == null ? '' : String.valueOf(raAccMap.get(riskAlert.id).Guaranteed_amount__c.setScale(2)));
