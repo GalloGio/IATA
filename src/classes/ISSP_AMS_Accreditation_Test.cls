@@ -706,8 +706,6 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.goToFinalStep();
             ctrl.isTerminatedAgent = false;
 
-            ctrl.getIsEmpty();
-            ctrl.getIsNotEmpty();
             ctrl.getPrevWorkedForItems();
 
             ctrl.cancel();
@@ -3630,7 +3628,7 @@ private class ISSP_AMS_Accreditation_Test {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.newCase = testCase;
             ctrl.pEfectiveDateStr = '2018-03-31';
-            List<Case> lc = ctrl.getAMSDraftCases();
+            List<Case> lc = ctrl.populateAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
@@ -3737,7 +3735,7 @@ private class ISSP_AMS_Accreditation_Test {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.newCase = testCase;
             ctrl.pEfectiveDateStr = '2018-03-31';
-            List<Case> lc = ctrl.getAMSDraftCases();
+            List<Case> lc = ctrl.populateAMSDraftCases();
             ctrl.runOptInOut();
         }
         Test.stopTest();
@@ -3746,7 +3744,7 @@ private class ISSP_AMS_Accreditation_Test {
     private static void optOutBasicTestContent() {
         ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
         ctrl.pEfectiveDateStr = '2018-03-31';
-        List<Case> lc = ctrl.getAMSDraftCases();
+        List<Case> lc = ctrl.populateAMSDraftCases();
         ctrl.runOptInOut();
     }
 
