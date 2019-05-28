@@ -297,8 +297,7 @@
 }
 
 .modalBox {
-  max-width: 100vh;
-  width: 90%;
+  max-width: 100vw;
 }
 
 .modalBody {
