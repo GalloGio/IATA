@@ -1,0 +1,32 @@
+.close-mark {
+    color : #999999;
+    cursor: pointer;
+    transform: rotate(45deg);
+}
+
+.attButtonCls{
+    border-radius: 1px;
+    border: solid 1px #1e32fa;
+    background-color: #ffffff;
+    color: #3333ff;
+    font-weight: 500;
+}
+
+.textMediumMessage{
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+}
+.mediumTitle{
+    font-size: 20px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #333333;
+}

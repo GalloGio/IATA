@@ -1,0 +1,12 @@
+.grey{
+    color: #999999;
+}
+
+.collapsed{
+    visibility: collapse;
+    display: none;
+}
+
+.arrowExpanded{
+    transform: rotate(90deg);
+}
