@@ -27,13 +27,13 @@
                     <div if:true={showCalendar}>
                         <div class="slds-p-horizontal_small">
                             <div class="slds-m-top_large slds-m-bottom_medium slds-grid slds-wrap text-xxsmall">
-                                <div class="slds-size_5-of-7">
+                                <div class="slds-size_10-of-12">
                                     {currentViewingMonth.monthName}, {currentViewingMonth.monthYear}
                                 </div>
-                                <div class="slds-size_1-of-7 slds-align_absolute-center" >
+                                <div class="slds-size_1-of-12" >
                                     <a onclick={previousWeek}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" alternative-text="previous month" size="xx-small" > </lightning-icon></a>
-                                    </div>
-                                <div class="slds-size_1-of-7 slds-align_absolute-center" >
+                                </div>
+                                <div class="slds-size_1-of-12" >
                                     <a onclick={nextWeek}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" alternative-text="previous month" size="xx-small"> </lightning-icon></a>
                                 </div>
                             </div>
