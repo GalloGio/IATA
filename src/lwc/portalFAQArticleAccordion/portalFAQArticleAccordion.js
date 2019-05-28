@@ -80,7 +80,7 @@ export default class PortalFAQArticleAccordion extends LightningElement {
     }
 
     get hasArticles() {
-        return this.articles !== undefined && this.articles.length > 0 ? true : false;
+        return this.articles !== undefined && this.articles.length > 0;
     }
 
     // GET COOKIE SESSION AND ALL SUBTOPICS TO RENDER CATEGORY ARTICLES
@@ -136,18 +136,14 @@ export default class PortalFAQArticleAccordion extends LightningElement {
         selectedParams = '(';
 
         for(let i = 0; i < params.length; i++) {
-            if(i === 0) {
-                selectedParams += params[i] + '__c';
-            } else {
-                selectedParams += ', ' + params[i] + '__c';
-            } 
+            selectedParams += (i === 0) ? params[i] + '__c' : ', ' + params[i] + '__c';
         }
         selectedParams += ')';
         
-        this.getArticles(selectedParams);
+        this.getArticlesFromParams(selectedParams);
     }
 
-    getArticles(selectedParams) {
+    getArticlesFromParams(selectedParams) {
         getArticles({ selectedParams : selectedParams })
             .then(result => {
                 this.articles = [];
@@ -161,12 +157,7 @@ export default class PortalFAQArticleAccordion extends LightningElement {
     
                     Object.keys(res).forEach(function (el) {                                  
                         tempArticles.push({ id: res[el].Id, number: res[el].ArticleNumber, label: res[el].Title, value: res[el].Answer__c, open: false, feedback: false });
-    
-                        if(el === '0') {
-                            tempArticleIds += '\'' + res[el].Id + '\'';
-                        } else {
-                            tempArticleIds += ', \'' + res[el].Id + '\'';
-                        }
+                        tempArticleIds += (el === '0') ? '\'' + res[el].Id + '\'' : ', \'' + res[el].Id + '\'';
                     });
                     tempArticleIds += ')';
     
