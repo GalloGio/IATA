@@ -215,17 +215,13 @@
                 submitMultiCountryApplication();
             }
 
-            function discardMultiCountry() {
-                discardMCApplication();
-            }
-
             $(document).ready(function() {
                 if ("{!mcAbleToSubmit}" == 'false') {
                     $('#submitMCButton').attr('disabled', 'false');
                 }
             });
 
-            function rerenderAllSections() {
+            function reRenderAllSections() {
                 $('[id$=left-side-regular]').css('display', 'block');
                 $('[id$=left-side-mc]').css('display', 'none');
                 $('[id$=ongoing-apps]').css('display', 'block');
@@ -269,13 +265,9 @@
                 <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
-                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms">
-                    <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
-                </apex:actionFunction>
-                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="other-forms, DraftCases" oncomplete="rerenderAllSections();"/>
-                <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" rerender="other-forms, DraftCases, left-side-mc, left-side-regular" oncomplete="rerenderAllSections();"/>
-
-                <div class="container" style="width: 100%" id="allSections">
+                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="other-forms, DraftCasespageblock, amsCasesMessage, ongoing-apps" oncomplete="rerenderAllSections();"/>
+                <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" reRender="DraftCasespageblock, amsCasesMessage" oncomplete="reRenderAllSections();"/>
+                    
                     <div class="row">
                         <section name="left-side-agency-accred" id="left-side-regular" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)), 'none', '')};">
                             <header>
@@ -303,9 +295,6 @@
                             <div class="col-md-5">
                                 <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
                             </div>
-                            <!--<div class="col-md-5">
-                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(AND(isHOAccredited,con.Account.Location_Class__c=='R'), '','none')};"/>
-                            </div> temporary--> 
                         </div>
                                 
                         <div class="row" style="padding-bottom: 20px; {!IF(isMCNewAEAccredited, 'padding-top: 20px;', '')}">
@@ -359,10 +348,10 @@
                                 </div>
                             </div>
 
-                            <c:ISSP_MCStagingRecordTable/>
+                            <c:ISSP_MCStagingRecordTable id="onGoingMultiCountryFormsTable"/>
                         </section>
                             
-                        <section name="right-side-agency-changes" class="col-md-5" style="min-height: 350px;">
+                        <section name="right-side-agency-changes" id="right-side-changes" class="col-md-5" style="min-height: 350px;">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -400,8 +389,8 @@
                             </header>
                                 
                             <div style="padding-top: 20px">
-                                <apex:pageBlock >
-                                    <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
+                                <apex:pageBlock id="DraftCasespageblock">
+                                    <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(AMSDraftCasesIsEmpty)}">
                                         <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', '&isMultiCountryNewAE=true&isMCNewAEAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                                             
@@ -421,7 +410,9 @@
                                 </apex:pageBlock>
                             </div>
 
-                            <apex:outputText styleClass="bg-info" value="{!if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending)}" rendered="{!IsEmpty}"/>
+                            <apex:outputPanel id="amsCasesMessage">
+                                <apex:outputText styleClass="bg-info" value="{!if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending)}" rendered="{!AMSDraftCasesIsEmpty}"/>
+                            </apex:outputPanel>
                                 
                         </section>
                             
@@ -441,7 +432,6 @@
                             </div>
                         </section>
                     </div>
-                </div>
 
                 <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <apex:outputPanel layout="block" styleClass="modal-dialog" id="modalChooseAccreditationTypeContent">
@@ -478,15 +468,6 @@
                             </apex:outputPanel>
                         </div>
                     </div>
-
-                    <!--<script type="text/javascript">
-                        $('[value="China_International"]').parent().append($('<apex:image/>',{id: 'dasd', value: '/img/msg_icons/info16.png',
-                                                html-data-html: 'true',
-                                                html-data-placement: 'right',
-                                                html-data-toggle: 'tooltip',
-                                                title: '{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}'}));
-                    </script>-->
-
                     <div class="modal-footer">
                         <div class="col-md-12">
                             <div class="row">

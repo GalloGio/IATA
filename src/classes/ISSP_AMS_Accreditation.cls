@@ -1234,8 +1234,6 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getBranchAccounts() {
-        System.DeBUG('vHQAccountId for BR Accounts: ' + vHQAccountId);
-
         List<SelectOption> options = new List<SelectOption>();
         List<Account> accountList = new List<Account>();
        
@@ -1265,10 +1263,9 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getAgencyCodesConcerned() {
-        List <Account> accountList = new List<Account>();
+        List<Account> accountList = new List<Account>();
         List<SelectOption> options = new List<SelectOption>();
 
-        //SYSTEM.DEBUG('SPLIT size: ' + newForm.Agency_Codes_Concerned__c.split(',').size());
         if(hierarchyValues.size() > 0){
             for(HierarchyItem hi:  hierarchyValues){
                 if(hi.selected){
@@ -1308,16 +1305,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getOfficeTypes() {
-        Boolean isUKTerritory;
-
-        isUKTerritory = false;
-
-        if(newCase.IFAP_Country_ISO__c == 'GB' || newCase.IFAP_Country_ISO__c == 'GI' || newCase.IFAP_Country_ISO__c == 'GG' || newCase.IFAP_Country_ISO__c == 'IM' || newCase.IFAP_Country_ISO__c == 'JE' || newCase.IFAP_Country_ISO__c == 'SH' || newCase.IFAP_Country_ISO__c == 'PN') {
-            isUKTerritory = true;
-        }
-
-        system.debug('sectorValue before get from URL: ' + sectorValue);
-        system.debug('defaultSectorValue before get from URL: ' + defaultSectorValue);
+        Boolean isUKTerritory = (newCase.IFAP_Country_ISO__c == 'GB' || newCase.IFAP_Country_ISO__c == 'GI' || newCase.IFAP_Country_ISO__c == 'GG' || newCase.IFAP_Country_ISO__c == 'IM' || newCase.IFAP_Country_ISO__c == 'JE' || newCase.IFAP_Country_ISO__c == 'SH' || newCase.IFAP_Country_ISO__c == 'PN');
 
         List<SelectOption> options = new List<SelectOption>();
 
@@ -1586,7 +1574,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
             amsLocationLabelTranslation();
 
-            if(ISSP_Utilities.isCNS()) newCase.CNSCase__c=true;
+            if(ISSP_Utilities.isCNS()) {
+                newCase.CNSCase__c=true;
+            }
 
             String agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
 
@@ -1677,8 +1667,6 @@ public without sharing class ISSP_AMS_Accreditation {
             } else {
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
             }
-
-            System.debug('1) newCase.Subject-->' + newCase.Subject);
 
             try {
                 String newIsoCountry = newCase.IFAP_Country_ISO__c;
@@ -1799,8 +1787,6 @@ public without sharing class ISSP_AMS_Accreditation {
             Boolean changeOfAccountConcerned = false;
 
             changeOfAccountConcerned = false;
-
-            SYSTEM.DEBUG('Scope of Change: ' + newForm.Scope_of_Change__c);
 
             if(agencyCodesConcerned.size()==0){
                 agencyCodesConcerned = getAgencyCodesConcerned();
@@ -1978,16 +1964,18 @@ public without sharing class ISSP_AMS_Accreditation {
 
         selectPageName();
 
-        if (step1GoToNumber == '5') return goToStep5();
-        else if (step1GoToNumber == '4') return goToStep4();
-        else if (step1GoToNumber == '3') return goToStep3();
-        else return goToStep2();
+        if (step1GoToNumber == '5') {
+            return goToStep5();
+        } else if (step1GoToNumber == '4') {
+            return goToStep4();
+        } else if (step1GoToNumber == '3') {
+            return goToStep3();
+        } else {
+            return goToStep2();
+        }
     }
 
     public void saveAMSForm() {
-        system.debug('Salesforce saveAMSForm sectorValue: ' + sectorValue);
-        system.debug('Salesforce saveAMSForm newCase.Reason1__c: ' + newCase.Reason1__c);
-
         newForm.Operation_Type__c = sectorValue;
         if (!isNoticeOfChange) {
             if (amsLocationType != null) {
@@ -2455,14 +2443,22 @@ public without sharing class ISSP_AMS_Accreditation {
         if (contactToUpsert.AMS_Pax_Accreditation_Form__c == null)
             contactToUpsert.AMS_Pax_Accreditation_Form__c = newForm.Id;
 
-        Integer cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
-                     WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Agency_owner__c = true AND Id != :newContact.Id And RecordType.Name = :contactType];
+        Integer cntOwners = [SELECT COUNT() 
+                            FROM AMS_Accreditation_Contact__c
+                            WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id 
+                                AND Agency_owner__c = true 
+                                AND Id != :newContact.Id 
+                                AND RecordType.Name = :contactType];
 
         refreshCntIFAPContacts();
 
-        Integer cntEmailContacts = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
-                            WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Email__c != :null  AND Email__c = :newContact.Email__c AND Id != :newContact.Id
-                                AND RecordTypeId != :rtAccreditContPreviousOwner];
+        Integer cntEmailContacts = [SELECT COUNT() 
+                                    FROM AMS_Accreditation_Contact__c
+                                    WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id 
+                                        AND Email__c != :null 
+                                        AND Email__c = :newContact.Email__c 
+                                        AND Id != :newContact.Id
+                                        AND RecordTypeId != :rtAccreditContPreviousOwner];
 
         if (contactType == 'Company' || contactType == 'Current Company Owner') {
             newContact.First_name__c = '';
@@ -2760,8 +2756,9 @@ public without sharing class ISSP_AMS_Accreditation {
         ISSP_AMS_Statement_International_Sales__c delSales = [SELECT Id
                                                             FROM ISSP_AMS_Statement_International_Sales__c
                                                             WHERE Id = :editSalesId];
-        if (delSales != null)
+        if (delSales != null) {
             delete delSales;
+        }
 
         fetchAMSProcessForm(); //Need to refetch parent AMS form in order to recalculate roll-up Total field in forms currency
     }
@@ -2816,7 +2813,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 accountUpdated = false;
             }
 
-            if (!accountUpdated) return;
+            if (!accountUpdated) {
+                return;
+            }
 
             if (!validateCharactersInAgencyWindow()) {
                 accountUpdated = false;
@@ -2853,7 +2852,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 formUpdated = false;
             }
 
-            if (!formUpdated) return;
+            if (!formUpdated) {
+                return;
+            }
 
             if (accountConcerned.BillingStreet == newForm.Branch_Office_Street_name_number__c) {
                 newForm.Branch_Office_Street_name_number__c = null;
@@ -2899,7 +2900,13 @@ public without sharing class ISSP_AMS_Accreditation {
         else {
             if (isMultiCountryNewAE) {
                 pageURL += '&isMultiCountryNewAE=true';
-                if (currentMCFormId != null) pageURL += '&currentMCFormId=' + currentMCFormId;
+                if (currentMCFormId != null) {
+                    pageURL += '&currentMCFormId=' + currentMCFormId;
+                }
+            }
+
+            if (isMCNewAEAccredited) {
+                pageURL += '&isMultiCountryNewAE=true&isMCNewAEAccredited=true';
             }
         }
 
@@ -2912,7 +2919,6 @@ public without sharing class ISSP_AMS_Accreditation {
         if (isNoticeOfChange) {
             pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
         } else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
-
             pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
         }
 
@@ -3116,9 +3122,6 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference goToFinalStep() {
-
-        System.DEBUG('goToFinalStep  - newForm Legal Status 1: ' + newForm.ISSP_AMS_Legal_Status__c);
-
         if (!validateCharactersInForm() || !validateForm(true) ) {
             newForm.Validation_ERRORS__c = TRUE;
             upsert newForm;
@@ -3139,7 +3142,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         //INC355752 - add attachment to case after submission
-        if(isNoticeOfChange) attachNOCFormToCase(newCase.Id, isBankAccountChange);
+        if(isNoticeOfChange) {
+            attachNOCFormToCase(newCase.Id, isBankAccountChange);
+        }
 
         try {
             if (isNoticeOfChange && !isBankAccountChange && newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && isocountry.Enable_Minor_Changes_from_Portal__c)
@@ -3290,10 +3295,13 @@ public without sharing class ISSP_AMS_Accreditation {
                 createHoAdminNotifications();
             }
 
-            if (isNoticeOfChange)
+            if (isNoticeOfChange) {
                 return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=Final' + commParam);
+            }
 
-            if (isMultiCountry) return new PageReference('/ISSP_AMSCases');
+            if (isMultiCountry) {
+                return new PageReference('/ISSP_AMSCases');
+            }
 
             return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
         } catch (DmlException ex) {
@@ -3348,7 +3356,7 @@ public without sharing class ISSP_AMS_Accreditation {
         sendConfirmationEmail(newCase);
 
         setConn = null;
-        getAMSDraftCases();
+        populateAMSDraftCases();
 
         isMultiCountryStarted = false;
     }
@@ -3412,9 +3420,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
             UploadMultipleFileToAmazonButtonCtrl.UploadFile upF = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(caseId, fileName, contentType, size, folder,  WrapperAttach.CREDENTIAL_NAME);
 
-            Boolean result = AmazonRest.uploadFile(upF, bodyNOC);
-
-            if(result) UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(folder+fileName, size, caseId, 'AMS_File', OTHERS, 'Portal');
+            if (AmazonRest.uploadFile(upF, bodyNOC)) {
+                UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(folder+fileName, size, caseId, 'AMS_File', OTHERS, 'Portal');
+            }
         }
     }
 
@@ -3510,10 +3518,12 @@ public without sharing class ISSP_AMS_Accreditation {
             newContact.First_name__c.addError(Label.ISSP_EnterValidString);
             errorFound = true;
         }
+
         if (newContact.Last_name__c != null && !p.matcher(newContact.Last_name__c).matches()) {
             newContact.Last_name__c.addError(Label.ISSP_EnterValidString);
             errorFound = true;
         }
+
         if (newContact.AddressStreet__c != null && !p.matcher(newContact.AddressStreet__c).matches()) {
             newContact.AddressStreet__c.addError(Label.ISSP_EnterValidString);
             errorFound = true;
@@ -3523,10 +3533,12 @@ public without sharing class ISSP_AMS_Accreditation {
             newContact.AddressCity__c.addError(Label.ISSP_EnterValidString);
             errorFound = true;
         }
+
         if (newContact.AddressPostcode__c != null && !p.matcher(newContact.AddressPostcode__c).matches()) {
             newContact.AddressPostcode__c.addError(Label.ISSP_EnterValidString);
             errorFound = true;
         }
+
         if (newContact.Job_title__c != null && !p.matcher(newContact.Job_title__c).matches()) {
             newContact.Job_title__c.addError(Label.ISSP_EnterValidString);
             errorFound = true;
@@ -3537,23 +3549,28 @@ public without sharing class ISSP_AMS_Accreditation {
                 newContact.Prev_Job1_Employer__c.addError(Label.ISSP_EnterValidString);
                 errorFound = true;
             }
+
             if (newContact.Prev_Job1_Position__c != null && !p.matcher(newContact.Prev_Job1_Position__c).matches()) {
                 newContact.Prev_Job1_Position__c.addError(Label.ISSP_EnterValidString);
                 errorFound = true;
             }
+
             if (newContact.Prev_Job1_Address__c != null && !p.matcher(newContact.Prev_Job1_Address__c).matches()) {
                 newContact.Prev_Job1_Address__c.addError(Label.ISSP_EnterValidString);
                 errorFound = true;
             }
+
             if (newContact.Agencies_prev_worked_for__c != '1') {
                 if (newContact.Prev_Job2_Employer__c != null && !p.matcher(newContact.Prev_Job2_Employer__c).matches()) {
                     newContact.Prev_Job2_Employer__c.addError(Label.ISSP_EnterValidString);
                     errorFound = true;
                 }
+
                 if (newContact.Prev_Job2_Position__c != null && !p.matcher(newContact.Prev_Job2_Position__c).matches()) {
                     newContact.Prev_Job2_Position__c.addError(Label.ISSP_EnterValidString);
                     errorFound = true;
                 }
+
                 if (newContact.Prev_Job2_Address__c != null && !p.matcher(newContact.Prev_Job2_Address__c).matches()) {
                     newContact.Prev_Job2_Address__c.addError(Label.ISSP_EnterValidString);
                     errorFound = true;
@@ -3671,9 +3688,8 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         /*** AMSU-112 - Start ***/
-        //replace tab character
         checkTabCharacters(newForm, hqAccount, newContact);
-        //check non latin characters
+
         if((!String.isBlank(newForm.Account_Name__c) && !p.matcher(newForm.Account_Name__c).matches()) || (!String.isBlank(hqAccount.Name) && !p.matcher(hqAccount.Name).matches())) {
             newForm.Account_Name__c.addError(Label.ISSP_EnterValidString);
             errorFound = true;
@@ -3870,8 +3886,9 @@ public without sharing class ISSP_AMS_Accreditation {
     private void popContact() {
         con = DAL_ISSP.getContact(DAL_ISSP.getUser(Userinfo.getUserId()).ContactId);
 
-        if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
+        if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' ) {
             bIsAdmin = true;
+        }
     }
 
     public void fetchCase(String vCaseId) {
@@ -3987,9 +4004,13 @@ public without sharing class ISSP_AMS_Accreditation {
             String accredModel;
             Id TravelReqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Travel_Agent');
 
-            if (applyLanguage == 'fr') selectedLang = 'French';
-            else if (applyLanguage == 'es') selectedLang = 'Spanish';
-            else selectedLang = 'English';
+            if (applyLanguage == 'fr') {
+                selectedLang = 'French';
+            } else if (applyLanguage == 'es') {
+                selectedLang = 'Spanish';
+            } else {
+                selectedLang = 'English';
+            }
 
             if(newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH){
                 accredModel = AMS_Utils.ACCREDITATIONMODEL_CASH;
@@ -4011,8 +4032,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 
             Set<String> excludeIdentifierSetTravel = new Set<String>();
             for(String identifier : identifierSetTravel){
-                if(!(allowIdentifierSetTravel.contains(identifier)))
+                if(!(allowIdentifierSetTravel.contains(identifier))) {
                     excludeIdentifierSetTravel.add(identifier);
+                }
             }
 
             String iso = (isMultiCountryNewAE) ? mcformCountryISO : newCase.IFAP_Country_ISO__c;
@@ -4020,8 +4042,6 @@ public without sharing class ISSP_AMS_Accreditation {
                 excludeIdentifierSetTravel = null;
             }
             //NEWGEN-583 end
-            system.debug('SFSF excludeIdentifierSetTravel ' + excludeIdentifierSetTravel);
-
 
             //Get distinct set of Languages for this country / operation requirements iur
             AggregateResult[] distinctReqmentLangs = [SELECT Language__c
@@ -4095,18 +4115,16 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void fetchAccountConcernedDetails () {
-        accountConcerned = [
-                            SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
-                            TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
-                            Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
-                            Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
-                            ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
-                            Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Country_ISO_Code__c
-                               FROM Account
-                               WHERE Id = :vAccountConcernedId
-                                          LIMIT 1
-                           ];
+        accountConcerned = [SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
+                                TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
+                                Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
+                                Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
+                                ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
+                                Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
+                                VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Country_ISO_Code__c
+                            FROM Account
+                            WHERE Id = :vAccountConcernedId
+                            LIMIT 1];
     }
 
     public void fetchAMSProcessForm() {
@@ -4525,16 +4543,22 @@ public without sharing class ISSP_AMS_Accreditation {
         return closedStatusesList;
     }
 
-    public Boolean getIsEmpty() {
-        return getAMSDraftCases().isEmpty();
+    public Boolean AMSDraftCasesIsEmpty {
+        get {
+            return AMSDraftCases.isEmpty() || AMSDraftCases == null;
+        }
+        set;
     }
 
-    Public Boolean getIsNotEmpty() {
-        return !getAMSDraftCases().isEmpty();
+    public List<Case> AMSDraftCases {
+        get {
+            return AMSDraftCases == null ? populateAMSDraftCases() : AMSDraftCases;
+        }
+        set;
     }
 
     // Initialize setCon and return a list of records
-    public List<Case> getAMSDraftCases() {
+    public List<Case> populateAMSDraftCases() {
         List<Case> l = (List<Case>) setConn.getRecords();
 
         Boolean isOpt_IN_OUT_InProgress = false;
@@ -4708,7 +4732,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if(agentaccountITAN != null && !agentaccountITAN.isEmpty()) {
-            if(iatanAccount == AMS_UTILS.IATAN_PASSENGER_AGENT) IATANAgentAccount = agentaccountITAN[0];
+            if(iatanAccount == AMS_UTILS.IATAN_PASSENGER_AGENT) {
+                IATANAgentAccount = agentaccountITAN[0];
+            }
         }
         return null;
     }
@@ -4793,8 +4819,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             return null;
-        }
-        else {
+        } else {
             if (prevAgentHistory == '1') {
                 newContact.Prev_Job1_Address__c = '';
                 newContact.Prev_Job1_Employer__c = '';
@@ -4834,7 +4859,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     //Does Open, non-Draft/Pending customer SAAM case already exist for HQ?
-    public boolean openHQCaseExists {
+    public Boolean openHQCaseExists {
         get {
             List<Case> dupeDrafts = [SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c 
                                     FROM Case 
@@ -4894,7 +4919,9 @@ public without sharing class ISSP_AMS_Accreditation {
         get{
             if (newCase != null) {
                 return (newCase.Case_Language__c != '') ? newCase.Case_Language__c : UserInfo.getLanguage();
-            } else return UserInfo.getLanguage();
+            } else {
+                return UserInfo.getLanguage();
+            }
         }
         set;
     }
@@ -4907,13 +4934,11 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getPrevWorkedForItems() {
-        List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('', ''));
-        options.add(new SelectOption('none', Label.PKB2_None));
-        options.add(new SelectOption('1', '1'));
-        options.add(new SelectOption('2', Label.ISSP_SELECT_THREE_or_MORE));
+        return new List<SelectOption>{new SelectOption('', ''),
+                                    new SelectOption('none', Label.PKB2_None),
+                                    new SelectOption('1', '1'),
+                                    new SelectOption('2', Label.ISSP_SELECT_THREE_or_MORE)};
 
-        return options;
     }
 
     public void getPilotCountries() {
@@ -4961,7 +4986,9 @@ public without sharing class ISSP_AMS_Accreditation {
             }
             ++idx;
             
-            if (iso.Branches_abroad_not_allowed__c) notAllowedCountries.add(iso.ISO_Code__c);  
+            if (iso.Branches_abroad_not_allowed__c) {
+                notAllowedCountries.add(iso.ISO_Code__c);  
+            }
         }
 
         jsonCountriesMap = JSON.serialize(mapCountriesList);
@@ -5026,7 +5053,7 @@ public without sharing class ISSP_AMS_Accreditation {
         return selectedLang;
     }
 
-    private void retCargoCountryReqments(boolean isFromValidation) {
+    private void retCargoCountryReqments(Boolean isFromValidation) {
         Set<String> allowIdentifierSet = new Set<String>();
 
         String selectedLang = translateApplyLanguage();
@@ -5051,8 +5078,9 @@ public without sharing class ISSP_AMS_Accreditation {
         Set<String> identifierSet = new Set<String> {OFFICE_LEASE, WAREHOUSE_LEASE, WAREHOUSE_SUBCONTRACTED};
         Set<String> excludeIdentifierSet = new Set<String>();
         for (String ident : identifierSet) {
-            if (!(allowIdentifierSet.contains(ident)))
+            if (!(allowIdentifierSet.contains(ident))) {
                 excludeIdentifierSet.add(ident);
+            }
         }
 
         String finalLang = '';
@@ -5323,7 +5351,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-    private boolean validateAttachedFiles() {
+    private Boolean validateAttachedFiles() {
         Boolean errorFound = false;
 
         redirectToStepE = false;
@@ -5337,10 +5365,7 @@ public without sharing class ISSP_AMS_Accreditation {
             retNoCTravelCountryReqments(true);
         }
 
-        system.debug('List_CountryReqments: ' + List_CountryReqments);
-
-        Map<String, String> folderMap = new Map<String, String>();
-        folderMap = getMapAmazonFileIdentifiers();
+        Map<String, String> folderMap = getMapAmazonFileIdentifiers();
 
         for (AMS_Accreditation_Requirement__c thisReq : List_CountryReqments) {
             if (thisReq.File_to_Upload__c == 'Mandatory') {
@@ -5359,7 +5384,7 @@ public without sharing class ISSP_AMS_Accreditation {
         return !errorFound;
     }
 
-    private boolean validateFacilities() {
+    private Boolean validateFacilities() {
         Boolean errorFound = false;
 
         if (isocountry.EACP_Country__c) {
@@ -5840,6 +5865,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent);
                         errorFound = true;
                     }
+
                     if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes' && newForm.Cargo_Agent_Account__c == null) {
                         newForm.IATA_Cargo_Code__c.addError(Label.ISSP_AMS_Validation_Cargo_Code);
                         errorFound = true;
@@ -6005,7 +6031,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
         //EO Travel Agency Form Validation, start of CGO HO validation
         } else if (sectorValue.StartsWith('Cargo_Agent') && (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary') && amsOfficeType == AMS_Utils.HO) {
-            Integer cntFacilities = [SELECT COUNT() FROM AMS_Facility__c WHERE AMS_Online_Accreditation__c = :newForm.Id];
+            Integer cntFacilities = [SELECT COUNT() 
+                                    FROM AMS_Facility__c 
+                                    WHERE AMS_Online_Accreditation__c = :newForm.Id];
 
             if (cntFacilities == 0) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please add at least one facility (SECTION 5)'));
@@ -6629,22 +6657,53 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void setContextualHelp(string lang) {
-        if(displayLanguage != null && displayLanguage != '') lang = displayLanguage;
+        if (displayLanguage != null && displayLanguage != '') {
+            lang = displayLanguage;
+        }
 
         String fldName = 'ISSP_AMS_HelpText_' + lang + '__c';
 
         Map<String, ISSP_AMS_Contextual_Help__c> hlpMap = ISSP_AMS_Contextual_Help__c.getAll();
 
-        if (hlpMap.containsKey('MIN_PAIDUP_CAPITAL')) txtHelpMinPaidCapital = (String) hlpMap.get('MIN_PAIDUP_CAPITAL').get(fldName);
-        if (hlpMap.containsKey('REGISTERED_CAPITAL')) txtHelpRegisteredCapital = (String) hlpMap.get('REGISTERED_CAPITAL').get(fldName);
-        if (hlpMap.containsKey('PAIDUP_CAPITAL')) txtHelpPaidUpCapital = (String) hlpMap.get('PAIDUP_CAPITAL').get(fldName);
-        if (hlpMap.containsKey('TAX_NUMBER')) txtHelpTaxNumber = (String) hlpMap.get('TAX_NUMBER').get(fldName);
-        if (hlpMap.containsKey('AUTHORISED_SIG')) txtHelpAuthorisedSig = (String) hlpMap.get('AUTHORISED_SIG').get(fldName);
-        if (hlpMap.containsKey('FIN_CONTACT')) txtHelpFinContact = (String) hlpMap.get('FIN_CONTACT').get(fldName);
-        if (hlpMap.containsKey('PORTAL_ADMIN')) txtHelpPortalAdmin = (String) hlpMap.get('PORTAL_ADMIN').get(fldName);
-        if (hlpMap.containsKey('GROSS_SALES')) txtHelpGrossSales = (String) hlpMap.get('GROSS_SALES').get(fldName);
-        if (hlpMap.containsKey('TRAINED_STAFF_ORGANIZATION')) txtHelpTrainedStaffOrganization = (String) hlpMap.get('TRAINED_STAFF_ORGANIZATION').get(fldName);
-        if (hlpMap.containsKey('TRAINED_STAFF_REFERENCE')) txtHelpTrainedStaffReference = (String) hlpMap.get('TRAINED_STAFF_REFERENCE').get(fldName);
+        if (hlpMap.containsKey('MIN_PAIDUP_CAPITAL')) {
+            txtHelpMinPaidCapital = (String) hlpMap.get('MIN_PAIDUP_CAPITAL').get(fldName);
+        }
+
+        if (hlpMap.containsKey('REGISTERED_CAPITAL')) {
+            txtHelpRegisteredCapital = (String) hlpMap.get('REGISTERED_CAPITAL').get(fldName);
+        }
+
+        if (hlpMap.containsKey('PAIDUP_CAPITAL')) {
+            txtHelpPaidUpCapital = (String) hlpMap.get('PAIDUP_CAPITAL').get(fldName);
+        }
+
+        if (hlpMap.containsKey('TAX_NUMBER')) {
+            txtHelpTaxNumber = (String) hlpMap.get('TAX_NUMBER').get(fldName);
+        }
+
+        if (hlpMap.containsKey('AUTHORISED_SIG')) {
+            txtHelpAuthorisedSig = (String) hlpMap.get('AUTHORISED_SIG').get(fldName);
+        }
+
+        if (hlpMap.containsKey('FIN_CONTACT')) {
+            txtHelpFinContact = (String) hlpMap.get('FIN_CONTACT').get(fldName);
+        }
+
+        if (hlpMap.containsKey('PORTAL_ADMIN')) {
+            txtHelpPortalAdmin = (String) hlpMap.get('PORTAL_ADMIN').get(fldName);
+        }
+
+        if (hlpMap.containsKey('GROSS_SALES')) {
+            txtHelpGrossSales = (String) hlpMap.get('GROSS_SALES').get(fldName);
+        }
+
+        if (hlpMap.containsKey('TRAINED_STAFF_ORGANIZATION')) {
+            txtHelpTrainedStaffOrganization = (String) hlpMap.get('TRAINED_STAFF_ORGANIZATION').get(fldName);
+        }
+
+        if (hlpMap.containsKey('TRAINED_STAFF_REFERENCE')) {
+            txtHelpTrainedStaffReference = (String) hlpMap.get('TRAINED_STAFF_REFERENCE').get(fldName);
+        }
 
         txtLocalAgencyDetailsTitle = Label.ISSP_AMS_Local_Details_Title;
         txtLocalAgencyDetailsPleaseEnter = Label.ISSP_AMS_Local_Details_Please_Enter;
@@ -6670,18 +6729,31 @@ public without sharing class ISSP_AMS_Accreditation {
         String ctrylabel;
 
         try {
-            if (userLang == 'en_US') ctrylabel = (String)isoctry.get('Name');
-            else if (userLang == 'es') ctrylabel =  (String)isoctry.get('IATA_Country_SP__c');
-            else if (userLang == 'fr') ctrylabel =  (String)isoctry.get('IATA_Country_FR__c');
-            else if (userLang == 'it') ctrylabel =  (String)isoctry.get('IATA_Country_IT__c');
-            else if (userLang == 'pt_BR') ctrylabel =  (String)isoctry.get('IATA_Country_PT__c');
-            else if (userLang == 'ko') ctrylabel =  (String)isoctry.get('IATA_Contry_KR__c');
-            else if (userLang == 'zh_CN') ctrylabel =  (String)isoctry.get('IATA_Country_ZH__c');
-            else if (userLang == 'ja') ctrylabel =  (String)isoctry.get('IATA_Country_JP__c');
-            else ctrylabel = (String)isoctry.get('Name');
+            if (userLang == 'en_US') {
+                ctrylabel = (String)isoctry.get('Name');
+            } else if (userLang == 'es') {
+                ctrylabel =  (String)isoctry.get('IATA_Country_SP__c');
+            } else if (userLang == 'fr') {
+                ctrylabel =  (String)isoctry.get('IATA_Country_FR__c');
+            } else if (userLang == 'it') {
+                ctrylabel =  (String)isoctry.get('IATA_Country_IT__c');
+            } else if (userLang == 'pt_BR') {
+                ctrylabel =  (String)isoctry.get('IATA_Country_PT__c');
+            } else if (userLang == 'ko') {
+                ctrylabel =  (String)isoctry.get('IATA_Contry_KR__c');
+            } else if (userLang == 'zh_CN') {
+                ctrylabel =  (String)isoctry.get('IATA_Country_ZH__c');
+            } else if (userLang == 'ja') {
+                ctrylabel =  (String)isoctry.get('IATA_Country_JP__c');
+            } else {
+                ctrylabel = (String)isoctry.get('Name');
+            }
 
-            if (ctrylabel != null) return ctrylabel;
-            else return (String)isoctry.get('Name');
+            if (ctrylabel != null) {
+                return ctrylabel;
+            } else {
+                return (String)isoctry.get('Name');
+            }
 
         } catch (DmlException ex) { return (String)isoctry.get('Name'); }
     }
@@ -6708,19 +6780,16 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-    //@future (callout = true)
     public static void OSCARIntegration(String accountId, String accreditationId, String typeOfProcess, String caseId) {
-        system.debug('createAccreditation(' + accountId + ', ' + accreditationId + ', ' + typeOfProcess + ', ' + caseId + ')');
-
         //FM 30-01-2017 - OSCAR Integration - do not create OSCAR when there's a existing case with "Open - EDMC" status and an OSCAR Record already assigned to the case
-        List<Case> checkCase = [Select Id, OSCAR__c  from case where Id = :caseid AND OSCAR__c <> null AND status = 'Open - EDMC'];
+        List<Case> checkCase = [SELECT Id, OSCAR__c FROM case WHERE Id = :caseid AND OSCAR__c <> null AND status = 'Open - EDMC'];
 
         // USE Static Method
         if(checkCase.isEmpty()){
             AMS_RecordCreatorWebservice.createAccreditation(accountId, accreditationId, typeOfProcess, caseId);
         }else{
             Case auxOscarCase = checkCase.get(0);
-            List<AMS_OSCAR__c> checkOscar = [Select id,Status__c  from AMS_OSCAR__c where id = :auxOscarCase.OSCAR__c];
+            List<AMS_OSCAR__c> checkOscar = [SELECT id,Status__c FROM AMS_OSCAR__c WHERE id = :auxOscarCase.OSCAR__c];
             AMS_OSCAR__c auxOscar = checkOscar.get(0);
             auxOscar.Status__c = 'Open';
             update auxOscar;
@@ -6756,12 +6825,13 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Subject = Label.ISSP_AMS_NoC_Multiple_Changes + ' – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
         } else {
             newCase.Subject = 'Change – ' + accountConcerned.IATACode__c + ' – ' + accountConcerned.Name;
-            if (newForm.Is_change_location__c)
+            if (newForm.Is_change_location__c) {
                 newCase.Reason1__c = 'CHL - Change of Location';
-            else if (newForm.Is_change_legal_name__c)
+            } else if (newForm.Is_change_legal_name__c) {
                 newCase.Reason1__c = 'CHN - Change of Name';
-            else if (newForm.Is_change_ownership_or_shareholding__c)
+            } else if (newForm.Is_change_ownership_or_shareholding__c) {
                 newCase.Reason1__c = 'CHO / CHS – Change of Ownership / Legal Status';
+            }
         }
         newCase.Description = Label.ISSP_AMS_Case_Change_Description;
     }
@@ -6951,8 +7021,9 @@ public without sharing class ISSP_AMS_Accreditation {
                                             CreatedBy.Name, Case__c, File_Identifier__c
                                         FROM AmazonFile__c
                                         WHERE Case__c = :newCase.Id]) {
-            if (!mapAmazonFileIdentifiers.containsKey(amazonFile.File_Identifier__c))
+            if (!mapAmazonFileIdentifiers.containsKey(amazonFile.File_Identifier__c)) {
                 mapAmazonFileIdentifiers.put(amazonFile.File_Identifier__c, amazonFile.File_Identifier__c);
+            }
         }
         return mapAmazonFileIdentifiers;
     }
@@ -6983,31 +7054,41 @@ public without sharing class ISSP_AMS_Accreditation {
     private void createChildCases() {
         List<String> agencySelectedBranches;
 
-        if(newForm.Agency_Codes_Concerned__c != null)
+        if(newForm.Agency_Codes_Concerned__c != null) {
             agencySelectedBranches = newForm.Agency_Codes_Concerned__c.split(',');
+        }
 
         Map<String, Account> agencies = new Map<String, Account>();
         for(Account branch : getBranchList(true)){
             agencies.put(branch.IATACode__c, branch);
         }
 
-        if(agencies.isEmpty()) return;
+        if(agencies.isEmpty()) {
+            return;
+        }
 
         if(newForm.Scope_of_Change__c == 'HO - All Branches'){
-            if(agencySelectedBranches == null) agencySelectedBranches = new List<String>();
-            else agencySelectedBranches.clear();
+            if(agencySelectedBranches == null) {
+                agencySelectedBranches = new List<String>();
+            } else {
+                agencySelectedBranches.clear();
+            }
 
             agencySelectedBranches.addAll(agencies.keySet());
         }
 
         //CB 07-03-2017 Create an OSCAR for every child case and link it to the account concerned; clone from the HO Oscar; no staging area
         List<Case> parentCase = [SELECT Id, OSCAR__c FROM Case WHERE Id = :newCase.Id AND OSCAR__c <> null];
-        if(parentCase.isEmpty()) return;
+        if(parentCase.isEmpty()) {
+            return;
+        }
 
         List<AMS_OSCAR__c> hoOscars = [SELECT Id, Status__c, Account__c, Process__c, RecordTypeId, OwnerId, AMS_Online_Accreditation__c, Type_of_change__c 
                                     FROM AMS_OSCAR__c 
                                     WHERE Id = :parentCase.get(0).OSCAR__c];
-        if(hoOscars.isEmpty()) return;
+        if(hoOscars.isEmpty()) {
+            return;
+        }
 
         AMS_OSCAR__c hoOscar = hoOscars[0];
 
@@ -7312,7 +7393,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if (!formToDelete.isEmpty()) {
 
-            deleteFormsFuture(new Set<Id>{formToDelete[0].Id});
+            //deleteFormsFuture(new Set<Id>{formToDelete[0].Id});
 
             Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
             mCApplicationFormMap.remove(formToDelete[0].Id);
@@ -7341,18 +7422,22 @@ public without sharing class ISSP_AMS_Accreditation {
                 update formToBeUpdated;
             }
 
+            delete formToDelete;
+
             multiCountryApplicationForms = new List<AMS_Pax_Accreditation_Form__c>(mCApplicationFormMap.values());
         }
     }
 
     public void discardMCApplication() {
+        isMultiCountryStarted = false;
+
+        Map<Id, Case> amsDraftCasesMap = new Map<Id, Case>(AMSDraftCases);
+        amsDraftCasesMap.remove(newCase.Id);
+        AMSDraftCases = new List<Case>(amsDraftCasesMap.values());
+
         deleteFormsAux(multiCountryApplicationForms);
 
         delete [SELECT Id FROM Case WHERE Id = :newCase.Id];
-
-        isMultiCountryStarted = false;
-        setConn = null;
-        getAMSDraftCases();
     }
 
     private static void deleteFormsAux(List<AMS_Pax_Accreditation_Form__c> formsList) {
@@ -7369,17 +7454,6 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         delete formsList;
-    }
-
-    @future
-    private static void deleteFormsFuture(Set<Id> formsToDelete) {
-        List<AMS_Pax_Accreditation_Form__c> formListToDelete = [SELECT Id, ISSP_Branch_AccountId__c 
-                                                                FROM AMS_Pax_Accreditation_Form__c 
-                                                                WHERE Id IN :formsToDelete];
-
-        if (!formListToDelete.isEmpty()) {
-            deleteFormsAux(formListToDelete);
-        }
     }
 
     public void updateStatusMCForm() {
@@ -7460,17 +7534,6 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     // ***********************************
-    // ********** constructor ************
-    // ***********************************
-    /*public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
-        if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
-
-        oscarId = stdController.getId();
-        oscar = (AMS_OSCAR__c)stdController.getRecord();
-    }*/
-
-
-    // ***********************************
     // *********** wrappers **************
     // ***********************************
     public class HierarchyItem{
@@ -7483,7 +7546,6 @@ public without sharing class ISSP_AMS_Accreditation {
             this.selected = selected;
         }
     }
-
 
     // ***********************************
     // ********* helper methods **********

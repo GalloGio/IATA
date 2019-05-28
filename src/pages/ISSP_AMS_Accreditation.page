@@ -517,7 +517,7 @@
 
         function runMultiCountry() {
             if({!isMultiCountryNewAE}) {
-                $('[id$=isSameLegal]').insertAfter($('[id$=countrySelection'));
+                $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
                 enableDisableLegalName();
             }
         }
@@ -581,7 +581,7 @@
                                     </apex:commandLink>
                                 </div>
                             </div>
-                            <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="optionsSetpA, langGSA">
+                            <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="optionsSetpA, langGSA" oncomplete="if({!isMultiCountryNewAE}) {$('[id$=isSameLegal]').first().css('display', 'none');}"> 
                                 <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
                             </apex:actionFunction>
                             <apex:actionFunction action="{!null}" name="refreshGsaQuestion" reRender="langGSA">
@@ -703,36 +703,6 @@
 
 
                             <apex:outputpanel rendered="{!isNoticeOfChange}">
-                        <!--
-                                <apex:outputPanel rendered="{!isBankAccountChange==false}">
-                                    <div class="form-group">
-                                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Noc_Type_of_Change}:</label>
-                                        <div class="col-lg-9" style="top:7px">
-                                            <apex:panelGrid columns="8">
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_legal_name__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Noc_Legal_Name}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_location__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Noc_Location}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_ownership_or_shareholding__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_NoC_Ownership_Shareholding}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                            </apex:panelGrid>
-                                        </div>
-                                    </div>
-                                </apex:outputPanel>
-
-                                <apex:outputText rendered="{!isBankAccountChange}">
-                                    <div class="form-group">
-                                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Noc_Type_of_Change}:</label>
-                                        <div class="col-lg-9" style="top:7px">
-                                            <apex:panelGrid columns="2">
-                                                <apex:inputCheckbox value="{!newForm.Is_change_bank_account_details__c}" selected="true" disabled="true"/>
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_NoC_Bank_acount_details}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                            </apex:panelGrid>
-                                        </div>
-                                    </div>
-                                </apex:outputText>
-                                -->
-
                                 <apex:outputpanel >
                                     <div class="form-group">
                                         <label for="operationtype" class="col-lg-3 control-label">

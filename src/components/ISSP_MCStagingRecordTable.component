@@ -2,6 +2,10 @@
 	<div class="row" style="padding-top: 20px">
         <div class="col-md-12">
             <apex:pageBlock>
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms" status="loadStatusSpinner">
+                    <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
+                </apex:actionFunction>
+
                 <apex:pageBlockTable id="onGoingMultiCountryForms" value="{!multiCountryApplicationForms}" var="mcForm" styleClass="table" rendered="{!mcApplicationFormsFound}">
                     
                     <apex:column headerValue="">
@@ -32,7 +36,7 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-            <input type="button" class="btn btn_iata_primary" onClick="discardMultiCountry();" value="Discard Application" style="float: right;"/>
+            <input type="button" class="btn btn_iata_primary" onClick="discardMCApplication();" value="Discard Application" style="float: right;"/>
         </div>
     </div>
 

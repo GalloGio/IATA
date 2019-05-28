@@ -941,27 +941,9 @@
                        <script type="text/javascript">
                             var $j = jQuery.noConflict();
 
-                            function mandatoryLabels() {
-                                /*var labelBillStreet = $j('.address-label')[0].childNodes[0],
-                                    labelBillCity = $j('.address-label')[1].childNodes[0];
-                                if (labelBillStreet) {
-                                    if (!labelBillStreet.textContent.includes("*")) {
-                                       labelBillStreet.textContent = labelBillStreet.textContent + ' *' ; 
-                                    }
-                                    
-                                }
-                                if (labelBillCity) {
-                                    if (!labelBillCity.textContent.includes("*")) {
-                                        labelBillCity.textContent = labelBillCity.textContent + ' *' ;   
-                                    }
-                                }*/
-                            }
-
-                            document.onload = mandatoryLabels();
                             document.onload = showUpdateAgencyDialog();
                             document.onload = removeReq();
 
-            
                             $( document ).ready(function() {
                                 $('[id$="ShippingCountryList"]').prependTo('#shippingcountry');
                                 var oldElemt = $('#shippingcountry > input');
