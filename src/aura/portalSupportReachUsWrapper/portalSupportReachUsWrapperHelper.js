@@ -62,7 +62,13 @@
             liveagent.init(component.get("v.endpoint"), component.get("v.deploymentId"), component.get("v.organizationId"));
 
         } else {
-            console.log('CTRL timeout to init live agent');
+            var toastEvent = $A.get("e.force:showToast");
+            toastEvent.setParams({
+                "title": "Error",
+                "message": "Live Agent connection timeout. Please refresh the page or contact Support",
+                "type": "Error"
+            });
+            toastEvent.fire();
         }
     }
 })
