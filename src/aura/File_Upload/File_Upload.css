@@ -76,10 +76,6 @@
     display: table;
 }
 
-.THIS .is-dragover {
-    background-color: #F2F2F2;
-}
-
 
 .THIS .dragDropMessage p{
     font-family: AktivGrotesk-Bold;
@@ -87,27 +83,6 @@
     color: #666666;
     text-align: center;
     line-height: 2rem;
-}
-
-.THIS.box__dragndrop {
-    display: inline;
-}
-
-
-.THIS .box__uploading {
-    display: none;
-}
-
-.THIS .box__success {
-    display: none;
-}
-
-.THIS .box__error {
-    display: none;
-}
-
-.THIS #myFile {
-    display: none;
 }
 
 .THIS .inputfile {

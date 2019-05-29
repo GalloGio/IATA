@@ -230,7 +230,7 @@
                 // If dropped items aren't files, reject them
                 if (event.dataTransfer.items[i].kind === 'file') {
                     var file = event.dataTransfer.items[i].getAsFile();
-                    var validationResult = this.checkFile(component, event, file);
+                    var validationResult = this.checkFile(component, event, file, filesToAdd.length);
                     if(validationResult === 1) {
                         filesToAdd.push(file);
                         console.log(i + ':... file[' + i + '].name = ' + file.name);
@@ -255,7 +255,7 @@
             //Use DataTransfer interface to access the file(s)
             for (var i = 0; i < event.dataTransfer.files.length; i++) {
                 var file = event.dataTransfer.files[i];
-                var validationResult = this.checkFile(component, event, file);
+                var validationResult = this.checkFile(component, event, file, filesToAdd.length);
                 if(validationResult === 1) {
                     filesToAdd.push(file);
                     console.log(i + ':... file[' + i + '].name = ' + file.name);
@@ -323,7 +323,7 @@
 
         for(let i = 0; i < files.length; i++) {
             var file = files[i];
-            var validationResult = this.checkFile(component, event, file);
+            var validationResult = this.checkFile(component, event, file, filesToAdd.length);
             if(validationResult === 1) {
                 filesToAdd.push(file);
                 console.log(i + ':... file[' + i + '].name = ' + file.name);
@@ -347,7 +347,7 @@
 
     },
 
-    checkFile : function(component, event, file) {
+    checkFile : function(component, event, file, filesCount) {
         let validFileExtensions = component.get('v.allowedExtensions');
         let validationResult = 2;// set to unsupported extension
 
@@ -392,7 +392,7 @@
 
         let maxFileCount = component.get('v.maxFileCount');
         let existingFilesCount = existingFiles.length;
-        if(existingFilesCount >= maxFileCount) {
+        if(existingFilesCount + filesCount >= maxFileCount) {
             return 6;
         }
 
