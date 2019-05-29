@@ -45,10 +45,10 @@ export default class Lookup extends LightningElement {
     }
     set requiredClass(value) {
         if (this.itemName === 'iatalookup') {
-            this.getContainerClass = 'slds-combobox_container squareShadow slds-has-inline-listbox squareBorder slds-p-around_small ' + value;
+            this.getContainerClass = 'slds-combobox_container customborder squareShadow slds-has-inline-listbox squareBorder slds-p-around_small ' + value;
         }
-        else{
-            this.getContainerClass = 'slds-combobox_container squareShadow slds-has-inline-listbox squareBorder slds-p-around_small ';
+        else {
+            this.getContainerClass = 'slds-combobox_container customborder squareShadow slds-has-inline-listbox squareBorder slds-p-around_small ';
         }
     }
 
@@ -154,14 +154,7 @@ export default class Lookup extends LightningElement {
 
     handleFocus() {
         // Prevent action if selection is not allowed
-        if (this.itemName === 'iatalookup') {
-            const searchIataEvent = new CustomEvent('iatalookup');
-            this.dispatchEvent(searchIataEvent);
-        }
-        else if (this.itemName === 'emaillookup') {
-            const searchEmailsEvent = new CustomEvent('emaillookup');
-            this.dispatchEvent(searchEmailsEvent);
-        }
+        this.dispatchEvent( new CustomEvent(this.itemName));
 
         if (!this.isSelectionAllowed()) {
             return;
@@ -222,7 +215,7 @@ export default class Lookup extends LightningElement {
     }
 
     get getInputClass() {
-        let css = 'slds-input slds-combobox__input has-custom-height hideInputLabel borderlessInput newRecipientTextInput  '
+        let css = 'slds-input slds-combobox__input no-boxshadow customborder has-custom-height hideInputLabel borderlessInput newRecipientTextInput  '
             + (this.errors.length === 0 ? '' : 'has-custom-error ');
         if (!this.isMultiEntry) {
             css += 'slds-combobox__input-value '

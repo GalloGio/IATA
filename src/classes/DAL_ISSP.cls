@@ -4,7 +4,7 @@ public with sharing class DAL_ISSP {
         if (userId == null)
             return null;
         List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,Contact.AccountId,
-		contact.IFG_Production__c, contact.IFG_PreProduction__c
+		contact.IFG_Production__c, contact.IFG_PreProduction__c, Profile.Id, Profile.Name
         from User where Id =:userId];
         if (users.size() > 0)
             return users[0];
@@ -14,7 +14,7 @@ public with sharing class DAL_ISSP {
     public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
         return
             [SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
-                IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c
+                IsActive, Pwortal_User_Frozen_Checkbox__c, Contact.Community__c
                FROM User 
               WHERE (Username=: nameOrEmail 
                  OR email =: nameOrEmail)

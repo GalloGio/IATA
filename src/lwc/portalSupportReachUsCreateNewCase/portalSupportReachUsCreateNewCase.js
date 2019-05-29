@@ -4,8 +4,6 @@ import { getParamsFromPage } from 'c/navigationUtils';
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 import searchAccounts from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.searchAccounts';
 import searchContacts from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.searchContacts';
-import getRelatedAccounts from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.getRelatedAccounts';
-import getRelatedContacts from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.getRelatedContacts';
 import createCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.createCase';
 import isAgentProfile from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.isAgentProfile';
 import insertCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.insertCase';
@@ -27,6 +25,9 @@ import csp_CreateNewCaseMainDocumentsSubLabel from '@salesforce/label/c.csp_Crea
 import csp_CreateNewCaseMainDocumentsSubSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainDocumentsSubSubLabel';
 import csp_CreateNewCaseMainUploadTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainUploadTopLabel';
 import csp_CreateNewCaseMainUploadTopSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainUploadTopSubLabel';
+import csp_searchIataCodeLocationNamePlaceHolder from '@salesforce/label/c.csp_searchIataCodeLocationNamePlaceHolder';
+import csp_ToastWarningRecipientNotFound from '@salesforce/label/c.csp_ToastWarningRecipientNotFound';
+import csp_searchEmailRecipientPlaceholder from '@salesforce/label/c.csp_searchEmailRecipientPlaceholder';
 import csp_CaseCreatedSuccess from '@salesforce/label/c.csp_CaseCreatedSuccess';
 import csp_ViewCaseSummary from '@salesforce/label/c.csp_ViewCaseSummary';
 import csp_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
@@ -66,6 +67,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_CreateNewCaseMainDocumentsSubSubLabel,
         csp_CreateNewCaseMainUploadTopLabel,
         csp_CreateNewCaseMainUploadTopSubLabel,
+        csp_searchIataCodeLocationNamePlaceHolder,
+        csp_searchEmailRecipientPlaceholder,
+        csp_ToastWarningRecipientNotFound,
         csp_CaseCreatedSuccess,
         csp_CaseBeingWorked,
         csp_CaseResponseGuarantee,
@@ -253,7 +257,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //gets related accounts and sets them in global var
     getRelatedAccounts() {
-        getRelatedAccounts()
+        searchAccounts({searchTerm : null})
             .then(relatedAccountsResult => {
                 this.relatedAccounts = JSON.parse(JSON.stringify(relatedAccountsResult));
             });
@@ -261,7 +265,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //gets related contacts and sets them in global var
     getRelatedContacts() {
-        getRelatedContacts()
+        searchContacts({searchTerm : null})
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
             });
@@ -474,7 +478,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Warning!',
-                message: 'Recipient has not been added. Please press the Add button.',
+                message: this.label.csp_ToastWarningRecipientNotFound,
                 variant: 'warning'
             })
         );
@@ -486,18 +490,18 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         this.bShowModal = true;
     }
 
-    //Simple redirect back to the reach us page.
-    redirectSupport() {
+    //Simple navigate to the reach us page.
+    navigateToSupport() {
         window.location.href = "/csportal/s/support-reach-us";
     }
 
-    //Simple redirect to the case details of the created case.
-    redirectCase() {
+    //Simple navigate to the case details of the created case.
+    navigateToCase() {
         window.location.href = "/csportal/s/case-details?caseId=" + this.caseID;
     }
 
-    //it really, really, really redirects to all cases. Promise!
-    redirectAllCases() {
+    //it really, really, really navigates to all cases. Promise!
+    navigateToAllCases() {
         window.location.href = "/csportal/s/cases-list";
     }
 }

@@ -82,10 +82,6 @@
     width: 130px;
 }
 
-.goLeft {
-    float: left;
-}
-
 .topCombobox {
     height: 60px;
 }
@@ -98,45 +94,6 @@
     border-radius: 0px;
     background-color: #fff;
     padding: 0px;
-}
-
-.darkgrey-text {
-    color: #525252
-}
-
-.lightgrey-text {
-    color: #999999;
-}
-
-.greybox-noborder {
-    width: 200px;
-    border: 0px;
-}
-
-.recipientInput {
-    height: 52px;
-    width: 415px;
-}
-
-.containedButtonAlt {
-    -webkit-transition-duration: 0.4s;
-    /* Safari */
-    transition-duration: 0.4s;
-    border: 1px #33f solid;
-    box-shadow: none;
-    background-color: white;
-    font-size: 16px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-align: center;
-    color: #33f;
-    min-height: 40px;
-    height: 56px;
-    width: 200px;
-    word-break: normal;
 }
 
 .custom-recipients {
@@ -158,11 +115,6 @@
     margin-right: 0.7rem;
 }
 
-.containedButton-size {
-    height: 56px;
-    width: 200px;
-}
-
 .overlap-top-center {
     position: relative;
     top: 110px;
@@ -179,6 +131,5 @@
 }
 
 .recipients-box{
-    min-height: 150px;
     max-height: 150px;
 }

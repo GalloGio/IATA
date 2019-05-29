@@ -1,8 +1,8 @@
-.slds-combobox__input, .slds-combobox_container {
+.slds-combobox__input, .slds-combobox_container .customborder{
     transition: border .1s linear, box-shadow .1 linear;
 }
 
-.slds-combobox__input {
+.slds-combobox__input.no-boxshadow{
     box-shadow: none;
 }
 

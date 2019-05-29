@@ -7,7 +7,7 @@
         </template>
         <!--LOADING SPINNER-->
 
-        <div class="slds-col slds-size_2-of-3 slds-large-size_2-of-3 slds-medium-size_1-of-1 slds-small-size_1-of-1">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3">
             <!-- CASE CREATE MODAL -->
             <template if:true={bShowModal}>
                 <div class="slds-backdrop slds-backdrop_open">
@@ -24,12 +24,12 @@
                                 </h2>
                             </div>
                             <div class="slds-align_absolute-center">
-                                <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center darkgrey-text">
+                                <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center text-gray">
                                     {label.csp_CaseBeingWorked}
                                 </h2>
                             </div>
                             <div class="slds-align_absolute-center">
-                                <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center darkgrey-text">
+                                <h2 class="text-xxsmall slds-p-top_small slds-align_absolute-center text-gray">
                                     {label.csp_CaseResponseGuarantee}
                                 </h2>
                             </div>
@@ -45,9 +45,9 @@
                             </div>
                             <div class="slds-align_absolute-center slds-p-horizontal_xx-large slds-p-top_small">
                                 <span class="text-xsmall slds-text-align_center 
-                            slds-p-horizontal_xx-large slds-align_absolute-center lightgrey-text">
+                            slds-p-horizontal_xx-large slds-align_absolute-center text-gray">
                                     <p>
-                                        {label.csp_CaseTracking} <a class="slds-text-link" onclick={redirectAllCases}>
+                                        {label.csp_CaseTracking} <a class="slds-text-link" onclick={navigateToAllCases}>
                                             {label.CSP_Support} {label.CSP_Cases}</a>.
                                     </p>
                                 </span>
@@ -56,13 +56,13 @@
                                 <div class="slds-grid slds-gutters">
                                     <div class="slds-col">
                                         <button class="containedButtonAlt uiButton contactSupport"
-                                            onclick={redirectSupport}>
+                                            onclick={navigateToSupport}>
                                             {label.csp_GoToSupport}
                                         </button>
                                     </div>
                                     <div class="slds-col">
                                         <button class="containedButton containedButton-size uiButton contactSupport"
-                                            onclick={redirectCase}>
+                                            onclick={navigateToCase}>
                                             {label.csp_ViewCaseSummary}
                                         </button>
                                     </div>
@@ -94,7 +94,7 @@
                                         {label.csp_CreateNewCaseMainPicklistLabel}</p>
                                     <c-portal-search-lookup-component onsearch={handleIataSearch} data-id="iatalookup"
                                         item-name="iatalookup" oniatalookup={showIataResults}
-                                        required-class={requiredClass} placeholder="Search IATA Code or location"
+                                        required-class={requiredClass} placeholder={label.csp_searchIataCodeLocationNamePlaceHolder}
                                         onclick={removeRequired}>
                                     </c-portal-search-lookup-component>
                                 </div>
@@ -124,7 +124,7 @@
                                 <!--DESCRIPTION-->
 
                                 <!--EMAIL RECIPIENTS-->
-                                <div class="slds-p-horizontal_xx-large slds-p-bottom_xx-large">
+                                <div class="slds-p-horizontal_xx-large">
                                     <p class="text-xsmall">{label.csp_CreateNewCaseMainInputEmailsTopLabel} (Optional)
                                     </p>
                                     <p class="text-xxsmall text-gray slds-p-bottom_small">
