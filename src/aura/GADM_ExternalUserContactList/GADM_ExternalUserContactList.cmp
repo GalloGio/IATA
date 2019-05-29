@@ -78,7 +78,7 @@
 
 
                     <div class="slds-card__body">
-                        <table class="slds-table slds-no-row-hover/*slds-table--bordered slds-table--fixed-layout slds-table--cell-buffer*/">
+                        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered/*slds-table slds-no-row-hover/*slds-table--bordered slds-table--fixed-layout slds-table--cell-buffer*/">
                             <colgroup>
                                 <col class="firstColumn "/>
                                 <col class="secondColumn "/>
@@ -124,8 +124,7 @@
 
 
                             <tbody>
-                            <!-- aditional row for details button -->
-
+                            <!-- TEXT MESSAGE IF TABLE HAS NO ROWS -->
                             <aura:if isTrue="{!v.TotalRecords == 0}">
                                 <tr>
                                     <td colspan="{!if(v.SelectionColumn, v.TableColumns.length+1, v.TableColumns.length)}">
@@ -135,18 +134,16 @@
                                     </td>
                                 </tr>
                                 <aura:set attribute="else">
+                                    <!--TABLE ROWS-->
                                     <aura:iteration items="{!v.TableRows}" var="row" indexVar="index">
                                         <tr class="{! if(index % 2 == 1, 'oddLine', if(index == 0, 'evenLine', 'evenLine'))}">
 
-                                            <!-- additional column for buttons -->
-                                            <td class="right2px" >
-                                                <div>
-                                                    <lightning:buttonIcon iconName="utility:preview" alternativeText="Details"
-                                                                          name="{!index}"  onclick="{!c.handleDetailsShow}"  />
-                                                </div>
-
+                                            <!-- DETAIL BUTTON-->
+                                            <td class="right2px button_padding" >
+                                                <lightning:buttonIcon  iconName="utility:preview" alternativeText="Details" name="{!index}"  onclick="{!c.handleDetailsShow}"/>
                                             </td>
 
+                                            <!--ROWS-->
                                             <aura:iteration items="{!row}" var="column" indexVar="indexColumn">
                                                 <aura:if isTrue="{!column.is_selection_column}">
 

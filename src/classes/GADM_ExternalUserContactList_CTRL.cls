@@ -266,7 +266,7 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
         return info;
     }
 
-    //@AuraEnabled
+
     private static List<Contact_Roles__c> getBusinessUnits(Id userId) {
 
         List<Contact_Roles__c> businessUnitsToReturn = new List<Contact_Roles__c>();
@@ -278,7 +278,7 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
         return businessUnitsToReturn;
     }
 
-    //@AuraEnabled
+
     private static List<Contact_Roles__c> getGrantedRoles(Id userId) {
         List<Contact_Roles__c> grantedRoles = new List<Contact_Roles__c>();
 
@@ -303,7 +303,6 @@ public without sharing class GADM_ExternalUserContactList_CTRL {
     @AuraEnabled
     public static List<Contact_Roles_Helper.AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnitsIds, Boolean sortDesc) {
 
-        //return Contact_Roles_Helper.getAggregatedContactsVisibleToUser(userId);
         return Contact_Roles_Helper.getContactsVisibleToUser(userId, isSuperUser, isGadmUser, businessUnitsIds, null, sortDesc);
     }
 

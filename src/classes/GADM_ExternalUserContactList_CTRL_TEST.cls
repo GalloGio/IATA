@@ -92,6 +92,17 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
 
         insert accountRolesToInsert;
 
+        Account_Role_Service__c accountRoleService = new Account_Role_Service__c();
+        accountRoleService.Account_Role__c = accountRole.Id;
+        accountRoleService.Account_Role_Services__c = accountRoleServices.Id;
+        insert accountRoleService;
+
+        GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
+        serviceDetail.Account_Role_Service__c = accountRoleService.Id;
+        serviceDetail.Allowed_email_domain__c = 'somedomain.com';
+        serviceDetail.Active_User_Count__c = 5;
+        insert serviceDetail;
+
         Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
 
         List<Contact_Roles__c> contactRolesToInsert = new List<Contact_Roles__c>();
@@ -235,8 +246,7 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
         accountContactRole5.Contact_Roles__c = contactRoles.Id;
         accountContactRole5.Account_Role__c = accountRole.Id;
         accountContactRole5.Service_Rendered__c = 'GADM';
-        accountContactRole5.RecordTypeId = functionalRecordTypeId;
-        //insert accountContactRole5;
+        accountContactRole5.RecordTypeId = groupRecordTypeId;
         accountContactRolesToInset.add(accountContactRole5);
 
         Account_Contact_Role__c accountContactRole5b = new Account_Contact_Role__c();
@@ -246,14 +256,6 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
         accountContactRole5b.Service_Rendered__c = 'GADM';
         accountContactRole5b.RecordTypeId = functionalRecordTypeId;
         accountContactRolesToInset.add(accountContactRole5b);
-
-        Account_Contact_Role__c accountContactRole6 = new Account_Contact_Role__c();
-        accountContactRole6.Contact__c = testContact2.Id;
-        accountContactRole6.Contact_Roles__c = contactRoles.Id;
-        accountContactRole6.Account_Role__c = accountRole.Id;
-        accountContactRole6.Service_Rendered__c = 'GADM';
-        accountContactRole6.RecordTypeId = groupRecordTypeId;
-        accountContactRolesToInset.add(accountContactRole6);
 
         insert accountContactRolesToInset;
 

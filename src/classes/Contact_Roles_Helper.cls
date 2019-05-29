@@ -28,26 +28,6 @@ public without sharing class Contact_Roles_Helper {
     }
 
 
-    /*public static Boolean isAccessGranted(String contactRole, String serviceName) {
-        Contact con = getContactFromUser(UserInfo.getUserId());
-        //Contact con = [SELECT Id FROM Contact WHERE Id = '0031x000009eJsuAAE'];
-
-        if(con.Id != null) {
-            List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id
-                                                                    FROM Contact_Role_Service_Access__c
-                                                                    WHERE Contact_Role__r.Contact__c = :con.Id AND
-                                                                    Status__c = 'Granted' AND
-                                                                    Service__r.Name = :serviceName AND
-                                                                    Contact_Role__r.Contact_Roles__r.Name = :contactRole];
-
-            return serviceAccesses.size() > 0;
-
-        }else{
-            return false;
-        }
-
-    }*/
-
     public static Map<String, String> getContactAccountDetails(Id contactId) {
 
         Map<String, String> accountDetails = new Map<String, String>();
@@ -85,32 +65,6 @@ public without sharing class Contact_Roles_Helper {
         return rolesMap;
     }
 
-
-    /*public static List<String> getStandardRoles() {
-        return new List<String>{'Power User', 'Super User', 'GADM User', 'Data Submitter', 'Data Consumer'};
-    }
-
-
-    public static Set<String> getStandardRolesGrantedToUser(Id userId) {
-
-        List<String> allRoles = getStandardRoles();
-        List<Contact_Role_Service__c> roleServices = [SELECT Id, Contact_Role__c FROM Contact_Role_Service__c WHERE Contact_Role__r.Name = :allRoles AND Service__r.Name = 'GADM'];
-
-        Set<Id> existingStandardRoles = new Set<Id>();
-        for(Contact_Role_Service__c roleService : roleServices) {
-            existingStandardRoles.add(roleService.Contact_Role__c);
-        }
-
-        Contact con = getContactFromUser(userId);
-        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
-
-        List<Contact_Role_Service_Access__c> contactRoleServiceAccesses = [SELECT Id, Contact_Role__r.Contact_Roles__r.Name FROM Contact_Role_Service_Access__c WHERE Status__c = 'Granted' AND Contact_Role__r.Contact_Roles__c =:existingStandardRoles AND Contact_Role__r.Contact__c = :con.Id AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId];
-        Set<String> grantedRoles = new Set<String>();
-        for(Contact_Role_Service_Access__c serviceAccess : contactRoleServiceAccesses) {
-            grantedRoles.add(serviceAccess.Contact_Role__r.Contact_Roles__r.Name);
-        }
-        return grantedRoles;
-    }*/
 
     public static List<Account> getUserAccounts(Id userId) {
         List<Account> accountsToReturn = new List<Account>();
@@ -198,15 +152,6 @@ public without sharing class Contact_Roles_Helper {
     }
 
 
-    /*//TODO: generic approach!
-    public static List<Contact_Roles__c> getUserRoles(Id userId, Id roleRecordTypeId, String category, String accessStatus) {
-        List<Contact_Roles__c> contactRolesToReturn = new List<Contact_Roles__c>();
-
-
-        return contactRolesToReturn;
-    }*/
-
-
     public static List<AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits, Contact selectedContact, Boolean sortDesc) {
 
         Contact con = Contact_Roles_Helper.getContactFromUser(UserId);
@@ -216,7 +161,6 @@ public without sharing class Contact_Roles_Helper {
 
         //current running user contact role
         List<Account_Contact_Role__c> accountContactRoles  =  [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = 'GADM'];
-        System.debug('accountContactRoles:: ' +accountContactRoles);
 
         Set<Id> accountContactIds = new Set<Id>();
         for(Account_Contact_Role__c acr : accountContactRoles) {
@@ -224,7 +168,6 @@ public without sharing class Contact_Roles_Helper {
         }
         //all users contact roles
         List<Account_Contact_Role__c> allUsersAccountContactRoles = [SELECT Id, Contact__c, Contact_Roles__r.Name, Contact_Roles__r.Category__c, Account_Role__r.Account__r.Name FROM Account_Contact_Role__c WHERE Account_Role__c = :accountContactIds AND (RecordTypeId = :groupRecordTypeId OR (RecordTypeId = :functionalRecordTypeId AND Contact_Roles__r.Name = 'GADM User'))  AND Service_Rendered__c = 'GADM'];
-        System.debug('allUsersAccountContactRoles:: ' +allUsersAccountContactRoles);
 
         Set<Id> contactIds = new Set<Id>();//all users
 
@@ -245,7 +188,6 @@ public without sharing class Contact_Roles_Helper {
 
         //fill roles
         List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Contact_Roles__r.Category__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : contactIds AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId  AND (Contact_Role__r.Contact_Roles__r.Category__c = null OR Contact_Role__r.Contact_Roles__r.Category__c = '') AND Service__r.Name = 'GADM' AND Status__c = 'Granted'];
-        System.debug('functionalServiceAccesses:: ' +serviceAccesses);
 
         for(Contact_Role_Service_Access__c crsa : serviceAccesses) {
             if(rolesMap.get(crsa.Contact_Role__r.Contact__c) == null) {
@@ -257,7 +199,6 @@ public without sharing class Contact_Roles_Helper {
 
         //fill business units
         List<Contact_Role_Service_Access__c> serviceAccesses2 = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Contact_Roles__r.Category__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : contactIds AND Contact_Role__r.RecordTypeId = :groupRecordTypeId AND Contact_Role__r.Contact_Roles__r.Category__c = 'Business Unit' AND Service__r.Name = 'GADM' AND Status__c = 'Granted'];
-        System.debug('functionalServiceAccesses2:: ' +serviceAccesses2);
 
         for(Contact_Role_Service_Access__c crsa : serviceAccesses2) {
             if(businessUnitsMap.get(crsa.Contact_Role__r.Contact__c) == null) {
@@ -270,7 +211,6 @@ public without sharing class Contact_Roles_Helper {
 
         //fill accounts
         List<Account_Contact_Role__c> accountRoles =  [SELECT Id, Contact__c, Account_Role__r.Account__r.Name, Contact_Roles__r.Category__c FROM Account_Contact_Role__c WHERE Contact__c = :contactIds AND RecordTypeId = :groupRecordTypeId  AND (Contact_Roles__r.Category__c = null OR Contact_Roles__r.Category__c = '') AND Service_Rendered__c = 'GADM'];
-        System.debug('accountRoles:: ' +accountRoles);
         for(Account_Contact_Role__c acr : accountRoles) {
             if(accountsMap.get(acr.Contact__c) == null) {
                 //accountsMap.put(acr.Contact__c, new Set<String>{acr.Account_Role__r.Account__r.Name});
@@ -280,32 +220,22 @@ public without sharing class Contact_Roles_Helper {
             }
         }
 
-
-        System.debug('contactIds:: ' +contactIds);
-        System.debug('accountsMap:: ' +accountsMap);
-        System.debug('rolesMap:: ' +rolesMap);
-        System.debug('businessUnitsMap:: ' +businessUnitsMap);
-        System.debug('isSuperUser:: ' + isSuperUser);
-
-
         Map<Id, Contact> contactsMap = new Map<Id, Contact>();
 
         if(! sortDesc) {
-            Map<Id, Contact> tempMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName, Salutation, Email, Phone, Account.Name, Account.IATACode__c, Account.Region__c FROM Contact WHERE Id = :contactIds ORDER BY LastName ASC ]);
+            Map<Id, Contact> tempMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName, Salutation, Email, Phone, MobilePhone, Fax, User_Portal_Status__c, Preferred_Language__c, Membership_Function__c, Title, Account.Name, Account.IATACode__c, Account.Region__c FROM Contact WHERE Id = :contactIds ORDER BY LastName ASC ]);
             contactsMap = tempMap;
         }else{
-            Map<Id, Contact> tempMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName, Salutation, Email, Phone, Account.Name, Account.IATACode__c, Account.Region__c FROM Contact WHERE Id = :contactIds ORDER BY LastName DESC ]);
+            Map<Id, Contact> tempMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName, Salutation, Email, Phone, MobilePhone, Fax, User_Portal_Status__c, Preferred_Language__c, Membership_Function__c, Title, Account.Name, Account.IATACode__c, Account.Region__c FROM Contact WHERE Id = :contactIds ORDER BY LastName DESC ]);
             contactsMap = tempMap;
         }
 
-        System.debug('contactsMap:: ' + contactsMap);
 
         List<AggregatedRecordWrapper> aggregatedRecordWrappers = new List<Contact_Roles_Helper.AggregatedRecordWrapper>();
         for(Id contactId : contactsMap.keySet()) {//for Power User
 
             AggregatedRecordWrapper arw = new AggregatedRecordWrapper();
             arw.con = contactsMap.get(contactId);
-            //arw.actors = accountsMap.get(contactId);
             arw.actorsData = accountsMap.get(contactId);
             arw.rolesData = rolesMap.get(contactId);
             arw.buData = businessUnitsMap.get(contactId);
@@ -347,8 +277,6 @@ public without sharing class Contact_Roles_Helper {
             return gadmUserAggregatedRecordWrappers;
         }
 
-
-        System.debug('aggregatedRecordWrappers:: ' +aggregatedRecordWrappers);
         return aggregatedRecordWrappers;
 
     }
@@ -366,8 +294,6 @@ public without sharing class Contact_Roles_Helper {
     public class AggregatedRecordWrapper {
         @AuraEnabled
         public Contact con {get; set;}
-        //@AuraEnabled
-        //public Set<String> actors {get; set;}
 
         @AuraEnabled
         public Map<Id,Account_Contact_Role__c> actorsData {get; set;}

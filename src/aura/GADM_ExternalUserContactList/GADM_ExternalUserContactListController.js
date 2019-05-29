@@ -99,7 +99,10 @@
 	 handleDetailsShow: function(component,event,helper) {
 	     debugger;
          var rowNum = event.getSource().get("v.name");
-         var rowData = component.get('v.AllRecords')[rowNum];
+         var pageNum = component.get('v.PageNumber');
+         var rowsPerPage = component.get('v.PageSize');
+         var idx = (rowsPerPage * (pageNum-1)) + rowNum;
+         var rowData = component.get('v.AllRecords')[idx];
 
          let selectedUserInfo = {};
 

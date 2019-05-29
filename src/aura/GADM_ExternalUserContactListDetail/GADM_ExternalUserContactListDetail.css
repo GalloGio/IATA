@@ -1,34 +1,35 @@
 .THIS.page_container{
-    width:40%;
+    width:80%;
     margin:0 auto;
-}
-
-.THIS .no-click {
-    pointer-events: none;
-    border: 0px solid;
 }
 
 .THIS .secondColumn {
     width:50px;
 }
 
-.THIS .field {
-    height: 40px !important;
-}
-
-.THIS .checkbox {
-    margin-top:5px;
-}
 
 .THIS .evenRows {
     height: 6px;
     background-color: #F2F2F2;
 }
 
-.THIS .roleLine {
+.THIS .line {
     height:30px;
 }
 
 .THIS .center {
     text-align:center;
+}
+
+.THIS .red {
+    color: red;
+}
+
+.THIS .small {
+    font-size:12px;
+}
+
+.THIS .slds-form-element__label {
+    color: #666666;
+    font-size:12px;
 }

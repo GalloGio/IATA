@@ -483,7 +483,7 @@
         $A.util.toggleClass(invitationContainer, 'slds-hide');
     },
 
-    handleReload : function(component, event) {
+    /*handleReload : function(component, event) {
         let tabId = component.get('v.tabId');
         let selectedTabId = event.getParam('value');
         if(tabId === selectedTabId) {
@@ -505,7 +505,7 @@
             }
         }
 
-    },
+    },*/
 
 
 })

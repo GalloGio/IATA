@@ -107,3 +107,11 @@
 .THIS .thirdColumn {
     width:200px;
 }
+
+.THIS .button_padding {
+    padding-left:10px !important;
+}
+
+.THIS a {
+    color: #666666 !important;
+}

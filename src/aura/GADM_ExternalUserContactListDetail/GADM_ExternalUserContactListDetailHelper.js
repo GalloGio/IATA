@@ -43,7 +43,7 @@
                     let actorsData = [];
                     if(! $A.util.isEmpty(actors)) {
                         for(let i in actors) {
-                            actorsData.push({value:actors[i], key:i})
+                            actorsData.push({value:actors[i], key:i});
                         }
                     }
 

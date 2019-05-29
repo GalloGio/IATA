@@ -136,6 +136,17 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
 
         insert accountRolesToInsert;
 
+        Account_Role_Service__c accountRoleService = new Account_Role_Service__c();
+        accountRoleService.Account_Role__c = accountRole.Id;
+        accountRoleService.Account_Role_Services__c = accountRoleServices.Id;
+        insert accountRoleService;
+
+        GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
+        serviceDetail.Account_Role_Service__c = accountRoleService.Id;
+        serviceDetail.Allowed_email_domain__c = 'somedomain.com';
+        serviceDetail.Active_User_Count__c = 5;
+        insert serviceDetail;
+
         Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
 
         List<Contact_Roles__c> contactRolesToInsert = new List<Contact_Roles__c>();
