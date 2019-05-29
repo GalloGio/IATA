@@ -19,7 +19,7 @@ public with sharing class AttachmentListCtrl {
     
     
     @AuraEnabled
-    public static List<CSP_Utils.PickListWrapper> ReviewStatusPickValues(){
+    public static List<CSP_Utils.PickListWrapper> ReviewStatusPickValues{
          get{
             if(ReviewStatusPickValues==null){                      
                 FileIdentifierPickValues=CSP_Utils.getPickListValues('AmazonFile__c','Review_Status__c');

@@ -327,6 +327,11 @@ global class WrapperAttach implements Comparable {
     public static list<WrapperAttach> getListAttachments(Id sobjectId) {
         return getListAttachments(sobjectId, false,false);
     }
+
+    public static list<WrapperAttach> getListAttachments(Id sobjectId,Boolean withBody) {
+        return getListAttachments(sobjectId, withBody,false);
+    }
+
     public static list<WrapperAttach> getListAttachments(Id sobjectId,Boolean withBody,Boolean isPortal) {
         list<WrapperAttach> listAttachments = getSalesforceAttachments(sobjectId, withBody);
         //listAttachments.addAll(getArchivedAttachments(sobjectId)); //silenced from the lightning migration
