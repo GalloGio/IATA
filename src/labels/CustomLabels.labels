@@ -3145,7 +3145,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Support_HeaderTitle</shortDescription>
-        <value>What can we help you with?</value>
+        <value>What can we help you with</value>
     </labels>
     <labels>
         <fullName>CSP_ThanksFeedback</fullName>
@@ -34112,6 +34112,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Emergency Query</shortDescription>
         <value>Sub-Topic</value>
+    </labels>
+    <labels>
+        <fullName>csp_Subtopic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Subtopic</value>
     </labels>
     <labels>
         <fullName>csp_Suggest_Label</fullName>
