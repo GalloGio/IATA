@@ -227,6 +227,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             });
     }
 
+    redirectSupport(){
+        window.history.back();
+    }
+
     //create the case and initialize it. No DML operation yet.
     createCase() {
         createCase({ countryiso: this.countryISO })
