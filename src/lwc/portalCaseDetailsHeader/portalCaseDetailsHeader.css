@@ -22,3 +22,22 @@
 .text-bold {
     font-weight: 500;
 }
+
+.recipients-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.recipients-label {
+    color: #9a9eb0;
+}
+
+.recipients-data {
+    padding: 0 20px;
+    white-space: nowrap;
+    max-width:50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display:inline-block;
+}

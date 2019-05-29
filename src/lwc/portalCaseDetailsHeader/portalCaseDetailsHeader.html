@@ -45,13 +45,9 @@
                     
                 </div>
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium" >
-                    <div if:true={haveRecipients} style="align-items: center;">
-                        <span style="color: #9a9eb0;">Recipients &nbsp;</span>
-                        <div style="white-space: nowrap;
-                        max-width:50%;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        display:inline-block;">
+                    <div if:true={haveRecipients} class="recipients-container">
+                        <span class="recipients-label">Recipients</span>
+                        <div class="recipients-data">
                             {caseDetails.E2CP__AdditionalCC__c}
                         </div>
                         <lightning-button variant="base" label="Manage Recipients" onclick={openManageRecipientsPopup} ></lightning-button>
