@@ -230,7 +230,7 @@ export default class FavoriteServicesLWC extends LightningElement {
             //determines if the link is to be opened on a new window or on the current
             if (openWindowData.value === "true") {
                 if (appUrlData.value !== 'undefined') {
-                    myUrl = appUrlData.value.replace("/", "");
+                    myUrl = appUrlData.value;
                 } else if (appFullUrlData.value !== 'undefined') {
                     myUrl = appFullUrlData.value;
                 }
@@ -256,6 +256,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                     //stop the spinner
                     this.toggleSpinner();
                     //open new tab with the redirection
+                    myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
                     window.open(myUrl);
                 }
             } else {
@@ -287,4 +288,5 @@ export default class FavoriteServicesLWC extends LightningElement {
     goToAvailableServices() {
         navigateToPage("services?tab=availableServices");
     }
+
 }
