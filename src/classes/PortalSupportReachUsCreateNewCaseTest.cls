@@ -22,23 +22,50 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
         parent.IATACode__c = '100';
         
         insert parent;
+        
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'GB';
         child.Name = 'GB';
         child.Site = 'headSite';
         child.sector__c = 'Travel Agent';
         child.Top_Parent__c = parent.Id;
+        child.IATAcode__c = '1234567';
         child.IATA_ISO_Country__c = country.Id;
         child.RecordTypeId = rtIdBr;
         insert child;
+        
+        Account child2 = ISSP_ObjectFactory.createNewAccount();
+        child2.BillingCity = 'GB';
+        child2.Name = 'GB';
+        child2.Site = 'headSite';
+        child2.sector__c = 'Travel Agent';
+        child2.Top_Parent__c = parent.Id;
+        child2.IATAcode__c = '1234568';
+        child2.IATA_ISO_Country__c = country.Id;
+        child2.RecordTypeId = rtIdBr;
+        insert child2;
+        
+        Account child3 = ISSP_ObjectFactory.createNewAccount();
+        child3.Name = 'GB';
+        child3.Site = 'headSite';
+        child3.sector__c = 'Travel Agent';
+        child3.Top_Parent__c = parent.Id;
+        child3.IATAcode__c = '1234568';
+        child3.IATA_ISO_Country__c = country.Id;
+        child3.RecordTypeId = rtIdBr;
+        insert child3;
         
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = child.Id;
         con.Email = 'Test@test11.com';
         insert con;
         
+        Contact con2 = ISSP_ObjectFactory.createNewContact();
+        con2.AccountId = child2.Id;
+        con2.Email = 'Test@test22.com';
+        insert con2;
+        
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
         
@@ -46,20 +73,21 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
         
         System.runAs(newUser) {
             List<PortalLookupSearchResult> lstSearchAccounts = PortalSupportReachUsCreateNewCaseCtrl.searchAccounts('asd');
-            List<PortalLookupSearchResult> lstGetAccounts =  PortalSupportReachUsCreateNewCaseCtrl.getRelatedAccounts();
-            
-            List<PortalLookupSearchResult> lstSearchContacts = PortalSupportReachUsCreateNewCaseCtrl.searchContacts('asd');
-            List<PortalLookupSearchResult> lstGetContacts =  PortalSupportReachUsCreateNewCaseCtrl.getRelatedContacts();
+            List<PortalLookupSearchResult> lstSearchAccountsNoEntry = PortalSupportReachUsCreateNewCaseCtrl.searchAccounts('');
+            List<PortalLookupSearchResult> lstSearchContacts = PortalSupportReachUsCreateNewCaseCtrl.searchContacts('Test@test22.com');
+            List<PortalLookupSearchResult> lstSearchContactsNoEntry = PortalSupportReachUsCreateNewCaseCtrl.searchContacts('');
             
             Boolean agent = PortalSupportReachUsCreateNewCaseCtrl.isAgentProfile();
             
             Case newcase = PortalSupportReachUsCreateNewCaseCtrl.createCase('gb');
             
+            Case newcaseNoEntry = PortalSupportReachUsCreateNewCaseCtrl.createCase('');
+            
             Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
             newcase.RecordTypeId = recordTypeId;
             newcase.BSPCountry__c = 'GB';
             newcase.Subject = 'test';
-		    newcase.Description = 'test';
+            newcase.Description = 'test';
             List<String> lstRecipient = new List<String>();
             lstRecipient.add('Test@test11.com');
             
