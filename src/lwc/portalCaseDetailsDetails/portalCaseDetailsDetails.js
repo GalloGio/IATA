@@ -21,14 +21,16 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     @track nrDocs=0;
 
-    @track label= {
+    labels= {
         AddDocumentsMsg,
         CaseDetails,
         DocumentsLabel,
         RelatedAccount
     };
 
-    @track fieldLabels={};
+    acceptedFormats= ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
+
+   
 
     connectedCallback() {        
         //get the parameters for this page
@@ -46,15 +48,20 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                     this.loading = false;
                 });  
             const labelsToRetrieve=["Country_concerned__c","Topic__c","Subtopic__c","Region__c","Type_of_case_Portal__c","Description"];      
+            //load the rest of the field labels
+            
             getFieldLabels({sObjectType:'case',sObjectFields:labelsToRetrieve}).then(result=>{
-                console.log(result);
                 if(result){
-                    this.fieldLabels=result;                   
+                    let currentLabels=this.labels;
+                    Object.keys(result).forEach( el=>{       // adds retrieved labels to current label variable               
+                        currentLabels[el]=result[el];                        
+                    })
+                    this.labels=currentLabels;              
                 }
             });
         }
     }
-
+ 
     get hasTopic() {
         return this.caseDetails !== undefined && this.caseDetails.Topic__c !== undefined;
     }

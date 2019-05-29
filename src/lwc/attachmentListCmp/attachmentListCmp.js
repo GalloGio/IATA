@@ -3,7 +3,6 @@ import getAllAttachments from '@salesforce/apex/AttachmentListCtrl.getAllAttachm
 import checkIfSaamSidra from '@salesforce/apex/AttachmentListCtrl.checkIfSidraSaam';
 import getExpiringLink from '@salesforce/apex/AttachmentListCtrl.getExpiringLink';
 import redirectToOldPortal from '@salesforce/apex/CSP_Utils.redirectToOldPortal';
-import getLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 
 import getContentDetails from '@salesforce/apex/AttachmentListCtrl.getContentDetails';
 import deleteAttachment from '@salesforce/apex/AttachmentListCtrl.deleteAttachment';
@@ -15,6 +14,10 @@ import SupportedFileExt from '@salesforce/label/c.CSP_Supported_File_Extensions'
 import FileName from '@salesforce/label/c.File_Name';
 import FileSize from '@salesforce/label/c.File_Size';
 import Datelabel from '@salesforce/label/c.ISSP_Date';
+import Viewlabel from '@salesforce/label/c.ISSP_View';
+import Deletelabel from '@salesforce/label/c.ISSP_AMC_DELETE';
+import GenericErrorMsg from '@salesforce/label/c.ISSP_ANG_GenericError';
+import  ErrorTitle from '@salesforce/label/c.PKB2_js_error';
 
 
 export default class AttachmentListCmp extends LightningElement {
@@ -38,7 +41,7 @@ export default class AttachmentListCmp extends LightningElement {
         this.trackedIsPortal = value;
         this.loadData();
     }
-
+    
     @api
     get showModal() {
         return this.trackedshowAddAttsModal;
@@ -46,9 +49,27 @@ export default class AttachmentListCmp extends LightningElement {
     set showModal(value) {
         this.trackedshowAddAttsModal = value;
     }
+    
+    @api
+    get acceptedFormats() {
+       return this.trackedAllowedFormats;
+    }
+    set acceptedFormats(value) {
+        this.trackedAllowedFormats = value;
+    }
 
-    @track label = {};
-
+   label = {
+    AddNewDocuments,
+    Datelabel,
+    FileName,
+    FileSize,
+    SupportedFileExt,
+    Viewlabel,
+    Deletelabel,
+    GenericErrorMsg,
+    ErrorTitle
+};
+    
     @track loading = true;
 
     @track lstDocuments = [];
@@ -57,8 +78,14 @@ export default class AttachmentListCmp extends LightningElement {
     @track trackedIsPortal;
     @track trackedCheckIfSaamSidra;
 
+    @track trackedAllowedFormats;
+
     @track trackedshowAddAttsModal = false;
     @track newDocsList = [];
+    
+    @api noAttachmentMsg;
+    docListResult;//get the wired function result(used to refresh Apex)
+
 
     @wire(getAllAttachments, { parentId: '$trackedParentId', isPortal: '$isportal', isSAAMorSIDRA: '$trackedCheckIfSaamSidra' })
     WireDocsList(result) {
@@ -70,27 +97,12 @@ export default class AttachmentListCmp extends LightningElement {
                 this.loading = false;
                 this.dispatchEvent(new CustomEvent('updateddocs', { detail: { ndocs: attlist.length } }));// sends to parent the nr of records
             }
-
         }
-    }
-
-
-
-    get acceptedFormats() {
-        return ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
-    }
-
-
-
-    @api noAttachmentMsg;
-
-
-    docListResult;
-
+    }    
 
     get documentsColumns() {
         return [
-            { label: '', fieldName: 'viewURL', type: 'button', typeAttributes: { label: 'View', name: 'view-attach' }, cellAttributes: { alignment: "center", class: "view_attachment_link" } },
+            { label: '', fieldName: 'viewURL', type: 'button', typeAttributes: { label: this.label.Viewlabel, name: 'view-attach' }, cellAttributes: { alignment: "center", class: "view_attachment_link" } },
             { label: this.label.FileName, fieldName: 'name', type: 'text' },
             { label: this.label.FileSize, fieldName: 'size', type: 'text' },
             { label: this.label.Datelabel, fieldName: 'createdDate', type: 'date', typeAttributes: { year: "numeric", month: "long", day: "2-digit" } }
@@ -100,28 +112,17 @@ export default class AttachmentListCmp extends LightningElement {
 
     get newDocumentsColumns() {
         return [
-            { label: '', fieldName: 'viewURL', type: 'button', typeAttributes: { label: 'View', name: 'view-attach' }, cellAttributes: { class: "view_attachment_link" } },
+            { label: '', fieldName: 'viewURL', type: 'button', typeAttributes: { label: this.label.Viewlabel, name: 'view-attach' }, cellAttributes: { class: "view_attachment_link" } },
             { label: this.label.FileName, fieldName: 'name', type: 'text' },
             { label: this.label.FileSize, fieldName: 'size', type: 'text' },
             { label: this.label.Datelabel, fieldName: 'createdDate', type: 'date', typeAttributes: { year: "numeric", month: "long", day: "2-digit" } },
             {
-                label: '', type: 'button-icon', typeAttributes: { label: '', name: 'delete-attach', title: 'Click to Delete', iconName: 'utility:delete', iconClass: 'deleteNewAttach' }
+                label: '', type: 'button-icon', typeAttributes: { label: '', name: 'delete-attach', title: this.label.Deletelabel, iconName: 'utility:delete', iconClass: 'deleteNewAttach' }
             }
         ]
     };
 
-
-    connectedCallback() {
-        this.label = {
-            AddNewDocuments,
-            Datelabel,
-            FileName,
-            FileSize,
-            SupportedFileExt
-        };
-
-    }
-
+    
     loadData() {
         if (this.parentid == null || this.isportal == null) return;
         let localparentid = this.trackedParentId;
@@ -178,7 +179,7 @@ export default class AttachmentListCmp extends LightningElement {
         event.detail.files.forEach((el) => {
             newFiles.push(el.documentId);
         });
-        console.log(newFiles);
+
         //gets details from the inserted files
         getContentDetails({ attachList: newFiles }).then(result => {
             this.newDocsList = templist.concat(this.prepareData(result));
@@ -219,8 +220,8 @@ export default class AttachmentListCmp extends LightningElement {
                     })
                 .catch(error => {
                     console.error('This File Contains error', error);
-                }
-                );
+                    this.showErrorToast();
+                });
         } else {
             //opens salesforce file link
             window.open(row.viewURL, '_blank');
@@ -234,8 +235,22 @@ export default class AttachmentListCmp extends LightningElement {
                 this.newDocsList = this.newDocsList.filter((val, idx, arr) => { return val.id != row.id; });
             }).catch(error => {
                 console.error('Error', error);
+                this.showErrorToast();
             });
 
     }
+
+    showErrorToast() {
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: this.label.ErrorTitle,
+                message: this.label.GenericErrorMsg,
+                variant: 'error'
+            })
+        );
+        let scrollobjective = this.template.querySelector('[data-id="caseDetails"]');
+        scrollobjective.scrollIntoView({ behavior: 'smooth' });
+    }
+
 
 }

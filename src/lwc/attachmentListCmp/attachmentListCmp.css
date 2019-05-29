@@ -30,3 +30,8 @@
     letter-spacing: normal;
     color: #333333;
 }
+
+.attachmentComponentContainer{
+    min-height:200px; 
+    max-height:750px;
+}

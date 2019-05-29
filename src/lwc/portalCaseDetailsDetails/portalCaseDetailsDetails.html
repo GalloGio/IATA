@@ -10,50 +10,50 @@
                 <div class="slds-p-around_medium customCardTitleBox cursorPointer" onclick={toggleCaseDetailsSection}>
                   <lightning-icon data-caseicon class="darkBlueIcon" if:false={showCaseDetailsSection}
                         icon-name="utility:chevronright" size="xx-small"></lightning-icon>
-                    <span class="slds-p-left_large">{label.CaseDetails}</span>
+                    <span class="slds-p-left_large">{labels.CaseDetails}</span>
                 </div>
                 <div data-casediv class="slds-p-around_medium collapsed">
                     <div class="slds-grid slds-wrap slds-p-horizontal_large">
                         <!-- ROW 1 -->
                         <div if:true={hasTopic}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">{fieldLabels.Topic__c}</span><br />
+                            <span class="grey">{labels.Topic__c}</span><br />
                             <span>{caseDetails.Topic__c}</span>
                         </div>
                         <div if:true={hasSubtopic}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">{fieldLabels.Subtopic__c}</span><br />
+                            <span class="grey">{labels.Subtopic__c}</span><br />
                             <span>{caseDetails.Subtopic__c}</span>
                         </div>
 
                         <!-- ROW 2 -->
                         <div if:true={hasRegion}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">{fieldLabels.Region__c}</span><br />
+                            <span class="grey">{labels.Region__c}</span><br />
                             <span>{caseDetails.Region__c}</span>
                         </div>
                         <div if:true={hasCountryConcerned}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">{fieldLabels.Country_concerned__c}</span><br />
+                            <span class="grey">{labels.Country_concerned__c}</span><br />
                             <span>{caseDetails.Country_concerned__c}</span>
                         </div>
 
                         <!-- ROW 3 -->
                         <div if:true={hasAccountConcerned}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">{label.RelatedAccount}</span><br />
+                            <span class="grey">{labels.RelatedAccount}</span><br />
                             <span>{caseDetails.Account_Concerned__r.IATACode__c}</span>
                         </div>
                         <div if:true={hasTypeOfCasePortal}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-around_medium">
-                            <span class="grey">{fieldLabels.Type_of_case_Portal__c}</span><br />
+                            <span class="grey">{labels.Type_of_case_Portal__c}</span><br />
                             <span>{caseDetails.Type_of_case_Portal__c}</span>
                         </div>
 
                         <!-- ROW 4 -->
                         <div if:true={hasDescription}
                             class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-around_medium">
-                            <span class="grey">{fieldLabels.Description}</span><br />
+                            <span class="grey">{labels.Description}</span><br />
                             <span>{caseDetails.Description}</span>
                         </div>
                     </div>
@@ -67,11 +67,16 @@
                     onclick={toggleDocumentsDetailsSection}>                  
                     <lightning-icon data-docicon class="darkBlueIcon" if:false={showDocumentsSection}
                         icon-name="utility:chevronright" size="xx-small"></lightning-icon>
-                    <span class="slds-p-left_large">{label.DocumentsLabel}</span><span if:true={showNrDocs}>({nrDocs})</span>
+                    <span class="slds-p-left_large">{labels.DocumentsLabel}</span><span if:true={showNrDocs}>({nrDocs})</span>
                 </div>
                 <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed" style="transition: height 0.8s ease;">
                     <c-attachment-list-cmp shownorecords=false parentid={caseId} isportal=true
-                        show-modal={showAddDocsModal} no-attachment-msg={label.AddDocumentsMsg} onupdateddocs={updateNdocs}></c-attachment-list-cmp>
+                        show-modal={showAddDocsModal} 
+                        no-attachment-msg={labels.AddDocumentsMsg} 
+                        onupdateddocs={updateNdocs}
+                        accepted-formats={acceptedFormats}>
+                    </c-attachment-list-cmp>
+
                 </div>
             </div>
 
