@@ -34114,6 +34114,14 @@ title,Title,Name</value>
         <value>Sub-Topic</value>
     </labels>
     <labels>
+        <fullName>csp_Subtopic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Subtopic</value>
+    </labels>
+    <labels>
         <fullName>csp_Suggest_Label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

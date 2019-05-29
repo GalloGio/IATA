@@ -8,7 +8,7 @@ import createCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.c
 import isAgentProfile from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.isAgentProfile';
 import insertCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.insertCase';
 
-// Import custom labels
+// Import custom labels 
 import csp_CreateNewCaseTopSubLabel from '@salesforce/label/c.csp_CreateNewCaseTopSubLabel';
 import csp_CreateNewCaseTopLabel from '@salesforce/label/c.csp_CreateNewCaseTopLabel';
 import csp_CreateNewCaseTopSubSubLabel from '@salesforce/label/c.csp_CreateNewCaseTopSubSubLabel';
@@ -20,18 +20,12 @@ import csp_CreateNewCaseMainInputBoxTopLabel from '@salesforce/label/c.csp_Creat
 import csp_CreateNewCaseMainInputBoxSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputBoxSubLabel';
 import csp_CreateNewCaseMainInputEmailsTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsTopLabel';
 import csp_CreateNewCaseMainInputEmailsSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsSubLabel';
-import csp_CreateNewCaseMainDocumentsTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainDocumentsTopLabel';
-import csp_CreateNewCaseMainDocumentsSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainDocumentsSubLabel';
-import csp_CreateNewCaseMainDocumentsSubSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainDocumentsSubSubLabel';
-import csp_CreateNewCaseMainUploadTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainUploadTopLabel';
-import csp_CreateNewCaseMainUploadTopSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainUploadTopSubLabel';
 import csp_searchIataCodeLocationNamePlaceHolder from '@salesforce/label/c.csp_searchIataCodeLocationNamePlaceHolder';
 import csp_ToastWarningRecipientNotFound from '@salesforce/label/c.csp_ToastWarningRecipientNotFound';
 import csp_searchEmailRecipientPlaceholder from '@salesforce/label/c.csp_searchEmailRecipientPlaceholder';
 import csp_CaseCreatedSuccess from '@salesforce/label/c.csp_CaseCreatedSuccess';
 import csp_ViewCaseSummary from '@salesforce/label/c.csp_ViewCaseSummary';
 import csp_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
-import csp_CaseTracking from '@salesforce/label/c.csp_CaseTracking';
 import csp_CaseBeingWorked from '@salesforce/label/c.csp_CaseBeingWorked';
 import csp_CaseResponseGuarantee from '@salesforce/label/c.csp_CaseResponseGuarantee';
 import csp_Category from '@salesforce/label/c.csp_SupportReachUs_Category';
@@ -62,11 +56,6 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_CreateNewCaseMainInputBoxSubLabel,
         csp_CreateNewCaseMainInputEmailsTopLabel,
         csp_CreateNewCaseMainInputEmailsSubLabel,
-        csp_CreateNewCaseMainDocumentsTopLabel,
-        csp_CreateNewCaseMainDocumentsSubLabel,
-        csp_CreateNewCaseMainDocumentsSubSubLabel,
-        csp_CreateNewCaseMainUploadTopLabel,
-        csp_CreateNewCaseMainUploadTopSubLabel,
         csp_searchIataCodeLocationNamePlaceHolder,
         csp_searchEmailRecipientPlaceholder,
         csp_ToastWarningRecipientNotFound,
@@ -75,7 +64,6 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_CaseResponseGuarantee,
         csp_GoToSupport,
         csp_Category,
-        csp_CaseTracking,
         csp_ViewCaseSummary,
         csp_Topic,
         CSP_Support,
