@@ -637,18 +637,20 @@ public class AMS_ChangeCodesHelper {
         Boolean isChina = false;
 
         if(fOPs != null && !fOPs.isEmpty() && isNewGen){
+
+            if(AMS_Utils.setChinaCountries.contains(fOPs[0].ISO_Country__c)) setFOPs.add('Refer to ASD');
+
             for(Agency_Authorization__c fop : fOPs) {
-                isChina = AMS_Utils.setChinaCountries.contains(fop.ISO_Country__c);
-                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : (fop.Authority__c == 'BOP Payment Method' ? 'BOP FoP: Refer to ASD' : ''))));
+                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : (fop.Authority__c == 'BOP Payment Method' ? 'BOP' : ''))));
 
                 // if a payment method is being restricted do not display it on ebulletin
                 if( !(authRelabel == 'Credit Card' && (changeCodeName == 'CCA' || changeCodeName == 'FOP')) && !(authRelabel == 'Cash' && (changeCodeName == 'PCA' || changeCodeName == 'FOP'))) {
-                    setFOPs.add(isChina ? translateFoPforChina(authRelabel) : authRelabel);
+                    setFOPs.add(authRelabel);
                 }
             }
             // include payment method if it's being restored
-            if (changeCodeName == 'PCR' || changeCodeName == 'FPR') setFOPs.add(isChina ? translateFoPforChina(authRelabel) : 'Cash');
-            if (changeCodeName == 'CCR' || changeCodeName == 'FPR') setFOPs.add(isChina ? translateFoPforChina(authRelabel) : 'Credit Card'); 
+            if (changeCodeName == 'PCR' || changeCodeName == 'FPR') setFOPs.add('Cash');
+            if (changeCodeName == 'CCR' || changeCodeName == 'FPR') setFOPs.add('Credit Card'); 
 
             List<String> orderedFOPs = new List<String>(setFOPs);   
 
@@ -663,17 +665,6 @@ public class AMS_ChangeCodesHelper {
 
         return fopString;
     }
-
-    //NEWGEN-5383 - FoP management in bulletin for China - set specific FoP information for China
-    private static String translateFoPforChina(String formOfPayment){
-
-
-        if(formOfPayment == 'Credit Card' || formOfPayment == 'Cash') return 'Refer to ASD';
-        else if(formOfPayment == 'IATA EasyPay') return 'BOP FoP: Refer to ASD';
-        else return formOfPayment;
-    }
-
-
 
     public static Map<Id,List<Agency_Authorization__c>> fetchFormsOfPayment(Set<Id> accsIds){
 
