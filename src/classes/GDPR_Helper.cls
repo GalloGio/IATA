@@ -165,7 +165,7 @@ public without sharing class GDPR_Helper {
 
                     String token = String.valueOf(System.TODAY()).left(10)+email.toLowerCase(); //Ex: 2018.12.24myemail@gmail.com
                     String encryptedToken = Comm_User_Helper.EncryptString(token);
-                    String link = Label.IATA_GDPR_URL+'guest-information?token='+encryptedToken;
+                    String link = Site.getBaseURL()+'/s/guest-information?token='+encryptedToken;
                     system.debug('link'+link);
                     sendAccessEmailUnknown(email, link);
                     
@@ -435,7 +435,7 @@ public without sharing class GDPR_Helper {
         String encryptedId = Comm_User_Helper.EncryptString(individualId);
         
         //Send Email
-        String link = Label.IATA_GDPR_URL+'guest?token='+encryptedToken+'&indId='+encryptedId;
+        String link = Site.getBaseURL()+'/s/guest?token='+encryptedToken+'&indId='+encryptedId;
         sendAccessEmailNewVersion(email, link);  
         
         return link;                   

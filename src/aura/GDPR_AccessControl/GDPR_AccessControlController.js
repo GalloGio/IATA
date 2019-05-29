@@ -27,12 +27,12 @@
 					var spinner = cmp.find("spinner");
 					$A.util.toggleClass(spinner, "slds-hide");
 				}else {
-					window.open($A.get('$Label.c.IATA_GDPR_URL')+'invalid-token','_top');
+					window.open('./invalid-token','_top');
 				}
 			});
 			$A.enqueueAction(action);
 		}else{
-			window.open($A.get('$Label.c.IATA_GDPR_URL')+'landing','_top');
+			window.open('./landing','_top');
 		}
 	}
 })
