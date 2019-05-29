@@ -6990,10 +6990,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Colombia - DOM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Congo</fullName>
                 <default>false</default>
             </values>
@@ -7122,15 +7118,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>India - DOM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Indonesia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Indonesia -DOM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7171,14 +7159,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Korea</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Korea Cash</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Korea Credit Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8933,10 +8913,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Colombia - DOM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Congo</fullName>
                 <default>false</default>
             </values>
@@ -9065,15 +9041,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>India - DOM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Indonesia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Indonesia -DOM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9114,14 +9082,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Korea</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Korea Cash</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Korea Credit Card</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10330,10 +10290,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Unidentified over 6 months %3C %241k</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>User profile %28employee%29</fullName>
                 <default>false</default>
             </values>
@@ -10880,10 +10836,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Colombia - DOM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Congo</fullName>
                 <default>false</default>
             </values>
@@ -11012,15 +10964,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>India - DOM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Indonesia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Indonesia -DOM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11061,14 +11005,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Korea</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Korea Cash</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Korea Credit Card</fullName>
                 <default>false</default>
             </values>
             <values>
