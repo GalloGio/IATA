@@ -3977,7 +3977,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.newCase.IFAP_Country_ISO__c = 'pt';
             ctrl.mcformCountryISO = 'pt';
 
-            ctrl.getLegalNameOptions();
+            //ctrl.getLegalNameOptions();
             String hierarchyIsoCodesString = ctrl.hierarchyIsoCodesString;
 
             ctrl.save();
@@ -4105,6 +4105,8 @@ private class ISSP_AMS_Accreditation_Test {
 
             ctrl.mcFormIdToDelete = aeForms[2].Id;
             ctrl.deleteMCForm();
+
+            ctrl.termsAndConditionsMC = true;
 
             ctrl.submitMultiCountryApplication();
         }
