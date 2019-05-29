@@ -123,9 +123,9 @@ public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
                 
                     list<Contact> listContact = [SELECT Id, Email FROM Contact WHERE Email IN :setRecipients];
                     
-                    String emailsForCase = createCaseTeamMemberList(caseToInsert, listContact);
+                    createCaseTeamMemberList(caseToInsert, listContact);
     
-                    caseToInsert.E2CP__AdditionalCC__c = emailsForCase;
+                    caseToInsert.E2CP__AdditionalCC__c = String.join(recipientsToAdd , ',');
     
                     update caseToInsert;
                 
@@ -138,7 +138,7 @@ public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
     }
     
     //Creates a CaseTeamMember with the contacts (related to the emails of course)
-    private static String createCaseTeamMemberList(Case cse, list<Contact> listContact) {
+    private static void createCaseTeamMemberList(Case cse, list<Contact> listContact) {
         list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
         list<String> listEmail = new list<String>();
         String IdTeamRole = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role' LIMIT 1].Id;
@@ -152,7 +152,5 @@ public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
             listEmail.add(contact.Email);
         }
         insert listCaseTeam;
-        String stringEmails = String.join(listEmail,',');
-        return stringEmails;
     }
 }
