@@ -533,7 +533,7 @@ public without sharing class ISSP_AMS_Accreditation {
             isMultiCountryAccredittedAddingAEs();
         }
             
-        if (isMultiCountryNewAE) {
+        if (isMultiCountryNewAE || isMCNewAEAccredited) {
             amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
         }
 
@@ -1558,6 +1558,10 @@ public without sharing class ISSP_AMS_Accreditation {
         SYSTEM.DEBUG('Saving Record - STEP A');
 
         if (!isNoticeOfChange) {
+            if (isMultiCountryNewAE || isMCNewAEAccredited) {
+                amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
+            }
+
             if(amsLocationType == null) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Empty_Location_Type));
                 return null;
