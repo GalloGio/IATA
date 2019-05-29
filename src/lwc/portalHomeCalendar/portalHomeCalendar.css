@@ -1,17 +1,17 @@
-.billingAvailabilityEvent{
+.eventDot {
     height: 8px;
     width: 8px;
-    background-color: blueviolet;
+    background-color: #000;
     border-radius: 50%;
     display: inline-block;
 }
 
+.billingAvailabilityEvent{
+    background-color: blueviolet;
+}
+
 .remittanceEvent{
-    height: 8px;
-    width: 8px;
     background-color: #f050c8;
-    border-radius: 50%;
-    display: inline-block;
 }
 
 .dayBoxSize{
