@@ -438,6 +438,7 @@ export default class PortalSupportReachUs extends LightningElement {
 
             categorization.Topic = this.topic;
             categorization.SubTopic = this.subTopic;
+            categorization.Category = this.category;
 
             let error = false;
             if (!error)
