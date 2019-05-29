@@ -72,7 +72,7 @@ public with sharing class AMS_Change_Code_Notification_Controller {
                     String message = '';
                     for(Integer i = 0; i < notifications.size(); i++){
 
-                        if(notifications[i].Log__c.contains('NOT')) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'NOT change code was not generated, please issue the Irregularity'));
+                        if(notifications[i].Log__c.contains('NOT')) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'This is not the third non-compliance. NOT change code was not generated'));
                         else message += (i == 0 ? '' :' and ')+notifications[i].Log__c; 
                     }
 
