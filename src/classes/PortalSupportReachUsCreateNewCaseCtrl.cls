@@ -1,0 +1,158 @@
+public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
+    
+    private final static Integer MAX_RESULTS = 100;
+
+    private static User USER = DAL_ISSP.getUser(Userinfo.getUserId());
+    private static Contact CONTACT = DAL_ISSP.getContact(DAL_ISSP.getUser(Userinfo.getUserId()).ContactId);
+    
+    //Searches accounts on user input on the IATA Codes field. MAX RESULTS set to 100 as a Limit for the search (let's NOT destroy salesforce)
+    @AuraEnabled(Cacheable=true)
+    public static List<PortalLookupSearchResult> searchAccounts(String searchTerm) {
+        // Prepare results
+        List<PortalLookupSearchResult> results = new List<PortalLookupSearchResult>();
+        
+        // Extract Accounts & convert them into PortalLookupSearchResult (check this class for more info)
+        String accountIcon = 'standard:account';
+        for (Account account : searchRelatedAccounts(searchTerm)) {
+            if(account.BillingCity == null) {
+                results.add(new PortalLookupSearchResult(account.Id, 'Account', accountIcon, account.IATAcode__c + '', 'Account'));
+            }else{
+                results.add(new PortalLookupSearchResult(account.Id, 'Account', accountIcon, account.IATAcode__c + '', 'Account • '+ account.BillingCity));
+            }
+        }
+        
+        return results;
+    }
+
+    //Dynamic Query to perform searches on the Account.
+    private static List<Account> searchRelatedAccounts(String searchTerm) {
+        //prepare query
+        String finalQuery = 'SELECT ID, IATAcode__c, Name, BillingCity FROM Account '
+                            + 'WHERE IATAcode__c != null ';
+        
+        if(String.isNotEmpty(searchTerm)){
+            finalQuery += ' AND ( IATAcode__c LIKE  \'%' + String.escapeSingleQuotes(searchTerm) 
+                          + '%\' OR BillingCity LIKE \'%' + String.escapeSingleQuotes(searchTerm)  
+                          + '%\' OR Name LIKE \'%' + String.escapeSingleQuotes(searchTerm)  
+                          + '%\') ';
+        }
+
+        finalQuery += ' LIMIT ' + MAX_RESULTS ;
+
+        return Database.query(finalQuery);
+
+    }
+
+    //Searches contacts on user input on the Email Recipient field.
+    @AuraEnabled(Cacheable=true)
+    public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
+        // Prepare results
+        List<PortalLookupSearchResult> results = new List<PortalLookupSearchResult>();
+        
+        // Extract Contacts & convert them into PortalLookupSearchResult (check this class for more info)
+        String contactIcon = 'standard:contact';
+        for (Contact contact : searchRelatedContacts(searchTerm)) {
+                results.add(new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Email, contact.Name));
+        }
+        
+        return results;
+    }
+
+    //Dynamic Query to perform searches on the Contact.
+    private static List<Contact> searchRelatedContacts(String searchTerm) {
+
+        //prepare query
+        String finalQuery = 'SELECT Id, Name, Email FROM Contact '
+                            + ' WHERE Email != \'' + CONTACT.Email + '\'';
+        
+        if(String.isNotEmpty(searchTerm)){
+            finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm) 
+                          + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\')';
+        }
+
+        finalQuery += ' LIMIT ' + MAX_RESULTS ;
+
+        return Database.query(finalQuery);
+
+    }
+
+    //Checks if the user has an Agent profile. (He could be after Neo you know...)
+    @AuraEnabled(Cacheable=true)
+    public static Boolean isAgentProfile() {
+        return USER.Profile.Name.contains('ISS Portal Agency');
+    }
+    
+    //Creates a Case once the user reaches the page and sends it over to the JS for further editting. 
+    @AuraEnabled(Cacheable=true)
+    public static Case createCase(String countryiso) {
+        Case newCase = new Case();
+        
+        Map<String,String> recordTypeCountry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(CONTACT, countryiso);
+        
+        if(recordTypeCountry != null) {
+            
+            newCase.RecordTypeId = recordTypeCountry.get('RecordType');
+            newCase.Region__c = recordTypeCountry.get('Region');
+            newCase.BSPCountry__c = recordTypeCountry.get('Country') == null ? '' : recordTypeCountry.get('Country');
+            newCase.Status = 'Open';
+            newCase.CaseArea__c = 'Customer Portal';
+            newCase.Country_concerned_by_the_query__c = recordTypeCountry.get('Country') == null ? '' : recordTypeCountry.get('Country');
+            newCase.Origin = 'Portal';
+            
+            if(countryiso == null || countryiso == '') {
+                newCase.IFAP_Country_ISO__c = CONTACT.Account.Country_ISO_Code__c;
+            }else{
+                newCase.IFAP_Country_ISO__c = countryiso;
+            }
+            return newCase;
+        }else{
+            throw new System.AuraHandledException('Error. No Record Type detected. Case cannot be created');
+        }
+    }
+    
+    //Inserts the Case. But sets a savepoint in case the Emails do not exist.
+    @AuraEnabled
+    public static Case insertCase(Case caseToInsert, List<String> recipientsToAdd) {
+        try{
+
+                insert caseToInsert;
+
+                if(!recipientsToAdd.isEmpty()){
+
+                    Set<String> setRecipients = new Set<String>(recipientsToAdd);
+                
+                    list<Contact> listContact = [SELECT Id, Email FROM Contact WHERE Email IN :setRecipients];
+                    
+                    String emailsForCase = createCaseTeamMemberList(caseToInsert, listContact);
+    
+                    caseToInsert.E2CP__AdditionalCC__c = emailsForCase;
+    
+                    update caseToInsert;
+                
+            }
+        }
+        catch(DmlException e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return [SELECT Id, CaseNumber FROM Case WHERE id =: caseToInsert.Id LIMIT 1];
+    }
+    
+    //Creates a CaseTeamMember with the contacts (related to the emails of course)
+    private static String createCaseTeamMemberList(Case cse, list<Contact> listContact) {
+        list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
+        list<String> listEmail = new list<String>();
+        String IdTeamRole = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role' LIMIT 1].Id;
+        for (Contact contact: listContact) {
+            
+            listCaseTeam.add(new CaseTeamMember(
+                ParentId = cse.Id,
+                MemberId = contact.Id,
+                TeamRoleId = IdTeamRole
+            ));
+            listEmail.add(contact.Email);
+        }
+        insert listCaseTeam;
+        String stringEmails = String.join(listEmail,',');
+        return stringEmails;
+    }
+}

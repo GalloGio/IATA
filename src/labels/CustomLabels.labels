@@ -33804,6 +33804,30 @@ title,Title,Name</value>
         <value>Call center is available from 09 AM to 05 PM.</value>
     </labels>
     <labels>
+        <fullName>csp_CaseBeingWorked</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>We&#39;re working on it right now.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CaseCreatedSuccess</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Your case is created successfully.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CaseResponseGuarantee</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>You will have a response as soon as possible.</value>
+    </labels>
+    <labels>
         <fullName>csp_Case_Panel_label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -33852,6 +33876,22 @@ title,Title,Name</value>
         <value>Compliment</value>
     </labels>
     <labels>
+        <fullName>csp_LiveAgentBadConfig</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Live Agent not configured correctly. Please contact Support.</value>
+    </labels>
+    <labels>
+        <fullName>csp_LiveAgentTimeout</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Live Agent connection timeout. Please refresh the page or contact Support</value>
+    </labels>
+    <labels>
         <fullName>csp_Concern</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -33876,6 +33916,110 @@ title,Title,Name</value>
         <value>Select the country or region the problem belongs to</value>
     </labels>
     <labels>
+        <fullName>csp_CreateNewCaseMainInputBoxSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Provide all details that may help to investigate the issue.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputBoxTopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputEmailsSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Add additional recipient e-mails.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputEmailsTopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Recipients</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Choose a subject for your issue.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainInputTopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>csp_ToastWarningRecipientNotFound</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Recipient has not been added. Please press the Add button.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseMainPicklistLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Related Account Code</value>
+    </labels>
+    <labels>
+        <fullName>csp_searchIataCodeLocationNamePlaceHolder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Search IATA Code, location or name</value>
+    </labels>
+    <labels>
+        <fullName>csp_searchEmailRecipientPlaceholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Search Email Recipient</value>
+    </labels>
+        <labels>
+        <fullName>csp_CreateNewCaseTopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Create New Case</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseTopSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Create a case on any issue related to IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>csp_CreateNewCaseTopSubSubLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Track the status of the case from Cases.</value>
+    </labels>
+    <labels>
         <fullName>csp_Emergency_Query</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -33890,6 +34034,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Financial Review</shortDescription>
         <value>Financial Review</value>
+    </labels>
+    <labels>
+        <fullName>csp_GoToSupport</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>Go to Support</value>
     </labels>
     <labels>
         <fullName>csp_IATA_Payment</fullName>
@@ -34110,6 +34261,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Support Options</value>
+    </labels>
+    <labels>
+        <fullName>csp_ViewCaseSummary</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>View Case Summary</value>
     </labels>
     <labels>
         <fullName>csp_btn_Support_Label</fullName>
