@@ -439,7 +439,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if (isMultiCountryStarted) {
             fetchMultiCountryApplicationForms();
-            //populateFieldsFromParentForm();
         }
 
         if (hqAccount.Status__c == 'Terminated') {
@@ -588,9 +587,13 @@ public without sharing class ISSP_AMS_Accreditation {
                 applyLanguage = newCase.Case_Language__c;
                 displayLanguage = newCase.Case_Language__c;
 
-                if (applyLanguage == 'en_US') amsCountryLabel = isocountry.Case_BSP_Country__c; 
-                else if (applyLanguage == 'fr') amsCountryLabel = isocountry.IATA_Country_FR__c;
-                else amsCountryLabel = isocountry.IATA_Country_SP__c;
+                if (applyLanguage == 'en_US') {
+                    amsCountryLabel = isocountry.Case_BSP_Country__c; 
+                } else if (applyLanguage == 'fr') {
+                    amsCountryLabel = isocountry.IATA_Country_FR__c;
+                } else {
+                    amsCountryLabel = isocountry.IATA_Country_SP__c;
+                }
                     
                 if (!isMultiCountryNewAE && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD 
                     || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)) {
@@ -696,8 +699,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 } else if (stepNumber == '3') {
                     isStep3 = true;
 
-                    if (isNoticeOfChange && con.Account.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASH)
+                    if (isNoticeOfChange && con.Account.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASH) {
                         refreshCntIFAPContacts();
+                    }
 
                     setOwnerAndRoleLabels();
                     getCGORegionData();
@@ -780,8 +784,10 @@ public without sharing class ISSP_AMS_Accreditation {
                     isStep5 = true;
                 } else {
                     fetchAMSProcessForm();
-                    if (newForm.ISSP_AMS_Legal_Status__c != null)
+                    if (newForm.ISSP_AMS_Legal_Status__c != null) {
                         legalstatus = newForm.ISSP_AMS_Legal_Status__c.toLowerCase();
+                    }
+
                     setPageLegalStatusLabels();
                     isFinalStep = true;
                 }
@@ -1074,7 +1080,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public void getLegalNameOptions() {
         List<SelectOption> options = legalNameOptions;
         if (currentMCFormId == null) {
-           newForm.Account_Name__c = ''; 
+            newForm.Account_Name__c = ''; 
         }
     }
 
@@ -1758,10 +1764,6 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
 
                         if (isMultiCountryNewAE) {
-                            newForm.Account_Name__c = geMCForm.Account_Name__c;
-                            newForm.Trade_Name__c = geMCForm.Trade_Name__c;
-                            newForm.ISSP_AMS_Legal_Status__c = geMCForm.ISSP_AMS_Legal_Status__c;
-                            //rui
                             populateFieldsFromParentForm(newForm);
                         } else {
                             newForm.Account_Name__c = hqAccount.Name;
@@ -6923,7 +6925,7 @@ public without sharing class ISSP_AMS_Accreditation {
             List<String> regionAirFreightStringList = newForm.CGO_Region_AirFreight_Selection__c.split(';');
             List<String> regionPercentagesStringList = newForm.CGO_Region_Percentage_Selection__c.split(';');
 
-            integer i = 0;
+            Integer i = 0;
             for (String thisRegion : regionStringList) {
                 Map<String, String> regionValues = new Map<String, String>();
 
@@ -7396,9 +7398,6 @@ public without sharing class ISSP_AMS_Accreditation {
                                                             WHERE Id = :mcFormIdToDelete LIMIT 1];
 
         if (!formToDelete.isEmpty()) {
-
-            //deleteFormsFuture(new Set<Id>{formToDelete[0].Id});
-
             Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
             mCApplicationFormMap.remove(formToDelete[0].Id);
 
@@ -7423,7 +7422,9 @@ public without sharing class ISSP_AMS_Accreditation {
                     }
                 }
 
-                update formToBeUpdated;
+                if (formToBeUpdated != null) {
+                    update formToBeUpdated;
+                }
             }
 
             delete formToDelete;
