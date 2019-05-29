@@ -395,7 +395,10 @@ export default class PortalSupportReachUs extends LightningElement {
         getCaseTypeAndCountry({ contactInfo: this.contact, country: this.countryValue })
             .then(result => {
                 this.recordTypeAndCountry = JSON.parse(JSON.stringify(result));
+
+
                 console.log(this.recordTypeAndCountry);
+
                 this.getLiveAgentButtonInfo();
             });
     }
@@ -412,8 +415,10 @@ export default class PortalSupportReachUs extends LightningElement {
             });
     }
 
+
     //Sends all data selected to Live Agent so call can be performed
     sendDataForLiveAgent() {
+
 
         let allData = {};
         let categorization = {};
@@ -439,7 +444,6 @@ export default class PortalSupportReachUs extends LightningElement {
 
             categorization.Topic = this.topic;
             categorization.SubTopic = this.subTopic;
-            categorization.Category = this.category;
 
             let error = false;
             if (!error)
