@@ -48,6 +48,12 @@ public without sharing class CSP_Utils {
     }
 
      /* 
+     @AuraEnabled
+    public static String redirectToOldPortal(string url) {
+        return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, url);
+    }
+
+     /* 
     * @description Returns picklist values from a specific fields
     * @return list<PickListWrapper> //wrapper used for picklist values- picklistEntry not available in lightning atm
     */
