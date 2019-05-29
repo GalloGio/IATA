@@ -45,11 +45,11 @@ export default class PortalSupportReachUs extends LightningElement {
     //track variables
     @track isLoaded = true;
     @track caseDetails;
-    @track categoryOptions;
+    @track categoryOptions = [];
     @track category;
     @track topic;
-    @track topicOptions;
-    @track subTopicOptions;
+    @track topicOptions = [];
+    @track subTopicOptions = [];
     @track subTopic;
     @track topicCB = false;
     @track subTopicCB = false;
@@ -117,7 +117,7 @@ export default class PortalSupportReachUs extends LightningElement {
         getAllPickListValues()
             .then(result => {
                 this.myResult = JSON.parse(JSON.stringify(result));
-
+                console.log(this.myResult);
                 //Auxiliary Map
                 const map = new Map();
                 //Array to consume category options
@@ -171,15 +171,16 @@ export default class PortalSupportReachUs extends LightningElement {
                 let myResult = JSON.parse(JSON.stringify(result));
 
                 //first element on the picklist
-                let myTopicOptions = [{ label: 'Select Country', value: '' }];
+                let myCountryOptions = [{ label: 'Select Country', value: '' }];
 
                 //ex: {label: My Topic, value: my_topic__c}
                 Object.keys(myResult).forEach(function (el) {
-                    myTopicOptions.push({ label: myResult[el], value: el });
+                    myCountryOptions.push({ label: myResult[el], value: el });
                 });
 
                 //set global with the options for later use
-                this.countryOptions = myTopicOptions;
+                this.countryOptions = myCountryOptions;
+                
 
             })
             .catch(error => {
@@ -329,7 +330,7 @@ export default class PortalSupportReachUs extends LightningElement {
 
         //set the options
         this.subTopicOptions = mySubTopicOptions;
-
+        
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
             const checkSubTopic = obj => obj.value === this.pageParams.subtopic;

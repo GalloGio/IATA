@@ -4,6 +4,9 @@ import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavo
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import { updateRecord } from 'lightning/uiRecordApi';
 
+//Navigation
+import { navigateToPage } from'c/navigationUtils';
+
 //import labels 
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import csp_Request_New_Service from '@salesforce/label/c.csp_Request_New_Service';
@@ -227,7 +230,7 @@ export default class FavoriteServicesLWC extends LightningElement {
             //determines if the link is to be opened on a new window or on the current
             if (openWindowData.value === "true") {
                 if (appUrlData.value !== 'undefined') {
-                    myUrl = appUrlData.value.replace("/", "");
+                    myUrl = appUrlData.value;
                 } else if (appFullUrlData.value !== 'undefined') {
                     myUrl = appFullUrlData.value;
                 }
@@ -253,6 +256,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                     //stop the spinner
                     this.toggleSpinner();
                     //open new tab with the redirection
+                    myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
                     window.open(myUrl);
                 }
             } else {
@@ -276,4 +280,13 @@ export default class FavoriteServicesLWC extends LightningElement {
             this.sliderIcons.push({ variant: vari });
         }
     }
+
+    goToServices() {
+        navigateToPage("services");
+    }
+
+    goToAvailableServices() {
+        navigateToPage("services?tab=availableServices");
+    }
+
 }

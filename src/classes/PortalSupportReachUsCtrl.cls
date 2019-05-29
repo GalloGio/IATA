@@ -159,6 +159,8 @@ public static Map<String,String> getCaseTypeAndCountry(Contact contactInfo, Stri
 		}else if(IATA_ISO_country.Region__c == 'China & North Asia') {
 			recordType = 'Cases_China_North_Asia';
 		}
+		//Sets the Region
+		caseInformation.put('Region',IATA_ISO_country.Region__c);
 	}else{
 		recordType = 'InternalCasesEuropeSCE';
 	}

@@ -1,0 +1,49 @@
+.WarningRectangle {
+    background-color: rgba(250, 200, 50, 0.32);
+    align-items: center;
+    display: inline-table;
+    width: 100%;
+}
+
+.borderStyle {
+    border-bottom-style: solid;
+    border-bottom-color: #e6e6e6;
+    border-bottom-width: 1px;
+    margin: 5px 5px 5px 5px;
+}
+
+.modalHeader {
+    font-size: 20px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.modalBody {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+}
+
+.customModal {
+    width: 45%;
+    height: 30%;
+    display: block;
+    top: 80px;
+    border-radius: 0px;
+    background-color: #fff;
+    padding: 0px;
+}
+
+.overlap-top-center {
+    position: relative;
+    top: 110px;
+    z-index: 1;
+}

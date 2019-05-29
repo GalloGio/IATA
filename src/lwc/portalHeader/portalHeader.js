@@ -10,6 +10,7 @@ import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 
+
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
@@ -202,7 +203,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //user logout
     logOut() {
-        //window.location.replace("/secur/logout.jsp");
+        navigateToPage("/secur/logout.jsp");
     }
 
 
@@ -231,6 +232,22 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     onClickAllNotificationsView(event){
+        this.notificationsView(event);
+    }
+
+    openmodal(event) {
+        this.notificationsView(event);
+
+        this.mainBackground = "z-index: 10004;"
+        this.openmodel = true
+    }
+
+    closeModal() {
+        this.mainBackground = "z-index: 10000;"
+        this.openmodel = false
+    }
+
+    notificationsView(event) {
         let selectedNotificationId = event.target.dataset.item;
 
         let notificationsListAux = JSON.parse(JSON.stringify(this.notificationsList));
@@ -242,26 +259,31 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             return null;
         });
 
+        this.notification = notification;
+
         if (notification.typeNotification === 'Announcement' ){
             increaseNotificationView({id : selectedNotificationId})
             .then(results => {
-                let notificationCounter = this.notificationCounter;
-                let taskCounter = this.taskCounter;
 
-                notificationCounter--;
-                this.numberOfNotifications = notificationCounter + taskCounter;
-                this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
-                this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
-                this.notificationCounter = notificationCounter;
+                if (!notification.viewed){
+                    let notificationCounter = this.notificationCounter;
+                    let taskCounter = this.taskCounter;
 
-                this.numberOfNotifications = (notificationCounter + taskCounter);
-                if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
-                    this.notificationNumberStyle = 'display: none;';
+                    notificationCounter--;
+                    this.numberOfNotifications = notificationCounter + taskCounter;
+                    this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+                    this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
+                    this.notificationCounter = notificationCounter;
+
+                    this.numberOfNotifications = (notificationCounter + taskCounter);
+                    if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+                        this.notificationNumberStyle = 'display: none;';
+                    }
+
+                    notification.viewed = true;
+                    notification.styles = 'readNotification';
+                    this.notificationsList = notificationsListAux;
                 }
-
-                notification.viewed = true;
-                notification.styles = 'readNotification';
-                this.notificationsList = notificationsListAux;
 
             })
             .catch(error => {
@@ -294,24 +316,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 
             }
         }
-
     }
-
-    openmodal(event) {
-        let selectedNotificationId = event.target.dataset.item;
-        this.notification = this.notificationsList.find(function(element) {
-            if (element.id === selectedNotificationId){
-                return element;
-            }
-            return null;
-        });
-
-        this.mainBackground = "z-index: 10004;"
-        this.openmodel = true
-    }
-    closeModal() {
-        this.mainBackground = "z-index: 10000;"
-        this.openmodel = false
-    } 
 
 }

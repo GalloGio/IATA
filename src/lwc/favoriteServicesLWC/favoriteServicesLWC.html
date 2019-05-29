@@ -12,7 +12,7 @@
                 title={label.CSP_SeeAll}
                 icon-name="utility:forward" 
                 icon-position="right" 
-                onclick={goToOldPortalCalendarJS}
+                onclick={goToServices}
                 class="slds-p-right_small blueCustomButtonLink">
             </lightning-button>
         </span>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="slds-col slds-size_1-of-5 slds-p-around_small">
                         <div class="slds-card__body slds-card__body_inner bigTile aroundLightGrayBorder">
-                            <div class="slds-illustration slds-illustration_small ">
+                            <div class="cursorPointer slds-illustration slds-illustration_small " onclick={goToAvailableServices}>
                                 <div class="slds-align_absolute-center">
                                     <lightning-icon icon-name="action:new" size="small" class="tileNewServiceIcon">
                                     </lightning-icon>
