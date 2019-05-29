@@ -943,9 +943,9 @@ public class ANG_RHCAlertTriggerHandler{
         Operational_Calendar__c oc = operationCalMap.get(ra.ANG_Account__c);
 
         if(oc != NULL){
-            smapCase.Start_Date_of_Sales_Period__c = operationCalMap.get(ra.ANG_Account__c).First_Day__c;
-            smapCase.End_Date_of_Sales_Period__c = operationCalMap.get(ra.ANG_Account__c).Last_Day__c;
-            smapCase.Next_Remittance_Date__c = operationCalMap.get(ra.ANG_Account__c).Remittance_Day__c;
+            smapCase.Start_Date_of_Sales_Period__c = oc.First_Day__c;
+            smapCase.End_Date_of_Sales_Period__c = oc.Last_Day__c;
+            smapCase.Next_Remittance_Date__c = oc.Remittance_Day__c;
         }
 
         assignCaseContact(smapCase, ra.ANG_Account__c, contactsPerAccountMap);
@@ -967,7 +967,7 @@ public class ANG_RHCAlertTriggerHandler{
     */
     private void assignCaseContact(Case cse, Id acctId, Map<Id, List<Contact>> contactsPerAccountMap){
         
-        for(Contact con : contactsPerAccountMap.get(acctId)){                        
+        for(Contact con : contactsPerAccountMap.get(acctId)){
             if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
                 cse.ContactId = con.Id;
                 break;
