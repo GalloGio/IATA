@@ -1,9 +1,9 @@
 ({
     doInit: function (component, event, helper) {
         jQuery("document").ready(function () {
-            console.log('Scripts loaded');
+            component.set("v.loaded", false);
         });
-        component.set("v.loaded", false);
+
     },
 
     //Begins chat for Online Default option
@@ -20,7 +20,7 @@
     startChatNoLanguage: function (component, event, helper) {
         liveagent.startChat(component.get("v.liveAgentOnlineNoCountry"));
     },
-    
+
     //Opens the Options panel
     showOptions: function (component, event, helper) {
         component.set("v.showOptions", true);
@@ -67,6 +67,7 @@
     //prepares live agent chat under many possible cases.
     handleLiveAgentChangeEvent: function (component, event, helper) {
         var data = JSON.parse(JSON.stringify(event.getParam('allData')));
+        component.set("v.category", data.categorization.Category);
         component.set("v.topic", data.categorization.Topic);
         component.set("v.subTopic", data.categorization.SubTopic);
         component.set("v.caseRecordType", data.recordTypeAndCountry.RecordType);
@@ -103,7 +104,24 @@
                 helper.liveAgentDefaultHandler(component, event);
             })
             .fail(function (jqxhr, settings, exception) {
-                console.log(exception);
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    "title": "Error",
+                    "message": $A.get("$Label.c.csp_LiveAgentBadConfig"),
+                    "type" : "Error"
+                });
+                toastEvent.fire();
             });
+    },
+
+    redirectCreateCase: function (component, event, helper) {
+        var urlEvent = $A.get("e.force:navigateToURL");
+        urlEvent.setParams({
+            "url": "/support-reach-us-create-new-case?category=" + component.get("v.category")
+                + '&topic=' + component.get("v.topic")
+                + '&subtopic=' + component.get("v.subTopic")
+                + '&countryISO=' + 'gb'
+        });
+        urlEvent.fire();
     },
 })
