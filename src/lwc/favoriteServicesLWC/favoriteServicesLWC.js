@@ -230,7 +230,7 @@ export default class FavoriteServicesLWC extends LightningElement {
             //determines if the link is to be opened on a new window or on the current
             if (openWindowData.value === "true") {
                 if (appUrlData.value !== 'undefined') {
-                    myUrl = appUrlData.value.replace("/", "");
+                    myUrl = appUrlData.value.replace("/csportal/s/", "");
                 } else if (appFullUrlData.value !== 'undefined') {
                     myUrl = appFullUrlData.value;
                 }
