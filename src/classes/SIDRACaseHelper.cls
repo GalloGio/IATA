@@ -36,6 +36,7 @@ public with sharing class SIDRACaseHelper {
 	public static void doAfterUpdate(map<Id, Case> newCases, map<Id, Case> oldCases) {
 
 		Map<Id, Case> sidraCasesToBeProcessed = new Map<Id, Case>();
+		List<String> reasonToBeProcessed = new List<String>{'Technical Default', 'Non-payment', 'Common Ownership'};
 
 		for (Case thisCase : newCases.values()) {
 			Case oldCase = oldCases.get(thisCase.Id);
@@ -71,7 +72,7 @@ public with sharing class SIDRACaseHelper {
 				(!thisCase.isClosed //&& !string.valueOf(thisCase.Owner).contains('Recycle') 
 					&& thisCase.DEF_Approval_Rejection__c == 'Approved' && thisCase.Agent_holds_FS_requiring_first_call__c == 'Yes')) && 
 			   !((oldCase.RecordTypeId == sidraRecordTypeId || oldCase.RecordTypeId == sidraLiteRecordTypeId) && 
-				(oldCase.DEF_Approval_Rejection__c == 'Approved' && oldCase.Agent_holds_FS_requiring_first_call__c == 'Yes'))) {
+				(oldCase.DEF_Approval_Rejection__c == 'Approved' && oldCase.Agent_holds_FS_requiring_first_call__c == 'Yes')) && !reasonToBeProcessed.contains(oldCase.Reason_for_Default__c) && reasonToBeProcessed.contains(thisCase.Reason_for_Default__c)) {
 				sidraCasesToBeProcessed.put(thisCase.Id, thisCase);
 			}		
 		}
