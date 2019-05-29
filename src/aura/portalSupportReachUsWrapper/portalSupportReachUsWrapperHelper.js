@@ -65,7 +65,7 @@
             var toastEvent = $A.get("e.force:showToast");
             toastEvent.setParams({
                 "title": "Error",
-                "message": "Live Agent connection timeout. Please refresh the page or contact Support",
+                "message": $A.get("$Label.c.csp_LiveAgentTimeout"),
                 "type": "Error"
             });
             toastEvent.fire();

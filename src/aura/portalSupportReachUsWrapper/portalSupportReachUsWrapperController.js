@@ -107,7 +107,7 @@
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
                     "title": "Error",
-                    "message": "Live Agent not configured correctly. Please contact Support.",
+                    "message": $A.get("$Label.c.csp_LiveAgentBadConfig"),
                     "type" : "Error"
                 });
                 toastEvent.fire();
