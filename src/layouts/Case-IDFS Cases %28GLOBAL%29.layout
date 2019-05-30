@@ -6,6 +6,8 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customButtons>unbabelsc__Unbabel_Translate_Case</customButtons>
+    <customButtons>Translate_Last_Customer_Comment</customButtons>
     <customConsoleComponents>
         <subtabComponents>
             <containers>

@@ -165,6 +165,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_CountrySAttr_Validation --></label>
+        <name>AMS_CountrySAttr_Validation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
         <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
@@ -11900,6 +11904,10 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     <customLabels>
         <label><!-- ISSP Cargo Agent New --></label>
         <name>ISSP_Cargo_Agent_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Cargo --></label>
+        <name>ISSP_Cargo_Label_Value</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CaseCommentEmail --></label>

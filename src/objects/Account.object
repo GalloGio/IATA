@@ -15741,11 +15741,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <label>Association</label>
                 </value>
                 <value>
-                    <fullName>Cargo Agent</fullName>
-                    <default>false</default>
-                    <label>Freight Forwarder</label>
-                </value>
-                <value>
                     <fullName>Education</fullName>
                     <default>false</default>
                     <label>Education</label>
@@ -15759,6 +15754,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Financial Institution</fullName>
                     <default>false</default>
                     <label>Financial Institution</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>General Sales Agent</fullName>
