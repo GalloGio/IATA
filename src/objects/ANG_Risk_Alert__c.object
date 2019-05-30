@@ -355,36 +355,6 @@
         <active>true</active>
         <label>Risk Alert EDS</label>
         <picklistValues>
-            <picklist>ANG_Direction__c</picklist>
-            <values>
-                <fullName>DOWN</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>SAME</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>UP</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Severity__c</picklist>
-            <values>
-                <fullName>Orange</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Red</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yellow</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>ANG_Triggered_Rules__c</picklist>
             <values>
                 <fullName>Cash Sales Shift</fullName>
