@@ -140,7 +140,7 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Open_Cash_Position_c__c</fullName>
+        <fullName>ANG_Open_Cash_Position__c</fullName>
         <description>Consumed RHC amount (only for NewGen accounts)</description>
         <externalId>false</externalId>
         <label>Open Cash Position</label>

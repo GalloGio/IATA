@@ -3,8 +3,8 @@
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
@@ -19,6 +19,10 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_Triggered_Rules__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Open_Cash_Position__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -28,10 +32,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CurrencyIsoCode</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ANG_Open_Cash_Position_c__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
