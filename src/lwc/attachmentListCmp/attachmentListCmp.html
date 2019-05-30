@@ -1,5 +1,5 @@
 <template>
-    <div if:true={renderDataTable} class="slds-p-top_medium slds-p-horizontal_medium attachmentComponentContainer">
+    <div if:true={renderDataTable} class="slds-p-top_medium slds-p-horizontal_medium dimensionContainer">
 
         <lightning-datatable columns={documentsColumns} hide-checkbox-column class="attlist slds-scrollable_none"
             is-loading={loading} key-field="Id" data={lstDocuments} onrowaction={handleRowAction}
@@ -7,14 +7,14 @@
         </lightning-datatable>
 
         <div class="slds-m-top_x-large slds-border_top slds-p-top_small">
-            <span style="display:flex;justify-content: flex-end;">
+            <span class="AddAttButtonContainer">
                 <lightning-button class="whiteButtonBlueBorder slds-p-around_small" label={label.AddNewDocuments}
                     onclick={handleAddAttachs}></lightning-button>
             </span>
         </div>
     </div>
-    <div if:false={renderDataTable} class="slds-grid slds-wrap slds-p-horizontal_large slds-align_absolute-center"
-        style="height:200px;">
+    <div if:false={renderDataTable}
+        class="slds-grid slds-wrap slds-p-horizontal_large slds-align_absolute-center noDocContainer">
         <div class="slds-col slds-size_1-of-1 slds-p-around_medium slds-text-align_center">
             <span class="textMediumMessage">{noAttachmentMsg}</span>
         </div>
@@ -43,7 +43,7 @@
                         onuploadfinished={handleFinishAddNewAttachs}
                         class="slds-size_1-of-1 slds-p-horizontal_small uploadFileArea" multiple>
                     </lightning-file-upload>
-                    <div if:true={renderModalDataTable} class="slds-m-top_large" style="min-height:150px;">
+                    <div if:true={renderModalDataTable} class="slds-m-top_large dimensionContainer">
                         <lightning-datatable class="newattlist" key-field="Id" data={newDocsList}
                             columns={newDocumentsColumns} is-loading={loading} hide-checkbox-column
                             onrowaction={handleRowAction} resize-column-disabled=true>
@@ -56,10 +56,7 @@
                         onclick={handleCloseModal}>
                     </lightning-button>
                 </div>
-
             </div>
-
         </div>
-
     </template>
 </template>
