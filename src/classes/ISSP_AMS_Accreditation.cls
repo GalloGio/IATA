@@ -27,7 +27,8 @@ public without sharing class ISSP_AMS_Accreditation {
         PARAMCODE_CURR_OWNERS,
         PARAMCODE_AGENCY_CONTACTS,
         PARAMCODE_IFAP_CONTACTS,
-        PARAMCODE_TRAINED_STAFF
+        PARAMCODE_TRAINED_STAFF,
+        PARAMCODE_COPY_OWNERS
     }
 
     private String vSAAMCaseId;
@@ -4218,49 +4219,49 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> trainedStaffList {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, '');
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_AgencyContacts {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, '');
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_IFAPAgencyContacts {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_IFAP_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_IFAP_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, '');
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_PreviousOwners {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_CurrentOwners {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_CurrentCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_CURR_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_CURR_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_PreviousCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_PREV_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_PREV_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         }
         set;
     }
@@ -4301,7 +4302,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> List_AgencyCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         }
         set;
     }
@@ -4318,26 +4319,26 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> List_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_Curr_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_CURR, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_CURR, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_Prev_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_PREV, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY);
+            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_PREV, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         }
         set;
     }
 
-    private List<AMS_Accreditation_Contact__c> dynamicAccredContactListQuery(AccredContactEnum paramCodeSelect, AccredContactEnum paramCodeWhere, AccredContactEnum paramCodeOrder) {
+    private List<AMS_Accreditation_Contact__c> dynamicAccredContactListQuery(AccredContactEnum paramCodeSelect, AccredContactEnum paramCodeWhere, AccredContactEnum paramCodeOrder, String parentFormId) {
         String query = 'SELECT ';
 
         if (paramCodeSelect == AccredContactEnum.PARAMCODE_PREV_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_CURR_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_AGENCY_CONTACTS) {
@@ -4372,7 +4373,12 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         
         query += 'FROM AMS_Accreditation_Contact__c ';
-        query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
+
+        if (String.isBlank(parentFormId)) {
+            query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
+        } else {
+            query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
+        }
     
         switch on paramCodeWhere {
             when PARAMCODE_OWNERSHIP_SUMMARY {
@@ -4417,6 +4423,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
             when PARAMCODE_TRAINED_STAFF {
                 query += 'AND RecordTypeId = \'' + RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff') + '\' ';
+            }
+
+            when PARAMCODE_COPY_OWNERS {
+                query += 'AND (RecordType.DeveloperName = \'Person\' OR RecordType.DeveloperName = \'Company\') ';
             }
         }
 
@@ -7392,16 +7402,14 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void deleteMCForm() {
-        List<AMS_Pax_Accreditation_Form__c> formToDelete = [SELECT Id, Status__c, Branch_Office_Country__r.AMS_Settlement_System__c,
-                                                                Branch_Office_Country__r.ISO_Code__c, AE_separate_Legal_Entity__c
-                                                            FROM AMS_Pax_Accreditation_Form__c 
-                                                            WHERE Id = :mcFormIdToDelete LIMIT 1];
+        Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
+        
+        AMS_Pax_Accreditation_Form__c formToDelete = mCApplicationFormMap.get(mcFormIdToDelete);
+        
+        if (formToDelete != null) {
+            mCApplicationFormMap.remove(mcFormIdToDelete);
 
-        if (!formToDelete.isEmpty()) {
-            Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
-            mCApplicationFormMap.remove(formToDelete[0].Id);
-
-            if (formToDelete[0].Status__c == 'InProgress') {
+            if (formToDelete.Status__c == 'InProgress') {
                 if (mCApplicationFormMap.values().size() == 1) {
                     mcAbleToSubmit = false;
                 } else {
@@ -7409,20 +7417,25 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            if (formToDelete[0].AE_separate_Legal_Entity__c == 'Yes') {
+            if (formToDelete.AE_separate_Legal_Entity__c == 'Yes') {
                 AMS_Pax_Accreditation_Form__c formToBeUpdated;
 
                 for (AMS_Pax_Accreditation_Form__c existingMCForm: mCApplicationFormMap.values()) {
-                    if (existingMCForm.Same_Legal_Entity_Agency__c == formToDelete[0].Id) {
+                    if (existingMCForm.Same_Legal_Entity_Agency__c == formToDelete.Id) {
                         existingMCForm.AE_separate_Legal_Entity__c = 'Yes';
                         existingMCForm.Status__c = 'InProgress';
+
+                        existingMCForm.Account_Name__c = formToDelete.Account_Name__c;
+                        existingMCForm.Trade_Name__c = formToDelete.Trade_Name__c;
+                        existingMCForm.ISSP_AMS_Legal_Status__c = formToDelete.ISSP_AMS_Legal_Status__c;
+
                         formToBeUpdated = existingMCForm;
-                        //identify that has to be updated, maybe with field;
                         break;
                     }
                 }
 
                 if (formToBeUpdated != null) {
+                    copyOwnersFromParentForm(formToBeUpdated);
                     update formToBeUpdated;
                 }
             }
@@ -7431,6 +7444,33 @@ public without sharing class ISSP_AMS_Accreditation {
 
             multiCountryApplicationForms = new List<AMS_Pax_Accreditation_Form__c>(mCApplicationFormMap.values());
         }
+    }
+
+    private void copyOwnersFromParentForm(AMS_Pax_Accreditation_Form__c formToBeUpdated) {
+        List<AMS_Accreditation_Contact__c> contactsToBeCreated = new List<AMS_Accreditation_Contact__c>();
+        
+        for (AMS_Accreditation_Contact__c con: dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency__c)) {
+            AMS_Accreditation_Contact__c newCon = new AMS_Accreditation_Contact__c();
+
+            newCon.AMS_Pax_Accreditation_Form__c = formToBeUpdated.Id;
+            newCon.First_name__c = con.First_name__c;
+            newCon.Last_name__c = con.Last_name__c;
+            newCon.Name = con.Name;
+            newCon.Financial_interest__c = con.Financial_interest__c;
+            newCon.Agency_owner__c = con.Agency_owner__c;
+            newCon.RecordTypeId = con.RecordTypeId;
+            newCon.Email__c = con.Email__c;
+            newCon.Phone__c = con.Phone__c;
+            newCon.Contact__c = con.Contact__c;
+            newCon.AddressStreet__c = con.AddressStreet__c;
+            newCon.AddressCity__c = con.AddressCity__c;
+            newCon.AddressPostcode__c = con.AddressPostcode__c;
+            newCon.AddressCountry__c = con.AddressCountry__c;
+
+            contactsToBeCreated.add(newCon);
+        }
+
+        insert contactsToBeCreated;
     }
 
     public void discardMCApplication() {
@@ -7486,7 +7526,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Boolean selectAll{
         get{
-            if(selectAll == null) selectAll = false;
+            if (selectAll == null) {
+                selectAll = false;
+            }
             return selectAll;
         }
         set;
