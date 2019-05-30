@@ -47,4 +47,55 @@ public without sharing class CSP_Utils {
         return loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
     }
 
+     /* 
+     @AuraEnabled
+    public static String redirectToOldPortal(string url) {
+        return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, url);
+    }
+
+     /* 
+    * @description Returns picklist values from a specific fields
+    * @return list<PickListWrapper> //wrapper used for picklist values- picklistEntry not available in lightning atm
+    */
+    @AuraEnabled
+    public static List<PickListWrapper> getPickListValues(string sobj,string field){
+        Schema.DescribeSObjectResult sobjectDescribe = Schema.getGlobalDescribe().get(sobj).getDescribe();
+        List<Schema.PicklistEntry> pickListValues = sobjectDescribe.fields.getMap().get(field).getDescribe().getPickListValues();
+        
+        List<PickListWrapper> options = new List<PickListWrapper>();
+        
+        PickListWrapper emptySelection = new PickListWrapper(); 
+        
+        for (Schema.PicklistEntry a : pickListValues) {
+            PickListWrapper selection = new PickListWrapper();  
+            selection.label = a.getLabel();
+            selection.value = a.getValue();
+            selection.checked = false;
+            options.add(selection);
+        }
+        return options;
+    }
+
+
+
+
+
+    /*============================== Sidekick classes ==============*/
+
+    // class side class used to wrap picklist values/
+    public class PickListWrapper{
+        @AuraEnabled
+        public String label;
+        @AuraEnabled
+        public String value;
+        @AuraEnabled
+        public Boolean checked;
+        
+        public PickListWrapper (){
+
+        }
+    }
+    
+
+
 }
