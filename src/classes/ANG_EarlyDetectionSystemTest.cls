@@ -1,35 +1,35 @@
 @isTest
 private class ANG_EarlyDetectionSystemTest {
 
-    @testSetup static void setup(){
-        
+	@testSetup static void setup(){
+		
 		Test.startTest();
 
-        Map<String, Profile> airlineProfileMap = new Map<String, Profile>(
-            [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']
-        );
+		Map<String, Profile> airlineProfileMap = new Map<String, Profile>(
+			[SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']
+		);
 
-        Map<String, Profile> agencyProfileMap = new Map<String, Profile>(
-            [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']
-        );
+		Map<String, Profile> agencyProfileMap = new Map<String, Profile>(
+			[SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']
+		);
 
-        List<ISSP_CS__c> listCs = new List<ISSP_CS__c>();
+		List<ISSP_CS__c> listCs = new List<ISSP_CS__c>();
 
-        listCs.add(
-            new ISSP_CS__c(
-                Name = 'ISS OperationalCalendar Airline Profil',
-                Value__c = String.join(new List<string>(airlineProfileMap.keySet()),',')
-            )
-        );
+		listCs.add(
+			new ISSP_CS__c(
+				Name = 'ISS OperationalCalendar Airline Profil',
+				Value__c = String.join(new List<string>(airlineProfileMap.keySet()),',')
+			)
+		);
 
-        listCs.add(
-            new ISSP_CS__c(
-                Name = 'ISS OperationalCalendar Agency Profile',
-                Value__c = String.join(new List<string>(agencyProfileMap.keySet()),',')
-            )
-        );
+		listCs.add(
+			new ISSP_CS__c(
+				Name = 'ISS OperationalCalendar Agency Profile',
+				Value__c = String.join(new List<string>(agencyProfileMap.keySet()),',')
+			)
+		);
 
-        insert listCs;
+		insert listCs;
 
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
@@ -43,23 +43,23 @@ private class ANG_EarlyDetectionSystemTest {
 
 		insert new List<AMS_Settlement_System__c>{bspSG, bspPT};
 
-        Operational_Calendar__c opSG = new Operational_Calendar__c( 
-            ISS_Operation__c = bspSG.id, 
+		Operational_Calendar__c opSG = new Operational_Calendar__c( 
+			ISS_Operation__c = bspSG.id, 
 			First_Day__c = Date.today().addDays(-30), 
 			Last_Day__c = Date.today().addDays(1), 
 			Frequency_code__c = 'W', 
 			Remittance_Day__c = Date.today()
-        );
+		);
 		
-        Operational_Calendar__c opPT = new Operational_Calendar__c( 
-            ISS_Operation__c = bspPT.id, 
+		Operational_Calendar__c opPT = new Operational_Calendar__c( 
+			ISS_Operation__c = bspPT.id, 
 			First_Day__c = Date.today().addDays(-30), 
 			Last_Day__c = Date.today().addDays(1), 
 			Frequency_code__c = 'W', 
 			Remittance_Day__c = Date.today()
-        );
+		);
 
-        insert new List<Operational_Calendar__c>{opSG, opPT};
+		insert new List<Operational_Calendar__c>{opSG, opPT};
 
 		IATA_ISO_Country__c countryWW = new IATA_ISO_Country__c(
 			Name = 'All Countries',
@@ -81,8 +81,8 @@ private class ANG_EarlyDetectionSystemTest {
 		);
 
 		insert new List<IATA_ISO_Country__c>{countryWW, countrySG, countryPT};
-        
-        Account agentSG = new Account(
+		
+		Account agentSG = new Account(
 			Name = 'Agent SG',
 			IATACode__c ='999999999',
 			Status__c = AMS_Utils.ACC_S9_APPROVED,
@@ -110,10 +110,10 @@ private class ANG_EarlyDetectionSystemTest {
 
 		insert new List<Account>{agentSG, agentPT};
 
-        Account agentAeSG = new Account(
+		Account agentAeSG = new Account(
 			Name = 'Agent AE SG',
 			IATACode__c ='999999997',
-            ParentId = agentSG.Id,
+			ParentId = agentSG.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED,
 			Location_Type__c = AMS_Utils.AE,
 			RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
@@ -124,10 +124,10 @@ private class ANG_EarlyDetectionSystemTest {
 			BillingCountry = 'Singapore'
 		);
 
-        Account agentAePT = new Account(
-			Name = 'Agent AE PT',
+		Account agentBrPT = new Account(
+			Name = 'Agent BR PT',
 			IATACode__c ='999999996',
-            ParentId = agentPT.Id,
+			ParentId = agentPT.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED,
 			Location_Type__c = AMS_Utils.BR,
 			RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
@@ -138,12 +138,13 @@ private class ANG_EarlyDetectionSystemTest {
 			BillingCountry = 'Portugal'
 		);
 
-        insert new List<Account>{agentAeSG, agentAePT};
+		insert new List<Account>{agentAeSG, agentBrPT};
 
-        Contact contSG = new Contact(
+		Contact contSG = new Contact(
 			FirstName = 'Agent',
 			LastName = 'Singapore',
 			AccountId = agentSG.Id,
+			Status__c = 'Active',
 			Email = 'agent.singapore@test.com',
 			Financial_Assessment_Contact__c = true
 		);
@@ -153,144 +154,196 @@ private class ANG_EarlyDetectionSystemTest {
 			LastName = 'Portugal',
 			AccountId = agentPT.Id,
 			Email = 'agent.portugal@test.com',
-            User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM
+			Status__c = 'Active',
+			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM
 		);
 		
-		insert new List<Contact>{contSG, contPT};
+		Contact contInactivePT = new Contact(
+			FirstName = 'Agent Inactive',
+			LastName = 'Portugal',
+			AccountId = agentPT.Id,
+			Email = 'agent.inactive.portugal@test.com',
+			Status__c = 'Inactive',
+			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM
+		);
 
-        Test.stopTest();
+		insert new List<Contact>{contSG, contPT, contInactivePT};
 
-    }
+		Test.stopTest();
 
-    @isTest static void createSMAPCaseOnEdsAlertHETest(){
+	}
 
-        Account acct = 
-            [SELECT 
-                Id,
-                Name,
-                IATACode__c,
-                IATA_ISO_Country__r.ISO_Code__c,
-                (Select Id, Name FROM Contacts)
-             FROM 
-                Account 
-             WHERE 
-                Location_Type__c = :AMS_Utils.HE
-            ];
+	@isTest static void createSMAPCaseOnEdsAlertHETest(){
+		assessSMAPCaseCreationOnEdsAlert(AMS_Utils.HE);
+	}
 
-        assessSMAPCaseCreationOnEdsAlert(acct);
+	@isTest static void createSMAPCaseOnEdsAlertHOTest(){
+		assessSMAPCaseCreationOnEdsAlert(AMS_Utils.HO);
+	}
 
-    }
+	@isTest static void doNotcreateSMAPCaseOnEdsAlertTest(){
 
-    @isTest static void createSMAPCaseOnEdsAlertHOTest(){
+		Map<Id, Account> acctMap = new Map<Id, Account>( 
+			[SELECT 
+				Id
+			 FROM 
+				Account 
+			 WHERE 
+				Location_Type__c = :AMS_Utils.AE
+			 OR
+				Location_Type__c = :AMS_Utils.BR
+			]
+		);
 
-        Account acct = 
-            [SELECT 
-                Id,
-                Name,
-                IATACode__c,
-                IATA_ISO_Country__r.ISO_Code__c,
-                (Select Id, Name FROM Contacts)
-             FROM 
-                Account 
-             WHERE 
-                Location_Type__c = :AMS_Utils.HO
-            ];
+		Id riskAlertEDSRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_EDS');
 
-        assessSMAPCaseCreationOnEdsAlert(acct);
+		List<ANG_Risk_Alert__c> raLst = new List<ANG_Risk_Alert__c>();
 
-    }
+		for(Account acct : acctMap.values()){
+			ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+				RecordTypeId = riskAlertEDSRecType, 
+				ANG_Account__c = acct.Id
+			);
+			raLst.add(ra);
+		}
 
-    @isTest static void doNotcreateSMAPCaseOnEdsAlertTest(){
+		Test.startTest();
 
-        Map<Id, Account> acctMap = new Map<Id, Account>( 
-            [SELECT 
-                Id
-             FROM 
-                Account 
-             WHERE 
-                Location_Type__c = :AMS_Utils.AE
-             OR
-                Location_Type__c = :AMS_Utils.BR
-            ]
-        );
+		insert raLst;
 
-        Id riskAlertEDSRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_EDS');
+		Test.stopTest();
 
-        List<ANG_Risk_Alert__c> raLst = new List<ANG_Risk_Alert__c>();
+		List<Case> cseLst = new List<Case>(
+			[SELECT 
+				Id
+			 FROM 
+				Case 
+			 WHERE 
+				AccountId IN :acctMap.keySet()
+			 AND
+				RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process' 
+			]
+		);
 
-        for(Account acct : acctMap.values()){
-            ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-                RecordTypeId = riskAlertEDSRecType, 
-                ANG_Account__c = acct.Id
-            );
-            raLst.add(ra);
-        }
+		system.assert(cseLst.isEmpty(), 'SMAP case must NOT be created for EDS Alert');
 
-        Test.startTest();
+	}
 
-        insert raLst;
+	private static void assessSMAPCaseCreationOnEdsAlert(String locationType){
+		
+		Account acct = 
+			[SELECT 
+				Id,
+				Name,
+				IATACode__c,
+				Region_Formula__c,
+				IATA_ISO_Country__r.Name,
+				IATA_ISO_Country__r.ISO_Code__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				(SELECT 
+					Id, 
+					Name, 
+					User_Portal_Status__c,
+					Financial_Assessment_Contact__c
+				 FROM 
+					Contacts 
+				 WHERE 
+					Status__c = 'Active'
+				)
+			 FROM 
+				Account 
+			 WHERE 
+				Location_Type__c = :locationType
+			 LIMIT 1
+			];
 
-        Test.stopTest();
+		Id riskAlertEDSRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_EDS');
 
-        List<Case> cseLst = new List<Case>(
-            [SELECT 
-                Id
-             FROM 
-                Case 
-             WHERE 
-                AccountId IN :acctMap.keySet()
-             AND
-                RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process' 
-            ]
-        );
+		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
+			RecordTypeId = riskAlertEDSRecType, 
+			ANG_Account__c = acct.Id
+		);
 
-        system.assert(cseLst.isEmpty(), 'SMAP case must NOT be created for EDS Alert');
+		Test.startTest();
 
-    }
+		insert ra;
 
-    private static void assessSMAPCaseCreationOnEdsAlert(Account acct){
+		Test.stopTest();
 
-        Id riskAlertEDSRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_EDS');
+		Case cse = 
+			[SELECT 
+				Id, 
+				Status,
+				Reason, 
+				Origin,
+				Subject,
+				Region__c,
+				ContactId,
+				Contact.Name,
+				Reason1__c,
+				BSP_CASS__c,
+				CaseArea__c,
+				BSPCountry__c,
+				Next_Remittance_Date__c,
+				Visible_on_ISS_Portal__c,
+				End_Date_of_Sales_Period__c,
+				Start_Date_of_Sales_Period__c
+			 FROM 
+				Case 
+			 WHERE 
+				AccountId = :acct.Id
+			 AND
+				RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process'
+			 LIMIT 1
+			];
 
-        ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-            RecordTypeId = riskAlertEDSRecType, 
-            ANG_Account__c = acct.Id
-        );
+		Operational_Calendar__c oc = 
+			[SELECT 
+				Id, 
+				First_Day__c, 
+				Last_Day__c, 
+				Remittance_Day__c,
+				Frequency_Code__c
+			 FROM 
+				Operational_Calendar__c 
+			 WHERE 
+				ISS_Operation__c = :acct.IATA_ISO_Country__r.AMS_Settlement_System__c
+			 LIMIT 1
+			];
 
-        Test.startTest();
+		String expectedSubject = 'SMAP - EDS - ' + acct.IATA_ISO_Country__r.ISO_Code__c + ' - ' + acct.IATACode__c;
 
-        insert ra;
+		system.assert(cse.Status == 'Open', 'The SMAP status must be Open');
+		system.assert(cse.Reason == 'EDS', 'The SMAP Reason must be \'EDS\'');
+		system.assert(cse.Reason1__c == 'EDS', 'The SMAP Reason1 must be \'EDS\'');
+		system.assert(cse.Subject == expectedSubject, 'The SMAP Subject must be: \'' + expectedSubject + '\'');
+		system.assert(cse.CaseArea__c == 'Agency Risk Management', 'The SMAP Case Area must be \'Agency Risk Management\'');
+		system.assert(cse.Origin == 'Risk Monitoring Engine', 'The SMAP Origin must be \'Risk Monitoring Engine\'');
+		system.assert(cse.BSPCountry__c == acct.IATA_ISO_Country__r.Name, 'The SMAP BSP Country must be \'' + acct.IATA_ISO_Country__r.Name + '\'');
+		system.assert(cse.BSP_CASS__c == 'BSP', 'The SMAP BSP Cass must be \'BSP\'');
+		system.assert(cse.Region__c == acct.Region_formula__c, 'The SMAP Region must be \'' + acct.Region_Formula__c + '\'');
+		system.assert(cse.Start_Date_of_Sales_Period__c == oc.First_Day__c, 'The SMAP Start Date of Sales Period must be \'' + oc.First_Day__c + '\'');
+		system.assert(cse.End_Date_of_Sales_Period__c == oc.Last_Day__c, 'The SMAP End Date of Sales Period must be \'' + oc.Last_Day__c + '\'');
+		system.assert(cse.Next_Remittance_Date__c == oc.Remittance_Day__c, 'The SMAP Next Remittance Date must be \'' + oc.Remittance_Day__c + '\'');
 
-        Test.stopTest();
+		List<Contact> contactLst = acct.Contacts;
 
-        Case cse = 
-            [SELECT 
-                Id, 
-                Status,
-                Reason, 
-                Origin,
-                Subject,
-                ContactId,
-                Reason1__c,
-                CaseArea__c,
-                Visible_on_ISS_Portal__c 
-             FROM 
-                Case 
-             WHERE 
-                AccountId = :acct.Id
-             AND
-                RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process'
-            ];
+		Contact expectedContact = null;
 
-        String expectedSubject = 'SMAP - EDS - ' + acct.IATA_ISO_Country__r.ISO_Code__c + ' - ' + acct.IATACode__c;
+		for(Contact c : contactLst){
+			
+			if(c.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
+				expectedContact = c;
+				break;
+			}
+			else if (c.Financial_Assessment_Contact__c){
+				expectedContact = c;
+			}
 
-        system.assert(cse.Status == 'Open', 'The SMAP status must be Open');
-        system.assert(cse.Reason == 'EDS', 'The SMAP Reason must be \'EDS\'');
-        system.assert(cse.Reason1__c == 'EDS', 'The SMAP Reason1 must be \'EDS\'');
-        system.assert(cse.Subject == expectedSubject, 'The SMAP Subject must be: \'' + expectedSubject + '\'');
-        system.assert(cse.CaseArea__c == 'Agency Risk Management', 'The SMAP Case Area must be \'Agency Risk Management\'');
-        system.assert(cse.Origin == 'Risk Monitoring Engine', 'The SMAP Origin must be \'Risk Monitoring Engine\'');
-        
-    } 
+		}
+		
+		system.assert(cse.ContactId == expectedContact.Id, 'The SMAP Contact must be \'' + expectedContact.Name + '\'(' + expectedContact.Id + ')');
+	
+	}
 
 }

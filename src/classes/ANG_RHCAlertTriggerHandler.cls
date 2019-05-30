@@ -538,7 +538,7 @@ public class ANG_RHCAlertTriggerHandler{
             List<Case> smapCasesToInsertLst = new List<Case>();
 
             for(ANG_Risk_Alert__c ra: edsAlerts){
-                Case smapCase = createSMAPCaseFromEDSAlert(ra, acct, smapRecType, contactsPerAccount, mapAccountOpCalendar, dmlOpts);
+                Case smapCase = createSMAPCaseFromEDSAlert(ra, raAccMap.get(ra.Id), smapRecType, contactsPerAccount, mapAccountOpCalendar, dmlOpts);
                 smapCasesToInsertLst.add(smapCase);
             }
 
@@ -931,7 +931,8 @@ public class ANG_RHCAlertTriggerHandler{
         smapCase.AccountId = ra.ANG_Account__c;
         smapCase.Status = 'Open';
         smapCase.CaseArea__c = 'Agency Risk Management';
-        smapCase.Reason__c = 'EDS';
+        smapCase.Reason = 'EDS';
+        smapCase.Reason1__c = 'EDS';
         smapCase.RecordTypeId = smapRecType;
         smapCase.Subject = 'SMAP - EDS - ' + acct.IATA_ISO_Country__r.ISO_Code__c + ' - ' + acct.IATACode__c;
         smapCase.Region__c = acct.Region_formula__c;
@@ -951,6 +952,8 @@ public class ANG_RHCAlertTriggerHandler{
         assignCaseContact(smapCase, ra.ANG_Account__c, contactsPerAccountMap);
 
         smapCase.setOptions(dmlOpts);
+
+        return smapCase;
 
     }
 
