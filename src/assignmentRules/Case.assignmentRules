@@ -5299,31 +5299,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesComplaintsAME</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Africa &amp; Middle East</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.IsComplaint__c</field>
-                <operation>equals</operation>
-                <value>True</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subject</field>
-                <operation>startsWith</operation>
-                <value>#C Africa &amp; Middle East</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Cases_Complaints_Americas</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 AND 2 AND 3) OR 4) AND 5</booleanFilter>
