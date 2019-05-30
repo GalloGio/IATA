@@ -33,22 +33,14 @@
         $A.enqueueAction(action);
 
         //Data Quality//
-        var action = c.get("c.getCountriesWithStatesAvailable");
-
-        action.setCallback(this, function(r){
-
-            //list of countries that don't have states loaded            
-            c.set("v.listOfCountriesWithStates", r.getReturnValue());
+               
+            h.checkCountryStates(c,e,h,'Billing',c.get("v.country"));
             
-            h.checkCountryStates(c,e,h,'Billing',c.get("v.country").Name);
             //Set shipping country picklist equals to billing country since account.BillingCountry and account.ShippingCountry
             //are the same from the previous component
             c.find("ShippingCountry").set("v.value", c.get("v.country.Id"));
             h.setCountry(c,e,h);
-        });
-
-        $A.enqueueAction(action);
-                
+                     
         //Data Quality//
     },
     sectorChanged : function (c, e, h) {
@@ -88,8 +80,14 @@
         c.set("v.valid"+addressType, 0);
         c.set("v.suggestionsMode", "hidden");
         
+        //clear warnings
+        h.clearWarnings(c,e,h,addressType);
+        h.clearContextLabelWarnings(c,e,h,addressType);
+        
         // if copy checkbox is selectected copy billing to shipping
         h.copyBillingToShipping(c, e, h);
+
+        
     },
 
     validateAddress : function (c, e, h) {
@@ -180,7 +178,6 @@
             
                 c.set('v.cityDoesNotExist'+mode, true);        
                 c.set('v.invalidCity', currentCity);
-
                 c.set('v.cityInvalidWarning', false);
                 c.set('v.cityDoesntExistWarning', true);
                 c.set('v.stateInvalidWarning', false);
@@ -190,7 +187,6 @@
 
                 c.set('v.cityInAnotherState'+mode, true);
                 c.set('v.invalidCity', currentCity);
-
                 c.set('v.cityInvalidWarning', false);
                 c.set('v.cityDoesntExistWarning', false);
                 c.set('v.stateInvalidWarning', true);
@@ -208,6 +204,7 @@
 
             if( c.get('v.cityDoesNotExist'+mode) || c.get('v.cityInAnotherState'+mode) || c.get('v.cityInAnotherCountry'+mode) ){
                 c.set('v.valid'+mode, 3);
+                h.copyBillingToShipping(c, e, h);
             }else{
 
             var addressInfo = {
@@ -275,6 +272,7 @@
     
     copyBilling: function (c, e, h) {
         h.clearContextLabelWarnings(c, null, null, 'Shipping');
+        h.clearWarnings(c,e,h,'Shipping');
         //check if information need to be passed to shipping as well
         h.copyBillingToShipping(c, e, h);
     },
@@ -283,10 +281,11 @@
         
         let localId = e.getSource().getLocalId();
         let mode = localId.includes('Billing')?'Billing':'Shipping';        
-        h.clearWarnings(c,e,h, mode);
+        h.clearWarnings(c,e,h, mode, true);
         h.clearContextLabelWarnings(c,e,h, mode);
         h.updateAddress(c,e,h,mode);        
     },
+
     updateState: function(c,e,h){
         //Data quality//
         
@@ -327,7 +326,10 @@
             
             let statenameid = c.get('v.stateNameId'+modes[i]);
             let citynameid = c.get('v.cityNameId'+modes[i]);
-            let stateElement = c.find(modes[i]+'State');
+
+            //checking if the value of the state is in the inputBox(added as workaround) or in a picklist
+            
+            let stateElement = (c.get("v.copyAddress")&&modes[i]==='Shipping')?c.find('InputShippingState'):c.find(modes[i]+'State');
             let cityElement = c.find(modes[i]+'City');
             let addDocComponent = c.find('addDocComponent'+modes[i]);
             let streetElement = addDocComponent.find('Street');
@@ -432,106 +434,21 @@
             
             let dataQualityFeedback = ''; 
             
-            if(billingCityInAnotherCountry){            
-                    
-                if(dataQualityFeedback){
-                    
-                    dataQualityFeedback+=';Billing city found in another country'; 
-                    
-                }else{
-                    
-                    dataQualityFeedback='Billing city found in another country';                    
-                }
-            }
-            
-            if(billingCityInAnotherState){            
-                    
-                if(dataQualityFeedback){
-                    
-                    dataQualityFeedback+=';Billing city found in another state'; 
-                    
-                }else{
-                    
-                    dataQualityFeedback='Billing city found in another state';                    
-                }
-            }
-            
-            if(billingCityDoesNotExist){
-
-                if(dataQualityFeedback){
-            
-                    dataQualityFeedback+=';Billing city not found in our Database'; 
-            
-                }else{
-            
-                    dataQualityFeedback='Billing city not found in our Database';
-            
-                }
-            }
-            
-            if(c.get("v.validBilling") === -1){
-
-                if(dataQualityFeedback){
-            
-                    dataQualityFeedback+=';Billing address not found by address doctor'; 
-            
-                }else{
-            
-                    dataQualityFeedback='Billing address not found by address doctor';
-            
-                }
-            }
-
-
-            if(shippingCityInAnotherCountry){            
-                    
-                if(dataQualityFeedback){
-                    
-                    dataQualityFeedback+=';Shipping city found in another country'; 
-                    
-                }else{
-                    
-                    dataQualityFeedback='Shipping city found in another country';                    
-                }
-            }
-
-            if(shippingCityInAnotherState){            
-                    
-                if(dataQualityFeedback){
-                    
-                    dataQualityFeedback+=';Shipping city found in another state'; 
-                    
-                }else{
-                    
-                    dataQualityFeedback='Shipping city found in another state';                    
-                }
-            }
-            
-            if(shippingCityDoesNotExist){
-
-                if(dataQualityFeedback){
-            
-                    dataQualityFeedback+=';Shipping city not found in our Database'; 
-            
-                }else{
-            
-                    dataQualityFeedback='Shipping city not found in our Database';
-            
-                }
-            }
-            
-            if(c.get("v.validShipping") === -1){
+            if(billingCityInAnotherCountry) dataQualityFeedback=';Billing city found in another country';                    
                 
-                if(dataQualityFeedback){
-                    
-                    dataQualityFeedback+=';Shipping address not found by address doctor'; 
+            if(billingCityInAnotherState) dataQualityFeedback=';Billing city found in another state';                    
+                
+            if(billingCityDoesNotExist) dataQualityFeedback=';Billing city not found in our Database';
             
-                }else{
-                    
-                    dataQualityFeedback='Shipping address not found by address doctor';
+            if(c.get("v.validBilling") === -1) dataQualityFeedback=';Billing address not found by address doctor';
             
-                }
-            }
+            if(shippingCityInAnotherCountry) dataQualityFeedback=';Shipping city found in another country';                    
+                
+            if(shippingCityInAnotherState) dataQualityFeedback+=';Shipping city found in another state'; 
+                    
+            if(shippingCityDoesNotExist) dataQualityFeedback+=';Shipping city not found in our Database'; 
+            
+            if(c.get("v.validShipping") === -1) dataQualityFeedback+=';Shipping address not found by address doctor'; 
             
             if(billingCityObj) c.set('v.billingCityId', billingCityObj.Id);
             
@@ -542,16 +459,18 @@
             if(shippingStateObj) c.set('v.shippingStateId', shippingStateObj.Id);
 
             c.set('v.account.Comment_data_quality_feedback__c','Registration errors.');
-            c.set('v.account.Data_quality_feedback__c', dataQualityFeedback);
+            c.set('v.account.Data_quality_feedback__c', dataQualityFeedback.substring(1));
             
         }
         
         //Data quality//
         return isAllFilled;        
     },
+
     closeModal: function(c){
         c.set("v.suggestionsMode", "hidden");
     },
+
     suggestionSelected: function(c, e) {
         
         // Set input with selected value
@@ -568,30 +487,26 @@
         c.set("v.suggestionsMode", "hidden");   
     },
 
-    getPredictions: function(c, e, h){                
-      
-        h.getPredictions(c, e, h);
-        
-    },
-
-    setCities: function(c, e, h){
-        let m;
-        if(e) m = e.currentTarget.getAttribute('name');
-        h.setCities(c, m);
-    },
 
     setCitiesUpdateAddress: function(c,e,h){
         
-        let m = e.currentTarget.getAttribute('name');   
-        h.clearWarnings(c,e,h);
-        h.setCities(c,e);
-        h.updateAddress(c,e,h,m);
+        let localId = e.getSource().getLocalId();
+        let m = localId.includes('Billing')?'Billing':'Shipping';   
+        
+        h.clearWarnings(c,e,h,m);        
+        h.clearContextLabelWarnings(c,e,h,m);
+        h.setCities(c,e,m);
+        h.updateAddress(c,e,h,m);        
     },
     
     //Only used by shipping at the moment
     setCountry : function (c,e,h) {
-
+        //clear warnings
+        h.clearWarnings(c,e,h,'Shipping');
+        h.clearContextLabelWarnings(c,e,h,'Shipping');
+        h.updateAddress(c,e,h, 'Shipping');
         h.setCountry(c,e,h);
 
     },
+
 })

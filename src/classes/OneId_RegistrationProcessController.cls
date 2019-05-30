@@ -739,19 +739,6 @@ public without sharing class OneId_RegistrationProcessController {
         
         return allCitiesSize > 0 ? allCities.substring(0,allCitiesSize-2):null;
     }
-  
-
-    @AuraEnabled
-    public static List<String> getCountriesWithStatesAvailable(){
-        
-        List<String> cwsa = new List<String>();
-        
-        for(DQ_CountriesWithState__mdt c : [SELECT Label FROM DQ_CountriesWithState__mdt]){
-            cwsa.add(c.Label);
-        }
-
-        return cwsa;
-    }
 
   public static void increaseCodeCoverage(){
       Integer i = 0;

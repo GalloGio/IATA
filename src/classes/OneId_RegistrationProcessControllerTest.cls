@@ -449,12 +449,8 @@ private class OneId_RegistrationProcessControllerTest {
                                                                                   'მონრეალი,ᒧᕆᐊᓪ,モントリオール,蒙特利尔,몬트리올' );
         insert city;
 
-        //DQ_CountriesWithState__mdt countryWithStates = new DQ_CountriesWithState__mdt(Label='Canada');
-        //insert countryWithStates;
-
         OneId_RegistrationProcessController.getStates('Canada');
-        OneId_RegistrationProcessController.getAllCities('Portugal');
-        OneId_RegistrationProcessController.getCountriesWithStatesAvailable();
+        OneId_RegistrationProcessController.getAllCities('Portugal');        
         OneId_RegistrationProcessController.registration(new Account(), new Contact(), null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
                                                                                                                        'billingStateId' => String.valueOf(state.Id),
                                                                                                                        'shippingCityId' => String.valueOf(city.Id),

@@ -12,18 +12,7 @@
 			var currentFocus = -1;
 			var c = component;
 			var h = helper;
-			
-			if(state){
-				state.getElement().addEventListener('click', function(e){
-					h.clearContextLabelWarnings(c,e,h);
-				});
-			}
-			
-			city.getElement().addEventListener('click', function(e){			
-				h.clearContextLabelWarnings(c,e,h);
-			});
-
-			
+						
 			city.getElement().addEventListener('input', function(e){
 				h.toggleInvalidCityWarning(c,e,h);			
 				h.getPredictions(c, e, h, this.value, modes[i]);

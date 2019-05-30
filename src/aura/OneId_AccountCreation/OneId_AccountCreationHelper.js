@@ -16,20 +16,21 @@
 
 	copyBillingToShipping : function(c, e, h) {
     
-        if(c.get("v.copyAddress")) {   
-            
-            if(c.get("v.account.BillingCountry") !== c.get("v.account.ShippingCountry")){
-                c.find("ShippingCountry").set("v.value", c.get("v.country.Id"));
-                h.setCountry(c,e,h);
-            }            
+        if(c.get("v.copyAddress")) {       
+                            
+            c.find("ShippingCountry").set("v.value", c.get("v.country.Id"));
+            c.set("v.countryShipping", c.get("v.countryInformation.countryMap")[c.get("v.country.Id")]);
+            c.set("v.statesShipping", c.get("v.statesBilling"));
+
+            c.set("v.account.ShippingCountry", c.get("v.account.BillingCountry"));                                     
             c.set("v.account.ShippingStreet", c.get("v.account.BillingStreet"));
 			c.set("v.account.ShippingCity", c.get("v.account.BillingCity"));
             c.set("v.account.ShippingState", c.get("v.account.BillingState"));            
             c.set("v.account.ShippingPostalCode", c.get("v.account.BillingPostalCode"));
+
             c.set("v.validShipping", c.get("v.validBilling"));
-            
-            c.find("ShippingState").set("v.value", c.get("v.account.ShippingState"));            
-		}
+        
+        }
 	},
 
 	placePhoneFlags : function(country){		
@@ -47,7 +48,6 @@
     },
     //Data quality
     setCities: function(c,e,m){
-        
         
         let mode;
         let currentState;
@@ -152,10 +152,9 @@
     },
 
     updateAddress: function(c,e,h,m){
-      
-        //change of address makes the validation null
+       //change of address makes the validation null
         c.set("v.valid"+m, 0);        
-
+       
         //check if information need to be passed to shipping as well
         h.copyBillingToShipping(c, e, h);
     },
@@ -165,8 +164,8 @@
         c.set('v.cityInAnotherState', false);                
     },
 
-    clearWarnings: function(c,e,h, m){     
-           
+    clearWarnings: function(c,e,h,m){     
+        
         c.set('v.cityInAnotherCountry'+m, false);         
         c.set('v.cityDoesNotExist'+m, false);
         c.set('v.cityInAnotherState'+m, false);
@@ -261,36 +260,31 @@
     },
 
     setCountry: function(c,e,h){
-        if(c.get("v.selectedCountry")){
-            
-            
+
+        if(c.get("v.selectedCountry")){                        
             c.set("v.countryShipping", c.get("v.countryInformation.countryMap")[c.get("v.selectedCountry")]);	
-            let countryName = c.get("v.countryShipping").Name;
-            
-            c.set("v.account.ShippingCountry", countryName);
-            
-            h.checkCountryStates(c,e,h,'Shipping',countryName);
+            let country = c.get("v.countryShipping");
+            c.set("v.account.ShippingCountry", country.Name);
+            h.checkCountryStates(c,e,h,'Shipping',country);
         }
     },
 
     checkCountryStates: function(c, e, h, m, cn){
-        c.set("v.countryHasStates"+m, false);
-        let cwsa = c.get("v.listOfCountriesWithStates");
+        c.set("v.countryHasStates"+m, false)
         
-        for(let i = 0; i < cwsa.length; i++){
-         
-            if(cwsa[i] === cn){
-                
-                c.set("v.countryHasStates"+m, true);
-            }
-        }
-
+        if(m === 'Shipping'){
+            $A.util.addClass(c.find('ShippingContainer'),'slds-hide');
+        }         
         //country has states
-        let chs = c.get("v.countryHasStates"+m);
-        
+        let chs = cn.Region_Province_and_Cities_Enabled__c;
+
         if(chs) {
+            c.set("v.countryHasStates"+m, true);
+            if(m==='Shipping'){
+                $A.util.removeClass(c.find('ShippingContainer'),'slds-hide');
+            }
             c.set("v.spinner", true);
-            h.getStates(c,e,h,m,cn);
+            h.getStates(c,e,h,m,cn.Name);
         }else{
             c.set('v.cities'+m, null);
             c.set('v.states'+m, null);
@@ -299,5 +293,6 @@
             c.set('v.stateNameId'+m, null);
             c.set('v.cityNameId'+m, null);
         }
-    }
+    },
+
 })
