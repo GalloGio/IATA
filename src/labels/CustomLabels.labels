@@ -52,6 +52,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_CountrySAttr_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
+        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
+    </labels>
+    <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22305,13 +22312,6 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Cargo</value>
     </labels>
     <labels>
-        <fullName>ISSP_Cargo_Label_Value</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Cargo</shortDescription>
-        <value>Freight Forwarder</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Cargo_Agent</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22326,6 +22326,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Cargo Agent New</shortDescription>
         <value>Cargo Agent / IFACP Forwarder</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Cargo_Label_Value</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Cargo</shortDescription>
+        <value>Freight Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_CaseCommentEmail</fullName>
@@ -37074,12 +37081,5 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-    <labels>
-        <fullName>AMS_CountrySAttr_Validation</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
-        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
     </labels>
 </CustomLabels>
