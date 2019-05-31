@@ -9,6 +9,11 @@
     width:100%;
 }
 
+.searchBarRow lightning-button{
+    border-color: transparent;
+    background-color: transparent;
+}
+
 .searchBarIcon {
     display: flex;
     justify-content: center;
