@@ -5,6 +5,11 @@ private class ANG_EarlyDetectionSystemTest {
 		
 		Test.startTest();
 
+		EDS_Alert_Stakeholders__c edsStakeholder = new EDS_Alert_Stakeholders__c();
+		edsStakeholder.Name = 'Bob Stakeholder';
+		edsStakeholder.Email__c = 'bob.stakeholder@test.com';
+		insert edsStakeholder;
+
 		Map<String, Profile> airlineProfileMap = new Map<String, Profile>(
 			[SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']
 		);
@@ -202,7 +207,10 @@ private class ANG_EarlyDetectionSystemTest {
 		for(Account acct : acctMap.values()){
 			ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
 				RecordTypeId = riskAlertEDSRecType, 
-				ANG_Account__c = acct.Id
+				ANG_Account__c = acct.Id,
+				ANG_Open_Cash_Position__c = 634.46,
+				ANG_Triggered_Rules__c = 'Cash Sales Shift;Cross Border Sales',
+				ANG_Agent_current_standing__c = 'Cross Border Sales: 0.5\nCash Sales Shift: 0.6\n'
 			);
 			raLst.add(ra);
 		}
@@ -261,7 +269,10 @@ private class ANG_EarlyDetectionSystemTest {
 
 		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
 			RecordTypeId = riskAlertEDSRecType, 
-			ANG_Account__c = acct.Id
+			ANG_Account__c = acct.Id,
+			ANG_Open_Cash_Position__c = 634.46,
+			ANG_Triggered_Rules__c = 'Cash Sales Shift;Cross Border Sales',
+			ANG_Agent_current_standing__c = 'Cross Border Sales: 0.5\nCash Sales Shift: 0.6\n'
 		);
 
 		Test.startTest();
