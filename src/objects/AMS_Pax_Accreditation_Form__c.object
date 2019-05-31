@@ -5459,17 +5459,42 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Same_Legal_Entity_Agency__c</fullName>
+        <fullName>Same_Legal_Entity_Agency_Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Same Legal Entity Agency</label>
-        <referenceTo>AMS_Pax_Accreditation_Form__c</referenceTo>
+        <label>Same Legal Entity Agency Account</label>
+        <referenceTo>Account</referenceTo>
         <relationshipLabel>AMS Online Accreditations</relationshipLabel>
-        <relationshipName>Same_Legal_Entity_Agencies</relationshipName>
+        <relationshipName>Same_Legal_Entity_Agency_Accounts</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Same_Legal_Entity_Agency_Form__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Same Legal Entity Agency Form</label>
+        <referenceTo>AMS_Pax_Accreditation_Form__c</referenceTo>
+        <relationshipLabel>AMS Online Accreditations</relationshipLabel>
+        <relationshipName>Same_Legal_Entity_Agency_Forms</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Same_Legal_Entity_Agency_Id__c</fullName>
+        <description>Same Legal Entity Id Used in Step A of Multicountry</description>
+        <externalId>false</externalId>
+        <label>Same Legal Entity Agency Id</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Saved_At_Least_Once__c</fullName>

@@ -270,8 +270,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public List<SelectOption> countryList {
         get {
             if (countryList == null) {
-                countryList = new List<SelectOption>();
-                countryList.add(new SelectOption('', ''));
+                countryList = new List<SelectOption>{new SelectOption('', '')};
                 
                 Set<String> isoCodesToExclude = new Set<String>{'IO','TF','GS','UM','UP','VI'};
 
@@ -314,7 +313,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Boolean isMCNewAEAccredited {get; set;}
     public Boolean termsAndConditionsMC {get; set;}
-    public Id legalNameSelectedAccountId {get; set;}
     public Map<String, Map<String, List<AgencyInfoByISOWrapper>>> agencyListByBSPByISOMap {get; set;}
     private List<Account> mcHierarchyAccounts {
         get {
@@ -463,15 +461,14 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         // NewGen is only valid for Travel Agents
-        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent'));
         namEnabled = isocountry.ANG_Enable_NewGen__c;
 
         checkEligibilityForAChange();
 
-        applyLanguageList = new List<SelectOption>();
-        applyLanguageList.add(new SelectOption('en_US', 'English'));
-        applyLanguageList.add(new SelectOption('fr', 'Français'));
-        applyLanguageList.add(new SelectOption('es', 'Español'));
+        applyLanguageList = new List<SelectOption>{new SelectOption('en_US', 'English'),
+                                                new SelectOption('fr', 'Français'),
+                                                new SelectOption('es', 'Español')};
 
         applyLanguage = UserInfo.getLanguage();
         displayLanguage = UserInfo.getLanguage();
@@ -578,7 +575,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
                 // NewGen is only valid for Travel Agents
-                newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent')) ;
+                newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && sectorValue.StartsWith('Travel_Agent'));
                 namEnabled = isocountry.ANG_Enable_NewGen__c;
 
                 amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
@@ -875,7 +872,7 @@ public without sharing class ISSP_AMS_Accreditation {
         applyLanguage = newCase.Case_Language__c;
 
         // NewGen is only valid for Travel Agents
-        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && !String.isBlank(sectorValue) && sectorValue.StartsWith('Travel_Agent')) ;//fix amsu-113
+        newAccreditationModels = (isocountry.ANG_Enable_NewGen__c == true && !String.isBlank(sectorValue) && sectorValue.StartsWith('Travel_Agent'));//fix amsu-113
 
         if (sectorValue != null) {
             if (sectorValue.StartsWith('Cargo_Agent'))
@@ -1011,7 +1008,8 @@ public without sharing class ISSP_AMS_Accreditation {
     private List<Account> fetchAllHierarchyAccounts() {
         return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, 
                     BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c, IATA_ISO_Shipping_Country__c, 
-                    IATA_ISO_Shipping_State__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c
+                    IATA_ISO_Shipping_State__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
+                    TradeName__c, Company_Type__c
                 FROM Account
                 WHERE (Top_Parent__c = :hqAccount.Id OR Id = :hqAccount.Id)
                 ORDER BY Legal_name__c];
@@ -1087,7 +1085,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<SelectOption> countryISOCodeList {
         get {
-            List<SelectOption> options = new List<SelectOption>();
+            List<SelectOption> options = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_COUNTRY)};
 
             Map<String, String> mapRegionToOtherRegion = new Map<String, String>{'Americas' => 'Americas', 'Europe' => 'Africa & Middle East', 'Africa & Middle East' => 'Europe',
                 'Asia & Pacific' => 'China & North Asia', 'China & North Asia' => 'Asia & Pacific'};
@@ -1110,9 +1108,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             List<IATA_ISO_Country__c> isoList = Database.query(query);
 
-            options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
             for (IATA_ISO_Country__c iso : isoList) {
-
                 if (applyLanguage == 'es') {
                     if (iso.IATA_Country_SP__c != null)
                         options.add(new SelectOption(iso.ISO_Code__c , iso.IATA_Country_SP__c));
@@ -1135,9 +1131,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<SelectOption> countryNameList {
         get {
-            List<SelectOption> options = new List<SelectOption>();
+            List<SelectOption> options = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_COUNTRY)};
 
-            list<IATA_ISO_Country__c> isoList;
+            List<IATA_ISO_Country__c> isoList;
             if (applyLanguage == 'es') {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
                 
@@ -1148,7 +1144,6 @@ public without sharing class ISSP_AMS_Accreditation {
                 isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
             }
 
-            options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
             for (IATA_ISO_Country__c iso : isoList) {
                 if (applyLanguage == 'es') {
                     if (iso.IATA_Country_SP__c != null)
@@ -1186,8 +1181,7 @@ public without sharing class ISSP_AMS_Accreditation {
                                 WHERE RecordType.DeveloperName IN ('IATA_Airline') AND Membership_status__c = 'IATA member'
                                 ORDER BY Name];
 
-        List<SelectOption> member_airlines = new List<SelectOption>();
-        member_airlines.add(new SelectOption('', '--None--'));
+        List<SelectOption> member_airlines = new List<SelectOption>{new SelectOption('', '--None--')};
 
         for (Account als : members) {
             member_airlines.add(new SelectOption(als.id, als.Name + ' (' + als.Airline_designator__c + ')'));
@@ -1258,12 +1252,10 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public String getContactAccount() {
-        List<SelectOption> options = new List<SelectOption>();
         Account conAccount = con.Account;
         String optionLabel = conAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? conAccount.Location_Type__c : conAccount.Name) + ' (' + conAccount.BillingCity + (conAccount.BillingState!= null ? ' ' + conAccount.BillingState : '') + ')';
         
-        options.add(new SelectOption(conAccount.IATACode__c, optionLabel));
-        agencyCodesConcerned = options;
+        agencyCodesConcerned = new List<SelectOption>{new SelectOption(conAccount.IATACode__c, optionLabel)};
         newForm.Scope_of_Change__c = 'Selected Branches Only';
         
         return optionLabel;
@@ -1271,7 +1263,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<SelectOption> getAgencyCodesConcerned() {
         List<Account> accountList = new List<Account>();
-        List<SelectOption> options = new List<SelectOption>();
 
         if(hierarchyValues.size() > 0){
             for(HierarchyItem hi:  hierarchyValues){
@@ -1567,6 +1558,12 @@ public without sharing class ISSP_AMS_Accreditation {
         if (!isNoticeOfChange) {
             if (isMultiCountryNewAE || isMCNewAEAccredited) {
                 amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
+
+                if (isMultiCountryNewAE && !isMCNewAEAccredited) {
+                    newForm.Same_Legal_Entity_Agency_Form__c = newForm.Same_Legal_Entity_Agency_Id__c;
+                } else if (isMCNewAEAccredited) {
+                    newForm.Same_Legal_Entity_Agency_Account__c = newForm.Same_Legal_Entity_Agency_Id__c;
+                }
             }
 
             if(amsLocationType == null) {
@@ -1623,9 +1620,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 return null;
             }
 
-            if (isMultiCountryNewAE && String.isBlank(newForm.Same_Legal_Entity_Agency__c) && String.isBlank(newForm.Account_Name__c)) {
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Null));
-                return null;
+            if (String.isBlank(newForm.Account_Name__c)) {
+                if ((isMultiCountryNewAE && !isMCNewAEAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Form__c)) || (isMCNewAEAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Account__c))) {
+                    ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Null));
+                    return null;
+                }
             }
 
             if((newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD && (newCase.IFAP_Country_ISO__c == hqCountryISOCode)) 
@@ -1656,7 +1655,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             newCase.recordTypeId = RECORD_TYPE_ID;
-            newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
+            newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c;
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
 
             if (isMultiCountryNewAE) {
@@ -1742,8 +1741,8 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
 
                         if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null)){  //Legal name is editable for BR Abroad, so set default value
-                            
-                            newForm.Account_Name__c = hqAccount.Name;                        }
+                            newForm.Account_Name__c = hqAccount.Name;                        
+                        }
 
                         saveAMSForm();
 
@@ -7226,7 +7225,7 @@ public without sharing class ISSP_AMS_Accreditation {
         if (accRole.Legacy_External_ID__c != null) {
             auxAccreditCont.Legacy_External_Id__c = accRole.Legacy_External_ID__c;
             auxAccreditCont.First_name__c = '';
-            auxAccreditCont.Last_name__c = accRole.Owner_Name__c != null ? accRole.Owner_Name__c : accRole.Employee_Name__c ;
+            auxAccreditCont.Last_name__c = accRole.Owner_Name__c != null ? accRole.Owner_Name__c : accRole.Employee_Name__c;
             auxAccreditCont.Name = accRole.Owner_Name__c;
             auxAccreditCont.RecordTypeId = rtRecordTypePerson;
 
@@ -7326,7 +7325,7 @@ public without sharing class ISSP_AMS_Accreditation {
         newCase.Reason1__c = AMS_Utils.CASE_REASON_OPT_OUT;
         newCase.Origin = AMS_Utils.CASE_ORIGIN_PORTAL;
         newCase.Visible_on_ISS_Portal__c = true;
-        newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
+        newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c;
         newCase.Country_concerned_by_the_query__c = isocountry.Name;
         newCase.Region__c = isocountry.Region__c;
         newCase.Type_of_customer__c = AMS_Utils.CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT;
@@ -7353,7 +7352,7 @@ public without sharing class ISSP_AMS_Accreditation {
                                                                             AE_separate_Legal_Entity__c, ISSP_Branch_AccountId__c, Branch_Office_Phone__c,
                                                                             Branch_Office_FAX__c, Branch_Office_Email__c, Branch_Office_City__c,
                                                                             State_Province__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
-                                                                            Same_Legal_Entity_Agency__c, Account_Name__c, Location_Type__c,
+                                                                            Same_Legal_Entity_Agency_Form__c, Same_Legal_Entity_Agency_Account__c, Account_Name__c, Location_Type__c,
                                                                             Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
@@ -7368,13 +7367,23 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private void populateFieldsFromParentForm(AMS_Pax_Accreditation_Form__c currentMCForm) {
-        Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
+        if (String.isEmpty(currentMCForm.Same_Legal_Entity_Agency_Form__c)) {
+            Map<Id, Account> mcHierarchyAccountsMap = new Map<Id, Account>(mcHierarchyAccounts);
+
+            Account parentAux = mcHierarchyAccountsMap.get(currentMCForm.Same_Legal_Entity_Agency_Account__c);
+
+            currentMCForm.Account_Name__c = parentAux.Name;
+            currentMCForm.Trade_Name__c = parentAux.TradeName__c;
+            currentMCForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(parentAux.Company_Type__c);
+        } else if (String.isEmpty(currentMCForm.Same_Legal_Entity_Agency_Account__c)) {
+            Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
+
+            AMS_Pax_Accreditation_Form__c parentAux = mCApplicationFormMap.get(currentMCForm.Same_Legal_Entity_Agency_Form__c);
         
-        AMS_Pax_Accreditation_Form__c parentAux = mCApplicationFormMap.get(currentMCForm.Same_Legal_Entity_Agency__c);
-        
-        currentMCForm.Account_Name__c = parentAux.Account_Name__c;
-        currentMCForm.Trade_Name__c = parentAux.Trade_Name__c;
-        currentMCForm.ISSP_AMS_Legal_Status__c = parentAux.ISSP_AMS_Legal_Status__c;
+            currentMCForm.Account_Name__c = parentAux.Account_Name__c;
+            currentMCForm.Trade_Name__c = parentAux.Trade_Name__c;
+            currentMCForm.ISSP_AMS_Legal_Status__c = parentAux.ISSP_AMS_Legal_Status__c;
+        }
     }
 
     private void checkSubmitMC(List<AMS_Pax_Accreditation_Form__c> mCountryApplicationForms) {
@@ -7421,7 +7430,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 AMS_Pax_Accreditation_Form__c formToBeUpdated;
 
                 for (AMS_Pax_Accreditation_Form__c existingMCForm: mCApplicationFormMap.values()) {
-                    if (existingMCForm.Same_Legal_Entity_Agency__c == formToDelete.Id) {
+                    if (existingMCForm.Same_Legal_Entity_Agency_Form__c == formToDelete.Id) {
                         existingMCForm.AE_separate_Legal_Entity__c = 'Yes';
                         existingMCForm.Status__c = 'InProgress';
 
@@ -7449,7 +7458,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private void copyOwnersFromParentForm(AMS_Pax_Accreditation_Form__c formToBeUpdated) {
         List<AMS_Accreditation_Contact__c> contactsToBeCreated = new List<AMS_Accreditation_Contact__c>();
         
-        for (AMS_Accreditation_Contact__c con: dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency__c)) {
+        for (AMS_Accreditation_Contact__c con: dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)) {
             AMS_Accreditation_Contact__c newCon = new AMS_Accreditation_Contact__c();
 
             newCon.AMS_Pax_Accreditation_Form__c = formToBeUpdated.Id;

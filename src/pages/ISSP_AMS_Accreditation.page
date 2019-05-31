@@ -802,7 +802,7 @@
 
                                         <div class="col-lg-9" id="legalNames" style="padding-top:7px;">
                                             <apex:outputPanel rendered="{!isMultiCountryNewAE}">
-                                                <apex:selectList id="legalNameSelected" required="false" styleClass="form-control" style="width:40%; display: none;" value="{!newForm.Same_Legal_Entity_Agency__c}" size="1">
+                                                <apex:selectList id="legalNameSelected" required="false" styleClass="form-control" style="width:40%; display: none;" value="{!newForm.Same_Legal_Entity_Agency_Id__c}" size="1">
                                                     <apex:selectOptions value="{!legalNameOptions}"/>
                                                 </apex:selectList>
 
