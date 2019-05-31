@@ -352,6 +352,7 @@
     <recordTypes>
         <fullName>Risk_Alert_EDS</fullName>
         <active>true</active>
+        <description>EDS Alert received from external systems for newgen and non newgen accounts</description>
         <label>Risk Alert EDS</label>
         <picklistValues>
             <picklist>ANG_Triggered_Rules__c</picklist>
