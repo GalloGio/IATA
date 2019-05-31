@@ -3103,7 +3103,7 @@ public class AMS_OSCARTriggerHandler {
             Id isoState = accreditation.Shipping_ISO_State__c;
             Id isoCountry = accreditation.Shipping_ISO_Country__c;
 
-            if(String.isBlank(street) && String.isBlank(city) && String.isBlank(state) && String.isBlank(zipCode) /* && String.isBlank(country) */ && isoState == null && isoCountry == null) {
+            if(String.isBlank(street) && String.isBlank(city) && /*String.isBlank(state) &&*/ String.isBlank(zipCode) /* && String.isBlank(country) */ && isoState == null && isoCountry == null) {
                 return;
             }
 
