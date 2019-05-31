@@ -16,6 +16,61 @@ public class ANG_RHCAlertTriggerHandler{
     public final Double UPPERFLUCTUATION = 1;
     public final Double LOWERFLUCTUATION = 2;
 
+    private static final String RTS_NOTIFICATION_MANAGER_ORANGE = 'RTS_Notification_Manager_orange';
+    private static final String RTS_NOTIFICATION_MANAGER = 'RTS_Notification_Manager';
+    private static final String EDS_NOTIFICATION = 'EDS_Alert_Notification';
+   
+    private static List<OrgWideEmailAddress> orgWideEmail {
+        get {
+            if(orgWideEmail == NULL){
+                orgWideEmail = 
+                    [SELECT 
+                        Id 
+                     FROM 
+                        OrgWideEmailAddress 
+                     WHERE 
+                        Address = 'noreply@iata.org'
+                    ];
+            }
+            return orgWideEmail;
+        }
+    }
+
+    private static Map<String, EmailTemplate> emailTemplateMap {
+        get {
+
+            if(emailTemplateMap == NULL){
+
+                List<EmailTemplate> emailTemplateLst = new List<EmailTemplate>(
+                    [SELECT
+                        Id,
+                        Body,
+                        Subject,
+                        HtmlValue,
+                        DeveloperName
+                     FROM
+                        EmailTemplate
+                     WHERE
+                        DeveloperName IN (
+                            :RTS_NOTIFICATION_MANAGER_ORANGE, 
+                            :RTS_NOTIFICATION_MANAGER,
+                            :EDS_NOTIFICATION
+                        )
+                    ]
+                );
+
+                emailTemplateMap = new Map<String, EmailTemplate>();
+
+                for(EmailTemplate et : emailTemplateLst){
+                    emailTemplateMap.put(et.DeveloperName, et);
+                }
+
+            }
+
+            return emailTemplateMap;
+        
+        }
+    }
 
     // ************************************************************
     // ****************** distribution methods ********************
@@ -123,7 +178,12 @@ public class ANG_RHCAlertTriggerHandler{
             }
         }
 
-        if(!orangeRiskAlerts.isEmpty())sendNotificationToSeniors(orangeRiskAlerts,'RTS_Notification_Manager_orange',false);
+        if(!orangeRiskAlerts.isEmpty()){
+            List<Messaging.SingleEmailMessage> emailLst = createNotificationToSeniors(orangeRiskAlerts, RTS_NOTIFICATION_MANAGER_ORANGE, false);
+            if(!emailLst.isEmpty()){
+                Messaging.sendEmail(emailLst);
+            }
+        }
 
         //prevent breaking already existing logic
         raAccMap.clear();
@@ -488,7 +548,8 @@ public class ANG_RHCAlertTriggerHandler{
             SELECT id,Name, IATACode__c, Location_Class__c, ANG_IsNewGenAgency__c, Top_Parent__c, CurrencyIsoCode, Guaranteed_amount__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.BSP_Country_free_text__c,Remittance_frequency__c,IATA_ISO_Country__c,IATA_ISO_Country__r.Name,
                     IATA_ISO_Country__r.ISO_Code__c, Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Name, Location_Type__c,
         
-        (SELECT ID,Name,RecordTypeId, ANG_Account__c,CurrencyIsoCode,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c
+        (SELECT ID,Name,RecordTypeId, ANG_Account__c,CurrencyIsoCode,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
+                ANG_Agent_current_standing__c, ANG_Open_Cash_Position__c, ANG_Triggered_Rules__c
         FROM Risk_Alerts__r 
         WHERE ID IN :triggerNew
         AND recordTypeId IN :targetRecordTypesSet
@@ -533,6 +594,8 @@ public class ANG_RHCAlertTriggerHandler{
         Database.DMLOptions dmlOpts = new Database.DMLOptions();
         dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
         
+        List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
+
         if(!edsAlerts.isEmpty()){
 
             List<Case> smapCasesToInsertLst = new List<Case>();
@@ -549,11 +612,13 @@ public class ANG_RHCAlertTriggerHandler{
                 Database.insert(smapCasesToInsertLst, false);
             }
 
+            emailLst.addAll(createEdsAlertNotifications(edsAlerts, raAccMap));
+
         }
 
         if(!redAlerts.isEmpty()){
             // NEWGEN-2005
-            sendNotificationToSeniors(redAlerts,'RTS_Notification_Manager',true);
+            emailLst.addAll(createNotificationToSeniors(redAlerts, RTS_NOTIFICATION_MANAGER, true));
             // END - NEWGEN-2005
 
             Case smapParentCase;
@@ -716,6 +781,11 @@ public class ANG_RHCAlertTriggerHandler{
                 }
             }
         }
+
+        if(!emailLst.isEmpty()){
+            Messaging.sendEmail(emailLst);
+        }
+
     }
 
     private Map<Id,operational_Calendar__c> fetchCalendar(List<ANG_Risk_Alert__c> ras){
@@ -753,14 +823,17 @@ public class ANG_RHCAlertTriggerHandler{
     }
 
     // NEWGEN-2005
-    private void sendNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts, String emailTemplate, boolean isRedAlert) {
+    private List<Messaging.SingleEmailMessage> createNotificationToSeniors(List<ANG_Risk_Alert__c> riskAlerts, String emailTemplate, boolean isRedAlert) {
+        
+        List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
+
         List<String> toAddresses = new List<String>();
         List<RTS_Senior_Manager__c> sManagersRed = RTS_Senior_Manager__c.getAll().values();
         List<RTS_Orange_Senior_Manager__c> sManagersOrange = RTS_Orange_Senior_Manager__c.getAll().values();
 
         if(sManagersRed.isEmpty() || sManagersOrange.isEmpty()){
             System.debug('Warning: No RTS Senior Managemrs found');
-            return;
+            return emailLst;
         }
 
         if(isRedAlert) {
@@ -779,27 +852,28 @@ public class ANG_RHCAlertTriggerHandler{
 
         system.debug('toAddresses: ' + toAddresses);
 
-        if(String.isEmpty(emailTemplate)){System.debug('Warning: No email Template defined');return;}
+        if(String.isEmpty(emailTemplate)){
+            System.debug('Warning: No email Template defined');
+            return emailLst;
+        }
 
-        List<EmailTemplate> eTemplates = [SELECT Id, Subject,Body FROM EmailTemplate WHERE DeveloperName = :emailTemplate];
-        List<OrgWideEmailAddress> orgWideEmail = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+        EmailTemplate template = emailTemplateMap.get(emailTemplate);
 
-        if (eTemplates.isEmpty() || orgWideEmail.isEmpty()) {
+        if (template == NULL || orgWideEmail.isEmpty()) {
             System.debug('Warning: No email template or org wide email found');
-            return;
+            return emailLst;
         }
 
         if(toAddresses.isEmpty()){
              System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
-             return; 
+             return emailLst;
         }
 
-        EmailTemplate template = eTemplates.get(0);
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        mail.setToAddresses(toAddresses);
-        mail.setSubject(template.Subject); 
-        mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
         for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setToAddresses(toAddresses);
+            mail.setSubject(template.Subject); 
+            mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
             String tBody = template.Body;
             String agentSales = (riskAlert.ANG_Agent_Sales__c == null ? '' : String.valueOf(riskAlert.ANG_Agent_Sales__c));
             String iataCode = (raAccMap.get(riskAlert.id).IATACode__c == null ? '' : raAccMap.get(riskAlert.id).IATACode__c);
@@ -812,8 +886,12 @@ public class ANG_RHCAlertTriggerHandler{
             tbody = tBody.replace('{{fsAmount}}', gAmount);
             
             mail.setPlainTextBody(tBody);
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+
+            emailLst.add(mail);
         }
+
+        return emailLst;
+
     }
     // END - NEWGEN-2005
         
@@ -970,7 +1048,13 @@ public class ANG_RHCAlertTriggerHandler{
     */
     private void assignCaseContact(Case cse, Id acctId, Map<Id, List<Contact>> contactsPerAccountMap){
         
-        for(Contact con : contactsPerAccountMap.get(acctId)){
+        List<Contact> contactLst = contactsPerAccountMap.get(acctId);
+
+        if(contactLst.isEmpty()){
+            return;
+        }
+
+        for(Contact con : contactLst){
             if(con.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
                 cse.ContactId = con.Id;
                 break;
@@ -982,9 +1066,89 @@ public class ANG_RHCAlertTriggerHandler{
                     
         //fallback to have one contact
         if(cse.ContactId == null){
-            cse.ContactId = contactsPerAccountMap.get(acctId)[0].Id;
+            cse.ContactId = contactLst.get(0).Id;
         }
         
+    }
+
+    /**
+    * Create a new EDS Alert email notification
+    *
+    * @param raLst: List<ANG_Risk_Alert__c>
+    * @param raAccountMap: Map<Id, Account>
+    *
+    * @return emailLst: List<Messaging.SingleEmailMessage>
+    *
+    */
+    private List<Messaging.SingleEmailMessage> createEdsAlertNotifications(List<ANG_Risk_Alert__c> raLst, Map<Id, Account> raAccountMap){
+        
+        List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
+
+        List<String> toAddresses = new List<String>();
+
+        List<EDS_Alert_Stakeholders__c> edsAlertStakeholders = EDS_Alert_Stakeholders__c.getAll().values();
+
+        if(edsAlertStakeholders.isEmpty()){
+            System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createEdsAlertNotifications] No EDS Alert Stakeholder found');
+            return emailLst;
+        }
+
+        for(EDS_Alert_Stakeholders__c stakeholder : edsAlertStakeholders){
+            if(String.isNotBlank(stakeholder.Email__c)){
+                toAddresses.add(stakeholder.Email__c);
+            }
+        }
+
+        EmailTemplate template = emailTemplateMap.get(EDS_NOTIFICATION);
+
+        if(template == NULL){
+            System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createEdsAlertNotifications] No EDS Alert Notification Template found');
+            return emailLst;
+        }
+
+        for (ANG_Risk_Alert__c ra: raLst) {
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setToAddresses(toAddresses);
+
+            String subject = template.Subject;
+            
+            Account acct = raAccountMap.get(ra.Id);
+
+            subject = subject.replace('##IATA_CODE##', acct.IATACode__c);
+            subject = subject.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
+
+            mail.setSubject(subject);
+
+            mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
+
+            String tBody = template.HtmlValue;
+            
+            String[] rulesCurrentStanding = 
+                String.isNotBlank(ra.ANG_Agent_current_standing__c) ? 
+                    ra.ANG_Agent_current_standing__c.split('\n') : 
+                    new String[]{};
+            
+            String rulesList = '<ul>';
+
+            for(String rule : rulesCurrentStanding){
+                rulesList += ('<li>' + rule + '</li>');
+            }
+
+            rulesList += '</ul>';
+
+            tBody = tBody.replace('##AGENT_NAME##', acct.Name);
+            tBody = tBody.replace('##IATA_CODE##', acct.IATACode__c);
+            tBody = tBody.replace('##TRIGGERED_RULES##', String.isNotBlank(ra.ANG_Triggered_Rules__c) ? ra.ANG_Triggered_Rules__c.replace(';', ', ') : ' ');
+            tBody = tBody.replace('##RULES_LIST##', rulesList);
+            tBody = tBody.replace('##OPEN_CASH_POSITION##', ra.ANG_Open_Cash_Position__c != NULL ? ra.ANG_Open_Cash_Position__c.format() : ' ');
+
+            mail.setHtmlBody(tBody);
+
+            emailLst.add(mail);
+        }
+        
+        return emailLst;
+
     }
 
     private class RiskAlertParentCaseWrapper {
