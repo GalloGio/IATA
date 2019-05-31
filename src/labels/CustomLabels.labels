@@ -2820,6 +2820,13 @@ Payment required on receipt of this Payment Advice
         <value>Company Profile</value>
     </labels>
     <labels>
+        <fullName>CSP_Community</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Community</shortDescription>
+        <value>Community</value>
+    </labels>
+    <labels>
         <fullName>CSP_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2964,6 +2971,13 @@ Payment required on receipt of this Payment Advice
         <value>We need your action to proceed your case.</value>
     </labels>
     <labels>
+        <fullName>CSP_Portal_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Portal_Status</shortDescription>
+        <value>Portal Status</value>
+    </labels>
+    <labels>
         <fullName>CSP_Question1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3026,6 +3040,20 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_SeeAll</shortDescription>
         <value>See All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SelectCommunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SelectCommunity</shortDescription>
+        <value>Select Community</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SelectPortalStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SelectPortalStatus</shortDescription>
+        <value>Select Portal Status</value>
     </labels>
     <labels>
         <fullName>CSP_Services_AccessRequested</fullName>
@@ -3243,6 +3271,13 @@ Payment required on receipt of this Payment Advice
                         be smaller than 50 MB.</value>
     </labels>
     <labels>
+        <fullName>CSP_selectReason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_selectReason</shortDescription>
+        <value>Select Reason</value>
+    </labels>
+    <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3451,6 +3486,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Company name</shortDescription>
         <value>Company name</value>
+    </labels>
+    <labels>
+        <fullName>ConfirmSendRecycleBin</fullName>
+        <categories>pop-up, modal, alert, confirm</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ConfirmSendRecycleBin</shortDescription>
+        <value>Are you sure you want to move this case to Recycle Bin?</value>
     </labels>
     <labels>
         <fullName>Confirm_password</fullName>
@@ -29658,6 +29701,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>New product id created</value>
     </labels>
     <labels>
+        <fullName>NoEligibleUserForContact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Eligible User</shortDescription>
+        <value>No Eligible User for this Contact</value>
+    </labels>
+    <labels>
         <fullName>NoSameName</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -34728,6 +34778,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>regular price</shortDescription>
         <value>Regular Price</value>
+    </labels>
+    <labels>
+        <fullName>resetPasswordConfirmMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>resetPasswordConfirmMessage</shortDescription>
+        <value>Reset password for this user for the selected community?</value>
     </labels>
     <labels>
         <fullName>select_all</fullName>

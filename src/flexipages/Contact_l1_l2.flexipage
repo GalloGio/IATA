@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Service console :
--Global cases
--SAAM cases
--SEDA cases
--Invoicing and collection cases
--Region cases (case Africa and Middle east...)
--Complaint</description>
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
@@ -15,25 +8,21 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>numVisibleActions</name>
-                <value>3</value>
+                <value>6</value>
             </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentName>force:relatedListQuickLinksContainer</componentName>
         </componentInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>forceChatter:recordFeedContainer</componentName>
-        </componentInstances>
-        <name>Facet-1f63d943-d851-4b51-a9f9-360e395dd5a8</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
             <componentName>force:detailPanel</componentName>
         </componentInstances>
-        <name>Facet-5d37ff4b-bdcd-4b67-8c0d-e998ffe86d2d</name>
+        <name>Facet-32f1e324-f0e2-49f0-b1ed-3e28df8c0826</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -44,7 +33,7 @@
             </componentInstanceProperties>
             <componentName>force:relatedListContainer</componentName>
         </componentInstances>
-        <name>Facet-4e8973df-ac40-402e-9e70-a24a10ca9026</name>
+        <name>Facet-cdfe1df8-7da5-4761-bcf7-cbbb985af020</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -55,18 +44,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-1f63d943-d851-4b51-a9f9-360e395dd5a8</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.feed</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-5d37ff4b-bdcd-4b67-8c0d-e998ffe86d2d</value>
+                <value>Facet-32f1e324-f0e2-49f0-b1ed-3e28df8c0826</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -81,7 +59,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-4e8973df-ac40-402e-9e70-a24a10ca9026</value>
+                <value>Facet-cdfe1df8-7da5-4761-bcf7-cbbb985af020</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -89,14 +67,14 @@
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
-        <name>Facet-528d8a29-8432-489a-9f37-a5e0ac7b20f5</name>
+        <name>Facet-8ec1e433-0ab7-4eb0-8f04-d5a51d4b10d8</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
                 <name>tabs</name>
-                <value>Facet-528d8a29-8432-489a-9f37-a5e0ac7b20f5</value>
+                <value>Facet-8ec1e433-0ab7-4eb0-8f04-d5a51d4b10d8</value>
             </componentInstanceProperties>
             <componentName>flexipage:tabset</componentName>
         </componentInstances>
@@ -104,44 +82,32 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <name>rightsidebar</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
-                <name>enableInlineEdit</name>
+                <name>cacheAge</name>
+                <value>1440</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>reportFilter</name>
+                <value>FK_CNTC_ID</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>reportName</name>
+                <value>YTD_Overall_satisfaction1</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>showRefreshButton</name>
                 <value>true</value>
             </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>entityName</name>
-                <value>Case</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>filterName</name>
-                <value>My_Open_Cases</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>hideActionBar</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>hideSearchBar</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>pageSize</name>
-                <value>5</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:filterListCard</componentName>
+            <componentName>flexipage:reportChart</componentName>
         </componentInstances>
-        <name>leftsidebar</name>
+        <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Service console case record page</masterLabel>
-    <sobjectType>Case</sobjectType>
+    <masterLabel>Contact l1/l2</masterLabel>
+    <sobjectType>Contact</sobjectType>
     <template>
-        <name>flexipage:recordHomePinnedHeaderLeftSidebarTemplateDesktop</name>
+        <name>flexipage:recordHomeTemplateDesktop</name>
     </template>
     <type>RecordPage</type>
 </FlexiPage>
