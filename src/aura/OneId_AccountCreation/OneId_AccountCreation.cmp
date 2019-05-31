@@ -119,8 +119,7 @@
 	<aura:handler name="change" value="{!v.account.Sector__c}" action="{!c.sectorChanged}"/>
 	
 	<aura:registerEvent name="addressSelected" type="c:OneId_AddressSelected_EVT"/>
-	<aura:handler name="addressSelected" event="c:OneId_AddressSelected_EVT" action="{!c.setAddress}"/>
-	<aura:handler name="updateAddress" event="c:OneId_UpdateAddress_EVT" action="{!c.updateAddress}"/>
+	<aura:handler name="addressSelected" event="c:OneId_AddressSelected_EVT" action="{!c.setAddress}"/>	
 
 	<aura:method name="validateRequiredFields"/>
 	

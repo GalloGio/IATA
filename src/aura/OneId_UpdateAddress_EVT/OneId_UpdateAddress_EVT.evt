@@ -1,3 +1,0 @@
-<aura:event type="COMPONENT" description="Update Address" >
-    <aura:attribute type="String" name="addressType"/>
-</aura:event>
