@@ -28,6 +28,7 @@
             c.set("v.account.ShippingState", c.get("v.account.BillingState"));            
             c.set("v.account.ShippingPostalCode", c.get("v.account.BillingPostalCode"));
 
+            c.set("v.countryHasStatesShipping", c.get("v.countryHasStatesBilling"));
             c.set("v.validShipping", c.get("v.validBilling"));
         
         }
@@ -188,8 +189,6 @@
     
     getStates : function(c,e,h,m,cn){
 
-        c.set('v.account.'+m+'State', null);
-        
         var country = cn;
         var action = c.get("c.getStates");
 
@@ -271,10 +270,8 @@
 
     checkCountryStates: function(c, e, h, m, cn){
         c.set("v.countryHasStates"+m, false)
-        
-        if(m === 'Shipping'){
-            $A.util.addClass(c.find('ShippingContainer'),'slds-hide');
-        }         
+        c.set('v.account.'+m+'State', null);
+                 
         //country has states
         let chs = cn.Region_Province_and_Cities_Enabled__c;
 
@@ -286,6 +283,9 @@
             c.set("v.spinner", true);
             h.getStates(c,e,h,m,cn.Name);
         }else{
+            if(m === 'Shipping'){
+                $A.util.addClass(c.find('ShippingContainer'),'slds-hide');
+            }
             c.set('v.cities'+m, null);
             c.set('v.states'+m, null);
             c.set('v.allCities'+m, null);

@@ -411,7 +411,7 @@
 			</div>
 			
 
-			<aura:if isTrue="{!!v.copyAddress}">
+			<aura:if isTrue="{! and(!v.copyAddress, v.countryHasStatesShipping)}">
 				<div aura:id="ShippingContainer" class="slds-form-element slds-m-bottom_small">
 						<label class="slds-form-element__label">{!v.accountLabels.ShippingState}</label>
 						<div class="slds-form-element__control">
@@ -425,7 +425,7 @@
 			</aura:if>
 			
 			<!--This inputbox was added as a workaround due to a constraint on setting the correct state on the shipping picklist when the "Copy Billing Address to Shipping Address" checkbox is selected-->
-			<aura:if isTrue="{!v.copyAddress}">
+			<aura:if isTrue="{! and(v.copyAddress, v.countryHasStatesShipping)}">
 					<div class="slds-form-element slds-m-bottom_small">
 						<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingState}</label>
 						<div class="slds-form-element__control">

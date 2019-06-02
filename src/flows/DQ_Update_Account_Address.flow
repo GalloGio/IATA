@@ -483,7 +483,7 @@
                 <stringValue>IF(NOT(ISBLANK([Account].Geoname_Shipping_City__c) ) , [Account].Geoname_Shipping_City__c.Name , null) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_13_myRule_9_A1_3990980841</name>
+        <name>formula_13_myRule_9_A1_4674467320</name>
         <dataType>String</dataType>
         <expression>IF(NOT(ISBLANK({!myVariable_current.Geoname_Shipping_City__c}) ) , {!myVariable_current.Geoname_Shipping_City__r.Name} , null)</expression>
     </formulas>
@@ -491,23 +491,23 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>IF(NOT(ISBLANK([Account].IATA_ISO_Country__c ) ) , [Account].IATA_ISO_Country__c.Name , null) </stringValue>
+                <stringValue>IF(NOT(ISBLANK([Account].IATA_ISO_Shipping_Country__c) ) ,[Account].IATA_ISO_Shipping_Country__c.Name , null) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_14_myRule_9_A1_7093843373</name>
+        <name>formula_14_myRule_9_A1_7445594223</name>
         <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!myVariable_current.IATA_ISO_Country__c} ) ) , {!myVariable_current.IATA_ISO_Country__r.Name} , null)</expression>
+        <expression>IF(NOT(ISBLANK({!myVariable_current.IATA_ISO_Shipping_Country__c}) ) ,{!myVariable_current.IATA_ISO_Shipping_Country__r.Name} , null)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>IF(NOT(ISBLANK([Account].Iso_State__c ) ) , [Account].Iso_State__c.Name , null) </stringValue>
+                <stringValue>IF(NOT(ISBLANK([Account].IATA_ISO_Shipping_State__c) ) , [Account].IATA_ISO_Shipping_State__c.Name , null) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_15_myRule_9_A1_7463668186</name>
+        <name>formula_15_myRule_9_A1_6968463796</name>
         <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!myVariable_current.Iso_State__c} ) ) , {!myVariable_current.Iso_State__r.Name} , null)</expression>
+        <expression>IF(NOT(ISBLANK({!myVariable_current.IATA_ISO_Shipping_State__c}) ) , {!myVariable_current.IATA_ISO_Shipping_State__r.Name} , null)</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -516,7 +516,7 @@
                 <stringValue>IF(NOT(ISBLANK([Account].Geoname_Billing_City__c) ) , [Account].Geoname_Billing_City__c.Name , null)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_5_myRule_1_A1_7052105799</name>
+        <name>formula_5_myRule_1_A1_4804983709</name>
         <dataType>String</dataType>
         <expression>IF(NOT(ISBLANK({!myVariable_current.Geoname_Billing_City__c}) ) , {!myVariable_current.Geoname_Billing_City__r.Name} , null)</expression>
     </formulas>
@@ -527,7 +527,7 @@
                 <stringValue>IF(NOT(ISBLANK([Account].IATA_ISO_Country__c ) ) , [Account].IATA_ISO_Country__c.Name , null) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_6_myRule_1_A1_0140622127</name>
+        <name>formula_6_myRule_1_A1_4841026212</name>
         <dataType>String</dataType>
         <expression>IF(NOT(ISBLANK({!myVariable_current.IATA_ISO_Country__c} ) ) , {!myVariable_current.IATA_ISO_Country__r.Name} , null)</expression>
     </formulas>
@@ -538,12 +538,12 @@
                 <stringValue>IF(NOT(ISBLANK([Account].IATA_ISO_Billing_State__c) ) , [Account].IATA_ISO_Billing_State__c.Name , null) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_7_myRule_1_A1_7191953164</name>
+        <name>formula_7_myRule_1_A1_5920866742</name>
         <dataType>String</dataType>
         <expression>IF(NOT(ISBLANK({!myVariable_current.IATA_ISO_Billing_State__c}) ) , {!myVariable_current.IATA_ISO_Billing_State__r.Name} , null)</expression>
     </formulas>
-    <interviewLabel>DQ_Update_Account_Address-1_InterviewLabel</interviewLabel>
-    <label>DQ Update Account Address</label>
+    <interviewLabel>DQ_Update_Account_Address-6_InterviewLabel</interviewLabel>
+    <label>AMS DQ Update Account Address</label>
     <processMetadataValues>
         <name>ObjectType</name>
         <value>
@@ -653,7 +653,7 @@
             </processMetadataValues>
             <field>BillingCity</field>
             <value>
-                <elementReference>formula_5_myRule_1_A1_7052105799</elementReference>
+                <elementReference>formula_5_myRule_1_A1_4804983709</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -689,7 +689,7 @@
             </processMetadataValues>
             <field>BillingCountry</field>
             <value>
-                <elementReference>formula_6_myRule_1_A1_0140622127</elementReference>
+                <elementReference>formula_6_myRule_1_A1_4841026212</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -725,7 +725,7 @@
             </processMetadataValues>
             <field>BillingState</field>
             <value>
-                <elementReference>formula_7_myRule_1_A1_7191953164</elementReference>
+                <elementReference>formula_7_myRule_1_A1_5920866742</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -805,7 +805,7 @@
             </processMetadataValues>
             <field>ShippingCity</field>
             <value>
-                <elementReference>formula_13_myRule_9_A1_3990980841</elementReference>
+                <elementReference>formula_13_myRule_9_A1_4674467320</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -841,7 +841,7 @@
             </processMetadataValues>
             <field>ShippingCountry</field>
             <value>
-                <elementReference>formula_14_myRule_9_A1_7093843373</elementReference>
+                <elementReference>formula_14_myRule_9_A1_7445594223</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -877,7 +877,7 @@
             </processMetadataValues>
             <field>ShippingState</field>
             <value>
-                <elementReference>formula_15_myRule_9_A1_7463668186</elementReference>
+                <elementReference>formula_15_myRule_9_A1_6968463796</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
