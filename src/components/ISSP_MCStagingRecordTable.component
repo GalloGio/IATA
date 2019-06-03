@@ -47,4 +47,11 @@
             <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ANG_ISSP_Multicountry_Submit_Message2}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
         </div>
     </div>
+
+    <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12" id="McQuestions">
+            <apex:outputText value="{!$Label.ANG_ISSP_Multicountry_Question}"/> &nbsp;
+            <apex:outputLink value="https://www.google.com">{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
+        </div>
+    </div>
 </apex:component>

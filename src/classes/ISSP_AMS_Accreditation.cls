@@ -1176,14 +1176,13 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getIATAMemberAirlines() {
-        List<Account> members = [SELECT Id, Name, Airline_Prefix__c, Airline_designator__c
-                                FROM Account
-                                WHERE RecordType.DeveloperName IN ('IATA_Airline') AND Membership_status__c = 'IATA member'
-                                ORDER BY Name];
-
         List<SelectOption> member_airlines = new List<SelectOption>{new SelectOption('', '--None--')};
 
-        for (Account als : members) {
+        for (Account als: [SELECT Id, Name, Airline_Prefix__c, Airline_designator__c
+                        FROM Account
+                        WHERE RecordType.DeveloperName IN ('IATA_Airline') 
+                            AND Membership_status__c = 'IATA member'
+                        ORDER BY Name]) {
             member_airlines.add(new SelectOption(als.id, als.Name + ' (' + als.Airline_designator__c + ')'));
         }
 
@@ -1243,8 +1242,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         for (Account thisAccount : accountList) { 
-            String theLabel;
-            theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
+            String theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')'; 
 
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
@@ -4763,7 +4761,9 @@ public without sharing class ISSP_AMS_Accreditation {
         companyModalAddress = '';
         companyModalNameOfEmployer = '';
 
-        if (iatacode == null) return null;
+        if (iatacode == null) {
+            return null;
+        }
 
         //Limit how many calls can be made to this service, to prevent a user from attempting to retrieve full list of agents
         cntAgencyLookups += 1;
@@ -4773,10 +4773,14 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         //Must be min of 8 chars for Cargo Search
-        if (agentsector == AMS_Utils.SECTOR_CARGO && iatacode.length() < 8) return null;
+        if (agentsector == AMS_Utils.SECTOR_CARGO && iatacode.length() < 8) {
+            return null;
+        }
 
         //Must be min of 7 chars for Cargo Search
-        if ((agentsector == AMS_Utils.SECTOR_PASSENGER || agentsector == 'Both')  && iatacode.length() < 7) return null;
+        if ((agentsector == AMS_Utils.SECTOR_PASSENGER || agentsector == 'Both') && iatacode.length() < 7) {
+            return null;
+        }
 
         qCargoCode = iatacode + '%';
 
