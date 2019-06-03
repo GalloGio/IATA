@@ -5,6 +5,11 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 
 		Test.startTest();
 
+        Portal_Applications__c pa = new Portal_Applications__c(
+            Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE
+       	);
+        insert pa;
+		
 		AMS_ChangeCodes__c chgFin = new AMS_ChangeCodes__c();
 		chgFin.Name = 'FIN-AMS';
 		chgFin.Account_status_change__c = '9';
