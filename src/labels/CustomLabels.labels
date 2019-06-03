@@ -14715,6 +14715,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Compare Accreditation types</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Info_Accreditation_Types</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Info Accreditation Types</shortDescription>
+        <value>For more details on the Accreditation Types:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Compare_Accreditation_Types_RHC</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
