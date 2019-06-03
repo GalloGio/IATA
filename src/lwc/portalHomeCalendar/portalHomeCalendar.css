@@ -14,6 +14,26 @@
     background-color: #f050c8;
 }
 
+.settlementEvent {
+    background-color: #289632;
+
+}
+.airlineUploadEvent {
+    background-color: #4B5BFB;
+}
+
+.airlineCorrectionEvent {
+    background-color: #333333;
+}
+
+.agentCorrectionEvent {
+    background-color: #A5ADFD;
+}
+
+.CASSReportsEvent {
+    background-color: #FAC832;
+}
+
 .dayBoxSize{
     width:25px;
     height:25px;
