@@ -97,7 +97,6 @@
         navigate.fire();
     },
 	 handleDetailsShow: function(component,event,helper) {
-	     debugger;
          var rowNum = event.getSource().get("v.name");
          var pageNum = component.get('v.PageNumber');
          var rowsPerPage = component.get('v.PageSize');

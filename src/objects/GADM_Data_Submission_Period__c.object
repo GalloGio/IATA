@@ -168,6 +168,14 @@
     <label>GADM Data Submission Period</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Months_Count__c</columns>
+        <columns>Period_Length__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Submission_Cycle_Start_Day__c</columns>
+        <columns>Submission_Cycle_End_Day__c</columns>
+        <columns>Submission_Cycle_End_Month__c</columns>
+        <columns>Submission_Cycle_Start_Month__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
@@ -178,5 +186,13 @@
     <pluralLabel>GADM Data Submission Periods</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>DayIsFirstDayInMonth</fullName>
+        <active>true</active>
+        <description>Date must always be first day of month.</description>
+        <errorConditionFormula>DAY(Start_Date__c) &lt;&gt; 1</errorConditionFormula>
+        <errorDisplayField>Start_Date__c</errorDisplayField>
+        <errorMessage>Date must always be first day of month.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

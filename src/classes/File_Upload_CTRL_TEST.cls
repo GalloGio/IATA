@@ -10,7 +10,7 @@ public class File_Upload_CTRL_TEST {
         Account testAccount = createTestAccount('Test Account', canada);
         Contact testContact = createTestContact(testAccount);
         User testUser = createTestUser(testContact);
-        Data_Submission__c dataSubmission = createDataSubmission(testContact);
+        Data_Submission__c dataSubmission = createDataSubmission(testContact, testAccount.Id);
         createCredentials('GenericAttach');
         createCredentials('RecycleBin');
 
@@ -104,8 +104,9 @@ public class File_Upload_CTRL_TEST {
 
     }
 
-    private static Data_Submission__c createDataSubmission(Contact contact) {
+    private static Data_Submission__c createDataSubmission(Contact contact, Id actorId) {
         Data_Submission__c dataSubmission = new Data_Submission__c();
+        dataSubmission.Account__c = actorId;
         dataSubmission.User__c = Contact.Id;
         dataSubmission.Type__c = 'Submission';
         dataSubmission.Status__c = 'Not Submitted';
@@ -143,11 +144,12 @@ public class File_Upload_CTRL_TEST {
     private static void createDataSubmissionTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'testFileUpload@test.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account'];
 
         Test.startTest();
 
         System.runAs(testUser) {
-            File_Upload_CTRL.createDataSubmission(testUser.Id);
+            File_Upload_CTRL.createDataSubmission(testUser.Id, testAccount.Id);
         }
 
         Test.stopTest();
@@ -220,8 +222,7 @@ public class File_Upload_CTRL_TEST {
         }
 
         Test.stopTest();
-
-        System.debug('userInformation:: ' + userInformation);
+        
         System.assertEquals(testUser.Id, userInformation.userId, 'Wrong userId retrieved!');
         System.assertEquals(false, userInformation.isInternalUser, 'Wrong user type retrieved!');
         System.assertEquals(true, userInformation.isExternalUser, 'Wrong user type retrieved!');
@@ -241,7 +242,7 @@ public class File_Upload_CTRL_TEST {
         Test.startTest();
 
         System.runAs(testUser) {
-            uploadFile = File_Upload_CTRL.createUploadFile(submission.Id,'testFile.csv', 'application/vnd.ms-excel', 'GenericAttach', testUser.Id, testContact.AccountId);
+            uploadFile = File_Upload_CTRL.createUploadFile(submission.Id,'testFile.csv', 'application/vnd.ms-excel', 'GenericAttach', testUser.Id, testContact.AccountId, true);
         }
 
         Test.stopTest();
@@ -333,6 +334,24 @@ public class File_Upload_CTRL_TEST {
         System.assertEquals(true, hasPermissionSet, 'Correct permission set was not detected!');
         System.assertEquals(true, userInformation.isInternalUser, 'User information retrieved incorrectly!');
         System.assertEquals(false, userInformation.isExternalUser, 'User information retrieved incorrectly!');
+    }
+
+    @IsTest
+    private static void isSubmissionOnTime() {
+        User testUser = [SELECT Id FROM User WHERE Email = 'testFileUpload@test.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account'];
+
+        Boolean isOnTime = false;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            isOnTime =  File_Upload_CTRL.isSubmissionOnTime(testAccount.Id);
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(false, isOnTime, 'Data submission should be sent with delay!');
     }
 
 }

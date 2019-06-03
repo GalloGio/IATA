@@ -1,0 +1,398 @@
+public without sharing class GADM_DataSubmissionPeriodHelper {
+    private static Map<Id, SubmissionPeriodCurrentData> getAllPeriodsWithCurrentData(Date testDate){
+        List<GADM_Data_Submission_Period__c> periods = [SELECT Id, Upcoming_Notification__c, In_Due_Notification__c, Months_Count__c,Name,Period_Length__c,Start_Date__c,Submission_Cycle_End_Day__c,Submission_Cycle_End_Month__c,Submission_Cycle_Start_Day__c,Submission_Cycle_Start_Month__c FROM GADM_Data_Submission_Period__c];
+        Map<Id, SubmissionPeriodCurrentData> periodsCurrentData = new Map<Id, SubmissionPeriodCurrentData>();
+        for(GADM_Data_Submission_Period__c period: periods){
+            periodsCurrentData.put(period.Id, new SubmissionPeriodCurrentData(period, testDate));
+        }
+
+        return periodsCurrentData;
+    }
+
+    public static boolean isSubmissionOnTime(Id periodId, Date testDate, string ExternalActorId){
+        if(periodId != null){
+
+            Map<Id, SubmissionPeriodCurrentData> periods = getAllPeriodsWithCurrentData(testDate);
+            SubmissionPeriodCurrentData	currentData = periods.get(periodId);
+
+            List<GADM_Account_Service_Detail__c> gadmActorDetail = [SELECT Id, Submission_Period_Extension__c FROM GADM_Account_Service_Detail__c WHERE External_Actor_Id__c =: ExternalActorId];
+
+            Date prolongedSubmissionCycleEnd = currentData.CurrentSubmissionCycleEnd;
+            if(gadmActorDetail != null && gadmActorDetail.size() > 0){
+                prolongedSubmissionCycleEnd.addDays((integer)(gadmActorDetail[0].Submission_Period_Extension__c == null ? 0 : gadmActorDetail[0].Submission_Period_Extension__c));
+            }
+
+            return currentData.CurrentSubmissionCycleStart <=  testDate && prolongedSubmissionCycleEnd >= testDate;
+        }
+        return false;
+    }
+
+    private static Map<Id, List<Data_Submission__c>> getDataSubmissions(Map<Id, List<Id>> inDuePeriodsWithAccounts, Map<Id, SubmissionPeriodCurrentData> periods){
+        string query = 'SELECT Id, Account__c, CreatedDate FROM Data_Submission__c WHERE';
+        boolean useQuery = false;
+        List<string> filters = new List<string>();
+        for(Id periodId: inDuePeriodsWithAccounts.keySet()){
+            SubmissionPeriodCurrentData period = periods.get(periodId);
+            List<Id> accountIds = inDuePeriodsWithAccounts.get(periodId);
+
+            DateTime dtFrom = DateTime.newInstanceGmt(
+                    period.CurrentSubmissionCycleStart.year(),
+                    period.CurrentSubmissionCycleStart.month(),
+                    period.CurrentSubmissionCycleStart.day(),
+                    0,0,0);
+
+            DateTime dtTo = DateTime.newInstanceGmt(
+                    period.CurrentSubmissionCycleEnd.year(),
+                    period.CurrentSubmissionCycleEnd.month(),
+                    period.CurrentSubmissionCycleEnd.day(),
+                    23,59,59);
+
+            if (period != null && accountIds != null) {
+                string accounts = '\''+String.join(accountIds,'\',\'')+'\'';
+                filters.add(' (Account__c IN (' + accounts + ') AND CreatedDate >=' +  dtFrom.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + '  AND CreatedDate <=' + dtTo.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + ' ) ');
+            }
+        }
+
+        string completeQuery = '';
+        if (filters.size() > 0){
+            completeQuery = query + string.join(filters, 'OR');
+        }
+
+        List<Data_Submission__c> dataSubmissions = new List<Data_Submission__c>();
+        if(string.isNotEmpty(completeQuery)){
+            dataSubmissions = Database.query(completeQuery);
+        }
+
+        Map<Id, List<Data_Submission__c>> accountDataSubmissions = new Map<Id, List<Data_Submission__c>>();
+        for(Data_Submission__c dataSubmission: dataSubmissions){
+            List<Data_Submission__c> dsFromMap = accountDataSubmissions.get(dataSubmission.Account__c);
+
+            if(dsFromMap == null){
+                accountDataSubmissions.put(dataSubmission.Account__c, new List<Data_Submission__c>{dataSubmission});
+            } else {
+                dsFromMap.add(dataSubmission);
+            }
+        }
+
+        return accountDataSubmissions;
+    }
+
+    private static Map<Id, List<Contact_Role_Service_Access__c>> getActiveUsersForAccounts(List<Id> allAccounts){
+        List<Contact_Role_Service_Access__c> usersAccess = [SELECT Account__c, Contact__c, Email_Address__c FROM Contact_Role_Service_Access__c
+        WHERE Account__c =: allAccounts AND Status__c = 'Granted' AND
+        (Contact_Roles_Name__c = 'GADM Data Submitter' OR Contact_Roles_Name__c = 'Service Super User') ];
+
+        Map<Id, List<Contact_Role_Service_Access__c>> accountAccess = new Map<Id, List<Contact_Role_Service_Access__c>>();
+        for(Contact_Role_Service_Access__c access: usersAccess){
+            List<Contact_Role_Service_Access__c> accessFromMap = accountAccess.get(access.Account__c);
+            if(accessFromMap == null){
+                accountAccess.put(access.Account__c, new List<Contact_Role_Service_Access__c>{access});
+            } else {
+                accessFromMap.add(access);
+            }
+        }
+
+        return accountAccess;
+    }
+
+    private static Map<Id, Id> getActorsBySubmisionPeriod(Set<Id> periodIds){
+        Map<Id, Id> accounts = new  Map<Id, Id>();
+        List<GADM_Account_Service_Detail__c> details = [Select Id, Account_Role_Service__r.Account_Role__r.Account__c, Data_Submission_Period__c  From GADM_Account_Service_Detail__c WHERE Data_Submission_Period__c =: (periodIds)];
+        if (details != null && details.size() > 0){
+            for(GADM_Account_Service_Detail__c detail: details){
+                accounts.put(detail.Account_Role_Service__r.Account_Role__r.Account__c, detail.Data_Submission_Period__c);
+            }
+        }
+        return accounts;
+    }
+
+    private static Map<String, List<NotificationWrapper>> notifyContactsBySubmissionPeriods(Date testDate){
+        Map<Id, SubmissionPeriodCurrentData> periods = getAllPeriodsWithCurrentData(testDate);
+        Set<Id> upcomingPeriods = new Set<Id>();
+        Set<Id> inDuePeriods = new Set<Id>();
+
+        for(SubmissionPeriodCurrentData cperiod: periods.values()){
+            if(cperiod.UpcomingToBeNotified){
+                upcomingPeriods.add(cperiod.period.Id);
+            }
+            if(cperiod.InDueToBeNotified){
+                inDuePeriods.add(cperiod.period.Id);
+            }
+
+        }
+
+        Map<Id, Id> upcomingPeriodAccounts = getActorsBySubmisionPeriod(upcomingPeriods);
+        Map<Id, Id> inDuePeriodAccounts = getActorsBySubmisionPeriod(inDuePeriods);
+
+        Map<String, List<NotificationWrapper>> contactToBeNotifiedWrapperMap = new Map<String, List<NotificationWrapper>>();
+
+        Map<Id, List<Id>> inDuePeriodsWithAccounts = new Map<Id, List<Id>>();
+        for(Id accountId: inDuePeriodAccounts.keySet()){
+            Id periodId = inDuePeriodAccounts.get(accountId);
+
+            List<Id> accounts = inDuePeriodsWithAccounts.get(periodId);
+            if(accounts == null){
+                inDuePeriodsWithAccounts.put(periodId, new List<Id>{accountId});
+            } else {
+                accounts.add(accountId);
+            }
+        }
+
+        List<Id> allAccounts = new List<Id>();
+        allAccounts.addAll(upcomingPeriodAccounts.keySet());
+        allAccounts.addAll(inDuePeriodAccounts.keySet());
+
+        Map<Id, List<Data_Submission__c>> accountDataSubmissions = getDataSubmissions(inDuePeriodsWithAccounts, periods);
+        Map<Id, List<Contact_Role_Service_Access__c>> accountAccess = getActiveUsersForAccounts(allAccounts);
+
+        List<NotificationWrapper> upcomingNotificationWrappers = new List<NotificationWrapper>();
+        for(Id accountId :upcomingPeriodAccounts.keySet()){
+            Id periodId = upcomingPeriodAccounts.get(accountId);
+            if(periodId == null) {
+                continue;
+            }
+            SubmissionPeriodCurrentData period = periods.get(periodId);
+            if(period == null) {
+                continue;
+            }
+
+
+            List<Contact_Role_Service_Access__c> accesses = accountAccess.get(accountId);
+            if (accesses != null){
+
+                NotificationWrapper notificationWrapper = new NotificationWrapper();
+                notificationWrapper.submissionStart = period.notificationDateStart;
+                notificationWrapper.submissionEnd = period.notificationDateEnd;
+                notificationWrapper.contactsToNotify = accesses;
+
+                upcomingNotificationWrappers.add(notificationWrapper);
+            }
+
+
+        }
+
+        contactToBeNotifiedWrapperMap.put('Upcoming', upcomingNotificationWrappers);
+
+
+        List<NotificationWrapper> inDueNotificationWrappers = new List<NotificationWrapper>();
+        for(Id accountId :inDuePeriodAccounts.keySet()){
+            Id periodId = inDuePeriodAccounts.get(accountId);
+            if (periodId == null){
+                continue;
+            }
+            SubmissionPeriodCurrentData period = periods.get(periodId);
+            if (period == null){
+                continue;
+            }
+
+            if(accountDataSubmissions.get(accountId) != null){
+                continue;
+            }
+
+
+            List<Contact_Role_Service_Access__c> accesses = accountAccess.get(accountId);
+            if (accesses != null){
+
+                NotificationWrapper notificationWrapper = new NotificationWrapper();
+                notificationWrapper.submissionStart = period.notificationDateStart;
+                notificationWrapper.submissionEnd = period.notificationDateEnd;
+                notificationWrapper.contactsToNotify = accesses;
+
+                inDueNotificationWrappers.add(notificationWrapper);
+            }
+        }
+
+        contactToBeNotifiedWrapperMap.put('InDue', inDueNotificationWrappers);
+
+        return contactToBeNotifiedWrapperMap;
+    }
+
+
+    private static Map<String, List<NotificationWrapper>> prepareNotifications(Map<String, List<NotificationWrapper>> notificationsWrapperMap) {
+
+        List<NotificationWrapper> upcomingNotificationWrappers = notificationsWrapperMap.get('Upcoming');
+        if(! upcomingNotificationWrappers.isEmpty()) {
+            EmailTemplate upcomingEmailTemplate = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName =: 'Data_Submission_Upcoming'];
+
+            for(NotificationWrapper wrapper : upcomingNotificationWrappers) {
+                wrapper.emailTemplate = upcomingEmailTemplate;
+            }
+        }
+
+        List<NotificationWrapper> inDueNotificationWrappers = notificationsWrapperMap.get('InDue');
+        if(! inDueNotificationWrappers.isEmpty()) {
+            EmailTemplate inDueEmailTemplate = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName =: 'Data_Submission_InDue'];
+
+            for(NotificationWrapper wrapper : inDueNotificationWrappers) {
+                wrapper.emailTemplate = inDueEmailTemplate;
+            }
+        }
+
+        return notificationsWrapperMap;
+    }
+
+    public static string notifyContacts(Date dateToCompare) {
+        Map<String, List<NotificationWrapper>> notificationsWrapperMap = notifyContactsBySubmissionPeriods(dateToCompare);
+        notificationsWrapperMap = prepareNotifications(notificationsWrapperMap);
+
+        List<NotificationWrapper> upcomingNotificationWrappers = notificationsWrapperMap.get('Upcoming');
+        List<NotificationWrapper> inDueNotificationWrappers = notificationsWrapperMap.get('InDue');
+
+        List<Messaging.SingleEmailMessage> allmsg = new List<Messaging.SingleEmailMessage>();
+
+        for(NotificationWrapper upcomingWrapper : upcomingNotificationWrappers) {
+            Date periodStart = upcomingWrapper.submissionStart;
+            Date periodEnd = upcomingWrapper.submissionEnd;
+            List<Contact_Role_Service_Access__c> accesses = upcomingWrapper.contactsToNotify;
+            for(Contact_Role_Service_Access__c access : accesses) {
+                Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(upcomingWrapper.emailTemplate.Id, access.Contact__c, null);
+                String bodyHtml = mail.getHtmlBody();
+                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd));
+                mail.setHtmlBody(replacedHtmlBody);
+
+                String bodyText = mail.getPlainTextBody();
+                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd));
+                mail.setPlainTextBody(replacedTextBody);
+                mail.setUseSignature(false);
+                allmsg.add(mail);
+            }
+        }
+
+        for(NotificationWrapper inDueWrapper : inDueNotificationWrappers) {
+            List<Contact_Role_Service_Access__c> accesses = inDueWrapper.contactsToNotify;
+            Date periodStart = inDueWrapper.submissionStart;
+            Date periodEnd = inDueWrapper.submissionEnd;
+
+            for(Contact_Role_Service_Access__c access : accesses) {
+                Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(inDueWrapper.emailTemplate.Id, access.Contact__c, null);
+                String bodyHtml = mail.getHtmlBody();
+                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd));
+                mail.setHtmlBody(replacedHtmlBody);
+
+                String bodyText = mail.getPlainTextBody();
+                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd));
+                mail.setPlainTextBody(replacedTextBody);
+                mail.setUseSignature(false);
+                allmsg.add(mail);
+            }
+        }
+
+        try {
+            Messaging.sendEmail(allmsg,false);
+            return 'sent';
+        } catch (Exception e) {
+            return e.getMessage();
+
+        }
+
+    }
+
+    public class NotificationWrapper {
+        public List<Contact_Role_Service_Access__c> contactsToNotify {get; set;}
+        public EmailTemplate emailTemplate {get; set;}
+        public Date submissionStart {get; set;}
+        public Date submissionEnd {get; set;}
+    }
+
+    public class SubmissionPeriodCurrentData{
+        public GADM_Data_Submission_Period__c period {get;set;}
+        public Date CurrentPeriodStart {get;set;}
+        public Date PreviousPeriodStart {get; set;}
+        public Date NextPeriodStart {get; set;}
+        public Date CurrentPeriodEnd {get;set;}
+        public Date PreviousPeriodEnd {get; set;}
+        public Date NextPeriodEnd {get; set;}
+
+
+        public Date CurrentSubmissionCycleStart {get;set;}
+        public Date CurrentSubmissionCycleEnd {get;set;}
+
+        public Date NextSubmissionCycleStart {get; set;}
+        public Date NextSubmissionCycleEnd {get; set;}
+
+        public Date PreviousSubmissionCycleStart {get; set;}
+        public Date PreviousSubmissionCycleEnd {get; set;}
+
+        public boolean UpcomingToBeNotified {get;set;}
+        public boolean InDueToBeNotified {get;set;}
+
+        public Date notificationDateStart {get; set;}
+        public Date notificationDateEnd {get; set;}
+
+        public SubmissionPeriodCurrentData(GADM_Data_Submission_Period__c period, Date dateToCompare){
+            if(period != null){
+                this.period = period;
+
+                Date sDate = period.Start_Date__c;
+                Date periodStartDate = sDate.toStartOfMonth();
+                Date comparedDate = dateToCompare.addDays(-1);
+                Integer monthsCount = periodStartDate.monthsBetween(comparedDate) + 1;
+
+                integer monthsToRemove = (math.mod(monthsCount,(integer)period.Period_Length__c) <> 0) ? 0 : 1;
+
+                CurrentPeriodStart = period.Start_Date__c.addMonths((integer)(period.Period_Length__c*((integer)(monthsCount/period.Period_Length__c )- monthsToRemove)));
+                CurrentPeriodEnd = period.Start_Date__c.addMonths((integer)(period.Period_Length__c*((integer)(monthsCount/period.Period_Length__c )- monthsToRemove))+(Integer)period.Period_Length__c).addDays(-1);
+
+                PreviousPeriodStart = CurrentPeriodStart.addMonths((integer)period.Period_Length__c*(-1));
+                NextPeriodStart = CurrentPeriodStart.addMonths((integer)period.Period_Length__c);
+
+                PreviousPeriodEnd = CurrentPeriodEnd.addMonths((integer)period.Period_Length__c*(-1));
+                NextPeriodEnd = CurrentPeriodEnd.addMonths((integer)period.Period_Length__c);
+
+                Date startDate = CurrentPeriodStart.addMonths((integer)(period.Submission_Cycle_Start_Month__c-1));
+                Date endDate = CurrentPeriodStart.addMonths((integer)(period.Submission_Cycle_End_Month__c-1));
+
+                Date startDatePrevious = PreviousPeriodStart.addMonths((integer)(period.Submission_Cycle_Start_Month__c-1));
+                Date endDatePrevious = PreviousPeriodStart.addMonths((integer)(period.Submission_Cycle_End_Month__c-1));
+
+                Date startDateNext = NextPeriodStart.addMonths((integer)(period.Submission_Cycle_Start_Month__c-1));
+                Date endDateNext = NextPeriodStart.addMonths((integer)(period.Submission_Cycle_End_Month__c-1));
+
+                Integer numberOfDaysStart = Date.daysInMonth(startDate.year(), startDate.month());
+                Integer numberOfDaysEnd = Date.daysInMonth(endDate.year(), endDate.month());
+
+                Integer numberOfDaysStartPrevious = Date.daysInMonth(startDatePrevious.year(), startDatePrevious.month());
+                Integer numberOfDaysEndPrevious = Date.daysInMonth(endDatePrevious.year(), endDatePrevious.month());
+
+                Integer numberOfDaysStartNext = Date.daysInMonth(startDateNext.year(), startDateNext.month());
+                Integer numberOfDaysEndNext = Date.daysInMonth(endDateNext.year(), endDateNext.month());
+
+                Integer startDay = (integer)period.Submission_Cycle_Start_Day__c > numberOfDaysStart ? numberOfDaysStart : (integer)period.Submission_Cycle_Start_Day__c;
+                Integer endDay = (integer)period.Submission_Cycle_End_Day__c > numberOfDaysEnd ? numberOfDaysEnd : (integer)period.Submission_Cycle_End_Day__c;
+                CurrentSubmissionCycleStart =  date.newInstance(startDate.year(), startDate.month(), startDay);
+                CurrentSubmissionCycleEnd =  date.newInstance(endDate.year(), endDate.month(), endDay);
+
+                Integer startDayPrevious = (integer)period.Submission_Cycle_Start_Day__c > numberOfDaysStartPrevious ? numberOfDaysStartPrevious : (integer)period.Submission_Cycle_Start_Day__c;
+                Integer endDayPrevious = (integer)period.Submission_Cycle_End_Day__c > numberOfDaysEndPrevious ? numberOfDaysEndPrevious : (integer)period.Submission_Cycle_End_Day__c;
+                PreviousSubmissionCycleStart =  date.newInstance(startDatePrevious.year(), startDatePrevious.month(), startDayPrevious);
+                PreviousSubmissionCycleEnd =  date.newInstance(endDatePrevious.year(), endDatePrevious.month(), endDayPrevious);
+
+                Integer startDayNext = (integer)period.Submission_Cycle_Start_Day__c > numberOfDaysStartNext ? numberOfDaysStartNext : (integer)period.Submission_Cycle_Start_Day__c;
+                Integer endDayNext = (integer)period.Submission_Cycle_End_Day__c > numberOfDaysEndNext ? numberOfDaysEndNext : (integer)period.Submission_Cycle_End_Day__c;
+                NextSubmissionCycleStart =  date.newInstance(startDateNext.year(), startDateNext.month(), startDayNext);
+                NextSubmissionCycleEnd =  date.newInstance(endDateNext.year(), endDateNext.month(), endDayNext);
+
+                Date upcomingDate = CurrentSubmissionCycleStart.addDays((integer)period.Upcoming_Notification__c*-1);
+                Date dueDate = CurrentSubmissionCycleEnd.addDays((integer)period.In_Due_Notification__c *-1);
+
+                Date upcomingDateNext = NextSubmissionCycleStart.addDays((integer)period.Upcoming_Notification__c*-1);
+                Date dueDateNext = NextSubmissionCycleEnd.addDays((integer)period.In_Due_Notification__c *-1);
+
+                Date upcomingDatePrevious = PreviousSubmissionCycleStart.addDays((integer)period.Upcoming_Notification__c*-1);
+                Date dueDatePrevious = PreviousSubmissionCycleEnd.addDays((integer)period.In_Due_Notification__c *-1);
+
+                UpcomingToBeNotified = (upcomingDate == dateToCompare) || (upcomingDatePrevious == dateToCompare) || (upcomingDateNext == dateToCompare);
+                if(UpcomingToBeNotified) {
+                    notificationDateStart = CurrentSubmissionCycleStart;
+                    notificationDateEnd = CurrentSubmissionCycleEnd;
+                }
+                InDueToBeNotified = (dueDate == dateToCompare) || (dueDatePrevious == dateToCompare) || (dueDateNext == dateToCompare);
+                if(InDueToBeNotified) {
+                    notificationDateStart = CurrentSubmissionCycleStart;
+                    notificationDateEnd = CurrentSubmissionCycleEnd;
+                }
+
+            }
+        }
+    }
+}

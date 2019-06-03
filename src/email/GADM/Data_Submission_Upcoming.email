@@ -1,0 +1,2 @@
+Dear {!Contact.FirstName} {!Contact.LastName},
+submission period start: *periodStart* submission period end: *periodEnd*

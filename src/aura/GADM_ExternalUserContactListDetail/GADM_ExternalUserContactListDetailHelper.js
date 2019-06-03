@@ -53,7 +53,6 @@
                     component.set('v.dataActors', actorsData);
                     component.set('v.dataBusinessUnits', businessUnitsData);
                     component.set('v.dataRoles', rolesData);
-					console.log(rolesData);
                     //save the copy and use it as original data
                     let copy = JSON.stringify(result);
                     component.set('v.copyData', copy);

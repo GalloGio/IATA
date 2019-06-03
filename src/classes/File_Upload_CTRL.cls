@@ -68,16 +68,30 @@ public without sharing class File_Upload_CTRL {
         return null;
     }
 
+    @AuraEnabled
+    public static Boolean isSubmissionOnTime(Id actorId) {
+        Boolean isOnTime = false;
+
+        if(String.isNotBlank(actorId)) {
+            List<GADM_Account_Service_Detail__c> accountServiceDetails = [SELECT Id, External_Actor_Id__c, Data_Submission_Period__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :actorId];
+            if(! accountServiceDetails.isEmpty()) {
+                isOnTime = GADM_DataSubmissionPeriodHelper.isSubmissionOnTime(accountServiceDetails[0].Data_Submission_Period__c, Date.today(), accountServiceDetails[0].External_Actor_Id__c);
+            }
+        }
+
+        return isOnTime;
+    }
+
 
     @AuraEnabled
-    public static UploadFile createUploadFile(String dataSubmissionId, String fileName, String contentType, String credentialName, String userId, String actorId) {
+    public static UploadFile createUploadFile(String dataSubmissionId, String fileName, String contentType, String credentialName, String userId, String actorId, Boolean isOnTime) {
         AmazonCredentials credential = AmazonCredentials.getCredentials(credentialName);
 
         // remove all repeated spaces
         String filteredFileName = fileName.replaceAll('[ ]+', ' ');
         String folder = 'Input/Salesforce_Landing/';
 
-        UploadFile upF = new UploadFile(dataSubmissionId, filteredFileName, contentType, folder, credential, userId, actorId);
+        UploadFile upF = new UploadFile(dataSubmissionId, filteredFileName, contentType, folder, credential, userId, actorId, isOnTime);
 
         //TODO:possible additional checks here
 
@@ -87,12 +101,19 @@ public without sharing class File_Upload_CTRL {
 
 
     @AuraEnabled
-    public static String createDataSubmission(Id submitterId) {
+    public static String createDataSubmission(Id submitterId, Id actorId) {
+
+        List<GADM_Account_Service_Detail__c> serviceDetail = [SELECT Id, External_Actor_Id__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :actorId LIMIT 1];
 
         Id userId = UserInfo.getUserId();
-        User u = [SELECT ContactId FROM User WHERE Id = :userId];
+        String externalActorId = '';
+        if(! serviceDetail.isEmpty()) {
+            externalActorId = (serviceDetail[0].External_Actor_Id__c == '' ? null : serviceDetail[0].External_Actor_Id__c);
+        }
 
         Data_Submission__c dataSubmission = new Data_Submission__c();
+        dataSubmission.Account__c = actorId;
+        dataSubmission.External_Actor_Id__c = externalActorId;
         dataSubmission.Original_User__c = userId;
         dataSubmission.Submitter__c = submitterId;
         dataSubmission.Type__c = 'Submission';
@@ -181,9 +202,11 @@ public without sharing class File_Upload_CTRL {
         public String dataSubmissionId {get;set;}
         @AuraEnabled
         public String fileNameEncoded {get;set;}
+        @AuraEnabled
+        public Boolean isOnTime {get; set;}
 
 
-        public UploadFile( String dataSubmissionId, String fileName, String contentType, String folder, AmazonCredentials credential, Id userId, Id actorId) {
+        public UploadFile( String dataSubmissionId, String fileName, String contentType, String folder, AmazonCredentials credential, Id userId, Id actorId, Boolean isOnTime) {
             this.endpoint = credential.EndpointBaseURL;
             this.bucketName = credential.Bucket;
             this.fullFileName = folder + dataSubmissionId + getFileExtension(fileName);
@@ -194,12 +217,13 @@ public without sharing class File_Upload_CTRL {
             this.userId = userId;
             this.actorId = actorId;
             this.dataSubmissionId = dataSubmissionId;
+            this.isOnTime = isOnTime;
             String fileNameEncoded = AmazonRest.EncodePath(fileName);
             this.fileNameEncoded = fileNameEncoded;
-            calculatePolicy(credential, dataSubmissionId, fileNameEncoded, userId, actorId);
+            calculatePolicy(credential, dataSubmissionId, fileNameEncoded, userId, actorId, isOnTime);
         }
 
-        public void calculatePolicy(AmazonCredentials credential, String dataSubmissionId, String fileName, String userId, String actorId) {
+        public void calculatePolicy(AmazonCredentials credential, String dataSubmissionId, String fileName, String userId, String actorId, Boolean isOntime) {
 
             this.timestamp = DateTime.now().format('E, d MMM yyyy HH:mm:ss Z');
 
@@ -208,6 +232,7 @@ public without sharing class File_Upload_CTRL {
                     + 'x-amz-date:' + this.timestamp + '\n'
                     + 'x-amz-meta-actor:' + actorId + '\n'
                     + 'x-amz-meta-filename:' + fileName + '\n'
+                    + 'x-amz-meta-outsideperiod:' + isOntime + '\n'
                     + 'x-amz-meta-submission:' + dataSubmissionId + '\n'
                     + 'x-amz-meta-user:' + userId + '\n'
                     + '/'+this.bucketName+'/'+this.fullFileNameEncoded;

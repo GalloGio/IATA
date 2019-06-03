@@ -1,7 +1,6 @@
 ({
 
     getSettings : function(component, event) {
-        debugger;
         this.toggleSpinner(component);
         let action = component.get('c.getGadmSettings');
         action.setCallback(this, function(response){
@@ -582,7 +581,8 @@
         function uploadFile(file, component, event) {
             let action = component.get('c.createDataSubmission');
             action.setParams({
-                'submitterId' : component.get('v.userId')
+                'submitterId' : component.get('v.userId'),
+                'actorId' : component.get('v.actorId')
             });
             action.setCallback(this, function(response){
                 const state = response.getState();
@@ -590,7 +590,8 @@
                     const dataSubmissionId = response.getReturnValue();
                     if(! $A.util.isEmpty(dataSubmissionId)) {
 
-                        createUploadFile(component, event, file, dataSubmissionId);
+                        //createUploadFile(component, event, file, dataSubmissionId);
+                        checkOnTimeSubmission(component, event, file, dataSubmissionId);
 
                     }else{
                         console.log('function uploadFile returned empty dataSubmissionId');
@@ -618,7 +619,37 @@
 
         }
 
-        function createUploadFile(component, event, file, dataSubmissionId) {
+        function checkOnTimeSubmission(component, event, file, dataSubmissionId) {
+            debugger;
+            let action = component.get('c.isSubmissionOnTime');
+            action.setParams({
+                'actorId' : component.get('v.actorId')
+            });
+            action.setCallback(this, function(response){
+                const state = response.getState();
+                if(state === 'SUCCESS') {
+                    const isOnTime = response.getReturnValue();
+                    if(! $A.util.isEmpty(isOnTime)) {
+
+                        createUploadFile(component, event, file, dataSubmissionId, !isOnTime);
+
+                    }else{
+                        console.log('function uploadFile returned empty uploadFile');
+                        let errors = component.get('v.uploadedErrors');
+                        errors.push({
+                            dataSubmissionId : '',
+                            fileName : file.name
+                        });
+                        component.set('v.uploadedErrors', errors);
+                        component.set('v.uploadDone', true);
+
+                    }
+                }
+            });
+            $A.enqueueAction(action);
+        }
+
+        function createUploadFile(component, event, file, dataSubmissionId, isOutsidePeriod) {
             let action = component.get('c.createUploadFile');
             action.setParams({
                 'dataSubmissionId' : dataSubmissionId,
@@ -626,14 +657,15 @@
                 'contentType' : file.type,
                 'fileName' : file.name,
                 'userId' :component.get('v.userId'),
-                'actorId' : component.get('v.actorId')
+                'actorId' : component.get('v.actorId'),
+                'isOnTime' : isOutsidePeriod
             });
             action.setCallback(this, function(response){
             let state = response.getState();
                 if(state === 'SUCCESS') {
                     let uploadFile = response.getReturnValue();
 
-                    if( $A.util.isEmpty(uploadFile)) {
+                    if(! $A.util.isEmpty(uploadFile)) {
                        let reader = new FileReader();
                        reader.readAsArrayBuffer(file);
                        reader.onload = function() {
@@ -720,6 +752,7 @@
             xhr.setRequestHeader("x-amz-meta-filename", uploadFile.fileNameEncoded);
             xhr.setRequestHeader("x-amz-meta-user", uploadFile.userId);
             xhr.setRequestHeader("x-amz-meta-actor", uploadFile.actorId);
+            xhr.setRequestHeader("x-amz-meta-outsideperiod", uploadFile.isOnTime);
             xhr.send(fileBody);
 
         }

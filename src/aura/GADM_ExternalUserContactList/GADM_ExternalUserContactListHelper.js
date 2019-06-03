@@ -139,7 +139,6 @@
             if(state === 'SUCCESS'){
                 let result = response.getReturnValue();
                 if(! $A.util.isEmpty(result)) {
-                    console.log('result:: ' + JSON.stringify(result));
                     let data = [];
                     for(let i = 0; i < result.length; i++) {
 
@@ -253,7 +252,6 @@
     updateTableRows : function(component) {
         this.updatePagination(component);
         let all_records = component.get('v.AllRecords');
-        console.log('allRecords:: ' + JSON.stringify(all_records));
         let table_rows = [];
         if(all_records.length){
             let first_record_on_page = component.get('v.FirstRecordOnPage');
