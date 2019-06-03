@@ -20,6 +20,7 @@
     <aura:attribute name="userSessionData" type="Boolean" default="true" />
 
     <aura:attribute name="contact" type="Contact" />
+    <aura:attribute name="category" type="String" />
     <aura:attribute name="topic" type="String" />
     <aura:attribute name="subTopic" type="String" />
     <aura:attribute name="caseRecordType" type="String" />
@@ -69,20 +70,20 @@
                         class="slds-grid grid-margin-bottom-justified slds-wrap slds-p-bottom_xx-large slds-align_absolute-center ">
                         <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
                                             slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                            slds-m-horizontal_small customCard" style="height: 170px; width: 250px;">
+                                            slds-m-horizontal_small customCard cardSizing">
                             <div class="slds-text-title_bold noPointerEvents slds-p-around_small ">
                                 {!$Label.c.csp_Case_Panel_label}
                             </div>
                             <div class="noPointerEvents slds-p-around_small">
                                 {!$Label.c.csp_Case_Panel_sub_label}
                             </div>
-                            <lightning:button label="Click Me!"
-                                class="containedButton cursorPointer slds-medium-size_1-of-3">
+                            <lightning:button label="{!$Label.c.csp_CreateNewCaseTopLabel}"
+                                class="containedButton cursorPointer slds-medium-size_1-of-3" onclick="{!c.redirectCreateCase}">
                             </lightning:button>
                         </div>
                         <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
                                 slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                slds-m-horizontal_small customCard" style="height: 170px; width: 250px;">
+                                slds-m-horizontal_small customCard cardSizing">
                             <div class="slds-text-title_bold noPointerEvents slds-p-around_small ">
                                 {!$Label.c.csp_Chat_Panel_label}
                             </div>

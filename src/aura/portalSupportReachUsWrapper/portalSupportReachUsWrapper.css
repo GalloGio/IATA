@@ -1,22 +1,22 @@
-.THIS .disabled{
+.THIS .disabled {
   background-color: #c2cacf;
-  cursor: default ;
+  cursor: default;
   pointer-events: none;
 }
 
-.THIS .disabled:hover{
-  background-color: #c2cacf ;
-  cursor: default ;
+.THIS .disabled:hover {
+  background-color: #c2cacf;
+  cursor: default;
   pointer-events: none;
 }
 
-.THIS .disabled:focus{
-  background-color: #c2cacf ;
-  cursor: default ;
+.THIS .disabled:focus {
+  background-color: #c2cacf;
+  cursor: default;
   pointer-events: none;
 }
 
-.THIS .tile-column{
+.THIS .tile-column {
   background: #fff;
   color: rgb(0, 0, 0);
   text-align: center;
@@ -25,9 +25,9 @@
   border-radius: 0;
 }
 
-
-.THIS .containedButtonLiveAgent{
-  -webkit-transition-duration: 0.4s; /* Safari */
+.THIS .containedButtonLiveAgent {
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
   transition-duration: 0.4s;
   border-radius: 1px;
   box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
@@ -46,8 +46,9 @@
   border: none;
 }
 
-.THIS .containedButtonOfflineLiveAgent{
-  -webkit-transition-duration: 0.4s; /* Safari */
+.THIS .containedButtonOfflineLiveAgent {
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
   transition-duration: 0.4s;
   border-radius: 1px;
   box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
@@ -65,7 +66,7 @@
   border: none;
 }
 
-.THIS.exampleHolder{
-  position: relative;
-  white-space: nowrap;
+.THIS.customCard .cardSizing {
+  height: 170px;
+  width: 250px;
 }

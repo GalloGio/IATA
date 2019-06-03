@@ -4,7 +4,7 @@ public with sharing class DAL_ISSP {
         if (userId == null)
             return null;
         List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,Contact.AccountId,
-		contact.IFG_Production__c, contact.IFG_PreProduction__c
+		contact.IFG_Production__c, contact.IFG_PreProduction__c, Profile.Id, Profile.Name
         from User where Id =:userId];
         if (users.size() > 0)
             return users[0];
@@ -49,7 +49,7 @@ public with sharing class DAL_ISSP {
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
 					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c,
                     Account.Location_Class__c, Account.CNS_Account__c,Account.IATA_ISO_Country__r.ANG_Portal_Service__c, Account.ANG_IEP_Status_FF__c, Account.Quality__c,Account.ANG_Accreditation_Model__c,Account.Legal_name__c,
-		            Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account.Top_Parent__r.Legal_name__c, Account.Top_Parent__r.Name_on_AOC__c
+		            Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account.Top_Parent__r.Legal_name__c, Account.Top_Parent__r.Name_on_AOC__c, Account.Country_ISO_Code__c
                     from Contact where Id=:contactId];
         if (contacts.size() > 0)
             return contacts[0];

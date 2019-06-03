@@ -47,12 +47,13 @@ export default class PortalNewsInfo extends LightningElement {
 
     sliderIconsRenderer() {
         this.sliderIcons = [];
+        let className = '';
         for (let i = 0; i < this.maxSize; i++) {
-            let vari = '';
+            className = 'slideIcon';
             if (i === this.page - 1) {
-                vari = 'warning';
+                className = 'currentSlideIcon';
             }
-            this.sliderIcons.push({ variant: vari });
+            this.sliderIcons.push({ className });
         }
     }
     
