@@ -1,0 +1,98 @@
+<!--
+ - Created by pvavruska on 5/23/2019.
+ -->
+
+<!-- Portal Company Profile Page -->
+<template>
+
+    <c-portal-page-container>
+        <span slot="componentContent">
+            <template if:true={userLoaded}>
+                <template if:false={noAccount}>
+                    <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+
+                        <!-- Sections nav bar -->
+                        <div
+                            class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium">
+
+                            <!--<div class="emptyGrayAreaSize"></div>-->
+
+                            <template for:each={lstTabs} for:item="tab">
+                                <span key={tab.id} class="text-small">
+
+                                    <!-- Active tab -->
+                                    <span if:true={tab.active} data-item={tab.id}
+                                        class="slds-p-around_small text-bold selectedTab">
+                                        {tab.label}
+                                    </span>
+
+                                    <!-- Inactive tab -->
+                                    <span if:false={tab.active} data-item={tab.id} style={tab.style}
+                                        onmouseenter={onmouseenterTab} onmouseleave={onmouseleaveTab}
+                                        onclick={onclickTab} class="slds-p-around_small cursorPointer text-darkGray">
+                                        {tab.label}
+                                    </span>
+
+                                </span>
+                            </template>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Profile: Navigation & Sections -->
+                    <template if:true={tab0Active}>
+                        <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+
+                            <!-- Sticky navigation -->
+                            <div style="position:sticky; top:5rem;">
+                                <c-portal-company-profile-info-nav class="slds-large-show"
+                                    onnavigate={handleNavigation}></c-portal-company-profile-info-nav>
+                            </div>
+
+                            <!-- Profile sections -->
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_2-of-3"
+                                style="float:right;">
+
+                                <template if:true={mapOfValues}>
+                                    <template for:each={mapOfValues} for:item="keyValue">
+                                        <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
+                                            record-id={loggedUser.Contact.AccountId} fields={keyValue.value} show-edit="true"
+                                            class="section" section-title={keyValue.key} data-name={keyValue.key}>
+                                        </c-portal-record-form-wrapper>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Profile: Branch Offices-->
+                    <template if:true={tab1Active}>
+                        Branches
+                    </template>
+
+                    <!-- Profile: Contacts-->
+                    <template if:true={tab2Active}>
+                        Contacts
+                    </template>
+
+                    <!-- Profile: Company Calendar -->
+                    <template if:true={tab3Active}>
+                        Company Calendar
+                    </template>
+
+                    <!-- Profile: Activity Log -->
+                    <template if:true={tab4Active}>
+                        Activity Log
+                    </template>
+
+                </template>
+                <template if:true={noAccount}>
+                    No related account to display.
+                </template>
+            </template>
+
+        </span>
+    </c-portal-page-container>
+</template>
