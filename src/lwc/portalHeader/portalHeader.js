@@ -189,7 +189,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     navigateToCompanyProfile() {
-        //this.navigateToOtherPage("");
+        this.navigateToOtherPage("company-profile");
     }
 
     navigateToCases() {
