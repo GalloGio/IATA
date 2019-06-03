@@ -51,6 +51,9 @@
         .hiddenStyle {
             display: none;
         }
+        .country__c{
+            background: lightgray !important;
+        }
     </style>
 
     <script>
