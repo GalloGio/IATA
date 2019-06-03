@@ -298,7 +298,7 @@ public class AMS_AgencyAChangeCodeHandler {
         List<AMS_OSCAR__c> oscarsToCopyData = new List<AMS_OSCAR__c>();
         List<AMS_OSCAR__c> oscarsToUpdateAppointments = new List<AMS_OSCAR__c>();
 
-        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c,Account__r.Location_Type__c
+        oscarsToCopyData = [SELECT ID, STEP10__c, STEP6__c, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c,Account__r.Location_Type__c
                             from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
 
         if(!oscarsToCopyData.isEmpty()){
