@@ -246,6 +246,17 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Reset approval date</fullName>
+        <actions>
+            <name>Reset_approval_date_OI</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>sets the approval date as blank when certain parameters of the CPS issue are edited. since they require further approval.</description>
+        <formula>and( RecordType.DeveloperName = &quot;CPS_Checks&quot;, or (ischanged(Issue_Categorization__c ), ISCHANGED( Issue_Sub_Category__c ), ISCHANGED( Amount_LC__c ), ISCHANGED( Back_Valued__c ) , ISCHANGED( Back_Valuation_Date__c ), ISCHANGED( OperationCPS__c ), ISCHANGED( Country__c ), ISCHANGED( Region__c )))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Update OI Status</fullName>
         <actions>
             <name>OI_Status_WF</name>

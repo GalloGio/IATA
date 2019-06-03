@@ -66,6 +66,47 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Action_Plan_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Action Plan Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Short Term Fix</fullName>
+                    <default>false</default>
+                    <label>Short Term Fix</label>
+                </value>
+                <value>
+                    <fullName>Permanent Fix</fullName>
+                    <default>false</default>
+                    <label>Permanent Fix</label>
+                </value>
+                <value>
+                    <fullName>Corrective Action</fullName>
+                    <default>false</default>
+                    <label>Corrective Action</label>
+                </value>
+                <value>
+                    <fullName>Preventive Action</fullName>
+                    <default>false</default>
+                    <label>Preventive Action</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Closure_Date__c</fullName>
         <externalId>false</externalId>
         <label>Closure Date</label>
@@ -195,11 +236,31 @@
         <fullName>Data_Governance</fullName>
         <active>true</active>
         <label>Data Governance</label>
+        <picklistValues>
+            <picklist>Action_Plan_Type__c</picklist>
+            <values>
+                <fullName>Permanent Fix</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Term Fix</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>action_plan_std</fullName>
         <active>true</active>
         <label>Action plan standard</label>
+        <picklistValues>
+            <picklist>Action_Plan_Type__c</picklist>
+            <values>
+                <fullName>Corrective Action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>

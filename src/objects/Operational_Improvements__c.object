@@ -2401,6 +2401,17 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         </valueSet>
     </fields>
     <fields>
+        <fullName>Risks_barriers_scope_boundaries__c</fullName>
+        <externalId>false</externalId>
+        <label>Risks, barriers, scope, boundaries</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Root_Cause_Analysis__c</fullName>
         <externalId>false</externalId>
         <label>Root Cause Analysis</label>
@@ -2737,6 +2748,18 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Compensating_Controls__c</fullName>
+        <description>Data Governance</description>
+        <externalId>false</externalId>
+        <label>Compensating Controls</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Conceptual_Schema_Attached__c</fullName>

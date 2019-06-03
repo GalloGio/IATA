@@ -138,6 +138,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Risks_barriers_scope_boundaries__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Compensating_Controls__c</field>
             </layoutItems>
         </layoutColumns>
