@@ -190,11 +190,16 @@
             c.set("v.validationError", false);
         }
         
-        if(!$A.util.isEmpty(category) && catValue == 'Other' && !$A.util.isEmpty(catOther) && $A.util.isEmpty(catOtherValue)) {            
-            catOther.set("v.errors",[{message: $A.get("$Label.c.ISSP_YouMustEnter")}]);
-            isAllFilled = false;
-        } else {
-            catOther.set("v.errors", false);
+        if(!$A.util.isEmpty(category) && catValue == 'Other')  {
+            var catOther = c.find("catOtherVal");
+        	var catOtherValue = catOther.get("v.value");
+            
+            if(!$A.util.isEmpty(catOther) && $A.util.isEmpty(catOtherValue)) {            
+            	catOther.set("v.errors",[{message: $A.get("$Label.c.ISSP_YouMustEnter")}]);
+            	isAllFilled = false;
+            } else {
+                catOther.set("v.errors", false);
+            }
         }
         
         /* MME TEMP for test purpose*/
