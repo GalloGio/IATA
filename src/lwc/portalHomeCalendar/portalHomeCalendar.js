@@ -87,6 +87,7 @@ export default class PortalHomeCalendar extends LightningElement {
         getInitialMonthPage({ browserDate : dateAuxAux,  requestedDate : dateAuxAux})
         .then(results => {
             //console.log('results ', results);
+            this.updateEventClassName(results);
             this.currentViewingMonth = results;
 
             for(let i = 0; i < results.lstWeeks.length; i++){
@@ -147,6 +148,7 @@ export default class PortalHomeCalendar extends LightningElement {
         getNextMonth({ browserDate : browserDate,  monthNumber : monthNumber, yearNumber : yearNumber})
         .then(results => {
             //console.log('results ', results);
+            this.updateEventClassName(results);
             this.currentViewingMonth = results;
             this.currentViewingWeek = results.lstWeeks[0];
             this.loading = false;
@@ -185,6 +187,7 @@ export default class PortalHomeCalendar extends LightningElement {
         getPreviousMonth({ browserDate : browserDate,  monthNumber : monthNumber, yearNumber : yearNumber})
         .then(results => {
             //console.log('results ', results);
+            this.updateEventClassName(results);
             this.currentViewingMonth = results;
             this.currentViewingWeek = results.lstWeeks[(results.lstWeeks.length-1)];
             this.loading = false;
@@ -194,5 +197,22 @@ export default class PortalHomeCalendar extends LightningElement {
             this.loading = false;
         });
     }
+
+    updateEventClassName(data) {
+        if (data.lstWeeks) {
+            data.lstWeeks.forEach(w => {
+                if (w.lstDays) {
+                    w.lstDays.forEach(d => {
+                        if (d.lstEvents) {
+                            d.lstEvents.forEach(e => {
+                                e.className = `eventDot ${e.className}`;
+                            });
+                        }                        
+                    });
+                }
+            });
+        }
+    }
+
 
 }
