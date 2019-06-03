@@ -341,18 +341,15 @@ public with sharing class AMS_AccreditationContactController {
             
         }
 
-        /*
-        if(!isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
-        {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
+        //WMO-492
+        if(!isCertificationOSCAR) {
+            List<String> ownershipErrors = validateOwnership();
+            if(!ownershipErrors.isEmpty()) {
+                for(String errorMessage : ownershipErrors) {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMessage));
+                }
             return null;
         }
-        */
-        //AMSU-180
-        if(!calculateTotalOwnership() && !isCertificationOSCAR)
-        {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownership rate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% and less than 100.01% before saving.'));
-            return null;
         }
         
         String firstErrorContact = verifyOwnerFlagIsSelectIfFinancialInterestAboveZero();
@@ -563,6 +560,37 @@ public with sharing class AMS_AccreditationContactController {
         return new PageReference('/' + ApexPages.currentPage().getParameters().get('Id'));
     }
     
+    //WMO-492
+    public List<String> validateOwnership() {
+        List<String> errors = new List<String>();
+        Decimal totalOwnership = 0;
+        Boolean validRange = true;
+        
+        for(AccreditationContactWrapper wrapped : acWrapper) {
+            if(wrapped.ac.Financial_interest__c <> null) {
+                totalOwnership += wrapped.ac.Financial_interest__c;
+                validRange &= (wrapped.ac.Financial_interest__c > 0 && wrapped.ac.Financial_interest__c <= 100);
+            }
+        }
+
+        for(AccountWrapper aWrapped : accountWrapper) {
+            totalOwnership += aWrapped.financialInterest;
+            validRange &= (aWrapped.financialInterest > 0 && aWrapped.financialInterest <= 100);
+        }
+
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR') {
+            if(totalOwnership < 99.99 || totalOwnership > 100) {
+                errors.add('Total ownership rate for all inserted contacts is ' + totalOwnership + '%. Please set it to at least 99.99% and less than 100.01% before saving.');
+            }
+
+            if(!validRange) {
+                 errors.add('Owner\'s financial interest cannot be 0% or less nor bigger than 100%.');
+            }            
+        }
+
+        return errors;
+    }
+
     //AMSU-132
     public void doSelectAll(){
         for(AgRegItemWrapper ar : agRegValuesForDisplay){
