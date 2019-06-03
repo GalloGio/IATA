@@ -3,6 +3,49 @@ private class ANG_AgentsNotificationRhcTest {
 	
 	@testSetup static void setup() {
 
+		Map<String, Profile> airlineProfileMap = new Map<String, Profile>(
+			[SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']
+		);
+
+		Map<String, Profile> agencyProfileMap = new Map<String, Profile>(
+			[SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Agency%']
+		);
+
+		List<ISSP_CS__c> listCs = new List<ISSP_CS__c>();
+
+		listCs.add(
+			new ISSP_CS__c(
+				Name = 'ISS OperationalCalendar Airline Profil',
+				Value__c = String.join(new List<string>(airlineProfileMap.keySet()),',')
+			)
+		);
+
+		listCs.add(
+			new ISSP_CS__c(
+				Name = 'ISS OperationalCalendar Agency Profile',
+				Value__c = String.join(new List<string>(agencyProfileMap.keySet()),',')
+			)
+		);
+
+		insert listCs;
+        
+        AMS_Settlement_System__c bspES = new AMS_Settlement_System__c(
+			Name = 'BSP-ES',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP
+		);
+        
+        insert bspES;
+        
+        Operational_Calendar__c opES = new Operational_Calendar__c( 
+			ISS_Operation__c = bspES.id, 
+			First_Day__c = Date.today().addDays(30), 
+			Last_Day__c = Date.today().addDays(60), 
+			Frequency_code__c = 'W', 
+			Remittance_Day__c = Date.today().addDays(30)
+		);
+        
+        insert opES;
+
 		IATA_ISO_Country__c cntry = new IATA_ISO_Country__c();
 		cntry.Name = 'Spain';
 		cntry.CurrencyIsoCode = 'EUR';
@@ -186,7 +229,7 @@ private class ANG_AgentsNotificationRhcTest {
 			 LIMIT 1
 			];
 
-		System.assert(no.Message__c.contains('RHC Amount: ' + String.valueOf(rhcInfo.ANG_RHC_Amount_Forecasted__c) + ' ' + rhcInfo.CurrencyIsoCode));
+		System.assert(no.Message__c.contains('RHC Amount: ' + String.valueOf(rhcInfo.ANG_RHC_Amount_Forecasted__c.format()) + ' ' + rhcInfo.CurrencyIsoCode));
 
 
 		//Now checking that the blocking is working 
