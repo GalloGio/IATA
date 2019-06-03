@@ -52,7 +52,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>AAO_Domestic__c</fullName>
         <defaultValue>false</defaultValue>
