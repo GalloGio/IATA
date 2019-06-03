@@ -1734,6 +1734,30 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Incurred_Costs_to_Fix_the_issue_or_est__c</fullName>
+        <description>Data Governance</description>
+        <externalId>false</externalId>
+        <label>Incurred Costs to Fix the issue (or est)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Incurred_Resources__c</fullName>
+        <description>Data Governance</description>
+        <externalId>false</externalId>
+        <label>Incurred Resources</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Initiator__c</fullName>
         <externalId>false</externalId>
         <label>Initiator</label>
