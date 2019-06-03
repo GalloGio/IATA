@@ -34246,7 +34246,14 @@ title,Title,Name</value>
         <shortDescription>Sales Payment</shortDescription>
         <value>Sales Payment</value>
     </labels>
-    CSP_Save
+    <labels>
+        <fullName>CSP_Save</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Save</shortDescription>
+        <value>Save</value>
+    </labels>
     <labels>
         <fullName>csp_Sub_Topic_Label</fullName>
         <categories>CS Portal</categories>
