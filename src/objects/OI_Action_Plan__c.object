@@ -261,6 +261,8 @@
             <values>
                 <fullName>Other</fullName>
                 <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
