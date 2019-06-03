@@ -58,7 +58,7 @@
                             </div>
                             </apex:outPutPanel>
                             <apex:outputText id="revalCaseOpen" rendered="{! revCaseOpen}" escape="false">
-                                <label class="lbl" style="color:red; font-weight: bold; padding-bottom:20px">{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen}</label>
+                                <label class="lbl" style="color:red; font-weight: bold; padding-bottom:20px">{!$Label.ISSP_Rev_Case_Open_Acc_Info}</label>
                             </apex:outputText>
                             <apex:outputText rendered="{!isIATAAgencyAcct}">
                                 <div class="row form-group">
