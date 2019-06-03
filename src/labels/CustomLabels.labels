@@ -28268,6 +28268,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Return to case</value>
     </labels>
     <labels>
+        <fullName>ISSP_Rev_Case_Open_Acc_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Rev Case Open Acc Info</shortDescription>
+        <value>Changes, except for GDP Opt-in, should be made through Annual Revalidation process</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SELECT_COUNTRY</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
