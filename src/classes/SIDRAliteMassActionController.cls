@@ -919,8 +919,8 @@ public with sharing class SIDRAliteMassActionController {
         Map <String, Schema.SObjectField> mapAccountFields = Schema.getGlobalDescribe().get('Account').getDescribe().fields.getMap();
 
         // create csv header
-        String content = '"Id"';
-        content += ',"' + mapCaseFields.get('IATA_Code__c').getDescribe().getLabel() + '"';
+        String content = '"' + mapCaseFields.get('IATA_Code__c').getDescribe().getLabel() + '"';
+        content += ',"Id"';
         content += ',"' + mapCaseFields.get('CaseNumber').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('Subject').getDescribe().getLabel() + '"';
         content += ',"' + mapCaseFields.get('Status').getDescribe().getLabel() + '"';
@@ -946,8 +946,8 @@ public with sharing class SIDRAliteMassActionController {
         content += '\n';
         // fill each line
         for (WrapperCase wrapper: this.listWrapperCase) {
-            content += '"' + wrapper.cse.Id + '"';
-            content += ',"' + wrapper.cse.IATA_Code__c + '"';
+            content += '"' + wrapper.cse.IATA_Code__c + '"';
+            content += ',"' + wrapper.cse.Id + '"';
             content += ',"' + wrapper.cse.CaseNumber + '"';
             content += ',"' + wrapper.cse.Subject + '"';
             content += ',"' + wrapper.cse.Status + '"';
