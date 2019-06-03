@@ -70,7 +70,7 @@ export default class PortalHomeCalendar extends LightningElement {
         goToOldPortalCalendar()
         .then(results => {
             //console.log('results: ' , results);
-            window.open(results);
+            window.open(results, "_self");
         })
         .catch(error => {
             console.log('error: ' , error);
