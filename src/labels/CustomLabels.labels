@@ -2859,22 +2859,6 @@ Payment required on receipt of this Payment Advice
         <value>Documents</value>
     </labels>
     <labels>
-        <fullName>CSP_FAQReachUsBanner_Text</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_FAQReachUsBanner_Text</shortDescription>
-        <value>You can create a case, start a conversation with IATA Live Support or call us.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_FAQReachUsBanner_Title</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_FAQReachUsBanner_Title</shortDescription>
-        <value>Need more help?</value>
-    </labels>
-    <labels>
         <fullName>CSP_FAQs_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
