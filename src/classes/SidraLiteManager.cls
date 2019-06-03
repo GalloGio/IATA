@@ -430,7 +430,12 @@ public with sharing class SidraLiteManager {
                 cse.IRR_Withdrawal_Reason__c = 'Default Prev';
             }
             parentCase.firstFSnonComplianceDate__c = Date.Today();
-            parentCase.FS_Second_Deadline_Date__c = Date.Today().addDays(30);
+
+            //We should set the FS 2nd Compliance due date as 60 days (as per Reso 812, Section 4.3.9) for NewGen countries.
+            if(parentCase.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c)
+                parentCase.FS_Second_Deadline_Date__c = Date.Today().addDays(60);
+            else
+                parentCase.FS_Second_Deadline_Date__c = Date.Today().addDays(30);
         }
         return parentCase;
     }
