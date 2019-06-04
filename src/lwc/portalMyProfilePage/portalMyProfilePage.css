@@ -1,0 +1,9 @@
+.stickyNavigation {
+    position:sticky;
+    top:5rem;
+}
+
+.floatRight {
+    float:right;
+}
+
