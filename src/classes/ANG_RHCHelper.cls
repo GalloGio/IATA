@@ -150,20 +150,17 @@ public class ANG_RHCHelper {
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] remittanceFrequencySet: ' + remittanceFrequencySet);
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] mapBspIdAccountList: ' + mapBspIdAccountList);
 			
-			if(!isoCountries.isEmpty()){
-				Set<String> isoCountriesSet = new Set<String>{DEFAULT_CODE};
-				isoCountriesSet.addAll(isoCountries.values());
+			Set<String> isoCountriesSet = new Set<String>{DEFAULT_CODE};
+			isoCountriesSet.addAll(isoCountries.values());
 
-				//for accounts where the RHC Amount is NOT equal to FS, we need to check the minimum
-				for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountryByIsoCodes(isoCountriesSet)){
-					for(AMS_Country_Specific_Attribute__c attr : isoCountry.AMS_Country_Specific_Attributes__r){
-						if(attr.RecordType.DeveloperName == 'Minimum_RHC_Amount'){
-							attributes.put(isoCountry.Iso_Code__c, attr);
-						}
+			//for accounts where the RHC Amount is NOT equal to FS, we need to check the minimum
+			for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountryByIsoCodes(isoCountriesSet)){
+				for(AMS_Country_Specific_Attribute__c attr : isoCountry.AMS_Country_Specific_Attributes__r){
+					if(attr.RecordType.DeveloperName == 'Minimum_RHC_Amount'){
+						attributes.put(isoCountry.Iso_Code__c, attr);
 					}
-				} 
-		
-			}
+				}
+			} 
 
 			//NEWGEN-4881 - RHC amount effective from first day of next calendar period
 			Map<Id, Map<String, Date>> mapBSPwithOperationalCalenders = new Map<Id, Map<String, Date>>();
@@ -468,8 +465,11 @@ public class ANG_RHCHelper {
 					riuw.accountId = accountId;
 					riuw.riskStatus = rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c;
 					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
-					riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c.format();
 					riuw.currencyIsoCode = rhc.CurrencyIsoCode;
+
+					if(rhc.ANG_RHC_Amount_Forecasted__c != NULL){			
+						riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c.format();
+					}
 
 					if(rhc.ANG_Forecasted_RHC_Effective_date__c != NULL){
 						riuw.rhcForecastedEffectiveDate = (rhc.ANG_Forecasted_RHC_Effective_date__c.month() + '/' + 
