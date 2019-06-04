@@ -22,38 +22,39 @@
                         <div style={profileDivStyle}></div>
                         <!--<img src={portalImg} style={profilePhotoStyle}/>-->
 
-                            <div class="companyHeader" style="width:100%; min-height:150px; margin-bottom:2rem; background-color:#ffff;">
-                                <!-- Image spacers -->
-                                <div class="slds-hide_medium" style="height:100px; width:100%;"><!-- Image --></div>
-                                <div class="slds-show_medium" style="min-width:250px; height:1px; float: left;"><!-- Image --></div>
+                        <div class="companyHeader"
+                            style="width:100%; min-height:150px; margin-bottom:2rem; background-color:#ffff;">
+                            <!-- Image spacers -->
+                            <div class="slds-hide_medium" style="height:100px; width:100%;"><!-- Image --></div>
+                            <div class="slds-show_medium" style="min-width:250px; height:1px; float: left;"><!-- Image --></div>
 
+                            <!-- Header Contact Info -->
+                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large"
+                                style="padding: 1rem; max-width:800px;">
+                                <div class="slds-col slds-size_3-of-3 slds-medium-size_3-of-3 slds-large-size_3-of-3 ">
+                                    <div class="text-medium text-bold text-darkGray"> {contact.Name} </div>
+                                </div>
 
-                                <!-- Header Contact Info -->
-                                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large" style="padding: 1rem; max-width:800px;">
-                                    <div class="slds-col slds-size_3-of-3 slds-medium-size_3-of-3 slds-large-size_3-of-3 ">
-                                        <div class="text-medium text-bold text-darkGray"> {contact.Name} </class></div>
-                                    </div>
-
-                                    <!-- Labels -->
-                                    <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3"> 
+                                <!-- Labels -->
+                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3">
                                     <div class="fieldLabel"> Job Title </div>
                                     <div class="fieldValue"> {contact.Title} </div>
-                                    </div>
-                                    <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3" >
-                                        <div class="fieldLabel">Company</div>
-                                        <div class="fieldValue"> {contact.DSE__DS_Company__c} </div>
-                                    </div>
-                                    <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3 ">
-                                        <div class="fieldLabel"> Email </div>
-                                        <div class="fieldValue"> {contact.Email} </div>
-                                    </div>
                                 </div>
-                                
+                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                                    <div class="fieldLabel">Company</div>
+                                    <div class="fieldValue"> {contact.DSE__DS_Company__c} </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3 ">
+                                    <div class="fieldLabel"> Email </div>
+                                    <div class="fieldValue"> {contact.Email} </div>
+                                </div>
                             </div>
+
+                        </div>
                     </template>
                 </div>
             </div>
-            
+
         </span>
     </c-portal-page-container>
 </template>
