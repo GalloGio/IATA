@@ -123,7 +123,7 @@ export default class PortalProfilePageHeader extends LightningElement {
                 .catch(error => {
                     const showError = new ShowToastEvent({
                     title: 'Error',
-                    message: this.ISSP_ANG_GenericError+' ' + error.getMessage,
+                    message: this.labels.ISSP_ANG_GenericError+' ' + error.getMessage,
                     variant: 'error',
                 });
                 this.dispatchEvent(showError);
