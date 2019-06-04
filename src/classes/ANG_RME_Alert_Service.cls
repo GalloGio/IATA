@@ -279,12 +279,12 @@ global class ANG_RME_Alert_Service {
 	//webservice called by salesforce (javascript button and portal) to request an update of RHC Consumption Status
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 
-		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_RHC_Amount_Forecasted__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
-			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
+			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount_Forecasted__c;
 			Integer decimalPlaces = (result.res.storedRHCValue).scale();
 			Decimal rounded = toRound.setScale(decimalPlaces, RoundingMode.HALF_UP);
 			
