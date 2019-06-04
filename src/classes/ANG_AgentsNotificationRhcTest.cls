@@ -93,6 +93,7 @@ private class ANG_AgentsNotificationRhcTest {
 			acct.ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED;
 			acct.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 			acct.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
+			acct.Remittance_frequency__c = 'W';
 
 			insert acct;
 
