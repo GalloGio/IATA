@@ -52,6 +52,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_CountrySAttr_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
+        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
+    </labels>
+    <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22344,6 +22351,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Cargo Agent / IFACP Forwarder</value>
     </labels>
     <labels>
+        <fullName>ISSP_Cargo_Label_Value</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Cargo</shortDescription>
+        <value>Freight Forwarder</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CaseCommentEmail</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -28282,6 +28296,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP Return to Case</shortDescription>
         <value>Return to case</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Rev_Case_Open_Acc_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Rev Case Open Acc Info</shortDescription>
+        <value>Changes, except for GDP Opt-in, should be made through Annual Revalidation process</value>
     </labels>
     <labels>
         <fullName>ISSP_SELECT_COUNTRY</fullName>

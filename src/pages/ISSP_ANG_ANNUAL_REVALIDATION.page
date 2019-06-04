@@ -733,6 +733,7 @@
 
             function showNewContactDialog() {
                 $( '#addNewContactModal').modal('show');
+                $('[id$="contactStateList"]').val($('[id$="contactStateInput"]').val());
                 toggleContactState();
             }
 

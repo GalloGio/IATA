@@ -58,7 +58,7 @@
                             </div>
                             </apex:outPutPanel>
                             <apex:outputText id="revalCaseOpen" rendered="{! revCaseOpen}" escape="false">
-                                <label class="lbl" style="color:red; font-weight: bold; padding-bottom:20px">{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen}</label>
+                                <label class="lbl" style="color:red; font-weight: bold; padding-bottom:20px">{!$Label.ISSP_Rev_Case_Open_Acc_Info}</label>
                             </apex:outputText>
                             <apex:outputText rendered="{!isIATAAgencyAcct}">
                                 <div class="row form-group">
@@ -114,7 +114,7 @@
                                 <apex:outputPanel rendered="{!con.Account.Sector__c != null}" layout="block">
                                     <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Sector__c.Label}</label>
                                     <div class="col-lg-7">
-                                        {!con.Account.Sector__c}
+                                         <apex:outputField value="{!con.Account.Sector__c}"/> <!-- WMO-391 -->
                                     </div>
                                 </apex:outputPanel>
                             </div>
@@ -123,7 +123,7 @@
                                 <apex:outputPanel rendered="{!AND(!isCNSAccount, con.Account.Category__c!= null)}" layout="block">
                                     <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Category__c.Label}</label>
                                     <div class="col-lg-7">
-                                        {!con.Account.Category__c}
+                                        <apex:outputField value="{!con.Account.Category__c}"/> <!-- WMO-391 -->
                                     </div>
                                 </apex:outputPanel>
                             </div>
@@ -226,19 +226,6 @@
                                 </div>
                             </div>
                             
-                            <div class="row form-group">
-                                <div class="col-md-5" style="padding-left:28px">
-                                    <label class="lbl" for="businessinputGDPOptIn">GDP Opt In</label>
-                                </div>
-                                <div class="col-md-7 email">
-                                    <apex:inputHidden id="GDPOptIn" value="{!con.Account.GDP_Opt_In__c}" />
-                                    <apex:inputCheckbox id="GDPOptIninput" styleclass="form-control editMode editModeGDPOptIn col-lg-8" value="{!con.Account.GDP_Opt_In__c}"/>
-                                    <span class="saveMode saveModeGDPOptIn">
-                                        <apex:inputCheckbox value="{!con.Account.GDP_Opt_In__c }" disabled="true"/>
-                                        <span style="padding-left:10px; {!IF(!revCaseOpen, 'display:block', 'display:none')}"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeGDPOptIn').hide();$('.editModeGDPOptIn').show();$('.editModeBtn').show()" rendered="{!OR(AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent),PermissionForStandardAccount)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
-                                    </span>
-                                </div>
-                            </div>
                             <!-- end row -->
                            
                             <div class="row">
@@ -273,6 +260,22 @@
                                     </span>
                                 </div>
                             </div>
+                            <!-- end row --> 
+                            
+                            <div class="row form-group">
+                                <div class="col-md-5" style="padding-left:28px">
+                                    <label class="lbl" for="businessinputGDPOptIn">GDP Opt In</label>
+                                </div>
+                                <div class="col-md-7 email">
+                                    <apex:inputHidden id="GDPOptIn" value="{!con.Account.GDP_Opt_In__c}" />
+                                    <apex:inputCheckbox id="GDPOptIninput" styleclass="form-control editMode editModeGDPOptIn col-lg-8" value="{!con.Account.GDP_Opt_In__c}"/>
+                                    <span class="saveMode saveModeGDPOptIn">
+                                        <apex:inputCheckbox value="{!con.Account.GDP_Opt_In__c }" disabled="true"/>
+                                        <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeGDPOptIn').hide();$('.editModeGDPOptIn').show();$('.editModeBtn').show()" rendered="{!OR(AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent),PermissionForStandardAccount)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <!-- end row --> 
                             
                             <!-- DTULLO 20160202. Add DDS Section -->
@@ -680,19 +683,6 @@
                                 </div>
                             </div>
                       
-                          <div class="row form-group">
-                              <div class="col-md-5" style="padding-left:28px">
-                                  <label class="lbl" for="businessinputGDPOptIn">[{!$ObjectType.Account.fields.GDP_Opt_In__c.Label}]</label>
-                              </div>
-                              <div class="col-md-7 emailBR">
-                                  <apex:inputHidden id="GDPOptIn" value="{!branchOffice.GDP_Opt_In__c}" />
-                                  <apex:inputCheckbox id="businessGDPOptIninput" styleclass="form-control editModeBR editModeGDPOptInBR col-lg-8" value="{!branchOffice.GDP_Opt_In__c}"/>
-                                  <span class="saveModeBR saveModeGDPOptInBR" id='businessGDPOptInBR'>
-                                      <apex:outputField value="{!branchOffice.GDP_Opt_In__c}"/>
-                                      <span style="padding-left:10px; {!IF(!revCaseOpen, 'display:block', 'display:none')}"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeGDPOptInBR').hide();$('.editModeGDPOptInBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgentBR)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
-                                  </span>
-                              </div>
-                          </div>
                             <!-- end row -->
                            
                             <div class="row">
@@ -700,7 +690,7 @@
                                 <div class="col-lg-7">
                                     <div>{!branchOffice.IATA_ISO_Country__r.Name}</div>
                                 </div>
-                </div>
+                			</div>
                             <!-- end row -->
                             <div class="row">
                                 <label class="lbl col-lg-5" style="padding-left:28px">{!$label.ISSP_CompanyAddressInformation}</label>
@@ -714,6 +704,23 @@
                                     
                                 </div>
                             </div>
+                      
+                      		<!-- end row -->
+                      
+                            <div class="row form-group">
+                                <div class="col-md-5" style="padding-left:28px">
+                                      <label class="lbl" for="businessinputGDPOptIn">[{!$ObjectType.Account.fields.GDP_Opt_In__c.Label}]</label>
+                                </div>
+                                <div class="col-md-7 emailBR">
+                                      <apex:inputHidden id="GDPOptIn" value="{!branchOffice.GDP_Opt_In__c}" />
+                                      <apex:inputCheckbox id="businessGDPOptIninput" styleclass="form-control editModeBR editModeGDPOptInBR col-lg-8" value="{!branchOffice.GDP_Opt_In__c}"/>
+                                      <span class="saveModeBR saveModeGDPOptInBR" id='businessGDPOptInBR'>
+                                          <apex:outputField value="{!branchOffice.GDP_Opt_In__c}"/>
+                                          <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeGDPOptInBR').hide();$('.editModeGDPOptInBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgentBR)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
+                                      </span>
+                                </div>
+                            </div>
+                      
                             <!-- end row --> 
                             <!-- **********************************************************-->
                             

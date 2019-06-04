@@ -840,7 +840,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
 
-		System.assert(upd.countryInfoByCountryNameMapString == '\'\'');
 		System.assert(upd.countryList.size() > 0);
 		System.assert(upd.countryInfoByCountryNameMapString.startsWith('{'));
 
@@ -1047,10 +1046,16 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
         
         upd.validateVATNumber();
         upd.validateVATNumber2();
-        
+                
         Boolean c = upd.displayShipping;
         system.assertEquals(true, c);
         upd.displayShipping = false;
+        upd.resetCheckbox();
+        
+        List<SelectOption> bsl = upd.billingStateList;
+        List<SelectOption> ssl = upd.shippingStateList;
+        string slbcn = upd.stateListByCountryName;
+        string si = upd.stateInfo;
         
         Test.stopTest();
     }

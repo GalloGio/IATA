@@ -107,6 +107,7 @@
     </fields>
     <fields>
         <fullName>Remarks__c</fullName>
+        <description>Field for leaving any remarks</description>
         <externalId>false</externalId>
         <label>Location</label>
         <length>255</length>
@@ -118,6 +119,7 @@
     </fields>
     <fields>
         <fullName>Reported_by__c</fullName>
+        <description>Agency that reported the funds</description>
         <externalId>false</externalId>
         <label>Reported by</label>
         <length>255</length>
