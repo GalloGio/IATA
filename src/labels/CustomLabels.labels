@@ -14612,6 +14612,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Contact Name</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Copy_Ownership_Warning</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Copy Ownership Warning</shortDescription>
+        <value>Attention! By copying ownership information to an Agency you will delete any existing ownership information for that Agency.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Country_Select</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18040,6 +18048,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Section 2 SubSection 2</shortDescription>
         <value>Section 2.2</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Select_Accounts</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Select Accounts</shortDescription>
+        <value>Select Accounts</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Selected_Associate_Entities</fullName>

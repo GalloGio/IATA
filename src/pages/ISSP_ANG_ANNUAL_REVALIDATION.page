@@ -5,6 +5,8 @@
     <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
 
     <body>
+        
+        <apex:slds />
 
         <script src="{!URLFOR($Resource.bootbox)}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
@@ -386,6 +388,8 @@
                                     <apex:param name="AgentSector" assignTo="{!agentsector}" value="Both"/>
                                     <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
                                 </apex:actionFunction>
+                                
+                                <apex:actionFunction name="copyOwnershipAction" action="{!cleanOwnership}" rerender="" />
 
                                 <apex:actionFunction name="rerenderTreeArea" rerender="treeArea" />
                                 
@@ -427,6 +431,31 @@
                                                         <p><span class="{!CONFIRMED_ICON}"></span> = {! $Label.ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED}</p>
                                                         <p><span class="{!PROGRESS_ICON}"></span> = {! $Label.ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS}</p>
                                                     </div>
+                                                    
+                                                    <!-- Progress status for batch -->
+                                                    <apex:pageBlock mode="edit" id="StatusPageBlock">
+                                                        
+                                                        <apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">
+                                                            
+                                                            <apex:actionStatus id="act" startText="Checking..." />
+                                                            
+                                                            <apex:outputText styleClass="processText" value="Process status: {!batchJob.Status}"/>
+                                                               
+                                                            <div class="slds-scope">
+                                                                <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="{!batchJob.TotalJobItems}" aria-valuenow="{!batchJob.JobItemsProcessed}" role="progressbar">
+                                                                    <span class="slds-progress-bar__value" style="width:{!progressBar}%">
+                                                                        <span class="slds-assistive-text" value="{!batchJob.JobItemsProcessed}/{!batchJob.TotalJobItems}"/>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <apex:outputText styleClass="processText" value="Entities processed: {!batchJob.JobItemsProcessed}/{!batchJob.TotalJobItems}"/>
+                                                                                                                        
+                                                            <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="treeArea" status="act"/>
+                                                            
+                                                        </apex:pageBlockSection>
+                                                        
+                                                    </apex:pageBlock>
 
                                                     <script>
                                                         //console.log('LOADING');
@@ -718,6 +747,19 @@
 
             function hideNewCompanyDialog() {
                 $( '#addNewCompanyModal' ).modal('hide');
+            }
+        
+        	function showCopyOwnershipDialog() {
+                $( '#copyOwnershipModal').modal('show');
+            }
+
+            function hideCopyOwnershipDialog() {
+                $( '#copyOwnershipModal' ).modal('hide');
+            }
+        
+        	function copyOwnershipClear() {
+                $('[id$=sameOwnershipList]').val('');
+                copyOwnershipAction();
             }
 
             var ownerModalFields = [];
@@ -1059,6 +1101,35 @@
             </div>
 
         </div>
+        </apex:form>
+        
+        <!-- Modal Apply same ownership to other codes -->
+        
+        <apex:form id="copyOwnership">
+            <div class="modal fade" id="copyOwnershipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="return false;"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Select_Accounts}</h4>
+                        </div>
+                        <div class="modal-body" style="text-align: center;">
+                            <apex:selectList value="{!formsToCopyOwnersTo}" style="width:200px;" size="5" multiselect="true" label="sameOwnership" id="sameOwnershipList" >
+                                <apex:selectOptions value="{!relatedAccounts}" />
+                            </apex:selectList>
+                            <br/><h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Copy_Ownership_Warning}</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <apex:commandButton action="{!copyOwnership}" id="copyOwnersSubmitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+                                                oncomplete="hideCopyOwnershipDialog(); this.removeAttr('disabled');"
+                                                reRender=""
+                                                onclick="this.disabled='disabled';">
+                            </apex:commandButton>&nbsp;
+                            <button type="button" class="btn btn-default" onclick="return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </apex:form>
 
     </body>

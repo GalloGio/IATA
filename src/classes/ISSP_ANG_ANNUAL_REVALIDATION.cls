@@ -126,9 +126,68 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         }
         set;
     }
+    public List<String> formsToCopyOwnersTo {get{
+        if(formsToCopyOwnersTo == null && currentAccount.fw.newform.Saved_At_Least_Once__c == true && currentAccount.fw.newform.Copy_Ownership_Records__c != null) {
+            formsToCopyOwnersTo = currentAccount.fw.newform.Copy_Ownership_Records__c.split(',');
+        }
+        return formsToCopyOwnersTo;
+    }set;}
     
-    
+    public List<SelectOption> relatedAccounts {get {
+        
+        List<SelectOption> relatedAccounts = new List<SelectOption>();
+        
+        List<id> completedForms = new List<id>();
+        for(AMS_Pax_Accreditation_Form__c accForm : [SELECT Id, IATACode__c, HO_Account__c 
+                                                     FROM AMS_Pax_Accreditation_Form__c 
+                                                     WHERE RecordTypeId =: rtAnnualRevalidation
+                                                     AND Status__c =: 'completed'
+                                                     AND SAAM_Case__c =: currentAccount.fw.newForm.SAAM_Case__c
+                                                     AND Id !=: currentAccount.fw.newForm.Id]){
+                                                         completedForms.add(accForm.HO_Account__c);
+                                                     }
+        
+        Set<Id> aux = new Set<Id>();
 
+		aux.add(caseAccount.id);
+
+		Map<Id, List<AMS_Agencies_relationhip__c>> h = AMS_HierarchyHelper.getAccountsHierarchies(aux);
+
+		List<AMS_Agencies_relationhip__c> accountsList = new List<AMS_Agencies_relationhip__c>();
+
+   		for(Id key : h.keySet()) {
+			accountsList.addAll(h.get(key));
+        }
+        
+        for(AMS_Agencies_relationhip__c r : accountsList) {
+            if(r.Child_Account__c != currentAccount.account.Id){
+                relatedAccounts.add(new SelectOption(String.valueOf(r.Child_Account__c), r.Child_Account__r.IATACode__c));
+            }
+            
+            if(r.Parent_Account__c != currentAccount.account.Id){
+                relatedAccounts.add(new SelectOption(String.valueOf(r.Parent_Account__c), r.Parent_Account__r.IATACode__c));
+            }
+        }
+        
+        for(Integer k = relatedAccounts.size()-1; k >= 0; k--){
+            for(Id completedId : completedForms){
+                if(relatedAccounts[k].getValue() == completedId) relatedAccounts.remove(k);
+            }
+        }
+        
+		if (!(relatedAccounts.size() > 0)) {
+            relatedAccounts.add(new SelectOption('', '-No Accounts Available-'));
+        }        
+        
+        return relatedAccounts;
+    }  set;}
+    
+    public String copyOwnershipBatchId {get;set;}
+    public Boolean batchStatusBool{get;set;}
+	public AsyncApexJob batchJob{get;set;}
+	public Boolean pollerBool{get;set;}
+    public Integer progressBar{get;set;}
+        
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 		this.setHe = true;
 
@@ -226,6 +285,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         if (hlp != null) {
             txtHelpCurrency = (String)hlp.get(fldName);
         }
+        
+        batchStatusBool = false;
 	}
 
 	public static void setCaseVisibleInPortal(Case newCase) {
@@ -439,6 +500,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			try {
 				currentAccount.fw.deleteOwners();
+                cleanOwnership();
 
 				delete this.currentAccount.fw.newform;
 
@@ -472,7 +534,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			} catch(DmlException de) {}
 		}
-
+        
 		return null;
 	}
 
@@ -534,6 +596,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				keepConfirmedData();
 				addVATPrefix();
 			}
+            
+            copyOwnershipOnConfirm();
 
 			currentAccount.fw.newform.Saved_At_Least_Once__c = True;
 			
@@ -1938,6 +2002,72 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         }
         return null;
     }
+    
+    public PageReference copyOwnership() {
+        
+        currentAccount.fw.newform.Copy_Ownership_Records__c = string.join(formsToCopyOwnersTo,',');
+        
+        return null;
+    }
+    
+	public PageReference cleanOwnership() {
+        
+        currentAccount.fw.newform.Copy_Ownership_Records__c = null;
+        formsToCopyOwnersTo = null;
+        
+        return null;
+    }    
+    
+    private void copyOwnershipOnConfirm() {
+        if(currentAccount.fw.newform.Notify_Change_Ownership__c == True && currentAccount.fw.newForm.Copy_Ownership__c == True) {
+            
+            List<String> idlist = currentAccount.fw.newform.Copy_Ownership_Records__c.split(',');
+            
+            List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c,
+                                                           Agency_role__c, Email__c,Phone__c, Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c,
+                                                           Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressState__c, AddressCountry__c, AddressPostcode__c,
+                                                           Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c, PhoneNational__c, FAX__c, Company_Name_Local__c
+                                                           FROM AMS_Accreditation_Contact__c
+                                                           WHERE AMS_Pax_Accreditation_Form__c =: currentAccount.fw.newForm.Id];
+            
+            ANG_CopyOwnershipBatch ownershipBatch = new ANG_CopyOwnershipBatch(currentAccount.fw.newform.Copy_Ownership_Records__c, 
+                                                                               newCase, isoCountryMap, heIataCode, contacts);
+            
+            copyOwnershipBatchId = Database.executeBatch(ownershipBatch);
+            
+            batchStatusBool = true;
+            pollerBool = true;
+			progressBar = 0;            
+        }
+    }
+    
+    public void getBatchStatus(){
+		
+        if(copyOwnershipBatchId == null){
+            pollerBool = true;
+        }
+        
+		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :copyOwnershipBatchId];
+        progressBar = (batchJob.JobItemsProcessed/batchJob.TotalJobItems)*100;
+        
+        
+        if(batchJob.status == 'Ended' || batchJob.status == 'Completed') {
+            // Get all forms and owners
+            setFormsMap();
+            
+            // Fill the following sets with the correct iata codes
+            // iataCodesOk - COMPLETED_STATUS
+            // iataCodesConfirmed - UPDATE_COMPLETED_STATUS
+            // iataCodesInProgress - UPDATE_PROGRESS_STATUS
+            setIataCodesOkNotOk(oscar);
+            
+            jsonTree = generateTree();
+            pollerBool = false;
+        } else {
+            pollerBool = true;
+        }
+    }
+}
 
     private void addVATPrefix() {
         if (currentAccount.isoCountry.EU_Country__c) {
