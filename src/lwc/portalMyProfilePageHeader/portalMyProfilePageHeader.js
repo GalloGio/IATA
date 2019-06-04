@@ -3,9 +3,14 @@ import { LightningElement, track } from 'lwc';
 //Contact Apex Methods
 import getContactDetails from '@salesforce/apex/PortalMyProfileCtrl.getContactInfo';
 
+//Import custom labels
+import csp_My_Profile_Job_Title from '@salesforce/label/c.csp_My_Profile_Job_Title';
+import csp_My_Profile_Company from '@salesforce/label/c.csp_My_Profile_Company';
+import csp_My_Profile_Email from '@salesforce/label/c.csp_My_Profile_Email';
+
 export default class PortalProfilePageHeader extends LightningElement {
 
-    backgroundIcon = '/csportal/s/unsplash.jpeg';
+    backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
 
     //Loading && Error
     @track loading = false;
@@ -16,6 +21,20 @@ export default class PortalProfilePageHeader extends LightningElement {
 
     @track contact = {};
 
+    _labels = {
+        csp_My_Profile_Job_Title,
+        csp_My_Profile_Company,
+        csp_My_Profile_Email
+        };
+
+    get labels() {
+        return this._labels;
+    }
+
+    set labels(value) {
+        this._labels = value;
+    }
+
 
     connectedCallback() {
         this.backgroundStyle = 'background-image: url("' + this.backgroundIcon + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:170px;'
@@ -23,14 +42,9 @@ export default class PortalProfilePageHeader extends LightningElement {
 
         getContactDetails().then(result => {
             //because proxy..
-            let resultsAux = JSON.parse(JSON.stringify(result));
-            this.contact = resultsAux;
+            this.contact = result;
             this.loading = false;
         })
-        .catch(error => {
-            console.log('PortalFAQPageHeader connectedCallback getCategoryTiles error: ' , error);
-            this.loading = false;
-        });
         
     }
 
