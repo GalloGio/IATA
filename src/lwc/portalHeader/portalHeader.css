@@ -96,7 +96,11 @@
   position: relative;
 }
 
-.headerBarButton:hover:after {
+.headerBarButton:hover {
+  cursor: pointer;
+}
+
+.buttonService:hover:after, .buttonSupport:hover:after {
   content: "";
   width: 100%;
   height: 4px;
@@ -107,12 +111,21 @@
   left: 0;
 }
 
-.headerBarButton:hover {
-  cursor: pointer;
-}
-
 .headerBarButton:hover span.tabText{
   font-weight: 500;
+}
+
+.headerButtonProfileContainer:hover {
+  background-color: #ffffff;
+}
+
+.headerButtonProfileContainer:hover span.tabText{
+  color: #1e32fa;
+}
+
+.headerButtonProfileContainer:hover div.headerButtonProfile, 
+.headerBarButton:hover div.headerButtonArrow {
+  background-color: #1e32fa;
 }
 
 .headerButtonNotificationsContainer:hover {
@@ -194,7 +207,7 @@
   display: inline-block;
 }
 
-.headerBarButton:hover div.headerButtonArrow{
+.headerBarButton:hover div.headerButtonArrow {
   transform: rotate(180deg);
 }
 
