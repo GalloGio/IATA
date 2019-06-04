@@ -3,7 +3,6 @@
      * Perform the SObject search via an Apex Controller
      */
     doSearch : function(cmp) {
-        debugger;
         // Get the search string, input element and the selection container
         var searchString = cmp.get('v.searchString');
         var searchConditions = cmp.get('v.searchConditions');
@@ -87,7 +86,6 @@
      * Handle the Selection of an Item
      */
     handleSelection : function(cmp, event) {
-        debugger;
         // Resolve the Object Id from the events Element Id (this will be the <a> tag)
         var objectId = this.resolveId(event.currentTarget.id);
 

@@ -8,17 +8,24 @@ public class File_Upload_CTRL_TEST {
 
         IATA_ISO_Country__c canada = createIataCountry('Canada', 'CA', 'Canada');
         Account testAccount = createTestAccount('Test Account', canada);
-        Contact testContact = createTestContact(testAccount);
+        Contact testContact = createTestContact(testAccount, 'testFileUpload@test.com', 'John', 'Fortest');
         User testUser = createTestUser(testContact);
+
+        Account testAccount2 = createTestAccount('Test Account 2', canada);
+        Contact testContact2 = createTestContact(testAccount2, 'test2FileUpload@test.com', 'Petr', 'Martinez');
+        User testUser2 = createTestUser(testContact2);
+
         Data_Submission__c dataSubmission = createDataSubmission(testContact, testAccount.Id);
         createCredentials('GenericAttach');
         createCredentials('RecycleBin');
 
-
-
         Account_Role__c accountRole = new Account_Role__c();
         accountRole.Account__c = testAccount.Id;
         insert accountRole;
+
+        Account_Role__c accountRole2 = new Account_Role__c();
+        accountRole2.Account__c = testAccount2.Id;
+        insert accountRole2;
 
         Contact_Roles__c contactRoles = new Contact_Roles__c();
         contactRoles.Name = 'GADM User';
@@ -32,6 +39,61 @@ public class File_Upload_CTRL_TEST {
         contactRole.Contact_Roles__c = contactRoles.Id;
         contactRole.Service_Rendered__c = 'GADM';
         insert contactRole;
+
+        //for Test Account
+        Portal_Applications__c portalApplications = new Portal_Applications__c();
+        portalApplications.Name = 'GADM';
+        insert portalApplications;
+
+        Account_Roles__c accountRoles = new Account_Roles__c();
+        accountRoles.Name = 'GADM Participant';
+        insert accountRoles;
+
+        Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
+        accountRoleServices.Portal_Service__c = portalApplications.Id;
+        accountRoleServices.Account_Roles__c = accountRoles.Id;
+        insert accountRoleServices;
+
+        Account_Role_Service__c accountRoleService = new Account_Role_Service__c();
+        accountRoleService.Account_Role__c = accountRole.Id;
+        accountRoleService.Account_Role_Services__c = accountRoleServices.Id;
+        insert accountRoleService;
+
+        GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
+        serviceDetail.Account_Role_Service__c = accountRoleService.Id;
+        serviceDetail.Allowed_email_domain__c = 'somedomain.com';
+        serviceDetail.Active_User_Count__c = 5;
+        serviceDetail.External_Actor_Id__c = 'ExtTestId001';
+        serviceDetail.Submission_Period_Extension__c = 30;
+        insert serviceDetail;
+
+        //for Test Account 2
+        Account_Role_Service__c accountRoleService2 = new Account_Role_Service__c();
+        accountRoleService2.Account_Role__c = accountRole2.Id;
+        accountRoleService2.Account_Role_Services__c = accountRoleServices.Id;
+        insert accountRoleService2;
+
+        GADM_Data_Submission_Period__c submissionPeriod = new GADM_Data_Submission_Period__c();
+        submissionPeriod.Name = 'Test';
+        submissionPeriod.Period_Length__c = 12;
+        submissionPeriod.Submission_Cycle_Start_Day__c = 1;
+        submissionPeriod.Submission_Cycle_End_Day__c = 10;
+        submissionPeriod.Submission_Cycle_Start_Month__c = 1;
+        submissionPeriod.Submission_Cycle_End_Month__c = 1;
+        submissionPeriod.Upcoming_Notification__c = 3;
+        submissionPeriod.In_Due_Notification__c = 0;
+        submissionPeriod.Start_Date__c = Date.newInstance(Date.today().year(), 1 , 1);
+        submissionPeriod.TestDate__c = Date.newInstance(Date.today().year(), 1 , 1).addDays(30);
+        insert submissionPeriod;
+
+        GADM_Account_Service_Detail__c serviceDetail2 = new GADM_Account_Service_Detail__c();
+        serviceDetail2.Account_Role_Service__c = accountRoleService2.Id;
+        serviceDetail2.Allowed_email_domain__c = 'somedomain.com';
+        serviceDetail2.Active_User_Count__c = 5;
+        serviceDetail2.External_Actor_Id__c = 'SomeExtTestId002';
+        serviceDetail2.Submission_Period_Extension__c = 30;
+        serviceDetail2.Data_Submission_Period__c = submissionPeriod.Id;
+        insert serviceDetail2;
 
     }
 
@@ -64,14 +126,14 @@ public class File_Upload_CTRL_TEST {
         return acc;
     }
 
-    private static Contact createTestContact(Account account) {
+    private static Contact createTestContact(Account account, String email, String firstName, String lastName) {
         Contact testContact = new Contact();
         testContact.AccountId = account.id;
-        testContact.Firstname = 'teste3_4';
-        testContact.Lastname='test3';
+        testContact.Firstname = firstName;
+        testContact.Lastname= lastName;
         testContact.Phone = '911111113';
         testContact.MobilePhone = '911111113';
-        testContact.Email = 'testFileUpload@test.com';
+        testContact.Email = email;
         testContact.BSP_CASS_Payment_contact__c = false;
         testContact.User_Portal_Status__c = 'Approved';
 
@@ -337,7 +399,25 @@ public class File_Upload_CTRL_TEST {
     }
 
     @IsTest
-    private static void isSubmissionOnTime() {
+    private static void isSubmissionOnTimeTest() {
+        User testUser = [SELECT Id FROM User WHERE Email = 'testFileUpload@test.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account 2'];
+
+        Boolean isOnTime = false;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            isOnTime =  File_Upload_CTRL.isSubmissionOnTime(testAccount.Id);
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(false, isOnTime, 'Data submission should be sent with delay!');
+    }
+
+    @IsTest
+    private static void isSubmissionOnTime_emptySubmissionIdTest() {
         User testUser = [SELECT Id FROM User WHERE Email = 'testFileUpload@test.com'];
         Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account'];
 
@@ -351,7 +431,7 @@ public class File_Upload_CTRL_TEST {
 
         Test.stopTest();
 
-        System.assertEquals(false, isOnTime, 'Data submission should be sent with delay!');
+        System.assertEquals(true, isOnTime, 'Missing submission period indicated submission on time!');
     }
 
 }

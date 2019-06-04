@@ -418,8 +418,6 @@ public class Data_Submission_List_CTRL_TEST {
         Test.stopTest();
 
 
-        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account'];
-
         System.assertEquals(false, info.isSuperUser, 'Bad user info retrieved!');
         System.assertEquals(false, info.isGadmUser, 'Bad user info retrieved!');
         System.assertEquals(true, info.isPowerUser, 'Bad user info retrieved!');

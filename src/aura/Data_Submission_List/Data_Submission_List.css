@@ -101,6 +101,6 @@
     width:50px;
 }
 
-.THIS .sixthColumn {
-    width:250px;
+.THIS .button_padding {
+   padding-left:10px !important;
 }

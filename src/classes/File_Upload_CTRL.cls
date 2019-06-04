@@ -75,6 +75,11 @@ public without sharing class File_Upload_CTRL {
         if(String.isNotBlank(actorId)) {
             List<GADM_Account_Service_Detail__c> accountServiceDetails = [SELECT Id, External_Actor_Id__c, Data_Submission_Period__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :actorId];
             if(! accountServiceDetails.isEmpty()) {
+                //missing period = submission on time
+                if(accountServiceDetails[0].Data_Submission_Period__c == null) {
+                    return true;
+                }
+
                 isOnTime = GADM_DataSubmissionPeriodHelper.isSubmissionOnTime(accountServiceDetails[0].Data_Submission_Period__c, Date.today(), accountServiceDetails[0].External_Actor_Id__c);
             }
         }
@@ -101,7 +106,7 @@ public without sharing class File_Upload_CTRL {
 
 
     @AuraEnabled
-    public static String createDataSubmission(Id submitterId, Id actorId) {
+    public static Data_Submission__c createDataSubmission(Id submitterId, Id actorId) {
 
         List<GADM_Account_Service_Detail__c> serviceDetail = [SELECT Id, External_Actor_Id__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :actorId LIMIT 1];
 
@@ -123,11 +128,11 @@ public without sharing class File_Upload_CTRL {
         try{
 
             insert dataSubmission;
-            return dataSubmission.Id;
+            return dataSubmission;
 
         }catch(Exception e) {
 
-            return '';
+            return null;
 
         }
     }
@@ -206,7 +211,7 @@ public without sharing class File_Upload_CTRL {
         public Boolean isOnTime {get; set;}
 
 
-        public UploadFile( String dataSubmissionId, String fileName, String contentType, String folder, AmazonCredentials credential, Id userId, Id actorId, Boolean isOnTime) {
+        public UploadFile( String dataSubmissionId, String fileName, String contentType, String folder, AmazonCredentials credential, String userId, String actorId, Boolean isOnTime) {
             this.endpoint = credential.EndpointBaseURL;
             this.bucketName = credential.Bucket;
             this.fullFileName = folder + dataSubmissionId + getFileExtension(fileName);

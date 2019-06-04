@@ -587,17 +587,21 @@
             action.setCallback(this, function(response){
                 const state = response.getState();
                 if(state === 'SUCCESS') {
-                    const dataSubmissionId = response.getReturnValue();
-                    if(! $A.util.isEmpty(dataSubmissionId)) {
+                    const dataSubmission = response.getReturnValue();
+                    if(! $A.util.isEmpty(dataSubmission)) {
 
-                        //createUploadFile(component, event, file, dataSubmissionId);
-                        checkOnTimeSubmission(component, event, file, dataSubmissionId);
+                        let dataSubmissionId = dataSubmission.Id;
+                        let externalActorId = '';
+                        if(! $A.util.isEmpty(dataSubmission.External_Actor_Id__c)) {
+                            externalActorId = dataSubmission.External_Actor_Id__c;
+                        }
+                        checkOnTimeSubmission(component, event, file, dataSubmissionId, externalActorId);
 
                     }else{
                         console.log('function uploadFile returned empty dataSubmissionId');
                         let errors = component.get('v.uploadedErrors');
                         errors.push({
-                            dataSubmissionId : '',
+                            dataSubmission : '',
                             fileName : file.name
                         });
                         component.set('v.uploadedErrors', errors);
@@ -607,7 +611,7 @@
                     console.log('uploadFile error');
                     let errors = component.get('v.uploadedErrors');
                     errors.push({
-                        dataSubmissionId : '',
+                        dataSubmission : '',
                         fileName : file.name
                     });
                     component.set('v.uploadedErrors', errors);
@@ -619,8 +623,7 @@
 
         }
 
-        function checkOnTimeSubmission(component, event, file, dataSubmissionId) {
-            debugger;
+        function checkOnTimeSubmission(component, event, file, dataSubmissionId, externalActorId) {
             let action = component.get('c.isSubmissionOnTime');
             action.setParams({
                 'actorId' : component.get('v.actorId')
@@ -631,7 +634,7 @@
                     const isOnTime = response.getReturnValue();
                     if(! $A.util.isEmpty(isOnTime)) {
 
-                        createUploadFile(component, event, file, dataSubmissionId, !isOnTime);
+                        createUploadFile(component, event, file, dataSubmissionId, !isOnTime, externalActorId);
 
                     }else{
                         console.log('function uploadFile returned empty uploadFile');
@@ -649,7 +652,7 @@
             $A.enqueueAction(action);
         }
 
-        function createUploadFile(component, event, file, dataSubmissionId, isOutsidePeriod) {
+        function createUploadFile(component, event, file, dataSubmissionId, isOutsidePeriod, externalActorId) {
             let action = component.get('c.createUploadFile');
             action.setParams({
                 'dataSubmissionId' : dataSubmissionId,
@@ -657,7 +660,7 @@
                 'contentType' : file.type,
                 'fileName' : file.name,
                 'userId' :component.get('v.userId'),
-                'actorId' : component.get('v.actorId'),
+                'actorId' : externalActorId,
                 'isOnTime' : isOutsidePeriod
             });
             action.setCallback(this, function(response){

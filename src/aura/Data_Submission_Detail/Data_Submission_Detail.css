@@ -3,3 +3,12 @@
     margin: 0 auto;
     padding-bottom: 10%;
 }
+
+.THIS.page_container{
+    margin:0 auto;
+}
+
+.THIS .slds-form-element__label {
+    color: #666666;
+    font-size:12px;
+}

@@ -51,7 +51,6 @@
     },
 
     handleGetUserInformation : function(component, event) {
-        debugger;
         let id = $A.get('$SObjectType.CurrentUser.Id');
         let action = component.get('c.getUserGrantedRoles');
         action.setParams({

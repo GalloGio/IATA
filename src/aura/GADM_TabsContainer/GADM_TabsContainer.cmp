@@ -31,15 +31,15 @@
 
 
                 <aura:if isTrue="{! v.isDataSubmissionResultVisible}">
-                    <lightning:tab class="element" label="DATA SUBMISSION RESULTS" id="3">
-                        <c:Data_Submission_List tabId="3" selectedTabId="{! v.tabId}"/>
+                    <lightning:tab class="element" label="DATA SUBMISSION RESULTS" id="3" onactive="{! c.activateTab}">
+                        <c:Data_Submission_List/>
                     </lightning:tab>
                 </aura:if>
 
 
                 <!--ALWAYS VISIBLE-->
-                <lightning:tab class="element" label="USER MANAGEMENT" id="4">
-                    <c:GADM_ExternalUserContactList tabId="4" selectedTabId="{! v.tabId}"/>
+                <lightning:tab class="element" label="USER MANAGEMENT" id="4" onactive="{! c.activateTab}">
+                    <c:GADM_ExternalUserContactList/>
                 </lightning:tab>
 
 
