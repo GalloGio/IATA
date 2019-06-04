@@ -7,6 +7,7 @@ import { LightningElement, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage } from'c/navigationUtils';
 import { getRecord} from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 //User and company details
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
@@ -40,8 +41,6 @@ export default class PortalProfilePageHeader extends LightningElement {
         //Account fields
         @track userAccount;
         @track loggedUser;
-
-
 
 
         _labels = {
@@ -119,7 +118,12 @@ export default class PortalProfilePageHeader extends LightningElement {
                     }
                 })
                 .catch(error => {
-                    console.log('PortalFAQPageHeader connectedCallback getCategoryTiles error: ' , error);
+                    const showError = new ShowToastEvent({
+                    title: 'Error',
+                    message: 'An error has occurred: ' + error.getMessage,
+                    variant: 'error',
+                });
+                this.dispatchEvent(showError);
                 });
             }
         }

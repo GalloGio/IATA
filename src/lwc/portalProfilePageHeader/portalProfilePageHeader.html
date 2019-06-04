@@ -9,15 +9,15 @@
 
     <c-portal-page-container>
         <span slot="componentContent">
-            <div style="min-width:300px;">
+            <div class="fixMinSize">
 
                 <!-- Breadcrumbs -->
-                <div style="position:relative;">
+                <div class="slds-is-relative">
                     <c-portal-breadcrumbs></c-portal-breadcrumbs>
                 </div>
 
                 <!-- Header -->
-                <div style="position:relative; box-shadow: 0px 1px 12px 0px #827f7f; ">
+                <div class="slds-is-relative headerShadow">
                     <template if:true={loading}>
                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                     </template>
@@ -25,25 +25,23 @@
                     <template if:false={loading}>
                         <div class="coverBand" style={backgroundStyle}></div>
 
-                        <!-- possible to use image with src or a div with background -->
                         <div style={profileDivStyle}></div>
-                        <!--<img src={portalImg} style={profilePhotoStyle}/>-->
 
-                            <div class="companyHeader" style="width:100%; min-height:150px; margin-bottom:2rem; background-color:#ffff;">
+                            <div class="companyHeader slds-m-bottom_medium fullWidth">
                                 <!-- Image spacers -->
-                                <div class="slds-hide_medium" style="height:100px; width:100%;"><!-- Image --></div>
-                                <div class="slds-show_medium" style="min-width:250px; height:1px; float: left;"><!-- Image --></div>
+                                <div class="slds-hide_medium fullWidth smallSpacer"><!-- Image --></div>
+                                <div class="slds-show_medium mediumSpacer"><!-- Image --></div>
 
 
                                 <template if:false={noAccount}>
                                     <!-- Header company info grid -->
-                                    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large" style="padding: 1rem; max-width:800px;">
+                                    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around--small headerGrid">
                                         <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_2-of-3 ">
                                             <div class="text-medium text-bold text-darkGray">{userAccount.Name}</class></div>
                                         </div>
                                         <!-- Labels -->
                                         <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-3"> </div>
-                                        <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4 slds-large-size_1-of-3" >
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 slds-large-size_1-of-3" >
                                             <div class="fieldLabel">{labels.csp_Profile_Website}</div>
                                             <div class="fieldValue"><a target="_blank" href={accountHref}>{accountWeb}</a></div>
                                         </div>
@@ -62,9 +60,9 @@
 
                                 <!-- No account -->
                                 <template if:true={noAccount}>
-                                    <div class="text-medium text-bold text-darkGray" style="padding-top:5rem; text-align:center;">
-                                    No related account
-                                        </div>
+                                    <div class="text-medium text-bold slds-p-top_xx-large text-darkGray centered">
+                                        No related account
+                                    </div>
                                 </template>
                             </div>
                     </template>

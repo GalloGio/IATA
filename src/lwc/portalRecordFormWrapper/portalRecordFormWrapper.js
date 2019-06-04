@@ -27,33 +27,20 @@ export default class PortalRecordFormWrapper extends LightningElement {
      openModal(){this.showEditModal = true;}
      closeModal(){this.showEditModal = false;}
 
-     loaded(){this.isLoading = false;}//console.log('loadedview '+this.recordId);
-     loadedEdit(){this.isLoadingEdit = false;}//console.log('loadedEdit '+this.recordId);
+     loaded(){this.isLoading = false;}
+     loadedEdit(){this.isLoadingEdit = false;}
 
      handleSucess(event){
          const updatedRecord = event.detail.id;
-         console.log('onsuccess: ', updatedRecord);
-         //this.isSaving = false;
-         }
+         this.isSaving = false;
+         this.closeModal();
+     }
 
      handleError(event){
-         //this.isSaving = false;
-         }
-
-     doSubmit(){
-         let form = this.template.querySelector('lightning-record-edit-form');
-         if(form){
-             console.log(form);
-             try{
-             form.submit();}catch(e){console.log(e);}
-         }else{console.log('NO FORM');}
+         this.isSaving = false;
      }
 
      onRecordSubmit(event){
-         event.preventDefault();
-         /*event.preventDefault();
-         let eventFields = event.detail.fields;
-         console.log('fields: '+JSON.stringify(eventFields));}*/
          this.isSaving = true;
-         }
+     }
 }

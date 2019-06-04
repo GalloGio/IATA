@@ -27,3 +27,42 @@
      letter-spacing: normal;
      color: #525252;
 }
+
+.centered{
+    text-align:center;
+}
+
+.headerShadow{
+    box-shadow: 0px 1px 12px 0px #827f7f;
+}
+
+.fixMinSize{
+    min-width:300px;
+}
+
+.fullWidth{
+    width:100%;
+}
+
+.fullHeight{
+    height:100%;
+}
+
+.companyHeader{
+    min-height:150px;
+    background-color:#ffff;
+}
+
+.mediumSpacer{
+    min-width:250px;
+    height:1px;
+    float: left;
+}
+
+.smallSpacer{
+    height:100px;
+}
+
+.headerGrid{
+    max-width:800px;
+}

@@ -8,4 +8,9 @@
     border-left-style: solid;
     border-left-color: #F04632;
     border-left-width: 5px;
+    font-size:18px;
+}
+
+.customCardWhite{
+    width:300px;
 }

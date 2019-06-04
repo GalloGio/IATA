@@ -4,11 +4,11 @@
 
 <!-- Portal Company Profile Info Nav -->
 <template>
-    <div class="customCardWhite" style="padding-top:0.5rem; width:300px;">
+    <div class="customCardWhite slds-p-top_x-small">
 
         <template for:each={navItems} for:item="topic">
             <template if:true={topic.open}>
-                <div key={topic.value} class="slds-p-around_small customCardTitleBox cursorPointer selectedItem" onclick={itemSelected}
+                <div key={topic.value} class="slds-p-around_small cust  omCardTitleBox cursorPointer selectedItem" onclick={itemSelected}
                     data-item={topic.value}>
                     <span class="slds-p-left_small text-bold" data-item={topic.value}>{topic.label}</span>
                 </div>

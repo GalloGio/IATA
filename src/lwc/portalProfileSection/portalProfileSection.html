@@ -4,14 +4,14 @@
 
 <!-- Portal Profile Section Container -->
 <template>
-    <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite section" style="margin-bottom:2.5rem;"> <!-- height:900px; -->
+    <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
 
         <!-- Header Part -->
         <div class="slds-m-vertical_small">
-            <div style="display: flex;justify-content: center;align-items: center;">
+            <div class="flexCenter">
 
-                <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                    <div style="width:100%;">
+                <div class="flexOneZero">
+                    <div class="fullWidth">
 
                         <!-- Section Title -->
                         <span class="text-medium text-bold text-darkGray">
@@ -24,8 +24,6 @@
                 <!-- Section actions -->
                 <div class="text-xxsmall">
                     <slot name="sectionActions"></slot>
-
-
                 </div>
             </div>
         </div>

@@ -1,10 +1,18 @@
 /**
- * Created by pvavruska on 5/24/2019.
+ * This class is used in GCS Portal to retrieve related contact and account information of the currently logged Community User,
+ * this information can be seen/edited under CompanyProfile(account info) and MyProfile(contact info) pages in the GCS Portal.
+ *
+ * To be able to dynamically display different fields for each of the Account (company) RecordTypes, list of fields to be display by lightning base components
+ * is generated based on Fieldsets. List of FieldWrappers is returned containg information about fieldName, additional access rules on top of FLS and information about
+ * which section of the profile that field belongs to.
+ *
+ * Fieldsets are not used for Contact fields (MyProfile) as the recordType-based layouts are not required there.
+ *
+ * User stories: MTSL-257 ; MTSL-258 ; MTSL-259 ; MTSL-289 ; MTSL-290 ; MTSL-291 ; MTSL-293 ; MTSL-294
  */
 
 public with sharing class PortalProfileCtrl {
 
-    PRIVATE STATIC FINAL STRING PORTAL_ADMIN;
     PRIVATE STATIC FINAL STRING FIELDSET_AIRLINE = 'GCS_Profile_Airline';
     PRIVATE STATIC FINAL STRING FIELDSET_AGENCY = 'GCS_Profile_Agency';
     PRIVATE STATIC FINAL STRING FIELDSET_GSA = 'GCS_Profile_GSA';
@@ -19,82 +27,90 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
     PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
 
-
-    // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
-    public static List<String[]> ContactFields() {
-        return new List<String[]>{
-                new String[]{'true', 'Salutation', 'true', 'true', LABEL_BASICS},
-                new String[]{'true', 'Birthdate', 'true', 'true', LABEL_BASICS},
-                new String[]{'true', 'FirstName', 'true', 'true', LABEL_BASICS},
-                new String[]{'true', 'LastName', 'true', 'true', LABEL_BASICS},
-                new String[]{'true', 'Preferred_Language__c', 'true', 'true', LABEL_BASICS},
-
-                new String[]{'true', 'Email', 'true', 'true', LABEL_PERSONAL_CONTACT},
-                new String[]{'true', 'Phone', 'true', 'true', LABEL_PERSONAL_CONTACT},
-                new String[]{'true', 'MobilePhone', 'true', 'true', LABEL_PERSONAL_CONTACT},
-                new String[]{'true', 'MailingCountry', 'true', 'true', LABEL_PERSONAL_CONTACT},
-                new String[]{'true', 'MailingCity', 'true', 'true', LABEL_PERSONAL_CONTACT},
-                new String[]{'true', 'MailingState', 'true', 'true', LABEL_PERSONAL_CONTACT},
-                new String[]{'true', 'MailingStreet', 'true', 'true', LABEL_PERSONAL_CONTACT},
-                new String[]{'true', 'MailingPostalCode', 'true', 'true', LABEL_PERSONAL_CONTACT},
-
-                new String[]{'true', 'Status__c', 'true', 'true', LABEL_ACCESSIBILITY},
-                //new String[]{'Authorisation', 'false', 'true', LABEL_ACCESSIBILITY},
-                new String[]{'true', 'Available_Services_Images__c', 'false', 'true', LABEL_ACCESSIBILITY},
-
-                new String[]{'false', 'Phone_Number__c', 'true', 'true', LABEL_BUSINESS_CONTACT},
-                new String[]{'false', 'Fax', 'true', 'true', LABEL_BUSINESS_CONTACT},
-                new String[]{'false', 'BillingCountry', 'false', 'true', LABEL_BUSINESS_CONTACT},
-                new String[]{'false', 'BillingState', 'false', 'true', LABEL_BUSINESS_CONTACT},
-                new String[]{'false', 'BillingCity', 'false', 'true', LABEL_BUSINESS_CONTACT},
-                new String[]{'false', 'BillingStreet', 'false', 'true', LABEL_BUSINESS_CONTACT},
-                new String[]{'false', 'BillingPostalCode', 'false', 'true', LABEL_BUSINESS_CONTACT},
-                 
-                //new String[]{'Working Areas', 'false', 'true', LABEL_PROFESSIONAL},
-                new String[]{'true', 'Area__c', 'true', 'true', LABEL_PROFESSIONAL}
-                //new String[]{'Languages', 'false', 'true', LABEL_PROFESSIONAL}
-
-        };
-    }
-
-    public static List<String[]> AccountFields() { return getFieldsByRecordType();}
-
     public static User myUser {
         get {
             if(myUser == null) {
-                myUser = [
-                        SELECT Id, AccountId, ContactId, Contact.AccountId, Contact.Financial_Assessment_Contact__c, Profile_Name__c,Contact.Account.RecordType.DeveloperName,Contact.Account.ANG_IsNewGenAgency__c
-                        FROM User
-                        WHERE Id = :UserInfo.getUserId()
-                ];
+                myUser = DAL_ISSP.getUser(UserInfo.getUserId());
             }
             return myUser;
         }
         set;
     }
 
+    public static Contact myContact{
+        get{
+            if(myContact == null){
+                myContact = DAL_ISSP.getContact(myUser.ContactId);
+            }
+            return myContact;
+        }
+
+        set;
+    }
+
+
+    // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
+    public static Map<String,List<FieldWrapper>> ContactFields() {
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
+        wrapperMap.put(LABEL_PERSONAL_CONTACT,new List<FieldWrapper>());
+        wrapperMap.put(LABEL_ACCESSIBILITY,new List<FieldWrapper>());
+        wrapperMap.put(LABEL_PROFESSIONAL,new List<FieldWrapper>());
+
+
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Salutation',true,true));
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Birthdate',true,true));
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('FirstName',true,true));
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('LastName',true,true));
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Preferred_Language__c',true,true));
+
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Email',false,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Phone',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MobilePhone',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingCountry',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingCity',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingState',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingStreet',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingPostalCode',true,true));
+
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Status__c',true,true));
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Available_Services_Images__c',false,true));
+
+        wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
+
+
+        return wrapperMap;
+    }
+
+    // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
+    public static Map<String, List<FieldWrapper>> ContactFieldsAcc() {
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        wrapperMap.put(LABEL_BUSINESS_CONTACT,new List<FieldWrapper>());
+
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone_Number__c',true,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Fax',true,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingCountry',false,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingState',false,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingStreet',false,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingPostalCode',false,true));
+
+        return wrapperMap;
+    }
+
+    public static Map<String,List<FieldWrapper>> AccountFields() { return getFieldsByRecordType();}
+
     @AuraEnabled
     public static Map<String, List<FieldWrapper>> getFieldsMap (String type){
         // CHECK IF ITS AN ACCOUNT OR CONTACT!!
+        Map<String, List<FieldWrapper>> sectionMap = new  Map<String, List<FieldWrapper>>();
 
         List<String[]> fieldsList = new List<String[]>();
         if ( type == 'MyProfile' ){
-            fieldsList = ContactFields();
+            sectionMap = ContactFields();
+        } else if (type == 'MyProfileAccFields') {
+            sectionMap = ContactFieldsAcc();
         } else {
-            fieldsList = AccountFields();
-        }
-
-        Map<String, List<FieldWrapper>> sectionMap = new  Map<String, List<FieldWrapper>>();
-
-        List<FieldWrapper> listWrapper = new List<FieldWrapper>();
-        for (String[] fieldInfo : fieldsList ) {
-            if ( !sectionMap.containsKey(fieldInfo[4]) ){
-                sectionMap.put(fieldInfo[4], new List<FieldWrapper>());
-            }
-            listWrapper = sectionMap.get(fieldInfo[4]);
-            //                                     IS Contact  -   FIELD NAME  -  EDITABLE  -  VISIBLE
-            FieldWrapper field = new FieldWrapper(fieldInfo[0], fieldInfo[1], fieldInfo[2], fieldInfo[3]);
-            listWrapper.add(field);
+            sectionMap = AccountFields();
         }
 
         return sectionMap;
@@ -121,14 +137,16 @@ public with sharing class PortalProfileCtrl {
     * Field access should be handled by field-level security, here it can be only more restrictive
     *                   with 'editable' attribute when editable by FL security.
     * */
-    private static List<String[]> getFieldsByRecordType(){
-        List<String[]> fieldNames = new List<String[]>();
+    private static Map<String,List<FieldWrapper>> getFieldsByRecordType(){
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
+        wrapperMap.put(LABEL_COMPANY_CONTACT,new List<FieldWrapper>());
+
+
+        String rType = myContact.Account.RecordType.DeveloperName;
+        Boolean newGen = myContact.Account.ANG_IsNewGenAgency__c;
+
         String fieldsetBasic;
-
-        String rType = myUser.Contact.Account.RecordType.DeveloperName;
-        Boolean newGen = myUser.Contact.Account.ANG_IsNewGenAgency__c;
-
-
         if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){fieldsetBasic = FIELDSET_AIRLINE;}
         else if(rType == 'IATA_Agency'){fieldsetBasic = FIELDSET_AGENCY;}
         else if(rType == 'IATA_GSA'){fieldsetBasic = FIELDSET_GSA;}
@@ -140,28 +158,28 @@ public with sharing class PortalProfileCtrl {
         List<Schema.FieldSetMember>  basicsFields = fieldsets.get(fieldsetBasic).getFields();
         List<Schema.FieldSetMember>  contactFields = fieldsets.get(FIELDSET_CONTACT).getFields();
 
+
         for(Schema.FieldSetMember f : basicsFields) {
-            String editable = 'true';
+            Boolean editable = true;
             if(newGen && f.getFieldPath() == 'TradeName__c'){
-                editable = 'false';
+                editable = false;
             }
-            fieldNames.add(new String[]{'false', f.getFieldPath(), editable, 'true', LABEL_BASICS});
+
+            wrapperMap.get(LABEL_BASICS).add(new FieldWrapper(f.getFieldPath(),editable,true));
         }
+
 
         for(Schema.FieldSetMember f : contactFields) {
-            fieldNames.add(new String[]{'false', f.getFieldPath(), 'true', 'true', LABEL_COMPANY_CONTACT});
+            wrapperMap.get(LABEL_COMPANY_CONTACT).add(new FieldWrapper(f.getFieldPath(),true,true));
         }
 
-        return fieldNames;
+        return wrapperMap;
 
     }
 
 
     /** FIELD WRAPPER HELPER CLASS */
     public class FieldWrapper{
-        @AuraEnabled
-        public Boolean isContact;
-
         @AuraEnabled
         public String fieldName;
 
@@ -173,11 +191,10 @@ public with sharing class PortalProfileCtrl {
 
         public FieldWrapper () {}
 
-        public FieldWrapper (String isContact, String fieldName, String editable, String visible){
-            this.isContact =(isContact == 'true' ? true : false );
+        public FieldWrapper (String fieldName, Boolean editable, Boolean visible){
             this.fieldName = fieldName;
-            this.editable = (editable == 'true' ? true : false );
-            this.visible = (visible == 'true' ? true : false );
+            this.editable = editable;
+            this.visible = visible;
         }
 
     }

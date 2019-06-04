@@ -53,7 +53,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             this.sectionMap = JSON.parse(JSON.stringify(result));
 
-            let sectionMap = this.sectionMap;//console.log('SECTION MAP BEFORE: ' , this.sectionMap );
+            let sectionMap = this.sectionMap;
 
             let localMap = [];
             for (let key in this.sectionMap) {
@@ -71,13 +71,13 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         //Different tabs based on current user's access
 
-        let tabNames = [this.labels.CompanyInformation]//, 'Branch Offices', 'Contacts', 'Company Calendar', 'Activity Log'];
+        let tabNames = [this.labels.CompanyInformation];//, 'Branch Offices', 'Contacts', 'Company Calendar', 'Activity Log'];
         for (let i = 0; i < tabNames.length; i++) {
             tabsAux.push({
                 "active": (i == 0),
                 "label": tabNames[i],
                 "id": i,
-                "style": ""
+                "class": ""
             });
         }
 
@@ -104,15 +104,11 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     navItemSelected(event) {
         this.navItem = event.detail.item;
-        console.log('item: ' + item);
     }
 
     handleScroll(yposition, self) {
-        if (!this.handleScrolling) { console.log('not scrolling'); return; }
+        if (!this.handleScrolling) { return; }
         let sections = self.template.querySelectorAll('.section');
-
-        //console.log('window: '+window.innerHeight);
-        //console.log('yposition: '+yposition);
 
         for (let i = 0; i < sections.length; i++) {
             let sectionName = sections[i].attributes.getNamedItem('data-name').value;
@@ -120,15 +116,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             let windowHeight = window.innerHeight;
             let positionFromTop = sections[i].getBoundingClientRect().top;
-            if (positionFromTop - windowHeight <= 0) {
-                //console.log('inView '+sectionName)
-            }
 
-
-            let triggerPosition = windowHeight / 2; //650
+            let triggerPosition = windowHeight / 2;
             if ((offsetTop - yposition < triggerPosition) && (offsetTop - yposition > - triggerPosition)) {
                 if (self.currentSection != sectionName) {
-                    //console.log('Looking at '+sectionName);
                     self.currentSection = sectionName;
                     const leftNav = this.template.querySelector('c-portal-company-profile-info-nav');
                     if (leftNav) {
@@ -141,16 +132,15 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     onmouseenterTab(event) {
         let clickedTab = event.target.dataset.item;
-        //console.log('onmouseenterTab', clickedTab);
 
         //because proxy.......
         let tabsAux = JSON.parse(JSON.stringify(this.lstTabs));
 
         for (let i = 0; i < tabsAux.length; i++) {
             if (i + "" === clickedTab) {
-                tabsAux[i].style = "color:#f04632;border-bottom: 2px solid #f04632;";
+                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray activeTab";
             } else {
-                tabsAux[i].style = "";
+                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
             }
         }
 
@@ -163,13 +153,12 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         //because proxy.......
         let tabsAux = JSON.parse(JSON.stringify(this.lstTabs));
-        //console.log(tabsAux);
 
         for (let i = 0; i < tabsAux.length; i++) {
             if (i + "" === clickedTab) {
-                tabsAux[i].style = "";
+                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
             } else {
-                tabsAux[i].style = "";
+                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
             }
         }
 
@@ -178,11 +167,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     onclickTab(event) {
         let clickedTab = event.target.dataset.item;
-        //console.log('onclickTab', clickedTab);
 
         //because proxy.......
         let tabsAux = JSON.parse(JSON.stringify(this.lstTabs));
-        //console.log(tabsAux);
 
         for (let i = 0; i < tabsAux.length; i++) {
             if (i + "" === clickedTab) {

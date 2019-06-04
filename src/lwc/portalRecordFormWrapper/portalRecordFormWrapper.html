@@ -18,7 +18,7 @@
                         onload={loaded}
                 >
                     <template if:false={isLoading}>
-                        <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large" style="padding: 1rem; max-width:800px;">
+                        <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small maxWidth">
                             <template for:each={fields} for:item="field">
                                 <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                                     <template if:true={field.visible}>
@@ -41,8 +41,7 @@
         <div class="modal">
             <div class="customPopupInteriorHalfScreenCentered">
                 <!-- Popup Header -->
-                <div class="slds-p-horizontal_large slds-p-vertical_medium"
-                     style="font-size: 20px;font-weight: 600;font-style: normal;font-stretch: normal;line-height: 1.6;letter-spacing: normal;color: #333333;">
+                <div class="slds-p-horizontal_large slds-p-vertical_medium editIcon">
                     <span>Edit {objectName}</span>
                     <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                         <template if:false={isSaving}>
@@ -54,7 +53,7 @@
 
                 <!-- Popup Body -->
                 <template if:true={recordId}>
-                    <div style="position:relative;">
+                    <div class="slds-is-relative">
                      <lightning-record-edit-form record-id={recordId} object-api-name={objectName} onload={loadedEdit} onsuccess={handleSucess} onsubmit={onRecordSubmit} onerror={handleError}> <!--  -->
 
                          <template if:true={isSaving}>
@@ -65,18 +64,12 @@
                          </template>
 
                         <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
-                            <div class="slds-p-vertical_large" style="font-size: 16px;
-                                    font-weight: normal;
-                                    font-style: normal;
-                                    font-stretch: normal;
-                                    line-height: 1.63;
-                                    letter-spacing: normal;
-                                    color: #525252;">
+                            <div class="slds-p-vertical_large">
                             </div>
 
 
                             <template if:false={isLoadingEdit}>
-                                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large" style="padding: 1rem; max-width:800px;">
+                                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small maxWidth">
                                     <template for:each={fields} for:item="field">
                                     <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
                                         <div>
@@ -104,7 +97,7 @@
 
                         <!-- Popup Footer -->
                         <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
-                            <lightning-button class="slds-float_right containedButton" label={labels.SaveLabel} type="submit" disabled={isSaving} onclick={doSubmit} variant="brand"></lightning-button>
+                            <lightning-button class="slds-float_right containedButton" label={labels.SaveLabel} type="submit" disabled={isSaving} variant="brand"></lightning-button>
 
                             <lightning-button class="slds-float_right  containedButtonWhite slds-m-right_medium" disabled={isSaving} label={labels.CancelLabel} variant="" onclick={closeModal}></lightning-button>
                         </div>
