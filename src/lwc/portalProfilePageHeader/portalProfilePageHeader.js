@@ -19,6 +19,8 @@ import getCategoryTiles from '@salesforce/apex/PortalFAQsCtrl.getCategoryTiles';
 import csp_Profile_CompanyEmail from '@salesforce/label/c.csp_Profile_CompanyEmail';
 import csp_Profile_IATACode from '@salesforce/label/c.csp_Profile_IATACode';
 import csp_Profile_Website from '@salesforce/label/c.csp_Profile_Website';
+import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
+
 
 
 
@@ -46,7 +48,8 @@ export default class PortalProfilePageHeader extends LightningElement {
         _labels = {
             csp_Profile_CompanyEmail,
             csp_Profile_IATACode,
-            csp_Profile_Website
+            csp_Profile_Website,
+            ISSP_ANG_GenericError
             };
 
         get labels() {
@@ -120,7 +123,7 @@ export default class PortalProfilePageHeader extends LightningElement {
                 .catch(error => {
                     const showError = new ShowToastEvent({
                     title: 'Error',
-                    message: 'An error has occurred: ' + error.getMessage,
+                    message: this.ISSP_ANG_GenericError+' ' + error.getMessage,
                     variant: 'error',
                 });
                 this.dispatchEvent(showError);
