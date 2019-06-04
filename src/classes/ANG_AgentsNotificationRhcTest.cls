@@ -52,6 +52,7 @@ private class ANG_AgentsNotificationRhcTest {
 		cntry.ISO_Code_Numeric__c = 625;
 		cntry.ISO_Code__c = 'ES';
 		cntry.ANG_Enable_NewGen__c = TRUE;
+		cntry.AMS_Settlement_System__c = bspES.Id;
 
 		insert cntry;
 
