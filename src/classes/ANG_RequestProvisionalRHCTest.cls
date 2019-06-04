@@ -42,6 +42,15 @@ public class ANG_RequestProvisionalRHCTest{
         );
         insert a;
 
+        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+        	ANG_AccountId__c =a.id,
+        	CurrencyIsoCode ='USD',
+        	RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+        	ANG_Financial_Security__c=100
+        );
+
+        insert rhcInfo;
+        
         // Create a new Financial Institution
         Financial_Institution__c fi = new Financial_Institution__c(
             Name = 'Test', 
@@ -121,14 +130,7 @@ public class ANG_RequestProvisionalRHCTest{
         
         insert bSPAttributes;
 
-        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-        	ANG_AccountId__c =a.id,
-        	CurrencyIsoCode ='USD',
-        	RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-        	ANG_Financial_Security__c=100
-        );
 
-        insert rhcInfo;
 
 	}
 
