@@ -1,8 +1,12 @@
 import { LightningElement, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getLiveAgentButton from '@salesforce/apex/PortalSupportReachUsCtrl.getLiveAgentButton';
 import getContactInfo from '@salesforce/apex/PortalSupportReachUsCtrl.getContactInfo';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
+import getEmergencyDependencies from '@salesforce/apex/PortalSupportReachUsCtrl.getEmergencyDependencies';
 import getCaseTypeAndCountry from '@salesforce/apex/PortalSupportReachUsCtrl.getCaseTypeAndCountry';
+import insertCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.insertCase';
+import createCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.createCase';
 
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 
@@ -37,7 +41,17 @@ import csp_SupportReachUs_Call_Panel_label from '@salesforce/label/c.csp_Call_Pa
 import csp_SupportReachUs_Call_Panel_sub_label from '@salesforce/label/c.csp_Call_Panel_sub_label';
 import csp_SupportReachUs_Chat_With_Us from '@salesforce/label/c.LVA_ChatWithUs';
 import csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL from '@salesforce/label/c.ISSP_Topics_To_Exclude_Country_PL';
-import csp_SupportReachUs_Category from '@salesforce/label/c.csp_SupportReachUs_Category'
+import csp_SupportReachUs_Category from '@salesforce/label/c.csp_SupportReachUs_Category';
+import csp_SupportReachUs_GoToHomepage from '@salesforce/label/c.csp_GoToHomepage';
+import csp_SupportReachUs_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
+import csp_SupportReachUs_ComplimentInfo from '@salesforce/label/c.csp_ComplimentInfo';
+import csp_SupportReachUs_Compliment from '@salesforce/label/c.csp_Compliment';
+import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
+
+// Import standard salesforce labels
+import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
+import csp_caseSubject from '@salesforce/schema/Case.Subject';
+import csp_caseDescription from '@salesforce/schema/Case.Description';
 
 
 
@@ -57,6 +71,17 @@ export default class PortalSupportReachUs extends LightningElement {
     @track optionsButton = false;
     @track supOptionsPanel = false;
     @track countryValue = '';
+    @track compliment_countryValue = '';
+    @track emergencyButton = false;
+    @track isEmergency = false;
+    @track isQuestion = true;
+    @track isConcern = false;
+    @track isCompliment = false;
+    @track question;
+    @track concern;
+    @track compliment;
+    @track showModal = false;
+    //@track suggestion;
 
     //global variables
     pageParams;
@@ -65,8 +90,10 @@ export default class PortalSupportReachUs extends LightningElement {
     contact;
     allData = {};
     categorization = {};
+    emergencyCategories = {};
     recordTypeAndCountry;
     myliveAgentButtonInfo;
+    caseInitiated;
 
     //label construct
     label = {
@@ -97,18 +124,38 @@ export default class PortalSupportReachUs extends LightningElement {
         csp_SupportReachUs_Call_Panel_sub_label,
         csp_SupportReachUs_Chat_With_Us,
         csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL,
-        csp_SupportReachUs_Category
+        csp_SupportReachUs_Category,
+        csp_SupportReachUs_GoToHomepage,
+        csp_SupportReachUs_GoToSupport,
+        csp_SupportReachUs_ComplimentInfo,
+        csp_SupportReachUs_Compliment,
+        csp_caseNumber,
+        csp_caseSubject,
+        csp_caseDescription,
+        IDCard_FillAllFields
     }
+
+    //links for images
+    iconsBaseLink = '/csportal/s/CSPortal/Images/Support/';
+    iconsExtension = '.svg';
+
+
 
     //old doInit() in aura. Fires once the component is loaded.
     connectedCallback() {
 
         this.getAllPickListValues();
 
+        this.getEmergencyDependencies();
+
         this.getCountryList();
 
         this.getContact();
 
+        this.question = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
+        this.concern = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
+        this.compliment = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
+        //this.suggestion = this.iconsBaseLink + 'suggestion_unselected' + this.iconsExtension;
     }
 
     //get the Topic Values for picklist
@@ -117,7 +164,6 @@ export default class PortalSupportReachUs extends LightningElement {
         getAllPickListValues()
             .then(result => {
                 this.myResult = JSON.parse(JSON.stringify(result));
-                console.log(this.myResult);
                 //Auxiliary Map
                 const map = new Map();
                 //Array to consume category options
@@ -164,6 +210,13 @@ export default class PortalSupportReachUs extends LightningElement {
             })
     }
 
+    getEmergencyDependencies() {
+        getEmergencyDependencies()
+            .then(result => {
+                this.emergencyCategories = JSON.parse(JSON.stringify(result));
+            });
+    }
+
     //gets Country for picklist
     getCountryList() {
         getCountryList()
@@ -180,7 +233,7 @@ export default class PortalSupportReachUs extends LightningElement {
 
                 //set global with the options for later use
                 this.countryOptions = myCountryOptions;
-                
+
 
             })
             .catch(error => {
@@ -302,6 +355,8 @@ export default class PortalSupportReachUs extends LightningElement {
         this.supOptionsPanel = false;
         //Hide Country Picklist/Combobox
         this.countryCB = false;
+        //Hide Emergency button
+        this.emergencyButton = false;
         //get subtopics
         this.subTopicValuesGetter();
 
@@ -330,7 +385,7 @@ export default class PortalSupportReachUs extends LightningElement {
 
         //set the options
         this.subTopicOptions = mySubTopicOptions;
-        
+
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
             const checkSubTopic = obj => obj.value === this.pageParams.subtopic;
@@ -341,9 +396,13 @@ export default class PortalSupportReachUs extends LightningElement {
                 let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
 
                 this.countryCB = true;
-                if (countryExclusion.includes(this.topic)) {
+                if (countryExclusion.includes(this.topic + '__c')) {
                     this.countryCB = false;
                     this.optionsButton = true;
+                    if (this.emergencyCategories.some(obj => obj.value === this.topic + ('__c'))
+                        && this.emergencyCategories.some(obj => obj.value.includes(this.subTopic + '__c'))) {
+                        this.emergencyButton = true;
+                    }
                 }
             } else {
                 this.countryCB = false;
@@ -359,12 +418,18 @@ export default class PortalSupportReachUs extends LightningElement {
             this.optionsButton = false;
             this.countryValue = '';
             this.countryCB = true;
+            this.emergencyButton = false;
 
             //required to not show the country picklist if the selected value is included here
             let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
             if (countryExclusion.includes(this.topic + '__c')) {
                 this.countryCB = false;
                 this.optionsButton = true;
+
+                if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
+                    && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
+                    this.emergencyButton = true;
+                }
             }
         } else {
             this.optionsButton = false;
@@ -379,11 +444,24 @@ export default class PortalSupportReachUs extends LightningElement {
         this.countryValue = event.target.value;
         if (this.countryValue !== "") {
             this.optionsButton = true;
+            if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
+                && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
+                this.emergencyButton = true;
+            }
         } else {
             this.optionsButton = false;
+            this.emergencyButton = false;
         }
         this.supOptionsPanel = false;
 
+        this.closeOptionsPanel();
+    }
+
+
+
+
+    handleEmergency() {
+        this.isEmergency = !this.isEmergency;
         this.closeOptionsPanel();
     }
 
@@ -401,9 +479,8 @@ export default class PortalSupportReachUs extends LightningElement {
 
     //Gets all live agent information depending on the selected data
     getLiveAgentButtonInfo() {
-        getLiveAgentButton({ topicName: this.topic, country: this.countryValue, contactInfo: this.contact })
+        getLiveAgentButton({ topicName: this.topic, country: this.countryValue, contactInfo: this.contact, isEmergency: this.isEmergency })
             .then(result => {
-
                 this.myliveAgentButtonInfo = JSON.parse(JSON.stringify(result));
                 this.sendDataForLiveAgent();
                 //fire event to activate spinner on Aura Wrapper
@@ -452,6 +529,7 @@ export default class PortalSupportReachUs extends LightningElement {
             allData.myliveAgentButtonInfo = myliveAgentButtonInfo;
             allData.recordTypeAndCountry = recordTypeAndCountry;
             allData.categorization = categorization;
+            allData.Emergency = this.isEmergency;
             allData.contact = contact;
 
             // Fire the custom event
@@ -526,6 +604,107 @@ export default class PortalSupportReachUs extends LightningElement {
         let mod = this.template.querySelector('[data-id="' + event.target.attributes.getNamedItem('data-id').value + '" ]');
         mod.classList.remove('default_panel');
         mod.classList.add('active_panel');
+
+
+        if (event.target.attributes.getNamedItem('data-id').value === '001') {
+            this.question = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
+            this.concern = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
+            this.compliment = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
+            this.isQuestion = true;
+            this.isConcern = false;
+            this.isCompliment = false;
+        }
+        else if (event.target.attributes.getNamedItem('data-id').value === '002') {
+            this.concern = this.iconsBaseLink + 'concern_selected' + this.iconsExtension;
+            this.question = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
+            this.compliment = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
+            this.isQuestion = false;
+            this.isConcern = true;
+            this.isCompliment = false;
+
+        }
+        else if (event.target.attributes.getNamedItem('data-id').value === '003') {
+            this.compliment = this.iconsBaseLink + 'compliment_selected' + this.iconsExtension;
+            this.question = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
+            this.concern = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
+            this.isQuestion = false;
+            this.isConcern = false;
+            this.isCompliment = true;
+        }
+
+    }
+
+    /*################# COMPLIMENT JS ########################*/
+
+    //handles compliment country selection
+    compliment_countryHandler(event) {
+        this.compliment_countryValue = event.target.value;
+    }
+
+    //grabs subject
+    handleSubject(event) {
+        this.subject = event.target.value;
+    }
+
+    //grabs description
+    handleDescription(event) {
+        this.description = event.target.value;
+    }
+
+    submitCompliment() {
+        this.toggleSpinner();
+
+        if (this.compliment_countryValue !== undefined && this.subject !== undefined && this.description !== undefined &&
+            this.compliment_countryValue.trim() !== '' && this.subject.trim() !== '' && this.description.trim() !== '') {
+
+            createCase({ countryiso: this.compliment_countryValue })
+                .then(createCaseResult => {
+                    this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
+
+                    const record = { 'sobjectType': 'Case' };
+                    record.RecordTypeId = this.caseInitiated.RecordTypeId;
+                    record.Subject = this.subject;
+                    record.Description = this.description + '\n-COMPLIMENT-';
+                    record.BSPCountry__c = this.compliment_countryValue;
+
+                    insertCase({ caseToInsert: record, recipientsToAdd: [] })
+                        .then(() => {
+                            this.showModal = true;
+                            this.toggleSpinner();
+                        })
+                        .catch(error => {
+
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error creating case',
+                                    message: JSON.parse(JSON.stringify(error)).body.message,
+                                    variant: 'error',
+                                    mode: 'pester'
+                                })
+                            );
+                        });
+                });
+        }
+        else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: this.label.IDCard_FillAllFields,
+                    variant: 'error',
+                    mode: 'pester'
+                })
+            );
+        }
+
+
+    }
+
+    navigateToHomepage() {
+        window.location.href = "/csportal/s/";
+    }
+
+    navigateToSupport() {
+        window.location.href = "/csportal/s/support-reach-us";
     }
 
 }

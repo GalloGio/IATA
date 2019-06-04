@@ -33912,6 +33912,13 @@ title,Title,Name</value>
         <value>You will have a response as soon as possible.</value>
     </labels>
     <labels>
+        <fullName>csp_CaseTracking</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>You can add comments, documents and recipients in case of update. You can track the status and do updates in</value>
+    </labels>
+    <labels>
         <fullName>csp_Case_Panel_label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34427,6 +34434,13 @@ title,Title,Name</value>
         <value>View Case Summary</value>
     </labels>
     <labels>
+        <fullName>csp_GoToHomepage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>Go to Homepage</value>
+    </labels>
+    <labels>
         <fullName>csp_btn_Support_Label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34442,6 +34456,22 @@ title,Title,Name</value>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Select the topic covering the problem.</value>
     </labels>        
+    <labels>
+        <fullName>csp_Compliment</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language> 
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Thanks for sharing.</value>
+    </labels>
+    <labels>
+        <fullName>csp_ComplimentInfo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>At IATA we strive to provide an excellent customer service and itâ€™s rewarding to know that you care too. We consider any feedback you give us.</value>
+    </labels>
     <labels>
     <fullName>days_left</fullName>
         <language>en_US</language>

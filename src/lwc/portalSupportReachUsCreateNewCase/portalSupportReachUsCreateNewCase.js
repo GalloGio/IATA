@@ -21,6 +21,7 @@ import csp_CreateNewCaseMainInputBoxSubLabel from '@salesforce/label/c.csp_Creat
 import csp_CreateNewCaseMainInputEmailsTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsTopLabel';
 import csp_CreateNewCaseMainInputEmailsSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsSubLabel';
 import csp_searchIataCodeLocationNamePlaceHolder from '@salesforce/label/c.csp_searchIataCodeLocationNamePlaceHolder';
+import csp_CaseTracking from '@salesforce/label/c.csp_CaseTracking';
 import csp_ToastWarningRecipientNotFound from '@salesforce/label/c.csp_ToastWarningRecipientNotFound';
 import csp_searchEmailRecipientPlaceholder from '@salesforce/label/c.csp_searchEmailRecipientPlaceholder';
 import csp_CaseCreatedSuccess from '@salesforce/label/c.csp_CaseCreatedSuccess';
@@ -64,6 +65,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_CaseResponseGuarantee,
         csp_GoToSupport,
         csp_Category,
+        csp_CaseTracking,
         csp_ViewCaseSummary,
         csp_Topic,
         CSP_Support,
@@ -75,7 +77,6 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_caseDescription,
         ISSP_ANG_GenericError,
         IDCard_FillAllFields
-        //csp_CreateNewCaseMainUploadSubLabel
     }
 
     //spinner controller
@@ -94,6 +95,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     @track description = "";
     @track subject = "";
     @track caseNumber;
+    @track isEmergencyCase = false;
 
     //variable to control error class sent to child component
     @track requiredClass;
@@ -195,6 +197,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                         && myTopicOptions.some(obj => obj.value === pageParams.topic)
                         && mySubTopicOptions.some(obj => obj.value === pageParams.subtopic)) {
 
+                        this.isEmergencyCase = pageParams.emergency === true;
+
                         //all ok parameters exist
                         //initialize the case
                         this.createCase();
@@ -227,7 +231,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             });
     }
 
-    redirectSupport(){
+    redirectSupport() {
         window.history.back();
     }
 
@@ -249,7 +253,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //gets related accounts and sets them in global var
     getRelatedAccounts() {
-        searchAccounts({searchTerm : null})
+        searchAccounts({ searchTerm: null })
             .then(relatedAccountsResult => {
                 this.relatedAccounts = JSON.parse(JSON.stringify(relatedAccountsResult));
             });
@@ -257,7 +261,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //gets related contacts and sets them in global var
     getRelatedContacts() {
-        searchContacts({searchTerm : null})
+        searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
             });
@@ -316,7 +320,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
 
     //class reset once you click on the input again.
-    removeRequired(){
+    removeRequired() {
         this.requiredClass = '';
     }
 
@@ -412,6 +416,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
             if (this.agentProfile) {
                 record.IATAcode__c = this.childComponent.title;
+            }
+
+            if (this.isEmergencyCase) {
+                record.Priority = 'Emergency';
             }
 
             record.RecordTypeId = this.caseInitiated.RecordTypeId;
