@@ -2152,8 +2152,9 @@ public class AMS_OSCARTriggerHandler {
             System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - mergeAccountsToUpdate] a - ' + a);
             if(a!=null) {
 
-                if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Id))
-                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(a.Id);
+                if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Id) ||
+                    (a.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Top_Parent__c)))
+                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(a.Top_Parent__c == null ? a.Id : a.Top_Parent__c);
 
                 mergedAccountsToUpdate.add(a);
             }
@@ -3998,8 +3999,9 @@ public class AMS_OSCARTriggerHandler {
                                 }
                             }
 
-                            if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(forAccount.Id))
-                                forAccount.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(forAccount.Id);
+                            if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(forAccount.Id) ||
+                                (forAccount.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(forAccount.Top_Parent__c)))
+                                forAccount.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(forAccount.Top_Parent__c == null ? forAccount.Id : forAccount.Top_Parent__c);
 
                             System.debug('auxChangeCodeHO: ' + auxChangeCodeHO );
                             System.debug('auxChangeCode: ' + auxChangeCode );

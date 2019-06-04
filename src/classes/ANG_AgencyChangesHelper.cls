@@ -198,8 +198,9 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c)) {
 					changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
 
-					if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(oscar.Account__c))
-						changesContainer.accountsMap.get(oscar.Account__c).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(oscar.Account__c);
+					if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(oscar.Account__c) ||
+                       (changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c)))
+						changesContainer.accountsMap.get(oscar.Account__c).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c == null ? oscar.Account__c : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c);
 				}
 
 				if(oscar.Process__c == AMS_Utils.NGCHANGES){
