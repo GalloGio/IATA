@@ -2716,6 +2716,22 @@ Payment required on receipt of this Payment Advice
         <value>Was this article helpful?</value>
     </labels>
     <labels>
+        <fullName>csp_Basics_Section_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Profile section label</shortDescription>
+        <value>Basics</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Breadcrumb_CompanyProfile_Title</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_CompanyProfile_Title</shortDescription>
+        <value>Company Profile</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_FAQ_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2812,6 +2828,14 @@ Payment required on receipt of this Payment Advice
         <value>Cases</value>
     </labels>
     <labels>
+        <fullName>csp_CompanyContact_Section_label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Company Profile section label</shortDescription>
+        <value>Company Contact</value>
+    </labels>
+    <labels>
         <fullName>CSP_CompanyProfile</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2833,22 +2857,6 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Documents</shortDescription>
         <value>Documents</value>
-    </labels>
-    <labels>
-        <fullName>CSP_FAQReachUsBanner_Text</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_FAQReachUsBanner_Text</shortDescription>
-        <value>You can create a case, start a conversation with IATA Live Support or call us.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_FAQReachUsBanner_Title</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_FAQReachUsBanner_Title</shortDescription>
-        <value>Need more help?</value>
     </labels>
     <labels>
         <fullName>CSP_FAQs_Title</fullName>
@@ -29765,6 +29773,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No special characters</shortDescription>
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
+    </labels>
     <labels>
         <fullName>Notification</fullName>
         <language>en_US</language>
@@ -34157,6 +34166,63 @@ title,Title,Name</value>
         <value>Process</value>
     </labels>
     <labels>
+        <fullName>csp_Profile_Website</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Profile_Website</shortDescription>
+        <value>Website</value>
+    </labels>
+    <labels>
+        <fullName>csp_Profile_CompanyEmail</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Profile_CompanyEmail</shortDescription>
+        <value>Company E-Mail</value>
+    </labels>
+    <labels>
+        <fullName>csp_Profile_IATACode</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Profile_IATACode</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+
+    <labels>
+        <fullName>csp_Profile_PortalAccessibility</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Profile_PortalAccessibility</shortDescription>
+        <value>Portal Accessibility</value>
+    </labels>
+    <labels>
+        <fullName>csp_Profile_BusinessContact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Profile_BusinessContact</shortDescription>
+        <value>Business Contact</value>
+    </labels>
+    <labels>
+        <fullName>csp_Profile_PersonalContact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Profile_PersonalContact</shortDescription>
+        <value>Personal Contact</value>
+    </labels>
+    <labels>
+        <fullName>csp_Profile_Professional</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Profile_Professional</shortDescription>
+        <value>Professional</value>
+    </labels>
+    <labels>
         <fullName>csp_Query</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34179,6 +34245,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Sales Payment</shortDescription>
         <value>Sales Payment</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Save</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
         <fullName>csp_Sub_Topic_Label</fullName>

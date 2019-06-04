@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>45.0</apiVersion>
+    <description>Renders record-view form for a given record with possibility to open modal dialog to edit the record.
+        Accepts ApiName, RecordId and a list of FieldWrappers.
+    </description>
+    <isExposed>true</isExposed>
+    <masterLabel>Portal Record Form Wrapper</masterLabel>
+</LightningComponentBundle>

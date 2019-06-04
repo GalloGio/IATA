@@ -1,0 +1,22 @@
+/**
+ * Created by pvavruska on 5/23/2019.
+ */
+
+.emptyGrayAreaSize{
+    height: 50px;
+}
+
+.selectedTab{
+    color:#f04632;
+    border-bottom: 5px solid #f04632;
+}
+
+.activeTab{
+    color:#f04632;
+    border-bottom: 2px solid #f04632;
+}
+
+.stickyNav{
+    position:sticky;
+    top:5rem;
+}
