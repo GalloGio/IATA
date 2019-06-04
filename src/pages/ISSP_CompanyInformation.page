@@ -262,7 +262,7 @@
                             </div>
                             <!-- end row --> 
                             
-                            <div class="row form-group">
+                            <div class="row form-group" style="display: {!IF(isGDPOptInDisplayed, '', 'none')}">
                                 <div class="col-md-5" style="padding-left:28px">
                                     <label class="lbl" for="businessinputGDPOptIn">GDP Opt In</label>
                                 </div>

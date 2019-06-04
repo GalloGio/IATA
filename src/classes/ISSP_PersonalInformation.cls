@@ -262,6 +262,14 @@ public with sharing class ISSP_PersonalInformation {
         }
     }*/
 
+    public Boolean isGDPOptInDisplayed {
+        get {
+            Set<String> possibleGDPLocationTypes = new Set<String>{'C', 'D', 'G', 'M', 'P', 'R', 'T', 'V', 'X'};
+            return possibleGDPLocationTypes.contains(con.Account.Location_Type__c);
+        }
+        set;
+    }
+
     public List<ISSP_AMS_Accreditation.AccountChanges> getAccountChangesList(){
         List<ISSP_AMS_Accreditation.AccountChanges> accChanges_List = new List<ISSP_AMS_Accreditation.AccountChanges>();
 
@@ -288,7 +296,7 @@ public with sharing class ISSP_PersonalInformation {
         if(acc.WebSite != con.Account.WebSite)
             accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('WebSite',acc.WebSite,con.Account.WebSite));
         
-        if(acc.GDP_Opt_In__c != con.Account.GDP_Opt_In__c)
+        if(acc.GDP_Opt_In__c != con.Account.GDP_Opt_In__c && isGDPOptInDisplayed)
             accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('GDP_Opt_In__c',String.valueOf(acc.GDP_Opt_In__c),String.valueOf(con.Account.GDP_Opt_In__c)));
         
         return accChanges_List;
