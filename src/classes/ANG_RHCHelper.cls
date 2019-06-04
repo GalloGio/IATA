@@ -467,9 +467,13 @@ public class ANG_RHCHelper {
 					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
 					riuw.currencyIsoCode = rhc.CurrencyIsoCode;
 
+					riuw.rhcAmountForecasted = '';
+					
 					if(rhc.ANG_RHC_Amount_Forecasted__c != NULL){			
 						riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c.format();
 					}
+
+					riuw.rhcForecastedEffectiveDate = '';
 
 					if(rhc.ANG_Forecasted_RHC_Effective_date__c != NULL){
 						riuw.rhcForecastedEffectiveDate = (rhc.ANG_Forecasted_RHC_Effective_date__c.month() + '/' + 
