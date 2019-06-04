@@ -52,6 +52,7 @@ private class ANG_AgentsNotificationRhcTest {
 		cntry.ISO_Code_Numeric__c = 625;
 		cntry.ISO_Code__c = 'ES';
 		cntry.ANG_Enable_NewGen__c = TRUE;
+		cntry.AMS_Settlement_System__c = bspES.Id;
 
 		insert cntry;
 
@@ -92,6 +93,7 @@ private class ANG_AgentsNotificationRhcTest {
 			acct.ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED;
 			acct.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 			acct.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
+			acct.Remittance_frequency__c = 'W';
 
 			insert acct;
 
