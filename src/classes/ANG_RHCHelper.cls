@@ -470,9 +470,13 @@ public class ANG_RHCHelper {
 					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
 					riuw.rhcAmountForecasted = rhc.ANG_RHC_Amount_Forecasted__c.format();
 					riuw.currencyIsoCode = rhc.CurrencyIsoCode;
-					riuw.rhcForecastedEffectiveDate = (rhc.ANG_Forecasted_RHC_Effective_date__c.month() + '/' + 
-																						 rhc.ANG_Forecasted_RHC_Effective_date__c.day() + '/' + 
-																						 rhc.ANG_Forecasted_RHC_Effective_date__c.year());
+
+					if(rhc.ANG_Forecasted_RHC_Effective_date__c != NULL){
+						riuw.rhcForecastedEffectiveDate = (rhc.ANG_Forecasted_RHC_Effective_date__c.month() + '/' + 
+																							rhc.ANG_Forecasted_RHC_Effective_date__c.day() + '/' + 
+																							rhc.ANG_Forecasted_RHC_Effective_date__c.year());
+					}
+
 					riuw.templateLanguage = contactMap.get(contactId).Preferred_Language__c;
 					riuwLst.add(riuw);
 				}
