@@ -475,6 +475,27 @@ J-Joint Vent</description>
         <label>RHC Risk Alerts</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>RTS_Risk_Alert</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Create_Process_Case__c</columns>
+        <columns>ANG_Create_Sidra_Lite__c</columns>
+        <columns>ANG_EmailTemplate_Legacy__c</columns>
+        <columns>ANG_EmailTemplate_NG__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Percentage__c</columns>
+        <columns>ANG_Remove_Ticketing_Authority__c</columns>
+        <columns>ANG_RTS_Severity__c</columns>
+        <columns>ANG_Send_Email_Agent__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.RTS_Risk_Alert_Notification</value>
+        </filters>
+        <label>RTS Risk Alert</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>ACSA-{00000000}</displayFormat>
         <label>AMS Country Specific Attribute Name</label>
