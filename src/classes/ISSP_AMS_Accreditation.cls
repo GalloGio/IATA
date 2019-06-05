@@ -3032,7 +3032,8 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.Validation_ERRORS__c = false;
             saveAMSForm();
 
-            if (!validateCharactersInForm() || !validateForm(true)) {
+            if (!validateCharactersInForm() || !validateForm(true) ) {
+                isValError = true;
                 return null;
             }
 

@@ -2150,7 +2150,8 @@
         <recipients>
             <type>owner</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>All/IFG_Internal_Case_Close_confirmation_e_mail_HTML_English</template>
     </alerts>
     <alerts>
@@ -3025,6 +3026,10 @@
         </recipients>
         <recipients>
             <recipient>khalailehk@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kutsera@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
