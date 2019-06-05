@@ -24775,6 +24775,14 @@ Please add below all your company valid email domains, including different ones 
         <value>General Sales and Service Agent</value>
     </labels>
     <labels>
+        <fullName>ISSP_Gdp_Opt_In_Hint</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Gdp Opt In Hint</shortDescription>
+        <value>Test text</value>
+    </labels>
+    <labels>
         <fullName>ISSP_GeneralPublicNotFound</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
