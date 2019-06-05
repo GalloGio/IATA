@@ -228,6 +228,15 @@
         <externalId>false</externalId>
         <inlineHelpText>It is mandatory to link the security with an institution. If the institution does not exist, create it first and then create the security related to it</inlineHelpText>
         <label>Financial Institution</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Financial_Institution__c.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Generic FI</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Financial_Institution__c</referenceTo>
         <relationshipLabel>Financial Securities</relationshipLabel>
         <relationshipName>Financial_Securities</relationshipName>
