@@ -265,7 +265,7 @@ public with sharing class ISSP_PersonalInformation {
     public Boolean isGDPOptInDisplayed {
         get {
             Set<String> possibleGDPLocationTypes = new Set<String>{'C', 'D', 'G', 'M', 'P', 'R', 'T', 'V', 'X'};
-            return possibleGDPLocationTypes.contains(con.Account.Location_Type__c);
+            return possibleGDPLocationTypes.contains(con.Account.Location_Class__c);
         }
         set;
     }
