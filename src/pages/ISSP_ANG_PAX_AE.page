@@ -235,6 +235,11 @@
                 text-align: left !important;
                 padding-left: 22px !important;
         	}
+
+          	[id$=legalStatusandIATACode] > div > table > tbody > tr > th {
+            	text-align: left !important;
+                padding-left: 22px !important;
+          	}
     </style>
 
     <script type="text/javascript">
@@ -821,19 +826,25 @@
 	                        				</apex:pageBlockSectionItem>
 	                      				</apex:pageBlockSection>
 
+                                <apex:pageBlockSection id="legalStatusandIATACode" columns="1">
+
+                                  <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
+                                  <apex:outputField value="{!hqAccount.IATACode__c}"/>
+
+                                </apex:pageBlockSection>
+
 	                      				<apex:pageBlockSection id="hqAccountDetails" columns="1">
+                                  
 	                        				<apex:outputText value="{0}<br/>{1}<br/>{2}" escape="false" label="{!$Label.ISSP_AN_Step1_AE_Full_Address}">
 	                          					<apex:param value="{!hqAccount.BillingStreet}" />
 	                          					<apex:param value="{!hqAccount.BillingCity}{!IF(hqAccount.BillingPostalCode!='', ', ' + hqAccount.BillingPostalCode, '')}" />
 	                          					<apex:param value="{!IF(hqAccount.BillingState!='',hqAccount.BillingState + ',&nbsp;','')}{!hqAccount.BillingCountry}" />
 	                        				</apex:outputText>
-	                        				<apex:outputField value="{!hqAccount.Website}"/>
-	                        				<apex:outputField value="{!hqAccount.Phone}" label="{!$Label.ISSP_Registration_BusinessPhone}"/>
-	                        				<apex:outputField value="{!hqAccount.Email__c}" label="{!SUBSTITUTE($Label.ISSP_Office_Email, "*", "")}"/>
+                                  <apex:outputField value="{!hqAccount.Phone}" label="{!$Label.ISSP_Office_Phone}"/>
 					                        <apex:outputField value="{!hqAccount.Mobile__c}"/>
 					                        <apex:outputField value="{!hqAccount.Fax}"/>
-					                        <apex:outputField value="{!hqAccount.IATACode__c}"/>
-					                        <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
+                                  <apex:outputField value="{!hqAccount.Email__c}" label="{!SUBSTITUTE($Label.ISSP_Office_Email, "*", "")}"/>
+					                        <apex:outputField value="{!hqAccount.Website}"/>
 	                      				</apex:pageBlockSection>
 	                   				 </apex:outputPanel>
 	                 	 		</apex:pageBlock>
@@ -993,20 +1004,14 @@
                         				<apex:outputtext/>
                         
                          				<apex:pageBlockSection columns="1">
-                         					<apex:outputPanel layout="block" style="height: 27px;"/>
-			                              	<DSE:DS_DataQuality id="BranchAddress" RecordRef="{!newForm}" FieldGroupName="Branch Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
-                         				</apex:pageBlockSection>
-                        
-                        				<apex:pageBlockSection columns="1" id="subbranchsection">
-                        					<apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
-							                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
-							                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress()" />
+                         					<apex:outputPanel styleClass="agencyLocationComponent" id="billingAddressTitle" layout="block">
+							                    <apex:outputLabel style="color:black;font-size:110%" value="Billing Address" />
 							                </apex:outputPanel>
-                        					<apex:pageBlockSectionItem> 
-	                    						<DSE:DS_DataQuality id="ShippingAddress" RecordRef="{!newForm}" FieldGroupName="Shipping Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
-	                    					</apex:pageBlockSectionItem>
+                         					<apex:pageBlockSectionItem> 
+			                              		<DSE:DS_DataQuality id="BranchAddress" RecordRef="{!newForm}" FieldGroupName="Branch Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
+			                              	</apex:pageBlockSectionItem>
 
-                          					<apex:pageBlockSectionItem id="branchphonefields">
+			                              	<apex:pageBlockSectionItem id="branchphonefields">
                           						<apex:outputPanel >
                           							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left: 7px;">
                             							<apex:outputText id="office-phone-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}"/>
@@ -1052,9 +1057,23 @@
 
                           					<DSE:DS_DataQuality id="BranchPhone" RecordRef="{!newForm}" FieldGroupName="Branch Phone" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="labelCol col-lg-6 labelText" InputStyle="col-lg-5" StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox" FormControlStyle="apcontainer"/>
 
-                          					<apex:selectList id="ShippingCountryList" size="1" value="{!newform.Shipping_Country__c}" style="width:80%" onchange="copyToADShippingCntr();">
+                          					
+                         				</apex:pageBlockSection>
+                        
+                        				<apex:pageBlockSection columns="1" id="subbranchsection">
+                        					<apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
+							                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+							                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress()" />
+							                </apex:outputPanel>
+                        					<apex:pageBlockSectionItem> 
+	                    						<DSE:DS_DataQuality id="ShippingAddress" RecordRef="{!newForm}" FieldGroupName="Shipping Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
+	                    					</apex:pageBlockSectionItem>
+
+	                    					<apex:selectList id="ShippingCountryList" size="1" value="{!newform.Shipping_Country__c}" style="width:80%" onchange="copyToADShippingCntr();">
 							                        <apex:selectOptions value="{!countryList}"/>
 							                    </apex:selectList>
+
+                          					
 
                         				</apex:pageBlockSection>
                       				</apex:pageBlockSection>
@@ -1072,6 +1091,18 @@
 					                            $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
 					                        }
 					                    }
+
+					                    $(".branch_office_street_name_number__c").css("width", "174.4px");
+					                    $(".branch_office_city__c").css("width", "174.4px");
+					                    $(".branch_office_postal_code__c").css("width", "174.4px");
+					                    $(".state_province__c").css("width", "174.4px");
+					                    $('[id$="ShippingCountryList"]').css("width", "174.4px");
+					                    
+					                    $(".shipping_street__c").css("width", "174.4px");
+					                    $(".shipping_city__c").css("width", "174.4px");
+					                    $(".shipping_postal_code__c").css("width", "174.4px");
+					                    $(".shipping_state__c").css("width", "174.4px");
+					                    $(".country__c").css("width", "174.4px");
 
 					                    $(".branch_office_street_name_number__c").change(function () {
 					                        copyBranchAddress();
