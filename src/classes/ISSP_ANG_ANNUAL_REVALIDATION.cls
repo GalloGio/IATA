@@ -2022,22 +2022,24 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         if(currentAccount.fw.newform.Notify_Change_Ownership__c == True && currentAccount.fw.newForm.Copy_Ownership__c == True) {
             
             List<String> idlist = currentAccount.fw.newform.Copy_Ownership_Records__c.split(',');
-            
-            List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c,
-                                                           Agency_role__c, Email__c,Phone__c, Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c,
-                                                           Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressState__c, AddressCountry__c, AddressPostcode__c,
-                                                           Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c, PhoneNational__c, FAX__c, Company_Name_Local__c
-                                                           FROM AMS_Accreditation_Contact__c
-                                                           WHERE AMS_Pax_Accreditation_Form__c =: currentAccount.fw.newForm.Id];
-            
-            ANG_CopyOwnershipBatch ownershipBatch = new ANG_CopyOwnershipBatch(currentAccount.fw.newform.Copy_Ownership_Records__c, 
-                                                                               newCase, isoCountryMap, heIataCode, contacts);
-            
-            copyOwnershipBatchId = Database.executeBatch(ownershipBatch);
-            
-            batchStatusBool = true;
-            pollerBool = true;
-			progressBar = 0;            
+
+            if(currentAccount.fw.newform.Copy_Ownership_Records__c != '') {
+				List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c,
+															Agency_role__c, Email__c,Phone__c, Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c,
+															Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressState__c, AddressCountry__c, AddressPostcode__c,
+															Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c, PhoneNational__c, FAX__c, Company_Name_Local__c
+															FROM AMS_Accreditation_Contact__c
+															WHERE AMS_Pax_Accreditation_Form__c =: currentAccount.fw.newForm.Id];
+				
+				ANG_CopyOwnershipBatch ownershipBatch = new ANG_CopyOwnershipBatch(currentAccount.fw.newform.Copy_Ownership_Records__c, 
+																				newCase, isoCountryMap, heIataCode, contacts);
+				
+				copyOwnershipBatchId = Database.executeBatch(ownershipBatch);
+				
+				batchStatusBool = true;
+				pollerBool = true;
+				progressBar = 0;
+			}            
         }
     }
     
@@ -2048,8 +2050,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         }
         
 		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :copyOwnershipBatchId];
-        progressBar = (batchJob.JobItemsProcessed/batchJob.TotalJobItems)*100;
-        
+        if(batchJob.TotalJobItems != 0) {
+            progressBar = (batchJob.JobItemsProcessed/batchJob.TotalJobItems)*100;
+        }
         
         if(batchJob.status == 'Ended' || batchJob.status == 'Completed') {
             // Get all forms and owners
