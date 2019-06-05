@@ -303,7 +303,7 @@ public with sharing class AMS_AccountRoleCreator
 
         }
 
-        if(newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty())
+        if((newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty()) || oldRolesPerAccount.isEmpty())
             return oldAndNewOwnersMap;
 
         //clone the roles for each account in the hierarchy
