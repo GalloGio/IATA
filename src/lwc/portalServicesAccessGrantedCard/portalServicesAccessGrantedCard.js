@@ -25,7 +25,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         //console.log(serviceAux);
 
         let params = {};
-        params.serviceId = serviceAux.Portal_Application__c;
+        params.serviceId = serviceAux.recordService.Id;
 
         event.preventDefault();
         event.stopPropagation();
@@ -60,9 +60,6 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
             .then(() => {
                 //console.info('Updated Last Visit Date successfully!');
             })
-            .catch(error => {
-                console.error('PortalServicesAccessGrantedCard goToServiceButtonClick updateRecord error: ', error);
-            });
         
         let myUrl = appUrlData;
         

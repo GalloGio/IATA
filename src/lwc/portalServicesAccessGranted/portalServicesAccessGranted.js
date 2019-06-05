@@ -1,19 +1,20 @@
 import { LightningElement,track } from 'lwc';
 
-import getAccessGrantedServices from '@salesforce/apex/PortalServicesCtrl.getAccessGrantedServices';
+import getUserAccessGrantedServices from '@salesforce/apex/PortalServicesCtrl.getUserAccessGrantedServices';
 
 export default class PortalServicesAccessGranted extends LightningElement {
+
+    @track componentLoading = true;
 
     @track lstServicesGranted = [];
 
     connectedCallback(){
 
-        getAccessGrantedServices({})
+        getUserAccessGrantedServices({})
         .then(results => {
             this.lstServicesGranted = results;
-        })
-        .catch(error => {
-            console.log('PortalServicesAccessGranted connectedCallback getAccessGrantedServices error: ' , error);
+            this.componentLoading = false;
+            //console.log('PortalServicesAccessGranted connectedCallback getUserAccessGrantedServices: ' , results);
         });
 
     }

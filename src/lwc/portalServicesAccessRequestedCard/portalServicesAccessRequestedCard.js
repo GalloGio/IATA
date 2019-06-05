@@ -22,7 +22,7 @@ export default class PortalServicesAccessRequestedCard extends NavigationMixin(L
         let serviceAux = JSON.parse(JSON.stringify(this.service));
 
         let params = {};
-        params.serviceId = serviceAux.Portal_Application__c;
+        params.serviceId = serviceAux.recordService.Id;
 
         event.preventDefault();
         event.stopPropagation();

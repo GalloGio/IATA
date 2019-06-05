@@ -3080,6 +3080,14 @@ Payment required on receipt of this Payment Advice
         <value>Access Requested</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_AvailableServicesHelpText</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_AvailableServicesHelpText</shortDescription>
+        <value>The recommended services and the other available services for your company are listed below.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_AvailableServicesTabTitle</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3150,6 +3158,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Services_RequestServiceBannerTitle</shortDescription>
         <value>Service Request</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_ServiceInformation</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_ServiceInformation</shortDescription>
+        <value>Service Information</value>
     </labels>
     <labels>
         <fullName>CSP_Services_Title</fullName>

@@ -1,38 +1,21 @@
 <template>
 
-        <div class="customCardLightGrayService cardProperties">
-            
-            <!-- Service image area -->
-            <div class="imageContainer slds-m-around_medium background-superLightGray">
-                <img class="slds-p-around_small serviceImageStyles" src={service.Portal_Application__r.Application_icon_URL__c}/>
-            </div>
+    <c-portal-services-card-container image-url={service.recordService.Application_icon_URL__c} background-variant="lightGray">
+
+        <span slot="serviceName">{service.recordService.ServiceName__c}</span>
+        <span slot="serviceDescription">{service.recordService.Service_Description__c}</span>
     
-            <!-- Service title, description and actions-->
-            <div class="textGridContainer slds-p-around_medium" >
-                <div class="textGridContainerInner">
+        <span slot="leftButton">
+            <lightning-button variant="base" 
+                label={label.CSP_Services_ManageService}
+                title={label.CSP_Services_ManageService}
+                onclick={goToManageServiceButtonClick}
+                class="slds-p-right_small text-xxsmall text-bold blueCustomButtonLink">
+            </lightning-button>
+        </span>
+        <span slot="rightButton">
+            <span class="text-xsamll text-bold text-lightGray">{label.CSP_Services_AccessRequested}</span>
+        </span>
+    </c-portal-services-card-container>
     
-                    <!-- Title and Description -->
-                    <div><p class="text-small text-bold slds-truncate text-darkGray">{service.PortalServiceTranslatedName__c}</p></div>
-                    <div class="slds-m-vertical_small text-xsmall text-gray fade">{service.Portal_Application__r.Description__c}</div>
-    
-                    <!-- Actions -->
-                    <div class="slds-grid slds-wrap actionsGridContainer ">
-                        <div class="slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-align_absolute-center">
-                            <lightning-button variant="base" 
-                                label={label.CSP_Services_ManageService}
-                                title={label.CSP_Services_ManageService}
-                                onclick={goToManageServiceButtonClick}
-                                class="slds-p-right_small text-xxsmall text-bold blueCustomButtonLink">
-                            </lightning-button>
-                        </div>
-                        <div class="slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-align_absolute-center">
-                            <span class="text-xsamll text-bold text-lightGray">{label.CSP_Services_AccessRequested}</span>
-                        </div>
-                    </div>
-    
-                </div>
-            </div>
-    
-        </div>
-        
-    </template>
+</template>

@@ -1,5 +1,7 @@
 import { LightningElement, track } from 'lwc';
 
+import { getParamsFromPage } from'c/navigationUtils';
+
 //import labels
 import CSP_Services_MyServicesTabTile from '@salesforce/label/c.CSP_Services_MyServicesTabTile';
 import CSP_Services_AvailableServicesTabTitle from '@salesforce/label/c.CSP_Services_AvailableServicesTabTitle';
@@ -15,23 +17,33 @@ export default class PortalServicesPage extends LightningElement {
     
     connectedCallback(){
 
+        //get the parameters for this page
+        let pageParams = getParamsFromPage();
+
+        let viewAvailableServices = false;
+        if(pageParams.tab !== undefined && pageParams.tab !== '' && pageParams.tab === 'availableServices'){
+            viewAvailableServices = true;
+        }
+
         let tabsAux = [];
 
         tabsAux.push({
-            "active" : true,
+            "active" : !viewAvailableServices,
             "label" : this.label.CSP_Services_MyServicesTabTile,
             "id" : 0,
             "style" : ""
         });
 
         tabsAux.push({
-            "active" : false,
+            "active" : viewAvailableServices,
             "label" : this.label.CSP_Services_AvailableServicesTabTitle,
             "id" : 1,
             "style" : ""
         });
 
         this.lstTabs = tabsAux;
+
+        
 
     }
 
