@@ -34,6 +34,17 @@ global class ANG_RME_Alert_Service {
 		public String transactionId;
 		public String api;
 		public String code;
+
+		//INT_032: reception of EDS Alerts
+		public List<String> triggeredRules;
+		public List<AgentStates> agentStates;
+
+	}
+
+	//INT_032: reception of EDS Alerts
+	public class AgentStates {
+		public String state;
+		public String value;
 	}
 
 	global class RequestResult {
@@ -85,6 +96,23 @@ global class ANG_RME_Alert_Service {
 		setResponse(message, null, statusCode);
 	}
 
+	private static Map<String, String> agentStatesRulesMapping = new Map<String, String>{
+		'edsState_fastGrowth_ratio_L12M_P12M' => 'Fast Growth Last 12m',
+		'edsState_fastGrowth_ratio_L3M_P3M'	=> 'Fast Growth Last 3m',
+		'edsState_fastGrowth_ratio_L3M_L3MPY' => 'Fast Growth Last 3m vs previous year',
+		'edsState_ticketsAbroad_ratio_L3M' => 'Cross Border Sales',
+		'edsState_cashSales_ratio_L3M' => 'Cash Sales Shift',
+		'edsState_cashSales_shift_L3M_P3M' => 'Shift of FoP',
+		'edsState_market_intelligence' => 'Market Intelligence',
+		'edsRule_fastGrowth_L12M_P12M' => 'Fast Growth Last 12m',
+		'edsRule_fastGrowth_L3M_P3M'	=> 'Fast Growth Last 3m',
+		'edsRule_fastGrowth_L3M_L3MPY' => 'Fast Growth Last 3m vs previous year',
+		'edsRule_ticketsAbroad_ratio_L3M' => 'Cross Border Sales',
+		'edsRule_cashSales_ratio_L3M' => 'Cash Sales Shift',
+		'edsRule_cashSales_shift_L3M_P3M' => 'Shift of FoP',
+		'edsRule_market_intelligence' => 'Market Intelligence'
+	};
+
 	private static void setResponse(String message, String stackTrace, Integer statusCode){
 		if(RestContext.response == null) RestContext.response = new RestResponse(); //this line is for testing purposes
 		RestContext.response.addHeader('Content-Type', 'application/json');
@@ -114,6 +142,11 @@ global class ANG_RME_Alert_Service {
 
 			String eventType = RestContext.request.params.get('eventType');
 
+			if(String.isBlank(req.iataCode)){
+				setResponse('Required value missing: iataCode', 404);
+				return new Map<String, RequestResult>{'apiStatus' => result};
+			}
+
 			//fetch current information
 			List<Account> accs = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where IATACode__c = :req.iataCode AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
@@ -122,6 +155,10 @@ global class ANG_RME_Alert_Service {
 
 			//handle Real Time Sales alert request 
 			else if(req.eventType == 'RTSAlert') 			saveRTSAlert(req, accs[0].Id);
+
+			else if(req.eventType == 'EDSAlert'){
+				saveEDSAlert(req, accs[0].Id);
+			}
 
 			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
 			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
@@ -243,6 +280,76 @@ global class ANG_RME_Alert_Service {
 
 		return true;
 
+	}
+
+	private static Boolean validateEDSAlert(RHCMessage req){
+	
+		Boolean missingEventId = String.isBlank(req.eventId); 
+		Boolean missingRules = (req.triggeredRules == NULL || req.triggeredRules.isEmpty());
+
+		if(missingEventId || missingRules){
+			setResponse('Required values missing: ' +
+				(missingEventId ? 'eventId ' : '') +
+				(missingRules ? 'triggeredRules ' : ''),
+				400);
+
+			return false;
+		
+		}
+
+		for(String rule : req.triggeredRules){
+			if(!agentStatesRulesMapping.containsKey(rule)){
+				setResponse('Invalid triggered rule value: ' + rule, 400);
+				return false;
+			}
+		}
+
+		return true;
+
+	}
+
+	private static void saveEDSAlert(RHCMessage req, Id accountId){
+
+		if(!validateEDSAlert(req)){
+			return;
+		}
+
+		Decimal openCashPosition = 0;
+		String agentCurrentStanding = '';
+
+		for(AgentStates agentState : req.agentStates){
+			
+			if(agentState.state == 'consumedRHC_USD'){
+				openCashPosition = Decimal.valueOf(agentState.value);
+				continue;
+			}
+
+			String readableState = agentStatesRulesMapping.get(agentState.state);
+
+			agentCurrentStanding += readableState + ': ' + agentState.value + '\n';
+
+		}
+
+		String triggeredRules = '';
+		for(String rule : req.triggeredRules){
+			triggeredRules += agentStatesRulesMapping.get(rule) + ';';
+		}
+
+		ANG_Risk_Alert__c edsAlert = new ANG_Risk_Alert__c(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_EDS'),
+			ANG_Account__c = accountId,
+			ANG_EventId__c = req.eventId,
+			ANG_RME_Last_Update__c = req.eventTime,
+			CurrencyIsoCode = 'USD',
+			ANG_Open_Cash_Position__c = openCashPosition,
+			ANG_Triggered_Rules__c = triggeredRules,
+			ANG_Agent_current_standing__c = agentCurrentStanding
+		);
+    	
+		insert edsAlert;
+
+    	setResponse(null, 202);
+	
 	}
 
 	global class WebserviceResult {
