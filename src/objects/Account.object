@@ -2923,6 +2923,91 @@
         </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
+    <fieldSets>
+        <fullName>zqu__CustomAccountFields</fullName>
+        <description>Fields in this field set will be included in the account data when quotes for new billing accounts are sent to Zuora.</description>
+        <label>Custom Account Fields</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Fields_For_Select_Billing_Account</fullName>
+        <availableFields>
+            <field>AccountSource</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>AnnualRevenue</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Industry</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>ParentId</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Rating</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Sic</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>SicDesc</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Type</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <description>Fields in this field set will be displayed in the list of Select Billing Account Component</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>AccountNumber</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Account Fields</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Lookup_Popup_Window</fullName>
+        <description>Fields in this field set will be displayed in the list of lookup component.</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>AccountNumber</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Lookup Popup Window</label>
+    </fieldSets>
     <fields>
         <fullName>ACH_Member__c</fullName>
         <defaultValue>false</defaultValue>
@@ -5742,31 +5827,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </valueSet>
     </fields>
     <fields>
-        <fullName>BSP_non_air__c</fullName>
-        <externalId>false</externalId>
-        <label>BSP non air</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Yes</fullName>
-                    <default>false</default>
-                    <label>Yes</label>
-                </value>
-                <value>
-                    <fullName>No</fullName>
-                    <default>false</default>
-                    <label>No</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>BSPlink_code__c</fullName>
         <externalId>false</externalId>
         <label>BSPlink code</label>
@@ -6302,7 +6362,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Non-IATA Cargo Agent</label>
+                    <label>Non-IATA Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Passenger Agent</fullName>
@@ -15681,11 +15741,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <label>Association</label>
                 </value>
                 <value>
-                    <fullName>Cargo Agent</fullName>
-                    <default>false</default>
-                    <label>Cargo Agent</label>
-                </value>
-                <value>
                     <fullName>Education</fullName>
                     <default>false</default>
                     <label>Education</label>
@@ -15699,6 +15754,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Financial Institution</fullName>
                     <default>false</default>
                     <label>Financial Institution</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>General Sales Agent</fullName>
@@ -30085,17 +30145,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -35679,17 +35728,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43035,17 +43073,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -49116,17 +49143,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -55143,17 +55159,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64548,17 +64553,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -70280,17 +70274,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -79526,17 +79509,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -85464,17 +85436,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -91941,17 +91902,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -99948,14 +99898,14 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
         <active>true</active>
         <description>Only airlines can be IATA members.</description>
         <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	OR(
-		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-		RecordType.DeveloperName=&apos;Operator&apos;
-	),
-	ISCHANGED(Membership_status__c),
-	$Permission.Airline_HQ_MER_Membership,
-	NOT(ISPICKVAL(Sector__c,&quot;Airline&quot;))
+NOT(ISNEW()),
+OR(
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+RecordType.DeveloperName=&apos;Operator&apos;
+),
+$Permission.Airline_HQ_MER_Membership,
+NOT(ISPICKVAL(Sector__c,&apos;Airline&apos;)),
+NOT(ISPICKVAL(Membership_status__c,&apos;Non-IATA member&apos;))
 )</errorConditionFormula>
         <errorDisplayField>Membership_status__c</errorDisplayField>
         <errorMessage>Only airlines can be IATA members.</errorMessage>
@@ -99991,8 +99941,7 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
 		ISCHANGED(AOC_Expiry_Date__c),
 		ISCHANGED(Legal_name__c),
 		ISCHANGED(Area_of_Operation__c),
-		ISCHANGED(Membership_SITA__c),
-		ISCHANGED(MITA_Member__c)
+		ISCHANGED(Membership_SITA__c)
 	)
 )</errorConditionFormula>
         <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
@@ -101205,5 +101154,16 @@ userid={!User.Id}</url>
         <openType>sidebar</openType>
         <page>pi__PardotAccountSendToPardot</page>
         <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>zqu__New_Quote</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Quote</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>{!URLFOR($Site.BaseRequestUrl+&apos;/apex/zqu__QuoteOption&apos;, null)}?crmAccountId={!Account.Id}&amp;retUrl=/{!Account.Id}</url>
     </webLinks>
 </CustomObject>

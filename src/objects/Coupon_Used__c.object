@@ -81,6 +81,7 @@
     <fields>
         <fullName>Order_Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Order Product</description>
         <externalId>false</externalId>
         <label>Order Product</label>
         <referenceTo>OrderItem</referenceTo>
@@ -93,6 +94,7 @@
     <fields>
         <fullName>Order__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related order</description>
         <externalId>false</externalId>
         <label>Order</label>
         <referenceTo>Order</referenceTo>
@@ -118,6 +120,7 @@
     <fields>
         <fullName>Unique_Key__c</fullName>
         <caseSensitive>true</caseSensitive>
+        <description>ID of the order + ID of the coupon</description>
         <externalId>true</externalId>
         <label>Unique Key</label>
         <length>50</length>
