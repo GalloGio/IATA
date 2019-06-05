@@ -265,6 +265,7 @@
                             <div class="row form-group">
                                 <div class="col-md-5" style="padding-left:28px">
                                     <label class="lbl" for="businessinputGDPOptIn">GDP Opt In</label>
+                                    <h4>{!$Label.ISSP_Gdp_Opt_In_Hint}</h4>
                                 </div>
                                 <div class="col-md-7 email">
                                     <apex:inputHidden id="GDPOptIn" value="{!con.Account.GDP_Opt_In__c}" />
@@ -710,6 +711,7 @@
                             <div class="row form-group">
                                 <div class="col-md-5" style="padding-left:28px">
                                       <label class="lbl" for="businessinputGDPOptIn">[{!$ObjectType.Account.fields.GDP_Opt_In__c.Label}]</label>
+                                      <h4>{!$Label.ISSP_Gdp_Opt_In_Hint}</h4>
                                 </div>
                                 <div class="col-md-7 emailBR">
                                       <apex:inputHidden id="GDPOptIn" value="{!branchOffice.GDP_Opt_In__c}" />
