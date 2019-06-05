@@ -18867,15 +18867,34 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <errorMessage>You should deactivate a user before changing his license</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Change_id_card_holder_account_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL($User.UserType,&quot;Standard&quot;),
+ID_Card_Holder__c=true,
+ISCHANGED(ISSP_Account_Name__c ),
+UPPER(PRIORVALUE(ISSP_Account_Name__c)) &lt;&gt; UPPER(ISSP_Account_Name__c)
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. please raise an internal case to ID Card team to move the contact to another account</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
 ISPICKVAL($User.UserType,&quot;Standard&quot;),
 ID_Card_Holder__c=true,
+	Or(			
+					and(
 ISCHANGED(LastName),
 UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
+									),
+					and(
+ISCHANGED(FirstName), 
+UPPER(PRIORVALUE(FirstName)) &lt;&gt; UPPER(FirstName)																		
+									)
+				)
 )</errorConditionFormula>
-        <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
+        <errorMessage>This contact is an ID Card Contact, please raise an internal case to ID Card team for name change.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Change_id_card_holder_cont_name_portal</fullName>
