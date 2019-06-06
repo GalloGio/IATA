@@ -362,12 +362,12 @@
                 c.set('v.valid'+modes[i], 0);
 
                 if(emptyCity){
-                    cityElement.set('v.errors', [{message:'The '+modes[i]+' city is compulsory. Please fill in the '+modes[i]+' city field.'}]);
+                    cityElement.set('v.errors', [{message: $A.util.format($A.get("$Label.c.AMS_DQ_City_Cumpulsory"),modes[i],modes[i]) }]);
                 }else{
                     cityElement.set('v.errors', null);
                 }
                 if(emptyStreet){
-                    streetElement.set('v.errors', [{message:'The '+modes[i]+' street is compulsory. Please fill in the '+modes[i]+' street field.'}]);
+                    streetElement.set('v.errors', [{message: $A.util.format($A.get("$Label.c.AMS_DQ_Street_Compulsory"),modes[i],modes[i]) }]);
                 }else{
                     streetElement.set('v.errors', null);
                 }            
