@@ -357,4 +357,169 @@ private class ANG_EarlyDetectionSystemTest {
 	
 	}
 
+	@isTest
+	private static void putInvalidEDSAlertWithoutTriggeredRulesTest() {
+
+		RestRequest req = new RestRequest();
+		req.httpMethod = 'PUT';
+		req.requestURI = System.URL.getSalesforceBaseUrl() + '/services/apexrest/RME_ALERT_BALANCEUPDATE/';
+
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '999999999';
+		message.eventId = 'b1088137-2db8-4c69-a599-98f6f5b84a6f';
+		message.eventType = 'EDSAlert';
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>(
+			[SELECT 
+				Id,
+				ANG_Triggered_Rules__c,
+				ANG_Open_Cash_Position__c,
+				ANG_Agent_current_standing__c 
+			 FROM 
+			 	ANG_Risk_Alert__c
+			]
+		);
+
+		System.assertEquals(400, RestContext.response.StatusCode, 'Expected response status: 400');
+		System.assertEquals(0, alerts.size(), 'EDS Alert must NOT be created');
+		System.assertEquals(result.description.trim(), 'Required values missing: triggeredRules', 'The description must be Required values missing: triggeredRules');
+
+	}
+
+	@isTest
+	private static void putInvalidEDSAlertWithoutIATACodeTest() {
+
+		RestRequest req = new RestRequest();
+		req.httpMethod = 'PUT';
+		req.requestURI = System.URL.getSalesforceBaseUrl() + '/services/apexrest/RME_ALERT_BALANCEUPDATE/';
+
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.eventId = 'b1088137-2db8-4c69-a599-98f6f5b84a6f';
+		message.eventType = 'EDSAlert';
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>(
+			[SELECT 
+				Id,
+				ANG_Triggered_Rules__c,
+				ANG_Open_Cash_Position__c,
+				ANG_Agent_current_standing__c 
+			 FROM 
+			 	ANG_Risk_Alert__c
+			]
+		);
+
+		System.assertEquals(404, RestContext.response.StatusCode, 'Expected response status: 404');
+		System.assertEquals(0, alerts.size(), 'EDS Alert must NOT be created');
+		System.assertEquals(result.description.trim(), 'Required value missing: iataCode', 'The description must be Required value missing: iataCode');
+
+	}
+
+	@isTest
+	private static void putValidEDSAlertTest() {
+
+		RestRequest req = new RestRequest();
+		req.httpMethod = 'PUT';
+		req.requestURI = System.URL.getSalesforceBaseUrl() + '/services/apexrest/RME_ALERT_BALANCEUPDATE/';
+
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '999999999';
+		message.eventId = 'b1088137-2db8-4c69-a599-98f6f5b84a6f';
+		message.eventType = 'EDSAlert';
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+
+		message.triggeredRules = new List<String>{
+			'edsRule_fastGrowth_L12M_P12M', 
+			'edsRule_ticketsAbroad_ratio_L3M'
+		};
+
+		List<ANG_RME_Alert_Service.AgentStates> agentStateLst = new List<ANG_RME_Alert_Service.AgentStates>();
+
+		ANG_RME_Alert_Service.AgentStates fastGrowthState = new ANG_RME_Alert_Service.AgentStates();
+		fastGrowthState.state = 'edsState_fastGrowth_ratio_L12M_P12M';
+		fastGrowthState.value = '0.55';
+
+		ANG_RME_Alert_Service.AgentStates ticketsAbroadState = new ANG_RME_Alert_Service.AgentStates();
+		ticketsAbroadState.state = 'edsState_ticketsAbroad_ratio_L3M';
+		ticketsAbroadState.value = '0.8';
+
+		ANG_RME_Alert_Service.AgentStates marketIntelligence = new ANG_RME_Alert_Service.AgentStates();
+		marketIntelligence.state = 'edsState_market_intelligence';
+		marketIntelligence.value = 'false';
+
+		ANG_RME_Alert_Service.AgentStates consumedRHC = new ANG_RME_Alert_Service.AgentStates();
+		consumedRHC.state = 'consumedRHC_USD';
+		consumedRHC.value = '12500.25';
+
+		agentStateLst.add(fastGrowthState);
+		agentStateLst.add(ticketsAbroadState);
+		agentStateLst.add(marketIntelligence);
+		agentStateLst.add(consumedRHC);
+		
+		system.debug('agentStateLst: ' + agentStateLst);
+
+		message.agentStates = agentStateLst;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>(
+			[SELECT 
+				Id,
+				ANG_Triggered_Rules__c,
+				ANG_Open_Cash_Position__c,
+				ANG_Agent_current_standing__c 
+			 FROM 
+			 	ANG_Risk_Alert__c
+			]
+		);
+
+		System.assertEquals(202, RestContext.response.StatusCode, 'Expected response status: 202');
+		System.assertEquals(1, alerts.size(), 'And EDS Alert must be created');
+
+		ANG_Risk_Alert__c alert = alerts.get(0);
+
+		system.debug('ALERT: ' + alert);
+
+		System.assertEquals(alert.ANG_Open_Cash_Position__c, 12500.25, 'Open cash position must have the value: 12500,25');
+		System.assert(alert.ANG_Triggered_Rules__c.contains('Fast Growth Last 12m'), 'EDS Alert triggered rules must contain Fast Growth Last 12m');
+		System.assert(alert.ANG_Triggered_Rules__c.contains('Cross Border Sales'), 'EDS Alert triggered rules must contain Cross Border Sales');
+
+		System.assert(alert.ANG_Agent_current_standing__c.contains('Fast Growth Last 12m'), 'EDS Alert current standing must contain Fast Growth Last 12m');
+		System.assert(alert.ANG_Agent_current_standing__c.contains('Cross Border Sales'), 'EDS Alert current standing must contain Cross Border Sales');
+		System.assert(alert.ANG_Agent_current_standing__c.contains('Market Intelligence'), 'EDS Alert current standing must contain Market Intelligence');
+
+	}
+
 }

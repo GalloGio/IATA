@@ -92,10 +92,6 @@ global class ANG_RME_Alert_Service {
 		set;
 	}
 
-	private static void setResponse(String message, Integer statusCode){
-		setResponse(message, null, statusCode);
-	}
-
 	private static Map<String, String> agentStatesRulesMapping = new Map<String, String>{
 		'edsState_fastGrowth_ratio_L12M_P12M' => 'Fast Growth Last 12m',
 		'edsState_fastGrowth_ratio_L3M_P3M'	=> 'Fast Growth Last 3m',
@@ -112,6 +108,10 @@ global class ANG_RME_Alert_Service {
 		'edsRule_cashSales_shift_L3M_P3M' => 'Shift of FoP',
 		'edsRule_market_intelligence' => 'Market Intelligence'
 	};
+	
+	private static void setResponse(String message, Integer statusCode){
+		setResponse(message, null, statusCode);
+	}
 
 	private static void setResponse(String message, String stackTrace, Integer statusCode){
 		if(RestContext.response == null) RestContext.response = new RestResponse(); //this line is for testing purposes
@@ -296,13 +296,6 @@ global class ANG_RME_Alert_Service {
 
 			return false;
 		
-		}
-
-		for(String rule : req.triggeredRules){
-			if(!agentStatesRulesMapping.containsKey(rule)){
-				setResponse('Invalid triggered rule value: ' + rule, 400);
-				return false;
-			}
 		}
 
 		return true;
