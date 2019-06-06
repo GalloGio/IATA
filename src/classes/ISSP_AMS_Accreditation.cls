@@ -2006,6 +2006,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
             SFDCAccount.Name = newForm.Account_Name__c;
+            SFDCAccount.TradeName__c = newForm.Trade_Name__c;
         } else {
             SFDCAccount.Name = hqAccount.Name;
         }
