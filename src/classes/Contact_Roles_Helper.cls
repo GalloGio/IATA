@@ -54,6 +54,35 @@ public without sharing class Contact_Roles_Helper {
     }
 
 
+    public static String getGadmUserRoleStatus(Id userId) {
+
+        String status = '';
+
+        if(String.isNotBlank(userId))
+        {
+            Contact con = Contact_Roles_Helper.getContactFromUser(userId);
+            if(con.Id != null) {
+                Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+                List<Account_Contact_Role__c> accountContactRoles = [SELECT Id FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND Contact_Roles__r.Name = 'GADM User' AND RecordTypeId = :functionalRecordTypeId AND Service_Rendered__c = 'GADM'];
+
+                if(! accountContactRoles.isEmpty()) {
+
+                    List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Status__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__c = :accountContactRoles[0].Id];
+                    if(! serviceAccesses.isEmpty()) {
+
+                        if(serviceAccesses[0].Status__c != null) {
+                            status = serviceAccesses[0].Status__c;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return status;
+    }
+
+
     public static Map<String, String> getAllAvailableRoles(Id contactId, String serviceName) {
         List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Status__c, Contact_Role__r.Contact_Roles__r.Name FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = :contactId AND Service__r.Name = :serviceName];
 

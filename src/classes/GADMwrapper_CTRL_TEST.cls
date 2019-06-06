@@ -70,12 +70,24 @@ public class GADMwrapper_CTRL_TEST {
         portalApplications.Name = 'GADM';
         insert portalApplications;
 
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
+
         Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
         accountContactRole.Contact__c = con.Id;
         accountContactRole.Contact_Roles__c = contactRoles.Id;
         accountContactRole.Account_Role__c = accountRole.Id;
         accountContactRole.Service_Rendered__c = 'GADM';
+        accountContactRole.RecordTypeId = functionalRecordTypeId;
         insert accountContactRole;
+
+        Account_Contact_Role__c accountContactRole1 = new Account_Contact_Role__c();
+        accountContactRole1.Contact__c = con.Id;
+        accountContactRole1.Contact_Roles__c = contactRoles.Id;
+        accountContactRole1.Account_Role__c = accountRole.Id;
+        accountContactRole1.Service_Rendered__c = 'GADM';
+        accountContactRole1.RecordTypeId = groupRecordTypeId;
+        insert accountContactRole1;
 
         Account_Contact_Role__c accountContactRole2 = new Account_Contact_Role__c();
         accountContactRole2.Contact__c = con.Id;
@@ -84,11 +96,11 @@ public class GADMwrapper_CTRL_TEST {
         accountContactRole2.Service_Rendered__c = 'GADM';
         insert accountContactRole2;
 
-        //role GADM User is pending
+        //role GADM User is granted
         Contact_Role_Service_Access__c serviceAccess = new Contact_Role_Service_Access__c();
         serviceAccess.Contact_Role__c = accountContactRole.Id;
         serviceAccess.Service__c = portalApplications.Id;
-        serviceAccess.Status__c = 'Pending';
+        serviceAccess.Status__c = 'Granted';
         insert serviceAccess;
 
         Contact_Role_Service_Access__c serviceAccess2 = new Contact_Role_Service_Access__c();
@@ -108,17 +120,15 @@ public class GADMwrapper_CTRL_TEST {
 
         Test.startTest();
 
-        Map<String, String> rolesMap;
+        String status;
 
         System.runAs(testUser) {
-            rolesMap = GADMwrapper_CTRL.getUserRoles(testUser.Id);
+            status = GADMwrapper_CTRL.getUserRoles(testUser.Id);
         }
 
         Test.stopTest();
 
-        System.assertEquals(2, rolesMap.size(), 'User has two roles!');
-        System.assertEquals('Pending', rolesMap.get('GADM User'),  'Access status for GADM User role should be Pending!');
-        System.assertEquals('Granted', rolesMap.get('Power User'), 'Access status for Power User role should be Granted!');
+        System.assertEquals('Granted', status, 'Access status for GADM User role should be Granted!');
 
     }
 
@@ -129,15 +139,15 @@ public class GADMwrapper_CTRL_TEST {
 
         Test.startTest();
 
-        Map<String, String> rolesMap;
+        String status;
 
         System.runAs(testUser) {
-            rolesMap = GADMwrapper_CTRL.getUserRoles(null);
+            status = GADMwrapper_CTRL.getUserRoles(null);
         }
 
         Test.stopTest();
 
-        System.assertEquals(0, rolesMap.size(), 'User has two roles!');
+        System.assertEquals('', status, 'Empty status should be retvieved!');
 
     }
 
@@ -253,7 +263,7 @@ public class GADMwrapper_CTRL_TEST {
 
         Test.stopTest();
 
-        System.assertEquals(0, accountDetailsMap.size());
+        System.assertEquals(0, accountDetailsMap.size(), 'If user has no related account - no info should be retrieved!');
     }
 
 }
