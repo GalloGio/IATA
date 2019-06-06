@@ -57,6 +57,7 @@
     <fields>
         <fullName>Active__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Represents if the queue is active</description>
         <externalId>false</externalId>
         <inlineHelpText>Is auto assignment currently active for this queue</inlineHelpText>
         <label>Active</label>
@@ -65,6 +66,7 @@
     </fields>
     <fields>
         <fullName>Queue_ID__c</fullName>
+        <description>Represents the ID of the public group with the same name as the queue</description>
         <externalId>false</externalId>
         <label>Queue ID</label>
         <length>18</length>
@@ -75,6 +77,7 @@
     </fields>
     <fields>
         <fullName>Queue_Option__c</fullName>
+        <description>Gives to possible options for case assignment: &quot;Continue assignment&quot; and &quot;Leave on queue&quot;</description>
         <externalId>false</externalId>
         <label>Queue Option</label>
         <required>false</required>
@@ -98,6 +101,7 @@
     </fields>
     <fields>
         <fullName>Region__c</fullName>
+        <description>Splits the queus into 5 regions: &quot;Africa &amp; Middle East&quot;, &quot;Americas&quot;, &quot;Asia &amp; Pacific&quot;, &quot;China &amp; North Asia&quot;, &quot;Europe&quot;</description>
         <externalId>false</externalId>
         <inlineHelpText>Select the region to which the Auto Queue belongs to.</inlineHelpText>
         <label>Region</label>

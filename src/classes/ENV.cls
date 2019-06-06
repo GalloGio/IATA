@@ -58,6 +58,7 @@ public without sharing class ENV {
     public final string ISSPChangeIEPStatusInProgressToOpenA = 'ISSP_Change_IEP_Status_InProgress_to_OpenA';
     public final string ISSPChangeIEPStatusInProgressToOpen = 'ISSP_Change_IEP_Status_InProgress_to_Open';
     public final string ISSP_ApprovalOfIATAEasyPayUsers = 'ISSP_Approval_Of_IATA_EasyPay_Users';
+    public final String ISSP_TIP_notifyNewExternalReports = 'ISSP_TIP_EXTERNAL_REPORT_NOTIFICATION';
   }
   
   public class TeamMemberRoleClass {

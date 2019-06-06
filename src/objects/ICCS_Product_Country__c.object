@@ -76,6 +76,7 @@
     </fields>
     <fields>
         <fullName>ICCS_Product_Country_Name__c</fullName>
+        <description>Represents the CASS Name or BSP Billing of related ISO Country if available</description>
         <externalId>false</externalId>
         <formula>CASE( Product__r.Name , 
 &apos;BSP&apos;, BLANKVALUE(Country__r.BSP_Country_free_text__c, Country__r.Name) , 
@@ -90,6 +91,7 @@ Country__r.Name )</formula>
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Product</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>

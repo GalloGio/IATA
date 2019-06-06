@@ -87,10 +87,6 @@ private class ISSP_ChangePassword_Test {
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
         IECUserManager.login(u.Username, 'testpassword', null);
     	
-    	//List <User> userList = [SELECT Id, UID__c FROM User WHERE Id = :usr.Id];
-    	//User myUser = userList[0];
-    	//myUser.UID__c = '1234';
-    	//update myUser;
     	System.runAs(u) {
 	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();	        
 	        // Test 001: Leave all fields blank
