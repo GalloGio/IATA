@@ -504,7 +504,7 @@
                                         </apex:inputField>
                                       </apex:column>
 
-                                      <apex:column rendered="{!surveyStatus=='Draft'}" width="20px">
+                                      <apex:column rendered="{!surveyStatus=='Draft'}" width="20px" headerClass="white" styleclass="empty">
                                         <!-- <apex:commandLink action="{!deleteRow}" id="removeRow" value="Delete Row" rerender="bankTable, reportingTypePanel" styleClass="removeRowDisableClass btnDisable">
                                             <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
                                             <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
@@ -512,20 +512,20 @@
                                         </apex:commandLink> -->
                                       </apex:column>
 
-                                <apex:column rendered="{!surveyStatus=='Draft'}" >
-                                                                  <apex:facet name="header">
-                                                                      <apex:commandLink id="addRow" value="Add Row" action="{!addRow}" rerender="bankTable, indexVar" styleClass="addRowDisableClass btnDisable backgroundAddRow bankAddBtnLink" oncomplete="requireFields();">
-                                                                          <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
-                                                                          <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
-                                                                      </apex:commandLink>
-                                                                  </apex:facet>
-                                                                  <apex:commandLink action="{!showPopupDeleteBankRow}" id="removeRow" value="Delete Row" rerender="popupDeleteBankRow" styleClass="removeRowDisableClass btnDisable" oncomplete="$('#deleteBankRowModal').modal('show');">
-                                                                      <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
-                                                                      <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
-                                                                      <apex:param name="index" value="{!numRow}"/>
-                                                                  </apex:commandLink>
-                                                                  <apex:variable var="numRow" value="{!numRow+1}"/>
-                                </apex:column>
+                                    <apex:column rendered="{!surveyStatus=='Draft'}" headerClass="green">
+                                        <apex:facet name="header">
+                                            <apex:commandLink id="addRow" value="Add Row" action="{!addRow}" rerender="bankTable, indexVar" styleClass="addRowDisableClass btnDisable backgroundAddRow bankAddBtnLink" oncomplete="requireFields();">
+                                                <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+                                                <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+                                            </apex:commandLink>
+                                        </apex:facet>
+                                        <apex:commandLink action="{!showPopupDeleteBankRow}" id="removeRow" value="Delete Row" rerender="popupDeleteBankRow" styleClass="removeRowDisableClass btnDisable" oncomplete="$('#deleteBankRowModal').modal('show');">
+                                            <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+                                            <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+                                            <apex:param name="index" value="{!numRow}"/>
+                                        </apex:commandLink>
+                                        <apex:variable var="numRow" value="{!numRow+1}"/>
+                                    </apex:column>
 
                               </apex:pageBlocktable>
 

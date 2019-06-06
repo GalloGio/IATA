@@ -524,9 +524,9 @@
                                                         <apex:outputField value="{!item.Amount_USD__c}" />
                                                     </apex:column>
 
-                                                    <apex:column rendered="{!surveyStatus=='Draft'}" >
+                                                    <apex:column rendered="{!surveyStatus=='Draft'}" headerClass="white" styleclass="empty">
                                                     </apex:column>
-                                                    <apex:column rendered="{!surveyStatus=='Draft'}" >
+                                                    <apex:column rendered="{!surveyStatus=='Draft'}" headerClass="green">
                                                         <apex:facet name="header">
                                                             <apex:commandLink id="addRowBankMap" value="Add Row" action="{!addRowBankMap}" rerender="bankTable, warningMessages" styleClass="btnDisable bankAddBtnLink"
                                                                               oncomplete="requireFields();">
