@@ -1,19 +1,16 @@
 .THIS .disabled {
   background-color: #c2cacf;
   cursor: default;
-  pointer-events: none;
 }
 
 .THIS .disabled:hover {
   background-color: #c2cacf;
   cursor: default;
-  pointer-events: none;
 }
 
 .THIS .disabled:focus {
   background-color: #c2cacf;
   cursor: default;
-  pointer-events: none;
 }
 
 .THIS .tile-column {

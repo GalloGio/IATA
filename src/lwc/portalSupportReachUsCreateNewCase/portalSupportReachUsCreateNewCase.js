@@ -21,6 +21,7 @@ import csp_CreateNewCaseMainInputBoxSubLabel from '@salesforce/label/c.csp_Creat
 import csp_CreateNewCaseMainInputEmailsTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsTopLabel';
 import csp_CreateNewCaseMainInputEmailsSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsSubLabel';
 import csp_searchIataCodeLocationNamePlaceHolder from '@salesforce/label/c.csp_searchIataCodeLocationNamePlaceHolder';
+import csp_CaseTracking from '@salesforce/label/c.csp_CaseTracking';
 import csp_ToastWarningRecipientNotFound from '@salesforce/label/c.csp_ToastWarningRecipientNotFound';
 import csp_searchEmailRecipientPlaceholder from '@salesforce/label/c.csp_searchEmailRecipientPlaceholder';
 import csp_CaseCreatedSuccess from '@salesforce/label/c.csp_CaseCreatedSuccess';
@@ -34,6 +35,7 @@ import csp_Topic from '@salesforce/label/c.ISSP_F2CTopic';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 import CSP_Support from '@salesforce/label/c.CSP_Support';
 import CSP_CaseNumber from '@salesforce/label/c.CSP_CaseNumber';
+import csp_Concern_Label from '@salesforce/label/c.csp_Concern_Label';
 import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 
@@ -64,6 +66,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_CaseResponseGuarantee,
         csp_GoToSupport,
         csp_Category,
+        csp_CaseTracking,
         csp_ViewCaseSummary,
         csp_Topic,
         CSP_Support,
@@ -72,10 +75,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_Subtopic,
         csp_caseNumber,
         csp_caseSubject,
+        csp_Concern_Label,
         csp_caseDescription,
         ISSP_ANG_GenericError,
         IDCard_FillAllFields
-        //csp_CreateNewCaseMainUploadSubLabel
     }
 
     //spinner controller
@@ -94,6 +97,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     @track description = "";
     @track subject = "";
     @track caseNumber;
+    @track isEmergencyCase = false;
 
     //variable to control error class sent to child component
     @track requiredClass;
@@ -195,6 +199,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                         && myTopicOptions.some(obj => obj.value === pageParams.topic)
                         && mySubTopicOptions.some(obj => obj.value === pageParams.subtopic)) {
 
+                        this.isEmergencyCase = pageParams.emergency === 'true';
+                        this.isConcernCase = pageParams.concerncase === 'true';
+
                         //all ok parameters exist
                         //initialize the case
                         this.createCase();
@@ -227,13 +234,13 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             });
     }
 
-    redirectSupport(){
+    redirectSupport() {
         window.history.back();
     }
 
     //create the case and initialize it. No DML operation yet.
     createCase() {
-        createCase({ countryiso: this.countryISO })
+        createCase({ countryiso: this.countryISO, isConcernCase: this.isConcernCase, topic: this.topic, subtopic: this.subtopic })
             .then(createCaseResult => {
                 this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
             });
@@ -249,7 +256,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //gets related accounts and sets them in global var
     getRelatedAccounts() {
-        searchAccounts({searchTerm : null})
+        searchAccounts({ searchTerm: null })
             .then(relatedAccountsResult => {
                 this.relatedAccounts = JSON.parse(JSON.stringify(relatedAccountsResult));
             });
@@ -257,7 +264,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //gets related contacts and sets them in global var
     getRelatedContacts() {
-        searchContacts({searchTerm : null})
+        searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
             });
@@ -316,21 +323,11 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
 
     //class reset once you click on the input again.
-    removeRequired(){
+    removeRequired() {
         this.requiredClass = '';
     }
 
-    //checks if the input is not fullfilled for the Agents.
-    checkForErrors() {
-        this.childComponent = this.template.querySelector('[data-id="iatalookup"]').getSelection();
-        if (this.childComponent.length === 0) {
-            this.requiredClass = ' slds-has-error';
-            this.showErrorToast();
-        } else {
-            this.errors = [];
-            this.requiredClass = '';
-        }
-    }
+    
 
     //grabs subject
     handleSubject(event) {
@@ -381,29 +378,38 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //validate fields and finish creating the case.
     finnishCreatingCase() {
+
         if (this.agentProfile) {
             this.checkForErrors();
         }
-        if (this.subject.trim() === '') {
+
+        if (this.newRecipient !== undefined && this.newRecipient !== '') {
+            this.showWarningToast();
+        }
+        else if (this.subject.trim() === '') {
             let textinput = this.template.querySelector('[data-id="subject"]');
             textinput.className += ' slds-has-error';
             this.showErrorToast();
         }
-        if (this.newRecipient !== undefined && this.newRecipient !== '') {
-            this.showWarningToast();
-        } else if (this.description.trim() === '') {
+        else if (this.description.trim() === '') {
             let textarea = this.template.querySelector('lightning-textarea');
             textarea.className += ' slds-has-error';
             this.showErrorToast();
-        } else {
-
+        }
+        else {
+            this.caseInitiated.Description = '';
             //Add to the Case Record (created beforehand) and add the required fields for the insert
-            this.caseInitiated.Description = this.label.csp_Category + ' - '
+            if (this.isConcernCase) {
+                this.caseInitiated.Description += '--' + this.label.csp_Concern_Label + '--\n\n'
+            }
+
+            this.caseInitiated.Description += this.label.csp_Category + ' - '
                 + this.category + ' \n'
                 + this.label.csp_Topic + ' - '
                 + this.topic + ' \n'
                 + this.label.csp_Subtopic + ' - '
-                + this.subtopic + ' \n'
+                + this.subtopic + ' \n\n'
+                + this.label.csp_caseDescription + ' - ' +
                 + this.description;
 
             this.caseInitiated.Subject = this.subject;
@@ -414,6 +420,11 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                 record.IATAcode__c = this.childComponent.title;
             }
 
+            if (this.isEmergencyCase) {
+                record.Priority = 'Emergency';
+            }
+
+            record.IsComplaint__c = this.isConcernCase;
             record.RecordTypeId = this.caseInitiated.RecordTypeId;
             record.BSPCountry__c = this.caseInitiated.BSPCountry__c;
             record.Region__c = this.caseInitiated.Region__c;
@@ -449,6 +460,19 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                         })
                     );
                 });
+        }
+    }
+
+    //checks if the input is not fullfilled for the Agents.
+    checkForErrors() {
+        this.childComponent = this.template.querySelector('[data-id="iatalookup"]').getSelection();
+        if (this.childComponent.length === 0) {
+            this.requiredClass = ' slds-has-error';
+            
+            throw new Error(this.showErrorToast());
+        } else {
+            this.errors = [];
+            this.requiredClass = '';
         }
     }
 
