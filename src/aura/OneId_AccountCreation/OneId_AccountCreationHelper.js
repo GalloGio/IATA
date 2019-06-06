@@ -126,8 +126,7 @@
                         let value = cityName;
 
                         if(alternateNames) value+=alternateNames;
-                    
-                        //check if the input is included either in the cityname or city alternate names. create a unique key composed by cityName•hierarchy in order to sort the array alphabetically
+                                            
                         if(value.toLowerCase().includes(inputValue)) cityNames.push(hierarchy);
                                                     
                     }
