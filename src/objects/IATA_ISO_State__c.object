@@ -134,8 +134,9 @@
     </fields>
     <fields>
         <fullName>ISO_CODE_STANDARD__c</fullName>
+        <description>This code is used to fill the LRegISO field in the WAD file. If the field has the format e.g. &apos;FR20&apos; we send the value &apos;FR&apos; if the field has the format e.g. &apos;FR-95&apos; we send the value &apos;95&apos;.</description>
         <externalId>false</externalId>
-        <label>ISO CODE STANDARD</label>
+        <label>Downstream Code LRegISO</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>true</trackHistory>

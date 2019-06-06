@@ -18443,7 +18443,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <externalId>false</externalId>
         <label>Geoname Billing City</label>
         <referenceTo>IATA_ISO_City__c</referenceTo>
-        <relationshipLabel>AccountsBilling</relationshipLabel>
+        <relationshipLabel>Accounts with this Billing City</relationshipLabel>
         <relationshipName>Accounts</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -18456,7 +18456,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <externalId>false</externalId>
         <label>Geoname Shipping City</label>
         <referenceTo>IATA_ISO_City__c</referenceTo>
-        <relationshipLabel>Accounts (Geoname Shipping City)</relationshipLabel>
+        <relationshipLabel>Accounts with this Shipping City</relationshipLabel>
         <relationshipName>AccountsShipping</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>

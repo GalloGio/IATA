@@ -124,7 +124,7 @@
         <externalId>false</externalId>
         <label>IATA ISO State</label>
         <referenceTo>IATA_ISO_State__c</referenceTo>
-        <relationshipLabel>IATA ISO Cities</relationshipLabel>
+        <relationshipLabel>IATA Geonames Cities</relationshipLabel>
         <relationshipName>IATA_ISO_Cities</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
@@ -144,13 +144,13 @@
         <trackTrending>false</trackTrending>
         <type>Location</type>
     </fields>
-    <label>IATA ISO City</label>
+    <label>IATA Geonames City</label>
     <nameField>
-        <label>IATA ISO City Name</label>
+        <label>IATA Geonames City</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>IATA ISO Cities</pluralLabel>
+    <pluralLabel>IATA Geonames Cities</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>

@@ -2486,7 +2486,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AddressDoctorValidate</shortDescription>
-        <value>Please validate your billing and shipping addresses by clicking on the &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D5E0000008wRK&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; button</value>
+        <value>Please check your billing and shipping addresses by clicking on the check address button</value>
     </labels>
     <labels>
         <fullName>AddressDoctorValidate2</fullName>

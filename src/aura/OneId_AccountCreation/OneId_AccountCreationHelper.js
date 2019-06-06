@@ -106,10 +106,10 @@
              citiesToSearch = citiesAvailable["All"];
              
             }
+            
             let cityNames = [];
-            
             let inputValue = v.toLowerCase();
-            
+
             if(inputValue){
                 
                 for (var i = 0; i < citiesToSearch.length; i++){
@@ -125,16 +125,20 @@
                         
                         let value = cityName;
 
-                        if(alternateNames)
-                            value+=alternateNames;
+                        if(alternateNames) value+=alternateNames;
                     
-                        if(value.toLowerCase().includes(inputValue))
-                            cityNames.push(hierarchy);
+                        //check if the input is included either in the cityname or city alternate names. create a unique key composed by cityName•hierarchy in order to sort the array alphabetically
+                        if(value.toLowerCase().includes(inputValue)) cityNames.push(hierarchy);
+                                                    
                     }
                     
                 }
+                    
+                //sort array by city length
                 
-                c.set("v.predictions"+m, cityNames);
+                cityNames.sort(function (a, b) { return a.split('>')[1].length - b.split('>')[1].length; });
+                
+                c.set("v.predictions"+m, cityNames.slice(0,30));
                 
             }else{
                 c.set("v.predictions"+m, []);
