@@ -216,9 +216,6 @@
                         <lightning:layoutItem size="6" padding="horizontal-small">
                             <lightning:inputField class="customRequired none"  aura:id="NDC_Forms_of_Remittance_and_Settlement__c" fieldName="NDC_Forms_of_Remittance_and_Settlement__c" />
                         </lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField fieldName="NDC_Public_Incentive_Schemes_for_Sellers__c" />
-                        </lightning:layoutItem>
                     </lightning:layout>
                     
                 </aura:if>
