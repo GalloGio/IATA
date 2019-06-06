@@ -29709,15 +29709,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Over paid</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
