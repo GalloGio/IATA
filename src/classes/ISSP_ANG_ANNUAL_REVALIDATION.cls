@@ -2070,7 +2070,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             pollerBool = true;
         }
     }
-}
 
     private void addVATPrefix() {
         if (currentAccount.isoCountry.EU_Country__c) {
