@@ -20,9 +20,10 @@ public without sharing class File_Upload_CTRL {
             List<User> users = [SELECT Id, UserType FROM User WHERE Id = :userId];
             if(users[0].UserType == 'PowerPartner') {//external user
                 List<Account> userActors = Contact_Roles_Helper.getUserAccounts(userId);
+                List<Account> accountsWithExternalActorIdSet = checkRelatedExternalActorId(userActors);
 
                 info.userId = userId;
-                info.actors = userActors;
+                info.actors = accountsWithExternalActorIdSet;
                 info.isExternalUser = true;
                 info.isInternalUser = false;
             }else{//internal user
@@ -32,6 +33,30 @@ public without sharing class File_Upload_CTRL {
         }
 
         return info;
+    }
+
+
+    private static List<Account> checkRelatedExternalActorId(List<Account> accounts) {
+        List<Account> toReturn = new List<Account>();
+
+        if(! accounts.isEmpty()) {
+            List<Account_Role__c> accountRoles = [SELECT Id, Account__c FROM Account_Role__c WHERE Account_Roles__r.Name = 'GADM Participant' AND Account__c = :accounts];
+
+            List<GADM_Account_Service_Detail__c> serviceDetails = [SELECT Id, Account_Role_Service__r.Account_Role__r.Account__c FROM GADM_Account_Service_Detail__c WHERE (External_Actor_Id__c != null AND External_Actor_Id__c != '') AND Account_Role_Service__r.Account_Role__c = :accountRoles];
+
+            Set<Id> relatedAccountsIds = new Set<Id>();
+            for(GADM_Account_Service_Detail__c detail : serviceDetails) {
+                relatedAccountsIds.add(detail.Account_Role_Service__r.Account_Role__r.Account__c);
+            }
+
+            for(Account acc : accounts) {
+                if(relatedAccountsIds.contains(acc.Id)) {
+                    toReturn.add(acc);
+                }
+            }
+        }
+
+        return toReturn;
     }
 
 
@@ -150,7 +175,6 @@ public without sharing class File_Upload_CTRL {
         if(! dataSubmissions.isEmpty()) {
             for(Data_Submission__c dataSubmission : dataSubmissions) {
                 dataSubmission.Status__c = 'Submitted';
-                //dataSubmission.Result__c = 'Submitted file : ' + dataSubmissionsMap.get(dataSubmission.Id);
             }
 
             try{

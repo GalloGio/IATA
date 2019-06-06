@@ -132,7 +132,6 @@
      * Clear the Selection
      */
     clearSelection : function(cmp) {
-        debugger;
         // Create the ClearLookupId event
         var clearEvent = cmp.getEvent("clearLookupIdEvent");
 

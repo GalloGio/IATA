@@ -19,12 +19,18 @@ public class File_Upload_CTRL_TEST {
         createCredentials('GenericAttach');
         createCredentials('RecycleBin');
 
+        Account_Roles__c accountRoles = new Account_Roles__c();
+        accountRoles.Name = 'GADM Participant';
+        insert accountRoles;
+
         Account_Role__c accountRole = new Account_Role__c();
         accountRole.Account__c = testAccount.Id;
+        accountRole.Account_Roles__c = accountRoles.Id;
         insert accountRole;
 
         Account_Role__c accountRole2 = new Account_Role__c();
         accountRole2.Account__c = testAccount2.Id;
+        accountRole2.Account_Roles__c = accountRoles.Id;
         insert accountRole2;
 
         Contact_Roles__c contactRoles = new Contact_Roles__c();
@@ -45,10 +51,6 @@ public class File_Upload_CTRL_TEST {
         portalApplications.Name = 'GADM';
         insert portalApplications;
 
-        Account_Roles__c accountRoles = new Account_Roles__c();
-        accountRoles.Name = 'GADM Participant';
-        insert accountRoles;
-
         Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
         accountRoleServices.Portal_Service__c = portalApplications.Id;
         accountRoleServices.Account_Roles__c = accountRoles.Id;
@@ -63,7 +65,7 @@ public class File_Upload_CTRL_TEST {
         serviceDetail.Account_Role_Service__c = accountRoleService.Id;
         serviceDetail.Allowed_email_domain__c = 'somedomain.com';
         serviceDetail.Active_User_Count__c = 5;
-        serviceDetail.External_Actor_Id__c = 'ExtTestId001';
+        serviceDetail.External_Actor_Id__c = 'ExtId0001';
         serviceDetail.Submission_Period_Extension__c = 30;
         insert serviceDetail;
 

@@ -95,8 +95,10 @@
                             }
                         }else{
                             console.log('no actors retrieved');
-                            this.showToast(component, 'error', 'Unexpected error!', 'Unable to retrieve user information!');
+                            this.showToast(component, 'error', 'Unexpected error!', 'No valid actor found!');
                             this.toggleSpinner(component);
+                            this.showContent(component);
+                            this.disableContent(component, event);
                         }
                     }
 
@@ -166,11 +168,11 @@
 
                 }else {
                     console.log('error retrieving user information');
-                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!!');
+                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!');
                 }
             }else{
                 console.log('error retrieving user information');
-                this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!!');
+                this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!');
             }
         });
         $A.enqueueAction(action);
@@ -204,14 +206,18 @@
                         }else{
                             component.set('v.actorId', actors[0].Id);
                         }
+                    }else{
+                        console.log('no actors with configured ExternalActorId found');
+                        this.disableContentInternal(component, event);
+                        this.showToast(component, 'error', 'Unexpected error!', 'No valid actor found!');
                     }
                 }else{
                     console.log('error retrieving user information');
-                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!!');
+                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!');
                 }
             }else{
                 console.log('error retrieving user information');
-                this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!!');
+                this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!');
             }
         });
         $A.enqueueAction(action);
@@ -766,5 +772,23 @@
         }
 
     },
+
+    disableContent : function(component, event) {
+        let content = component.find('content');
+        $A.util.addClass(content, 'disable_content');
+    },
+
+    disableContentInternal : function(component, event) {
+        let content = component.find('content_internal');
+        content.getElement().classList.add('disable_content');
+    },
+
+    enableContentInternal : function(component, event) {
+        let content = component.find('content_internal');
+        content.getElement().classList.remove('disable_content');
+    },
+
+
+
 
 })

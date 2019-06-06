@@ -59,7 +59,7 @@
         }
     },
 
-    clearSelectedUser : function(component, event) {
+    clearSelectedUser : function(component, event, helper) {
         let userId = component.get('v.userId');
         userId = '';
         component.set('v.userId', userId);
@@ -71,6 +71,7 @@
         let actors = component.get('v.actors');
         actors = [];
         component.set('v.actors', actors);
+        helper.enableContentInternal(component, event);
     },
 
     finishUpload : function(component, event, helper) {

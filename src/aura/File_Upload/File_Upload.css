@@ -105,3 +105,8 @@
 .THIS .noRight {
     margin:auto;
 }
+
+.THIS .disable_content {
+    opacity: 0.4;
+    pointer-events:none;
+}
