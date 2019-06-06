@@ -81,4 +81,11 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     if(trigger.isAfter)
     	PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 
+  //HK TR18-150 - Move all fields updates (workflows) on Account, Case and Contact to the trigger
+
+  if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)){
+    WorkflowHelper.performActions(WorkflowHelper.ACCOUNT_TYPE,Trigger.oldMap, Trigger.new); 
+  }
+  
+
 }

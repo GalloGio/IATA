@@ -442,7 +442,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>AccountIATAAirlineSetName</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Set the name of an ACLI account (RT = Airline Headquarters ) using its Trade Name or AOC Name</description>
         <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Legal_name__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
         <triggerType>onAllChanges</triggerType>
@@ -453,7 +453,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>AIMS_Accounts_RT_Assignment</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Is_AIMS_Account__c</field>
             <operation>equals</operation>
@@ -497,7 +497,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>UpdateIndustrywithTravelAgency</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Is_AIMS_Account__c</field>
             <operation>equals</operation>
@@ -517,7 +517,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Update_Last_Modified_By_Source</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.LastModifiedById</field>
             <operation>equals</operation>
@@ -536,7 +536,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Account_Sector_Travel_Agent</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Source_System__c</field>
             <operation>equals</operation>
@@ -556,7 +556,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </rules>
     <rules>
         <fullName>Account incomplete</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.BillingCountry</field>
             <operation>equals</operation>
@@ -569,7 +569,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Accountsiteupdate</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Update account site if the account Record Type is Airline Branch or Airline Headquarters</description>
         <formula>and( or(RecordType.DeveloperName= &apos;IATA_Airline_BR&apos;, RecordType.DeveloperName= &apos;IATA_Airline&apos;,RecordType.DeveloperName= &apos;IATA_GSA&apos; ,(and (RecordType.DeveloperName= &apos;Standard_Account&apos;, ISPICKVAL(Sector__c,&apos;Airline&apos;)))))</formula>
         <triggerType>onAllChanges</triggerType>
@@ -624,7 +624,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Update_Account_Type_to_empty</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Clears the Account Type field when the field should be filled by the user</description>
         <formula>AND(         	RecordType.DeveloperName  = &apos;IATA_Airline&apos;,             	ISPICKVAL(Sector__c, &apos;Airline&apos;),         	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),         	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;),         	ISPICKVAL(Account_Type__c, &apos;Not Applicable&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
@@ -655,7 +655,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Update_DDS_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Update last DDS Updated date</description>
         <formula>ISCHANGED(DDS_Status__c)</formula>
         <triggerType>onAllChanges</triggerType>
@@ -666,7 +666,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Data_quality_comment_history</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>ISCHANGED( Comment_data_quality_feedback__c )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -788,7 +788,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>InvoiceWorks_Account_True</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>User.ProfileId</field>
             <operation>contains</operation>
@@ -803,7 +803,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Member_Airline_False</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Parent account IS NOT an IATA member airline. Updates field &apos;IATA member airline&apos; for subsidiaries.</description>
         <formula>Parent.IATA_Member__c  = false</formula>
         <triggerType>onAllChanges</triggerType>
@@ -814,7 +814,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Parent_Branch_member_airlines</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Parent account is an IATA member airline.</description>
         <formula>Parent.IATA_Member__c  = true</formula>
         <triggerType>onAllChanges</triggerType>
@@ -825,7 +825,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Update_acct_name</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.RecordTypeId</field>
             <operation>equals</operation>
@@ -843,7 +843,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Set_ID_Card_Discount</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.IDCard_Key_Account__c</field>
             <operation>equals</operation>
@@ -890,7 +890,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Update_Account_Type_to_Not_Applicable</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Update Account Type field to &apos;Not Applicable&apos; when the field should not be filled</description>
         <formula>AND(RecordType.DeveloperName  = &apos;IATA_Airline&apos;, NOT(AND(  	ISPICKVAL(Sector__c, &apos;Airline&apos;),  	NOT(ISPICKVAL(Membership_status__c, &apos;IATA member&apos;)),  	ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;)) ))</formula>
         <triggerType>onAllChanges</triggerType>

@@ -99846,7 +99846,7 @@ $Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
         <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
-        <errorConditionFormula>ISCHANGED(Name) &amp;&amp;  RecordType.DeveloperName  = &apos;IATA_Airline&apos;</errorConditionFormula>
+        <errorConditionFormula>AND (ISCHANGED(Name) ,  RecordType.DeveloperName  = &apos;IATA_Airline&apos;, NOT(OR(ISCHANGED(Legal_name__c),ischanged(TradeName__c),ISCHANGED(Name_on_AOC__c))) , Name != TradeName__c, Name != Legal_name__c, Name != Name_on_AOC__c)</errorConditionFormula>
         <errorDisplayField>Is_your_firm_handling_Dangerous_Goods__c</errorDisplayField>
         <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
     </validationRules>
