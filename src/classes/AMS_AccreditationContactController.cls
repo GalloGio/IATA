@@ -574,8 +574,10 @@ public with sharing class AMS_AccreditationContactController {
         }
 
         for(AccountWrapper aWrapped : accountWrapper) {
-            totalOwnership += aWrapped.financialInterest;
-            validRange &= (aWrapped.financialInterest > 0 && aWrapped.financialInterest <= 100);
+            if(aWrapped.financialInterest <> null) {
+            	totalOwnership += aWrapped.financialInterest;
+            	validRange &= (aWrapped.financialInterest > 0 && aWrapped.financialInterest <= 100);
+            }
         }
 
         if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR') {

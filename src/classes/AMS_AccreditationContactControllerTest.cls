@@ -69,11 +69,11 @@ private class AMS_AccreditationContactControllerTest
             Phone__c='323562762', Email__c='jw@email.com', Valid_Until__c = Date.today(), 
             RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff')));
 
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST', Financial_interest__c = 0, 
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST', 
             Company__c=acc2.Id, RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
 
         acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, Last_name__c = 'TEST2', 
-            Financial_interest__c = 0, RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
+            RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company')));
 
 		insert acList;
     }
