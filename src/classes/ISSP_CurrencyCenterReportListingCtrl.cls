@@ -1,21 +1,31 @@
 public with sharing class ISSP_CurrencyCenterReportListingCtrl {
 
-	public Set<String> setOfSections {get; set;}
+	public List<String> listOfSections {get; set;}
 	public Set<String> sectionNameRBF {get; set;}
 	public Set<String> sectionNameMisc {get; set;}
 
-	public Set<String> setOfYearsSection {get; set;}
+	public List<String> listOfYearsSection {get; set;}
 	public Map<String, List<ccReport>> mapOfYearsSection {get; set;}
 	public Map<String, Map<String, List<ccReport>>> reportsMap {get; set;}
 
 	public Map<String, List<ccReport>> reportsMapRBF {get; set;}	
 	public Map<String, List<ccReport>> reportsMapMisc {get; set;}
 
-	public class ccReport {
+	public class ccReport implements Comparable{
 		public String Id {get;set;}
+		public Integer Month {get;set;}
 		public String MonthName {get; set;}
 		public String YearName {get; set;}
 		public String Title {get; set;}
+
+		public Integer compareTo(Object compareTo) {
+			try {
+				ccReport report = (ccReport)compareTo;
+				return Month - report.Month;
+			} catch (Exception e) {
+				return -1;
+			}
+		}
 	}
 
 	public ISSP_CurrencyCenterReportListingCtrl() {
@@ -23,9 +33,18 @@ public with sharing class ISSP_CurrencyCenterReportListingCtrl {
 		// Currency Repatriation - Monthly Reports
 		this.reportsMap = new Map<String, Map<String, List<ccReport>>>();
 		this.reportsMap.put('Currency Repatriation - Monthly Reports', getCurrencyRepatriationReports());
-		this.setOfSections = this.reportsMap.keyset();
-		this.setOfYearsSection = this.reportsMap.get('Currency Repatriation - Monthly Reports').keyset();
+		this.listOfSections = new List<String>(this.reportsMap.keyset());
+		this.listOfSections.sort();
+		this.listOfSections = reverse(this.listOfSections);
+		
+		this.listOfYearsSection = new List<String>(this.reportsMap.get('Currency Repatriation - Monthly Reports').keyset());
+		this.listOfYearsSection.sort();
+		this.listOfYearsSection = reverse(this.listOfYearsSection);
 		this.mapOfYearsSection = this.reportsMap.get('Currency Repatriation - Monthly Reports');
+		for (String year: this.listOfYearsSection) {
+			list<ccReport> listSection = this.mapOfYearsSection.get(year);
+			listSection.sort();
+		}
 
 		// Annual RBF Reports
 		this.reportsMapRBF = new Map<String, List<ccReport>>();
@@ -60,7 +79,7 @@ public with sharing class ISSP_CurrencyCenterReportListingCtrl {
          	ccr.Id = s.Id;
          	ccr.Title = s.Title;
          	ccr.YearName = s.Title.substringAfter('_').left(4);
-
+			ccr.Month = Integer.ValueOf(s.Title.right(2));
 
          	switch on s.Title.right(2) {
 			    when '01' { ccr.MonthName = 'January'; 		}
@@ -126,5 +145,11 @@ public with sharing class ISSP_CurrencyCenterReportListingCtrl {
          return ccrList;
     }
 
-
+	public static List<String> reverse(List<String> listString) {
+		List<String> listResult = new List<String>();
+		for(Integer i = listString.size()-1; i >= 0; i--) {
+			listResult.add(listString[i]);
+		}
+		return listResult;
+	}
 }
