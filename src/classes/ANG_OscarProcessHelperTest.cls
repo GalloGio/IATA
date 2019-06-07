@@ -98,6 +98,8 @@ private class ANG_OscarProcessHelperTest {
 
 		insert acontact;
 
+		AMS_OSCARTriggerHandler.allOnlineAccr = null;
+
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.AMS_Online_Accreditation__c = theAccreditation.Id;
 		oscar.Is_PCI_compliant__c = 'Yes';
