@@ -105,6 +105,10 @@
                 <behavior>Edit</behavior>
                 <field>Estimated_of_Records_Affected_total__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Risks_barriers_scope_boundaries__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -135,10 +139,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Root_Cause_s__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Risks_barriers_scope_boundaries__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
