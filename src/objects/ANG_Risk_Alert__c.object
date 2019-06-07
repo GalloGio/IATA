@@ -381,15 +381,27 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 12m</fullName>
+                <fullName>Fast Growth Decrease Last 12m</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 3m</fullName>
+                <fullName>Fast Growth Decrease Last 3m</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 3m vs previous year</fullName>
+                <fullName>Fast Growth Decrease Last 3m vs previous year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fast Growth Increase Last 12m</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fast Growth Increase Last 3m</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fast Growth Increase Last 3m vs previous year</fullName>
                 <default>false</default>
             </values>
             <values>
