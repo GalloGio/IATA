@@ -197,10 +197,6 @@ public with sharing class ANG_AgencyChangesHelper {
 				//if(Pattern.matches(AMS_Utils.ANG_OWNERSHIP + '|' + AMS_Utils.ANG_MINOR_SHAREHOLDING + '|' + AMS_Utils.ANG_MAJOR_SHAREHOLDING, oscar.ANG_Type_Of_Change__c))
 				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c)) {
 					changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
-
-					if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(oscar.Account__c) ||
-                       (changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c)))
-						changesContainer.accountsMap.get(oscar.Account__c).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c == null ? oscar.Account__c : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c);
 				}
 
 				if(oscar.Process__c == AMS_Utils.NGCHANGES){
@@ -1081,6 +1077,10 @@ public with sharing class ANG_AgencyChangesHelper {
 		/*Capture Owner history for change codes*/
 
 		for(Id accId : accountsAffected) {
+
+			if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accId) ||
+                (toReturn.accountsMap.get(accId).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(toReturn.accountsMap.get(accId).Top_Parent__c)))
+				toReturn.accountsMap.get(accId).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(toReturn.accountsMap.get(accId).Top_Parent__c == null ? accId : toReturn.accountsMap.get(accId).Top_Parent__c);
 
 			AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(oscarToProcess.AMS_Online_Accreditation__c);
 
