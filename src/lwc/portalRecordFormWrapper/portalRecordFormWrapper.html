@@ -4,7 +4,7 @@
 
 <!-- Portal Record Form Wrapper -->
 <template>
-    <c-portal-profile-section>
+    <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
         <span slot="sectionTitle">{sectionTitle}</span>
         <span slot="sectionActions">
             <lightning-icon if:true={showEdit} icon-name="utility:edit" size="x-small" class="darkBlueIcon cursorPointer" onclick={openModal}></lightning-icon>
@@ -28,8 +28,10 @@
                             </template>
                         </div>
                             </template>
-            <template if:true={isLoadingEdits}>
-                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            <template if:true={isLoading}>
+                <div class="slds-m-around_medium slds-is-relative">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
             </template>
                     </lightning-record-view-form>
 
@@ -90,12 +92,14 @@
                             </template>
 
                             <template if:true={isLoadingEdit}>
-                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                                <div class="slds-m-around_medium slds-is-relative">
+                                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                                </div>
                             </template>
 
                         </div>
 
-                        <!-- Popup Footer -->
+                         <!-- Popup Footer -->
                         <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
                             <lightning-button class="slds-float_right containedButton" label={labels.SaveLabel} type="submit" disabled={isSaving} variant="brand"></lightning-button>
 

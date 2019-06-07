@@ -9,12 +9,15 @@ import CancelLabel from '@salesforce/label/c.CSP_Cancel';
 
 export default class PortalRecordFormWrapper extends LightningElement {
 
+    @api sectionClass;
+    @api headerClass;
     @api sectionTitle;
     @api showEdit;
     @api fields;
     @api recordId;
     @api objectName;
     @api showEditModal = false;
+    @api isLoading;
 
     @track isLoading = true;
     @track isLoadingEdit = true;

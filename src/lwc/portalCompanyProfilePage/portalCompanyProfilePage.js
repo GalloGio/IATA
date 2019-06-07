@@ -3,8 +3,15 @@
  */
 
 import { LightningElement, wire, track } from 'lwc';
-import getFieldsMap from '@salesforce/apex/PortalProfileCtrl.getFieldsMap';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
+import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
+import getFieldsMap from '@salesforce/apex/PortalProfileCtrl.getFieldsMap';
+import getContactFieldsToInsert from '@salesforce/apex/PortalProfileCtrl.getContactFieldsToInsert';
+import getContactsListFields from '@salesforce/apex/PortalProfileCtrl.getContactsListFields';
+import getContacts from '@salesforce/apex/PortalProfileCtrl.getAccountContacts';
+import getBranches from '@salesforce/apex/PortalProfileCtrl.getCompanyBranches';
+
+
 
 import CompanyInformation from '@salesforce/label/c.ISSP_CompanyInformation';
 
@@ -17,21 +24,30 @@ export default class PortalCompanyProfilePage extends LightningElement {
         window.addEventListener('scroll', function (e) { self.handleScroll(window.scrollY, self); });
     }
 
+    @track isAdmin = false;
     @track sectionMap = [];
-
     @track handleScrolling = true;
     @track accountId;
     @track emailAddress;
-
-    @track objectApiName = 'User';
-
     @track userLoaded = false;
-
     @track currentSection;
     @track lstTabs = [];
 
-    @track accFields = [];
-    @track contactFields = [];
+    @track contacts = [];
+    @track branches = [];
+    @track branchesLoaded = false;
+    @track contactsLoaded = false;
+
+    // CHANGE IN FUTURE!!!
+    @track openmodel = false;
+    @track recordid;
+    @track objectid;
+    @track objectName = "Contact";
+    @track fieldsList = [{'label':'FirstName','class':'active'}, {'label':'LastName','class':'inactive'}, {'label':'Email','class':'inactive'}, {'label':'MobilePhone','class':'inactive'}, {'label':'Phone','class':'inactive'}];
+    @track fieldsListToCreate = [];
+    // ------------------- //
+
+
 
     get noAccount() {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
@@ -43,9 +59,13 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
 
     connectedCallback() {
+        isAdmin().then(result =>{
+           this.isAdmin = result
+        });
 
         getLoggedUser().then(result => {
             this.loggedUser = JSON.parse(JSON.stringify(result));
+            this.objectid = this.loggedUser.Contact.AccountId;
             this.userLoaded = true;
         });
 
@@ -69,19 +89,27 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         let tabsAux = [];
 
-        //Different tabs based on current user's access
-
-        let tabNames = [this.labels.CompanyInformation];//, 'Branch Offices', 'Contacts', 'Company Calendar', 'Activity Log'];
+        let tabNames = [this.labels.CompanyInformation,'Branch Offices','Contacts'];// 'Contacts', 'Company Calendar', 'Activity Log'];
         for (let i = 0; i < tabNames.length; i++) {
+
+            //TBD - when development done
+            if(i > 0 && this.isAdmin){
+                //PUSH OTHERS ONLY FOR ADMIN ?
+            }
+
             tabsAux.push({
                 "active": (i == 0),
                 "label": tabNames[i],
                 "id": i,
-                "class": ""
+                "class": "cursorPointer text-darkGray"
             });
         }
 
         this.lstTabs = tabsAux;
+
+        getContactFieldsToInsert().then(result => {
+            this.fieldsListToCreate = result;
+        });
     }
 
     renderedCallback() {
@@ -167,13 +195,24 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     onclickTab(event) {
         let clickedTab = event.target.dataset.item;
-
+        console.log('clicked '+clickedTab);
         //because proxy.......
         let tabsAux = JSON.parse(JSON.stringify(this.lstTabs));
 
+        //Add onclick method to retrieve Accounts/Contacts
         for (let i = 0; i < tabsAux.length; i++) {
             if (i + "" === clickedTab) {
                 tabsAux[i].active = true;
+
+                if(i == 1 && !this.branchesLoaded){
+                    //Branches
+                    this.retrieveBranches();
+                }else if(i == 2 && !this.contactsLoaded){
+                    //Contacts
+                    this.retrieveContacts();
+                }
+
+
             } else {
                 tabsAux[i].active = false;
             }
@@ -195,9 +234,61 @@ export default class PortalCompanyProfilePage extends LightningElement {
         }.bind(this), 2000);
     }
 
+    createContact(){
+        let contactList = this.template.querySelector('c-portal-contact-list');
+        contactList.openModal();
+    }
+
+
+    retrieveContacts(){
+        console.log('getContacts');
+
+        getContacts().then(result => {
+            console.log('gotContacts ');
+            this.contacts = JSON.parse(JSON.stringify(result));
+            console.log('gotContacts '+result.length);
+            this.contactsLoaded = true;
+        });
+    }
+
+    get contactsNotLoaded(){
+        return !this.contactsLoaded;
+    }
+
+    retrieveBranches(){
+        console.log('getBranches');
+
+        getBranches().then(result => {
+            console.log('gotBranches ');
+            this.branches = JSON.parse(JSON.stringify(result));
+            console.log('gotBranches '+result.length);
+            this.branchesLoaded = true;
+        });
+    }
+
+
+    getContactsFieldMap(){
+        getContactsListFields().then(result => {
+           let sectionMap = JSON.parse(JSON.stringify(result));
+
+           let localMap = [];
+           for (let key in this.sectionMap) {
+               // Preventing unexcepted data
+               if (sectionMap.hasOwnProperty(key)) { // Filtering the data in the loop
+                   let value = sectionMap[key];
+                   localMap.push({ 'value': value, 'key': key });
+               }
+           }
+           console.log(localMap);
+           //this.contactsMap = localMap;
+        });
+    }
+
+    getBranchesFieldMap(){}
+
     get tab0Active() { return this.lstTabs[0].active; }
-    //get tab1Active() { return this.lstTabs[1].active; }
-    //get tab2Active() { return this.lstTabs[2].active; }
+    get tab1Active() { return this.lstTabs[1].active; }
+    get tab2Active() { return this.lstTabs[2].active; }
     //get tab3Active() { return this.lstTabs[3].active; }
     //get tab4Active() { return this.lstTabs[4].active; }
 }

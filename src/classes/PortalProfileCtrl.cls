@@ -49,6 +49,19 @@ public with sharing class PortalProfileCtrl {
     }
 
 
+    @AuraEnabled
+    public static List<Contact> getAccountContacts(){
+        return DAL_ISSP.getContactsByAccountId(myContact.AccountId);
+    }
+
+    @AuraEnabled
+    public static List<Account> getCompanyBranches(){
+        List<Account> branches = new List<Account>();
+
+        return branches;
+    }
+
+
     // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
     public static Map<String,List<FieldWrapper>> ContactFields() {
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
@@ -96,6 +109,22 @@ public with sharing class PortalProfileCtrl {
 
         return wrapperMap;
     }
+    
+    @AuraEnabled
+    public static List<FieldWrapper> getContactFieldsToInsert() {
+        return new List<FieldWrapper>{
+            new FieldWrapper('FirstName', false),
+            new FieldWrapper('LastName', false),
+            new FieldWrapper('Email', false),
+            new FieldWrapper('MobilePhone', false),
+            new FieldWrapper('Phone', false),
+            new FieldWrapper('Preferred_Language__c', false),
+            new FieldWrapper('Membership_Function__c', true),
+            new FieldWrapper('Available_Services__c', true)
+        };
+
+    }
+
 
     public static Map<String,List<FieldWrapper>> AccountFields() { return getFieldsByRecordType();}
 
@@ -189,7 +218,15 @@ public with sharing class PortalProfileCtrl {
         @AuraEnabled
         public Boolean visible;
 
+        @AuraEnabled
+        public Boolean fullSize;
+
         public FieldWrapper () {}
+
+        public FieldWrapper (String fieldName, Boolean fullSize) {
+            this.fieldName = fieldName;
+            this.fullSize = fullSize;
+        }
 
         public FieldWrapper (String fieldName, Boolean editable, Boolean visible){
             this.fieldName = fieldName;
@@ -198,5 +235,70 @@ public with sharing class PortalProfileCtrl {
         }
 
     }
+
+
+    /** Contacts & Branches Sections */
+
+    @AuraEnabled
+    public static void getContactsListFields(){
+        String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
+        String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
+        String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
+
+        List<String> toView = new List<String>{'FirstName'};
+        List<String> toRow = new List<String>{'FirstName'};
+        List<String> toEdit = new List<String>{'FirstName'};
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+
+        wrapperMap.put(rowsFields,new List<FieldWrapper>());
+        for(String fieldName : toRow){
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true));
+        }
+
+        wrapperMap.put(viewFields,new List<FieldWrapper>());
+        for(String fieldName : toView){
+            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true));
+        }
+
+        wrapperMap.put(editFields,new List<FieldWrapper>());
+        for(String fieldName : toEdit){
+            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true));
+        }
+
+    }
+
+    @AuraEnabled
+    public static void getBranchesListFields(){
+        String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
+        String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
+        String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
+
+        String sectionBasic = LABEL_BASICS; //Fields to display in open accordion section/record detail - first section
+        String sectionBranchContact = 'Branch Contact'; //Fields to display in open accordion section/record detail + in edit modal dialog
+
+        List<String> toView = new List<String>{'FirstName'};
+        List<String> toRow = new List<String>{'FirstName'};
+        List<String> toEdit = new List<String>{'FirstName'};
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+
+        wrapperMap.put(rowsFields,new List<FieldWrapper>());
+        for(String fieldName : toRow){
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true));
+        }
+
+        wrapperMap.put(viewFields,new List<FieldWrapper>());
+        for(String fieldName : toView){
+            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true));
+        }
+
+        wrapperMap.put(editFields,new List<FieldWrapper>());
+        for(String fieldName : toEdit){
+            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true));
+        }
+
+    }
+
 
 }

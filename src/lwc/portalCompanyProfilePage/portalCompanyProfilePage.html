@@ -5,20 +5,20 @@
 <!-- Portal Company Profile Page -->
 <template>
 
-    <c-portal-page-container>
-        <span slot="componentContent">
-            <template if:true={userLoaded}>
-                <template if:false={noAccount}>
+
+    <template if:true={userLoaded}>
+        <template if:false={noAccount}>
+            <c-portal-page-container style-class="dark">
+                <span slot="componentContent">
                     <div class="slds-grid slds-wrap slds-gutters_direct-medium">
 
                         <!-- Sections nav bar -->
-                        <div
-                            class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
+                        <div class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
 
                             <!--<div class="emptyGrayAreaSize"></div>-->
 
                             <template for:each={lstTabs} for:item="tab">
-                                <span key={tab.id} class="text-small">
+                                <span key={tab.id} class="slds-p-around_small text-small">
 
                                     <!-- Active tab -->
                                     <span if:true={tab.active} data-item={tab.id}
@@ -39,8 +39,11 @@
                         </div>
 
                     </div>
+                </span>
+            </c-portal-page-container>
 
-
+            <c-portal-page-container style-class="light">
+                <span slot="componentContent">
                     <!-- Profile: Navigation & Sections -->
                     <template if:true={tab0Active}>
                         <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
@@ -57,8 +60,10 @@
                                 <template if:true={mapOfValues}>
                                     <template for:each={mapOfValues} for:item="keyValue">
                                         <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
-                                            record-id={loggedUser.Contact.AccountId} fields={keyValue.value} show-edit="true"
-                                            class="section" section-title={keyValue.key} data-name={keyValue.key}>
+                                            record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
+                                            show-edit="true" class="section" section-title={keyValue.key}
+                                            data-name={keyValue.key}
+                                            section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
                                         </c-portal-record-form-wrapper>
                                     </template>
                                 </template>
@@ -68,12 +73,48 @@
 
                     <!-- Profile: Branch Offices-->
                     <template if:true={tab1Active}>
-                        Branches
+                        <template if:true={branchesLoaded}>
+                            <div class="slds-grid slds-wrap slds-m-top_x-small" style="margin-bottom:5rem;">
+                                <c-portal-contact-list class="fullWidth" records={branches} openmodel={openmodel}
+                                    recordid={recordid} objectid={accountid} object-name={objectName}
+                                    fields-list={fieldsList} fields-list-to-create={fieldsListToCreate}>
+                                </c-portal-contact-list>
+                            </div>
+                        </template>
+
+                        <template if:false={branchesLoaded}>
+                            <div class="slds-m-around_xx-large slds-is-relative">
+                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                            </div>
+                        </template>
                     </template>
 
                     <!-- Profile: Contacts-->
                     <template if:true={tab2Active}>
-                        Contacts
+                        <div class="slds-clearfix slds-m-top_xx-large">
+                            <div class="slds-float_right">
+                                <!-- LABELS -->
+                                <lightning-button variant="brand" label="Create New Contact" title="Create New Contact" disabled={contactsNotLoaded}
+                                    onclick={createContact} class="slds-float_right containedButton"></lightning-button>
+                            </div>
+                        </div>
+
+                        <template if:true={contactsLoaded}>
+                            <div class="slds-grid slds-wrap slds-m-top_x-small" style="margin-bottom:5rem;">
+                                <c-portal-contact-list class="fullWidth" records={contacts} openmodel={openmodel}
+                                    fields-list={fieldsList} fields-list-to-create={fieldsListToCreate}
+                                    recordid={recordid} accountid={accountid} objectid={objectid}
+                                    object-name={objectName}>
+                                </c-portal-contact-list>
+                            </div>
+                        </template>
+
+                        <template if:false={contactsLoaded}>
+                            <div class="slds-m-around_xx-large slds-is-relative">
+                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                            </div>
+                        </template>
+
                     </template>
 
                     <!-- Profile: Company Calendar -->
@@ -85,13 +126,19 @@
                     <template if:true={tab4Active}>
                         Activity Log
                     </template>
+                </span>
+            </c-portal-page-container>
+        </template>
 
-                </template>
-                <template if:true={noAccount}>
+        <template if:true={noAccount}>
+            <c-portal-page-container style-class="light">
+                <span slot="componentContent">
                     No related account to display.
-                </template>
-            </template>
+                </span>
+            </c-portal-page-container>
 
-        </span>
-    </c-portal-page-container>
+        </template>
+    </template>
+
+
 </template>
