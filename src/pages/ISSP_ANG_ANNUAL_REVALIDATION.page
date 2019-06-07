@@ -433,13 +433,13 @@
                                                     </div>
                                                     
                                                     <!-- Progress status for batch -->
-                                                    <apex:pageBlock mode="edit" id="StatusPageBlock">
+                                                    <apex:pageBlock id="StatusPageBlock">
                                                         
-                                                        <apex:pageBlockSection columns="1" title="Process Status" rendered="{!batchStatusBool}">
+                                                        <apex:pageBlockSection columns="1" title="{! $Label.ISSP_ANG_COPY_OWNERSHIP_PROGRESS}" rendered="{!batchStatusBool}">
                                                             
-                                                            <apex:actionStatus id="act" startText="Checking..." />
+                                                            <apex:actionStatus id="act" startText="{! $Label.ISSP_ANG_COPY_OWNERSHIP_CHECKING}" />
                                                             
-                                                            <apex:outputText styleClass="processText" value="Process status: {!batchJob.Status}"/>
+                                                            <apex:outputText styleClass="processText" value="{! $Label.ISSP_Status}: {!batchJob.Status}"/>
                                                                
                                                             <div class="slds-scope">
                                                                 <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="{!batchJob.TotalJobItems}" aria-valuenow="{!batchJob.JobItemsProcessed}" role="progressbar">
@@ -449,7 +449,7 @@
                                                                 </div>
                                                             </div>
                                                             
-                                                            <apex:outputText styleClass="processText" value="Entities processed: {!batchJob.JobItemsProcessed}/{!batchJob.TotalJobItems}"/>
+                                                            <apex:outputText styleClass="processText" value="{! $Label.ISSP_ANG_COPY_OWNERSHIP_PROCESSED}: {!batchJob.JobItemsProcessed}/{!batchJob.TotalJobItems}"/>
                                                                                                                         
                                                             <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="treeArea" status="act"/>
                                                             
@@ -1120,7 +1120,7 @@
                             <br/><h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Copy_Ownership_Warning}</h4>
                         </div>
                         <div class="modal-footer">
-                            <apex:commandButton action="{!copyOwnership}" id="copyOwnersSubmitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+                            <apex:commandButton action="{!copyOwnership}" id="copyOwnersSubmitBut" styleClass="btn btn-default" value="{!$Label.Save}"
                                                 oncomplete="hideCopyOwnershipDialog(); this.removeAttr('disabled');"
                                                 reRender=""
                                                 onclick="this.disabled='disabled';">
