@@ -722,15 +722,19 @@
             <apex:outputPanel styleClass="agencyOwnershipComponent">
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;margin-right:5px;">
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Copy_Ownership__c.Label}" style="color:black;font-size:110%"/>
-                        <apex:inputCheckbox id="copyOwnershipCheckbox" disabled="{!ca.isReadonly}" html-data-controls="copyOwnershipComponent" html-data-group="copyOwnership" value="{!ca.fw.newForm.Copy_Ownership__c}" onclick="copyOwnership();"/>
+                        <apex:outputpanel>
+                            <div>
+                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Copy_Ownership__c.Label}" style="color:black;font-size:110%"/>
+                                <a href="" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<div escape='false'>{!$Label.ISSP_ANG_COPY_OWNERSHIP_HINT}</div>">
+                                    <apex:image value="/img/msg_icons/info16.png"/></a>                            
+                                <apex:inputCheckbox id="copyOwnershipCheckbox" disabled="{!ca.isReadonly}" html-data-controls="copyOwnershipComponent" html-data-group="copyOwnership" value="{!ca.fw.newForm.Copy_Ownership__c}" onclick="copyOwnership();"/>
+                            </div>
+                        </apex:outputpanel>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
             <apex:outputPanel styleClass="copyOwnershipComponent" >
                 <apex:pageBlockSection columns="2">
-                    <apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:10%;margin-right:5px;">
-                    </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:15%;margin-right:5px;">
                         <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="copyOwnershipEdit" status="" oncomplete="showCopyOwnershipDialog();" rerender="copyOwnership">
                             <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Select_Accounts}

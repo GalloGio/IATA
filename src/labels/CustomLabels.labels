@@ -14617,7 +14617,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Copy Ownership Warning</shortDescription>
-        <value>Attention! By copying ownership information to an Agency you will delete any existing ownership information for that Agency.</value>
+        <value>Attention! By copying ownership information to an Agency you will delete any existing ownership information on the target Agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Country_Select</fullName>
@@ -18055,7 +18055,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Select Accounts</shortDescription>
-        <value>Select Accounts</value>
+        <value>Select Target Accounts</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Selected_Associate_Entities</fullName>
@@ -20765,6 +20765,38 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>Location type SA name</shortDescription>
         <value>Specific Sales Activity (SA)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_CHECKING</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_CHECKING</shortDescription>
+        <value>Checking...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_HINT</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG COPY OWNERSHIP HINT</shortDescription>
+        <value>This action allows you to copy the ownership details from this account into the chosen locations belonging to your hierarchy. You will be able to visualize the changes applied by this action on the target agencies, only after Confirming Update of all the details of this page.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</shortDescription>
+        <value>Agencies processed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</shortDescription>
+        <value>Copy Ownership Progress</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Click_Here_PCI</fullName>
