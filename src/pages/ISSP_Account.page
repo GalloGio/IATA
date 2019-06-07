@@ -55,7 +55,7 @@
                         <div class="row">
                         	<label class="lbl col-xs-5">{!$ObjectType.Account.fields.Sector__c.Label}</label>
                             <div class="col-sm-6">
-                      			{!Account.Sector__c}
+                                <apex:outPutField value="{!Account.Sector__c}"/> <!-- WMO-391 -->
                       		</div>
                              </div>
                          </apex:outputText> 
@@ -64,7 +64,7 @@
                                 <div class="row">
                             <div class="lbl col-xs-5"><label>{!$ObjectType.Account.fields.Category__c.Label}</label></div>
                             <div class="col-sm-6">
-                          		{!Account.Category__c}
+                                <apex:outPutField value="{!Account.Category__c}"/> <!-- WMO-391 -->
                       		</div>
                              </div>
                         </apex:outputText>
