@@ -260,19 +260,34 @@
                     <label>Cross Border Sales</label>
                 </value>
                 <value>
-                    <fullName>Fast Growth Last 12m</fullName>
+                    <fullName>Fast Growth Decrease Last 12m</fullName>
                     <default>false</default>
-                    <label>Fast Growth Last 12m</label>
+                    <label>Fast Growth Decrease Last 12m</label>
                 </value>
                 <value>
-                    <fullName>Fast Growth Last 3m</fullName>
+                    <fullName>Fast Growth Decrease Last 3m</fullName>
                     <default>false</default>
-                    <label>Fast Growth Last 3m</label>
+                    <label>Fast Growth Decrease Last 3m</label>
                 </value>
                 <value>
-                    <fullName>Fast Growth Last 3m vs previous year</fullName>
+                    <fullName>Fast Growth Decrease Last 3m vs previous year</fullName>
                     <default>false</default>
-                    <label>Fast Growth Last 3m vs previous year</label>
+                    <label>Fast Growth Decrease Last 3m vs previous year</label>
+                </value>
+                <value>
+                    <fullName>Fast Growth Increase Last 12m</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 12m</label>
+                </value>
+                <value>
+                    <fullName>Fast Growth Increase Last 3m</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 3m</label>
+                </value>
+                <value>
+                    <fullName>Fast Growth Increase Last 3m vs previous year</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 3m vs previous year</label>
                 </value>
                 <value>
                     <fullName>Shift of FoP</fullName>
@@ -365,15 +380,27 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 12m</fullName>
+                <fullName>Fast Growth Decrease Last 12m</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 3m</fullName>
+                <fullName>Fast Growth Decrease Last 3m</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 3m vs previous year</fullName>
+                <fullName>Fast Growth Decrease Last 3m vs previous year</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fast Growth Increase Last 12m</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fast Growth Increase Last 3m</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fast Growth Increase Last 3m vs previous year</fullName>
                 <default>false</default>
             </values>
             <values>
