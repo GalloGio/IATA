@@ -15,6 +15,14 @@ import csp_Footer_IATA_Store from '@salesforce/label/c.csp_Footer_IATA_Store';
 import ISSP_Registration_Privacy from '@salesforce/label/c.ISSP_Registration_Privacy';
 import ISSP_Registration_Legal from '@salesforce/label/c.ISSP_Registration_Legal';
 
+import csp_Footer_Facebook_URL from '@salesforce/label/c.csp_Footer_Facebook_URL';
+import csp_Footer_Twitter_URL from '@salesforce/label/c.csp_Footer_Twitter_URL';
+import csp_Footer_Linkedin_URL from '@salesforce/label/c.csp_Footer_Linkedin_URL';
+import csp_Footer_Youtube_URL from '@salesforce/label/c.csp_Footer_Youtube_URL';
+import csp_Footer_Legal_URL from '@salesforce/label/c.csp_Footer_Legal_URL';
+import csp_Footer_Privacy_URL from '@salesforce/label/c.csp_Footer_Privacy_URL';
+import csp_Footer_IataStore_URL from '@salesforce/label/c.csp_Footer_IataStore_URL';
+
 export default class PortalFooter extends LightningElement {
     @track selectedLang = '';
     @track langOptions = [];
@@ -39,7 +47,7 @@ export default class PortalFooter extends LightningElement {
         csp_Footer_IATA_Store,
         ISSP_Registration_Privacy,
         ISSP_Registration_Legal
-        };
+    };
 
     get labels() {
         return this._labels;
@@ -47,6 +55,24 @@ export default class PortalFooter extends LightningElement {
 
     set labels(value) {
         this._labels = value;
+    }
+
+    _urls = {
+        csp_Footer_Facebook_URL, 
+        csp_Footer_Twitter_URL,
+        csp_Footer_Linkedin_URL,
+        csp_Footer_Youtube_URL,
+        csp_Footer_Legal_URL,
+        csp_Footer_Privacy_URL,
+        csp_Footer_IataStore_URL
+    };
+
+    get urls() {
+        return this._urls;
+    }
+
+    set urls(value) {
+        this._urls = value;
     }
 
     connectedCallback() {
@@ -86,30 +112,30 @@ export default class PortalFooter extends LightningElement {
     }
 
     navigateToIataStore() {
-        window.open("https://www.iata.org");
+        window.open(this.urls.csp_Footer_IataStore_URL);
     }
 
     navigateToPrivacy() {
-        window.open("https://www.iata.org/Pages/privacy.aspx");
+        window.open(this.urls.csp_Footer_Privacy_URL);
     }
 
     navigateToLegal() {
-        window.open("https://www.iata.org/Pages/terms.aspx");
+        window.open(this.urls.csp_Footer_Legal_URL);
     }
 
     navigateToFacebook() {
-        window.open("https://www.facebook.com/iata.org");
+        window.open(this.urls.csp_Footer_Facebook_URL);
     }
 
     navigateToTwitter() {
-        window.open("https://twitter.com/iata");
+        window.open(this.urls.csp_Footer_Twitter_URL);
     }
 
     navigateToLinkedin() {
-        window.open("https://www.linkedin.com/company/international-air-transport-association-iata");
+        window.open(this.urls.csp_Footer_Linkedin_URL);
     }
 
     navigateToYoutube() {
-        window.open("https://www.youtube.com/iatatv");
+        window.open(this.urls.csp_Footer_Youtube_URL);
     }
 }
