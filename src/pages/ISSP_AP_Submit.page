@@ -123,10 +123,9 @@
 
                 <!-- With ICCS and is Member -->
                 <apex:pageBlockSection title="Information required to join ICCS in this market" columns="1" rendered="{!newForm.Airline_wish_to_join_ICCS__c=='Yes'}">
-                    Scenario C<br/>
-                    information required to join ICCS in this market. <br/>
-                    <a href="#" style="text-decoration: underline">Download a file</a><br/>
-
+                    <apex:outputPanel layout="block" rendered="{!ICCSJoiningThisMarketUrl!=null}">
+                        <apex:outputLink value="{!ICCSJoiningThisMarketUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ICCSJoiningThisMarketName}</apex:outputLink>
+                    </apex:outputPanel>
                     <apex:iframe scrolling="false" height="160px"
                         src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market&onlyOne=true"/>
                 </apex:pageBlockSection>
@@ -252,10 +251,22 @@
                             Please download, complete and upload the resolution agreement(s) as a scanned document(s).<br/>
                         </p>
                     </div>
+
+                    <apex:outputPanel layout="block" rendered="{!AND(BSPCounterIndemnityAgreementUrl!=null,ShowCounterIndemnity)}">
+                        <apex:outputLink value="{!BSPCounterIndemnityAgreementUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!BSPCounterIndemnityAgreementName}</apex:outputLink>
+                    </apex:outputPanel>
                     <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=This agreement must be signed once for all BSPs by IATA and Non-IATA Members&reqIdentifier=CounterIndemnityAgreement&onlyOne=true"
                         height="190px" width="100%" scrolling="false" rendered="{!ShowCounterIndemnity}"/>
+
+                    <apex:outputPanel layout="block" rendered="{!AND(BSPFormOfConcurrenceUrl!=null,ShowFormOfConcurrence)}">
+                        <apex:outputLink value="{!BSPFormOfConcurrenceUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!BSPFormOfConcurrenceName}</apex:outputLink>
+                    </apex:outputPanel>
                     <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName=Form of Concurrence&reqDescription=This agreement must be signed once for all BSPs only by Non- IATA Members&reqIdentifier=FormOfAuthorization&onlyOne=true"
                         height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfConcurrence}"/>
+
+                    <apex:outputPanel layout="block" rendered="{!AND(BSPFormOfApplicationUrl!=null,ShowFormOfApplication)}">
+                        <apex:outputLink value="{!BSPFormOfApplicationUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!BSPFormOfApplicationName}</apex:outputLink>
+                    </apex:outputPanel>
                     <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=6&reqRequired=Mandatory&reqName=Form of Application&reqDescription=This agreement must be signed per each BSP only by Non-IATA Members&reqIdentifier=FormOfApplication&onlyOne=true"
                         height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfApplication}"/>
                 </apex:pageBlockSection>
@@ -270,8 +281,16 @@
                             Please download, complete and upload the resolution agreement(s) as a scanned document(s).<br/>
                         </p>
                     </div>
+
+                    <apex:outputPanel layout="block" rendered="{!AND(CASSCounterIndemnityAgreementUrl!=null,ShowCounterIndemnity)}">
+                        <apex:outputLink value="{!CASSCounterIndemnityAgreementUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!CASSCounterIndemnityAgreementName}</apex:outputLink>
+                    </apex:outputPanel>
                     <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=This agreement must be signed once for all CASS by IATA and Non-IATA Members&reqIdentifier=CounterIndemnityAgreement&onlyOne=true"
                         height="190px" width="100%" scrolling="false" rendered="{!ShowCounterIndemnity}"/>
+
+                    <apex:outputPanel layout="block" rendered="{!AND(CASSFormOfApplicacionConcurrenceUrl!=null,ShowFormOfApplicationAndConcurrence)}">
+                        <apex:outputLink value="{!CASSFormOfApplicacionConcurrenceUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!CASSFormOfApplicacionConcurrenceName}</apex:outputLink>
+                    </apex:outputPanel>
                     <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName=Form of Application and Concurrence&reqDescription=This agreement must be signed per each CASS only by Non-IATA Members&reqIdentifier=FormOfApplicationAndConcurrence&onlyOne=true"
                         height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfApplicationAndConcurrence}"/>
                 </apex:pageBlockSection>

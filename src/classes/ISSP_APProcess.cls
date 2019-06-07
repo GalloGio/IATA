@@ -1836,6 +1836,56 @@ global without sharing class ISSP_APProcess {
     }
 
     /**
+        Get the document for "Information required to join ICCS in this market" section
+    **/
+    public String getICCSJoiningThisMarketUrl() {
+        return getDocumentUrl('ICCS_Joining_This_Market');
+    }
+    public String getICCSJoiningThisMarketName() {
+        return getDocumentName('ICCS_Joining_This_Market');
+    }
+
+    /**
+        Get the document for "BSP Agreements" section
+    **/
+    public String getBSPCounterIndemnityAgreementUrl() {
+        return getDocumentUrl('BSP_Counter_Indemnity_Agreement');
+    }
+    public String getBSPCounterIndemnityAgreementName() {
+        return getDocumentName('BSP_Counter_Indemnity_Agreement');
+    }
+    public String getBSPFormOfConcurrenceUrl() {
+        return getDocumentUrl('BSP_Form_Of_Concurrence');
+    }
+    public String getBSPFormOfConcurrenceName() {
+        return getDocumentName('BSP_Form_Of_Concurrence');
+    }
+    public String getBSPFormOfApplicationUrl() {
+        return getDocumentUrl('BSP_Form_Of_Application');
+    }
+    public String getBSPFormOfApplicationName() {
+        return getDocumentName('BSP_Form_Of_Application');
+    }
+
+    /**
+        Get the document for "CASS Agreements" section
+    **/
+    public String getCASSCounterIndemnityAgreementUrl() {
+        return getDocumentUrl('CASS_Counter_Indemnity');
+    }
+    public String getCASSCounterIndemnityAgreementName() {
+        return getDocumentName('CASS_Counter_Indemnity');
+    }
+    public String getCASSFormOfApplicacionConcurrenceUrl() {
+        return getDocumentUrl('CASS_Form_Of_Application_Concurrence');
+    }
+    public String getCASSFormOfApplicacionConcurrenceName() {
+        return getDocumentName('CASS_Form_Of_Application_Concurrence');
+    }
+
+    }
+
+    /**
         Get the url to the document specified in CS AP_Country_specs__c
         It can be a url or a Document Name in a Library (Content Document)
     **/
@@ -1877,6 +1927,7 @@ global without sharing class ISSP_APProcess {
                 FROM ContentVersion
                 WHERE isLatest = true
                 AND title = :name
+                ORDER BY CreatedDate DESC
                 LIMIT 1];
         } catch (Exception e) {
             System.debug('ERROR, document "' + name + '" not found: ' + e.getMessage());

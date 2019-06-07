@@ -1537,6 +1537,18 @@ private class ISSP_APProcess_Test
             ctrl.getDocumentAppendixAName();
             ctrl.getICCSJoiningPackageUrl();
             ctrl.getICCSJoiningPackageName();
+            ctrl.getICCSJoiningThisMarketUrl();
+            ctrl.getICCSJoiningThisMarketName();
+            ctrl.getBSPCounterIndemnityAgreementUrl();
+            ctrl.getBSPCounterIndemnityAgreementName();
+            ctrl.getBSPFormOfConcurrenceUrl();
+            ctrl.getBSPFormOfConcurrenceName();
+            ctrl.getBSPFormOfApplicationUrl();
+            ctrl.getBSPFormOfApplicationName();
+            ctrl.getCASSCounterIndemnityAgreementUrl();
+            ctrl.getCASSCounterIndemnityAgreementName();
+            ctrl.getCASSFormOfApplicacionConcurrenceUrl();
+            ctrl.getCASSFormOfApplicacionConcurrenceName();
             ctrl.securityCheck();
             ctrl.getShowJoinICCSQuestion();
             ctrl.getShowJoinICCS();
