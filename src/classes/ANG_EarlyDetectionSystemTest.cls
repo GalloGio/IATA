@@ -453,7 +453,7 @@ private class ANG_EarlyDetectionSystemTest {
 		message.eventTime = System.now();
 
 		message.triggeredRules = new List<String>{
-			'edsRule_fastGrowth_L12M_P12M', 
+			'edsRule_fastGrowth_decrease_L12M_P12M', 
 			'edsRule_ticketsAbroad_ratio_L3M'
 		};
 
@@ -513,7 +513,7 @@ private class ANG_EarlyDetectionSystemTest {
 		system.debug('ALERT: ' + alert);
 
 		System.assertEquals(alert.ANG_Open_Cash_Position__c, 12500.25, 'Open cash position must have the value: 12500,25');
-		System.assert(alert.ANG_Triggered_Rules__c.contains('Fast Growth Last 12m'), 'EDS Alert triggered rules must contain Fast Growth Last 12m');
+		System.assert(alert.ANG_Triggered_Rules__c.contains('Fast Growth Decrease Last 12m'), 'EDS Alert triggered rules must contain Fast Growth Decrease Last 12m');
 		System.assert(alert.ANG_Triggered_Rules__c.contains('Cross Border Sales'), 'EDS Alert triggered rules must contain Cross Border Sales');
 
 		System.assert(alert.ANG_Agent_current_standing__c.contains('Fast Growth Last 12m'), 'EDS Alert current standing must contain Fast Growth Last 12m');
