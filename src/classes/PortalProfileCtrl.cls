@@ -58,6 +58,8 @@ public with sharing class PortalProfileCtrl {
     public static List<Account> getCompanyBranches(){
         List<Account> branches = new List<Account>();
 
+        branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry from account where id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId];
+
         return branches;
     }
 
@@ -119,7 +121,7 @@ public with sharing class PortalProfileCtrl {
             new FieldWrapper('MobilePhone', false),
             new FieldWrapper('Phone', false),
             new FieldWrapper('Preferred_Language__c', false),
-            new FieldWrapper('Membership_Function__c', true),
+            //new FieldWrapper('Membership_Function__c', true),
             new FieldWrapper('Available_Services__c', true)
         };
 
@@ -221,6 +223,12 @@ public with sharing class PortalProfileCtrl {
         @AuraEnabled
         public Boolean fullSize;
 
+        @AuraEnabled
+        public String className;
+
+        @AuraEnabled
+        public String label;
+
         public FieldWrapper () {}
 
         public FieldWrapper (String fieldName, Boolean fullSize) {
@@ -233,6 +241,13 @@ public with sharing class PortalProfileCtrl {
             this.editable = editable;
             this.visible = visible;
         }
+        public FieldWrapper (String fieldName, Boolean editable, Boolean visible,String className, String label){
+            this.fieldName = fieldName;
+            this.editable = editable;
+            this.visible = visible;
+            this.className = className;
+            this.label = label;
+        }
 
     }
 
@@ -240,20 +255,31 @@ public with sharing class PortalProfileCtrl {
     /** Contacts & Branches Sections */
 
     @AuraEnabled
-    public static void getContactsListFields(){
+    public static Map<String,List<FieldWrapper>> getContactsListFields(){
         String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
         String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
-        List<String> toView = new List<String>{'FirstName'};
-        List<String> toRow = new List<String>{'FirstName'};
-        List<String> toEdit = new List<String>{'FirstName'};
+        List<String> toView = new List<String>{'AccountId','MailingCountry','Name','MobilePhone','Services__c'};
+        List<String> toRow = new List<String>{'LastName','FirstName','Email','Type_of_Contact__c'};
+        List<String> toEdit = new List<String>{'FirstName','Email','MobilePhone','BusinessPhone','MailingCountry','LocationCode'};
+
+        Map<String,String> fieldLabels = new Map<String,String>();
+        for(String fieldName: toView){
+            fieldLabels.put(fieldName,fieldName);
+        }
+        for(String fieldName: toRow){
+            fieldLabels.put(fieldName,fieldName);
+        }
+        for(String fieldName: toEdit){
+            fieldLabels.put(fieldName,fieldName);
+        }
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
 
         wrapperMap.put(rowsFields,new List<FieldWrapper>());
         for(String fieldName : toRow){
-            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true));
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
@@ -266,10 +292,12 @@ public with sharing class PortalProfileCtrl {
             wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true));
         }
 
+        return wrapperMap;
+
     }
 
     @AuraEnabled
-    public static void getBranchesListFields(){
+    public static Map<String,List<FieldWrapper>> getBranchesListFields(){
         String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
         String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
@@ -277,26 +305,28 @@ public with sharing class PortalProfileCtrl {
         String sectionBasic = LABEL_BASICS; //Fields to display in open accordion section/record detail - first section
         String sectionBranchContact = 'Branch Contact'; //Fields to display in open accordion section/record detail + in edit modal dialog
 
-        List<String> toView = new List<String>{'FirstName'};
-        List<String> toRow = new List<String>{'FirstName'};
-        List<String> toEdit = new List<String>{'FirstName'};
+        List<String> toView = new List<String>{'Name','Status__c'};
+        List<String> toRow = new List<String>{'TradeName__c','Name','BillingCity','BillingCountry','Status__c'};
+        List<String> toEdit = new List<String>{'Name','Status__c'};
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
 
         wrapperMap.put(rowsFields,new List<FieldWrapper>());
         for(String fieldName : toRow){
-            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true));
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldName));
         }
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
         for(String fieldName : toView){
-            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true));
+            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldName));
         }
 
         wrapperMap.put(editFields,new List<FieldWrapper>());
         for(String fieldName : toEdit){
-            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true));
+            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldName));
         }
+
+        return wrapperMap;
 
     }
 

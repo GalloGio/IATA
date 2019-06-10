@@ -22,8 +22,8 @@
                 <tr>
                     <th class="tableLefty"></th>
                     <th class="underLinded" style="width:1%;"><!-- arrow spacer --></th>
-                    <template for:each={rowFields} for:item="field" for:index="index">
-                        <th class={field.class} key={field.label} onclick={orderRows} data-name={field.fieldName}>
+                    <template for:each={fieldsList.ROWS} for:item="field" for:index="index">
+                        <th class={field.className} key={field.label} onclick={columnSort} data-name={field.fieldName}>
                             {field.label}
                             <lightning-icon class="slds-is-absolute" if:true={field.isAsc} icon-name="utility:arrowup" size="xx-small"></lightning-icon>
                             <lightning-icon class="slds-is-absolute" if:true={field.isDesc} icon-name="utility:arrowdown" size="xx-small"></lightning-icon>
@@ -49,7 +49,7 @@
                         -->
 
                         <template for:each={record.rowValues} for:item="rowValue">
-                            <td key={rowValue.value} class={rowValue.class}>
+                            <td key={rowValue.value} class={rowValue.className}>
                                 <span>{rowValue.value}</span>
                             </td>
                         </template>
@@ -65,7 +65,7 @@
 
                                     <!-- iterate over sections here -->
                                         <c-portal-record-form-wrapper object-name={objectName} record-id={record.Id}
-                                                                      fields={viewFields} show-edit="true" header-class="slds-float_right">
+                                                                      fields={fieldsList.VIEW} show-edit="true" header-class="slds-float_right">
                                         </c-portal-record-form-wrapper>
 
                                 </div>

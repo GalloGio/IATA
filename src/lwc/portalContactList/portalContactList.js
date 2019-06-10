@@ -11,6 +11,7 @@ export default class PortalContactList extends LightningElement {
     @api recordid;
     @api objectid;
     @api objectName;
+    @api defaultSort;
     isAsc = true;
     sortBy;
     @track isLoading = true;
@@ -23,13 +24,15 @@ export default class PortalContactList extends LightningElement {
     /* Dynamic fields*/
     @api sectionMap;
 
-    @track rowFields = [{'fieldName':'FirstName','label':'First name','class':'underLinded inactive'},{'fieldName':'LastName','label':'Last name','class':'underLinded inactive'},
-    {'fieldName':'Email','label':'Email','class':'underLinded inactive'},{'fieldName':'Type_of_Contact__c','label':'Type','class':'underLinded inactive'}];
+    /*@track rowFields = [{'fieldName':'FirstName','label':'First name','class':'underLinded inactive cursorPointer'},
+    {'fieldName':'LastName','label':'Last name','class':'underLinded inactive cursorPointer'},
+    {'fieldName':'Email','label':'Email','class':'underLinded inactive cursorPointer'},
+    {'fieldName':'Type_of_Contact__c','label':'Type','class':'underLinded inactive cursorPointer'}];
     @track viewFields = [
         { 'fieldName': 'AccountId', 'visible': true, 'editable': true },{ 'fieldName': 'MailingCountry', 'visible': true, 'editable': true },
-        { 'fieldName': 'Name', 'visible': true, 'editable': true },{ 'fieldName': 'Services__c', 'visible': true, 'editable': true }];
-    @api
+        { 'fieldName': 'Name', 'visible': true, 'editable': true },{ 'fieldName': 'Services__c', 'visible': true, 'editable': true }];*/
 
+    @api
     get records() {
         //return this._records;
         return this.recordsLocal;
@@ -50,7 +53,7 @@ export default class PortalContactList extends LightningElement {
         if (!this.fieldsList) {
             return 0;
         } else {
-            return this.fieldsList.length + 3; // Adding extra colspans for spacing columns
+            return this.fieldsList.ROWS.length + 3; // Adding extra colspans for spacing columns
         }
     }
 
@@ -89,7 +92,8 @@ export default class PortalContactList extends LightningElement {
 
     processRecords(){
         let records = JSON.parse(JSON.stringify(this.records));
-        let fields = this.rowFields;
+        //let fields = this.rowFields;
+        let fields = this.fieldsList.ROWS;
 
         if(fields && records){
             for(let r =0;r<records.length;r++){
@@ -97,16 +101,21 @@ export default class PortalContactList extends LightningElement {
                 let rowValues = [];
 
                 for(let i=0;i<fields.length;i++){
+                    let field = fields[i];
                     let fieldName = fields[i].fieldName;
 
                     let rowValue = {};
 
                     if(record[fieldName] != null){
                         rowValue.value = record[fieldName];
-                        rowValue.class = this.getRowStyle(fieldName,record[fieldName]);
+                        rowValue.className = field.className;
+                        let extraStyle = this.getRowStyle(fieldName,record[fieldName]);
+                        if(extraStyle != null){
+                            rowValue.className += ' '+extraStyle;
+                        }
                     }else{
                         rowValue.value = '';
-                        rowValue.class = this.getRowStyle(fieldName,null);
+                        rowValue.className = field.className;//this.getRowStyle(fieldName,null);
                     }
 
                     rowValues.push(rowValue);
@@ -115,6 +124,12 @@ export default class PortalContactList extends LightningElement {
                 record.open = false;
             }
             this.records = records;
+
+            if(this.defaultSort != null){
+                try{
+                    this.orderRows(this.defaultSort);
+                }catch(e){console.log(e)}
+            }
         }
 
 
@@ -124,10 +139,13 @@ export default class PortalContactList extends LightningElement {
     getRowStyle(fieldName,value){
         let objectName = this.objectName;
 
-        if(fieldName == 'Status' && objectName == 'Account'){
+        if(fieldName == 'Status__c' && objectName == 'Account'){
             if(value != null){
                 if(value == 'Approved' || value == 'Resolved'){
                     return 'lightGreen';
+                }
+                if(value == 'Pending'){
+                    return 'amber';
                 }
             }else{
                 return 'underLinded';
@@ -137,11 +155,14 @@ export default class PortalContactList extends LightningElement {
         return 'underLinded';
     }
 
+    columnSort(event){
+        let fieldName = event.target.dataset.name;
+        this.orderRows(fieldName);
+    }
+
 
     /** Sort & Filer*/
-    orderRows(event){
-        let fieldName = event.target.dataset.name;
-
+    orderRows(fieldName){
         let isAsc = this.isAsc;
         let sortBy = this.sortBy;
         let records = JSON.parse(JSON.stringify(this.records));
@@ -182,19 +203,20 @@ export default class PortalContactList extends LightningElement {
 
 
         //Set field classes
-        let rowFields = this.rowFields;
+        let fieldsList = JSON.parse(JSON.stringify(this.fieldsList));
+        let rowFields = fieldsList.ROWS; //this.rowFields;
         for(let f = 0;f<rowFields.length;f++){
             if(rowFields[f].fieldName == fieldName){
-                rowFields[f].class = 'underLinded active';
+                rowFields[f].className = rowFields[f].className.replace(/\inactive\b/g, ' active ');
                 rowFields[f].isAsc = isAsc;
                 rowFields[f].isDesc = !isAsc;
             }else{
-                rowFields[f].class = 'underLinded inactive';
+                rowFields[f].className = rowFields[f].className.replace(/\active\b/g, ' inactive ');
                 rowFields[f].isAsc = false;
                 rowFields[f].isDesc = false;
             }
         }
-        this.rowFields = rowFields;
+        this.fieldsList = fieldsList;
     }
 
 

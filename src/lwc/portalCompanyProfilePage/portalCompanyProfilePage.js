@@ -8,6 +8,7 @@ import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getFieldsMap from '@salesforce/apex/PortalProfileCtrl.getFieldsMap';
 import getContactFieldsToInsert from '@salesforce/apex/PortalProfileCtrl.getContactFieldsToInsert';
 import getContactsListFields from '@salesforce/apex/PortalProfileCtrl.getContactsListFields';
+import getBranchesListFields from '@salesforce/apex/PortalProfileCtrl.getBranchesListFields';
 import getContacts from '@salesforce/apex/PortalProfileCtrl.getAccountContacts';
 import getBranches from '@salesforce/apex/PortalProfileCtrl.getCompanyBranches';
 
@@ -37,13 +38,15 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track branches = [];
     @track branchesLoaded = false;
     @track contactsLoaded = false;
+    @track branchFields;
+    @track contactFields;
 
     // CHANGE IN FUTURE!!!
     @track openmodel = false;
     @track recordid;
     @track objectid;
     @track objectName = "Contact";
-    @track fieldsList = [{'label':'FirstName','class':'active'}, {'label':'LastName','class':'inactive'}, {'label':'Email','class':'inactive'}, {'label':'MobilePhone','class':'inactive'}, {'label':'Phone','class':'inactive'}];
+    //@track fieldsList = [{'label':'FirstName','class':'active'}, {'label':'LastName','class':'inactive'}, {'label':'Email','class':'inactive'}, {'label':'MobilePhone','class':'inactive'}, {'label':'Phone','class':'inactive'}];
     @track fieldsListToCreate = [];
     // ------------------- //
 
@@ -68,6 +71,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.objectid = this.loggedUser.Contact.AccountId;
             this.userLoaded = true;
         });
+
+        this.getContactsFieldMap();//For contacts tab
+        this.getBranchesFieldMap();//For branches tab
+
 
         getFieldsMap({ type: 'CompanyProfile' }).then(result => {
 
@@ -270,9 +277,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
     getContactsFieldMap(){
         getContactsListFields().then(result => {
            let sectionMap = JSON.parse(JSON.stringify(result));
+           console.log(sectionMap);
 
            let localMap = [];
-           for (let key in this.sectionMap) {
+           for (let key in sectionMap) {
                // Preventing unexcepted data
                if (sectionMap.hasOwnProperty(key)) { // Filtering the data in the loop
                    let value = sectionMap[key];
@@ -280,11 +288,29 @@ export default class PortalCompanyProfilePage extends LightningElement {
                }
            }
            console.log(localMap);
-           //this.contactsMap = localMap;
+           //this.contactFields = localMap;
+           this.contactFields = sectionMap;
         });
     }
 
-    getBranchesFieldMap(){}
+    getBranchesFieldMap(){
+        getBranchesListFields().then(result => {
+            let sectionMap = JSON.parse(JSON.stringify(result));
+            console.log(sectionMap);
+
+            let localMap = [];
+            for (let key in sectionMap) {
+                // Preventing unexcepted data
+                if (sectionMap.hasOwnProperty(key)) { // Filtering the data in the loop
+                    let value = sectionMap[key];
+                    localMap.push({ 'value': value, 'key': key });
+                }
+            }
+            console.log(localMap);
+            //this.contactFields = localMap;
+            this.branchFields = sectionMap;
+         });
+    }
 
     get tab0Active() { return this.lstTabs[0].active; }
     get tab1Active() { return this.lstTabs[1].active; }

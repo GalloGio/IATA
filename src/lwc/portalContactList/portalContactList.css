@@ -30,7 +30,7 @@
 .underLinded {
     border-bottom: 1px solid #E1E1E1;
     padding-bottom:2%;
-        padding-top:2%;
+    padding-top:2%;
 }​
 
 table tr:last-child {
@@ -94,4 +94,16 @@ td.inactive{
 
 .tableLefty{
     width:5%
+}
+
+
+/* COLORS */
+.lightGreen span{
+    background-color: #b1e8b5;
+    border: solid #b1e8b5 5px;
+}
+
+.amber span{
+    background-color: #fac832;
+    border: solid #fac832 5px;
 }
