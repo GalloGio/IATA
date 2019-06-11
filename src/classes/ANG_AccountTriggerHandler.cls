@@ -45,6 +45,7 @@ public class ANG_AccountTriggerHandler {
 		manageDowngrades();
 		manageUpgrades();
 		createIEPModelAOscars();
+		updateFormsOfPayment();
 	}
 
 	public void onBeforeDelete(){}
@@ -635,5 +636,41 @@ public class ANG_AccountTriggerHandler {
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelAAccounts, 'A');
 		if(!iepModelBAccounts.isEmpty())
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBAccounts, 'B');
+	}
+
+	public void updateFormsOfPayment(){
+
+		Set<ID> setAccountIDs = new Set<ID>();
+
+		for(Account a :triggerNew){
+			if(a.Status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c != AMS_Utils.ACC_S0_TERMINATED) setAccountIDs.add(a.id);
+			if(a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED) setAccountIDs.add(a.id);
+		}
+
+		List<Agency_Authorization__c> AgencyAuthorizationsToUpdate = new List<Agency_Authorization__c>();
+		for (Agency_Authorization__c aa : [SELECT ID, Account__c, ANG_FormOfPayment_ID__c FROM Agency_Authorization__c WHERE Account__c IN :setAccountIDs] ){
+			Account currentAccount = newMap.get(aa.Account__c);
+
+			if(currentAccount.Status__c == AMS_Utils.ACC_S0_TERMINATED) aa.Status__c = 'Non-Active';
+			
+			else {
+
+				if(AMS_Utils.setChinaCountries.contains(currentAccount.Country_ISO_Code__c)) aa.Status__c = 'Refer to ASD';
+				
+				else if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CC) {
+
+					if (currentAccount.Is_PCI_compliant__c == 'Yes' ) aa.Status__c = 'Active';
+					if (currentAccount.Is_PCI_compliant__c == 'No' ) aa.Status__c = 'Non-Active';
+					if (currentAccount.Is_PCI_compliant__c == 'Nil CC' ) aa.Status__c = 'Not Authorized';
+				}
+
+				else aa.Status__c = 'Active';
+
+			}
+			AgencyAuthorizationsToUpdate.add(aa);
+		}
+	
+	if(!AgencyAuthorizationsToUpdate.isEmpty()) update AgencyAuthorizationsToUpdate;
+
 	}
 }
