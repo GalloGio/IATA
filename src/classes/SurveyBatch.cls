@@ -126,6 +126,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
                                AND Instant_Survey_Feedback_requested__c = false
                                AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
+                               AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR' //WMO-571
                                    ORDER BY ClosedDate DESC]);
 
     CasesPart1 = new Set<Id>();
