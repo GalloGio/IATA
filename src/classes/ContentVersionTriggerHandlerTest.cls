@@ -16,12 +16,14 @@ private class ContentVersionTriggerHandlerTest {
 		Contact con = ISSP_ObjectFactory.createNewContact();
 		con.Email = 'testxxaasddasdasda@test.com';
 		con.AccountId= headQuarter.Id;
+		con.Status__c = 'Active';
 		insert con;
 
 		User newUser = ISSP_ObjectFactory.createPortalBasicAirlineUser(con);
 
 		Portal_Applications__c papp = new Portal_Applications__c();
 		papp.Application_URL__c = '/ISSP_CurrencyCenterHome';
+		papp.Name= 'Currency Center';
 		insert papp;
 
 		Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = con.Id, Right__c = 'Access Granted', Portal_Application__c = papp.Id);
