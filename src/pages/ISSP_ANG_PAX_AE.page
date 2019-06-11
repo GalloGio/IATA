@@ -710,6 +710,18 @@
 	          	$j(".PostalArea").val($j(".PhysicalArea").val());
         	}
       	}
+
+      	function showCopyOwneresMulticountry() {
+      		$j(function () {
+          		$j('#copyOwnersMcModal').modal('show');
+        	});
+      	}
+
+      	function closeCopyOwneresMulticountry() {
+        	$j(function () {
+          		$j('#copyOwnersMcModal').modal('hide');
+        	});
+      	}
     </script>
     <c:MutationObserverPolyfill/>
 
@@ -1248,11 +1260,13 @@
 
                     					<apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),$Label.ISSP_AMS_Step3_4_People,$Label.ISSP_AMS_Step3_4_Branch_People)}" styleClass="col-md-12" escape="false" />
 
-                              <apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="Text message (missing)" style="color: red;" styleClass="col-md-12" escape="false"/>
+                              			<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="Text message (missing)" style="color: red;" styleClass="col-md-12" escape="false"/>
 
 					                    <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
 					                      {!$Label.ISSP_AMS_Not_Listed_Msg}
 					                    </div>
+
+					                    <apex:commandLink style="float: right;" onfocus="showCopyOwneresMulticountry();">ola rui</apex:commandLink>
                     
                     					<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
 
@@ -2194,6 +2208,113 @@
 	        }
 	    </script>
     </apex:form>
+
+    <!-- Modal Copy Owners MultiCountry -->
+    <apex:form id="copyOwnersMc">
+      	<div class="modal fade" id="copyOwnersMcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        	<div class="modal-dialog" role="document">
+          		<div class="modal-content">
+            		<div class="modal-header">
+              			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              			<!--<h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Company}</h4>-->
+              			<h4 class="modal-title" id="myModalLabel">Copy Owners</h4>
+            		</div>
+            		<div class="modal-body">
+              			<apex:pageBlock>
+               		 		<!--<apex:pageMessages id="companyMessages"/> rui-->
+
+               		 		<!--<apex:pageBlockTable value="{!ownersThatCanBeCopied}" var="ownerCon" id="contactList" styleClass="table-hover table table-condensed table-responsive">
+		                      	<apex:column>
+		                    		<apex:facet name="header">
+		                        		<apex:inputCheckbox id="mainbox"/>
+				                    </apex:facet>
+
+				                    <apex:inputCheckbox value="{!ownerCon.selected}" id="childbox"/>
+				                    <script type="text/javascript">
+				            			function selectAll() {
+				            				console.log('ola :)', $j('[id$="mainBox"]'));
+
+				            				/*if ($('[id$="mainBox"]')) {
+				            					console.log('oi1');
+				            					$('[id$="childbox"]') = true;
+				            				} else {
+				            					console.log('oi3');
+												$('[id$="childbox"]') = false;
+				            				}*/
+				            			}
+				            		</script>
+			                    </apex:column>
+
+			                	<div id="{!ownerCon.owner.id}">
+			                		<apex:column>
+			                    		<apex:facet name="header">{!$ObjectType.Contact.fields.FirstName.Label}</apex:facet>
+			                    		{!ownerCon.owner.First_name__c}
+			                        </apex:column>
+			                        <apex:column>
+			                    		<apex:facet name="header">{!$ObjectType.Contact.fields.LastName.Label}</apex:facet>
+			                    		{!ownerCon.owner.Last_name__c}
+			                        </apex:column>
+			                        <apex:column>
+			                    		<apex:facet name="header">{!$ObjectType.Contact.fields.Phone.Label}</apex:facet>
+			                    		{!ownerCon.owner.Phone__c}
+			                        </apex:column>
+			                        <apex:column>
+			                    		<apex:facet name="header">{!$ObjectType.Contact.fields.Email.Label}</apex:facet>
+			                    		{!ownerCon.owner.Email__c}
+			                        </apex:column>
+
+			                    </div>
+
+
+
+
+		                    </apex:pageBlockTable>-->
+
+		                    <apex:dataTable value="{!ownersThatCanBeCopied}" var="ownerCon" id="importOwnersList" styleClass="table-hover table table-condensed table-responsive">
+								<apex:column>
+									<apex:facet name="header"> 
+										<apex:inputCheckbox>
+											<apex:actionSupport event="onclick" action="{!getSelectedOwners}" onsubmit="checkAll(this)" rerender=""/>
+										</apex:inputCheckbox>
+									</apex:facet>
+
+									<apex:inputCheckbox value="{!ownerCon.selected}" id="checkedone">
+										<apex:actionSupport event="onclick" action="{!getSelectedOwners}" rerender=""/>
+									</apex:inputCheckbox>
+								</apex:column>
+
+								<apex:column headervalue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!ownerCon.owner.First_name__c}"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!ownerCon.owner.Last_name__c}"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!ownerCon.owner.Phone__c}"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Email.Label}" value="{!ownerCon.owner.Email__c}"/>
+
+							</apex:dataTable>
+              			</apex:pageBlock>
+            		</div>
+
+            		<div class="modal-footer">
+              			<apex:commandButton action="{!importOwners}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="closeCopyOwneresMulticountry(); this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList"/>
+              			<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+            		</div>
+
+            		
+          		</div>
+        	</div>
+    	</div>
+    </apex:form>
+    <script>
+	    function checkAll(cb) {
+			var inputElem = document.getElementsByTagName("input");
+
+			for(var i=0; i<inputElem.length; i++) {
+				if(inputElem[i].id.indexOf("checkedone")!=-1) {
+					inputElem[i].checked = cb.checked;
+				}
+			}
+		}
+	</script>
+    <!-- End Modal Copy Owners MultiCountry -->
+
 
 						</div>
 					</div>

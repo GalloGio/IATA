@@ -28,7 +28,8 @@ public without sharing class ISSP_AMS_Accreditation {
         PARAMCODE_AGENCY_CONTACTS,
         PARAMCODE_IFAP_CONTACTS,
         PARAMCODE_TRAINED_STAFF,
-        PARAMCODE_COPY_OWNERS
+        PARAMCODE_COPY_OWNERS,
+        PARAMCODE_IMPORT_OWNERS
     }
 
     private String vSAAMCaseId;
@@ -320,6 +321,17 @@ public without sharing class ISSP_AMS_Accreditation {
                 mcHierarchyAccounts = fetchAllHierarchyAccounts();
             }
             return mcHierarchyAccounts;
+        }
+        set;
+    }
+    public List<ImportOwnerModalRecord> ownersThatCanBeCopiedList {
+        get;
+        set;
+    }
+
+    public List<AMS_Accreditation_Contact__c> selectedOwnersToImport {
+        get {
+            return (selectedOwnersToImport == null) ? new List<AMS_Accreditation_Contact__c>() : selectedOwnersToImport;
         }
         set;
     }
@@ -4205,49 +4217,49 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> trainedStaffList {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_AgencyContacts {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_IFAPAgencyContacts {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_IFAP_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_IFAP_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_PreviousOwners {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_CurrentOwners {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_CurrentCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_CURR_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_CURR_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_PreviousCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_PREV_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_PREV_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
@@ -4288,7 +4300,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> List_AgencyCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
@@ -4305,26 +4317,26 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> List_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_Curr_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_CURR, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_CURR, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_Prev_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_PREV, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_PREV, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
-    private List<AMS_Accreditation_Contact__c> dynamicAccredContactListQuery(AccredContactEnum paramCodeSelect, AccredContactEnum paramCodeWhere, AccredContactEnum paramCodeOrder, String parentFormId) {
+    private String dynamicAccredContactListQuery(AccredContactEnum paramCodeSelect, AccredContactEnum paramCodeWhere, AccredContactEnum paramCodeOrder, String parentFormId) {
         String query = 'SELECT ';
 
         if (paramCodeSelect == AccredContactEnum.PARAMCODE_PREV_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_CURR_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_AGENCY_CONTACTS) {
@@ -4357,13 +4369,17 @@ public without sharing class ISSP_AMS_Accreditation {
                 query += 'Portal_administrator__c, Authorised_to_make_customs_declarations__c ';
             }
         }
-        
-        query += 'FROM AMS_Accreditation_Contact__c ';
 
-        if (String.isBlank(parentFormId)) {
-            query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
+        if (paramCodeWhere != AccredContactEnum.PARAMCODE_IMPORT_OWNERS) {
+            query += 'FROM AMS_Accreditation_Contact__c ';
+
+            if (String.isBlank(parentFormId)) {
+                query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
+            } else {
+                query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
+            }
         } else {
-            query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
+            query += 'FROM AMS_Accreditation_Contacts__r ';
         }
     
         switch on paramCodeWhere {
@@ -4422,6 +4438,10 @@ public without sharing class ISSP_AMS_Accreditation {
             query += 'ORDER BY Agency_owner__c DESC, Name ASC';
         }
         
+        return query;
+    }
+
+    private List<AMS_Accreditation_Contact__c> executeContactQuery(String query) {
         return Database.query(query);
     }
 
@@ -7451,7 +7471,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private void copyOwnersFromParentForm(AMS_Pax_Accreditation_Form__c formToBeUpdated) {
         List<AMS_Accreditation_Contact__c> contactsToBeCreated = new List<AMS_Accreditation_Contact__c>();
         
-        for (AMS_Accreditation_Contact__c con: dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)) {
+        for (AMS_Accreditation_Contact__c con: executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c))) {
             AMS_Accreditation_Contact__c newCon = new AMS_Accreditation_Contact__c();
 
             newCon.AMS_Pax_Accreditation_Form__c = formToBeUpdated.Id;
@@ -7508,5 +7528,62 @@ public without sharing class ISSP_AMS_Accreditation {
 
         newForm.ISSP_Branch_AccountId__c = null;
         update newForm;
+    }
+
+    public class ImportOwnerModalRecord {
+        public AMS_Accreditation_Contact__c owner {get; set;}
+        public Boolean selected {get; set;}
+
+        public ImportOwnerModalRecord(AMS_Accreditation_Contact__c con) {
+            owner = con;
+            selected = false;
+        }
+    }
+
+    public List<ImportOwnerModalRecord> getOwnersThatCanBeCopied() {
+        ownersThatCanBeCopiedList = new List<ImportOwnerModalRecord>();
+
+        String contactsToImportQuery = 'SELECT Id, (';
+        contactsToImportQuery += dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_IMPORT_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+        contactsToImportQuery += ') FROM AMS_Pax_Accreditation_Form__c ';
+
+        if (newForm.Same_Legal_Entity_Agency_Form__c == null) {
+            contactsToImportQuery += 'WHERE Same_Legal_Entity_Agency_Form__c = \'' + newForm.Id + '\' ';
+        } else {
+            contactsToImportQuery += 'WHERE (Same_Legal_Entity_Agency_Form__c = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ';
+            contactsToImportQuery += 'OR Id = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ) ';
+            contactsToImportQuery += 'AND Id != \'' + newForm.Id + '\' ';
+        }
+
+        for (AMS_Pax_Accreditation_Form__c form: Database.query(contactsToImportQuery)) {
+            for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
+                ownersThatCanBeCopiedList.add(new ImportOwnerModalRecord(con));
+            }
+        }
+
+        return ownersThatCanBeCopiedList;
+    }
+
+    public void getSelectedOwners() {
+        selectedOwnersToImport.clear();
+
+        System.debug('hey1: ' + ownersThatCanBeCopiedList);
+
+        for(ImportOwnerModalRecord owner: ownersThatCanBeCopiedList) {
+            if(owner.selected == true) {
+                System.debug('hey2');
+                selectedOwnersToImport.add(owner.owner);
+            }
+        }
+    }
+
+    public List<AMS_Accreditation_Contact__c> getSelectedOwnersToImport() {
+        return (selectedOwnersToImport.isEmpty()) ? null : selectedOwnersToImport;
+    }
+
+    public void importOwners() {
+        getSelectedOwners();
+        System.debug('ola rui: ' + ownersThatCanBeCopiedList);
+        System.debug('ola rui2: ' + selectedOwnersToImport);
     }
 }
