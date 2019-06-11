@@ -24750,7 +24750,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Gdp Opt In Hint</shortDescription>
-        <value>Test text</value>
+        <value>By opting-in, Industry suppliers like airlines, hotels and tour operators will be able to circulate important messages to your agency about their products, promotions, sales and agency policies.</value>
     </labels>
     <labels>
         <fullName>ISSP_GeneralPublicNotFound</fullName>
