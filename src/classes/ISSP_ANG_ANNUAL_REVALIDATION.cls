@@ -1660,7 +1660,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                 	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted));
                 	contactSaved = false;
                 	return;
-            		} else if (currentAccount.newContact.Time_devoted_to_Agency_business__c < 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c > 100) {
+            		} else if (currentAccount.newContact.Time_devoted_to_Agency_business__c <= 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c > 100) {
             			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid));
                 		contactSaved = false;
                 		return;
