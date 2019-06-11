@@ -549,7 +549,7 @@ public class ANG_RHCAlertTriggerHandler{
                     IATA_ISO_Country__r.ISO_Code__c, Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Name, Location_Type__c,
         
         (SELECT ID,Name,RecordTypeId, ANG_Account__c,CurrencyIsoCode,ANG_Sidra_Lite__c,ANG_Agent_Sales__c,ANG_Is_Case_Created__c,ANG_Direction__c,ANG_email_sent__c,ANG_EventId__c,ANG_RHC_Information__c,ANG_RME_Last_Update__c,ANG_Severity__c,ANG_Threshold_Level__c,
-                ANG_Agent_current_standing__c, ANG_Open_Cash_Position__c, ANG_Triggered_Rules__c
+                ANG_Agent_current_standing__c, ANG_Open_Cash_Position__c, tolabel(ANG_Triggered_Rules__c)
         FROM Risk_Alerts__r 
         WHERE ID IN :triggerNew
         AND recordTypeId IN :targetRecordTypesSet
