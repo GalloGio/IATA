@@ -1,6 +1,7 @@
-import { LightningElement,track } from 'lwc';
+import { LightningElement,track,wire } from 'lwc';
 
 import getUserAvailableServices from '@salesforce/apex/PortalServicesCtrl.getUserAvailableServices';
+import { refreshApex } from '@salesforce/apex';
 
 export default class PortalServicesAvailableServicesList extends LightningElement {
 
@@ -8,16 +9,19 @@ export default class PortalServicesAvailableServicesList extends LightningElemen
 
     @track lstServicesGranted = [];
 
-    connectedCallback(){
-
-        getUserAvailableServices({})
-        .then(results => {
-            this.lstServicesGranted = results;
-            this.componentLoading = false;
-            //console.log('getAvailableServices: ', results);
-        });
-
+    @wire( getUserAvailableServices,{})
+    wiredGetUsers(results){
+        this.lstServicesGranted = results.data;
+        this.componentLoading = false;
     }
-    
 
+
+
+    handleServiceGranted(event){
+        let servRec=JSON.parse(JSON.stringify(event.detail.serviceId));
+        let tempList=this.lstServicesGranted.filter(elem=> {return elem.recordService.Id !=servRec.recordService.Id });
+        this.lstServicesGranted=tempList;
+    }
+
+    
 }
