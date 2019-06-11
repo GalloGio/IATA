@@ -265,7 +265,8 @@
                             <div class="row form-group" style="display: {!IF(isGDPOptInDisplayed, '', 'none')}">
                                 <div class="col-md-5" style="padding-left:28px">
                                     <label class="lbl" for="businessinputGDPOptIn">GDP Opt In</label>
-                                    <h4>{!$Label.ISSP_Gdp_Opt_In_Hint}</h4>
+                                    <a href="" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<div escape='false'>{!$Label.ISSP_Gdp_Opt_In_Hint}</div>">
+                                    <apex:image value="/img/msg_icons/info16.png"/></a> 
                                 </div>
                                 <div class="col-md-7 email">
                                     <apex:inputHidden id="GDPOptIn" value="{!con.Account.GDP_Opt_In__c}" />
@@ -317,6 +318,7 @@
                          <script>
             $('.editMode').hide();
             $('.editModeBtn').hide();
+            $('[data-toggle="popover"]').popover();
          </script>
          <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>      
         <script>
@@ -711,7 +713,8 @@
                             <div class="row form-group">
                                 <div class="col-md-5" style="padding-left:28px">
                                       <label class="lbl" for="businessinputGDPOptIn">[{!$ObjectType.Account.fields.GDP_Opt_In__c.Label}]</label>
-                                      <h4>{!$Label.ISSP_Gdp_Opt_In_Hint}</h4>
+                                      <a href="" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<div escape='false'>{!$Label.ISSP_Gdp_Opt_In_Hint}</div>">
+                                      <apex:image value="/img/msg_icons/info16.png"/></a> 
                                 </div>
                                 <div class="col-md-7 emailBR">
                                       <apex:inputHidden id="GDPOptIn" value="{!branchOffice.GDP_Opt_In__c}" />
@@ -728,6 +731,7 @@
                             
                         
                 <script>
+        $('[data-toggle="popover"]').popover();
      	var natphoneBR = $("input[name='{!$Component.branchOffice.businessphoneinput}']");
         var phoneBR = $("input[name='{!$Component.branchOffice.businessphone}']");
      
