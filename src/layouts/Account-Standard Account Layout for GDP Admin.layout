@@ -68,6 +68,10 @@
                 <behavior>Edit</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
+			<layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Billing_City__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IATA_ISO_Billing_State__c</field>
@@ -96,6 +100,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ShippingAddress</field>
+            </layoutItems>
+			<layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Shipping_City__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

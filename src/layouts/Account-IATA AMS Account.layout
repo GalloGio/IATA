@@ -251,22 +251,22 @@
                 <behavior>Readonly</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IATA_ISO_Country__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Iso_State__c</field>
+			<layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Billing_City__c</field>
             </layoutItems>
 			<layoutItems>
                 <behavior>Edit</behavior>
                 <field>IATA_ISO_Billing_State__c</field>
             </layoutItems>
+			<layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Iso_State__c</field>
+            </layoutItems> 
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Geoname_Billing_City__c</field>
-            </layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IATA_ISO_Country__c</field>
+            </layoutItems>                    
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Region_formula__c</field>
@@ -287,16 +287,16 @@
             </layoutItems>
 			<layoutItems>
                 <behavior>Edit</behavior>
-                <field>IATA_ISO_Shipping_Country__c</field>
+                <field>Geoname_Shipping_City__c</field>
             </layoutItems>
-            <layoutItems>
+			<layoutItems>
                 <behavior>Edit</behavior>
                 <field>IATA_ISO_Shipping_State__c</field>
             </layoutItems>
-            <layoutItems>
+			<layoutItems>
                 <behavior>Edit</behavior>
-                <field>Geoname_Shipping_City__c</field>
-            </layoutItems>
+                <field>IATA_ISO_Shipping_Country__c</field>
+            </layoutItems>           
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Email__c</field>
