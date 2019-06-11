@@ -28,7 +28,8 @@ public without sharing class ISSP_AMS_Accreditation {
         PARAMCODE_AGENCY_CONTACTS,
         PARAMCODE_IFAP_CONTACTS,
         PARAMCODE_TRAINED_STAFF,
-        PARAMCODE_COPY_OWNERS
+        PARAMCODE_COPY_OWNERS,
+        PARAMCODE_IMPORT_OWNERS
     }
 
     private String vSAAMCaseId;
@@ -320,6 +321,17 @@ public without sharing class ISSP_AMS_Accreditation {
                 mcHierarchyAccounts = fetchAllHierarchyAccounts();
             }
             return mcHierarchyAccounts;
+        }
+        set;
+    }
+    public List<ImportOwnerModalRecord> ownersThatCanBeCopiedList {
+        get;
+        set;
+    }
+
+    public List<AMS_Accreditation_Contact__c> selectedOwnersToImport {
+        get {
+            return (selectedOwnersToImport == null) ? new List<AMS_Accreditation_Contact__c>() : selectedOwnersToImport;
         }
         set;
     }
@@ -1204,6 +1216,7 @@ public without sharing class ISSP_AMS_Accreditation {
         List<String> selectedBranchCodes = new List<String>();
         
         if(newForm.Agency_Codes_Concerned__c != null && !fullHierarchy) //Exclude already selected branches
+
             selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
 
         if (isHOcontact) {
@@ -1235,14 +1248,12 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<SelectOption> getBranchAccounts() {
         List<SelectOption> options = new List<SelectOption>();
-        List<Account> accountList = new List<Account>();
-       
-        for(HierarchyItem hi: hierarchyValues){
-            accountList.add(hi.acc);
-        }
 
-        for (Account thisAccount : accountList) { 
-            String theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')'; 
+        List<Account> accountList = getBranchList(false);
+
+        for (Account thisAccount : accountList) {
+            String theLabel;
+            theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
@@ -1260,15 +1271,9 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getAgencyCodesConcerned() {
-        List<Account> accountList = new List<Account>();
+        List<Account> accountList;
+        List<SelectOption> options = new List<SelectOption>();
 
-        if(hierarchyValues.size() > 0){
-            for(HierarchyItem hi:  hierarchyValues){
-                if(hi.selected){
-                    accountList.add(hi.acc);
-                }
-            }
-        }
         if(newForm.Agency_Codes_Concerned__c != null) {
             accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
         }
@@ -1792,10 +1797,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
             changeOfAccountConcerned = false;
 
-            if(agencyCodesConcerned.size()==0){
-                agencyCodesConcerned = getAgencyCodesConcerned();
-            }
-            
             if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
                 return null;
@@ -4217,49 +4218,49 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> trainedStaffList {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, AccredContactEnum.PARAMCODE_TRAINED_STAFF, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_AgencyContacts {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_IFAPAgencyContacts {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_IFAP_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_IFAP_CONTACTS, AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_PreviousOwners {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_PREV_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_CurrentOwners {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_CURR_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_CurrentCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_CURR_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_CURR_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_PreviousCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_PREV_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_PREV_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
@@ -4300,7 +4301,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> List_AgencyCompanies {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_AGENCY_COMPANIES, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
@@ -4317,26 +4318,26 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> List_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_Curr_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_CURR, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_CURR, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_Prev_Ownership_Summary {
         get{
-            return dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_PREV, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY_PREV, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
         }
         set;
     }
 
-    private List<AMS_Accreditation_Contact__c> dynamicAccredContactListQuery(AccredContactEnum paramCodeSelect, AccredContactEnum paramCodeWhere, AccredContactEnum paramCodeOrder, String parentFormId) {
+    private String dynamicAccredContactListQuery(AccredContactEnum paramCodeSelect, AccredContactEnum paramCodeWhere, AccredContactEnum paramCodeOrder, String parentFormId) {
         String query = 'SELECT ';
 
         if (paramCodeSelect == AccredContactEnum.PARAMCODE_PREV_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_CURR_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_AGENCY_CONTACTS) {
@@ -4369,13 +4370,17 @@ public without sharing class ISSP_AMS_Accreditation {
                 query += 'Portal_administrator__c, Authorised_to_make_customs_declarations__c ';
             }
         }
-        
-        query += 'FROM AMS_Accreditation_Contact__c ';
 
-        if (String.isBlank(parentFormId)) {
-            query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
+        if (paramCodeWhere != AccredContactEnum.PARAMCODE_IMPORT_OWNERS) {
+            query += 'FROM AMS_Accreditation_Contact__c ';
+
+            if (String.isBlank(parentFormId)) {
+                query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
+            } else {
+                query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
+            }
         } else {
-            query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
+            query += 'FROM AMS_Accreditation_Contacts__r ';
         }
     
         switch on paramCodeWhere {
@@ -4434,6 +4439,10 @@ public without sharing class ISSP_AMS_Accreditation {
             query += 'ORDER BY Agency_owner__c DESC, Name ASC';
         }
         
+        return query;
+    }
+
+    private List<AMS_Accreditation_Contact__c> executeContactQuery(String query) {
         return Database.query(query);
     }
 
@@ -7463,7 +7472,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private void copyOwnersFromParentForm(AMS_Pax_Accreditation_Form__c formToBeUpdated) {
         List<AMS_Accreditation_Contact__c> contactsToBeCreated = new List<AMS_Accreditation_Contact__c>();
         
-        for (AMS_Accreditation_Contact__c con: dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)) {
+        for (AMS_Accreditation_Contact__c con: executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c))) {
             AMS_Accreditation_Contact__c newCon = new AMS_Accreditation_Contact__c();
 
             newCon.AMS_Pax_Accreditation_Form__c = formToBeUpdated.Id;
@@ -7522,128 +7531,60 @@ public without sharing class ISSP_AMS_Accreditation {
         update newForm;
     }
 
-    public Map<Id, HierarchyItem> hierarchy{
-        get{
-            if(hierarchy == null) {
-                hierarchy = new Map<Id, HierarchyItem>();
-                
-                List<Account> acc = getBranchList(false);
-                for(Account a : acc){
-                    Boolean isSelected = false;
-                    hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
-                }                           
+    public class ImportOwnerModalRecord {
+        public AMS_Accreditation_Contact__c owner {get; set;}
+        public Boolean selected {get; set;}
+
+        public ImportOwnerModalRecord(AMS_Accreditation_Contact__c con) {
+            owner = con;
+            selected = false;
+        }
+    }
+
+    public List<ImportOwnerModalRecord> getOwnersThatCanBeCopied() {
+        ownersThatCanBeCopiedList = new List<ImportOwnerModalRecord>();
+
+        String contactsToImportQuery = 'SELECT Id, (';
+        contactsToImportQuery += dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_IMPORT_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+        contactsToImportQuery += ') FROM AMS_Pax_Accreditation_Form__c ';
+
+        if (newForm.Same_Legal_Entity_Agency_Form__c == null) {
+            contactsToImportQuery += 'WHERE Same_Legal_Entity_Agency_Form__c = \'' + newForm.Id + '\' ';
+        } else {
+            contactsToImportQuery += 'WHERE (Same_Legal_Entity_Agency_Form__c = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ';
+            contactsToImportQuery += 'OR Id = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ) ';
+            contactsToImportQuery += 'AND Id != \'' + newForm.Id + '\' ';
+        }
+
+        for (AMS_Pax_Accreditation_Form__c form: Database.query(contactsToImportQuery)) {
+            for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
+                ownersThatCanBeCopiedList.add(new ImportOwnerModalRecord(con));
             }
-            return hierarchy;
         }
-        set;
-    }    
 
-    public Boolean selectAll{
-        get{
-            if (selectAll == null) {
-                selectAll = false;
+        return ownersThatCanBeCopiedList;
+    }
+
+    public void getSelectedOwners() {
+        selectedOwnersToImport.clear();
+
+        System.debug('hey1: ' + ownersThatCanBeCopiedList);
+
+        for(ImportOwnerModalRecord owner: ownersThatCanBeCopiedList) {
+            if(owner.selected == true) {
+                System.debug('hey2');
+                selectedOwnersToImport.add(owner.owner);
             }
-            return selectAll;
-        }
-        set;
-    }
-
-    public List<HierarchyItem> hierarchyValues{
-        get{
-            return hierarchy.values();
         }
     }
 
-    private Integer rowsPerPage = 100;
-
-    public Integer currentPage{
-        get{
-            if(currentPage == null){
-                currentPage = 0;
-            }
-            return currentPage;
-        }
-        set;
-    }
-    
-    public Integer totalPages{
-        get{
-            return hierarchyValuesForDisplay.size();
-        }
-    }
-    
-    public List<List<HierarchyItem>> hierarchyValuesForDisplay{
-        get{
-            if(hierarchyValuesForDisplay == null){
-                hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
-
-                // create as many sub-lists as necessary
-                for(Integer i = 0; i <= (hierarchy.values().size()-1)/rowsPerPage; i++){
-                    hierarchyValuesForDisplay.add(new List<HierarchyItem>());
-                }
-
-                // fill HierarchyItems in the sub-lists
-                Integer itemNumber = 0;
-                for(HierarchyItem item : hierarchy.values()){
-                    hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
-                }
-            }
-            System.debug(loggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
-            return hierarchyValuesForDisplay;
-        }
-        set;
+    public List<AMS_Accreditation_Contact__c> getSelectedOwnersToImport() {
+        return (selectedOwnersToImport.isEmpty()) ? null : selectedOwnersToImport;
     }
 
-    // ***********************************
-    // *********** wrappers **************
-    // ***********************************
-    public class HierarchyItem{
-
-        public Account acc { get; set; }
-        public Boolean selected { get; set; }
-
-        public HierarchyItem(Account a, Boolean selected){
-            this.acc = a;
-            this.selected = selected;
-        }
-    }
-
-    // ***********************************
-    // ********* helper methods **********
-    // ***********************************
-
-    public void doSelectAll(){
-        for(HierarchyItem hi : hierarchyValues){
-            hi.selected = selectAll;
-        }
-    }
-
-    public Boolean getDisablePrevious() { 
-        //this will disable the previous and beginning buttons
-        return (currentPage <= 0);
-    }
-
-    public Boolean getDisableNext() { //this will disable the next and end buttons
-        return (currentPage >= hierarchyValuesForDisplay.size()-1);
-    }
-
-    public PageReference Beginning() { //user clicked beginning 
-        currentPage = 0;
-        return null;
-    }
-
-    public PageReference Previous() { //user clicked previous button
-        currentPage--;
-        return null;
-    }
-
-    public PageReference Next() { //user clicked next button
-        currentPage++;
-        return null;
-    }
-
-    public PageReference End() { //user clicked end
-        currentPage = hierarchyValuesForDisplay.size()-1;
-        return null;
+    public void importOwners() {
+        getSelectedOwners();
+        System.debug('ola rui: ' + ownersThatCanBeCopiedList);
+        System.debug('ola rui2: ' + selectedOwnersToImport);
     }
 }
