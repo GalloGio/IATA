@@ -1076,44 +1076,4 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    test.StopTest();
 	}
 
-	private static testmethod void testTicketingAuthorityOrange(){
-
-		Account a = [Select Id, Remittance_frequency__c from Account limit 1];
-		System.debug('##Account: '+ a.Remittance_frequency__c);
-
-		AMS_Country_Specific_Attribute__c csa = new AMS_Country_Specific_Attribute__c (
-			IATA_ISO_Country__c=[select id from IATA_ISO_Country__c where Name = 'France'].id,
-			ANG_RTS_Severity__c='Orange',
-			ANG_Send_Email_Agent__c=true ,
-			ANG_Create_Sidra_Lite__c= true, 
-			ANG_Remove_Ticketing_Authority__c= true,
-			recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
-			);
-
-		insert csa;
-
-		Operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = [SELECT Id FROM AMS_Settlement_System__c WHERE Name = 'BSP-FR'][0].Id, 
-			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
-
-		insert op;
-		
-		Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active');
-		insert con;
-
-	    //NEWGEN-2005
-	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
-
-	    test.StartTest();
-
-	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-	    	Recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
-	    	ang_Severity__c='Orange',
-	    	ANG_Account__c = a.Id
-	    	);
-	    insert ra;
-
-	    test.StopTest();
-
-	}
-
 }
