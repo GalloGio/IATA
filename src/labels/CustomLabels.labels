@@ -2780,6 +2780,13 @@ Payment required on receipt of this Payment Advice
         <value>Cancel</value>
     </labels>    
     <labels>
+        <fullName>CSP_Cancel_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Cancel_Request</shortDescription>
+        <value>Cancel Request</value>
+    </labels>
+    <labels>
         <fullName>CSP_CaseMessage_HelpText</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2849,6 +2856,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Community</shortDescription>
         <value>Community</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Confirmed_Requested_Service_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
+        <value>Your {0} access request has been delivered to portal administrators. If you have any questions or requests about the process, you can contact an administrator below :</value>
     </labels>
     <labels>
         <fullName>CSP_Documents</fullName>
@@ -2921,6 +2935,29 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_LogOut</shortDescription>
         <value>Log Out</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Manage_Portal_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Portal_Users</shortDescription>
+        <value>You can manage the users from the list below.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Manage_Service</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Service</shortDescription>
+        <value>Manage Service</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Manage_Services</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Services</shortDescription>
+        <value>Manage Services</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -3018,6 +3055,13 @@ Payment required on receipt of this Payment Advice
         <value>Related Articles</value>
     </labels>    
     <labels>
+	<fullName>CSP_Request_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Request_Service</shortDescription>
+        <value>Request Service</value>
+    </labels>
+    <labels>
         <fullName>CSP_Search_Home_Placeholder</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3102,6 +3146,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Services_GoToService</shortDescription>
         <value>Go to Service</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_GoToServices</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_GoToServices</shortDescription>
+        <value>Go to Services</value>
     </labels>
     <labels>
         <fullName>CSP_Services_HeaderTitle</fullName>
