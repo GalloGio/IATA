@@ -209,7 +209,7 @@ private class ANG_EarlyDetectionSystemTest {
 				RecordTypeId = riskAlertEDSRecType, 
 				ANG_Account__c = acct.Id,
 				ANG_Open_Cash_Position__c = 634.46,
-				ANG_Triggered_Rules__c = 'Cash Sales Shift;Cross Border Sales',
+				ANG_Triggered_Rules__c = 'edsRule_cashSales_ratio_L3M;edsRule_ticketsAbroad_ratio_L3M',
 				ANG_Agent_current_standing__c = 'Cross Border Sales: 0.5\nCash Sales Shift: 0.6\n'
 			);
 			raLst.add(ra);
@@ -271,7 +271,7 @@ private class ANG_EarlyDetectionSystemTest {
 			RecordTypeId = riskAlertEDSRecType, 
 			ANG_Account__c = acct.Id,
 			ANG_Open_Cash_Position__c = 634.46,
-			ANG_Triggered_Rules__c = 'Cash Sales Shift;Cross Border Sales',
+			ANG_Triggered_Rules__c = 'edsRule_cashSales_ratio_L3M;edsRule_ticketsAbroad_ratio_L3M ',
 			ANG_Agent_current_standing__c = 'Cross Border Sales: 0.5\nCash Sales Shift: 0.6\n'
 		);
 
@@ -513,8 +513,8 @@ private class ANG_EarlyDetectionSystemTest {
 		system.debug('ALERT: ' + alert);
 
 		System.assertEquals(alert.ANG_Open_Cash_Position__c, 12500.25, 'Open cash position must have the value: 12500,25');
-		System.assert(alert.ANG_Triggered_Rules__c.contains('Fast Growth Decrease Last 12m'), 'EDS Alert triggered rules must contain Fast Growth Decrease Last 12m');
-		System.assert(alert.ANG_Triggered_Rules__c.contains('Cross Border Sales'), 'EDS Alert triggered rules must contain Cross Border Sales');
+		System.assert(alert.ANG_Triggered_Rules__c.contains('edsRule_fastGrowth_decrease_L12M_P12M'), 'EDS Alert triggered rules must contain edsRule_fastGrowth_decrease_L12M_P12M');
+		System.assert(alert.ANG_Triggered_Rules__c.contains('edsRule_ticketsAbroad_ratio_L3M'), 'EDS Alert triggered rules must contain edsRule_ticketsAbroad_ratio_L3M');
 
 		System.assert(alert.ANG_Agent_current_standing__c.contains('Fast Growth Last 12m'), 'EDS Alert current standing must contain Fast Growth Last 12m');
 		System.assert(alert.ANG_Agent_current_standing__c.contains('Cross Border Sales'), 'EDS Alert current standing must contain Cross Border Sales');

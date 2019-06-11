@@ -250,37 +250,52 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Cash Sales Shift</fullName>
+                    <fullName>edsRule_cashSales_ratio_L3M</fullName>
                     <default>false</default>
                     <label>Cash Sales Shift</label>
                 </value>
                 <value>
-                    <fullName>Cross Border Sales</fullName>
+                    <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
                     <default>false</default>
                     <label>Cross Border Sales</label>
                 </value>
                 <value>
-                    <fullName>Fast Growth Last 12m</fullName>
+                    <fullName>edsRule_fastGrowth_decrease_L12M_P12M</fullName>
                     <default>false</default>
-                    <label>Fast Growth Last 12m</label>
+                    <label>Fast Growth Decrease Last 12m</label>
                 </value>
                 <value>
-                    <fullName>Fast Growth Last 3m</fullName>
+                    <fullName>edsRule_fastGrowth_decrease_L3M_P3M</fullName>
                     <default>false</default>
-                    <label>Fast Growth Last 3m</label>
+                    <label>Fast Growth Decrease Last 3m</label>
                 </value>
                 <value>
-                    <fullName>Fast Growth Last 3m vs previous year</fullName>
+                    <fullName>edsRule_fastGrowth_decrease_L3M_L3MPY</fullName>
                     <default>false</default>
-                    <label>Fast Growth Last 3m vs previous year</label>
+                    <label>Fast Growth Decrease Last 3m vs previous year</label>
                 </value>
                 <value>
-                    <fullName>Shift of FoP</fullName>
+                    <fullName>edsRule_fastGrowth_increase_L12M_P12M</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 12m</label>
+                </value>
+                <value>
+                    <fullName>edsRule_fastGrowth_increase_L3M_P3M</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 3m</label>
+                </value>
+                <value>
+                    <fullName>edsRule_fastGrowth_increase_L3M_L3MPY</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 3m vs previous year</label>
+                </value>
+                <value>
+                    <fullName>edsRule_cashSales_shift_L3M_P3M</fullName>
                     <default>false</default>
                     <label>Shift of FoP</label>
                 </value>
                 <value>
-                    <fullName>Market Intelligence</fullName>
+                    <fullName>edsRule_market_intelligence</fullName>
                     <default>false</default>
                     <label>Market Intelligence</label>
                 </value>
@@ -357,31 +372,43 @@
         <picklistValues>
             <picklist>ANG_Triggered_Rules__c</picklist>
             <values>
-                <fullName>Cash Sales Shift</fullName>
+                <fullName>edsRule_cashSales_ratio_L3M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cross Border Sales</fullName>
+                <fullName>edsRule_cashSales_shift_L3M_P3M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 12m</fullName>
+                <fullName>edsRule_fastGrowth_decrease_L12M_P12M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 3m</fullName>
+                <fullName>edsRule_fastGrowth_decrease_L3M_L3MPY</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fast Growth Last 3m vs previous year</fullName>
+                <fullName>edsRule_fastGrowth_decrease_L3M_P3M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Market Intelligence</fullName>
+                <fullName>edsRule_fastGrowth_increase_L12M_P12M</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Shift of FoP</fullName>
+                <fullName>edsRule_fastGrowth_increase_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_market_intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

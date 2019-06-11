@@ -92,24 +92,14 @@ global class ANG_RME_Alert_Service {
 		set;
 	}
 
-	private static Map<String, String> agentStatesRulesMapping = new Map<String, String>{
+	private static Map<String, String> agentStatesMapping = new Map<String, String>{
 		'edsState_fastGrowth_ratio_L12M_P12M' => 'Fast Growth Last 12m',
 		'edsState_fastGrowth_ratio_L3M_P3M'	=> 'Fast Growth Last 3m',
 		'edsState_fastGrowth_ratio_L3M_L3MPY' => 'Fast Growth Last 3m vs previous year',
 		'edsState_ticketsAbroad_ratio_L3M' => 'Cross Border Sales',
 		'edsState_cashSales_ratio_L3M' => 'Cash Sales Shift',
 		'edsState_cashSales_shift_L3M_P3M' => 'Shift of FoP',
-		'edsState_market_intelligence' => 'Market Intelligence',
-		'edsRule_fastGrowth_decrease_L12M_P12M' => 'Fast Growth Decrease Last 12m',
-		'edsRule_fastGrowth_decrease_L3M_P3M'	=> 'Fast Growth Decrease Last 3m',
-		'edsRule_fastGrowth_decrease_L3M_L3MPY' => 'Fast Growth Decrease Last 3m vs previous year',
-		'edsRule_fastGrowth_increase_L12M_P12M' => 'Fast Growth Increase Last 12m',
-		'edsRule_fastGrowth_increase_L3M_P3M'	=> 'Fast Growth Increase Last 3m',
-		'edsRule_fastGrowth_increase_L3M_L3MPY' => 'Fast Growth Increase Last 3m vs previous year',
-		'edsRule_ticketsAbroad_ratio_L3M' => 'Cross Border Sales',
-		'edsRule_cashSales_ratio_L3M' => 'Cash Sales Shift',
-		'edsRule_cashSales_shift_L3M_P3M' => 'Shift of FoP',
-		'edsRule_market_intelligence' => 'Market Intelligence'
+		'edsState_market_intelligence' => 'Market Intelligence'
 	};
 	
 	private static void setResponse(String message, Integer statusCode){
@@ -320,15 +310,10 @@ global class ANG_RME_Alert_Service {
 				continue;
 			}
 
-			String readableState = agentStatesRulesMapping.get(agentState.state);
+			String readableState = agentStatesMapping.get(agentState.state);
 
 			agentCurrentStanding += readableState + ': ' + agentState.value + '\n';
 
-		}
-
-		String triggeredRules = '';
-		for(String rule : req.triggeredRules){
-			triggeredRules += agentStatesRulesMapping.get(rule) + ';';
 		}
 
 		ANG_Risk_Alert__c edsAlert = new ANG_Risk_Alert__c(
@@ -338,7 +323,7 @@ global class ANG_RME_Alert_Service {
 			ANG_RME_Last_Update__c = req.eventTime,
 			CurrencyIsoCode = 'USD',
 			ANG_Open_Cash_Position__c = openCashPosition,
-			ANG_Triggered_Rules__c = triggeredRules,
+			ANG_Triggered_Rules__c = String.join(req.triggeredRules, ';'),
 			ANG_Agent_current_standing__c = agentCurrentStanding
 		);
     	
