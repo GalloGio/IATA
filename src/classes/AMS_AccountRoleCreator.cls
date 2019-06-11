@@ -371,6 +371,9 @@ public with sharing class AMS_AccountRoleCreator
         System.debug('Assigning roles '+ rolesToClone+' to new account ' + accountId);
 
         List<AMS_Account_role__c> toReturn = new List<AMS_Account_role__c>();
+        
+        if(rolesToClone == null)
+            return toReturn;
 
         for(AMS_Account_Role__c role: rolesToClone){
 
