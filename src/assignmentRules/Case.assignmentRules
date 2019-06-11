@@ -5356,7 +5356,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>CustomerServiceEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3 and 5) or (4 AND 6)</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 3 AND 5 AND 7) or (4 AND 6)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -5386,6 +5386,11 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Subject</field>
                 <operation>contains</operation>
                 <value>Dashboard: Key Controls Customer Service - Europe</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>notContain</operation>
+                <value>Dashboard: Key Controls Customer Service - Americas</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -7915,7 +7920,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <team>SIDRA AME HUB R&amp;S Team 3</team>
             <team>SIDRA AME LO BO</team>
             <team>SIDRA AME LO PE</team>
-            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesArgentinaParaguayUruguay</assignedTo>

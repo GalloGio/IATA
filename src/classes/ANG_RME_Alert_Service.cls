@@ -225,7 +225,8 @@ global class ANG_RME_Alert_Service {
 			ANG_Agent_Sales__c = req.agentSales,
 			CurrencyIsoCode = req.storedBaseCurrency,
 			ANG_Account__c = accountId,
-			ANG_EventId__c = req.eventId
+			ANG_EventId__c = req.eventId,
+			ANG_RME_Last_Update__c = req.eventTime
 		);
     	insert rtsAlert;
     	setResponse(null, 202);
