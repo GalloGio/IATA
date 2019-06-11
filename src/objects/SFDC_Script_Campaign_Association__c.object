@@ -57,6 +57,7 @@
     <fields>
         <fullName>Campaign__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Campaign</description>
         <externalId>false</externalId>
         <label>Campaign</label>
         <referenceTo>Campaign</referenceTo>
@@ -68,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Help__c</fullName>
+        <description>This is a link to a page for help with a question mark icon next to it, to make it visually friendly</description>
         <externalId>false</externalId>
         <formula>(HYPERLINK(&quot;/servlet/servlet.FileDownload?file=015200000002o5K&quot;, &quot;Help for Scripts&quot;)) &amp; &quot; &quot; &amp; (IMAGE(&quot;/img/btn_help.gif&quot;, &quot;Help&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -80,6 +82,7 @@
     <fields>
         <fullName>Script__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Scripts</description>
         <externalId>false</externalId>
         <label>Script</label>
         <referenceTo>SFDC_Script__c</referenceTo>

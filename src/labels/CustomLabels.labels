@@ -52,6 +52,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_CountrySAttr_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
+        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
+    </labels>
+    <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -19264,6 +19271,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Please enter the % of time devoted to Agency Business</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</shortDescription>
+        <value>Please enter a value between 0 and 100 on the % of time devoted to Agency Business</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_HO_Full_Address</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -20968,6 +20982,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Copy Billing Address to Shipping Address</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shipping same as Billing</shortDescription>
+        <value>Shipping address is same as Billing address</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21330,6 +21352,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
         <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Step0 Other Changes Msg RevCaseOpen</shortDescription>
+        <value>Changes should be made through Annual Revalidation process</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step1_ANNUAL_REV</fullName>
@@ -22303,6 +22333,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Cargo Agent New</shortDescription>
         <value>Cargo Agent / IFACP Forwarder</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Cargo_Label_Value</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Cargo</shortDescription>
+        <value>Freight Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_CaseCommentEmail</fullName>
@@ -26757,6 +26794,21 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP PAX Validating VAT Number</shortDescription>
         <value>Validating VAT number...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Validating_VAT_Number_2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Validating VAT Number 2</shortDescription>
+        <value>Validating VAT number 2...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Validating_VAT_Number_2_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Validating VAT Number 2 error</shortDescription>
+        <value>Invalid VAT Number 2</value>
     </labels>
     <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number_error</fullName>
