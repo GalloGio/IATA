@@ -946,7 +946,7 @@
                                                 <div class="requiredInput">
                                                     <div class="requiredBlock"></div>
                                                     <apex:actionRegion >
-                                                        <apex:selectList styleClass="contactcountry" id="contactcountry" style="width:85%" value="{!amsContactCountry}" onchange="toggleContactState()" size="1">
+                                                        <apex:selectList styleClass="contactcountry" id="contactcountry" style="width:85%" value="{!amsContactCountry}" onchange="toggleContactStateOnChange()" size="1">
                                                             <apex:selectOptions value="{!countryNameList}"/>
                                                         </apex:selectList>
                                                     </apex:actionRegion>
@@ -1001,6 +1001,12 @@
                         } else {
                             fax.val(natfax.intlTelInput("getNumber"));
                         }
+                    }
+                    
+                    function toggleContactStateOnChange() {
+                    	$('[id$="contactStateInput"]').val('');
+                        $('[id$="contactStateList"]').val('');
+                        toggleContactState();
                     }
                     
                     function toggleContactState() {
