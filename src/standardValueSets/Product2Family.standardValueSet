@@ -331,4 +331,14 @@
         <default>false</default>
         <label>Training: Self Study</label>
     </standardValue>
+    <standardValue>
+        <fullName>Training - Distance</fullName>
+        <default>false</default>
+        <label>Training - Distance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training - OnSite</fullName>
+        <default>false</default>
+        <label>Training - OnSite</label>
+    </standardValue>
 </StandardValueSet>
