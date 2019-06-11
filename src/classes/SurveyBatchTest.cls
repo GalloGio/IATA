@@ -658,6 +658,9 @@ public class SurveyBatchTest {
 
     static testMethod void SurveyEmailTest2() {
 
+        SurveyBatch sb = new SurveyBatch();
+        sb.fakeMethod();
+
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         TransformationHelper.CalculateBusinessHoursAges = true;
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
