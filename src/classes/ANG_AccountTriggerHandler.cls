@@ -659,9 +659,9 @@ public class ANG_AccountTriggerHandler {
 				
 				else if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CC) {
 
-					if (currentAccount.Is_PCI_compliant__c == 'Yes' ) a.Status__c = 'Active';
-					if (currentAccount.Is_PCI_compliant__c == 'No' ) a.Status__c = 'Non-Active';
-					if (currentAccount.Is_PCI_compliant__c == 'Nil CC' ) a.Status__c = 'Not Authorized';
+					if (currentAccount.Is_PCI_compliant__c == 'Yes' ) aa.Status__c = 'Active';
+					if (currentAccount.Is_PCI_compliant__c == 'No' ) aa.Status__c = 'Non-Active';
+					if (currentAccount.Is_PCI_compliant__c == 'Nil CC' ) aa.Status__c = 'Not Authorized';
 				}
 
 				else aa.Status__c = 'Active';
