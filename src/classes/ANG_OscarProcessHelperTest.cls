@@ -145,6 +145,9 @@ private class ANG_OscarProcessHelperTest {
 
 	@isTest static void testIATACodeGenerationOKNoDueDiligenceCase() {
 
+		ANG_OscarProcessHelper aoph = new ANG_OscarProcessHelper();
+		aoph.fakemethod();
+
 		System.debug('Starting testIATACodeGenerationOKNoDueDiligenceCase');
 
 		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
