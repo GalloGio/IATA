@@ -69,9 +69,7 @@ public without sharing class LVA_ChatTriggerHandler {
 
    
     public void processLiveChat(){
-        List<LiveChatTranscript> lctlist= new List<LiveChatTranscript>(); 
-        List<case> caseToUpdateList= new List<case>(); 
-
+        List<LiveChatTranscript> lctlist= new List<LiveChatTranscript>();
         for(LiveChatTranscript lct:triggerNew){
         
             if(lct.Status != oldMap.get(lct.id).Status ){
@@ -79,9 +77,7 @@ public without sharing class LVA_ChatTriggerHandler {
             }
         }
         if(!lctlist.isEmpty()) ProcessLiveChatTranscript(lctlist);   
-        
-        if(!caseToUpdateList.isEmpty()) update caseToUpdateList;  
-
+    
     }
 
      public static void ProcessLiveChatTranscript(List<LiveChatTranscript> liveChatTranscripts){
