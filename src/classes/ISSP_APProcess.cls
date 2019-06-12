@@ -1883,8 +1883,6 @@ global without sharing class ISSP_APProcess {
         return getDocumentName('CASS_Form_Of_Application_Concurrence');
     }
 
-    }
-
     /**
         Get the url to the document specified in CS AP_Country_specs__c
         It can be a url or a Document Name in a Library (Content Document)
