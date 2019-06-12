@@ -37,3 +37,13 @@
     display:flex;
     justify-content: flex-end;
 }
+
+.customPopupInteriorHalfScreenCentered {
+    width: 100%;
+}
+
+@media (min-width: 64em) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 83.333333%; /*slds-large-size_10-of-12*/
+    }
+}
