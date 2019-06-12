@@ -70,7 +70,7 @@ public class Service_Notification_List_CTRL_TEST {
         insert serviceAccess2;
 
 
-        Service_Notification__c message1 = createMessage('Test header1', 'Test body1', Date.today(), Date.today());
+        Service_Notification__c message1 = createMessage('Test header1', 'Test body1 <a href="https://iata--gadm.cs100.my.salesforce.com/0681x000000Fi1I" target="_blank">file</a>', Date.today(), Date.today());
         Service_Notification__c message2 = createMessage('Test header2', 'Test body2', Date.today().addDays(-5), Date.today().addDays(5));
         Service_Notification__c message3 = createMessage('Test header3', 'Test body3', Date.today().addDays(-10), Date.today().addDays(-1));
         Service_Notification__c message4 = createMessage('Test header4', 'Test body4', Date.today().addDays(1), Date.today().addDays(5));
@@ -200,7 +200,6 @@ public class Service_Notification_List_CTRL_TEST {
 
         Test.stopTest();
 
-        System.debug('test messages:: ' + testMessages);
         System.assertEquals(1, testMessages.size(), 'Incorrect number of valid messages retrieved!');
         System.assertEquals(testMessages[0].Header__c, 'Test header1', 'Incorrect message retrieved!');
 
