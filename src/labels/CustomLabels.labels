@@ -33703,7 +33703,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
-        <value>https://www.iata.org/whatwedo/airline-distribution/ndc/Pages/matchmaker.aspx</value>
+        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_NDCMM_Terms_Of_Use_Link</fullName>
