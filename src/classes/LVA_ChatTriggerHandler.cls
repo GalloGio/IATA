@@ -12,16 +12,11 @@ public without sharing class LVA_ChatTriggerHandler {
     // ****************** distribution methods ********************
     // ************************************************************
     
-    public void onBeforeInsert(){
-        //workaround no longer needed
-       // CreateCaseForLiveChat();
-    }
+     public void onBeforeInsert(){}
     
-    public void onAfterInsert(){
-    }
+    public void onAfterInsert(){}
     
-    public void onBeforeUpdate(){
-    }
+    public void onBeforeUpdate(){}
     public void onAfterUpdate(){  
         processLiveChat();      
     }
@@ -33,7 +28,7 @@ public without sharing class LVA_ChatTriggerHandler {
     // ********************* action methods ***********************
     // ************************************************************
     
-    public void CreateCaseForLiveChat(){
+    /*public void CreateCaseForLiveChat(){
         //Workaround for salesforce issue on creating cases from the deploymetn API
        /* Date mydate = Date.today();
         Map<Id, Case> mapCases = new Map<Id,Case>();
@@ -64,7 +59,7 @@ public without sharing class LVA_ChatTriggerHandler {
                 lct.CaseId = c.id;
             }
         }*/
-    }
+    //}
 
 
    
@@ -76,8 +71,7 @@ public without sharing class LVA_ChatTriggerHandler {
                 if(oldMap.get(lct.id).Status ==INPROGRESS_STATUS && closedStatusSet.contains(lct.Status))   lctlist.add(lct);
             }
         }
-        if(!lctlist.isEmpty()) ProcessLiveChatTranscript(lctlist);   
-    
+        if(!lctlist.isEmpty()) ProcessLiveChatTranscript(lctlist);      
     }
 
      public static void ProcessLiveChatTranscript(List<LiveChatTranscript> liveChatTranscripts){
