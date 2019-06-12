@@ -27,8 +27,8 @@
                     <p>
                         Product Name: {!relatedTo.Product__r.Name} <br></br>
                         Product number: {!relatedTo.Product__r.SAP_Material_Number__c} <br></br>
-                        Product Manager: {!relatedTo.Product__r.Product_Manager_lookup__c} <br></br>
-                        Name of the SME: {!relatedTo.Product__r.Name_of_SME__c} <br></br>
+                        Product Manager: {!relatedTo.Product__r.Product_Manager_lookup__r.Name} <br></br>
+                        Name of the SME: {!relatedTo.Product__r.Name_of_SME__r.Name} <br></br>
                     </p>
                 </div>
                 
