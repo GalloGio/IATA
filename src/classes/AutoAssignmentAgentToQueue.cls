@@ -58,10 +58,8 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
             System.debug('logged off agents: '+agents);
             Id[] agentsToUsers = new List<Id>();
             Id[] recordTypes = new List<Id>();
-            recordTypes.add(Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName()
-                             .get('Cases_Global').getRecordTypeId());
-            recordTypes.add(Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName()
-                             .get('ComplaintIDFS').getRecordTypeId());
+            recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('Case','Cases_Global'));
+            recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('Case','ComplaintIDFS'));
             for(Agents__c agent: agents)
                 agentsToUsers.add(agent.User__c);
             System.debug('+++ Agent users: '+agentsToUsers);

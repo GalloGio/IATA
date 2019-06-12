@@ -547,10 +547,14 @@ private class ISSP_APProcess_Test
     
     @isTest static void test_method_f()
     {
+        Id RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
         AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(
             DPC_System__c = 'Maestro'
         );
         insert issOperation;
+        
+        Case_Reason_Service__c cs = new Case_Reason_Service__c(name =  'CASS HOT', Service__C = 'CASS HOT', Provider_Required__c = false);
+        insert cs; 
         
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
             Name= 'test country',
@@ -615,7 +619,9 @@ private class ISSP_APProcess_Test
             testCase.Verification__c = 'BSP';
             testCase.CaseArea__c = 'Airline Joining';
             testCase.IFAP_Country_ISO__c = 'PT';
+            testCase.RecordTypeId = RECORD_TYPE_ID;
             insert testCase;
+            
             System.debug('testCase Id: ' + testCase.Id);
 
             //AP_Process_Form__c ap = (AP_Process_Form__c)ISSP_ObjectFactory.createSObject('AP_Process_Form__c',false,1);

@@ -15,6 +15,20 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>GDI_Opportunity_Sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>GDI Opportunity Sharing for AGM Roles</description>
+        <label>GDI Opportunity Sharing</label>
+        <sharedTo>
+            <group>AGM_Opportunity_Access</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>GDI Financial Security</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>GDP_Opportunities</fullName>
         <accessLevel>Edit</accessLevel>
         <label>GDP Opportunities</label>
@@ -170,6 +184,17 @@
         </sharedTo>
         <sharedFrom>
             <group>MACSLOBs</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Sales_Europe_team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sales - Europe team</label>
+        <sharedTo>
+            <role>SalesAssistantDirectorEurope</role>
+        </sharedTo>
+        <sharedFrom>
+            <group>Sales_Europe_team</group>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

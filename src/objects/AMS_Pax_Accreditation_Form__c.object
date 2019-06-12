@@ -46,9 +46,9 @@
     <description>Capture PAX &amp; Cargo accreditation application details from the CS Portal.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -866,6 +866,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Acreditation Type</label>
     </fieldSets>
     <fieldSets>
@@ -951,6 +956,21 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Name</label>
     </fieldSets>
     <fieldSets>
@@ -998,6 +1018,11 @@
         </displayedFields>
         <displayedFields>
             <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1086,16 +1111,31 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location</label>
     </fieldSets>
     <fieldSets>
         <fullName>ANG_locationtype</fullName>
         <description>fields to be migrated when we have a change of location type process</description>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location Type</label>
     </fieldSets>
     <fieldSets>
         <fullName>ANG_locationtypetodifferentlegalentity</fullName>
         <description>fields to be migrated when we have a change of Location Type to Different Legal Entity</description>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location Type to Different Legal Entity</label>
     </fieldSets>
     <fieldSets>
@@ -1103,6 +1143,11 @@
         <description>fields to be migrated when we have a change of major shareholding</description>
         <displayedFields>
             <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1156,6 +1201,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Minor Shareholding</label>
     </fieldSets>
     <fieldSets>
@@ -1183,6 +1233,11 @@
         </displayedFields>
         <displayedFields>
             <field>ISSP_AMS_License_No__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1899,7 +1954,7 @@
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
-        <formula>Branch_Office_Country__r.ANG_Enable_NewGen__c  &amp;&amp; OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)</formula>
+        <formula>(Branch_Office_Country__r.ANG_Enable_NewGen__c &amp;&amp; OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)) || (Branch_Office_Country__r.Enable_NewGen_Pilot__c &amp;&amp; OR(TEXT(Location_Type__c) = &apos;HE&apos;, TEXT(Location_Type__c) = &apos;AE&apos;, TEXT(Location_Type__c) = &apos;GE&apos;) &amp;&amp; TEXT(Location_Class__c) = &apos;D&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
@@ -2481,6 +2536,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Current_VAT_Number_2__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
+HO_Account__r.VAT_Number_2__c,
+SAAM_Case__r.Account_Concerned__r.VAT_Number_2__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current VAT Number 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Current_VAT_Number__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
@@ -3022,7 +3091,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <relationshipLabel>AMS Online Accreditations</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -3050,6 +3119,15 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>INVALID_Tax_Number_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>INVALID Tax Number 2</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>INVALID_Tax_Number__c</fullName>
@@ -3890,6 +3968,17 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <fullName>ISSP_AMS_Type_of_License__c</fullName>
         <externalId>false</externalId>
         <label>* Type of License</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ISSP_AMS_VAT_Number_2_Input__c</fullName>
+        <externalId>false</externalId>
+        <label>* VAT Number 2</label>
         <length>30</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -5353,6 +5442,15 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Saved_At_Least_Once__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Saved At Least Once</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Scope_of_Change__c</fullName>
         <externalId>false</externalId>
         <label>Scope of Change</label>
@@ -5473,6 +5571,15 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Same_As_Billing__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Shipping Same As Billing</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Shipping_State__c</fullName>
@@ -27214,6 +27321,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
 )</errorConditionFormula>
         <errorDisplayField>CASS_Number__c</errorDisplayField>
         <errorMessage>CASS Number should be inserted for Accounts with Location Class equals to C, R, I Q or G (for GSSA application processes) or for Cargo Agents.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Change_Location_Class_after_IATACode_gen</fullName>
+        <active>false</active>
+        <description>Once the IATA Code is generated the Location Class can no longer be changed.</description>
+        <errorConditionFormula>AND(   
+ISCHANGED(Location_Class__c), 
+NOT( ISBLANK( IATACode__c ) ) 
+)</errorConditionFormula>
+        <errorDisplayField>Location_Class__c</errorDisplayField>
+        <errorMessage>Agent needs to be pointed to create a new account and new application.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>

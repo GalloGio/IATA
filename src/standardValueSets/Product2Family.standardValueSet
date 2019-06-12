@@ -132,7 +132,7 @@
         <label>Financial Charges</label>
     </standardValue>
     <standardValue>
-        <fullName>FSS (FDS Division)</fullName>
+        <fullName>FSS Products</fullName>
         <default>false</default>
         <label>FSS Products</label>
     </standardValue>
@@ -162,7 +162,7 @@
         <label>ID Cards/TIDS</label>
     </standardValue>
     <standardValue>
-        <fullName>IFG (FDS Division)</fullName>
+        <fullName>IFG Products</fullName>
         <default>false</default>
         <label>IFG Products</label>
     </standardValue>
@@ -192,7 +192,7 @@
         <label>Meetings and Conferen</label>
     </standardValue>
     <standardValue>
-        <fullName>MER (MER Division)</fullName>
+        <fullName>MER Products</fullName>
         <default>false</default>
         <label>MER Products</label>
     </standardValue>
@@ -277,7 +277,7 @@
         <label>Security</label>
     </standardValue>
     <standardValue>
-        <fullName>SFO (SFO Division)</fullName>
+        <fullName>SFO Products</fullName>
         <default>false</default>
         <label>SFO Products</label>
     </standardValue>

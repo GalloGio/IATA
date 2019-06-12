@@ -1,4 +1,4 @@
-trigger eventTrigger on Event  (before insert, before update, before delete) {
+trigger eventTrigger on Event  (before insert, before update, before delete, after insert, after update) {
 	if(Trigger.isBefore && (Trigger.isUpdate || Trigger.isInsert)) {
 		List<Id> lsWhatIds = new List<Id>();
 		for(Event t : Trigger.new) {
@@ -22,6 +22,11 @@ trigger eventTrigger on Event  (before insert, before update, before delete) {
 		for(Event t : Trigger.old) {
 			if(mpLGM.containsKey(t.WhatId) && !mpLGM.get(t.WhatId).Local_GoverNance__r.Active__c) t.addError('cannot modify for inactive groups');
 		}
+	}
+
+	if(Trigger.isAfter && (Trigger.isUpdate || Trigger.isInsert)) {
+
+		EventTriggerHandler.handleCountryProfileEvents(Trigger.new);
 	}
 
 }

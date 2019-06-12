@@ -46,9 +46,9 @@
     <description>Used by the ICCS Currency Center project. Stores ICCS-related information on countries.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -209,6 +209,58 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Acquisition_Model_Info__c</fullName>
+        <description>Additional information for the Acquisition Model</description>
+        <externalId>false</externalId>
+        <label>Acquisition Model Info</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Acquisition_Model__c</fullName>
+        <description>Acquisition Model for the Country</description>
+        <externalId>false</externalId>
+        <label>Acquisition Model</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Local</fullName>
+                    <default>false</default>
+                    <label>Local</label>
+                </value>
+                <value>
+                    <fullName>Central</fullName>
+                    <default>false</default>
+                    <label>Central</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Actual_Amount_Blocked_In_Local_Currency__c</fullName>
+        <description>Actual Amount Blocked in the Country&apos;s local currency</description>
+        <externalId>false</externalId>
+        <label>Actual Amount Blocked In Local Currency</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Actual_Amount_Blocked__c</fullName>
@@ -1299,6 +1351,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Hedging_Opportunities__c</fullName>
+        <description>Hedging Opportunities for the Country</description>
+        <externalId>false</externalId>
+        <label>Hedging Opportunities</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>History__c</fullName>
         <externalId>false</externalId>
         <label>History</label>
@@ -1331,6 +1395,21 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the correspondent Country Profile</description>
+        <externalId>false</externalId>
+        <label>IATA ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Country Profiles (IATA ISO Country)</relationshipLabel>
+        <relationshipName>Country_Profiles1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ICCS_Simplified_Process__c</fullName>
@@ -1519,6 +1598,20 @@
         <visibleLines>10</visibleLines>
     </fields>
     <fields>
+        <fullName>Number_of_Airlines_Present_In_Market__c</fullName>
+        <description>Number of Airlines Present In Market for the specific Country</description>
+        <externalId>false</externalId>
+        <label>Number of Airlines Present In Market</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Number_of_Airlines_Reporting_Issues__c</fullName>
         <externalId>false</externalId>
         <label>Number of Airlines Reporting Issues</label>
@@ -1573,6 +1666,31 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Providers_Info__c</fullName>
+        <description>Providers additional information</description>
+        <externalId>false</externalId>
+        <label>Providers Info</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Providers__c</fullName>
+        <description>Providers for the Country Profile</description>
+        <externalId>false</externalId>
+        <label>Providers</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Publish_News__c</fullName>

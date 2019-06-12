@@ -45,9 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -316,15 +316,15 @@
             <value>checkIpCountry</value>
         </filters>
         <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>4/16/2018 12:00 AM</value>
+            <field>LAST_UPDATE</field>
+            <operation>greaterOrEqual</operation>
+            <value>5/23/2019 1:00 PM</value>
         </filters>
         <label>Debug View</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>ISSP_WS_NewUser</fullName>
+        <fullName>ISSP_WS_SIS_NewUser</fullName>
         <columns>NAME</columns>
         <columns>Web_Service__c</columns>
         <columns>Success__c</columns>
@@ -333,14 +333,19 @@
         <columns>Method__c</columns>
         <columns>System__c</columns>
         <columns>Login_Ip__c</columns>
-        <columns>Input_Description__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Web_Service__c</field>
             <operation>equals</operation>
-            <value>ISSP_WS_NewUser</value>
+            <value>ISSP_WS_SIS_NewUser</value>
         </filters>
-        <label>ISSP_WS_NewUser</label>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>ISSP_WS_SIS_NewUser</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -447,8 +452,8 @@
         </filters>
         <filters>
             <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>8/16/2018 12:00 AM</value>
+            <operation>greaterThan</operation>
+            <value>4/1/2019 12:00 AM</value>
         </filters>
         <label>SIS</label>
         <language>en_US</language>
@@ -475,7 +480,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>10/15/2018 12:00 AM</value>
+            <value>3/13/2019 12:00 AM</value>
         </filters>
         <filters>
             <field>Method__c</field>

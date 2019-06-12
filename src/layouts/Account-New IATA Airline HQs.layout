@@ -62,6 +62,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Type__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
             </layoutItems>
@@ -70,11 +74,11 @@
                 <field>Site</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Sector__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Category__c</field>
             </layoutItems>
             <layoutItems>
@@ -108,6 +112,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Logo_File_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Baggage_Tag_Range_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accounting_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -157,7 +169,7 @@
                 <field>TradeName__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>AOC_Expiry_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -165,15 +177,11 @@
                 <field>Area_of_Operation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>MITA_Member__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Membership_SITA__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>BIETA_Member__c</field>
             </layoutItems>
             <layoutItems>
@@ -183,6 +191,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ACH_Member__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>iiNet_Account__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -237,6 +249,10 @@
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Billing_State__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Phone</field>
             </layoutItems>
@@ -263,8 +279,8 @@
                 <field>ShippingAddress</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IATA_ISO_Billing_State__c</field>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Shipping_State__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -277,6 +293,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Sub_Region__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Iso_State__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -432,7 +452,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Monitored Activities</label>
+        <label>Performance Measures</label>
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
@@ -475,7 +495,7 @@
         <label>Non-SAP Products and Services</label>
         <layoutColumns>
             <layoutItems>
-                <height>300</height>
+                <height>100</height>
                 <page>AMP_Services</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
@@ -488,7 +508,23 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Membership on Main IATA Industry Groups</label>
+        <label>Industry Activities</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>AMP_Industry_Activities</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Participation in Main IATA Industry Groups</label>
         <layoutColumns>
             <layoutItems>
                 <height>310</height>
@@ -614,6 +650,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIS_Sub_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Give_SIS_Membership__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -858,7 +898,7 @@
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ACLI_SAP_Id__c</field>
             </layoutItems>
             <layoutItems>
@@ -964,6 +1004,7 @@
         <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>Contact_Related_List</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>Airline_Contact_Type__c</fields>
@@ -972,8 +1013,8 @@
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
-        <fields>CORE.USERS.ALIAS</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
+        <fields>VER_Number_2__c</fields>
         <relatedList>RelatedContactList</relatedList>
         <sortField>FULL_NAME</sortField>
         <sortOrder>Asc</sortOrder>

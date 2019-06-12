@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
-    <name>GCS-Finance AR-BIS</name>
+    <name>L3 Accounts Receivables YMQ</name>
     <queueMembers>
         <publicGroups>
             <publicGroup>GCS_BIS_Finance_AR</publicGroup>

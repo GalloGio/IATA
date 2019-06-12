@@ -580,6 +580,90 @@ private class AMS_AccreditationContactControllerTest
 
         return messageFound;
     }
-    
+ 
+    @isTest static void blockOwnershipChinaConversionTest(){
+
+        Test.startTest();
+
+        IATA_ISO_Country__c chinaCountry = new IATA_ISO_Country__c(
+            Name = 'China (People\'s Republic of)', 
+            ISO_Code__c = 'CN',
+            Enable_NewGen_Pilot__c = true,
+            CurrencyIsoCode = 'CNY'
+        );
+
+        insert chinaCountry;
+
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+        Account chinaHE = new Account(
+            Name='My China Test HE', 
+            Location_Type__c = 'HO', 
+            Email__c = 'chinatestacct@test.com', 
+            Type='Domestic Agent', 
+            Sector__c = 'Travel Agent', 
+            IATA_ISO_Country__c = chinaCountry.id, 
+            IATAcode__c = '12345672', 
+            RecordTypeId = accRtId
+        );
+
+        insert chinaHE;
+        
+        Contact contactChina = new Contact();
+        contactChina.AccountId = chinaHE.Id;
+        contactChina.Firstname = 'Bob';
+        contactChina.Lastname = 'Yung';
+        contactChina.Phone = '921111333';
+        contactChina.MobilePhone = '911111331';
+        contactChina.Email = 'test@china.com';
+
+        insert contactChina;
+
+        Id chinaConversionsRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
+        
+        AMS_OSCAR__c chinaConversionOscar = new AMS_OSCAR__c();
+
+        chinaConversionOscar.Account__c = chinaHE.id;
+        chinaConversionOscar.New_parent__c = chinaHE.id;
+        chinaConversionOscar.RecordTypeId = chinaConversionsRT;
+        chinaConversionOscar.Process__c = AMS_Utils.NGCHINACONVERSION;
+        chinaConversionOscar.ANG_Type_Of_Change__c = AMS_Utils.CONVERTTOLEGACY;
+
+        insert chinaConversionOscar;
+
+        Id oscarRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+
+        Case chinaOscarCase = new Case(Oscar__c = chinaConversionOscar.Id, RecordTypeId = oscarRecordType);
+        chinaOscarCase.AccountId = chinaHE.Id;
+        chinaOscarCase.ContactId = contactChina.Id;
+        chinaOscarCase.Reason = 'Product Inquiry';
+        chinaOscarCase.Type = 'Case';
+        chinaOscarCase.Subject = 'Conversion to Domestic with Cash - My China Test HE';
+        chinaOscarCase.CaseArea__c = 'Accreditation Process';
+        chinaOscarCase.Reason1__c = AMS_Utils.CONVERTTOLEGACY;
+        chinaOscarCase.Type_of_customer__c = 'IATA Travel Agent';
+        chinaOscarCase.Account_Concerned__c = chinaHE.Id;
+        chinaOscarCase.Region__c = 'China & North Asia';
+
+        insert chinaOscarCase;
+        
+        AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(
+            IsGSA__c = 'No', 
+            CurrencyIsoCode = chinaCountry.CurrencyIsoCode, 
+            SAAM_Case__c = chinaOscarCase.Id
+        );
+
+        insert onlineAccreditation;
+        
+        Test.stopTest();
+
+        ApexPages.StandardController sc = new ApexPages.StandardController(onlineAccreditation);
+        AMS_AccreditationContactController ctrl = new AMS_AccreditationContactController(sc);
+
+        System.debug(LoggingLevel.FINE, '____ [cls AMS_AccreditationContactController - blockOwnershipChinaConversionTest] blockOwnershipEdit: ' + ctrl.blockOwnershipEdit);
+
+        System.assert(ctrl.blockOwnershipEdit, 'The ownership modification must be blocked for China Conversions');
+
+    }
     
 }
