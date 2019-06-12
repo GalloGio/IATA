@@ -577,6 +577,55 @@ private class ANG_AccountTriggerHandlerTest {
         System.assertEquals(2, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = 'MAPDF' OR Change_Code__c ='MBDIL'].size());
     }
 
+	@isTest static void dueDiligenceModelBPlusTest(){
+		
+		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'UK Test'];
+
+		List<Contact> cons = new List<Contact>();
+		Contact con1 = new Contact(LastName = 'con1',
+				Email = 'test1@istest.newgen', 
+				Preferred_Language__c = 'English',
+				BSP_CASS_Payment_contact__c = true, 
+				Financial_Assessment_Contact__c = true, 
+				AccountId = accs[0].Id
+		);
+		cons.add(con1);
+
+		insert cons;
+
+		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
+		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
+		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
+		insert pas;
+
+		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
+		insert pars;
+
+        Test.startTest();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+
+        for (Account a :accs){
+        	a.ANG_IEP_Status__c = 'In Progress';
+        }
+
+        update accs;
+
+        List<AMS_Oscar__c> oscars = [SELECT Id, STEP17__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.IEPMODELBPLUSACCOUNTSETUP];
+
+        for (AMS_Oscar__c oscar : oscars){
+        	oscar.STEP17__c = 'Passed';
+        }
+
+        update oscars;
+
+        Test.stopTest();
+
+        System.assertEquals(1, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = :AMS_Utils.MBPDD_CHANGE_CODE].size());
+
+	}
+
 	@isTest static void pciCompliantUpdateTriggerMasterDataTest() {
 
 		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'Test' OR Name = 'Test2' ORDER BY NAME ASC];
@@ -644,6 +693,7 @@ private class ANG_AccountTriggerHandlerTest {
 		}
 
     }
+
 	@isTest static void pciCompliantUpdateDoNotTriggerMasterDataTest() {
 
 		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'Test' OR Name = 'Test2' ORDER BY NAME ASC];
@@ -705,55 +755,6 @@ private class ANG_AccountTriggerHandlerTest {
 		system.assert(agencyUpdLst.size() == 0, 'Should NOT have created agency updates records');
 
     }
-
-	@isTest static void dueDiligenceModelBPlusTest(){
-		
-		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'UK Test'];
-
-		List<Contact> cons = new List<Contact>();
-		Contact con1 = new Contact(LastName = 'con1',
-				Email = 'test1@istest.newgen', 
-				Preferred_Language__c = 'English',
-				BSP_CASS_Payment_contact__c = true, 
-				Financial_Assessment_Contact__c = true, 
-				AccountId = accs[0].Id
-		);
-		cons.add(con1);
-
-		insert cons;
-
-		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
-		insert pas;
-
-		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
-		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
-		insert pars;
-
-        Test.startTest();
-
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
-
-        for (Account a :accs){
-        	a.ANG_IEP_Status__c = 'In Progress';
-        }
-
-        update accs;
-
-        List<AMS_Oscar__c> oscars = [SELECT Id, STEP17__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.IEPMODELBPLUSACCOUNTSETUP];
-
-        for (AMS_Oscar__c oscar : oscars){
-        	oscar.STEP17__c = 'Passed';
-        }
-
-        update oscars;
-
-        Test.stopTest();
-
-        System.assertEquals(1, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = :AMS_Utils.MBPDD_CHANGE_CODE].size());
-
-	}
 
     public class MockHttpResponseSuccessGenerator implements HttpCalloutMock {
 		// Implement this interface method

@@ -657,6 +657,5 @@ public class ANG_AccountTriggerHandler {
 		if(!toNotify.isEmpty()){
 			ANG_RHCHelper.handleRiskOrForecastedRhcAmountUpdates(toNotify);
 		}
-
 	}
 }
