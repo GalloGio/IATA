@@ -563,6 +563,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Cloned_From_Another_Form__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to determine whether the contact is a &quot;clone&quot; from another staging record or not. Used in the import owners functionality in the accreditation page Step C for Multicountry scenarios</description>
+        <externalId>false</externalId>
+        <label>Is Cloned From Another Form</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Job_title__c</fullName>
         <externalId>false</externalId>
         <label>Job title</label>
