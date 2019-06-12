@@ -12,11 +12,11 @@ public without sharing class LVA_ChatTriggerHandler {
     // ****************** distribution methods ********************
     // ************************************************************
     
-    // public void onBeforeInsert(){}
+     public void onBeforeInsert(){}
     
-    //public void onAfterInsert(){}
+    public void onAfterInsert(){}
     
-    //public void onBeforeUpdate(){}
+    public void onBeforeUpdate(){}
     public void onAfterUpdate(){  
         processLiveChat();      
     }
