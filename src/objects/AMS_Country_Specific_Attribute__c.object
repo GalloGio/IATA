@@ -475,6 +475,27 @@ J-Joint Vent</description>
         <label>RHC Risk Alerts</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>RTS_Risk_Alert</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Create_Process_Case__c</columns>
+        <columns>ANG_Create_Sidra_Lite__c</columns>
+        <columns>ANG_EmailTemplate_Legacy__c</columns>
+        <columns>ANG_EmailTemplate_NG__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ANG_Percentage__c</columns>
+        <columns>ANG_Remove_Ticketing_Authority__c</columns>
+        <columns>ANG_RTS_Severity__c</columns>
+        <columns>ANG_Send_Email_Agent__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Country_Specific_Attribute__c.RTS_Risk_Alert_Notification</value>
+        </filters>
+        <label>RTS Risk Alert</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>ACSA-{00000000}</displayFormat>
         <label>AMS Country Specific Attribute Name</label>
@@ -578,6 +599,17 @@ J-Joint Vent</description>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>DGR_Minimum_Requirements</fullName>
@@ -673,6 +705,17 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -774,6 +817,17 @@ J-Joint Vent</description>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>IRR_CPE</fullName>
@@ -869,6 +923,17 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -980,7 +1045,7 @@ J-Joint Vent</description>
         </picklistValues>
         <picklistValues>
             <picklist>Reason__c</picklist>
-                <values>
+            <values>
                 <fullName>Adhoc review</fullName>
                 <default>false</default>
             </values>
@@ -1095,6 +1160,17 @@ J-Joint Vent</description>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Minimum_RHC_Amount</fullName>
@@ -1199,6 +1275,17 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1308,6 +1395,17 @@ J-Joint Vent</description>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>RHC_Risk_Alert</fullName>
@@ -1414,6 +1512,17 @@ J-Joint Vent</description>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>RTS_Risk_Alert_Notification</fullName>
@@ -1449,6 +1558,17 @@ J-Joint Vent</description>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

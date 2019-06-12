@@ -2554,7 +2554,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>TIESSManagementAmericas</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 3) OR (4 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -2573,7 +2573,12 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
-                <value>TIESS Banking,TIESS Remittance reportsTIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
+                <value>TIESS Banking,TIESS Remittance reports,TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>notEqual</operation>
+                <value>Portal</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -5299,31 +5304,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesComplaintsAME</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Africa &amp; Middle East</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.IsComplaint__c</field>
-                <operation>equals</operation>
-                <value>True</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subject</field>
-                <operation>startsWith</operation>
-                <value>#C Africa &amp; Middle East</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Cases_Complaints_Americas</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 AND 2 AND 3) OR 4) AND 5</booleanFilter>
@@ -5381,7 +5361,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>CustomerServiceEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3 and 5) or (4 AND 6)</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 3 AND 5 AND 7) or (4 AND 6)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -5411,6 +5391,11 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Subject</field>
                 <operation>contains</operation>
                 <value>Dashboard: Key Controls Customer Service - Europe</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>notContain</operation>
+                <value>Dashboard: Key Controls Customer Service - Americas</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -7940,7 +7925,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <team>SIDRA AME HUB R&amp;S Team 3</team>
             <team>SIDRA AME LO BO</team>
             <team>SIDRA AME LO PE</team>
-            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesArgentinaParaguayUruguay</assignedTo>

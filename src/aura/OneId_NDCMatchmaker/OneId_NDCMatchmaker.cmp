@@ -91,7 +91,7 @@
                         <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Content_Differentiation__c" /></lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Content_Differentiation_Products_and_Se__c" /></lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Forms_of_Remittance_and_Settlement__c" /></lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Public_Incentive_Schemes_for_Sellers__c" /></lightning:layoutItem>
+                        <!--<lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Public_Incentive_Schemes_for_Sellers__c" /></lightning:layoutItem>-->
                     </lightning:layout>
                     
                     
@@ -216,9 +216,9 @@
                         <lightning:layoutItem size="6" padding="horizontal-small">
                             <lightning:inputField class="customRequired none"  aura:id="NDC_Forms_of_Remittance_and_Settlement__c" fieldName="NDC_Forms_of_Remittance_and_Settlement__c" />
                         </lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small">
+                        <!--<lightning:layoutItem size="6" padding="horizontal-small">
                             <lightning:inputField fieldName="NDC_Public_Incentive_Schemes_for_Sellers__c" />
-                        </lightning:layoutItem>
+                        </lightning:layoutItem>-->
                     </lightning:layout>
                     
                 </aura:if>
