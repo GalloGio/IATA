@@ -78,20 +78,106 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
     }
 
     private static Map<Id, List<Contact_Role_Service_Access__c>> getActiveUsersForAccounts(List<Id> allAccounts){
-        List<Contact_Role_Service_Access__c> usersAccess = [SELECT Account__c, Contact__c, Email_Address__c FROM Contact_Role_Service_Access__c
-        WHERE Account__c =: allAccounts AND Status__c = 'Granted' AND
-        (Contact_Roles_Name__c = 'GADM Data Submitter' OR Contact_Roles_Name__c = 'Service Super User') ];
+        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
+        List<Account_Contact_Role__c> grantedAccounts = [SELECT Id, Contact__c, Contact_Roles__c, Account_Role__r.Account__c FROM Account_Contact_Role__c
+        WHERE Account_Role__r.Account__c =: allAccounts AND RecordTypeId =: groupRecordTypeId AND Contact_Roles__r.Name = 'GADM User'];
 
-        Map<Id, List<Contact_Role_Service_Access__c>> accountAccess = new Map<Id, List<Contact_Role_Service_Access__c>>();
-        for(Contact_Role_Service_Access__c access: usersAccess){
-            List<Contact_Role_Service_Access__c> accessFromMap = accountAccess.get(access.Account__c);
-            if(accessFromMap == null){
-                accountAccess.put(access.Account__c, new List<Contact_Role_Service_Access__c>{access});
+        List<Account_Contact_Role__c> businessUnits = [SELECT Id, Contact__c, Contact_Roles__c, Account_Role__r.Account__c FROM Account_Contact_Role__c
+        WHERE Account_Role__r.Account__c =: allAccounts AND RecordTypeId =: groupRecordTypeId AND Contact_Roles__r.Category__c = 'Business Unit'];
+
+        Map<Id, Set<Id>> contactToAccount  = new Map<Id, Set<Id>>();
+        for(Account_Contact_Role__c acr: grantedAccounts){
+            Set<Id> accounts = contactToAccount.get(acr.Contact__c);
+            if(accounts == null){
+                contactToAccount.put(acr.Contact__c, new Set<Id>{acr.Account_Role__r.Account__c});
             } else {
-                accessFromMap.add(access);
+                accounts.add(acr.Account_Role__r.Account__c);
             }
         }
 
+        Map<Id, Set<Id>> contactsToBU  = new Map<Id, Set<Id>>();
+        for(Account_Contact_Role__c acr: grantedAccounts){
+            Set<Id> bus = contactsToBU.get(acr.Contact__c);
+            if(bus == null){
+                contactsToBU.put(acr.Contact__c, new Set<Id>{acr.Contact_Roles__c});
+            } else {
+                bus.add(acr.Contact_Roles__c);
+            }
+        }
+
+        Set<Id> contactIds = new Set<Id>();
+        for(Account_Contact_Role__c acr: grantedAccounts){
+            contactIds.Add(acr.Contact__c);
+        }
+
+        List<Contact_Role_Service_Access__c> usersAccess = [SELECT Account__c, Contact__c, Email_Address__c, Contact_Roles_Name__c FROM Contact_Role_Service_Access__c
+        WHERE Contact__c =: contactIds AND Status__c = 'Granted' AND
+        (Contact_Roles_Name__c = 'GADM Data Submitter' OR Contact_Roles_Name__c = 'Service Super User') ];
+        Set<Id> businessUnitsIds = new Set<Id>();
+        Map<Id, List<Contact_Role_Service_Access__c>> accountAccess = new Map<Id, List<Contact_Role_Service_Access__c>>();
+        List<Id> addedSubmitters = new List<Id>();
+        for(Contact_Role_Service_Access__c access: usersAccess){
+            if(access.Contact_Roles_Name__c != 'GADM Data Submitter') {continue;}
+            Set<Id> contactAccounts = contactToAccount.get(access.Contact__c);
+            if(contactAccounts != null){
+                for (Id accId: contactAccounts){
+                    List<Contact_Role_Service_Access__c> accessFromMap = accountAccess.get(accId);
+                    if(accessFromMap == null){
+                        accountAccess.put(accId, new List<Contact_Role_Service_Access__c>{access});
+                    } else {
+                        accessFromMap.add(access);
+                    }
+                }
+            }
+            addedSubmitters.add(access.Contact__c);
+        }
+
+        Map<Id, Set<Id>> accountSuperUsers = new Map<Id,Set<Id>>();
+        for(Contact_Role_Service_Access__c access: usersAccess){
+            if(access.Contact_Roles_Name__c != 'Service Super User') {continue;}
+            Set<Id> suAccounts = contactToAccount.get(access.Contact__c);
+            Set<Id> suBu = contactsToBU.get(access.Contact__c);
+            system.debug(addedSubmitters);
+            system.debug(addedSubmitters.contains(access.Contact__c));
+            system.debug(access.Contact__c);
+            if(addedSubmitters.contains(access.Contact__c)){continue;}
+            for(Id submId: addedSubmitters){
+                Set<Id> dsAccounts = contactToAccount.get(submId);
+                Set<Id> dsBus = contactsToBU.get(submId);
+
+                for(Id dsAcc: dsAccounts){
+                    if(suAccounts.contains(dsAcc)){
+                        for(Id dsBu: dsBus) {
+                            if(suBu.contains(dsBu)){
+                                Set<Id> superUsersforAccount = accountSuperUsers.get(dsAcc);
+                                 if(superUsersforAccount == null){
+                                    accountSuperUsers.put(dsAcc, new Set<Id>{access.Contact__c});
+                                 } else {
+                                     superUsersforAccount.add(access.Contact__c);
+                                 }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        for(Contact_Role_Service_Access__c access: usersAccess){
+            if(access.Contact_Roles_Name__c != 'Service Super User') {continue;}
+            for(Id accountId: accountSuperUsers.keySet()){
+                Set<Id> contacts = accountSuperUsers.get(accountId);
+                if (contacts.contains(access.Contact__c)){
+                    List<Contact_Role_Service_Access__c> accessFromMap = accountAccess.get(accountId);
+                    if(accessFromMap == null){
+                        accountAccess.put(accountId, new List<Contact_Role_Service_Access__c>{access});
+                    } else {
+                        accessFromMap.add(access);
+                    }
+                }
+            }
+        }
         return accountAccess;
     }
 
@@ -123,7 +209,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
         Map<Id, Id> upcomingPeriodAccounts = getActorsBySubmisionPeriod(upcomingPeriods);
         Map<Id, Id> inDuePeriodAccounts = getActorsBySubmisionPeriod(inDuePeriods);
-
+        system.debug(inDuePeriodAccounts);
         Map<String, List<NotificationWrapper>> contactToBeNotifiedWrapperMap = new Map<String, List<NotificationWrapper>>();
 
         Map<Id, List<Id>> inDuePeriodsWithAccounts = new Map<Id, List<Id>>();
@@ -141,7 +227,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
         List<Id> allAccounts = new List<Id>();
         allAccounts.addAll(upcomingPeriodAccounts.keySet());
         allAccounts.addAll(inDuePeriodAccounts.keySet());
-
+        Map<Id, Account> acocunts = new Map<Id, Account>([SELECT Id, Name FROM Account WHERE Id =: allAccounts]);
         Map<Id, List<Data_Submission__c>> accountDataSubmissions = getDataSubmissions(inDuePeriodsWithAccounts, periods);
         Map<Id, List<Contact_Role_Service_Access__c>> accountAccess = getActiveUsersForAccounts(allAccounts);
 
@@ -161,14 +247,13 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             if (accesses != null){
 
                 NotificationWrapper notificationWrapper = new NotificationWrapper();
+                notificationWrapper.accountName = acocunts.get(accountId).Name;
                 notificationWrapper.submissionStart = period.notificationDateStart;
                 notificationWrapper.submissionEnd = period.notificationDateEnd;
                 notificationWrapper.contactsToNotify = accesses;
 
                 upcomingNotificationWrappers.add(notificationWrapper);
             }
-
-
         }
 
         contactToBeNotifiedWrapperMap.put('Upcoming', upcomingNotificationWrappers);
@@ -197,6 +282,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
                 notificationWrapper.submissionStart = period.notificationDateStart;
                 notificationWrapper.submissionEnd = period.notificationDateEnd;
                 notificationWrapper.contactsToNotify = accesses;
+                notificationWrapper.accountName = acocunts.get(accountId).Name;
 
                 inDueNotificationWrappers.add(notificationWrapper);
             }
@@ -247,11 +333,11 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             for(Contact_Role_Service_Access__c access : accesses) {
                 Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(upcomingWrapper.emailTemplate.Id, access.Contact__c, null);
                 String bodyHtml = mail.getHtmlBody();
-                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd));
+                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', upcomingWrapper.accountName);
                 mail.setHtmlBody(replacedHtmlBody);
 
                 String bodyText = mail.getPlainTextBody();
-                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd));
+                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', upcomingWrapper.accountName);
                 mail.setPlainTextBody(replacedTextBody);
                 mail.setUseSignature(false);
                 allmsg.add(mail);
@@ -266,11 +352,11 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             for(Contact_Role_Service_Access__c access : accesses) {
                 Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(inDueWrapper.emailTemplate.Id, access.Contact__c, null);
                 String bodyHtml = mail.getHtmlBody();
-                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd));
+                String replacedHtmlBody = bodyHtml.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', inDueWrapper.accountName);
                 mail.setHtmlBody(replacedHtmlBody);
 
                 String bodyText = mail.getPlainTextBody();
-                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd));
+                String replacedTextBody = bodyText.replace('*periodStart*', String.valueOf(periodStart)).replace('*periodEnd*', String.valueOf(periodEnd)).replace('*actor*', inDueWrapper.accountName);
                 mail.setPlainTextBody(replacedTextBody);
                 mail.setUseSignature(false);
                 allmsg.add(mail);
@@ -292,6 +378,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
         public EmailTemplate emailTemplate {get; set;}
         public Date submissionStart {get; set;}
         public Date submissionEnd {get; set;}
+        public string accountName {get; set;}
     }
 
     public class SubmissionPeriodCurrentData{
@@ -325,11 +412,12 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
                 Date sDate = period.Start_Date__c;
                 Date periodStartDate = sDate.toStartOfMonth();
-                Date comparedDate = dateToCompare.addDays(-1);
+                Date comparedDate = dateToCompare;//.addDays(-1);
                 Integer monthsCount = periodStartDate.monthsBetween(comparedDate) + 1;
+                system.debug(monthsCount);
 
                 integer monthsToRemove = (math.mod(monthsCount,(integer)period.Period_Length__c) <> 0) ? 0 : 1;
-
+                system.debug(monthsToRemove);
                 CurrentPeriodStart = period.Start_Date__c.addMonths((integer)(period.Period_Length__c*((integer)(monthsCount/period.Period_Length__c )- monthsToRemove)));
                 CurrentPeriodEnd = period.Start_Date__c.addMonths((integer)(period.Period_Length__c*((integer)(monthsCount/period.Period_Length__c )- monthsToRemove))+(Integer)period.Period_Length__c).addDays(-1);
 
@@ -372,6 +460,18 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
                 NextSubmissionCycleStart =  date.newInstance(startDateNext.year(), startDateNext.month(), startDayNext);
                 NextSubmissionCycleEnd =  date.newInstance(endDateNext.year(), endDateNext.month(), endDayNext);
 
+                system.debug('Current');
+                system.debug(CurrentPeriodStart);
+                system.debug(CurrentPeriodEnd);
+
+                system.debug('Prev');
+                system.debug(PreviousSubmissionCycleStart);
+                system.debug(PreviousSubmissionCycleEnd);
+
+                system.debug('Next');
+                system.debug(NextSubmissionCycleStart);
+                system.debug(NextSubmissionCycleEnd);
+
                 Date upcomingDate = CurrentSubmissionCycleStart.addDays((integer)period.Upcoming_Notification__c*-1);
                 Date dueDate = CurrentSubmissionCycleEnd.addDays((integer)period.In_Due_Notification__c *-1);
 
@@ -383,13 +483,29 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
                 UpcomingToBeNotified = (upcomingDate == dateToCompare) || (upcomingDatePrevious == dateToCompare) || (upcomingDateNext == dateToCompare);
                 if(UpcomingToBeNotified) {
-                    notificationDateStart = CurrentSubmissionCycleStart;
-                    notificationDateEnd = CurrentSubmissionCycleEnd;
+                    if(upcomingDate == dateToCompare) {
+                        notificationDateStart = CurrentSubmissionCycleStart;
+                        notificationDateEnd = CurrentSubmissionCycleEnd;
+                    } else if (upcomingDatePrevious == dateToCompare){
+                        notificationDateStart = PreviousSubmissionCycleStart;
+                        notificationDateEnd = PreviousSubmissionCycleEnd;
+                    } else if (upcomingDateNext == dateToCompare){
+                        notificationDateStart = NextSubmissionCycleStart;
+                        notificationDateEnd = NextSubmissionCycleEnd;
+                    }
                 }
                 InDueToBeNotified = (dueDate == dateToCompare) || (dueDatePrevious == dateToCompare) || (dueDateNext == dateToCompare);
                 if(InDueToBeNotified) {
-                    notificationDateStart = CurrentSubmissionCycleStart;
-                    notificationDateEnd = CurrentSubmissionCycleEnd;
+                    if(dueDate == dateToCompare) {
+                        notificationDateStart = CurrentSubmissionCycleStart;
+                        notificationDateEnd = CurrentSubmissionCycleEnd;
+                    } else if (dueDatePrevious == dateToCompare){
+                        notificationDateStart = PreviousSubmissionCycleStart;
+                        notificationDateEnd = PreviousSubmissionCycleEnd;
+                    } else if (dueDateNext == dateToCompare){
+                        notificationDateStart = NextSubmissionCycleStart;
+                        notificationDateEnd = NextSubmissionCycleEnd;
+                    }
                 }
 
             }

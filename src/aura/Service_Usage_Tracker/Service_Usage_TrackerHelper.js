@@ -31,13 +31,14 @@
         var target = event.getParam('Target');
         var service = event.getParam('Service');
         var type = event.getParam('Type');
-
+        var key = event.getParam('Key');
         var action = component.get('c.saveUsageTracking');
         action.setParams({
             'userId' : userId,
             'target' : target,
             'service' : service,
-            'type' : type
+            'type' : type,
+            'key' : key
         });
         action.setCallback(this, function(response){
             var state = response.getState();

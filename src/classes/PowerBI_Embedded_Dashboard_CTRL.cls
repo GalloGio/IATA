@@ -64,6 +64,20 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
     }
 
     @AuraEnabled
+    public static boolean checkSessionCache(Id userId, String key) {
+
+        String cacheKey = userId + key;
+        Cache.SessionPartition sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
+
+        if(sessionPartition != null) {
+            if(sessionPartition.contains(cacheKey)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @AuraEnabled
     public static OAuthResult getAccessToken() {
 
         /*String accessToken = '';

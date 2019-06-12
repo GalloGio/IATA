@@ -53,6 +53,25 @@ public without sharing class Contact_Roles_Helper {
         return accountDetails;
     }
 
+    public static Id getUserAccountContactRoleForGadmUser(Id userId){
+        String status = '';
+
+        if(String.isNotBlank(userId))
+        {
+            Contact con = Contact_Roles_Helper.getContactFromUser(userId);
+            if(con.Id != null) {
+                Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+                List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND Contact_Roles__r.Name = 'GADM User' AND RecordTypeId = :functionalRecordTypeId AND Service_Rendered__c = 'GADM'];
+
+                if(! accountContactRoles.isEmpty()) {
+                    return accountContactRoles[0].Account_Role__c;
+                }
+            }
+
+        }
+
+        return null;
+    }
 
     public static String getGadmUserRoleStatus(Id userId) {
 
@@ -120,8 +139,11 @@ public without sharing class Contact_Roles_Helper {
 
         Contact con = getContactFromUser(userId);
 
+
         Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
-        List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact_Roles__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = :serviceName];
+        Id funcRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+        List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact_Roles__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND
+        ((RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = :serviceName AND Contact_Roles__r.Category__c = 'Business Unit') OR (RecordTypeId = :funcRecordTypeId AND Service_Rendered__c = :serviceName))];
 
         Set<Id> rolesId = new Set<Id>();
         for(Account_Contact_Role__c accountContactRole : accountContactRoles) {
@@ -309,7 +331,8 @@ public without sharing class Contact_Roles_Helper {
         return aggregatedRecordWrappers;
 
     }
-	
+
+
     private static boolean hasRole(string roleName, Map<Id, Contact_Role_Service_Access__c> roles){
         if (roles == null || roles.isEmpty()) {return false;}
         for(Contact_Role_Service_Access__c access: roles.values()){

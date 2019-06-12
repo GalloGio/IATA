@@ -55,6 +55,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -134,19 +135,19 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Success</fullName>
+                    <fullName>File processed</fullName>
                     <default>false</default>
-                    <label>Success</label>
+                    <label>File processed</label>
                 </value>
                 <value>
-                    <fullName>Error</fullName>
+                    <fullName>Rejected</fullName>
                     <default>false</default>
-                    <label>Error</label>
+                    <label>Rejected</label>
                 </value>
                 <value>
-                    <fullName>In Progress</fullName>
+                    <fullName>Accepted for Processing</fullName>
                     <default>false</default>
-                    <label>In Progress</label>
+                    <label>Accepted for Processing</label>
                 </value>
                 <value>
                     <fullName>Submitted</fullName>
@@ -230,7 +231,8 @@
         <columns>CREATED_DATE</columns>
         <columns>Status__c</columns>
         <columns>Type__c</columns>
-        <columns>User__c</columns>
+        <columns>Account__c</columns>
+        <columns>External_Actor_Id__c</columns>
         <columns>Submitter__c</columns>
         <columns>Original_User__c</columns>
         <filterScope>Everything</filterScope>

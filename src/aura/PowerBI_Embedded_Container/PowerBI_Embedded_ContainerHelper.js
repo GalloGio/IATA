@@ -216,6 +216,41 @@
     toggleSpinner : function(component, event) {
         component.set('v.showSpinner', !component.get('v.showSpinner'));
     },
-
+    handleTrackUsage : function(component, event, category) {
+                debugger;
+                var userId = $A.get("$SObjectType.CurrentUser.Id");
+                var action = component.get('c.checkSessionCache');
+                let key = category.replace(/ /g, '');
+                action.setParams({
+                    'userId' : userId,
+                    'key' : key
+                });
+                console.log(userId+key);
+                action.setCallback(this, function(response){
+                    var state = response.getState();
+                    if(state === 'SUCCESS') {
+                        debugger;
+                        var isKeyInCache = response.getReturnValue();
+                        if(! isKeyInCache) {
+                            //key not yet present in cache - fire event
+                            var trackUsageEvent = component.getEvent('serviceUsageEvent');
+                            trackUsageEvent.setParams({
+                                'UserId' : userId,
+                                'Key' : key,
+                                'Target' : key,
+                                'Service' : 'GADM',
+                                'Type' : 'Page'
+                            });
+                            trackUsageEvent.fire();
+                        }else{
+                           //key is present in cache
+                           console.log('key present in session cache');
+                        }
+                    } else {
+                        console.log('handleTrackUsage error');
+                    }
+                });
+                $A.enqueueAction(action);
+        },
 
 })

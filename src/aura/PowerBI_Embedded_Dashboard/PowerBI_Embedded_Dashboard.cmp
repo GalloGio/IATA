@@ -6,12 +6,21 @@
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
 
     <aura:registerEvent name="backEvent" type="c:PowerBI_Embedded_Dashboard_Back_EVT"/>
-
+    <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event"/>
     <aura:handler name="init" value="{!this}" action="{! c.init}"/>
 
 
     <div class="slds-container--fluid">
 
+
+
+
+        <div aura:id="iframe"></div>
+
+
+        <aura:if isTrue="{! v.showSpinner}">
+            <lightning:spinner alternativeText="Loading"/>
+        </aura:if>
         <aura:if isTrue="{! v.showSpinner == false}">
 
             <div class="back_button">
@@ -26,15 +35,6 @@
 
 
         </aura:if>
-
-
-        <div aura:id="iframe"></div>
-
-
-        <aura:if isTrue="{! v.showSpinner}">
-            <lightning:spinner alternativeText="Loading"/>
-        </aura:if>
-
     </div>
 
 

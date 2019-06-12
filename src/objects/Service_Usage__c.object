@@ -64,6 +64,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Account_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account Role</label>
+        <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>Service Usages</relationshipLabel>
+        <relationshipName>Service_Usages</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <externalId>false</externalId>
         <formula>User__r.Account.Id</formula>
@@ -81,6 +93,18 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Dashboard_Id__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Dashboard Id</label>
+        <referenceTo>Contact_Role_Service_Permission__c</referenceTo>
+        <relationshipLabel>Service Usages</relationshipLabel>
+        <relationshipName>Service_Usages</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Service__c</fullName>

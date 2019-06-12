@@ -17,9 +17,7 @@
 
         <aura:if isTrue="{! v.showDashboards}">
 
-            <div class="back_button">
-                <button class="btn btn-primary btn-grey" onclick="{! c.listBack}">Back</button>
-            </div>
+
 
             <h3>Dashboards</h3>
 
@@ -33,7 +31,9 @@
 
                 </aura:iteration>
             </ul>
-
+            <div class="back_button">
+                <button class="btn btn-primary btn-grey" onclick="{! c.listBack}">Back</button>
+            </div>
 
         </aura:if>
 
