@@ -70,10 +70,14 @@
         component.set("v.category", data.categorization.Category);
         component.set("v.topic", data.categorization.Topic);
         component.set("v.subTopic", data.categorization.SubTopic);
+        component.set("v.isEmergency", data.Emergency);
         component.set("v.caseRecordType", data.recordTypeAndCountry.RecordType);
         component.set("v.country", data.recordTypeAndCountry.Country);
-        component.set("v.contact", data.contact);
-
+        component.set("v.countryISO", data.CountryISO);
+        component.set("v.contact", data.Contact);
+        component.set("v.isQuestion", data.Question);
+        component.set("v.phoneNumber", data.PhoneNumber);
+        console.log(data.Question);
         //must disconnect and delete in order to re-deploy
         if ((typeof liveagent == "object")) {
             liveagent.disconnect();
@@ -81,20 +85,37 @@
             delete liveAgentDeployment;
         }
 
+        if(data.Emergency){
+            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") +'\n'
+            + $A.get("$Label.c.LVA_CallUsEmergencyPhoneNumber") +'\n\n'
+            + $A.get("$Label.c.LVA_CallUsAvailableHours") +'\n'
+            + $A.get("$Label.c.LVA_CallUsEmergencyAvailableHours") +'\n';
+            component.set("v.callCenterInfo_Label", emergency);
+        }else{
+            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") +'\n'
+            + component.get("v.phoneNumber").PhoneNumber +'\n\n'
+            + $A.get("$Label.c.LVA_CallUsAvailableHours") +'\n'
+            + component.get("v.phoneNumber").AvailableHours +'\n';
+            component.set("v.callCenterInfo_Label", emergency);
+        }
+
         data.myliveAgentButtonInfo.forEach(function (laButton) {
             if (laButton.Button_Per_Topic__c == true) {
                 component.set("v.liveAgentOnlineDefault", laButton.ButtonId__c);
                 component.set("v.isTopicLiveAgent", true);
                 component.set("v.liveAgentOnlineDefaultIdLanguage", laButton.Language__c.toUpperCase());
+                component.set("v.liveAgentOnlineDefaultName", laButton.Name);
             } else if (laButton.Language__c == "EN" || laButton.Language__c == "en") {
                 component.set("v.liveAgentOnlineNoCountry", laButton.ButtonId__c);
                 component.set("v.isNoCountryLiveAgent", true);
                 component.set("v.liveAgentOnlineNoCountryLanguage", laButton.Language__c.toUpperCase());
+                component.set("v.liveAgentOnlineNoCountryName", laButton.Name);
             }
-            if (!laButton.Button_Per_Topic__c && (laButton.Language__c != "EN" || laButton.Language__c != "en")) {
+            if (!laButton.Button_Per_Topic__c && (laButton.Language__c != "EN" && laButton.Language__c != "en")) {
                 component.set("v.liveAgentOnlineWithCountry", laButton.ButtonId__c);
                 component.set("v.isWithCountryLiveAgent", true);
                 component.set("v.liveAgentOnlineWithCountryLanguage", laButton.Language__c.toUpperCase());
+                component.set("v.liveAgentOnlineWithCountryName", laButton.Name);
             }
         });
 
@@ -120,7 +141,9 @@
             "url": "/support-reach-us-create-new-case?category=" + component.get("v.category")
                 + '&topic=' + component.get("v.topic")
                 + '&subtopic=' + component.get("v.subTopic")
-                + '&countryISO=' + 'gb'
+                + '&countryISO=' + (component.get("v.countryISO") == '' ? 'gb' : component.get("v.countryISO"))
+                + '&concerncase=' + !component.get("v.isQuestion")
+                + '&emergency=' + component.get("v.isEmergency")
         });
         urlEvent.fire();
     },

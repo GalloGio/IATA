@@ -1,7 +1,7 @@
 public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
     
     private final static Integer MAX_RESULTS = 100;
-
+    
     private static User USER = DAL_ISSP.getUser(Userinfo.getUserId());
     private static Contact CONTACT = DAL_ISSP.getContact(DAL_ISSP.getUser(Userinfo.getUserId()).ContactId);
     
@@ -23,26 +23,26 @@ public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
         
         return results;
     }
-
+    
     //Dynamic Query to perform searches on the Account.
     private static List<Account> searchRelatedAccounts(String searchTerm) {
         //prepare query
         String finalQuery = 'SELECT ID, IATAcode__c, Name, BillingCity FROM Account '
-                            + 'WHERE IATAcode__c != null ';
+            + 'WHERE IATAcode__c != null ';
         
-        if(String.isNotEmpty(searchTerm)){
-            finalQuery += ' AND ( IATAcode__c LIKE  \'%' + String.escapeSingleQuotes(searchTerm) 
-                          + '%\' OR BillingCity LIKE \'%' + String.escapeSingleQuotes(searchTerm)  
-                          + '%\' OR Name LIKE \'%' + String.escapeSingleQuotes(searchTerm)  
-                          + '%\') ';
+        if(String.isNotEmpty(searchTerm)) {
+            finalQuery += ' AND ( IATAcode__c LIKE  \'%' + String.escapeSingleQuotes(searchTerm)
+                + '%\' OR BillingCity LIKE \'%' + String.escapeSingleQuotes(searchTerm)
+                + '%\' OR Name LIKE \'%' + String.escapeSingleQuotes(searchTerm)
+                + '%\') ';
         }
-
-        finalQuery += ' LIMIT ' + MAX_RESULTS ;
-
+        
+        finalQuery += ' LIMIT ' + MAX_RESULTS;
+        
         return Database.query(finalQuery);
-
+        
     }
-
+    
     //Searches contacts on user input on the Email Recipient field.
     @AuraEnabled(Cacheable=true)
     public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
@@ -52,82 +52,94 @@ public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
         // Extract Contacts & convert them into PortalLookupSearchResult (check this class for more info)
         String contactIcon = 'standard:contact';
         for (Contact contact : searchRelatedContacts(searchTerm)) {
-                results.add(new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Email, contact.Name));
+            results.add(new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Email, contact.Name));
         }
         
         return results;
     }
-
+    
     //Dynamic Query to perform searches on the Contact.
     private static List<Contact> searchRelatedContacts(String searchTerm) {
-
+        
         //prepare query
         String finalQuery = 'SELECT Id, Name, Email FROM Contact '
-                            + ' WHERE Email != \'' + CONTACT.Email + '\'';
+            + ' WHERE Email != \'' + CONTACT.Email + '\'';
         
-        if(String.isNotEmpty(searchTerm)){
-            finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm) 
-                          + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\')';
+        if(String.isNotEmpty(searchTerm)) {
+            finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
+                + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\')';
         }
-
-        finalQuery += ' LIMIT ' + MAX_RESULTS ;
-
+        
+        finalQuery += ' LIMIT ' + MAX_RESULTS;
+        
         return Database.query(finalQuery);
-
-    }
-
-    //Checks if the user has an Agent profile. (He could be after Neo you know...)
-    @AuraEnabled(Cacheable=true)
-    public static Boolean isAgentProfile() {
-        return USER.Profile.Name.contains('ISS Portal Agency');
+        
     }
     
-    //Creates a Case once the user reaches the page and sends it over to the JS for further editting. 
+    //grabs the user profile name
     @AuraEnabled(Cacheable=true)
-    public static Case createCase(String countryiso) {
+    public static String getProfile() {
+        return USER.Profile.Name;
+    }
+
+    //grabs the user profile name
+    @AuraEnabled(Cacheable=true)
+    public static Contact getContact() {
+        return CONTACT;
+    }
+    
+    //Creates a Case once the user reaches the page and sends it over to the JS for further editting.
+    @AuraEnabled(Cacheable=true)
+    public static Case createCase(String countryiso, Boolean isConcernCase, String topic, String subtopic) {
         Case newCase = new Case();
         
-        Map<String,String> recordTypeCountry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(CONTACT, countryiso);
+        Map<String,String> recordTypeCountry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(CONTACT, countryiso.toUpperCase());
         
         if(recordTypeCountry != null) {
-            
-            newCase.RecordTypeId = recordTypeCountry.get('RecordType');
+            if(isConcernCase) {
+                List<ISSP_FAQ2Case_Record_Type__c> complaintRecordType = recordTypeComplaint('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic + '%');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', complaintRecordType[0].RecordType__c);
+            }else{
+                newCase.RecordTypeId = recordTypeCountry.get('RecordType');
+            }
             newCase.Region__c = recordTypeCountry.get('Region');
             newCase.BSPCountry__c = recordTypeCountry.get('Country') == null ? '' : recordTypeCountry.get('Country');
-            newCase.Status = 'Open';
-            newCase.CaseArea__c = 'Customer Portal';
             newCase.Country_concerned_by_the_query__c = recordTypeCountry.get('Country') == null ? '' : recordTypeCountry.get('Country');
-            newCase.Origin = 'Portal';
-            
-            if(countryiso == null || countryiso == '') {
-                newCase.IFAP_Country_ISO__c = CONTACT.Account.Country_ISO_Code__c;
-            }else{
-                newCase.IFAP_Country_ISO__c = countryiso;
-            }
-            return newCase;
         }else{
             throw new System.AuraHandledException('Error. No Record Type detected. Case cannot be created');
         }
+        
+        newCase.Status = 'Open';
+        newCase.CaseArea__c = 'Customer Portal';
+        newCase.Origin = 'Portal';
+        
+        if(countryiso == null || countryiso == '') {
+            newCase.IFAP_Country_ISO__c = CONTACT.Account.Country_ISO_Code__c;
+        }else{
+            newCase.IFAP_Country_ISO__c = countryiso;
+        }
+        return newCase;
+        
     }
     
     //Inserts the Case. But sets a savepoint in case the Emails do not exist.
     @AuraEnabled
     public static Case insertCase(Case caseToInsert, List<String> recipientsToAdd) {
         try{
-
-                insert caseToInsert;
-
-                if(!recipientsToAdd.isEmpty()){
-
-                    Set<String> setRecipients = new Set<String>(recipientsToAdd);
+            
+            insert caseToInsert;
+            
+            if(!recipientsToAdd.isEmpty()) {
                 
-                    list<Contact> listContact = [SELECT Id, Email FROM Contact WHERE Email IN :setRecipients];
-                    
-                    createCaseTeamMemberList(caseToInsert, listContact);
-    
-                    caseToInsert.E2CP__AdditionalCC__c = String.join(recipientsToAdd , ',');
-    
-                    update caseToInsert;
+                Set<String> setRecipients = new Set<String>(recipientsToAdd);
+                
+                list<Contact> listContact = [SELECT Id, Email FROM Contact WHERE Email IN :setRecipients];
+                
+                createCaseTeamMemberList(caseToInsert, listContact);
+                
+                caseToInsert.E2CP__AdditionalCC__c = String.join(recipientsToAdd, ',');
+                
+                update caseToInsert;
                 
             }
         }
@@ -135,6 +147,19 @@ public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
             throw new AuraHandledException(e.getMessage());
         }
         return [SELECT Id, CaseNumber FROM Case WHERE id =: caseToInsert.Id LIMIT 1];
+    }
+    
+    private static List<ISSP_FAQ2Case_Record_Type__c> recordTypeComplaint (String country, String topic, String subtopic){
+        return [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
+                Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c,
+                Flag_Assignment_Rules__c
+                FROM ISSP_FAQ2Case_Record_Type__c
+                WHERE Complaint__c = true
+                AND (Topic__c =: topic
+                     OR SubTopic__c = : subtopic
+                     OR Country_concerned_by_the_query__c like: country
+                     OR Country_concerned_by_the_query2__c like: country
+                     OR Country_concerned_by_the_query3__c like: country)];
     }
     
     //Creates a CaseTeamMember with the contacts (related to the emails of course)

@@ -52,6 +52,18 @@ export default class Lookup extends LightningElement {
         }
     }
 
+    @api
+    get singleLookupResult() {
+        return this.selection;
+    }
+    set singleLookupResult(result) {
+        if (result !== undefined) {
+            const newSelection = [...this.selection];
+            newSelection.push(result);
+            this.selection = newSelection;
+        }
+    }
+
     // INTERNAL FUNCTIONS
 
     updateSearchTerm(newSearchTerm) {
@@ -154,7 +166,7 @@ export default class Lookup extends LightningElement {
 
     handleFocus() {
         // Prevent action if selection is not allowed
-        this.dispatchEvent( new CustomEvent(this.itemName));
+        this.dispatchEvent(new CustomEvent(this.itemName));
 
         if (!this.isSelectionAllowed()) {
             return;

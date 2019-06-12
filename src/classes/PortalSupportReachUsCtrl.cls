@@ -188,4 +188,65 @@ public static Contact getContactInfo(){
 	        Account.Region_formula__c FROM Contact WHERE ID = : user.ContactId];
 
 }
+
+@AuraEnabled (cacheable=true)
+public static List<ISSP_FAQ2Case_Emergencies__c> getEmergencyDependencies(){
+
+	//Grabs ISSP_FAQ2Case_Emergencies__c Custom Setting records
+	return [SELECT Id, Name, Subtopic__c FROM ISSP_FAQ2Case_Emergencies__c];
+
+}
+
+@AuraEnabled (cacheable=true)
+public static List<LVA_CallUsConfigClass> getCallUsPhoneNumber(){
+	List<LVA_CallUsConfigClass> listCallConfigs = new List<LVA_CallUsConfigClass>();
+	for(LVA_CallUsConfig__mdt callConfig : [SELECT DeveloperName,
+	                                        IsoCountry__c,
+	                                        Sector__c,
+	                                        Topic__c,
+	                                        PhoneNumber__c,
+	                                        AvailableHours__c
+	                                        FROM LVA_CallUsConfig__mdt]) {
+		LVA_CallUsConfigClass auxCallConfig =
+			new LVA_CallUsConfigClass(
+				callConfig.DeveloperName,
+				callConfig.IsoCountry__c,
+				callConfig.Sector__c,
+				callConfig.Topic__c,
+				callConfig.PhoneNumber__c,
+				callConfig.AvailableHours__c);
+
+		listCallConfigs.add(auxCallConfig);
+	}
+
+	return listCallConfigs;
+
+}
+
+//This wrapper was constructed to hide the ID from the users view
+//The remaining data is public and can be shown
+public class LVA_CallUsConfigClass {
+
+@AuraEnabled
+public String DeveloperName;
+@AuraEnabled
+public String IsoCountry;
+@AuraEnabled
+public String Sector;
+@AuraEnabled
+public String Topic;
+@AuraEnabled
+public String PhoneNumber;
+@AuraEnabled
+public String AvailableHours;
+
+public LVA_CallUsConfigClass(String developerName, String isoCountry, String sector, String topic, String phoneNumber, String availableHours) {
+	this.DeveloperName = developerName;
+	this.IsoCountry = isoCountry;
+	this.Sector = sector;
+	this.Topic = topic;
+	this.PhoneNumber = phoneNumber;
+	this.AvailableHours = availableHours;
+}
+}
 }
