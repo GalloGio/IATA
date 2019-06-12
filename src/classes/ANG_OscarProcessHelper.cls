@@ -95,7 +95,7 @@ global class ANG_OscarProcessHelper {
 			updater.oscarMap.put(oscar.Id,oscar);
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
-
+			
 			/*** AMSU-162 ***/                                                       /************************ ENHC0012583 *************************/
 			if((AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
@@ -915,37 +915,46 @@ global class ANG_OscarProcessHelper {
 			else
 				aaObject = accountsAA.get(aa.Account__c);
 
-			if(aa.ANG_FormOfPayment_ID__c == 'CA')
+			if(aa.ANG_FormOfPayment_ID__c == 'CA'){
 				aaObject.addCash(aa);
-			else
-				aaObject.addCreditCard(aa);
+			} else{
+					aaObject.addCreditCard(aa);
+			}
 
-			accountsAA.put(aa.Account__c,aaObject);
+			if(aaObject.creditCardAA.Account__r.Is_PCI_compliant__c == 'No' || aaObject.creditCardAA.Account__r.Is_PCI_compliant__c == 'Nil CC')
+            	aaObject.preventCCActivation = true;
+				
+            accountsAA.put(aa.Account__c,aaObject);
 
 		}
 
-		String process = restoreCash  && restoreCreditCard  ? 'Restore All' : 
-						 restrictCash && restrictCreditCard ? 'Restrict All' : 
-						 restrictCash ? 'Restrict Cash' :
-						 restrictCreditCard ? 'Restrict Credit Card' :
-						 restoreCash ? 'Restore Cash' : 'Restore Credit Card';
-
-		List<ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcess = [SELECT Cash_before__c,Credit_Card_before__c,Action_in_FoP_OSCAR__c,Cash_after__c,Credit_Card_after__c,Change_Code__c FROM ANG_Forms_Of_Payment_CC_Matrix__mdt WHERE Action_in_FoP_OSCAR__c =:process];
+		String process = null;
+		
+		List<ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcess = [SELECT Cash_before__c,Credit_Card_before__c,Action_in_FoP_OSCAR__c,Cash_after__c,Credit_Card_after__c,Change_Code__c FROM ANG_Forms_Of_Payment_CC_Matrix__mdt];
 
 		Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcessMap = new Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt>();
 
 		for(ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject: matrixAAProcess)
-			matrixAAProcessMap.put(matrixObject.Cash_before__c+matrixObject.Credit_Card_before__c,matrixObject);
+			matrixAAProcessMap.put(matrixObject.Action_in_FoP_OSCAR__c+matrixObject.Cash_before__c+matrixObject.Credit_Card_before__c,matrixObject);
 
 		ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject;
-
+		        
 		for(AgencyAuthorizationOBject aaOjectToAnalyze: accountsAA.values()){
-			
-			matrixObject = matrixAAProcessMap.get(aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
 
-			System.debug('matrixObject is ' + matrixObject);
+			process =  	 restoreCash  && restoreCreditCard  && !aaOjectToAnalyze.preventCCActivation? 'Restore All' : 
+						 restoreCash  && restoreCreditCard  && aaOjectToAnalyze.preventCCActivation? 'Restore Cash':
+						 restrictCash && restrictCreditCard ? 'Restrict All' : 
+						 restrictCash ? 'Restrict Cash' :
+						 restrictCreditCard ? 'Restrict Credit Card' :
+						 restoreCash ? 'Restore Cash' : 
+						 restoreCreditCard && !aaOjectToAnalyze.preventCCActivation ? 'Restore Credit Card' : null;
 
-			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);
+			if(process == null)
+				continue;
+
+			matrixObject = matrixAAProcessMap.get(process+aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
+
+			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);           
 			aaOjectToAnalyze.addCreditCardValue(matrixObject.Credit_Card_after__c, matrixObject.Change_Code__c);
 			
 			if(aaOjectToAnalyze.changedCA)
@@ -979,6 +988,8 @@ global class ANG_OscarProcessHelper {
 
 		boolean changedCC;
 		boolean changedCA;
+
+		public boolean preventCCActivation;
 
 		public AgencyAuthorizationOBject(Id accountId){
 			this.accountId = accountId;
