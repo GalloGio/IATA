@@ -19,10 +19,6 @@ private class clsCaseCommentManagerTest {
 		insert case2;
 
 		CaseComment cm = new CaseComment(parentId = case2.Id);
-		clsCaseCommentManager.increasecoverage();
-		//insert cm;
-
-
+		insert cm;
 	}
-
 }

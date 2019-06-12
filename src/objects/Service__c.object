@@ -46,9 +46,9 @@
     <description>IATA services airlines can subscribe for</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -66,6 +66,7 @@
     </fields>
     <fields>
         <fullName>Service_Publication__c</fullName>
+        <description>Represents either the current order is a service or a publication</description>
         <externalId>false</externalId>
         <label>Service/Publication</label>
         <required>false</required>

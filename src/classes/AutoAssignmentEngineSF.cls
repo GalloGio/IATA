@@ -17,10 +17,10 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
     global void finish(Database.BatchableContext BC) {
 
         try {
-            AutoAssignmentEngineSF assignBatch = new AutoAssignmentEngineSF();
+            //AutoAssignmentEngineSF assignBatch = new AutoAssignmentEngineSF();
 
             //schedule the next batch
-            System.scheduleBatch(assignBatch, 'AutoAssignmentBatch', 10, 10);
+            //System.scheduleBatch(assignBatch, 'AutoAssignmentBatch', 10, 10);
 
             AsyncApexJob a = [SELECT Id, Status, CompletedDate, JobItemsProcessed FROM AsyncApexJob WHERE Id = :BC.getJobId()];
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to notify users that Monthly Survey is available</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Currency Center Monthly Survey Initial Notification</name>
+    <style>freeForm</style>
+    <subject>Monthly Survey is available</subject>
+    <textOnly>Dear Currency Center users,
+
+Your Monthly Survey on the Remittance of Foreign Balance for the month {!CASE(Currency_Center_Survey__c.Month_Survey__c,&apos;1&apos;,&apos;January&apos;,&apos;2&apos;,&apos;February&apos;,&apos;3&apos;,&apos;March&apos;,&apos;4&apos;,&apos;April&apos;,&apos;5&apos;,&apos;May&apos;,&apos;6&apos;,&apos;June&apos;,&apos;7&apos;,&apos;July&apos;,&apos;8&apos;,&apos;August&apos;,&apos;9&apos;,&apos;September&apos;,&apos;10&apos;,&apos;October&apos;,&apos;11&apos;,&apos;November&apos;,&apos;12&apos;,&apos;December&apos;,&apos;&apos;)} is now open. 
+Please ensure you provide us with complete information by latest 14th {!CASE(MONTH(TODAY()),1,&apos;January&apos;,2,&apos;February&apos;,3,&apos;March&apos;,4,&apos;April&apos;,5,&apos;May&apos;,6,&apos;June&apos;,7,&apos;July&apos;,8,&apos;August&apos;,9,&apos;September&apos;,10,&apos;October&apos;,11,&apos;November&apos;,12,&apos;December&apos;,&apos;&apos;)}. Your participation is essential to IATA Currency Repatriation advocacy efforts.
+
+Should you have any queries, please log a case in your IATA Customer portal under the topic &quot;Currency Center&quot;.
+
+Kind regards,
+Currency Center Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

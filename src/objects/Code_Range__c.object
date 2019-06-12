@@ -45,9 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -357,8 +357,12 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <columns>Country_Code__c</columns>
         <columns>ProgramCode__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>ProgramCode__c</field>
+            <operation>equals</operation>
+            <value>T</value>
+        </filters>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>China_Ranges</fullName>

@@ -34,7 +34,7 @@
         <criteriaItems>
             <field>AMS_Agency_Regulation__c.Type_Of_Certificate__c</field>
             <operation>equals</operation>
-            <value>DGR,CATA</value>
+            <value>DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.CNS_Agency__c</field>

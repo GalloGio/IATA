@@ -24,15 +24,13 @@ global without sharing class ANG_SAP_PPA {
             Blob fileContent;
 
             if (string.isBlank(fileBody)) {
-                /* removed PPA stories from Release
-                //SAP_Digital_Invoice.DT_SFDC_DigitalSignedInvoice_Response response = IECInvoice_Ctrl.CallSAPToGetInvoice_Static(ppaNumber);
+                SAP_Digital_Invoice.DT_SFDC_DigitalSignedInvoice_Response response = IECInvoice_Ctrl.CallSAPToGetInvoice_Static(ppaNumber);
                 if (response!=null) {
                     if (response.Error == null) EncodingUtil.base64Decode(response.EncodedSignedInvoice);
                 } else {
                 	if (!Test.isRunningTest()) //ServiceNow_Helper.sendRequestToSNOW('SAP', 'SAP PPA', 'SAP PPA', 'SAP-PI', 'SAP', 'Error while getting PPA from SAP', String.valueOf(response.Error.Message), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
                         ServiceNow_Helper.sendRequestToSNOWSAP('SNOW15', response, null);
                 }
-                */
             }
             else fileContent = EncodingUtil.base64Decode(fileBody);
 

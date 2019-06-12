@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customApplications>
+        <label><!-- ACLI --></label>
+        <name>ACLI</name>
+    </customApplications>
+    <customApplications>
         <label><!-- AMS INTEGRATION --></label>
         <name>AMS</name>
     </customApplications>
@@ -113,6 +117,14 @@
         <name>SIS_Help_Desk</name>
     </customApplications>
     <customApplications>
+        <label><!-- Service console lightning L1/L2 --></label>
+        <name>Service_console_lightning_l1l2</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Service --></label>
+        <name>Service_l1l2</name>
+    </customApplications>
+    <customApplications>
         <label><!-- TIP --></label>
         <name>TIP</name>
     </customApplications>
@@ -141,12 +153,20 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMP Services Active --></label>
+        <name>AMP_Services_Active</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_AttchNotifyOwner --></label>
         <name>AMS_AttchNotifyOwner</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_CountrySAttr_Validation --></label>
+        <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
@@ -257,6 +277,10 @@
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action20 --></label>
+        <name>AMS_OSCAR_Action20</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_OSCAR_Action3 --></label>
         <name>AMS_OSCAR_Action3</name>
     </customLabels>
@@ -331,6 +355,18 @@
     <customLabels>
         <label><!-- AMS OSCAR DISAPPROVAL --></label>
         <name>AMS_OSCAR_DISAPPROVAL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_ENDORSEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_FINANCIAL_SECURITY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_fees --></label>
+        <name>AMS_OSCAR_GDI_fees</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -545,8 +581,28 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP46 --></label>
+        <name>AMS_OSCAR_STEP46</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP47 --></label>
+        <name>AMS_OSCAR_STEP47</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP48 --></label>
+        <name>AMS_OSCAR_STEP48</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP49 --></label>
+        <name>AMS_OSCAR_STEP49</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP5 --></label>
         <name>AMS_OSCAR_STEP5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP50 --></label>
+        <name>AMS_OSCAR_STEP50</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -693,15 +749,15 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label>Leia estas</label>
+        <label>Você pode acessar sua conta EasyPay IATA pelo</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</name>
     </customLabels>
     <customLabels>
-        <label>Perguntas frequentes</label>
+        <label>Portal de Atendimento ao Cliente da IATA</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</name>
     </customLabels>
     <customLabels>
-        <label>para saber mais sobre como gerenciar sua conta EasyPay e dar os primeiros passos.</label>
+        <label>sempre que preciso. Agora, seus colegas também podem solicitar acesso à sua conta recém-aberta.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</name>
     </customLabels>
     <customLabels>
@@ -709,11 +765,11 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Seus colegas agora podem solicitar acesso à sua conta recém-aberta no Portal de Atendimento ao Cliente da IATA. As &amp;lt;a href=&quot;&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot;&gt;Perguntas frequentes&amp;lt;/a&gt; acima descrevem como você pode gerenciar o acesso de usuários.&quot;</label>
+        <label>Consulte a seção de Perguntas Frequentes/Ajuda no portal EasyPay IATA para mais informações sobre como gerenciar sua conta EasyPay.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Parabéns pela abertura de sua nova conta EasyPay IATA. Siga este artigo, que descreve como gerenciar sua conta EasyPay e as etapas iniciais para transferir fundos, para poder começar a emitir passagens pela EasyPay. Seus colegas agora podem solicitar acesso à sua conta recém-aberta no Portal de Atendimento ao Cliente da IATA. O artigo acima descreve como você pode gerenciar o acesso de usuários. Obrigado, Atendimento ao Cliente da IATA&quot;</label>
+        <label>Parabéns pela abertura de sua nova conta EasyPay IATA. Você pode acessar sua conta EasyPay IATA pelo Portal de Atendimento ao Cliente da IATA &lt;https://portal.iata.org/ISSP_Login&gt; sempre que preciso. Agora, seus colegas também podem solicitar acesso à sua conta recém-aberta. Consulte a seção de Perguntas Frequentes/Ajuda no portal EasyPay IATA para mais informações sobre como gerenciar sua conta EasyPay. Obrigado, Atendimento ao Cliente da IATA</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</name>
     </customLabels>
     <customLabels>
@@ -807,6 +863,50 @@
     <customLabels>
         <label>Função de serviço do Portal</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
+    </customLabels>
+    <customLabels>
+        <label>Concordo</label>
+        <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label>A lista de Instituições Financeiras que fornecem Seguro/Segurança Financeira no seu país</label>
+        <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label>Ir para o Portal do GDI</label>
+        <name>ANG_ISSP_GDI_Navigate_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label>Registros exibidos por página:</label>
+        <name>ANG_ISSP_GDI_Page_Display_Records</name>
+    </customLabels>
+    <customLabels>
+        <label>Primeira página</label>
+        <name>ANG_ISSP_GDI_Page_First</name>
+    </customLabels>
+    <customLabels>
+        <label>Última página</label>
+        <name>ANG_ISSP_GDI_Page_Last</name>
+    </customLabels>
+    <customLabels>
+        <label>Próxima página</label>
+        <name>ANG_ISSP_GDI_Page_Next</name>
+    </customLabels>
+    <customLabels>
+        <label>Página anterior</label>
+        <name>ANG_ISSP_GDI_Page_Previous</name>
+    </customLabels>
+    <customLabels>
+        <label>Ao solicitar que sua Segurança Financeira seja fornecida à IATA pela Euler Hermes, você consente que a IATA compartilhe com a Euler Hermes as informações que detém e que são relevantes para a sua posição financeira, sejam elas obtidas diretamente de você ao solicitar seu credenciamento da IATA ou aquelas que a IATA tenha mantido durante todo o período de sua associação à IATA.</label>
+        <name>ANG_ISSP_GDI_Terms_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_UserProvisioningError --></label>
+        <name>ANG_ISSP_GDI_UserProvisioningError</name>
+    </customLabels>
+    <customLabels>
+        <label>Aguarde. Você será redirecionado para o Portal do GDI em alguns momentos.</label>
+        <name>ANG_ISSP_GDI_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
         <label>Entidade principal:</label>
@@ -1181,6 +1281,10 @@
         <name>ANG_OSCAR_WARNING_RISK</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_OnGoing_OSCAR_Warning --></label>
+        <name>ANG_OnGoing_OSCAR_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_PCI_COMPLIANT --></label>
         <name>ANG_PCI_COMPLIANT</name>
     </customLabels>
@@ -1201,15 +1305,15 @@
         <name>ANG_RHC_AmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG RHC HUB Current Usage Tooltip --></label>
+        <label>Valor de RHC consumido</label>
         <name>ANG_RHC_HUB_Current_UsageTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_RHC RHC Amount Tooltip --></label>
+        <label>Limite monetário de vendas em dinheiro pendentes no BSP dos agentes</label>
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG RHC Risk Status Tooltip --></label>
+        <label>Determinado pelo histórico de risco contínuo dos agentes e pelo resultado de suas análises financeiras</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -1536,6 +1640,26 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Community --></label>
+        <name>CSP_Community</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Portal_Status --></label>
+        <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SelectCommunity --></label>
+        <name>CSP_SelectCommunity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SelectPortalStatus --></label>
+        <name>CSP_SelectPortalStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_selectReason --></label>
+        <name>CSP_selectReason</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -1566,6 +1690,10 @@
     <customLabels>
         <label><!-- CaseKPI2_RecordType --></label>
         <name>CaseKPI2_RecordType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseRTtrackedByCS --></label>
+        <name>CaseRTtrackedByCS</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseTypeReason1List1 --></label>
@@ -1652,6 +1780,10 @@
         <name>Company_name</name>
     </customLabels>
     <customLabels>
+        <label><!-- ConfirmSendRecycleBin --></label>
+        <name>ConfirmSendRecycleBin</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Confirm password --></label>
         <name>Confirm_password</name>
     </customLabels>
@@ -1720,6 +1852,10 @@
         <name>CurrencyCenter_Actual_Amount_Blocked</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_AddCountry_Monthly_Survey --></label>
+        <name>CurrencyCenter_AddCountry_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Airlines_Charges --></label>
         <name>CurrencyCenter_Airlines_Charges</name>
     </customLabels>
@@ -1734,6 +1870,18 @@
     <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Survey --></label>
+        <name>CurrencyCenter_Annual_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Surveys --></label>
+        <name>CurrencyCenter_Annual_Surveys</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Top_Text --></label>
+        <name>CurrencyCenter_Annual_Top_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Attachments_Description --></label>
@@ -1764,6 +1912,10 @@
         <name>CurrencyCenter_Back_Home</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Back_ReportingActions --></label>
+        <name>CurrencyCenter_Back_ReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Blocked_Funds --></label>
         <name>CurrencyCenter_Blocked_Funds</name>
     </customLabels>
@@ -1788,6 +1940,18 @@
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Question --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Title --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Monthly_Survey --></label>
+        <name>CurrencyCenter_Cancel_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -1802,6 +1966,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Title --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Details --></label>
@@ -1830,6 +2002,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_Economic_Profile --></label>
         <name>CurrencyCenter_Economic_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Edit --></label>
+        <name>CurrencyCenter_Edit</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Exchange_Rates_Directory --></label>
@@ -1880,6 +2056,10 @@
         <name>CurrencyCenter_Issue_Started</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Link --></label>
+        <name>CurrencyCenter_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Manage_Notifications --></label>
         <name>CurrencyCenter_Manage_Notifications</name>
     </customLabels>
@@ -1892,12 +2072,24 @@
         <name>CurrencyCenter_Manage_Notifications_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Survey --></label>
+        <name>CurrencyCenter_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Surveys --></label>
+        <name>CurrencyCenter_Monthly_Surveys</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Next_Action --></label>
         <name>CurrencyCenter_Next_Action</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Number_of_Airlines_Reporting --></label>
         <name>CurrencyCenter_Number_of_Airlines_Reporting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Open --></label>
+        <name>CurrencyCenter_Open</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Preferences_Save_Error --></label>
@@ -1920,6 +2112,22 @@
         <name>CurrencyCenter_Repatriation_Process</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Reporting_And_Actions --></label>
+        <name>CurrencyCenter_Reporting_And_Actions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update --></label>
+        <name>CurrencyCenter_Request_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update_Hover --></label>
+        <name>CurrencyCenter_Request_Update_Hover</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Save_Monthly_Survey --></label>
+        <name>CurrencyCenter_Save_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Save_Preferences --></label>
         <name>CurrencyCenter_Save_Preferences</name>
     </customLabels>
@@ -1940,12 +2148,32 @@
         <name>CurrencyCenter_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Question --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Title --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submit_Monthly_Survey --></label>
+        <name>CurrencyCenter_Submit_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Survey --></label>
+        <name>CurrencyCenter_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Treasury_Dashboard --></label>
         <name>CurrencyCenter_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Unfollow --></label>
         <name>CurrencyCenter_Unfollow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_UpcomingActions --></label>
+        <name>CurrencyCenter_UpcomingActions</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Update_Feeds --></label>
@@ -2398,6 +2626,14 @@
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
         <name>IATA_Alpha</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA_GDPR_URL --></label>
+        <name>IATA_GDPR_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA GDPR White Logo --></label>
+        <name>IATA_GDPR_White_Logo</name>
     </customLabels>
     <customLabels>
         <label><!-- ICAddressDoctor_adns --></label>
@@ -3572,6 +3808,22 @@
         <name>IDCard_Attachments</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_BSP_Agent_Billing_Reports_Procedures --></label>
+        <name>IDCard_BSP_Agent_Billing_Reports_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Agent_Remittance_Procedures --></label>
+        <name>IDCard_BSP_Agent_Remittance_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Essentials_for_Travel_Agents --></label>
+        <name>IDCard_BSP_Essentials_for_Travel_Agents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Standard_Documents_Procedures --></label>
+        <name>IDCard_BSP_Standard_Documents_Procedures</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_Back --></label>
         <name>IDCard_Back</name>
     </customLabels>
@@ -3990,6 +4242,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label><!-- IDCard_IndustryEntrySuperior --></label>
         <name>IDCard_IndustryEntrySuperior</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Intro_to_the_BSP_System_Language --></label>
+        <name>IDCard_Intro_to_the_BSP_System_Language</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_IntroduccionAlBSPlink_Description --></label>
@@ -5568,6 +5824,1370 @@ and
         <name>ISSP_60Day_Password_Reset</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ACM_PREFIX --></label>
+        <name>ISSP_ACM_PREFIX</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CATEGORY --></label>
+        <name>ISSP_AMC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_1 --></label>
+        <name>ISSP_AMC_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_2 --></label>
+        <name>ISSP_AMC_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_2DIGITS_CODE --></label>
+        <name>ISSP_AMC_2DIGITS_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_3 --></label>
+        <name>ISSP_AMC_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_3LETTERS_CODE --></label>
+        <name>ISSP_AMC_3LETTERS_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_3NUMBERS_CODE --></label>
+        <name>ISSP_AMC_3NUMBERS_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNT --></label>
+        <name>ISSP_AMC_ACCOUNT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNTING --></label>
+        <name>ISSP_AMC_ACCOUNTING</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNTING_CODE --></label>
+        <name>ISSP_AMC_ACCOUNTING_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNTING_OR_PREFIX --></label>
+        <name>ISSP_AMC_ACCOUNTING_OR_PREFIX</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE --></label>
+        <name>ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE_DESC --></label>
+        <name>ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE_DESC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNT_PREFIX_CODE --></label>
+        <name>ISSP_AMC_ACCOUNT_PREFIX_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM --></label>
+        <name>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM_QUESTION --></label>
+        <name>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM_QUESTION_YES --></label>
+        <name>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM_QUESTION_YES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ADD --></label>
+        <name>ISSP_AMC_ADD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ADDRESS_INFO --></label>
+        <name>ISSP_AMC_ADDRESS_INFO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ADD_ANOTHER_AUTHORITY_BUTTON --></label>
+        <name>ISSP_AMC_ADD_ANOTHER_AUTHORITY_BUTTON</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ADD_DELETE_FROM_METROPOLITAN --></label>
+        <name>ISSP_AMC_ADD_DELETE_FROM_METROPOLITAN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ADD_ME --></label>
+        <name>ISSP_AMC_ADD_ME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC AGREE TERMS AND CONDITIONS --></label>
+        <name>ISSP_AMC_AGREE_TERMS_AND_CONDITIONS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRLINES_LOCATION_CODES --></label>
+        <name>ISSP_AMC_AIRLINES_LOCATION_CODES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRLINE_CODE --></label>
+        <name>ISSP_AMC_AIRLINE_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRLINE_DESIGNATOR --></label>
+        <name>ISSP_AMC_AIRLINE_DESIGNATOR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRLINE_DESIGNATORS --></label>
+        <name>ISSP_AMC_AIRLINE_DESIGNATORS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRLINE_DESIGNATORS_DESC --></label>
+        <name>ISSP_AMC_AIRLINE_DESIGNATORS_DESC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE --></label>
+        <name>ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRLINE_ISSUED_AOC --></label>
+        <name>ISSP_AMC_AIRLINE_ISSUED_AOC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRLINE_NAME --></label>
+        <name>ISSP_AMC_AIRLINE_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRPORT_GROUP --></label>
+        <name>ISSP_AMC_AIRPORT_GROUP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRPORT_HELIPORT --></label>
+        <name>ISSP_AMC_AIRPORT_HELIPORT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRPORT_LOCATION_NAME --></label>
+        <name>ISSP_AMC_AIRPORT_LOCATION_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRPORT_OPEN_QUESTION --></label>
+        <name>ISSP_AMC_AIRPORT_OPEN_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIRPORT_OPERATIONAL_QUESTION --></label>
+        <name>ISSP_AMC_AIRPORT_OPERATIONAL_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIR_OPERATOR_CERTIFICATE --></label>
+        <name>ISSP_AMC_AIR_OPERATOR_CERTIFICATE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIR_OPERATOR_HELP --></label>
+        <name>ISSP_AMC_AIR_OPERATOR_HELP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AIR_OPERATOR_QUESTION --></label>
+        <name>ISSP_AMC_AIR_OPERATOR_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AOC_EXPIRES --></label>
+        <name>ISSP_AMC_AOC_EXPIRES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AOC_EXPIRES_CHANGE --></label>
+        <name>ISSP_AMC_AOC_EXPIRES_CHANGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_APPLICATION_BTIC --></label>
+        <name>ISSP_AMC_APPLICATION_BTIC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_APPLICATION_THREE_NUMERIC_ACCOUNTING --></label>
+        <name>ISSP_AMC_APPLICATION_THREE_NUMERIC_ACCOUNTING</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_APPLY_NEW_CODE --></label>
+        <name>ISSP_AMC_APPLY_NEW_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_APPROVALS_BOTH_AUTHORITIES --></label>
+        <name>ISSP_AMC_APPROVALS_BOTH_AUTHORITIES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AREA --></label>
+        <name>ISSP_AMC_AREA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Accouting_Code_Withdraw --></label>
+        <name>ISSP_AMC_Accouting_Code_Withdraw</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Airline_Issued_AOC_HELP_TEXT --></label>
+        <name>ISSP_AMC_Airline_Issued_AOC_HELP_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Application_Approval_IATA --></label>
+        <name>ISSP_AMC_Application_Approval_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AreasOfRoutesAndOperations --></label>
+        <name>ISSP_AMC_AreasOfRoutesAndOperations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_AreasOfRoutesAndOperations_Routes --></label>
+        <name>ISSP_AMC_AreasOfRoutesAndOperations_Routes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Authorization_Transportation_Services --></label>
+        <name>ISSP_AMC_Authorization_Transportation_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Authorization_Transportation_Services_HELP_TEXT --></label>
+        <name>ISSP_AMC_Authorization_Transportation_Services_HELP_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Authorized_Areas_Operation --></label>
+        <name>ISSP_AMC_Authorized_Areas_Operation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Authorized_Areas_Operation_Domestic --></label>
+        <name>ISSP_AMC_Authorized_Areas_Operation_Domestic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Authorized_Areas_Operation_International --></label>
+        <name>ISSP_AMC_Authorized_Areas_Operation_International</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BAGAGE_TAG_RANGE --></label>
+        <name>ISSP_AMC_BAGAGE_TAG_RANGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BAGAGE_TAG_RANGE_DESC --></label>
+        <name>ISSP_AMC_BAGAGE_TAG_RANGE_DESC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC BAGGAGE REASON FOR USE 1 --></label>
+        <name>ISSP_AMC_BAGGAGE_REASON_FOR_USE_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC BAGGAGE REASON FOR USE 2 --></label>
+        <name>ISSP_AMC_BAGGAGE_REASON_FOR_USE_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC BAGGAGE REASON FOR USE 3 --></label>
+        <name>ISSP_AMC_BAGGAGE_REASON_FOR_USE_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC BAGGAGE REASON FOR USE 4 --></label>
+        <name>ISSP_AMC_BAGGAGE_REASON_FOR_USE_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC BAGGAGE REASON FOR USE 5 --></label>
+        <name>ISSP_AMC_BAGGAGE_REASON_FOR_USE_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BAGGAGE_TAG --></label>
+        <name>ISSP_AMC_BAGGAGE_TAG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BAGGAGE_TAG_RANGE_CODE --></label>
+        <name>ISSP_AMC_BAGGAGE_TAG_RANGE_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BILLING_ADDRESS --></label>
+        <name>ISSP_AMC_BILLING_ADDRESS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BILLING_CONTACT --></label>
+        <name>ISSP_AMC_BILLING_CONTACT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE --></label>
+        <name>ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BTR_Code_Withdraw --></label>
+        <name>ISSP_AMC_BTR_Code_Withdraw</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BUSINESS_PHONE --></label>
+        <name>ISSP_AMC_BUSINESS_PHONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BUS_COMPANY --></label>
+        <name>ISSP_AMC_BUS_COMPANY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_BUS_RAILWAY_FERRY --></label>
+        <name>ISSP_AMC_BUS_RAILWAY_FERRY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CAALETTEROPENINGDATE_TEXT --></label>
+        <name>ISSP_AMC_CAALETTEROPENINGDATE_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CANCEL --></label>
+        <name>ISSP_AMC_CANCEL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CARGO_AIRLINES_DOCUMENTS --></label>
+        <name>ISSP_AMC_CARGO_AIRLINES_DOCUMENTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CARGO_TEXT --></label>
+        <name>ISSP_AMC_CARGO_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CARGO_TEXT_FIVE --></label>
+        <name>ISSP_AMC_CARGO_TEXT_FIVE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CARGO_TEXT_FOUR --></label>
+        <name>ISSP_AMC_CARGO_TEXT_FOUR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CARGO_TEXT_ONE --></label>
+        <name>ISSP_AMC_CARGO_TEXT_ONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CARGO_TEXT_THREE --></label>
+        <name>ISSP_AMC_CARGO_TEXT_THREE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CARGO_TEXT_TWO --></label>
+        <name>ISSP_AMC_CARGO_TEXT_TWO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CASE_NUMBER --></label>
+        <name>ISSP_AMC_CASE_NUMBER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CASE_SYNC --></label>
+        <name>ISSP_AMC_CASE_SYNC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CHECK_THE_REQUIREMENTS --></label>
+        <name>ISSP_AMC_CHECK_THE_REQUIREMENTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CITY --></label>
+        <name>ISSP_AMC_CITY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CITY_NAME --></label>
+        <name>ISSP_AMC_CITY_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC CLICK HERE TO GET THERE --></label>
+        <name>ISSP_AMC_CLICK_HERE_TO_GET_THERE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CLOSE --></label>
+        <name>ISSP_AMC_CLOSE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS_TEXT --></label>
+        <name>ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMPANY_CODES --></label>
+        <name>ISSP_AMC_COMPANY_CODES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMPANY_CODES2 --></label>
+        <name>ISSP_AMC_COMPANY_CODES2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMPANY_CODES3 --></label>
+        <name>ISSP_AMC_COMPANY_CODES3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMPANY_INFO --></label>
+        <name>ISSP_AMC_COMPANY_INFO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMPANY_INFORMATION --></label>
+        <name>ISSP_AMC_COMPANY_INFORMATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMPANY_OPERATING_CERTIFICATE --></label>
+        <name>ISSP_AMC_COMPANY_OPERATING_CERTIFICATE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMPANY_OPERATING_CERTIFICATE_QUESTION --></label>
+        <name>ISSP_AMC_COMPANY_OPERATING_CERTIFICATE_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COMPLETE_APPLICATION_FORM --></label>
+        <name>ISSP_AMC_COMPLETE_APPLICATION_FORM</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CONTACT --></label>
+        <name>ISSP_AMC_CONTACT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CONTACT_DATA --></label>
+        <name>ISSP_AMC_CONTACT_DATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CONTACT_SALUTE --></label>
+        <name>ISSP_AMC_CONTACT_SALUTE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COORDINATES_FORMAT --></label>
+        <name>ISSP_AMC_COORDINATES_FORMAT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COUNTRY --></label>
+        <name>ISSP_AMC_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_COUNTRY_ISSUE --></label>
+        <name>ISSP_AMC_COUNTRY_ISSUE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CRS --></label>
+        <name>ISSP_AMC_CRS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CRS_QUESTION --></label>
+        <name>ISSP_AMC_CRS_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_CURRENT_STRUCTURE_LOCATION_TEXT --></label>
+        <name>ISSP_AMC_CURRENT_STRUCTURE_LOCATION_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Connected_Intermodally --></label>
+        <name>ISSP_AMC_Connected_Intermodally</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ContactDataValidation --></label>
+        <name>ISSP_AMC_ContactDataValidation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_DATE_ISSUE --></label>
+        <name>ISSP_AMC_DATE_ISSUE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_DATE_OF_PARTICIPATION --></label>
+        <name>ISSP_AMC_DATE_OF_PARTICIPATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_DATE_TIME_OPENED --></label>
+        <name>ISSP_AMC_DATE_TIME_OPENED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_DELETE --></label>
+        <name>ISSP_AMC_DELETE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_DESIGNATOR --></label>
+        <name>ISSP_AMC_DESIGNATOR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_DESIGNATOR_APPROVAL --></label>
+        <name>ISSP_AMC_DESIGNATOR_APPROVAL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC DOWNLOAD --></label>
+        <name>ISSP_AMC_DOWNLOAD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_DRAFT_SUBMITED_60_DAYS --></label>
+        <name>ISSP_AMC_DRAFT_SUBMITED_60_DAYS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Designator_Code_Withdraw --></label>
+        <name>ISSP_AMC_Designator_Code_Withdraw</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EDIT_CASE --></label>
+        <name>ISSP_AMC_EDIT_CASE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EMAIL --></label>
+        <name>ISSP_AMC_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_1 --></label>
+        <name>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_2 --></label>
+        <name>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_3 --></label>
+        <name>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_4 --></label>
+        <name>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_5 --></label>
+        <name>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ENTER_A_VALID_EMAIL --></label>
+        <name>ISSP_AMC_ENTER_A_VALID_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ENTITY_DATA --></label>
+        <name>ISSP_AMC_ENTITY_DATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EXISTING_CASE --></label>
+        <name>ISSP_AMC_EXISTING_CASE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EXISTING_CASE_EDIT --></label>
+        <name>ISSP_AMC_EXISTING_CASE_EDIT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EXISTING_CASE_ERROR_MESSAGE --></label>
+        <name>ISSP_AMC_EXISTING_CASE_ERROR_MESSAGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_EXPIRY_DATE --></label>
+        <name>ISSP_AMC_EXPIRY_DATE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_FERRY_COMPANY --></label>
+        <name>ISSP_AMC_FERRY_COMPANY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC FIELDS IN MESSAGE --></label>
+        <name>ISSP_AMC_FIELDS_IN_MESSAGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC FIELD IS REQUIRED --></label>
+        <name>ISSP_AMC_FIELD_IS_REQUIRED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_FIRST_NAME --></label>
+        <name>ISSP_AMC_FIRST_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_FLEET_INFORMATION --></label>
+        <name>ISSP_AMC_FLEET_INFORMATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_FREIGHT_FORWARDER --></label>
+        <name>ISSP_AMC_FREIGHT_FORWARDER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_FREIGHT_FORWARDER_QUESTION --></label>
+        <name>ISSP_AMC_FREIGHT_FORWARDER_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_FREIGHT_FORWARDER_QUESTION_YES --></label>
+        <name>ISSP_AMC_FREIGHT_FORWARDER_QUESTION_YES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_GPS_COORDINATES --></label>
+        <name>ISSP_AMC_GPS_COORDINATES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_HAS_OBTAINED_LETTER --></label>
+        <name>ISSP_AMC_HAS_OBTAINED_LETTER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_HEAD_OFFICE_ADDRESS --></label>
+        <name>ISSP_AMC_HEAD_OFFICE_ADDRESS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_HEAD_OFFICE_CONTACT --></label>
+        <name>ISSP_AMC_HEAD_OFFICE_CONTACT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_HOME_LB0 --></label>
+        <name>ISSP_AMC_HOME_LB0</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_HOME_LB0_CNS --></label>
+        <name>ISSP_AMC_HOME_LB0_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_IATA_A4A_CODE --></label>
+        <name>ISSP_AMC_IATA_A4A_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_IATA_AIRLINE_CODE --></label>
+        <name>ISSP_AMC_IATA_AIRLINE_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_IATA_CODE --></label>
+        <name>ISSP_AMC_IATA_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_IATA_CODES_BODY --></label>
+        <name>ISSP_AMC_IATA_CODES_BODY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_IATA_CODE_VALIDATION --></label>
+        <name>ISSP_AMC_IATA_CODE_VALIDATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ICAO_CODE --></label>
+        <name>ISSP_AMC_ICAO_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ICAO_CODE_HELP --></label>
+        <name>ISSP_AMC_ICAO_CODE_HELP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ICAO_CODE_QUESTION --></label>
+        <name>ISSP_AMC_ICAO_CODE_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ICAO_CODE_VALIDATION --></label>
+        <name>ISSP_AMC_ICAO_CODE_VALIDATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_INNOVATA_LLC --></label>
+        <name>ISSP_AMC_INNOVATA_LLC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_INTERMODAL_AGREEMENT --></label>
+        <name>ISSP_AMC_INTERMODAL_AGREEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_INTERMODAL_AGREEMENT_INFO --></label>
+        <name>ISSP_AMC_INTERMODAL_AGREEMENT_INFO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC INTERMODAL AGREEMENT LOCATION --></label>
+        <name>ISSP_AMC_INTERMODAL_AGREEMENT_LOCATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_INTERMODAL_AGREEMENT_MUST --></label>
+        <name>ISSP_AMC_INTERMODAL_AGREEMENT_MUST</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_INTERMODAL_AGREEMENT_QUESTION --></label>
+        <name>ISSP_AMC_INTERMODAL_AGREEMENT_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_INVALID_DATE --></label>
+        <name>ISSP_AMC_INVALID_DATE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC INVALID EMAIL --></label>
+        <name>ISSP_AMC_INVALID_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ISO_COUNTRY --></label>
+        <name>ISSP_AMC_ISO_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LAST_NAME --></label>
+        <name>ISSP_AMC_LAST_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LEGAL_NAME --></label>
+        <name>ISSP_AMC_LEGAL_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION --></label>
+        <name>ISSP_AMC_LOCATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_CODE --></label>
+        <name>ISSP_AMC_LOCATION_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_CODE_1 --></label>
+        <name>ISSP_AMC_LOCATION_CODE_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_CODE_2 --></label>
+        <name>ISSP_AMC_LOCATION_CODE_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_IDENTIFIER --></label>
+        <name>ISSP_AMC_LOCATION_IDENTIFIER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_IDENTIFIER_DESC --></label>
+        <name>ISSP_AMC_LOCATION_IDENTIFIER_DESC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_NAME --></label>
+        <name>ISSP_AMC_LOCATION_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_NAME_1 --></label>
+        <name>ISSP_AMC_LOCATION_NAME_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_NAME_2 --></label>
+        <name>ISSP_AMC_LOCATION_NAME_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_LOCATION_TYPE --></label>
+        <name>ISSP_AMC_LOCATION_TYPE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Location_Code_Error --></label>
+        <name>ISSP_AMC_Location_Code_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Location_Identifier_Code --></label>
+        <name>ISSP_AMC_Location_Identifier_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_MANAGE_CODES --></label>
+        <name>ISSP_AMC_MANAGE_CODES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_MAP_NO_RESULTS --></label>
+        <name>ISSP_AMC_MAP_NO_RESULTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_METROPOLITAN_AREA --></label>
+        <name>ISSP_AMC_METROPOLITAN_AREA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_METROPOLITAN_AREA_QUESTION --></label>
+        <name>ISSP_AMC_METROPOLITAN_AREA_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_AIRLINE --></label>
+        <name>ISSP_AMC_NAME_AIRLINE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_AIRPORT_AUTHORITY_1 --></label>
+        <name>ISSP_AMC_NAME_AIRPORT_AUTHORITY_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_AIRPORT_AUTHORITY_2 --></label>
+        <name>ISSP_AMC_NAME_AIRPORT_AUTHORITY_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_AIRPORT_AUTHORITY_3 --></label>
+        <name>ISSP_AMC_NAME_AIRPORT_AUTHORITY_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_AIRPORT_AUTHORITY_4 --></label>
+        <name>ISSP_AMC_NAME_AIRPORT_AUTHORITY_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_AIRPORT_AUTHORITY_5 --></label>
+        <name>ISSP_AMC_NAME_AIRPORT_AUTHORITY_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_ISSUING_AUTHORITY --></label>
+        <name>ISSP_AMC_NAME_ISSUING_AUTHORITY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_OF_ORGANIZATION --></label>
+        <name>ISSP_AMC_NAME_OF_ORGANIZATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NAME_SERVICE --></label>
+        <name>ISSP_AMC_NAME_SERVICE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NEGATIVE_APPROVALS --></label>
+        <name>ISSP_AMC_NEGATIVE_APPROVALS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NO --></label>
+        <name>ISSP_AMC_NO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NON_SCHEDULED_AIRLINES_DOCUMENTS --></label>
+        <name>ISSP_AMC_NON_SCHEDULED_AIRLINES_DOCUMENTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NON_SCHEDULED_TEXT --></label>
+        <name>ISSP_AMC_NON_SCHEDULED_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NON_SCHEDULED_TEXT_ONE --></label>
+        <name>ISSP_AMC_NON_SCHEDULED_TEXT_ONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NON_SCHEDULED_TEXT_THREE --></label>
+        <name>ISSP_AMC_NON_SCHEDULED_TEXT_THREE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NON_SCHEDULED_TEXT_TWO --></label>
+        <name>ISSP_AMC_NON_SCHEDULED_TEXT_TWO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC NOT VALID FOR SUBMISSION --></label>
+        <name>ISSP_AMC_NOT_VALID_FOR_SUBMISSION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NO_AIR_OPERATOR_CERTIFICATION --></label>
+        <name>ISSP_AMC_NO_AIR_OPERATOR_CERTIFICATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NO_CODE_ASSIGNED --></label>
+        <name>ISSP_AMC_NO_CODE_ASSIGNED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NO_INFORMATION --></label>
+        <name>ISSP_AMC_NO_INFORMATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NUMBER_OF_PLANES --></label>
+        <name>ISSP_AMC_NUMBER_OF_PLANES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NUMERIC_CODE --></label>
+        <name>ISSP_AMC_NUMERIC_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_NUMERIC_CODE_VALIDATION --></label>
+        <name>ISSP_AMC_NUMERIC_CODE_VALIDATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_No_Pending --></label>
+        <name>ISSP_AMC_No_Pending</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_OBTAINED_APPROVALS --></label>
+        <name>ISSP_AMC_OBTAINED_APPROVALS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_OFFICE_EMAIL --></label>
+        <name>ISSP_AMC_OFFICE_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_OFF_LINE_POINT --></label>
+        <name>ISSP_AMC_OFF_LINE_POINT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_OFF_LINE_POINT_PURPOSE --></label>
+        <name>ISSP_AMC_OFF_LINE_POINT_PURPOSE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ONLY_ALPHANUM_ALLOWED --></label>
+        <name>ISSP_AMC_ONLY_ALPHANUM_ALLOWED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_OTHER_AIRLINES_OPERATING_QUESTION --></label>
+        <name>ISSP_AMC_OTHER_AIRLINES_OPERATING_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PASSENGERS_TEXT_ONE --></label>
+        <name>ISSP_AMC_PASSENGERS_TEXT_ONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PASSENGERS_TEXT_THREE --></label>
+        <name>ISSP_AMC_PASSENGERS_TEXT_THREE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PASSENGERS_TEXT_TWO --></label>
+        <name>ISSP_AMC_PASSENGERS_TEXT_TWO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PASSENGERS_TEXT_ZERO --></label>
+        <name>ISSP_AMC_PASSENGERS_TEXT_ZERO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PASSENGER_AIRLINES_DOCUMENTS --></label>
+        <name>ISSP_AMC_PASSENGER_AIRLINES_DOCUMENTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PHONE --></label>
+        <name>ISSP_AMC_PHONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PLANNED_DATE_AIRLINES_QUESTION --></label>
+        <name>ISSP_AMC_PLANNED_AIRLINES_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_POSTAL_CODE --></label>
+        <name>ISSP_AMC_POSTAL_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREFERENCE_OF_CODE --></label>
+        <name>ISSP_AMC_PREFERENCE_OF_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC PREFERENCE OF CODE2 --></label>
+        <name>ISSP_AMC_PREFERENCE_OF_CODE2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREFERENCE_ONE --></label>
+        <name>ISSP_AMC_PREFERENCE_ONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREFERENCE_THREE --></label>
+        <name>ISSP_AMC_PREFERENCE_THREE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREFERENCE_TWO --></label>
+        <name>ISSP_AMC_PREFERENCE_TWO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREFIX_CODE --></label>
+        <name>ISSP_AMC_PREFIX_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREFIX_CODE1 --></label>
+        <name>ISSP_AMC_PREFIX_CODE1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREVIOUSLY_ASSIGNED_2CHAR_IATA_A4A_CODE --></label>
+        <name>ISSP_AMC_PREVIOUSLY_ASSIGNED_2CHAR_IATA_A4A_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREVIOUSLY_ASSIGNED_IATA_A4A_CODE --></label>
+        <name>ISSP_AMC_PREVIOUSLY_ASSIGNED_IATA_A4A_CODE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREVIOUS_IATA_CODE_ACCPREF --></label>
+        <name>ISSP_AMC_PREVIOUS_IATA_CODE_ACCPREF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PREVIOUS_IATA_CODE_QUESTION --></label>
+        <name>ISSP_AMC_PREVIOUS_IATA_CODE_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PROVIDING_TICKETING_TO_AIRLINE --></label>
+        <name>ISSP_AMC_PROVIDING_TICKETING_TO_AIRLINE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Prefix_Code_Withdraw --></label>
+        <name>ISSP_AMC_Prefix_Code_Withdraw</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_PreviousIATACode --></label>
+        <name>ISSP_AMC_PreviousIATACode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RAILWAY_COMPANY --></label>
+        <name>ISSP_AMC_RAILWAY_COMPANY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RAIL_FERRY_BUS --></label>
+        <name>ISSP_AMC_RAIL_FERRY_BUS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RAIL_FERRY_BUS_INFO_ONE --></label>
+        <name>ISSP_AMC_RAIL_FERRY_BUS_INFO_ONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RAIL_FERRY_BUS_INFO_TWO --></label>
+        <name>ISSP_AMC_RAIL_FERRY_BUS_INFO_TWO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RAIL_FERRY_BUS_QUESTION --></label>
+        <name>ISSP_AMC_RAIL_FERRY_BUS_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC REASONS FOR USE --></label>
+        <name>ISSP_AMC_REASONS_FOR_USE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RECIPROCAL_TWO_WAY --></label>
+        <name>ISSP_AMC_RECIPROCAL_TWO_WAY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RECIPROCAL_TWO_WAY_QUESTION --></label>
+        <name>ISSP_AMC_RECIPROCAL_TWO_WAY_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RECIPROCAL_TWO_WAY_QUESTION_YES --></label>
+        <name>ISSP_AMC_RECIPROCAL_TWO_WAY_QUESTION_YES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RECOMMENDED_LOCATION_IDENTIFIER --></label>
+        <name>ISSP_AMC_RECOMMENDED_LOCATION_IDENTIFIER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_REINSTATE --></label>
+        <name>ISSP_AMC_REINSTATE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_REQUESTOR_LOCATION_TYPE --></label>
+        <name>ISSP_AMC_REQUESTOR_LOCATION_TYPE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_REQUEST_BUTTON_LABEL --></label>
+        <name>ISSP_AMC_REQUEST_BUTTON_LABEL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_REQUIRED_TYPE_OF_OPERATION --></label>
+        <name>ISSP_AMC_REQUIRED_TYPE_OF_OPERATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC REQUIRES AN ANSWER --></label>
+        <name>ISSP_AMC_REQUIRES_AN_ANSWER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_RESERVATIONS_TICKETING_SYSTEMS --></label>
+        <name>ISSP_AMC_RESERVATIONS_TICKETING_SYSTEMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_REVIEW_REQUIREMENTS --></label>
+        <name>ISSP_AMC_REVIEW_REQUIREMENTS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Recalled --></label>
+        <name>ISSP_AMC_Recalled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SAVE --></label>
+        <name>ISSP_AMC_SAVE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULED_PUBLISHED_NO --></label>
+        <name>ISSP_AMC_SCHEDULED_PUBLISHED_NO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULED_PUBLISHED_YES --></label>
+        <name>ISSP_AMC_SCHEDULED_PUBLISHED_YES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_CONFIRMATION --></label>
+        <name>ISSP_AMC_SCHEDULES_CONFIRMATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_EIGHT --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_EIGHT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_ELEVEN --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_ELEVEN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_FIFTEEN --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_FIFTEEN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_FIVE --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_FIVE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_FOUR --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_FOUR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_FOURTEEN --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_FOURTEEN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_NINE --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_NINE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_ONE --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_ONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_SEVEN --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_SEVEN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_SIX --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_SIX</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_SIXTEEN --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_SIXTEEN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_TEN --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_TEN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_THIRTEEN --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_THIRTEEN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_THREE --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_THREE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_TWELVE --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_TWELVE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_INFO_TWO --></label>
+        <name>ISSP_AMC_SCHEDULES_INFO_TWO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_PUBLICATION --></label>
+        <name>ISSP_AMC_SCHEDULES_PUBLICATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SCHEDULES_PUBLICATION_QUESTION --></label>
+        <name>ISSP_AMC_SCHEDULES_PUBLICATION_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SEARCH --></label>
+        <name>ISSP_AMC_SEARCH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SEARCH_BILLING_CONTACT --></label>
+        <name>ISSP_AMC_SEARCH_BILLING_CONTACT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SEARCH_EXISTING --></label>
+        <name>ISSP_AMC_SEARCH_EXISTING</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SEARCH_HOC --></label>
+        <name>ISSP_AMC_SEARCH_HOC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SECTOR --></label>
+        <name>ISSP_AMC_SECTOR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SELECT_TYPE_OF_LOCATION --></label>
+        <name>ISSP_AMC_SELECT_TYPE_OF_LOCATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SELECT_TYPE_OF_OPERATION --></label>
+        <name>ISSP_AMC_SELECT_TYPE_OF_OPERATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SIGNED_LETTER_METRO_1 --></label>
+        <name>ISSP_AMC_SIGNED_LETTER_METRO_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SIGNED_LETTER_METRO_2 --></label>
+        <name>ISSP_AMC_SIGNED_LETTER_METRO_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SIS_BUBBLE --></label>
+        <name>ISSP_AMC_SIS_BUBBLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SIS_INFO --></label>
+        <name>ISSP_AMC_SIS_INFO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_STATE --></label>
+        <name>ISSP_AMC_STATE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_STATUS --></label>
+        <name>ISSP_AMC_STATUS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_STEP_1_OF_4 --></label>
+        <name>ISSP_AMC_STEP_1_OF_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_STRATEGIC_PARTNERSHIP --></label>
+        <name>ISSP_AMC_STRATEGIC_PARTNERSHIP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_STREET_ADDRESS --></label>
+        <name>ISSP_AMC_STREET_ADDRESS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SUBJECT --></label>
+        <name>ISSP_AMC_SUBJECT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SUBMITTED_BY --></label>
+        <name>ISSP_AMC_SUBMITTED_BY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SUBMIT_TO_IATA --></label>
+        <name>ISSP_AMC_SUBMIT_TO_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SUCCESS_REDIRECT --></label>
+        <name>ISSP_AMC_SUCCESS_REDIRECT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_SYN_CONNECTION --></label>
+        <name>ISSP_AMC_SYN_CONNECTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_Signed_Letter_CRS --></label>
+        <name>ISSP_AMC_Signed_Letter_CRS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TELEPHONE_NUMBER --></label>
+        <name>ISSP_AMC_TELEPHONE_NUMBER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TELEPHONE_NUMBER_ERROR --></label>
+        <name>ISSP_AMC_TELEPHONE_NUMBER_ERROR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE --></label>
+        <name>ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE2File --></label>
+        <name>ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE2File</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TERMSCONDITIONS_DATE --></label>
+        <name>ISSP_AMC_TERMSCONDITIONS_DATE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TERMSCONDITIONS_NAME --></label>
+        <name>ISSP_AMC_TERMSCONDITIONS_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TERMS_AGREE --></label>
+        <name>ISSP_AMC_TERMS_AGREE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TERMS_AND_CONDITIONS --></label>
+        <name>ISSP_AMC_TERMS_AND_CONDITIONS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TERMS_AND_CONDITIONS_TEXT --></label>
+        <name>ISSP_AMC_TERMS_AND_CONDITIONS_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_THREE_NUMERIC_ACCOUNTING --></label>
+        <name>ISSP_AMC_THREE_NUMERIC_ACCOUNTING</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TIME_ZONE --></label>
+        <name>ISSP_AMC_TIME_ZONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TITLE --></label>
+        <name>ISSP_AMC_TITLE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TO_BE_UPLOADED --></label>
+        <name>ISSP_AMC_TO_BE_UPLOADED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TRADE_NAME --></label>
+        <name>ISSP_AMC_TRADE_NAME</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TWO_CHARACTER_DESIGNATOR --></label>
+        <name>ISSP_AMC_TWO_CHARACTER_DESIGNATOR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TYPE_ONE --></label>
+        <name>ISSP_AMC_TYPE_ONE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TYPE_OPERATION_NON_SCHEDULED_CARGO --></label>
+        <name>ISSP_AMC_TYPE_OPERATION_NON_SCHEDULED_CARGO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TYPE_OPERATION_NON_SCHEDULED_PASSENGER --></label>
+        <name>ISSP_AMC_TYPE_OPERATION_NON_SCHEDULED_PASSENGER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TYPE_OPERATION_SCHEDULED_CARGO --></label>
+        <name>ISSP_AMC_TYPE_OPERATION_SCHEDULED_CARGO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TYPE_OPERATION_SCHEDULED_PASSENGER --></label>
+        <name>ISSP_AMC_TYPE_OPERATION_SCHEDULED_PASSENGER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TYPE_THREE --></label>
+        <name>ISSP_AMC_TYPE_THREE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TYPE_TWO --></label>
+        <name>ISSP_AMC_TYPE_TWO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TrafficAgreement_Valid_IATA_Code --></label>
+        <name>ISSP_AMC_TrafficAgreement_Valid_IATA_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_TrafficAgreement_Valid_IATA_Code_HELP_TEXT --></label>
+        <name>ISSP_AMC_TrafficAgreement_Valid_IATA_Code_HELP_TEXT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ULD --></label>
+        <name>ISSP_AMC_ULD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ULD_INFO --></label>
+        <name>ISSP_AMC_ULD_INFO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_ULD_QUESTION --></label>
+        <name>ISSP_AMC_ULD_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_UNTIL_IS_REVOKED --></label>
+        <name>ISSP_AMC_UNTIL_IS_REVOKED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC UPLOAD --></label>
+        <name>ISSP_AMC_UPLOAD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_UPLOAD_AIR_OPERATOR_CERTIFICATE --></label>
+        <name>ISSP_AMC_UPLOAD_AIR_OPERATOR_CERTIFICATE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMC UPLOAD FILES --></label>
+        <name>ISSP_AMC_UPLOAD_FILES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_VAT --></label>
+        <name>ISSP_AMC_VAT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_VIEW_CASE --></label>
+        <name>ISSP_AMC_VIEW_CASE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WC_ACCOUNTING --></label>
+        <name>ISSP_AMC_WC_ACCOUNTING</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WC_BAGGAGE_TAG_RANGE --></label>
+        <name>ISSP_AMC_WC_BAGGAGE_TAG_RANGE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WC_DESIGNATOR --></label>
+        <name>ISSP_AMC_WC_DESIGNATOR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WC_LOCATION_IDENTIFIER --></label>
+        <name>ISSP_AMC_WC_LOCATION_IDENTIFIER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WC_PREFIX --></label>
+        <name>ISSP_AMC_WC_PREFIX</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WEBSITE --></label>
+        <name>ISSP_AMC_WEBSITE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WHICH_ADD_DELETE_METROPOLITAN --></label>
+        <name>ISSP_AMC_WHICH_ADD_DELETE_METROPOLITAN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WITHDRAW --></label>
+        <name>ISSP_AMC_WITHDRAW</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WITHDRAW_QUESTION --></label>
+        <name>ISSP_AMC_WITHDRAW_QUESTION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WITHOUT_CODES --></label>
+        <name>ISSP_AMC_WITHOUT_CODES</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_WORK_IN_PROGRESS --></label>
+        <name>ISSP_AMC_WORK_IN_PROGRESS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_YEAR_CODE_HELD --></label>
+        <name>ISSP_AMC_YEAR_CODE_HELD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMC_YES --></label>
+        <name>ISSP_AMC_YES</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_ACCR_Alert1 --></label>
         <name>ISSP_AMS_ACCR_Alert1</name>
     </customLabels>
@@ -5620,7 +7240,7 @@ and
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Agency_Accreditation --></label>
+        <label>Credenciamento de agências</label>
         <name>ISSP_AMS_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
@@ -5628,23 +7248,23 @@ and
         <name>ISSP_AMS_Agency_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Associate_Entity --></label>
+        <label>Solicitar uma nova entidade associada</label>
         <name>ISSP_AMS_Apply_New_Associate_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Branch_Office --></label>
+        <label>Solicitar uma nova filial</label>
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <label>Solicitar uma nova matriz de carga</label>
         <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
+        <label>Solicitar uma nova entidade principal</label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Office --></label>
+        <label>Solicitar uma nova matriz</label>
         <name>ISSP_AMS_Apply_New_Office</name>
     </customLabels>
     <customLabels>
@@ -5656,11 +7276,11 @@ and
         <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
+        <label>Solicitar uma nova entidade principal de viagem</label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Office --></label>
+        <label>Solicitar uma nova matriz de viagem</label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
@@ -6732,43 +8352,43 @@ and
         <name>ISSP_AMS_LABEL_Listed_Shares</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Association --></label>
+        <label>Associação</label>
         <name>ISSP_AMS_LS_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Co-operative --></label>
+        <label>Cooperativa</label>
         <name>ISSP_AMS_LS_Co_operative</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Corporation --></label>
+        <label>Corporação</label>
         <name>ISSP_AMS_LS_Corporation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Government --></label>
+        <label>Empresa de propriedade do governo</label>
         <name>ISSP_AMS_LS_Government</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Limited Company --></label>
+        <label>Companhia limitada</label>
         <name>ISSP_AMS_LS_Limited_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Limited Partnership --></label>
+        <label>Sociedade limitada</label>
         <name>ISSP_AMS_LS_Limited_Partnership</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Other --></label>
+        <label>Outra</label>
         <name>ISSP_AMS_LS_Other</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Partnership --></label>
+        <label>Sociedade</label>
         <name>ISSP_AMS_LS_Partnership</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Sole Owner --></label>
+        <label>Firma individual</label>
         <name>ISSP_AMS_LS_Sole_Owner</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Trust Company --></label>
+        <label>Companhia fiduciária</label>
         <name>ISSP_AMS_LS_Trust_Company</name>
     </customLabels>
     <customLabels>
@@ -7548,7 +9168,7 @@ and
         <name>ISSP_AMS_NoC_New_HO_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC No Company Owners --></label>
+        <label>Não há nenhuma empresa listada como atual proprietária da sua Empresa.</label>
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
     </customLabels>
     <customLabels>
@@ -8384,7 +10004,7 @@ and
         <name>ISSP_AMS_Step3_4_Companies</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Se sua empresa for de propriedade total ou parcial de uma ou mais empresas, insira os dados aqui (exceto se sua organização for uma entidade legal com ações listadas em uma bolsa de valores ou regularmente negociadas em um mercado de balcão).&quot;</label>
+        <label>Se sua empresa for de propriedade total ou parcial de uma ou mais empresas, insira os dados aqui (exceto se sua organização for uma entidade legal com ações listadas em uma bolsa de valores ou regularmente negociadas em um mercado de balcão).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
@@ -8698,6 +10318,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted --></label>
         <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid --></label>
+        <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 HO Full Address --></label>
@@ -9132,6 +10756,10 @@ and
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_GeneratedReports --></label>
+        <name>ISSP_AMS_eBulletin_GeneratedReports</name>
+    </customLabels>
+    <customLabels>
         <label>Área geográfica</label>
         <name>ISSP_AMS_eBulletin_GeographicArea</name>
     </customLabels>
@@ -9376,15 +11004,15 @@ and
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP --></label>
+        <label>Propriedade total (Indivíduos + Empresas) deve totalizar 100% para o envio à IATA.</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <label>De acordo com nossos registros, a Propriedade deste Código da IATA não é 100%. Atualize os detalhes da Agência (seção Propriedade/Participação acionária da agência) para garantir que a propriedade total seja equivalente a 100%, de modo que possamos atualizar nossos registros.</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
+        <label>PROPRIEDADE TOTAL:</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
     <customLabels>
@@ -9412,7 +11040,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <label>O mesmo Código da IATA que está sendo atualizado não pode ser adicionado como um Proprietário da Empresa.</label>
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
@@ -9528,7 +11156,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC --></label>
+        <label>Equivalente a segurança financeira</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
     </customLabels>
     <customLabels>
@@ -9536,7 +11164,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_FORMULA --></label>
+        <label>De acordo com a fórmula</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
@@ -9590,6 +11218,10 @@ and
     <customLabels>
         <label><!-- Branch to Shipping --></label>
         <name>ISSP_ANG_Local_Details_Copy_Address2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Shipping same as Billing --></label>
+        <name>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
@@ -9782,6 +11414,10 @@ and
     <customLabels>
         <label>Solicitar alteração de Tipo de credenciamento e/ou notificar a IATA de alterações em sua Localização, Nome da empresa, Situação jurídica, Propriedade/Participação acionária.</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
     <customLabels>
         <label>PASSO A - Confirmar os dados da agência</label>
@@ -10224,6 +11860,10 @@ and
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CCOthers Invalid Contact --></label>
+        <name>ISSP_CCOthers_Invalid_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CNS_Documents --></label>
         <name>ISSP_CNS_Documents</name>
     </customLabels>
@@ -10274,6 +11914,10 @@ and
     <customLabels>
         <label><!-- ISSP Cargo Agent New --></label>
         <name>ISSP_Cargo_Agent_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Cargo --></label>
+        <name>ISSP_Cargo_Label_Value</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CaseCommentEmail --></label>
@@ -10646,8 +12290,20 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_CurrencyCenter</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reporting Actions Page --></label>
+        <name>ISSP_CurrencyCenterReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CurrencyCenter_Description --></label>
         <name>ISSP_CurrencyCenter_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Download --></label>
+        <name>ISSP_CurrencyCenter_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Last Updated On --></label>
+        <name>ISSP_CurrencyCenter_Last_Updated_On</name>
     </customLabels>
     <customLabels>
         <label>Filtro da Moeda</label>
@@ -10724,6 +12380,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
     <customLabels>
         <label>Baixar</label>
         <name>ISSP_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_DownloadAll --></label>
+        <name>ISSP_DownloadAll</name>
     </customLabels>
     <customLabels>
         <label>Baixe agora!</label>
@@ -11278,6 +12938,86 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_FAQ</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_FDS_AllCountries --></label>
+        <name>ISSP_FDS_AllCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountriesWithServices --></label>
+        <name>ISSP_FDS_AllCountriesWithServices</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_ChooseCountries --></label>
+        <name>ISSP_FDS_ChooseCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Countries --></label>
+        <name>ISSP_FDS_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountriesSelected --></label>
+        <name>ISSP_FDS_CountriesSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountryName --></label>
+        <name>ISSP_FDS_CountryName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CustomFilterBtn --></label>
+        <name>ISSP_FDS_CustomFilterBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Download --></label>
+        <name>ISSP_FDS_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_DownloadOpts --></label>
+        <name>ISSP_FDS_DownloadOpts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FileFormat --></label>
+        <name>ISSP_FDS_FileFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FillAllFields --></label>
+        <name>ISSP_FDS_FillAllFields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Filters --></label>
+        <name>ISSP_FDS_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_NoResults --></label>
+        <name>ISSP_FDS_NoResults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Operations --></label>
+        <name>ISSP_FDS_Operations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_OperationsSelected --></label>
+        <name>ISSP_FDS_OperationsSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_PopupTitle --></label>
+        <name>ISSP_FDS_PopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Remittance --></label>
+        <name>ISSP_FDS_Remittance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_RemittanceSelected --></label>
+        <name>ISSP_FDS_RemittanceSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_SelectAll --></label>
+        <name>ISSP_FDS_SelectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_UnselectAll --></label>
+        <name>ISSP_FDS_UnselectAll</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Fax --></label>
         <name>ISSP_Fax</name>
     </customLabels>
@@ -11338,23 +13078,35 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <label>Instituições financeiras</label>
+        <name>ISSP_Financial_Insititutions</name>
+    </customLabels>
+    <customLabels>
+        <label>Seguradoras da Instituição Financeira</label>
+        <name>ISSP_Financial_Insititutions_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>As Instituições Financeiras a seguir fornecem Seguro/Segurança Financeira no seu país</label>
+        <name>ISSP_Financial_Insititutions_Subheader</name>
+    </customLabels>
+    <customLabels>
+        <label>Valor total garantizado (convertido)</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>Detalhes</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <label>Garantia Financeira</label>
         <name>ISSP_Financial_Securities_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <label>Resumo</label>
         <name>ISSP_Financial_Securities_Summary</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <label>Valor total garantizado</label>
         <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
@@ -11822,7 +13574,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_InvalidPassword</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_InvalidPostalCode --></label>
+        <label>Formato inválido do código postal</label>
         <name>ISSP_InvalidPostalCode</name>
     </customLabels>
     <customLabels>
@@ -12346,6 +14098,10 @@ Se você continuar tendo problemas ao se no Portal do Cliente IATA, por favor co
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_DownloadWarning --></label>
+        <name>ISSP_OperationalCalendar_DownloadWarning</name>
+    </customLabels>
+    <customLabels>
         <label>Ativar filtros</label>
         <name>ISSP_OperationalCalendar_EnableFilters</name>
     </customLabels>
@@ -12424,6 +14180,14 @@ Se você continuar tendo problemas ao se no Portal do Cliente IATA, por favor co
     <customLabels>
         <label><!-- ISSP PAX Validating VAT Number --></label>
         <name>ISSP_PAX_Validating_VAT_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 error --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2_error</name>
     </customLabels>
     <customLabels>
         <label><!-- c --></label>
@@ -12748,6 +14512,46 @@ Por favor note que muitas invoices IATA para agentes acreditados são cobradas a
         <name>ISSP_ProductSubcategory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ProgressBar_Agreement --></label>
+        <name>ISSP_ProgressBar_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_ApplicationProcessing --></label>
+        <name>ISSP_ProgressBar_ApplicationProcessing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Application_Approved --></label>
+        <name>ISSP_ProgressBar_Application_Approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Application_Review --></label>
+        <name>ISSP_ProgressBar_Application_Review</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_ChangeProcessing --></label>
+        <name>ISSP_ProgressBar_ChangeProcessing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_FinalValidation --></label>
+        <name>ISSP_ProgressBar_FinalValidation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Financial_Security --></label>
+        <name>ISSP_ProgressBar_Financial_Security</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Payment --></label>
+        <name>ISSP_ProgressBar_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_SanityCheck --></label>
+        <name>ISSP_ProgressBar_SanityCheck</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ProgressBar_Submitted --></label>
+        <name>ISSP_ProgressBar_Submitted</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Public --></label>
         <name>ISSP_Public</name>
     </customLabels>
@@ -13063,6 +14867,10 @@ Se desejar redefinir a sua senha, volte à tela de login e use a função Esquec
         <name>ISSP_Related_contacts</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
+    </customLabels>
+    <customLabels>
         <label>Transferir para outra conta</label>
         <name>ISSP_Relocate_Contact</name>
     </customLabels>
@@ -13213,6 +15021,10 @@ Se desejar redefinir a sua senha, volte à tela de login e use a função Esquec
     <customLabels>
         <label><!-- ISSP SIS Membership AutoBilling Helptext --></label>
         <name>ISSP_SIS_Membership_AutoBilling_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership AutoBilling Helptext2 --></label>
+        <name>ISSP_SIS_Membership_AutoBilling_Helptext2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_SIS_Membership_BankMandateDescription --></label>
@@ -14521,6 +16333,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
+        <label><!-- Industry_Activities --></label>
+        <name>Industry_Activities</name>
+    </customLabels>
+    <customLabels>
         <label><!-- InputRequiredMessage --></label>
         <name>InputRequiredMessage</name>
     </customLabels>
@@ -15053,6 +16869,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>Last_name</name>
     </customLabels>
     <customLabels>
+        <label><!-- Line of Business (LoB) --></label>
+        <name>Line_of_Business_LoB</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LiveAgentButtonLanguage --></label>
         <name>LiveAgentButtonLanguage</name>
     </customLabels>
@@ -15189,6 +17009,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
+        <label><!-- MultiselectPicklist_AddAll --></label>
+        <name>MultiselectPicklist_AddAll</name>
+    </customLabels>
+    <customLabels>
         <label>Para baixo</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
@@ -15197,12 +17021,28 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>MultiselectPicklist_Remove</name>
     </customLabels>
     <customLabels>
+        <label><!-- MultiselectPicklist_RemoveAll --></label>
+        <name>MultiselectPicklist_RemoveAll</name>
+    </customLabels>
+    <customLabels>
         <label>Para cima</label>
         <name>MultiselectPicklist_Up</name>
     </customLabels>
     <customLabels>
         <label><!-- My_Renewals --></label>
         <name>My_Renewals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NDC Troubleshooting --></label>
+        <name>NDC_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NEW_HO_SanityCheck --></label>
+        <name>NEW_HO_SanityCheck</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NEW_HO_Submitted --></label>
+        <name>NEW_HO_Submitted</name>
     </customLabels>
     <customLabels>
         <label><!-- New --></label>
@@ -15249,6 +17089,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>New_product_email_subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- No Eligible User --></label>
+        <name>NoEligibleUserForContact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- NoSameName --></label>
         <name>NoSameName</name>
     </customLabels>
@@ -15279,6 +17123,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
     <customLabels>
         <label><!-- No special characters --></label>
         <name>No_special_characters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Not Applicable --></label>
+        <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
         <label><!-- Notions_Essentl_Tarif_Billet_Description --></label>
@@ -15337,7 +17185,7 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_CategoryError</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CheckEmail --></label>
+        <label>Inscrição concluída com sucesso</label>
         <name>OneId_CheckEmail</name>
     </customLabels>
     <customLabels>
@@ -15665,6 +17513,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_FRED_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
     </customLabels>
@@ -15781,6 +17633,22 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_My_available_applications</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_NDCMM_Sharepoint_URL --></label>
+        <name>OneId_NDCMM_Sharepoint_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Terms_Of_Use_Link --></label>
+        <name>OneId_NDCMM_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting --></label>
+        <name>OneId_NDCMM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NDCMM_Troubleshooting_Link --></label>
+        <name>OneId_NDCMM_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Name --></label>
         <name>OneId_Name</name>
     </customLabels>
@@ -15893,7 +17761,7 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
         <name>OneId_Profile_OfficeEmail</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_RegistrationComplete --></label>
+        <label>Verifique seu e-mail para obter seus dados de acesso</label>
         <name>OneId_RegistrationComplete</name>
     </customLabels>
     <customLabels>
@@ -15964,6 +17832,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>OneId_Type</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_URL_To_GDPR --></label>
+        <name>OneId_URL_To_GDPR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId URL javaScript --></label>
         <name>OneId_URL_javaScript</name>
     </customLabels>
@@ -15996,8 +17868,20 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>OneId_Your_request_has_been_successfully_sent</name>
     </customLabels>
     <customLabels>
+        <label><!-- Text for link tor online help on OneIdentity login page for data privacy portal --></label>
+        <name>OneId_dataprivacy_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Link on online help link in One Identity login page for data privacy portal --></label>
+        <name>OneId_dataprivacy_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Oneid_request_acess_to_a_new_service --></label>
         <name>Oneid_request_acess_to_a_new_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Only Allow Broadcast Tool for IATA Members --></label>
+        <name>Only_Allow_Broadcast_Tool_for_IATA_Members</name>
     </customLabels>
     <customLabels>
         <label><!-- Only one subscription can  be purchased --></label>
@@ -17212,6 +19096,14 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
+        <label><!-- Name of the GDPR community in the URL --></label>
+        <name>TECH_GDPR_Community_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Name of GDPR  Network. Usually name of the community - Query on network objec --></label>
+        <name>TECH_GDPR_Network_Name</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Taxes --></label>
         <name>Taxes</name>
     </customLabels>
@@ -17312,7 +19204,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>Warning_Empty_Cart</name>
     </customLabels>
     <customLabels>
-        <label><!-- Warning_Expired --></label>
+        <label>Expirou</label>
         <name>Warning_Expired</name>
     </customLabels>
     <customLabels>
@@ -17620,6 +19512,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>regular_price</name>
     </customLabels>
     <customLabels>
+        <label><!-- resetPasswordConfirmMessage --></label>
+        <name>resetPasswordConfirmMessage</name>
+    </customLabels>
+    <customLabels>
         <label><!-- select all --></label>
         <name>select_all</name>
     </customLabels>
@@ -17632,7 +19528,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>AMS_GDP_Synchronizer</name>
     </customTabs>
     <customTabs>
-        <label><!-- AMS PCI Compliant Mass Oscar Creation --></label>
+        <label><!-- OSCAR mass action --></label>
         <name>AMS_PCI_Compliant_Mass_Oscar_Creation</name>
     </customTabs>
     <customTabs>

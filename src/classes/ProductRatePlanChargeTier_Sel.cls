@@ -92,53 +92,6 @@ public with sharing class ProductRatePlanChargeTier_Sel extends Selector
 		//return Database.query(query);
 	}
 
-	/*public List<zqu__ProductRatePlanChargeTier__c> getProductTiers(Set<String> productNumbers, IECCustomer customer)
-	{
-		String query;
-		
-		if(customer != null && customer.RelatedAccount !=null)
-		{
-			String customerType    = customer.RelatedAccount.Customer_Type__c; 
-            String customerRegion  = customer.RelatedAccount.Region__c;
-            String customerCountry = customer.RelatedAccount.BillingCountry;
-
-			query = String.format(
-				'SELECT {0}  ' + 
-				'FROM {1} ' + 
-				'WHERE Product_Number__c IN :productNumbers  '  + 
-				'  AND (ZRatePlan_CustomerType__c=null OR ZRatePlan_CustomerType__c= :customerType)' +
-				'  AND (ZRatePlan_Region__c=null OR ZRatePlan_Region__c= :customerRegion)' +
-				'  AND (ZRatePlan_Country__c=null OR ZRatePlan_Country__c= :customerCountry)' +
-				'  AND ZProduct_Deleted__c!=true AND ZRatePlan_Deleted__c!=true AND ZCharge_Deleted__c!=true AND zqu__Deleted__c!=true ' +
-				'  AND ZProduct_EffectiveStartDate__c <= TODAY AND ZProduct_EffectiveEndDate__c >= TODAY ' + 
-				'  AND ZRatePlan_EffectiveStartDate__c <= TODAY AND ZRatePlan_EffectiveEndDate__c >= TODAY ', 
-				new List<String>{
-					String.join(getDefaultFields(), ', '),
-					getSObjectType().getDescribe().getName()
-				}
-			);
-		}
-		else
-		{
-			query = String.format(
-				'SELECT {0}  ' + 
-				'FROM {1} ' + 
-				'WHERE Product_Number__c IN :productNumbers  '  + 
-				'  AND (ZRatePlan_CustomerType__c=null)' +
-				'  AND (ZRatePlan_Region__c=null)' +
-				'  AND (ZRatePlan_Country__c=null)' +
-				'  AND ZProduct_Deleted__c!=true AND ZRatePlan_Deleted__c!=true AND ZCharge_Deleted__c!=true AND zqu__Deleted__c!=true ' +
-				'  AND ZProduct_EffectiveStartDate__c <= TODAY AND ZProduct_EffectiveEndDate__c >= TODAY ' + 
-				'  AND ZRatePlan_EffectiveStartDate__c <= TODAY AND ZRatePlan_EffectiveEndDate__c >= TODAY ', 
-				new List<String>{
-					String.join(getDefaultFields(), ', '),
-					getSObjectType().getDescribe().getName()
-				}
-			);
-		}
-		List<zqu__ProductRatePlanChargeTier__c> result = Database.query(query);
-		return result;
-	}*/
 
 	public List<zqu__ProductRatePlanChargeTier__c> getProductTiers(Set<String> productNumbers, String customerType, String customerRegion, String customerCountry)
 	{

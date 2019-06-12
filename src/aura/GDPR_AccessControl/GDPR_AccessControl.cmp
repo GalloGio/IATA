@@ -1,0 +1,15 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="GDPR_AccessControl_CTRL">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="isValid" type="Boolean" default="false"/>
+   
+    <aura:If isTrue="{!!v.isValid}">
+        <div class="slds-align_absolute-center" style="height: 50em;">
+            <lightning:spinner size="large" aura:id="spinner"/>
+        </div> 
+    <aura:set attribute="else">
+        <c:GDPR_TabsContainer version="1"/>
+    </aura:set>
+
+    </aura:If>
+
+</aura:component>

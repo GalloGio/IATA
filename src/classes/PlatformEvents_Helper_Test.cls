@@ -47,7 +47,7 @@ private class PlatformEvents_Helper_Test {
         
         	delete con;
 
-        	undelete con;
+        	//undelete con;
 
         test.stopTest();
     }
@@ -180,7 +180,8 @@ private class PlatformEvents_Helper_Test {
 		test.startTest();
         	insert BinRange;
         
-	        BinRange.TIP_Range_End__c = '6000';
+	        //BinRange.TIP_Range_End__c = '6000';
+	        BinRange.TIP_Effective_To_Date__c = Date.today()+30;
         
         	update BinRange;
         
@@ -192,7 +193,7 @@ private class PlatformEvents_Helper_Test {
     }
     
     static testMethod void Test_Platform_Event_On_PArtner_Product_Config() {
-    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', BSP_Country_free_text__c = 'US');
         insert country;
 
 		Account account = new Account(Name = 'ProviderTest1',

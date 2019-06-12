@@ -1,0 +1,113 @@
+<!-- 
+    Class Name: ISSP_AMC_LocationOfflinePoint.component
+    Related Classes: ISSP_AMC_LocationOfflinePoint.cls
+
+    Copyright @Right IT Services
+
+    Purpose: Controller Class for ISSP_AMC_LocationOfflinePoint.component
+
+    VERSION       AUTHOR          DATE          DETAIL/CHANGE REFERENCE
+    1.0         DAVID BENTO     10-12-2018      INITIAL DEVELOPMENT
+-->
+<apex:component controller="ISSP_AMC_LocationOfflinePoint">
+	<apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="true" />
+
+	<c:Loading />
+
+	<div class="panel panel-primary">
+        <div class="panel-heading" id="OFFLINEPOINT">
+            {!$Label.ISSP_AMC_OFF_LINE_POINT}
+        </div>
+
+        <div class="panel-body">
+
+            <div class="form-group">
+                <div class="col-md-offset-1 col-sm-6">
+                    <label for="newDesc">{!$Label.ISSP_AMC_OFF_LINE_POINT_PURPOSE}</label>
+                </div>
+                    <div class="col-md-offset-1 col-md-10">
+                        <div class="{!IF(AND(hasError, OR(participation.Off_Line_Point_Purpose__c == null, participation.Off_Line_Point_Purpose__c == "")), 'has-error has-feedback', '')}">
+                            <apex:inputTextarea id="newDesc" rows="10" style="width: 100%" onchange="validateLatinChar(this)" styleClass="form-control allchar" value="{!controllerParticipation.Off_Line_Point_Purpose__c}"/>
+                            <span class="{!IF(AND(hasError, OR(participation.Off_Line_Point_Purpose__c == null, participation.Off_Line_Point_Purpose__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                            <span class="sr-only">(error)</span>
+                            
+                            <div style="color: #a94442" class="errormessage"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    $(document).ready(function(){
+        var charList = document.getElementsByClassName('allchar');
+        for(var i=0; i<charList.length; i++){              
+            if(charList[i].value != null && charList[i].value != ""){
+                validateLatinChar(charList[i]);
+            }
+        }
+    });
+
+    //validate if latin chars are being used
+    function validateLatinChar(element) {
+        var x = element.parentElement.classList;
+        var y = element.parentElement.children;
+        filter = /([^A-Za-z0-9\s\-\:\.\,\;\(\)]+)/;
+        if(element.value  != null && element.value != ""){
+            if (filter.test(element.value)) {
+                //x.remove("parentClass");
+                x.add("has-error");
+                x.add("has-feedback");
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == ""){
+                        //y[i].classList.remove("errorClass");
+                        y[i].classList.add("glyphicon");
+                        y[i].classList.add("glyphicon-remove"); 
+                        y[i].classList.add("form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        element.value="";
+                        y[i].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+                    }
+                    console.log('Y CLASS LIST (ELEMENT HAS VALUE AND ERROR):: ' + y[i].classList.value);             
+                }
+                console.log('X CLASS LIST (ELEMENT HAS VALUE AND ERROR):: ' + x.value);
+            } 
+            else{
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                        //y[i].classList.add("errorClass");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        y[i].innerHTML = ""
+                    }
+                    console.log('Y CLASS LIST (ELEMENT HAS VALUE):: ' + y[i].classList.value);  
+                }
+                //x.add("parentClass");
+                x.remove("has-error");
+                x.remove("has-feedback");
+                console.log('X CLASS LIST (ELEMENT HAS VALUE):: ' + x.value);
+            }
+        }
+        else{
+            for (var i = 0; i < y.length; i++) {
+                if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                    //y[i].classList.add("errorClass");
+                    y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                }
+                if(y[i].classList =="errormessage"){
+                    y[i].innerHTML = ""
+                }
+                console.log('Y CLASS LIST (ELEMENT NO VALUE):: ' + y[i].classList.value);  
+            }
+            //x.add("parentClass");
+            x.remove("has-error");
+            x.remove("has-feedback");
+            console.log('X CLASS LIST (ELEMENT NO VALUE):: ' + x.value);
+        }
+    }
+    </script>
+</apex:component>
