@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="stage" label="Stage" />	
+    <design:attribute name="processOrchestratorId" label="Process Orchestrator Id" />
+</design:component>

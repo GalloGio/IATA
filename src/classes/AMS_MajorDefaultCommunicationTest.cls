@@ -10,12 +10,12 @@ private class AMS_MajorDefaultCommunicationTest {
 
 		Account airline = new Account();
 		airline.Name = 'Airline';
-		airline.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+		airline.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 		airline.IATA_ISO_Country__c = country.Id;
 
 		Account agency = new Account();
 		agency.Name = 'Agency';
-		agency.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		agency.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		agency.IATACode__c = '24125';
 		agency.Location_Type__c = 'HO';
 		agency.Location_Class__c = 'P';
@@ -48,7 +48,7 @@ private class AMS_MajorDefaultCommunicationTest {
 		insert new List<Contact> {airlineContact1, airlineContact2, agencyContact};
 
 		Case cse = new Case();
-		cse.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+		cse.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 		cse.AccountId = agency.Id;
 		cse.ContactId = agencyContact.Id;
 		cse.Region__c = 'Europe';

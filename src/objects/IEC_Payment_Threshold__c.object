@@ -46,9 +46,9 @@
     <description>Holds the min/max amount limits when purchasing for different payment methods</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -95,6 +95,7 @@
     </fields>
     <fields>
         <fullName>Payment_Type__c</fullName>
+        <description>Represents a payment option. 4 possible options are available: Credit Card, ICH, Bank Transfer, Bill me later</description>
         <externalId>false</externalId>
         <label>Payment Type</label>
         <required>false</required>

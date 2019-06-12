@@ -14,3 +14,7 @@
 	border: 1px solid rgb(217, 219, 221);
 	padding: 3px;
 }
+
+.THIS .suggestion-list{
+	display: contents;
+}

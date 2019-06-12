@@ -46,10 +46,10 @@
     <description>Used for the automatic assignment of cases in SCE. Developed by Salesforce Professional Services.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -57,6 +57,7 @@
     <fields>
         <fullName>Auto_queue__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Id of the parent Auto Queue</description>
         <externalId>false</externalId>
         <label>Auto queue</label>
         <referenceTo>Auto_Queue__c</referenceTo>
@@ -68,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Skill_Types__c</fullName>
+        <description>Id of the parent Skill Type</description>
         <externalId>false</externalId>
         <label>Skill Types</label>
         <referenceTo>Skill_Types__c</referenceTo>

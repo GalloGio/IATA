@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to notify Currency Center users that the Annual report has been published.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Currency Center New Annual Report Notification</name>
+    <style>freeForm</style>
+    <subject>New Annual Report available</subject>
+    <textOnly>Dear Currency Center users,
+
+This year&apos;s currency repatriation report is now published.
+
+Should you have any feedback, comments or queries, please log a case on your IATA customer portal under &quot;Currency Center&quot; topic.
+
+Kind regards,
+Currency Center Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

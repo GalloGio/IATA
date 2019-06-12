@@ -11,7 +11,7 @@ private class ISSP_FinancialSecInformationCtrlTest {
 
                 Account agency = new Account();
                 agency.Name = 'Agency';
-                agency.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+                agency.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
                 agency.IATACode__c = '24125';
                 agency.Location_Type__c = 'HO';
                 agency.Location_Class__c = 'P';

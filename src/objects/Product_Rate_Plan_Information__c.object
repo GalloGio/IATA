@@ -46,9 +46,9 @@
     <description>Contains the main Rate Plans information to be displayed on the product browsing page UI</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -155,7 +155,7 @@
                 <value>False</value>
             </filterItems>
             <filterItems>
-                <field>zqu__ProductRatePlan__c.zqu__ZProduct__r.zqu__Deleted__c</field>
+                <field>zqu__ProductRatePlan__c.zqu__Product__r.zqu__Deleted__c</field>
                 <operation>equals</operation>
                 <value>False</value>
             </filterItems>

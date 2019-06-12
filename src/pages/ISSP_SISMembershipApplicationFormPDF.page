@@ -195,7 +195,9 @@
     <div class="footer">
         <hr />
         <div style="float: left; width: 80%;">
-            Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (October 2018)
+            <apex:outputText value="Standard Agreement for SIS Participation" rendered="{!isISPA}"/>
+            <apex:outputText value="Standard Participation Agreement for SIS e-Invoicing Services – Non Transportation" rendered="{!isISUA}"/>
+            <apex:outputText value="Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (October 2018)" rendered="{!isTOU}"/>
         </div>
         <div style="float: right; width: 20%; text-align: right;">
             <apex:outputText value="{!$Label.ISSP_AMS_PDF_Page}"/> <span class="pagenumber"/> OF <span class="pagecount"/>

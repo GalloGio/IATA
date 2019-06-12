@@ -61,6 +61,10 @@ public without sharing class OneIdLightningLoginFormController {
                      LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
                 }
 
+
+                //Assign GDPR Permission set when user logs in. No matter the service
+                LightningRegistrationProcess.assignGDPRPermissionSet(oneUser.Id);
+
 //to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
 //oneUser.Portal_User_Frozen_Checkbox__c=true; 
                 
@@ -79,11 +83,20 @@ public without sharing class OneIdLightningLoginFormController {
 			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
                     }
 
+                    if( String.isNotBlank(serviceName) && serviceName == 'NDCMM'){
+	                     pageLink = '/s/login/SelfRegister?language=en_US&serviceName=NDCMM';
+                    }
+
                 }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                 	 //pageLink = '/ISSP_Homepage';
                 	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
                 	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
 			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+                } else if( String.isNotBlank(serviceName) && serviceName == Label.TECH_GDPR_Community_Name){
+                    //  GP-17: GDPR need a direct redirection to the GDPR portal not to OneId home page
+                    pageLink = '/apex/CommunitiesLanding?serviceName='+Label.TECH_GDPR_Community_Name;
+                }else if( String.isNotBlank(serviceName) && serviceName == 'NDCMM'){
+					pageLink = '/s/ndcmm?serviceName=NDCMM';
                 }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){

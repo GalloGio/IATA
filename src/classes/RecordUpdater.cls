@@ -9,7 +9,7 @@ public class RecordUpdater implements Schedulable {
     
  
     public void schedule(Datetime runningTime){
-        System.schedule('RecordUpdater '+System.now().format('dd/MM/yyyy hh:MM:ss'), 
+        System.schedule('RecordUpdater '+System.now().format('dd/MM/yyyy hh:MM:ss.SSS'), 
         				runningTime.format('ss mm HH dd MM ? yyyy'), this);
     }
     

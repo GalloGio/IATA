@@ -4,6 +4,95 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>NDC_Matchmaker</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>NDC Management</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_SIS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - SIS Help Desk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Web</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>SIS</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_ICH</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - SIS Help Desk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Web</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>ICH</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Vendor_Relations_Business_Analytics</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Vendor Relations – Business Analytics</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GDPR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>contains</operation>
+                <value>GDPR</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Due_Diligence_Publications</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Corporate Compliance</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Publications</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_SIS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND 3</booleanFilter>
@@ -63,7 +152,7 @@
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Cases - Global</value>
+                <value>Cases - Global,Complaint (IDFS ISS)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
@@ -77,12 +166,45 @@
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_E_F</assignedTo>
+            <assignedTo>Cases_E_F_Thailand</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>Cases - Global,Complaint (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>E&amp;F - Enhancement &amp; Financing</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Thailand</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_E_F_Thailand</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - E&amp;F Thailand</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_E_F</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Complaint (IDFS ISS),Cases - Global</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
@@ -561,7 +683,7 @@
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Invoicing / Billing request,New Account request,New Connectivity request,Update configuration request,iiNet Information request,iiNet WEB File retrieval,iiNet WEB How-to question,iiNet WEB interface</value>
+                <value>Update configuration request,General information,Integrated file processing,iiNet WEB File retrieval,iiNet WEB interface,Invoicing / Billing request,New Account request,New Connectivity request</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -580,7 +702,7 @@
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Integrated connectivity,Integrated file processing</value>
+                <value>Integrated connectivity</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -598,12 +720,26 @@
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_DIP_Communications_ARM_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SAAM</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - DIP Communications</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Agency_Risk_Management_Americas_T1</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -617,7 +753,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -631,7 +767,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -645,7 +781,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -659,7 +795,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -671,69 +807,136 @@
             <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND( 
+OR( 
 ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
 RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
+OR( 
 TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;01:00:00.000&quot;), 
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;) 
+) 
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Emergency_SIN_GDC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>OR(
-  AND(
-    RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    OR(
-      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;),
-      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;)
-    )
-  ),
-  AND(
-    OR(
-      RecordType.DeveloperName = &quot;CasesEurope&quot;,
-      RecordType.DeveloperName = &quot;CasesAmericas&quot;,
-      RecordType.DeveloperName = &quot;CasesMENA&quot;
-    ),
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    OR(
-      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;),
-      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;)
-    )
-  ),
-  AND(  
-    RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    OR(
-      TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;),
-      TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;)
-    )
-  )
+            <formula>OR( 
+AND( 
+RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;) 
+) 
+), 
+AND( 
+OR( 
+RecordType.DeveloperName = &quot;CasesEurope&quot;, 
+RecordType.DeveloperName = &quot;CasesAmericas&quot;, 
+RecordType.DeveloperName = &quot;CasesMENA&quot; 
+), 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;) 
+) 
+), 
+AND( 
+RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;) 
+) 
+) 
 )</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Emergency_MAD_GDC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>OR(
-  AND(
-    OR(
-      RecordType.DeveloperName = &quot;CasesEurope&quot;,
-      RecordType.DeveloperName = &quot;CasesAmericas&quot;,
-      RecordType.DeveloperName = &quot;CasesMENA&quot;
-    ),
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;),
-    TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;)
-  ),
-  AND(
-    OR(
-      RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
-      RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;
-    ),
-    ISPICKVAL(Priority , &quot;Emergency&quot;),
-    TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;),
-    TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
-  )
+            <formula>OR( 
+AND( 
+OR( 
+RecordType.DeveloperName = &quot;CasesEurope&quot;, 
+RecordType.DeveloperName = &quot;CasesAmericas&quot;, 
+RecordType.DeveloperName = &quot;CasesMENA&quot; 
+), 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;) 
+) 
+), 
+AND( 
+OR( 
+RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, 
+RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot; 
+), 
+OR( 
+ISPICKVAL(Priority , &quot;Emergency&quot;), 
+AND( 
+ISPICKVAL(Origin,&quot;Escalation&quot;), 
+Key_Customer_Case__c &lt;&gt; &quot; &quot; 
+) 
+), 
+OR( 
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;), 
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;) 
+) 
+) 
 )</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emirates</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>equals</operation>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Name</field>
+                <operation>equals</operation>
+                <value>Emirates</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Sector__c</field>
+                <operation>equals</operation>
+                <value>Airline</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>notContain</operation>
+                <value>E&amp;F</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
@@ -1206,6 +1409,25 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>NewGen_Support</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>NewGen ISS</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>GDI,IATA Easy Pay,New Accreditation Models,Remittance Holding Capacity</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>PwC_Lithuania_DC</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -1520,12 +1742,19 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
         <ruleEntry>
             <assignedTo>CasesRussia</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND( 
+            <formula>OR(
+AND( 
 ISPICKVAL(Country_concerned_by_the_query__c , &quot;Russian Federation&quot;), 
 ISPICKVAL(Account.Location_Class__c, &quot;P&quot;), 
 NOT(CONTAINS( TEXT(Reason) ,&quot;Certificate&quot;)),
 !(RecordType.DeveloperName=&apos;ID_Card_Application&apos;),
 ISPICKVAL( Status , &quot;Open&quot;) 
+),
+AND(
+RecordType.DeveloperName = &apos;OSCAR_Communication&apos;,
+ISPICKVAL( Origin,&quot;PCI automatic renewal&quot;),
+ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
+)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -1655,6 +1884,30 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>Weblink</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>NewGen_PCI</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>equals</operation>
+                <value>OSCAR Communication</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>FoP Management</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Massive FOP Creation,FoP automatic renewal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Region__c</field>
+                <operation>equals</operation>
+                <value>Europe,Africa,Americas</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -1792,20 +2045,6 @@ ISPICKVAL( Status , &quot;Open&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Model_A_Onboarding_Africa_Mid_East</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Onboarding IEP Model A</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Africa &amp; Middle East</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Model_A_Onboarding_China_North_Asia</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -1820,20 +2059,6 @@ ISPICKVAL( Status , &quot;Open&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Model_A_Onboarding_Americas</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Onboarding IEP Model A</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Americas</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Model_A_Onboarding_Asia_Pacific</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -1845,20 +2070,6 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>Asia &amp; Pacific</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Model_A_Onboarding_Europe</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Onboarding IEP Model A</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Europe</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -1897,23 +2108,25 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
                 <operation>notEqual</operation>
-                <value>Agency Risk Management,Risk Management Process</value>
+                <value>Risk Management Process,Agency Risk Management</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Due_Diligence</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>Corporate Compliance</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>notEqual</operation>
-                <value>IEP Due Diligence</value>
-            </criteriaItems>
+            <formula>OR(
+AND(
+ISPICKVAL(CaseArea__c, &quot;Corporate Compliance&quot;),
+NOT(ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;))
+),
+AND(
+OR(
+ISPICKVAL(Parent.Reason1__c, &quot;Screening IEP Model A&quot;),
+ISPICKVAL(Parent.Reason1__c, &quot;Screening IEP Model B&quot;)),
+ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
+)
+)</formula>
             <template>All/New_Case_Assigned_to_the_Queue</template>
         </ruleEntry>
         <ruleEntry>
@@ -1926,9 +2139,33 @@ ISPICKVAL( Status , &quot;Open&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_Airline_Coding_Draft</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Status</field>
+                <operation>equals</operation>
+                <value>Open</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Airline Coding Application</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Coding Application</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>notContain</operation>
+                <value>Voluntary Withdrawal</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_Airline_Coding_YMQ</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5 AND 6) OR 7</booleanFilter>
+            <booleanFilter>((1 OR 2) AND 3) OR (4 AND 5 AND 6) OR 7 OR (8 AND 9 AND 10) OR (8 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
@@ -1963,6 +2200,31 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.CaseArea__c</field>
                 <operation>equals</operation>
                 <value>Coding &amp; MITA,Airline Coding</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Airline Coding Application</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>3 Digit Form,Baggage Tag Identifier Codes,Designator Form,Location ID Form</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status</field>
+                <operation>notEqual</operation>
+                <value>Open</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>contains</operation>
+                <value>Accounting Code,Designator Code,Baggage Tag Range Code,Prefix Code</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>contains</operation>
+                <value>Voluntary withdrawal</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -2292,7 +2554,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>TIESSManagementAmericas</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 3) OR (4 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -2311,84 +2573,23 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
-                <value>TIESS Banking,TIESS Remittance reports</value>
+                <value>TIESS Banking,TIESS Remittance reports,TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>notEqual</operation>
+                <value>Portal</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>TIESS_Europe</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Europe</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>TIESS_Africa_Middle_East</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Africa &amp; Middle East</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>TIESS_Americas</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Americas</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>TIESS_China_North_Asia</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>China &amp; North Asia</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>TIESS_Asia_Pacific</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Asia &amp; Pacific</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>equals</operation>
-                <value>TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>CustomerServiceEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND( AccountId = &apos;00120000003mA4e&apos;, ContactId = &apos;003w000001B9pKt&apos;,  ISPICKVAL(Origin, &apos;E-mail to Case - Service Centre Europe&apos;),   ISPICKVAL(Region__c, &apos;Europe&apos;))</formula>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - Service Centre Europe</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_MITA_YMQ</assignedTo>
@@ -2484,6 +2685,20 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>TSP_Certification_process</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - TSP Certification</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 AND (2 OR 3)</booleanFilter>
@@ -2510,7 +2725,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - TSP Certification,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink,E-mail to Case - ACCA Bug Fix</value>
+                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink,E-mail to Case - ACCA Bug Fix</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
@@ -2785,7 +3000,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>IATA Codes not applicable to Agents</value>
+                <value>IATA Codes (not applicable to Agents)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
@@ -3211,17 +3426,9 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>Cases_IDPC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>IDPC</value>
-            </criteriaItems>
-            <template>All/IDFS_Caseassignmentqueue</template>
+            <formula>OR(AND(Account_Concerned__c = &apos;0011r00002DnBrF&apos;,RecordType.DeveloperName=&apos;Inter_DPCs&apos;), 
+AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;InternalCasesEuropeSCE&apos;))</formula>
+            <team>iDPC Case Team</team>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Banking_GDC_Madrid</assignedTo>
@@ -3912,6 +4119,25 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <template>Quality/New_Case_Business_delivery</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_ARM_Global_Emergency</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SAAM,Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Agency Risk Management,Risk Management Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Priority</field>
+                <operation>equals</operation>
+                <value>Emergency</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_ARM_Europe</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND 2) OR 3 OR (2 AND 4 AND 5)</booleanFilter>
@@ -3938,7 +4164,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>SAAM,Internal Cases (IDFS ISS)</value>
+                <value>SAAM,Internal Cases (IDFS ISS),OSCAR Communication</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -4038,7 +4264,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>Cases_ARM_Africa_Middle_East</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2) OR (3 AND 4) OR (2 AND 5)</booleanFilter>
+            <booleanFilter>(1 AND 2) OR (3 AND 4) OR (2 AND 5 AND 6)</booleanFilter>
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
                 <operation>equals</operation>
@@ -4064,6 +4290,11 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <operation>startsWith</operation>
                 <value>#SARA</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>notEqual</operation>
+                <value>Portal</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>SIDRA_Eurozone</assignedTo>
@@ -4081,7 +4312,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>France,GUADELOUPE,Martinique</value>
+                <value>France,Guadeloupe,Martinique</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -5073,31 +5304,6 @@ ISPICKVAL( Status , &quot;Open&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesComplaintsAME</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
-            <criteriaItems>
-                <field>Case.Region__c</field>
-                <operation>equals</operation>
-                <value>Africa &amp; Middle East</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.IsComplaint__c</field>
-                <operation>equals</operation>
-                <value>True</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subject</field>
-                <operation>startsWith</operation>
-                <value>#C Africa &amp; Middle East</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Cases_Complaints_Americas</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 AND 2 AND 3) OR 4) AND 5</booleanFilter>
@@ -5155,7 +5361,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>CustomerServiceEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3 and 5) or (4 AND 6)</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 3 AND 5 AND 7) or (4 AND 6)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -5185,6 +5391,11 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.Subject</field>
                 <operation>contains</operation>
                 <value>Dashboard: Key Controls Customer Service - Europe</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>notContain</operation>
+                <value>Dashboard: Key Controls Customer Service - Americas</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -5931,6 +6142,20 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Africa_Mid_East</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Africa &amp; Middle East</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>CustomerServiceAmericas</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 AND 2 AND 3) OR (6 AND 4)) AND 5</booleanFilter>
@@ -5957,7 +6182,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>notEqual</operation>
-                <value>Bermuda,Canada,Argentina,Mexico,Paraguay,Panama,Uruguay</value>
+                <value>Bermuda,Canada,Argentina,Mexico,Paraguay,Panama,Uruguay,Guatemala</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>
@@ -5965,6 +6190,20 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <value>Dashboard: Key Controls Customer Service - Americas</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Americas</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Americas</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Airlines_A_P</assignedTo>
@@ -6029,6 +6268,20 @@ ISPICKVAL( Status , &quot;Open&quot;)
                 <field>Case.SuppliedEmail</field>
                 <operation>contains</operation>
                 <value>aviareps.com,csair.nl,flybe.com,mea.aero,vietnamair.com.vn,transaero.ru,airmauritius.com,airchina.es,egyptair.nl,china-airlines.com,in.daksh.com,airindia.in,kenya-airways.com,tarom.ro,bintercanarias.es,transat.com,airlinebusiness.co.uk,thaiairways.co.in</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Model_A_Onboarding_Europe</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Onboarding IEP Model A</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Region__c</field>
+                <operation>equals</operation>
+                <value>Europe</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6550,7 +6803,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>CasesEgypt</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 OR 2) AND (3 AND 4)</booleanFilter>
+            <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
@@ -7672,7 +7925,6 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <team>SIDRA AME HUB R&amp;S Team 3</team>
             <team>SIDRA AME LO BO</team>
             <team>SIDRA AME LO PE</team>
-            <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesArgentinaParaguayUruguay</assignedTo>

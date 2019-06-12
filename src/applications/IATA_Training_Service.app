@@ -28,6 +28,14 @@
         <type>Flexipage</type>
         <profile>IATA Training - Support Team</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>Tab</actionName>
+        <content>IATA_Training_Home_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>standard-home</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>IATA Training - Support Team</profile>
+    </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Feed</tabs>
     <tabs>standard-Account</tabs>

@@ -46,15 +46,16 @@
     <description>Tracks the trials that the user have consumed during</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Contact__c</fullName>
+        <description>Related Contact</description>
         <externalId>false</externalId>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
@@ -98,6 +99,7 @@
     </fields>
     <fields>
         <fullName>Trial_Date__c</fullName>
+        <description>Beginning of trial date</description>
         <externalId>false</externalId>
         <label>Trial Date</label>
         <required>true</required>
