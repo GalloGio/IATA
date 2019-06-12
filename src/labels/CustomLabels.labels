@@ -3283,7 +3283,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_FAQ_Subtitle</shortDescription>
-        <value>Please select one of the main FAQ categories that you need help with</value>
+        <value>Please select one of the main FAQ categories that you need help with.</value>
     </labels>
      <labels>
         <fullName>CSP_Supported_File_Extensions</fullName>
