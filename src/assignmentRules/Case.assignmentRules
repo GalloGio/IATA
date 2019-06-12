@@ -2554,7 +2554,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>TIESSManagementAmericas</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 3) OR (4 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -2573,7 +2573,12 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
-                <value>TIESS Banking,TIESS Remittance reportsTIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
+                <value>TIESS Banking,TIESS Remittance reports,TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>notEqual</operation>
+                <value>Portal</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>

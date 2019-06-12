@@ -928,37 +928,46 @@ global class ANG_OscarProcessHelper {
 			else
 				aaObject = accountsAA.get(aa.Account__c);
 
-			if(aa.ANG_FormOfPayment_ID__c == 'CA')
+			if(aa.ANG_FormOfPayment_ID__c == 'CA'){
 				aaObject.addCash(aa);
-			else
-				aaObject.addCreditCard(aa);
+			} else{
+					aaObject.addCreditCard(aa);
+			}
 
-			accountsAA.put(aa.Account__c,aaObject);
+			if(aaObject.creditCardAA.Account__r.Is_PCI_compliant__c == 'No' || aaObject.creditCardAA.Account__r.Is_PCI_compliant__c == 'Nil CC')
+            	aaObject.preventCCActivation = true;
+				
+            accountsAA.put(aa.Account__c,aaObject);
 
 		}
 
-		String process = restoreCash  && restoreCreditCard  ? 'Restore All' : 
-						 restrictCash && restrictCreditCard ? 'Restrict All' : 
-						 restrictCash ? 'Restrict Cash' :
-						 restrictCreditCard ? 'Restrict Credit Card' :
-						 restoreCash ? 'Restore Cash' : 'Restore Credit Card';
-
-		List<ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcess = [SELECT Cash_before__c,Credit_Card_before__c,Action_in_FoP_OSCAR__c,Cash_after__c,Credit_Card_after__c,Change_Code__c FROM ANG_Forms_Of_Payment_CC_Matrix__mdt WHERE Action_in_FoP_OSCAR__c =:process];
+		String process = null;
+		
+		List<ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcess = [SELECT Cash_before__c,Credit_Card_before__c,Action_in_FoP_OSCAR__c,Cash_after__c,Credit_Card_after__c,Change_Code__c FROM ANG_Forms_Of_Payment_CC_Matrix__mdt];
 
 		Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcessMap = new Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt>();
 
 		for(ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject: matrixAAProcess)
-			matrixAAProcessMap.put(matrixObject.Cash_before__c+matrixObject.Credit_Card_before__c,matrixObject);
+			matrixAAProcessMap.put(matrixObject.Action_in_FoP_OSCAR__c+matrixObject.Cash_before__c+matrixObject.Credit_Card_before__c,matrixObject);
 
 		ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject;
-
+		        
 		for(AgencyAuthorizationOBject aaOjectToAnalyze: accountsAA.values()){
-			
-			matrixObject = matrixAAProcessMap.get(aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
 
-			System.debug('matrixObject is ' + matrixObject);
+			process =  	 restoreCash  && restoreCreditCard  && !aaOjectToAnalyze.preventCCActivation? 'Restore All' : 
+						 restoreCash  && restoreCreditCard  && aaOjectToAnalyze.preventCCActivation? 'Restore Cash':
+						 restrictCash && restrictCreditCard ? 'Restrict All' : 
+						 restrictCash ? 'Restrict Cash' :
+						 restrictCreditCard ? 'Restrict Credit Card' :
+						 restoreCash ? 'Restore Cash' : 
+						 restoreCreditCard && !aaOjectToAnalyze.preventCCActivation ? 'Restore Credit Card' : null;
 
-			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);
+			if(process == null)
+				continue;
+
+			matrixObject = matrixAAProcessMap.get(process+aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
+
+			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);           
 			aaOjectToAnalyze.addCreditCardValue(matrixObject.Credit_Card_after__c, matrixObject.Change_Code__c);
 			
 			if(aaOjectToAnalyze.changedCA)
@@ -992,6 +1001,8 @@ global class ANG_OscarProcessHelper {
 
 		boolean changedCC;
 		boolean changedCA;
+
+		public boolean preventCCActivation;
 
 		public AgencyAuthorizationOBject(Id accountId){
 			this.accountId = accountId;
@@ -2149,8 +2160,8 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
 	        fieldsOfObject.put('Origin','IEP portal');
-	        fieldsOfObject.put('Reason1__c', (model == 'A' ? 'Onboarding IEP Model A' : (model == 'B' ? 'Screening IEP Model B' : 'IEP Bank Account Setup')));
-	        fieldsOfObject.put('Subject',(model == 'A' ? 'Onboarding IEP Model A - ' : (model == 'B' ? 'Screening IEP Model B -' : 'IEP Bank Account Setup -')) + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Reason1__c', (model == 'A' ? 'Onboarding IEP Model A' : (model == 'B' ? 'Screening IEP Model B' : (model == 'B+' ? 'Onboarding IEP Model B+' : 'IEP Bank Account Setup'))));
+	        fieldsOfObject.put('Subject',(model == 'A' ? 'Onboarding IEP Model A - ' : (model == 'B' ? 'Screening IEP Model B -' : (model == 'B+' ? 'Onboarding IEP Model B+ -' : 'IEP Bank Account Setup -'))) + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
 	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 	        
@@ -2189,13 +2200,13 @@ global class ANG_OscarProcessHelper {
         for (Account acc : accs){
         
 			fieldsOfObject = new Map<String,Object>();
-	        fieldsOfObject.put('Process__c',(model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP :AMS_Utils.IEPBANKACCOUNTSETUP)));
+	        fieldsOfObject.put('Process__c',(model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP :(model == 'B+' ? AMS_Utils.IEPMODELBPLUSACCOUNTSETUP :AMS_Utils.IEPBANKACCOUNTSETUP))));
 			fieldsOfObject.put('Status__c','Open');
 			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
 			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
 			fieldsOfObject.put('Dossier_Reception_Date__c',Date.today());
 
-			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(model == 'A'? AMS_Utils.RECTYPE_IEPMODELA : AMS_Utils.RECTYPE_IEPMODELB, acc.Id, fieldsOfObject);		
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar((model == 'A'? AMS_Utils.RECTYPE_IEPMODELA : (model == 'B'? AMS_Utils.RECTYPE_IEPMODELB : (model == 'B+'? AMS_Utils.RECTYPE_IEPMODELBPLUS : AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP))), acc.Id, fieldsOfObject);		
 	        oscarsToInsert.add(oscar);
 	        accOscarObjsMap.get(acc.Id).oscar = oscar;
 		}
@@ -2231,57 +2242,11 @@ global class ANG_OscarProcessHelper {
 		//sending email with url for portal    
         for (Account acc: accs){
         
-            AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
+            if(model != 'B+') AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates((model == 'A' ? AMS_Utils.IEPMODELAACCOUNTSETUP : (model == 'B' ? AMS_Utils.IEPMODELBACCOUNTSETUP : AMS_Utils.IEPBANKACCOUNTSETUP)), 'Creation'+(model == 'B' ? '_'+contactAcc.get(acc.Id).Portal_Application_Rights__r[0].Portal_Application__r.Name : ''), true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);         
 
         }
         return oscarsToInsert;
     }
-
-	public static Set<String> fetchOptOutFromFinancialReviewCountriesCfg(Set<Id> countryIdSet){
-
-        Set<String> optOutCountryConfig = new Set<String>();
-
-        if(!countryIdSet.isEmpty()){
-            for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIdSet)){
-                for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                    if(att != null && att.RecordType.DeveloperName == AMS_Utils.OPT_OUT_ACCREDITATION_CFG_RT_NAME){
-                        optOutCountryConfig.add(country.Id + '.' + att.Location_Class__c);
-                    }
-                }
-            }
-        }
-
-        return optOutCountryConfig;
-
-    }
-
-	public static void updateCaseStatusForAccounts(Set<Id> accountIdSet, Id recordTypeId, String newCaseStatus){
-
-		//Fetch all the cases with the 'recordTypeId' related with the given accounts
-		//that are not in the given 'newCaseStatus' status 
-		List<Case> caseLst = new List<Case>(
-			[SELECT 
-				Id,
-				Status 
-				FROM 
-				Case 
-				WHERE 
-					AccountId IN :accountIdSet 
-				AND RecordTypeId = :recordTypeId
-				AND Status != :newCaseStatus
-			]
-		);
-
-		//Updates the status to the given 'newCaseStatus' for every case
-		for(Case c : caseLst){
-			c.Status = newCaseStatus;
-		}
-
-		if(!caseLst.isEmpty()){
-			update caseLst;
-		}
-
-	}
 
     // to be removed
   public void fakeMethod(){
@@ -2631,5 +2596,51 @@ global class ANG_OscarProcessHelper {
     i=0;
     i=0;
   }
+
+	public static Set<String> fetchOptOutFromFinancialReviewCountriesCfg(Set<Id> countryIdSet){
+
+        Set<String> optOutCountryConfig = new Set<String>();
+
+        if(!countryIdSet.isEmpty()){
+            for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIdSet)){
+                for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
+                    if(att != null && att.RecordType.DeveloperName == AMS_Utils.OPT_OUT_ACCREDITATION_CFG_RT_NAME){
+                        optOutCountryConfig.add(country.Id + '.' + att.Location_Class__c);
+                    }
+                }
+            }
+        }
+
+        return optOutCountryConfig;
+
+    }
+
+	public static void updateCaseStatusForAccounts(Set<Id> accountIdSet, Id recordTypeId, String newCaseStatus){
+
+		//Fetch all the cases with the 'recordTypeId' related with the given accounts
+		//that are not in the given 'newCaseStatus' status 
+		List<Case> caseLst = new List<Case>(
+			[SELECT 
+				Id,
+				Status 
+				FROM 
+				Case 
+				WHERE 
+					AccountId IN :accountIdSet 
+				AND RecordTypeId = :recordTypeId
+				AND Status != :newCaseStatus
+			]
+		);
+
+		//Updates the status to the given 'newCaseStatus' for every case
+		for(Case c : caseLst){
+			c.Status = newCaseStatus;
+		}
+
+		if(!caseLst.isEmpty()){
+			update caseLst;
+		}
+
+	}
 
 }
