@@ -2233,6 +2233,11 @@ SIS Charge Code Type.</description>
                     <label>20 Year Passenger Forecast</label>
                 </value>
                 <value>
+                    <fullName>A4A-IATA Reservations Interline Procedures (AIRIMP)</fullName>
+                    <default>false</default>
+                    <label>A4A-IATA Reservations Interline Procedures (AIRIMP)</label>
+                </value>
+                <value>
                     <fullName>Aircraft Reliability Guidelines</fullName>
                     <default>false</default>
                     <label>Aircraft Reliability Guidelines</label>
@@ -2266,11 +2271,6 @@ SIS Charge Code Type.</description>
                     <fullName>Airport Handling Manual</fullName>
                     <default>false</default>
                     <label>Airport Handling Manual</label>
-                </value>
-                <value>
-                    <fullName>ATA-IATA Reservations Interline Procedures (AIRIMP)</fullName>
-                    <default>false</default>
-                    <label>ATA-IATA Reservations Interline Procedures (AIRIMP)</label>
                 </value>
                 <value>
                     <fullName>Aviation Charges Intelligence Center (ACIC)</fullName>
@@ -7917,7 +7917,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11010,7 +11010,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14162,7 +14162,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17332,10 +17332,6 @@ The product will only appear on the Online Store when the date entered in this f
             <picklist>IATA_ORG_Group__c</picklist>
             <values>
                 <fullName>20 Year Passenger Forecast</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
