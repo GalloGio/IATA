@@ -14224,6 +14224,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>TACT-Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIESS</fullName>
                 <default>false</default>
             </values>
@@ -14233,6 +14237,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic-Public</fullName>
                 <default>false</default>
             </values>
             <values>
