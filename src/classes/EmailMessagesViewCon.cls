@@ -179,17 +179,20 @@ public class EmailMessagesViewCon {
     public transient Map<String, EmailMessage> originalEmail {get; set;}
     public transient List<Tracked_Email__c> trackedEmails {get; set;}
     public boolean hasAttachment  {get; set;}
-
+    public Boolean isEligibleForKeyCustomerAlert {get; set;} //ACAMBAS - WMO-436
+    public Boolean isUserAllowedToCreateEditCase {get; set;} //ACAMBAS - WMO-482
 
 
     public EmailMessagesViewCon (ApexPages.StandardController controller) {
         try {
             if (!Test.isRunningTest()) {
-                controller.addFields(new List<String> {'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c'});
+                controller.addFields(new List<String> {'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c', 'Account.Identify_as_Key_Customer__c', 'RecordType.Name'});
             }
             this.cse = (Case)controller.getRecord();
             loadEmails();
             loadAttachments();
+            setEligibilityForKeyCustomerAlert(); //ACAMBAS - WMO-436
+            setUserAllowedToCreateEditCase(this.cse); //ACAMBAS - WMO-482
         } catch (Exception e) {
             String temp = ApexPages.currentPage().getParameters().get('fieldValue');
             this.cse = [Select id, Status, CaseNumber, BSPCountry__c, ContactId, RecordType.DeveloperName from Case where id = :temp];
@@ -254,4 +257,33 @@ public class EmailMessagesViewCon {
         }
         return false;
     }
+
+    //ACAMBAS - WMO-436 - Begin
+    public void setEligibilityForKeyCustomerAlert() {
+        List<Case_RTs_for_Key_Customer_alert__c> csRecords = [SELECT Record_Type__c FROM Case_RTs_for_Key_Customer_alert__c];
+
+        List<String> eligibleCaseRTs = new List<String>();
+
+        for(Case_RTs_for_Key_Customer_alert__c cs : csRecords) {
+            eligibleCaseRTs.add(cs.Record_Type__c);
+        }
+
+        this.isEligibleForKeyCustomerAlert = eligibleCaseRTs.contains(cse.RecordType.Name);
+    }
+    //ACAMBAS - WMO-436 - End
+    
+
+    //ACAMBAS - WMO-482 - Begin
+    public void setUserAllowedToCreateEditCase(Case c) {
+        Id RECORDTYPE_CNS = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
+        Id RECORDTYPE_SIDRA_LITE = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+
+        if(c.RecordTypeId == RECORDTYPE_CNS || (c.RecordTypeId == RECORDTYPE_SIDRA_LITE && c.Account.CNS_Agency__c == true)) {
+            this.isUserAllowedToCreateEditCase = CNSCaseManager.isUserAllowedToCreateEditCase();
+        }
+        else {
+            this.isUserAllowedToCreateEditCase = true;
+        }
+    }
+    //ACAMBAS - WMO-482 - End
 }

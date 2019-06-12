@@ -123,6 +123,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
 			
 			Map<Id, List<Case>> casesPerAccount = new Map<Id, List<Case>>();
+			Set<Id> parentInsertedCaseIds = new Set<Id>(); //ACAMBAS - WMO-484
+			List<Case> parentInsertedCasesList = new List<Case>(); //ACAMBAS - WMO-484
 
 			//filter IFAP cases with the correct data and aggregate them per account
 			for(Case c : casesToConsider){
@@ -136,7 +138,26 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 						casesPerAccount.put(c.AccountId, new List<Case>());
 					casesPerAccount.get(c.AccountId).add(c);
 				}
+				//ACAMBAS - WMO-484: Begin
+				if(trigger.isInsert) {
+					parentInsertedCaseIds.add(c.ParentId);
+				}
+				//ACAMBAS - WMO-484: End
 			}
+
+			//ACAMBAS - WMO-484: Begin
+			if(!parentInsertedCaseIds.isEmpty())  {
+				parentInsertedCasesList = [SELECT Id, Deadline_Date__c, BusinessHoursId FROM Case WHERE Id IN :parentInsertedCaseIds];
+			}
+
+			for(Case parentCase : parentInsertedCasesList) {
+				parentCase.Deadline_Date__c = BusinessHours.nextStartDate(parentCase.BusinessHoursId, Date.today().addDays(30)).date();
+			}
+
+			if(!parentInsertedCasesList.isEmpty()) {
+				update parentInsertedCasesList;
+			}
+			//ACAMBAS - WMO-484: End
 
 			if(!casesPerAccount.isEmpty())  {
 				//NewGen agents will handled by the ANG_CaseTriggerHandler, so we filter them out

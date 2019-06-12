@@ -22,6 +22,14 @@
 @isTest
 private class IFAP_WebServiceTest {
 
+    @testSetup 
+    static void init() {
+        Group cnsGroup = [SELECT Id FROM Group WHERE DeveloperName = 'CNS_Collection_Process_Group' LIMIT 1];
+
+        GroupMember gm = new GroupMember(UserOrGroupId = UserInfo.getUserId(),
+                                         GroupId = cnsGroup.Id);
+        insert gm;
+    }
     
     static testMethod void TestGetCaseStatus() {
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
@@ -405,4 +413,56 @@ private class IFAP_WebServiceTest {
         
         Test.stopTest();
     }
+
+
+    //ACAMBAS - WMO-484: Begin
+    static testMethod void generateURLForIFAPCaseFromCNS() {
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+        ID CNScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
+
+        User testUser = SidraLiteManagerTest.getCNSUser();
+        SidraLiteManagerTest.configureUserToCNS(testUser);
+
+        System.RunAs(testUser) { 
+            IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+                Name = 'United States',
+                ISO_Code__c = 'EU',
+                AIMS_Area_Name__c = 'United States',
+                AIMS_Area_ID__c = '1',
+                CNS_Country__c = true
+            );
+            insert country;
+            
+            Account account1 = new Account(
+                Name = 'Test account',
+                IATA_ISO_Country__c = country.Id,
+                IATACode__c = '1234567',
+                Location_Type__c = 'HO',
+                Location_Class__c = 'C',
+                Type = 'IATA Passenger Sales Agent'
+            );
+            insert account1;
+            
+            Contact contact1 = new Contact(
+                FirstName = 'Dummy',
+                LastName = 'Contact',
+                Type_of_Contact__c = 'IFAP Contact',
+                AccountId = account1.Id,
+                Email = 'some@email.org',
+                Financial_Assessment_Contact__c = true
+            );
+            insert contact1;
+        
+            Case case1 = new Case(
+                ContactId = contact1.Id,
+                AccountId = account1.Id,
+                RecordTypeId = CNScaseRecordTypeID
+            );
+            insert case1;
+
+            String url = IFAP_WebService.generateURLForNewCaseFromSAAM(case1.Id);
+            System.assertEquals(true, url.contains('RecordType=' + IFAPcaseRecordTypeID));
+        }
+    }
+    //ACAMBAS - WMO-484: End
 }

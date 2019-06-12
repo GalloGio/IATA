@@ -55,6 +55,16 @@ public with sharing class SidraLiteHelperForIFAP {
         returnCase.Origin = 'Internal Case';
         returnCase.Status= 'Open';
         returnCase.BSP_CASS__c = SidraLiteUtil.getBSPCASS(parentCase.account);
+
+        //ACAMBAS - WMO-485: Begin
+        if(parentCase.Parent.RecordTypeId == SidraLiteManager.RECORDTYPE_CNS) {
+            returnCase.Subject = 'SIDRA Lite - CNS Financial Review';
+            returnCase.SIDRA_Lite_Reason__c = 'CNS Financial Review';
+            returnCase.CNSCase__c = true;
+        }
+        else {
+        //ACAMBAS - WMO-485: End
+            
         // for FS
         if ( isFS(parentCase) ) {
             returnCase.Subject = 'SIDRA Lite - Financial Security Non-compliance';
@@ -113,6 +123,7 @@ public with sharing class SidraLiteHelperForIFAP {
                 }
             }
         }
+        }
         returnCase.Termination_date_manual_entry__c = WSSidraLite.getTerminationDateFromRelatedCase(parentCase.account);
 
         return returnCase;
@@ -144,6 +155,12 @@ public with sharing class SidraLiteHelperForIFAP {
     **/
     public static list<Case> updateSidraLiteAndParent(Case parentCase, Case childCase) {
         Account account = parentCase.account;
+
+        //WMO-485 - ACAMBAS : Begin
+        if(childCase.SIDRA_Lite_Reason__c == 'CNS Financial Review') {
+            throw new SidraLiteException('Second non compliance is not allowed for a CNS agency.');          
+        }
+        //WMO-485 - ACAMBAS : End
 
         // ACTIONS for FS
         if (isFS(parentCase)) {
