@@ -22,28 +22,28 @@ private class Pricebook_Sel_Test {
 		contact = TestDataGenerator.generateContacts(account.Id, 1, true)[0];
 		contact.Account = account;
 
-		for (
-			Product2 product : [
-				SELECT
-					Id,
-					ZProduct__c
-				FROM
-					Product2
-				WHERE
-					ZProduct__c != null
-			]
-		) {
-			productZProductMap.put(product.ZProduct__c, product.Id);
+		//for (
+		//	Product2 product : [
+		//		SELECT
+		//			Id,
+		//			ZProduct__c
+		//		FROM
+		//			Product2
+		//		WHERE
+		//			ZProduct__c != null
+		//	]
+		//) {
+		//	productZProductMap.put(product.Id, product.Id);
 
-			System.debug('ZProductId: ' + product.ZProduct__c + ', ProductId: ' + product.Id);
-		}
+		//	System.debug('ZProductId: ' + product.ZProduct__c + ', ProductId: ' + product.Id);
+		//}
 
 		for (
 			zqu__ProductRatePlanCharge__c charge : [
 				SELECT
 					Id,
 					zqu__ListPrice__c,
-					zqu__ProductRatePlan__r.zqu__ZProduct__c
+					zqu__ProductRatePlan__r.zqu__Product__c
 				FROM
 					zqu__ProductRatePlanCharge__c
 				WHERE
@@ -52,13 +52,13 @@ private class Pricebook_Sel_Test {
 					zqu__ListPrice__c != NULL
 			]
 		) {
-			Id zProductId = charge.zqu__ProductRatePlan__r.zqu__ZProduct__c;
-			Id productId = productZProductMap.get(zProductId);
+			Id zProductId = charge.zqu__ProductRatePlan__r.zqu__Product__c;
+			//Id productId = productZProductMap.get(zProductId);
 
-			if (productId != null) {
-				System.debug('ProductId: ' + productId + ', ChargeId: ' + charge.Id + ', ZProductId: ' + zProductId);
+			if (zProductId != null) {
+				System.debug('ProductId: ' + zProductId + ', ChargeId: ' + charge.Id );
 
-				chargeMap.put(productId, charge);
+				chargeMap.put(zProductId, charge);
 			}
 		}
 	}

@@ -57,6 +57,7 @@
     <fields>
         <fullName>Auto_queue__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Id of the parent Auto Queue</description>
         <externalId>false</externalId>
         <label>Auto queue</label>
         <referenceTo>Auto_Queue__c</referenceTo>
@@ -68,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Skill_Types__c</fullName>
+        <description>Id of the parent Skill Type</description>
         <externalId>false</externalId>
         <label>Skill Types</label>
         <referenceTo>Skill_Types__c</referenceTo>

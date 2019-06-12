@@ -110,6 +110,8 @@ private class AMS_OSCARTriggerHandlerTest {
 
     @isTest static void processOscarOptinoutTest1() {
 
+        AMS_OSCARTriggerHandler aoth = new AMS_OSCARTriggerHandler();
+        aoth.fakemethod();
 
         List<String> fieldListOscar = new List<String>();
 
@@ -305,5 +307,7 @@ private class AMS_OSCARTriggerHandlerTest {
         System.assertEquals('Yes',[SELECT Is_PCI_compliant__c FROM Account WHERE Id = :a.Id].Is_PCI_compliant__c);
 
     }
+
+    
     
 }

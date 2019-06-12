@@ -75,10 +75,6 @@
                 <behavior>Edit</behavior>
                 <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BSP_non_air__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -775,7 +771,7 @@
         <fields>CREATED_DATE</fields>
         <fields>LAST_UPDATE</fields>
         <relatedList>Account_Statement__c.Account__c</relatedList>
-        <sortField>Remittance_Date__c</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>

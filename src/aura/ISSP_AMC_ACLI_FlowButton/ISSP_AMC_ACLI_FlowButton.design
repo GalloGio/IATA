@@ -1,0 +1,8 @@
+<design:component>
+	<design:attribute name="caseRecordId" label="Current Case Record Id" />
+    <design:attribute name="action" label="Action on Button" />
+    <design:attribute name="action2" label="Action on Button 2" />
+    <design:attribute name="stage" label="Stage" />
+    <design:attribute name="processOrchestratorId" label="Process Orchestrator Id" />
+    <design:attribute name="apiServerPartner" label="Api Server Partner" />
+</design:component>
