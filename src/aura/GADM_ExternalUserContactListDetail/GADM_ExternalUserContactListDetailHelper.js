@@ -28,6 +28,15 @@
                     if(! $A.util.isEmpty(roles)) {
                         for(let i in roles) {
                             rolesData.push({value:roles[i], key:i});
+
+                            if(roles[i].role.Name === 'GADM User') {
+                                let isChecked = roles[i].isChecked;
+                                if(! $A.util.isEmpty(isChecked)) {
+                                    component.set('v.hasGadmUserRole', isChecked);
+                                }else{
+                                    component.set('v.hasGadmUserRole', false);
+                                }
+                            }
                         }
                     }
 
@@ -45,6 +54,15 @@
                         for(let i in actors) {
                             actorsData.push({value:actors[i], key:i});
                         }
+                        let accountDetail = actors[selectedUserInfo.con.AccountId];
+                        let maxUserCount = accountDetail.maxUserCount;
+                        let currentUserCount = accountDetail.currentUserCount;
+                        let userCountReached = currentUserCount >= maxUserCount;
+
+                        component.set('v.userCountReached', userCountReached);
+                        component.set('v.maxUserCount', maxUserCount);
+                        component.set('v.activeUserCount', currentUserCount);
+                        component.set('v.gadmUserReachedText', maxUserCount + ' ' + $A.get("$Label.c.GADM_active_users_reached"));
                     }
 
                     let isCurrentUseIsSelectedUser = result.currentUserIsSelectedUser;
@@ -206,6 +224,15 @@
             }
         });
         $A.enqueueAction(action);
+    },
+
+    handleUserCountCheck : function(component, event) {
+        let value = event.getSource().get("v.checked");
+        if(value) {
+            component.set('v.gadmUserRoleAdded', true);
+        }else{
+            component.set('v.gadmUserRoleAdded', false);
+        }
     },
 
     handleErrorMessage : function(component, message){

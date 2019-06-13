@@ -162,7 +162,6 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
         if(! accountContactRoles.isEmpty()) {
 
             String mainActorId = accountContactRoles[0].Account_Role__r.Account__c;
-
             List<GADM_Account_Service_Detail__c> serviceDetails = [SELECT Id, Active_User_Count__c, Allowed_email_domain__c, Account_Role_Service__r.Account_Role__r.Account__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :accountContactRoles[0].Account_Role__r.Account__c];
             if(! serviceDetails.isEmpty()) {
 
@@ -221,6 +220,42 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
                 userManagementData.actors.get(mainActorId).currentUserCount = actualUserCount;
 
             }
+        }
+
+        //fill allowed domains for other actors
+        Set<Id> actorsIds = userManagementData.actors.keySet();
+
+        if(! actorsIds.isEmpty()) {
+            List<GADM_Account_Service_Detail__c> serviceDetailsList = [SELECT Id, Allowed_email_domain__c, Account_Role_Service__r.Account_Role__r.Account__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :actorsIds];
+
+            Map<Id, List<String>> idToDomainsMap = new Map<Id, List<String>>();
+            for(GADM_Account_Service_Detail__c detail : serviceDetailsList) {
+                if(detail.Allowed_email_domain__c != null) {
+                    List<String> domainsList = new List<String>();
+                    if(detail.Allowed_email_domain__c.indexOf(';') > -1) {
+                        domainsList = detail.Allowed_email_domain__c.split(';');
+                    }else{
+                        domainsList.add(detail.Allowed_email_domain__c);
+                    }
+
+                    idToDomainsMap.put(detail.Account_Role_Service__r.Account_Role__r.Account__c, domainsList);
+
+                }else{//nothing in Allowed_email_domain__c field
+                    idToDomainsMap.put(detail.Account_Role_Service__r.Account_Role__r.Account__c, new List<String>());
+                }
+            }
+
+
+            for(Id actorId : userManagementData.actors.keySet()) {
+                GADM_ExternalUserContactDetail_CTRL.Actor actorObj = userManagementData.actors.get(actorId);
+                if(actorObj != null) {
+                    List<String> actorDomains = idToDomainsMap.get(actorId);
+                    if(actorDomains != null) {
+                        actorObj.isDomainBlocked = !actorDomains.contains(userDomain);
+                    }
+                }
+            }
+
         }
 
         return userManagementData;

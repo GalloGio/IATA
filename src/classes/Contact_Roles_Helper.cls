@@ -305,7 +305,10 @@ public without sharing class Contact_Roles_Helper {
                 else {
                     for (Id buid : businessUnits) {
                         if (wr.buData.get(buid) != null) {
-                            SuAggregatedRecordWrappers.add(wr);
+                            if(! SuAggregatedRecordWrappers.contains(wr)) {
+                               SuAggregatedRecordWrappers.add(wr);
+                            }
+
                         }
                     }
                 }

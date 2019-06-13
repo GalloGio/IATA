@@ -17,5 +17,9 @@
         helper.handleSave(component, event);
     },
 
+    checkUserCount : function(component, event, helper) {
+        helper.handleUserCountCheck(component, event);
+    },
+
 
 })

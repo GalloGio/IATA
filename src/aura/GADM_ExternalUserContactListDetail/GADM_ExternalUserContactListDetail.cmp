@@ -24,6 +24,11 @@
 
     <!--ACTOR CAN HAVE ONLY CERTAIN NUMBER OF USERS-->
     <aura:attribute name="userCountReached" type="Boolean" default="false"/>
+    <aura:attribute name="maxUserCount" type="Integer"/>
+    <aura:attribute name="activeUserCount" type="Integer"/>
+    <aura:attribute name="hasGadmUserRole" type="Boolean"/>
+    <aura:attribute name="gadmUserRoleAdded" type="Boolean" default="false"/>
+    <aura:attribute name="gadmUserReachedText" type="String" default=""/>
 
     <!--BACK EVENT-->
     <aura:registerEvent name="Back_EVT" type="c:GADM_ExternalUserContactList_EVT"/>
@@ -152,9 +157,25 @@
                             <aura:if isTrue="{! v.dataRoles.length > 0}">
                                 <aura:iteration items="{!v.dataRoles}" var="dataRole">
                                     <div class="slds-size--1-of-1 slds-grid slds-col line">
-                                        <div class="slds-col slds-size--1-of-12"><lightning:input type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! !dataRole.value.isEditable || dataRole.value.isDomainBlocked || dataRole.value.userCountReached}"/></div>
-                                        <div class="slds-col slds-size--6-of-12">{!dataRole.value.role.Name}</div>
-                                        <div class="slds-col slds-size--5-of-12 red small">{! dataRole.value.userCountReached ? 'User count reached!' : ''}</div>
+                                        <!--GADM User role-->
+                                        <aura:if isTrue="{! dataRole.value.role.Name == 'GADM User'}">
+
+                                            <div class="slds-col slds-size--1-of-12"><lightning:input aura:id="gadmUserCheckbox" type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! !dataRole.value.isEditable || dataRole.value.isDomainBlocked}" onchange="{! c.checkUserCount}"/></div>
+                                            <div class="slds-col slds-size--6-of-12">{!dataRole.value.role.Name}</div>
+                                            <aura:if isTrue="{! and(and(!v.hasGadmUserRole, v.gadmUserRoleAdded), v.userCountReached)}">
+                                                <div class="slds-col slds-size--5-of-12 red small"><lightning:helptext content="{!v.gadmUserReachedText}"/></div>
+                                            </aura:if>
+
+                                            <!--OTHER ROLES-->
+                                            <aura:set attribute="else">
+
+                                                <div class="slds-col slds-size--1-of-12"><lightning:input type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! !dataRole.value.isEditable}"/></div>
+                                                <div class="slds-col slds-size--11-of-12">{!dataRole.value.role.Name}</div>
+
+                                            </aura:set>
+
+                                        </aura:if>
+
                                     </div>
                                 </aura:iteration>
                                 <aura:set attribute="else">
@@ -211,8 +232,8 @@
                                 <aura:iteration items="{!v.dataActors}" var="dataActor">
                                     <div class="slds-size--1-of-1 slds-grid line">
                                         <div class="slds-col slds-size--1-of-12"><lightning:input type="checkbox" checked="{!dataActor.value.isChecked}" disabled="{! !dataActor.value.isEditable || dataActor.value.isDomainBlocked}" /></div>
-                                        <div class="label slds-col slds-size--6-of-12">{!dataActor.value.actor.Name} </div>
-                                        <div class="label slds-col slds-size--5-of-12 red small">{! dataActor.value.isDomainBlocked ? 'Domain blocked!' : ''}</div>
+                                        <div class="label slds-col slds-size--11-of-12">{!dataActor.value.actor.Name} </div>
+                                        <!--<div class="label slds-col slds-size-5-of-12 red small">{! dataActor.value.isDomainBlocked ? 'Domain blocked!' : ''}</div>-->
                                     </div>
                                 </aura:iteration>
                                 <aura:set attribute="else">
@@ -241,7 +262,7 @@
                 <aura:if isTrue="{! !v.currentUserIsSelectedUser}">
 
                     <div class="slds-size--1-of-2 slds-p-right_small">
-                        <button class="btn btn-primary btn-grey slds-float--right" onclick="{! c.save }">Save</button>
+                        <button class="btn btn-primary btn-grey slds-float--right" onclick="{! c.save }" disabled="{! and(and(!v.hasGadmUserRole, v.gadmUserRoleAdded), v.userCountReached)}">Save</button>
                     </div>
 
                 </aura:if>
