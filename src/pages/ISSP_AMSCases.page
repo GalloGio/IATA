@@ -265,7 +265,7 @@
                 <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
-                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="other-forms, DraftCasespageblock, amsCasesMessage, ongoing-apps" oncomplete="rerenderAllSections();"/>
+                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="other-forms, DraftCasespageblock, amsCasesMessage, ongoing-apps" oncomplete="reRenderAllSections();"/>
                 <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" reRender="DraftCasespageblock, amsCasesMessage" oncomplete="reRenderAllSections();"/>
                     
                     <div class="row">
