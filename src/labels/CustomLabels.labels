@@ -2780,12 +2780,19 @@ Payment required on receipt of this Payment Advice
         <value>Cancel</value>
     </labels>    
     <labels>
+        <fullName>CSP_Cancel_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Cancel_Request</shortDescription>
+        <value>Cancel Request</value>
+    </labels>
+    <labels>
         <fullName>CSP_CaseMessage_HelpText</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CaseMessage_HelpText</shortDescription>
-        <value>You can send and receive messages to IATA Customer Service about the issues regarding this case.</value>
+        <value>You can send and receive messages to IATA Customer Service about this case.</value>
     </labels>
     <labels>
         <fullName>CSP_CaseMessage_InputPlaceholder</fullName>
@@ -2793,7 +2800,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CaseMessage_InputPlaceholder</shortDescription>
-        <value>Add comments, ask questions or be informed about the upcoming actions</value>
+        <value>Type your comments here</value>
     </labels>
     <labels>
         <fullName>CSP_CaseMessage_MessageTitle</fullName>
@@ -2809,7 +2816,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CaseMessage_SubmitSuccess</shortDescription>
-        <value>Added Comment successfully</value>
+        <value>Comment Added Successfully</value>
     </labels>
     <labels>
         <fullName>CSP_CaseNumber</fullName>
@@ -2851,6 +2858,13 @@ Payment required on receipt of this Payment Advice
         <value>Community</value>
     </labels>
     <labels>
+        <fullName>CSP_Confirmed_Requested_Service_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
+        <value>Your {0} access request has been delivered to portal administrators. If you have any questions or requests about the process, you can contact an administrator below :</value>
+    </labels>
+    <labels>
         <fullName>CSP_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2864,7 +2878,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_FAQs_Title</shortDescription>
-        <value>FAQs</value>
+        <value>FAQ</value>
     </labels>
     <labels>
         <fullName>CSP_Features_Title</fullName>
@@ -2880,7 +2894,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_FeedbackBody</shortDescription>
-        <value>Please tell us how we can make this article more useful.</value>
+        <value>Tell us how we can make this article more useful.</value>
     </labels>
     <labels>
         <fullName>CSP_FeedbackBody2</fullName>
@@ -2912,7 +2926,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
-        <value>Hi [username], welcome on board</value>
+        <value>Hi [username], welcome</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>
@@ -2921,6 +2935,29 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_LogOut</shortDescription>
         <value>Log Out</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Manage_Portal_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Portal_Users</shortDescription>
+        <value>You can manage the users from the list below.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Manage_Service</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Service</shortDescription>
+        <value>Manage Service</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Manage_Services</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Services</shortDescription>
+        <value>Manage Services</value>
     </labels>
     <labels>
         <fullName>CSP_NoCases1</fullName>
@@ -2936,7 +2973,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_NoCases2</shortDescription>
-        <value>But when you have, you&#39;ll view the most recent ones with their basic details in this area.</value>
+        <value>But once you have, you&#39;ll see the most recent ones here.</value>
     </labels>
     <labels>
         <fullName>CSP_NoSearchResults</fullName>
@@ -2944,7 +2981,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_NoSearchResults</shortDescription>
-        <value>Nothing corresponds to your search criteria</value>
+        <value>No Results</value>
     </labels>
     <labels>
         <fullName>CSP_No_Documents_Message</fullName>
@@ -2976,7 +3013,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_PendingCustomerCase_Warning</shortDescription>
-        <value>We need your action to proceed your case.</value>
+        <value>We need your input to proceed with your case.</value>
     </labels>
     <labels>
         <fullName>CSP_Portal_Status</fullName>
@@ -3018,6 +3055,13 @@ Payment required on receipt of this Payment Advice
         <value>Related Articles</value>
     </labels>    
     <labels>
+	<fullName>CSP_Request_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Request_Service</shortDescription>
+        <value>Request Service</value>
+    </labels>
+    <labels>
         <fullName>CSP_Search_Home_Placeholder</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3031,7 +3075,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Search_Services_Placeholder</shortDescription>
-        <value>Type to service name to go</value>
+        <value>Search Services</value>
     </labels>
     <labels>
         <fullName>CSP_Search_Support_Placeholder</fullName>
@@ -3039,7 +3083,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Search_Support_Placeholder</shortDescription>
-        <value>Search FAQ or Document</value>
+        <value>Search Support</value>
     </labels>
     <labels>
         <fullName>CSP_SeeAll</fullName>
@@ -3104,6 +3148,14 @@ Payment required on receipt of this Payment Advice
         <value>Go to Service</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_GoToServices</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_GoToServices</shortDescription>
+        <value>Go to Services</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_HeaderTitle</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3125,7 +3177,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Services_MyServicesHelpText</shortDescription>
-        <value>Your company&#39;s all services are listed below. You can manage users and update service access from the actions menu. You can select your favorite services which will also appear on your dashboard.</value>
+        <value>Your company&#39;s services are listed below. You can flag services as favorite. These favorite services will appear on the IATA Portal Home page.</value>
     </labels>
     <labels>
         <fullName>CSP_Services_MyServicesTabTile</fullName>
@@ -3149,7 +3201,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Services_RequestServiceBannerSubtitle</shortDescription>
-        <value>You can view detailed service information and request access to available services.</value>
+        <value>View detailed service information and request access to the available services.</value>
     </labels>
     <labels>
         <fullName>CSP_Services_RequestServiceBannerTitle</fullName>
@@ -3213,7 +3265,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Support_HeaderTitle</shortDescription>
-        <value>What can we help you with?</value>
+        <value>How can we help?</value>
     </labels>
     <labels>
         <fullName>CSP_ThanksFeedback</fullName>
@@ -3291,7 +3343,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Supported_File_Extensions</shortDescription>
-        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls,xlsx, tif, tiff, zip files, the size should
+        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls,xlsx, tif, tiff, zip files. The size should
                         be smaller than 50 MB.</value>
     </labels>
     <labels>
@@ -29802,7 +29854,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NotificationCenter_Title</shortDescription>
-        <value>Notification Center</value>
+        <value>Notifications</value>
     </labels>
     <labels>
         <fullName>NotificationDetail_Detail</fullName>
@@ -33885,7 +33937,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Specify basic case details to see support options.</value>
+        <value>Complete the form to see the recommended support options</value>
     </labels>
     <labels>
         <fullName>csp_Call_Panel_label</fullName>
@@ -33901,7 +33953,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Call center is available from 09 AM to 05 PM.</value>
+        <value>Available period:</value>
     </labels>
     <labels>
         <fullName>csp_CaseBeingWorked</fullName>
@@ -33909,7 +33961,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>We&#39;re working on it right now.</value>
+        <value>An IATA Representative will start working on it.</value>
     </labels>
     <labels>
         <fullName>csp_CaseCreatedSuccess</fullName>
@@ -33917,7 +33969,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Your case is created successfully.</value>
+        <value>Case created successfully.</value>
     </labels>
     <labels>
         <fullName>csp_CaseResponseGuarantee</fullName>
@@ -33925,7 +33977,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>You will have a response as soon as possible.</value>
+        <value>You&#39;ll get an answer soon.</value>
     </labels>
     <labels>
         <fullName>csp_Case_Panel_label</fullName>
@@ -33933,7 +33985,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Solve with a Case</value>
+        <value>Create a Case</value>
     </labels>
     <labels>
         <fullName>csp_Case_Panel_sub_label</fullName>
@@ -33941,7 +33993,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Let us know your question.</value>
+        <value>Tell us how we can help</value>
     </labels>
     <labels>
         <fullName>csp_Chat_Panel_label</fullName>
@@ -33957,7 +34009,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Ask your question to an IATA Specialist</value>
+        <value>Chat directly with an IATA Representative</value>
     </labels>
     <labels>
         <fullName>csp_ChooseOption</fullName>
@@ -33965,7 +34017,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Please choose one of the paths below.</value>
+        <value>Get support directly through the IATA portal, by phone or chat.</value>
     </labels>
     <labels>
         <fullName>csp_Compliment_Label</fullName>
@@ -33997,7 +34049,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Concern</shortDescription>
-        <value>Concern</value>
+        <value>Complaint</value>
     </labels>
     <labels>
         <fullName>csp_Concern_Label</fullName>
@@ -34005,7 +34057,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Concern</shortDescription>
-        <value>Concern</value>
+        <value>Complaint</value>
     </labels>
     <labels>
         <fullName>csp_CountryOrRegionIndicator</fullName>
@@ -34013,7 +34065,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Select the country or region the problem belongs to</value>
+        <value>Select the country or region of your query</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseMainInputBoxSubLabel</fullName>
@@ -34021,7 +34073,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Provide all details that may help to investigate the issue.</value>
+        <value>Provide all the details that will help us investigate your query.</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseMainInputBoxTopLabel</fullName>
@@ -34037,7 +34089,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Add additional recipient e-mails.</value>
+        <value>Add another IATA Portal user.</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseMainInputEmailsTopLabel</fullName>
@@ -34045,7 +34097,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Recipients</value>
+        <value>Additional Recipients</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseMainInputSubLabel</fullName>
@@ -34053,7 +34105,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Choose a subject for your issue.</value>
+        <value>What&#39;s the subject of your query?</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseMainInputTopLabel</fullName>
@@ -34109,7 +34161,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Create a case on any issue related to IATA Customer Portal.</value>
+        <value>You selected</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseTopSubSubLabel</fullName>
@@ -34117,7 +34169,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Track the status of the case from Cases.</value>
+        <value>Please provide us more information.</value>
     </labels>
     <labels>
         <fullName>csp_Emergency_Query</fullName>
@@ -34156,7 +34208,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>What do you want to do?</value>
+        <value>Contact Support</value>
     </labels>
     <labels>
         <fullName>csp_IsEmergency</fullName>
@@ -34164,7 +34216,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Is this a case of emergency?</value>
+        <value>Is your query an emergency?</value>
     </labels>
     <labels>
         <fullName>csp_Options_Label</fullName>
@@ -34172,7 +34224,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>How do you want to go on?</value>
+        <value>Select your preferred support option.</value>
     </labels>
     <labels>
         <fullName>csp_Process</fullName>
@@ -34244,7 +34296,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Query</shortDescription>
-        <value>Query</value>
+        <value>Support</value>
     </labels>
     <labels>
         <fullName>csp_Request_New_Service</fullName>
@@ -34276,7 +34328,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Emergency Query</shortDescription>
-        <value>Sub-Topic</value>
+        <value>Subtopic</value>
     </labels>
     <labels>
         <fullName>csp_Subtopic</fullName>
@@ -34292,7 +34344,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Suggest</value>
+        <value>Suggestion</value>
     </labels>
     <labels>
         <fullName>csp_Suggestion_label</fullName>
@@ -34308,7 +34360,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Basic Information</value>
+        <value>We&#39;re here to help.</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_AskTile</fullName>
@@ -34316,14 +34368,14 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Ask</value>
+        <value>Question</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_BasicInfo</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Basic Information</value>
+        <value>We&#39;re here to help.</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_Category</fullName>
@@ -34344,7 +34396,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Concern</value>
+        <value>Complaint</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_Country</fullName>
@@ -34359,28 +34411,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Is this a case of emergency?</value>
+        <value>Is your query an emergency?</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_PlzChoosePath</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Please choose one of the paths below.</value>
+        <value>Get support directly through the IATA portal, by phone or chat.</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_SelectCategory</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Select the main category of your issue.</value>
+        <value>Select the main category</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_SelectCountry</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Select the country or region the problem belongs to</value>
+        <value>Select the country or region of your query</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_SelectTopic</fullName>
@@ -34388,7 +34440,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Select the topic covering the problem.</value>
+        <value>Select the topic</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_ShowSupportOptions</fullName>
@@ -34403,14 +34455,14 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Specify basic case details to see support options.</value>
+        <value>Complete the form to see the recommended support options</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_SuggestTile</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Suggest</value>
+        <value>Suggestion</value>
     </labels>
     <labels>
         <fullName>csp_SupportReachUs_Topic</fullName>
@@ -34425,7 +34477,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>What do you want to do?</value>
+        <value>Contact Support</value>
     </labels>
     <labels>
         <fullName>csp_Support_Label</fullName>

@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api,track } from 'lwc';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
@@ -10,7 +10,16 @@ import CSP_Services_GoToService from '@salesforce/label/c.CSP_Services_GoToServi
 
 export default class PortalServicesAvailableServicesListCard extends NavigationMixin(LightningElement) {
 
-    @api service;
+    @api
+    get service(){
+        return this.trackedService;
+    }
+    set service(val){
+        this.trackedService=val;
+    }
+    @track trackedService;
+
+    @track showConfirm=false;
 
     label = {
         CSP_Services_ServiceInformation,
@@ -36,12 +45,22 @@ export default class PortalServicesAvailableServicesListCard extends NavigationM
     }
 
     enableServiceButtonClick(event){
-        console.log('TODO enableServiceButtonClick :D');
-
-
-        //figure out if the user is admin or normal user, then open the correspondent popup for the type of user and the appropriate service.
-
+        this.showConfirm=true;     
     }
 
+    requestComplete(event){
+        if(event.detail.success){
+           this.dispatchEvent(new CustomEvent('servicegranted', { detail: {serviceId:this.trackedService}}));// sends to parent the service that was requested with success
+        
+        }else{
+
+            this.showConfirm = false;
+        }
+    }
+
+    get serviceInfo(){
+        let serv=JSON.parse(JSON.stringify(this.trackedService));        
+        return serv;
+    }
 
 }
