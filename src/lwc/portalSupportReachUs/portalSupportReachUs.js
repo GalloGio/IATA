@@ -180,7 +180,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         getAllPickListValues()
             .then(result => {
                 this.myResult = JSON.parse(JSON.stringify(result));
-                console.log(JSON.parse(JSON.stringify(result)));
                 //Auxiliary Map
                 const map = new Map();
                 //Array to consume category options

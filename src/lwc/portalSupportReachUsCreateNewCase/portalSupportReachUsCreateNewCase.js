@@ -39,6 +39,7 @@ import CSP_Support from '@salesforce/label/c.CSP_Support';
 import CSP_CaseNumber from '@salesforce/label/c.CSP_CaseNumber';
 import csp_Concern_Label from '@salesforce/label/c.csp_Concern_Label';
 import csp_errorCreatingCase from '@salesforce/label/c.csp_errorCreatingCase';
+import csp_CreateNewCaseAddAttachment from '@salesforce/label/c.csp_CreateNewCaseAddAttachment';
 import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
@@ -73,6 +74,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_CaseTracking,
         csp_ViewCaseSummary,
         csp_Topic,
+        csp_CreateNewCaseAddAttachment,
         CSP_Support,
         CSP_Cases,
         CSP_CaseNumber,
@@ -398,8 +400,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
 
     //validate fields and finish creating the case.
-    finnishCreatingCase() {
-
+    finnishCreatingCase(event) {
+        
         if (this.agentProfile) {
             this.checkForErrors();
         }
@@ -457,15 +459,24 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             record.Description = this.caseInitiated.Description;
 
             this.loading = true;
-
+            let process = event.target.attributes.getNamedItem('data-id').value;
             //Yes. You can pass the record itself. Yes. It's doable. Yes, i know. It's awsome! Like Thor's Hammer! :D
             insertCase({ caseToInsert: record, recipientsToAdd: this.caseEmails })
                 .then(result => {
                     this.caseNumber = result.CaseNumber;
                     this.caseID = result.Id;
+                    
+
+                    // let process = createEvent.target.attributes.getNamedItem('data-id').value;
+                    
+                    //Open the modal upon case insert with the success message if is the Create Case button pressed.
+                    if (process === 'Show_Success') {
+                        this.openModal();
+                    }
+                    else if (process === 'Add_Attachment') {
+                        window.location.href = "/csportal/s/case-details?caseId=" + this.caseID + '&Att=true';
+                    }
                     this.loading = false;
-                    //Open the modal upon case insert with the success message.
-                    this.openModal();
 
                 })
                 .catch(error => {
@@ -474,7 +485,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: this.label.csp_errorCreatingCase,
-                            message: JSON.parse(JSON.stringify(error)).body.message,
+                            message: JSON.parse(JSON.stringify(error)),
                             variant: 'error',
                             mode: 'pester'
                         })

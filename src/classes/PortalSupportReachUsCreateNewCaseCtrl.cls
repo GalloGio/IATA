@@ -97,10 +97,11 @@ public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
         
         if(recordTypeCountry != null) {
             if(isConcernCase) {
-                List<ISSP_FAQ2Case_Record_Type__c> complaintRecordType = recordTypeComplaint('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic + '%');
+                List<ISSP_FAQ2Case_Record_Type__c> complaintRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic + '%', true);
                 newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', complaintRecordType[0].RecordType__c);
             }else{
-                newCase.RecordTypeId = recordTypeCountry.get('RecordType');
+                List<ISSP_FAQ2Case_Record_Type__c> caseRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic + '%', false);
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', caseRecordType[0].RecordType__c);
             }
             newCase.Region__c = recordTypeCountry.get('Region');
             newCase.BSPCountry__c = recordTypeCountry.get('Country') == null ? '' : recordTypeCountry.get('Country');
@@ -149,12 +150,12 @@ public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
         return [SELECT Id, CaseNumber FROM Case WHERE id =: caseToInsert.Id LIMIT 1];
     }
     
-    private static List<ISSP_FAQ2Case_Record_Type__c> recordTypeComplaint (String country, String topic, String subtopic){
+    private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country, String topic, String subtopic, Boolean emergency){
         return [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
                 Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c,
                 Flag_Assignment_Rules__c
                 FROM ISSP_FAQ2Case_Record_Type__c
-                WHERE Complaint__c = true
+                WHERE Complaint__c =:emergency
                 AND (Topic__c =: topic
                      OR SubTopic__c = : subtopic
                      OR Country_concerned_by_the_query__c like: country

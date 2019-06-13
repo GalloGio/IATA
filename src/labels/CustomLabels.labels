@@ -34120,6 +34120,14 @@ title,Title,Name</value>
         <value>Track the status of the case from Cases.</value>
     </labels>
     <labels>
+        <fullName>csp_CreateNewCaseAddAttachment</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Create Case &amp; Add Attachment</value>
+    </labels>
+    <labels>
         <fullName>csp_Emergency_Query</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
