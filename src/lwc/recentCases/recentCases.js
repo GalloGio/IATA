@@ -12,6 +12,8 @@ import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import CSP_Question1 from '@salesforce/label/c.CSP_Question1';
 import CSP_Question2 from '@salesforce/label/c.CSP_Question2';
+import CSP_Question1URL from '@salesforce/label/c.CSP_Question1URL';
+import CSP_Question2URL from '@salesforce/label/c.CSP_Question2URL';
 
 export default class RecentCases extends NavigationMixin(LightningElement) {
     label = {
@@ -20,7 +22,9 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         CSP_RecentCases,
         CSP_SeeAll,
         CSP_Question1,
-        CSP_Question2
+        CSP_Question2,
+        CSP_Question1URL,
+        CSP_Question2URL
     };
     @track error;
     @track data;
@@ -30,6 +34,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned__c', 'Portal_Case_Status__c'
     ];
     @track casesListUrl;
+    noCasesImg = '/csportal/s/CSPortal/Images/Icons/nocases.svg';
 
     connectedCallback() {
         this[NavigationMixin.GenerateUrl]({

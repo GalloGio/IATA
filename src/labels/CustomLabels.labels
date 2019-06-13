@@ -3039,6 +3039,22 @@ Payment required on receipt of this Payment Advice
         <value>How can I see and update the details of a case?</value>
     </labels>
     <labels>
+        <fullName>CSP_Question1URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Question1URL</shortDescription>
+        <value>https://www.salesforce.com</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Question2URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Question2URL</shortDescription>
+        <value>https://www.salesforce.com</value>
+    </labels>
+    <labels>
         <fullName>CSP_RecentCases</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
