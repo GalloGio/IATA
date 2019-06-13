@@ -1,0 +1,69 @@
+<apex:component controller="ISSP_AMS_Accreditation" allowDML="true">
+    <apex:form id="copyOwnersMc">
+      	<div class="modal fade" id="copyOwnersMcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        	<div class="modal-dialog" role="document">
+          		<div class="modal-content">
+            		<div class="modal-header">
+              			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              			<!--<h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Company}</h4>-->
+              			<h4 class="modal-title" id="myModalLabel">Copy Owners</h4>
+            		</div>
+            		<div class="modal-body">
+              			<apex:pageBlock>
+		                    <apex:dataTable value="{!ownersThatCanBeCopied}" var="ownerCon" id="importOwnersList" styleClass="table-hover table table-condensed table-responsive">
+								<apex:column>
+									<apex:facet name="header"> 
+										<apex:inputCheckbox>
+											<apex:actionSupport event="onclick" action="{!getSelectedOwners}" onsubmit="checkAll(this)" rerender=""/>
+										</apex:inputCheckbox>
+									</apex:facet>
+
+									<apex:inputCheckbox value="{!ownerCon.selected}" id="checkedone">
+										<apex:actionSupport event="onclick" action="{!getSelectedOwners}" rerender=""/>
+									</apex:inputCheckbox>
+								</apex:column>
+
+								<apex:column headervalue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!ownerCon.owner.First_name__c}"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!ownerCon.owner.Last_name__c}"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!ownerCon.owner.Phone__c}"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Email.Label}" value="{!ownerCon.owner.Email__c}"/>
+
+							</apex:dataTable>
+              			</apex:pageBlock>
+            		</div>
+
+            		<div class="modal-footer">
+              			<apex:commandButton action="{!importOwners}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="closeCopyOwneresMulticountry(); this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="contactList, companyList, ownerList"/>
+              			<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+            		</div>
+
+            		
+          		</div>
+        	</div>
+    	</div>
+    </apex:form>
+    <script>
+	    function checkAll(cb) {
+			var inputElem = document.getElementsByTagName("input");
+
+			for(var i=0; i<inputElem.length; i++) {
+				if(inputElem[i].id.indexOf("checkedone")!=-1) {
+					inputElem[i].checked = cb.checked;
+				}
+			}
+		}
+
+		function showCopyOwneresMulticountry() {
+      		$j(function () {
+          		$j('#copyOwnersMcModal').modal('show');
+        	});
+      	}
+
+      	function closeCopyOwneresMulticountry() {
+        	$j(function () {
+          		$j('#copyOwnersMcModal').modal('hide');
+        	});
+      	}
+	</script>
+    <!-- End Modal Copy Owners MultiCountry -->
+</apex:component>

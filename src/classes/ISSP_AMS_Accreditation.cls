@@ -330,9 +330,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<AMS_Accreditation_Contact__c> selectedOwnersToImport {
-        get {
-            return (selectedOwnersToImport == null) ? new List<AMS_Accreditation_Contact__c>() : selectedOwnersToImport;
-        }
+        get;
         set;
     }
 
@@ -4367,7 +4365,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 query += 'Job_title__c, Agencies_prev_worked_for__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, ';
                 query += 'Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, ';
                 query += 'Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, Duplicate_contact_exists__c, ';
-                query += 'Portal_administrator__c, Authorised_to_make_customs_declarations__c ';
+                query += 'Portal_administrator__c, Authorised_to_make_customs_declarations__c , Is_Cloned_From_Another_Form__c ';
             }
         }
 
@@ -7458,7 +7456,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 if (formToBeUpdated != null) {
-                    copyOwnersFromParentForm(formToBeUpdated);
+                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)), false);
                     update formToBeUpdated;
                 }
             }
@@ -7469,10 +7467,10 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-    private void copyOwnersFromParentForm(AMS_Pax_Accreditation_Form__c formToBeUpdated) {
+    private void copyOwnersFromOtherForm(AMS_Pax_Accreditation_Form__c formToBeUpdated, List<AMS_Accreditation_Contact__c> contactList, Boolean isCloned) {
         List<AMS_Accreditation_Contact__c> contactsToBeCreated = new List<AMS_Accreditation_Contact__c>();
         
-        for (AMS_Accreditation_Contact__c con: executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c))) {
+        for (AMS_Accreditation_Contact__c con: contactList) {
             AMS_Accreditation_Contact__c newCon = new AMS_Accreditation_Contact__c();
 
             newCon.AMS_Pax_Accreditation_Form__c = formToBeUpdated.Id;
@@ -7489,6 +7487,12 @@ public without sharing class ISSP_AMS_Accreditation {
             newCon.AddressCity__c = con.AddressCity__c;
             newCon.AddressPostcode__c = con.AddressPostcode__c;
             newCon.AddressCountry__c = con.AddressCountry__c;
+
+            if (isCloned) {
+                newCon.Is_Cloned_From_Another_Form__c = true;
+            } else {
+                newCon.Is_Cloned_From_Another_Form__c = con.Is_Cloned_From_Another_Form__c;
+            }
 
             contactsToBeCreated.add(newCon);
         }
@@ -7556,6 +7560,8 @@ public without sharing class ISSP_AMS_Accreditation {
             contactsToImportQuery += 'AND Id != \'' + newForm.Id + '\' ';
         }
 
+        //contactsToImportQuery += 'AND Is_Cloned_From_Another_Form__c = false';
+
         for (AMS_Pax_Accreditation_Form__c form: Database.query(contactsToImportQuery)) {
             for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
                 ownersThatCanBeCopiedList.add(new ImportOwnerModalRecord(con));
@@ -7566,13 +7572,10 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void getSelectedOwners() {
-        selectedOwnersToImport.clear();
-
-        System.debug('hey1: ' + ownersThatCanBeCopiedList);
+        selectedOwnersToImport = new List<AMS_Accreditation_Contact__c>();
 
         for(ImportOwnerModalRecord owner: ownersThatCanBeCopiedList) {
             if(owner.selected == true) {
-                System.debug('hey2');
                 selectedOwnersToImport.add(owner.owner);
             }
         }
@@ -7584,7 +7587,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public void importOwners() {
         getSelectedOwners();
-        System.debug('ola rui: ' + ownersThatCanBeCopiedList);
-        System.debug('ola rui2: ' + selectedOwnersToImport);
+        copyOwnersFromOtherForm(newForm, getSelectedOwnersToImport(), true);
     }
 }
