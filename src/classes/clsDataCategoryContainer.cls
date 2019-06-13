@@ -39,11 +39,14 @@ public with sharing class clsDataCategoryContainer {
         	for(DataCategory oneCat : topCat2Group) {
         		list<DataCategory> childCategories = oneCat.getChildCategories();
         		for(DataCategory oneChildCat : childCategories) {
+					list<DataCategory> childCategories2ndLevel = oneChildCat.getChildCategories();
+                    for(DataCategory oneChildCateg: childCategories2ndLevel){
 					lst_DataCategories.add(new clsDataCategory(oneResult.name
                 										  	  ,oneResult.label 	
                 										      ,oneChildCat.getName()
                                                               ,oneChildCat.getLabel()
-                                                              ,oneChildCat.getChildCategories()));        			
+                                                              ,oneChildCat.getChildCategories()));    
+					}    			
         		}
         	} 
         }       
