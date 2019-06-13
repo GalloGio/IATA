@@ -18,7 +18,7 @@
                         onload={loaded}
                 >
                     <template if:false={isLoading}>
-                        <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small maxWidth">
+                        <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
                             <template for:each={fields} for:item="field">
                                 <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                                     <template if:true={field.visible}>
@@ -71,22 +71,56 @@
 
 
                             <template if:false={isLoadingEdit}>
-                                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small maxWidth">
-                                    <template for:each={fields} for:item="field">
-                                    <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
-                                        <div>
-                                            <template if:true={field.visible}>
-                                                <template if:true={field.editable}>
-                                                    <lightning-input-field class="labelValue textValue" field-name={field.fieldName}></lightning-input-field>
-                                                    <!--<lightning-input type="text" label={field.fieldName} value={field.fieldName} name="input1"  ></lightning-input>-->
-                                                </template>
-                                                <template if:false={field.editable}>
-                                                    <lightning-input-field class="labelValue textValue disabledValue" field-name={field.fieldName} disabled></lightning-input-field>
-                                                    <!--<lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>-->
-                                                </template>
-                                            </template>
-                                        </div>
-                                    </span>
+                                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
+
+                                    <template if:false={haveEditFields}>
+                                        <template for:each={fields} for:item="field">
+                                            <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                <div>
+                                                    <template if:true={field.visible}>
+                                                        <template if:true={field.editable}>
+                                                            <lightning-input-field onchange={styleInputs}  class="labelValue textValue" field-name={field.fieldName}></lightning-input-field>
+                                                            <!--<lightning-input type="text" label={field.fieldName} value={field.fieldName} name="input1"  ></lightning-input>-->
+                                                        </template>
+                                                        <template if:false={field.editable}>
+                                                            <lightning-input-field class="labelValue textValue disabledValue disabledInput" field-name={field.fieldName} disabled></lightning-input-field>
+                                                            <!--<template if:true={field.labeled}>
+                                                                <label>{field.label}</label>
+                                                                <lightning-output-field variant="label-hidden" class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>
+                                                            </template>
+                                                            <template if:false={field.labeled}>
+                                                                <lightning-input-field class="labelValue textValue disabledValue disabledInput" field-name={field.fieldName} disabled></lightning-input-field>
+                                                            </template>-->
+                                                        </template>
+                                                    </template>
+                                                </div>
+                                            </span>
+                                        </template>
+                                    </template>
+
+                                    <template if:true={haveEditFields}>
+                                        <template for:each={editFields} for:item="field">
+                                            <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                <div>
+                                                    <template if:true={field.visible}>
+                                                        <template if:true={field.editable}>
+                                                            <lightning-input-field onchange={styleInputs}  class="labelValue textValue" field-name={field.fieldName}></lightning-input-field>
+                                                            <!--<lightning-input type="text" label={field.fieldName} value={field.fieldName} name="input1"  ></lightning-input>-->
+                                                        </template>
+                                                        <template if:false={field.editable}>
+                                                            <lightning-input-field class="labelValue textValue disabledValue disabledInput" field-name={field.fieldName} disabled></lightning-input-field>
+                                                            <!--<template if:true={field.labeled}>
+                                                                <label>{field.label}</label>
+                                                                <lightning-output-field variant="label-hidden" class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>
+                                                            </template>
+                                                            <template if:false={field.labeled}>
+                                                                <lightning-input-field class="labelValue textValue disabledValue disabledInput" field-name={field.fieldName} disabled></lightning-input-field>
+                                                            </template>-->
+                                                        </template>
+                                                    </template>
+                                                </div>
+                                            </span>
+                                        </template>
                                     </template>
                                 </div>
                             </template>

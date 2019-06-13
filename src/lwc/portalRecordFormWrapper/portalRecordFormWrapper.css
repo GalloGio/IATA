@@ -14,3 +14,15 @@
 .editIcon{
     font-size: 20px;font-weight: 600;font-style: normal;font-stretch: normal;line-height: 1.6;letter-spacing: normal;color: #333333;
 }
+
+.slds-required{
+    display:none;
+}
+
+.slds-input__icon-group_right{
+    display:none;
+}
+
+.slds-form-element__legend{
+    display:none;
+}

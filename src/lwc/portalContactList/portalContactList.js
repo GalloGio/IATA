@@ -9,6 +9,7 @@ export default class PortalContactList extends LightningElement {
 
     @api openmodel;
     @api recordid;
+    @track originalRecords;
     @api objectid;
     @api objectName;
     @api defaultSort;
@@ -16,7 +17,6 @@ export default class PortalContactList extends LightningElement {
     sortBy;
     @track isLoading = true;
     @track isLoadingRecords = true;
-    @api fieldsList;
     @api fieldsListToCreate;
     @track recordsLocal;
     @api recordsInitDone = false;
@@ -31,6 +31,17 @@ export default class PortalContactList extends LightningElement {
     @track viewFields = [
         { 'fieldName': 'AccountId', 'visible': true, 'editable': true },{ 'fieldName': 'MailingCountry', 'visible': true, 'editable': true },
         { 'fieldName': 'Name', 'visible': true, 'editable': true },{ 'fieldName': 'Services__c', 'visible': true, 'editable': true }];*/
+
+    @api
+    get fieldsList(){
+        return this._fieldsList;
+    }
+
+    set fieldsList(value){
+        this._fieldsList = value;
+        //PROCESS OTHER SECTIONS HERE
+    }
+
 
     @api
     get records() {
@@ -64,7 +75,7 @@ export default class PortalContactList extends LightningElement {
     set labels(value) {this._labels = value;}
 
     connectedCallback() {
-
+        console.log('TEST: ' , JSON.parse(JSON.stringify(this.fieldsList)) );
     }
 
     openRecordDetail(event) {
@@ -88,6 +99,28 @@ export default class PortalContactList extends LightningElement {
     @api
     openModal() {this.openmodel = true;}
     closeModal() {this.openmodel = false;}
+    closemodalWithSuccess() {
+        this.openModal = false;
+        
+    }
+    @api
+    searchRecords(searchParam){
+        console.log('searching... '+searchParam);
+
+        if(searchParam != null && searchParam.length>0){
+            let records = JSON.parse(JSON.stringify(this.originalRecords));
+
+            let filtered = records.filter(function (el) {
+                 let stringed = JSON.stringify(el.rowValues).toLowerCase();
+                 return stringed.includes(searchParam.toLowerCase());
+            });
+
+            this.records = filtered;
+        }else{
+            this.records = this.originalRecords;
+        }
+    }
+
 
 
     processRecords(){
@@ -124,6 +157,7 @@ export default class PortalContactList extends LightningElement {
                 record.open = false;
             }
             this.records = records;
+            this.originalRecords = records;
 
             if(this.defaultSort != null){
                 try{

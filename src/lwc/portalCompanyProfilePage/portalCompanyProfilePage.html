@@ -74,7 +74,28 @@
                     <!-- Profile: Branch Offices-->
                     <template if:true={tab1Active}>
                         <template if:true={branchesLoaded}>
-                            <div class="slds-grid slds-wrap slds-m-top_x-small" style="margin-bottom:5rem;">
+
+                            <div class="slds-clearfix slds-m-top_xx-large">
+                                <div class="slds-float_left" style="width:30%; border-bottom: solid #e2e4e8 2px;">
+                                    <div style="display:inline-block;">
+                                        <img src="/csportal/s/CSPortal/Images/Icons/searchColored.svg" height="42" width="42" class="slds-p-left_small">
+                                    </div>
+
+                                    <div style="display:inline-block;">
+                                        <div style="width:100%;">
+                                            <lightning-input
+                                                    name="branch-search"
+                                                    type="text"
+                                                    placeholder="Find branch"
+                                                    onchange={onchangeSearchInputBranches}
+                                                    class="borderlessInput grayInputBackground searchInput">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-grid slds-wrap slds-m-top_x-small" style="">
                                 <c-portal-contact-list object-name="Account" class="fullWidth" fields-list={branchFields} fields-list-to-create={fieldsListToCreate} default-sort="Name"
                                                        records={branches} openmodel={openmodel}
                                                        recordid={recordid} objectid={accountid}>
@@ -91,7 +112,28 @@
 
                     <!-- Profile: Contacts-->
                     <template if:true={tab2Active}>
-                        <div class="slds-clearfix slds-m-top_xx-large">
+
+                        <template if:true={contactsLoaded}>
+
+                            <div class="slds-clearfix slds-m-top_xx-large">
+                            <div class="slds-float_left" style="width:30%; border-bottom: solid #e2e4e8 2px;">
+                                <div style="display:inline-block;">
+                                    <img src="/csportal/s/CSPortal/Images/Icons/searchColored.svg" height="42" width="42" class="slds-p-left_small">
+                                </div>
+
+                                <div style="display:inline-block;">
+                                    <div style="width:100%;">
+                                        <lightning-input
+                                                name="contact-search"
+                                                type="text"
+                                                placeholder="Find contact"
+                                                onchange={onchangeSearchInputContacts}
+                                                class="borderlessInput grayInputBackground searchInput">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="slds-float_right">
                                 <!-- LABELS -->
                                 <lightning-button variant="brand" label="Create New Contact" title="Create New Contact" disabled={contactsNotLoaded}
@@ -99,13 +141,13 @@
                             </div>
                         </div>
 
-                        <template if:true={contactsLoaded}>
-                            <div class="slds-grid slds-wrap slds-m-top_x-small" style="margin-bottom:5rem;">
-                                <c-portal-contact-list object-name="Contact" class="fullWidth" default-sort="LastName"
+                            <div class="slds-grid slds-wrap slds-m-top_x-small" style="">
+                                <c-portal-contact-list object-name="Contact" class="fullWidth" default-sort="Name"
                                                        fields-list={contactFields} fields-list-to-create={fieldsListToCreate}
                                                        records={contacts} openmodel={openmodel}
                                                        recordid={recordid} accountid={accountid} objectid={objectid}>
                                 </c-portal-contact-list>
+
                             </div>
                         </template>
 

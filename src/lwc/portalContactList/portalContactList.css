@@ -29,8 +29,8 @@
 
 .underLinded {
     border-bottom: 1px solid #E1E1E1;
-    padding-bottom:2%;
-    padding-top:2%;
+    padding-bottom:1%;
+    padding-top:1%;
 }​
 
 table tr:last-child {
@@ -99,11 +99,17 @@ td.inactive{
 
 /* COLORS */
 .lightGreen span{
+    display:inline-block;
+    width:90px;
     background-color: #b1e8b5;
     border: solid #b1e8b5 5px;
+    text-align:center;
 }
 
 .amber span{
+    display:inline-block;
+    width:90px;
     background-color: #fac832;
     border: solid #fac832 5px;
+    text-align:center;
 }

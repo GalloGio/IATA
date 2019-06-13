@@ -60,8 +60,8 @@ public with sharing class DAL_ISSP {
     public static List<Contact> getContactsByAccountId(Id accountId){
         List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
                 OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
-                User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c ,
-                AccountId, Account.Name
+                User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
+                Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
         from Contact where AccountId=:accountId];
         if(!contacts.isEmpty()){
             return contacts;
@@ -69,6 +69,7 @@ public with sharing class DAL_ISSP {
 
         return null;
     }
+
 
     public static List<AccountTeamMember> getPortalAdmins(Id accountId) {
         if (accountId == null)
