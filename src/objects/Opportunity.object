@@ -184,7 +184,6 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
-    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>DSE__DS_OpportunityListFields</fullName>
         <availableFields>
