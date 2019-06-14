@@ -4,8 +4,12 @@
 
 import { LightningElement, track, api } from 'lwc';
 import BasicsSection from '@salesforce/label/c.csp_Basics_Section_label';
+import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
+
 
 export default class PortalContactList extends LightningElement {
+
+    @api isAccount;
 
     @api openmodel;
     @api recordid;
@@ -24,13 +28,6 @@ export default class PortalContactList extends LightningElement {
     /* Dynamic fields*/
     @api sectionMap;
 
-    /*@track rowFields = [{'fieldName':'FirstName','label':'First name','class':'underLinded inactive cursorPointer'},
-    {'fieldName':'LastName','label':'Last name','class':'underLinded inactive cursorPointer'},
-    {'fieldName':'Email','label':'Email','class':'underLinded inactive cursorPointer'},
-    {'fieldName':'Type_of_Contact__c','label':'Type','class':'underLinded inactive cursorPointer'}];
-    @track viewFields = [
-        { 'fieldName': 'AccountId', 'visible': true, 'editable': true },{ 'fieldName': 'MailingCountry', 'visible': true, 'editable': true },
-        { 'fieldName': 'Name', 'visible': true, 'editable': true },{ 'fieldName': 'Services__c', 'visible': true, 'editable': true }];*/
 
     @api
     get fieldsList(){
@@ -39,13 +36,11 @@ export default class PortalContactList extends LightningElement {
 
     set fieldsList(value){
         this._fieldsList = value;
-        //PROCESS OTHER SECTIONS HERE
     }
 
 
     @api
     get records() {
-        //return this._records;
         return this.recordsLocal;
     }
     set records(value) {
@@ -70,12 +65,12 @@ export default class PortalContactList extends LightningElement {
 
 
 
-    _labels = {BasicsSection};
+    _labels = {BasicsSection,CSP_NoSearchResults};
     get labels() {return this._labels;}
     set labels(value) {this._labels = value;}
 
     connectedCallback() {
-        console.log('TEST: ' , JSON.parse(JSON.stringify(this.fieldsList)) );
+        this.isAccount = (this.isAccount === 'true' ? true : false);
     }
 
     openRecordDetail(event) {
@@ -100,12 +95,11 @@ export default class PortalContactList extends LightningElement {
     openModal() {this.openmodel = true;}
     closeModal() {this.openmodel = false;}
     closemodalWithSuccess() {
-        this.openModal = false;
-        
+        this.openmodel = false;
+        this.dispatchEvent(new CustomEvent('getcontacts'));
     }
     @api
     searchRecords(searchParam){
-        console.log('searching... '+searchParam);
 
         if(searchParam != null && searchParam.length>0){
             let records = JSON.parse(JSON.stringify(this.originalRecords));
@@ -160,9 +154,7 @@ export default class PortalContactList extends LightningElement {
             this.originalRecords = records;
 
             if(this.defaultSort != null){
-                try{
-                    this.orderRows(this.defaultSort);
-                }catch(e){console.log(e)}
+                this.orderRows(this.defaultSort);
             }
         }
 
@@ -200,6 +192,10 @@ export default class PortalContactList extends LightningElement {
         let isAsc = this.isAsc;
         let sortBy = this.sortBy;
         let records = JSON.parse(JSON.stringify(this.records));
+
+
+        //Choose different field for login date
+        if(fieldName === 'LastLogin'){fieldName == 'LastLoginDate';}
 
         //Handle sort direction
         if(sortBy != null){

@@ -14,7 +14,16 @@ import getBranches from '@salesforce/apex/PortalProfileCtrl.getCompanyBranches';
 
 
 
+
 import CompanyInformation from '@salesforce/label/c.ISSP_CompanyInformation';
+import FindBranch from '@salesforce/label/c.csp_Find_Branch';
+import FindContact from '@salesforce/label/c.csp_Find_Contact';
+import NewContact from '@salesforce/label/c.csp_CreateNewContact';
+import NoAccount from '@salesforce/label/c.CSP_NoAccount';
+import CSP_Branch_Offices from '@salesforce/label/c.CSP_Branch_Offices';
+import ISSP_Contacts from '@salesforce/label/c.ISSP_Contacts';
+
+
 
 
 export default class PortalCompanyProfilePage extends LightningElement {
@@ -43,12 +52,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track searchTextContacts;
     @track searchTextBranches;
 
-    // CHANGE IN FUTURE!!!
     @track openmodel = false;
     @track recordid;
     @track objectid;
     @track objectName = "Contact";
-    //@track fieldsList = [{'label':'FirstName','class':'active'}, {'label':'LastName','class':'inactive'}, {'label':'Email','class':'inactive'}, {'label':'MobilePhone','class':'inactive'}, {'label':'Phone','class':'inactive'}];
     @track fieldsListToCreate = [];
     // ------------------- //
 
@@ -58,14 +65,14 @@ export default class PortalCompanyProfilePage extends LightningElement {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    _labels = {CompanyInformation};
+    _labels = {CompanyInformation,FindBranch,FindContact,NewContact,NoAccount,CSP_Branch_Offices,ISSP_Contacts};
     get labels() {return this._labels;}
     set labels(value) {this._labels = value;}
 
 
     connectedCallback() {
         isAdmin().then(result =>{
-           this.isAdmin = result
+           this.isAdmin = result;
         });
 
         getLoggedUser().then(result => {
@@ -98,12 +105,12 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         let tabsAux = [];
 
-        let tabNames = [this.labels.CompanyInformation,'Branch Offices','Contacts'];// 'Contacts', 'Company Calendar', 'Activity Log'];
+        let tabNames = [this.labels.CompanyInformation,this.labels.CSP_Branch_Offices,this.labels.ISSP_Contacts]; //+'Company Calendar', 'Activity Log'];
         for (let i = 0; i < tabNames.length; i++) {
 
-            //TBD - when development done
+            //Only Portal Admin can see other tabs
             if(i > 0 && this.isAdmin){
-                //PUSH OTHERS ONLY FOR ADMIN ?
+
             }
 
             tabsAux.push({
@@ -250,18 +257,48 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     retrieveContacts(){
         getContacts().then(result => {
-            console.log('gotContacts ');
             //this.contacts
             let contacts = JSON.parse(JSON.stringify(result));
+            let unwrappedContacts = [];
             for(let i=0;i<contacts.length;i++){
-                let contact = contacts[i];
+                let contact = contacts[i].contact;
+                let user = contacts[i].contactUser;
+
+
                 contact.LocationCode = contact.IATA_Code__c+' '+contact.Account.Location_Type__c;
+                if(user.LastLoginDate != null){
+                    let locale = user.LanguageLocaleKey.replace('_','-');
+                    let lastLogin = new Date(user.LastLoginDate);
+                    contact.LastLoginDate = lastLogin;
+
+                    let day = lastLogin.getDate();
+                    let monthIndex = lastLogin.getMonth();
+                    let year = lastLogin.getFullYear();
+                    let month;
+
+                    try{
+                        month = lastLogin.toLocaleString(locale, { month: "long" });
+                        contact.LastLogin = month+' '+day+', '+year;
+                    }
+                    catch(e){
+                        contact.LastLogin = day+'.'+(monthIndex+1)+'. '+year;
+                    }
+                 }
+                //contact.LastLogin = user.LastLoginDate;
+                contact.IsoCountry = contact.Account.IATA_ISO_Country__r.Name;
+                unwrappedContacts.push(contact);
+
             }
-            this.contacts = contacts;
+            this.contacts = unwrappedContacts; //contacts;
             this.contactsLoaded = true;
         });
     }
 
+    getContacts(){
+        this.contactsLoaded = false;
+        this.retrieveContacts();
+    }
+    
     get contactsNotLoaded(){
         return !this.contactsLoaded;
     }
@@ -285,7 +322,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
     getContactsFieldMap(){
         getContactsListFields().then(result => {
            let sectionMap = JSON.parse(JSON.stringify(result));
-           console.log(sectionMap);
 
            let localMap = [];
            for (let key in sectionMap) {
@@ -313,7 +349,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
                     localMap.push({ 'value': value, 'key': key });
                 }
             }
-            console.log(localMap);
             //this.contactFields = localMap;
             this.branchFields = sectionMap;
          });
@@ -338,7 +373,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
                     contactList.searchRecords(this.searchTextContacts);
                 }else{
                     contactList.searchRecords(null);
-                    console.log('reset contacts search');
                 }
 
             }, 500, this);
@@ -363,7 +397,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 branchList.searchRecords(this.searchTextBranches);
             }else{
                 branchList.searchRecords(null);
-                console.log('reset branches search');
             }
 
         }, 500, this);

@@ -4,7 +4,6 @@
 
 <!-- Portal Contact List -->
 <template>
-    <!--div if:true={openmodel} class="slds-backdrop slds-backdrop_open"></div-->
     <div class="slds-p-vertical_large customBorderlessCardWhite">
 
         <!-- OPEN MODAL -->
@@ -18,12 +17,11 @@
         <!-- CONTACT LIST -->
         <template if:true={hasRecords}>
             <table class="slds-m-vertical_medium profileTable slds-table">
-                <!-- m-horizontal-auto -->
                 <!-- HEADER -->
                 <thead>
                     <tr>
                         <th class="tableLefty"></th>
-                        <th class="underLinded" style="width:1%;">
+                        <th class="underLinded">
                             <!-- arrow spacer -->
                         </th>
                         <template for:each={fieldsList.ROWS} for:item="field" for:index="index">
@@ -45,7 +43,7 @@
                     <tbody key={record.Id}>
                         <tr>
                             <td class="tableLefty"></td>
-                            <td class="underLinded" style="width:5%; text-align:center;">
+                            <td class="underLinded chevronColumn">
                                 <div class="cursorPointer inline-block" onclick={openRecordDetail} data-item={index}>
                                     <lightning-icon class="darkBlueIcon" if:true={record.open}
                                         icon-name="utility:chevrondown" size="xx-small" data-item={index}>
@@ -55,9 +53,6 @@
                                     </lightning-icon>
                                 </div>
                             </td>
-                            <!--
-                        <td class="active">{record.Name}</td>
-                        -->
 
                             <template for:each={record.rowValues} for:item="rowValue">
                                 <td key={rowValue.value} class={rowValue.className}>
@@ -68,24 +63,38 @@
                             <td class="tableLefty"></td>
                         </tr>
 
-                        <tr if:true={record.open} class="slds-p-vertical_x-large text-xsmall"
-                            style="transition: height 0.3s ease;" data-item={index}>
+                        <tr if:true={record.open} class="slds-p-vertical_x-large text-xsmall openTransition" data-item={index}>
                             <td class="noPadding" colspan={fieldCount}>
                                 <div class="recordDetail">
-                                    <div style="margin-left:10%; min-height:200px; padding-top:0.5rem; max-width:75%;">
+                                    <div class="recordDetailBox">
                                         <!-- iterate over sections here -->
 
-                                        <c-portal-record-form-wrapper section-title="Basics" object-name={objectName}
-                                            record-id={record.Id} edit-fields={fieldsList.Basics}
-                                            fields={fieldsList.Basics} show-edit="true" header-class="slds-float_right">
-                                        </c-portal-record-form-wrapper>
+                                        <template if:true={isAccount}>
+                                            <c-portal-record-form-wrapper section-title="Basics"
+                                                object-name={objectName} record-id={record.Id}
+                                                edit-fields={fieldsList.Basics} fields={fieldsList.Basics}
+                                                show-edit="false"
+                                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
+                                            </c-portal-record-form-wrapper>
 
-                                        <c-portal-record-form-wrapper section-title="Branch Contact" object-name={objectName}
-                                            record-id={record.Id} edit-fields={fieldsList.BranchContact}
-                                            fields={fieldsList.BranchContact} show-edit="true"
-                                            header-class="slds-float_right">
-                                        </c-portal-record-form-wrapper>
+                                            <hr class="hr">
 
+                                            <c-portal-record-form-wrapper section-title="Branch Contact"
+                                                object-name={objectName} record-id={record.Id}
+                                                edit-fields={fieldsList.BranchContact} fields={fieldsList.BranchContact}
+                                                show-edit="true"
+                                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
+                                            </c-portal-record-form-wrapper>
+                                        </template>
+
+                                        <template if:false={isAccount}>
+                                            <c-portal-record-form-wrapper object-name={objectName} record-id={record.Id}
+                                                edit-fields={fieldsList.EDITS} static-fields={record}
+                                                fields={fieldsList.VIEW} show-edit="true"
+                                                header-class="slds-float_right" showarea="true"
+                                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
+                                            </c-portal-record-form-wrapper>
+                                        </template>
 
                                     </div>
                                 </div>
@@ -104,7 +113,7 @@
         <!-- NO RECORDS -->
         <template if:false={hasRecords}>
             <div class="text-medium text-bold slds-p-top_xx-large text-darkGray centered">
-                No records found.
+                {labels.CSP_NoSearchResults}
             </div>
         </template>
 

@@ -1,6 +1,6 @@
 public with sharing class DAL_ISSP {
 
-    public static User getUser(Id userId) {
+        public static User getUser(Id userId) {
         if (userId == null)
             return null;
         List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,Contact.AccountId,
@@ -131,5 +131,14 @@ public with sharing class DAL_ISSP {
             }
         }
         return false;
+    }
+
+    public static List<User> getUsersByContactId(List<Id> contactIds){
+        if(!contactIds.isEmpty()){
+            List<User> users = [SELECT Id,ContactId,AccountId,Email,LanguageLocaleKey,LastLoginDate,IsActive FROM User WHERE ContactId IN: contactIds];
+            return users;
+        }
+        return null;
+
     }
 }

@@ -56,3 +56,8 @@
 .slds-form-element__label{
     display:none;
 }
+
+.borderedSearch{
+    width:30%;
+    border-bottom: solid #e2e4e8 2px;
+}

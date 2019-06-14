@@ -37,7 +37,7 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_NAME = System.label.ISSP_Local_Groups_Contact_Name;
     PRIVATE STATIC FINAL STRING LABEL_EMAIL = System.label.Email;
     PRIVATE STATIC FINAL STRING LABEL_CONTACT_TYPE = System.label.ISSP_Airline_Contact_Type;
-    PRIVATE STATIC FINAL STRING LABEL_ACCOUNT_NAME = System.label.ISSP_Account;
+    PRIVATE STATIC FINAL STRING LABEL_LAST_LOGIN = System.label.csp_LastLoginDate;
     PRIVATE STATIC FINAL STRING LABEL_TRADE_NAME = System.label.ISSP_MyProfile_TradeName;
     PRIVATE STATIC FINAL STRING LABEL_ISO_COUNTRY = System.label.Country;
 
@@ -68,29 +68,32 @@ public with sharing class PortalProfileCtrl {
     @AuraEnabled
     public static List<ContactWrapper> getAccountContacts(){
         List<Contact> contacts = DAL_ISSP.getContactsByAccountId(myContact.AccountId);
+        System.debug('## TIAGO ## Contacts: ' + contacts);
         List<Id> contactIds = new List<Id>();
+        List<User> users = new List<User>();
+        Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
+
+        List<ContactWrapper> wrappers = new List<ContactWrapper>();
 
         if(!contacts.isEmpty()){
-            for(Contact c:contacts){
+            for(Contact c :contacts){
                 contactIds.add(c.Id);
+                contactIdtoContact.put(c.Id,c);
             }
 
-            List<User>
+            users = DAL_ISSP.getUsersByContactId(contactIds);
+            System.debug('## TIAGO ## Users: ' + users);
+            ContactWrapper wrapper;
+            for(User u :users){
+                wrapper = new ContactWrapper();
+                wrapper.contact = contactIdtoContact.get(u.ContactId);
+                wrapper.contactUser = u;
+
+                wrappers.add(wrapper);
+            }
         }
 
-
-        return new List<ContactWrapper>();
-    }
-
-    public class ContactWrapper{
-        @AuraEnabled
-        public Account acc;
-
-        @AuraEnabled
-        public User user;
-
-        @AuraEnabled
-        public Contact contact;
+        return wrappers;
     }
 
     @AuraEnabled
@@ -101,6 +104,14 @@ public with sharing class PortalProfileCtrl {
         from account where id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId];
 
         return branches;
+    }
+
+    public class ContactWrapper{
+        @AuraEnabled
+        public Contact contact;
+
+        @AuraEnabled
+        public User contactUser;
     }
 
 
@@ -273,11 +284,20 @@ public with sharing class PortalProfileCtrl {
         @AuraEnabled
         public Boolean labeled;
 
-        public FieldWrapper () {}
+        @AuraEnabled
+        public Boolean outputOnly;
 
         public FieldWrapper (String fieldName, Boolean fullSize) {
             this.fieldName = fieldName;
             this.fullSize = fullSize;
+            this.labeled = false;
+        }
+
+        public FieldWrapper (String fieldName, Boolean editable, Boolean visible,Boolean output){
+            this.fieldName = fieldName;
+            this.editable = editable;
+            this.visible = visible;
+            this.outputOnly = output ;
             this.labeled = false;
         }
 
@@ -312,10 +332,8 @@ public with sharing class PortalProfileCtrl {
         String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
-        List<String> toView = new List<String>{'AccountId','MailingCountry','MobilePhone','Phone','Services__c','Area__c','LastLogin'};
-        List<String> toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode'};
-        List<String> toEdit = new List<String>{'FirstName','Email','MobilePhone','BusinessPhone','MailingCountry','LocationCode'};
 
+        List<String> toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
         Map<String,String> fieldLabels = new Map<String,String>();
 
         fieldLabels.put('FirstName',LABEL_FIRST_NAME);
@@ -324,20 +342,12 @@ public with sharing class PortalProfileCtrl {
         fieldLabels.put('Type_of_Contact__c',LABEL_CONTACT_TYPE);
         fieldLabels.put('Name',LABEL_NAME);
         fieldLabels.put('LocationCode',LABEL_LOCATION_CODE);
+        fieldLabels.put('LastLogin',LABEL_LAST_LOGIN);
 
-
-        for(String fieldName: toView){
-            if(!fieldLabels.containsKey(fieldName)){
-                fieldLabels.put(fieldName,fieldName);}
-        }
         for(String fieldName: toRow){
-            if(!fieldLabels.containsKey(fieldName)){
-                fieldLabels.put(fieldName,fieldName);}
+            if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
         }
-        for(String fieldName: toEdit){
-            if(!fieldLabels.containsKey(fieldName)){
-                fieldLabels.put(fieldName,fieldName);}
-        }
+
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
 
@@ -347,18 +357,26 @@ public with sharing class PortalProfileCtrl {
         }
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
-        for(String fieldName : toView){
-            if(fieldName == 'AccountId'){
-                wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,false,true,'',LABEL_ACCOUNT_NAME));
-            }else{
-                wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,false,true));
-            }
-        }
-
         wrapperMap.put(editFields,new List<FieldWrapper>());
-        for(String fieldName : toEdit){
-            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true));
-        }
+
+        //VIEW
+        wrapperMap.get(viewFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('ISO_Country__c',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('MobilePhone',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Available_Services_Images__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
+
+        //EDIT
+        wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('ISO_Country__c',true,true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('FirstName',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('LastName',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('Email',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('MobilePhone',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('Phone',true,true));
+
+
 
         return wrapperMap;
 
@@ -371,7 +389,7 @@ public with sharing class PortalProfileCtrl {
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
         String sectionBasic = LABEL_BASICS; //Fields to display in open accordion section/record detail - first section
-        String sectionBranchContact = 'Branch Contact'; //Fields to display in open accordion section/record detail + in edit modal dialog
+        String sectionBranchContact = 'BranchContact'; //Fields to display in open accordion section/record detail + in edit modal dialog
 
         List<String> toView = new List<String>{'Name','Status__c'};
         List<String> toRow = new List<String>{'TradeName__c','LocationCode','IsoCountry','BillingCity','Status__c'};
@@ -420,7 +438,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Website',true,true));
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Phone',true,true));
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Fax',true,true));
-        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('IsoCountry',true,true));
+        //wrapperMap.get(sectionBranchContact).add(new FieldWrapper('IsoCountry',true,true));
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingAddress',true,true));
 
 
