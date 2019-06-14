@@ -179,7 +179,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                   WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
                                FROM Case
                                WHERE Id IN :lstCaseIds
-                               AND RecordType.DeveloperName IN :lstRecordTypesInScope]);
+                               AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR']);//WMO-571
 
     system.debug(LoggingLevel.error, '################### START() -> AFTER PART 2 I FOUND IN TOTAL ' + casesToBeProcessed.size() + ' CASES');
 
