@@ -73,6 +73,25 @@ export default class PortalCompanyProfilePage extends LightningElement {
     connectedCallback() {
         isAdmin().then(result =>{
            this.isAdmin = result;
+
+           let tabsAux = [];
+
+           let tabNames = [this.labels.CompanyInformation,this.labels.CSP_Branch_Offices,this.labels.ISSP_Contacts]; //+'Company Calendar', 'Activity Log'];
+           for (let i = 0; i < tabNames.length; i++) {
+
+               //Only Portal Admin can see other tabs
+               if(i == 0 || this.isAdmin){
+                   tabsAux.push({
+                      "active": (i == 0),
+                      "label": tabNames[i],
+                      "id": i,
+                      "class": "slds-p-around_small cursorPointer text-darkGray"
+                  });
+               }
+
+           }
+
+           this.lstTabs = tabsAux;
         });
 
         getLoggedUser().then(result => {
@@ -103,25 +122,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         });
 
-        let tabsAux = [];
 
-        let tabNames = [this.labels.CompanyInformation,this.labels.CSP_Branch_Offices,this.labels.ISSP_Contacts]; //+'Company Calendar', 'Activity Log'];
-        for (let i = 0; i < tabNames.length; i++) {
-
-            //Only Portal Admin can see other tabs
-            if(i > 0 && this.isAdmin){
-
-            }
-
-            tabsAux.push({
-                "active": (i == 0),
-                "label": tabNames[i],
-                "id": i,
-                "class": "slds-p-around_small cursorPointer text-darkGray"
-            });
-        }
-
-        this.lstTabs = tabsAux;
 
         getContactFieldsToInsert().then(result => {
             this.fieldsListToCreate = result;
