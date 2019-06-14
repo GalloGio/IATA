@@ -190,12 +190,13 @@ global class ANG_RME_Alert_Service {
 		if(!validateRTSAlert(req)) return;
 
 		ANG_Risk_Alert__c rtsAlert = new ANG_Risk_Alert__c(
-			RecordTypeId = Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
 			ANG_Severity__c= req.rtsSeverity,
 			ANG_Agent_Sales__c = req.agentSales,
 			CurrencyIsoCode = req.storedBaseCurrency,
 			ANG_Account__c = accountId,
-			ANG_EventId__c = req.eventId
+			ANG_EventId__c = req.eventId,
+			ANG_RME_Last_Update__c = req.eventTime
 		);
     	insert rtsAlert;
     	setResponse(null, 202);
@@ -276,6 +277,11 @@ global class ANG_RME_Alert_Service {
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
+			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
+			Integer decimalPlaces = (result.res.storedRHCValue).scale();
+			Decimal rounded = toRound.setScale(decimalPlaces, RoundingMode.HALF_UP);
+			
+			system.debug('rounded value :: ' + rounded + ' |  result storedRHCValue :: ' +  result.res.storedRHCValue + ' | Decimal Places :: ' +  decimalPlaces);
 
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
@@ -291,7 +297,7 @@ global class ANG_RME_Alert_Service {
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW4', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
-			else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+			else if (result.res.storedRHCValue != rounded){
 				result.isSuccess = false;
 				log.Error_Code__c = 'RHC Value Mismatch';
 				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');

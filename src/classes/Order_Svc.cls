@@ -289,7 +289,7 @@ public without sharing class Order_Svc
                 requestByOrder.put(ord.Id, createSalesOrderRequestObject(ord, items, chargesByItem, sapTable, locationById));
 
             }
-            else if(!System.isFuture() && !System.isBatch() && !System.isScheduled())
+            else if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
             {   errorLogs.add(IECErrorLogger.createErrorLog('Order_Svc/createSapSalesOrders', JSON.serialize(sapTable), 'Order '+ord, 'Error - SAP_Order_Number__c NOT blank'));
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING ,Label.Warning_SalesOrder_Already_Created));
             }
@@ -319,7 +319,7 @@ public without sharing class Order_Svc
                 }
                 else
                 {
-                    if(!System.isFuture() && !System.isBatch() && !System.isScheduled())
+                    if(!System.isFuture() && !System.isBatch() && !System.isScheduled() && !System.isQueueable())
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING ,Label.Warning_No_Shippable_Product));
                 }
             }
@@ -1681,12 +1681,12 @@ public without sharing class Order_Svc
                                     //Date activationDate = customerOrder.EffectiveDate;
                                     Date activationDate = Date.today();
                                     
-                                    sub.setValue('ContractEffectiveDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
-                                    sub.setValue('ContractAcceptanceDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
+                                    sub.setValue('ContractEffectiveDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDateOnly(Date.today()) : Zuora.zUtil.getZuoraDateOnly(activationDate));
+                                    sub.setValue('ContractAcceptanceDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDateOnly(Date.today()) : Zuora.zUtil.getZuoraDateOnly(activationDate));
                                     //if(customerOrder.Payment_Type__c != IECConstants.PaymentThresholdType_BankTransfer)
                                     if(customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard || customerOrder.Payment_Type__c == IECConstants.PaymentThresholdType_ICH)
                                     {
-                                        sub.setValue('ServiceActivationDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDate(Date.today()) : Zuora.zUtil.getZuoraDate(activationDate));
+                                        sub.setValue('ServiceActivationDate', Test.IsRunningTest() ? Zuora.zUtil.getZuoraDateOnly(Date.today()) : Zuora.zUtil.getZuoraDateOnly(activationDate));
                                     }
                                     
                                     sub.setValue('InitialTerm', (product.Number_of_months_of_subscription__c != null) ? product.Number_of_months_of_subscription__c : ZuoraUtil.SUBSCRIPTION_TERM);
@@ -1720,8 +1720,8 @@ public without sharing class Order_Svc
                                     so.ProcessPayments = false;
                                     
                                     so.SubscribeInvoiceProcessingOptions = new Zuora.zApi.SubscribeInvoiceProcessingOptions();
-                                    so.SubscribeInvoiceProcessingOptions.InvoiceTargetDate = Zuora.zUtil.getZuoraDate(activationDate); //IECZuoraHelper.getCurrentDate(); customerOrder.EffectiveDate
-                                    so.SubscribeInvoiceProcessingOptions.InvoiceDate = Zuora.zUtil.getZuoraDate(activationDate); //IECZuoraHelper.getCurrentDate();
+                                    so.SubscribeInvoiceProcessingOptions.InvoiceTargetDate = Zuora.zUtil.getZuoraDateOnly(activationDate); //IECZuoraHelper.getCurrentDate(); customerOrder.EffectiveDate
+                                    so.SubscribeInvoiceProcessingOptions.InvoiceDate = Zuora.zUtil.getZuoraDateOnly(activationDate); //IECZuoraHelper.getCurrentDate();
                                     
                                     //subscribe request
                                     Zuora.zApi.SubscribeRequest subsRequest = new Zuora.zApi.SubscribeRequest();
@@ -2332,7 +2332,7 @@ public without sharing class Order_Svc
             ZuoraUtil.zAccountPaymentMethod zAcc_PaymentMethod = orderId_zAccountPaymentMethod.get(order.Id);
             pmt.setValue('AccountId',zAcc_PaymentMethod.zAccountId);
             pmt.setValue('Amount', totalToPaid);
-            pmt.setValue('EffectiveDate', Zuora.zUtil.getZuoraDate(Date.today()));
+            pmt.setValue('EffectiveDate', Zuora.zUtil.getZuoraDateOnly(Date.today()));
             pmt.setValue('AppliedCreditBalanceAmount', 0);
             
             //Set the Invoice Payment Data
@@ -2642,9 +2642,9 @@ public without sharing class Order_Svc
         for(OrderItem oi : orderItems){
             Zuora.zObject zSubscription = new Zuora.zObject('Subscription');
             zSubscription.setValue('Id', oi.Zuora_SubscriptionId__c);
-            zSubscription.setValue('ContractEffectiveDate', Zuora.zUtil.getZuoraDate(Date.today()));
-            zSubscription.setValue('ServiceActivationDate', Zuora.zUtil.getZuoraDate(Date.today()));
-            zSubscription.setValue('ContractAcceptanceDate', Zuora.zUtil.getZuoraDate(Date.today()));
+            zSubscription.setValue('ContractEffectiveDate', Zuora.zUtil.getZuoraDateOnly(Date.today()));
+            zSubscription.setValue('ServiceActivationDate', Zuora.zUtil.getZuoraDateOnly(Date.today()));
+            zSubscription.setValue('ContractAcceptanceDate', Zuora.zUtil.getZuoraDateOnly(Date.today()));
             lstZsubscriptionToUpdate.add(zSubscription);
 
             //Update the OrderItem Zuora subscription status

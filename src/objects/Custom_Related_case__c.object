@@ -67,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Parent_Case_Number__c</fullName>
+        <description>Equals to the Case Number of Master Case</description>
         <externalId>false</externalId>
         <formula>Master_Case__r.CaseNumber</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -78,6 +79,7 @@
     </fields>
     <fields>
         <fullName>Parent_Case_Record_Type__c</fullName>
+        <description>Equals to the Record Type of Master Case</description>
         <externalId>false</externalId>
         <formula>Master_Case__r.RecordTypeId</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

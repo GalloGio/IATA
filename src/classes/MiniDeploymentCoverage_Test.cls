@@ -53,13 +53,13 @@ private class MiniDeploymentCoverage_Test {
   static void test_ProductRatePlanCharge_Sel(){
     
     // create dummy Zuora product
-        zqu__ZProduct__c prod = IECTestUtil.CreateSampleProduct('Product1');
+        Product2 prod = IECTestUtil.CreateSampleProduct2('Product1');
         prod.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
         prod.ProductCategory__c = IECConstants.ProductCategory_SF_CACPRO;
         insert prod;
         
         // create dummy Zuora rate plan
-        zqu__ProductRatePlan__c ratePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, prod);
+        zqu__ProductRatePlan__c ratePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, prod);
         ratePlan.zqu__Deleted__c = false;
         insert ratePlan;
         

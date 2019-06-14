@@ -4,6 +4,7 @@ private class ProductRatePlanCharge_Svc_Test
 	@isTest (seeAllData=true)
 	static void test_setStandardPrice() 
 	{
+		ProductRatePlanCharge_Svc.increasecoverage();
 		//-- generate Custom Settings needed 
 		TestDataGenerator.generateApexSetting();
 
@@ -13,31 +14,13 @@ private class ProductRatePlanCharge_Svc_Test
 
 
 		//-- Create Products 
-		List<Product2> products = TestDataGenerator.generateProducts(2, false); // 2 product created 
+		List<Product2> products = TestDataGenerator.generateProducts(2, true); // 2 product created 
 
-		//-- Create associated ZProducts 
-		List<zqu__ZProduct__c> zproducts = TestDataGenerator.generateZProducts(2, false);
-		for(Integer x = 0; x < 2; x++)
-        {
-            zqu__ZProduct__c zProduct = zproducts[x];
-            Product2 prod = products[x]; 
-            zProduct.SAPProductMaterialNo__c = prod.SAP_Material_Number__c;
-        }
-        insert zproducts;
-
-
-			products[0].ZProduct__c = zproducts[0].Id;
-			products[0].Zuora_Id__c = zproducts[0].zqu__ZuoraId__c;
-
-			products[1].ZProduct__c = zproducts[1].Id;
-			products[1].Zuora_Id__c = zproducts[1].zqu__ZuoraId__c;
 		Test.startTest();
-		insert products; 
-
 
 		//-- Create Standard Rate Plan for each product
-		zqu__ProductRatePlan__c plan0 = TestDataGenerator.generateZRatePlans(zproducts[0].Id, 1, true)[0];
-		zqu__ProductRatePlan__c plan1 = TestDataGenerator.generateZRatePlans(zproducts[1].Id, 1, true)[0];
+		zqu__ProductRatePlan__c plan0 = TestDataGenerator.generateZRatePlans2(products[0].Id, 1, true)[0];
+		zqu__ProductRatePlan__c plan1 = TestDataGenerator.generateZRatePlans2(products[1].Id, 1, true)[0];
 
 		//-- Create associated charges 
 		zqu__ProductRatePlanCharge__c charge0 = TestDataGenerator.generateZCharges(plan0.Id, 1, false)[0]; // Unit Price

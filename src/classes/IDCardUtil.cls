@@ -144,6 +144,8 @@ global with sharing class IDCardUtil {
 
     public static final String CREDENTIAL_NAME = 'IdCard';
     public static final String FOLDER_NAME = 'a0W';
+    
+    public static final Id IDCARDAIMS_RTID = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
 
     @RemoteAction
     public static Id IDCardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
@@ -279,7 +281,6 @@ global with sharing class IDCardUtil {
 
         // reselect the price table (to make sure every required field has been queryed)
 
-        //Price_Table__c thePriceTable = [Select p.ID_Card_Fee__c, p.Expedite__c, p.IATA_Package__c From Price_Table__c p where p.Id =: priceTable.Id limit 1];
         Price_Table__c thePriceTable = priceTable;
 
         if (isReissue) {
@@ -337,8 +338,6 @@ global with sharing class IDCardUtil {
         }
         massCounter++;
 
-
-
         string formattedCounter = String.valueOf(massCounter).right(6).leftpad(6).replace(' ', '0');
         string newVER = '5' + formattedIsoCodeNumeric + formattedCounter;
         string newUIR = massCountry.ISO_Code__c + formattedCounter;
@@ -379,8 +378,6 @@ global with sharing class IDCardUtil {
                                          'or  Ver_Number__c LIKE \'Z5' + formattedIsoCodeNumeric + '%\')' +
                                          'ORDER BY Ver_Number__c DESC LIMIT 1  ');
 
-
-
         long counter, counterapp;
         try {
             counter = Long.valueOf(c[0].VER_Number_2__c.replace('Z', ''));
@@ -420,8 +417,6 @@ global with sharing class IDCardUtil {
                                          'or  Ver_Number__c LIKE \'Z5' + formattedIsoCodeNumeric + '%\' ' +
                                          'ORDER BY Ver_Number__c DESC LIMIT 1  ');
 
-
-
         long counter, counterapp;
         try {
             counter = Long.valueOf(c[0].VER_Number_2__c.replace('Z', ''));
@@ -441,8 +436,6 @@ global with sharing class IDCardUtil {
         string newUIR =  formattedCounter + 'ZZ';
         return newUIR;
     }
-
-
 
 
     public static string generateVER( Account theAccount) {
@@ -658,30 +651,6 @@ global with sharing class IDCardUtil {
             }
             system.debug('NewFileName :' + newFilename);
 
-            /* WEB SERVICE CALL FOR THE OLD STORAGE ON THE IATA SERVER
-            system.debug('WebService call');
-
-            system.debug('Session Id: ' + sessionID);
-            // call web method to rename
-            IDCardCroppingToolWebService.IDCardCroppingToolServiceSoap ws = new IDCardCroppingToolWebService.IDCardCroppingToolServiceSoap();
-            ws.endpoint_x = Label.IDCard_Cropping_Tool_WS_Endpoint;
-            List<String> results = Test.isRunningTest() ? new List<String>{'testfilename.jpg'} : ParseXMLReturn(ws.RenameImage(sessionID, idCardApp.Photo__c, newFilename));
-            system.debug('renameIDCardPhotoOfContact - Result ' + results[0].toUpperCase());
-            if (results[0].toUpperCase() != 'FAIL' ){
-                // update ID Card application
-                idCardApp.Photo__c = newFilename;
-                update idCardApp;
-
-                // update ID Card
-                ID_Card__c idCard = [Select Photo__c, Id From ID_Card__c where ID_Card_Application__c =: idCardApp.Id limit 1];
-                idCard.Photo__c = newFilename;
-                update idCard;
-            }
-            else{
-                throw new IDCardApplicationException(results[1]);
-            }*/
-
-
             // WEB SERVICE CALL FOR THE NEW STORAGE ON AMAZON S3
             if (newFilename != existingFilename) {
 
@@ -714,7 +683,6 @@ global with sharing class IDCardUtil {
                 } else {
                     throw new IDCardApplicationException('Error renaming the photo file on Amazon S3');
                 }
-
             }
 
             return;
@@ -756,119 +724,6 @@ global with sharing class IDCardUtil {
 
         return returnValue;
     }
-
-
-    /**
-     * Generate the CIN/TCIN for newly created ID Card records
-     */
-    @future(callout = true)
-    public static void generateAndAssignCIN(set<ID> lstIdCardIds) {
-
-        list<ID_Card__c> lstIdCards = [SELECT Id, CIN__c, FirstName__c, LastName__c, Date_of_Birth__c, Position_Code__c, Duty_Code__c, HourWorkedCode__c, Gender__c, ID_Card_Application__r.UIR__c  FROM ID_Card__c WHERE Id IN :lstIdCardIds AND RecordType.DeveloperName = 'AIMS'];
-
-        map<Id, String> mapCinTemplatePerIdCardId = new map<Id, String>();
-        map<String, Integer> mapIncDigitsPerCinTemplate = new map<String, Integer>();
-        set<String> setCinTemplates = new set<String>();
-
-        for (ID_Card__c idCard : lstIdCards) {
-            String CIN = '';
-            try {
-                CIN += idCard.LastName__c.left(3);
-                CIN += Datetime.newInstanceGmt(idCard.Date_of_Birth__c.year(), idCard.Date_of_Birth__c.month(), idCard.Date_of_Birth__c.day()).format('yy', 'GMT');
-                CIN += idCard.FirstName__c.left(1);
-                CIN += Datetime.newInstanceGmt(idCard.Date_of_Birth__c.year(), idCard.Date_of_Birth__c.month(), idCard.Date_of_Birth__c.day()).format('MMdd', 'GMT');
-                CIN += '__'; // THE INCREMENT DIGITS
-                CIN += idCard.Position_Code__c != '' ? idCard.Position_Code__c : ' ';
-                CIN += idCard.Duty_Code__c != '' ? idCard.Duty_Code__c : ' ';
-                CIN += idCard.HourWorkedCode__c != '' ? idCard.HourWorkedCode__c : ' ';
-
-                if (idCard.ID_Card_Application__c != null && idCard.ID_Card_Application__r.UIR__c != null) {
-                    CIN += idCard.ID_Card_Application__r.UIR__c.left(2);
-                }
-            } catch (Exception e) {
-                // empty fields could lead to this
-                system.debug('Error generating CIN: ' + e.getMessage());
-            }
-
-            // CIN += idCard.... ; // Industry Qualification
-
-            CIN = CIN.toUpperCase();
-
-            // add a temporary prefix for sex M/F, REMOVE IT BEFORE ASSIGNING to the ID Card
-            CIN = (idCard.Gender__c == 'Male' ? 'M' : 'F') + CIN;
-
-            mapCinTemplatePerIdCardId.put(idCard.Id, CIN);
-            mapIncDigitsPerCinTemplate.put(CIN, idCard.Gender__c == 'Male' ? 0 : 50);
-            setCinTemplates.add(CIN.substring(1)); // add to the set without the prefix, to correctly match in the DB
-
-            system.debug('CIN template: ' + CIN.substring(1));
-        }
-
-        // Get current max for the increment digits for each template
-
-        list<ID_Card__c> lstRelatedIdCards = [SELECT Id, CIN__c, LastName__c, Gender__c FROM ID_Card__c WHERE CIN__c <> null AND CIN__c LIKE :setCinTemplates];
-
-        for (ID_Card__c idcard : lstRelatedIdCards) {
-            system.debug('Found related CIN: ' + idcard.CIN__c);
-
-            // for Last Names shorter than 3 chars
-            Integer LNamelength = idCard.LastName__c.left(3).length();
-            Integer incDigitsStartPosition = LNamelength + 7; // 10 normally
-
-            system.debug('incDigitsStartPosition: ' + incDigitsStartPosition);
-
-            Integer incDigits = Integer.valueOf(idcard.CIN__c.mid(incDigitsStartPosition, 2));
-
-            if ( incDigits > mapIncDigitsPerCinTemplate.get( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2) ) ) {
-                mapIncDigitsPerCinTemplate.put( (idcard.Gender__c == 'Male' ? 'M' : 'F') + idcard.CIN__c.left(incDigitsStartPosition) + '__' + idcard.CIN__c.substring(incDigitsStartPosition + 2), incDigits );
-            }
-        }
-
-
-        // Set the new inc digits into the CINs and assign them
-
-        for (ID_Card__c idCard : lstIdCards) {
-            // Get the increment digits
-            Integer incDigits = mapIncDigitsPerCinTemplate.get(mapCinTemplatePerIdCardId.get(idCard.Id));
-
-            //increase the digits for the new card
-            incDigits++;
-
-            // update the increased digits in the map
-            mapIncDigitsPerCinTemplate.put(mapCinTemplatePerIdCardId.get(idCard.Id), incDigits);
-
-            // insert the digits in the CIN template for the idcard
-            String strCIN = mapCinTemplatePerIdCardId.get(idCard.Id).replace('__', String.valueOf(incDigits).leftPad(2).replace(' ', '0'));
-
-            // remove the temporary prefix (M/F)
-            strCIN = strCIN.substring(1);
-
-            idCard.CIN__c = strCIN;
-
-            system.debug('New CIN assigned: ' + strCIN);
-        }
-
-
-        Database.SaveResult[] srList = Database.update(lstIdCards, false);
-
-
-        // Iterate through each returned result
-        for (Database.SaveResult sr : srList) {
-            if (sr.isSuccess()) {
-                // Operation was successful, so get the ID of the record that was processed
-                System.debug('Successfully updated idcard CIN. idcard ID: ' + sr.getId());
-            } else {
-                // Operation failed, so get all errors
-                for (Database.Error err : sr.getErrors()) {
-                    System.debug('The following error has occurred.');
-                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                    System.debug('ID Card fields that affected this error: ' + err.getFields());
-                }
-            }
-        }
-
-    }
-
 
     private static String getCharAtIndex(String str, Integer index) {
         if (str == null)
@@ -933,18 +788,25 @@ global with sharing class IDCardUtil {
      * Creates an ID Card object from an ID Card application
      */
     public static ID_Card__c CreateIDCardObjectFromApplication(ID_Card_Application__c objApp, Contact theContact) {
-
-
+            
         Account theAccount;
         try {
             Case a = [ Select Account.Id from Case where Related_ID_Card_Application__c = : objApp.Id limit 1];
-            theAccount = [ Select Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c From Account where Id = : a.Account.Id limit 1];
-        }
-
-        catch ( Exception e) {
+            theAccount = [ Select Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c From Account  where Id = :a.Account.Id limit 1];
+        }catch ( Exception e) {
             System.debug('**** Error doing workaround ' + e);
             theAccount = [Select a.Name, a.ID_Card_Corporate_Validation_Date__c, a.IATA_Area__c, a.IATACode__c, a.Type, IDCard_Key_Account__c From Account a where a.RecordType.Name = 'Agency' AND a.IATACode__c = : objApp.IATA_Code__c limit 1];
         }
+
+        return IDCardUtil.CreateIDCardObjectFromApplication(objApp, theContact, theAccount);
+    }
+
+
+    /**
+     * Creates an ID Card object from an ID Card application
+     * Used by CaseBeforeTrigger in order to reduce SOQL limits 
+     */
+    public static ID_Card__c CreateIDCardObjectFromApplication(ID_Card_Application__c objApp, Contact theContact, Account theAccount) {
 
         system.debug(LoggingLevel.ERROR, '[CreateIDCardObjectFromApplication] start! ' + objApp.Displayed_Name__c);
 
@@ -981,9 +843,7 @@ global with sharing class IDCardUtil {
             idCard.Start_Date_Industry__c = objApp.Start_Date_Industry__c;
             idCard.Start_Date_Agency_Month__c = objApp.Start_Date_Agency_Month__c;
             idCard.Start_Date_Agency_Year__c = objApp.Start_Date_Agency_Year__c;
-            idCard.Type_of_ID_Card__c = GetAgentTypeFromAccountType(theAccount.type);
-            //INC158829
-            //idCard.Title__c = objApp.Title__c;
+            idCard.Type_of_ID_Card__c = GetAgentTypeFromAccountType(theAccount.Type);
             idCard.Title__c = (objApp.Title__c != null && objApp.Title__c.length() <= 5) ? objApp.Title__c : '';
             idcard.VER_Number__c = objApp.VER_Number__c;
             //set sync to true
@@ -1128,19 +988,17 @@ global with sharing class IDCardUtil {
         System.debug(' *** Getting Account IATA Code' + iataCode);
         System.debug(' ** Query is:  Select IATACode__c, BillingCountry,type, Id From Account where RecordType.Name =: \'Agency\' AND IATACode__c =: ' + iataCode + '  AND  (Status__c =: ' + ACCOUNT_STATUS_LISTED + ' or Status__c =: ' + ACCOUNT_STATUS_APPROVED + ' or Status__c = :' + ACCOUNT_STATUS_CHANGES_PROCESSED + ' or Status__c = :' + ACCOUNT_STATUS_UNDER_REVIEW + ' )  limit 1 ');
 
-        Account[] theAccounts = [Select IATACode__c, BillingCountry, type, Id From Account
-                                 where RecordType.Name = : 'Agency'
-                                         AND IATACode__c = : iataCode
-                                                 AND (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS or Status__c = 'Terminated') // INC183592
-                                                 limit 1];
+        Account[] theAccounts = [SELECT IATACode__c, BillingCountry, type, Id 
+                                 FROM Account
+                                 WHERE RecordType.Name = : 'Agency' AND IATACode__c = : iataCode
+                                    AND (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS or Status__c = 'Terminated') limit 1];
+
         System.debug(' *** Getting Account ' + theAccounts);
         if (theAccounts == null || theAccounts.size() == 0) {
             throw new IDCardApplicationException(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + iataCode + '</i>'}));
         } else {
             return theAccounts[0];
         }
-
-
     }
 
     /**
@@ -1185,7 +1043,7 @@ global with sharing class IDCardUtil {
         return rmap;
     }
 
-    public static ID CreateContactWhenNewCardIsApproved(ID_Card_Application__c application) {
+    public static Contact CreateContactWhenNewCardIsApproved(ID_Card_Application__c application) {
 
         String OldPhotoName = application.Photo__c;
         Account theAccount;
@@ -1199,33 +1057,29 @@ global with sharing class IDCardUtil {
             theAccount = GetAccountObjectFromIATACode(application.IATA_Code__c);
         }
 
+        return IDCARDUtil.CreateContactWhenNewCardIsApproved(application, theAccount);
+    }
+
+
+    public static Contact CreateContactWhenNewCardIsApproved(ID_Card_Application__c application, Account theAccount) {
+
+        String OldPhotoName = application.Photo__c;
         system.debug('Before UIR and VER# Generation');
         // generate a new VER and UIR (for new application)
         IDCardUtil.generateAndAssignVERandUIR(application, theAccount);
 
-
         //@@@ TODO update instead of creation of contact in case it already exists
 
         SavePoint sp = database.setSavepoint();
-
         try {
-
             // get the contact object associate to the agent
             Contact theContact = new Contact();
-
             theContact.AccountId = theAccount.Id;
             theContact.LastName = application.Last_Name__c;
-            //theContact.Email = application.Email_admin__c;
             theContact.IDCard_Email__c = application.Email_admin__c;
-
-            // update some contact fields
-
-
             theContact.Approving_Manager_s_Name__c = application.Approving_Manager_s_Name__c;
             theContact.Approving_Manager_s_Email__c = application.Approving_Manager_s_Email__c;
-
             theContact.ID_Card_Preferred_Language__c = application.IDCard_Prefered_Language__c;
-
             theContact.FirstName = application.First_Name__c;
             theContact.Salutation = application.Title__c;
             theContact.Date_of_Birth__c = application.Date_of_Birth__c;
@@ -1234,8 +1088,6 @@ global with sharing class IDCardUtil {
             theContact.Phone = application.Telephone__c;
             theContact.Position__c = application.Position_in_Current_Agency__c;
             theContact.Duties__c = application.Duties_in_Current_Agency__c;
-
-
             theContact.Hours_per_week__c = application.Hours_worked__c;
             theContact.Start_Date_Industry__c = Decimal.valueOf(application.Start_Date_Industry__c);
             theContact.Start_Date_Agency_Month__c = application.Start_Date_Agency_Month__c;
@@ -1243,29 +1095,26 @@ global with sharing class IDCardUtil {
             theContact.Solicitation_Flag__c = application.Solicitation_Flag__c;
             theContact.Revenue_Confirmation__c = application.Revenue_Confirmation__c;
             theContact.AgencyShare_Confirmation__c = application.AgencyShare_Confirmation__c;
-
-
             theContact.UIR__c = application.UIR__c;
+
             if (application.VER_Number__c != '' && application.VER_Number__c != null) {
                 theContact.VER_Number_2__c = application.VER_Number__c;
             } else {
                 theContact.VER_Number_2__c =  generateVER(theAccount);
                 application.VER_Number__c = theContact.VER_Number_2__c;
             }
-            system.debug('[IdCardUtil] fu**** vvernum = ' + theContact.VER_Number_2__c + '  /  ' + generateVER(theAccount));
             theContact.RecordTypeID = IDCardContactRecordTypeID;
-
-
-            //Update VER on IDCard Object
-            /*
-            ID_Card__c temp = [Select VER_Number__c from ID_Card__c where ID_Card_Application__c = :application.Id];
-            temp.VER_Number__c = application.VER_Number__c;
-            update temp;
-            */
 
             insert theContact;
             update application;
-            return theContact.Id;
+
+            //Needs to get theContact.VerNumber - calculates after the insert on GlobalContactTrigger
+            theContact = [SELECT c.AgencyShare_Confirmation__c,c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, 
+                            c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c 
+                          FROM Contact c 
+                          WHERE id=:theContact.id];
+
+            return theContact;
         } catch (Exception ex) {
             system.debug('Error: ' + ex);
             throw new IDCardApplicationException('Contact Creation failed.' + ex.getMessage());
@@ -1273,8 +1122,8 @@ global with sharing class IDCardUtil {
             renameIDCardPhotoOfContact(application.ID, OldPhotoName, Userinfo.getSessionId());  // rename photo to its old name
             return null;
         }
-
     }
+
     public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount) {
         return  CreateIDCardApplicationCase(idCardApp, theAccount, false);
     }
@@ -1650,9 +1499,9 @@ global with sharing class IDCardUtil {
                         //throw new TransformationException('APP VER = '+application.VER_Number__c);
                         //**Create Contact only for new application
                         if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW && c[0].ContactId == null)
-                            c[0].ContactId = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
+                            c[0].ContactId = IDCardUtil.CreateContactWhenNewCardIsApproved(application).ID;
 
-                        Contact[] contacts = [Select c.Allow_Contact_LastName_Change__c, c.AgencyShare_Confirmation__c, c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c  From Contact c where c.VER_Number__c = : Decimal.valueof(application.VER_Number__c)  and Id = : c[0].ContactId  limit 1];
+                        Contact[] contacts = [Select c.Allow_Contact_LastName_Change__c, c.AgencyShare_Confirmation__c, c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c From Contact c where c.VER_Number__c = : Decimal.valueof(application.VER_Number__c) and Id = : c[0].ContactId  limit 1];
                         System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  calling the method for id card creation');
 
                         idCardNew = IDCardUtil.CreateIDCardObjectFromApplication(application, contacts[0]);

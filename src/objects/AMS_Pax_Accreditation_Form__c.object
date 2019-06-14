@@ -961,6 +961,16 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Name</label>
     </fieldSets>
     <fieldSets>
@@ -2526,6 +2536,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Current_VAT_Number_2__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
+HO_Account__r.VAT_Number_2__c,
+SAAM_Case__r.Account_Concerned__r.VAT_Number_2__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current VAT Number 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Current_VAT_Number__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(SAAM_Case__r.Account_Concerned__c),
@@ -3067,7 +3091,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <relationshipLabel>AMS Online Accreditations</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -3095,6 +3119,15 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>INVALID_Tax_Number_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>INVALID Tax Number 2</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>INVALID_Tax_Number__c</fullName>
@@ -3935,6 +3968,17 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <fullName>ISSP_AMS_Type_of_License__c</fullName>
         <externalId>false</externalId>
         <label>* Type of License</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ISSP_AMS_VAT_Number_2_Input__c</fullName>
+        <externalId>false</externalId>
+        <label>* VAT Number 2</label>
         <length>30</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -5398,6 +5442,15 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Saved_At_Least_Once__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Saved At Least Once</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Scope_of_Change__c</fullName>
         <externalId>false</externalId>
         <label>Scope of Change</label>
@@ -5518,6 +5571,15 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Same_As_Billing__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Shipping Same As Billing</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Shipping_State__c</fullName>
