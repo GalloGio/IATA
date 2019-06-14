@@ -20907,6 +20907,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Associate Entity address details:</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Branch_Office_contact_details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Branch Office contact details</shortDescription>
+        <value>Associate Entity contact details:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
