@@ -362,6 +362,11 @@ src/queues/CasesVenezuela.queue
 src/queues/CasesWesternCaribbean.queue
 src/queues/Cases_Agent_Financial_Review.queue
 src/queues/Cases_Americas_Airlines.queue
+src/queues/AgencyManagementChinaNAsia.queue
+src/queues/CustomerServiceChinaNAsia.queue
+src/queues/Weblinkheadoffice.queue
+
+
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace
