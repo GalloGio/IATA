@@ -622,9 +622,9 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>YMQ eDistribution Support</fullName>
+                    <fullName>YMQ ePublication Support</fullName>
                     <default>false</default>
-                    <label>YMQ eDistribution Support</label>
+                    <label>YMQ ePublication Support</label>
                 </value>
                 <value>
                     <fullName>Product Manager</fullName>
@@ -6757,7 +6757,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>YMQ eDistribution Support</fullName>
+                <fullName>YMQ ePublication Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9889,7 +9889,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>YMQ eDistribution Support</fullName>
+                <fullName>YMQ ePublication Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13036,7 +13036,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>YMQ eDistribution Support</fullName>
+                <fullName>YMQ ePublication Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16228,7 +16228,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>YMQ eDistribution Support</fullName>
+                <fullName>YMQ ePublication Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19404,7 +19404,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>YMQ eDistribution Support</fullName>
+                <fullName>YMQ ePublication Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
