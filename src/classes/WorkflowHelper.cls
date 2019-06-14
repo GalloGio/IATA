@@ -22,7 +22,7 @@ public without sharing class WorkflowHelper {
                 System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
             }
             when else{
-                System.debug('[WorkflowHelper]: object was not identified so no job to perform here:'+objectType); 
+                System.debug(LoggingLevel.ERROR,'[WorkflowHelper]: object was not identified so no job to perform here:'+objectType); 
             }
         }
         
@@ -162,7 +162,7 @@ public without sharing class WorkflowHelper {
 
         if(accountRecordTypes.contains(newAccount.RecordTypeId) || 
         (newAccount.recordTypeId == standardRT && newAccount.Sector__c == 'Airline')
-        ){
+        ){            
             if(newAccount.Industry == 'Travel Agent'){
                 return;
             }
