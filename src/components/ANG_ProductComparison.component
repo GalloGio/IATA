@@ -60,14 +60,14 @@
           <p><b>{! $Label.ANG_ISSP_ProductComparisonTitle2}</b></p>
         </div>
 
-        <div class="row" style="padding-top: 20px; text-align: center;">
-	        <div class="col-md-12" id="McQuestions">
+        <div class="row" style="padding-top: 22px; text-align: center;">
+	        <div class="col-md-12" id="McQuestions" style="margin-bottom: -18px; padding-left: {!IF(helper.multiCountryEnabled, '200px;', '')}">
 	            <apex:outputText value="{!$Label.ISSP_AMS_Info_Accreditation_Types}"/> &nbsp;
-	            <apex:outputLink value="https://newgeniss.iata.org/">{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
+	            <apex:outputLink value="https://newgeniss.iata.org/" target="_blank" >{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
 	        </div>
 	    </div>
 
-        <div class="panel-body scrollBar" id="body-results">
+        <div class="panel-body scrollBar" id="body-results" style="padding-top: -20px;">
 			<div class="ProdCompwrapper">
 				<table>
 					<tr>
