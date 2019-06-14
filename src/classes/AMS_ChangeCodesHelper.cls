@@ -560,7 +560,7 @@ public class AMS_ChangeCodesHelper {
             codesConfs = [SELECT Name, Change_Code__c, Published_in_bulletin__c, Bulletin_Memo_Text__c,
                                     Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Integration_RecId__c, Field1__c, Field1Values__c, Field2__c,
                                     Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c,
-                                    Field6__c, Field6Values__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true];
+                                    Field6__c, Field6Values__c, Field7__c, Field7Values__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true];
 
         for (Account acc:accsNew){
             for (AMS_ChangeCodes__c conf:codesConfs){
@@ -579,6 +579,10 @@ public class AMS_ChangeCodesHelper {
                     CCToBeGenerated = bCheckCondition(acc, conf.Field5__c, conf.Field5Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
                 if(conf.Field6__c!=null && CCToBeGenerated)
                     CCToBeGenerated = bCheckCondition(acc, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                
+                if(conf.Field7__c != NULL && CCToBeGenerated){
+                    CCToBeGenerated = bCheckCondition(acc, conf.Field7__c, conf.Field7Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
+                }
 
                 if(CCToBeGenerated)
                     mapAccCodeConf.put(acc, conf);
