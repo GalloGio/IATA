@@ -447,8 +447,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 5 --> Query issued: ' + Limits.getQueries());
 
-        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, sMemo2, sMemo3, null, lsFS, '', true);
-        //string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, sMemo2, sMemo3, null, lsFS);
+        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), sMemo1, sMemo2, sMemo3, null, lsFS, '', true);
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 6 --> Query issued: ' + Limits.getQueries());
 
@@ -515,8 +514,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 4 --> Query issued: ' + Limits.getQueries());
 
-        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, null, null, lsCC, null, '', true);
-        //string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, null, null, lsCC, null);
+        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), sMemo1, null, null, lsCC, null, '', true);
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 5 --> Query issued: ' + Limits.getQueries());
 
@@ -590,41 +588,41 @@ private class AMS_OscarCase_RiskMgmt_Test {
                                   , Account.CNS_Agency__c
                                   from case where id =: SidraLiteCase4.Id];
 
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT BLANK', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Type__c', 'BLANK', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:Rejected', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:Closed', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY', null, mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT BLANK', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Type__c', 'BLANK', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:Rejected', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:Closed', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY', mapExistingChangeCodes));
 
         // START: amtosantos, 2017-04-18, Increase Code Coverage
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY OR EQUAL TO TODAY', null, mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY OR EQUAL TO TODAY', mapExistingChangeCodes));
         //   END: amtosantos
 
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'EQUAL TO TODAY', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:5000', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:1000', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>:1000', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<:5000', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'EXISTS:IRR', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'NOT EXISTS:DEF', null, mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'EQUAL TO TODAY', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:5000', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:1000', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>:1000', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<:5000', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'EXISTS:IRR', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'NOT EXISTS:DEF', mapExistingChangeCodes));
 
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:OPEN', null, mapExistingChangeCodes));
-        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'SIDRA_Lite_Reason__c', 'VALUES:BANKRUPTCY', null, mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:OPEN', mapExistingChangeCodes));
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'SIDRA_Lite_Reason__c', 'VALUES:BANKRUPTCY', mapExistingChangeCodes));
 
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Type__c', 'NOT BLANK', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'BLANK', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:APPROVED', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:OPEN', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'GREATER THAN TODAY', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'EQUAL TO TODAY', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:1000', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:5000', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>:5000', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<:1000', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'EXISTS:DEF', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'NOT EXISTS:IRR', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Withdrawal_Reason__c', 'VALUES:BlaBlaBla', null, mapExistingChangeCodes));
-        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:CLOSED', null, mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Type__c', 'NOT BLANK', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'BLANK', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:APPROVED', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:OPEN', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'GREATER THAN TODAY', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'EQUAL TO TODAY', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:1000', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:5000', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>:5000', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<:1000', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'EXISTS:DEF', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'ChangeCode', 'NOT EXISTS:IRR', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'IRR_Withdrawal_Reason__c', 'VALUES:BlaBlaBla', mapExistingChangeCodes));
+        system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:CLOSED', mapExistingChangeCodes));
 
         test.StopTest();
     }
