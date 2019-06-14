@@ -4,16 +4,21 @@ public without sharing class WorkflowHelper {
     public static final String CONTACT_TYPE = 'Contact';
     public static final String CASE_TYPE = 'Case';
 
+    private static final ID AIRLINERT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+    private  static final ID GSART = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_GSA');
+    private  static final Id STANDARDRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+    private  static final Id AIRLINEBRRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
+
     private static Set<String> accountTypes = new Set<String>{'GSA General Sales Agent','IATA Passenger Sales Agent','SSI','TIDS Agent','ERSP Agent','Domestic Agent','Associations','Handling Agent','NISI','Airline Point of Sale','MSO Member Sales Office'};
 
     private static Map<Id,Account> accountsToSearchParents = new Map<Id,Account>();
 
-    public static void performActions(String objectType, Map<Id,sObject> oldMap, List<sObject> newMap){
+    public static void performActions(String objectType){
         
         switch on objectType { 
             when 'Account' {
                 System.debug('[WorkflowHelper]: starting to process work for:'+objectType); 
-                performActionsAccount(oldMap, newMap);
+                performActionsAccount();
                 System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
             }
             when else{
@@ -23,9 +28,12 @@ public without sharing class WorkflowHelper {
         
     }
 
-    public static void performActionsAccount(Map<Id,sObject> oldMap, List<sObject> newMap){
+    public static void performActionsAccount(){
 
         // runs on both Update and Insert
+
+        Map<Id,sObject> oldMap = trigger.oldMap;
+        List<sObject> newMap = trigger.new;
 
         Account oldAcct;
         Account newAcct;
@@ -44,10 +52,13 @@ public without sharing class WorkflowHelper {
             resetAccountType(newAcct);
             restoreAccountType(newAcct);
             setAccountSite(newAcct);
-            setDataQualityHistory(oldAcct,newAcct);
             setAccountBranchNamePre(newAcct);
-            setAccountDDSUpdateDate(oldAcct,newAcct);
             setACLIAccountName(oldAcct,newAcct);
+
+            if(Trigger.isUpdate){
+                setDataQualityHistory(oldAcct,newAcct);
+                setAccountDDSUpdateDate(oldAcct,newAcct);
+            }
         }
 
         if(!accountsToSearchParents.isEmpty()){
@@ -59,7 +70,7 @@ public without sharing class WorkflowHelper {
     //Workflow Name: AIMS: Update Industry - travel agents
     public static void updateIndustryFieldFromAIMS(Account newAccount){ 
 
-        if(newAccount.Is_AIMS_Account__c && accountTypes.contains(newAccount.type) && newAccount.Industry <> 'Travel Agent'){
+        if(newAccount.Is_AIMS_Account__c && newAccount.Industry <> 'Travel Agent' && accountTypes.contains(newAccount.type)){
             newAccount.Industry = 'Travel Agent';
         }
 
@@ -86,8 +97,9 @@ public without sharing class WorkflowHelper {
     public static void updateWebstarAccountCategory(Account newAccount){
 
         if( newAccount.Source_System__c == 'Webstar' && 
-            newAccount.recordtypeId == AMS_Utils.RECTYPE_IATAAGENCY &&
-            newAccount.Category__c == null){
+            newAccount.Category__c == null &&
+            newAccount.recordtypeId == AMS_Utils.RECTYPE_IATAAGENCY
+            ){
 
             newAccount.Sector__c = 'Travel Agent';
             newAccount.Category__c = 'IATAN Passenger agent';
@@ -97,8 +109,6 @@ public without sharing class WorkflowHelper {
     //Assign "Agency" as Record Type when an AIMS Account is created
     //Workflow Name:AIMS Accounts RT Assignment Rule
     public static void updateAIMSAccountRecordtype(Account newAccount){
-
-        Id standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         If( newAccount.Is_AIMS_Account__c && 
             newAccount.recordtypeId == standardRT){
@@ -120,8 +130,6 @@ public without sharing class WorkflowHelper {
     //Workflow Name:Clear Account Type when the field is applicable
     public static void resetAccountType(Account newAccount){
 
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
-
         if(newAccount.RecordTypeId == airLineRT &&
             newAccount.Sector__c == 'Airline' &&
             newAccount.Membership_status__c <> 'IATA member' &&
@@ -135,8 +143,6 @@ public without sharing class WorkflowHelper {
     //Update Account Type field to 'Not Applicable' when the field should not be filled
     //Workflow Name:Set Account Type when Not Applicable	
     public static void restoreAccountType(Account newAccount){
-
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 
         if(newAccount.RecordTypeId == airLineRT &&
           !(newAccount.Sector__c == 'Airline' &&
@@ -152,12 +158,7 @@ public without sharing class WorkflowHelper {
     //Workflow Name:Account site update	
     public static void setAccountSite(Account newAccount){
 
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
-        ID rtGsa = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_GSA');
-        Id standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-
-        Set<Id> accountRecordTypes = new Set<Id>{AMS_Utils.RECTYPE_AIRLINE_BR,airLineRT,rtGsa};
-        //and( or(RecordType.DeveloperName= 'IATA_Airline_BR', RecordType.DeveloperName= 'IATA_Airline',RecordType.DeveloperName= 'IATA_GSA' ,(and (RecordType.DeveloperName= 'Standard_Account', ISPICKVAL(Sector__c,'Airline')))))
+        Set<Id> accountRecordTypes = new Set<Id>{AMS_Utils.RECTYPE_AIRLINE_BR,airLineRT,gsaRT};
 
         if(accountRecordTypes.contains(newAccount.RecordTypeId) || 
         (newAccount.recordTypeId == standardRT && newAccount.Sector__c == 'Airline')
@@ -182,10 +183,6 @@ public without sharing class WorkflowHelper {
     //Update account Historize the data quality feedback comment
     //Workflow Name:Data quality comment history
     public static void setDataQualityHistory(Account oldAccount , Account newAccount){
-
-        if(oldAccount == null){
-            return;
-        }
         
         if(oldAccount.Comment_data_quality_feedback__c <> newAccount.Comment_data_quality_feedback__c){
             newAccount.Data_quality_history__c = (newAccount.Data_quality_history__c == null ? '' : newAccount.Data_quality_history__c) + System.now().format('YYYY-MM-dd') + ': ' + newAccount.Comment_data_quality_feedback__c;
@@ -197,7 +194,6 @@ public without sharing class WorkflowHelper {
     //Workflow Name:Rename Branch
     public static void setAccountBranchNamePre(Account newAccount){
         
-        Id airLineBrRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
 
         if(newAccount.RecordTypeId == AMS_Utils.RECTYPE_AIRLINE_BR && newAccount.ParentId <> null) {
                 accountsToSearchParents.put(newAccount.ParentId,newAccount);
@@ -253,10 +249,6 @@ public without sharing class WorkflowHelper {
     //Update account EU Agent Consent Last Update Date with todays date uppon DDS Update Date field change
     //Workflow Name:DDS Update Date
     public static void setAccountDDSUpdateDate(Account oldAccount , Account newAccount){
-        
-        if(oldAccount == null){
-            return;
-        }
     
         if(oldAccount.DDS_Status__c <> newAccount.DDS_Status__c){
             newAccount.DDS_Last_Update_Date__c = System.today();
@@ -267,8 +259,6 @@ public without sharing class WorkflowHelper {
     //Workflow Name:ACLIAccountSetName
     public static void setACLIAccountName(Account oldAccount ,Account newAccount){
         
-        ID airLineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
-
         if(newAccount.recordTypeId <> airLineRT){
             return;
         }
