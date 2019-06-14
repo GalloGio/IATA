@@ -20,14 +20,29 @@
                             
             c.find("ShippingCountry").set("v.value", c.get("v.country.Id"));
             c.set("v.countryShipping", c.get("v.countryInformation.countryMap")[c.get("v.country.Id")]);
-            c.set("v.statesShipping", c.get("v.statesBilling"));
-
+            c.set("v.statesShipping", c.get("v.statesBilling"));        
+            c.set("v.citiesShipping", c.get("v.citiesBilling"));
+            c.set("v.allCitiesShipping", c.get("v.allCitiesBilling"));
+            c.set("v.idAndAlternateNamesBilling", c.get("v.idAndAlternateNamesShipping"));
+            c.set("v.stateNameIdShipping", c.get("v.stateNameIdBilling"));
+            c.set("v.cityNameIdShipping", c.get("v.cityNameIdBilling"));
+            c.set("v.hierarchyCitiesShipping", c.get("v.hierarchyCitiesBilling"));
+            c.set("v.shippingCityId", c.get("v.billingCityId"));
+            c.set("v.shippingStateId", c.get("v.billingStateId"));
+            c.set("v.allCitiesAllCountriesShipping", c.get("v.allCitiesAllCountriesBilling"));
+            c.set("v.showListShipping", c.get("v.showListBilling"));            
+            c.set("v.ShippingCityEmpty", c.get("v.BillingCityEmpty"));
+            c.set("v.ShippingStreetEmpty", c.get("v.BillingStreetEmpty"));
+            c.set("v.ShippingCityStreetEmpty", c.get("v.BillingCityStreetEmpty"));
+            c.set("v.cityDoesNotExistShipping", c.get("v.cityDoesNotExistBilling"));
+            c.set("v.cityInAnotherStateShipping", c.get("v.cityInAnotherStateBilling"));
+            c.set("v.cityInAnotherCountryShipping", c.get("v.cityInAnotherCountryBilling"));
+            c.set("v.cityDoesNotExistShipping", c.get("v.cityDoesNotExistBilling"));
             c.set("v.account.ShippingCountry", c.get("v.account.BillingCountry"));                                     
             c.set("v.account.ShippingStreet", c.get("v.account.BillingStreet"));
 			c.set("v.account.ShippingCity", c.get("v.account.BillingCity"));
             c.set("v.account.ShippingState", c.get("v.account.BillingState"));            
             c.set("v.account.ShippingPostalCode", c.get("v.account.BillingPostalCode"));
-
             c.set("v.countryHasStatesShipping", c.get("v.countryHasStatesBilling"));
             c.set("v.validShipping", c.get("v.validBilling"));
         
@@ -121,7 +136,7 @@
 
                         let hierarchy = citiesToSearch[i]["GeonameHierarchy_label__c"];
 
-                        let alternateNames = idAndAlternateNames[cityId]["GeonameAlternateNames__c"];
+                        let alternateNames = idAndAlternateNames[cityId]?idAndAlternateNames[cityId]["GeonameAlternateNames__c"]:null;
                         
                         let value = cityName;
 

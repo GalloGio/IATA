@@ -296,7 +296,7 @@
         c.set('v.predictions'+mode, []); 
         c.set('v.account.'+mode+'City', hierarchyCities[selectedHierarchy].CityName);
         c.set('v.account.'+mode+'State', hierarchyCities[selectedHierarchy].StateName);
-                
+        h.updateAddress(c,e,h,mode);
         //Data quality//
     },
     validateNumber : function(c, e, h){
@@ -416,14 +416,18 @@
 
         if(c.get("v.validBilling") == 0){
             c.set("v.validationError", true);
+            let ac = document.getElementById('addrContainer');
             isAllFilled = false;
+            ac.scrollIntoView();
         }else{
             c.set("v.validationError", false);
         }
 
         if(c.get("v.validShipping") == 0){
             c.set("v.validationError", true);
+            let ac = document.getElementById('addrContainer');
             isAllFilled = false;
+            ac.scrollIntoView();
         }else{
             c.set("v.validationError", false);
         }
@@ -492,7 +496,9 @@
         
         let localId = e.getSource().getLocalId();
         let m = localId.includes('Billing')?'Billing':'Shipping';   
-        
+        c.set('v.account.'+m+'City','');
+        c.set('v.account.'+m+'Street','');
+        c.set('v.account.'+m+'PostalCode','');        
         h.clearWarnings(c,e,h,m);        
         h.clearContextLabelWarnings(c,e,h,m);
         h.setCities(c,e,m);
@@ -501,6 +507,9 @@
     
     //Only used by shipping at the moment
     setCountry : function (c,e,h) {
+        c.set('v.account.ShippingCity','');
+        c.set('v.account.ShippingStreet','');
+        c.set('v.account.ShippingPostalCode','');
         //clear warnings
         h.clearWarnings(c,e,h,'Shipping');
         h.clearContextLabelWarnings(c,e,h,'Shipping');
