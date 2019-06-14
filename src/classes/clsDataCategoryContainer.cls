@@ -43,9 +43,9 @@ public with sharing class clsDataCategoryContainer {
                     for(DataCategory oneChildCateg: childCategories2ndLevel){
 					lst_DataCategories.add(new clsDataCategory(oneResult.name
                 										  	  ,oneResult.label 	
-                										      ,oneChildCat.getName()
-                                                              ,oneChildCat.getLabel()
-                                                              ,oneChildCat.getChildCategories()));    
+                										      ,oneChildCateg.getName()
+                                                              ,oneChildCateg.getLabel()
+                                                              ,oneChildCateg.getChildCategories()));    
 					}    			
         		}
         	} 
