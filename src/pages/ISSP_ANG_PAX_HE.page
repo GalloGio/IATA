@@ -221,6 +221,7 @@
            label {
               float: left;
               margin-left: 20px;
+              text-align: left;
            }
            
            input + label {
@@ -1390,10 +1391,11 @@
                     <apex:inputField showDatePicker="true" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" style="margin-left:11px"/>
                     <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
                     <apex:outputtext rendered="{!AND(countryCheckList.License_required__c!=true,countryCheckList.Registration_required__c!=true)}"><!--empty: move following field to next row --></apex:outputtext>
-                    <apex:inputfield value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}" style="margin-left:11px"/>
-                    <apex:inputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}" />
-                    <apex:inputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}" style="margin-left:11px"/>                
-                    <apex:inputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}" /> 
+                    
+                    <apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" rendered="{!countryCheckList.License_required__c==true}" style="margin-left:11px"/>
+                    <apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}" />
+                    <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!countryCheckList.License_required__c==true}" style="margin-left:11px"/>                
+                    <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!countryCheckList.Registration_required__c==true}" /> 
                </apex:pageBlockSection>               
                
                <apex:pageBlockSection columns="2" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
@@ -1445,23 +1447,55 @@
                 <script>
                     $j( document ).ready(function() {
                         var legalStatusLabel = $j('[for$=LegalStatus]')[0],
+                            licenseNo = $j('[for$=license-no]')[0],
+                            tradeRegNo = $j('[for$=trade-reg-no]')[0],
+                            dateLicenseGranted = $j('[for$=date-license-granted]')[0],
+                            dateRegGranted = $j('[for$=date-reg-granted]')[0],
                             vatLabel = $j('[for$=VATInput]')[0],
                             dateOfficeOpenedLabel = $j('[for$=dateOpenedAsTravelAgency]')[0],
                             whereIncorporate = $j('[for$=section2-where-incorporate]')[0],
                             whenIncorporate = $j('[for$=section2-when-incorporate]')[0],
                             sharesListedLabel = $j('[id$=section2-shares-listed-label]')[0];
-                        if (legalStatusLabel)
+
+                        if (legalStatusLabel) {
                             legalStatusLabel.textContent = legalStatusLabel.textContent.replace('* ', '') + ' *';
-                        if (vatLabel)
+                        }
+
+                        if (vatLabel) {
                             vatLabel.textContent = vatLabel.textContent.replace('* ', '') + ' *';
-                        if (dateOfficeOpenedLabel)
+                        }
+
+                        if (dateOfficeOpenedLabel) {
                             dateOfficeOpenedLabel.textContent = dateOfficeOpenedLabel.textContent.replace('* ', '') + ' *';
-                        if (sharesListedLabel)
+                        }
+
+                        if (sharesListedLabel) {
                             sharesListedLabel.textContent = sharesListedLabel.textContent.replace('* ', '') + ' *';
-                        if (whereIncorporate)
+                        }
+
+                        if (whereIncorporate) {
                             whereIncorporate.textContent = whereIncorporate.textContent.replace('* ', '') + ' *';
-                        if (whenIncorporate)
+                        }
+
+                        if (whenIncorporate) {
                             whenIncorporate.textContent = whenIncorporate.textContent.replace('* ', '') + ' *';
+                        }
+
+                        if (licenseNo) {
+                            licenseNo.textContent = licenseNo.textContent.replace('* ', '') + ' *';
+                        }
+            
+                        if (tradeRegNo) {
+                            tradeRegNo.textContent = tradeRegNo.textContent.replace('* ', '') + ' *';
+                        }
+            
+                        if (dateLicenseGranted) {
+                            dateLicenseGranted.textContent = dateLicenseGranted.textContent.replace('* ', '') + ' *';
+                        }
+            
+                        if (dateRegGranted) {
+                            dateRegGranted.textContent = dateRegGranted.textContent.replace('* ', '') + ' *';
+                        }
                     });
                 </script>
                 
@@ -1608,7 +1642,7 @@
                
                 <table>
                             <tr>
-                                <td class="col-lg-10" style="padding-top:15px;{!IF(AND(isValError, newForm.ISSP_AMS_Previous_default__c==null), 'border:2px red solid;', '')}"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Previous_Default_2}"/></td>
+                                <td class="col-lg-10" style="padding-top:15px;{!IF(AND(isValError, newForm.ISSP_AMS_Previous_default__c==null), 'border:2px red solid;', '')}"><apex:outputText escape="false" id="previous-default-label" value="{!$Label.ISSP_AMS_Previous_Default_2}"/></td>
                             <td class="col-lg-2">
                                 <apex:selectRadio label="" style="width:100px" styleClass="{!IF(AND(isValError, newForm.ISSP_AMS_Previous_default__c==null), 'requiredIndicator', '')}" value="{!newForm.ISSP_AMS_Previous_default__c}" id="previouslyDefaulted" onchange="toggleDefaultDetails('{!$Component.previouslyDefaulted}');">
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}"/>
@@ -1744,16 +1778,16 @@
                         </apex:pageblocksectionitem>
 
                         <apex:pageBlockSectionItem id="y1" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
-                            <apex:outputLabel id="section5-first-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
+                            <apex:outputLabel id="section5-first-year-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
                             <apex:outputPanel >
-                                <apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                                <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
                                 <apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
                             </apex:outputPanel>
                         </apex:pageBlockSectionItem>       
                         <apex:pageBlockSectionItem id="y2" rendered="{!newForm.Agent_Type__c!='Standard no Cash'}">
-                            <apex:outputLabel id="section5-second-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
+                            <apex:outputLabel id="section5-second-year-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
                             <apex:outputPanel >                            
-                                <apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                                <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
                                 <apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
                             </apex:outputPanel>                            
                         </apex:pageBlockSectionItem>
@@ -1838,8 +1872,8 @@
                     iatanCodeRadio = $j('[id$=section5-iatan-code-radio]')[0],
                     cargoCode = $j('[id$=section5-cargo-code]')[0],
                     cargoCodeRadio = $j('[id$=section5-cargo-code-radio]')[0],
-                    firstYear = $j('[for$=section5-first-year]')[0],
-                    secondYear = $j('[for$=section5-second-year]')[0];
+                    firstYear = $j('[id$=section5-first-year-label]')[0],
+                    secondYear = $j('[id$=section5-second-year-label]')[0];
                 if (gds)
                     gds.textContent = gds.textContent.replace('* ', '') + ' *'; 
                 if (iatanCode)

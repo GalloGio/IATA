@@ -999,65 +999,17 @@
                 						</apex:pageblocksectionitem>
                						</apex:pageBlockSection>            
 
-                      				<apex:pageBlockSection columns="2" id="branchphonefax">
+                      				<apex:pageBlockSection columns="2" id="branch">
                         				<apex:outputText value="{!$Label.ISSP_ANG_Branch_Office_address_details}" style="font-weight:bold" />
                         				<apex:outputtext/>
                         
                          				<apex:pageBlockSection columns="1">
                          					<apex:outputPanel styleClass="agencyLocationComponent" id="billingAddressTitle" layout="block">
-							                    <apex:outputLabel style="color:black;font-size:110%" value="Billing Address" />
+							                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.Billing_address}"/>
 							                </apex:outputPanel>
                          					<apex:pageBlockSectionItem> 
 			                              		<DSE:DS_DataQuality id="BranchAddress" RecordRef="{!newForm}" FieldGroupName="Branch Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
 			                              	</apex:pageBlockSectionItem>
-
-			                              	<apex:pageBlockSectionItem id="branchphonefields">
-                          						<apex:outputPanel >
-                          							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left: 7px;">
-                            							<apex:outputText id="office-phone-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}"/>
-                          							</div>
-                            						<apex:outputPanel layout="none">
-                            							<apex:inputHidden value="{!newForm.Branch_Office_Phone__c}" id="phonebranch" />
-                            							<div style="width:174.4px; float:left;">
-                              								<apex:inputField id="natphonebranch" html-placeholder="" onblur="setInternationalBranchPhoneNo('phone');$j('.branch_office_phone__c').change();" value="{!newForm.Branch_Office_Phone_National__c}" style="width:174.4px;"/>
-                            							</div>
-                            							<div id="div-verify-office-phone" style="float:left; width: 16px; margin-left: 6px;"/>
-                            						</apex:outputPanel>
-                            					</apex:outputPanel> 
-                          					</apex:pageBlockSectionItem>
-
-                          					<apex:pageBlockSectionItem id="branchfaxfields">
-                           						<apex:outputPanel >
-                          							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:9px;">
-                            							<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_FAX__c.Label}" />
-                          							</div>
-                            						<apex:outputPanel layout="none">
-                              							<apex:inputHidden value="{!newForm.Branch_Office_FAX__c}" id="faxbranch" />
-                            							<div style="width:174.4px; float:left;">
-                              								<apex:inputField id="natfaxbranch" html-placeholder="" onblur="setInternationalBranchPhoneNo('fax');" value="{!newForm.Branch_Office_Fax_National__c}" style="width:174.4px;" />
-                            							</div>
-                            						</apex:outputPanel>
-                            					</apex:outputPanel>
-                          					</apex:pageBlockSectionItem>
-
-                          					<DSE:DS_DataQuality id="BranchEmail" RecordRef="{!newForm}" FieldGroupName="Branch Email" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label text-label-no-margin office-email" InputStyle="test-input email-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
-
-                          					<apex:pageBlockSectionItem id="branchwebsitefields">
-                           						<apex:outputPanel >
-				                              		<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:9px;">
-				                                		<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Website__c.Label}" />
-				                              		</div>
-                            						<apex:outputPanel layout="none">
-                              							<div style="width:174.4px; float:left;">
-                                							<apex:inputField value="{!newForm.Website__c}" style="width:174.4px" />
-                              							</div>
-                            						</apex:outputPanel>
-                            					</apex:outputPanel>
-                          					</apex:pageBlockSectionItem>
-
-                          					<DSE:DS_DataQuality id="BranchPhone" RecordRef="{!newForm}" FieldGroupName="Branch Phone" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="labelCol col-lg-6 labelText" InputStyle="col-lg-5" StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox" FormControlStyle="apcontainer"/>
-
-                          					
                          				</apex:pageBlockSection>
                         
                         				<apex:pageBlockSection columns="1" id="subbranchsection">
@@ -1072,10 +1024,57 @@
 	                    					<apex:selectList id="ShippingCountryList" size="1" value="{!newform.Shipping_Country__c}" style="width:80%" onchange="copyToADShippingCntr();">
 							                        <apex:selectOptions value="{!countryList}"/>
 							                    </apex:selectList>
-
-                          					
-
                         				</apex:pageBlockSection>
+                      				</apex:pageBlockSection>
+
+                      				<apex:pageBlockSection columns="1" id="phonefax">
+                      					<apex:outputText value="{!$Label.ISSP_ANG_Branch_Office_contact_details}" style="font-weight:bold"/>
+                        				<apex:outputtext/>
+                      					<apex:pageBlockSectionItem id="branchphonefields">
+                      						<apex:outputPanel >
+                      							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left: 7px;">
+                        							<apex:outputText id="office-phone-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}"/>
+                      							</div>
+                        						<apex:outputPanel layout="none">
+                        							<apex:inputHidden value="{!newForm.Branch_Office_Phone__c}" id="phonebranch" />
+                        							<div style="width:174.4px; float:left;">
+                          								<apex:inputField id="natphonebranch" html-placeholder="" onblur="setInternationalBranchPhoneNo('phone');$j('.branch_office_phone__c').change();" value="{!newForm.Branch_Office_Phone_National__c}" style="width:174.4px;"/>
+                        							</div>
+                        							<div id="div-verify-office-phone" style="float:left; width: 16px; margin-left: 6px;"/>
+                        						</apex:outputPanel>
+                        					</apex:outputPanel> 
+                      					</apex:pageBlockSectionItem>
+
+                      					<apex:pageBlockSectionItem id="branchfaxfields">
+                       						<apex:outputPanel >
+                      							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:9px;">
+                        							<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_FAX__c.Label}" />
+                      							</div>
+                        						<apex:outputPanel layout="none">
+                          							<apex:inputHidden value="{!newForm.Branch_Office_FAX__c}" id="faxbranch" />
+                        							<div style="width:174.4px; float:left;">
+                          								<apex:inputField id="natfaxbranch" html-placeholder="" onblur="setInternationalBranchPhoneNo('fax');" value="{!newForm.Branch_Office_Fax_National__c}" style="width:174.4px;" />
+                        							</div>
+                        						</apex:outputPanel>
+                        					</apex:outputPanel>
+                      					</apex:pageBlockSectionItem>
+
+                      					<DSE:DS_DataQuality id="BranchEmail" RecordRef="{!newForm}" FieldGroupName="Branch Email" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label text-label-no-margin office-email" InputStyle="test-input email-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
+
+                      					<apex:pageBlockSectionItem id="branchwebsitefields">
+                       						<apex:outputPanel >
+			                              		<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left:9px;">
+			                                		<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Website__c.Label}" />
+			                              		</div>
+                        						<apex:outputPanel layout="none">
+                          							<div style="width:174.4px; float:left;">
+                            							<apex:inputField value="{!newForm.Website__c}" style="width:174.4px" />
+                          							</div>
+                        						</apex:outputPanel>
+                        					</apex:outputPanel>
+                      					</apex:pageBlockSectionItem>
+
+                      					<DSE:DS_DataQuality id="BranchPhone" RecordRef="{!newForm}" FieldGroupName="Branch Phone" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="labelCol col-lg-6 labelText" InputStyle="col-lg-5" StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox" FormControlStyle="apcontainer"/>
                       				</apex:pageBlockSection>
 
                       				<script type="text/javascript">
@@ -1534,7 +1533,7 @@
 							                    </apex:pageBlockSectionItem>
 
 							                    <apex:pageBlockSectionItem id="a" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
-							                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
+							                        <apex:outputLabel id="section5-first-year-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
 							                        <apex:outputPanel >
 							                          	<apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
 							                          	<apex:outputText id="y1CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
@@ -1542,9 +1541,9 @@
 							                    </apex:pageBlockSectionItem>  
 
 							                    <apex:pageBlockSectionItem id="b" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
-							                        <apex:outputLabel id="section5-second-year" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
+							                        <apex:outputLabel id="section5-second-year-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
 							                        <apex:outputPanel >
-							                          	<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+							                          	<apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
 							                          	<apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>
 							                        </apex:outputPanel>
 							                    </apex:pageBlockSectionItem>
@@ -1631,7 +1630,9 @@
 				                       		isAgencyIatan = $j('[id$=is-agency-iatan-label]')[0],
 				                       		iatanCode = $j('[id$=iatan-code-label]')[0],
 				                       		isCargo = $j('[id$=is-cargo-label]')[0],
-				                       		cargoCode = $j('[id$=cargo-code-label]')[0];
+				                       		cargoCode = $j('[id$=cargo-code-label]')[0],
+				                       		firstYear = $j('[id$=section5-first-year-label]')[0],
+				                       		secondYear = $j('[id$=section5-second-year-label]')[0];
 				                    
 					                    if (dgsLabel) {
 					                      	dgsLabel.textContent = dgsLabel.textContent.replace('* ', '') + ' *';
@@ -1651,6 +1652,14 @@
 
 					                    if (cargoCode) {
 					                      	cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *';
+					                    }
+
+					                    if (firstYear) {
+					                      	firstYear.textContent = firstYear.textContent.replace('* ', '') + ' *';
+					                    }
+
+					                    if (secondYear) {
+					                      	secondYear.textContent = secondYear.textContent.replace('* ', '') + ' *';
 					                    }
 				                  	});
 				              	</script>
