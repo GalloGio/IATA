@@ -1,6 +1,6 @@
 import { LightningElement,track } from 'lwc';
 
-import getAccessRequestedServices from '@salesforce/apex/PortalServicesCtrl.getAccessRequestedServices';
+import getUserAccessRequestedServices from '@salesforce/apex/PortalServicesCtrl.getUserAccessRequestedServices';
 
 //import labels
 import CSP_Services_AccessRequestedTitle from '@salesforce/label/c.CSP_Services_AccessRequestedTitle';
@@ -11,20 +11,20 @@ export default class PortalServicesAccessRequested extends LightningElement {
         CSP_Services_AccessRequestedTitle
     };
 
+    @track componentLoading = true;
+
     @track lstServicesRequested = [];
     @track viewRequestedServicesArea = false;
 
     connectedCallback(){
 
-        getAccessRequestedServices({})
+        getUserAccessRequestedServices({})
         .then(results => {
             if(results !== undefined && results.length > 0){
                 this.lstServicesRequested = results;
                 this.viewRequestedServicesArea = true;
             }
-        })
-        .catch(error => {
-            console.log('PortalServicesAccessRequested connectedCallback getAccessRequestedServices error: ' , error);
+            this.componentLoading = false;
         });
 
     }

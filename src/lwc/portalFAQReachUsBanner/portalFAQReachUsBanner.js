@@ -26,9 +26,9 @@ export default class PortalFAQReachUsBanner extends NavigationMixin(LightningEle
     @api topic;
     @api subTopic;
 
-    conversationImageURL = PORTAL_RESOURCES + '/images/conversation_image.png';
+    conversationImageURL = '/csportal/s/CSPortal/Images/Icons/messageBallons.svg';
 
-    connectedCallback() {
+    connectedCallback() {        
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {

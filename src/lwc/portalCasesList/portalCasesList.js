@@ -59,7 +59,7 @@ export default class PortalCasesList extends LightningElement {
                 ];
                 /*Column 'Created By' is only visible by Portal Admin on list 'My Company Cases'*/
                 this.columnsAux = this.columns[3];
-                this.columns.splice(3, 1);
+                this.columns = this.columns.slice(0, 3).concat(this.columns.slice(4));
         })
         .catch(error => {
             this.error = error;
@@ -108,13 +108,13 @@ export default class PortalCasesList extends LightningElement {
             /*Clear cacheable data when toggle between lists*/
             this.clearCache();
             
-            if(!this.seeAll) {                            
-                this.columns.splice(3, 0, this.columnsAux); /*Inserting 'Created By' column*/
+            if(!this.seeAll) {
+                this.columns = this.columns.slice(0, 3).concat([this.columnsAux]).concat(this.columns.slice(3)); /*Inserting 'Created By' column*/
                 this.caseListName = CSP_MyCases;
                 this.seeAll = true;
                 this.pageNumber = 1;            
             } else {
-                this.columns.splice(3, 1); /*Removing 'Created By' column*/
+                this.columns = this.columns.slice(0, 3).concat(this.columns.slice(4)); /*Removing 'Created By' column*/
                 this.caseListName = CSP_CompanyCases;
                 this.seeAll = false;
                 this.pageNumber = 1;

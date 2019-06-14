@@ -25,7 +25,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         //console.log(serviceAux);
 
         let params = {};
-        params.serviceId = serviceAux.Portal_Application__c;
+        params.serviceId = serviceAux.recordService.Id;
 
         event.preventDefault();
         event.stopPropagation();
@@ -39,14 +39,14 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 
     goToServiceButtonClick(event){
         //because proxy.......
-        let serviceAux = JSON.parse(JSON.stringify(this.service));
+        let serviceAux = JSON.parse(JSON.stringify(this.service)).recordService;
         //console.log(serviceAux);
 
         //attributes stored on element that is related to the event
-        let appUrlData = serviceAux.Application_Start_URL__c
-        let appFullUrlData = serviceAux.Portal_Application__r.Application_URL__c;
-        let openWindowData = serviceAux.Portal_Application__r.New_Window__c;
-        let requestable = serviceAux.Portal_Application__r.Requestable__c
+        let appUrlData = serviceAux.Application_URL__c
+        let appFullUrlData = serviceAux.Application_URL__c;
+        let openWindowData = serviceAux.New_Window__c;
+        let requestable = serviceAux.Requestable__c
         let recordId = serviceAux.Id;
         
         // update Last Visit Date on record
@@ -60,9 +60,6 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
             .then(() => {
                 //console.info('Updated Last Visit Date successfully!');
             })
-            .catch(error => {
-                console.error('PortalServicesAccessGrantedCard goToServiceButtonClick updateRecord error: ', error);
-            });
         
         let myUrl = appUrlData;
         

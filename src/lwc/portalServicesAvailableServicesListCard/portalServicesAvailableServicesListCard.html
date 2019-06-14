@@ -7,19 +7,21 @@
     
         <span slot="leftButton">
             <lightning-button variant="base" 
-                label={label.CSP_Services_ManageService}
-                title={label.CSP_Services_ManageService}
-                onclick={goToManageServiceButtonClick}
+                label={label.CSP_Services_ServiceInformation}
+                title={label.CSP_Services_ServiceInformation}
+                onclick={goToServiceInformationButtonClick}
                 class="slds-p-right_small text-xxsmall text-bold blueCustomButtonLink">
             </lightning-button>
         </span>
         <span slot="rightButton">
             <lightning-button 
-                label={label.CSP_Services_GoToService} 
+                label={service.btnLabel} 
                 class="containedButtonSlim" 
-                onclick={goToServiceButtonClick}>
+                onclick={enableServiceButtonClick}>
             </lightning-button>
         </span>
     </c-portal-services-card-container>
+    <c-portal-services-request-service-modal service-record={serviceInfo} display-confirm={showConfirm} onrequestcompleted={requestComplete}></c-portal-services-request-service-modal>
+
     
 </template>

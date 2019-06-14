@@ -35079,4 +35079,68 @@
         <shortDescription>csp_Footer_IataStore_URL</shortDescription>
         <value>https://store.iata.org/</value>
     </labels>
+    <labels>
+        <fullName>csp_Footer_IATA_Store</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Footer_IATA_Store</shortDescription>
+        <value>IATA Store</value>
+    </labels>
+    <labels>
+        <fullName>csp_Footer_Facebook_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Footer_Facebook_URL</shortDescription>
+        <value>https://www.facebook.com/iata.org</value>
+    </labels>
+    <labels>
+        <fullName>csp_Footer_Twitter_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Footer_Twitter_URL</shortDescription>
+        <value>https://twitter.com/iata</value>
+    </labels>
+    <labels>
+        <fullName>csp_Footer_Linkedin_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Footer_Linkedin_URL</shortDescription>
+        <value>https://www.linkedin.com/company/international-air-transport-association-iata</value>
+    </labels>
+    <labels>
+        <fullName>csp_Footer_Youtube_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Footer_Youtube_URL</shortDescription>
+        <value>https://www.youtube.com/iatatv</value>
+    </labels>
+    <labels>
+        <fullName>csp_Footer_Legal_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Footer_Legal_URL</shortDescription>
+        <value>https://www.iata.org/Pages/terms.aspx</value>
+    </labels>
+    <labels>
+        <fullName>csp_Footer_Privacy_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Footer_Privacy_URL</shortDescription>
+        <value>https://www.iata.org/Pages/privacy.aspx</value>
+    </labels>
+    <labels>
+        <fullName>csp_Footer_IataStore_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Footer_IataStore_URL</shortDescription>
+        <value>https://store.iata.org/</value>
+    </labels>
 </CustomLabels>
