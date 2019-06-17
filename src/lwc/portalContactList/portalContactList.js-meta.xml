@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>45.0</apiVersion>
+    <description>Used to render list of contacts with specified columns, detail tiles and an edit modal.</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Portal Contact List</masterLabel>
+</LightningComponentBundle>

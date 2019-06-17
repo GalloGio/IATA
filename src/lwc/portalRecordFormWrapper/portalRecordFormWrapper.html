@@ -4,109 +4,198 @@
 
 <!-- Portal Record Form Wrapper -->
 <template>
-    <c-portal-profile-section>
+    <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
         <span slot="sectionTitle">{sectionTitle}</span>
         <span slot="sectionActions">
-            <lightning-icon if:true={showEdit} icon-name="utility:edit" size="x-small" class="darkBlueIcon cursorPointer" onclick={openModal}></lightning-icon>
+            <lightning-icon if:true={showEdit} icon-name="utility:edit" size="x-small"
+                            class="darkBlueIcon cursorPointer" onclick={openModal}></lightning-icon>
         </span>
         <span slot="componentContent">
 
             <!-- VIEW RECORD -->
-                <lightning-record-view-form
-                        record-id={recordId}
-                        object-api-name={objectName}
-                        onload={loaded}
-                >
-                    <template if:false={isLoading}>
-                        <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small maxWidth">
-                            <template for:each={fields} for:item="field">
-                                <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <template if:true={field.visible}>
-                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>
-                                    </template>
-                                </span>
-                            </template>
-                        </div>
-                            </template>
-            <template if:true={isLoadingEdits}>
-                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-            </template>
-                    </lightning-record-view-form>
+            <lightning-record-view-form record-id={recordId} object-api-name={objectName} onload={loaded}>
+                <template if:false={isLoading}>
+                    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
+                        <template for:each={fields} for:item="field">
+                            <span key={field.fieldName}
+                                  class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                <template if:true={field.visible}>
+                                    <lightning-output-field class="labelValue textValue" field-name={field.fieldName}>
+                                    </lightning-output-field>
+                                </template>
+                            </span>
+                        </template>
+                    </div>
+                </template>
+                <template if:true={isLoading}>
+                    <div class="slds-m-around_medium slds-is-relative">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+            </lightning-record-view-form>
 
 
 
             <!-- EDIT MODAL -->
-    <template if:true={showEditModal}>
+            <template if:true={showEditModal}>
 
-        <div class="modal">
-            <div class="customPopupInteriorHalfScreenCentered">
-                <!-- Popup Header -->
-                <div class="slds-p-horizontal_large slds-p-vertical_medium editIcon">
-                    <span>Edit {objectName}</span>
-                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
-                        <template if:false={isSaving}>
-                            <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer" onclick={closeModal}></lightning-icon>
-                        </template>
-                    </span>
-                </div>
-
-
-                <!-- Popup Body -->
-                <template if:true={recordId}>
-                    <div class="slds-is-relative">
-                     <lightning-record-edit-form record-id={recordId} object-api-name={objectName} onload={loadedEdit} onsuccess={handleSucess} onsubmit={onRecordSubmit} onerror={handleError}> <!--  -->
-
-                         <template if:true={isSaving}>
-                             <div class="modalSpinnerContainer">
-                                 <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                             </div>
-
-                         </template>
-
-                        <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
-                            <div class="slds-p-vertical_large">
-                            </div>
+                <div class="modal">
+                    <div class="customPopupInteriorHalfScreenCentered">
+                        <!-- Popup Header -->
+                        <div class="slds-p-horizontal_large slds-p-vertical_medium editIcon">
+                            <span>Edit {objectName}</span>
+                            <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                                <template if:false={isSaving}>
+                                    <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                                    onclick={closeModal}></lightning-icon>
+                                </template>
+                            </span>
+                        </div>
 
 
-                            <template if:false={isLoadingEdit}>
-                                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small maxWidth">
-                                    <template for:each={fields} for:item="field">
-                                    <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
-                                        <div>
-                                            <template if:true={field.visible}>
-                                                <template if:true={field.editable}>
-                                                    <lightning-input-field class="labelValue textValue" field-name={field.fieldName}></lightning-input-field>
-                                                    <!--<lightning-input type="text" label={field.fieldName} value={field.fieldName} name="input1"  ></lightning-input>-->
-                                                </template>
-                                                <template if:false={field.editable}>
-                                                    <lightning-input-field class="labelValue textValue disabledValue" field-name={field.fieldName} disabled></lightning-input-field>
-                                                    <!--<lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>-->
-                                                </template>
-                                            </template>
+                        <!-- Popup Body -->
+                        <template if:true={recordId}>
+                            <div class="slds-is-relative">
+                                <lightning-record-edit-form record-id={recordId} object-api-name={objectName}
+                                                            onload={loadedEdit} onsuccess={handleSucess} onsubmit={handleSubmit}
+                                                            onerror={handleError}>
+
+                                    <template if:true={isSaving}>
+                                        <div class="modalSpinnerContainer">
+                                            <lightning-spinner alternative-text="Loading" size="medium">
+                                            </lightning-spinner>
                                         </div>
-                                    </span>
                                     </template>
-                                </div>
-                            </template>
 
-                            <template if:true={isLoadingEdit}>
-                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                            </template>
+                                    <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
+                                        <template if:false={isLoadingEdit}>
+                                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
 
-                        </div>
+                                                <!-- Display same fields for edit -->
+                                                <template if:false={haveEditFields}>
+                                                    <template for:each={fields} for:item="field">
+                                                        <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
 
-                        <!-- Popup Footer -->
-                        <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
-                            <lightning-button class="slds-float_right containedButton" label={labels.SaveLabel} type="submit" disabled={isSaving} variant="brand"></lightning-button>
+                                                            <div>
+                                                                <!-- If field is visible -->
+                                                                <template if:true={field.visible}>
+                                                                    <!-- If field is editable -->
+                                                                    <template if:false={field.outputOnly}>
+                                                                        <template if:true={field.editable}>
+                                                                            <lightning-input-field onchange={styleInputs}
+                                                                                                   class="labelValue textValue"
+                                                                                                   field-name={field.fieldName}>
+                                                                            </lightning-input-field>
+                                                                        </template>
 
-                            <lightning-button class="slds-float_right  containedButtonWhite slds-m-right_medium" disabled={isSaving} label={labels.CancelLabel} variant="" onclick={closeModal}></lightning-button>
-                        </div>
-                    </lightning-record-edit-form>
-                        </div>
-                </template>
-            </div>
-        </div>
-    </template>
+
+                                                                        <!-- Read-only fields -->
+                                                                        <template if:false={field.editable}>
+                                                                            <lightning-input-field
+                                                                                    class="labelValue textValue disabledValue disabledInput"
+                                                                                    field-name={field.fieldName} disabled>
+                                                                            </lightning-input-field>
+                                                                        </template>
+                                                                    </template>
+
+                                                                    <template if:true={field.outputOnly}>
+                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>
+                                                                    </template>
+
+                                                                </template>
+                                                            </div>
+
+                                                        </span>
+                                                    </template>
+                                                </template>
+
+                                                <!-- Display different set of fields for editing -->
+                                                <template if:true={haveEditFields}>
+                                                    <template for:each={editFields} for:item="field">
+                                                        <span key={field.fieldName}
+                                                              class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                            <div>
+                                                                <template if:true={field.visible}>
+                                                                    <template if:false={field.outputOnly}>
+                                                                        <template if:true={field.editable}>
+                                                                            <lightning-input-field onchange={styleInputs}
+                                                                                                   class="labelValue textValue"
+                                                                                                   field-name={field.fieldName}>
+                                                                            </lightning-input-field>
+                                                                        </template>
+                                                                        <template if:false={field.editable}>
+                                                                            <lightning-input-field
+                                                                                    class="labelValue textValue disabledValue disabledInput"
+                                                                                    field-name={field.fieldName} disabled>
+                                                                            </lightning-input-field>
+                                                                        </template>
+                                                                    </template>
+
+                                                                    <template if:true={field.outputOnly}>
+                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>
+                                                                    </template>
+                                                                </template>
+                                                            </div>
+                                                        </span>
+                                                    </template>
+                                                </template>
+
+                                                <!-- Working areas for contact -->
+                                                <template if:true={showAreas}>
+                                                    <div class="slds-hide">
+                                                        <lightning-input-field field-name="Area__c"></lightning-input-field>
+                                                    </div>
+
+                                                    <div class="text-small slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                                        Working Areas
+                                                    </div>
+
+                                                    <template for:each={areasOptions} for:item="item">
+                                                        <div key={item.label} class="slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                                            <div class="slds-m-left_x-small slds-m-bottom_small">
+                                                                <label class="checkbox-button">
+                                                                    <input data-item={item.label} type="checkbox" class="checkbox-button__input" onchange={getValueSelected} name={item.label} checked={item.checked}>
+                                                                    <span data-item={item.label} class="checkbox-button__control" onchange={getValueSelected}></span>
+                                                                    <span data-item={item.label} class="checkbox-button__label" onchange={getValueSelected}>{item.value}</span>
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+                                                    </template>
+
+                                                </template>
+
+                                            </div>
+                                        </template>
+
+                                        <template if:true={isLoadingEdit}>
+                                            <div class="slds-m-around_medium slds-is-relative">
+                                                <lightning-spinner alternative-text="Loading" size="medium">
+                                                </lightning-spinner>
+                                            </div>
+                                        </template>
+
+                                    </div>
+
+                                    <!-- Popup Footer -->
+                                    <div
+                                            class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                        <lightning-button class="slds-float_right containedButton"
+                                                          label={labels.SaveLabel} type="submit" disabled={isSaving} variant="brand">
+                                        </lightning-button>
+
+                                        <lightning-button
+                                                class="slds-float_right  containedButtonWhite slds-m-right_medium"
+                                                disabled={isSaving} label={labels.CancelLabel} variant=""
+                                                onclick={closeModal}></lightning-button>
+                                    </div>
+                                </lightning-record-edit-form>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
 
 
 
