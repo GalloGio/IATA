@@ -88,14 +88,19 @@ public static Map<String,String> getCountryList(){
 //Grab Account information for distinguish of other buttons to show
 //Check the Sector of the Account. Related to Contact.
 @AuraEnabled (cacheable=true)
-public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicName, String country, Contact contactInfo){
+public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicName, String country, Contact contactInfo, Boolean isEmergency){
+
+	if(isEmergency) {
+		return [SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c, Language__c, Region__c, Sectors__c, Topic__c
+		        FROM LiveAgentButtonSettings__c
+		        WHERE Name =: 'Emergency'];
+	}
 
 	//lower cases the country value;
 	country = country.toLowerCase();
 
 	//adds __c to end of Topic value. Check Custom Settings or query below.
 	topicName = topicName + '__c';
-	List<LiveAgentButtonSettings__c> liveAgentSettings = new List<LiveAgentButtonSettings__c>();
 
 	Contact con = contactInfo;
 
@@ -106,26 +111,20 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 	String region = con.Account.Region_formula__c != null ? con.Account.Region_formula__c : '';
 
 	if(country != null && country != '') {
-		for(LiveAgentButtonSettings__c buttonSettings : [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
-		                                                  Language__c, Region__c, Sectors__c, Topic__c
-		                                                  FROM LiveAgentButtonSettings__c
-		                                                  WHERE Sectors__c Like :sector
-		                                                  AND ((Language__c = 'en' AND Region__c =:region)
-		                                                       OR (Language__c =:country AND Region__c =:region))]) {
-			liveAgentSettings.add(buttonSettings);
-		}
+		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
+		         Language__c, Region__c, Sectors__c, Topic__c
+		         FROM LiveAgentButtonSettings__c
+		         WHERE Sectors__c Like : sector
+		         AND ((Language__c = 'en' AND Region__c =: region)
+		              OR (Language__c =: country AND Region__c =: region))];
+
 	}
 	else{
-		for(LiveAgentButtonSettings__c buttonSettings : [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
-		                                                  Language__c, Region__c, Sectors__c, Topic__c
-		                                                  FROM LiveAgentButtonSettings__c
-		                                                  WHERE Topic__c Like :topicName]) {
-			liveAgentSettings.add(buttonSettings);
-		}
+		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
+		         Language__c, Region__c, Sectors__c, Topic__c
+		         FROM LiveAgentButtonSettings__c
+		         WHERE Topic__c Like : topicName];
 	}
-
-	//return Live Agent Settings
-	return liveAgentSettings;
 }
 
 
@@ -177,6 +176,8 @@ public static Map<String,String> getCaseTypeAndCountry(Contact contactInfo, Stri
 
 }
 
+
+
 @AuraEnabled (cacheable=true)
 public static Contact getContactInfo(){
 	//Grabs User info
@@ -186,6 +187,14 @@ public static Contact getContactInfo(){
 	return [SELECT ID, FirstName, Name, Email, Phone, Account.Name, Account.Sector__c,
 	        Account.Category__c, Account.id, Account.Country_ISO_Code__c,
 	        Account.Region_formula__c FROM Contact WHERE ID = : user.ContactId];
+
+}
+
+@AuraEnabled (cacheable=true)
+public static List<ISSP_FAQ2Case_Emergencies__c> getEmergencyDependencies(){
+
+	//Grabs ISSP_FAQ2Case_Emergencies__c Custom Setting records
+	return [SELECT Id, Name, Subtopic__c FROM ISSP_FAQ2Case_Emergencies__c];
 
 }
 }

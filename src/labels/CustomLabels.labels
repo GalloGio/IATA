@@ -34028,6 +34028,13 @@ title,Title,Name</value>
         <value>You&#39;ll get an answer soon.</value>
     </labels>
     <labels>
+        <fullName>csp_CaseTracking</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>You can add comments, documents and recipients in case of update. You can track the status and do updates in</value>
+    </labels>
+    <labels>
         <fullName>csp_Case_Panel_label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

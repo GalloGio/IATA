@@ -2,6 +2,7 @@ import { LightningElement, track } from 'lwc';
 import getLiveAgentButton from '@salesforce/apex/PortalSupportReachUsCtrl.getLiveAgentButton';
 import getContactInfo from '@salesforce/apex/PortalSupportReachUsCtrl.getContactInfo';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
+import getEmergencyDependencies from '@salesforce/apex/PortalSupportReachUsCtrl.getEmergencyDependencies';
 import getCaseTypeAndCountry from '@salesforce/apex/PortalSupportReachUsCtrl.getCaseTypeAndCountry';
 
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
@@ -57,6 +58,8 @@ export default class PortalSupportReachUs extends LightningElement {
     @track optionsButton = false;
     @track supOptionsPanel = false;
     @track countryValue = '';
+    @track emergencyButton = false;
+    @track isEmergency = false;
 
     //global variables
     pageParams;
@@ -65,6 +68,7 @@ export default class PortalSupportReachUs extends LightningElement {
     contact;
     allData = {};
     categorization = {};
+    emergencyCategories = {};
     recordTypeAndCountry;
     myliveAgentButtonInfo;
 
@@ -104,6 +108,8 @@ export default class PortalSupportReachUs extends LightningElement {
     connectedCallback() {
 
         this.getAllPickListValues();
+
+        this.getEmergencyDependencies();
 
         this.getCountryList();
 
@@ -164,6 +170,13 @@ export default class PortalSupportReachUs extends LightningElement {
             })
     }
 
+    getEmergencyDependencies() {
+        getEmergencyDependencies()
+            .then(result => {
+                this.emergencyCategories = JSON.parse(JSON.stringify(result));
+            });
+    }
+
     //gets Country for picklist
     getCountryList() {
         getCountryList()
@@ -180,7 +193,7 @@ export default class PortalSupportReachUs extends LightningElement {
 
                 //set global with the options for later use
                 this.countryOptions = myCountryOptions;
-                
+
 
             })
             .catch(error => {
@@ -302,6 +315,8 @@ export default class PortalSupportReachUs extends LightningElement {
         this.supOptionsPanel = false;
         //Hide Country Picklist/Combobox
         this.countryCB = false;
+        //Hide Emergency button
+        this.emergencyButton = false;
         //get subtopics
         this.subTopicValuesGetter();
 
@@ -330,7 +345,7 @@ export default class PortalSupportReachUs extends LightningElement {
 
         //set the options
         this.subTopicOptions = mySubTopicOptions;
-        
+
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
             const checkSubTopic = obj => obj.value === this.pageParams.subtopic;
@@ -341,9 +356,13 @@ export default class PortalSupportReachUs extends LightningElement {
                 let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
 
                 this.countryCB = true;
-                if (countryExclusion.includes(this.topic)) {
+                if (countryExclusion.includes(this.topic + '__c')) {
                     this.countryCB = false;
                     this.optionsButton = true;
+                    if (this.emergencyCategories.some(obj => obj.value === this.topic + ('__c'))
+                        && this.emergencyCategories.some(obj => obj.value.includes(this.subTopic + '__c'))) {
+                        this.emergencyButton = true;
+                    }
                 }
             } else {
                 this.countryCB = false;
@@ -359,12 +378,18 @@ export default class PortalSupportReachUs extends LightningElement {
             this.optionsButton = false;
             this.countryValue = '';
             this.countryCB = true;
+            this.emergencyButton = false;
 
             //required to not show the country picklist if the selected value is included here
             let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
             if (countryExclusion.includes(this.topic + '__c')) {
                 this.countryCB = false;
                 this.optionsButton = true;
+
+                if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
+                    && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
+                    this.emergencyButton = true;
+                }
             }
         } else {
             this.optionsButton = false;
@@ -379,11 +404,21 @@ export default class PortalSupportReachUs extends LightningElement {
         this.countryValue = event.target.value;
         if (this.countryValue !== "") {
             this.optionsButton = true;
+            if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
+                && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
+                this.emergencyButton = true;
+            }
         } else {
             this.optionsButton = false;
+            this.emergencyButton = false;
         }
         this.supOptionsPanel = false;
 
+        this.closeOptionsPanel();
+    }
+
+    handleEmergency(){
+        this.isEmergency = !this.isEmergency;
         this.closeOptionsPanel();
     }
 
@@ -401,9 +436,8 @@ export default class PortalSupportReachUs extends LightningElement {
 
     //Gets all live agent information depending on the selected data
     getLiveAgentButtonInfo() {
-        getLiveAgentButton({ topicName: this.topic, country: this.countryValue, contactInfo: this.contact })
+        getLiveAgentButton({ topicName: this.topic, country: this.countryValue, contactInfo: this.contact, isEmergency: this.isEmergency })
             .then(result => {
-
                 this.myliveAgentButtonInfo = JSON.parse(JSON.stringify(result));
                 this.sendDataForLiveAgent();
                 //fire event to activate spinner on Aura Wrapper
@@ -452,6 +486,7 @@ export default class PortalSupportReachUs extends LightningElement {
             allData.myliveAgentButtonInfo = myliveAgentButtonInfo;
             allData.recordTypeAndCountry = recordTypeAndCountry;
             allData.categorization = categorization;
+            allData.Emergency = this.isEmergency;
             allData.contact = contact;
 
             // Fire the custom event
