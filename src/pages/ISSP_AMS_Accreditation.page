@@ -520,6 +520,7 @@
             if({!isMultiCountryNewAE}) {
                 $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
                 enableDisableLegalName();
+                $('[id$=officetypelist]').prop('disabled', true);
             }
         }
     </script>
@@ -612,8 +613,8 @@
                                     <div class="alert alert-info" role="alert" style="display:{!IF(NOT(isNoticeOfChange),'','none')}">
                                         <apex:outputText value="{!$Label.ISSP_AMS_Step1_Separate_Application}" escape="false"/>
                                     </div>
-                                    <div class="alert alert-warning"  role="alert">
-                                        {!IF(NOT(isNoticeOfChange),
+                                    <div class="alert alert-warning" role="alert" style="display: {!IF(isMultiCountryNewAE, 'none', '')}">
+                                        {!IF(NOT(isNoticeOfChange), 
                                         $Label.ISSP_AMS_Step1_Two_Weeks_Expiry,
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
@@ -642,7 +643,7 @@
                                                     <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label>
                                                     <div class="col-lg-9">
 
-                                                    <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%;float:left" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, ''); if ({!isMultiCountryNewAE} == false) { toggleCountries(this.value); }" size="1">
+                                                    <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%;float:left" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, ''); if ({!isMultiCountryNewAE} == false) { toggleCountries(this.value); }" size="1" disabled="{!AND(isMultiCountryNewAE, sectorvalue == 'Travel_Agent')}">
                                                         <apex:selectOptions value="{!OfficeTypes}" />
                                                     </apex:selectList>
 
@@ -651,8 +652,6 @@
                                                     </apex:outputPanel>
 
                                                     <script>
-                                                        if ({!isMultiCountryNewAE} == true) $('[id$=officetypelist]').prop('disabled', true);
-
                                                         if(showProductComparisonLink) {
                                                             $('[name$=ProductComparisonLink]').show();
                                                         }
@@ -836,6 +835,8 @@
                                     if (sectorValue === 'Cargo_Agent') {
                                         $('[name$=separateLegalEntitySelect]').prop('checked', false);
                                         $('[name$=isGSASelect]').prop('checked', false);
+                                    } else {
+                                        runMultiCountry();
                                     }
 
                                     setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector);
