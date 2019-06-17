@@ -1082,6 +1082,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>Annual Fees :</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ASD_HelpText</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ASD_HelpText</shortDescription>
+        <value>Please access ASD to view more details on the Remittance Holding Capacity</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_AssociateEntity</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
