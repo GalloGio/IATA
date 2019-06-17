@@ -34,6 +34,9 @@
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                     slds-m-horizontal_small default_panel customCard cursorPointer">
                         <div class="slds-p-top_large noPointerEvents">
+                            <!-- <lightning-icon icon-name="utility:password" size="small"
+                                class="tileNewServiceIcon slds-current-color">
+                            </lightning-icon> -->
                             <img class="questionIcon" src={concern_selected} if:true={isConcern} />
                             <img class="questionIcon" src={concern_unselected} if:false={isConcern} />
                         </div>
@@ -45,6 +48,9 @@
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                     slds-m-horizontal_small default_panel customCard cursorPointer">
                         <div class="slds-p-top_large noPointerEvents">
+                            <!-- <lightning-icon icon-name="utility:task" size="small"
+                                class="tileNewServiceIcon slds-current-color">
+                            </lightning-icon> -->
                             <img class="questionIcon" src={compliment_selected} if:true={isCompliment} />
                             <img class="questionIcon" src={compliment_unselected} if:false={isCompliment} />
                         </div>
@@ -75,7 +81,7 @@
                     <h2 class="text-xsmall slds-p-top_medium">{label.csp_SupportReachUs_ActionIndicator}</h2>
                 </div>
                 <div class="slds-align_absolute-center slds-p-bottom_xx-large">
-                    <div class="basicInfoBox">
+                    <div class="slds-size_1-of-2">
                         <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Category}</p>
                             <lightning-combobox name="progress"
@@ -133,6 +139,7 @@
                     </div>
                 </div>
             </div>
+            <div class="endOfReachUs"></div>
         </template>
         <template if:true={isCompliment}>
             <template if:true={showModal}>
@@ -195,7 +202,7 @@
                     <h2 class="text-xsmall slds-p-top_medium">We're glad to hear your compliments</h2>
                 </div>
                 <div class="slds-align_absolute-center">
-                    <div class="basicInfoBox">
+                    <div class="slds-size_1-of-2">
                         <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</p>
                             <lightning-combobox name="progress" required

@@ -5,8 +5,8 @@ import getContactInfo from '@salesforce/apex/PortalSupportReachUsCtrl.getContact
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import getEmergencyDependencies from '@salesforce/apex/PortalSupportReachUsCtrl.getEmergencyDependencies';
 import getCaseTypeAndCountry from '@salesforce/apex/PortalSupportReachUsCtrl.getCaseTypeAndCountry';
-import insertCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.insertCase';
-import createCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.createCase';
+import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
+import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
 import getCallUsPhoneNumber from '@salesforce/apex/PortalSupportReachUsCtrl.getCallUsPhoneNumber';
 
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
@@ -45,7 +45,12 @@ import csp_SupportReachUs_Call_Panel_label from '@salesforce/label/c.csp_Call_Pa
 import csp_SupportReachUs_Call_Panel_sub_label from '@salesforce/label/c.csp_Call_Panel_sub_label';
 import csp_SupportReachUs_Chat_With_Us from '@salesforce/label/c.LVA_ChatWithUs';
 import csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL from '@salesforce/label/c.ISSP_Topics_To_Exclude_Country_PL';
-import csp_SupportReachUs_Category from '@salesforce/label/c.csp_SupportReachUs_Category'
+import csp_SupportReachUs_Category from '@salesforce/label/c.csp_SupportReachUs_Category';
+import csp_SupportReachUs_GoToHomepage from '@salesforce/label/c.csp_GoToHomepage';
+import csp_SupportReachUs_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
+import csp_SupportReachUs_ComplimentInfo from '@salesforce/label/c.csp_ComplimentInfo';
+import csp_SupportReachUs_Compliment from '@salesforce/label/c.csp_Compliment';
+import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 
 // Import standard salesforce labels
 import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
@@ -175,6 +180,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         getAllPickListValues()
             .then(result => {
                 this.myResult = JSON.parse(JSON.stringify(result));
+                console.log(JSON.parse(JSON.stringify(result)));
                 //Auxiliary Map
                 const map = new Map();
                 //Array to consume category options
@@ -218,6 +224,14 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 this.error = error;
                 // eslint-disable-next-line no-console
                 console.log('Error: ', error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: JSON.parse(JSON.stringify(error)).body.message,
+                        variant: 'error',
+                        mode: 'pester'
+                    })
+                );
             })
     }
 
@@ -251,6 +265,14 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 //throws error
                 this.error = error;
                 console.log('Error: ', error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: JSON.parse(JSON.stringify(error)).body.message,
+                        variant: 'error',
+                        mode: 'pester'
+                    })
+                );
             });
     }
 
@@ -565,8 +587,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //Performs a document scroll down.
         let scrollWindowDown = new Promise((resolve, reject) => {
+
             let divToTop = this.template.querySelectorAll('.endOfReachUs')[0].offsetTop;
-            window.scrollTo({ top: divToTop , left: 0, behavior: 'smooth' });
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
 
             let error = false;
             if (!error)
