@@ -2865,7 +2865,6 @@ Payment required on receipt of this Payment Advice
         <value>Your {0} access request has been delivered to portal administrators. If you have any questions or requests about the process, you can contact an administrator below :</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>CSP_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2874,8 +2873,6 @@ Payment required on receipt of this Payment Advice
         <value>Documents</value>
     </labels>
     <labels>
-=======
->>>>>>> 832af287d... MTSL-337 / MTSL-369
         <fullName>CSP_FAQs_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
