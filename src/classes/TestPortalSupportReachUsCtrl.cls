@@ -96,6 +96,8 @@ public static testMethod void TestPortalSupportReachUsCtrl(){
 		newUser.LanguageLocaleKey ='it';
 		update newUser;
 		myMapIT = PortalSupportReachUsCtrl.getCountryList();
+        
+        List<PortalSupportReachUsCtrl.LVA_CallUsConfigClass> phoneNumbers = PortalSupportReachUsCtrl.getCallUsPhoneNumber();
 
         Contact cont = PortalSupportReachUsCtrl.getContactInfo();
 

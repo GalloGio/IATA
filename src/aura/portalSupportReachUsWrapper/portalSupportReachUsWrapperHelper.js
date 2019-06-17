@@ -23,6 +23,7 @@
             var subTopicLabel = component.get("v.subTopic");
             var caseRecordTypeId = component.get("v.caseRecordType");
             var country = component.get("v.country");
+            var isEmergency = component.get("v.isEmergency");
 
             liveagent.setName(userContact.FirstName);
             liveagent.enableLogging();
@@ -35,7 +36,7 @@
             liveagent.addCustomDetail('#Subtopic', subTopicLabel);
             liveagent.addCustomDetail('Case Status', 'Open');
             liveagent.addCustomDetail('Case Origin', 'Chat');
-            //liveagent.addCustomDetail('Case Priority', "{!IF(isEmergency,'Emergency','Normal')}");
+            liveagent.addCustomDetail('Case Priority', isEmergency ? 'Emergency':'Normal');
             liveagent.addCustomDetail('userContactId', userContact.Id);
             liveagent.addCustomDetail('userAccountId', userContact.Account.Id);
             liveagent.addCustomDetail('caseRTId', caseRecordTypeId);

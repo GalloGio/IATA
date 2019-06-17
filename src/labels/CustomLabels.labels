@@ -34035,6 +34035,13 @@ title,Title,Name</value>
         <value>You can add comments, documents and recipients in case of update. You can track the status and do updates in</value>
     </labels>
     <labels>
+        <fullName>csp_CaseTracking</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>You can add comments, documents and recipients in case of update. You can track the status and do updates in</value>
+    </labels>
+    <labels>
         <fullName>csp_Case_Panel_label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34243,6 +34250,14 @@ title,Title,Name</value>
         <value>Create New Contact</value>
     </labels>
     <labels>
+        <fullName>csp_CreateNewCaseAddAttachment</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Create Case &amp; Add Attachment</value>
+    </labels>
+    <labels>
         <fullName>csp_Emergency_Query</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34304,6 +34319,30 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Is your query an emergency?</value>
+    </labels>
+    <labels>
+        <fullName>csp_LiveAgentBadConfig</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>The chat is not available. Please call or create a case.</value>
+    </labels>
+    <labels>
+        <fullName>csp_LiveAgentTimeout</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>The chat connection timed out. You can refresh the page, or create a case</value>
+    </labels>
+    <labels>
+        <fullName>csp_LiveTimeout</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Live Agent connection timeout. Please refresh the page or contact Support</value>
     </labels>
     <labels>
         <fullName>csp_Options_Label</fullName>
@@ -34538,6 +34577,30 @@ title,Title,Name</value>
         <value>Show Support Options</value>
     </labels>
     <labels>
+        <fullName>csp_searchEmailRecipientPlaceholder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Search by name or email</value>
+    </labels>
+    <labels>
+        <fullName>csp_searchIataCodeLocationNamePlaceHolder</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Search by IATA Code, location or name</value>
+    </labels>
+    <labels>
+        <fullName>csp_errorCreatingCase</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
+        <value>Error creating case</value>
+    </labels>
+    <labels>
         <fullName>csp_SupportReachUs_SpecifyCaseDetails</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -34582,6 +34645,13 @@ title,Title,Name</value>
         <value>View Case Summary</value>
     </labels>
     <labels>
+        <fullName>csp_GoToHomepage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_selectReason</shortDescription>
+        <value>Go to Homepage</value>
+    </labels>
+    <labels>
         <fullName>csp_btn_Support_Label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34597,6 +34667,22 @@ title,Title,Name</value>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Select the topic covering the problem.</value>
     </labels>        
+    <labels>
+        <fullName>csp_Compliment</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language> 
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Thanks for sharing.</value>
+    </labels>
+    <labels>
+        <fullName>csp_ComplimentInfo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>At IATA we strive to provide an excellent customer service and itâ€™s rewarding to know that you care too. We consider any feedback you give us.</value>
+    </labels>
     <labels>
     <fullName>days_left</fullName>
         <language>en_US</language>

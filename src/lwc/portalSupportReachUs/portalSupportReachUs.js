@@ -1,19 +1,25 @@
 import { LightningElement, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getLiveAgentButton from '@salesforce/apex/PortalSupportReachUsCtrl.getLiveAgentButton';
 import getContactInfo from '@salesforce/apex/PortalSupportReachUsCtrl.getContactInfo';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import getEmergencyDependencies from '@salesforce/apex/PortalSupportReachUsCtrl.getEmergencyDependencies';
 import getCaseTypeAndCountry from '@salesforce/apex/PortalSupportReachUsCtrl.getCaseTypeAndCountry';
+import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
+import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
+import getCallUsPhoneNumber from '@salesforce/apex/PortalSupportReachUsCtrl.getCallUsPhoneNumber';
 
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 
-import { getParamsFromPage } from 'c/navigationUtils';
+//import navigation methods
+import { NavigationMixin } from 'lightning/navigation';
+import { navigateToPage, getParamsFromPage } from 'c/navigationUtils';
 
 
 // Import custom labels
 import csp_SupportReachUs_IntentionOnThisPage from '@salesforce/label/c.csp_IntentionOnThisPage';
 import csp_SupportReachUs_ChooseOption from '@salesforce/label/c.csp_ChooseOption';
-import csp_SupportReachUs_Ask_Label from '@salesforce/label/c.PKB2_Ask_Button';
+import csp_SupportReachUs_Ask_Label from '@salesforce/label/c.csp_SupportReachUs_AskTile';
 import csp_SupportReachUs_Concern_Label from '@salesforce/label/c.csp_Concern_Label';
 import csp_SupportReachUs_Compliment_Label from '@salesforce/label/c.csp_Compliment_Label';
 import csp_SupportReachUs_Suggest_Label from '@salesforce/label/c.csp_Suggest_Label';
@@ -21,6 +27,7 @@ import csp_SupportReachUs_SupportCategoriesInfo from '@salesforce/label/c.csp_Su
 import csp_SupportReachUs_ActionIndicator from '@salesforce/label/c.csp_ActionIndicator';
 import csp_SupportReachUs_Topic_Label from '@salesforce/label/c.ISSP_F2CTopic';
 import csp_SupportReachUs_ActionForCategoryPicklist from '@salesforce/label/c.csp_ActionForCategoryPicklist';
+import csp_SupportReachUs_ActionForTopicPicklist from '@salesforce/label/c.csp_ActionForTopicPicklist';
 import csp_SupportReachUs_Sub_Topic_Label from '@salesforce/label/c.csp_Sub_Topic_Label';
 import csp_SupportReachUs_toSelectSubTopicPicklist from '@salesforce/label/c.csp_toSelectSubTopic';
 import csp_SupportReachUs_Country_Label from '@salesforce/label/c.Country';
@@ -38,11 +45,21 @@ import csp_SupportReachUs_Call_Panel_label from '@salesforce/label/c.csp_Call_Pa
 import csp_SupportReachUs_Call_Panel_sub_label from '@salesforce/label/c.csp_Call_Panel_sub_label';
 import csp_SupportReachUs_Chat_With_Us from '@salesforce/label/c.LVA_ChatWithUs';
 import csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL from '@salesforce/label/c.ISSP_Topics_To_Exclude_Country_PL';
-import csp_SupportReachUs_Category from '@salesforce/label/c.csp_SupportReachUs_Category'
+import csp_SupportReachUs_Category from '@salesforce/label/c.csp_SupportReachUs_Category';
+import csp_SupportReachUs_GoToHomepage from '@salesforce/label/c.csp_GoToHomepage';
+import csp_SupportReachUs_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
+import csp_SupportReachUs_ComplimentInfo from '@salesforce/label/c.csp_ComplimentInfo';
+import csp_SupportReachUs_Compliment from '@salesforce/label/c.csp_Compliment';
+import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
+
+// Import standard salesforce labels
+import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
+import csp_caseSubject from '@salesforce/schema/Case.Subject';
+import csp_caseDescription from '@salesforce/schema/Case.Description';
 
 
 
-export default class PortalSupportReachUs extends LightningElement {
+export default class PortalSupportReachUs extends NavigationMixin(LightningElement) {
     //track variables
     @track isLoaded = true;
     @track caseDetails;
@@ -58,8 +75,21 @@ export default class PortalSupportReachUs extends LightningElement {
     @track optionsButton = false;
     @track supOptionsPanel = false;
     @track countryValue = '';
+    @track compliment_countryValue = '';
     @track emergencyButton = false;
     @track isEmergency = false;
+    @track isQuestion = true;
+    @track isCompliment = false;
+    @track question_selected;
+    @track question_unselected;
+    @track concern_selected;
+    @track concern_unselected;
+    @track compliment_selected;
+    @track compliment_unselected;
+    @track showModal = false;
+    @track callUsPhoneNumberConfigs;
+    @track phoneNumber = [];
+    //@track suggestion;
 
     //global variables
     pageParams;
@@ -71,6 +101,7 @@ export default class PortalSupportReachUs extends LightningElement {
     emergencyCategories = {};
     recordTypeAndCountry;
     myliveAgentButtonInfo;
+    caseInitiated;
 
     //label construct
     label = {
@@ -84,6 +115,7 @@ export default class PortalSupportReachUs extends LightningElement {
         csp_SupportReachUs_ActionIndicator,
         csp_SupportReachUs_Topic_Label,
         csp_SupportReachUs_ActionForCategoryPicklist,
+        csp_SupportReachUs_ActionForTopicPicklist,
         csp_SupportReachUs_Sub_Topic_Label,
         csp_SupportReachUs_toSelectSubTopicPicklist,
         csp_SupportReachUs_Country_Label,
@@ -101,12 +133,27 @@ export default class PortalSupportReachUs extends LightningElement {
         csp_SupportReachUs_Call_Panel_sub_label,
         csp_SupportReachUs_Chat_With_Us,
         csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL,
-        csp_SupportReachUs_Category
+        csp_SupportReachUs_Category,
+        csp_SupportReachUs_GoToHomepage,
+        csp_SupportReachUs_GoToSupport,
+        csp_SupportReachUs_ComplimentInfo,
+        csp_SupportReachUs_Compliment,
+        csp_caseNumber,
+        csp_caseSubject,
+        csp_caseDescription,
+        IDCard_FillAllFields
     }
+
+    //links for images
+    iconsBaseLink = '/csportal/s/CSPortal/Images/Support/';
+    iconsExtension = '.svg';
+
+
 
     //old doInit() in aura. Fires once the component is loaded.
     connectedCallback() {
 
+        //Data Pickup methods
         this.getAllPickListValues();
 
         this.getEmergencyDependencies();
@@ -115,6 +162,16 @@ export default class PortalSupportReachUs extends LightningElement {
 
         this.getContact();
 
+        this.getCallUsPhoneNumber();
+
+        //visual aspect for tiles
+        this.question_selected = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
+        this.question_unselected = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
+        this.concern_selected = this.iconsBaseLink + 'concern_selected' + this.iconsExtension;
+        this.concern_unselected = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
+        this.compliment_selected = this.iconsBaseLink + 'compliment_selected' + this.iconsExtension;
+        this.compliment_unselected = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
+        //this.suggestion = this.iconsBaseLink + 'suggestion_unselected' + this.iconsExtension;
     }
 
     //get the Topic Values for picklist
@@ -123,7 +180,7 @@ export default class PortalSupportReachUs extends LightningElement {
         getAllPickListValues()
             .then(result => {
                 this.myResult = JSON.parse(JSON.stringify(result));
-                console.log(this.myResult);
+                console.log(JSON.parse(JSON.stringify(result)));
                 //Auxiliary Map
                 const map = new Map();
                 //Array to consume category options
@@ -167,6 +224,14 @@ export default class PortalSupportReachUs extends LightningElement {
                 this.error = error;
                 // eslint-disable-next-line no-console
                 console.log('Error: ', error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: JSON.parse(JSON.stringify(error)).body.message,
+                        variant: 'error',
+                        mode: 'pester'
+                    })
+                );
             })
     }
 
@@ -199,8 +264,15 @@ export default class PortalSupportReachUs extends LightningElement {
             .catch(error => {
                 //throws error
                 this.error = error;
-                // eslint-disable-next-line no-console
                 console.log('Error: ', error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: JSON.parse(JSON.stringify(error)).body.message,
+                        variant: 'error',
+                        mode: 'pester'
+                    })
+                );
             });
     }
 
@@ -244,6 +316,8 @@ export default class PortalSupportReachUs extends LightningElement {
         this.supOptionsPanel = false;
         //Hide Country Picklist/Combobox
         this.countryCB = false;
+        //sets emergency to the default value
+        this.emergencyButton = false;
 
         //get topics
         this.topicValuesGetter();
@@ -417,7 +491,8 @@ export default class PortalSupportReachUs extends LightningElement {
         this.closeOptionsPanel();
     }
 
-    handleEmergency(){
+    //handles emergency attribution
+    handleEmergency() {
         this.isEmergency = !this.isEmergency;
         this.closeOptionsPanel();
     }
@@ -485,9 +560,16 @@ export default class PortalSupportReachUs extends LightningElement {
         let provideAllDataToWrapper = new Promise((resolve, reject) => {
             allData.myliveAgentButtonInfo = myliveAgentButtonInfo;
             allData.recordTypeAndCountry = recordTypeAndCountry;
+            allData.CountryISO = this.countryValue;
             allData.categorization = categorization;
             allData.Emergency = this.isEmergency;
-            allData.contact = contact;
+            allData.Question = this.isQuestion;
+            allData.Contact = contact;
+
+            this.getPhoneNumber();
+            if (JSON.parse(JSON.stringify(this.phoneNumber)).length > 0) {
+                allData.PhoneNumber = JSON.parse(JSON.stringify(this.phoneNumber))[0];
+            }
 
             // Fire the custom event
             const allDataChange = new CustomEvent('alldatachange', {
@@ -505,8 +587,9 @@ export default class PortalSupportReachUs extends LightningElement {
 
         //Performs a document scroll down.
         let scrollWindowDown = new Promise((resolve, reject) => {
+
             let divToTop = this.template.querySelectorAll('.endOfReachUs')[0].offsetTop;
-            window.scrollTo({ top: divToTop , left: 0, behavior: 'smooth' });
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
 
             let error = false;
             if (!error)
@@ -558,10 +641,174 @@ export default class PortalSupportReachUs extends LightningElement {
             elem[i].classList.add('default_panel');
         }
 
+        if (event.target.attributes.getNamedItem('data-id').value === '001') {
+            this.isQuestion = true;
+            this.isConcern = false;
+            this.isCompliment = false;
+            this.closeOptionsPanel();
+            this.resetData();
+        }
+        else if (event.target.attributes.getNamedItem('data-id').value === '002') {
+            this.isQuestion = false;
+            this.isConcern = true;
+            this.isCompliment = false;
+            this.closeOptionsPanel();
+            this.resetData();
+        }
+        else if (event.target.attributes.getNamedItem('data-id').value === '003') {
+            this.isQuestion = false;
+            this.isConcern = false;
+            this.isCompliment = true;
+            this.closeOptionsPanel();
+            this.resetData();
+        }
+
         //grabs the clicked panel and paints with blue color. Identified by it's data-id.
         let mod = this.template.querySelector('[data-id="' + event.target.attributes.getNamedItem('data-id').value + '" ]');
         mod.classList.remove('default_panel');
         mod.classList.add('active_panel');
+
     }
 
+    //on changing tabs resets all the data to default values
+    resetData() {
+        this.category = ''
+        this.topic = ''
+        this.subTopic = ''
+        this.countryValue = ''
+        this.topicCB = false;
+        this.subTopicCB = false;
+        this.subTopicCB = false;
+        this.countryCB = false;
+        this.optionsButton = false;
+    }
+
+    /*################# COMPLIMENT JS ########################*/
+
+    //handles compliment country selection
+    compliment_countryHandler(event) {
+        this.compliment_countryValue = event.target.value;
+    }
+
+    //grabs subject
+    handleSubject(event) {
+        this.subject = event.target.value;
+    }
+
+    //grabs description
+    handleDescription(event) {
+        this.description = event.target.value;
+    }
+
+    //submits the compliment
+    submitCompliment() {
+        this.toggleSpinner();
+
+        if (this.compliment_countryValue !== undefined && this.subject !== undefined && this.description !== undefined &&
+            this.compliment_countryValue.trim() !== '' && this.subject.trim() !== '' && this.description.trim() !== '') {
+
+            createCase({ countryiso: this.compliment_countryValue, isConcernCase: false, topic: '', subtopic: '' })
+                .then(createCaseResult => {
+                    this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
+
+                    const record = { 'sobjectType': 'Case' };
+                    record.RecordTypeId = this.caseInitiated.RecordTypeId;
+                    record.Subject = this.subject;
+                    record.Description = this.description + '\n-COMPLIMENT-';
+                    record.BSPCountry__c = this.compliment_countryValue;
+
+                    insertCase({ caseToInsert: record, recipientsToAdd: [] })
+                        .then(() => {
+                            this.showModal = true;
+                            this.toggleSpinner();
+                        })
+                        .catch(error => {
+
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error creating case',
+                                    message: JSON.parse(JSON.stringify(error)).body.message,
+                                    variant: 'error',
+                                    mode: 'pester'
+                                })
+                            );
+                        });
+                });
+        }
+        else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: this.label.IDCard_FillAllFields,
+                    variant: 'error',
+                    mode: 'pester'
+                })
+            );
+        }
+    }
+
+
+    //navigates to homepage
+    navigateToHomepage() {
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "home"
+            }
+        })
+            .then(url => navigateToPage(url, {}));
+    }
+
+    //navigates to support reach us
+    navigateToSupport() {
+        navigateToPage("support-reach-us");
+    }
+
+    getCallUsPhoneNumber() {
+        getCallUsPhoneNumber()
+            .then(result => {
+                this.callUsPhoneNumberConfigs = JSON.parse(JSON.stringify(result));
+            });
+    }
+
+    getPhoneNumber() {
+        if (this.callUsPhoneNumberConfigs.length > 0) {
+            this.phoneNumber = this.callUsPhoneNumberConfigs.filter(item => {
+                //This magical function brought about from an ancient civilization performs beautifully to capture the one value we need based on the conditions bellow
+                //We have a list of PhoneNumberConfigs from the custom meta data type with the same name and we extract one value from it.
+                return (item.Topic
+                    && item.Topic === this.topic
+                    && (item.Sector === this.contact.Account.Sector__c)
+                    && (item.IsoCountry === this.countryValue)) // ---- First Condition ------//
+
+                    || (item.Topic
+                        && item.Topic === this.topic
+                        && item.Sector === this.contact.Account.Sector__c
+                        && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Second Condition ------//
+
+                    || (item.Topic
+                        && item.Topic === this.topic
+                        && (item.Sector === 'All' || item.Sector === '' || item.Sector === undefined)
+                        && item.IsoCountry === this.countryValue) // ---- Third Condition ------//
+
+                    || (item.Topic
+                        && item.Topic === this.topic
+                        && (item.Sector === 'All' || item.Sector === '' || item.Sector === undefined)
+                        && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Fourth Condition ------//
+
+                    || (item.Sector
+                        && item.Sector === this.contact.Account.Sector__c
+                        && (item.Topic === '' || item.Topic === undefined)
+                        && (item.IsoCountry === this.countryValue)) // ---- Fifth Condition ------//
+
+                    || (item.Sector
+                        && item.Sector === this.contact.Account.Sector__c
+                        && (item.Topic === '' || item.Topic === undefined)
+                        && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Sixth Condition ------//
+
+                    || (item.DeveloperName
+                        && item.DeveloperName === 'LVA_CallUs_GEN'); // ---- Seventh Condition ------//
+            });
+        }
+    }
 }

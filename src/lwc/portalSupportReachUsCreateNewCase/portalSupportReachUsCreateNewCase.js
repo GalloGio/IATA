@@ -1,11 +1,13 @@
 import { LightningElement, track } from 'lwc';
+import idOfUser from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getParamsFromPage } from 'c/navigationUtils';
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 import searchAccounts from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.searchAccounts';
+import getContact from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.getContact';
 import searchContacts from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.searchContacts';
 import createCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.createCase';
-import isAgentProfile from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.isAgentProfile';
+import getProfile from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.getProfile';
 import insertCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.insertCase';
 
 // Import custom labels 
@@ -21,6 +23,7 @@ import csp_CreateNewCaseMainInputBoxSubLabel from '@salesforce/label/c.csp_Creat
 import csp_CreateNewCaseMainInputEmailsTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsTopLabel';
 import csp_CreateNewCaseMainInputEmailsSubLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsSubLabel';
 import csp_searchIataCodeLocationNamePlaceHolder from '@salesforce/label/c.csp_searchIataCodeLocationNamePlaceHolder';
+import csp_CaseTracking from '@salesforce/label/c.csp_CaseTracking';
 import csp_ToastWarningRecipientNotFound from '@salesforce/label/c.csp_ToastWarningRecipientNotFound';
 import csp_searchEmailRecipientPlaceholder from '@salesforce/label/c.csp_searchEmailRecipientPlaceholder';
 import csp_CaseCreatedSuccess from '@salesforce/label/c.csp_CaseCreatedSuccess';
@@ -34,8 +37,12 @@ import csp_Topic from '@salesforce/label/c.ISSP_F2CTopic';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 import CSP_Support from '@salesforce/label/c.CSP_Support';
 import CSP_CaseNumber from '@salesforce/label/c.CSP_CaseNumber';
+import csp_Concern_Label from '@salesforce/label/c.csp_Concern_Label';
+import csp_errorCreatingCase from '@salesforce/label/c.csp_errorCreatingCase';
+import csp_CreateNewCaseAddAttachment from '@salesforce/label/c.csp_CreateNewCaseAddAttachment';
 import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
+import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
 
 // Import standard salesforce labels
 import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
@@ -64,17 +71,22 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_CaseResponseGuarantee,
         csp_GoToSupport,
         csp_Category,
+        csp_CaseTracking,
         csp_ViewCaseSummary,
         csp_Topic,
+        csp_CreateNewCaseAddAttachment,
         CSP_Support,
         CSP_Cases,
         CSP_CaseNumber,
         csp_Subtopic,
         csp_caseNumber,
         csp_caseSubject,
+        csp_Concern_Label,
         csp_caseDescription,
+        csp_errorCreatingCase,
         ISSP_ANG_GenericError,
-        IDCard_FillAllFields
+        IDCard_FillAllFields,
+        PKB2_js_error
     }
 
     //spinner controller
@@ -97,6 +109,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //variable to control error class sent to child component
     @track requiredClass;
+
+    //variable used to set the lookup input for the lookup component
+    @track singleresult;
 
     //goes true to show modal once case is created
     @track bShowModal = false;
@@ -122,12 +137,15 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     //stores initiated case
     caseInitiated;
 
+    //the logged user's id
+    userId = idOfUser;
+
     //Same as doInit() on aura
     connectedCallback() {
         this.validateEntryParameters();
         this.getRelatedAccounts();
         this.getRelatedContacts();
-        this.isAgentProfile();
+
     }
 
     //validates the entry parameters coming from the URL. 
@@ -195,9 +213,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                         && myTopicOptions.some(obj => obj.value === pageParams.topic)
                         && mySubTopicOptions.some(obj => obj.value === pageParams.subtopic)) {
 
-                            if(pageParams.emergency !== undefined && pageParams.emergency === true){
-                                this.isEmergencyCase = true;
-                            }
+                        this.isEmergencyCase = pageParams.emergency === 'true';
+                        this.isConcernCase = pageParams.concerncase === 'true';
 
                         //all ok parameters exist
                         //initialize the case
@@ -221,7 +238,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                 this.error = error;
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Error',
+                        title: this.label.PKB2_js_error,
                         message: this.label.ISSP_ANG_GenericError,
                         variant: 'error'
                     })
@@ -231,37 +248,48 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             });
     }
 
-    redirectSupport(){
+    redirectSupport() {
         window.history.back();
     }
 
     //create the case and initialize it. No DML operation yet.
     createCase() {
-        createCase({ countryiso: this.countryISO })
+        createCase({ countryiso: this.countryISO, isConcernCase: this.isConcernCase, topic: this.topic, subtopic: this.subtopic })
             .then(createCaseResult => {
                 this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
             });
     }
 
-    //check if the profile of the user is Agent based.
-    isAgentProfile() {
-        isAgentProfile()
-            .then(result => {
-                this.agentProfile = JSON.parse(JSON.stringify(result));
+    //gets related accounts and sets them in global var
+    getRelatedAccounts() {
+        searchAccounts({ searchTerm: null })
+            .then(relatedAccountsResult => {
+                this.relatedAccounts = JSON.parse(JSON.stringify(relatedAccountsResult));
+                this.getProfile();
             });
     }
 
-    //gets related accounts and sets them in global var
-    getRelatedAccounts() {
-        searchAccounts({searchTerm : null})
-            .then(relatedAccountsResult => {
-                this.relatedAccounts = JSON.parse(JSON.stringify(relatedAccountsResult));
+    //get the profile of the user
+    getProfile() {
+        getProfile()
+            .then(result => {
+                this.agentProfile = JSON.parse(JSON.stringify(result)).includes('ISS Portal Agency');
+                if (!JSON.parse(JSON.stringify(result)).includes('Admin')) {
+                    this.setPortalUserIATACode();
+                }
+            });
+    }
+
+    setPortalUserIATACode() {
+        getContact()
+            .then(result => {
+                this.singleresult = this.relatedAccounts.find(x => x.id === JSON.parse(JSON.stringify(result)).Account.Id);
             });
     }
 
     //gets related contacts and sets them in global var
     getRelatedContacts() {
-        searchContacts({searchTerm : null})
+        searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
             });
@@ -320,20 +348,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
 
     //class reset once you click on the input again.
-    removeRequired(){
+    removeRequired() {
         this.requiredClass = '';
-    }
-
-    //checks if the input is not fullfilled for the Agents.
-    checkForErrors() {
-        this.childComponent = this.template.querySelector('[data-id="iatalookup"]').getSelection();
-        if (this.childComponent.length === 0) {
-            this.requiredClass = ' slds-has-error';
-            this.showErrorToast();
-        } else {
-            this.errors = [];
-            this.requiredClass = '';
-        }
     }
 
     //grabs subject
@@ -384,32 +400,40 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
 
     //validate fields and finish creating the case.
-    finnishCreatingCase() {
+    finnishCreatingCase(event) {
+        
         if (this.agentProfile) {
             this.checkForErrors();
         }
-        if (this.subject.trim() === '') {
+
+        if (this.newRecipient !== undefined && this.newRecipient !== '') {
+            this.showWarningToast();
+        }
+        else if (this.subject.trim() === '') {
             let textinput = this.template.querySelector('[data-id="subject"]');
             textinput.className += ' slds-has-error';
             this.showErrorToast();
         }
-        if (this.newRecipient !== undefined && this.newRecipient !== '') {
-            this.showWarningToast();
-        } else if (this.description.trim() === '') {
+        else if (this.description.trim() === '') {
             let textarea = this.template.querySelector('lightning-textarea');
             textarea.className += ' slds-has-error';
             this.showErrorToast();
-        } else {
-
+        }
+        else {
+            this.caseInitiated.Description = '';
             //Add to the Case Record (created beforehand) and add the required fields for the insert
-            this.caseInitiated.Description = this.label.csp_Category + ' - '
+            if (this.isConcernCase) {
+                this.caseInitiated.Description += '--' + this.label.csp_Concern_Label + '--\n\n'
+            }
+
+            this.caseInitiated.Description += this.label.csp_Category + ' - '
                 + this.category + ' \n'
                 + this.label.csp_Topic + ' - '
                 + this.topic + ' \n'
                 + this.label.csp_Subtopic + ' - '
-                + this.subtopic + ' \n'
+                + this.subtopic + ' \n\n'
+                + this.label.csp_caseDescription.fieldApiName + ' - '
                 + this.description;
-
             this.caseInitiated.Subject = this.subject;
 
             const record = { 'sobjectType': 'Case' };
@@ -418,10 +442,11 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                 record.IATAcode__c = this.childComponent.title;
             }
 
-            if(this.isEmergencyCase){
+            if (this.isEmergencyCase) {
                 record.Priority = 'Emergency';
             }
 
+            record.IsComplaint__c = this.isConcernCase;
             record.RecordTypeId = this.caseInitiated.RecordTypeId;
             record.BSPCountry__c = this.caseInitiated.BSPCountry__c;
             record.Region__c = this.caseInitiated.Region__c;
@@ -434,15 +459,24 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             record.Description = this.caseInitiated.Description;
 
             this.loading = true;
-
+            let process = event.target.attributes.getNamedItem('data-id').value;
             //Yes. You can pass the record itself. Yes. It's doable. Yes, i know. It's awsome! Like Thor's Hammer! :D
             insertCase({ caseToInsert: record, recipientsToAdd: this.caseEmails })
                 .then(result => {
                     this.caseNumber = result.CaseNumber;
                     this.caseID = result.Id;
+                    
+
+                    // let process = createEvent.target.attributes.getNamedItem('data-id').value;
+                    
+                    //Open the modal upon case insert with the success message if is the Create Case button pressed.
+                    if (process === 'Show_Success') {
+                        this.openModal();
+                    }
+                    else if (process === 'Add_Attachment') {
+                        window.location.href = "/csportal/s/case-details?caseId=" + this.caseID + '&Att=true';
+                    }
                     this.loading = false;
-                    //Open the modal upon case insert with the success message.
-                    this.openModal();
 
                 })
                 .catch(error => {
@@ -450,8 +484,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
                     this.dispatchEvent(
                         new ShowToastEvent({
-                            title: 'Error creating case',
-                            message: JSON.parse(JSON.stringify(error)).body.message,
+                            title: this.label.csp_errorCreatingCase,
+                            message: JSON.parse(JSON.stringify(error)),
                             variant: 'error',
                             mode: 'pester'
                         })
@@ -460,11 +494,25 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         }
     }
 
+    //checks if the input is not fullfilled for the Agents.
+    checkForErrors() {
+        this.childComponent = this.template.querySelector('[data-id="iatalookup"]').getSelection();
+
+        if (this.childComponent.length === 0) {
+            this.requiredClass = ' slds-has-error';
+
+            throw new Error(this.showErrorToast());
+        } else {
+            this.errors = [];
+            this.requiredClass = '';
+        }
+    }
+
     //Error toaster
     showErrorToast() {
         this.dispatchEvent(
             new ShowToastEvent({
-                title: 'Error creating case',
+                title: this.label.csp_errorCreatingCase,
                 message: this.label.IDCard_FillAllFields,
                 variant: 'error'
             })

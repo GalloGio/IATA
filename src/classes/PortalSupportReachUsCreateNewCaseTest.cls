@@ -20,7 +20,6 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
         parent.Location_Type__c = 'HO';
         parent.RecordTypeId = rtIdBr; 
         parent.IATACode__c = '100';
-        
         insert parent;
         
         Account child = ISSP_ObjectFactory.createNewAccount();
@@ -69,6 +68,30 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
         con.OwnerId = newUser.Id;
         update con;
         
+        list<ISSP_FAQ2Case_Record_Type__c> listFaq2CaseRT = new list<ISSP_FAQ2Case_Record_Type__c>();
+        listFaq2CaseRT.add(new ISSP_FAQ2Case_Record_Type__c(
+            Name = '1',
+            Complaint__c = false,
+            Recordtype__c = 'Cases_Global',
+            Topic__c = 'Airline_Management__c',
+            Subtopic__c = 'MITA_Interline_Agreements__c',
+            Country_concerned_by_the_query__c = 'GB'));
+        listFaq2CaseRT.add(new ISSP_FAQ2Case_Record_Type__c(
+            Name = '3',
+            Complaint__c = true,
+            Recordtype__c = 'Cases_Global',
+            Topic__c = 'TIESS__c',
+            Subtopic__c = 'TIESS_General_Information__c,TIESS_Link_request_to_Supplier__c,TIESS_New_registration__c,TIESS_Settlement_amount__c,TIESS_User_Profile__c',
+            Country_concerned_by_the_query__c = 'GB'));
+        listFaq2CaseRT.add( new ISSP_FAQ2Case_Record_Type__c(
+            Name = '2',
+            Complaint__c = true,
+            Recordtype__c = 'Cases_Global',
+            Topic__c = 'ICCS__c',
+            Subtopic__c = '',
+            Country_concerned_by_the_query__c = 'GB'));
+        insert listFaq2CaseRT;
+        
         test.startTest();
         
         System.runAs(newUser) {
@@ -79,9 +102,9 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
             
             Boolean agent = PortalSupportReachUsCreateNewCaseCtrl.isAgentProfile();
             
-            Case newcase = PortalSupportReachUsCreateNewCaseCtrl.createCase('gb');
+            Case newcase = PortalSupportReachUsCreateNewCaseCtrl.createCase('GB', true, 'Airline_Management__c', 'MITA_Interline_Agreements__c');
             
-            Case newcaseNoEntry = PortalSupportReachUsCreateNewCaseCtrl.createCase('');
+            Case newcaseNoEntry = PortalSupportReachUsCreateNewCaseCtrl.createCase('GB', false, 'TIESS__c', 'TIESS_Link_request_to_Supplier__c');
             
             Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
             newcase.RecordTypeId = recordTypeId;
