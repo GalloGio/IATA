@@ -73,3 +73,10 @@
     position: relative;
     margin-top: 30px;
 }
+
+.opacityHigh{
+    opacity: .77;
+}
+.opacityMedium{
+    opacity: .95;
+}
