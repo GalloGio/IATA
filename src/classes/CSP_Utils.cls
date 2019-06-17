@@ -150,6 +150,55 @@ public without sharing class CSP_Utils {
         return [SELECT ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE Id = :contentToInsert.Id LIMIT 1][0];
     } 
 
+    //* Retrieves available lanaguages for the community*/
+    @AuraEnabled
+    public static List<PickListWrapper> getCommunityAvailableLanguages(string sobj,string field){
+        List<PickListWrapper> options = new List<PickListWrapper>();
+
+        Map<String,String> langMap = new Map<String,String>();
+
+        for(Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
+            langMap.put(l.Language__c,l.languageLocalKey__c);
+
+        List<String> auxList = new List<String>(langMap.keySet());
+        auxList.sort();
+
+        for(String key :auxList)
+            options.add(new PickListWrapper(langMap.get(key), key));
+
+        return options;
+    }
+
+
+    // sets new language
+    @AuraEnabled
+    public static void changeUserLanguage(string lang){
+        List<Preferred_Language_on_ISS_Portal__c> pLangcs = Preferred_Language_on_ISS_Portal__c.getall().values();
+
+        User user = [select Id,ContactId from User where Id=:Userinfo.getUserId()];
+        user.LanguageLocaleKey = lang;
+        update user;
+
+        List<Contact> contacts = [select Id,Preferred_Language__c  from Contact where Id=:user.ContactId];
+        if (!contacts.isEmpty()){
+            
+            Contact con = contacts[0];
+
+            if(pLangcs!= null || !pLangcs.isEmpty()){
+                for(Preferred_Language_on_ISS_Portal__c language : pLangcs){
+                    if(language.languageLocalKey__c == lang){
+                        con.Preferred_Language__c = language.Language__c;
+                    }
+                }
+                update con;
+            }
+        }
+
+       
+       /* Pagereference pr = new Pagereference(retURL);
+        pr.setCookies(new Cookie[]{new Cookie('lang',lang,null,100000000,false)});*/
+   }
+
     /*============================== Sidekick classes ==============*/
 
     // class side class used to wrap picklist values/
