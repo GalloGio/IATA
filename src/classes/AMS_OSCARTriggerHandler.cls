@@ -4252,10 +4252,10 @@ public class AMS_OSCARTriggerHandler {
         ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Account account = [SELECT ParentId FROM Account WHERE Id =: oscar.Account__c ];
-        List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: account.ParentId AND Status__c = 'Active' AND RecordTypeId =: FormOfPaymentRT];
+        List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: account.ParentId AND Status__c IN ('Active','Authorized') AND RecordTypeId =: FormOfPaymentRT];
         
         boolean isCCCreated = false;
-        
+
         for(Agency_Authorization__c fop: parentFormsOfPayment){
             
             if(fop.ANG_FormOfPayment_ID__c == 'CC')
