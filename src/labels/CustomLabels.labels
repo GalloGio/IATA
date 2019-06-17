@@ -3290,7 +3290,15 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_ThanksFeedback</shortDescription>
         <value>Thanks for your feedback!</value>
-    </labels>    
+    </labels>
+    <labels>
+        <fullName>CSP_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Title</shortDescription>
+        <value>Title</value>
+    </labels>        
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
         <categories>CS Portal</categories>
