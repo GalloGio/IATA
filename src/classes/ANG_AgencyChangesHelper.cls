@@ -1219,36 +1219,27 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	public static List<Agency_Authorization__c> performCashTransformation(Set<Id> accountsAffected){
-
-		Set<Id> accountsToProcess = accountsAffected.clone();
-
+		
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-		Set<Id> accountsUpdated = new Set<Id>();
+		List<Account> accs = [SELECT ID,Country_ISO_Code__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
+															  WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
+							FROM ACCOUNT WHERE ID IN :accountsAffected];
 
-		For(Agency_Authorization__c aa: [Select Id ,Account__c, Status__c from Agency_Authorization__c where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment']){
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
-			aa.Status__c = 'Active';
-			toUpsert.add(aa);
-			accountsUpdated.add(aa.Account__c);
-
+		for(Account a: accs){
+			if(a.Agency_Authorizations__r.isEmpty())
+				toUpsert.add(new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CA', 
+					Status__c = AMS_Utils.setChinaCountries.contains(a.Country_ISO_Code__c) ? 'Authorized' : 'Active', RecordTypeId = FormOfPaymentRT));
+			else{
+				for(Agency_Authorization__c aa : a.Agency_Authorizations__r){
+					aa.Status__c = AMS_Utils.setChinaCountries.contains(a.Country_ISO_Code__c) ? 'Authorized' : 'Active';
+					toUpsert.add(aa);
+				}
+			}
 		}
-
-		accountsToProcess.removeAll(accountsUpdated);
-
-		Id formOfPaymentRT = null;
-
-		if(!accountsToProcess.isEmpty())
-			formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-
-		For(Id accountId: accountsToProcess){
-
-			toUpsert.add(new Agency_Authorization__c(Account__c = accountId, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-
-		}
-
 		return toUpsert;
-
 	}
 
 	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar) {
