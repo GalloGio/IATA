@@ -35,6 +35,7 @@ import csp_Topic from '@salesforce/label/c.ISSP_F2CTopic';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 import CSP_Support from '@salesforce/label/c.CSP_Support';
 import CSP_CaseNumber from '@salesforce/label/c.CSP_CaseNumber';
+import csp_Concern_Label from '@salesforce/label/c.csp_Concern_Label';
 import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 
@@ -74,6 +75,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_Subtopic,
         csp_caseNumber,
         csp_caseSubject,
+        csp_Concern_Label,
         csp_caseDescription,
         ISSP_ANG_GenericError,
         IDCard_FillAllFields
@@ -197,7 +199,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                         && myTopicOptions.some(obj => obj.value === pageParams.topic)
                         && mySubTopicOptions.some(obj => obj.value === pageParams.subtopic)) {
 
-                        this.isEmergencyCase = pageParams.emergency === true;
+                        this.isEmergencyCase = pageParams.emergency === 'true';
+                        this.isConcernCase = pageParams.concerncase === 'true';
 
                         //all ok parameters exist
                         //initialize the case
@@ -237,7 +240,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //create the case and initialize it. No DML operation yet.
     createCase() {
-        createCase({ countryiso: this.countryISO })
+        createCase({ countryiso: this.countryISO, isConcernCase: this.isConcernCase, topic: this.topic, subtopic: this.subtopic })
             .then(createCaseResult => {
                 this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
             });
@@ -324,17 +327,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         this.requiredClass = '';
     }
 
-    //checks if the input is not fullfilled for the Agents.
-    checkForErrors() {
-        this.childComponent = this.template.querySelector('[data-id="iatalookup"]').getSelection();
-        if (this.childComponent.length === 0) {
-            this.requiredClass = ' slds-has-error';
-            this.showErrorToast();
-        } else {
-            this.errors = [];
-            this.requiredClass = '';
-        }
-    }
+    
 
     //grabs subject
     handleSubject(event) {
@@ -385,29 +378,38 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //validate fields and finish creating the case.
     finnishCreatingCase() {
+
         if (this.agentProfile) {
             this.checkForErrors();
         }
-        if (this.subject.trim() === '') {
+
+        if (this.newRecipient !== undefined && this.newRecipient !== '') {
+            this.showWarningToast();
+        }
+        else if (this.subject.trim() === '') {
             let textinput = this.template.querySelector('[data-id="subject"]');
             textinput.className += ' slds-has-error';
             this.showErrorToast();
         }
-        if (this.newRecipient !== undefined && this.newRecipient !== '') {
-            this.showWarningToast();
-        } else if (this.description.trim() === '') {
+        else if (this.description.trim() === '') {
             let textarea = this.template.querySelector('lightning-textarea');
             textarea.className += ' slds-has-error';
             this.showErrorToast();
-        } else {
-
+        }
+        else {
+            this.caseInitiated.Description = '';
             //Add to the Case Record (created beforehand) and add the required fields for the insert
-            this.caseInitiated.Description = this.label.csp_Category + ' - '
+            if (this.isConcernCase) {
+                this.caseInitiated.Description += '--' + this.label.csp_Concern_Label + '--\n\n'
+            }
+
+            this.caseInitiated.Description += this.label.csp_Category + ' - '
                 + this.category + ' \n'
                 + this.label.csp_Topic + ' - '
                 + this.topic + ' \n'
                 + this.label.csp_Subtopic + ' - '
-                + this.subtopic + ' \n'
+                + this.subtopic + ' \n\n'
+                + this.label.csp_caseDescription + ' - ' +
                 + this.description;
 
             this.caseInitiated.Subject = this.subject;
@@ -422,6 +424,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                 record.Priority = 'Emergency';
             }
 
+            record.IsComplaint__c = this.isConcernCase;
             record.RecordTypeId = this.caseInitiated.RecordTypeId;
             record.BSPCountry__c = this.caseInitiated.BSPCountry__c;
             record.Region__c = this.caseInitiated.Region__c;
@@ -457,6 +460,19 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                         })
                     );
                 });
+        }
+    }
+
+    //checks if the input is not fullfilled for the Agents.
+    checkForErrors() {
+        this.childComponent = this.template.querySelector('[data-id="iatalookup"]').getSelection();
+        if (this.childComponent.length === 0) {
+            this.requiredClass = ' slds-has-error';
+            
+            throw new Error(this.showErrorToast());
+        } else {
+            this.errors = [];
+            this.requiredClass = '';
         }
     }
 

@@ -10,7 +10,9 @@ import createCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.c
 
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 
-import { getParamsFromPage } from 'c/navigationUtils';
+//import navigation methods
+import { NavigationMixin } from 'lightning/navigation';
+import { navigateToPage, getParamsFromPage } from 'c/navigationUtils';
 
 
 // Import custom labels
@@ -24,6 +26,7 @@ import csp_SupportReachUs_SupportCategoriesInfo from '@salesforce/label/c.csp_Su
 import csp_SupportReachUs_ActionIndicator from '@salesforce/label/c.csp_ActionIndicator';
 import csp_SupportReachUs_Topic_Label from '@salesforce/label/c.ISSP_F2CTopic';
 import csp_SupportReachUs_ActionForCategoryPicklist from '@salesforce/label/c.csp_ActionForCategoryPicklist';
+import csp_SupportReachUs_ActionForTopicPicklist from '@salesforce/label/c.csp_ActionForTopicPicklist';
 import csp_SupportReachUs_Sub_Topic_Label from '@salesforce/label/c.csp_Sub_Topic_Label';
 import csp_SupportReachUs_toSelectSubTopicPicklist from '@salesforce/label/c.csp_toSelectSubTopic';
 import csp_SupportReachUs_Country_Label from '@salesforce/label/c.Country';
@@ -75,11 +78,13 @@ export default class PortalSupportReachUs extends LightningElement {
     @track emergencyButton = false;
     @track isEmergency = false;
     @track isQuestion = true;
-    @track isConcern = false;
     @track isCompliment = false;
-    @track question;
-    @track concern;
-    @track compliment;
+    @track question_selected;
+    @track question_unselected;
+    @track concern_selected;
+    @track concern_unselected;
+    @track compliment_selected;
+    @track compliment_unselected;
     @track showModal = false;
     //@track suggestion;
 
@@ -107,6 +112,7 @@ export default class PortalSupportReachUs extends LightningElement {
         csp_SupportReachUs_ActionIndicator,
         csp_SupportReachUs_Topic_Label,
         csp_SupportReachUs_ActionForCategoryPicklist,
+        csp_SupportReachUs_ActionForTopicPicklist,
         csp_SupportReachUs_Sub_Topic_Label,
         csp_SupportReachUs_toSelectSubTopicPicklist,
         csp_SupportReachUs_Country_Label,
@@ -152,9 +158,12 @@ export default class PortalSupportReachUs extends LightningElement {
 
         this.getContact();
 
-        this.question = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
-        this.concern = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
-        this.compliment = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
+        this.question_selected = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
+        this.question_unselected = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
+        this.concern_selected = this.iconsBaseLink + 'concern_selected' + this.iconsExtension;
+        this.concern_unselected = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
+        this.compliment_selected = this.iconsBaseLink + 'compliment_selected' + this.iconsExtension;
+        this.compliment_unselected = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
         //this.suggestion = this.iconsBaseLink + 'suggestion_unselected' + this.iconsExtension;
     }
 
@@ -457,9 +466,7 @@ export default class PortalSupportReachUs extends LightningElement {
         this.closeOptionsPanel();
     }
 
-
-
-
+    //handles emergency attribution
     handleEmergency() {
         this.isEmergency = !this.isEmergency;
         this.closeOptionsPanel();
@@ -528,8 +535,10 @@ export default class PortalSupportReachUs extends LightningElement {
         let provideAllDataToWrapper = new Promise((resolve, reject) => {
             allData.myliveAgentButtonInfo = myliveAgentButtonInfo;
             allData.recordTypeAndCountry = recordTypeAndCountry;
+            allData.CountryISO = this.countryValue;
             allData.categorization = categorization;
             allData.Emergency = this.isEmergency;
+            allData.Question = this.isQuestion;
             allData.contact = contact;
 
             // Fire the custom event
@@ -601,38 +610,45 @@ export default class PortalSupportReachUs extends LightningElement {
             elem[i].classList.add('default_panel');
         }
 
+        if (event.target.attributes.getNamedItem('data-id').value === '001') {
+            this.isQuestion = true;
+            this.isConcern = false;
+            this.isCompliment = false;
+            this.closeOptionsPanel();
+            this.resetData();
+        }
+        else if (event.target.attributes.getNamedItem('data-id').value === '002') {
+            this.isQuestion = false;
+            this.isConcern = true;
+            this.isCompliment = false;
+            this.closeOptionsPanel();
+            this.resetData();
+        }
+        else if (event.target.attributes.getNamedItem('data-id').value === '003') {
+            this.isQuestion = false;
+            this.isConcern = false;
+            this.isCompliment = true;
+            this.closeOptionsPanel();
+            this.resetData();
+        }
+
         //grabs the clicked panel and paints with blue color. Identified by it's data-id.
         let mod = this.template.querySelector('[data-id="' + event.target.attributes.getNamedItem('data-id').value + '" ]');
         mod.classList.remove('default_panel');
         mod.classList.add('active_panel');
+    }
 
-
-        if (event.target.attributes.getNamedItem('data-id').value === '001') {
-            this.question = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
-            this.concern = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
-            this.compliment = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
-            this.isQuestion = true;
-            this.isConcern = false;
-            this.isCompliment = false;
-        }
-        else if (event.target.attributes.getNamedItem('data-id').value === '002') {
-            this.concern = this.iconsBaseLink + 'concern_selected' + this.iconsExtension;
-            this.question = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
-            this.compliment = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
-            this.isQuestion = false;
-            this.isConcern = true;
-            this.isCompliment = false;
-
-        }
-        else if (event.target.attributes.getNamedItem('data-id').value === '003') {
-            this.compliment = this.iconsBaseLink + 'compliment_selected' + this.iconsExtension;
-            this.question = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
-            this.concern = this.iconsBaseLink + 'concern_unselected' + this.iconsExtension;
-            this.isQuestion = false;
-            this.isConcern = false;
-            this.isCompliment = true;
-        }
-
+    //on changing tabs resets all the data to default values
+    resetData() {
+        this.category = ''
+        this.topic = ''
+        this.subTopic = ''
+        this.countryValue = ''
+        this.topicCB = false;
+        this.subTopicCB = false;
+        this.subTopicCB = false;
+        this.countryCB = false;
+        this.optionsButton = false;
     }
 
     /*################# COMPLIMENT JS ########################*/
@@ -652,6 +668,7 @@ export default class PortalSupportReachUs extends LightningElement {
         this.description = event.target.value;
     }
 
+    //submits the compliment
     submitCompliment() {
         this.toggleSpinner();
 
@@ -696,16 +713,31 @@ export default class PortalSupportReachUs extends LightningElement {
                 })
             );
         }
-
-
     }
 
+
+    //navigates to homepage
     navigateToHomepage() {
-        window.location.href = "/csportal/s/";
+        let params;
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: ""
+            }
+        })
+            .then(url => navigateToPage(url, params));
     }
 
+    //navigates to support reach us
     navigateToSupport() {
-        window.location.href = "/csportal/s/support-reach-us";
+        let params;
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "support-reach-us"
+            }
+        })
+            .then(url => navigateToPage(url, params));
     }
 
 }

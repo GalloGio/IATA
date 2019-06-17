@@ -14,7 +14,9 @@
                             <!-- <lightning-icon icon-name="utility:help" size="small" variant="inverse"
                                 class="tileNewServiceIcon slds-current-color">
                             </lightning-icon> -->
-                            <img class="questionIcon" src={question} />
+                            
+                            <img class="questionIcon" src={question_selected} if:true={isQuestion} />
+                            <img class="questionIcon" src={question_unselected} if:false={isQuestion}/>
                         </div>
                         <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
                             {label.csp_SupportReachUs_Ask_Label}
@@ -27,7 +29,8 @@
                             <!-- <lightning-icon icon-name="utility:password" size="small"
                                 class="tileNewServiceIcon slds-current-color">
                             </lightning-icon> -->
-                            <img class="questionIcon" src={concern} />
+                            <img class="questionIcon" src={concern_selected} if:true={isConcern} />
+                            <img class="questionIcon" src={concern_unselected} if:false={isConcern}/>
                         </div>
                         <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
                             {label.csp_SupportReachUs_Concern_Label}
@@ -40,7 +43,8 @@
                             <!-- <lightning-icon icon-name="utility:task" size="small"
                                 class="tileNewServiceIcon slds-current-color">
                             </lightning-icon> -->
-                            <img class="questionIcon" src={compliment} />
+                            <img class="questionIcon" src={compliment_selected} if:true={isCompliment}/>
+                            <img class="questionIcon" src={compliment_unselected} if:false={isCompliment}/>
                         </div>
                         <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
                             {label.csp_SupportReachUs_Compliment_Label}
@@ -62,13 +66,13 @@
                 </div>
             </div>
         </template>
-        <template if:true={isQuestion}>
+        <template if:false={isCompliment}>
             <div class="customWhiteBackground">
                 <div class="slds-text-align_center slds-p-top_xx-large">
                     <h1 class="text-medium text-bold">{label.csp_SupportReachUs_SupportCategoriesInfo}</h1>
                     <h2 class="text-xsmall slds-p-top_medium">{label.csp_SupportReachUs_ActionIndicator}</h2>
                 </div>
-                <div class="slds-align_absolute-center">
+                <div class="slds-align_absolute-center slds-p-bottom_xx-large">
                     <div class="basicInfoBox">
                         <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Category}</p>
@@ -83,7 +87,7 @@
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Topic_Label}</p>
                             <lightning-combobox name="progress"
                                 class="cursorPointerComboBox text-xxsmall customPickList"
-                                label={label.csp_SupportReachUs_ActionForCategoryPicklist} value={topic}
+                                label={label.csp_SupportReachUs_ActionForTopicPicklist} value={topic}
                                 options={topicOptions} dropdown-alignment="auto" onchange={topicHandler}
                                 placeholder="Select Topic" size=5>
                             </lightning-combobox>
@@ -112,7 +116,7 @@
                                 onchange={handleEmergency} />
                             <label class="slds-checkbox__label" for="checkbox">
                                 <span class="slds-checkbox_faux cursorPointer slds-m-right_xx-small"></span>
-                                <span class="text-xsmall slds-p-horizontal_x-small">
+                                <span class="text-xxsmall slds-p-horizontal_x-small">
                                     {label.csp_SupportReachUs_IsEmergency}
                                 </span>
                             </label>
@@ -191,15 +195,15 @@
                 <div class="slds-align_absolute-center">
                     <div class="basicInfoBox">
                         <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
-                            <p class="text-xsmall">{label.csp_SupportReachUs_Country_Label}</p>
+                            <p class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</p>
                             <lightning-combobox name="progress" required
-                                class="hideInputLabel cursorPointerComboBox text-xsmall customPickList"
+                                class="hideInputLabel cursorPointerComboBox text-xxsmall customPickList"
                                 value={compliment_countryValue} placeholder="Select Country" dropdown-alignment="auto"
                                 options={countryOptions} onchange={compliment_countryHandler}>
                             </lightning-combobox>
                         </div>
                         <div class="slds-p-horizontal_xx-large slds-p-bottom_large ">
-                            <p class="text-xsmall">{label.csp_caseSubject.fieldApiName}</p>
+                            <p class="text-xxsmall">{label.csp_caseSubject.fieldApiName}</p>
                             <p class="text-xxsmall slds-p-bottom_small">
                                 {label.csp_CreateNewCaseMainInputSubLabel}</p>
                             <lightning-input data-id="subject"
@@ -208,7 +212,7 @@
                             </lightning-input>
                         </div>
                         <div class="slds-p-horizontal_xx-large slds-p-bottom_large">
-                            <p class="text-xsmall">{label.csp_caseDescription.fieldApiName}</p>
+                            <p class="text-xxsmall">{label.csp_caseDescription.fieldApiName}</p>
                             <p class="text-xxsmall slds-m-bottom_small">
                                 {label.csp_CreateNewCaseMainInputBoxSubLabel}</p>
                             <lightning-textarea class="hideInputLabel text-xxsmall heightTextArea customTextArea"

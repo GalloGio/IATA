@@ -11,13 +11,20 @@
     <aura:attribute name="onlineText" type="String" required="true" default="" />
     <aura:attribute name="offlineText" type="String" required="true" default="No Chat" />
     <aura:attribute name="liveAgentOnlineDefaultIdLanguage" type="String" />
+    <aura:attribute name="liveAgentOnlineDefaultName" type="String" />
     <aura:attribute name="liveAgentOnlineWithCountryLanguage" type="String" />
+    <aura:attribute name="liveAgentOnlineWithCountryName" type="String" />
     <aura:attribute name="liveAgentOnlineNoCountryLanguage" type="String" />
+    <aura:attribute name="liveAgentOnlineNoCountryName" type="String" />
+    <aura:attribute name="callCenterInfo_Label" type="String" />
+    <aura:attribute name="phoneNumber_Label" type="String" />
     <aura:attribute name="isTopicLiveAgent" type="Boolean" default="false" />
     <aura:attribute name="isNoCountryLiveAgent" type="Boolean" default="false" />
     <aura:attribute name="isWithCountryLiveAgent" type="Boolean" default="false" />
+    <aura:attribute name="isEmergency" type="Boolean" default="false" />
     <aura:attribute name="showOptions" type="Boolean" default="false" />
     <aura:attribute name="userSessionData" type="Boolean" default="true" />
+    <aura:attribute name="isQuestion" type="Boolean" default="true" />
 
     <aura:attribute name="contact" type="Contact" />
     <aura:attribute name="category" type="String" />
@@ -25,9 +32,10 @@
     <aura:attribute name="subTopic" type="String" />
     <aura:attribute name="caseRecordType" type="String" />
     <aura:attribute name="country" type="String" />
+    <aura:attribute name="countryISO" type="String" />
 
     <aura:attribute name="loaded" type="Boolean" default="true" />
-    
+
     <ltng:require scripts="{!$Resource.jquery2_1_4}" afterScriptsLoaded="{!c.doInit}" />
 
     <aura:if isTrue="{!v.loaded}">
@@ -36,8 +44,9 @@
     <div class="slds-grid slds-grid_align-center">
         <div class="slds-col slds-size_2-of-3 slds-large-size_2-of-3 slds-medium-size_1-of-1 slds-small-size_1-of-1">
             <div class="customCard">
-                <c:portalSupportReachUs ontoggleSpinner="{!c.toggleSpinner}" onalldatachange="{!c.handleLiveAgentChangeEvent}"
-                    onshowoptions="{!c.showOptions}" oncloseoptions="{!c.closeOptions}" />
+                <c:portalSupportReachUs ontoggleSpinner="{!c.toggleSpinner}"
+                    onalldatachange="{!c.handleLiveAgentChangeEvent}" onshowoptions="{!c.showOptions}"
+                    oncloseoptions="{!c.closeOptions}" />
                 <aura:if isTrue="{!v.showOptions}">
                     <ltng:require scripts="{!$Resource.deployment}" />
                     <div class="slds-text-align_center slds-p-vertical_xx-large">
@@ -66,88 +75,117 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="slds-grid grid-margin-bottom-justified slds-wrap slds-p-bottom_xx-large slds-align_absolute-center ">
-                        <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
-                                            slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                            slds-m-horizontal_small customCard cardSizing">
-                            <div class="slds-text-title_bold noPointerEvents slds-p-around_small ">
+                    <div class="slds-grid grid-margin-bottom-justified slds-wrap 
+                        slds-p-bottom_xx-large slds-align_absolute-center ">
+                        <div class="slds-col tile-column slds-size_1-of-2 
+                        slds-small-size_1-of-3 
+                        slds-medium-size_1-of-3 
+                        slds-large-size_1-of-8 
+                        slds-m-horizontal_small 
+                        customCard cardSizing">
+                            <div class="text-small noPointerEvents slds-p-around_small ">
                                 {!$Label.c.csp_Case_Panel_label}
                             </div>
                             <div class="noPointerEvents slds-p-around_small">
                                 {!$Label.c.csp_Case_Panel_sub_label}
                             </div>
                             <lightning:button label="{!$Label.c.csp_CreateNewCaseTopLabel}"
-                                class="containedButton cursorPointer slds-medium-size_1-of-3" onclick="{!c.redirectCreateCase}">
+                                class="containedButton cursorPointer slds-medium-size_1-of-3"
+                                onclick="{!c.redirectCreateCase}">
                             </lightning:button>
                         </div>
-                        <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
+                        <aura:if isTrue="{!v.isQuestion}">
+                            <div class="slds-col tile-column 
+                                slds-size_1-of-2 
+                                slds-small-size_1-of-3 
                                 slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                 slds-m-horizontal_small customCard cardSizing">
-                            <div class="slds-text-title_bold noPointerEvents slds-p-around_small ">
-                                {!$Label.c.csp_Chat_Panel_label}
-                            </div>
-                            <div class="noPointerEvents slds-p-around_small">
-                                {!$Label.c.csp_Chat_Panel_sub_label}
-                            </div>
-                            <div class="slds-grid">
-                                <aura:if isTrue="{!v.isNoCountryLiveAgent}">
-                                    <div id="btnContainer1"
-                                        class="slds-col slds-size_1-of-3 selfServiceContactSupport forceCommunityCreateRecordButton">
-                                        <div class="sButton">
-                                            <button aura:id="liveAgentOnlineNoCountryId" id="liveAgentOnlineNoCountryId"
-                                                class="containedButtonLiveAgent uiButton contactSupport "
-                                                style="display:none;" onclick="{!c.startChatNoLanguage}">
-                                                {!v.liveAgentOnlineNoCountryLanguage}
-                                            </button>
-                                            <button aura:id="liveAgentOfflineNoCountryId"
-                                                id="liveAgentOfflineNoCountryId"
-                                                class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
-                                                style="display:none;">
-                                                {!v.liveAgentOnlineNoCountryLanguage}
-                                            </button>
+                                <div class="text-small noPointerEvents slds-p-around_small ">
+                                    {!$Label.c.csp_Chat_Panel_label}
+                                </div>
+                                <div class="noPointerEvents slds-p-around_small">
+                                    {!$Label.c.csp_Chat_Panel_sub_label}
+                                </div>
+                                <div class="slds-grid">
+                                    <aura:if isTrue="{!v.isNoCountryLiveAgent}">
+                                        <div id="btnContainer1"
+                                            class="slds-col slds-size_1-of-3 selfServiceContactSupport forceCommunityCreateRecordButton">
+                                            <div class="sButton">
+                                                <button aura:id="liveAgentOnlineNoCountryId"
+                                                    id="liveAgentOnlineNoCountryId"
+                                                    class="containedButtonLiveAgent uiButton contactSupport "
+                                                    style="display:none;" onclick="{!c.startChatNoLanguage}"
+                                                    title="{!'Agent Online (' + v.liveAgentOnlineNoCountryName + ')'}">
+                                                    {!v.liveAgentOnlineNoCountryLanguage}
+                                                </button>
+                                                <button aura:id="liveAgentOfflineNoCountryId"
+                                                    id="liveAgentOfflineNoCountryId"
+                                                    class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
+                                                    style="display:none;"
+                                                    title="{!'Agent Offline (' + v.liveAgentOnlineNoCountryName + ')'}">
+                                                    {!v.liveAgentOnlineNoCountryLanguage}
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </aura:if>
-                                <aura:if isTrue="{!v.isWithCountryLiveAgent}">
-                                    <div id="btnContainer2"
-                                        class="slds-col slds-size_1-of-3 selfServiceContactSupport forceCommunityCreateRecordButton">
-                                        <div class="sButton">
-                                            <button aura:id="liveAgentOnlineWithCountryId"
-                                                id="liveAgentOnlineWithCountryId"
-                                                class="containedButtonLiveAgent uiButton contactSupport "
-                                                onclick="{!c.startChatWithLanguage}" style="display:none;">
-                                                {!v.liveAgentOnlineWithCountryLanguage}
-                                            </button>
-                                            <button aura:id="liveAgentOfflineWithCountryId"
-                                                id="liveAgentOfflineWithCountryId"
-                                                class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
-                                                style="display:none;">
-                                                {!v.liveAgentOnlineWithCountryLanguage}
-                                            </button>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.isWithCountryLiveAgent}">
+                                        <div id="btnContainer2"
+                                            class="slds-col slds-size_1-of-3 selfServiceContactSupport forceCommunityCreateRecordButton">
+                                            <div class="sButton">
+                                                <button aura:id="liveAgentOnlineWithCountryId"
+                                                    id="liveAgentOnlineWithCountryId"
+                                                    class="containedButtonLiveAgent uiButton contactSupport "
+                                                    onclick="{!c.startChatWithLanguage}" style="display:none;"
+                                                    title="{!'Agent Online (' + v.liveAgentOnlineWithCountryName + ')'}">
+                                                    {!v.liveAgentOnlineWithCountryLanguage}
+                                                </button>
+                                                <button aura:id="liveAgentOfflineWithCountryId"
+                                                    id="liveAgentOfflineWithCountryId"
+                                                    class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
+                                                    style="display:none;"
+                                                    title="{!'Agent Offline (' + v.liveAgentOnlineWithCountryName + ')'}">
+                                                    {!v.liveAgentOnlineWithCountryLanguage}
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </aura:if>
-                                <aura:if isTrue="{!v.isTopicLiveAgent}">
-                                    <div id="btnContainer"
-                                        class="slds-col slds-size_1-of-3 selfServiceContactSupport forceCommunityCreateRecordButton">
-                                        <div class="sButton">
-                                            <button id="liveAgentOnlineDefaultId" aura:id="liveAgentOnlineDefaultId"
-                                                style="display:none;"
-                                                class="containedButtonLiveAgent uiButton contactSupport"
-                                                onclick="{!c.startChatDefault}">
-                                                {!v.liveAgentOnlineDefaultIdLanguage}
-                                            </button>
-                                            <button id="liveAgentOfflineDefaultId" aura:id="liveAgentOfflineDefaultId"
-                                                class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
-                                                style="display:none;">
-                                                {!v.liveAgentOnlineDefaultIdLanguage}
-                                            </button>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.isTopicLiveAgent}">
+                                        <div id="btnContainer"
+                                            class="slds-col slds-size_1-of-3 selfServiceContactSupport forceCommunityCreateRecordButton">
+                                            <div class="sButton">
+                                                <button id="liveAgentOnlineDefaultId" aura:id="liveAgentOnlineDefaultId"
+                                                    style="display:none;"
+                                                    class="containedButtonLiveAgent uiButton contactSupport"
+                                                    onclick="{!c.startChatDefault}"
+                                                    title="{!'Agent Online (' + v.liveAgentOnlineDefaultName + ')'}">
+                                                    {!v.liveAgentOnlineDefaultIdLanguage}
+                                                </button>
+                                                <button id="liveAgentOfflineDefaultId"
+                                                    aura:id="liveAgentOfflineDefaultId"
+                                                    class="containedButtonOfflineLiveAgent uiButton contactSupport disabled"
+                                                    style="display:none;"
+                                                    title="{!'Agent Offline (' + v.liveAgentOnlineDefaultName + ')'}">
+                                                    {!v.liveAgentOnlineDefaultIdLanguage}
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </aura:if>
+                                    </aura:if>
+                                </div>
                             </div>
-                        </div>
+                            <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
+                                                    slds-medium-size_1-of-3 slds-large-size_1-of-8 
+                                                    slds-m-horizontal_small customCard cardSizing">
+                                <div class="text-small noPointerEvents slds-p-around_small ">
+                                    {!$Label.c.csp_Call_Panel_label}
+                                </div>
+                                <div class="noPointerEvents slds-p-around_small">
+                                    {!v.callCenterInfo_Label}
+                                </div>
+                                <div class="text-small noPointerEvents slds-p-around_small ">
+                                    {!v.phoneNumber_Label}
+                                </div>
+                            </div>
+                        </aura:if>
                     </div>
                 </aura:if>
             </div>
