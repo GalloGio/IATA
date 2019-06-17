@@ -116,6 +116,40 @@ public without sharing class CSP_Utils {
         return str.substring(index, index+1);
     }
 
+
+   /* 
+    * @description Return a public URL from a shared file
+    * @description The public URL (DistributionPublicUrl) is not ready in the moment it is inserted, so it's been retrieved using a SOQL instead
+    * @params String documentName, Id documentId
+    * @return String
+    */
+    @AuraEnabled
+    public static ContentDistribution getContentDistribution(String documentName, Id documentId) {
+        Datetime dt = Datetime.now();
+        List<ContentDistribution> contentInfo = [SELECT ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE ContentVersionId = :documentId AND ExpiryDate >= :dt LIMIT 1];
+        ContentDistribution contentToInsert;
+
+        if(!contentInfo.isEmpty()) {
+            return contentInfo[0];
+        } else {
+            contentToInsert = new ContentDistribution();
+            contentToInsert.Name = documentName;
+            contentToInsert.ContentVersionId = documentId;
+            contentToInsert.PreferencesExpires = true;
+            contentToInsert.ExpiryDate = Datetime.now().addMinutes(10);
+            contentToInsert.PreferencesAllowViewInBrowser = true;
+            contentToInsert.PreferencesLinkLatestVersion = true;
+            contentToInsert.PreferencesAllowPDFDownload = false;
+            contentToInsert.PreferencesNotifyOnVisit = false;
+            contentToInsert.PreferencesPasswordRequired = false;
+            contentToInsert.PreferencesAllowOriginalDownload = true;
+
+            insert contentToInsert; 
+        }
+
+        return [SELECT ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE Id = :contentToInsert.Id LIMIT 1][0];
+    } 
+
     /*============================== Sidekick classes ==============*/
 
     // class side class used to wrap picklist values/

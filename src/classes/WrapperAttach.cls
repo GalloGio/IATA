@@ -144,7 +144,7 @@ global class WrapperAttach implements Comparable {
         this.createdBy = cv.createdById;
         this.fileIdentifier = '';
         this.createdByName = cv.createdBy.Name;
-        this.viewURL =cv.ContentDocumentId;
+        this.viewURL ='';
         this.isPublic=true;
 
     }
@@ -550,12 +550,10 @@ global class WrapperAttach implements Comparable {
 
     public static list<WrapperAttach> getContentInfo(set<id> contentIdSet) {
         list<WrapperAttach> attachList = new list<WrapperAttach>();
-        for(ContentDistribution cd:[select Id,name,ContentVersion.FileExtension,ContentVersion.ContentDocumentId,
-                DistributionPublicUrl ,ContentVersion.FileType,ContentVersion.Description,ContentVersion.ContentSize,
-                ContentVersion.CreatedById,ContentVersion.CreatedBy.name,ContentVersion.CreatedDate,
-                ContentVersion.LastModifiedById,ContentVersion.LastModifiedDate
-                from ContentDistribution where ContentVersionId in :contentIdSet]){
-            attachList.add(new WrapperAttach(cd));
+        for(ContentVersion cv:[select Id,ContentDocumentId,title,FileExtension,Description,FileType,ContentSize,
+        LastModifiedDate,createdDate,createdById,createdBy.Name
+                from ContentVersion where id in :contentIdSet]){
+            attachList.add(new WrapperAttach(cv));
         }
         return attachList;
     }

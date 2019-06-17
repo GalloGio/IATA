@@ -29,6 +29,16 @@ public with sharing class AttachmentListCtrl {
         set;
     }   
 
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> getFileIdentifierPickValues(){
+        return AttachmentListCtrl.FileIdentifierPickValues;
+    }
+    
+    
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> getReviewStatusPickValues(){
+        return AttachmentListCtrl.ReviewStatusPickValues;
+    } 
 
     @AuraEnabled
     public static PropertiesWrapper getPanelProperties(String parentId, Boolean isPortal, String communityName) {
@@ -191,17 +201,14 @@ public with sharing class AttachmentListCtrl {
     
     @AuraEnabled
     public static List<WrapperAttach> getContentDetails(list<id> attachList){
-    //generates link to be externally acessible
+    //gets details on uploaded files
         set<id> attachSet= new set<id>(attachList);
         
         list<ContentDistribution> linkList= new list<ContentDistribution>(); 
         set<id> lastVersionIdSet= new set<id>();
         for(ContentDocument cd :WrapperAttach.getContentDocInfo(attachSet)){
             lastVersionIdSet.add(cd.LatestPublishedVersionId);
-            linkList.add( WrapperAttach.generateContentDistribution(cd));
         }
-        
-        if(!linkList.isEmpty()) insert linkList;
         
         //gets file details
         return WrapperAttach.getContentInfo(lastVersionIdSet);
@@ -334,9 +341,24 @@ public with sharing class AttachmentListCtrl {
      @AuraEnabled
 	public static string getExpiringLinkWithRecId(String recId ) {
 		Integer secondsValid = 300;
-        AmazonFile__c amazonFile = [select Full_Name_Unique__c from AmazonFile__C where id=:Id.valueOF(recId)];
+        String link='';
+        if(String.isblank(recId)) return '';
+        
+        Id idRec =Id.valueOf(recId);
+        Schema.SObjectType recObjTp = idRec.getSObjectType();
+
+
+        if(recObjTp ==Schema.AmazonFile__C.getSObjectType() ){  // IF amazon file record       
+            AmazonFile__c amazonFile = [select Full_Name_Unique__c from AmazonFile__C where id=:idRec];
            
-		String link = AmazonRest.genPublicExpiringAWSLink( amazonFile.Full_Name_Unique__c, WrapperAttach.CREDENTIAL, secondsValid);
+            link = AmazonRest.genPublicExpiringAWSLink( amazonFile.Full_Name_Unique__c, WrapperAttach.CREDENTIAL, secondsValid);
+        }else if(recObjTp ==Schema.ContentDocument.getSObjectType()){ // If content document file
+           ContentDocument cd=[select title,LatestPublishedVersionId  from ContentDocument where id =:idRec];
+           
+           //generates temporary link
+           ContentDistribution cdist= CSP_Utils.getContentDistribution(cd.title,cd.LatestPublishedVersionId);
+           link= cdist.DistributionPublicUrl;
+        }
 		return link;
 	}
 
