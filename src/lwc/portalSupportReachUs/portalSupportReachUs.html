@@ -68,7 +68,7 @@
                 <div class="basicInfoBox">
                     <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
                         <p class="text-xxsmall">{label.csp_SupportReachUs_Category}</p>
-                        <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
+                        <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall customPickList"
                             label={label.csp_SupportReachUs_ActionForCategoryPicklist} value={category}
                             options={categoryOptions} dropdown-alignment="auto" onchange={categoryHandler}
                             placeholder="Select Category" size=5>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="slds-p-horizontal_xx-large slds-p-bottom_large" if:true={topicCB}>
                         <p class="text-xxsmall">{label.csp_SupportReachUs_Topic_Label}</p>
-                        <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
+                        <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall customPickList"
                             label={label.csp_SupportReachUs_ActionForCategoryPicklist} value={topic}
                             options={topicOptions} dropdown-alignment="auto" onchange={topicHandler}
                             placeholder="Select Topic" size=5>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="slds-p-horizontal_xx-large slds-p-bottom_large" if:true={subTopicCB}>
                         <p class="text-xxsmall">{label.csp_SupportReachUs_Sub_Topic_Label}</p>
-                        <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
+                        <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall customPickList"
                             label={label.csp_SupportReachUs_toSelectSubTopicPicklist} value={subTopic}
                             placeholder="Select Sub-Topic" dropdown-alignment="auto" options={subTopicOptions}
                             onchange={subTopicHandler} data-id="topicCB">
@@ -92,22 +92,22 @@
                     </div>
                     <div class="slds-p-horizontal_xx-large slds-p-bottom_xx-large" if:true={countryCB}>
                         <p class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</p>
-                        <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall"
+                        <lightning-combobox name="progress" class="cursorPointerComboBox text-xxsmall customPickList"
                             label={label.csp_SupportReachUs_CountryOrRegionIndicator} value={countryValue}
                             placeholder="Select Country" dropdown-alignment="auto" options={countryOptions}
                             onchange={countryHandler}>
                         </lightning-combobox>
                     </div>
-                    <div class="slds-checkbox slds-p-bottom_xx-large slds-align_absolute-center">
-                        <input type="checkbox" name="options" id="checkbox" value="checkbox-2" />
+                    <div class="slds-checkbox slds-p-bottom_xx-large slds-align_absolute-center" if:true={emergencyButton}>
+                        <input type="checkbox" name="options" id="checkbox" value={isEmergency} onchange={handleEmergency}/>
                         <label class="slds-checkbox__label" for="checkbox">
                             <span class="slds-checkbox_faux cursorPointer slds-m-right_xx-small"></span>
-                            <span class=" medium_gray_text">
+                            <span class="text-xsmall slds-p-horizontal_x-small">
                                 {label.csp_SupportReachUs_IsEmergency}
                             </span>
                         </label>
                     </div>
-                    <div class="slds-p-bottom_xx-large slds-align_absolute-center text-xsmall" if:true={optionsButton}>
+                    <div class="slds-p-bottom_xx-large slds-p-top_large slds-align_absolute-center text-xsmall" if:true={optionsButton}>
                         <lightning-button onclick={supportOptionsHandler}
                             label={label.csp_SupportReachUs_btn_Support_Label} class="containedButton cursorPointer">
                         </lightning-button>

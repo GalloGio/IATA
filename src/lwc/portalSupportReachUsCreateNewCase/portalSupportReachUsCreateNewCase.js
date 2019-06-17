@@ -75,7 +75,6 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_caseDescription,
         ISSP_ANG_GenericError,
         IDCard_FillAllFields
-        //csp_CreateNewCaseMainUploadSubLabel
     }
 
     //spinner controller
@@ -94,6 +93,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     @track description = "";
     @track subject = "";
     @track caseNumber;
+    @track isEmergencyCase = false;
 
     //variable to control error class sent to child component
     @track requiredClass;
@@ -194,6 +194,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                     if (myCategoryOptions.some(obj => obj.value === pageParams.category)
                         && myTopicOptions.some(obj => obj.value === pageParams.topic)
                         && mySubTopicOptions.some(obj => obj.value === pageParams.subtopic)) {
+
+                            if(pageParams.emergency !== undefined && pageParams.emergency === true){
+                                this.isEmergencyCase = true;
+                            }
 
                         //all ok parameters exist
                         //initialize the case
@@ -412,6 +416,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
             if (this.agentProfile) {
                 record.IATAcode__c = this.childComponent.title;
+            }
+
+            if(this.isEmergencyCase){
+                record.Priority = 'Emergency';
             }
 
             record.RecordTypeId = this.caseInitiated.RecordTypeId;

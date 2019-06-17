@@ -100,9 +100,9 @@ public static testMethod void TestPortalSupportReachUsCtrl(){
         Contact cont = PortalSupportReachUsCtrl.getContactInfo();
 
         myMapRTContry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(cont,'GB');
-		List<LiveAgentButtonSettings__c> labstest = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','GB',cont);
-		List<LiveAgentButtonSettings__c> labstests = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','',cont);
-
+		List<LiveAgentButtonSettings__c> labstest = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','GB',cont,false);
+		List<LiveAgentButtonSettings__c> labstests = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','',cont, true);
+		List<ISSP_FAQ2Case_Emergencies__c> caseEmergencies = PortalSupportReachUsCtrl.getEmergencyDependencies();
 		test.stopTest();
 	}
 }

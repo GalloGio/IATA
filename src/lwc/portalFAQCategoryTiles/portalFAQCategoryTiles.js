@@ -1,11 +1,9 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import getCategoryTiles from '@salesforce/apex/PortalFAQsCtrl.getCategoryTiles';
 
-//navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
 
-//import labels
 import CSP_FAQ_HeaderTitle from '@salesforce/label/c.CSP_FAQ_HeaderTitle';
 import CSP_FAQ_Subtitle from '@salesforce/label/c.CSP_FAQ_Subtitle';
 
@@ -15,63 +13,37 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
         CSP_FAQ_HeaderTitle,
         CSP_FAQ_Subtitle
     };
-
+    @api renderWithIcons;
     @track lstTiles = [];
 
-    //links for images
     iconsBaseLink = '/csportal/s/CSPortal/Images/FAQ/';
     iconsExtension = '.svg';
     
-    connectedCallback() {
-        getCategoryTiles({})
+    connectedCallback() {                
+        getCategoryTiles()
         .then(results => {
-            //because proxy.......
             let resultsAux = JSON.parse(JSON.stringify(results));
-            //console.log(resultsAux);
-
-            //let lstCategories = [];
-
-            /*let iAux;
-            for(iAux = 0; iAux < resultsAux.length; iAux++){
-                let found = false;
-                let jAux;
-                for(jAux = 0; jAux < lstCategories.length; jAux++){
-                    if(resultsAux[iAux].categoryName === lstCategories[jAux].categoryName){
-                        found = true;
-                    }
-                }
-                if(found === false){
-                    resultsAux.push(resultsAux[iAux]);
-                }
-
-            }*/
-
-            //console.log(lstCategories);
 
             if(resultsAux !== undefined && resultsAux !== null && resultsAux.length > 0){
                 let i;
                 for(i = 0; i < resultsAux.length; i++){
                     if(i === 0 || i === 1){
-                        resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small';
+                        resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small slds-text-align_center';
                     }else{
-                        resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-p-vertical_xx-small';
+                        resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-p-vertical_xx-small slds-text-align_center';
                     }
                     resultsAux[i].imageURL = this.iconsBaseLink + resultsAux[i].categoryName + this.iconsExtension;
                 }
-                this.lstTiles = resultsAux;
+                this.lstTiles = resultsAux;                
             }
         })
         .catch(error => {
             this.error = error;
-            this.loading = false;
-            this.dataRecords = false;
         });
     }
 
     handleTileButtonClick(event){
         let selectedCategory = event.target.dataset.item;
-
-        //console.log(selectedCategory);
 
         let params = {};
         if(selectedCategory !== undefined && selectedCategory !== null) {
@@ -86,8 +58,6 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
                 pageName: "support-view-category"
             }})
         .then(url => navigateToPage(url, params));
-
-        
     }
 
 }

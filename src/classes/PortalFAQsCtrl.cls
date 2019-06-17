@@ -76,7 +76,7 @@ public with sharing class PortalFAQsCtrl {
 
     @AuraEnabled(cacheable=true)
     public static List<FAQ__kav> getSearchArticles(String searchTerm) {
-        String query = 'FIND \'' + String.escapeSingleQuotes(searchTerm) + '\' IN ALL FIELDS RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\' LIMIT 6 OFFSET 1)';
+        String query = 'FIND \'' + String.escapeSingleQuotes(searchTerm) + '\' IN ALL FIELDS RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\' LIMIT 5 OFFSET 1)';
         System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getSearchArticles] query - ' + query);
 
         List<List<SObject>> searchList = Search.query(query);
@@ -91,7 +91,12 @@ public with sharing class PortalFAQsCtrl {
         System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticlesFeedback] query - ' + query); 
 
         return Database.query(query);
-    }    
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static String getArticleTitle(String articleId) {
+        return [SELECT Title FROM FAQ__kav WHERE Id = :articleId].Title;
+    }
 
     @AuraEnabled
     public static void createFeedback(String articleId, String articleNumber, String articleTitle, String feedbackSource, String feedbackComments, String sessionId, Boolean isDeferred) {
@@ -113,52 +118,12 @@ public with sharing class PortalFAQsCtrl {
         insert articleFeedback;
     }             
 
-    @AuraEnabled(cacheable=true)
-    public static String randomUUID() {
-        String kHexChars = '0123456789abcdefABCDEF';
-        String returnValue = '';
-        Integer nextByte = 0;
-        for(Integer i = 0; i < 16; i++){
-            if(i==4 || i==6 || i==8 || i==10){
-                returnValue += '-';
-            }
-            //generate a "byte"; i.e., number in range [-2^7,2^7-1]
-            nextByte = (Math.round(Math.random() * 255)-128) & 255;
-
-            if(i==6){
-                nextByte = nextByte & 15;
-                nextByte = nextByte | (4 << 4);
-            }
-            if(i==8){
-                nextByte = nextByte & 63;
-                nextByte = nextByte | 128;
-            }
-
-            returnValue += charAt(kHexChars,nextByte >> 4);
-            returnValue += charAt(kHexChars,nextByte & 15);
-        }
-        return returnValue;
-    }
-
-    private static String charAt(String str, Integer index) {
-        if(str == null){
-            return null;
-        }
-        if(str.length() <= 0){
-            return str;
-        }
-        if(index < 0 || index >= str.length()){
-            return null;
-        }
-        return str.substring(index, index+1);
-    }
-
     /*
         This method is used for CS Portal searchbar. 
         @refinedSearchSerialized - is a serialized filter object sent from the LWC controller for further filtering 
     */
     @AuraEnabled (cacheable=true)
-    public static List<KnowledgeArticleVersion> getFaqsList(String refinedSearchSerialized){
+    public static List<FAQ__kav> getFaqsList(String refinedSearchSerialized, Boolean moreFields){
         //User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
         //String contactId = userAux.ContactId;
 
@@ -170,9 +135,11 @@ public with sharing class PortalFAQsCtrl {
         System.debug('refinedSearch: ' + refinedSearch);
 
         //base query 
-        String finalQuery = 'SELECT Id, UrlName, Title, Summary, LastPublishedDate ' + 
-                            'FROM KnowledgeArticleVersion ' +
-                            'WHERE PublishStatus= \'Online\' ';
+        String finalQuery = 'SELECT Title';
+
+        if(moreFields) finalQuery += ', ArticleNumber, Answer__c';
+
+        finalQuery += ' FROM FAQ__kav WHERE PublishStatus= \'Online\' ';
 
         //Add the clauses for further filtering 
         if(refinedSearch != null ){
@@ -183,7 +150,7 @@ public with sharing class PortalFAQsCtrl {
 
         System.debug('finalQuery: ' + finalQuery);
 
-        List<KnowledgeArticleVersion> lstArticles = Database.query(finalQuery);
+        List<FAQ__kav> lstArticles = Database.query(finalQuery);
 
         System.debug('lstArticles: ' + lstArticles);
 

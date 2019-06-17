@@ -20,3 +20,44 @@
     position:sticky;
     top:5rem;
 }
+
+
+.fullWidth{
+    width:100%;
+}
+
+/* Search bars */
+.searchBarRow {
+    display: flex;
+    z-index:9002;
+    position:absolute;
+    width:100%;
+}
+
+.searchBarRow lightning-button{
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.searchBarIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchBarBarContainer {
+    max-width: 30%;
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.slds-form-element__label{
+    display:none;
+}
+
+.borderedSearch{
+    width:30%;
+    border-bottom: solid #e2e4e8 2px;
+}

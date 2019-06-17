@@ -45,6 +45,14 @@ export default class FavoriteServicesLWC extends LightningElement {
             .then(result => {
                 //auxResult stores the results globaly
                 this.auxResult = JSON.parse(JSON.stringify(result));
+                
+                //removes undefined from images
+                for (let i = 0; i < this.auxResult.length; i++) {
+                    if(this.auxResult[i].Portal_Application__r === undefined || this.auxResult[i].Portal_Application__r.Application_icon_URL__c === undefined){
+                        this.auxResult[i].Portal_Application__r.Application_icon_URL__c = '';
+                    }
+                }
+
 
                 //Inverts returned List in order to keep the unrequestable links
                 //Slices the List in 15 members as a limit (3 pages with 5 tiles each)                
@@ -86,10 +94,10 @@ export default class FavoriteServicesLWC extends LightningElement {
             for (let j = 0; j < this.globaList[i].length; j++) {
                 for (let k = 0; k < this.globaList[i][j].length; k++) {
                     if (this.globaList[i][j].length === 1) {
-                        this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-around_small aroundLightGrayBorder';
+                        this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-vertical_small aroundLightGrayBorder';
                     }
                     if (this.globaList[i][j].length === 2) {
-                        this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-around_small aroundLightGrayBorder';
+                        this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-vertical_small aroundLightGrayBorder';
                     }
                 }
             }
@@ -256,7 +264,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                     //stop the spinner
                     this.toggleSpinner();
                     //open new tab with the redirection
-                    myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
+                        myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
                     window.open(myUrl);
                 }
             } else {

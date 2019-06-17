@@ -1,7 +1,7 @@
 import { api, LightningElement, track, wire } from 'lwc';
 import getAllAttachments from '@salesforce/apex/AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal';
 import checkIfSaamSidra from '@salesforce/apex/AttachmentListCtrl.checkIfSidraSaam';
-import getExpiringLink from '@salesforce/apex/AttachmentListCtrl.getExpiringLink';
+import getExpiringLinkWithRecId from '@salesforce/apex/AttachmentListCtrl.getExpiringLinkWithRecId';
 import redirectToOldPortal from '@salesforce/apex/CSP_Utils.redirectToOldPortal';
 
 import getContentDetails from '@salesforce/apex/AttachmentListCtrl.getContentDetails';
@@ -210,9 +210,9 @@ export default class AttachmentListCmp extends LightningElement {
 
     viewAttachment(row) {
         if (row.viewURL == '') {
-            //gets Amazon File Link
-            getExpiringLink({
-                fileName: row.fullName
+            //gets Amazon or Content Document Link
+            getExpiringLinkWithRecId({
+                recId: row.id
             })
                 .then(
                     result => {
