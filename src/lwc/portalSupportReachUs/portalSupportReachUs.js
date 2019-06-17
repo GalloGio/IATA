@@ -470,7 +470,8 @@ export default class PortalSupportReachUs extends LightningElement {
 
         //Performs a document scroll down.
         let scrollWindowDown = new Promise((resolve, reject) => {
-            window.scrollTo({ top: document.lastChild.scrollHeight, left: 0, behavior: 'smooth' });
+            let divToTop = this.template.querySelectorAll('.endOfReachUs')[0].offsetTop;
+            window.scrollTo({ top: divToTop , left: 0, behavior: 'smooth' });
 
             let error = false;
             if (!error)
