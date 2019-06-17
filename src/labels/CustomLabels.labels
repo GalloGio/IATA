@@ -34347,17 +34347,6 @@ title,Title,Name</value>
         <value>Save</value>
     </labels>
     <labels>
-<<<<<<< HEAD
-=======
-        <fullName>CSP_SearchFAQ</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_SearchFAQ</shortDescription>
-        <value>Search by FAQ details</value>
-    </labels>    
-    <labels>
->>>>>>> 832af287d... MTSL-337 / MTSL-369
         <fullName>csp_Sub_Topic_Label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
