@@ -27,11 +27,6 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>ParentId</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
                 <field>Region__c</field>
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
@@ -87,10 +82,15 @@
                 <field>SuppliedPhone</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Case_record_type__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
     <targetObject>Case</targetObject>
     <targetParentField>Contact</targetParentField>
-    <targetRecordType>Case.Cases_Global</targetRecordType>
+    <targetRecordType>Case.CasesEurope</targetRecordType>
     <type>Create</type>
 </QuickAction>
