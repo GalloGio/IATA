@@ -74,8 +74,9 @@
         component.set("v.caseRecordType", data.recordTypeAndCountry.RecordType);
         component.set("v.country", data.recordTypeAndCountry.Country);
         component.set("v.countryISO", data.CountryISO);
-        component.set("v.contact", data.contact);
+        component.set("v.contact", data.Contact);
         component.set("v.isQuestion", data.Question);
+        component.set("v.phoneNumber", data.PhoneNumber);
         console.log(data.Question);
         //must disconnect and delete in order to re-deploy
         if ((typeof liveagent == "object")) {
@@ -85,11 +86,17 @@
         }
 
         if(data.Emergency){
-            var test = $A.get("$Label.c.LVA_CallUsThruPhoneNum") +'\n'
+            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") +'\n'
             + $A.get("$Label.c.LVA_CallUsEmergencyPhoneNumber") +'\n\n'
             + $A.get("$Label.c.LVA_CallUsAvailableHours") +'\n'
             + $A.get("$Label.c.LVA_CallUsEmergencyAvailableHours") +'\n';
-            component.set("v.callCenterInfo_Label", test);
+            component.set("v.callCenterInfo_Label", emergency);
+        }else{
+            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") +'\n'
+            + component.get("v.phoneNumber").PhoneNumber +'\n\n'
+            + $A.get("$Label.c.LVA_CallUsAvailableHours") +'\n'
+            + component.get("v.phoneNumber").AvailableHours +'\n';
+            component.set("v.callCenterInfo_Label", emergency);
         }
 
         data.myliveAgentButtonInfo.forEach(function (laButton) {

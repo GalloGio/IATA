@@ -1,4 +1,15 @@
 <template>
+    <c-portal-page-container>
+        <span slot="componentContent">
+            <div>
+                <div class="breadcrumbsHeight negative-margin-left">
+                    <c-portal-breadcrumbs last-breadcrumb-label={label.csp_SupportReachUs_IntentionOnThisPage}>
+                    </c-portal-breadcrumbs>
+                </div>
+            </div>
+        </span>
+    </c-portal-page-container>
+
     <div class="slds-theme_shade customCard">
         <template if:false={loading}>
             <div class="slds-text-align_center slds-p-top_xx-large">
@@ -11,12 +22,9 @@
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                     slds-m-horizontal_small active_panel cursorPointer">
                         <div class="slds-p-top_large noPointerEvents">
-                            <!-- <lightning-icon icon-name="utility:help" size="small" variant="inverse"
-                                class="tileNewServiceIcon slds-current-color">
-                            </lightning-icon> -->
-                            
+
                             <img class="questionIcon" src={question_selected} if:true={isQuestion} />
-                            <img class="questionIcon" src={question_unselected} if:false={isQuestion}/>
+                            <img class="questionIcon" src={question_unselected} if:false={isQuestion} />
                         </div>
                         <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
                             {label.csp_SupportReachUs_Ask_Label}
@@ -26,11 +34,8 @@
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                     slds-m-horizontal_small default_panel customCard cursorPointer">
                         <div class="slds-p-top_large noPointerEvents">
-                            <!-- <lightning-icon icon-name="utility:password" size="small"
-                                class="tileNewServiceIcon slds-current-color">
-                            </lightning-icon> -->
                             <img class="questionIcon" src={concern_selected} if:true={isConcern} />
-                            <img class="questionIcon" src={concern_unselected} if:false={isConcern}/>
+                            <img class="questionIcon" src={concern_unselected} if:false={isConcern} />
                         </div>
                         <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
                             {label.csp_SupportReachUs_Concern_Label}
@@ -40,11 +45,8 @@
                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                     slds-m-horizontal_small default_panel customCard cursorPointer">
                         <div class="slds-p-top_large noPointerEvents">
-                            <!-- <lightning-icon icon-name="utility:task" size="small"
-                                class="tileNewServiceIcon slds-current-color">
-                            </lightning-icon> -->
-                            <img class="questionIcon" src={compliment_selected} if:true={isCompliment}/>
-                            <img class="questionIcon" src={compliment_unselected} if:false={isCompliment}/>
+                            <img class="questionIcon" src={compliment_selected} if:true={isCompliment} />
+                            <img class="questionIcon" src={compliment_unselected} if:false={isCompliment} />
                         </div>
                         <div class="slds-p-top_large text-xsmall text-bold noPointerEvents">
                             {label.csp_SupportReachUs_Compliment_Label}

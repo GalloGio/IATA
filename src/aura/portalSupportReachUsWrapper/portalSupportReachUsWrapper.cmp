@@ -25,6 +25,7 @@
     <aura:attribute name="showOptions" type="Boolean" default="false" />
     <aura:attribute name="userSessionData" type="Boolean" default="true" />
     <aura:attribute name="isQuestion" type="Boolean" default="true" />
+    <aura:attribute name="phoneNumber" type="String" default="" />
 
     <aura:attribute name="contact" type="Contact" />
     <aura:attribute name="category" type="String" />
@@ -41,12 +42,13 @@
     <aura:if isTrue="{!v.loaded}">
         <lightning:spinner alternativeText="Loading" style="height:250vh;" />
     </aura:if>
+
     <div class="slds-grid slds-grid_align-center">
         <div class="slds-col slds-size_2-of-3 slds-large-size_2-of-3 slds-medium-size_1-of-1 slds-small-size_1-of-1">
+            <c:portalSupportReachUs ontoggleSpinner="{!c.toggleSpinner}"
+                onalldatachange="{!c.handleLiveAgentChangeEvent}" onshowoptions="{!c.showOptions}"
+                oncloseoptions="{!c.closeOptions}" />
             <div class="customCard">
-                <c:portalSupportReachUs ontoggleSpinner="{!c.toggleSpinner}"
-                    onalldatachange="{!c.handleLiveAgentChangeEvent}" onshowoptions="{!c.showOptions}"
-                    oncloseoptions="{!c.closeOptions}" />
                 <aura:if isTrue="{!v.showOptions}">
                     <ltng:require scripts="{!$Resource.deployment}" />
                     <div class="slds-text-align_center slds-p-vertical_xx-large">
