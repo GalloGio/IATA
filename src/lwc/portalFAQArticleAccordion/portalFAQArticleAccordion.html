@@ -1,12 +1,21 @@
 <template>
+    <div class="bottomLightGrayBorder slds-m-around_small">
+        <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+        <lightning-input name="newRecipientTextInput"
+            placeholder={label.CSP_SearchFAQ}
+            class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
+            value={searchText}
+            onchange={onInputchange}>
+        </lightning-input>
+    </div>
     <!-- ARTICLES -->
     <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite">  
         <template if:true={hasArticles} for:each={articles} for:item="article">
-            <div class="slds-p-vertical_medium borderStyle" key={article.id}>
-                <div class="customCardTitleBox cursorPointer" onclick={articleSelected} data-item={article.label}>
-                    <lightning-icon class="darkBlueIcon" if:true={article.open} icon-name="utility:chevrondown" size="xx-small" data-item={article.label}></lightning-icon>
-                    <lightning-icon class="darkBlueIcon" if:false={article.open} icon-name="utility:chevronright" size="xx-small" data-item={article.label}></lightning-icon>
-                    <span class="slds-p-left_small text-bold" data-item={article.label}>{article.label}</span>
+            <div class="slds-p-vertical_medium slds-m-around_small borderStyle" key={article.id}>
+                <div class="customCardTitleBox cursorPointer" onclick={articleSelected} data-item={article.label} data-id={article.id}>
+                    <lightning-icon class="darkBlueIcon" if:true={article.open} icon-name="utility:chevrondown" size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
+                    <lightning-icon class="darkBlueIcon" if:false={article.open} icon-name="utility:chevronright" size="xx-small" data-item={article.label} data-id={article.id}></lightning-icon>
+                    <span class="slds-p-left_small text-bold" data-item={article.label} data-id={article.id}>{article.label}</span>
                 </div>        
                 <div if:true={article.open} class="slds-p-vertical_x-large text-xsmall" style="transition: height 0.3s ease;" data-item={article.label}>
                     <!-- ARTICLE -->
@@ -37,7 +46,7 @@
 
                     <!-- RELATED ARTICLES -->
                     <div class="slds-p-vertical_x-large">
-                        <c-portal-f-a-q-related-article article={searchRelated}></c-portal-f-a-q-related-article>
+                        <c-portal-f-a-q-related-article article={articleInfo}></c-portal-f-a-q-related-article>
                     </div>
                     <!-- REACHS US BANNER -->
                     <div class="slds-p-vertical_x-large">

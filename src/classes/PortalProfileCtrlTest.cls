@@ -48,4 +48,40 @@ public with sharing class PortalProfileCtrlTest {
         }
     }
 
+    @IsTest
+    static void testBranchesAndContactsTabsInfo(){
+        Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        MyAirline = new Account(
+                RecordTypeId = rtHQ,
+                Name='MyAirline',
+                ACLI_Status__c = 'Active Company',
+                MITA_Member__c = true,
+                BIETA_Member__c = true,
+                Airline_designator__c = 'AA',
+                IATACode__c = '123',
+                Airline_Prefix__c = '456');
+        insert MyAirline;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = MyAirline.Id;
+        con.Email='contact@MyAirline.com';
+        insert con;
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        System.runAs(portalUser){
+
+            Map<String, List<PortalProfileCtrl.FieldWrapper>> branchFields = PortalProfileCtrl.getBranchesListFields();
+            Map<String, List<PortalProfileCtrl.FieldWrapper>> contactFields = PortalProfileCtrl.getContactsListFields();
+            List<PortalProfileCtrl.FieldWrapper> createContactFields = PortalProfileCtrl.getContactFieldsToInsert();
+
+
+            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts();
+            List<Account> branches = PortalProfileCtrl.getCompanyBranches();
+
+            System.assert(!contacts.isEmpty());
+            System.assert(!branches.isEmpty());
+        }
+    }
+
 }
