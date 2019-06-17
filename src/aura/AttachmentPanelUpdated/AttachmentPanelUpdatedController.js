@@ -21,7 +21,7 @@
 
     doInit: function (component, event, helper) {
 
-        var getFileIdentifierPickValuesAction = component.get("c.getFileIdentifierPickValues");
+        var getFileIdentifierPickValuesAction = component.get("c.FileIdentifierPickValues");
         getFileIdentifierPickValuesAction.setCallback(this, function (response) {
             var state = response.getState();
             if (state === "SUCCESS") {
@@ -31,7 +31,7 @@
         });
         $A.enqueueAction(getFileIdentifierPickValuesAction);
 
-        var getReviewStatusPickValuesAction = component.get("c.getReviewStatusPickValues");
+        var getReviewStatusPickValuesAction = component.get("c.ReviewStatusPickValues");
         getReviewStatusPickValuesAction.setCallback(this, function (response) {
             var state = response.getState();
 
