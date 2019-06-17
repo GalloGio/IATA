@@ -54,7 +54,7 @@ public with sharing class PortalNewsController {
 
         System.debug('____ [cls PortalNewsController - populateVariables] UserPortalCountry / UserPortalRegion - ' + UserPortalCountry + ' / ' + UserPortalRegion);
 
-        soql =  'SELECT Id, Country__c, Publication_end_date__c, Publication_start_date__c, Sector__c, Status__c, User_portal_Status__c '+
+        soql =  'SELECT Id, Country__c, Publication_end_date__c, Publication_start_date__c, Sector__c, Status__c, User_portal_Status__c, Background_image_url_link__c, Background_image_url_link_target__c '+
                 'FROM ISSP_Banner__c '+
                 'WHERE Status__c = \'Active\''+
                 ' AND Publication_start_date__c < ' + TodayInstance +
