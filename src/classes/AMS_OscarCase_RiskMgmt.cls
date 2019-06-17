@@ -188,7 +188,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
 								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c, Account.ParentId
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-								  , Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c
+								  , Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, Group_Single_Agent__c
 								  from case where id in:mapTrgNew.keySet()]);
 
 			set<string> setOperationCalendarExtID = new set<string>();
@@ -249,8 +249,12 @@ public class AMS_OscarCase_RiskMgmt {
 					if(conf.Field6__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
 
+					if(conf.Field7__c != NULL && CCToBeGenerated){
+						CCToBeGenerated = bCheckCondition(c, conf.Field7__c, conf.Field7Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
+					}	
+
 					if(CCToBeGenerated)
-						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
+						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c, conf.Field7__c);
 
 					if(CCToBeGenerated){
 						//mapCasePerAccount.put(c.AccountId, c);
@@ -925,7 +929,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 
 	//Check if there all the fields that lead to generation of change code had a change
-	private static boolean CheckOldNewValues(case NewCaseValues, case OldCaseValues, string Field1, string Field2, string Field3, string Field4, string Field5, string Field6){
+	private static boolean CheckOldNewValues(case NewCaseValues, case OldCaseValues, string Field1, string Field2, string Field3, string Field4, string Field5, string Field6, String field7){
 
 		if(OldCaseValues!=null){
 			if( ((Field1==null || Field1.toUpperCase() == 'PARENT.STATUS' || Field1.toUpperCase() ==  'CHANGECODE' || Field1.toUpperCase()== 'EXISTS') || (Field1 != null && NewCaseValues.get(Field1) == OldCaseValues.get(Field1))) &&
@@ -933,7 +937,8 @@ public class AMS_OscarCase_RiskMgmt {
 				((Field3==null || Field3.toUpperCase() == 'PARENT.STATUS' || Field3.toUpperCase() ==  'CHANGECODE' || Field3.toUpperCase()== 'EXISTS') || (Field3 != null && NewCaseValues.get(Field3) == OldCaseValues.get(Field3))) &&
 				((Field4==null || Field4.toUpperCase() == 'PARENT.STATUS' || Field4.toUpperCase() ==  'CHANGECODE' || Field4.toUpperCase()== 'EXISTS') || (Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4))) &&
 				((Field5==null || Field5.toUpperCase() == 'PARENT.STATUS' || Field5.toUpperCase() ==  'CHANGECODE' || Field5.toUpperCase()== 'EXISTS') || (Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5))) &&
-				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
+				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6))) &&
+				((Field7==null || Field7.toUpperCase() == 'PARENT.STATUS' || Field7.toUpperCase() ==  'CHANGECODE' || Field7.toUpperCase()== 'EXISTS') || (Field7 != null && NewCaseValues.get(Field7) == OldCaseValues.get(Field7)))
 				)
 				return false;
 		}
@@ -945,7 +950,7 @@ public class AMS_OscarCase_RiskMgmt {
 	private static void ReadConfiguration(){
 
 		ListCCConfig = [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c,
-			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c,
+			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c, Field7__c, Field7Values__c,
 			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Clear_Expiry_Date__c, Integration_RecId__c,
 			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c, Calculate_BG_to_HO__c, Extra_memo_text_for_HO__c, Calculate_Outstanding_Amount__c,
 				Calculate_Termination_Date__c, Calculate_End_Grace_Period_Date__c, Generate_Irregularity_Sequence__c, Accreditation_Model__c
