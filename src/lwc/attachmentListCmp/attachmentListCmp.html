@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <!-- Popup Footer -->
-                <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                <div if:true={renderModalDataTable} class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
                     <lightning-button class="slds-float_right containedButton" label="Ok" variant="neutral"
                         onclick={handleCloseModal}>
                     </lightning-button>
