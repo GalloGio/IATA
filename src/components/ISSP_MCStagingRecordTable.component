@@ -29,6 +29,12 @@
         </div>
     </div>
 
+    <div class="row" style="padding-top: 10px;">
+        <div class="col-md-12 alert alert-warning" id="AccreditationAlert" role="alert">
+            {!$Label.ISSP_AMS_Step1_Two_Weeks_Expiry}
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-4" id="submitMC">
             <input type="button" class="btn btn_iata_primary" onClick="showTermsAndConditionsModal(); return false;" value="{!$Label.ISSP_AMS_Multicountry_Submit_Button}" id="submitMCButton"/>

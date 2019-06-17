@@ -61,7 +61,7 @@
         </div>
 
         <div class="row" style="padding-top: 22px; text-align: center;">
-	        <div class="col-md-12" id="McQuestions" style="margin-bottom: -18px; padding-left: {!IF(helper.multiCountryEnabled, '200px;', '')}">
+	        <div class="col-md-12" id="McQuestions" style="margin-bottom: -18px; padding-left: {!IF(helper.multiCountryEnabled, '200px;', '255px;')}">
 	            <apex:outputText value="{!$Label.ISSP_AMS_Info_Accreditation_Types}"/> &nbsp;
 	            <apex:outputLink value="https://newgeniss.iata.org/" target="_blank" >{!$Label.ANG_ISSP_ProductComparisonViewHere}</apex:outputLink>
 	        </div>

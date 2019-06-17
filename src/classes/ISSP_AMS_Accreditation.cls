@@ -1457,6 +1457,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     }
                     
                     if (isMultiCountryNewAE) {
+                        options.clear();
                         options.add(new SelectOption(AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY, Label.ISSP_AMS_Associate_Entity_Multicountry));
                     }
                 } else {    //Not an Accredited PAX Agent, or any type of Cargo Agent
