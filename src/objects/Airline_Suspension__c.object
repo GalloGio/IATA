@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Airline_Code__c</fullName>
         <description>Returns the 2-letter and the 3-digit airline identification codes. To be used for the template merge.</description>
@@ -113,7 +114,7 @@
     <fields>
         <fullName>Approval_Comments__c</fullName>
         <externalId>false</externalId>
-        <label>Agreement Comments</label>
+        <label>Comments from Region</label>
         <length>16384</length>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>

@@ -81,4 +81,37 @@ private class AMS_Irregularities_Utils_Test {
         system.assert([select id, Accumulated_Irregularities__c from Account where name = 'My Travels'].get(0).Accumulated_Irregularities__c == 4);
         test.stopTest();
     }
+
+    @isTest
+    static void testIRR_For_FinancialSecurity() {
+        Account acc = [SELECT Id, Name, IATA_ISO_Country__c, Location_Type__c, Location_Class__c FROM Account];
+        acc.Location_Type__c = 'HO';
+        acc.Location_Class__c = 'P';
+        acc.Accumulated_Irregularities__c = 1;
+        update acc;
+
+        IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c];
+        AMS_Country_Specific_Attribute__c attr = new AMS_Country_Specific_Attribute__c();
+        attr.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularities_for_FS_Request');
+        attr.IATA_ISO_Country__c = country.Id;
+        attr.Location_Class__c = 'P';
+        attr.Threshold__c = 1;
+        attr.Reason__c = 'Financial Security Request';
+        insert attr;
+
+        Case cse = new Case();
+        cse.AccountId = acc.Id;
+        insert cse;
+        
+        Test.startTest();
+        List<Account> accs = new List<Account> {acc};
+        Set<Id> countriesIds = new Set<Id> {country.Id};
+        Map<Id,Id> mapAccountCase = new Map<Id,Id> {acc.Id => cse.Id};
+        Map<Id,Decimal> mapCurrentIrr = new Map<Id,Decimal> {acc.Id => 0};
+        AMS_Irregularities_Utils.checkIRRTreshold(accs, countriesIds, mapAccountCase, mapCurrentIrr);
+        Test.stopTest();
+
+        List<Case> childCases = [SELECT Id FROM Case WHERE ParentId = :cse.Id AND CaseArea__c = 'Risk Management Process'];
+        System.assertEquals(1, childCases.size());
+    }
 }

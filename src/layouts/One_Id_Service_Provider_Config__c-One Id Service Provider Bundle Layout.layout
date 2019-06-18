@@ -60,6 +60,10 @@
                 <behavior>Edit</behavior>
                 <field>Invitation_Secondary_Max__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Portal_Service__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>Attachment_Changed__c</fullName>
         <defaultValue>false</defaultValue>
@@ -61,12 +62,32 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Business_Version_Number__c</fullName>
+        <description>Non numerical version number</description>
+        <externalId>false</externalId>
+        <label>Business Version Number</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Effective_Start_Date__c</fullName>
         <externalId>false</externalId>
         <label>Effective Start Date</label>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Is_Latest__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the this record is the latest version of the T&amp;C of the related Service</description>
+        <externalId>false</externalId>
+        <label>Is Latest</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>NewGenApp_Language__c</fullName>
@@ -143,6 +164,17 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>T_C_Id__c</fullName>
+        <description>Id of the Document record</description>
+        <externalId>false</externalId>
+        <label>T&amp;C Document Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>T_C_Key_Formula__c</fullName>

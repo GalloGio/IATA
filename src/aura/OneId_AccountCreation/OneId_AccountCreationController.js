@@ -17,7 +17,12 @@
 
                 c.find("sectorSelection").set("v.options", options);
             }else{
-                c.find("sectorSelection").set("v.options", [{label: sector, value : sector, selected : true}]);
+                var option = sectorsMap[sector];/* WMO-391 */
+                if(option) {
+                    c.find("sectorSelection").set("v.options", [{label: option.label, value : option.value, selected : true}]);
+                } else {
+                	c.find("sectorSelection").set("v.options", [{label: sector, value : sector, selected : true}]);
+            	}
             }
 
             h.setCategory(c);
@@ -124,6 +129,8 @@
 
         //check if information need to be passed to shipping as well
         h.copyBillingToShipping(c);
+    	
+        validateRequiredFields(c);
     },
 
     validateNumber : function(c, e, h){
@@ -183,6 +190,14 @@
             isAllFilled = false;
         }else{
             c.set("v.validationError", false);
+        }
+        
+        if(isAllFilled){
+          c.getEvent("newAccountSet")
+            .setParams({
+                "state" : "newAccountSet",
+                "account" : c.get("v.account")
+            }).fire();             
         }
         
         return isAllFilled;        

@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AWS_ENDPOINT_URL__c</fullName>
         <defaultValue>&quot;http://s3.awsamazon.com&quot;</defaultValue>
@@ -147,9 +148,9 @@
         <columns>Bucket__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>
+        <columns>Key__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Credential Name</label>
