@@ -3,14 +3,14 @@
 }
 
 .customWhiteBackground {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .customBlueBackground {
   background-color: #1e32fa;
 }
 
-.text-xsmall{
+.text-xsmall {
   font-size: 16px;
   font-style: normal;
   font-stretch: normal;
@@ -18,18 +18,18 @@
   letter-spacing: normal;
 }
 
-.customCardWhite{
+.customCardWhite {
   box-shadow: 5px 5px 20px #e2e2e2;
   border-radius: 1px;
   border: solid 1px #e2e2e2;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
-.text-white{
-  color: #FFFFFF;
+.text-white {
+  color: #ffffff;
 }
 
-.text-black{
+.text-black {
   color: #000000;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .headerBarLeft::after {
-  content:"";
+  content: "";
   width: 0;
   height: 0;
   border-top: 20px solid transparent;
@@ -70,7 +70,7 @@
 }
 
 .headerBarRight::after {
-  content:"";
+  content: "";
   width: 0;
   height: 0;
   border-top: 20px solid transparent;
@@ -92,14 +92,41 @@
   float: left;
 }
 
+.headerBarButton {
+  position: relative;
+}
+
 .headerBarButton:hover {
-  background-color: #ffffff;
   cursor: pointer;
 }
 
-.headerBarButton:hover span.tabText{
-  color: #1e32fa;
+.buttonService:hover:after,
+.buttonSupport:hover:after {
+  content: "";
+  width: 100%;
+  height: 4px;
+  background-color: #fac832;
+  position: absolute;
+  bottom: 1px;
+  right: 0;
+  left: 0;
+}
+
+.headerBarButton:hover span.tabText {
   font-weight: 500;
+}
+
+.headerButtonProfileContainer:hover {
+  background-color: #ffffff;
+}
+
+.headerButtonProfileContainer:hover span.tabText {
+  color: #1e32fa;
+}
+
+.headerButtonProfileContainer:hover div.headerButtonProfile,
+.headerBarButton:hover div.headerButtonArrow {
+  background-color: #1e32fa;
 }
 
 .headerButtonNotificationsContainer:hover {
@@ -129,10 +156,6 @@
   position: relative;
 }
 
-.headerBarButton:hover div.headerButtonProfile{
-  background-color: #1e32fa;
-}
-
 .headerButtonProfile {
   background-color: #ffffff;
   mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
@@ -142,7 +165,8 @@
   display: inline-block;
 }
 
-.headerButtonProfileContainer:hover .openProfile, .openProfile:hover{
+.headerButtonProfileContainer:hover .openProfile,
+.openProfile:hover {
   display: block;
 }
 
@@ -167,10 +191,6 @@
   box-shadow: 5px 10px 20px #e2e2e2;
 }
 
-.headerBarButton:hover div.headerButtonSupport{
-  background-color: #1e32fa;
-}
-
 .headerButtonSupport {
   background-color: #ffffff;
   mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
@@ -178,10 +198,6 @@
   width: 24px;
   height: 24px;
   display: inline-block;
-}
-
-.headerBarButton:hover div.headerButtonService{
-  background-color: #1e32fa;
 }
 
 .headerButtonService {
@@ -193,8 +209,7 @@
   display: inline-block;
 }
 
-.headerBarButton:hover div.headerButtonArrow{
-  background-color: #1e32fa;
+.headerBarButton:hover div.headerButtonArrow {
   transform: rotate(180deg);
 }
 
@@ -202,6 +217,15 @@
   background-color: #ffffff;
   mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
   -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonSearch {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
   width: 24px;
   height: 24px;
   display: inline-block;
@@ -236,7 +260,7 @@
   height: 550px;
   max-height: 550px;
   right: 0px;
-  margin-right: 10%;
+  margin-right: 14.9%;
 }
 .notificationOption {
   display: block;
@@ -319,7 +343,7 @@
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 85px;
-  background-color:white;
+  background-color: white;
   color: black;
   text-align: center;
   font-weight: bold;
