@@ -708,8 +708,35 @@ private class WorkflowHelperTest {
 
     @isTest static void setACLIAccountNameTest(){
 
+        // Create a unique UserName
+        String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+        
+        // This code runs as the system user
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        
+        User u = new User(
+            Alias = 'standt',
+            Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8',
+            FirstName = 'System',
+            LastName='Integrations',
+            LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US',
+            ProfileId = p.Id,
+            TimeZoneSidKey='America/Los_Angeles',
+            UserName=uniqueUserName,
+            License_Cost_Center__c ='IDS005CH01'
+            );
+        
+        insert u;
+
+        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Airline_HQ_ACLI'];
+        insert new PermissionSetAssignment(AssigneeId = u.id, PermissionSetId = ps.Id);
+        
         Test.startTest();
 
+        System.runAs(u) {
+            
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
@@ -743,10 +770,15 @@ private class WorkflowHelperTest {
         acct.Name_on_AOC__c = null;
         acct.Legal_name__c  = 'OLDNAME';
 
-        update acct;
 
+        update acct;
+            
         acct =   [Select Id,Name from Account];
 
         System.assertEquals('OLDNAME', acct.Name);
+        
+        }
+
+
     }
 }
