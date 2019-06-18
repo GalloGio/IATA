@@ -21288,7 +21288,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
-        <value>Annual fees for 2018</value>
+        <value>Annual fees for YYYY</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
