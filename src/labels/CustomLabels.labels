@@ -4620,11 +4620,25 @@ You can choose one or more of the following topics:</value>
         <value>Unable to get data!</value>
     </labels>
     <labels>
+        <fullName>GADM_Invite_User_invitation_sent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_sent</shortDescription>
+        <value>Invitation email sent.</value>
+    </labels>
+    <labels>
         <fullName>GADM_Invite_User_not_allowed_email_domain</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GADM_Invite_User_not_allowed_email_domain</shortDescription>
         <value>Email domain is not allowed for selected Actor!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_notification_sent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_notification_sent</shortDescription>
+        <value>Notification email sent.</value>
     </labels>
     <labels>
         <fullName>GADM_NoFile</fullName>
