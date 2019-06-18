@@ -48,7 +48,7 @@ public without sharing class CSP_Utils {
         return loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
     }
 
-     /* 
+    
      @AuraEnabled
     public static String redirectToOldPortal(string url) {
         return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, url);
