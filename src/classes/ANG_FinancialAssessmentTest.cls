@@ -220,15 +220,12 @@ private class ANG_FinancialAssessmentTest {
 			 LIMIT 1
 			];
 
-		String message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.AGENT_HAS_ALREADY_CASH_CONDITION, message); 
-
 		Account acct = new Account();
 		acct.Id = cse.AccountId;
 		acct.ANG_HE_CashCondition__c = FALSE;
 		update acct;
 
-		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
+		String message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
