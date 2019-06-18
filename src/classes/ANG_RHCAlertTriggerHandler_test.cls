@@ -928,7 +928,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	    insert op;
 	    
-	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active');
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active', email = 'cooltestcontact@testcontact.com', User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
 	    insert con;
 
 	    //NEWGEN-2005
@@ -995,7 +995,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 	    insert op;
 	    
-	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active');
+	    Contact con = new Contact(LastName = 'ttt', Accountid = a.id, Status__c = 'Active', email = 'cooltestcontact@testcontact.com', User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM);
 	    insert con;
 
 	    //NEWGEN-2005
