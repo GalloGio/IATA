@@ -33980,6 +33980,14 @@ title,Title,Name</value>
         <value>Select the main category of your issue.</value>
     </labels>
     <labels>
+        <fullName>csp_ActionForTopicPicklist</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Support Reach Us Page Label</shortDescription>
+        <value>Select the main topic of your issue.</value>
+    </labels>
+    <labels>
         <fullName>csp_ActionIndicator</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34026,13 +34034,6 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>You&#39;ll get an answer soon.</value>
-    </labels>
-    <labels>
-        <fullName>csp_CaseTracking</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>csp_selectReason</shortDescription>
-        <value>You can add comments, documents and recipients in case of update. You can track the status and do updates in</value>
     </labels>
     <labels>
         <fullName>csp_CaseTracking</fullName>
@@ -34321,22 +34322,6 @@ title,Title,Name</value>
         <value>Is your query an emergency?</value>
     </labels>
     <labels>
-        <fullName>csp_LiveAgentBadConfig</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>The chat is not available. Please call or create a case.</value>
-    </labels>
-    <labels>
-        <fullName>csp_LiveAgentTimeout</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>The chat connection timed out. You can refresh the page, or create a case</value>
-    </labels>
-    <labels>
         <fullName>csp_LiveTimeout</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34575,22 +34560,6 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Show Support Options</value>
-    </labels>
-    <labels>
-        <fullName>csp_searchEmailRecipientPlaceholder</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Search by name or email</value>
-    </labels>
-    <labels>
-        <fullName>csp_searchIataCodeLocationNamePlaceHolder</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Search by IATA Code, location or name</value>
     </labels>
     <labels>
         <fullName>csp_errorCreatingCase</fullName>
