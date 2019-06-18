@@ -3,17 +3,17 @@ import { LightningElement, track, api } from 'lwc';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import createUserForContact from '@salesforce/apex/ISSP_PortalUserStatusChange.preformActionNewPortal';
 
-import New_Contact_Profile from '@salesforce/label/c.cpcc_New_Contact_Profile';
-import Working_Areas from '@salesforce/label/c.cpcc_Working_Areas';
-import Contact_Type_Status from '@salesforce/label/c.cpcc_Contact_Type_Status';
+import New_Contact_Profile from '@salesforce/label/c.CSP_cpcc_New_Contact_Profile';
+import Working_Areas from '@salesforce/label/c.CSP_cpcc_Working_Areas';
+import Contact_Type_Status from '@salesforce/label/c.CSP_cpcc_Contact_Type_Status';
 import Cancel from '@salesforce/label/c.Cancel';
 import Save from '@salesforce/label/c.Save';
-import Portal_Administrator from '@salesforce/label/c.cpcc_Portal_Administrator';
-import Financial_Assessment_Contact from '@salesforce/label/c.cpcc_Financial_Assessment_Contact';
-import Invoice_Contact from '@salesforce/label/c.cpcc_Invoice_Contact';
-import Authorised_Signatory from '@salesforce/label/c.cpcc_Authorised_Signatory';
-import BSP_CASS_Payment_Contact from '@salesforce/label/c.cpcc_BSP_CASS_Payment_Contact';
-import Agent_Credit_Risk from '@salesforce/label/c.cpcc_Agent_Credit_Risk';
+import Portal_Administrator from '@salesforce/label/c.CSP_cpcc_Portal_Administrator';
+import Financial_Assessment_Contact from '@salesforce/label/c.CSP_cpcc_Financial_Assessment_Contact';
+import Invoice_Contact from '@salesforce/label/c.CSP_cpcc_Invoice_Contact';
+import Authorised_Signatory from '@salesforce/label/c.CSP_cpcc_Authorised_Signatory';
+import BSP_CASS_Payment_Contact from '@salesforce/label/c.CSP_cpcc_BSP_CASS_Payment_Contact';
+import Agent_Credit_Risk from '@salesforce/label/c.CSP_cpcc_Agent_Credit_Risk';
 
 
 export default class PortalProfileCustomBox extends LightningElement {
