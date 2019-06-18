@@ -101,7 +101,7 @@ public without sharing class OneId_RegistrationProcessController {
 
             if(serviceName != 'FRED'){
 	            isAlreadyContact = true;
-    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName, null);
+    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
             
 	            if(userCreated == true){
 		            userInformation.isContactInserted = true;
@@ -354,8 +354,10 @@ public without sharing class OneId_RegistrationProcessController {
         return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
     }
 
+    //Method created as a workaround due to not be able to populate lookups in the Lightning Component. This was a quick fix in order to not change registration method signature. 
+    //Probably the way to set this IDs should be reviewed. 
     @AuraEnabled
-    public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
+    public static boolean registrationAux(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
         
         if(cityAndStateIds != null){
             String billingCityId = (String) cityAndStateIds.get('billingCityId');
@@ -380,7 +382,12 @@ public without sharing class OneId_RegistrationProcessController {
                 acc.IATA_ISO_Shipping_State__c = shippingStateId;                            
             }
         }
-        
+
+        return OneId_RegistrationProcessController.registration(acc, con, serviceName);
+    }
+    @AuraEnabled
+    public static boolean registration(Account acc, Contact con, String serviceName){
+              
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
         system.debug('contact  --> ' + con);

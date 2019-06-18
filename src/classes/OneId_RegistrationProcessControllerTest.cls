@@ -189,7 +189,7 @@ private class OneId_RegistrationProcessControllerTest {
             Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Travel Agent', Category__c='Non-IATA Travel Agent',IATA_ISO_Country__c = country.Id);
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(a,c,serviceName,null);
+            OneId_RegistrationProcessController.registration(a,c,serviceName);
             OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@lls.com', OneId_RegistrationProcessController.returnExistingContact('xpto@lls.com'));
             OneId_RegistrationProcessController.getAccountLabels();
             OneId_RegistrationProcessController.getSectors();
@@ -235,7 +235,7 @@ private class OneId_RegistrationProcessControllerTest {
             
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(a,c,serviceName,null);
+            OneId_RegistrationProcessController.registration(a,c,serviceName);
 
         Test.stopTest();
 
@@ -279,7 +279,7 @@ private class OneId_RegistrationProcessControllerTest {
             Account acc1child = new Account(Name='testAccount1 child', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO', ParentId = acc1.Id);
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(acc1child,c,serviceName,null);
+            OneId_RegistrationProcessController.registration(acc1child,c,serviceName);
 
         Test.stopTest();
 
@@ -323,7 +323,7 @@ private class OneId_RegistrationProcessControllerTest {
             
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(acc1,c,serviceName,null);
+            OneId_RegistrationProcessController.registration(acc1,c,serviceName);
 
         Test.stopTest();
 
@@ -420,7 +420,7 @@ private class OneId_RegistrationProcessControllerTest {
          
              Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
 
-             OneId_RegistrationProcessController.registration(a,c,serviceName,null);
+             OneId_RegistrationProcessController.registration(a,c,serviceName);
 			 OneId_RegistrationProcessController.increaseCodeCoverage();
            
          Test.stopTest();
@@ -451,7 +451,7 @@ private class OneId_RegistrationProcessControllerTest {
 
         OneId_RegistrationProcessController.getStates('Canada');
         OneId_RegistrationProcessController.getAllCities('Portugal');        
-        OneId_RegistrationProcessController.registration(new Account(), new Contact(), null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
+        OneId_RegistrationProcessController.registrationAux(new Account(), new Contact(), null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
                                                                                                                        'billingStateId' => String.valueOf(state.Id),
                                                                                                                        'shippingCityId' => String.valueOf(city.Id),
                                                                                                                        'shippingStateId' => String.valueOf(state.Id)});

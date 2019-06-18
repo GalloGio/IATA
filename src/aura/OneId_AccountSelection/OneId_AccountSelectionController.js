@@ -66,7 +66,7 @@
 									'shippingCityId' : c.get('v.shippingCityId'),
 									'shippingStateId': c.get('v.shippingStateId') };
 			//Data Quality//
-			var action = c.get("c.registration");
+			var action = c.get("c.registrationAux");
 
 			action.setParams({
 					"con" : c.get("v.contact"),
