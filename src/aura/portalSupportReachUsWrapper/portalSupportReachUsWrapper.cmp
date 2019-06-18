@@ -40,7 +40,7 @@
     <ltng:require scripts="{!$Resource.jquery2_1_4}" afterScriptsLoaded="{!c.doInit}" />
 
     <aura:if isTrue="{!v.loaded}">
-        <lightning:spinner alternativeText="Loading" style="height:250vh;" />
+        <lightning:spinner alternativeText="Loading" class="viewHeight" />
     </aura:if>
 
     <div class="slds-grid slds-grid_align-center">
