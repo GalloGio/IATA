@@ -892,7 +892,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
             update cse;
         }
         catch(Exception e){
-            system.assert(e.getMessage().contains('This field is only available for China HE\'s Financial Review non-compliance'), 'The exception message should be: \'This field is only available for China HE\'s Financial Review non-compliance\'');
+            system.assert(e.getMessage().contains('This field is only available for China HE\'s Financial Security non-compliance'), 'The exception message should be: \'This field is only available for China HE\'s Financial Security non-compliance\'');
         }
 
         AMS_OscarCase_RiskMgmt.EndRun();
