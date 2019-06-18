@@ -25,18 +25,6 @@
   padding-top: 5%;
 }
 
-.textFormat {
-  font-family: AktivGrotesk;
-  font-size: 14px;
-  font-weight: 500;
-  font-style: 500;
-  font-stretch: normal;
-  line-height: 1.4;
-  letter-spacing: normal;
-  padding-top: 2%;
-  padding-bottom: 1%;
-}
-
 .checkbox-button {
   cursor: pointer;
 }

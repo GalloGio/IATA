@@ -1,14 +1,11 @@
 <template>
 
-    <div class="slds-backdrop slds-backdrop_open"></div>
-
     <section aria-modal="true" class="slds-modal slds-fade-in-open">
         <div class="modal">
             <div class="customPopupInteriorHalfScreenCentered">
 
                 <!-- Popup Header -->
                 <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
-                    <!-- LABEL -->
                     <span>{labels.New_Contact_Profile}</span>
                     <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                         <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
@@ -74,7 +71,6 @@
 
                                 <div
                                     class="text-small slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_medium">
-                                    <!-- LABEL -->
                                     {labels.Working_Areas}
                                 </div>
                                 <template for:each={options} for:item="item">
@@ -98,7 +94,6 @@
 
                                 <div
                                     class="text-small slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_medium">
-                                    <!-- LABEL -->
                                     {labels.Contact_Type_Status}
                                 </div>
                                 <template for:each={contactTypeStatus} for:item="item">
@@ -125,13 +120,11 @@
 
                             <div class="slds-align_absolute-center slds-m-top_medium slds-m-bottom_medium">
                                 <span class="slds-m-right_medium">
-                                    <!-- LABEL -->
                                     <lightning-button variant="base" class="slds-m-top_small containedButtonWhite"
                                         type="close" label={labels.Cancel} onclick={closeModal}>
                                     </lightning-button>
                                 </span>
                                 <span>
-                                    <!-- LABEL -->
                                     <lightning-button variant="brand" class="slds-m-top_small containedButton"
                                         type="submit" label={labels.Save} onclick={save}>
                                     </lightning-button>
