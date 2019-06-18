@@ -217,7 +217,7 @@ public class PortalServicesCtrlTest {
         System.runAs(testeUser1) {
             Test.StartTest();
 
-            List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getUserAccessRequestedServices();
+            List<PortalServicesCtrl.ServiceWrapper> lstResults = PortalServicesCtrl.getUserAccessRequestedServices();
             System.assertEquals(lstResults.size() > 0, true);
 
             Test.StopTest();
