@@ -16,29 +16,28 @@
         });
         myEvent.fire();
     },
+
+    backToEmailField : function(component, event, helper) {
+        $A.util.removeClass(component.find('form'), 'slds-hide');
+        $A.util.addClass(component.find('sent'), 'slds-hide');
+        $A.util.addClass(component.find("emailExists"), 'slds-hide');
+        $A.util.addClass(component.find("detail"), 'slds-hide');
+        let invitation = component.get('v.invitation');
+        invitation.Email__c = ''
+        component.set('v.invitation', invitation);
+    },
+
     inviteUser : function(cmp, event, helper) {
-    	var action = cmp.get("c.sendInvitation");
-        console.log(JSON.stringify(cmp.get("v.contact")));
-        console.log(JSON.stringify(cmp.get("v.invitation")));
-        action.setParams({
-            "contactStr": JSON.stringify(cmp.get("v.contact")),
-            "invitationStr": JSON.stringify(cmp.get("v.invitation"))
-        });
-		action.setCallback(this, function(resp) {
-            console.log('here');
-            console.log(resp.getReturnValue());
-        });
-        $A.enqueueAction(action);	
+        debugger;
+        helper.handleInviteUser(cmp, event);
 	},
  
-	checkUsername :function (cmp, event, helper) {        
-        $A.util.removeClass(cmp.find("spinner"), 'slds-hide');
+	checkUsername :function (cmp, event, helper) {
+	    helper.toggleSpinner(cmp);
         if(helper.validateEmail(cmp)){
-        console.log("IN");
+
         var emailCmp = cmp.find("email");
-        console.log(emailCmp);
         var emailValue = emailCmp.get("v.value");
-        console.log(emailValue);
         var serviceName = "GADM";
 
         if(serviceName == null){
@@ -47,40 +46,44 @@
 
         //check if username is available (insert + rollback)
         var action = cmp.get("c.getUserInformationFromEmail");
-        console.log("before1");
+
         action.setParams({
             "email":emailValue,
             "serviceName": serviceName
         });
-		console.log("before2");
         action.setCallback(this, function(resp) {
             var params = resp.getReturnValue();
             
-            console.log(params);
-            console.log('Params received : ' + params);
-            
             cmp.set("v.contact", params.contact);
             cmp.set("v.invitation", params.invitation);
-            console.log(cmp.get("v.contact"));
-            console.log(cmp.get("v.invitation"));
+
             if(params.showNotifyButton){
-                $A.util.removeClass(cmp.find("notifyUserButton"), 'slds-hide'); 
+                $A.util.removeClass(cmp.find("notifyUserButton"), 'slds-hide');
             } else {
-                $A.util.addClass(cmp.find("notifyUserButton"), 'slds-hide'); 
+                $A.util.addClass(cmp.find("notifyUserButton"), 'slds-hide');
             }
             
             if(params.createNewInvitation){
 				$A.util.addClass(cmp.find("emailExists"), 'slds-hide'); 
-                $A.util.removeClass(cmp.find("detail"), 'slds-hide');              		
+                $A.util.removeClass(cmp.find("detail"), 'slds-hide');
+                cmp.set('v.sendNotification', false);
             } else {
                 $A.util.removeClass(cmp.find("emailExists"), 'slds-hide'); 
                 $A.util.addClass(cmp.find("detail"), 'slds-hide');
+                cmp.set('v.sendNotification', true);
             }
-            $A.util.addClass(cmp.find("spinner"), 'slds-hide');
+
+            helper.toggleSpinner(cmp);
         });
         $A.enqueueAction(action);
         }else{
-            $A.util.addClass(cmp.find("spinner"), 'slds-hide');
+
+            helper.toggleSpinner(cmp);
         }        
-    }
+    },
+
+    checkActorDomains : function(component, event, helper) {
+        helper.handleCheckActorDomains(component, event);
+    },
+
 })

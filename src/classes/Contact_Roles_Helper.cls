@@ -290,13 +290,13 @@ public without sharing class Contact_Roles_Helper {
             arw.actorsData = accountsMap.get(contactId);
             arw.rolesData = rolesMap.get(contactId);
             arw.buData = businessUnitsMap.get(contactId);
-
             aggregatedRecordWrappers.add(arw);
 
         }
 
         if(isSuperUser) {//for Super User
             List<AggregatedRecordWrapper> SuAggregatedRecordWrappers = new List<AggregatedRecordWrapper>();
+            Map<Id, AggregatedRecordWrapper> wrapperMap = new Map<Id, AggregatedRecordWrapper>();
             for (AggregatedRecordWrapper wr: aggregatedRecordWrappers){
                 if (hasRole('Service Power User', wr.rolesData)) {continue;}
                 if (wr.buData == null || wr.buData.isEmpty()){
@@ -305,8 +305,9 @@ public without sharing class Contact_Roles_Helper {
                 else {
                     for (Id buid : businessUnits) {
                         if (wr.buData.get(buid) != null) {
-                            if(! SuAggregatedRecordWrappers.contains(wr)) {
-                               SuAggregatedRecordWrappers.add(wr);
+                            if(wrapperMap.get(wr.con.Id) == null) {
+                                wrapperMap.put(wr.con.Id, wr);
+                                SuAggregatedRecordWrappers.add(wr);
                             }
 
                         }

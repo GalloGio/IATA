@@ -22,29 +22,29 @@
             <lightning:tabset  aura:id="tabs" selectedTabId="{!v.tabId}" onselect="{! c.trackUsage}">
 
                 <!--ALWAYS VISIBLE-->
-                <lightning:tab class="element first" label="HOME" id="1" onactive="{! c.activateTab}"/>
+                <lightning:tab class="first" label="HOME" id="1" onactive="{! c.activateTab}"/>
 
 
                 <aura:if isTrue="{!v.isDataSubmissionVisible}">
-                    <lightning:tab class="element" label="DATA SUBMISSION" id="2" onactive="{! c.activateTab}"/>
+                    <lightning:tab  label="DATA SUBMISSION" id="2" onactive="{! c.activateTab}"/>
                 </aura:if>
 
 
                 <aura:if isTrue="{! v.isDataSubmissionResultVisible}">
-                    <lightning:tab class="element" label="DATA SUBMISSION RESULTS" id="3" onactive="{! c.activateTab}">
+                    <lightning:tab  label="DATA SUBMISSION RESULTS" id="3" onactive="{! c.activateTab}">
                         <c:Data_Submission_List/>
                     </lightning:tab>
                 </aura:if>
 
 
                 <!--ALWAYS VISIBLE-->
-                <lightning:tab class="element" label="USER MANAGEMENT" id="4" onactive="{! c.activateTab}">
+                <lightning:tab  label="USER MANAGEMENT" id="4" onactive="{! c.activateTab}">
                     <c:GADM_ExternalUserContactList/>
                 </lightning:tab>
 
 
                 <aura:if isTrue="{!v.isDashboardsVisible}">
-                    <lightning:tab class="element" label="DASHBOARDS" id="5" onactive="{! c.activateTab}"/>
+                    <lightning:tab label="DASHBOARDS" id="5" onactive="{! c.activateTab}"/>
                 </aura:if>
 
             </lightning:tabset>

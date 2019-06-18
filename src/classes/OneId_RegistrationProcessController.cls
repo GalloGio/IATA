@@ -908,6 +908,7 @@ public without sharing class OneId_RegistrationProcessController {
         if(! invitation.isEmpty()) {
             Invitation__c inv = invitation[0];
             Contact c = new Contact (
+                    AccountId = inv.AccountId__c,
                     Fax = inv.Business_Fax__c,
                     Phone = inv.Business_Phone__c,
                     Email = inv.Email__c,
@@ -922,6 +923,21 @@ public without sharing class OneId_RegistrationProcessController {
             return c;
         }
         return null;
+    }
+
+
+    @AuraEnabled
+    public static Account loadGadmAccount(String gadmAccountId) {
+        if(String.isNotBlank(gadmAccountId)) {
+            List<Account> accounts = [SELECT Id, Name, BillingStreet, IATA_ISO_Country__r.Name, Airline_designator__c, IATACode__c, Category__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c FROM Account WHERE Id = :gadmAccountId LIMIT 1];
+            if (! accounts.isEmpty()) {
+                return accounts[0];
+            }else{
+                return new Account();
+            }
+        }
+
+        return new Account();
     }
 
     /* Manuel Conde commented this...

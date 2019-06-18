@@ -608,5 +608,103 @@ private class OneId_RegistrationProcessControllerTest {
         Test.stopTest();
     }
 
+    @IsTest
+    private static void loadGadmAccountTest() {
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c();
+        country.Name = 'Czech Republic';
+        country.ISO_Code__c = 'Cs';
+        country.AIMS_Area_Name__c = 'Czech Republic';
+        country.AIMS_Area_ID__c = '1';
+        insert country;
+
+        Id headquarters = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+
+        List<Account> accountsToInsert = new List<Account>();
+
+        Account acc = new Account();
+        acc.Name = 'Test account';
+        acc.BillingCity = 'Montreal';
+        acc.BillingCountry = 'Canada';
+        acc.BillingStreet = 'some street';
+        acc.IATA_ISO_Country__c = country.Id;
+        acc.Location_Type__c = 'HO';
+        acc.IATACode__c = '1234567';
+        acc.Type = 'IATA Cargo Agent';
+        acc.Status__c = 'Approved';
+        acc.RecordTypeId = headquarters;
+        accountsToInsert.add(acc);
+
+        Account acc2 = new Account();
+        acc2.Name = 'Test account 2';
+        acc2.BillingCity = 'Montreal';
+        acc2.BillingCountry = 'Canada';
+        acc2.BillingStreet = 'some street';
+        acc2.IATA_ISO_Country__c = country.Id;
+        acc2.Location_Type__c = 'HO';
+        acc2.IATACode__c = '1234567';
+        acc2.Type = 'IATA Cargo Agent';
+        acc2.Status__c = 'Approved';
+        acc2.RecordTypeId = headquarters;
+        accountsToInsert.add(acc2);
+
+        insert accountsToInsert;
+
+        Account testAccount = null;
+
+        Test.startTest();
+
+        testAccount = OneId_RegistrationProcessController.loadGadmAccount(acc.Id);
+
+        Test.stopTest();
+
+
+        System.assertEquals(acc.Id, testAccount.Id, 'Wrong account retrieved!');
+
+    }
+
+    @IsTest
+    private static void loadGadmAccountNullTest() {
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c();
+        country.Name = 'Czech Republic';
+        country.ISO_Code__c = 'Cs';
+        country.AIMS_Area_Name__c = 'Czech Republic';
+        country.AIMS_Area_ID__c = '1';
+        insert country;
+
+        Id headquarters = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+
+        List<Account> accountsToInsert = new List<Account>();
+
+        Account acc = new Account();
+        acc.Name = 'Test account';
+        acc.BillingCity = 'Montreal';
+        acc.BillingCountry = 'Canada';
+        acc.BillingStreet = 'some street';
+        acc.IATA_ISO_Country__c = country.Id;
+        acc.Location_Type__c = 'HO';
+        acc.IATACode__c = '1234567';
+        acc.Type = 'IATA Cargo Agent';
+        acc.Status__c = 'Approved';
+        acc.RecordTypeId = headquarters;
+        accountsToInsert.add(acc);
+
+        insert accountsToInsert;
+
+        Account testAccount = null;
+
+        Test.startTest();
+
+        testAccount = OneId_RegistrationProcessController.loadGadmAccount(null);
+
+        Test.stopTest();
+
+
+        System.assertEquals(testAccount.Id, null, 'Wrong result retrieved!');
+
+    }
+
+
 
 }

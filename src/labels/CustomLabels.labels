@@ -4606,6 +4606,27 @@ You can choose one or more of the following topics:</value>
         <value>This file is already attached!</value>
     </labels>
     <labels>
+        <fullName>GADM_Invite_User_invitation_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_error</shortDescription>
+        <value>Unable to send invitation!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_invitation_no_data</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_no_data</shortDescription>
+        <value>Unable to get data!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_not_allowed_email_domain</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_not_allowed_email_domain</shortDescription>
+        <value>Email domain is not allowed for selected Actor!</value>
+    </labels>
+    <labels>
         <fullName>GADM_NoFile</fullName>
         <language>en_US</language>
         <protected>false</protected>

@@ -30,6 +30,7 @@
     <aura:attribute name="isServiceUser" type="Boolean"/>
     <aura:attribute name="isServiceEligible" type="Boolean"/>
     <aura:attribute name="isGadmPowerUser" type="Boolean" default="false"/>
+    <aura:attribute name="gadmAccountId" type="String"/>
 
     <!-- URL parameters -->
     <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
@@ -157,11 +158,20 @@
                                         <c:OneId_Fred_AccountSelection contact="{!v.contact}" account="{!v.account}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>
                                         <aura:set attribute="else">
                                             <aura:if isTrue="{!v.serviceName=='NDCMM'}">
-                                                <c:OneId_NDCMM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>
+                                               <!--<c:OneId_NDCMM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>-->
 
-                                                <!-- Default account creation -->
                                                 <aura:set attribute="else">
-                                                    <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}"/>
+                                                    <!--GADM Account-->
+                                                    <aura:if isTrue="{!v.serviceName == 'GADM'}">
+
+                                                        <c:OneId_GADM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}" gadmAccountId="{! v.gadmAccountId}"/>
+
+                                                        <!-- Default account creation -->
+                                                        <aura:set attribute="else">
+                                                            <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}"/>
+                                                        </aura:set>
+
+                                                    </aura:if>
                                                 </aura:set>
                                             </aura:if>
                                         </aura:set>

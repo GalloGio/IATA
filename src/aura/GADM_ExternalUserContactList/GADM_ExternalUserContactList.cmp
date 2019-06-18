@@ -291,7 +291,7 @@
                 
             </aura:if>
             
-			<aura:if isTrue="{!or(v.IsPowerUser, v.isSuperUser)}">
+			<aura:if isTrue="{!or(v.isPowerUser, v.isSuperUser)}">
             		<lightning:button variant="base" label="Invite user" title="Invite user" onclick="{! c.handleInvitationShow }" class="btn btn-primary btn-grey" />
                 </aura:if>
         </div>
@@ -302,12 +302,14 @@
                 <c:GADM_ExternalUserContactListDetail Back_EVT="{!c.handleDetailsBackEvt}" selectedUserInfo="{!v.selectedUserInfo}" currentUserInfo ="{! v.currentUserInfo}" isPowerUser="{! v.isPowerUser}" isSuperUser="{! v.isSuperUser}" isGadmUser="{! v.isGadmUser}" businessUnits="{!v.businessUnits}"/>
             </div>
         </aura:if>
-		<!--RECORD DETAIL-->
+
+		<!--INVITE USER-->
         <aura:if isTrue="{! v.invitationShown}">
             <div aura:id="invitationContainer" class="slds-hide">
                 <c:Invite_User Back_EVT="{!c.handleDetailsBackEvt}"/>
             </div>
         </aura:if>
+
         <!--SPINNER-->
         <div aura:id="spinner" class="slds-hide">
             <lightning:spinner alternativeText="Loading"/>
