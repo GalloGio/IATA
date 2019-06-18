@@ -1,4 +1,4 @@
-public without sharing class PortalSupportReachUsCreateNewCaseCtrl {
+public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
 
 private final static Integer MAX_RESULTS = 100;
 
