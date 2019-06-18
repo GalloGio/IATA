@@ -591,14 +591,15 @@ public with sharing class ANG_AgencyChangesHelper {
 			New parent = external HE
 			The selected agencies will be transformed into AE and linked to the new paren, therefore they will automatically get the Accreditation type "XXX"
 		*/
+
+		Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
+
 		if((!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c) && oscarToProcess.Account__c != oscarToProcess.New_parent__c)){
 
 			//Map<Id,Account> accountsMap;
 
-			Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
-
 			if(newHEaccount == null)
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c from Account where Id = :oscarToProcess.New_parent__c];
+				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c from Account where Id = :oscarToProcess.New_parent__c];
 
 			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
@@ -655,6 +656,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			oscarAccount.ANG_HE_RiskStatus__c = null;
 			oscarAccount.Assessment_Performed_Date__c = null;
 			oscarAccount.Financial_Review_Result__c = null;
+			oscarAccount.ANG_FA_Opt_out__c = newHEaccount.ANG_FA_Opt_out__c;
 
 			if(switchAccreditationModel){
 				oscarAccount.ANG_Accreditation_Model__c = newAccreditationModel;
