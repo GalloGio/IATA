@@ -28,6 +28,19 @@ public with sharing class ANG_ProductComparisonHelper {
     }
 
     public Boolean chinaAgent {get; set;}
+
+    public String currentYear {
+    	get {
+    		return String.valueOf(Date.today().year());
+    	} 
+    	private set;
+   	}
+    public String prodCompAnnualFeesFormattedLabel {
+    	get {
+    		return Label.ISSP_ANG_ProdCompAnnualFees.replaceAll('YYYY', currentYear);
+    	}
+    	private set;
+    }
        
     public ANG_ProductComparisonHelper(String type) {
 
