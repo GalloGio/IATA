@@ -1101,16 +1101,16 @@ NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
         <errorMessage>Access cannot be granted since the Agency&apos;s accreditation type for this contact does not match the portal service (Restrict by Accreditation Type).</errorMessage>
     </validationRules>
     <validationRules>
-    <fullName>MIR_service_for_airlines_only</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND(
+        <fullName>MIR_service_for_airlines_only</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
     Application_Name__c = &quot;Management Information Report&quot;,
-    ISPICKVAL(Right__c,&#39;Access Granted&#39;),
+    ISPICKVAL(Right__c,&apos;Access Granted&apos;),
       NOT(
-      ISPICKVAL(Contact__r.Account.Sector__c,&#39;Airline&#39;)
+      ISPICKVAL(Contact__r.Account.Sector__c,&apos;Airline&apos;)
       )
     )</errorConditionFormula>
-    <errorMessage>Management Information Report portal service can only be granted for users under airline accounts.</errorMessage>
+        <errorMessage>Management Information Report portal service can only be granted for users under airline accounts.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>
