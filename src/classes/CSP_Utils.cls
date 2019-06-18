@@ -28,6 +28,7 @@ public without sharing class CSP_Utils {
     * @description Get Logged User.
     * @return User
     */
+    @AuraEnabled
     public static User getLoggedUser() {
         
         User loggedUser = [SELECT Id, contactId, Contact.Account.Top_Parent__c, Contact.AccountId, Contact.User_Portal_Status__c
