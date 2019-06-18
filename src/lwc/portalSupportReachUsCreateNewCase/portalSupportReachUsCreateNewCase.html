@@ -96,7 +96,7 @@
                 <div class="slds-theme_shade customCard">
                     <div class="slds-text-align_center slds-p-vertical_xx-large">
                         <h1 class="text-large text-bold slds-p-bottom_large">{label.csp_CreateNewCaseTopLabel}</h1>
-                        <h2 class="text-xsmall">{label.csp_CreateNewCaseTopSubLabel}</h2>
+                        <h2 class="text-xsmall">{label.csp_CreateNewCaseTopSubLabel}: {categoryLabel}, {topicLabel}, {subtopicLabel}</h2>
                         <h2 class="text-xsmall">{label.csp_CreateNewCaseTopSubSubLabel}</h2>
                     </div>
                     <div class="customWhiteBackground">
@@ -171,13 +171,13 @@
                                 <div class="slds-align_absolute-center slds-m-around_x-large slds-p-vertical_large">
                                     <div class="slds-grid slds-gutters">
                                         <div class="slds-col">
-                                            <button onclick={finnishCreatingCase} data-id="Show_Success"
+                                            <button onclick={finishCreatingCase} data-id="Show_Success"
                                                 class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport">
                                                 {label.csp_CreateNewCaseTopLabel}
                                             </button>
                                         </div>
                                         <div class="slds-col">
-                                            <button onclick={finnishCreatingCase} data-id="Add_Attachment"
+                                            <button onclick={finishCreatingCase} data-id="Add_Attachment"
                                                 class="slds-p-horizontal_large containedButton containedButton-size cursorPointer uiButton contactSupport slds-button_brand">
                                                 {label.csp_CreateNewCaseAddAttachment}
                                             </button>

@@ -85,17 +85,17 @@
             delete liveAgentDeployment;
         }
 
-        if(data.Emergency){
-            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") +'\n'
-            + $A.get("$Label.c.LVA_CallUsEmergencyPhoneNumber") +'\n\n'
-            + $A.get("$Label.c.LVA_CallUsAvailableHours") +'\n'
-            + $A.get("$Label.c.LVA_CallUsEmergencyAvailableHours") +'\n';
+        if (data.Emergency) {
+            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") + '\n'
+                + $A.get("$Label.c.LVA_CallUsEmergencyPhoneNumber") + '\n\n'
+                + $A.get("$Label.c.LVA_CallUsAvailableHours") + '\n'
+                + $A.get("$Label.c.LVA_CallUsEmergencyAvailableHours") + '\n';
             component.set("v.callCenterInfo_Label", emergency);
-        }else{
-            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") +'\n'
-            + component.get("v.phoneNumber").PhoneNumber +'\n\n'
-            + $A.get("$Label.c.LVA_CallUsAvailableHours") +'\n'
-            + component.get("v.phoneNumber").AvailableHours +'\n';
+        } else {
+            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") + '\n'
+                + component.get("v.phoneNumber").PhoneNumber + '\n\n'
+                + $A.get("$Label.c.LVA_CallUsAvailableHours") + '\n'
+                + component.get("v.phoneNumber").AvailableHours + '\n';
             component.set("v.callCenterInfo_Label", emergency);
         }
 
@@ -129,7 +129,7 @@
                 toastEvent.setParams({
                     "title": "Error",
                     "message": $A.get("$Label.c.csp_LiveAgentBadConfig"),
-                    "type" : "Error"
+                    "type": "Error"
                 });
                 toastEvent.fire();
             });
@@ -137,11 +137,12 @@
 
     redirectCreateCase: function (component, event, helper) {
         var urlEvent = $A.get("e.force:navigateToURL");
+        var country = (component.get("v.countryISO") == '' ? '' : '&countryISO=' + component.get("v.countryISO"));
         urlEvent.setParams({
             "url": "/support-reach-us-create-new-case?category=" + component.get("v.category")
                 + '&topic=' + component.get("v.topic")
                 + '&subtopic=' + component.get("v.subTopic")
-                + '&countryISO=' + (component.get("v.countryISO") == '' ? 'gb' : component.get("v.countryISO"))
+                + country
                 + '&concerncase=' + !component.get("v.isQuestion")
                 + '&emergency=' + component.get("v.isEmergency")
         });

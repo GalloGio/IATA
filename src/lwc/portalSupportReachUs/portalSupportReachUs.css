@@ -48,10 +48,6 @@
     color: #999999;
 }
 
-.basicInfoBox {
-    width: 512px;
-}
-
 .lower_gray_panel_half_border::before {
     content: "";
     display: block;

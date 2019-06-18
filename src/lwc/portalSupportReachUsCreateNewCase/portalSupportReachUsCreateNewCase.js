@@ -3,12 +3,12 @@ import idOfUser from '@salesforce/user/Id';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getParamsFromPage } from 'c/navigationUtils';
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
-import searchAccounts from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.searchAccounts';
-import getContact from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.getContact';
-import searchContacts from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.searchContacts';
-import createCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.createCase';
-import getProfile from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.getProfile';
-import insertCase from '@salesforce/apex/portalSupportReachUsCreateNewCaseCtrl.insertCase';
+import searchAccounts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchAccounts';
+import getContact from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.getContact';
+import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchContacts';
+import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
+import getProfile from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.getProfile';
+import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
 
 // Import custom labels 
 import csp_CreateNewCaseTopSubLabel from '@salesforce/label/c.csp_CreateNewCaseTopSubLabel';
@@ -126,6 +126,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     category;
     topic;
     subtopic;
+    categoryLabel;
+    topicLabel;
+    @track subtopicLabel;
     countryISO;
 
     //childComponent data
@@ -167,14 +170,17 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                     && 'topic' in pageParams
                     && pageParams.topic !== ''
                     && 'subtopic' in pageParams
-                    && pageParams.subtopic !== ''
-                    && 'countryISO' in pageParams) {
+                    && pageParams.subtopic !== '') {
 
                     //store all data in global variables
                     this.category = pageParams.category;
                     this.topic = pageParams.topic;
                     this.subtopic = pageParams.subtopic;
-                    this.countryISO = pageParams.countryISO;
+                    if (this.countryISO === undefined || this.countryISO === '') {
+                        this.countryISO = ''
+                    } else {
+                        this.countryISO = pageParams.countryISO;
+                    }
 
                     //Auxiliary Map
                     const map = new Map();
@@ -215,6 +221,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
                         this.isEmergencyCase = pageParams.emergency === 'true';
                         this.isConcernCase = pageParams.concerncase === 'true';
+                        this.categoryLabel = myCategoryOptions.find(obj => obj.value === pageParams.category).label;
+                        this.topicLabel = myTopicOptions.find(obj => obj.value === pageParams.topic).label;
+                        this.subtopicLabel = mySubTopicOptions.find(obj => obj.value === pageParams.subtopic).label;
 
                         //all ok parameters exist
                         //initialize the case
@@ -262,10 +271,14 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //gets related accounts and sets them in global var
     getRelatedAccounts() {
+        //activate spinner
+        this.loading = true;
         searchAccounts({ searchTerm: null })
             .then(relatedAccountsResult => {
                 this.relatedAccounts = JSON.parse(JSON.stringify(relatedAccountsResult));
                 this.getProfile();
+                //activate spinner
+                this.loading = false;
             });
     }
 
@@ -289,9 +302,13 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //gets related contacts and sets them in global var
     getRelatedContacts() {
+        //activate spinner
+        this.loading = true;
         searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
+                //deactivate spinner
+                this.loading = false;
             });
     }
 
@@ -400,8 +417,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     }
 
     //validate fields and finish creating the case.
-    finnishCreatingCase(event) {
-        
+    finishCreatingCase(event) {
+
         if (this.agentProfile) {
             this.checkForErrors();
         }
@@ -427,11 +444,11 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             }
 
             this.caseInitiated.Description += this.label.csp_Category + ' - '
-                + this.category + ' \n'
+                + this.categoryLabel + ' \n'
                 + this.label.csp_Topic + ' - '
-                + this.topic + ' \n'
+                + this.topicLabel + ' \n'
                 + this.label.csp_Subtopic + ' - '
-                + this.subtopic + ' \n\n'
+                + this.subtopicLabel + ' \n\n'
                 + this.label.csp_caseDescription.fieldApiName + ' - '
                 + this.description;
             this.caseInitiated.Subject = this.subject;
@@ -447,13 +464,17 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             }
 
             record.IsComplaint__c = this.isConcernCase;
-            record.RecordTypeId = this.caseInitiated.RecordTypeId;
+            if (this.caseInitiated.RecordTypeId !== undefined && this.caseInitiated.RecordTypeId !== '') {
+                record.RecordTypeId = this.caseInitiated.RecordTypeId;
+            }
             record.BSPCountry__c = this.caseInitiated.BSPCountry__c;
             record.Region__c = this.caseInitiated.Region__c;
             record.Country_concerned_by_the_query__c = this.caseInitiated.Country_concerned_by_the_query__c;
             record.Origin = this.caseInitiated.Origin;
             record.Status = this.caseInitiated.Status;
             record.CaseArea__c = this.caseInitiated.CaseArea__c;
+            record.Topic__c = this.topic + '__c';
+            record.Subtopic__c = this.subtopicLabel + '__c';
             record.IFAP_Country_ISO__c = this.caseInitiated.IFAP_Country_ISO__c.toUpperCase();
             record.Subject = this.caseInitiated.Subject;
             record.Description = this.caseInitiated.Description;
@@ -465,10 +486,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                 .then(result => {
                     this.caseNumber = result.CaseNumber;
                     this.caseID = result.Id;
-                    
+                    this.loading = false;
 
-                    // let process = createEvent.target.attributes.getNamedItem('data-id').value;
-                    
                     //Open the modal upon case insert with the success message if is the Create Case button pressed.
                     if (process === 'Show_Success') {
                         this.openModal();
@@ -476,8 +495,6 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                     else if (process === 'Add_Attachment') {
                         window.location.href = "/csportal/s/case-details?caseId=" + this.caseID + '&Att=true';
                     }
-                    this.loading = false;
-
                 })
                 .catch(error => {
                     this.loading = false;
