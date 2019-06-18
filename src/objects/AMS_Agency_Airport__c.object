@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>AMS_2_GDP_Key__c</fullName>
         <description>Key used within AMS and GDP. Has the format of (ID of the Account (Agency))-(Related Airport&apos;s Code)</description>
