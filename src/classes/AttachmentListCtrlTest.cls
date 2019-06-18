@@ -30,8 +30,8 @@ private  class AttachmentListCtrlTest {
 
 	static testMethod void testGetters() {
 
-       List<AttachmentListCtrl.PickListWrapper> identifierList=  AttachmentListCtrl.getFileIdentifierPickValues();
-       List<AttachmentListCtrl.PickListWrapper> reviewStatusList=  AttachmentListCtrl.getReviewStatusPickValues();
+       List<CSP_Utils.PickListWrapper> identifierList=  AttachmentListCtrl.getFileIdentifierPickValues();
+       List<CSP_Utils.PickListWrapper> reviewStatusList=  AttachmentListCtrl.getReviewStatusPickValues();
 
  
     }
