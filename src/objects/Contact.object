@@ -19991,12 +19991,19 @@ $Profile.Name &lt;&gt; &quot;System Administrator&quot;
     <validationRules>
         <fullName>Change_id_card_holder_account_name</fullName>
         <active>true</active>
-        <errorConditionFormula>AND( 
-ISPICKVAL($User.UserType,&quot;Standard&quot;), 
-ID_Card_Holder__c=true, 
-ISCHANGED(AccountId),
-NOT(ISBLANK(PRIORVALUE(AccountId)))
+        <errorConditionFormula>AND(
 
+
+ID_Card_Holder__c=true,
+
+ISCHANGED(AccountId),
+
+NOT(ISBLANK(PRIORVALUE(AccountId))),
+				
+				or(
+	 $User.Profile_Name__c &lt;&gt;  &quot;IDFS Passenger - Distribution Solutions&quot;,
+		$UserRole.Name  &lt;&gt;   &quot;IDO Industry Solutions&quot;												
+								)				
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. please raise an internal case to ID Card team to move the contact to another account</errorMessage>
     </validationRules>
@@ -20004,7 +20011,11 @@ NOT(ISBLANK(PRIORVALUE(AccountId)))
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;),
+			
+				or(
+	 $User.Profile_Name__c &lt;&gt;  &quot;IDFS Passenger - Distribution Solutions&quot;,
+		$UserRole.Name  &lt;&gt;   &quot;IDO Industry Solutions&quot;												
+								),				
 ID_Card_Holder__c=true,
 	Or(			
 					and(
