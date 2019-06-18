@@ -65,14 +65,22 @@
 									'billingStateId' : c.get('v.billingStateId'),
 									'shippingCityId' : c.get('v.shippingCityId'),
 									'shippingStateId': c.get('v.shippingStateId') };
+			let acc = c.get("v.account");
+
+			if(cityAndStateIds.billingCityId) acc.Geoname_Billing_City__c = cityAndStateIds.billingCityId;
+			if(cityAndStateIds.billingStateId){
+				acc.ISO_State__c = cityAndStateIds.billingStateId;
+                acc.IATA_ISO_Billing_State__c = cityAndStateIds.billingStateId;
+			}
+			if(cityAndStateIds.shippingCityId) acc.Geoname_Shipping_City__c = cityAndStateIds.shippingCityId;
+			if(cityAndStateIds.shippingStateId) acc.IATA_ISO_Shipping_State__c = cityAndStateIds.shippingStateId;
 			//Data Quality//
 			var action = c.get("c.registration");
 
 			action.setParams({
 					"con" : c.get("v.contact"),
-					"acc" : c.get("v.account"),
-					"serviceName" : c.get("v.serviceName"),
-					"cityAndStateIds" : cityAndStateIds
+					"acc" : acc,
+					"serviceName" : c.get("v.serviceName")					
 				});
 			
 			action.setCallback(this, function(resp){

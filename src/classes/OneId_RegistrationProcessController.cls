@@ -101,7 +101,7 @@ public without sharing class OneId_RegistrationProcessController {
 
             if(serviceName != 'FRED'){
 	            isAlreadyContact = true;
-    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName, null);
+    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
             
 	            if(userCreated == true){
 		            userInformation.isContactInserted = true;
@@ -355,31 +355,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
-    public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
-        
-        if(cityAndStateIds != null){
-            String billingCityId = (String) cityAndStateIds.get('billingCityId');
-            String billingStateId = (String) cityAndStateIds.get('billingStateId');
-            String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
-            String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
-            
-            if(!String.isBlank(billingCityId)){
-                acc.Geoname_Billing_City__c = billingCityId;                
-            }
-
-            if(!String.isBlank(billingStateId)){
-                acc.ISO_State__c = billingStateId;
-                acc.IATA_ISO_Billing_State__c = billingStateId;                            
-            }
-
-            if(!String.isBlank(shippingCityId)){
-                acc.Geoname_Shipping_City__c = shippingCityId;                
-            }
-
-            if(!String.isBlank(shippingStateId)){
-                acc.IATA_ISO_Shipping_State__c = shippingStateId;                            
-            }
-        }
+    public static boolean registration(Account acc, Contact con, String serviceName){       
         
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
