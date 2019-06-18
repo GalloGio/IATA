@@ -34113,6 +34113,27 @@ title,Title,Name</value>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Live Agent connection timeout. Please refresh the page or contact Support</value>
     </labels>
+	<labels>
+        <fullName>csp_My_Profile_Company</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp My Profile Company</shortDescription>
+        <value>Company</value>
+    </labels>
+    <labels>
+        <fullName>csp_My_Profile_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp My Profile Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>csp_My_Profile_Job_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp My Profile Job Title</shortDescription>
+        <value>Job Title</value>
+    </labels>
     <labels>
         <fullName>csp_Concern</fullName>
         <categories>CS Portal</categories>
