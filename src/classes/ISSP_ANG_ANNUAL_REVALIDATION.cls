@@ -169,9 +169,13 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
             }
         }
         
-        for(Integer k = relatedAccounts.size()-1; k >= 0; k--){
+        for(Integer i = relatedAccounts.size() - 1; i >= 0; i--) {
             for(Id completedId : completedForms){
-                if(relatedAccounts[k].getValue() == completedId) relatedAccounts.remove(k);
+                if(relatedAccounts[i].getValue() == completedId)
+                {
+                    relatedAccounts.remove(i);
+                    break;
+                }
             }
         }
         
