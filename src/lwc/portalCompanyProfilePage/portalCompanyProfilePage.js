@@ -58,6 +58,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track contactsEnded = false;
     @track branchesEnded = false;
     @track isFetching = false;
+    lastPosition;
 
 
     @track openmodel = false;
@@ -192,20 +193,17 @@ export default class PortalCompanyProfilePage extends LightningElement {
         let treshhold = 250;
 
         let isFetching = this.isFetching;
-        
-        console.log('wholePageTop '+wholePage.getBoundingClientRect().top);
-        console.log('wholePageBottom '+wholePage.getBoundingClientRect().bottom);
-        console.log('loadMoreTrigger '+loadMoreTrigger);
-        console.log('endPage.top '+endPage.getBoundingClientRect().top);
-        console.log('yposition '+yposition);
 
-        if((Math.abs(yposition-loadMoreTrigger) < treshhold)){
-            if(!isFetching){
+        let lastPosition  = this.lastPosition;
+
+        if(Math.abs(wholePage.getBoundingClientRect().bottom - yposition) < treshhold){//if((Math.abs(yposition-loadMoreTrigger) < treshhold)){
+            if(!isFetching && (lastPosition == null || lastPosition < yposition) ){
                 this.loadMore();
             }
         }else{
             //console.log(Math.abs(yposition-loadMoreTrigger));
         }
+        this.lastPosition = yposition;
     }
 
     onmouseenterTab(event) {
@@ -293,7 +291,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         getContacts({ offset: this.contactsOffset}).then(result => {
             console.log('cs.. '+result.length);
             this.isFetching = false;
-            if(result.length == 0){return;}
+            if(result.length == 0){ this.contactsEnded = true; return;}
 
             let contacts = JSON.parse(JSON.stringify(result));
             let unwrappedContacts = JSON.parse(JSON.stringify(this.contacts));
@@ -349,7 +347,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         getBranches({ offset: this.branchesOffset}).then(result => {
             console.log('brs... '+result.length);
             this.isFetching = false;
-            if(result.length == 0){return;}
+            if(result.length == 0){this.branchesEnded = true; return;}
 
             this.branchesOffset = this.branchesOffset+ result.length;
             let branches = JSON.parse(JSON.stringify(result));
@@ -456,24 +454,24 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         let offset;
 
-        this.isFetching = true;
-
-        if(this.tab1Active){
+        if(this.tab1Active && !this.branchesEnded){
             //Get more branches
+            this.isFetching = true;
             offset = this.branchesOffset;
-            console.log('getMore ..branches '+offset);
+
             let contactList = this.template.querySelector('c-portal-contact-list');
             contactList.resetInit();
-            //this.branchesLoaded = false;
+
             this.retrieveBranches();
         }
-        else if(this.tab2Active){
+        else if(this.tab2Active && !this.contactsEnded){
             //Get more contacts
+            this.isFetching = true;
             offset = this.contactsOffset;
-            console.log('getMore ..contacts '+offset);
+
             let contactList = this.template.querySelector('c-portal-contact-list');
             contactList.resetInit();
-            //this.contactsLoaded= false;
+
             this.retrieveContacts();
         }
 
@@ -481,8 +479,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     get tab0Active() { return this.lstTabs[0].active; }
-    get tab1Active() { return this.lstTabs[1].active; }
-    get tab2Active() { return this.lstTabs[2].active; }
+    get tab1Active() { return this.lstTabs[1] != null && this.lstTabs[1].active; }
+    get tab2Active() { return this.lstTabs[2] != null && this.lstTabs[2].active; }
     //get tab3Active() { return this.lstTabs[3].active; }
     //get tab4Active() { return this.lstTabs[4].active; }
 }
