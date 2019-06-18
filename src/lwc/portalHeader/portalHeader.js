@@ -1,8 +1,8 @@
-import { LightningElement, track} from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
-import { navigateToPage } from'c/navigationUtils';
+import { navigateToPage } from 'c/navigationUtils';
 
 //notification apex method
 import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
@@ -59,7 +59,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     set labels(value) {
         this._labels = value;
     }
-    
+
     //links for images
     logoIcon = '/csportal/s/CSPortal/Images/Logo/group.svg';
 
@@ -101,7 +101,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     @track mainBackground = 'z-index: 9999;';
 
-    connectedCallback() { 
+    connectedCallback() {
 
         isAdmin().then(result => {
             this.userAdmin = result;
@@ -111,9 +111,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.baseURL = window.location.href;
             let resultsAux = JSON.parse(JSON.stringify(result));
 
-            console.log('AUX: ' , resultsAux);
+            console.log('AUX: ', resultsAux);
 
-            resultsAux.sort(function(a,b){
+            resultsAux.sort(function (a, b) {
                 return new Date(b.createdDate) - new Date(a.createdDate);
             });
 
@@ -122,8 +122,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             let notificationCounter = 0;
             let taskCounter = 0;
             resultsAux.forEach(function (element) {
-                if (element.type === 'Notification'){
-                    if ( element.viewed === false ) {
+                if (element.type === 'Notification') {
+                    if (element.viewed === false) {
                         notificationCounter++;
                     }
                 } else {
@@ -139,7 +139,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
             this.numberOfNotifications = (notificationCounter + taskCounter);
 
-            if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+            if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
                 this.notificationNumberStyle = 'display: none;';
             }
 
@@ -156,12 +156,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             },
         });
     }
-    
+
     // Check if we are in the Old/New Portal
-    navigationCheck(pageNameToNavigate, currentService){
+    navigationCheck(pageNameToNavigate, currentService) {
         this.currentURL = window.location.href;
-        if ( !this.currentURL.includes(this.labels.PortalName) ) {
-            window.history.pushState("", "", "/" + this.labels.PortalName+ "/s/" + currentService);
+        if (!this.currentURL.includes(this.labels.PortalName)) {
+            window.history.pushState("", "", "/" + this.labels.PortalName + "/s/" + currentService);
             location.reload();
         } else {
             this.navigateToOtherPage(pageNameToNavigate);
@@ -185,15 +185,15 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     navigateToMyProfile() {
-        //this.navigateToOtherPage("");
+        this.navigationCheck("my-profile", "my-profile");
     }
 
     navigateToCompanyProfile() {
-        this.navigateToOtherPage("company-profile");
+        this.navigationCheck("company-profile", "company-profile");
     }
 
     navigateToCases() {
-        this.navigateToOtherPage("cases-list");
+        this.navigationCheck("cases-list", "cases-list");
     }
 
     navigateToSettings() {
@@ -212,7 +212,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
         this.openNotifications = !this.openNotifications;
 
-        if(this.openNotifications) {
+        if (this.openNotifications) {
             this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000;';
             this.headerButtonNotificationsCloseIconStyle = 'display: block;';
             this.headerButtonNotificationsStyle = 'display: none;';
@@ -221,7 +221,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.showBackdrop = true;
             this.displayBodyStyle = 'width: 35vw';
             this.displayNotificationStyle = 'width: 100%'
-       } else {
+        } else {
             this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
             this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
             this.headerButtonNotificationsStyle = 'display: block;';
@@ -231,7 +231,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
-    onClickAllNotificationsView(event){
+    onClickAllNotificationsView(event) {
         this.notificationsView(event);
     }
 
@@ -252,8 +252,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
         let notificationsListAux = JSON.parse(JSON.stringify(this.notificationsList));
 
-        let notification = notificationsListAux.find(function(element) {
-            if (element.id === selectedNotificationId){
+        let notification = notificationsListAux.find(function (element) {
+            if (element.id === selectedNotificationId) {
                 return element;
             }
             return null;
@@ -261,61 +261,74 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
         this.notification = notification;
 
-        if (notification.typeNotification === 'Announcement' ){
-            increaseNotificationView({id : selectedNotificationId})
-            .then(results => {
+        if (notification.typeNotification === 'Announcement') {
+            increaseNotificationView({ id: selectedNotificationId })
+                .then(results => {
 
-                if (!notification.viewed){
-                    let notificationCounter = this.notificationCounter;
-                    let taskCounter = this.taskCounter;
+                    if (!notification.viewed) {
+                        let notificationCounter = this.notificationCounter;
+                        let taskCounter = this.taskCounter;
 
-                    notificationCounter--;
-                    this.numberOfNotifications = notificationCounter + taskCounter;
-                    this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
-                    this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
-                    this.notificationCounter = notificationCounter;
+                        notificationCounter--;
+                        this.numberOfNotifications = notificationCounter + taskCounter;
+                        this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+                        this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
+                        this.notificationCounter = notificationCounter;
 
-                    this.numberOfNotifications = (notificationCounter + taskCounter);
-                    if(this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
-                        this.notificationNumberStyle = 'display: none;';
+                        this.numberOfNotifications = (notificationCounter + taskCounter);
+                        if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+                            this.notificationNumberStyle = 'display: none;';
+                        }
+
+                        notification.viewed = true;
+                        notification.styles = 'readNotification';
+                        this.notificationsList = notificationsListAux;
                     }
 
-                    notification.viewed = true;
-                    notification.styles = 'readNotification';
-                    this.notificationsList = notificationsListAux;
-                }
+                })
+                .catch(error => {
+                    const showError = new ShowToastEvent({
+                        title: 'Error',
+                        message: 'An error has occurred: ' + error.getMessage,
+                        variant: 'error',
+                    });
+                    this.dispatchEvent(showError);
 
-            })
-            .catch(error => {
-                const showError = new ShowToastEvent({
-                    title: 'Error',
-                    message: 'An error has occurred: ' + error.getMessage,
-                    variant: 'error',
                 });
-                this.dispatchEvent(showError);
-
-            });
         } else {
-            if (notification.type === "Portal Service"){
+            if (notification.type === "Portal Service") {
                 let params = {};
                 params.serviceId = notification.id;
                 this.currentURL = window.location.href;
 
-                if ( this.currentURL.includes(this.labels.PortalName) ) {
+                if (this.currentURL.includes(this.labels.PortalName)) {
                     this[NavigationMixin.GenerateUrl]({
                         type: "standard__namedPage",
                         attributes: {
                             pageName: "manage-service"
-                        }})
-                    .then(url => navigateToPage(url, params) );
+                        }
+                    })
+                        .then(url => navigateToPage(url, params));
                 } else {
                     goToManageService().then(results => {
                         navigateToPage(results, params);
                     });
                 }
-                
+
             }
         }
+    }
+
+    goToAdvancedSearchPage(event) {
+        let params = {};
+
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "advanced-search"
+            }
+        })
+            .then(url => navigateToPage(url, params));
     }
 
 }
