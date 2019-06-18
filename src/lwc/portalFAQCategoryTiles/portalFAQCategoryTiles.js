@@ -15,6 +15,7 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
     };
     @api renderWithIcons;
     @track lstTiles = [];
+    @track loading = true;
 
     iconsBaseLink = '/csportal/s/CSPortal/Images/FAQ/';
     iconsExtension = '.svg';
@@ -22,11 +23,10 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
     connectedCallback() {                
         getCategoryTiles()
         .then(results => {
-            let resultsAux = JSON.parse(JSON.stringify(results));
+            if(results.length) {
+                let resultsAux = JSON.parse(JSON.stringify(results));
 
-            if(resultsAux !== undefined && resultsAux !== null && resultsAux.length > 0){
-                let i;
-                for(i = 0; i < resultsAux.length; i++){
+                for(let i = 0; i < resultsAux.length; i++){
                     if(i === 0 || i === 1){
                         resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small slds-text-align_center';
                     }else{
@@ -34,11 +34,9 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
                     }
                     resultsAux[i].imageURL = this.iconsBaseLink + resultsAux[i].categoryName + this.iconsExtension;
                 }
-                this.lstTiles = resultsAux;                
+                this.lstTiles = resultsAux; 
             }
-        })
-        .catch(error => {
-            this.error = error;
+            this.loading = false;
         });
     }
 
