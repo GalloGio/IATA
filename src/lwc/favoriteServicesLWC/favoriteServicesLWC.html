@@ -1,6 +1,6 @@
 <template>
 
-    <c-portal-custom-card-container>
+    <c-portal-custom-card-container >
 
         <span slot="cardTitle">
             Favorite Services
@@ -19,13 +19,13 @@
 
         <span slot="cardBody">
 
-            <div>
+            <div class="cardBodyContent">
                 <div class="backgroundInverse" if:true={isLoaded}>
                     <lightning-spinner alternative-text="Loading"></lightning-spinner>
                 </div>
-                <div class="slds-grid">
-                    <div class="slds-col slds-size_4-of-5">
-                        <div class="slds-grid">
+                <div class="slds-p-horizontal_small slds-grid slds-gutters_direct-x-small">
+                    <div class="slds-col slds-size_5-of-6">
+                        <div class="slds-grid slds-gutters_direct-x-small">
                             <template for:each={favoriteServices} for:item='favoriteServicesRow'>
                                 <div class="slds-col slds-size_1-of-3" key={favoriteServicesRow}>
                                     <template for:each={favoriteServicesRow} for:item="favoriteServicesTile">
@@ -36,15 +36,16 @@
                                             data-openwindow={favoriteServicesTile.Portal_Application__r.New_Window__c}
                                             data-recordid={favoriteServicesTile.Id} >
                                             <div class="noPointerEvents">
-                                                <div>
+                                                <div class="extDivHeight">
                                                     <lightning-icon icon-name="utility:forward_up" size="xx-small"
                                                         slot="actions" class={favoriteServicesTile.extIconClass}>
                                                     </lightning-icon>
                                                 </div>
-                                                <div class="tileText">
-                                                    <h1>
-                                                        {favoriteServicesTile.Portal_Application__r.Name}
-                                                    </h1>
+                                                <div class="imageContainer slds-m-horizontal_small imageDivHeight" >
+                                                    <img class="serviceImageStyles" src={favoriteServicesTile.Portal_Application__r.Application_icon_URL__c}/>
+                                                </div>
+                                                <div class="tileText slds-truncate text-gray text-xxxsmall textDivHeight" >
+                                                    {favoriteServicesTile.Portal_Application__r.Name}
                                                 </div>
                                             </div>
                                         </article>
@@ -53,15 +54,15 @@
                             </template>
                         </div>
                     </div>
-                    <div class="slds-col slds-size_1-of-5 slds-p-around_small">
-                        <div class="slds-card__body slds-card__body_inner bigTile aroundLightGrayBorder">
+                    <div class="slds-col slds-size_1-of-6 slds-p-around_small">
+                        <div class="slds-card__body_inner bigTile aroundLinkBlueBorder">
                             <div class="cursorPointer slds-illustration slds-illustration_small " onclick={goToAvailableServices}>
                                 <div class="slds-align_absolute-center">
                                     <lightning-icon icon-name="action:new" size="small" class="tileNewServiceIcon">
                                     </lightning-icon>
                                 </div>
                                 <div class="slds-align_absolute-center">
-                                    <h3 class="slds-text-heading_small tileNewServiceText">
+                                    <h3 class="slds-text-heading_small tileNewServiceText text-blue text-bold">
                                         {label.csp_Request_New_Service}
                                     </h3>
                                 </div>
@@ -71,19 +72,15 @@
                 </div>
                 <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
                     <lightning-layout-item padding="around-small">
-                        <lightning-icon icon-name="utility:chevronleft" onclick={handlePrevious} size="small"
-                            style="cursor:pointer" variant="light"></lightning-icon>
+                        <a onclick={handlePrevious}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" size="xx-small"> </lightning-icon></a>
                     </lightning-layout-item>
                     <template for:each={sliderIcons} for:item="sliderIcon">
-                        <lightning-layout-item padding="around-small" key={sliderIcon.id}>
-                            <lightning-icon icon-name="utility:record" size="xx-small" variant={sliderIcon.variant}>
-                            </lightning-icon>
+                        <lightning-layout-item class="slds-p-around_xx-small" key={sliderIcon.id}>
+                            <lightning-icon icon-name="utility:record" size="xx-small" class={sliderIcon.className}></lightning-icon>
                         </lightning-layout-item>
                     </template>
                     <lightning-layout-item padding="around-small">
-                        <lightning-icon icon-name="utility:chevronright" size="small" onclick={handleNext} variant="light"
-                            style="cursor:pointer">
-                        </lightning-icon>
+                        <a onclick={handleNext}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" size="xx-small"> </lightning-icon></a>
                     </lightning-layout-item>
                 </lightning-layout>
             </div>

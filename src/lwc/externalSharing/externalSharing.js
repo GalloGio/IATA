@@ -36,7 +36,7 @@ export default class ExternalSharing extends LightningElement {
         }
     }
 
-    @wire(getUserPermission)
+    @wire(getUserPermission,{recId: '$recordId' })
     wiredUserPermission(results) {
         if(results.data) {
             this.userPermission = results.data;

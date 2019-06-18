@@ -14,7 +14,7 @@
                     title={label.CSP_SeeAll}
                     icon-name="utility:forward" 
                     icon-position="right" 
-                    onclick={goToSeeAllFAQsButtonClick}
+                    onclick={goToFAQPage}
                     class="slds-p-right_small blueCustomButtonLink">
                 </lightning-button>
             </span>
@@ -24,14 +24,28 @@
                     <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                 </template>
                 <template if:false={loading}>
-                    <div if:true={dataRecords}>
-                        <lightning-datatable
-                            key-field="Id"
-                            data={data}
-                            columns={columns}
-                            hide-checkbox-column>
-                        </lightning-datatable>
-                    </div>
+                    <template if:true={data}>
+                        <div class="slds-p-left_x-small slds-p-bottom_small text-xxsmall text-gray">
+                            {label.CSP_Title}
+                        </div>
+                        <template for:each={data} for:item="article">
+                            <lightning-layout horizontal-align="spread" key={article.Id} data-item={article.Id} 
+                                class="slds-border_top slds-p-horizontal_x-small slds-grid slds-grid_align-spread slds-hint-parent slds-grid_vertical-align-center">
+                                    <lightning-layout-item >
+                                            <div class="text-black text-bold cursorPointer" data-item={article.Id} onclick={goToArticle}>{article.Title}</div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item class="cursorPointer"> 
+                                        <lightning-button variant="base"
+                                            icon-name="utility:forward"
+                                            size="x-small"
+                                            class="blueCustomButtonLink"
+                                            data-item={article.Id}
+                                            onclick={renderArticle}>
+                                        </lightning-button>
+                                    </lightning-layout-item>
+                                </lightning-layout>       
+                        </template>
+                    </template>
                     <div if:false={dataRecords}>
                         <div class="slds-text-align_center">
                             <div class="slds-text-heading_medium">

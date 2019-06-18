@@ -1,41 +1,42 @@
 public with sharing class DAL_ISSP {
-    
-    public static User getUser(Id userId) {
+
+        public static User getUser(Id userId) {
         if (userId == null)
             return null;
         List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,Contact.AccountId,
-		contact.IFG_Production__c, contact.IFG_PreProduction__c
+		contact.IFG_Production__c, contact.IFG_PreProduction__c, Profile.Id, Profile.Name
         from User where Id =:userId];
         if (users.size() > 0)
             return users[0];
         return null;
     }
-    
+
     public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
         return
             [SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
-                IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c
-               FROM User 
-              WHERE (Username=: nameOrEmail 
+                IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
+                Profile.Name
+               FROM User
+              WHERE (Username=: nameOrEmail
                  OR email =: nameOrEmail)
                  AND (IsActive = true OR Portal_User_Frozen_Checkbox__c = true)
                  AND ContactId != ''
                  limit 1];
     }
-    
+
     public static list<LoginHistory> getLoginHistoryByUserId(ID userID) {
-        return 
-            [SELECT l.UserId 
-               FROM LoginHistory l 
+        return
+            [SELECT l.UserId
+               FROM LoginHistory l
               WHERE UserId =: userId];
     }
-    
-    
+
+
     public static Contact getContact(Id contactId) {
         if (contactId == null)
             return null;
-        List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone, 
-                    OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c, 
+        List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,
+                    OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
                     User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c ,
                     AccountId, Account.Name, Account.Status__c, Account.BillingStreet, Account.BillingCity,
                     Account.BillingCountry, Account.IATACode__c, Account.Airline_Prefix__c, Account.BillingPostalCode,Account.BillingState,
@@ -48,28 +49,43 @@ public with sharing class DAL_ISSP {
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
 					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c,
                     Account.Location_Class__c, Account.CNS_Account__c,Account.IATA_ISO_Country__r.ANG_Portal_Service__c, Account.ANG_IEP_Status_FF__c, Account.Quality__c,Account.ANG_Accreditation_Model__c,Account.Legal_name__c,
-		            Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account.Top_Parent__r.Legal_name__c, Account.Top_Parent__r.Name_on_AOC__c
+		            Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account.Top_Parent__r.Legal_name__c, Account.Top_Parent__r.Name_on_AOC__c, Account.Country_ISO_Code__c,Account.ANG_IsNewGenAgency__c
                     from Contact where Id=:contactId];
         if (contacts.size() > 0)
             return contacts[0];
         return null;
+
     }
-    
+
+    public static List<Contact> getContactsByAccountId(Id accountId){
+        List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
+                OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
+                User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
+                Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
+        from Contact where AccountId=:accountId];
+        if(!contacts.isEmpty()){
+            return contacts;
+        }
+
+        return null;
+    }
+
+
     public static List<AccountTeamMember> getPortalAdmins(Id accountId) {
         if (accountId == null)
             return null;
         List<AccountTeamMember> teamMembers = [select UserId, TeamMemberRole,
-                User.Contact.Salutation, User.Contact.Name, User.Contact.Email, 
+                User.Contact.Salutation, User.Contact.Name, User.Contact.Email,
                 User.Contact.Account.BillingCountry
-                from AccountTeamMember where accountId=:accountId and 
+                from AccountTeamMember where accountId=:accountId and
                 (TeamMemberRole='Portal Administrator' or TeamMemberRole='Portal Regional Administrator')];
-                
+
         return teamMembers;
-        
+
     }
-    
+
     public static Case getCase(String caseId) {
-        List<Case> cases = [select  
+        List<Case> cases = [select
                 (Select Id, IsPublished, CreatedDate From CaseComments),Product_Manager_ACR__c,ArchivedDate__c,Account.Type,Account.IATA_ISO_Country__c,account.IATA_ISO_Country__r.iso_code__c,
                 Id,Subject,Description,CaseArea__c, Country_concerned_by_the_query__c,CaseNumber,Portal_Case_Status__c,
                 ContactId, RecordType.Name, RecordType.DeveloperName, Type, Priority, Classification_SIS__c, Defect_Issue__c, Airline_Designator__c,
@@ -92,28 +108,37 @@ public with sharing class DAL_ISSP {
                 PO_Number__c, Visible_on_ISS_Portal__c,Instant_Survey_Last_feedback_received__c,Dossier_reception_date__c, IFAP_Country_ISO__c,
                 Outstanding_Amount__c,End_of_Grace_Period_Date__c,Total_Irregularities__c,Update_AIMS_IRR__c,Update_AIMS_IRRWITH__c,Update_AIMS_DEF__c,Reason_for_Default__c,
              	DEF_Withdrawal_Approval_Rejection__c,DEF_Withdrawal_Approval_Rejection_Date__c,Update_AIMS_REI_DEFWITH__c,Remittance_Date__c,Short_Payment_Amount__c,Billing_Amount__c,
-                Collected_amount__c, E2CP__AdditionalCC__c, Has_the_agent_paid_invoice__c, Account.Location_Type__c, Reason_for_Deadline__c, Cost_Centre__c, Action__c, Due_Date__c, 
+                Collected_amount__c, E2CP__AdditionalCC__c, Has_the_agent_paid_invoice__c, Account.Location_Type__c, Reason_for_Deadline__c, Cost_Centre__c, Action__c, Due_Date__c,
                 Action_Person__c, Detailed_Description__c, Source_of_Case__c, IsClosed,
                 OSCAR__c, Oscar__r.Process__c
                 FROM Case where Id=:caseId];
         if (cases.size() > 0)
             return cases[0];
         return null;
-        
+
     }
-    
+
     public static boolean visibilityOnIATACertificate(String accCategory, String accStatus){
         List<VisibilityOnIATACertificates__c> VisibilityOnIATACertificatesCS = VisibilityOnIATACertificates__c.getall().values();
         String accountCategory, accountStatus;
-       
+
         for(VisibilityOnIATACertificates__c v : VisibilityOnIATACertificatesCS){
             accountCategory = v.Account_Category__c;
             accountStatus = v.Account_Status__c;
-           
+
             if(accountCategory == accCategory && accountStatus == accStatus){
                 return true;
             }
         }
         return false;
+    }
+
+    public static List<User> getUsersByContactId(List<Id> contactIds){
+        if(!contactIds.isEmpty()){
+            List<User> users = [SELECT Id,ContactId,AccountId,Email,LanguageLocaleKey,LastLoginDate,IsActive FROM User WHERE ContactId IN: contactIds];
+            return users;
+        }
+        return null;
+
     }
 }

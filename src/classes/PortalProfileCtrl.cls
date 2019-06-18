@@ -1,0 +1,463 @@
+/**
+ * This class is used in GCS Portal to retrieve related contact and account information of the currently logged Community User,
+ * this information can be seen/edited under CompanyProfile(account info) and MyProfile(contact info) pages in the GCS Portal.
+ *
+ * To be able to dynamically display different fields for each of the Account (company) RecordTypes, list of fields to be display by lightning base components
+ * is generated based on Fieldsets. List of FieldWrappers is returned containg information about fieldName, additional access rules on top of FLS and information about
+ * which section of the profile that field belongs to.
+ *
+ * Fieldsets are not used for Contact fields (MyProfile) as the recordType-based layouts are not required there.
+ *
+ * User stories: MTSL-257 ; MTSL-258 ; MTSL-259 ; MTSL-289 ; MTSL-290 ; MTSL-291 ; MTSL-293 ; MTSL-294
+ */
+
+public with sharing class PortalProfileCtrl {
+
+    PRIVATE STATIC FINAL STRING FIELDSET_AIRLINE = 'GCS_Profile_Airline';
+    PRIVATE STATIC FINAL STRING FIELDSET_AGENCY = 'GCS_Profile_Agency';
+    PRIVATE STATIC FINAL STRING FIELDSET_GSA = 'GCS_Profile_GSA';
+    PRIVATE STATIC FINAL STRING FIELDSET_STANDARD = 'GCS_Profile_Standard';
+    PRIVATE STATIC FINAL STRING FIELDSET_OTHERS = 'GCS_Profile_Others';
+    PRIVATE STATIC FINAL STRING FIELDSET_CONTACT = 'GCS_CompanyContact';
+
+    PRIVATE STATIC FINAL STRING LABEL_BASICS = System.label.csp_Basics_Section_label;
+    PRIVATE STATIC FINAL STRING LABEL_COMPANY_CONTACT = System.label.csp_CompanyContact_Section_label;
+    PRIVATE STATIC FINAL STRING LABEL_PERSONAL_CONTACT = System.label.csp_Profile_PersonalContact;
+    PRIVATE STATIC FINAL STRING LABEL_BUSINESS_CONTACT = System.label.csp_Profile_BusinessContact;
+    PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
+    PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
+
+
+    PRIVATE STATIC FINAL STRING LABEL_FIRST_NAME = System.label.First_name;
+    PRIVATE STATIC FINAL STRING LABEL_LAST_NAME = System.label.Last_name;
+    PRIVATE STATIC FINAL STRING LABEL_LOCATION_CODE = System.label.ISSP_IATA_Location_Code;
+    PRIVATE STATIC FINAL STRING LABEL_CITY = System.label.City;
+    PRIVATE STATIC FINAL STRING LABEL_STATUS = System.label.Status;
+
+    PRIVATE STATIC FINAL STRING LABEL_NAME = System.label.ISSP_Local_Groups_Contact_Name;
+    PRIVATE STATIC FINAL STRING LABEL_EMAIL = System.label.Email;
+    PRIVATE STATIC FINAL STRING LABEL_CONTACT_TYPE = System.label.ISSP_Airline_Contact_Type;
+    PRIVATE STATIC FINAL STRING LABEL_LAST_LOGIN = System.label.csp_LastLoginDate;
+    PRIVATE STATIC FINAL STRING LABEL_TRADE_NAME = System.label.ISSP_MyProfile_TradeName;
+    PRIVATE STATIC FINAL STRING LABEL_ISO_COUNTRY = System.label.Country;
+
+
+
+    public static User myUser {
+        get {
+            if(myUser == null) {
+                myUser = DAL_ISSP.getUser(UserInfo.getUserId());
+            }
+            return myUser;
+        }
+        set;
+    }
+
+    public static Contact myContact{
+        get{
+            if(myContact == null){
+                myContact = DAL_ISSP.getContact(myUser.ContactId);
+            }
+            return myContact;
+        }
+
+        set;
+    }
+
+
+    @AuraEnabled
+    public static List<ContactWrapper> getAccountContacts(){
+        List<Contact> contacts = DAL_ISSP.getContactsByAccountId(myContact.AccountId);
+        System.debug('## TIAGO ## Contacts: ' + contacts);
+        List<Id> contactIds = new List<Id>();
+        List<User> users = new List<User>();
+        Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
+
+        List<ContactWrapper> wrappers = new List<ContactWrapper>();
+
+        if(!contacts.isEmpty()){
+            for(Contact c :contacts){
+                contactIds.add(c.Id);
+                contactIdtoContact.put(c.Id,c);
+            }
+
+            users = DAL_ISSP.getUsersByContactId(contactIds);
+            System.debug('## TIAGO ## Users: ' + users);
+            ContactWrapper wrapper;
+            for(User u :users){
+                wrapper = new ContactWrapper();
+                wrapper.contact = contactIdtoContact.get(u.ContactId);
+                wrapper.contactUser = u;
+
+                wrappers.add(wrapper);
+            }
+        }
+
+        return wrappers;
+    }
+
+    @AuraEnabled
+    public static List<Account> getCompanyBranches(){
+        List<Account> branches = new List<Account>();
+
+        branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
+        from account where id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId];
+
+        return branches;
+    }
+
+    public class ContactWrapper{
+        @AuraEnabled
+        public Contact contact;
+
+        @AuraEnabled
+        public User contactUser;
+    }
+
+
+    // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
+    public static Map<String,List<FieldWrapper>> ContactFields() {
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
+        wrapperMap.put(LABEL_PERSONAL_CONTACT,new List<FieldWrapper>());
+        wrapperMap.put(LABEL_ACCESSIBILITY,new List<FieldWrapper>());
+        wrapperMap.put(LABEL_PROFESSIONAL,new List<FieldWrapper>());
+
+
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Birthdate',true,true));
+        /*wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Salutation',true,true));
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('FirstName',true,true));
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('LastName',true,true));*/
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true)); // !Add name field, it will fetch Salutation picklist values
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Preferred_Language__c',true,true));
+
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Email',false,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Phone',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MobilePhone',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingCountry',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingCity',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingState',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingStreet',true,true));
+        wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingPostalCode',true,true));
+
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Status__c',true,true));
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Available_Services_Images__c',false,true));
+
+        wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
+
+
+        return wrapperMap;
+    }
+
+    // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
+    public static Map<String, List<FieldWrapper>> ContactFieldsAcc() {
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        wrapperMap.put(LABEL_BUSINESS_CONTACT,new List<FieldWrapper>());
+
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone_Number__c',true,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Fax',true,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingCountry',false,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingState',false,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingStreet',false,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingPostalCode',false,true));
+
+        return wrapperMap;
+    }
+
+    @AuraEnabled
+    public static List<FieldWrapper> getContactFieldsToInsert() {
+        return new List<FieldWrapper>{
+                new FieldWrapper('FirstName', false),
+                new FieldWrapper('LastName', false),
+                new FieldWrapper('Email', false),
+                new FieldWrapper('MobilePhone', false),
+                new FieldWrapper('Phone', false),
+                new FieldWrapper('Preferred_Language__c', false),
+                //new FieldWrapper('Membership_Function__c', true),
+                new FieldWrapper('Available_Services__c', true)
+        };
+
+    }
+
+
+    public static Map<String,List<FieldWrapper>> AccountFields() { return getFieldsByRecordType();}
+
+    @AuraEnabled
+    public static Map<String, List<FieldWrapper>> getFieldsMap (String type){
+        // CHECK IF ITS AN ACCOUNT OR CONTACT!!
+        Map<String, List<FieldWrapper>> sectionMap = new  Map<String, List<FieldWrapper>>();
+
+        List<String[]> fieldsList = new List<String[]>();
+        if ( type == 'MyProfile' ){
+            sectionMap = ContactFields();
+        } else if (type == 'MyProfileAccFields') {
+            sectionMap = ContactFieldsAcc();
+        } else {
+            sectionMap = AccountFields();
+        }
+
+        return sectionMap;
+    }
+
+
+
+    @AuraEnabled
+    public static Account getCompanyInfo(String accountId){
+        List<Account> accs = [SELECT Id,Name,Logo_File_ID__c,Website,IATACode__c,Email__c FROM Account WHERE Id=: accountId];
+        if(!accs.isEmpty()){
+            return accs[0];
+        }
+
+        return null;
+    }
+
+
+    /**
+    *
+    * Returns list of FieldWrapper rows to be.
+    * List of account fields to display is determined by record type and a relevant fieldset.
+    *
+    * Field access should be handled by field-level security, here it can be only more restrictive
+    *                   with 'editable' attribute when editable by FL security.
+    * */
+    private static Map<String,List<FieldWrapper>> getFieldsByRecordType(){
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
+        wrapperMap.put(LABEL_COMPANY_CONTACT,new List<FieldWrapper>());
+
+
+        String rType = myContact.Account.RecordType.DeveloperName;
+        Boolean newGen = myContact.Account.ANG_IsNewGenAgency__c;
+
+        String fieldsetBasic;
+        if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){fieldsetBasic = FIELDSET_AIRLINE;}
+        else if(rType == 'IATA_Agency'){fieldsetBasic = FIELDSET_AGENCY;}
+        else if(rType == 'IATA_GSA'){fieldsetBasic = FIELDSET_GSA;}
+        else if(rType == 'Others'){fieldsetBasic = FIELDSET_OTHERS;}
+        else {fieldsetBasic = FIELDSET_STANDARD;}
+
+
+        Map<String,Schema.FieldSet> fieldsets =  SObjectType.Account.FieldSets.getMap();
+        List<Schema.FieldSetMember>  basicsFields = fieldsets.get(fieldsetBasic).getFields();
+        List<Schema.FieldSetMember>  contactFields = fieldsets.get(FIELDSET_CONTACT).getFields();
+
+
+        for(Schema.FieldSetMember f : basicsFields) {
+            Boolean editable = true;
+            if(newGen && f.getFieldPath() == 'TradeName__c'){
+                editable = false;
+            }
+
+            wrapperMap.get(LABEL_BASICS).add(new FieldWrapper(f.getFieldPath(),editable,true));
+        }
+
+
+        for(Schema.FieldSetMember f : contactFields) {
+            wrapperMap.get(LABEL_COMPANY_CONTACT).add(new FieldWrapper(f.getFieldPath(),true,true));
+        }
+
+        return wrapperMap;
+
+    }
+
+
+    /** FIELD WRAPPER HELPER CLASS */
+    public class FieldWrapper{
+        @AuraEnabled
+        public String fieldName;
+
+        @AuraEnabled
+        public Boolean editable;
+
+        @AuraEnabled
+        public Boolean visible;
+
+        @AuraEnabled
+        public Boolean fullSize;
+
+        @AuraEnabled
+        public String className;
+
+        @AuraEnabled
+        public String label;
+
+        @AuraEnabled
+        public Boolean labeled;
+
+        @AuraEnabled
+        public Boolean outputOnly;
+
+        public FieldWrapper (String fieldName, Boolean fullSize) {
+            this.fieldName = fieldName;
+            this.fullSize = fullSize;
+            this.labeled = false;
+        }
+
+        public FieldWrapper (String fieldName, Boolean editable, Boolean visible,Boolean output){
+            this.fieldName = fieldName;
+            this.editable = editable;
+            this.visible = visible;
+            this.outputOnly = output ;
+            this.labeled = false;
+        }
+
+        public FieldWrapper (String fieldName, Boolean editable, Boolean visible){
+            this.fieldName = fieldName;
+            this.editable = editable;
+            this.visible = visible;
+            this.labeled = false;
+        }
+        public FieldWrapper (String fieldName, Boolean editable, Boolean visible,String className, String label){
+            this.fieldName = fieldName;
+            this.editable = editable;
+            this.visible = visible;
+            this.className = className;
+            this.label = label;
+
+            if(!String.isEmpty(label)){
+                this.labeled = true;
+            }else{
+                this.labeled = false;
+            }
+        }
+
+    }
+
+
+    /** Contacts & Branches Sections */
+
+    @AuraEnabled
+    public static Map<String,List<FieldWrapper>> getContactsListFields(){
+        String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
+        String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
+        String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
+
+
+        List<String> toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
+        Map<String,String> fieldLabels = new Map<String,String>();
+
+        fieldLabels.put('FirstName',LABEL_FIRST_NAME);
+        fieldLabels.put('LastName',LABEL_LAST_NAME);
+        fieldLabels.put('Email',LABEL_EMAIL);
+        fieldLabels.put('Type_of_Contact__c',LABEL_CONTACT_TYPE);
+        fieldLabels.put('Name',LABEL_NAME);
+        fieldLabels.put('LocationCode',LABEL_LOCATION_CODE);
+        fieldLabels.put('LastLogin',LABEL_LAST_LOGIN);
+
+        for(String fieldName: toRow){
+            if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
+        }
+
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+
+        wrapperMap.put(rowsFields,new List<FieldWrapper>());
+        for(String fieldName : toRow){
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+        }
+
+        wrapperMap.put(viewFields,new List<FieldWrapper>());
+        wrapperMap.put(editFields,new List<FieldWrapper>());
+
+        //VIEW
+        wrapperMap.get(viewFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('ISO_Country__c',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('MobilePhone',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Available_Services_Images__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
+
+        //EDIT
+        wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('ISO_Country__c',true,true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('FirstName',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('LastName',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('Email',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('MobilePhone',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('Phone',true,true));
+
+
+
+        return wrapperMap;
+
+    }
+
+    @AuraEnabled
+    public static Map<String,List<FieldWrapper>> getBranchesListFields(){
+        String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
+        String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
+        String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
+
+        String sectionBasic = LABEL_BASICS; //Fields to display in open accordion section/record detail - first section
+        String sectionBranchContact = 'BranchContact'; //Fields to display in open accordion section/record detail + in edit modal dialog
+
+        List<String> toView = new List<String>{'Name','Status__c'};
+        List<String> toRow = new List<String>{'TradeName__c','LocationCode','IsoCountry','BillingCity','Status__c'};
+        List<String> toEdit = new List<String>{'Name','Status__c'};
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        Map<String,String> fieldLabels = new Map<String,String>();
+
+
+        wrapperMap.put(rowsFields,new List<FieldWrapper>());
+        wrapperMap.put(viewFields,new List<FieldWrapper>());
+        wrapperMap.put(editFields,new List<FieldWrapper>());
+
+
+        wrapperMap.put(sectionBranchContact,new List<FieldWrapper>());
+        wrapperMap.put(sectionBasic,new List<FieldWrapper>());
+
+        fieldLabels.put('Name',LABEL_NAME);
+        fieldLabels.put('TradeName__c',LABEL_TRADE_NAME);
+        fieldLabels.put('LocationCode',LABEL_LOCATION_CODE);
+        fieldLabels.put('IsoCountry',LABEL_ISO_COUNTRY);
+        fieldLabels.put('BillingCity',LABEL_CITY);
+        fieldLabels.put('Status__c',LABEL_STATUS);
+
+
+        for(String fieldName: toView){
+            if(!fieldLabels.containsKey(fieldName)){
+                fieldLabels.put(fieldName,fieldName);}
+        }
+        for(String fieldName: toRow){
+            if(!fieldLabels.containsKey(fieldName)){
+                fieldLabels.put(fieldName,fieldName);}
+        }
+        for(String fieldName: toEdit){
+            if(!fieldLabels.containsKey(fieldName)){
+                fieldLabels.put(fieldName,fieldName);}
+        }
+
+
+        wrapperMap.get(sectionBasic).add(new FieldWrapper('Legal_name__c',false,true));
+        wrapperMap.get(sectionBasic).add(new FieldWrapper('Sector__c',false,true));
+        wrapperMap.get(sectionBasic).add(new FieldWrapper('Category__c',false,true));
+        wrapperMap.get(sectionBasic).add(new FieldWrapper('Location_Type__c',false,true));
+
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Email__c',true,true));
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Website',true,true));
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Phone',true,true));
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Fax',true,true));
+        //wrapperMap.get(sectionBranchContact).add(new FieldWrapper('IsoCountry',true,true));
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingAddress',true,true));
+
+
+        for(String fieldName : toRow){
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+        }
+
+
+        wrapperMap.put(viewFields,new List<FieldWrapper>());
+        for(String fieldName : toView){
+            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+        }
+
+        wrapperMap.put(editFields,new List<FieldWrapper>());
+        for(String fieldName : toEdit){
+            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+        }
+
+        return wrapperMap;
+
+    }
+}

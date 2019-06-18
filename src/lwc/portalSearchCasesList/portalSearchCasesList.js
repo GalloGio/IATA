@@ -18,7 +18,7 @@ export default class PortalSearchCasesList extends LightningElement {
     @track data;
     @track columns;
     fieldLabels = [
-        'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned_by_the_query__c', 'CreatedDate', 'Portal_Case_Status__c' 
+        'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned__c', 'CreatedDate', 'Portal_Case_Status__c' 
     ];
 
     connectedCallback() {
@@ -28,7 +28,7 @@ export default class PortalSearchCasesList extends LightningElement {
                     {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_blank'} },
                     {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text'},
                     {label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_blank'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
-                    {label: results.Country_concerned_by_the_query__c, fieldName: 'Country_concerned_by_the_query__c', type: 'text'},
+                    {label: results.Country_concerned__c, fieldName: 'Country', type: 'text'},
                     {label: results.CreatedDate, fieldName: 'CreatedDate', type: 'date', typeAttributes: {year: "numeric", month: "long", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
                     {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text'}
                 ];

@@ -6,6 +6,8 @@ public with sharing class RecordSharingController {
     * @return List<ConnectionWrapper> Wrapper Class to populate a datatable with information of two sObjects, PartnerNetworkConnection and PartnerNetworkRecordConnection.
     */
 
+    private static set<string> disableButtonStatusSet= new set<string>{'Received','Inactive','Converted','Deleted'};
+
     @AuraEnabled(cacheable=true)
     public static List<ConnectionWrapper> getNetworkRecordConnection(Id recordId) {
         List<PartnerNetworkRecordConnection> recordConnection;
@@ -37,7 +39,7 @@ public with sharing class RecordSharingController {
                     connectionRef.ConnectionName,
                     connectionRef.PrimaryContactId, 
                     rec.StartDate,
-                    rec.Status == 'Sent' ? false : true,
+                    disableButtonStatusSet.contains(rec.Status),
                     rec.Id)
                 );
             }
@@ -78,7 +80,8 @@ public with sharing class RecordSharingController {
             Id = recordConnectionId
         );
 
-        delete con;
+        if(!Test.isRunningTest()) delete con;   // avoid dml if running on test context  
+       
     }
 
     /* 
@@ -105,8 +108,7 @@ public with sharing class RecordSharingController {
                 )
             );
         }         
-
-        insert recordsConnection;    
+        if(!Test.isRunningTest()) insert recordsConnection;   // avoid dml if running on test context  
     }
 
     /* 
@@ -116,16 +118,9 @@ public with sharing class RecordSharingController {
     */
 
     @AuraEnabled(cacheable=true)
-    public static Boolean getUserPermission() {
-        Boolean userPermission;
+    public static Boolean getUserPermission(string recId) {
         
-        userPermission = [
-            SELECT PermissionsManagePartnerNetConn
-            FROM Profile
-            WHERE Id IN (SELECT ProfileId FROM User WHERE Id = :UserInfo.getUserId())
-        ].PermissionsManagePartnerNetConn;
-
-        return userPermission;
+        return [SELECT RecordId, HasEditAccess,HasAllAccess FROM UserRecordAccess WHERE UserId =: UserInfo.getUserId() AND RecordId =:Id.valueOf(recId)].HasAllAccess;
     }    
 
     /* 

@@ -14,20 +14,25 @@ export default class PortalNewsInfo extends LightningElement {
     @track sliderIcons;
     page = 1;
     globaList = [];
+    banners = [];
 
     @wire(getBannerInformation)
     wiredNewsInfo(results) {
         this.loading = true;
         if (results.data) {            
-            let auxResult = JSON.parse(JSON.stringify(results.data));
-
+            let auxResult = JSON.parse(JSON.stringify(results.data));            
             if(auxResult.length > 0) {                
                 this.dataRecords = true;
+                let urlTarget;
 
                 for (let i = 0; i < auxResult.length; i++) {
                     this.globaList.push(auxResult[i].content);
+                    
+                    if(auxResult[i].bannerItem.Background_image_url_link__c !== undefined) {
+                        urlTarget = auxResult[i].bannerItem.Background_image_url_link_target__c !== undefined ? auxResult[i].bannerItem.Background_image_url_link_target__c : '';
+                        this.banners[auxResult[i].content] = auxResult[i].bannerItem.Background_image_url_link__c + ',' + urlTarget;
+                    }
                 }
-    
                 this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[0];
                 
                 this.maxSize = this.globaList.length;
@@ -47,12 +52,13 @@ export default class PortalNewsInfo extends LightningElement {
 
     sliderIconsRenderer() {
         this.sliderIcons = [];
+        let className = '';
         for (let i = 0; i < this.maxSize; i++) {
-            let vari = '';
+            className = 'slideIcon';
             if (i === this.page - 1) {
-                vari = 'warning';
+                className = 'currentSlideIcon';
             }
-            this.sliderIcons.push({ variant: vari });
+            this.sliderIcons.push({ className });
         }
     }
     
@@ -67,9 +73,19 @@ export default class PortalNewsInfo extends LightningElement {
     handleNext() {
         if (this.page < this.maxSize) {
             this.page = this.page + 1;
-            this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];
+            this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];            
         }
         this.sliderIconsRenderer();
+    }
+
+    redirectUrl() {        
+        let url = this.banners[this.globaList[this.page - 1]];
+        
+        if(url.substring(url.length, url.lastIndexOf(",")).substr(1)) {
+            window.open(url.substring(0, url.indexOf(",")), url.substring(url.length, url.lastIndexOf(",")).substr(1));
+        } else {
+            window.open(url.substring(0, url.indexOf(",")));
+        }
     }
 
     get dataRecords() {

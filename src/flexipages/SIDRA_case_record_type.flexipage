@@ -25,19 +25,15 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>forceChatter:recordFeedContainer</componentName>
-        </componentInstances>
-        <name>Facet-e8dbfd3e-8cbb-401f-9c9b-fbc54dc71470</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
             <componentName>force:detailPanel</componentName>
         </componentInstances>
         <name>Facet-070d26f6-2bad-4443-8274-4243bc8985b0</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <componentInstances>
+            <componentName>AttachmentPanelUpdated</componentName>
+        </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>relatedListComponentOverride</name>
@@ -54,17 +50,6 @@
                 <name>active</name>
                 <value>true</value>
             </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-e8dbfd3e-8cbb-401f-9c9b-fbc54dc71470</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.feed</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-070d26f6-2bad-4443-8274-4243bc8985b0</value>
@@ -91,9 +76,6 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>AttachmentPanel</componentName>
-        </componentInstances>
-        <componentInstances>
             <componentInstanceProperties>
                 <name>tabs</name>
                 <value>Facet-17250a05-ecff-4980-9cf4-bb38a817eb2f</value>
@@ -116,21 +98,6 @@
             <componentInstanceProperties>
                 <name>relatedListComponentOverride</name>
                 <value>GRID</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>parentFieldApiName</name>
-                <value>Case.Id</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListApiName</name>
-                <value>CaseComments</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListComponentOverride</name>
-                <value>NONE</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
         </componentInstances>

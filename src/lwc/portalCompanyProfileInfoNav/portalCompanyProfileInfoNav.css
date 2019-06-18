@@ -1,0 +1,18 @@
+/**
+ * Created by pvavruska on 5/27/2019.
+ */
+
+.selectedItem{
+    background-color: #FEF9F9;
+    color: #F04632;
+    border-left-style: solid;
+    border-left-color: #F04632;
+    border-left-width: 5px;
+    font-size:18px;
+}
+
+
+.customCardWhite{
+    /*width:450px;*/
+
+}

@@ -6,17 +6,6 @@
             {label.CSP_ForYou}
         </span>
 
-        <!--<span slot="cardButton">
-            <lightning-button variant="base" 
-                label={label.CSP_SeeAll} 
-                title={label.CSP_SeeAll}
-                icon-name="utility:forward" 
-                icon-position="right" 
-                onclick={seeAllCases}
-                class="slds-p-right_small blueCustomButtonLink">
-            </lightning-button>
-        </span>-->
-
         <span slot="cardBody">
             <template if:true={loading}>
                 <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
@@ -25,7 +14,7 @@
                 <div class="slds-m-around_x-small">
                     <template if:true={dataRecords}>
                         <div class="infoBanner">
-                            <img src={bannerImages} class="carouselBanner">
+                            <img src={bannerImages} class="carouselBanner cursorPointer" onclick={redirectUrl}>
                         </div>
                     </template>
                 </div>
@@ -33,20 +22,16 @@
             
             <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
                 <lightning-layout-item padding="around-small">
-                    <lightning-icon icon-name="utility:chevronleft" onclick={handlePrevious} size="small"
-                        class="cursorPointer" variant="light"></lightning-icon>
-                </lightning-layout-item>
-                <template for:each={sliderIcons} for:item="sliderIcon">
-                    <lightning-layout-item padding="around-small" key={sliderIcon.id}>
-                        <lightning-icon icon-name="utility:record" size="xx-small" variant={sliderIcon.variant}>
-                        </lightning-icon>
+                        <a onclick={handlePrevious}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" size="xx-small"> </lightning-icon></a>
                     </lightning-layout-item>
-                </template>
-                <lightning-layout-item padding="around-small">
-                    <lightning-icon icon-name="utility:chevronright" size="small" onclick={handleNext} variant="light"
-                        class="cursorPointer">
-                    </lightning-icon>
-                </lightning-layout-item>
+                    <template for:each={sliderIcons} for:item="sliderIcon">
+                        <lightning-layout-item class="slds-p-around_xx-small" key={sliderIcon.id}>
+                            <lightning-icon icon-name="utility:record" size="xx-small" class={sliderIcon.className}></lightning-icon>
+                        </lightning-layout-item>
+                    </template>
+                    <lightning-layout-item padding="around-small">
+                        <a onclick={handleNext}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" size="xx-small"> </lightning-icon></a>
+                    </lightning-layout-item>
             </lightning-layout>
         </span>
 

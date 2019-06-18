@@ -12,6 +12,8 @@ import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import CSP_Question1 from '@salesforce/label/c.CSP_Question1';
 import CSP_Question2 from '@salesforce/label/c.CSP_Question2';
+import CSP_Question1URL from '@salesforce/label/c.CSP_Question1URL';
+import CSP_Question2URL from '@salesforce/label/c.CSP_Question2URL';
 
 export default class RecentCases extends NavigationMixin(LightningElement) {
     label = {
@@ -20,7 +22,9 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         CSP_RecentCases,
         CSP_SeeAll,
         CSP_Question1,
-        CSP_Question2
+        CSP_Question2,
+        CSP_Question1URL,
+        CSP_Question2URL
     };
     @track error;
     @track data;
@@ -30,6 +34,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned__c', 'Portal_Case_Status__c'
     ];
     @track casesListUrl;
+    noCasesImg = '/csportal/s/CSPortal/Images/Icons/nocases.svg';
 
     connectedCallback() {
         this[NavigationMixin.GenerateUrl]({
@@ -43,11 +48,11 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         getSelectedColumns({ sObjectType: 'Case', sObjectFields: this.fieldLabels })
             .then(results => {
                 this.columns = [
-                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_blank'} },
-                    { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text' },
+                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
+                    { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130, },
                     { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_blank'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
                     { label: results.Country_concerned__c, fieldName: 'Country', type: 'text' },
-                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', cellAttributes: { class: { fieldName: 'Portal_Case_Status__c' } } }
+                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'Portal_Case_Status__c' } } }
                 ];
             })
             .catch(error => {
@@ -56,7 +61,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
 
     }
 
-    @wire(getRecentCases, { seeAll: false })
+    @wire(getRecentCases, { limitView: true, seeAll: false })
     wiredRecentCases(results) {
         this.loading = true;
         if (results.data) {

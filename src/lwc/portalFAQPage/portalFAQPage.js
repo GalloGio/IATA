@@ -1,30 +1,28 @@
-import { LightningElement,track } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage } from'c/navigationUtils';
 
 export default class PortalFAQPage extends NavigationMixin(LightningElement) {
+    @track category;
+    @track topic;
+    @track subTopic;
 
-    @track categoryName = '';
-    @track topicName = '';
-
-    connectedCallback(){
-
+    connectedCallback() {
         //get the parameters for this page
         let pageParams = getParamsFromPage();
 
-        if(pageParams !== undefined && pageParams.category !== undefined){ 
-            console.log(pageParams.category);
-                       
-            this.categoryName = pageParams.category;
-            console.log(this.categoryName);
-        }
+        if(pageParams !== undefined && pageParams.category !== undefined){              
+            this.category = pageParams.category;
+        }         
     }
 
-    handleTopicSelected(event) {
-        this.topicName = event.detail;
-        console.log(this.topicName);
-        
+    topicSelected(event) {
+        this.topic = event.detail.options;
+    }
+
+    subTopicSelected(event) {
+        this.subTopic = event.detail.options;
     }
 }

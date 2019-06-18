@@ -1,5 +1,5 @@
 <template> 
-    <lightning-layout multiple-rows>
+    <lightning-layout multiple-rows pull-to-boundary="small">
         <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="6" large-device-size="6">
             <div class="bottomLightGrayBorder slds-m-around_small">
                 <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
@@ -11,10 +11,10 @@
                 </lightning-input>
             </div>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="3" large-device-size="3">
+        <lightning-layout-item padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3" large-device-size="3">
                 <lightning-button label="Filter" class="filterButton"></lightning-button>
         </lightning-layout-item>         
-        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="3" large-device-size="3">
+        <lightning-layout-item padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3" large-device-size="3">
             <lightning-button label={caseListName} class="containedButton" onclick={rerenderCases} if:true={isAdmin}></lightning-button>
         </lightning-layout-item>                            
     </lightning-layout>
@@ -30,7 +30,8 @@
                         key-field="Id"
                         data={data}
                         columns={columns}
-                        hide-checkbox-column>
+                        hide-checkbox-column
+                        resize-column-disabled>
                     </lightning-datatable>
                     <!-- DATA RECORDS -->
 

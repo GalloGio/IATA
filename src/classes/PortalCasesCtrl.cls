@@ -14,8 +14,8 @@ public with sharing class PortalCasesCtrl {
         set;
     }
 
-    public static Boolean isAdmin;
     public static Boolean seeAllCases;
+    public static Boolean limitCases;
     public static String currentListViewName;
     public static Boolean apUser;
     public static String selectedList;
@@ -39,8 +39,9 @@ public with sharing class PortalCasesCtrl {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getRecentCases(Boolean seeAll) {
+    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll) {
         seeAllCases = seeAll;
+        limitCases = limitView;
 
         initialization();
 
@@ -103,7 +104,6 @@ public with sharing class PortalCasesCtrl {
     private static void initCaseListViewMap() {
         List<String> ListViewNameList = new List<String>();
         caseListViewMap = new Map<String, ISSPCaseListView__c>();
-        isAdmin = (seeAllCases && adminProfile);
 
         for(ISSPCaseListView__c caseListViewItem : csCaseListViews) {
             Boolean resultPermission1 = true; 
@@ -125,11 +125,11 @@ public with sharing class PortalCasesCtrl {
                         ListViewNameList.add(caseListViewItem.Name);
                     }
                 } else {
-                    if(!isAdmin && !caseListViewItem.isAdmin__c) {
+                    if(!seeAllCases && !caseListViewItem.isAdmin__c) {
                         caseListViewMap.put(caseListViewItem.Name, caseListViewItem);
                         ListViewNameList.add(caseListViewItem.Name);
                     } else {
-                        if(isAdmin && caseListViewItem.isAdmin__c) {
+                        if(seeAllCases && caseListViewItem.isAdmin__c) {
                             caseListViewMap.put(caseListViewItem.Name, caseListViewItem);
                             ListViewNameList.add(caseListViewItem.Name);
                         } 
@@ -180,7 +180,7 @@ public with sharing class PortalCasesCtrl {
 
         queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ';
 
-        if(!seeAllCases) {
+        if(limitCases) {
             queryString += 'LIMIT 4';
         } else {
             queryString += 'LIMIT 2000';
@@ -235,14 +235,13 @@ public with sharing class PortalCasesCtrl {
 
         casesMap = new Map<Id, String>();
         caseURL = new Map<Id, String>();
-        System.debug('____ [cls PortalCasesCtrl - getCases] before records');
+
         for(Case record : records) {
             casesMap = pageLoad(record);
             caseURL.putAll(casesMap);
         }
-        System.debug('____ [cls PortalCasesCtrl - getCases] after records');
         
-        System.debug('____ [cls PortalCasesCtrl - getCases] caseURL - ' + caseURL);
+        System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - setCaseURLs] caseURL - ' + caseURL);
 
         return caseURL;
     }

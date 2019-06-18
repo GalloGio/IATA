@@ -1,13 +1,23 @@
-trigger LVA_AfterChatTrigger on LiveChatTranscript (before insert,after insert) {
+trigger LVA_AfterChatTrigger on LiveChatTranscript (before insert,after insert,before update, after update) {
     
-    LVA_BeforeChatTriggerHandler handler = new LVA_BeforeChatTriggerHandler();
+    LVA_ChatTriggerHandler handler = new LVA_ChatTriggerHandler();
     
     if(Trigger.isBefore){
-        handler.onBeforeInsert();
+        if(Trigger.isInsert)
+            handler.onBeforeInsert();
+        if(Trigger.isUpdate)
+             handler.onBeforeUpdate();
     }  
     
     if(Trigger.isAfter){
-        LVA_AfterChatTriggerHandler.ProcessLiveChatTranscript(Trigger.New);
+         if(Trigger.isInsert)
+            handler.onAfterInsert();
+        if(Trigger.isUpdate)
+             handler.onAfterUpdate();
+
+        
     }
+
+    
     
 }

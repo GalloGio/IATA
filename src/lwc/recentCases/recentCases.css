@@ -1,3 +1,35 @@
-.text-black lightning-formatted-url a {
-    color: #000000;
+.cardBodyContent {
+    min-height: 300px;
+}
+
+.noRecentCases {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.noCasesTitle {
+    font-size: 22px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.noCasesSubtitle {
+    font-size: 16px;
+    color: #999999;
+    text-align: center;
+}
+
+.noCasesUrls {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.noCasesUrls a {
+    color: #3333ff !important;
+    padding: 5px;
+    cursor: pointer;
 }
