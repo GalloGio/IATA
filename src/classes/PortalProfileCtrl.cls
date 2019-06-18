@@ -172,9 +172,9 @@ public with sharing class PortalProfileCtrl {
                 new FieldWrapper('Email', false),
                 new FieldWrapper('MobilePhone', false),
                 new FieldWrapper('Phone', false),
-                new FieldWrapper('Preferred_Language__c', false),
+                new FieldWrapper('Preferred_Language__c', false)
                 //new FieldWrapper('Membership_Function__c', true),
-                new FieldWrapper('Available_Services__c', true)
+                //new FieldWrapper('Available_Services__c', true)
         };
 
     }

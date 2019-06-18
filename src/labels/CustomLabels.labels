@@ -33964,6 +33964,69 @@ title,Title,Name</value>
         <value>contacting us.</value>
     </labels>
     <labels>
+        <fullName>cpcc_Agent_Credit_Risk</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Agent Credit Risk</shortDescription>
+        <value>Agent Credit Risk</value>
+    </labels>
+    <labels>
+        <fullName>cpcc_Authorised_Signatory</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Authorised Signatory</shortDescription>
+        <value>Authorised Signatory</value>
+    </labels>
+    <labels>
+        <fullName>cpcc_BSP_CASS_Payment_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP/CASS Payment Contact</shortDescription>
+        <value>BSP/CASS Payment Contact</value>
+    </labels>
+    <labels>
+        <fullName>cpcc_Contact_Type_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Type Status</shortDescription>
+        <value>Contact Type Status</value>
+    </labels>
+    <labels>
+        <fullName>cpcc_Financial_Assessment_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Assessment Contact</shortDescription>
+        <value>Financial Assessment Contact</value>
+    </labels>
+    <labels>
+        <fullName>cpcc_Invoice_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Contact</shortDescription>
+        <value>Invoice Contact</value>
+    </labels>
+    <labels>
+        <fullName>cpcc_New_Contact_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New Contact Profile</shortDescription>
+        <value>New Contact Profile</value>
+    </labels>
+    <labels>
+        <fullName>cpcc_Portal_Administrator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal Administrator</shortDescription>
+        <value>Portal Administrator</value>
+    </labels>
+    <labels>
+        <fullName>cpcc_Working_Areas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Working Areas</shortDescription>
+        <value>Working Areas</value>
+    </labels>
+    <labels>
         <fullName>csp_Accreditation_Process</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
