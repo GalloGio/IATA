@@ -213,6 +213,11 @@ public without sharing class CSP_Utils {
         public PickListWrapper (){
 
         }
+        
+        public PickListWrapper (string value,string label){
+            this.value=value;
+            this.label=label;
+        }
     }
     
 
