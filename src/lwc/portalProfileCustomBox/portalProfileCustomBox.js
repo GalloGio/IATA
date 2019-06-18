@@ -30,6 +30,7 @@ export default class PortalProfileCustomBox extends LightningElement {
     @track isLoading = true;
     @track userType = 'Approved User';
 
+    @track
     _labels = {
         New_Contact_Profile,
         Working_Areas,
