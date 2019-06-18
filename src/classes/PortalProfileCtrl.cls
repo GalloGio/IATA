@@ -41,6 +41,8 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_TRADE_NAME = System.label.ISSP_MyProfile_TradeName;
     PRIVATE STATIC FINAL STRING LABEL_ISO_COUNTRY = System.label.Country;
 
+    PRIVATE STATIC FINAL INTEGER CONTACT_BATCH= 5;
+    PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 5;
 
 
     public static User myUser {
@@ -66,23 +68,25 @@ public with sharing class PortalProfileCtrl {
 
 
     @AuraEnabled
-    public static List<ContactWrapper> getAccountContacts(){
-        List<Contact> contacts = DAL_ISSP.getContactsByAccountId(myContact.AccountId);
-        System.debug('## TIAGO ## Contacts: ' + contacts);
+    public static List<ContactWrapper> getAccountContacts(Integer offset){
+        if(offset == null){
+            offset = 0;
+        }
+
+        List<Contact> contacts = DAL_ISSP.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
         List<Id> contactIds = new List<Id>();
         List<User> users = new List<User>();
         Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
 
         List<ContactWrapper> wrappers = new List<ContactWrapper>();
 
-        if(!contacts.isEmpty()){
+        if(contacts != null && !contacts.isEmpty()){
             for(Contact c :contacts){
                 contactIds.add(c.Id);
                 contactIdtoContact.put(c.Id,c);
             }
 
             users = DAL_ISSP.getUsersByContactId(contactIds);
-            System.debug('## TIAGO ## Users: ' + users);
             ContactWrapper wrapper;
             for(User u :users){
                 wrapper = new ContactWrapper();
@@ -97,11 +101,16 @@ public with sharing class PortalProfileCtrl {
     }
 
     @AuraEnabled
-    public static List<Account> getCompanyBranches(){
+    public static List<Account> getCompanyBranches(Integer offset){
+        if(offset == null){
+            offset = 0;
+        }
         List<Account> branches = new List<Account>();
 
         branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
-        from account where id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId];
+        from account where id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId
+        ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
+        ];
 
         return branches;
     }

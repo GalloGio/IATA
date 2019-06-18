@@ -61,7 +61,7 @@ export default class PortalProfilePageHeader extends LightningElement {
         }
 
         get emptyCode(){
-            return (this.userAccount == null || this.userAccount.IATACode__c == null);
+            return (this.userAccount == null || this.userAccount.IATACode__c.length == 0);
         }
 
         connectedCallback() {

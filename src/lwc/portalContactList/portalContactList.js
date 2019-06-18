@@ -17,6 +17,7 @@ export default class PortalContactList extends LightningElement {
     @api objectid;
     @api objectName;
     @api defaultSort;
+    @api fetching;
     isAsc = true;
     sortBy;
     @track isLoading = true;
@@ -90,7 +91,9 @@ export default class PortalContactList extends LightningElement {
 
     }
 
-
+    @api resetInit(){
+        this.recordsInitDone = false;
+    }
     @api
     openModal() {this.openmodel = true;}
     closeModal() {this.openmodel = false;}
@@ -118,6 +121,7 @@ export default class PortalContactList extends LightningElement {
 
 
     processRecords(){
+        console.log('record to process '+this.records.length)
         let records = JSON.parse(JSON.stringify(this.records));
         //let fields = this.rowFields;
         let fields = this.fieldsList.ROWS;
@@ -150,11 +154,13 @@ export default class PortalContactList extends LightningElement {
                 record.rowValues = rowValues;
                 record.open = false;
             }
+            console.log('setting rows: '+records.length);
             this.records = records;
             this.originalRecords = records;
 
             if(this.defaultSort != null){
-                this.orderRows(this.defaultSort);
+
+                //this.orderRows(this.defaultSort);
             }
         }
 
