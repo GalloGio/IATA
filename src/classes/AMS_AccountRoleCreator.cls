@@ -303,7 +303,7 @@ public with sharing class AMS_AccountRoleCreator
 
         }
 
-        if((newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty()) || oldRolesPerAccount.isEmpty())
+        if(newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty())
             return oldAndNewOwnersMap;
 
         //clone the roles for each account in the hierarchy
@@ -371,9 +371,6 @@ public with sharing class AMS_AccountRoleCreator
         System.debug('Assigning roles '+ rolesToClone+' to new account ' + accountId);
 
         List<AMS_Account_role__c> toReturn = new List<AMS_Account_role__c>();
-        
-        if(rolesToClone == null)
-            return toReturn;
 
         for(AMS_Account_Role__c role: rolesToClone){
 
