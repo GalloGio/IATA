@@ -11,7 +11,7 @@ public without sharing class WorkflowHelper {
 
     private static Set<String> accountTypes = new Set<String>{'GSA General Sales Agent','IATA Passenger Sales Agent','SSI','TIDS Agent','ERSP Agent','Domestic Agent','Associations','Handling Agent','NISI','Airline Point of Sale','MSO Member Sales Office'};
 
-    private static Map<Id,Account> accountsToSearchParents = new Map<Id,Account>();
+    private static Map<Id,List<Account>> accountsToSearchParents = new Map<Id,List<Account>>();
 
     public static void performActions(String objectType){
         
@@ -196,7 +196,12 @@ public without sharing class WorkflowHelper {
         
 
         if(newAccount.RecordTypeId == AMS_Utils.RECTYPE_AIRLINE_BR && newAccount.ParentId <> null) {
-                accountsToSearchParents.put(newAccount.ParentId,newAccount);
+                if(accountsToSearchParents.get(newAccount.ParentId) == null){
+                    accountsToSearchParents.put(newAccount.ParentId,new List<Account>{newAccount});
+                    }
+                else {
+                    accountsToSearchParents.get(newAccount.ParentId).add(newAccount);
+                }
             }
     }
 
@@ -208,22 +213,24 @@ public without sharing class WorkflowHelper {
             newMap.put(acct.Id,acct);
         }
 
-        for(Account acct : accountsToSearchParents.values()){
-
-            if(newMap.get(acct.ParentId) <> null){
-                accountsToSearchParents.remove(acct.ParentId);
+        for(List<Account> acctLst : accountsToSearchParents.values()){
+            for(Account acct: acctLst){
+                if(newMap.get(acct.ParentId) <> null){
+                    accountsToSearchParents.remove(acct.ParentId);
+                }
             }
         }
 
-        Account acct = null;
+        List<Account> accountLst;
 
         for(Account acctParent: [Select Id, TradeName__c, Name from Account where Id in:accountsToSearchParents.keySet()]){
             
-            acct = accountsToSearchParents.get(acctParent.Id);
+            accountLst = accountsToSearchParents.get(acctParent.Id);
 
-            acct.Name = acctParent.TradeName__c == null ? acctParent.Name : acctParent.TradeName__c;
-
-            newMap.remove(acct.Id);
+            For(Account acct :accountLst){
+                acct.Name = acctParent.TradeName__c == null ? acctParent.Name : acctParent.TradeName__c;
+                newMap.remove(acct.Id);
+            }
 
         }
 
@@ -233,7 +240,6 @@ public without sharing class WorkflowHelper {
             Account parentAccount = null;
             
             for(Account acctObject: newMap.values()){
-
 
                 if(acctObject.RecordTypeId == AMS_Utils.RECTYPE_AIRLINE_BR && acctObject.ParentId <> null){
 
