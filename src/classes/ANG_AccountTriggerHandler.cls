@@ -655,7 +655,7 @@ public class ANG_AccountTriggerHandler {
 			
 			else {
 
-				if(AMS_Utils.setChinaCountries.contains(currentAccount.Country_ISO_Code__c)) aa.Status__c = 'Refer to ASD';
+				if(AMS_Utils.setChinaCountries.contains(currentAccount.Country_ISO_Code__c)) aa.Status__c = 'Authorized';
 				
 				else if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CC) {
 
