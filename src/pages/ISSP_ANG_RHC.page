@@ -502,8 +502,7 @@
     		$( document ).ready(function() {
     			if ({!isChinaAgent}) {
     				$('[name$="risk-profile"]').prependTo($('[name$="left-side"]').first());
-    				$('[id$="remittance-holding"]').appendTo($('[id$="afp"]').first());
-    				$('[id$="remittance-holding"]').css('padding-top', '120px');
+    				$('[id$="remittance-holding"]').appendTo($('[name$="right-side"]').first());
     			}
 			});
 
