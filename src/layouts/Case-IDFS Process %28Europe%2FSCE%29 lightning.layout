@@ -639,26 +639,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Case.Send_to_Recycle_Bin</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.dgec__SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Log_a_call_lightning</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ChangeOwnerOne</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>ChangeRecordType</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>11</sortOrder>
@@ -699,7 +679,7 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Close_Case_process</actionName>
+            <actionName>Case.Close_case_global</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>
@@ -727,6 +707,26 @@
             <actionName>Case.Log_Phone_case_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Send_to_Recycle_Bin</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.dgec__SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Log_a_call_lightning</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeOwnerOne</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>10</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
