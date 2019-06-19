@@ -3644,18 +3644,21 @@ public class AMS_OSCARTriggerHandler {
     /*
         ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         ID newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+
         ID corrRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
         ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
         ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China'); //ACAMBAS - NEWGEN-4445
         */
 
-        Set<Id> oscarRTsToProcess = new Set<ID>{AMS_Utils.RECTYPE_NEW, AMS_Utils.RECTYPE_NEWHE, AMS_Utils.RECTYPE_NEWAE, AMS_Utils.RECTYPE_GDI};
+        Set<Id> oscarRTsToProcess = new Set<ID>{AMS_Utils.RECTYPE_NEW,AMS_Utils.RECTYPE_NEWHE, AMS_Utils.RECTYPE_NEWAE};
 
         if (oscarRTsToProcess.contains(updatedOscar.recordTypeID)){
         	//TD2080607: partially refactored below code
         	boolean bGenerateCC =  false;
         	String changeCodeId = '';
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
+
+
 
                 /*** AMSU-31 Start ***/
                 Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD};
@@ -3668,25 +3671,15 @@ public class AMS_OSCARTriggerHandler {
                 changeCodeId = 'FIN-' + updatedOscar.Business_Process__c;
             }else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 				bGenerateCC = true;
-                changeCodeId = 'DIS-' + updatedOscar.Business_Process__c; 
+                changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
             }else if (oldOSCAR.STEP4__c != 'Passed' && updatedOscar.STEP4__c == 'Passed') {
             	bGenerateCC = true;
                 changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
             }else if (oldOSCAR.STEP5__c != 'Passed' && updatedOscar.STEP5__c == 'Passed') {
             	bGenerateCC = true;
                 changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
-            }else if(oldOscar.STEP46__c != 'Passed' && updatedOscar.STEP46__c == 'Passed'){ // for GDI change code creation
-            	
-                Account oscarAccount = [SELECT Id, Status__c, Reason__c, CNS_Agency__c FROM Account WHERE Id =:updatedOscar.Account__c]; 
-
-                if(oscarAccount.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
-                    changeCodeId = 'GDN';
-                else
-                    changeCodeId = 'GDI';
-
-                ANG_OscarProcessHelper.createChangeCodeForFOP(null, updatedOscar, new List<Account>{oscarAccount} , changeCodeId);
             }
-
+            
             if(bGenerateCC){
             	AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
             	AMS_ChangeCodes__c n = AMS_ChangeCodes__c.getInstance(changeCodeId);
