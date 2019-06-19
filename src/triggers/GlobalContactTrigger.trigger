@@ -148,6 +148,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             if (Contacts) {
                 system.debug('Contacts BeforeInsert');
                 AccountDomainContactHandler.beforeInsert(Trigger.new);
+                ContactHandler.beforeInsert(Trigger.new);
             }
             /*Contacts Trigger.BeforeInsert*/
 
@@ -264,6 +265,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 ANG_ContactHandler angHandler = new ANG_ContactHandler();
                 angHandler.handleBeforeUpdate();
                 /* NEWGEN ANG_ContactHandler */
+
+                ContactHandler.beforeUpdate(Trigger.new, Trigger.oldMap);
                 
             }
             /*Contacts Trigger.BeforeUpdate*/

@@ -57,6 +57,7 @@ two record types:
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Agency_Accreditation_Class__c</fullName>
         <description>Agency Accreditation Class taken from the related GDP Account View</description>

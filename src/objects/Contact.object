@@ -96,6 +96,7 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_Oscar_Savepoint_Owner_fields</fullName>
         <description>Used to know which fields needed for rollback</description>
@@ -8263,6 +8264,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
     </fields>
     <fields>
         <fullName>IndividualId</fullName>
+        <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
