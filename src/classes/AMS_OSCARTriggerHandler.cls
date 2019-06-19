@@ -1481,8 +1481,6 @@ public class AMS_OSCARTriggerHandler {
                     integer index = 0;
                     for(Account acc : c.accts)
                     {
-        
-                    
 
                         //******* Add "Custom" changes struct for the Ownership mapping ******** INI
 
@@ -2152,8 +2150,14 @@ public class AMS_OSCARTriggerHandler {
                     a.Status__c = mapB.get(accId).Status__c;
 
             System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - mergeAccountsToUpdate] a - ' + a);
-            if(a!=null)
+            if(a!=null) {
+
+                if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Id) ||
+                    (accounts.get(a.Id).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accounts.get(a.Id).Top_Parent__c)))
+                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accounts.get(a.Id).Top_Parent__c == null ? a.Id : accounts.get(a.Id).Top_Parent__c);
+
                 mergedAccountsToUpdate.add(a);
+            }
         }
 
         return mergedAccountsToUpdate;
@@ -2719,7 +2723,7 @@ public class AMS_OSCARTriggerHandler {
         get{
             //we just need to fetch the first time (or anytime we add a new Id)
             if(accounts == null){
-                accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, CNS_Agency__c, Company_Type__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, Website,
+                accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, CNS_Agency__c, Company_Type__c, Covered_Ownership__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, Website,
                     (SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
                     (SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
                 FROM Account WHERE Id IN :accountIds]);
@@ -3993,11 +3997,15 @@ public class AMS_OSCARTriggerHandler {
                                     auxChangeCodeHO.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
                                     lChangeCode.add(auxChangeCodeHO);
                                 }else{
-                                auxChangeCode.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
-                                auxChangeCode.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
-                                    lChangeCode.add(auxChangeCode);
+                                    auxChangeCode.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
+                                    auxChangeCode.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
+                                        lChangeCode.add(auxChangeCode);
+                                }
                             }
-                            }
+
+                            if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(forAccount.Id) ||
+                                (accounts.get(forAccount.Id).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accounts.get(forAccount.Id).Top_Parent__c)))
+                                forAccount.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accounts.get(forAccount.Id).Top_Parent__c == null ? forAccount.Id : accounts.get(forAccount.Id).Top_Parent__c);
 
                             System.debug('auxChangeCodeHO: ' + auxChangeCodeHO );
                             System.debug('auxChangeCode: ' + auxChangeCode );
