@@ -8,3 +8,7 @@
 .infoBanner {
     height: 280px;
 }
+
+.cardBodyContent {
+    min-height: 323px;
+}
