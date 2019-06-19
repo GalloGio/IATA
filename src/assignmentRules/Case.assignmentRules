@@ -1748,7 +1748,9 @@ ISPICKVAL(Country_concerned_by_the_query__c , &quot;Russian Federation&quot;),
 ISPICKVAL(Account.Location_Class__c, &quot;P&quot;), 
 NOT(CONTAINS( TEXT(Reason) ,&quot;Certificate&quot;)),
 !(RecordType.DeveloperName=&apos;ID_Card_Application&apos;),
-ISPICKVAL( Status , &quot;Open&quot;) 
+ISPICKVAL( Status , &quot;Open&quot;),
+NOT(CONTAINS(Subject ,&quot;IEP Model&quot;)),
+NOT(CONTAINS(TEXT(CaseArea__c),&quot;Corporate Compliance&quot;))
 ),
 AND(
 RecordType.DeveloperName = &apos;OSCAR_Communication&apos;,
@@ -2123,6 +2125,7 @@ NOT(ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;))
 AND(
 OR(
 ISPICKVAL(Parent.Reason1__c, &quot;Screening IEP Model A&quot;),
+ISPICKVAL(Parent.Reason1__c, &quot;Onboarding IEP Model B+&quot;),
 ISPICKVAL(Parent.Reason1__c, &quot;Screening IEP Model B&quot;)),
 ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
 )

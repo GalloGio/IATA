@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Area_Concerned__c</fullName>
         <description>Represents the Area that the KPI is related with. Can be &quot;Agency Management&quot;, &quot;Airline Suspension&quot;, &quot;CPS&quot;, &quot;Customer Service&quot;, &quot;DPC Management&quot;, &quot;Invoicing &amp; Collection&quot;, &quot;Quality&quot;, &quot;Remittance &amp; Settlement&quot;, &quot;SIS&quot;, &quot;ICH&quot;, &quot;ICCS&quot;, &quot;CNS&quot;.</description>
