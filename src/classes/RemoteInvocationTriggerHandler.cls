@@ -29,10 +29,8 @@ public without sharing class RemoteInvocationTriggerHandler {
                                                                             TIP_IFG_REPORT  => RECTYPE_TIP,
                                                                             NEWGEN_GDI_ENDO => RECTYPE_GDI};
 
-
-
     //private final List<String> typesToProcess = new List<String>{'ANG_IEPRemoteInvocation','ANG_GDIRemoteInvocation'};
-	 private Map<String,String> typesToProcess = new Map<String,String>{  NEWGEN_EASY_PAY => 'ANG_IEPRemoteInvocation',
+     private Map<String,String> typesToProcess = new Map<String,String>{  NEWGEN_EASY_PAY => 'ANG_IEPRemoteInvocation',
                                                                             NEWGEN_GDI_ENDO => 'ANG_GDIRemoteInvocation'};
 
     public RemoteInvocationTriggerHandler(){
@@ -44,7 +42,8 @@ public without sharing class RemoteInvocationTriggerHandler {
 
     public void handleAfterUpdate(){
         handlePlatformEvent();
-		processInvocationsInProgress(NEWGEN_GDI_ENDO);
+        processInvocationsInProgress(NEWGEN_GDI_ENDO);
+        
     }
 
     public void handleAfterDelete(){
@@ -60,7 +59,7 @@ public without sharing class RemoteInvocationTriggerHandler {
     }
 
     public void handleBeforeUpdate(){
-        processInvocationsInProgress(true);
+        processInvocationsInProgress(NEWGEN_EASY_PAY);
         handleAutomaticUploadReports();
     }
 
@@ -83,36 +82,36 @@ public without sharing class RemoteInvocationTriggerHandler {
     public void processInvocationsInProgress(string whatToProcess){
         
         Set<Remote_Invocation__c> IEPToProcess = new Set<Remote_Invocation__c>();
-		Set<Remote_Invocation__c> GDIToProcess = new Set<Remote_Invocation__c>();
+        Set<Remote_Invocation__c> GDIToProcess = new Set<Remote_Invocation__c>();
         
         for(Remote_Invocation__c re :  triggerNew){
             if(re.Status__c == REMOTE_INVOCATION_STATUS_PROGRESS && oldMap.get(re.Id).Status__c == REMOTE_INVOCATION_STATUS_INITIALIZING){
-				if(whatToProcess==NEWGEN_GDI_ENDO && re.Request_Type__c==NEWGEN_GDI_ENDO)
-					GDIToProcess.add(re);
-				
-				if(whatToProcess==NEWGEN_EASY_PAY && re.Request_Type__c==NEWGEN_EASY_PAY)
-                	IEPToProcess.add(re);
+                if(whatToProcess==NEWGEN_GDI_ENDO && re.Request_Type__c==NEWGEN_GDI_ENDO)
+                    GDIToProcess.add(re);
+                
+                if(whatToProcess==NEWGEN_EASY_PAY && re.Request_Type__c==NEWGEN_EASY_PAY)
+                    IEPToProcess.add(re);
             }
         }
         
         if(IEPToProcess.isEmpty() && GDIToProcess.isEmpty()) return; // move along, nothing to see here ...
 
-		// Get the Type corresponding to the class name
-		Type t = Type.forName(typesToProcess.get(whatToProcess));
+        // Get the Type corresponding to the class name
+        Type t = Type.forName(typesToProcess.get(whatToProcess));
 
-		ANG_RemoteInvocationINT processor = (ANG_RemoteInvocationINT)t.newInstance();
+        ANG_RemoteInvocationINT processor = (ANG_RemoteInvocationINT)t.newInstance();
 
-		if(whatToProcess==NEWGEN_GDI_ENDO){
-			processor.doProcess(GDIToProcess);
-		}
+        if(whatToProcess==NEWGEN_GDI_ENDO){
+            processor.doProcess(GDIToProcess);
+        }
 
-		if(whatToProcess==NEWGEN_EASY_PAY){
-			processor.doSanityCheck(IEPToProcess);
-			processor.doProcess(IEPToProcess);
-		}
+        if(whatToProcess==NEWGEN_EASY_PAY){
+            processor.doSanityCheck(IEPToProcess);
+            processor.doProcess(IEPToProcess);
+        }
     }
 
-	public void handleAutomaticUploadReports() {
+    public void handleAutomaticUploadReports() {
 
         //
         // Get all remote invocations that were updated to In Progress by mulesoft.
