@@ -104,7 +104,8 @@ public with sharing class RecordSharingController {
                     SendClosedTasks = false,
                     SendOpenTasks = false,
                     SendEmails = sendEmail,
-                    ParentRecordId = null
+                    ParentRecordId = null,
+                    RelatedRecords = 'Case,CaseComment,Attachment'
                 )
             );
         }         
