@@ -6,6 +6,56 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customConsoleComponents>
+        <subtabComponents>
+            <containers>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
+                <region>Right</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Editing</label>
+                    <page>dgAI2__DG_OnDemandCase</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Portal</label>
+                    <page>dgec__DG_WelcomeEmailPromts</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Chat</label>
+                    <page>dglc__DG_LiveChat</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Suggestion</label>
+                    <page>DG_ProposedTemplate</page>
+                </sidebarComponents>
+                <style>Accordion</style>
+                <unit>Pixel</unit>
+                <width>300</width>
+            </containers>
+            <containers>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <region>Left</region>
+                <sidebarComponents>
+                    <componentType>Lookup</componentType>
+                    <height>50</height>
+                    <lookup>Contact</lookup>
+                    <unit>Percentage</unit>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>Lookup</componentType>
+                    <height>50</height>
+                    <lookup>Account</lookup>
+                    <unit>Percentage</unit>
+                </sidebarComponents>
+                <style>Stack</style>
+                <unit>Percentage</unit>
+                <width>35</width>
+            </containers>
+        </subtabComponents>
+    </customConsoleComponents>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -385,7 +435,12 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Case.Close_Case_lightning</actionName>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Case_Close_Region</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>
@@ -443,11 +498,6 @@
             <actionName>Share</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>12</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
