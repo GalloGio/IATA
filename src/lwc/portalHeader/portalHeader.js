@@ -1,8 +1,9 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 
 //navigation
-import { NavigationMixin } from 'lightning/navigation';
-import { navigateToPage } from 'c/navigationUtils';
+import { NavigationMixin, CurrentPageReference} from 'lightning/navigation';
+import { navigateToPage, getPageName } from 'c/navigationUtils';
+import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
 
 //notification apex method
 import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
@@ -100,6 +101,15 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track openmodel = false;
 
     @track mainBackground = 'z-index: 9999;';
+
+    @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonService';
+    @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport';
+
+
+    @wire(CurrentPageReference)
+    getPageRef() {
+        this.handlePageRefChanged();
+    }
 
     connectedCallback() {
 
@@ -329,6 +339,31 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             }
         })
             .then(url => navigateToPage(url, params));
+    }
+
+    handlePageRefChanged() {
+        let pagename = getPageName();
+        if(pagename){
+            getBreadcrumbs({ pageName : pagename })
+                .then(results => {
+                    let breadCrumbs = JSON.parse(JSON.stringify(results));
+                    if (breadCrumbs && breadCrumbs[1] && (breadCrumbs[1].DeveloperName === 'services' || breadCrumbs[1].DeveloperName === 'support')) {
+                        if (breadCrumbs[1].DeveloperName === 'services') {
+                            this.buttonServiceStyle = `${this.buttonServiceStyle} selectedButton`;
+                            this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+                        } else if (breadCrumbs[1].DeveloperName === 'support') {
+                            this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+                            this.buttonSupportStyle = `${this.buttonSupportStyle} selectedButton`;
+                        }
+                    } else {
+                        this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+                        this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+                    }
+                })
+                .catch(error => {
+                    console.log('PortalHeader getBreadcrumbs error: ' , error);
+                });
+        }
     }
 
 }
