@@ -20,6 +20,20 @@
                         </template>
                     </div>
                 </template>
+                
+                <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
+                    <lightning-layout-item padding="around-small">
+                            <a onclick={handlePrevious}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" size="xx-small"> </lightning-icon></a>
+                        </lightning-layout-item>
+                        <template for:each={sliderIcons} for:item="sliderIcon">
+                            <lightning-layout-item class="slds-p-around_xx-small" key={sliderIcon.id}>
+                                <lightning-icon icon-name="utility:record" size="xx-small" class={sliderIcon.className}></lightning-icon>
+                            </lightning-layout-item>
+                        </template>
+                        <lightning-layout-item padding="around-small">
+                            <a onclick={handleNext}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" size="xx-small"> </lightning-icon></a>
+                        </lightning-layout-item>
+                </lightning-layout>
             </div>
         </span>
 
