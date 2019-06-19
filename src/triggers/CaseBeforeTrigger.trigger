@@ -1685,8 +1685,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 //If Group_Single_Agent__c is being modified for Sidra Lite case
                 //We need to check if any change code was previously generated:
                 //If any change code was generated we need to prevent saving 
-                if(aCase.RecordTypeId == SIDRALiteCaseRecordTypeID && aCase.Group_Single_Agent__c != aCaseOld.Group_Single_Agent__c){
+                //This field must only be edited for China: we do not need to check the country here since 
+                //we have a validation rule preventing the field to be edited for Non China)
+                if(SidraLiteManager.runGroupSingleAgentSidraValidation && aCase.RecordTypeId == SIDRALiteCaseRecordTypeID && aCase.Group_Single_Agent__c != aCaseOld.Group_Single_Agent__c){
                     casesGroupSingleAgentModifiedSet.add(aCase.Id);
+                    SidraLiteManager.runGroupSingleAgentSidraValidation = false;
                 }
                 
             }
