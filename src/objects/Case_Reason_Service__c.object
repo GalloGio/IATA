@@ -35,6 +35,7 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Provider_Required__c</columns>
+        <columns>Create_custom_service_rendered__c</columns>
         <columns>Service__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>
