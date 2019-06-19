@@ -122,14 +122,11 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                         bToSend = false;                            
                     }
 
-    
-                    Set<String> aModelToExcludeSet = new set<String>(ccbs.Accreditation_Model_To_Exclude__c.split(';'));
-
-                    if(au.Change_Code__c == ccbs.Change_Code__c && 
+                    if( au.Change_Code__c == ccbs.Change_Code__c && 
                         auxAccAccount.ANG_IsNewGenAgency__c && 
-                        aModelToExcludeSet.contains(auxAccAccount.ANG_Accreditation_Model__c))
-                        bToSend = false;
-                    }
+                        auxAccAccount.ANG_Accreditation_Model__c == ccbs.Accreditation_Model_To_Exclude__c)
+                    bToSend = false;
+                }
 
                 if(bToSend){
                     sLog += au.Account__r.IATACode__c + ',';
