@@ -369,6 +369,10 @@ public class ANG_RHCHelper {
 	*/
 	private static Map<String, ANG_BSP_Attributes__c> fetchBSPAttributesConfig(List<Id> bspIdSet){
 
+		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = new Map<String, ANG_BSP_Attributes__c>();
+
+		if(bspIdSet.isEmpty()) return bspAttributesMap;
+
 		List<ANG_BSP_Attributes__c> bspAttributesLst = new List<ANG_BSP_Attributes__c>(
 			[SELECT
 				Id,
@@ -388,8 +392,6 @@ public class ANG_RHCHelper {
 			 	BSP__c IN :bspIdSet
 			]
 		);
-
-		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = new Map<String, ANG_BSP_Attributes__c>();
 
 		for(ANG_BSP_Attributes__c bspAttr : bspAttributesLst){
 			//For RHC Amount Conf Rec Type the unique key is:

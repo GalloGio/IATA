@@ -28,6 +28,7 @@ public class ANG_AccountTriggerHandler {
 	public void onBeforeInsert(){
 		adjustShortName();
 		updateRiskStatus();
+		populateIEPStatus();
 	}
 	public void onAfterInsert() {
 
@@ -37,6 +38,7 @@ public class ANG_AccountTriggerHandler {
 		adjustShortName();
 		updateRiskStatus();
 		runRiskAssessment();
+		populateIEPStatus();
 	}
 	public void onAfterUpdate() {
 		updateRiskEventStatus();
@@ -333,6 +335,9 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	private void updateRHCInformation() {
+
+		if(ANG_OscarProcessHelper.isIATACodeGenerationRunning) return;
+
 		Map<Id, ANG_RHC_Information__c> rhcToUpdate = new Map<Id, ANG_RHC_Information__c>();
 		Map<Id, Boolean> changedConditions = new Map<Id, Boolean>();
 		Set<Id> changedStatus = new Set<Id>();
@@ -642,6 +647,22 @@ public class ANG_AccountTriggerHandler {
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBAccounts, 'B');
 		if(!iepModelBPlusAccounts.isEmpty())
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBPlusAccounts, 'B+');
+	}
+
+	private void populateIEPStatus() {
+
+		for(Account acc : triggerNew) {
+
+			if((acc.Location_Class__c == 'P' || acc.Location_Class__c == 'D') 
+				&& acc.IATA_ISO_Country__c != null && acc.ANG_IEP_Status__c == null 
+				&& acc.Status__c != 'Terminated' && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) {
+				
+				//Just go in the IsoCountryDao if the other conditions are true, to avoid a query
+				List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acc.IATA_ISO_Country__c});
+				if(!listCountries.isEmpty() && (listCountries.get(0).ANG_Portal_Service__c != null || listCountries.get(0).ANG_IEP_Model__c == 'Banking Model'))
+					acc.ANG_IEP_Status__c = 'No IEP Account';
+			}
+		}
 	}
 
 	private void handleAccountUpdate(){
