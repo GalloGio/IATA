@@ -3702,7 +3702,7 @@
                     "ActionLabel": "AMS_OSCAR_Action6_Corr",
                     "args": ["oscarid"]
                   }
-        ],
+				],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -4522,7 +4522,7 @@
                   "Is_PCI_compliant__c",
                   "ANG_PCI_compliance_expiry_date__c",
                   "ANG_Change_Entity_Location__c",
-                  "Change_of_Entity_Location_within_EU__c",
+                  "Change_of_Entity_Location_within_EU__c",                  
                   "STEP6__c"
                 ],
                 "IsDependent": false
@@ -5669,7 +5669,7 @@
                       "oscarid"
                     ]
                   },
-          {
+				  {
                     "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
@@ -6695,25 +6695,25 @@
                 "IsDependent": false
               },
               {
-                "Name": "STEP9",
+                "Name": "STEP48",
                 "Required": [],
                 "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_succeeded"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_passed"
                   },
                   {
                     "Status": "Failed",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_failed"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_failed"
                   },
                   {
                     "Status": "Not Applicable",
-                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_notApplicable"
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable"
                   }
                 ],
                 "DisplayFields": [
-                  "STEP9__c"                
+                  "STEP48__c"                  
                 ],
                 "IsDependent": false
               }
