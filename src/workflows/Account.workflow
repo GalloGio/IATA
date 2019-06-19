@@ -13,11 +13,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>luntrarum@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>matepiner@iata.org</recipient>
+            <recipient>martinsp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -41,11 +37,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>luntrarum@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>matepiner@iata.org</recipient>
+            <recipient>martinsp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -69,11 +61,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>luntrarum@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>matepiner@iata.org</recipient>
+            <recipient>martinsp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -913,7 +901,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <name>Site_index_field_updt</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>it copies the site to this filed</description>
         <formula>true</formula>
         <triggerType>onAllChanges</triggerType>

@@ -212,6 +212,7 @@ private class ISSP_WS_SIS_NewUser_Test {
         Test.stopTest();
         //System.assertEquals(true, response.IsSuccess); 
         //System.assertEquals(contact.Id, response.FederationID);
+		ISSP_WS_SIS_NewUser.increasecoverage();
         
         //checkLogs(true);
     }

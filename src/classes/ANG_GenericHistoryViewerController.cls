@@ -96,7 +96,7 @@ public with sharing class ANG_GenericHistoryViewerController {
                                 trackedObjId,
                                 history.get('CreatedById'),
                                 mapUserNamesPerId.get((Id)history.get('CreatedById')),
-                                String.valueOf(history.get('CreatedDate')),
+                                DateTime.valueOf(history.get('CreatedDate')).format('yyyy-MM-dd HH:mm:ss'),
                                 tmpOld,
                                 tmpNew,
                                 String.valueOf(history.get('What__c')),
@@ -128,7 +128,7 @@ public with sharing class ANG_GenericHistoryViewerController {
             if((trackedFieldLabel == 'RecordType' && tmpOld.startsWith('012') )|| trackedFieldApiName == 'created' || (trackedFieldLabel == 'Parent' && !tmpOld.startsWith('001') && !tmpNew.startsWith('001')) || (trackedFieldLabel == 'Owner' && !tmpOld.startsWith('005') && !tmpNew.startsWith('005')))
                 continue;
             else 
-            mergedHistoric.add(new GenericHistoryWrapper(trackedObjId, history.get('CreatedById'),mapUserNamesPerId.get((Id)history.get('CreatedById')),String.valueOf(history.get('CreatedDate')),tmpOld,tmpNew,trackedFieldLabel,false,trackedFieldApiName,isLookUpValueMap.get(tmpNew) || isLookUpValueMap.get(tmpOld)));
+                mergedHistoric.add(new GenericHistoryWrapper(trackedObjId, history.get('CreatedById'),mapUserNamesPerId.get((Id)history.get('CreatedById')), DateTime.valueOf(history.get('CreatedDate')).format('yyyy-MM-dd HH:mm:ss'), tmpOld,tmpNew,trackedFieldLabel,false,trackedFieldApiName,isLookUpValueMap.get(tmpNew) || isLookUpValueMap.get(tmpOld)));
         }
 
         //sort by createddate (comparable interface methods implemented in wrapper class)

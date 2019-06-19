@@ -28,6 +28,7 @@ public class ANG_AccountTriggerHandler {
 	public void onBeforeInsert(){
 		adjustShortName();
 		updateRiskStatus();
+		populateIEPStatus();
 	}
 	public void onAfterInsert() {
 
@@ -37,6 +38,7 @@ public class ANG_AccountTriggerHandler {
 		adjustShortName();
 		updateRiskStatus();
 		runRiskAssessment();
+		populateIEPStatus();
 	}
 	public void onAfterUpdate() {
 		updateRiskEventStatus();
@@ -67,7 +69,6 @@ public class ANG_AccountTriggerHandler {
 
 	private void adjustShortName(){
 
-		//AND ( RecordType.DeveloperName = 'IATA_Agency', OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )
 		for(Account a : triggerNew){
 			if(a.RecordTypeID != RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'))
 				continue;
@@ -332,18 +333,26 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	private void updateRHCInformation() {
+
+		if(ANG_OscarProcessHelper.isIATACodeGenerationRunning) return;
+
 		Map<Id, ANG_RHC_Information__c> rhcToUpdate = new Map<Id, ANG_RHC_Information__c>();
 		Map<Id, Boolean> changedConditions = new Map<Id, Boolean>();
 		Set<Id> changedStatus = new Set<Id>();
 
 		//Find relevant accounts
 		for(Account a : triggerNew){
+			Account oldAcct = oldMap.get(a.Id);
 			//need to check both fields as some will change the be done 
 			//previously on the trigger (on on physical field), and some 
 			//cases will change only the formula field (i.e.: Opt-in)
-			if(a.ANG_HE_CashCondition__c != oldMap.get(a.Id).ANG_HE_CashCondition__c) changedConditions.put(a.Id, a.ANG_HE_CashCondition__c);
-			else if(a.ANG_CashCondition__c != oldMap.get(a.Id).ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
-			if(a.Status__c != oldMap.get(a.Id).Status__c && oldMap.get(a.Id).Status__c == AMS_Utils.ACC_S0_TERMINATED) changedStatus.add(a.Id);
+			if(a.ANG_HE_CashCondition__c != oldAcct.ANG_HE_CashCondition__c) changedConditions.put(a.Id, a.ANG_HE_CashCondition__c);
+			else if(a.ANG_CashCondition__c != oldAcct.ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
+			if(a.Status__c != oldAcct.Status__c && oldAcct.Status__c == AMS_Utils.ACC_S0_TERMINATED) changedStatus.add(a.Id);
+			
+			if((a.Financial_Assessment_Points__c != oldAcct.Financial_Assessment_Points__c) || (a.ANG_HE_RiskStatus__c != oldAcct.ANG_HE_RiskStatus__c)){
+				changedStatus.add(a.Id);
+			}
 
 		}
 
@@ -351,7 +360,7 @@ public class ANG_AccountTriggerHandler {
 		if(changedConditions.isEmpty() && changedStatus.isEmpty()) return;
 
 		//find rhc records
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :changedStatus OR ANG_AccountId__c IN :changedConditions.keySet()]){
 			rhcToUpdate.put(r.ANG_AccountId__c, r);
 		}
 
@@ -361,10 +370,10 @@ public class ANG_AccountTriggerHandler {
 		for(Id acc : changedConditions.keySet()) if(rhcToUpdate.containsKey(acc)) rhcToUpdate.get(acc).ANG_CashCondition__c = changedConditions.get(acc);
 		
 		//then set the recalculated values
-		List<ANG_RHC_Information__c> reactivatedRHC = new List<ANG_RHC_Information__c>();
-		for(Id acc : changedStatus) if(rhcToUpdate.containsKey(acc)) reactivatedRHC.add(rhcToUpdate.get(acc));
+		List<ANG_RHC_Information__c> recalculateRHC = new List<ANG_RHC_Information__c>();
+		for(Id acc : changedStatus) if(rhcToUpdate.containsKey(acc)) recalculateRHC.add(rhcToUpdate.get(acc));
 
-		if(!reactivatedRHC.isEmpty()) ANG_RHCHelper.calculateRHCAmount(reactivatedRHC);
+		if(!recalculateRHC.isEmpty()) ANG_RHCHelper.calculateRHCAmount(recalculateRHC);
 		
 		//then, at last, we make the update
 		if(!rhcToUpdate.isEmpty()) update rhcToUpdate.values();
@@ -378,7 +387,7 @@ public class ANG_AccountTriggerHandler {
 	private Boolean hasChangedValuesAccount(Account oldAcc, Account newAcc){
 		// used on updateRiskStatus to determine if some values have changed.
 
-		return oldAcc.Financial_Review_Result__c != newAcc.Financial_Review_Result__c || oldAcc.ANG_HE_RiskHistoryAssessment__c != newAcc.ANG_HE_RiskHistoryAssessment__c;
+		return oldAcc.Financial_Review_Result__c != newAcc.Financial_Review_Result__c || oldAcc.ANG_HE_RiskHistoryAssessment__c != newAcc.ANG_HE_RiskHistoryAssessment__c || (oldAcc.Financial_Assessment_Points__c != newAcc.Financial_Assessment_Points__c);
 	}
 
 
@@ -603,6 +612,7 @@ public class ANG_AccountTriggerHandler {
 		Set<Id> iepAccounts = new Set<Id>();
 		Map<Id,Account> iepModelAAccounts = new Map<Id,Account>();
 		Map<Id,Account> iepModelBAccounts = new Map<Id,Account>();
+		Map<Id,Account> iepModelBPlusAccounts = new Map<Id,Account>();
 
 		for(Account a :triggerNew){
 
@@ -613,7 +623,7 @@ public class ANG_AccountTriggerHandler {
 
 		if(iepAccounts.isEmpty()) return;
 
-		Map<Id,Account> iepCountriesAccs = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.ANG_IEP_Model__c FROM Account WHERE Id IN :iepAccounts AND (IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B')]);
+		Map<Id,Account> iepCountriesAccs = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.ANG_IEP_Model__c FROM Account WHERE Id IN :iepAccounts AND (IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B+')]);
 		
 		for(Id iepAcc: iepAccounts){
 
@@ -623,6 +633,8 @@ public class ANG_AccountTriggerHandler {
 					iepModelAAccounts.put(iepAcc, newMap.get(iepAcc));
 				else if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model B')
 					iepModelBAccounts.put(iepAcc, newMap.get(iepAcc));
+				else if(iepCountriesAccs.get(iepAcc).IATA_ISO_Country__r.ANG_IEP_Model__c == 'Model B+')
+					iepModelBPlusAccounts.put(iepAcc, newMap.get(iepAcc));
 			}
 
 		}
@@ -631,5 +643,23 @@ public class ANG_AccountTriggerHandler {
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelAAccounts, 'A');
 		if(!iepModelBAccounts.isEmpty())
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBAccounts, 'B');
+		if(!iepModelBPlusAccounts.isEmpty())
+			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBPlusAccounts, 'B+');
+	}
+
+	private void populateIEPStatus() {
+
+		for(Account acc : triggerNew) {
+
+			if((acc.Location_Class__c == 'P' || acc.Location_Class__c == 'D') 
+				&& acc.IATA_ISO_Country__c != null && acc.ANG_IEP_Status__c == null 
+				&& acc.Status__c != 'Terminated' && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) {
+				
+				//Just go in the IsoCountryDao if the other conditions are true, to avoid a query
+				List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acc.IATA_ISO_Country__c});
+				if(!listCountries.isEmpty() && (listCountries.get(0).ANG_Portal_Service__c != null || listCountries.get(0).ANG_IEP_Model__c == 'Banking Model'))
+					acc.ANG_IEP_Status__c = 'No IEP Account';
+			}
+		}
 	}
 }

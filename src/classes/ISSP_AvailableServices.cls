@@ -472,7 +472,11 @@ public with sharing class ISSP_AvailableServices{
 
             this.modalStyle = 'modal-dialog';
 
+            //Fix INC467210 -- WMO-465 Commit
+            this.addUsersEnable = isRequestableWithoutApproval(isAdmin, inRecord, currentPortalUser.Profile);
+
             if(this.isEasyPayService) {
+                this.addUsersEnable = isAdmin; //INC467210: Revert WMO-465 deletion
                 this.accountNotOpenError = (IepStatus != ANG_ISSP_PortalServiceHelper.STATUS_OPEN);
                 if(this.accountNotOpenError) {
                     this.lineErrorMessage = System.Label.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg;
@@ -480,8 +484,7 @@ public with sharing class ISSP_AvailableServices{
             } else {
                 this.accountNotOpenError = false;
             }
-            this.addUsersEnable = isRequestableWithoutApproval(isAdmin, inRecord, currentPortalUser.Profile);
-
+            
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
                                         
             if (flagIsIepPortalService && (IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT || IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) && isAdmin && isAuthorisedSignatory) {

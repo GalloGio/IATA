@@ -169,7 +169,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>BSP_non_air__c</field>
+                <field>Purge_Flag__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -279,6 +279,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Special_remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Baggage_Tag_Range_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accounting_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
