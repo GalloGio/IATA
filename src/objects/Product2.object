@@ -638,7 +638,7 @@
                 </value>
                 <value>
                     <fullName>N/A</fullName>
-                    <default>false</default>
+                    <default>true</default>
                     <label>N/A</label>
                 </value>
             </valueSetDefinition>
@@ -12926,6 +12926,7 @@ The product will only appear on the Online Store when the date entered in this f
     <recordTypes>
         <fullName>Publication</fullName>
         <active>true</active>
+        <compactLayoutAssignment>Publication</compactLayoutAssignment>
         <label>Publication</label>
         <picklistValues>
             <picklist>Accepted_Payment_Methods__c</picklist>
@@ -13029,7 +13030,7 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>N%2FA</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Product Manager</fullName>
