@@ -52,6 +52,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_CountrySAttr_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
+        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
+    </labels>
+    <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2943,6 +2950,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CaseKPI2_RecordType</shortDescription>
         <value>ProcessEuropeSCE;ID_Card_Application;OSCAR_Communication</value>
+    </labels>
+    <labels>
+        <fullName>CaseRTtrackedByCS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseRTtrackedByCS</shortDescription>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global,ComplaintIDFS</value>
     </labels>
     <labels>
         <fullName>CaseTypeReason1List1</fullName>
@@ -22319,6 +22333,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Cargo Agent New</shortDescription>
         <value>Cargo Agent / IFACP Forwarder</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Cargo_Label_Value</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Cargo</shortDescription>
+        <value>Freight Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_CaseCommentEmail</fullName>

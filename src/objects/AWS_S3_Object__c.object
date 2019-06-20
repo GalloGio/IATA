@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Access__c</fullName>
         <description>Represents the type of access to the object: &quot;FULL_CONTROL&quot; for both read an write permissions, &quot;public-read&quot; for read only permissions, &quot;WRITE&quot; for write permissions</description>
