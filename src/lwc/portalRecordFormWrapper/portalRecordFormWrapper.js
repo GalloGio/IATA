@@ -4,12 +4,18 @@
 
 import { LightningElement, api, track } from 'lwc';
 
+
+//navigation
+import { NavigationMixin } from 'lightning/navigation';
+import { navigateToPage } from 'c/navigationUtils';
+
+
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
 
-export default class PortalRecordFormWrapper extends LightningElement {
+export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
 
     @api sectionClass;
     @api headerClass;
@@ -23,13 +29,18 @@ export default class PortalRecordFormWrapper extends LightningElement {
     @api isLoading;
     @api staticFields;
     @api showarea;
+    @api services;
+
 
     @track isLoading = true;
     @track isLoadingEdit = true;
     @track isSaving = false;
     @track areasOptions = [];
     @track selectedvalues = [];
+    @track accessibilityText = '';
 
+    @track listSelected = [];
+    @track contactTypeStatus = [];
 
     _labels = { SaveLabel, CancelLabel };
     get labels() { return this._labels; }
@@ -38,18 +49,18 @@ export default class PortalRecordFormWrapper extends LightningElement {
     connectedCallback() {
         this.showEdit = (this.showEdit === 'true' ? true : false);
 
-        if(this.isContact){
+        if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = result;
                 let contact = JSON.parse(JSON.stringify(this.staticFields));
                 let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
 
-                if(contact.Area__c != null){
+                if (contact.Area__c != null) {
 
                     let values = contact.Area__c.split(";");
                     values.forEach(function (value) {
                         options.forEach(function (option) {
-                            if(option.label == value){option.checked = true; selectedV.push(option.value);}
+                            if (option.label == value) { option.checked = true; selectedV.push(option.value); }
                         });
                     });
 
@@ -58,13 +69,38 @@ export default class PortalRecordFormWrapper extends LightningElement {
 
                 this.areasOptions = options;
             });
+
+
+            let contactTypeStatus = [];
+            let contactType = [];
+            let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
+            fieldsToIterate.forEach(function (item) {
+                if (item.isAccessibility) {
+                    contactType = item.accessibilityList;
+                    item.accessibilityList.forEach(function (acc) {
+                        if (acc.checked) {
+                            contactTypeStatus.push(acc.label);
+                        }
+                    });
+                }
+            });
+
+            this.accessibilityText = contactTypeStatus.join(', ');
+            this.contactTypeStatus = contactType;
+            this.listSelected = contactTypeStatus;
+
         }
+
     }
 
     openModal() { this.showEditModal = true; }
     closeModal() { this.showEditModal = false; }
 
-    loaded() { this.isLoading = false; }
+    loaded(event) {
+        this.isLoading = false;
+        let fields = JSON.parse(JSON.stringify(event.detail.objectInfos.Contact.fields));
+        
+    }
     loadedEdit() {
         this.isLoadingEdit = false;
         this.styleInputs();
@@ -73,7 +109,13 @@ export default class PortalRecordFormWrapper extends LightningElement {
     handleSucess(event) {
         const updatedRecord = event.detail.id;
         this.isSaving = false;
+
+        let listSelected = JSON.parse(JSON.stringify(this.listSelected));
+        if (listSelected.length > 0) {
+            this.dispatchEvent(new CustomEvent('refreshview'));
+        }
         this.closeModal();
+        eval("$A.get('e.force:refreshView').fire();");
     }
 
     handleError(event) {
@@ -88,11 +130,11 @@ export default class PortalRecordFormWrapper extends LightningElement {
         return this.editFields != null;
     }
 
-    get isContact(){
+    get isContact() {
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
 
-    get showAreas(){
+    get showAreas() {
         return this.showarea;
     }
 
@@ -136,8 +178,8 @@ export default class PortalRecordFormWrapper extends LightningElement {
     }
 
     handleSubmit(event) {
-    	this.isSaving = true;
-    	if(this.isContact){
+        this.isSaving = true;
+        if (this.isContact) {
             event.preventDefault();
 
             let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
@@ -149,8 +191,22 @@ export default class PortalRecordFormWrapper extends LightningElement {
 
             fields.Area__c = selected;
 
+            let listSelected = JSON.parse(JSON.stringify(this.listSelected));
+            if (listSelected.length > 0) {
+                let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
+
+                contactTypeStatusLocal.forEach(function (item) {
+                    if (listSelected.includes(item.label)) {
+                        fields[item.APINAME] = true;
+                    } else {
+                        fields[item.APINAME] = false;
+                    }
+                });
+
+            }
+
             this.template.querySelector('lightning-record-edit-form').submit(fields);
-    	}
+        }
     }
 
     getValueSelected(event) {
@@ -163,20 +219,57 @@ export default class PortalRecordFormWrapper extends LightningElement {
         if (!selectedV.includes(selected)) {
             selectedV.push(selected);
             options.forEach(function (option) {
-                if(option.value == selected){option.checked = true;}
+                if (option.value == selected) { option.checked = true; }
             });
         } else {
             let index = selectedV.indexOf(selected);
             if (index > -1) {
                 selectedV.splice(index, 1);
                 options.forEach(function (option) {
-                    if(option.value == selected){option.checked = false;}
+                    if (option.value == selected) { option.checked = false; }
                 });
             }
         }
 
         this.areasOptions = options;
         this.selectedvalues = selectedV;
+    }
+
+    navigateTo(event) {
+        let serviceId = event.target.dataset.id;
+
+        let params = {};
+        params.serviceId = serviceId;
+
+        event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "manage-service"
+            }
+        })
+            .then(url => navigateToPage(url, params));
+
+    }
+
+    getValueSelectedTypeStatus(event) {
+
+        let selected = event.target.dataset.item;
+
+        let contactTypeStatus = JSON.parse(JSON.stringify(this.listSelected));
+
+        if (!contactTypeStatus.includes(selected)) {
+            contactTypeStatus.push(selected)
+        } else {
+            for (let i = contactTypeStatus.length - 1; i >= 0; i--) {
+                if (contactTypeStatus[i] === selected) {
+                    contactTypeStatus.splice(i, 1);
+                }
+            }
+        }
+
+        this.listSelected = contactTypeStatus;
     }
 
 }

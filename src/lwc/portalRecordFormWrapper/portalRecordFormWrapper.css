@@ -48,6 +48,7 @@
   padding-top: 5%;
 }
 
+
 .textFormat {
   font-family: AktivGrotesk;
   font-size: 14px;
@@ -105,4 +106,8 @@ input[type="checkbox"] {
 
 .checkbox-button__control {
   transform: scale(0.75);
+}
+
+.hrefLinkColor {
+color: blue;
 }

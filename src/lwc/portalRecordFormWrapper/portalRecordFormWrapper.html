@@ -8,7 +8,7 @@
         <span slot="sectionTitle">{sectionTitle}</span>
         <span slot="sectionActions">
             <lightning-icon if:true={showEdit} icon-name="utility:edit" size="x-small"
-                            class="darkBlueIcon cursorPointer" onclick={openModal}></lightning-icon>
+                class="darkBlueIcon cursorPointer" onclick={openModal}></lightning-icon>
         </span>
         <span slot="componentContent">
 
@@ -17,13 +17,43 @@
                 <template if:false={isLoading}>
                     <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
                         <template for:each={fields} for:item="field">
-                            <span key={field.fieldName}
-                                  class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                <template if:true={field.visible}>
-                                    <lightning-output-field class="labelValue textValue" field-name={field.fieldName}>
-                                    </lightning-output-field>
+                            <template if:true={field.isAccessibility}>
+                                <span key={field.fieldName}
+                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <span class="specialLabel">
+                                        {field.fieldName}
+                                    </span>
+                                    <div class="textValue">
+                                        {accessibilityText}
+                                    </div>
+                                </span>
+
+                                <div key={field.fieldName}
+                                    class="specialLabel slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                    Services
+                                </div>
+                                <template for:each={services} for:item="service">
+                                    <div key={service.recordService.ServiceName__c}
+                                        class="text-xsmall slds-m-left_medium slds-size_1-of-1">
+                                        <a class="hrefLinkColor" onclick={navigateTo}
+                                            data-url={service.recordService.Application_URL__c}
+                                            data-id={service.recordService.Id}>
+                                            {service.recordService.ServiceName__c}
+                                        </a>
+                                    </div>
                                 </template>
-                            </span>
+                            </template>
+
+                            <template if:false={field.isAccessibility}>
+                                <span key={field.fieldName}
+                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <template if:true={field.visible}>
+                                        <lightning-output-field class="labelValue textValue"
+                                            field-name={field.fieldName}>
+                                        </lightning-output-field>
+                                    </template>
+                                </span>
+                            </template>
                         </template>
                     </div>
                 </template>
@@ -47,7 +77,7 @@
                             <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                                 <template if:false={isSaving}>
                                     <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
-                                                    onclick={closeModal}></lightning-icon>
+                                        onclick={closeModal}></lightning-icon>
                                 </template>
                             </span>
                         </div>
@@ -57,8 +87,8 @@
                         <template if:true={recordId}>
                             <div class="slds-is-relative">
                                 <lightning-record-edit-form record-id={recordId} object-api-name={objectName}
-                                                            onload={loadedEdit} onsuccess={handleSucess} onsubmit={handleSubmit}
-                                                            onerror={handleError}>
+                                    onload={loadedEdit} onsuccess={handleSucess} onsubmit={handleSubmit}
+                                    onerror={handleError}>
 
                                     <template if:true={isSaving}>
                                         <div class="modalSpinnerContainer">
@@ -67,45 +97,87 @@
                                         </div>
                                     </template>
 
-                                    <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
+                                    <div
+                                        class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
                                         <template if:false={isLoadingEdit}>
-                                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
+                                            <div
+                                                class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
 
                                                 <!-- Display same fields for edit -->
                                                 <template if:false={haveEditFields}>
                                                     <template for:each={fields} for:item="field">
-                                                        <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
-
-                                                            <div>
-                                                                <!-- If field is visible -->
-                                                                <template if:true={field.visible}>
-                                                                    <!-- If field is editable -->
-                                                                    <template if:false={field.outputOnly}>
-                                                                        <template if:true={field.editable}>
-                                                                            <lightning-input-field onchange={styleInputs}
-                                                                                                   class="labelValue textValue"
-                                                                                                   field-name={field.fieldName}>
-                                                                            </lightning-input-field>
-                                                                        </template>
-
-
-                                                                        <!-- Read-only fields -->
-                                                                        <template if:false={field.editable}>
-                                                                            <lightning-input-field
-                                                                                    class="labelValue textValue disabledValue disabledInput"
-                                                                                    field-name={field.fieldName} disabled>
-                                                                            </lightning-input-field>
-                                                                        </template>
-                                                                    </template>
-
-                                                                    <template if:true={field.outputOnly}>
-                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>
-                                                                    </template>
-
-                                                                </template>
+                                                        <template if:true={field.isAccessibility}>
+                                                            <div key={field.fieldName}
+                                                                class="specialLabel slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                                                {field.fieldName}
                                                             </div>
+                                                            <template for:each={field.accessibilityList}
+                                                                for:item="accessibility">
+                                                                <div key={accessibility.label}
+                                                                    class="text-xsmall slds-size_1-of-2">
+                                                                    <div
+                                                                        class="slds-m-left_x-small slds-m-bottom_small">
+                                                                        <label class="checkbox-button">
+                                                                            <input data-check={accessibility.checked}
+                                                                                checked={accessibility.checked}
+                                                                                data-item={accessibility.label}
+                                                                                type="checkbox"
+                                                                                class="checkbox-button__input"
+                                                                                onchange={getValueSelectedTypeStatus}
+                                                                                name={accessibility.label}>
+                                                                            <span data-check={accessibility.checked}
+                                                                                data-item={accessibility.label}
+                                                                                class="checkbox-button__control"
+                                                                                onchange={getValueSelectedTypeStatus}></span>
+                                                                            <span data-check={accessibility.checked}
+                                                                                data-item={accessibility.label}
+                                                                                class="checkbox-button__label"
+                                                                                onchange={getValueSelectedTypeStatus}>
+                                                                                {accessibility.label}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                        </template>
 
-                                                        </span>
+                                                        <template if:false={field.isAccessibility}>
+                                                            <span key={field.fieldName}
+                                                                class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                                <div>
+                                                                    <!-- If field is visible -->
+                                                                    <template if:true={field.visible}>
+                                                                        <!-- If field is editable -->
+                                                                        <template if:false={field.outputOnly}>
+                                                                            <template if:true={field.editable}>
+                                                                                <lightning-input-field
+                                                                                    onchange={styleInputs}
+                                                                                    class="labelValue textValue"
+                                                                                    field-name={field.fieldName}>
+                                                                                </lightning-input-field>
+                                                                            </template>
+
+
+                                                                            <!-- Read-only fields -->
+                                                                            <template if:false={field.editable}>
+                                                                                <lightning-input-field
+                                                                                    class="labelValue textValue disabledValue disabledInput"
+                                                                                    field-name={field.fieldName}
+                                                                                    disabled>
+                                                                                </lightning-input-field>
+                                                                            </template>
+                                                                        </template>
+
+                                                                        <template if:true={field.outputOnly}>
+                                                                            <lightning-output-field
+                                                                                class="labelValue textValue"
+                                                                                field-name={field.fieldName}>
+                                                                            </lightning-output-field>
+                                                                        </template>
+
+                                                                    </template>
+                                                                </div>
+                                                            </span>
+                                                        </template>
                                                     </template>
                                                 </template>
 
@@ -113,26 +185,30 @@
                                                 <template if:true={haveEditFields}>
                                                     <template for:each={editFields} for:item="field">
                                                         <span key={field.fieldName}
-                                                              class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                            class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
                                                             <div>
                                                                 <template if:true={field.visible}>
                                                                     <template if:false={field.outputOnly}>
                                                                         <template if:true={field.editable}>
-                                                                            <lightning-input-field onchange={styleInputs}
-                                                                                                   class="labelValue textValue"
-                                                                                                   field-name={field.fieldName}>
+                                                                            <lightning-input-field
+                                                                                onchange={styleInputs}
+                                                                                class="labelValue textValue"
+                                                                                field-name={field.fieldName}>
                                                                             </lightning-input-field>
                                                                         </template>
                                                                         <template if:false={field.editable}>
                                                                             <lightning-input-field
-                                                                                    class="labelValue textValue disabledValue disabledInput"
-                                                                                    field-name={field.fieldName} disabled>
+                                                                                class="labelValue textValue disabledValue disabledInput"
+                                                                                field-name={field.fieldName} disabled>
                                                                             </lightning-input-field>
                                                                         </template>
                                                                     </template>
 
                                                                     <template if:true={field.outputOnly}>
-                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>
+                                                                        <lightning-output-field
+                                                                            class="labelValue textValue"
+                                                                            field-name={field.fieldName}>
+                                                                        </lightning-output-field>
                                                                     </template>
                                                                 </template>
                                                             </div>
@@ -143,21 +219,31 @@
                                                 <!-- Working areas for contact -->
                                                 <template if:true={showAreas}>
                                                     <div class="slds-hide">
-                                                        <lightning-input-field field-name="Area__c"></lightning-input-field>
+                                                        <lightning-input-field field-name="Area__c">
+                                                        </lightning-input-field>
                                                     </div>
 
-                                                    <div class="text-small slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                                    <div
+                                                        class="text-small slds-col slds-size_1-of-1 slds-m-bottom_medium">
                                                         Working Areas
                                                     </div>
 
                                                     <template for:each={areasOptions} for:item="item">
-                                                        <div key={item.label} class="slds-size_1-of-1 slds-large-size_1-of-2">
+                                                        <div key={item.label}
+                                                            class="slds-size_1-of-1 slds-large-size_1-of-2">
 
                                                             <div class="slds-m-left_x-small slds-m-bottom_small">
                                                                 <label class="checkbox-button">
-                                                                    <input data-item={item.label} type="checkbox" class="checkbox-button__input" onchange={getValueSelected} name={item.label} checked={item.checked}>
-                                                                    <span data-item={item.label} class="checkbox-button__control" onchange={getValueSelected}></span>
-                                                                    <span data-item={item.label} class="checkbox-button__label" onchange={getValueSelected}>{item.value}</span>
+                                                                    <input data-item={item.label} type="checkbox"
+                                                                        class="checkbox-button__input"
+                                                                        onchange={getValueSelected} name={item.label}
+                                                                        checked={item.checked}>
+                                                                    <span data-item={item.label}
+                                                                        class="checkbox-button__control"
+                                                                        onchange={getValueSelected}></span>
+                                                                    <span data-item={item.label}
+                                                                        class="checkbox-button__label"
+                                                                        onchange={getValueSelected}>{item.value}</span>
                                                                 </label>
                                                             </div>
 
@@ -180,15 +266,15 @@
 
                                     <!-- Popup Footer -->
                                     <div
-                                            class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
                                         <lightning-button class="slds-float_right containedButton"
-                                                          label={labels.SaveLabel} type="submit" disabled={isSaving} variant="brand">
+                                            label={labels.SaveLabel} type="submit" disabled={isSaving} variant="brand">
                                         </lightning-button>
 
                                         <lightning-button
-                                                class="slds-float_right  containedButtonWhite slds-m-right_medium"
-                                                disabled={isSaving} label={labels.CancelLabel} variant=""
-                                                onclick={closeModal}></lightning-button>
+                                            class="slds-float_right  containedButtonWhite slds-m-right_medium"
+                                            disabled={isSaving} label={labels.CancelLabel} variant=""
+                                            onclick={closeModal}></lightning-button>
                                     </div>
                                 </lightning-record-edit-form>
                             </div>
