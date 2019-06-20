@@ -363,6 +363,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 .catch(error => {
                     console.log('PortalHeader getBreadcrumbs error: ' , error);
                 });
+        } else {
+            this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+            this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
         }
     }
 
