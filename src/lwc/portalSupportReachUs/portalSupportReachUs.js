@@ -568,6 +568,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             this.getPhoneNumber();
             if (JSON.parse(JSON.stringify(this.phoneNumber)).length > 0) {
                 allData.PhoneNumber = JSON.parse(JSON.stringify(this.phoneNumber))[0];
+            } else {
+                allData.PhoneNumber = '';
             }
 
             // Fire the custom event
