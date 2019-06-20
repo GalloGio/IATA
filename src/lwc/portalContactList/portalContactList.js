@@ -152,7 +152,9 @@ export default class PortalContactList extends LightningElement {
                     rowValues.push(rowValue);
                 }
                 record.rowValues = rowValues;
-                record.open = false;
+                if(record.open == null){
+                    record.open = false;
+                    }
             }
             console.log('setting rows: '+records.length);
             this.records = records;

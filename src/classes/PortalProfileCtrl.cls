@@ -373,15 +373,31 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Available_Services_Images__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));
 
         //EDIT
         wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
         wrapperMap.get(editFields).add(new FieldWrapper('ISO_Country__c',true,true,true));
         wrapperMap.get(editFields).add(new FieldWrapper('FirstName',true,true));
         wrapperMap.get(editFields).add(new FieldWrapper('LastName',true,true));
-        wrapperMap.get(editFields).add(new FieldWrapper('Email',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('Title',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('Email',false,true));
         wrapperMap.get(editFields).add(new FieldWrapper('MobilePhone',true,true));
         wrapperMap.get(editFields).add(new FieldWrapper('Phone',true,true));
+
+        wrapperMap.get(editFields).add(new FieldWrapper('Membership_Function__c',true,true));
+
+        //For Airlines & agencies only
+        wrapperMap.get(editFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c',true,true));
+        wrapperMap.get(editFields).add(new FieldWrapper('Invoicing_Contact__c',true,true));
+
+        wrapperMap.get(editFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
+
+        //Airline only
+        wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
+
+        wrapperMap.get(editFields).add(new FieldWrapper('User_Portal_Status__c',true,true));
+
 
 
 

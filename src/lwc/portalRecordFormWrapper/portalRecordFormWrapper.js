@@ -38,18 +38,18 @@ export default class PortalRecordFormWrapper extends LightningElement {
     connectedCallback() {
         this.showEdit = (this.showEdit === 'true' ? true : false);
 
-        if(this.isContact){
+        if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = result;
                 let contact = JSON.parse(JSON.stringify(this.staticFields));
                 let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
 
-                if(contact.Area__c != null){
+                if (contact.Area__c != null) {
 
                     let values = contact.Area__c.split(";");
                     values.forEach(function (value) {
                         options.forEach(function (option) {
-                            if(option.label == value){option.checked = true; selectedV.push(option.value);}
+                            if (option.label == value) { option.checked = true; selectedV.push(option.value); }
                         });
                     });
 
@@ -64,7 +64,17 @@ export default class PortalRecordFormWrapper extends LightningElement {
     openModal() { this.showEditModal = true; }
     closeModal() { this.showEditModal = false; }
 
-    loaded() { this.isLoading = false; }
+    loaded(event) {
+        this.isLoading = false;
+        let fields = JSON.parse(JSON.stringify(event.detail.objectInfos.Contact.fields));
+
+        console.log('FIELDS: ', fields);
+
+        console.log('FIELD (Invoicing): ', fields.Invoicing_Contact__c);
+        console.log('FIELD (Email): ', fields.Email.value);
+        // Invoicing_Contact__c, Authorized_Signatory__c, BSP_CASS_Payment_contact__c
+        //console.log('Fields: ', JSON.stringify(event.detail.fields));
+    }
     loadedEdit() {
         this.isLoadingEdit = false;
         this.styleInputs();
@@ -88,11 +98,11 @@ export default class PortalRecordFormWrapper extends LightningElement {
         return this.editFields != null;
     }
 
-    get isContact(){
+    get isContact() {
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
 
-    get showAreas(){
+    get showAreas() {
         return this.showarea;
     }
 
@@ -136,8 +146,8 @@ export default class PortalRecordFormWrapper extends LightningElement {
     }
 
     handleSubmit(event) {
-    	this.isSaving = true;
-    	if(this.isContact){
+        this.isSaving = true;
+        if (this.isContact) {
             event.preventDefault();
 
             let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
@@ -150,7 +160,7 @@ export default class PortalRecordFormWrapper extends LightningElement {
             fields.Area__c = selected;
 
             this.template.querySelector('lightning-record-edit-form').submit(fields);
-    	}
+        }
     }
 
     getValueSelected(event) {
@@ -163,14 +173,14 @@ export default class PortalRecordFormWrapper extends LightningElement {
         if (!selectedV.includes(selected)) {
             selectedV.push(selected);
             options.forEach(function (option) {
-                if(option.value == selected){option.checked = true;}
+                if (option.value == selected) { option.checked = true; }
             });
         } else {
             let index = selectedV.indexOf(selected);
             if (index > -1) {
                 selectedV.splice(index, 1);
                 options.forEach(function (option) {
-                    if(option.value == selected){option.checked = false;}
+                    if (option.value == selected) { option.checked = false; }
                 });
             }
         }
