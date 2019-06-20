@@ -1767,7 +1767,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 
 			this.currentAccount.fw.refreshForm();
-			if(formsToCopyOwnersTo.size() > 0)copyOwnership();
+			if(formsToCopyOwnersTo != null && formsToCopyOwnersTo.size() > 0)copyOwnership();
 
             currentAccount.newContact = new AMS_Accreditation_Contact__c();
             contactToUpsert = new AMS_Accreditation_Contact__c();
@@ -1890,7 +1890,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
     public void deleteAgencyContact() {
 		currentAccount.fw.deleteAgencyContact(editContactId);
-		if(formsToCopyOwnersTo.size() > 0)copyOwnership();
+		if(formsToCopyOwnersTo != null && formsToCopyOwnersTo.size() > 0)copyOwnership();
     }
 
     public List<SelectOption> countryNameList {
