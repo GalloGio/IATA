@@ -2956,7 +2956,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseRTtrackedByCS</shortDescription>
-        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global</value>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global,ComplaintIDFS</value>
     </labels>
     <labels>
         <fullName>CaseTypeReason1List1</fullName>
@@ -33579,7 +33579,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
-        <value>https://www.iata.org/whatwedo/airline-distribution/ndc/Pages/matchmaker.aspx</value>
+        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_NDCMM_Terms_Of_Use_Link</fullName>
