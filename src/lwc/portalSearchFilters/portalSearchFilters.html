@@ -1,0 +1,145 @@
+<template>
+
+    <!-- TOP RESULTS -->
+    <div class="slds-m-top_medium customLightShadow">
+        <div class={getClassForTopResults} onclick={handleTopResultsClick}>
+            <span class="slds-p-left_small text-bold">{label.CSP_Search_TopResults}</span>
+        </div>
+    </div>
+
+    <div class="slds-m-top_medium customLightShadow background-white">
+
+        <!-- CASES FILTER -->
+        <div>
+            <div class={getClassForCases} onclick={handleCasesClick} >
+                <lightning-icon if:true={filteringObject.casesComponent.highlight} class="darkBlueIcon" icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
+                <lightning-icon if:false={filteringObject.casesComponent.highlight} class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                <span class="slds-p-left_small text-bold">{label.CSP_Cases} (
+                    <span if:true={filteringObject.casesComponent.loading} class="componentLoadingSpinner">
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </span>
+                    <span if:false={filteringObject.casesComponent.loading}>
+                        {getCasesresultsText}
+                    </span>
+                    )
+                </span>
+            </div>
+            <div if:true={filteringObject.casesComponent.highlight} class="slds-p-vertical_medium">
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox name="casesType" label={label.CSP_Search_Case_Type} 
+                                        value={filteringObject.casesComponent.caseTypeFilter} 
+                                        options={caseTypeOptions} onchange={handleCasesTypePickChange}
+                                        class="fullWidth">
+                    </lightning-combobox>
+                </div>
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox name="casesCountry" label={label.CSP_Search_Case_Country} 
+                                        value={filteringObject.casesComponent.caseCountryFilter} 
+                                        options={caseCountryOptions} onchange={handleCasesCountryPickChange}
+                                        class="fullWidth">
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQs FILTER -->
+        <div>
+            <div class={getClassForFAQs} onclick={handleFaqsClick} >
+                <lightning-icon if:true={filteringObject.faqsComponent.highlight} class="darkBlueIcon" icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
+                <lightning-icon if:false={filteringObject.faqsComponent.highlight} class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                <span class="slds-p-left_small text-bold">{label.CSP_FAQs_Title} (
+                    <span if:true={filteringObject.faqsComponent.loading} class="componentLoadingSpinner">
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </span>
+                    <span if:false={filteringObject.faqsComponent.loading}>
+                        {getFAQsresultsText}
+                    </span>
+                    )
+                </span>
+            </div>
+            <div if:true={filteringObject.faqsComponent.highlight} class="slds-p-vertical_medium">
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox name="faqsCategory" label={label.CSP_Search_FAQ_Category} 
+                                        value={filteringObject.faqsComponent.faqCategoryFilter} 
+                                        options={faqCategoryPickValues} onchange={handleFAQCategoryPickValues} 
+                                        class="fullWidth" >
+                    </lightning-combobox>
+                </div>
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox name="faqsTopic" label={label.CSP_Search_FAQ_Topic}
+                                        value={filteringObject.faqsComponent.faqTopicFilter} 
+                                        options={faqTopicPickValues} onchange={handleFAQTopicPickValues} 
+                                        class="fullWidth" >
+                    </lightning-combobox>
+                </div>
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox name="faqsSubtopic" label={label.CSP_Search_FAQ_Subtopic}
+                                        value={filteringObject.faqsComponent.faqSubtopicFilter} 
+                                        options={faqSubtopicPickValues} onchange={handleFAQSubtopicPickValues} 
+                                        class="fullWidth" >
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCUMENTS FILTER -->
+        <div>
+            <div class={getClassForDocuments} onclick={handleDocumentsClick} >
+                <lightning-icon if:true={filteringObject.documentsComponent.highlight} class="darkBlueIcon" icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
+                <lightning-icon if:false={filteringObject.documentsComponent.highlight} class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                <span class="slds-p-left_small text-bold">{label.CSP_Documents} (
+                    <span if:true={filteringObject.documentsComponent.loading} class="componentLoadingSpinner">
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </span>
+                    <span if:false={filteringObject.documentsComponent.loading}>
+                        {getDocumentsresultsText}
+                    </span>
+                    )
+                </span>
+            </div>
+            <div if:true={filteringObject.documentsComponent.highlight} class="slds-p-vertical_medium">
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox name="faqsCategory" label={label.CSP_Search_Documents_Category} 
+                                        value={filteringObject.documentsComponent.documentCategoryFilter} 
+                                        options={documentCategoryOptions} onchange={handleDocumentCategoryPickValues} 
+                                        class="fullWidth" >
+                    </lightning-combobox>
+                </div>
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox name="faqsCategory" label={label.CSP_Search_Documents_ProdType}
+                                        value={filteringObject.documentsComponent.documentProductCategoryFilter} 
+                                        options={documentProductCategoryOptions} onchange={handleDocumentProductCategoryPickValues} 
+                                        class="fullWidth" >
+                    </lightning-combobox>
+                </div>
+                <div class="slds-m-around_medium slds-align_absolute-center">
+                    <lightning-combobox name="faqsCategory" label={label.CSP_Search_Documents_PubCountry}
+                                        value={filteringObject.documentsComponent.documentCountryFilter} 
+                                        options={documentCountryOptions} onchange={handleDocumentCountryPickValues} 
+                                        class="fullWidth" >
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICES FILTER -->
+        <div>
+            <div class={getClassForServices} onclick={handleServicesClick} >
+                <lightning-icon if:true={filteringObject.servicesComponent.highlight} class="darkBlueIcon" icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
+                <lightning-icon if:false={filteringObject.servicesComponent.highlight} class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                <span class="slds-p-left_small text-bold">{label.CSP_Services_Title} (
+                    <span if:true={filteringObject.servicesComponent.loading} class="componentLoadingSpinner">
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </span>
+                    <span if:false={filteringObject.servicesComponent.loading}>
+                        {getServicesresultsText}
+                    </span>
+                    )
+                </span>
+            </div>
+        </div>
+
+    </div>
+    
+
+</template>

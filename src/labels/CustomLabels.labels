@@ -2732,6 +2732,14 @@ Payment required on receipt of this Payment Advice
         <value>Branch Offices</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrumb_AdvancedSearch_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_AdvancedSearch_Title</shortDescription>
+        <value>Advanced Search</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_CompanyProfile_Title</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
@@ -3102,6 +3110,30 @@ Payment required on receipt of this Payment Advice
         <value>Find services, cases, support and more</value>
     </labels>
     <labels>
+        <fullName>CSP_Search_NoResults_text1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_NoResults_text1</shortDescription>
+        <value>No Search Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_NoResults_text2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_NoResults_text2</shortDescription>
+        <value>Sorry, there is not any results for</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_NoResults_text3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_NoResults_text3</shortDescription>
+        <value>Check the spelling of your keywords or try again with new ones.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Search_Services_Placeholder</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3116,6 +3148,38 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Search_Support_Placeholder</shortDescription>
         <value>Search Support</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_TopResults</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_TopResults</shortDescription>
+        <value>Top Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_TypeIn_text1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_TypeIn_text1</shortDescription>
+        <value>Type your search terms</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_TypeIn_text2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_TypeIn_text2</shortDescription>
+        <value>Please type in something bigger that 2 letters to start the search.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_TypeIn_text3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_TypeIn_text3</shortDescription>
+        <value>Select a filter section to further improve your search results.</value>
     </labels>
     <labels>
         <fullName>CSP_SeeAll</fullName>
@@ -3392,6 +3456,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_MyCases</shortDescription>
         <value>View My Cases</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Name</shortDescription>
+        <value>Name</value>
     </labels>
     <labels>
         <fullName>CSP_CompanyCases</fullName>
@@ -34531,6 +34603,78 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>CSP_SearchFAQ</shortDescription>
         <value>Search by FAQ details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_AdvancedSearch</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_AdvancedSearch</shortDescription>
+        <value>Advanced Search</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Case_Country</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Case_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Case_Type</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Case_Type</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Documents_Category</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Documents_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Documents_ProdType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Documents_ProdType</shortDescription>
+        <value>Product Type</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Documents_PubCountry</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Documents_PubCountry</shortDescription>
+        <value>Published Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_FAQ_Category</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_FAQ_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_FAQ_Subtopic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_FAQ_Subtopic</shortDescription>
+        <value>Subtopic</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_FAQ_Topic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_FAQ_Topic</shortDescription>
+        <value>Topic</value>
     </labels>
     <labels>
         <fullName>csp_Sub_Topic_Label</fullName>
