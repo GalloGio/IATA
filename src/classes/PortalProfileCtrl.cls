@@ -135,9 +135,7 @@ public with sharing class PortalProfileCtrl {
     public static Map<String,List<FieldWrapper>> ContactFields() {
 
         User loggedUser = CSP_Utils.getLoggedUser();
-        contactInfo = [SELECT Id, Invoicing_Contact__c, Authorized_Signatory__c, BSP_CASS_Payment_contact__c, Airline_Credit_Risk_Manager__c
-                           FROM Contact
-                           WHERE Id = :loggedUser.contactId];
+        contactInfo = DAL_ISSP.getContact(loggedUser.contactId);
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
         wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());

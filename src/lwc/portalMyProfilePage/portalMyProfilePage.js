@@ -52,7 +52,6 @@ export default class PortalMyProfilePage extends LightningElement {
         });
 
         getServices().then(result => {
-            console.log('SERVICES: ', JSON.parse(JSON.stringify(result)));
             this.services = result;
         });
 

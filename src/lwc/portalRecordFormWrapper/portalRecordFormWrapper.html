@@ -35,7 +35,7 @@
                                 <template for:each={services} for:item="service">
                                     <div key={service.recordService.ServiceName__c}
                                         class="text-xsmall slds-m-left_medium slds-size_1-of-1">
-                                        <a class="hrefLinkColor" onclick={navigateTo}
+                                        <a class="text-blue" onclick={navigateTo}
                                             data-url={service.recordService.Application_URL__c}
                                             data-id={service.recordService.Id}>
                                             {service.recordService.ServiceName__c}
