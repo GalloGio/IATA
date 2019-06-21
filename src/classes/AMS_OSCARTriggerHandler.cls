@@ -592,7 +592,7 @@ public class AMS_OSCARTriggerHandler {
                 }else if(updatedOSCAR.Send_invoice__c && !oldOSCAR.Send_invoice__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
                     updatedOSCAR.Payment_requested__c = Date.today();
                     updatedOSCAR.STEP47__c = 'Passed';
-                    updatedOSCAR.STEP9__c = 'In Progress';
+                    updatedOSCAR.STEP48__c = 'In Progress';
 
                 }else if(updatedOSCAR.Endorsement_Requested__c && !oldOSCAR.Endorsement_Requested__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
                     updatedOSCAR.Endorsement_requested_date__c = Date.today();
