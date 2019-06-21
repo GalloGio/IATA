@@ -229,9 +229,6 @@ public with sharing class PortalServicesCtrl {
 		String extraQueryFields = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c';
 		String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
 
-		System.debug('getPortalApplications finalQuery : ' + finalQuery);
-		System.debug(Database.query(finalQuery));
-
 		return Database.query(finalQuery);
 
 	}
@@ -666,7 +663,6 @@ public static String newAppsRequest2(String applicationId, String applicationNam
 public static Integer userProvisioningRequests(){
 	Id userId = UserInfo.getUserId();
 	List<UserProvisioningRequest> userProvList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
-	System.debug(userProvList);
 	return userProvList.size();
 }
 
@@ -674,9 +670,6 @@ public static Integer userProvisioningRequests(){
 public static String performCheckonPoll(String permSetSSO, Integer failedCount){
 	Id userId = UserInfo.getUserId();
 	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
-	System.debug('HERE!!!');
-
-	System.debug(permissionSetList);
 
 	if(!permissionSetList.isEmpty()) {
 		return 'Success';
