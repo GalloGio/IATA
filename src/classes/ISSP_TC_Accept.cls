@@ -49,10 +49,10 @@ public  class ISSP_TC_Accept {
     public Boolean isPortalNavigationBar {
     get {
         if(isPortalNavigationBar == null) {
-            User usr = [SELECT Id, Profile.Name FROM User WHERE Id =: UserInfo.getUserId()];
+            User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
 
-            isPortalNavigationBar = ISSP_CS__c.getValues('CS Portal Redirect') == null || usr.Profile.Name.toUpperCase().contains('DPC') || usr.Profile.Name.toUpperCase().contains('PWC');
-        }
+            isPortalNavigationBar = ISSP_CS__c.getValues('CS Portal Redirect') == null || usr.Profile.Name.toUpperCase().contains('DPC') || usr.Profile.Name.toUpperCase().contains('PWC') || usr.CNS_Account_or_Agency__c;
+         }
 
         system.debug('SS## isPortalNavigationBar: ' + isPortalNavigationBar);
         return isPortalNavigationBar;
