@@ -2,8 +2,8 @@
 
     <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
 
-    <div class="customWhiteBackground headerContainer">
-        <div class="slds-grid slds-wrap">
+    <div class="headerContainer">
+        <div class="slds-grid slds-wrap maxWidthHeader">
 
             <!-- MODAL -->
             <template if:true={openmodel}>
@@ -44,8 +44,8 @@
             </template>
             <!-- END MODAL -->
 
-            <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth"></div>
-            <div class="headerBarLogo slds-p-horizontal_x-small">
+            <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth slds-show_medium"></div>
+            <div class="headerBarLogo slds-p-horizontal_x-small slds-show_medium">
                 <span onclick={navigateToHomePage}>
                     <img src={logoIcon}>
                 </span>
