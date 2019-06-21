@@ -77,14 +77,19 @@
         component.set("v.contact", data.Contact);
         component.set("v.isQuestion", data.Question);
         component.set("v.phoneNumber", data.PhoneNumber);
-        console.log(data.Question);
+
+        if (component.get("v.isEmergency") == false && (component.get("v.phoneNumber") == undefined || component.get("v.phoneNumber") == '')) {
+            component.set("v.showPhoneNumber", false);
+        } else {
+            component.set("v.showPhoneNumber", true);
+        }
+
         //must disconnect and delete in order to re-deploy
         if ((typeof liveagent == "object")) {
             liveagent.disconnect();
             delete liveagent;
             delete liveAgentDeployment;
         }
-
         if (data.Emergency) {
             var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") + '\n'
                 + $A.get("$Label.c.LVA_CallUsEmergencyPhoneNumber") + '\n\n'
@@ -92,11 +97,11 @@
                 + $A.get("$Label.c.LVA_CallUsEmergencyAvailableHours") + '\n';
             component.set("v.callCenterInfo_Label", emergency);
         } else {
-            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") + '\n'
+            var emergency2 = $A.get("$Label.c.LVA_CallUsThruPhoneNum") + '\n'
                 + component.get("v.phoneNumber").PhoneNumber + '\n\n'
                 + $A.get("$Label.c.LVA_CallUsAvailableHours") + '\n'
                 + component.get("v.phoneNumber").AvailableHours + '\n';
-            component.set("v.callCenterInfo_Label", emergency);
+            component.set("v.callCenterInfo_Label", emergency2);
         }
 
         data.myliveAgentButtonInfo.forEach(function (laButton) {
