@@ -26,6 +26,7 @@
     <aura:attribute name="userSessionData" type="Boolean" default="true" />
     <aura:attribute name="isQuestion" type="Boolean" default="true" />
     <aura:attribute name="phoneNumber" type="String" default="" />
+    <aura:attribute name="showPhoneNumber" type="Boolean" default="true" />
 
     <aura:attribute name="contact" type="Contact" />
     <aura:attribute name="category" type="String" />
@@ -88,7 +89,7 @@
                             <div class="text-small noPointerEvents slds-p-around_small ">
                                 {!$Label.c.csp_Case_Panel_label}
                             </div>
-                            <div class="noPointerEvents slds-p-around_small">
+                            <div class="noPointerEvents slds-p-around_small slds-m-bottom_medium">
                                 {!$Label.c.csp_Case_Panel_sub_label}
                             </div>
                             <lightning:button label="{!$Label.c.csp_CreateNewCaseTopLabel}"
@@ -105,7 +106,7 @@
                                 <div class="text-small noPointerEvents slds-p-around_small ">
                                     {!$Label.c.csp_Chat_Panel_label}
                                 </div>
-                                <div class="noPointerEvents slds-p-around_small">
+                                <div class="noPointerEvents slds-p-around_small slds-m-bottom_medium">
                                     {!$Label.c.csp_Chat_Panel_sub_label}
                                 </div>
                                 <div class="slds-grid">
@@ -174,19 +175,21 @@
                                     </aura:if>
                                 </div>
                             </div>
-                            <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
+                            <aura:if isTrue="{!v.showPhoneNumber}">
+                                <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
                                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
                                                     slds-m-horizontal_small customCard cardSizing">
-                                <div class="text-small noPointerEvents slds-p-around_small ">
-                                    {!$Label.c.csp_Call_Panel_label}
+                                    <div class="text-small noPointerEvents slds-p-around_small ">
+                                        {!$Label.c.csp_Call_Panel_label}
+                                    </div>
+                                    <div class="noPointerEvents slds-p-around_small">
+                                        {!v.callCenterInfo_Label}
+                                    </div>
+                                    <div class="text-small noPointerEvents slds-p-around_small ">
+                                        {!v.phoneNumber_Label}
+                                    </div>
                                 </div>
-                                <div class="noPointerEvents slds-p-around_small">
-                                    {!v.callCenterInfo_Label}
-                                </div>
-                                <div class="text-small noPointerEvents slds-p-around_small ">
-                                    {!v.phoneNumber_Label}
-                                </div>
-                            </div>
+                            </aura:if>
                         </aura:if>
                     </div>
                 </aura:if>

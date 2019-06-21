@@ -317,6 +317,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.countryCB = false;
         //sets emergency to the default value
         this.emergencyButton = false;
+        this.isEmergency = false;
 
         //get topics
         this.topicValuesGetter();
@@ -390,6 +391,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.countryCB = false;
         //Hide Emergency button
         this.emergencyButton = false;
+        this.isEmergency = false;
         //get subtopics
         this.subTopicValuesGetter();
 
@@ -452,6 +454,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             this.countryValue = '';
             this.countryCB = true;
             this.emergencyButton = false;
+            this.isEmergency = false;
 
             //required to not show the country picklist if the selected value is included here
             let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
@@ -567,6 +570,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
             this.getPhoneNumber();
             if (JSON.parse(JSON.stringify(this.phoneNumber)).length > 0) {
+                console.log(JSON.parse(JSON.stringify(this.phoneNumber)));
                 allData.PhoneNumber = JSON.parse(JSON.stringify(this.phoneNumber))[0];
             } else {
                 allData.PhoneNumber = '';
@@ -682,6 +686,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.subTopicCB = false;
         this.countryCB = false;
         this.optionsButton = false;
+        this.isEmergency = false;
     }
 
     /*################# COMPLIMENT JS ########################*/
@@ -774,37 +779,44 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
     getPhoneNumber() {
         if (this.callUsPhoneNumberConfigs.length > 0) {
+            let sector;
+            if (this.topic === 'E_F') {
+                sector = 'All';
+            } else {
+                sector = this.contact.Account.Sector__c;
+            }
             this.phoneNumber = this.callUsPhoneNumberConfigs.filter(item => {
                 //This magical function brought about from an ancient civilization performs beautifully to capture the one value we need based on the conditions bellow
                 //We have a list of PhoneNumberConfigs from the custom meta data type with the same name and we extract one value from it.
+
                 return (item.Topic
-                    && item.Topic === this.topic
-                    && (item.Sector === this.contact.Account.Sector__c)
+                    && item.Topic === (this.topic + '__c')
+                    && (item.Sector === sector)
                     && (item.IsoCountry === this.countryValue)) // ---- First Condition ------//
 
                     || (item.Topic
-                        && item.Topic === this.topic
-                        && item.Sector === this.contact.Account.Sector__c
+                        && item.Topic === (this.topic + '__c')
+                        && item.Sector === sector
                         && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Second Condition ------//
 
                     || (item.Topic
-                        && item.Topic === this.topic
+                        && item.Topic === (this.topic + '__c')
                         && (item.Sector === 'All' || item.Sector === '' || item.Sector === undefined)
                         && item.IsoCountry === this.countryValue) // ---- Third Condition ------//
 
                     || (item.Topic
-                        && item.Topic === this.topic
+                        && item.Topic === (this.topic + '__c')
                         && (item.Sector === 'All' || item.Sector === '' || item.Sector === undefined)
                         && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Fourth Condition ------//
 
                     || (item.Sector
-                        && item.Sector === this.contact.Account.Sector__c
                         && (item.Topic === '' || item.Topic === undefined)
+                        && (item.Sector === sector)
                         && (item.IsoCountry === this.countryValue)) // ---- Fifth Condition ------//
 
                     || (item.Sector
-                        && item.Sector === this.contact.Account.Sector__c
                         && (item.Topic === '' || item.Topic === undefined)
+                        && (item.Sector === sector)
                         && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Sixth Condition ------//
 
                     || (item.DeveloperName
