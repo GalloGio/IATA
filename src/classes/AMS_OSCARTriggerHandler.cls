@@ -11,6 +11,9 @@ public class AMS_OSCARTriggerHandler {
     //used to identify situations where the LocationType of an SA Agency should not be changed
     public static Boolean keepSALocationTypeFlag = false;
 
+    // used to apply different rules when poulating RHC oBject on the Oscar's account 
+    public static boolean applyRHCForecast = false;
+
     public static Map<String, String> closedStatusMapping{
         get{
             if(closedStatusMapping == null){
@@ -589,7 +592,7 @@ public class AMS_OSCARTriggerHandler {
                 }else if(updatedOSCAR.Send_invoice__c && !oldOSCAR.Send_invoice__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
                     updatedOSCAR.Payment_requested__c = Date.today();
                     updatedOSCAR.STEP47__c = 'Passed';
-                    updatedOSCAR.STEP48__c = 'In Progress';
+                    updatedOSCAR.STEP9__c = 'In Progress';
 
                 }else if(updatedOSCAR.Endorsement_Requested__c && !oldOSCAR.Endorsement_Requested__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
                     updatedOSCAR.Endorsement_requested_date__c = Date.today();
@@ -3091,6 +3094,11 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
                 //ACAMBAS - NEWGEN-4784 - End
+
+                if(oscar.Process__c == AMS_Utils.NEWHESTANDARD && oscar.ANG_Change_Entity_Location__c && oscar.Change_of_Entity_Location_within_EU__c){
+                    oscar.addError(ANG_OscarProcessHelper.NEW_HE_CHANGE_ENTITY_LOCATION_ERROR_MSG);
+                }
+
             }
         }
     }
@@ -3637,14 +3645,18 @@ public class AMS_OSCARTriggerHandler {
 
     public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds, Set<AMS_Oscar__c> oscarsToCreateAuth) {
     
+    /*
         ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         ID newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
         ID corrRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
         ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
         ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China'); //ACAMBAS - NEWGEN-4445
-        
-        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
+        */
+
+        Set<Id> oscarRTsToProcess = new Set<ID>{AMS_Utils.RECTYPE_NEW,AMS_Utils.RECTYPE_NEWHE, AMS_Utils.RECTYPE_NEWAE};
+
+        if (oscarRTsToProcess.contains(updatedOscar.recordTypeID)){
         	//TD2080607: partially refactored below code
         	boolean bGenerateCC =  false;
         	String changeCodeId = '';
@@ -3687,7 +3699,7 @@ public class AMS_OSCARTriggerHandler {
                 AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
             }
         // Management of CORRECTION OSCARs
-        }else if (updatedOscar.recordTypeID == corrRT){
+        }else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CORRECTION){
             if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){
 
                 Savepoint sp = Database.setSavepoint();
@@ -4055,7 +4067,7 @@ public class AMS_OSCARTriggerHandler {
         
             }
         //FM AMSU-113            
-        }else if (updatedOscar.recordTypeID == certRT){
+        }else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CERT){
             System.debug('updatedOscar.Is_PCI_compliant__c: ' + updatedOscar.Is_PCI_compliant__c);
             System.debug('updatedOscar.Change_Code__c: ' + updatedOscar.Change_Code__c);
             System.debug('oldOSCAR.STEP6__c: ' + oldOSCAR.STEP6__c);
@@ -4101,7 +4113,7 @@ public class AMS_OSCARTriggerHandler {
             }
         }
         //ACAMBAS - NEWGEN-4445 - Start
-        else if (updatedOscar.recordTypeID == chinaRT) {
+        else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CHINA) {
             
             String changeCode;
             String caseReason = updatedOscar.ANG_Type_Of_Change__c;
