@@ -282,15 +282,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         for (const role of iepRoles) {
                             myRolesObj.push({ label: role.Connected_App__c + ' - ' + role.Role__c, value: role.Permission_set_SSO__c });
                         }
-                        console.log(this.radioOption);
-
                         if (this.radioOption !== undefined && this.radioOption !== '') {
                             this.permSetSSO = myRolesObj.find(obj => obj.label === this.serviceFullName + ' - ' + this.radioOption).value;
                         } else {
                             this.permSetSSO = myRolesObj.find(obj => obj.label === this.serviceFullName + ' - ' + this.defaultPortalUserRole).value;
                         }
-                        console.log(this.permSetSSO);
-                        // this.beginPolling(this.permSetSSO);
                         this.onchangeSearchInput();
 
                     });
@@ -307,9 +303,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         // Make a new timeout set to go off in 5000ms
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
-            //this.testfunction();
-            console.log(this.permSetSSO);
-            console.log(this.NumberOfUseProvisioningRequests);
+
             performCheckonPoll({ permSetSSO: this.permSetSSO, failedCount: this.NumberOfUseProvisioningRequests })
                 .then(data => {
                     // you can access your data here
