@@ -10,6 +10,7 @@ import CSP_Question2 from '@salesforce/label/c.CSP_Question2';
 import Created_By from '@salesforce/label/c.Created_By';
 import CSP_MyCases from '@salesforce/label/c.CSP_MyCases';
 import CSP_CompanyCases from '@salesforce/label/c.CSP_CompanyCases';
+import CSP_SearchingOn from '@salesforce/label/c.CSP_SearchingOn';
 
 export default class PortalCasesList extends LightningElement {
     label = {
@@ -21,7 +22,8 @@ export default class PortalCasesList extends LightningElement {
         CSP_Question2,
         Created_By,
         CSP_MyCases,
-        CSP_CompanyCases
+        CSP_CompanyCases,
+        CSP_SearchingOn
     };
     @track error;
     @track data;

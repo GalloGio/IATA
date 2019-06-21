@@ -1,11 +1,11 @@
 <template> 
     <lightning-layout multiple-rows pull-to-boundary="small">
         <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="6" large-device-size="6">
-            <div class="bottomLightGrayBorder slds-m-around_small">
+            <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
                 <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
                 <lightning-input name="newRecipientTextInput"
-                    placeholder="Search cases number, subject or status"
-                    class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchCasesList"
+                    placeholder={label.CSP_SearchingOn}
+                    class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
                     onkeyup={handleKeyUp}
                     onchange={handleInputChange}>
                 </lightning-input>
