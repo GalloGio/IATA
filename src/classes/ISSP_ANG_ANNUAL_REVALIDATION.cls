@@ -1780,7 +1780,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     public Boolean validateCharactersInPersonWindow() {
         Boolean errorFound = false;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
-        IATA_ISO_Country__c contactCountryInfo = ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap.get(amsContactCountry.toUpperCase());
+        IATA_ISO_Country__c contactCountryInfo = new IATA_ISO_Country__c();
+        if(amsContactCountry != null) contactCountryInfo = ISSP_ANG_ANNUAL_REV_UPDATE.postalCodeRegexByCountryMap.get(amsContactCountry.toUpperCase());
         
         if (contactCountryInfo != null && contactCountryInfo.State_Province_Mandatory__c && currentAccount.newContact.AddressState__c == null) {
             currentAccount.newContact.AddressState__c.addError(Label.ISSP_YouMustEnter);
