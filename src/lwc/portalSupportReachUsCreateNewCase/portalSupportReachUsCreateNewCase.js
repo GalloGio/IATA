@@ -176,7 +176,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                     this.category = pageParams.category;
                     this.topic = pageParams.topic;
                     this.subtopic = pageParams.subtopic;
-                    if (this.countryISO === undefined || this.countryISO === '') {
+                    if (pageParams.countryISO === undefined || pageParams.countryISO === '') {
                         this.countryISO = ''
                     } else {
                         this.countryISO = pageParams.countryISO;
