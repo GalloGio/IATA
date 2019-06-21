@@ -1,7 +1,5 @@
 ({
     handleTrackUsage : function(component, event) {
-            console.log('IN');
-            debugger;
             var userId = $A.get("$SObjectType.CurrentUser.Id");
             let dashboard = component.get('v.dashboard');
             var action = component.get('c.checkSessionCache');
@@ -13,7 +11,6 @@
             action.setCallback(this, function(response){
                 var state = response.getState();
                 if(state === 'SUCCESS') {
-                    debugger;
                     var isKeyInCache = response.getReturnValue();
                     if(! isKeyInCache) {
                         //key not yet present in cache - fire event
@@ -36,6 +33,8 @@
             });
             $A.enqueueAction(action);
     },
+
+
     getReportDetails : function(component, event, dashboard) {
         this.toggleSpinner(component, event);
         if(! $A.util.isEmpty(dashboard.Url__c)) {
@@ -45,7 +44,6 @@
             let reportStart = url.indexOf('reportId=');
             let groupId = url.substr(groupStart+8, 36);
             let reportId = url.substr(reportStart+9, 36);
-            //this.getUserDetail(component, event, groupId, reportId);
             this.getAccessToken(component, event, groupId, reportId);
 
         }else{
@@ -58,9 +56,6 @@
 
     getAccessToken : function(component, event, groupId, reportId) {
 
-        //groupId = 'bb322fe5-1f26-4bc6-892a-811d6a625ba1';
-        //reportId = '3a12085d-f7ea-49ef-a3e0-ec6bafbc7f0a';
-
         let action = component.get("c.getAccessToken");
         action.setCallback(this, function(response){
             const state = response.getState();
@@ -69,23 +64,22 @@
                 if(! $A.util.isEmpty(oauth)) {
                     if(! $A.util.isEmpty(oauth.access_token)) {
                         const accessToken = oauth.access_token;
-                        //this.getDatasetDetail(component, event, accessToken, '472737e1-7e1a-4ded-988e-dbcac9293415');
-                        this.getReportDataset(component, event, accessToken, groupId, reportId); //383c83c1-c3d7-4b6f-ac7d-b2be2d644118
-                        //this.getEmbedToken(component, event, accessToken, federationId, groupId, reportId, '383c83c1-c3d7-4b6f-ac7d-b2be2d644118');
+                        this.getReportDataset(component, event, accessToken, groupId, reportId);
+
                     }else{
                         console.log('getAccessToken error - no access token');
-                        this.showToast('error', 'Unexpected error!', 'Unable to get application access token.');
+                        this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_access_token"));
                         this.toggleSpinner(component, event);
                     }
 
                 }else{
                     console.log('getAccessToken error - empty response');
-                    this.showToast('error', 'Unexpected error!', 'Unable to get application access token.');
+                    this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_access_token"));
                     this.toggleSpinner(component, event);
                 }
             }else{
                 console.log('getAccessToken error - error in response');
-                this.showToast('error', 'Unexpected error!', 'Unable to get application access token.');
+                this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_access_token"));
                 this.toggleSpinner(component, event);
             }
         });
@@ -104,19 +98,19 @@
             const state = response.getState();
             if(state === 'SUCCESS') {
                 const result = response.getReturnValue();
-
                 if(! $A.util.isEmpty(result)) {
+
                     let datasetId = result.datasetId;
                     this.getDatasetDetail(component, event, accessToken, datasetId, groupId, reportId);
                 }else{
-                    //TODO:error
+                    console.log('getReportsDetails error');
+                    this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_report_detail"));
+                    this.toggleSpinner(component, event);
                 }
 
-                console.log('reports details result:: ' + JSON.stringify(result));
-                //this.toggleSpinner(component, event);
             }else{
-                //TODO:error
                 console.log('getReportsDetails error');
+                this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_report_detail"));
                 this.toggleSpinner(component, event);
             }
 
@@ -137,37 +131,28 @@
                 const result = response.getReturnValue();
 
                 if(! $A.util.isEmpty(result)) {
-
+                    //if identity is needed -> dashboard with user security
                     let identityNeeded = result.isEffectiveIdentityRequired;
 
                     if(identityNeeded === 'true') {
-                        //get embed token
+                        //get embed token - dashboard with user security
                         let tokenType = 'Embed';
                         this.getUserDetail(component, event, groupId, reportId, accessToken, datasetId, tokenType);
-                        //this.getEmbedToken(component, event)
                     }else{
-                        //get dashboard
+                        //get dashboard - dashboard without user security
                         let tokenType = 'Aad';
                         this.getDashboard(component, event, accessToken, groupId, reportId, tokenType);
                     }
                 }else{
-
-                    //TODO:error
+                    console.log('getDatasetDetail error');
+                    this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_dataset_detail"));
+                    this.toggleSpinner(component, event);
                 }
-
-
-                //console.log('getDatasetDetail result:: ' + JSON.stringify(result));
-                //this.toggleSpinner(component, event);
-
-
-
-
             }else{
-                //TODO:error
                 console.log('getDatasetDetail error');
+                this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_dataset_detail"));
                 this.toggleSpinner(component, event);
             }
-
         });
         $A.enqueueAction(action);
     },
@@ -188,23 +173,23 @@
 
                         component.set('v.userDetail', userDetail);
                         let federationId = userDetail.Federation_ID__c;
-                        //this.getAccessToken(component, event, federationId, groupId, reportId);
+
                         this.getEmbedToken(component, event, accessToken, federationId, groupId, reportId, datasetId, tokenType);
 
                     }else{
                         console.log('getUserDetail - empty federationId');
-                        this.showToast('error', 'Unexpected error!', 'Unable to get federationId.');
+                        this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_federation_Id"));
                         this.toggleSpinner(component, event);
                     }
 
                 }else{
                     console.log('getUserDetail - empty userDetail');
-                    this.showToast('error', 'Unexpected error!', 'Unable to get user details.');
+                    this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_user_detail"));
                     this.toggleSpinner(component, event);
                 }
             }else{
                 console.log('getUserDetail error');
-                this.showToast('error', 'Unexpected error!', 'Unable to get user details.');
+                this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_user_detail"));
                 this.toggleSpinner(component, event);
             }
         });
@@ -229,25 +214,23 @@
                 const result = response.getReturnValue();
                 if(! $A.util.isEmpty(result)) {
 
-                    console.log('embed token result:: ' + JSON.stringify(result));
-
                     if(! $A.util.isEmpty(result.token)) {
                         let embedToken = result.token;
                         this.getDashboard(component, event, embedToken, groupId, reportId, tokenType);
-                        //this.toggleSpinner(component, event);
+
                     }else{
                         console.log('getEmbedToken error');
-                        this.showToast('error', 'Unexpected error!', 'Unable to get report embed token.');
+                        this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_embed_token"));
                         this.toggleSpinner(component, event);
                     }
                 }else{
                     console.log('getEmbedToken error');
-                    this.showToast('error', 'Unexpected error!', 'Unable to get report embed token.');
+                    this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_embed_token"));
                     this.toggleSpinner(component, event);
                 }
             }else{
                 console.log('getEmbedToken error');
-                this.showToast('error', 'Unexpected error!', 'Unable to get report embed token.');
+                this.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_embed_token"));
                 this.toggleSpinner(component, event);
             }
 
@@ -263,14 +246,13 @@
         setTimeout(
             $A.getCallback(
                 function() {
+                    let width = component.find("iframe").getElement().getBoundingClientRect().width;
                     $A.createComponent(
                       "aura:html",
                       {
                           tag: "iframe",
                           HTMLAttributes:{"frameBorder": "0", "src": "/apex/PowerBI_Dashboard?embedUrl="+encodeURIComponent('https://app.powerbi.com/reportEmbed?reportId=' + reportId + '&groupId=' + groupId)+'+&accessToken='+accessToken+'&objectId='+objectId+'&tokenType='+tokenType
-                                                                                                          ,"width": 947, "height": 800, "scrolling": "no"}
-                          /*HTMLAttributes:{"frameBorder": "0", "src": "/apex/PowerBI_Dashboard?embedUrl="+encodeURIComponent('https://app.powerbi.com/reportEmbed?reportId=39d42f7a-0a92-49cc-aef8-1a6c851143dd&groupId=bb322fe5-1f26-4bc6-892a-811d6a625ba1&w=2')+'&accessToken='+accessToken+'&objectId='+objectId
-                                          ,"width": 947.5, "height": 800, "scrolling": "no"}*/
+                                                                                                          ,"width": width, "height": 800, "scrolling": "no"}
                       },
                       function(iframe){
                           component.set('v.showWorkspaces', false);
@@ -281,6 +263,9 @@
                               body = [];
                               body.push(iframe);
                               container.set("v.body", body);
+                          }else{
+                              console.log('getDashboard error');
+                              self.showToast('error', 'Unexpected error.', $A.get("$Label.c.GADM_PowerBI_no_dashboard"));
                           }
                       }
 

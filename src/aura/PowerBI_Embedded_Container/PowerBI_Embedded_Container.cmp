@@ -1,18 +1,12 @@
 <aura:component controller="PowerBI_Embedded_Container_CTRL" description="PowerBI_Embedded_Container">
 
-    <aura:attribute type="List" name="workspaces" />
-    <!--<aura:attribute name="accessToken" type="String" access="private"/>
-    <aura:attribute name="expiresOn" type="String" access="private"/>
-    <aura:attribute name="refreshToken" type="String" access="private"/>-->
-    <aura:attribute name="showWorkspaces" type="Boolean" default="true"/>
-    <aura:attribute name="showDashboard" type="Boolean" default="false"/>
-    <aura:attribute name="dashboards" type="List"/>
-    <!--<aura:attribute name="display" type="Boolean" default="false"/>-->
-
     <aura:attribute name="dashboardCategories" type="List" />
     <aura:attribute name="selectedDashboardCategory" type="List"/>
-    <aura:attribute name="showDashboardCategory" type="Boolean" default="false"/>
 
+    <!--SHOW ATTRIBUTES-->
+    <aura:attribute name="showDashboardCategory" type="Boolean" default="false"/>
+    <aura:attribute name="showCategories" type="Boolean" default="true"/>
+    <aura:attribute name="showDashboard" type="Boolean" default="false"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
 
     <!--EVENTS-->
@@ -23,7 +17,7 @@
 
     <div class="body_container">
 
-        <aura:if isTrue="{! v.showWorkspaces}">
+        <aura:if isTrue="{! v.showCategories}">
 
             <aura:if isTrue="{! v.dashboardCategories.length > 0}">
 
@@ -35,10 +29,6 @@
 
                         <li>
                             <a id="{! key}" onclick="{! c.showDashboardCategory}">{! category.key}</a>
-
-                            <!--<aura:iteration items="{! category.value}" var="dashboard">
-                                <p>{! dashboard.Id}</p>
-                            </aura:iteration>-->
                         </li>
 
                     </aura:iteration>
@@ -48,24 +38,6 @@
             </aura:if>
 
 
-            <!--<aura:iteration items="{! v.workspaces}" var="pbiWorkspace" indexVar="w">
-                <h3>{!pbiWorkspace.workspace.name}</h3>
-
-                <ul class="IATA_UlLi">
-
-                    <aura:iteration items="{!pbiWorkspace.dashboards}" var="dashboard" indexVar="iVar">
-
-                        <li>
-                            <a id="{!iVar}" name="{!w}" onclick="{! c.showDashboard}">{!dashboard.name}</a>
-                        </li>
-
-                    </aura:iteration>
-
-                </ul>
-
-            </aura:iteration>-->
-
-
         </aura:if>
 
 
@@ -73,36 +45,10 @@
         <aura:if isTrue="{! v.showDashboardCategory}">
 
             <c:PowerBI_Embedded_Dashboard_List dashboards="{! v.selectedDashboardCategory}"/>
-            <!--<div class="back_button">
-                <button class="btn btn-primary btn-grey" onclick="{! c.hideDashboardList}">Back</button>
-            </div>
-
-
-            <h3>Dashboards</h3>
-
-            <ul class="IATA_UlLi">
-
-                <aura:iteration items="{! v.dashboards}" var="dashboard" indexVar="key">
-
-                    <li>
-                        <a id="{! key}" onclick="">{! dashboard.Id}</a>
-                    </li>
-
-                </aura:iteration>
-            </ul>-->
 
         </aura:if>
 
 
-        <!--<aura:if isTrue="{! v.showDashboard}">
-
-            <div class="back_button">
-                <button class="btn btn-primary btn-grey" onclick="{! c.hideDashboard}">Back</button>
-            </div>
-
-            <div aura:id="iframe"></div>
-
-        </aura:if>-->
 
         <!--SPINNER-->
         <aura:if isTrue="{! v.showSpinner}">

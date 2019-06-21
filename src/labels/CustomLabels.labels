@@ -4655,6 +4655,62 @@ You can choose one or more of the following topics:</value>
         <value>You do not have access to GADM service.</value>
     </labels>
     <labels>
+        <fullName>GADM_PowerBI_no_access_token</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_access_token</shortDescription>
+        <value>Unable to get application access token!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_categories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_categories</shortDescription>
+        <value>Unable to load dashboard categories!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_dashboard</shortDescription>
+        <value>Unable to get dashboard!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_dataset_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_dataset_detail</shortDescription>
+        <value>Unable to get dataset details!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_embed_token</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_embed_token</shortDescription>
+        <value>Unable to get embed token!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_federation_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_federation_Id</shortDescription>
+        <value>Unable to get user&apos;s federation id!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_report_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_report_detail</shortDescription>
+        <value>Unable to get report details!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_user_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_user_detail</shortDescription>
+        <value>Unable to get user details!</value>
+    </labels>
+    <labels>
         <fullName>GADM_Power_User</fullName>
         <language>en_US</language>
         <protected>false</protected>

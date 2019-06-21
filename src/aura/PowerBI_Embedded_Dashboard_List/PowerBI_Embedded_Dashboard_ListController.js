@@ -1,8 +1,6 @@
 ({
 
     init: function(component, event) {
-        let dashboards = component.get('v.dashboards');
-        console.log('dashboards:: ' + JSON.stringify(dashboards));
     },
 
     listBack : function(component, event, helper) {
@@ -16,8 +14,5 @@
     show : function(component, event, helper) {
         helper.handleShowDashboard(component, event);
     },
-
-
-
 
 })

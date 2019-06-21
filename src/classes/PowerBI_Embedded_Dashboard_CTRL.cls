@@ -4,20 +4,20 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
     private static String POWERBI_EXPIERS_ON = 'PowerBIexpiersOn';
     private static String POWERBI_REFRESH_TOKEN = 'PowerBIrefreshToken';
 
-    private static String CUSTOM_SETTING_NAME = 'IATA_PowerBI_Test';
-
-    private class OAuthResult {
+    public class OAuthResult {
         @AuraEnabled
         public String access_token {get; set;}
         @AuraEnabled
         public String refresh_token {get; set;}
         @AuraEnabled
         public Long expires_on {get;set;}
+        @AuraEnabled
+        public String error {get; set;}
 
     }
 
 
-    private class EmbedTokenResult {
+    public class EmbedTokenResult {
         @AuraEnabled
         public String token {get; set;}
         @AuraEnabled
@@ -26,7 +26,7 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         public String expiration {get; set;}
     }
 
-    private class ReportDetailResult {
+    public class ReportDetailResult {
         @AuraEnabled
         public String id {get; set;}
         @AuraEnabled
@@ -39,7 +39,7 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         public String datasetId {get; set;}
     }
 
-    private class DatasetDetailResult {
+    public class DatasetDetailResult {
         @AuraEnabled
         public String id {get; set;}
         @AuraEnabled
@@ -63,6 +63,25 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         List<String> datasets;
     }
 
+    private static PowerBI_Config__c getPowerBICredentials(String configurationName) {
+        PowerBI_Cred__c powerBiCred = PowerBI_Cred__c.getInstance(configurationName);
+        if(powerBiCred != null) {
+            String credName = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? powerBiCred.Prod_Configuration__c : powerBiCred.Dev_Configuration__c;
+            PowerBI_Config__c config = PowerBI_Config__c.getValues(credName);
+            if(config != null) {
+                return config;
+
+            }else{
+                TransformationHelper.sendEmailSupport('FATAL: PowerBi Config ' + credName ,'PowerBi Config   ' + credName);
+                throw new transformationException('Error Credentials - no credentials found!');
+            }
+
+        }else{
+            TransformationHelper.sendEmailSupport('FATAL: PowerBI Cred ' + configurationName ,'PowerBI Cred   ' + configurationName);
+            throw new transformationException('Error Credentials - no credentials found!');
+        }
+    }
+
     @AuraEnabled
     public static boolean checkSessionCache(Id userId, String key) {
 
@@ -80,10 +99,6 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
     @AuraEnabled
     public static OAuthResult getAccessToken() {
 
-        /*String accessToken = '';
-        Long expiresOn = 0L;
-        String refreshToken = '';*/
-
         OAuthResult result = new OAuthResult();
 
         Cache.OrgPartition orgPartition = Cache.Org.getPartition('local.PowerBI');
@@ -97,46 +112,41 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
                 if (orgPartition.contains(POWERBI_EXPIERS_ON)) {
 
                     Long expiresOn = (Long) orgPartition.get(POWERBI_EXPIERS_ON);
+
                     //PowerBI is using timestamp without milliseconds - we need to divide by 1000
                     Long currentTime = (System.now().getTime()) / 1000;
-                    if ((expiresOn - 2000) < currentTime) {//token expired
+
+                    if ((expiresOn - 120) < currentTime) {//token will expire in 2 minutes
 
 
                         if (orgPartition.contains(POWERBI_REFRESH_TOKEN)) {
                             //refresh token here
-                            System.debug('token expired');
                             result = refreshToken(orgPartition);
                         } else {
                             //get new token
-                            System.debug('no refresh token found in org cache');
                             result = getNewAccessToken(orgPartition);
                         }
 
                     } else {//token OK
                         result.expires_on = (Long) orgPartition.get(POWERBI_EXPIERS_ON);
                         if (orgPartition.contains(POWERBI_REFRESH_TOKEN)) {
-                            //refreshToken = (String)orgPartition.get(POWERBI_REFRESH_TOKEN);
 
-                            //result.access_token = accessToken;
-                            //result.expires_on = expiresOn;
                             result.refresh_token = (String) orgPartition.get(POWERBI_REFRESH_TOKEN);
                         } else {
-                            //get new token
-                            System.debug('refresh token not found');
+                            //refresh token not found - get new token
                             result = getNewAccessToken(orgPartition);
                         }
 
                     }
 
                 } else {
-                    //get new token
-                    System.debug('expiresOn not found');
+                    //expiresOn not found - get new token
                     result = getNewAccessToken(orgPartition);
                 }
 
             } else {
-                //get new token
-                System.debug('access token not found');
+                //access token not found - get new token
+
                 result = getNewAccessToken(orgPartition);
             }
         }
@@ -145,11 +155,10 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
     }
 
     private static OAuthResult getNewAccessToken(Cache.Orgpartition orgPartition) {
-        System.debug('getNewAccessToken');
-        PowerBI_Config__c conf = PowerBI_Config__c.getValues(CUSTOM_SETTING_NAME);
+        PowerBI_Config__c conf = getPowerBICredentials('GADM');
+
         if(conf == null) {
-            System.debug('PowerBI config with name "'+CUSTOM_SETTING_NAME+'" not found!');
-            return null; // todo: should redirect to error page or something
+            return null;
         }
 
         Http h = new Http();
@@ -170,7 +179,11 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         HttpResponse res = h.send(req);
 
         OAuthResult result = (OAuthResult)(JSON.deserialize(res.getBody(), OAuthResult.class));
-        System.debug('result:: ' + result);
+
+        if(result.error != null) {
+            TransformationHelper.sendEmailSupport('FATAL: PowerBI Access token: ' + conf.Name + ' ' + result.error, 'PowerBI Access token: ' + conf.Name + ' ' +result.error);
+            throw new transformationException('Error PowerBI access token: ' + result.error);
+        }
 
         if(orgPartition != null) {
             orgPartition.put(POWERBI_ACCESS_TOKEN, result.access_token, 3600);
@@ -178,28 +191,16 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
             orgPartition.put(POWERBI_REFRESH_TOKEN, result.refresh_token, 3600);
         }
         return result;
-        /*String accessToken = result.access_token;
-        Long expiresOn = Long.valueOf(result.expires_on) * 1000;
-        String refreshToken = result.refresh_token;
 
-        PBI_OAuth__c oaAuth = new PBI_OAuth__c();
-        oaAuth.Access_Token__c = accessToken;
-        oaAuth.Expires_On__c = Datetime.newInstance(expiresOn);
-        oaAuth.Refresh_Token__c = refreshToken;
-
-        insert oaAuth;
-        return oaAuth;*/
     }
 
 
     private static OAuthResult refreshToken(Cache.Orgpartition orgPartition) {
-        System.debug('refreshToken');
         String refreshToken = (String)orgPartition.get(POWERBI_REFRESH_TOKEN);
 
-        PowerBI_Config__c conf = PowerBI_Config__c.getValues(CUSTOM_SETTING_NAME);
+        PowerBI_Config__c conf = getPowerBICredentials('GADM');
         if(conf == null) {
-            System.debug('PowerBI config with name "'+CUSTOM_SETTING_NAME+'" not found!');
-            return null; // todo: should redirect to error page or something
+            return null;
         }
 
         Http h = new Http();
@@ -221,7 +222,6 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         HttpResponse res = h.send(req);
 
         OAuthResult result = (OAuthResult)(JSON.deserialize(res.getBody(), OAuthResult.class));
-        System.debug('refresh_token result:: ' + result);
 
         orgPartition.put(POWERBI_ACCESS_TOKEN, result.access_token, 3600);
         orgPartition.put(POWERBI_EXPIERS_ON, result.expires_on, 3600);
@@ -229,17 +229,6 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
 
         return result;
 
-        /*String accessToken = result.access_token;
-        Long expiresOn = Long.valueOf(result.expires_on) * 1000;
-        String refreshToken = result.refresh_token;
-
-        //update new token data
-        oAuth.Access_Token__c = accessToken;
-        oAuth.Expires_On__c = Datetime.newInstance(expiresOn);
-        oAuth.Refresh_Token__c = refreshToken;
-
-        update oAuth;
-        return oAuth;*/
     }
 
     @AuraEnabled
@@ -248,7 +237,7 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
     }
 
 
-    @AuraEnabled      //TODO: - dataset details
+    @AuraEnabled
     public static DatasetDetailResult getDataset(String accessToken, String datasetId) {
         Http h = new Http();
         HttpRequest req = new HttpRequest();
@@ -257,23 +246,17 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         req.setMethod('GET');
         req.setHeader('Authorization', 'Bearer ' + accessToken);
 
-        System.debug('request:: ' + req.toString());
         HttpResponse res = h.send(req);
 
         DatasetDetailResult result = (DatasetDetailResult)(JSON.deserialize(res.getBody(), DatasetDetailResult.class));
-        //String result = res.getBody();
-        System.debug('getDataset result.getBody():: ' + result);
 
         return result;
     }
 
 
 
-    @AuraEnabled           //TODO:get dataseteId for report
+    @AuraEnabled
     public static ReportDetailResult getReportsDetails(String accessToken, String reportId) {
-
-        //groupId = 'bb322fe5-1f26-4bc6-892a-811d6a625ba1';
-        //String reportId = '39d42f7a-0a92-49cc-aef8-1a6c851143dd';
 
         Http h = new Http();
         HttpRequest req = new HttpRequest();
@@ -282,22 +265,14 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         req.setMethod('GET');
         req.setHeader('Authorization', 'Bearer ' + accessToken);
 
-        System.debug('request:: ' + req.toString());
         HttpResponse res = h.send(req);
 
-        //EmbedTokenResult result = (EmbedTokenResult)(JSON.deserialize(res.getBody(), EmbedTokenResult.class));
         ReportDetailResult result = (ReportDetailResult)(JSON.deserialize(res.getBody(), ReportDetailResult.class));
-
-        System.debug('getReportsDetails result.getBody():: ' + result);
-
         return result;
     }
 
     @AuraEnabled
     public static EmbedTokenResult getEmbedToken(String accessToken, String federationId, String groupId, String reportId, String datasetId) {
-        System.debug('getEmbedToken - groupId: ' +groupId);
-        System.debug('getEmbedToken - reportId: ' +reportId);
-        System.debug('getEmbedToken - federationId: ' +federationId);
 
         IdentityData identityData = new IdentityData();
         identityData.username = federationId;
@@ -308,9 +283,7 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         requestData.identities = new List<IdentityData> {identityData};
         requestData.accessLevel = 'View';
 
-
         String sBody = JSON.serialize(requestData);
-        System.debug('sBody:: ' + sBody);
 
         Http h = new Http();
         HttpRequest req = new HttpRequest();
@@ -322,12 +295,9 @@ public without sharing class PowerBI_Embedded_Dashboard_CTRL {
         req.setHeader('Accept', 'application/json');
         req.setBody(sBody);
 
-        System.debug('request:: ' + req.toString());
         HttpResponse res = h.send(req);
 
         EmbedTokenResult result = (EmbedTokenResult)(JSON.deserialize(res.getBody(), EmbedTokenResult.class));
-        System.debug('embedToken response:: ' + res.getBody());
-        System.debug('embedToken result.getBody():: ' + result);
 
         return result;
 

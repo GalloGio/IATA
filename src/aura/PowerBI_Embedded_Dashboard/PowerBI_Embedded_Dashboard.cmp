@@ -3,38 +3,40 @@
     <aura:attribute name="dashboard" type="Object"/>
     <aura:attribute name="userDetail" type="Object"/>
 
+    <!--SHOW SPINNER-->
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
 
+    <!--EVENTS-->
     <aura:registerEvent name="backEvent" type="c:PowerBI_Embedded_Dashboard_Back_EVT"/>
     <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event"/>
+
+    <!--HANDLER-->
     <aura:handler name="init" value="{!this}" action="{! c.init}"/>
 
 
     <div class="slds-container--fluid">
 
-
-
-
+        <!--EMBEDDED DASHBOARD-->
         <div aura:id="iframe"></div>
 
 
         <aura:if isTrue="{! v.showSpinner}">
+            <!--SPINNER-->
             <lightning:spinner alternativeText="Loading"/>
-        </aura:if>
-        <aura:if isTrue="{! v.showSpinner == false}">
 
-            <div class="back_button">
-                <button class="btn btn-primary btn-grey" onclick="{! c.back}">Back</button>
-            </div>
 
-            <!--Dashboard name:{! v.dashboard.Name}
-            <br/>
-            Dahsboard id:{! v.dashboard.Id}
-            <br/>
-            Dashboard url:{! v.dashboard.Url__c}-->
+            <aura:set attribute="else">
+                <!--BACK BUTTON-->
+                <div class="back_button">
+                    <button class="btn btn-primary btn-grey" onclick="{! c.back}">Back</button>
+                </div>
+
+            </aura:set>
 
 
         </aura:if>
+
+
     </div>
 
 
