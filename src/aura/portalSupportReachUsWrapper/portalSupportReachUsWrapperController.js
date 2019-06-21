@@ -97,11 +97,11 @@
                 + $A.get("$Label.c.LVA_CallUsEmergencyAvailableHours") + '\n';
             component.set("v.callCenterInfo_Label", emergency);
         } else {
-            var emergency2 = $A.get("$Label.c.LVA_CallUsThruPhoneNum") + '\n'
+            var emergency = $A.get("$Label.c.LVA_CallUsThruPhoneNum") + '\n'
                 + component.get("v.phoneNumber").PhoneNumber + '\n\n'
                 + $A.get("$Label.c.LVA_CallUsAvailableHours") + '\n'
                 + component.get("v.phoneNumber").AvailableHours + '\n';
-            component.set("v.callCenterInfo_Label", emergency2);
+            component.set("v.callCenterInfo_Label", emergency);
         }
 
         data.myliveAgentButtonInfo.forEach(function (laButton) {
