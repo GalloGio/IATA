@@ -164,4 +164,9 @@ public without sharing class PortalHeaderCtrl {
 
     }
 
+    @AuraEnabled
+    public static String goToOldChangePassword(){
+        return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_ChangePassword');
+    }
+
 }
