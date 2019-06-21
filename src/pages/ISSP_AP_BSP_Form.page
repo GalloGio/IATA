@@ -685,9 +685,9 @@
                     
                     <apex:pageBlockSection title="Please enclose" columns="1" rendered="{!apcountryisocode='BR'}">
                         <apex:iframe scrolling="false" height="160px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR1&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR1"/>
                         <apex:iframe scrolling="false" height="160px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR"/>
                     </apex:pageBlockSection>
                     
                 </apex:pageBlockSection>
@@ -710,11 +710,11 @@
 
                     <apex:pageBlockSection title="Please provide copies of the following documents:" columns="1">
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=a. Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina.&reqDescription=If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.&reqIdentifier=Additional_Information_AR1&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=a. Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina.&reqDescription=If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.&reqIdentifier=Additional_Information_AR1"/>
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=b. Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).&reqDescription=If you are joining the BSP through a GSA, the GSA's fiscal ID number/CUIT will be accepted.<br/><br/>&reqIdentifier=Additional_Information_AR2&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=b. Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).&reqDescription=If you are joining the BSP through a GSA, the GSA's fiscal ID number/CUIT will be accepted.<br/><br/>&reqIdentifier=Additional_Information_AR2"/>
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=c. Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.&reqDescription=If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.&reqIdentifier=Additional_Information_AR3&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=c. Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.&reqDescription=If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.&reqIdentifier=Additional_Information_AR3"/>
                     </apex:pageBlockSection>
                 </apex:pageBlockSection>
 

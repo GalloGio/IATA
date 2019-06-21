@@ -59,7 +59,7 @@
     	</table>
 
         <!-- for CASS show an Accept conditions box -->
-        <apex:outputPanel layout="block" style="padding: 40px;" rendered="{!isCASS}">
+        <apex:outputPanel layout="block" style="padding: 40px;" rendered="{!AND(isCASS,strAreaType=='Airline Joining')}">
         <div class="alert alert-danger" role="alert">Please note that as part of the joining process, a test file for CASSlink billing have to be submitted. The requirements dor this file are described in the CASSlink specifications handbook, and we have also prepared a guide with the most frequent issues encuntered during the testing process. Please make sure you read the documents below and made the necessary preparation.</div>
         <div class="row">
             <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentCASSSpecificationUrl!=null}">

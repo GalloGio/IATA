@@ -215,6 +215,7 @@ global without sharing class ISSP_APProcess {
             //Retrieve information linked to the case Id
             vCaseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = retrieveCase(vCaseId);
+            retrieveAPProcessForm();
 
             if(newCase==null)
                 redirectToCasesList();
@@ -279,8 +280,6 @@ global without sharing class ISSP_APProcess {
                 isStep2= true;
             }else if(stepNumber == '3'){
                 isStep3= true;
-                retrieveAPProcessForm();
-
                 if(newForm.Id==null) {
                     newForm.Airline_Local_address_in_the_BSP_Country__c = newCase.BSPCountry__c;
                 }
@@ -299,7 +298,6 @@ global without sharing class ISSP_APProcess {
             }else if(stepNumber == '4'){
                 system.debug('STEP 4 - 1');
                 isStep4 = true;
-                retrieveAPProcessForm();
                 system.debug('STEP 4 - 2');
                 newForm.Submitted_to_IATA__c = FALSE;
 
@@ -692,9 +690,11 @@ global without sharing class ISSP_APProcess {
             }
         } else {
             newCase.IATAcode__c = con.Account.IATACode__c;  //Web IATA Code on case
-            newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
+            if (newCase.Account_Concerned__c==null) {
+                newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
                                                                     con.Account.IATACode__c,
                                                                     apCountryisocode, con.Account.Name, vHqAccountId);
+            }
         }
 
         //Defining default values for the case
@@ -893,44 +893,22 @@ global without sharing class ISSP_APProcess {
     }
 
     public Pagereference goToFinalStep(){
-        List<String> listMandatoryFiles = new list<String>();
-        Boolean showJoinICCSQuestion = getShowJoinICCSQuestion();
-        if (!showJoinICCSQuestion) {
-            this.newForm.Airline_wish_to_join_ICCS__c = 'No';
-        }
-        if (this.newForm.Airline_wish_to_join_ICCS__c==null) {
-            this.newForm.Airline_wish_to_join_ICCS__c.addError('Select an option');
-            return null;
-        }
-        if (getShowJoinICCS()) {
-            //check ICCS_Join
-            listMandatoryFiles.add('ICCS_Join');
-        }
-        if (showJoinICCSQuestion && newForm.Airline_wish_to_join_ICCS__c=='Yes') {
-            //check ICCS_Join_market
-            listMandatoryFiles.add('ICCS_Join_market');
-        }
-        if (getShowUploadBankMandate()) {
-            //check Bank_Mandate
-            listMandatoryFiles.add('Bank_Mandate');
-        }
-        if (getShowCounterIndemnity()) {
-            listMandatoryFiles.add('CounterIndemnityAgreement');
-        }
-        if (getShowFormOfConcurrence()) {
-            listMandatoryFiles.add('FormOfAuthorization');
-        }
-        if (getShowFormOfApplication()) {
-            listMandatoryFiles.add('FormOfApplication');
-        }
-        if (getShowFormOfApplicationAndConcurrence()) {
-            listMandatoryFiles.add('FormOfApplicationAndConcurrence');
-        }
-        if (!checkMandatoryFiles(listMandatoryFiles)) {
-            newForm.addError('There are missing files to upload, Please attach them before submitting the application.');
-            return null;
-        }
         try{
+            if (isBSP || isCASS) {
+                if (!getShowJoinICCSQuestion()) {
+                    this.newForm.Airline_wish_to_join_ICCS__c = 'No';
+                }
+                if (this.newForm.Airline_wish_to_join_ICCS__c==null) {
+                    this.newForm.Airline_wish_to_join_ICCS__c.addError('Select an option');
+                    return null;
+                }
+            }
+
+            List<String> listMandatoryFiles = getMandatoryFileList();
+            if (!checkMandatoryFiles(listMandatoryFiles)) {
+                newForm.addError('There are missing files to upload, Please attach them before submitting the application.');
+                return null;
+            }
 
             newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today() && isocountry.Airline_EasyPay_Opt_Out_Date__c != null);
 
@@ -942,6 +920,7 @@ global without sharing class ISSP_APProcess {
             }
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
+            newCase.Dossier_Reception_Date__c = Date.today();
             if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
             newCase.ownerid = APQueue('Airline Participation - Head Office').Id;
             upsert newCase;
@@ -955,6 +934,41 @@ global without sharing class ISSP_APProcess {
         }
 
         return null;
+    }
+
+    /**
+        Returns a list of all required filed to upload for current form type
+    **/
+    private list<String> getMandatoryFileList() {
+        List<String> listMandatoryFiles = new list<String>();
+        if (isBSP || isCASS) {
+            if (getShowJoinICCS()) {
+                //check ICCS_Join
+                listMandatoryFiles.add('ICCS_Join');
+            }
+            if (getShowICCSJoinMarket()) {
+                //check ICCS_Join_market
+                listMandatoryFiles.add('ICCS_Join_market');
+            }
+            if (getShowUploadBankMandate()) {
+                //check Bank_Mandate
+                listMandatoryFiles.add('Bank_Mandate');
+            }
+            if (getShowCounterIndemnity()) {
+                listMandatoryFiles.add('CounterIndemnityAgreement');
+            }
+            if (getShowFormOfConcurrence()) {
+                listMandatoryFiles.add('FormOfAuthorization');
+            }
+            if (getShowFormOfApplication()) {
+                listMandatoryFiles.add('FormOfApplication');
+            }
+            if (getShowFormOfApplicationAndConcurrence()) {
+                listMandatoryFiles.add('FormOfApplicationAndConcurrence');
+            }
+        }
+        System.debug('___getMandatoryFileList() ' + listMandatoryFiles);
+        return listMandatoryFiles;
     }
 
     public Pagereference redirectToCasesList(){
@@ -1685,6 +1699,13 @@ global without sharing class ISSP_APProcess {
     }
 
     /**
+        Returns true if the account meets the conditions to show "Information required to join ICCS in this market" section
+    **/
+    public Boolean getShowICCSJoinMarket() {
+        return getShowJoinICCSQuestion() && newForm.Airline_wish_to_join_ICCS__c=='Yes';
+    }
+
+    /**
         Returns true if the account meets the conditions to show ICCS Joining section
     **/
     public Boolean getShowJoinICCS() {
@@ -1738,7 +1759,8 @@ global without sharing class ISSP_APProcess {
         Returns true if the account meets the conditions to show Form Of Application section
     **/
     public Boolean getShowFormOfApplication() {
-        return isGSSAUser==false
+        return isBSP
+            && isGSSAUser==false
             && strAreaType=='Airline Joining'
             && accountToShowSections!=null
             && accountToShowSections.Sector__c=='Airline'
