@@ -1,7 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 
 //navigation
-import { NavigationMixin, CurrentPageReference} from 'lightning/navigation';
+import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 import { navigateToPage, getPageName } from 'c/navigationUtils';
 import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
 
@@ -10,6 +10,8 @@ import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
+import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
+
 
 
 // Toast
@@ -105,7 +107,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonService';
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport';
 
-
     @wire(CurrentPageReference)
     getPageRef() {
         this.handlePageRefChanged();
@@ -120,8 +121,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         getNotifications().then(result => {
             this.baseURL = window.location.href;
             let resultsAux = JSON.parse(JSON.stringify(result));
-
-            console.log('AUX: ', resultsAux);
 
             resultsAux.sort(function (a, b) {
                 return new Date(b.createdDate) - new Date(a.createdDate);
@@ -210,6 +209,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         //this.navigateToOtherPage("");
     }
 
+    navigateToChangePassword() {
+        goToOldChangePassword({}).then(results => {
+            window.open(results, "_self");
+        });
+
+    }
 
     //user logout
     logOut() {
@@ -329,22 +334,14 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
-    goToAdvancedSearchPage(event) {
-        let params = {};
-
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: "advanced-search"
-            }
-        })
-            .then(url => navigateToPage(url, params));
+    goToAdvancedSearchPage() {
+        this.navigationCheck("advanced-search", "advanced-search");
     }
 
     handlePageRefChanged() {
         let pagename = getPageName();
-        if(pagename){
-            getBreadcrumbs({ pageName : pagename })
+        if (pagename) {
+            getBreadcrumbs({ pageName: pagename })
                 .then(results => {
                     let breadCrumbs = JSON.parse(JSON.stringify(results));
                     if (breadCrumbs && breadCrumbs[1] && (breadCrumbs[1].DeveloperName === 'services' || breadCrumbs[1].DeveloperName === 'support')) {
@@ -359,9 +356,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                         this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
                         this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
                     }
-                })
-                .catch(error => {
-                    console.log('PortalHeader getBreadcrumbs error: ' , error);
                 });
         } else {
             this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
