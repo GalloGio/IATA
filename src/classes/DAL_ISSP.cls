@@ -67,7 +67,7 @@ public with sharing class DAL_ISSP {
             return contacts;
         }
 
-        return null;
+        return new List<Contact>();
     }
 
     public static List<Contact> getContactsByAccountId(Id accountId, Integer offset, Integer batchSize){
@@ -81,7 +81,7 @@ public with sharing class DAL_ISSP {
             return contacts;
         }
 
-        return null;
+        return new List<Contact>();
     }
 
 
@@ -152,7 +152,7 @@ public with sharing class DAL_ISSP {
             List<User> users = [SELECT Id,ContactId,AccountId,Email,LanguageLocaleKey,LastLoginDate,IsActive FROM User WHERE ContactId IN: contactIds];
             return users;
         }
-        return null;
+        return new List<User>();
 
     }
 }

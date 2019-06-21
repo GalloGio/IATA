@@ -84,13 +84,14 @@ public with sharing class PortalProfileCtrl {
         return new List<ContactWrapper>();
     }
 
+    @AuraEnabled
+    public static List<ContactWrapper> getAccountContacts(){
+        return getAccountContacts(0);
+    }
+
 
     @AuraEnabled
     public static List<ContactWrapper> getAccountContacts(Integer offset){
-        if(offset == null){
-            offset = 0;
-        }
-
         List<Contact> contacts = DAL_ISSP.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
         List<Id> contactIds = new List<Id>();
         List<User> users = new List<User>();
@@ -98,7 +99,7 @@ public with sharing class PortalProfileCtrl {
 
         List<ContactWrapper> wrappers = new List<ContactWrapper>();
 
-        if(contacts != null && !contacts.isEmpty()){
+        if(!contacts.isEmpty()){
             for(Contact c :contacts){
                 contactIds.add(c.Id);
                 contactIdtoContact.put(c.Id,c);
@@ -118,11 +119,14 @@ public with sharing class PortalProfileCtrl {
         return wrappers;
     }
 
+
+    @AuraEnabled
+    public static List<Account> getCompanyBranches(){
+        return getCompanyBranches(0);
+    }
+
     @AuraEnabled
     public static List<Account> getCompanyBranches(Integer offset){
-        if(offset == null){
-            offset = 0;
-        }
         List<Account> branches = new List<Account>();
 
         branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
