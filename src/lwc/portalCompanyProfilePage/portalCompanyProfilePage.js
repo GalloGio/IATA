@@ -200,9 +200,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
             if(!isFetching && (lastPosition == null || lastPosition < yposition) ){
                 this.loadMore();
             }
-        }else{
-            //console.log(Math.abs(yposition-loadMoreTrigger));
         }
+
         this.lastPosition = yposition;
     }
 
@@ -289,7 +288,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     retrieveContacts(){
         getContacts({ offset: this.contactsOffset}).then(result => {
-            console.log('cs.. '+result.length);
+
             this.isFetching = false;
             if(result.length == 0){ this.contactsEnded = true; return;}
 
@@ -345,7 +344,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     retrieveBranches(){
 
         getBranches({ offset: this.branchesOffset}).then(result => {
-            console.log('brs... '+result.length);
+
             this.isFetching = false;
             if(result.length == 0){this.branchesEnded = true; return;}
 
@@ -479,8 +478,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     get tab0Active() { return this.lstTabs[0].active; }
-    get tab1Active() { return this.lstTabs[1] != null && this.lstTabs[1].active; }
-    get tab2Active() { return this.lstTabs[2] != null && this.lstTabs[2].active; }
+    get tab1Active() { return this.lstTabs[1].active; }
+    get tab2Active() { return this.lstTabs[2].active; }
     //get tab3Active() { return this.lstTabs[3].active; }
     //get tab4Active() { return this.lstTabs[4].active; }
 }

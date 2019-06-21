@@ -41,9 +41,16 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_TRADE_NAME = System.label.ISSP_MyProfile_TradeName;
     PRIVATE STATIC FINAL STRING LABEL_ISO_COUNTRY = System.label.Country;
 
+
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_CONTACT = System.label.CSP_cpcc_Invoice_Contact;
+    PRIVATE STATIC FINAL STRING LABEL_AUTHORISED_SIGNATORY = System.label.CSP_cpcc_Authorised_Signatory;
+    PRIVATE STATIC FINAL STRING LABEL_PAYMENT_CONTACT = System.label.CSP_cpcc_BSP_CASS_Payment_Contact;
+    PRIVATE STATIC FINAL STRING LABEL_AGENT_CREDIT_RISK = System.label.CSP_cpcc_Agent_Credit_Risk;
+
     PRIVATE STATIC FINAL INTEGER CONTACT_BATCH= 5;
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 5;
 
+    public static Contact contactInfo = new Contact();
 
     public static User myUser {
         get {
@@ -64,6 +71,17 @@ public with sharing class PortalProfileCtrl {
         }
 
         set;
+    }
+
+    /**
+    * Todo: Implement contact search.
+    * With infinite scrolling, search currently only filters records that are already on the client.
+    * In the future - filtering, sorting to call backend methods and return data from the DB.
+    */
+    @AuraEnabled
+    public static List<ContactWrapper> searchAccountContacts(String queryString){
+        List<Contact> searchResults = new List<Contact>();
+        return new List<ContactWrapper>();
     }
 
 
@@ -126,6 +144,12 @@ public with sharing class PortalProfileCtrl {
 
     // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
     public static Map<String,List<FieldWrapper>> ContactFields() {
+
+        User loggedUser = CSP_Utils.getLoggedUser();
+        contactInfo = [SELECT Id, Invoicing_Contact__c, Authorized_Signatory__c, BSP_CASS_Payment_contact__c, Airline_Credit_Risk_Manager__c
+        FROM Contact
+        WHERE Id = :loggedUser.contactId];
+
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
         wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
         wrapperMap.put(LABEL_PERSONAL_CONTACT,new List<FieldWrapper>());
@@ -150,7 +174,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingPostalCode',true,true));
 
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Status__c',true,true));
-        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Available_Services_Images__c',false,true));
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorisation',false,true));
 
         wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
 
@@ -294,6 +318,12 @@ public with sharing class PortalProfileCtrl {
         @AuraEnabled
         public Boolean outputOnly;
 
+        @AuraEnabled
+        public Boolean isAccessibility;
+
+        @AuraEnabled
+        public List<accessibilityWrapper> accessibilityList;
+
         public FieldWrapper (String fieldName, Boolean fullSize) {
             this.fieldName = fieldName;
             this.fullSize = fullSize;
@@ -313,6 +343,20 @@ public with sharing class PortalProfileCtrl {
             this.editable = editable;
             this.visible = visible;
             this.labeled = false;
+            this.isAccessibility = (fieldName == 'Authorisation' ? true : false);
+            if (fieldName == 'Authorisation') {
+                this.accessibilityList = new List<accessibilityWrapper>{
+                        new accessibilityWrapper(false, LABEL_INVOICE_CONTACT, 'Invoicing_Contact__c'),
+                        new accessibilityWrapper(false, LABEL_AUTHORISED_SIGNATORY, 'Authorized_Signatory__c'),
+                        new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c'),
+                        new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c')
+                };
+
+
+
+
+            }
+
         }
         public FieldWrapper (String fieldName, Boolean editable, Boolean visible,String className, String label){
             this.fieldName = fieldName;
@@ -330,11 +374,34 @@ public with sharing class PortalProfileCtrl {
 
     }
 
+    /* checked: false, label: this.labels.Portal_Administrator, APINAME: "PortalAdmin" */
+
+    public class accessibilityWrapper{
+
+        @AuraEnabled
+        public Boolean checked;
+
+        @AuraEnabled
+        public String label;
+
+        @AuraEnabled
+        public String APINAME;
+
+        public accessibilityWrapper (Boolean checked, String label, String APINAME){
+            this.checked = (Boolean) contactInfo.get(APINAME);
+            this.label = label;
+            this.APINAME = APINAME;
+        }
+    }
+
 
     /** Contacts & Branches Sections */
 
     @AuraEnabled
     public static Map<String,List<FieldWrapper>> getContactsListFields(){
+
+        String rType = myContact.Account.RecordType.DeveloperName;
+
         String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
         String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
@@ -373,10 +440,12 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Available_Services_Images__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Membership_Function__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));
 
         //EDIT
         wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
+        //wrapperMap.get(editFields).add(new FieldWrapper('Salutation',true,true)); - Salesforce bug, salutation picklist not loading values
         wrapperMap.get(editFields).add(new FieldWrapper('ISO_Country__c',true,true,true));
         wrapperMap.get(editFields).add(new FieldWrapper('FirstName',true,true));
         wrapperMap.get(editFields).add(new FieldWrapper('LastName',true,true));
@@ -385,21 +454,20 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(editFields).add(new FieldWrapper('MobilePhone',true,true));
         wrapperMap.get(editFields).add(new FieldWrapper('Phone',true,true));
 
-        wrapperMap.get(editFields).add(new FieldWrapper('Membership_Function__c',true,true));
-
         //For Airlines & agencies only
-        wrapperMap.get(editFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c',true,true));
-        wrapperMap.get(editFields).add(new FieldWrapper('Invoicing_Contact__c',true,true));
+        if((rType == 'IATA_Airline_BR' || rType == 'IATA_Airline') || rType == 'IATA_Agency') {
+            wrapperMap.get(editFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
+            wrapperMap.get(editFields).add(new FieldWrapper('Invoicing_Contact__c', true, true));
+        }
 
         wrapperMap.get(editFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
 
         //Airline only
-        wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
+        if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){
+            wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
+        }
 
         wrapperMap.get(editFields).add(new FieldWrapper('User_Portal_Status__c',true,true));
-
-
-
 
         return wrapperMap;
 
@@ -461,7 +529,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Website',true,true));
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Phone',true,true));
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Fax',true,true));
-        //wrapperMap.get(sectionBranchContact).add(new FieldWrapper('IsoCountry',true,true));
+//wrapperMap.get(sectionBranchContact).add(new FieldWrapper('IsoCountry',true,true));
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingAddress',true,true));
 
 

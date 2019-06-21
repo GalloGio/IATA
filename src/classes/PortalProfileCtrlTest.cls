@@ -76,8 +76,10 @@ public with sharing class PortalProfileCtrlTest {
             List<PortalProfileCtrl.FieldWrapper> createContactFields = PortalProfileCtrl.getContactFieldsToInsert();
 
 
-            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts();
-            List<Account> branches = PortalProfileCtrl.getCompanyBranches();
+            List<PortalProfileCtrl.ContactWrapper> contacts = PortalProfileCtrl.getAccountContacts(0);
+            List<PortalProfileCtrl.ContactWrapper> searchResults = PortalProfileCtrl.searchAccountContacts('searchQuery');
+            List<Account> branches = PortalProfileCtrl.getCompanyBranches(0);
+
 
             System.assert(!contacts.isEmpty());
             System.assert(!branches.isEmpty());
