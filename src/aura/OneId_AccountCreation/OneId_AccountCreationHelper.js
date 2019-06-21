@@ -17,7 +17,9 @@
 	copyBillingToShipping : function(c, e, h) {
     
         if(c.get("v.copyAddress")) {       
-                            
+            
+            c.set("v.showListShipping", false);
+
             c.find("ShippingCountry").set("v.value", c.get("v.country.Id"));
             c.set("v.countryShipping", c.get("v.countryInformation.countryMap")[c.get("v.country.Id")]);
             c.set("v.statesShipping", c.get("v.statesBilling"));        
@@ -29,8 +31,7 @@
             c.set("v.hierarchyCitiesShipping", c.get("v.hierarchyCitiesBilling"));
             c.set("v.shippingCityId", c.get("v.billingCityId"));
             c.set("v.shippingStateId", c.get("v.billingStateId"));
-            c.set("v.allCitiesAllCountriesShipping", c.get("v.allCitiesAllCountriesBilling"));
-            c.set("v.showListShipping", c.get("v.showListBilling"));            
+            c.set("v.allCitiesAllCountriesShipping", c.get("v.allCitiesAllCountriesBilling"));                        
             c.set("v.ShippingCityEmpty", c.get("v.BillingCityEmpty"));
             c.set("v.ShippingStreetEmpty", c.get("v.BillingStreetEmpty"));
             c.set("v.ShippingCityStreetEmpty", c.get("v.BillingCityStreetEmpty"));

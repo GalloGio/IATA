@@ -183,7 +183,7 @@
                 c.set('v.stateInvalidWarning', false);
                 
                 
-            }else if(cityMatch){
+            }else if(cityMatch && !cityAndStateMatch){
 
                 c.set('v.cityInAnotherState'+mode, true);
                 c.set('v.invalidCity', currentCity);
