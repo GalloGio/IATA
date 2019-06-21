@@ -41,7 +41,7 @@
 }
 
 .tileNewServiceText{
-    margin-top: 80%;
+    margin-top: 20px;
     bottom: 40px;
     margin-left: auto;
     margin-right: auto;
@@ -50,9 +50,16 @@
 }
 
 .tileNewServiceIcon{
-    margin-top: 20%;
-    top: 40px;
-    background-color: #E8EAFE;
+    margin-top: 50px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(30, 50, 250, 0.1);
+    color: #3333ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
 }
 
 .noPointerEvents{

@@ -2,8 +2,8 @@
 
     <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
 
-    <div class="customWhiteBackground headerContainer">
-        <div class="slds-grid slds-wrap">
+    <div class="headerContainer">
+        <div class="slds-grid slds-wrap maxWidthHeader">
 
             <!-- MODAL -->
             <template if:true={openmodel}>
@@ -44,23 +44,21 @@
             </template>
             <!-- END MODAL -->
 
-            <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth"></div>
-            <div class="headerBarLogo slds-p-horizontal_x-small">
+            <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth slds-show_medium"></div>
+            <div class="headerBarLogo slds-p-horizontal_x-small slds-show_medium">
                 <span onclick={navigateToHomePage}>
                     <img src={logoIcon}>
                 </span>
             </div>
             <div class="slds-col customBlueBackground headerBar headerBarRight">
                 <span>
-                    <div class="slds-grid slds-m-top_xx-small">
-                        <div class="slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonService"
-                            onclick={navigateToServices}>
+                    <div class="slds-grid slds-m-top_xx-small headerBarConatiner">
+                        <div class={buttonServiceStyle} onclick={navigateToServices}>
                             <div class="headerButtonService slds-m-right_small"></div>
                             <span
                                 class="text-xsmall text-white slds-p-right_x-small floatRight tabText slds-show_large">{labels.ISSP_Services}</span>
                         </div>
-                        <div class="slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport"
-                            onclick={navigateToSupport}>
+                        <div class={buttonSupportStyle} onclick={navigateToSupport}>
                             <div class="headerButtonSupport slds-m-right_small"></div>
                             <span
                                 class="text-xsmall text-white slds-p-right_x-small floatRight tabText slds-show_large">{labels.CSP_Support}</span>
