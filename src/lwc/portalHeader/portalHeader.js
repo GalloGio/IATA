@@ -11,9 +11,6 @@ import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
-import getUserAccpetTerms from '@salesforce/apex/PortalHeaderCtrl.getUserAccpetTerms';
-import setUserAccpetTerms from '@salesforce/apex/PortalHeaderCtrl.setUserAccpetTerms';
-
 
 
 // Toast
@@ -38,7 +35,24 @@ import Announcement from '@salesforce/label/c.Announcements_Notification';
 import Tasks from '@salesforce/label/c.Tasks_Notification';
 import AllNotifications from '@salesforce/label/c.All_Notifications_Notification';
 
+// Accept Terms
+import { updateRecord } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
+import Id from '@salesforce/user/Id';
+import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
+
 export default class PortalHeader extends NavigationMixin(LightningElement) {
+    @track displayAcceptTerms = true;
+
+    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept] })
+    WiregetUserRecord(result) {
+        if (result.data) {
+            let user = JSON.parse(JSON.stringify(result.data));
+            this.displayAcceptTerms = user.fields.ToU_accepted__c.value;
+            console.log('DATA: ', user);
+        }
+    }
+
 
     _labels = {
         ISSP_Services,
@@ -110,18 +124,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport';
 
 
-    @track displayAcceptTerms = true;
-
     @wire(CurrentPageReference)
     getPageRef() {
         this.handlePageRefChanged();
     }
 
     connectedCallback() {
-
-        getUserAccpetTerms().then(result => {
-            this.displayAcceptTerms = result;
-        });
 
         isAdmin().then(result => {
             this.userAdmin = result;
@@ -373,9 +381,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     acceptTerms() {
-        setUserAccpetTerms().then(result => {
-            this.displayAcceptTerms = true;
-        });
+
+        const fields = {};
+        fields.Id = Id;
+        fields.ToU_accepted__c = true;
+        fields.Date_ToU_accepted__c = new Date().toISOString();
+        const recordInput = { fields };
+
+        updateRecord(recordInput)
+            .then(() => {
+                this.displayAcceptTerms = true;
+            });
+
+
 
     }
 

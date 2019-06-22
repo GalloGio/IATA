@@ -5,8 +5,6 @@ import ISSP_TC_Accept from '@salesforce/label/c.ISSP_TC_Accept';
 import ISSP_Registration_acceptGeneralConditions from '@salesforce/label/c.ISSP_Registration_acceptGeneralConditions';
 import CSP_Accept_Terms_Error from '@salesforce/label/c.CSP_Accept_Terms_Error';
 
-
-// , , 
 export default class PortalChangePassword extends LightningElement {
 
     @track isLoading = false;
@@ -30,6 +28,8 @@ export default class PortalChangePassword extends LightningElement {
     set labels(value) {
         this._labels = value;
     }
+
+    
 
     connectedCallback() {
 
