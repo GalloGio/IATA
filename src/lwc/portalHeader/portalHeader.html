@@ -2,6 +2,10 @@
 
     <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
 
+    <template if:false={displayAcceptTerms}>
+        <c-portal-accept-terms oncloseacceptterms={logOut} onacceptterms={acceptTerms}></c-portal-accept-terms>
+    </template>
+
     <div class="headerContainer">
         <div class="slds-grid slds-wrap maxWidthHeader">
 
@@ -80,7 +84,10 @@
                                     onclick={navigateToCases}>{labels.CSP_Cases}</span>
                                 <!--<span class="slds-p-around_small text-xsmall text-black profileOption" onclick={navigateToSettings}>{labels.CSP_Settings}</span>-->
                                 <span class="slds-p-around_small text-xsmall text-black profileOption"
+                                    onclick={navigateToChangePassword}> Change Password</span>
+                                <span class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={logOut}>{labels.CSP_LogOut}</span>
+
                             </div>
                         </div>
                         <div class="slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer"

@@ -2700,6 +2700,13 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_Accept_Terms_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Accept Terms Error</shortDescription>
+        <value>Accept the Terms before you proceed.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Add_New_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2716,6 +2723,14 @@ Payment required on receipt of this Payment Advice
         <value>Was this article helpful?</value>
     </labels>
     <labels>
+        <fullName>csp_AgencyReadOnly</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Agency Read Only</value>
+    </labels>
+    <labels>
         <fullName>csp_Basics_Section_label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2730,6 +2745,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>Branch Offices</shortDescription>
         <value>Branch Offices</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Breadcrumb_AdvancedSearch_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_AdvancedSearch_Title</shortDescription>
+        <value>Advanced Search</value>
     </labels>
     <labels>
         <fullName>CSP_Breadcrumb_CompanyProfile_Title</fullName>
@@ -2968,6 +2991,13 @@ Payment required on receipt of this Payment Advice
         <value>Manage Services</value>
     </labels>
     <labels>
+        <fullName>csp_MembershipFunction</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp Membership Function</shortDescription>
+        <value>Job Function</value>
+    </labels>
+    <labels>
         <fullName>CSP_NoAccount</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3102,6 +3132,30 @@ Payment required on receipt of this Payment Advice
         <value>Find services, cases, support and more</value>
     </labels>
     <labels>
+        <fullName>CSP_Search_NoResults_text1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_NoResults_text1</shortDescription>
+        <value>No Search Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_NoResults_text2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_NoResults_text2</shortDescription>
+        <value>Sorry, there is not any results for</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_NoResults_text3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_NoResults_text3</shortDescription>
+        <value>Check the spelling of your keywords or try again with new ones.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Search_Services_Placeholder</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3116,6 +3170,38 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Search_Support_Placeholder</shortDescription>
         <value>Search Support</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_TopResults</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_TopResults</shortDescription>
+        <value>Top Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_TypeIn_text1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_TypeIn_text1</shortDescription>
+        <value>Type your search terms</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_TypeIn_text2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_TypeIn_text2</shortDescription>
+        <value>Please type in something bigger that 2 letters to start the search.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_TypeIn_text3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_TypeIn_text3</shortDescription>
+        <value>Select a filter section to further improve your search results.</value>
     </labels>
     <labels>
         <fullName>CSP_SeeAll</fullName>
@@ -3394,11 +3480,26 @@ Payment required on receipt of this Payment Advice
         <value>View My Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
         <fullName>CSP_CompanyCases</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CompanyCases</shortDescription>
         <value>View My Company Cases</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SearchingOn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SearchingOn</shortDescription>
+        <value>Searching on Case Number. Subject &amp; Description</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>
@@ -34271,6 +34372,14 @@ title,Title,Name</value>
         <value>Subject</value>
     </labels>
     <labels>
+        <fullName>csp_TicketIssuer</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Ticket Issuer</value>
+    </labels>
+    <labels>
         <fullName>csp_ToastWarningRecipientNotFound</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34390,6 +34499,14 @@ title,Title,Name</value>
         <value>IATA Payment</value>
     </labels>
     <labels>
+        <fullName>csp_IEPAdmin</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>IEP Admin</value>
+    </labels>
+    <labels>
         <fullName>csp_IntentionOnThisPage</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34412,6 +34529,46 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Live Agent connection timeout. Please refresh the page or contact Support</value>
+    </labels>
+    <labels>
+        <fullName>csp_MasterWalletManager</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Master Wallet Manager</value>
+    </labels>
+    <labels>
+        <fullName>csp_TDP_ServiceRequest_TopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>You are about to request more information on an IATA commercial service. By clicking "confirm" you will be sent all details on how to subscribe to the IATA Treasury Dashboard Premium on a monthly basis.</value>
+    </labels>
+    <labels>
+        <fullName>csp_TD_ServiceRequest_TopLabel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>You are about to request more information on an IATA commercial service. By clicking "confirm" you will be sent all details on how to subscribe to the IATA Treasury Dashboard on a monthly basis.</value>
+    </labels>
+    <labels>
+        <fullName>csp_TDP_ServiceRequest_MediumLabel1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>This dashboard allows each airline Treasury Team to gain full visibility of their incoming credit card sales, and the related credit card sales downloadable report - in additon to viewing cash flows being processed by each of IATA's main settlement systems: BSP, CASS,ICCS (Currency Clearance Service) and ICH (IATA Clearing House).</value>
+    </labels>
+    <labels>
+        <fullName>csp_TDP_ServiceRequest_MediumLabel2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>For more info visit: www.iata.org/treasurydashboard</value>
     </labels>
     <labels>
         <fullName>csp_Options_Label</fullName>
@@ -34494,6 +34651,50 @@ title,Title,Name</value>
         <value>Support</value>
     </labels>
     <labels>
+        <fullName>csp_RequestService_ContactPortalAdmin_Alt</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;
+        Please contact your Head Office&#39;s Authorized Signatory to request them to open an IATA EasyPay Account. 
+        As a Portal Administrator you can either update your 
+        &lt;a href=&quot;/my-profile&quot;&gt;Personal Information&lt;/a&gt; 
+        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the 
+        &lt;a href=&quot;/company-profile&quot;&gt;Company Administration -&gt; Contacts&lt;/a&gt; 
+        page and ask them to open your EasyPay account.
+        &lt;br/&gt;
+        &lt;br/&gt;
+        Please &lt;a href=&quot;/Support-Reach-Us?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
+    </labels>
+    <labels>
+        <fullName>csp_RequestService_ContactPortalAdmin_LegalAuth</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&#39;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency.
+        &lt;br/&gt;
+        &lt;br/&gt;
+        Please &lt;a href=&quot;/Support-Reach-Us?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
+    </labels>
+    <labels>
+        <fullName>csp_RequestService_IEPAccountOpenInProgress</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>An Authorised Signatory from your Head Entity has already initiated the opening of your Agency&#39;s IEP Account. Once the IEP Account is successfully opened you will be able to access this service.</value>
+    </labels>
+    <labels>
+        <fullName>csp_RequestService_ProceedIEPAccountOpen</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agency’s IATA EasyPay account.&lt;br/&gt;&lt;br/&gt;By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law.&lt;br/&gt;&lt;br/&gt;Do you wish to proceed?</value>
+    </labels>
+    <labels>
         <fullName>csp_Request_New_Service</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34524,6 +34725,78 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>CSP_SearchFAQ</shortDescription>
         <value>Search by FAQ details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_AdvancedSearch</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_AdvancedSearch</shortDescription>
+        <value>Advanced Search</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Case_Country</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Case_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Case_Type</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Case_Type</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Documents_Category</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Documents_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Documents_ProdType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Documents_ProdType</shortDescription>
+        <value>Product Type</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_Documents_PubCountry</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_Documents_PubCountry</shortDescription>
+        <value>Published Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_FAQ_Category</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_FAQ_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_FAQ_Subtopic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_FAQ_Subtopic</shortDescription>
+        <value>Subtopic</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Search_FAQ_Topic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Search_FAQ_Topic</shortDescription>
+        <value>Topic</value>
     </labels>
     <labels>
         <fullName>csp_Sub_Topic_Label</fullName>
@@ -34704,6 +34977,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>csp_selectReason</shortDescription>
         <value>View Case Summary</value>
+    </labels>
+    <labels>
+        <fullName>csp_WorkingAreas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_WorkingAreas</shortDescription>
+        <value>Working Areas</value>
     </labels>
     <labels>
         <fullName>csp_GoToHomepage</fullName>

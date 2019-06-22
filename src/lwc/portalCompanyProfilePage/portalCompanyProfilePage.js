@@ -52,6 +52,15 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track searchTextContacts;
     @track searchTextBranches;
 
+    //Infinite loading
+    @track contactsOffset = 0;
+    @track branchesOffset = 0;
+    @track contactsEnded = false;
+    @track branchesEnded = false;
+    @track isFetching = false;
+    lastPosition;
+
+
     @track openmodel = false;
     @track recordid;
     @track objectid;
@@ -88,7 +97,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
                       "class": "slds-p-around_small cursorPointer text-darkGray"
                   });
                }
-
+    
            }
 
            this.lstTabs = tabsAux;
@@ -172,7 +181,28 @@ export default class PortalCompanyProfilePage extends LightningElement {
                     }
                 }
             }
+
         }
+
+
+        //Infinite load
+        let endPage = self.template.querySelector('.endOfPage');
+        let wholePage = self.template.querySelector('.profilePageWrapper');
+
+        let loadMoreTrigger = (window.innerHeight / 5)*4;
+        let treshhold = 250;
+
+        let isFetching = this.isFetching;
+
+        let lastPosition  = this.lastPosition;
+
+        if(Math.abs(wholePage.getBoundingClientRect().bottom - yposition) < treshhold){//if((Math.abs(yposition-loadMoreTrigger) < treshhold)){
+            if(!isFetching && (lastPosition == null || lastPosition < yposition) ){
+                this.loadMore();
+            }
+        }
+
+        this.lastPosition = yposition;
     }
 
     onmouseenterTab(event) {
@@ -257,10 +287,17 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
 
     retrieveContacts(){
-        getContacts().then(result => {
-            //this.contacts
+        getContacts({ offset: this.contactsOffset}).then(result => {
+
+            this.isFetching = false;
+            if(result.length == 0){ this.contactsEnded = true; return;}
+
             let contacts = JSON.parse(JSON.stringify(result));
-            let unwrappedContacts = [];
+            let unwrappedContacts = JSON.parse(JSON.stringify(this.contacts));
+
+            this.contactsOffset = this.contactsOffset + result.length;
+
+
             for(let i=0;i<contacts.length;i++){
                 let contact = contacts[i].contact;
                 let user = contacts[i].contactUser;
@@ -306,9 +343,14 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     retrieveBranches(){
 
-        getBranches().then(result => {
+        getBranches({ offset: this.branchesOffset}).then(result => {
 
+            this.isFetching = false;
+            if(result.length == 0){this.branchesEnded = true; return;}
+
+            this.branchesOffset = this.branchesOffset+ result.length;
             let branches = JSON.parse(JSON.stringify(result));
+
             for(let i=0;i<branches.length;i++){
                 let branch = branches[i];
                 branch.LocationCode = branch.IATACode__c;
@@ -404,9 +446,40 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         }
 
-    get tab0Active() { return this.lstTabs[0] != null && this.lstTabs[0].active; }
-    get tab1Active() { return this.lstTabs[1] != null && this.lstTabs[1].active; }
-    get tab2Active() { return this.lstTabs[2] != null && this.lstTabs[2].active; }
+    loadMore(){
+        if(this.tab0Active){
+            return;
+        }
+
+        let offset;
+
+        if(this.tab1Active && !this.branchesEnded){
+            //Get more branches
+            this.isFetching = true;
+            offset = this.branchesOffset;
+
+            let contactList = this.template.querySelector('c-portal-contact-list');
+            contactList.resetInit();
+
+            this.retrieveBranches();
+        }
+        else if(this.tab2Active && !this.contactsEnded){
+            //Get more contacts
+            this.isFetching = true;
+            offset = this.contactsOffset;
+
+            let contactList = this.template.querySelector('c-portal-contact-list');
+            contactList.resetInit();
+
+            this.retrieveContacts();
+        }
+
+
+    }
+
+    get tab0Active() { return this.lstTabs[0].active; }
+    get tab1Active() { return this.lstTabs[1].active; }
+    get tab2Active() { return this.lstTabs[2].active; }
     //get tab3Active() { return this.lstTabs[3].active; }
     //get tab4Active() { return this.lstTabs[4].active; }
 }

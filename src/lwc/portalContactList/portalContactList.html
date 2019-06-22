@@ -91,7 +91,7 @@
                                             <c-portal-record-form-wrapper object-name={objectName} record-id={record.Id}
                                                 edit-fields={fieldsList.EDITS} static-fields={record}
                                                 fields={fieldsList.VIEW} show-edit="true"
-                                                header-class="slds-float_right" showarea="true"
+                                                header-class="slds-float_right" showfunction="true"
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
                                         </template>
@@ -107,6 +107,12 @@
 
 
             </table>
+
+            <template if:true={fetching}>
+                <div class="slds-m-around_xx-large slds-is-relative">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
         </template>
 
 
