@@ -33,6 +33,11 @@ import ICCS_Service_Access_Inactive from '@salesforce/label/c.ICCS_Service_Acces
 import ICCS_Homepage_Select_Role_Label from '@salesforce/label/c.ICCS_Homepage_Select_Role_Label';
 import ICCS_Homepage_Request_Role_Message2 from '@salesforce/label/c.ICCS_Homepage_Request_Role_Message2';
 import ICCS_Service_Access_Granted_Message from '@salesforce/label/c.ICCS_Service_Access_Granted_Message';
+import ISSP_AcceptTermsAndConditions from '@salesforce/label/c.ISSP_AcceptTermsAndConditions';
+import ISSP_KAVI_Terms_Conditions_Part1 from '@salesforce/label/c.ISSP_KAVI_Terms_Conditions_Part1';
+import ISSP_KAVI_Terms_Conditions_Part2 from '@salesforce/label/c.ISSP_KAVI_Terms_Conditions_Part2';
+import ISSP_KAVI_Terms_Conditions_Part3 from '@salesforce/label/c.ISSP_KAVI_Terms_Conditions_Part3';
+import ISSP_Access_Granted from '@salesforce/label/c.ISSP_Access_Granted';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -86,7 +91,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         ICCS_Service_Access_Inactive,
         ICCS_Homepage_Select_Role_Label,
         ICCS_Homepage_Request_Role_Message2,
-        ICCS_Service_Access_Granted_Message
+        ICCS_Service_Access_Granted_Message,
+        ISSP_AcceptTermsAndConditions,
+        ISSP_KAVI_Terms_Conditions_Part1,
+        ISSP_KAVI_Terms_Conditions_Part2,
+        ISSP_KAVI_Terms_Conditions_Part3,
+        ISSP_Access_Granted
 
     };
 
@@ -159,7 +169,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track showICCSRoleSelection = false;
     @track ICCSRoleSelectionModal = false;
     @track ICCSOpenAccountModal = false;
+    @track acceptSSWSConditions = false;
+    @track SSWSRoleSelectionModal = false;
+    @track SSWSMessage = false;
+    @track showButtons = false;
     @track ICCSSuccessMessage;
+    @track SSWSSuccessMessage;
     @track roleICCSList = [];
     @track roleList;
 
@@ -183,7 +198,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 
     connectedCallback() {
-
         if (this.serviceName.includes('IATA EasyPay')) {
             this.defaultMessage = false;
             this.showRoleSelection = false;
@@ -239,7 +253,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.ICCSMessage = true;
             this.defaultMessage = false;
             this.showRoleSelection = false;
-
+            this.showButtons = true;
             this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
             getUserOptions({ portalUser: this.userID })
                 .then(result => {
@@ -274,6 +288,24 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     }
                 });
         }
+        else if (this.serviceName.includes('Standards Setting Workspace')) {
+            this.defaultMessage = false;
+            //stays true for any IATA EasyPay PopUp
+            this.SSWSMessage = true;
+            this.showButtons = true;
+            getUserOptions({ portalUser: this.userID })
+                .then(result => {
+                    let userOptions = JSON.parse(JSON.stringify(result));
+                    if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
+                        this.userContactId = userOptions.User_ContactId;
+                    }
+                });
+            this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
+            this.SSWSOptionalMessages = this.label.ISSP_KAVI_Terms_Conditions_Part1
+                + '&lt;br/&gt;' + this.label.ISSP_KAVI_Terms_Conditions_Part2
+                + '&lt;br/&gt;' + this.label.ISSP_KAVI_Terms_Conditions_Part3;
+        }
+
         //get the parameters for this page  
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
@@ -322,6 +354,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         }
     }
 
+    handleSSWSConditions(event) {
+        this.acceptSSWSConditions = event.target.value;
+    }
+
     openICCSAccount() {
         this.ICCSSuccessMessage = this.label.ICCS_Service_Access_Granted_Message;
         this.showSpinner = true;
@@ -334,6 +370,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showSpinner = true;
 
         this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.ICCSRole, false, '');
+    }
+
+    OpenSSWSAccount() {
+        this.SSWSSuccessMessage = this.label.ICCS_Service_Access_Granted_Message;
+        this.showSpinner = true;
+        this.newAppsRequestSSWS(this.trackedServiceId, this.serviceFullName, this.userContactId);
     }
 
 
@@ -371,9 +413,29 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 let results = JSON.parse(JSON.stringify(result));
                 this.showSpinner = false;
                 this.ICCSMessage = false;
+                this.showButtons = false;
 
                 if (results === 'okauto') {
                     this.ICCSRoleSelectionModal = true;
+                }
+            });
+    }
+
+    newAppsRequestSSWS(AppId, AppName, ContactId) {
+
+        newAppsRequestICCS({
+            applicationId: AppId,
+            applicationName: AppName,
+            contactId: ContactId
+        })
+            .then(result => {
+                let results = JSON.parse(JSON.stringify(result));
+                this.showSpinner = false;
+                this.SSWSMessage = false;
+                this.showButtons = false;
+
+                if (results === 'okauto') {
+                    this.SSWSRoleSelectionModal = true;
                 }
             });
     }
