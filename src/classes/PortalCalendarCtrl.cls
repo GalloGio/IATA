@@ -156,6 +156,27 @@ public with sharing class PortalCalendarCtrl {
     }
 
     @AuraEnabled
+    public static Boolean isAirlineOrAgencyUser(){
+        Boolean isOpCalendarAirlineUser = false;
+        Boolean isOpCalendarAgencyUser = false;
+        
+        Id profileId = UserInfo.getProfileId();
+        String profileId15 = String.ValueOf(UserInfo.getProfileId()).left(15);
+        try {
+            isOpCalendarAirlineUser = ISSP_CS__c.getValues('ISS OperationalCalendar Airline Profil').Value__c.split(',').contains(profileId15);
+        } catch (Exception e) {
+            isOpCalendarAirlineUser = false;
+        }
+        try {
+            isOpCalendarAgencyUser = ISSP_CS__c.getValues('ISS OperationalCalendar Agency Profile').Value__c.split(',').contains(profileId15);
+        } catch (Exception e) {
+            isOpCalendarAgencyUser = false;
+        }
+
+        return (isOpCalendarAirlineUser || isOpCalendarAgencyUser);
+    }
+
+    @AuraEnabled
     public static List<EventWrapper> getOperationalCalendarEventsBetweenDates(){
     //public static List<EventWrapper> getOperationalCalendarEventsBetweenDates(Date initialDate, Date finalDate){
 

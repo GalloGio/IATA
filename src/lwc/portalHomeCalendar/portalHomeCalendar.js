@@ -3,6 +3,7 @@ import getInitialMonthPage from '@salesforce/apex/PortalCalendarCtrl.getInitialM
 import getNextMonth from '@salesforce/apex/PortalCalendarCtrl.getNextMonth';
 import getPreviousMonth from '@salesforce/apex/PortalCalendarCtrl.getPreviousMonth';
 import goToOldPortalCalendar from '@salesforce/apex/PortalCalendarCtrl.goToOldPortalCalendar';
+import isAirlineOrAgencyUser from '@salesforce/apex/PortalCalendarCtrl.isAirlineOrAgencyUser';
 
 //custom labels
 import ISSP_Weekday_Short_Sunday from '@salesforce/label/c.ISSP_Weekday_Short_Sunday';
@@ -14,8 +15,6 @@ import ISSP_Weekday_Short_Friday from '@salesforce/label/c.ISSP_Weekday_Short_Fr
 import ISSP_Weekday_Short_Saturday from '@salesforce/label/c.ISSP_Weekday_Short_Saturday';
 import CSP_OperationalCalendar_HomeTileTitle from '@salesforce/label/c.CSP_OperationalCalendar_HomeTileTitle';
 import CSP_OperationalCalendar_SeeMonthlyLink from '@salesforce/label/c.CSP_OperationalCalendar_SeeMonthlyLink';
-
-
 
 export default class PortalHomeCalendar extends LightningElement {
 
@@ -33,8 +32,6 @@ export default class PortalHomeCalendar extends LightningElement {
     };
 
     @track loading = true;
-    @track error;
-    @track data;
 
     @track currentViewingMonth;
     @track currentViewingWeek;
@@ -42,8 +39,19 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstEventsForCardFooter;
     @track viewEvents;
 
+    @track showCalendar = false;
+
     connectedCallback() {
-        this.getInitialMonth();
+
+        isAirlineOrAgencyUser({})
+        .then(results => {
+            if(results === false){
+                //renders if user is not airline or agency
+                this.showCalendar = true;
+                this.getInitialMonth();
+            }
+        });
+        
     }
 
     get showCalendar(){
@@ -67,13 +75,9 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     goToOldPortalCalendarJS(){
-        goToOldPortalCalendar()
+        goToOldPortalCalendar({})
         .then(results => {
-            //console.log('results: ' , results);
             window.open(results, "_self");
-        })
-        .catch(error => {
-            console.log('error: ' , error);
         });
     }
 
@@ -86,7 +90,6 @@ export default class PortalHomeCalendar extends LightningElement {
 
         getInitialMonthPage({ browserDate : dateAuxAux,  requestedDate : dateAuxAux})
         .then(results => {
-            //console.log('results ', results);
             this.updateEventClassName(results);
             this.currentViewingMonth = results;
 
@@ -111,10 +114,6 @@ export default class PortalHomeCalendar extends LightningElement {
                     break;
                 }
             }
-            this.loading = false;
-        })
-        .catch(error => {
-            console.log('error: ' , error);
             this.loading = false;
         });
     }
@@ -147,14 +146,12 @@ export default class PortalHomeCalendar extends LightningElement {
         //(String browserDate, Integer monthNumber, Integer yearNumber)
         getNextMonth({ browserDate : browserDate,  monthNumber : monthNumber, yearNumber : yearNumber})
         .then(results => {
-            //console.log('results ', results);
             this.updateEventClassName(results);
             this.currentViewingMonth = results;
             this.currentViewingWeek = results.lstWeeks[0];
             this.loading = false;
         })
         .catch(error => {
-            console.log('error: ' , error);
             this.loading = false;
         });
     }
@@ -186,14 +183,12 @@ export default class PortalHomeCalendar extends LightningElement {
         //(String browserDate, Integer monthNumber, Integer yearNumber)
         getPreviousMonth({ browserDate : browserDate,  monthNumber : monthNumber, yearNumber : yearNumber})
         .then(results => {
-            //console.log('results ', results);
             this.updateEventClassName(results);
             this.currentViewingMonth = results;
             this.currentViewingWeek = results.lstWeeks[(results.lstWeeks.length-1)];
             this.loading = false;
         })
         .catch(error => {
-            console.log('error: ' , error);
             this.loading = false;
         });
     }
