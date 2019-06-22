@@ -169,4 +169,18 @@ public without sharing class PortalHeaderCtrl {
         return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_ChangePassword');
     }
 
+    @AuraEnabled
+    public static Boolean getUserAccpetTerms(){
+        return CSP_Utils.getLoggedUser().ToU_accepted__c;
+    }
+
+    @AuraEnabled
+    public static void setUserAccpetTerms(){
+        User loggedUser = CSP_Utils.getLoggedUser();
+        loggedUser.ToU_accepted__c = true;
+        loggedUser.Date_ToU_accepted__c = datetime.now();
+        update loggedUser;
+    }
+
+
 }

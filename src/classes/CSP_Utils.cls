@@ -31,7 +31,7 @@ public without sharing class CSP_Utils {
     @AuraEnabled
     public static User getLoggedUser() {
         
-        User loggedUser = [SELECT Id, contactId, Contact.Account.Top_Parent__c, Contact.AccountId, Contact.User_Portal_Status__c
+        User loggedUser = [SELECT Id, contactId, Contact.Account.Top_Parent__c, Contact.AccountId, Contact.User_Portal_Status__c, ToU_accepted__c, Date_ToU_accepted__c
                            FROM User
                            WHERE Id =: UserInfo.getUserId()];
         

@@ -11,6 +11,8 @@ import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
+import getUserAccpetTerms from '@salesforce/apex/PortalHeaderCtrl.getUserAccpetTerms';
+import setUserAccpetTerms from '@salesforce/apex/PortalHeaderCtrl.setUserAccpetTerms';
 
 
 
@@ -107,12 +109,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonService';
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport';
 
+
+    @track displayAcceptTerms = true;
+
     @wire(CurrentPageReference)
     getPageRef() {
         this.handlePageRefChanged();
     }
 
     connectedCallback() {
+
+        getUserAccpetTerms().then(result => {
+            this.displayAcceptTerms = result;
+        });
 
         isAdmin().then(result => {
             this.userAdmin = result;
@@ -361,6 +370,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
             this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
         }
+    }
+
+    acceptTerms() {
+        setUserAccpetTerms().then(result => {
+            this.displayAcceptTerms = true;
+        });
+
     }
 
 }

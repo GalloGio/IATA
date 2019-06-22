@@ -2,6 +2,10 @@
 
     <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
 
+    <template if:false={displayAcceptTerms}>
+        <c-portal-accept-terms oncloseacceptterms={logOut} onacceptterms={acceptTerms}></c-portal-accept-terms>
+    </template>
+
     <div class="headerContainer">
         <div class="slds-grid slds-wrap maxWidthHeader">
 
