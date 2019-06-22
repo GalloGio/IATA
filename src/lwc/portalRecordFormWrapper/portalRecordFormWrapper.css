@@ -107,7 +107,3 @@ input[type="checkbox"] {
 .checkbox-button__control {
   transform: scale(0.75);
 }
-
-.hrefLinkColor {
-color: blue;
-}

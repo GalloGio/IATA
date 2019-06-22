@@ -2,6 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 
 import getFieldsMap from '@salesforce/apex/PortalProfileCtrl.getFieldsMap';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
+import getServices from '@salesforce/apex/PortalServicesCtrl.getUserAccessGrantedServices';
 
 
 export default class PortalMyProfilePage extends LightningElement {
@@ -11,6 +12,8 @@ export default class PortalMyProfilePage extends LightningElement {
         var self = this;
         window.addEventListener('scroll', function (e) { self.handleScroll(window.scrollY, self); });
     }
+
+    @track services = [];
 
     @track handleScrolling = true;
     @track currentSection;
@@ -28,22 +31,7 @@ export default class PortalMyProfilePage extends LightningElement {
             this.loggedUser = JSON.parse(JSON.stringify(result));
         });
 
-        getFieldsMap({ type: 'MyProfile' }).then(result => {
-
-            this.sectionMapContact = JSON.parse(JSON.stringify(result));
-
-            let sectionMap = this.sectionMapContact;
-
-            let localMap = [];
-            for (let key in this.sectionMapContact) {
-
-                if (sectionMap.hasOwnProperty(key)) {
-                    let value = sectionMap[key];
-                    localMap.push({ 'value': value, 'key': key });
-                }
-            }
-            this.mapOfValuesContact = localMap;
-        });
+        this.refreshview();
 
         getFieldsMap({ type: 'MyProfileAccFields' }).then(result => {
 
@@ -62,6 +50,11 @@ export default class PortalMyProfilePage extends LightningElement {
             this.mapOfValuesAccount = localMap;
 
         });
+
+        getServices().then(result => {
+            this.services = result;
+        });
+
     }
 
     renderedCallback() {
@@ -82,6 +75,26 @@ export default class PortalMyProfilePage extends LightningElement {
             leftNav.navItems = navItems;
             leftNav.activesection = 'Basics';
         }
+    }
+
+    refreshview() {
+        getFieldsMap({ type: 'MyProfile' }).then(result => {
+
+            this.sectionMapContact = JSON.parse(JSON.stringify(result));
+
+            let sectionMap = this.sectionMapContact;
+
+            let localMap = [];
+            for (let key in this.sectionMapContact) {
+
+                if (sectionMap.hasOwnProperty(key)) {
+                    let value = sectionMap[key];
+                    localMap.push({ 'value': value, 'key': key });
+                }
+            }
+            this.mapOfValuesContact = localMap;
+
+        });
     }
 
 
