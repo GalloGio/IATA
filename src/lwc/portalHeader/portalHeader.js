@@ -13,7 +13,6 @@ import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageServi
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 
 
-
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
@@ -36,7 +35,24 @@ import Announcement from '@salesforce/label/c.Announcements_Notification';
 import Tasks from '@salesforce/label/c.Tasks_Notification';
 import AllNotifications from '@salesforce/label/c.All_Notifications_Notification';
 
+// Accept Terms
+import { updateRecord } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
+import Id from '@salesforce/user/Id';
+import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
+
 export default class PortalHeader extends NavigationMixin(LightningElement) {
+    @track displayAcceptTerms = true;
+
+    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept] })
+    WiregetUserRecord(result) {
+        if (result.data) {
+            let user = JSON.parse(JSON.stringify(result.data));
+            this.displayAcceptTerms = user.fields.ToU_accepted__c.value;
+            console.log('DATA: ', user);
+        }
+    }
+
 
     _labels = {
         ISSP_Services,
@@ -106,6 +122,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonService';
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport';
+
 
     @wire(CurrentPageReference)
     getPageRef() {
@@ -361,6 +378,23 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
             this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
         }
+    }
+
+    acceptTerms() {
+
+        const fields = {};
+        fields.Id = Id;
+        fields.ToU_accepted__c = true;
+        fields.Date_ToU_accepted__c = new Date().toISOString();
+        const recordInput = { fields };
+
+        updateRecord(recordInput)
+            .then(() => {
+                this.displayAcceptTerms = true;
+            });
+
+
+
     }
 
 }

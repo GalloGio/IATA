@@ -2700,6 +2700,13 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_Accept_Terms_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Accept Terms Error</shortDescription>
+        <value>Accept the Terms before you proceed.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Add_New_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

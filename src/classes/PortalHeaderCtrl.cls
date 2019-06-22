@@ -169,4 +169,5 @@ public without sharing class PortalHeaderCtrl {
         return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_ChangePassword');
     }
 
+
 }
