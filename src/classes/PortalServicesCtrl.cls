@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String WILDCARD = 'ALL';
 
 	/*
