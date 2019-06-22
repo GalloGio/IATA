@@ -154,11 +154,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     connectedCallback() {
 
         //Data Pickup methods
+
+        this.getCountryList();
+
         this.getAllPickListValues();
 
         this.getEmergencyDependencies();
-
-        this.getCountryList();
 
         this.getContact();
 
@@ -182,23 +183,27 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 this.myResult = JSON.parse(JSON.stringify(result));
                 //Auxiliary Map
                 const map = new Map();
+
                 //Array to consume category options
                 let myCategoryOptions = [];
 
                 //Set first value on the list
                 myCategoryOptions = [{ label: 'Select Category', value: '' }];
-
+                let auxmyCategoryOptions = [];
                 for (const item of this.myResult) {
                     if (!map.has(item.categoryLabel) && item.categoryLabel !== 'All') {
                         map.set(item.categoryLabel, true);
-                        myCategoryOptions.push({
+                        auxmyCategoryOptions.push({
                             label: item.categoryLabel,
                             value: item.categoryName
                         });
                     }
                 }
+                //used to order alphabetically
+                // eslint-disable-next-line no-confusing-arrow
+                auxmyCategoryOptions.sort((a, b) => (a.label > b.label) ? 1 : -1);
 
-                this.categoryOptions = myCategoryOptions;
+                this.categoryOptions = myCategoryOptions.concat(auxmyCategoryOptions);
                 //eslint-disable-next-line no-console
 
                 //Set the category if in URL
@@ -217,10 +222,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                         this.pageParams.subtopic = '';
                     }
                 }
+                this.toggleSpinner();
             })
             .catch(error => {
                 //throws error
                 this.error = error;
+                this.toggleSpinner();
                 // eslint-disable-next-line no-console
                 console.log('Error: ', error);
                 this.dispatchEvent(
@@ -235,14 +242,19 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     }
 
     getEmergencyDependencies() {
+        this.toggleSpinner();
+
         getEmergencyDependencies()
             .then(result => {
+                this.toggleSpinner();
+
                 this.emergencyCategories = JSON.parse(JSON.stringify(result));
             });
     }
 
     //gets Country for picklist
     getCountryList() {
+        this.toggleSpinner();
         getCountryList()
             .then(result => {
                 let myResult = JSON.parse(JSON.stringify(result));
@@ -254,6 +266,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 Object.keys(myResult).forEach(function (el) {
                     myCountryOptions.push({ label: myResult[el], value: el });
                 });
+                this.toggleSpinner();
 
                 //set global with the options for later use
                 this.countryOptions = myCountryOptions;
@@ -263,6 +276,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             .catch(error => {
                 //throws error
                 this.error = error;
+                this.toggleSpinner();
                 console.log('Error: ', error);
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -277,8 +291,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
     //gets Contact Info
     getContact() {
+        this.toggleSpinner();
         getContactInfo()
             .then(result => {
+                this.toggleSpinner();
                 this.contact = JSON.parse(JSON.stringify(result));
             });
     }
@@ -333,19 +349,23 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         myTopicOptions = [{ label: 'Select Topic', value: '' }];
-
+        let auxmyTopicOptions = [];
         for (const item of this.myResult) {
             if (!map.has(item.topicLabel) && item.categoryName === this.category) {
                 map.set(item.topicLabel, true);
-                myTopicOptions.push({
+                auxmyTopicOptions.push({
                     label: item.topicLabel,
                     value: item.topicName
                 });
             }
         }
 
+        //used to order alphabetically
+        // eslint-disable-next-line no-confusing-arrow
+        auxmyTopicOptions.sort((a, b) => (a.label > b.label) ? 1 : -1);
+
         //set the options of picklist
-        this.topicOptions = myTopicOptions;
+        this.topicOptions = myTopicOptions.concat(auxmyTopicOptions);
 
         //set Topic value if included in URL
         if ('topic' in this.pageParams && this.pageParams.topic !== '') {
@@ -407,19 +427,23 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         mySubTopicOptions = [{ label: 'Select Sub-Topic', value: '' }];
-
+        let auxmySubTopicOptions = []
         for (const item of this.myResult) {
             if (!map.has(item.childs) && item.topicName === this.topic) {
                 Object.keys(item.childs).forEach(function (el) {
-                    mySubTopicOptions.push({
+                    auxmySubTopicOptions.push({
                         label: el, value: item.childs[el]
                     });
                 })
             }
         }
 
+        //used to order alphabetically
+        // eslint-disable-next-line no-confusing-arrow
+        auxmySubTopicOptions.sort((a, b) => (a.label > b.label) ? 1 : -1);
+
         //set the options
-        this.subTopicOptions = mySubTopicOptions;
+        this.subTopicOptions = mySubTopicOptions.concat(auxmySubTopicOptions);
 
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
@@ -716,12 +740,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             createCase({ countryiso: this.compliment_countryValue, isConcernCase: false, topic: '', subtopic: '' })
                 .then(createCaseResult => {
                     this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
-
+                    console.log(this.caseInitiated);
                     const record = { 'sobjectType': 'Case' };
                     record.RecordTypeId = this.caseInitiated.RecordTypeId;
                     record.Subject = this.subject;
                     record.Description = this.description + '\n-COMPLIMENT-';
-                    record.BSPCountry__c = this.compliment_countryValue;
+                    record.BSPCountry__c = this.caseInitiated.Country_concerned_by_the_query__c;
 
                     insertCase({ caseToInsert: record, recipientsToAdd: [] })
                         .then(() => {
@@ -771,8 +795,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     }
 
     getCallUsPhoneNumber() {
+        this.toggleSpinner();
         getCallUsPhoneNumber()
             .then(result => {
+                this.toggleSpinner();
                 this.callUsPhoneNumberConfigs = JSON.parse(JSON.stringify(result));
             });
     }
