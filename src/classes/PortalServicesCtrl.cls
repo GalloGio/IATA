@@ -5,6 +5,8 @@ public with sharing class PortalServicesCtrl {
 	Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 	Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 	Public static final String STATUS_PORTAL_ADMIN='Access Denied';
+	Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
+
 	/*
 		This method is used for CS Portal searchbar.
 		@refinedSearchSerialized - is a serialized filter object sent from the LWC controller for further filtering
@@ -608,7 +610,7 @@ public static Map<String, String> getUserOptions(String portalUser){
 	Map<String,String> userOptions = new Map<String,String>();
 
 	List<User> userContactAccountOptions = [SELECT id, Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
-	                                        Contact.User_Portal_Status__c, ContactId
+	                                        Contact.User_Portal_Status__c, ContactId, Account.ICCS_Membership_Status__c
 	                                        FROM User WHERE Id =:portalUser];
 
 	if(!userContactAccountOptions.isEmpty()) {
@@ -624,6 +626,9 @@ public static Map<String, String> getUserOptions(String portalUser){
 			}
 			if(u.ContactId != null) {
 				userOptions.put('User_ContactId', u.ContactId);
+			}
+			if(u.Account.ICCS_Membership_Status__c != null) {
+				userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
 			}
 		}
 	}
@@ -659,10 +664,16 @@ public static String newAppsRequest2(String applicationId, String applicationNam
 	return ISSP_AvailableServices.newAppsRequest2(applicationId, applicationName, contactId, portalServiceRole, flagUseDefaultRole, defaultPortalUserRole);
 }
 
+@AuraEnabled
+public static String newAppsRequestICCS(String applicationId, String applicationName, String contactId){
+	return ISSP_AvailableServices.newAppsRequest(applicationId, applicationName, contactId);
+}
+
 @AuraEnabled(cacheable=true)
 public static Integer userProvisioningRequests(){
 	Id userId = UserInfo.getUserId();
 	List<UserProvisioningRequest> userProvList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
+	System.debug(userProvList);
 	return userProvList.size();
 }
 
@@ -670,6 +681,9 @@ public static Integer userProvisioningRequests(){
 public static String performCheckonPoll(String permSetSSO, Integer failedCount){
 	Id userId = UserInfo.getUserId();
 	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
+	System.debug('HERE!!!');
+
+	System.debug(permissionSetList);
 
 	if(!permissionSetList.isEmpty()) {
 		return 'Success';
@@ -690,7 +704,7 @@ public static String serviceWrapperRedirect(String serviceId){
 	                          WHERE id =: UserInfo.getUserId()];
 
 
-	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == 'Approved Admin');
+	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == PORTAL_ADMIN_APPROVED);
 
 	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
 	                                                                                 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
