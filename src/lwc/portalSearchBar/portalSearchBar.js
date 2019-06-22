@@ -1,6 +1,16 @@
 import { LightningElement, track, api} from 'lwc';
 
-export default class PortalSearchBar extends LightningElement {
+import { NavigationMixin } from 'lightning/navigation';
+import { navigateToPage } from'c/navigationUtils';
+
+//import custom labels
+import CSP_Search_AdvancedSearch from '@salesforce/label/c.CSP_Search_AdvancedSearch';
+
+export default class PortalSearchBar extends NavigationMixin(LightningElement) {
+
+    label = {
+        CSP_Search_AdvancedSearch
+    }
 
     @track showHoverResults = false;
 
@@ -8,10 +18,10 @@ export default class PortalSearchBar extends LightningElement {
 
     timeout = null;
 
-    @api placeholder;
-    
     @track searchText = "";
 
+    @api placeholder;
+    
     //clone of the filtering object passed from the parent
     @track filteringObject;
 
@@ -24,9 +34,9 @@ export default class PortalSearchBar extends LightningElement {
         this.filteringObject = value;
     }
 
-    connectedCallback() {
-        //nothing to do here... yet
-    }
+    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
+
+    @track loadingTypehead = false;
 
     closeSearch(){
         this.searchText = "";
@@ -40,13 +50,33 @@ export default class PortalSearchBar extends LightningElement {
 
         //if enter
         if(keyEntered === 13){
-            //go somewhere...
+            this.navigateToAdvancedSearchPage();
         } 
 
         //if escape
         if(keyEntered === 27){
             this.closeSearch();
         }
+    }
+
+    goToAdvancedSearch(event){
+        event.preventDefault();
+        event.stopPropagation();
+        this.navigateToAdvancedSearchPage();
+    }
+
+    navigateToAdvancedSearchPage(){
+        let params = {};
+        if(this.searchText !== '') {
+            params.searchText = this.searchText;
+        }
+
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "advanced-search"
+            }})
+        .then(url => navigateToPage(url, params));
     }
 
     onclickSearchInput(){
@@ -60,10 +90,14 @@ export default class PortalSearchBar extends LightningElement {
         // if it has been less than <MILLISECONDS>
         clearTimeout(this.timeout);
 
+        this.loadingTypehead = true;
+
         // Make a new timeout set to go off in 1500ms
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
             //this.testfunction();
+
+            this.loadingTypehead = false;
 
             if(this.searchText.length > 0){
                 this.showHoverResults = true;

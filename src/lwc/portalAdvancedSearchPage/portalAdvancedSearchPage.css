@@ -1,11 +1,5 @@
-.mainContentDiv {
-    position:relative;
-}
-
 .searchBarRow {
     display: flex;
-    z-index:9002;
-    position:absolute;
     width:100%;
 }
 
@@ -27,17 +21,16 @@
     justify-content: center;
 }
 
-.resultsContentDiv {
-    background-color:white;
-    position:absolute;
-    width:calc(100% + 20px);
-    z-index:9001;
-    top:33px;
-    margin: 0px -10px 0px -10px;
-    padding: 40px 10px 0px 10px;
+.emptyGrayAreaSize{
+    height: 50px;
 }
 
-.barSpinner{
+.searchBarPosition{
+    position:relative;
+    margin-top:-29px;
+}
+
+.smallSearchSpinner{
     position: relative;
     display: inline-block;
     margin-right: 35px;
@@ -46,5 +39,5 @@
 }
 
 .fullWidth{
-    width: 100%;
+    width:100%;
 }

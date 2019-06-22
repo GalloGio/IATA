@@ -8,6 +8,7 @@ import { navigateToPage, getPageName } from'c/navigationUtils';
 
 //import labels
 import CSP_Breadcrumb_Home_Title from '@salesforce/label/c.CSP_Breadcrumb_Home_Title';
+import CSP_Breadcrumb_AdvancedSearch_Title from '@salesforce/label/c.CSP_Breadcrumb_AdvancedSearch_Title';
 import CSP_Breadcrumb_Support_Title from '@salesforce/label/c.CSP_Breadcrumb_Support_Title';
 import CSP_Breadcrumb_Support_ReachUs from '@salesforce/label/c.CSP_Breadcrumb_Support_ReachUs';
 import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
@@ -19,6 +20,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     // Expose the labels to use in the template.
     labels = {
         CSP_Breadcrumb_Home_Title,
+        CSP_Breadcrumb_AdvancedSearch_Title,
         CSP_Breadcrumb_Support_Title,
         CSP_Breadcrumb_Support_ReachUs,
         CSP_Breadcrumb_FAQ_Title,
@@ -48,7 +50,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     connectedCallback() {
         
         this.pagename = getPageName();
-        //console.log(this.pagename);
+        // console.log(this.pagename);
 
         this.classNameAllBreadCrumbs = 'text-linkBlue';
         this.classNameLastBreadCrumb = 'text-black';
