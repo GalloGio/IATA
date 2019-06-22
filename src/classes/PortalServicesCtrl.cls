@@ -229,9 +229,6 @@ public with sharing class PortalServicesCtrl {
 		String extraQueryFields = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c';
 		String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
 
-		System.debug('getPortalApplications finalQuery : ' + finalQuery);
-		System.debug(Database.query(finalQuery));
-
 		return Database.query(finalQuery);
 
 	}
@@ -605,6 +602,105 @@ public with sharing class PortalServicesCtrl {
 
 	}
 
+@AuraEnabled(cacheable=true)
+public static Map<String, String> getUserOptions(String portalUser){
+
+	Map<String,String> userOptions = new Map<String,String>();
+
+	List<User> userContactAccountOptions = [SELECT id, Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
+	                                        Contact.User_Portal_Status__c, ContactId
+	                                        FROM User WHERE Id =:portalUser];
+
+	if(!userContactAccountOptions.isEmpty()) {
+		for(User u : userContactAccountOptions) {
+			if(u.Account.ANG_IEP_Status_FF__c != null) {
+				userOptions.put('IEP_Status', u.Account.ANG_IEP_Status_FF__c);
+			}
+			if(u.Contact.Authorized_Signatory__c != null) {
+				userOptions.put('Legal_Auth_Signature', String.valueOf(u.Contact.Authorized_Signatory__c));
+			}
+			if(u.Contact.User_Portal_Status__c != null  && u.Contact.User_Portal_Status__c != '') {
+				userOptions.put('User_Portal_Status', u.Contact.User_Portal_Status__c);
+			}
+			if(u.ContactId != null) {
+				userOptions.put('User_ContactId', u.ContactId);
+			}
+		}
+	}
+	return userOptions;
+}
+
+@AuraEnabled(cacheable=true)
+public static List<Connected_App_Roles__c> availableIEPPortalServiceRoles(){
+	List<Connected_App_Roles__c> allAppRoles = Connected_App_Roles__c.getAll().values();
+	List<Connected_App_Roles__c> finalAllAppRoles = new List<Connected_App_Roles__c>();
+	for(Connected_App_Roles__c car : allAppRoles) {
+		if(car.Connected_App__c.startsWith('IATA EasyPay')) {
+			finalAllAppRoles.add(car);
+		}
+	}
+	return finalAllAppRoles;
+}
+
+@AuraEnabled(cacheable=true)
+public static List<Connected_App_Roles__c> availableICCSPortalServiceRoles(){
+	List<Connected_App_Roles__c> allAppRoles = Connected_App_Roles__c.getAll().values();
+	List<Connected_App_Roles__c> finalAllAppRoles = new List<Connected_App_Roles__c>();
+	for(Connected_App_Roles__c car : allAppRoles) {
+		if(car.Connected_App__c.startsWith('ICCS')) {
+			finalAllAppRoles.add(car);
+		}
+	}
+	return finalAllAppRoles;
+}
+
+@AuraEnabled
+public static String newAppsRequest2(String applicationId, String applicationName, String contactId, String portalServiceRole, Boolean flagUseDefaultRole, String defaultPortalUserRole){
+	return ISSP_AvailableServices.newAppsRequest2(applicationId, applicationName, contactId, portalServiceRole, flagUseDefaultRole, defaultPortalUserRole);
+}
+
+@AuraEnabled(cacheable=true)
+public static Integer userProvisioningRequests(){
+	Id userId = UserInfo.getUserId();
+	List<UserProvisioningRequest> userProvList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
+	return userProvList.size();
+}
+
+@AuraEnabled(cacheable=true)
+public static String performCheckonPoll(String permSetSSO, Integer failedCount){
+	Id userId = UserInfo.getUserId();
+	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
+
+	if(!permissionSetList.isEmpty()) {
+		return 'Success';
+	} else {
+		List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed '];
+		if(userProvisioningList.size() != failedCount) {
+			return 'Error ';
+		}
+	}
+	return 'Incomplete';
+}
+
+@AuraEnabled(cacheable=true)
+public static String serviceWrapperRedirect(String serviceId){
+
+	User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status_FF__c, contact.Authorized_Signatory__c, contact.User_Portal_Status__c
+	                          FROM User
+	                          WHERE id =: UserInfo.getUserId()];
+
+
+	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == 'Approved Admin');
+
+	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
+	                                                                                 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
+	                                                                                 ServiceName__c,Cannot_be_managed_by_portal_admin__c
+	                                                                                 FROM Portal_Applications__c WHERE Id =: serviceId ]);
+
+	ISSP_AvailableServices.ServiceWrapper serviceWrap = new ISSP_AvailableServices.ServiceWrapper (Servicetmp_List[0], currentPortalUser.contact.account.ANG_IEP_Status_FF__c, isAdmin, currentPortalUser.contact.Authorized_Signatory__c);
+
+	return serviceWrap.recordService.Application_URL__c;
+}
 
 	//gets Portal ADmins - Method based on existing funcionality ANG_RHCAlertTriggerHandler.sendAlertNotification
 	@AuraEnabled(cacheable=true)
