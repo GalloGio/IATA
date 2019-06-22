@@ -109,6 +109,72 @@
             </div>
             <!--For IATA Easy Pay Role Selection-->
 
+            <!--For ICCS Role & Account creation-->
+            <div class="customPopupInteriorHalfScreenCentered" if:true={ICCSRoleSelectionModal}>
+                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                    <lightning-formatted-rich-text class="richTextlinks" value={ICCSSuccessMessage}>
+                    </lightning-formatted-rich-text>
+                </div>
+                <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                    <div class="slds-align_absolute-center">
+                        <lightning-button class="containedButton" label="Close" variant="neutral" onclick={reloadPage}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+            <!--For ICCS Role & Account creation-->
+
+            <!--For ICCS Create Account-->
+            <div class="customPopupInteriorHalfScreenCentered" if:true={ICCSMessage}>
+                <div if:true={showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </div>
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                    <span>{IEPIntroOptionalMessages}</span>
+                </div>
+                <!-- Popup Body -->
+                <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                    <div class="slds-p-vertical_large textMediumMessage">
+                        <lightning-formatted-rich-text class="richTextlinks" value={ICCSOptionalMessages}>
+                        </lightning-formatted-rich-text>
+                    </div>
+                </div>
+                <!-- For ICSS Role picking -->
+                <div class="slds-p-around_medium" if:true={showICCSRoleSelection}>
+                    <lightning-combobox class="cursorPointerComboBox text-xxsmall customPickList" value={ICCSRole}
+                        options={roleICCSList} dropdown-alignment="auto" onchange={ICCSRolePick}
+                        placeholder="Select Role" size=5>
+                    </lightning-combobox>
+                </div>
+                <!-- For ICSS Role picking -->
+
+
+                <!-- Popup Footer -->
+                <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                    <div class="slds-align_absolute-center">
+                        <lightning-button class="blueCustomButtonLink slds-p-right_xx-large" label="Cancel"
+                            variant="neutral" onclick={abortRequest}>
+                        </lightning-button>
+                        <lightning-button if:true={IATARequestConfirm} class="containedButton" label="Confirm"
+                            variant="neutral" onclick={requestService}>
+                        </lightning-button>
+                        <lightning-button if:true={IEPRoleChangeConfirm} class="containedButton" label="Confirm"
+                            variant="neutral" onclick={changeIEPRole}>
+                        </lightning-button>
+                        <lightning-button if:true={IEPOpenAccount} class="containedButton" label="Confirm"
+                            variant="neutral" onclick={openIEPAccount}>
+                        </lightning-button>
+                        <lightning-button if:true={ICCSOpenAccount} class="containedButton" label="Confirm"
+                            variant="neutral" onclick={openICCSAccount}>
+                        </lightning-button>
+                        <lightning-button if:true={ICCSRoleChangeConfirm} class="containedButton" label="Confirm"
+                            variant="neutral" onclick={changeICCSRole}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+            <!--For ICCS Create Account-->
         </div>
     </template>
     <template if:true={showPopUp}>

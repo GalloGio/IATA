@@ -29,6 +29,10 @@ import ANG_ISSP_PortalRoleErrorMessage from '@salesforce/label/c.ANG_ISSP_Portal
 import ANG_ISSP_UserProvisioningWait from '@salesforce/label/c.ANG_ISSP_UserProvisioningWait';
 import ANG_ISSP_Open_IATA_EasyPay_Account from '@salesforce/label/c.ANG_ISSP_Open_IATA_EasyPay_Account';
 import ISSP_Thanks_for_request from '@salesforce/label/c.ISSP_Thanks_for_request';
+import ICCS_Service_Access_Inactive from '@salesforce/label/c.ICCS_Service_Access_Inactive';
+import ICCS_Homepage_Select_Role_Label from '@salesforce/label/c.ICCS_Homepage_Select_Role_Label';
+import ICCS_Homepage_Request_Role_Message2 from '@salesforce/label/c.ICCS_Homepage_Request_Role_Message2';
+import ICCS_Service_Access_Granted_Message from '@salesforce/label/c.ICCS_Service_Access_Granted_Message';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -43,10 +47,12 @@ import requestServiceAccess from '@salesforce/apex/PortalServicesCtrl.requestAcc
 import getPortalAdmins from '@salesforce/apex/PortalServicesCtrl.getPortalAdmins';
 import getUserOptions from '@salesforce/apex/PortalServicesCtrl.getUserOptions';
 import availableIEPPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableIEPPortalServiceRoles';
+import availableICCSPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableICCSPortalServiceRoles';
 import userProvisioningRequests from '@salesforce/apex/PortalServicesCtrl.userProvisioningRequests';
 import serviceWrapperRedirect from '@salesforce/apex/PortalServicesCtrl.serviceWrapperRedirect';
 import performCheckonPoll from '@salesforce/apex/PortalServicesCtrl.performCheckonPoll';
 import ISSP_AvailableService_newAppsRequest2 from '@salesforce/apex/PortalServicesCtrl.newAppsRequest2';
+import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsRequestICCS';
 
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
@@ -76,7 +82,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         ANG_ISSP_PortalRoleErrorMessage,
         ANG_ISSP_UserProvisioningWait,
         ANG_ISSP_Open_IATA_EasyPay_Account,
-        ISSP_Thanks_for_request
+        ISSP_Thanks_for_request,
+        ICCS_Service_Access_Inactive,
+        ICCS_Homepage_Select_Role_Label,
+        ICCS_Homepage_Request_Role_Message2,
+        ICCS_Service_Access_Granted_Message
 
     };
 
@@ -142,6 +152,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track IEPOpenAccount = false;
     @track IEPOpenAccountModal = false;
     @track IEPRoleSelectionModal = false;
+    @track ICCSMessage = false;
+    @track ICCSOptionalMessages;
+    @track ICCSOpenAccount = false;
+    @track ICCSRoleChangeConfirm = false;
+    @track showICCSRoleSelection = false;
+    @track ICCSRoleSelectionModal = false;
+    @track ICCSOpenAccountModal = false;
+    @track ICCSSuccessMessage;
+    @track roleICCSList = [];
+    @track roleList;
+
 
     serviceDetailsResult;
     userContactId;
@@ -214,6 +235,45 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     }
                 });
         }
+        else if (this.serviceName.includes('ICCS')) {
+            this.ICCSMessage = true;
+            this.defaultMessage = false;
+            this.showRoleSelection = false;
+
+            this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
+            getUserOptions({ portalUser: this.userID })
+                .then(result => {
+                    let userOptions = JSON.parse(JSON.stringify(result));
+                    if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
+                        this.userContactId = userOptions.User_ContactId;
+                    }
+                    if (userOptions.User_ICCS_Membership_Status === 'Member') {
+                        this.ICCSOptionalMessages = this.label.ICCS_Homepage_Select_Role_Label
+                            + '&lt;b&gt; &lt;b&gt; &lt;b&gt;'
+                            + this.label.ICCS_Homepage_Request_Role_Message2;
+
+                        this.showICCSRoleSelection = true;
+                        this.ICCSRoleChangeConfirm = false;
+                        let myICCSRolesOptions = [];
+                        availableICCSPortalServiceRoles()
+                            .then(data => {
+                                let roles = JSON.parse(JSON.stringify(data));
+                                if (this.serviceFullName === 'ICCS') {
+                                    let allRoles = roles.filter(obj => obj.Connected_App__c === 'ICCS');
+                                    allRoles.forEach(element => {
+                                        myICCSRolesOptions.push({
+                                            label: element.Role__c, value: element.Role__c
+                                        });
+                                    });
+                                    this.roleICCSList = myICCSRolesOptions;
+                                }
+                            });
+                    } else {
+                        this.ICCSOptionalMessages = this.label.ICCS_Service_Access_Inactive;
+                        this.ICCSOpenAccount = true;
+                    }
+                });
+        }
         //get the parameters for this page  
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
@@ -253,6 +313,30 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
     }
 
+    ICCSRolePick(event) {
+        this.ICCSRole = event.target.value;
+        if (this.ICCSRole !== undefined && this.ICCSRole !== '') {
+            this.ICCSRoleChangeConfirm = true;
+        } else {
+            this.ICCSRoleChangeConfirm = false;
+        }
+    }
+
+    openICCSAccount() {
+        this.ICCSSuccessMessage = this.label.ICCS_Service_Access_Granted_Message;
+        this.showSpinner = true;
+
+        this.newAppsRequestICCS(this.trackedServiceId, this.serviceFullName, this.userContactId);
+    }
+
+    changeICCSRole() {
+        this.ICCSSuccessMessage = this.label.ISSP_Thanks_for_request;
+        this.showSpinner = true;
+
+        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.ICCSRole, false, '');
+    }
+
+
     newAppRequest(AppId, AppName, ContactId, AppPortalRole, FlagUseDefaultRole, defaultPortalUserRole) {
         ISSP_AvailableService_newAppsRequest2({
             applicationId: AppId,
@@ -264,8 +348,32 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         })
             .then(result => {
                 let results = JSON.parse(JSON.stringify(result));
+                this.showSpinner = false;
+                if (this.ICCSRole !== undefined && this.ICSSRole !== '') {
+                    this.ICCSMessage = false;
+                    this.ICCSRoleSelectionModal = true;
+                }
+
                 if (results === 'okauto') {
                     this.preparePolling();
+                }
+            });
+    }
+
+    newAppsRequestICCS(AppId, AppName, ContactId) {
+
+        newAppsRequestICCS({
+            applicationId: AppId,
+            applicationName: AppName,
+            contactId: ContactId
+        })
+            .then(result => {
+                let results = JSON.parse(JSON.stringify(result));
+                this.showSpinner = false;
+                this.ICCSMessage = false;
+
+                if (results === 'okauto') {
+                    this.ICCSRoleSelectionModal = true;
                 }
             });
     }
@@ -310,7 +418,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     let results = JSON.parse(JSON.stringify(data));
                     if (results === 'Success') {
 
-                        if (this.radioOption === undefined || this.radioOption === '') {
+                        if ((this.radioOption === undefined || this.radioOption === '')
+                            && (this.ICCSRole === undefined && this.ICSSRole === '')) {
                             serviceWrapperRedirect({ serviceId: this.trackedServiceId })
                                 .then(result => {
                                     window.open(JSON.parse(JSON.stringify(result)));

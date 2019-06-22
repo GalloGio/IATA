@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String WILDCARD = 'ALL';
 
 @AuraEnabled (cacheable=true)
@@ -659,6 +660,9 @@ public static Map<String, String> getUserOptions(String portalUser){
 			if(u.ContactId != null) {
 				userOptions.put('User_ContactId', u.ContactId);
 			}
+			if(u.Account.ICCS_Membership_Status__c != null) {
+				userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
+			}
 		}
 	}
 	return userOptions;
@@ -693,6 +697,11 @@ public static String newAppsRequest2(String applicationId, String applicationNam
 	return ISSP_AvailableServices.newAppsRequest2(applicationId, applicationName, contactId, portalServiceRole, flagUseDefaultRole, defaultPortalUserRole);
 }
 
+@AuraEnabled
+public static String newAppsRequestICCS(String applicationId, String applicationName, String contactId){
+	return ISSP_AvailableServices.newAppsRequest(applicationId, applicationName, contactId);
+}
+
 @AuraEnabled(cacheable=true)
 public static Integer userProvisioningRequests(){
 	Id userId = UserInfo.getUserId();
@@ -724,7 +733,7 @@ public static String serviceWrapperRedirect(String serviceId){
 	                          WHERE id =: UserInfo.getUserId()];
 
 
-	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == 'Approved Admin');
+	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == PORTAL_ADMIN_APPROVED);
 
 	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
 	                                                                                 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
