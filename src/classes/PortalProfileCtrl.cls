@@ -72,6 +72,7 @@ public with sharing class PortalProfileCtrl {
 
         set;
     }
+    
 
     /**
     * Todo: Implement contact search.
@@ -84,14 +85,13 @@ public with sharing class PortalProfileCtrl {
         return new List<ContactWrapper>();
     }
 
-    @AuraEnabled
-    public static List<ContactWrapper> getAccountContacts(){
-        return getAccountContacts(0);
-    }
-
 
     @AuraEnabled
     public static List<ContactWrapper> getAccountContacts(Integer offset){
+        if(offset == null){
+            offset = 0;
+        }
+
         List<Contact> contacts = DAL_ISSP.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
         List<Id> contactIds = new List<Id>();
         List<User> users = new List<User>();
@@ -99,7 +99,7 @@ public with sharing class PortalProfileCtrl {
 
         List<ContactWrapper> wrappers = new List<ContactWrapper>();
 
-        if(!contacts.isEmpty()){
+        if(contacts != null && !contacts.isEmpty()){
             for(Contact c :contacts){
                 contactIds.add(c.Id);
                 contactIdtoContact.put(c.Id,c);
@@ -119,14 +119,11 @@ public with sharing class PortalProfileCtrl {
         return wrappers;
     }
 
-
-    @AuraEnabled
-    public static List<Account> getCompanyBranches(){
-        return getCompanyBranches(0);
-    }
-
     @AuraEnabled
     public static List<Account> getCompanyBranches(Integer offset){
+        if(offset == null){
+            offset = 0;
+        }
         List<Account> branches = new List<Account>();
 
         branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
@@ -150,9 +147,7 @@ public with sharing class PortalProfileCtrl {
     public static Map<String,List<FieldWrapper>> ContactFields() {
 
         User loggedUser = CSP_Utils.getLoggedUser();
-        contactInfo = [SELECT Id, Invoicing_Contact__c, Authorized_Signatory__c, BSP_CASS_Payment_contact__c, Airline_Credit_Risk_Manager__c
-        FROM Contact
-        WHERE Id = :loggedUser.contactId];
+        contactInfo = DAL_ISSP.getContact(loggedUser.contactId);
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
         wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
