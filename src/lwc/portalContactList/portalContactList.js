@@ -17,6 +17,7 @@ export default class PortalContactList extends LightningElement {
     @api objectid;
     @api objectName;
     @api defaultSort;
+    @api fetching;
     isAsc = true;
     sortBy;
     @track isLoading = true;
@@ -90,7 +91,9 @@ export default class PortalContactList extends LightningElement {
 
     }
 
-
+    @api resetInit(){
+        this.recordsInitDone = false;
+    }
     @api
     openModal() {this.openmodel = true;}
     closeModal() {this.openmodel = false;}
@@ -148,13 +151,17 @@ export default class PortalContactList extends LightningElement {
                     rowValues.push(rowValue);
                 }
                 record.rowValues = rowValues;
-                record.open = false;
+                if(record.open == null){
+                    record.open = false;
+                    }
             }
+
             this.records = records;
             this.originalRecords = records;
 
             if(this.defaultSort != null){
-                this.orderRows(this.defaultSort);
+
+                //this.orderRows(this.defaultSort);
             }
         }
 

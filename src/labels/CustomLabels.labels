@@ -2976,6 +2976,13 @@ Payment required on receipt of this Payment Advice
         <value>Manage Services</value>
     </labels>
     <labels>
+        <fullName>csp_MembershipFunction</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp Membership Function</shortDescription>
+        <value>Job Function</value>
+    </labels>
+    <labels>
         <fullName>CSP_NoAccount</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -34855,6 +34862,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>csp_selectReason</shortDescription>
         <value>View Case Summary</value>
+    </labels>
+    <labels>
+        <fullName>csp_WorkingAreas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_WorkingAreas</shortDescription>
+        <value>Working Areas</value>
     </labels>
     <labels>
         <fullName>csp_GoToHomepage</fullName>
