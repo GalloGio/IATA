@@ -1,12 +1,16 @@
 public with sharing class PortalDocumentsController {
 
+    public static Integer RESULTS_PER_PAGE = 10;
+    public static Integer requestedPageNumber;
+    public static PagedResult result;
+
     /* 
     * @description Main method that returns a list of ContentVersion records based on user level access
-    * @params String searchKey
-    * @return List<ContentVersion>
+    * @params String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage
+    * @return PagedResult
     */
     @AuraEnabled(cacheable=true)
-    public static List<ContentVersion> getSearchDocuments(String searchKey) {
+    public static PagedResult getSearchDocuments(String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage) {
         String UserPortalStatus;
         String UserPortalCountry;
         String UserPortalRegion;
@@ -14,6 +18,8 @@ public with sharing class PortalDocumentsController {
         String UserPortalRecodType;
         String UserPortalAccountSector;
         String soql;
+        String queryConditions;
+        String queryLimit;
         Set<Id> DocIds_set;
         Set<Id> PublicDocIds_set;
         List<ContentWorkspaceDoc> ContentWorkspaceDoc_Lst;
@@ -30,12 +36,12 @@ public with sharing class PortalDocumentsController {
         ];
         System.debug('____ [cls PortalDocumentsController - getSearchDocuments] PortalContact - ' + PortalContact);
 
-        UserPortalStatus = String.isNotEmpty(PortalContact.User_Portal_Status__c) ? PortalContact.User_Portal_Status__c : 'NoStatusValue';   
-        UserPortalCountry = String.isNotEmpty(PortalContact.Account.IATA_ISO_Country__r.Name) ? PortalContact.Account.IATA_ISO_Country__r.Name : 'NoCountryValue';
-        UserPortalRegion = String.isNotEmpty(PortalContact.Account.IATA_ISO_Country__r.Region__c) ? PortalContact.Account.IATA_ISO_Country__r.Region__c : 'NoRegionValue';
-        UserPortalAccountSector = String.isNotEmpty(PortalContact.Account.Sector__c) ? PortalContact.Account.Sector__c : 'NoSectorValue';
-        UserPortalCategory = String.isNotEmpty(PortalContact.Account.Category__c) ? PortalContact.Account.Category__c : 'NoCategoryValue';
-        UserPortalRecodType = String.isNotEmpty(PortalContact.Account.RecordType.Name) ? PortalContact.Account.RecordType.Name : 'NoRecordTypeValue';
+        UserPortalStatus = String.isNotBlank(PortalContact.User_Portal_Status__c) ? PortalContact.User_Portal_Status__c : 'NoStatusValue';   
+        UserPortalCountry = String.isNotBlank(PortalContact.Account.IATA_ISO_Country__r.Name) ? PortalContact.Account.IATA_ISO_Country__r.Name : 'NoCountryValue';
+        UserPortalRegion = String.isNotBlank(PortalContact.Account.IATA_ISO_Country__r.Region__c) ? PortalContact.Account.IATA_ISO_Country__r.Region__c : 'NoRegionValue';
+        UserPortalAccountSector = String.isNotBlank(PortalContact.Account.Sector__c) ? PortalContact.Account.Sector__c : 'NoSectorValue';
+        UserPortalCategory = String.isNotBlank(PortalContact.Account.Category__c) ? PortalContact.Account.Category__c : 'NoCategoryValue';
+        UserPortalRecodType = String.isNotBlank(PortalContact.Account.RecordType.Name) ? PortalContact.Account.RecordType.Name : 'NoRecordTypeValue';
 
         System.debug('____ [cls PortalDocumentsController - getSearchDocuments] UserPortalAccountSector / UserPortalCategory / UserPortalRecodType - ' + UserPortalAccountSector + ' / ' + UserPortalCategory + ' / ' + UserPortalRecodType);
 
@@ -55,7 +61,7 @@ public with sharing class PortalDocumentsController {
         }
 
         System.debug('____ [cls PortalDocumentsController - getSearchDocuments] AccessLibraryName - ' + AccessLibraryName);
-
+        DocIds_set = new Set<Id>();
         /* Get Library Ids */
         if(!AccessLibraryName.isEmpty()) {
             ContentWorkspaceDoc_Lst = new List<ContentWorkspaceDoc>([
@@ -66,7 +72,6 @@ public with sharing class PortalDocumentsController {
             System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] ContentWorkspaceDoc_Lst - ' + ContentWorkspaceDoc_Lst);
 
             if(!ContentWorkspaceDoc_Lst.isEmpty()) {
-                DocIds_set = new Set<Id>();
                 for(ContentWorkspaceDoc libId : ContentWorkspaceDoc_Lst) {
                     DocIds_set.add(libId.ContentDocumentId);
                 }
@@ -97,21 +102,28 @@ public with sharing class PortalDocumentsController {
 
         System.debug('____ [cls PortalDocumentsController - getSearchDocuments] PublicDocIds_set - ' + PublicDocIds_set);
 
-        soql = 'SELECT Id, Title, Description, FileType, OwnerId,Owner.Name, '+
+        soql = 'SELECT Id, Title, Description, Product_Category__c, FileType, OwnerId,Owner.Name, '+
                     'VersionNumber, Country_visibilty__c, User_status_access__c, Region__c, TagCsv, '+
                     'ContentSize, Language__c, ContentDocumentId, Document_Category__c, Country_of_publication__c, ContentUrl, ICH_Member_Only__c'+
-                ' FROM ContentVersion'+
-                ' WHERE IsLatest = true'+
-                    ' AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\''+
-                    ' AND User_status_access__c includes (\''+ String.escapeSingleQuotes(UserPortalStatus) +'\')'+
+                ' FROM ContentVersion';
+
+        queryConditions = ' WHERE IsLatest = true AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'';
+
+        if(String.isNotBlank(category)) queryConditions += ' AND Document_Category__c LIKE \'%'+ String.escapeSingleQuotes(category) +'%\'';
+        if(String.isNotBlank(prodCat)) queryConditions += ' AND Product_Category__c LIKE \'%'+ String.escapeSingleQuotes(prodCat) +'%\'';
+        if(String.isNotBlank(publiCountry)) queryConditions += ' AND Country_of_publication__c includes (\''+ String.escapeSingleQuotes(publiCountry) +'\')';
+
+        queryConditions += ' AND User_status_access__c includes (\''+ String.escapeSingleQuotes(UserPortalStatus) +'\')'+
                     ' AND ((ContentDocumentId IN: DocIds_set'+
                     ' AND Country_visibilty__c includes (\'All - Globally\', \''+ String.escapeSingleQuotes(UserPortalCountry) +'\', \'All - Region '+ String.escapeSingleQuotes(UserPortalRegion) +'\'))'+
                     ' OR (ContentDocumentId IN: PublicDocIds_set))';
 
-        System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] soql - ' + soql);
+        queryLimit = ' LIMIT ' + RESULTS_PER_PAGE + ' OFFSET ' + Integer.valueOf(requestedPage) * RESULTS_PER_PAGE;
 
-        ContentVersion[] contents = Database.query(soql);
-        System.debug('____ [cls PortalDocumentsController - getSearchDocuments] contents - ' + contents);
+        System.debug('____ [cls PortalDocumentsController - getSearchDocuments] queryString - ' + soql + queryConditions + queryLimit);
+
+        ContentVersion[] contents = Database.query(soql + queryConditions + queryLimit);
+        System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] contents - ' + contents);
 
         /* Filtering by products membership (ICH only, SIS only...) */
         for(Integer j = 0; j < contents.size(); j++) {
@@ -123,9 +135,36 @@ public with sharing class PortalDocumentsController {
             }
         }
 
-        return sortContentVersions(contents, UserPortalCountry, UserPortalRegion);
-    }
+        List<ContentVersion> documentsToReturn = sortContentVersions(contents, UserPortalCountry, UserPortalRegion);
 
+        List<CSP_Utils.PickListWrapper> categoryPicklist = CSP_Utils.getPickListValues('ContentVersion', 'Document_Category__c');
+
+        Set<String> categoryLabel = new Set<String>();
+        for(CSP_Utils.PickListWrapper pklst : categoryPicklist) {
+            categoryLabel.add(pklst.label);
+        }
+
+        Map<String, Integer> docsByCategory = new Map<String, Integer>();
+        for(ContentVersion docs : documentsToReturn) {
+            if(categoryLabel.contains(docs.Document_Category__c)) {
+                if(!docsByCategory.containsKey(docs.Document_Category__c)) {
+                    docsByCategory.put(docs.Document_Category__c, Database.countQuery('SELECT COUNT() FROM ContentVersion' + queryConditions + ' AND Document_Category__c LIKE \'%'+ String.escapeSingleQuotes(docs.Document_Category__c) +'%\''));
+                    continue;
+                }
+            }
+        }
+
+        System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] docsByCategory - ' + docsByCategory);
+
+        result = new PagedResult();
+        if(Integer.valueOf(requestedPage) == 0) {
+            result.totalItemCount = Database.countQuery('SELECT COUNT() FROM ContentVersion' + queryConditions);
+        }
+        result.documentsMap = docsByCategory;
+        result.records = documentsToReturn;
+
+        return result;
+    }
 
     /* 
     * @description Filter method to return the ContentVersion records that a user has access
@@ -197,5 +236,14 @@ public with sharing class PortalDocumentsController {
         System.debug('____ [cls PortalDocumentsController - sortContentVersions] retDocs - ' + retDocs);
 
         return retDocs;
+    }
+
+    public class PagedResult {
+        @AuraEnabled
+        public Integer totalItemCount { get;set; }       
+        @AuraEnabled
+        public SObject[] records { get;set; }
+        @AuraEnabled
+        Map<String, Integer> documentsMap { get;set; }
     }    
 }
