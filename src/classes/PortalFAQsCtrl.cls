@@ -138,8 +138,22 @@ public with sharing class PortalFAQsCtrl {
         if(filtersWrapper != null && filtersWrapper.searchText != null && filtersWrapper.searchText != '') {
 
             List<String> subtopics = new List<String>();
-            for(String subtopicAux : filtersWrapper.faqsComponent.faqSubtopicsList){
-                subtopics.add(subtopicAux + '__c');
+            if(filtersWrapper.faqsComponent == null || filtersWrapper.faqsComponent.faqSubtopicsList == null || filtersWrapper.faqsComponent.faqSubtopicsList.isEmpty()){
+                List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstStructure = PortalFAQsCtrl.getFAQsInfo();
+                if(lstStructure != null && !lstStructure.isEmpty()){
+                    for(DescribeDataCategoryGroupStructures.DataCategoryWrapper category : lstStructure){
+                        if(category.categoryName != 'All'){
+                            for(String subtopicAux : category.childs.values()){
+                                subtopics.add(subtopicAux+'__c');
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                for(String subtopicAux : filtersWrapper.faqsComponent.faqSubtopicsList){
+                    subtopics.add(subtopicAux + '__c');
+                }
             }
 
             String levels = '(' + String.join(subtopics,' , ') + ' ) ';
