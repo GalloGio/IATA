@@ -6,7 +6,7 @@ import getArticlesFeedback from '@salesforce/apex/PortalFAQsCtrl.getArticlesFeed
 import randomUUID from '@salesforce/apex/CSP_Utils.randomUUID';
 import getSearchArticles from '@salesforce/apex/PortalFAQsCtrl.getSearchArticles';
 import getArticleTitle from '@salesforce/apex/PortalFAQsCtrl.getArticleTitle';
-import getFaqsList from '@salesforce/apex/PortalFAQsCtrl.getFaqsList';
+import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
 
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
@@ -40,7 +40,6 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     @track _subTopic;
     @track childs;
     @track articles;
-    @track error;
     @track renderedModal = false;
     @track articleComments = '';
     @track articleIds;
@@ -123,13 +122,13 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     
                 /* SAME METHOD USED IN SEARCH FUNCTIONALITY
                 RETRIEVE ARTICLES WITH SEARCH TERMS OCURRIENCES IN TITLE AND SUMMARY FIELDS */
-                getFaqsList({ refinedSearchSerialized : JSON.stringify(filteringObject), moreFields : true })
-                    .then(results => {
-                        this.articles = [];
-                        if(results.length) {
-                            this.handleCallback(results, this.articleView.id1);
-                        }
-                    });            
+                getFilteredFAQsResultsPage({ searchKey : JSON.stringify(filteringObject), requestedPage : '0'})
+                .then(results => {
+                    this.articles = [];
+                    if(results.records.length) {
+                        this.handleCallback(results.records);
+                    }
+                });            
             } else {
                 /* GET ARTICLE TITLE FROM ITS ID, TO BE USED IN THE SOSL SEARCH */
                 getArticleTitle({ articleId : this.articleView.id1 })
@@ -170,7 +169,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         getSearchArticles({ searchTerm : searchParam })
             .then(resultsArticles => {
                 this.articles = [];
-                if(resultsArticles.length) {
+                if(resultsArticles.length) {                    
                     this.handleCallback(resultsArticles, this.articleView.id2);
                 }
             });
@@ -183,7 +182,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         this.articleIds = [];
         let tempArticles = [];
         let tempArticleIds;
-        let articleSelected = {};                   
+        let articleSelected = {};               
 
         tempArticleIds = '(';
 
@@ -201,7 +200,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         });
 
         tempArticleIds += ')';
-
+        
         this.articles = tempArticles;
         this.articleIds = tempArticleIds; // SET OF IDS USED TO SEARCH ARTICLE'S FEEDBACK
         this.articleInfo = articleSelected; // RENDER RELATED ARTICLES
