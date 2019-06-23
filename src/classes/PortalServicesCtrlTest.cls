@@ -249,14 +249,9 @@ public class PortalServicesCtrlTest {
         System.runAs(testeUser1) {
             Test.StartTest();
 
-            PortalServicesCtrl.FilteringObject filteringObjectAux = new PortalServicesCtrl.FilteringObject();
-            filteringObjectAux.searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
-
-            String filteringObjectAuxStr = JSON.serialize(filteringObjectAux);
-
-
-            List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getUserServicesList(filteringObjectAuxStr);
-            System.assertEquals(lstResults.size() == 0, true);
+            string searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
+            PortalServicesCtrl.PagedResult results = PortalServicesCtrl.getUserFilteredServices(searchText, '1');
+            System.assertEquals(results.totalItemCount == 0, true);
 
             Test.StopTest();
         }
