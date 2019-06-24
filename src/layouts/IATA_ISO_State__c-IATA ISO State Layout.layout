@@ -55,15 +55,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>GeonameId__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>GeonameISO3166__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>GeonameISOCountryPlusCode__c</field>
-            </layoutItems>
+            </layoutItems>            
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
