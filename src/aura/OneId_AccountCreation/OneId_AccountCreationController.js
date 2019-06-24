@@ -273,6 +273,37 @@
     copyBilling: function (c, e, h) {
         h.clearContextLabelWarnings(c, null, null, 'Shipping');
         h.clearWarnings(c,e,h,'Shipping');
+
+        if(!c.get("v.copyAddress")){
+            c.set("v.showListShipping", false);
+            c.find("ShippingCountry").set("v.value",'');
+            c.set("v.countryShipping", '');
+            c.set("v.statesShipping", []);        
+            c.set("v.citiesShipping", []);
+            c.set("v.allCitiesShipping", {});
+            c.set("v.idAndAlternateNamesBilling", {});
+            c.set("v.stateNameIdShipping", {});
+            c.set("v.cityNameIdShipping", {});
+            c.set("v.hierarchyCitiesShipping", {});
+            c.set("v.shippingCityId", '');
+            c.set("v.shippingStateId", '');
+            c.set("v.allCitiesAllCountriesShipping", '');                        
+            c.set("v.ShippingCityEmpty", false);
+            c.set("v.ShippingStreetEmpty", false);
+            c.set("v.ShippingCityStreetEmpty", false);
+            c.set("v.cityDoesNotExistShipping", false);
+            c.set("v.cityInAnotherStateShipping", false);
+            c.set("v.cityInAnotherCountryShipping", false);
+            c.set("v.cityDoesNotExistShipping", false);
+            c.set("v.account.ShippingCountry", '');                                     
+            c.set("v.account.ShippingStreet", '');
+			c.set("v.account.ShippingCity", '');
+            c.set("v.account.ShippingState", '');            
+            c.set("v.account.ShippingPostalCode", '');
+            c.set("v.countryHasStatesShipping",false);
+            c.set("v.validShipping", 0);
+        }
+
         //check if information need to be passed to shipping as well
         h.copyBillingToShipping(c, e, h);
     },
