@@ -1748,7 +1748,9 @@ ISPICKVAL(Country_concerned_by_the_query__c , &quot;Russian Federation&quot;),
 ISPICKVAL(Account.Location_Class__c, &quot;P&quot;), 
 NOT(CONTAINS( TEXT(Reason) ,&quot;Certificate&quot;)),
 !(RecordType.DeveloperName=&apos;ID_Card_Application&apos;),
-ISPICKVAL( Status , &quot;Open&quot;) 
+ISPICKVAL( Status , &quot;Open&quot;),
+NOT(CONTAINS(Subject ,&quot;IEP Model&quot;)),
+NOT(CONTAINS(TEXT(CaseArea__c),&quot;Corporate Compliance&quot;))
 ),
 AND(
 RecordType.DeveloperName = &apos;OSCAR_Communication&apos;,
@@ -2123,6 +2125,7 @@ NOT(ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;))
 AND(
 OR(
 ISPICKVAL(Parent.Reason1__c, &quot;Screening IEP Model A&quot;),
+ISPICKVAL(Parent.Reason1__c, &quot;Onboarding IEP Model B+&quot;),
 ISPICKVAL(Parent.Reason1__c, &quot;Screening IEP Model B&quot;)),
 ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
 )
@@ -2554,7 +2557,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>TIESSManagementAmericas</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 3) OR (4 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
@@ -2573,7 +2576,12 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
-                <value>TIESS Banking,TIESS Remittance reportsTIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
+                <value>TIESS Banking,TIESS Remittance reports,TIESS General Information,TIESS Link request to Supplier,TIESS New registration,TIESS Settlement amount,TIESS User Profile,TIESS Website Agency status</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>notEqual</operation>
+                <value>Portal</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>

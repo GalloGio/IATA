@@ -2952,6 +2952,13 @@ Payment required on receipt of this Payment Advice
         <value>ProcessEuropeSCE;ID_Card_Application;OSCAR_Communication</value>
     </labels>
     <labels>
+        <fullName>CaseRTtrackedByCS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseRTtrackedByCS</shortDescription>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global,ComplaintIDFS</value>
+    </labels>
+    <labels>
         <fullName>CaseTypeReason1List1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -24812,7 +24819,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Gdp Opt In Hint</shortDescription>
-        <value>Test text</value>
+        <value>By opting-in, Industry suppliers like airlines, hotels and tour operators will be able to circulate important messages to your agency about their products, promotions, sales and agency policies.</value>
     </labels>
     <labels>
         <fullName>ISSP_GeneralPublicNotFound</fullName>
@@ -33650,7 +33657,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
-        <value>https://www.iata.org/whatwedo/airline-distribution/ndc/Pages/matchmaker.aspx</value>
+        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_NDCMM_Terms_Of_Use_Link</fullName>

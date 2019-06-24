@@ -520,11 +520,12 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>CREATED_DATE</columns>
         <columns>SETUP_OWNER_NAME</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CHA</value>
+            <value>RTR,CTA</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>

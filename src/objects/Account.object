@@ -73,6 +73,7 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_ACCOUNT_FIELDS_TO_VALIDATE</fullName>
         <description>This field set is used to know which fields cannot contain non latin characters</description>
@@ -99890,16 +99891,17 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
     <validationRules>
         <fullName>Airline_HQ_Account_Type</fullName>
         <active>true</active>
-        <description>For Airline HQ only the Account Management Team can update the Account Type field</description>
+        <description>For Airline HQ only the Account Management Team can update the Account Type and Website field</description>
         <errorConditionFormula>AND(
- RecordType.DeveloperName=&apos;IATA_Airline&apos;,
- ISCHANGED(Account_Type__c),
- NOT(CONTAINS($Profile.Name, &quot;Developer&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+OR(
+ISCHANGED(Account_Type__c),
+ISCHANGED(Website)
+),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
 )</errorConditionFormula>
-        <errorDisplayField>Account_Type__c</errorDisplayField>
-        <errorMessage>For Airline HQ, only the Account Management Team can update the Account Type field</errorMessage>
+        <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>

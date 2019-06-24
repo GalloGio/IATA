@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>Amount__c</fullName>
         <description>Represents the amount of order items, negative if &apos;CRM&apos;</description>
