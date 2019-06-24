@@ -262,6 +262,7 @@
         $j(function() {
             $j( '#addNewContactModal' ).modal('hide');
             clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
+            reRenderImportOwnersMCModal();
       });
 
     }
@@ -288,6 +289,7 @@
         $j(function() {
             $j( '#addNewCompanyModal' ).modal('hide');
             clearForm('{!$Component.newCompany}', '{!$Component.newContact.contactBlock.contactcountry}');
+            reRenderImportOwnersMCModal();
       });
     }
 
@@ -774,6 +776,7 @@
                     <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
              </apex:actionfunction>
              <apex:actionFunction name="updateStatus" action="{!updateStatusMCForm}" rerender=""/>
+            <apex:actionFunction name="reRenderImportOwnersMCModal" rerender="importOwnersMCModal"/>
              
             <apex:pageBlock id="AMSBlock">
             <div class="alert alert-info" role="alert">
@@ -1546,7 +1549,12 @@
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                            {!$Label.ISSP_AMS_Not_Listed_Msg}
                         </div>
-                        <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!IF(OR(amsOfficeType=='Branch',newCase.Reason1__c=='New BR Abroad'), IF(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Manager), $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
+
+                        <apex:outputPanel>
+                            <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!IF(OR(amsOfficeType=='Branch',newCase.Reason1__c=='New BR Abroad'), IF(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Manager), $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
+
+                            <apex:commandLink style="float: right;" onfocus="showCopyOwneresMulticountry();"><span class="glyphicon glyphicon-plus" rendered="{!isMultiCountry}"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_ANG_Import_Owners_Directors, $Label.ISSP_ANG_Import_Directors)}</apex:commandLink>
+                        </apex:outputPanel>
                                 
                            <apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon"  id="contactList" styleClass="table-hover table table-condensed table-responsive">
                                <apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}"/></apex:column>
@@ -1576,11 +1584,11 @@
                                     </apex:facet>
                                 </apex:actionStatus>
 
-                                <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewContactDialog();" rerender="contactList, newContact">
+                                <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewContactDialog(); reRenderImportOwnersMCModal();" rerender="contactList, newContact">
                                     <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                                 </apex:commandLink>
 
-                                <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showUpdateOwnerDialog();" rerender="contactList, updateOwner" rendered="{!AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c)}">
+                                <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showUpdateOwnerDialog(); reRenderImportOwnersMCModal();" rerender="contactList, updateOwner" rendered="{!AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c)}">
                                     <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                                 </apex:commandLink>
                             </apex:column>
@@ -2315,7 +2323,7 @@
       
       <div class="modal-footer">
           <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
-            oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages">
+            oncomplete="if ({!contactSaved==true}){closeModal2(); cancelCompanyUpdate(); reRenderImportOwnersMCModal();} this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="companyList, ownerList, companyMessages">
             <apex:param value="Company" name="companytype" assignTo="{!contactType}" />
          </apex:commandButton>&nbsp;
         <button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
@@ -2325,6 +2333,8 @@
 </div>
    
 </apex:form>
+
+<c:ISSP_ANG_ImportOwnersMCModal id="importOwnersMCModal"/> <!-- Modal Copy Owners MultiCountry -->
                 
      </div>   
      </div>

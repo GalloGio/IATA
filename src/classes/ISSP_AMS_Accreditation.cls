@@ -324,15 +324,9 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         set;
     }
-    public List<ImportOwnerModalRecord> ownersThatCanBeCopiedList {
-        get;
-        set;
-    }
+    public List<ImportOwnerModalRecord> ownersThatCanBeCopiedList {get; set;}
 
-    public List<AMS_Accreditation_Contact__c> selectedOwnersToImport {
-        get;
-        set;
-    }
+    public List<AMS_Accreditation_Contact__c> selectedOwnersToImport {get; set;}
 
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
@@ -2657,6 +2651,10 @@ public without sharing class ISSP_AMS_Accreditation {
             ApexPages.addMessages(ex);
         }
         iatacode = '';
+
+        if (isMultiCountry) {
+            getOwnersThatCanBeCopied();
+        }
     }
 
     public Pagereference securityCheck() {
@@ -2734,6 +2732,10 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         refreshCntIFAPContacts();
+
+        if (isMultiCountry) {
+            getOwnersThatCanBeCopied();
+        }
     }
 
     public void deleteTrainedStaff() {
@@ -4429,6 +4431,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
             when PARAMCODE_COPY_OWNERS {
                 query += 'AND (RecordType.DeveloperName = \'Person\' OR RecordType.DeveloperName = \'Company\') ';
+            }
+
+            when PARAMCODE_IMPORT_OWNERS {
+                query += 'WHERE Is_Cloned_From_Another_Form__c = false ';
             }
         }
 
@@ -7546,9 +7552,18 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-    public List<ImportOwnerModalRecord> getOwnersThatCanBeCopied() {
-        ownersThatCanBeCopiedList = new List<ImportOwnerModalRecord>();
+    public List<AMS_Pax_Accreditation_Form__c> allOwnersThatCanBeCopied {
+        get {
+            if (allOwnersThatCanBeCopied == null) {
+                fetchOwnersThatCanBeCopied();
+            }
 
+            return allOwnersThatCanBeCopied;
+        }
+        set;
+    }
+
+    public void fetchOwnersThatCanBeCopied() {
         String contactsToImportQuery = 'SELECT Id, (';
         contactsToImportQuery += dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_IMPORT_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
         contactsToImportQuery += ') FROM AMS_Pax_Accreditation_Form__c ';
@@ -7561,13 +7576,29 @@ public without sharing class ISSP_AMS_Accreditation {
             contactsToImportQuery += 'AND Id != \'' + newForm.Id + '\' ';
         }
 
-        //contactsToImportQuery += 'AND Is_Cloned_From_Another_Form__c = false';
+        allOwnersThatCanBeCopied = Database.query(contactsToImportQuery);
+    }
 
-        for (AMS_Pax_Accreditation_Form__c form: Database.query(contactsToImportQuery)) {
+    public List<ImportOwnerModalRecord> getOwnersThatCanBeCopied() {
+        ownersThatCanBeCopiedList = new List<ImportOwnerModalRecord>();
+        Set<String> repeatedContacts = new Set<String>();
+
+        for (AMS_Accreditation_Contact__c con: List_AgencyContacts) {
+            repeatedContacts.add(con.Name + con.Email__c);
+        }
+
+        for (AMS_Accreditation_Contact__c con: List_AgencyCompanies) {
+            repeatedContacts.add(con.Name + con.Email__c);
+        }
+
+        for (AMS_Pax_Accreditation_Form__c form: allOwnersThatCanBeCopied) {
             for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
-                ownersThatCanBeCopiedList.add(new ImportOwnerModalRecord(con));
+                if (!repeatedContacts.contains(con.Name + con.Email__c)) {
+                    ownersThatCanBeCopiedList.add(new ImportOwnerModalRecord(con));
+                }
             }
         }
+        //Improve logic to avoid queries on deleting;
 
         return ownersThatCanBeCopiedList;
     }
@@ -7589,5 +7620,6 @@ public without sharing class ISSP_AMS_Accreditation {
     public void importOwners() {
         getSelectedOwners();
         copyOwnersFromOtherForm(newForm, getSelectedOwnersToImport(), true);
+        getOwnersThatCanBeCopied();
     }
 }

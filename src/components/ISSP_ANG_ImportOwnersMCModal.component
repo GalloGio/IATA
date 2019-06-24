@@ -8,9 +8,9 @@
               			<!--<h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Company}</h4>-->
               			<h4 class="modal-title" id="myModalLabel">Copy Owners</h4>
             		</div>
-            		<div class="modal-body">
+            		<div class="modal-body" style="text-align: center;">
               			<apex:pageBlock>
-		                    <apex:dataTable value="{!ownersThatCanBeCopied}" var="ownerCon" id="importOwnersList" styleClass="table-hover table table-condensed table-responsive">
+		                    <apex:dataTable value="{!ownersThatCanBeCopied}" var="ownerCon" id="importOwnersList" styleClass="table-hover table table-condensed table-responsive" rendered="{!ownersThatCanBeCopied.size != 0}">
 								<apex:column>
 									<apex:facet name="header"> 
 										<apex:inputCheckbox>
@@ -23,17 +23,19 @@
 									</apex:inputCheckbox>
 								</apex:column>
 
-								<apex:column headervalue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!ownerCon.owner.First_name__c}"/>
-								<apex:column headervalue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!ownerCon.owner.Last_name__c}"/>
-								<apex:column headervalue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!ownerCon.owner.Phone__c}"/>
-								<apex:column headervalue="{!$ObjectType.Contact.fields.Email.Label}" value="{!ownerCon.owner.Email__c}"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!ownerCon.owner.First_name__c}" style="text-align: left;"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!ownerCon.owner.Last_name__c}" style="text-align: left;"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!ownerCon.owner.Phone__c}" style="text-align: left;"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Email.Label}" value="{!ownerCon.owner.Email__c}" style="text-align: left;"/>
 
 							</apex:dataTable>
+
+							<apex:outputText value="ola rui empty" rendered="{!ownersThatCanBeCopied.size == 0}"/>
               			</apex:pageBlock>
             		</div>
 
             		<div class="modal-footer">
-              			<apex:commandButton action="{!importOwners}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="closeCopyOwneresMulticountry(); this.removeAttribute('disabled');" onclick="this.disabled='disabled'" reRender="contactList, companyList, ownerList"/>
+              			<apex:commandButton action="{!importOwners}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="closeCopyOwneresMulticountry(); this.removeAttribute('disabled'); return false;" onclick="this.disabled='disabled'" reRender="contactList, companyList, ownerList" disabled="{!ownersThatCanBeCopied.size == 0}"/>
               			<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
             		</div>
 
@@ -62,6 +64,7 @@
       	function closeCopyOwneresMulticountry() {
         	$j(function () {
           		$j('#copyOwnersMcModal').modal('hide');
+          		reRenderImportOwnersMCModal();
         	});
       	}
 	</script>
