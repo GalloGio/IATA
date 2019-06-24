@@ -4,7 +4,10 @@
 
 public with sharing class PortalFAQsSharingCtrl {
 
-    PRIVATE STATIC FINAL STRING x;
+    PRIVATE STATIC FINAL STRING DEFAULT_PERMSET_NAME = 'FAQ_DEFAULT';
+    private static User currentUser;
+    private static Account userAccount;
+    private static IATA_ISO_Country__c accountCountry;
 
     private class FAQsVisibilitySettings{
         public String sector;
@@ -16,133 +19,64 @@ public with sharing class PortalFAQsSharingCtrl {
         public String iso_countries3;
     }
 
-    //Get
-
 
     @future
-    public static void shareFAQs(List<Id> userId){
-        Account userAccount;
-        //When user is registered/logs in - assign permission sets based on user's related account
-        //Permset names to be set from relevant metadata types - from metadata csvs, to list of strings 
+    public static void shareFAQs(Id userId){
+        String countryCode;
+        String accountSector;
+        String accountCategory;
+
+        List<User> userInfo = [SELECT Id,AccountId,Account.Sector__c,Account.Category__c,Account.IATA_ISO_Country__r.ISO_Code__c FROM User WHERE Id =:userId];
+
+        //countryCode = userInfo
+
         List<String> permsetNames = new List<String>();
-        Map<String,Id> permToId = new Map<String,Id>();
+        Map<String,Id> permissionNameToId = new Map<String,Id>();
 
-        List <PermissionSet> setList = [SELECT Id,Name FROM PermissionSet WHERE Name IN:permsetNames];
-        if (!setList.isEmpty()){
+        String settingsQuery = 'SELECT Permission_Set_Name__c FROM PortalFAQs__mdt WHERE';
+
+
+        List<PortalFAQs__mdt> settings = [
+                SELECT Permission_Set_Name__c
+                FROM PortalFAQs__mdt
+                WHERE
+                (
+                        ISO_Country_Codes1__c LIKE :countryCode OR ISO_Country_Codes2__c LIKE :countryCode OR ISO_Country_Codes3__c LIKE :countryCode
+                        OR ISO_Country_Codes1__c = 'All'
+                )
+                AND (Account_Sector__c = :accountSector)
+                AND (Account_Categories__c LIKE :accountCategory OR Account_Categories__c = 'All')
+        ];
+
+        if(!settings.isEmpty()){
+            for(PortalFAQs__mdt setting:settings){
+                permsetNames.add(setting.Permission_Set_Name__c);
+            }
+        }else{
+            settings = [SELECT Permission_Set_Name__c FROM PortalFAQs__mdt WHERE DeveloperName =: DEFAULT_PERMSET_NAME]
         }
 
-        //Get custom metadata based on Sector, Category - All is valid, ISO_Country__c (2chars) - in 3fields, All is valid
-        //Custom metadata contain permission set name
-
-        List<Account> accs= [SELECT Id,Category__c,Sector__c FROM Account LIMIT 50];
-
-        Map<String,PermissionSet> sectorPermSets = Map<String,PermissionSet>();
-        Map<String,PermissionSet> categoryPermSets = Map<String,PermissionSet>();
-        Map<String,PermissionSet> countryPermSets = Map<String,PermissionSet>();
-
-        List<FAQsVisibilitySettings> settings = new List<FAQsVisibilitySettings>();
-
-
-
-        for(FAQsVisibilitySettings setting: settings){
-            if(!String.isBlank(setting.sector)){
-                sectorPermSets.put(setting.permsetName,setting);
-            }
-
-            if(!String.isBlank(setting.category)){
-                sectorPermSets.put(setting.permsetName,setting);
-            }
-
-            if(!String.isBlank(setting.iso_countries1) || !String.isBlank(setting.iso_countries2) || !String.isBlank(setting.iso_countries3)){
-                //Get country permission set based on country code (ideally check if 1,2,3 country fields contains  Account's) ->
-                //
-                sectorPermSets.put(setting.permsetName,setting);
-            }
-        }
-
-
-        /**
-        *
-        * PERM SETS MUST BE COUNTRY-VALID -> check country_iso1,2,3 for a match. if not matching, don't assign.
-        *
-        * */
-
-        List<Id> userIds = new List<Id>();
-
-        List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
-
-        Map<Id,List<Id>> userIdtoPermSetIds = new Map<Id,List<Id>>();
-
-        for(Id userId :userIds){
-            if(userIdtoPermSetIds.containsKey(userId) &&  userIdtoPermSetIds.containsKey(userId) != null){
-
-                List<Id> userPermSets = userIdtoPermSetIds.get(userId);
-
+        if(!permsetNames.isEmpty()) {
+            List <PermissionSet> setList = [SELECT Id,Name FROM PermissionSet WHERE Name IN:permsetNames];
+            if (!setList.isEmpty()) {
+                List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
 
                 PermissionSetAssignment newPermission;
-                for(Id permissionSetId : userPermSets){
+                for(PermissionSet permSet : setList){
                     newPermission   = new PermissionSetAssignment();
                     newPermission.AssigneeId = userId;
-                    newPermission.PermissionSetId = permissionSetId;
+                    newPermission.PermissionSetId = permSet.Id;
                     assignments.add(newPermission);
                 }
-            }
 
-        }
-
-        if(!assignments.isEmpty()){
-            insert assignments;
-        }
-
-        // HANDLE DEFAULT ASSIGNMENTS IF NO MATCHING CRITERIA FOR PERMISSIONSETS FOUND
-
-
-
-    }
-
-    /*public static void updateSIS_permissionSet(Set<Id> contactIdSet, Set<Id> contactRemoveIdSet){
-        system.debug('FUTURE METHOD, ADD: ' + contactIdSet);
-        system.debug('FUTURE METHOD, REMOVE: ' + contactRemoveIdSet);
-        String permissionSetId = '';
-
-        if (!setList.isEmpty()){
-            permissionSetId = setList[0].Id;
-        }
-        if (permissionSetId != ''){
-            if (!contactIdSet.isEmpty()){
-                List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactIdSet AND IsActive = true];
-                Set <Id> userSetId = new Set <Id>();
-                Map <Id, Id> userMap = new Map <Id, Id>();
-                if (!userList.isEmpty()){
-                    for (User thisUser : userList){
-                        userSetId.add(thisUser.Id);
-                        userMap.put(thisUser.Id, thisUser.Id);
-                    }
-                    List <PermissionSetAssignment> assignmentList = [SELECT Id, AssigneeId FROM PermissionSetAssignment
-                    WHERE AssigneeId IN :userSetId
-                    AND PermissionSetId = :permissionSetId];
-                    if (!assignmentList.isEmpty()){
-                        for (PermissionSetAssignment thisAssignment : assignmentList){
-                            if (userMap.containsKey(thisAssignment.AssigneeId)){
-                                userMap.remove(thisAssignment.AssigneeId);
-                            }
-                        }
-                    }
-                    if (!userMap.isEmpty()){
-                        List <PermissionSetAssignment> newPermissionList = new List <PermissionSetAssignment>();
-                        List <Id> idList = userMap.values();
-                        for (Id thisId : idList){
-                            PermissionSetAssignment newPermission = new PermissionSetAssignment();
-                            newPermission.AssigneeId = thisId;
-                            newPermission.PermissionSetId = permissionSetId;
-                            newPermissionList.add(newPermission);
-                        }
-                        insert newPermissionList;
-                    }
+                if(!assignments.isEmpty()){
+                    insert assignments;
                 }
+
             }
+
         }
-    }*/
+    }
 
 
     /**
@@ -162,5 +96,51 @@ public with sharing class PortalFAQsSharingCtrl {
             delete assignmentListRemove;
         }
     }
+
+
+    /*public static void updateSIS_permissionSet(Set<Id> contactIdSet, Set<Id> contactRemoveIdSet){
+    system.debug('FUTURE METHOD, ADD: ' + contactIdSet);
+    system.debug('FUTURE METHOD, REMOVE: ' + contactRemoveIdSet);
+    String permissionSetId = '';
+
+    if (!setList.isEmpty()){
+        permissionSetId = setList[0].Id;
+    }
+    if (permissionSetId != ''){
+        if (!contactIdSet.isEmpty()){
+            List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactIdSet AND IsActive = true];
+            Set <Id> userSetId = new Set <Id>();
+            Map <Id, Id> userMap = new Map <Id, Id>();
+            if (!userList.isEmpty()){
+                for (User thisUser : userList){
+                    userSetId.add(thisUser.Id);
+                    userMap.put(thisUser.Id, thisUser.Id);
+                }
+                List <PermissionSetAssignment> assignmentList = [SELECT Id, AssigneeId FROM PermissionSetAssignment
+                WHERE AssigneeId IN :userSetId
+                AND PermissionSetId = :permissionSetId];
+                if (!assignmentList.isEmpty()){
+                    for (PermissionSetAssignment thisAssignment : assignmentList){
+                        if (userMap.containsKey(thisAssignment.AssigneeId)){
+                            userMap.remove(thisAssignment.AssigneeId);
+                        }
+                    }
+                }
+                if (!userMap.isEmpty()){
+                    List <PermissionSetAssignment> newPermissionList = new List <PermissionSetAssignment>();
+                    List <Id> idList = userMap.values();
+                    for (Id thisId : idList){
+                        PermissionSetAssignment newPermission = new PermissionSetAssignment();
+                        newPermission.AssigneeId = thisId;
+                        newPermission.PermissionSetId = permissionSetId;
+                        newPermissionList.add(newPermission);
+                    }
+                    insert newPermissionList;
+                }
+            }
+        }
+    }
+}*/
+
 
 }
