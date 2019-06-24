@@ -472,8 +472,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             record.Country_concerned_by_the_query__c = this.caseInitiated.Country_concerned_by_the_query__c;
             record.Origin = this.caseInitiated.Origin;
             record.Status = this.caseInitiated.Status;
-            record.Topic__c = this.topic;
-            record.Subtopic__c = this.subtopic;
+            record.Topic__c = this.topicLabel;
+            record.Subtopic__c = this.subtopicLabel;
             record.IFAP_Country_ISO__c = this.caseInitiated.IFAP_Country_ISO__c.toUpperCase();
             record.Subject = this.caseInitiated.Subject;
             record.Description = this.caseInitiated.Description;
