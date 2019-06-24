@@ -437,8 +437,7 @@ private class OneId_RegistrationProcessControllerTest {
                                                          IATA_ISO_Country__c=country.Id,
                                                          GeonameName__c='Quebec',
                                                          GeonameAsciiName__c='Quebec',
-                                                         GeonameId__c='6115047',
-                                                         GeonameISO3166__c='QC');
+                                                         GeonameId__c='6115047');
          insert state;
          IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Montreal', 
                                                        IATA_ISO_State__c = state.ID,

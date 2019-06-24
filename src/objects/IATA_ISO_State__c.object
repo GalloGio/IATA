@@ -78,28 +78,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>GeonameISO3166__c</fullName>
-        <externalId>false</externalId>
-        <label>GeonameISO3166</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>GeonameISOCountryPlusCode__c</fullName>
-        <externalId>false</externalId>
-        <label>GeonameISOCountryPlusCode</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>GeonameId__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
