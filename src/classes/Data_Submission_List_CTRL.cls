@@ -31,7 +31,7 @@ public without sharing class Data_Submission_List_CTRL {
                 query += ' NULLS LAST';
             }
         }
-        System.debug('query:: ' +query);
+
         query += ' LIMIT ' + String.valueOf(MAX_QUERY_RECORDS);
         List<SObject> sobjects = new List<SObject>();
         try {
@@ -257,6 +257,8 @@ public without sharing class Data_Submission_List_CTRL {
         @AuraEnabled
         public List<Account> visibleAccounts {get; set;}
         @AuraEnabled
+        public List<Id> usersWithSameBusinessUnits {get; set;}
+        @AuraEnabled
         public String queryWhereClause {get; set;}
 
     }
@@ -271,6 +273,7 @@ public without sharing class Data_Submission_List_CTRL {
         info.isGadmUser = false;
         info.isDataSubmitter = false;
         info.visibleAccounts = new List<Account>();
+        info.usersWithSameBusinessUnits = new List<Id>();
 
         List<Contact_Roles__c> grantedRoles = Contact_Roles_Helper.getGrantedUserRoles(userId, 'GADM');
         if(! grantedRoles.isEmpty()) {
@@ -307,12 +310,36 @@ public without sharing class Data_Submission_List_CTRL {
             info.isDataSubmitter = isDataSubmitter;
         }
 
+        List<Contact_Roles__c> grantedBusinessUnits = Contact_Roles_Helper.getGrantedBusinessUnits(userId, 'GADM');
+
+        if(! grantedBusinessUnits.isEmpty()) {
+
+            List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact_Roles__c = :grantedBusinessUnits AND Status__c = 'Granted' AND Contact_Role__r.Service_Rendered__c = 'GADM'];
+            Set<Id> contactIds = new Set<Id>();
+            for(Contact_Role_Service_Access__c access : serviceAccesses) {
+                contactIds.add(access.Contact_Role__r.Contact__c);
+            }
+
+            List<Id> userIdWithSameBusinessUnit = new List<Id>();
+
+            if(! contactIds.isEmpty()) {
+                List<User> users = [SELECT Id FROM User WHERE ContactId = :contactIds];
+                for(User u : users) {
+                    userIdWithSameBusinessUnit.add(u.Id);
+                }
+            }
+
+
+            info.usersWithSameBusinessUnits = new List<Id>(userIdWithSameBusinessUnit);
+
+        }
+
         List<Account> visibleAccounts = Contact_Roles_Helper.getUserAccounts(userId);
         if(! visibleAccounts.isEmpty()) {
             info.visibleAccounts = visibleAccounts;
         }
 
-        info.queryWhereClause = buildWhereClause(userId, info.isPowerUser, info.isSuperUser, info.isDataSubmitter, info.visibleAccounts);
+        info.queryWhereClause = buildWhereClause(userId, info.isPowerUser, info.isSuperUser, info.isDataSubmitter, info.visibleAccounts, info.usersWithSameBusinessUnits);
 
 
         return info;
@@ -320,24 +347,37 @@ public without sharing class Data_Submission_List_CTRL {
     }
 
 
-    private static String buildWhereClause(Id userId, Boolean isPowerUser, Boolean isSuperUser, Boolean isDataSubmitter, List<Account> visibleAccounts) {
+    private static String buildWhereClause(Id userId, Boolean isPowerUser, Boolean isSuperUser, Boolean isDataSubmitter, List<Account> visibleAccounts, List<Id> usersWithSameBusinessUnits) {
         String whereClause = '';
 
-        if(isPowerUser || isSuperUser) {
+        if(isPowerUser) {
             String accountsString = '';
 
-            if(! visibleAccounts.isEmpty()) {
-                accountsString = '(' +'\'' + visibleAccounts[0].Id + '\'';
+            if (!visibleAccounts.isEmpty()) {
+                accountsString = '(' + '\'' + visibleAccounts[0].Id + '\'';
 
-                for(Integer i = 1 ; i < visibleAccounts.size(); i++) {
-                    accountsString +=', \''+visibleAccounts[i].Id + '\'';
+                for (Integer i = 1; i < visibleAccounts.size(); i++) {
+                    accountsString += ', \'' + visibleAccounts[i].Id + '\'';
                 }
                 accountsString += ')';
             }
 
-            if(accountsString.length() > 0) {
+            if (accountsString.length() > 0) {
                 whereClause += 'Submitter__r.AccountId IN ' + accountsString;
             }
+        }else if(isSuperUser) {
+            String usersString = '';
+
+            if(! usersWithSameBusinessUnits.isEmpty()) {
+                usersString = '(' + '\'' + usersWithSameBusinessUnits[0] + '\'';
+
+                for(Integer i = 1; i < usersWithSameBusinessUnits.size(); i++) {
+                    usersString += ', \'' + usersWithSameBusinessUnits[i] + '\'';
+                }
+                usersString += ')';
+            }
+
+            whereClause += 'Submitter__c IN ' + usersString;
         }else if(isDataSubmitter) {
             whereClause += 'Submitter__c =\'' + userId + '\'';
         }

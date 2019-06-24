@@ -4718,6 +4718,48 @@ You can choose one or more of the following topics:</value>
         <value>GADM Power User</value>
     </labels>
     <labels>
+        <fullName>GADM_User_Management_actor_not_available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_actor_not_available</shortDescription>
+        <value>Actor can not be assigned by current user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_business_unit_not_available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_business_unit_not_available</shortDescription>
+        <value>Business unit can not be assigned by current user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_cannot_edit_own_assignments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_ cannot_edit_own_assignments</shortDescription>
+        <value>You cannot edit your own assignments.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_domain_blocked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_domain_blocked</shortDescription>
+        <value>Actor can not be assigned, user email domain does not mach with allowed email domains for this actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_gadm_user_domain_blocked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_gadm_user_domain_blocked</shortDescription>
+        <value>User can not be activated for main account as user email domain does not match with allowed email domains for this actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_role_not_editable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_role_not_editable</shortDescription>
+        <value>Role can not be edited.</value>
+    </labels>
+    <labels>
         <fullName>GADM_account_contact_role_gadm_user</fullName>
         <language>en_US</language>
         <protected>false</protected>

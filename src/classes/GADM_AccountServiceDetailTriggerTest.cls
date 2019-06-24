@@ -356,6 +356,9 @@ public class GADM_AccountServiceDetailTriggerTest {
             serviceDetail.External_Actor_Id__c = '';
             update serviceDetail;
 
+            serviceDetail.Active_User_Count__c = 6;
+            update serviceDetail;
+
         }
 
         Test.stopTest();

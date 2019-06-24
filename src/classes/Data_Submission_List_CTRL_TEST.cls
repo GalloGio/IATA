@@ -51,11 +51,21 @@ public class Data_Submission_List_CTRL_TEST {
 
         List<Data_Submission__c> listToInsert = new List<Data_Submission__c>();
 
+        List<String> pickListValuesList= new List<String>();
+
+        Schema.DescribeFieldResult fieldResult = Data_Submission__c.Status__c.getDescribe();
+        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+        for( Schema.PicklistEntry pickListVal : ple){
+            pickListValuesList.add(pickListVal.getLabel());
+        }
+
+        String testStatus = pickListValuesList[0];
+
         for(Integer i = 0; i < 20; i++) {
             Data_Submission__c submission = new Data_Submission__c();
             submission.User__c = testContact.Id;
             submission.Result__c = 'Test result ' + i;
-            submission.Status__c = 'Submitted';
+            submission.Status__c = testStatus;
             submission.Type__c = 'Submission';
             submission.Submission_date__c = System.now();
             listToInsert.add(submission);
@@ -71,6 +81,8 @@ public class Data_Submission_List_CTRL_TEST {
 
         Date today = Date.today();
 
+        List<Account_Role__c> accountRolesToInsert = new List<Account_Role__c>();
+
         Account_Role__c accountRole = new Account_Role__c();
         accountRole.RecordTypeId = defaultRecordTypeId;
         accountRole.Account__c = acc.Id;
@@ -78,7 +90,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountRole.Status__c = 'Active';
         accountRole.Effective_From_Date__c = today.addDays(-2);
         accountRole.Effective_To_Date__c = today;
-        insert accountRole;
+        accountRolesToInsert.add(accountRole);
 
         Account_Role__c accountRole2 = new Account_Role__c();
         accountRole2.RecordTypeId = defaultRecordTypeId;
@@ -87,24 +99,35 @@ public class Data_Submission_List_CTRL_TEST {
         accountRole2.Status__c = 'Active';
         accountRole2.Effective_From_Date__c = today.addDays(-2);
         accountRole2.Effective_To_Date__c = today;
-        insert accountRole2;
+        accountRolesToInsert.add(accountRole2);
+
+        insert accountRolesToInsert;
+
+        List<Contact_Roles__c> contactRolesToInsert = new List<Contact_Roles__c>();
 
         //possible contact roles
         Contact_Roles__c contactRoles = new Contact_Roles__c();
         contactRoles.Name = 'GADM User';
-        insert contactRoles;
+        contactRolesToInsert.add(contactRoles);
 
         Contact_Roles__c contactRoles2 = new Contact_Roles__c();
         contactRoles2.Name = 'Service Power User';
-        insert contactRoles2;
+        contactRolesToInsert.add(contactRoles2);
 
         Contact_Roles__c contactRoles3 = new Contact_Roles__c();
         contactRoles3.Name = 'Service Super User';
-        insert contactRoles3;
+        contactRolesToInsert.add(contactRoles3);
 
         Contact_Roles__c contactRoles4 = new Contact_Roles__c();
         contactRoles4.Name = 'GADM Data Submitter';
-        insert contactRoles4;
+        contactRolesToInsert.add(contactRoles4);
+
+        Contact_Roles__c contactRoles5 = new Contact_Roles__c();
+        contactRoles5.Name = 'Security';
+        contactRoles5.Category__c = 'Business Unit';
+        contactRolesToInsert.add(contactRoles5);
+
+        insert contactRolesToInsert;
 
         Portal_Applications__c portalApplications = new Portal_Applications__c();
         portalApplications.Name = 'GADM';
@@ -113,6 +136,8 @@ public class Data_Submission_List_CTRL_TEST {
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
         Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
 
+        List<Account_Contact_Role__c> accountContactRolesToInsert = new List<Account_Contact_Role__c>();
+
         //Account contact role for user Neo and Test Account
         Account_Contact_Role__c accountContactRole = new Account_Contact_Role__c();
         accountContactRole.Contact__c = testContact.Id;
@@ -120,7 +145,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole.Account_Role__c = accountRole.Id;
         accountContactRole.Service_Rendered__c = 'GADM';
         accountContactRole.RecordTypeId = functionalRecordTypeId;
-        insert accountContactRole;
+        accountContactRolesToInsert.add(accountContactRole);
 
         Account_Contact_Role__c accountContactRole1 = new Account_Contact_Role__c();
         accountContactRole1.Contact__c = testContact.Id;
@@ -128,7 +153,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole1.Account_Role__c = accountRole.Id;
         accountContactRole1.Service_Rendered__c = 'GADM';
         accountContactRole1.RecordTypeId = groupRecordTypeId;
-        insert accountContactRole1;
+        accountContactRolesToInsert.add(accountContactRole1);
 
         //Account contact role for user Neo and Test Account
         Account_Contact_Role__c accountContactRole2 = new Account_Contact_Role__c();
@@ -137,7 +162,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole2.Account_Role__c = accountRole.Id;
         accountContactRole2.Service_Rendered__c = 'GADM';
         accountContactRole2.RecordTypeId = functionalRecordTypeId;
-        insert accountContactRole2;
+        accountContactRolesToInsert.add(accountContactRole2);
 
         //Account contact role for user Neo and Test Account2
         Account_Contact_Role__c accountContactRole2b = new Account_Contact_Role__c();
@@ -146,7 +171,15 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole2b.Account_Role__c = accountRole2.Id;
         accountContactRole2b.Service_Rendered__c = 'GADM';
         accountContactRole2b.RecordTypeId = groupRecordTypeId;
-        insert accountContactRole2b;
+        accountContactRolesToInsert.add(accountContactRole2b);
+
+        Account_Contact_Role__c accountContactRole2c = new Account_Contact_Role__c();
+        accountContactRole2c.Contact__c = testContact.Id;
+        accountContactRole2c.Contact_Roles__c = contactRoles5.Id;
+        accountContactRole2c.Account_Role__c = accountRole2.Id;
+        accountContactRole2c.Service_Rendered__c = 'GADM';
+        accountContactRole2c.RecordTypeId = groupRecordTypeId;
+        accountContactRolesToInsert.add(accountContactRole2c);
 
         //Account contact role for user Leo and Test Account2
         Account_Contact_Role__c accountContactRole3 = new Account_Contact_Role__c();
@@ -155,7 +188,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole3.Account_Role__c = accountRole2.Id;
         accountContactRole3.Service_Rendered__c = 'GADM';
         accountContactRole3.RecordTypeId = functionalRecordTypeId;
-        insert accountContactRole3;
+        accountContactRolesToInsert.add(accountContactRole3);
 
         Account_Contact_Role__c accountContactRole3b = new Account_Contact_Role__c();
         accountContactRole3b.Contact__c = testContact2.Id;
@@ -163,7 +196,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole3b.Account_Role__c = accountRole2.Id;
         accountContactRole3b.Service_Rendered__c = 'GADM';
         accountContactRole3b.RecordTypeId = groupRecordTypeId;
-        insert accountContactRole3b;
+        accountContactRolesToInsert.add(accountContactRole3b);
 
         Account_Contact_Role__c accountContactRole4 = new Account_Contact_Role__c();
         accountContactRole4.Contact__c = testContact2.Id;
@@ -171,7 +204,15 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole4.Account_Role__c = accountRole2.Id;
         accountContactRole4.Service_Rendered__c = 'GADM';
         accountContactRole4.RecordTypeId = functionalRecordTypeId;
-        insert accountContactRole4;
+        accountContactRolesToInsert.add(accountContactRole4);
+
+        Account_Contact_Role__c accountContactRole4b = new Account_Contact_Role__c();
+        accountContactRole4b.Contact__c = testContact2.Id;
+        accountContactRole4b.Contact_Roles__c = contactRoles5.Id;
+        accountContactRole4b.Account_Role__c = accountRole2.Id;
+        accountContactRole4b.Service_Rendered__c = 'GADM';
+        accountContactRole4b.RecordTypeId = groupRecordTypeId;
+        accountContactRolesToInsert.add(accountContactRole4b);
 
         Account_Contact_Role__c accountContactRole5 = new Account_Contact_Role__c();
         accountContactRole5.Contact__c = testContact3.Id;
@@ -179,7 +220,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole5.Account_Role__c = accountRole.Id;
         accountContactRole5.Service_Rendered__c = 'GADM';
         accountContactRole5.RecordTypeId = functionalRecordTypeId;
-        insert accountContactRole5;
+        accountContactRolesToInsert.add(accountContactRole5);
 
         Account_Contact_Role__c accountContactRole5b = new Account_Contact_Role__c();
         accountContactRole5b.Contact__c = testContact3.Id;
@@ -187,7 +228,7 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole5b.Account_Role__c = accountRole.Id;
         accountContactRole5b.Service_Rendered__c = 'GADM';
         accountContactRole5b.RecordTypeId = functionalRecordTypeId;
-        insert accountContactRole5b;
+        accountContactRolesToInsert.add(accountContactRole5b);
 
         Account_Contact_Role__c accountContactRole6 = new Account_Contact_Role__c();
         accountContactRole6.Contact__c = testContact3.Id;
@@ -195,56 +236,75 @@ public class Data_Submission_List_CTRL_TEST {
         accountContactRole6.Account_Role__c = accountRole.Id;
         accountContactRole6.Service_Rendered__c = 'GADM';
         accountContactRole6.RecordTypeId = groupRecordTypeId;
-        insert accountContactRole6;
+        accountContactRolesToInsert.add(accountContactRole6);
+
+        insert accountContactRolesToInsert;
+
+
+        List<Contact_Role_Service_Access__c> contactRoleServiceAccessesToInsert = new List<Contact_Role_Service_Access__c>();
 
         //grant access for user Neo, account Test account and GADM User role and GADM service
         Contact_Role_Service_Access__c serviceAccess = new Contact_Role_Service_Access__c();
         serviceAccess.Contact_Role__c = accountContactRole.Id;
         serviceAccess.Service__c = portalApplications.Id;
         serviceAccess.Status__c = 'Granted';
-        insert serviceAccess;
+        contactRoleServiceAccessesToInsert.add(serviceAccess);
 
         //grant access for user Neo, account Test account and Service Power User role and GADM service
         Contact_Role_Service_Access__c serviceAccess2 = new Contact_Role_Service_Access__c();
         serviceAccess2.Contact_Role__c = accountContactRole2.Id;
         serviceAccess2.Service__c = portalApplications.Id;
         serviceAccess2.Status__c = 'Granted';
-        insert serviceAccess2;
+        contactRoleServiceAccessesToInsert.add(serviceAccess2);
 
         //grant access for user Neo, account Test account 2 and GADM User role and GADM service
         Contact_Role_Service_Access__c serviceAccess2b = new Contact_Role_Service_Access__c();
         serviceAccess2b.Contact_Role__c = accountContactRole2b.Id;
         serviceAccess2b.Service__c = portalApplications.Id;
         serviceAccess2b.Status__c = 'Granted';
-        insert serviceAccess2b;
+        contactRoleServiceAccessesToInsert.add(serviceAccess2b);
+
+        Contact_Role_Service_Access__c serviceAccess2c = new Contact_Role_Service_Access__c();
+        serviceAccess2c.Contact_Role__c = accountContactRole2c.Id;
+        serviceAccess2c.Service__c = portalApplications.Id;
+        serviceAccess2c.Status__c = 'Granted';
+        contactRoleServiceAccessesToInsert.add(serviceAccess2c);
 
         //grant access for user Leo, account Test account 2 and GADM User role and GADM service
         Contact_Role_Service_Access__c serviceAccess3 = new Contact_Role_Service_Access__c();
         serviceAccess3.Contact_Role__c = accountContactRole3.Id;
         serviceAccess3.Service__c = portalApplications.Id;
         serviceAccess3.Status__c = 'Granted';
-        insert serviceAccess3;
+        contactRoleServiceAccessesToInsert.add(serviceAccess3);
 
         //grant access for user Leo, account Test account 2 and Service Super User role and GADM service
         Contact_Role_Service_Access__c serviceAccess3b = new Contact_Role_Service_Access__c();
         serviceAccess3b.Contact_Role__c = accountContactRole4.Id;
         serviceAccess3b.Service__c = portalApplications.Id;
         serviceAccess3b.Status__c = 'Granted';
-        insert serviceAccess3b;
+        contactRoleServiceAccessesToInsert.add(serviceAccess3b);
+
+        Contact_Role_Service_Access__c serviceAccess3bb = new Contact_Role_Service_Access__c();
+        serviceAccess3bb.Contact_Role__c = accountContactRole4b.Id;
+        serviceAccess3bb.Service__c = portalApplications.Id;
+        serviceAccess3bb.Status__c = 'Granted';
+        contactRoleServiceAccessesToInsert.add(serviceAccess3bb);
 
         //grant access for user Leo, account Test account 2 and GADM Data Submitter role and GADM service
         Contact_Role_Service_Access__c serviceAccess3c = new Contact_Role_Service_Access__c();
         serviceAccess3c.Contact_Role__c = accountContactRole5b.Id;
         serviceAccess3c.Service__c = portalApplications.Id;
         serviceAccess3c.Status__c = 'Granted';
-        insert serviceAccess3c;
+        contactRoleServiceAccessesToInsert.add(serviceAccess3c);
 
         //grant access for user Leo, account Test account 2 and Service Super User role and GADM service
         Contact_Role_Service_Access__c serviceAccess4 = new Contact_Role_Service_Access__c();
         serviceAccess4.Contact_Role__c = accountContactRole5.Id;
         serviceAccess4.Service__c = portalApplications.Id;
         serviceAccess4.Status__c = 'Granted';
-        insert serviceAccess4;
+        contactRoleServiceAccessesToInsert.add(serviceAccess4);
+
+        insert contactRoleServiceAccessesToInsert;
 
     }
 
@@ -291,12 +351,24 @@ public class Data_Submission_List_CTRL_TEST {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
 
+        List<Data_Submission__c> listToInsert = new List<Data_Submission__c>();
+
+        List<String> pickListValuesList= new List<String>();
+
+        Schema.DescribeFieldResult fieldResult = Data_Submission__c.Status__c.getDescribe();
+        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+        for( Schema.PicklistEntry pickListVal : ple){
+            pickListValuesList.add(pickListVal.getLabel());
+        }
+
+        String testStatus = pickListValuesList[0];
+
         Test.startTest();
 
         Integer totalRecordCount = 0;
 
         System.runAs(testUser) {
-            totalRecordCount = Data_Submission_List_CTRL.getTotalRecords('Data_Submission__c', 'Status__c = \'Submitted\'');
+            totalRecordCount = Data_Submission_List_CTRL.getTotalRecords('Data_Submission__c', 'Status__c = ' + '\'' + testStatus + '\'');
         }
 
         Test.stopTest();
@@ -310,10 +382,21 @@ public class Data_Submission_List_CTRL_TEST {
 
         User testUser = [SELECT Id, ContactId FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
 
+        List<String> pickListValuesList= new List<String>();
+
+        Schema.DescribeFieldResult fieldResult = Data_Submission__c.Status__c.getDescribe();
+        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+        for( Schema.PicklistEntry pickListVal : ple){
+            pickListValuesList.add(pickListVal.getLabel());
+        }
+
+        String testStatus = pickListValuesList[1];
+
+
         Data_Submission__c submission = new Data_Submission__c();
         submission.User__c = testUser.ContactId;
-        submission.Result__c = 'Test result for status success';
-        submission.Status__c = 'Success';
+        submission.Result__c = 'Test result for status ' + testStatus;
+        submission.Status__c = testStatus;
         submission.Type__c = 'Submission';
         submission.Submission_date__c = System.now();
         insert submission;
@@ -324,7 +407,7 @@ public class Data_Submission_List_CTRL_TEST {
         String records = '';
 
         System.runAs(testUser) {
-            records = Data_Submission_List_CTRL.getRecords('Data_Submission__c', new List<String>{'Type__c', 'User__c', 'Result__c', 'Status__c'}, 'Status__c = \'Success\'', '', 'ASC');
+            records = Data_Submission_List_CTRL.getRecords('Data_Submission__c', new List<String>{'Type__c', 'User__c', 'Result__c', 'Status__c'}, 'Status__c = ' + '\'' + testStatus + '\'', '', 'ASC');
         }
 
         Test.stopTest();
@@ -341,10 +424,20 @@ public class Data_Submission_List_CTRL_TEST {
 
         User testUser = [SELECT Id, ContactId FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
 
+        List<String> pickListValuesList= new List<String>();
+
+        Schema.DescribeFieldResult fieldResult = Data_Submission__c.Status__c.getDescribe();
+        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+        for( Schema.PicklistEntry pickListVal : ple){
+            pickListValuesList.add(pickListVal.getLabel());
+        }
+
+        String testStatus = pickListValuesList[1];
+
         Data_Submission__c submission = new Data_Submission__c();
         submission.User__c = testUser.ContactId;
         submission.Result__c = 'Test result for status success';
-        submission.Status__c = 'Success';
+        submission.Status__c = testStatus;
         submission.Type__c = 'Submission';
         submission.Submission_date__c = System.now();
         insert submission;
@@ -355,7 +448,7 @@ public class Data_Submission_List_CTRL_TEST {
         String records = '';
 
         System.runAs(testUser) {
-            records = Data_Submission_List_CTRL.getRecords('Data_Submission__c', new List<String>{'Type__c', 'User__c', 'Result__c', 'Status__c'}, 'Status__c = \'Success\'', 'User__c', '');
+            records = Data_Submission_List_CTRL.getRecords('Data_Submission__c', new List<String>{'Type__c', 'User__c', 'Result__c', 'Status__c'}, 'Status__c = ' + '\'' + testStatus + '\'', 'User__c', '');
         }
 
         Test.stopTest();
@@ -445,6 +538,7 @@ public class Data_Submission_List_CTRL_TEST {
         System.assertEquals(false, info.isGadmUser, 'Bad user info retrieved!');
         System.assertEquals(false, info.isPowerUser, 'Bad user info retrieved!');
         System.assertEquals(1, info.visibleAccounts.size(), 'Incorrect number of visible accounts retrieved!');
+        System.assertEquals(2, info.usersWithSameBusinessUnits.size(), 'Incorrect number of users with same business units retrieved!');
         System.assertEquals(testAccount.Id, info.visibleAccounts[0].Id, 'Retrieved accountId does not match!');
     }
 

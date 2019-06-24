@@ -208,11 +208,6 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
                             role.isDomainBlocked = true;
                         }
 
-                        //check actual user vs max users active for actor
-                        if(maxUserCount <= actualUserCount) {
-                            role.userCountReached = true;
-                        }
-
                         break;
                     }
                 }
@@ -728,8 +723,6 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
         public Boolean isEditable {get; set;}
         @AuraEnabled
         public Boolean isDomainBlocked {get; set;}
-        @AuraEnabled
-        public Boolean userCountReached {get; set;}
     }
 
     public class BusinessUnit {

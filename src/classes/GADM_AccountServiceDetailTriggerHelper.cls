@@ -57,7 +57,9 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
                     toInsert.add(detail);
                 }
             }
-            toReturn.put('Insert', toInsert);
+            if(! toInsert.isEmpty()) {
+                toReturn.put('Insert', toInsert);
+            }
         }
 
         if(isDelete) {
@@ -76,9 +78,9 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
                     continue;
                 }
 
-                if(oldObj.External_Actor_Id__c == null && accountServiceDetail.External_Actor_Id__c != null) {
+                if((oldObj.External_Actor_Id__c == null || oldObj.External_Actor_Id__c == '') && (accountServiceDetail.External_Actor_Id__c != null && accountServiceDetail.External_Actor_Id__c != '')) {
                     toInsert.add(accountServiceDetail);
-                }else if(accountServiceDetail.External_Actor_Id__c == null) {
+                }else if(accountServiceDetail.External_Actor_Id__c == null || accountServiceDetail.External_Actor_Id__c == '') {
                     toDelete.add(accountServiceDetail);
                 }else if(oldObj.External_Actor_Id__c != accountServiceDetail.External_Actor_Id__c) {
                     toUpdate.add(accountServiceDetail);
