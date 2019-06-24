@@ -23,11 +23,23 @@
                 const result = response.getReturnValue();
                 if(! $A.util.isEmpty(result)) {
 
+                    let isCurrentUseIsSelectedUser = result.currentUserIsSelectedUser;
+
                     let roles = result.roles;
                     let rolesData = [];
                     if(! $A.util.isEmpty(roles)) {
                         for(let i in roles) {
-                            rolesData.push({value:roles[i], key:i});
+                            let error = '';
+
+                            if(isCurrentUseIsSelectedUser) {
+                               error = $A.get('$Label.c.GADM_User_Management_cannot_edit_own_assignments');
+                            }
+                            else if(! roles[i].isEditable) {
+                                error = $A.get('$Label.c.GADM_User_Management_role_not_editable');
+                            }else if(roles[i].isDomainBlocked) {
+                                error = $A.get('$Label.c.GADM_User_Management_gadm_user_domain_blocked');
+                            }
+                            rolesData.push({value:roles[i], key:i, errorText:error});
 
                             if(roles[i].role.Name === 'GADM User') {
                                 let isChecked = roles[i].isChecked;
@@ -44,7 +56,15 @@
                     let businessUnitsData = [];
                     if(! $A.util.isEmpty(businessUnits)) {
                         for(let i in businessUnits) {
-                            businessUnitsData.push({value: businessUnits[i], key:i});
+                            let error = '';
+
+                            if(isCurrentUseIsSelectedUser) {
+                               error = $A.get('$Label.c.GADM_User_Management_cannot_edit_own_assignments');
+                            }
+                            else if(! businessUnits[i].isEditable) {
+                                error = $A.get('$Label.c.GADM_User_Management_business_unit_not_available');
+                            }
+                            businessUnitsData.push({value: businessUnits[i], key:i, errorText:error});
                         }
                     }
 
@@ -52,7 +72,17 @@
                     let actorsData = [];
                     if(! $A.util.isEmpty(actors)) {
                         for(let i in actors) {
-                            actorsData.push({value:actors[i], key:i});
+                            let error = '';
+
+                            if(isCurrentUseIsSelectedUser) {
+                               error = $A.get('$Label.c.GADM_User_Management_cannot_edit_own_assignments');
+                            }
+                            else if(! actors[i].isEditable) {
+                                error = $A.get('$Label.c.GADM_User_Management_actor_not_available');
+                            }else if(actors[i].isDomainBlocked) {
+                                error = $A.get('$Label.c.GADM_User_Management_domain_blocked');
+                            }
+                            actorsData.push({value:actors[i], key:i, errorText:error});
                         }
                         let accountDetail = actors[selectedUserInfo.con.AccountId];
                         let maxUserCount = accountDetail.maxUserCount;
@@ -64,8 +94,6 @@
                         component.set('v.activeUserCount', currentUserCount);
                         component.set('v.gadmUserReachedText', maxUserCount + ' ' + $A.get("$Label.c.GADM_active_users_reached"));
                     }
-
-                    let isCurrentUseIsSelectedUser = result.currentUserIsSelectedUser;
 
                     component.set('v.currentUserIsSelectedUser', isCurrentUseIsSelectedUser);
                     component.set('v.dataActors', actorsData);

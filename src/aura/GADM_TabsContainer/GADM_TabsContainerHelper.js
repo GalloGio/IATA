@@ -64,8 +64,20 @@
 
                     let isDataSubmitter = false;
                     let isDataConsumer = false;
+                    let isPowerUser = false;
+                    let isSuperUser = false;
 
                     for(let i in grantedRoles) {
+
+                        if(grantedRoles[i].Name === 'Service Power User') {
+                            isPowerUser = true;
+                            continue;
+                        }
+
+                         if(grantedRoles[i].Name === 'Service Super User') {
+                            isSuperUser = true;
+                            continue;
+                        }
 
                         if(grantedRoles[i].Name === 'GADM Data Submitter') {
                             isDataSubmitter = true;
@@ -86,6 +98,10 @@
 
                     if(isDataConsumer) {
                         component.set('v.isDashboardsVisible', true);
+                    }
+
+                    if(isPowerUser || isSuperUser) {
+                        component.set('v.isDataSubmissionResultVisible', true);
                     }
 
                     component.set('v.doDisplayTab', true);
