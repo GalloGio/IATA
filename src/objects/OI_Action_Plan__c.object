@@ -233,6 +233,8 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>OI Action Plans</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Data_Governance</fullName>
         <active>true</active>
@@ -261,6 +263,10 @@
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preventive Action</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

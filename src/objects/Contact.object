@@ -19905,7 +19905,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Available_Services_Images__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
@@ -19923,14 +19923,15 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <searchFilterFields>CONTACT.ADDRESS2_CITY</searchFilterFields>
         <searchFilterFields>CONTACT.EMAIL</searchFilterFields>
         <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CONTACT.TITLE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Airline_Contact_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Services__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CONTACT.FIRST_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CONTACT.LAST_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Airline_Contact_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Available_Services_Images__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.PHONE1</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.EMAIL</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CONTACT.ADDRESS2_CITY</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
