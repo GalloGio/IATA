@@ -206,6 +206,7 @@
         <relatedList>RelatedGroupsListOnRecord</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>VERSION.LAST_UPDATE</fields>
         <relatedList>ContentDocumentRelatedList</relatedList>
     </relatedLists>
     <relatedLists>
