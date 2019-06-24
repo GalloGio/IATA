@@ -744,6 +744,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                     const record = { 'sobjectType': 'Case' };
                     record.RecordTypeId = this.caseInitiated.RecordTypeId;
                     record.Subject = this.subject;
+                    record.Compliment__c = true;
                     record.Description = this.description + '\n-COMPLIMENT-';
                     record.BSPCountry__c = this.caseInitiated.Country_concerned_by_the_query__c;
 
