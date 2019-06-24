@@ -23,8 +23,8 @@
                                         <lightning-formatted-text value={message.messageText}></lightning-formatted-text>
                                     </div>
                                     <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_right caseMessagesMyselfTimestamp">
-                                        {message.senderName}, 
-                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                        {message.senderName},&nbsp;
+                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" hour="2-digit"
                                         minute="2-digit" hour12="true"></lightning-formatted-date-time>
                                     </div>
                                 </div>
@@ -33,8 +33,8 @@
                                         <lightning-formatted-text value={message.messageText}></lightning-formatted-text>
                                     </div>
                                     <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_left caseMessagesOtherTimestamp">
-                                        {message.senderName}, 
-                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                        {message.senderName},&nbsp;
+                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" hour="2-digit"
                                         minute="2-digit" hour12="true"></lightning-formatted-date-time>
                                     </div>
                                 </div>
@@ -60,17 +60,16 @@
                 </div>
             </div>
             <div class="customWhiteBackground topLightGrayBorder">
-                <div class="slds-grid slds-wrap slds-p-around_small">
+                <div class="slds-grid slds-wrap slds-p-around_small messageTextareaContainer">
                     <div class="slds-col slds-size_11-of-12" >
-                        <lightning-textarea name="newMessageTextInput"
+                        <textarea
                             placeholder={label.CSP_CaseMessage_InputPlaceholder}
-                            class="hideInputLabel borderlessInput grayInputPlaceholder" 
+                            class="slds-textarea textarea"
                             onchange={handleInputChange}
-                            value={newMessage}
-                            disabled={messageInputLoading} >
-                        </lightning-textarea>
+                            onkeyup={handleKeyUp}
+                            disabled={messageInputLoading}>{newMessage}</textarea>
                     </div>
-                    <div class="slds-col slds-size_1-of-12 slds-float_right" >
+                    <div class="slds-col slds-size_1-of-12 sendIcon" >
                         <lightning-icon class="darkBlueSendButton" if:true={showSendMessageButton} icon-name="utility:send" alternative-text="Send" onclick={sendNewMessageJS}></lightning-icon>
                         <lightning-icon class="lightBlueSendButton" if:false={showSendMessageButton} icon-name="utility:send" alternative-text="Send" ></lightning-icon>
                     </div>

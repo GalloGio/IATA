@@ -31,7 +31,7 @@ export default class PortalHomeCalendar extends LightningElement {
     @track showCaseMessagingSection = false;
     @track messagingHeight = 'height:400px;';
 
-    conversationImageURL = '/csportal/s/CSPortal/Images/Icons/messageBallons.svg';
+    conversationImageURL = PORTAL_RESOURCES + '/images/conversation_image.png';
 
     connectedCallback() {
 
@@ -76,6 +76,12 @@ export default class PortalHomeCalendar extends LightningElement {
         this.showSendMessageButton = event.target.value !== undefined && event.target.value !== '';
     }
 
+    handleKeyUp(event) {
+        this.handleInputChange(event);
+        event.target.style.height  = '5px'
+        event.target.style.height = event.target.scrollHeight+'px';
+    }
+
     sendNewMessageJS(){
         if(this.newMessage.length > 0){
             this.messageInputLoading = true;
@@ -93,6 +99,7 @@ export default class PortalHomeCalendar extends LightningElement {
                         this.dispatchEvent(toastEvent);
 
                         this.newMessage = '';
+                        this.template.querySelector('textarea').value = '';
                         this.showSendMessageButton = false;
                         this.getCaseMessagesJS();
                     }
