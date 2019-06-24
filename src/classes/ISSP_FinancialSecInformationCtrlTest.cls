@@ -69,23 +69,7 @@ private class ISSP_FinancialSecInformationCtrlTest {
                 fs1.Reasonforrequest__c = 'New Application';
                 fs1.Expiry_Date__c = Date.today().addDays(90);
                 fs1.CurrencyIsoCode = 'USD';
-
-                Financial_Security__c fs2 = new Financial_Security__c();
-                fs2.Region__c = 'Europe';
-                fs2.Security_Status__c = 'Active';
-                fs2.Security_Type__c = 'CCG';
-                fs2.Account__c = agency.Id;
-                fs2.Amount__c = 5000;
-                fs2.Financial_Institution__c = fi2.Id;
-                fs2.Reception_Case__c = cse.Id;
-                fs2.Reception_Date__c = Date.today();
-                fs2.Reasonforrequest__c = 'New Application';
-                fs2.Expiry_Date__c = Date.today().addDays(90);
-                fs2.CurrencyIsoCode = 'EUR';
-
-                listFs.add(fs1);
-                listFs.add(fs2);
-                insert listFs;
+                insert fs1;
         }
 
         @isTest 
