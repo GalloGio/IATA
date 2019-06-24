@@ -109,6 +109,9 @@ public class AMS_AccountRoleHelper {
 
 	/*** AMSU-171 ***/
 	public static void calculateCoveredOwnership(List<AMS_Account_Role__c> records, Map<Id,AMS_Account_Role__c> oldMap) {
+
+		if(AMS_AccountRoleCreator.isAccountRoleCreationRunning) return;
+
 		Id ownerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		Set<Id> accountIds = new Set<Id>();
 		for(AMS_Account_Role__c record : records) {
