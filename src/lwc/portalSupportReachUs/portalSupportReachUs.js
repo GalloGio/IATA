@@ -201,7 +201,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 }
                 //used to order alphabetically
                 // eslint-disable-next-line no-confusing-arrow
-                auxmyCategoryOptions.sort((a, b) => (a.label > b.label) ? 1 : -1);
+                auxmyCategoryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
 
                 this.categoryOptions = myCategoryOptions.concat(auxmyCategoryOptions);
                 //eslint-disable-next-line no-console
@@ -261,12 +261,20 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
                 //first element on the picklist
                 let myCountryOptions = [{ label: 'Select Country', value: '' }];
-
+                let auxmyCountryOptions = [];
                 //ex: {label: My Topic, value: my_topic__c}
                 Object.keys(myResult).forEach(function (el) {
-                    myCountryOptions.push({ label: myResult[el], value: el });
+                    auxmyCountryOptions.push({ label: myResult[el], value: el });
                 });
                 this.toggleSpinner();
+
+                //used to order alphabetically
+                // eslint-disable-next-line no-confusing-arrow
+                auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
+
+                myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
+                //eslint-disable-next-line no-console
+
 
                 //set global with the options for later use
                 this.countryOptions = myCountryOptions;
@@ -281,7 +289,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: JSON.parse(JSON.stringify(error)).body.message,
+                        message: JSON.parse(JSON.stringify(error)),
                         variant: 'error',
                         mode: 'pester'
                     })
@@ -362,8 +370,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //used to order alphabetically
         // eslint-disable-next-line no-confusing-arrow
-        auxmyTopicOptions.sort((a, b) => (a.label > b.label) ? 1 : -1);
-
+        auxmyTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
         //set the options of picklist
         this.topicOptions = myTopicOptions.concat(auxmyTopicOptions);
 
@@ -440,7 +447,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //used to order alphabetically
         // eslint-disable-next-line no-confusing-arrow
-        auxmySubTopicOptions.sort((a, b) => (a.label > b.label) ? 1 : -1);
+        auxmySubTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
 
         //set the options
         this.subTopicOptions = mySubTopicOptions.concat(auxmySubTopicOptions);
@@ -594,7 +601,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
             this.getPhoneNumber();
             if (JSON.parse(JSON.stringify(this.phoneNumber)).length > 0) {
-                console.log(JSON.parse(JSON.stringify(this.phoneNumber)));
                 allData.PhoneNumber = JSON.parse(JSON.stringify(this.phoneNumber))[0];
             } else {
                 allData.PhoneNumber = '';
@@ -740,10 +746,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             createCase({ countryiso: this.compliment_countryValue, isConcernCase: false, topic: '', subtopic: '' })
                 .then(createCaseResult => {
                     this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
-                    console.log(this.caseInitiated);
                     const record = { 'sobjectType': 'Case' };
                     record.RecordTypeId = this.caseInitiated.RecordTypeId;
                     record.Subject = this.subject;
+                    record.Compliment__c = true;
                     record.Description = this.description + '\n-COMPLIMENT-';
                     record.BSPCountry__c = this.caseInitiated.Country_concerned_by_the_query__c;
 
