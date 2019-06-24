@@ -1108,6 +1108,8 @@
                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
             	$('[id$="shippingStateInput"]').attr('style', 'display: none;');
             	$(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');            
+            } else {
+                $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
             }
 
             // checks initial state
