@@ -643,7 +643,7 @@ public static Map<String, String> getUserOptions(String portalUser){
 	Map<String,String> userOptions = new Map<String,String>();
 
 	List<User> userContactAccountOptions = [SELECT id, Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
-	                                        Contact.User_Portal_Status__c, ContactId
+	                                        Contact.User_Portal_Status__c, ContactId, Account.ICCS_Membership_Status__c
 	                                        FROM User WHERE Id =:portalUser];
 
 	if(!userContactAccountOptions.isEmpty()) {
