@@ -39,7 +39,13 @@ public class PortalServicesCtrlTest {
                 Agency__c = true
             );
 
-        insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2};
+        Portal_Applications__c serviceTest3 = new Portal_Applications__c (
+                Name = 'serviceTest3',
+                requestable__c=true,
+                Agency__c = true
+            );
+
+        insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3};
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
@@ -153,8 +159,13 @@ public class PortalServicesCtrlTest {
                 Right__c = 'Access Requested',
                 Contact__c = c3.Id
         );
+        Portal_Application_Right__c appRight4 = new Portal_Application_Right__c(
+                Portal_Application__c = serviceTest3.id,
+                Right__c = 'Access Granted',
+                Contact__c = c2.Id
+        );
 
-        insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3};
+        insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3,appRight4};
 
     }
 
@@ -337,5 +348,38 @@ public class PortalServicesCtrlTest {
         
     }
 
+    @isTest
+    public static void PortalServicesCtrlTest_getServiceInformation() {
+        Contact c = [select id from contact where lastName = 'ContactTest2'];
+
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+
+
+        User testeUser1 = new User (
+                Alias = 'newUser', 
+                Email='newuser@testorg.com', 
+                EmailEncodingKey='UTF-8', 
+                LastName='Testing1', 
+                LanguageLocaleKey='en_US', 
+                ContactId = c.id,            
+                LocaleSidKey='en_US',
+                ProfileId = p.Id, 
+                TimeZoneSidKey='America/Los_Angeles', 
+                UserName='newuser@testorg.com',
+                Mgmt_Report_Team__c = true
+            );
+        
+        System.runAs(testeUser1) {
+            Test.StartTest();
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where name ='serviceTest3'];
+            PortalServicesCtrl.ServiceWrapper result = PortalServicesCtrl.getServiceDetails(portalServicelist.get(0).id);
+            
+            System.assertEquals(result.accessGranted, true);
+
+            Test.StopTest();
+        }
+        
+    }
 
 }
