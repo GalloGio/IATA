@@ -477,9 +477,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     }
 
-    get tab0Active() { return this.this.lstTabs[0] != null && return this.lstTabs[0].active; }
-    get tab1Active() { return this.this.lstTabs[1] != null &&  return this.lstTabs[1].active; }
-    get tab2Active() { return this.this.lstTabs[2] != null &&  return this.lstTabs[2].active; }
+    get tab0Active() { return this.lstTabs[0] != null && return this.lstTabs[0].active; }
+    get tab1Active() { return this.lstTabs[1] != null &&  return this.lstTabs[1].active; }
+    get tab2Active() { return this.lstTabs[2] != null &&  return this.lstTabs[2].active; }
     //get tab3Active() { return this.lstTabs[3].active; }
     //get tab4Active() { return this.lstTabs[4].active; }
 }
