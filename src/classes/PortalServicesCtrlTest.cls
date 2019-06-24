@@ -248,9 +248,10 @@ public class PortalServicesCtrlTest {
         
         System.runAs(testeUser1) {
             Test.StartTest();
-
-            string searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
-            PortalServicesCtrl.PagedResult results = PortalServicesCtrl.getUserFilteredServices(searchText, '1');
+			PortalSearchFilterWrapper psfwrapper= new PortalSearchFilterWrapper();
+            
+            psfwrapper.searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
+            PortalServicesCtrl.PagedResult results = PortalServicesCtrl.getUserFilteredServices(JSON.serialize(psfwrapper), '0');
             System.assertEquals(results.totalItemCount == 0, true);
 
             Test.StopTest();
