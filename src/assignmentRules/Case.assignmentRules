@@ -4394,8 +4394,8 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <booleanFilter>(1 OR 2 OR (6 AND 4)) AND (3 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
-                <operation>equals</operation>
-                <value>Spain &amp; Andorra</value>
+                <operation>contains</operation>
+                <value>Spain &amp; Andorra,Spain</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -6635,7 +6635,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>&quot;Hong Kong (SAR), China&quot;,&quot;Macau SAR, China&quot;</value>
+                <value>&quot;Hong Kong SAR, China&quot;,&quot;Macau SAR, China&quot;,&quot;Hong Kong (SAR), China&quot;</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>
