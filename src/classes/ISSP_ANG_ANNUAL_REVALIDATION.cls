@@ -1659,18 +1659,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                 	contactSaved = false;
             	}
 
-            	if (currentAccount.newContact.Agency_owner__c == true || currentAccount.newContact.Agency_role__c == true) {
-            		if (currentAccount.newContact.Time_devoted_to_Agency_business__c == null) {
-                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted));
-                	contactSaved = false;
-                	return;
-            		} else if (currentAccount.newContact.Time_devoted_to_Agency_business__c <= 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c > 100) {
-            			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid));
-                		contactSaved = false;
-                		return;
-            		}
-            	}
-
             	if (currentAccount.newContact.Agency_owner__c == false) {
             		if (currentAccount.newContact.Agency_role__c == false) {
             			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_NoC_Type_Of_Person));
@@ -1683,6 +1671,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
                 		contactSaved = false;
                 		return;
             		}
+					if (currentAccount.newContact.Time_devoted_to_Agency_business__c == null) {
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted));
+                        contactSaved = false;
+                        return;
+                    } else if (currentAccount.newContact.Time_devoted_to_Agency_business__c <= 0 || currentAccount.newContact.Time_devoted_to_Agency_business__c > 100) {
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid));
+                        contactSaved = false;
+                        return;
+                    }
             	}
             }
 
