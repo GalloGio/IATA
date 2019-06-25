@@ -35,26 +35,30 @@ public with sharing class clsDataCategoryContainer {
     	describeCategoryStructureResult = Schema.describeDataCategoryGroupStructures(pairs, false);
         
         for(DescribeDataCategoryGroupStructureResult oneResult : describeCategoryStructureResult){
-        	list<DataCategory> topCat2Group = oneResult.getTopCategories();
-        	for(DataCategory oneCat : topCat2Group) {
-        		list<DataCategory> childCategories = oneCat.getChildCategories();
-				//checks if new portal is live or not to use 3rd level categories
-                if(CSP_Utils.CSPortalRedirectExists()){
-                    childCategories2ndLevel = oneChildCat.getChildCategories();
+            list<DataCategory> topCat2Group = oneResult.getTopCategories();
+            for(DataCategory oneCat : topCat2Group) {
+                list<DataCategory> childCategories = oneCat.getChildCategories();
+                for(DataCategory oneChildCat : childCategories) {                    
+                    if(CSP_Utils.CSPortalRedirectExists()){                        
+                        list<DataCategory> childCategories2ndLevel = oneChildCat.getChildCategories();
+                        for(DataCategory oneChildCateg: childCategories2ndLevel){
+                            lst_DataCategories.add(new clsDataCategory(oneResult.name
+                                                                       ,oneResult.label    
+                                                                       ,oneChildCateg.getName()
+                                                                       ,oneChildCateg.getLabel()
+                                                                       ,oneChildCateg.getChildCategories()));   
+                        }   
+                    }else{                      
+                        lst_DataCategories.add(new clsDataCategory(oneResult.name
+                                                                   ,oneResult.label    
+                                                                   ,oneChildCat.getName()
+                                                                   ,oneChildCat.getLabel()
+                                                                   ,oneChildCat.getChildCategories()));   
+                        
+                    }
                 }
-        		for(DataCategory oneChildCat : childCategories) {
-					list<DataCategory> childCategories2ndLevel = oneChildCat.getChildCategories();
-                    for(DataCategory oneChildCateg: childCategories2ndLevel){
-					lst_DataCategories.add(new clsDataCategory(oneResult.name
-                										  	  ,oneResult.label 	
-                										      ,oneChildCateg.getName()
-                                                              ,oneChildCateg.getLabel()
-                                                              ,oneChildCateg.getChildCategories()));    
-					}    			
-        		}
-        	} 
-        }       
-	}
+            } 
+        } 
 
 	/**
 	 * [print description]
