@@ -480,6 +480,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 															  getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c),
 															  (currentIataCode == heIataCode));
 		ownershipCompleted = checkPreviousOwnership();
+		if(currentAccount.fw.newform.Copy_Ownership_Records__c != null) {
+            formsToCopyOwnersTo = currentAccount.fw.newform.Copy_Ownership_Records__c.split(',');
+        }
 		return null;
 	}
 

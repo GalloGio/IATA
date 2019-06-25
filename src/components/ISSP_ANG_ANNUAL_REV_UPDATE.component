@@ -424,6 +424,7 @@
                                 if (isToClean) {
                                     $('[id$="ShippingCountryList"]').val('');
                                     $('#shipping_country__c > input').val('');
+                                    resetPCHint();
                                 }
                             }
 
