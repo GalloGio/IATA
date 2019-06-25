@@ -333,7 +333,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     closePortalChangeUserStatusWithRefresh() {
-        this.dispatchEvent(new CustomEvent('refreshview'));
         this.changeUserPortalStatus = false;
+        this.dispatchEvent(new CustomEvent('refreshview'));
     }
 }
