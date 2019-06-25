@@ -737,7 +737,7 @@ private class ANG_AccountTriggerHandlerTest {
         integer i=0;
         for (Account a :accs){
 			a.Is_PCI_compliant__c = (Math.mod(i, 2) == 0) ? 'Corporate Card' : 'Nil CC';
-        	a.ANG_IEP_Status__c = 'No IEP Account';
+        	a.ANG_IEP_Status__c = (Math.mod(i, 2) == 0) ? 'No IEP Account' : NULL;
 			i++;
         }
 
