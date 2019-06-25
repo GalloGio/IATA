@@ -41,3 +41,12 @@
     text-overflow: ellipsis;
     display:inline-block;
 }
+
+.recipients {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.recipients lightning-button{
+    padding: 0 10px;
+}

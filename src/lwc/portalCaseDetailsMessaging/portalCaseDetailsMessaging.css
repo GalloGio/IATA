@@ -12,6 +12,10 @@ textarea::placeholder{
     color: #999;
 }
 
+textarea:focus{
+    box-shadow: unset;
+}
+
 .sendIcon {
     display: flex;
     justify-content: center;

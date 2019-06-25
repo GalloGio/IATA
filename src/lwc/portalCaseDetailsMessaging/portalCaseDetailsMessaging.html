@@ -24,8 +24,10 @@
                                     </div>
                                     <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_right caseMessagesMyselfTimestamp">
                                         {message.senderName},&nbsp;
-                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" hour="2-digit"
-                                        minute="2-digit" hour12="true"></lightning-formatted-date-time>
+                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" >
+                                        </lightning-formatted-date-time>,&nbsp;
+                                        <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit" hour12="true">
+                                        </lightning-formatted-date-time>
                                     </div>
                                 </div>
                                 <div key={message.id} if:false={message.isSelf} class="slds-col slds-size_2-of-3 slds-col_bump-right"  >
@@ -34,8 +36,10 @@
                                     </div>
                                     <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_left caseMessagesOtherTimestamp">
                                         {message.senderName},&nbsp;
-                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" hour="2-digit"
-                                        minute="2-digit" hour12="true"></lightning-formatted-date-time>
+                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" >
+                                        </lightning-formatted-date-time>,&nbsp;
+                                        <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit" hour12="true">
+                                        </lightning-formatted-date-time>
                                     </div>
                                 </div>
                             </template>

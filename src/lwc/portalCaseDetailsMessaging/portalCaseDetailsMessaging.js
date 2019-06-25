@@ -4,6 +4,8 @@ import submitNewMessage from '@salesforce/apex/PortalCasesCtrl.submitNewMessage'
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+import PORTAL_RESOURCES from '@salesforce/resourceUrl/csPortalResources';
+
 import { getParamsFromPage } from'c/navigationUtils';
 
 //custom labels
@@ -78,7 +80,7 @@ export default class PortalHomeCalendar extends LightningElement {
 
     handleKeyUp(event) {
         this.handleInputChange(event);
-        event.target.style.height  = '5px'
+        event.target.style.height  = '5px';
         event.target.style.height = event.target.scrollHeight+'px';
     }
 
@@ -99,6 +101,7 @@ export default class PortalHomeCalendar extends LightningElement {
                         this.dispatchEvent(toastEvent);
 
                         this.newMessage = '';
+                        this.template.querySelector('textarea').style.height  = '5px';
                         this.template.querySelector('textarea').value = '';
                         this.showSendMessageButton = false;
                         this.getCaseMessagesJS();
