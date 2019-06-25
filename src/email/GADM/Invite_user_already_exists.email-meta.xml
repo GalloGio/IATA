@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Invite user - already exists</name>
+    <style>none</style>
+    <subject>GADM Service Invitation</subject>
+    <textOnly>Dear {!IF(Contact.LastName= &quot;&quot;, &quot;User&quot;, Contact.FirstName + &apos; &apos;+ Contact.LastName )}, to access the GADM service go to *link*, log in and request the GADM service.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
