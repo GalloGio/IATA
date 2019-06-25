@@ -73,6 +73,7 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_ACCOUNT_FIELDS_TO_VALIDATE</fullName>
         <description>This field set is used to know which fields cannot contain non latin characters</description>
@@ -2923,6 +2924,91 @@
         </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
+    <fieldSets>
+        <fullName>zqu__CustomAccountFields</fullName>
+        <description>Fields in this field set will be included in the account data when quotes for new billing accounts are sent to Zuora.</description>
+        <label>Custom Account Fields</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Fields_For_Select_Billing_Account</fullName>
+        <availableFields>
+            <field>AccountSource</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>AnnualRevenue</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Industry</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>ParentId</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Rating</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Sic</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>SicDesc</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Type</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <description>Fields in this field set will be displayed in the list of Select Billing Account Component</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>AccountNumber</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Account Fields</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>zqu__Lookup_Popup_Window</fullName>
+        <description>Fields in this field set will be displayed in the list of lookup component.</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>AccountNumber</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Lookup Popup Window</label>
+    </fieldSets>
     <fields>
         <fullName>ACH_Member__c</fullName>
         <defaultValue>false</defaultValue>
@@ -5742,35 +5828,22 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </valueSet>
     </fields>
     <fields>
-        <fullName>BSP_non_air__c</fullName>
-        <externalId>false</externalId>
-        <label>BSP non air</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Yes</fullName>
-                    <default>false</default>
-                    <label>Yes</label>
-                </value>
-                <value>
-                    <fullName>No</fullName>
-                    <default>false</default>
-                    <label>No</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>BSPlink_code__c</fullName>
         <externalId>false</externalId>
         <label>BSPlink code</label>
         <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Baggage_Tag_Range_Code__c</fullName>
+        <description>Numeric code for the Baggage Tag Range.</description>
+        <externalId>false</externalId>
+        <label>Baggage Tag Range Code</label>
+        <length>255</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -6158,14 +6231,14 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Fuel Supplier</label>
                 </value>
                 <value>
-                    <fullName>GDS</fullName>
-                    <default>false</default>
-                    <label>GDS</label>
-                </value>
-                <value>
                     <fullName>General Aviation</fullName>
                     <default>false</default>
                     <label>General Aviation</label>
+                </value>
+                <value>
+                    <fullName>Global Distribution System</fullName>
+                    <default>false</default>
+                    <label>Global Distribution System</label>
                 </value>
                 <value>
                     <fullName>Governmental Aviation</fullName>
@@ -6290,7 +6363,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Non-IATA Cargo Agent</label>
+                    <label>Non-IATA Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Passenger Agent</fullName>
@@ -6625,7 +6698,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
-                <valueName>GDS</valueName>
+                <valueName>Global Distribution System</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
@@ -10027,6 +10100,19 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Financial_Assessment_Points__c</fullName>
+        <description>Number of points obtained on the financial assessment (only for Hong Kong and Macao)</description>
+        <externalId>false</externalId>
+        <label>Financial Assessment Points</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Financial_Review_Result__c</fullName>
@@ -15656,11 +15742,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <label>Association</label>
                 </value>
                 <value>
-                    <fullName>Cargo Agent</fullName>
-                    <default>false</default>
-                    <label>Cargo Agent</label>
-                </value>
-                <value>
                     <fullName>Education</fullName>
                     <default>false</default>
                     <label>Education</label>
@@ -15674,6 +15755,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Financial Institution</fullName>
                     <default>false</default>
                     <label>Financial Institution</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>General Sales Agent</fullName>
@@ -25960,6 +26046,18 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Org_Account_Hierarchy</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>ACCOUNT.INDUSTRY</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>Org_Account_Hierarchy</label>
+    </listViews>
+    <listViews>
         <fullName>OthersuppliersEurope</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.SITE</columns>
@@ -30056,17 +30154,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35658,17 +35745,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -35798,10 +35874,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -35811,6 +35883,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43010,17 +43086,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -49091,17 +49156,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -55122,17 +55176,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -55262,10 +55305,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -55275,6 +55314,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64523,17 +64566,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -70259,17 +70291,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -70395,10 +70416,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -70408,6 +70425,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -79501,17 +79522,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -79641,10 +79651,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -79654,6 +79660,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85443,17 +85453,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -85559,6 +85558,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Domestic Agent</fullName>
                 <default>false</default>
             </values>
@@ -85579,10 +85582,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -85592,6 +85591,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85615,7 +85618,23 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local office</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Passenger Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85680,6 +85699,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -91920,17 +91943,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>BSP_non_air__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -92060,10 +92072,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -92073,6 +92081,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -99779,13 +99791,14 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Field_Head_Office__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IATA_Member__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Strategic_Partners__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ICCS_Membership_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IATA_ISO_Country__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
@@ -99891,16 +99904,17 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
     <validationRules>
         <fullName>Airline_HQ_Account_Type</fullName>
         <active>true</active>
-        <description>For Airline HQ only the Account Management Team can update the Account Type field</description>
+        <description>For Airline HQ only the Account Management Team can update the Account Type and Website field</description>
         <errorConditionFormula>AND(
- RecordType.DeveloperName=&apos;IATA_Airline&apos;,
- ISCHANGED(Account_Type__c),
- NOT(CONTAINS($Profile.Name, &quot;Developer&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+OR(
+ISCHANGED(Account_Type__c),
+ISCHANGED(Website)
+),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
 )</errorConditionFormula>
-        <errorDisplayField>Account_Type__c</errorDisplayField>
-        <errorMessage>For Airline HQ, only the Account Management Team can update the Account Type field</errorMessage>
+        <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>
@@ -99923,14 +99937,14 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
         <active>true</active>
         <description>Only airlines can be IATA members.</description>
         <errorConditionFormula>AND(
-	NOT(ISNEW()),
-	OR(
-		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
-		RecordType.DeveloperName=&apos;Operator&apos;
-	),
-	ISCHANGED(Membership_status__c),
-	$Permission.Airline_HQ_MER_Membership,
-	NOT(ISPICKVAL(Sector__c,&quot;Airline&quot;))
+NOT(ISNEW()),
+OR(
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+RecordType.DeveloperName=&apos;Operator&apos;
+),
+$Permission.Airline_HQ_MER_Membership,
+NOT(ISPICKVAL(Sector__c,&apos;Airline&apos;)),
+NOT(ISPICKVAL(Membership_status__c,&apos;Non-IATA member&apos;))
 )</errorConditionFormula>
         <errorDisplayField>Membership_status__c</errorDisplayField>
         <errorMessage>Only airlines can be IATA members.</errorMessage>
@@ -99966,8 +99980,7 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
 		ISCHANGED(AOC_Expiry_Date__c),
 		ISCHANGED(Legal_name__c),
 		ISCHANGED(Area_of_Operation__c),
-		ISCHANGED(Membership_SITA__c),
-		ISCHANGED(MITA_Member__c)
+		ISCHANGED(Membership_SITA__c)
 	)
 )</errorConditionFormula>
         <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
@@ -101180,5 +101193,16 @@ userid={!User.Id}</url>
         <openType>sidebar</openType>
         <page>pi__PardotAccountSendToPardot</page>
         <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>zqu__New_Quote</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Quote</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>{!URLFOR($Site.BaseRequestUrl+&apos;/apex/zqu__QuoteOption&apos;, null)}?crmAccountId={!Account.Id}&amp;retUrl=/{!Account.Id}</url>
     </webLinks>
 </CustomObject>

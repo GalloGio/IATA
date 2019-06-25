@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents a deployment plan name and dates for IATA projects</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,8 +53,10 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Deployment_Date__c</fullName>
+        <description>Date for deployment</description>
         <externalId>false</externalId>
         <label>Deployment Date</label>
         <required>false</required>
@@ -62,6 +65,7 @@
     </fields>
     <fields>
         <fullName>IATA_Project__c</fullName>
+        <description>Name of the IATA project to be deployed</description>
         <externalId>false</externalId>
         <label>IATA Project</label>
         <required>false</required>
@@ -105,6 +109,7 @@
     </fields>
     <fields>
         <fullName>Week__c</fullName>
+        <description>Week of deployment</description>
         <externalId>false</externalId>
         <label>Week</label>
         <precision>2</precision>
