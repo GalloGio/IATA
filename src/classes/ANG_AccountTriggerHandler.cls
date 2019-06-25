@@ -124,7 +124,7 @@ public class ANG_AccountTriggerHandler {
 		List<Account> downGradeAtoB = new List<Account>();
 		List<Account> downGradeBtoC = new List<Account>();
 		List<Account> createFOP = new List<Account>();
-		Set<Id> changeCodesForRiskChangesLst = new Set<Account>();
+		Set<Id> changeCodesForRiskChangesLst = new Set<Id>();
 
 		for(Account acc : triggerNew){
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Risk Status - ' + oldMap.get(acc.Id).ANG_HE_RiskStatus__c);
