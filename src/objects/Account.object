@@ -73,7 +73,6 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
-    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_ACCOUNT_FIELDS_TO_VALIDATE</fullName>
         <description>This field set is used to know which fields cannot contain non latin characters</description>
