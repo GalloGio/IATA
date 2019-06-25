@@ -3405,7 +3405,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_SearchingOn</shortDescription>
-        <value>Searching on Case Number. Subject &amp; Description</value>
+        <value>Searching on Case Number, Subject or Description</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>
