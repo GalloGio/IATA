@@ -7568,15 +7568,6 @@ IFAP Application.</description>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Global_ID__c</fullName>
-        <description>global unique identifier</description>
-        <displayFormat>003{0000000000}</displayFormat>
-        <externalId>true</externalId>
-        <label>Global ID</label>
-        <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
-    </fields>
-    <fields>
         <fullName>HasOptedOutOfEmail</fullName>
         <trackHistory>true</trackHistory>
     </fields>

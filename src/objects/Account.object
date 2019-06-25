@@ -10455,15 +10455,6 @@ WSPN-Worldspan</inlineHelpText>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Global_ID__c</fullName>
-        <description>global unique identifier</description>
-        <displayFormat>001{0000000000}</displayFormat>
-        <externalId>true</externalId>
-        <label>Global ID</label>
-        <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
-    </fields>
-    <fields>
         <fullName>Guaranteed_amount__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
