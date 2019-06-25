@@ -49,12 +49,16 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track listSelected = [];
     @track contactTypeStatus = [];
 
-    _labels = { SaveLabel, CancelLabel,MembershipFunction,Area };
+    @track changeUserPortalStatus = false;
+
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
     connectedCallback() {
         this.showEdit = (this.showEdit === 'true' ? true : false);
+
+        console.log('BLA: ', JSON.parse(JSON.stringify(this.fields)));
 
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
@@ -98,27 +102,31 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 this.functionOptions = options;
             });
 
-
-            let contactTypeStatus = [];
-            let contactType = [];
-            let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
-            fieldsToIterate.forEach(function (item) {
-                if (item.isAccessibility) {
-                    contactType = item.accessibilityList;
-                    item.accessibilityList.forEach(function (acc) {
-                        if (acc.checked) {
-                            contactTypeStatus.push(acc.label);
-                        }
-                    });
-                }
-            });
-
-            this.accessibilityText = contactTypeStatus.join(', ');
-            this.contactTypeStatus = contactType;
-            this.listSelected = contactTypeStatus;
-
         }
 
+    }
+
+    get accessibilityGetter() {
+
+        let contactTypeStatus = [];
+        let contactType = [];
+        let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
+        fieldsToIterate.forEach(function (item) {
+            if (item.isAccessibility) {
+                contactType = item.accessibilityList;
+                item.accessibilityList.forEach(function (acc) {
+                    if (acc.checked) {
+                        contactTypeStatus.push(acc.label);
+                    }
+                });
+            }
+        });
+
+        this.accessibilityText = contactTypeStatus.join(', ');
+        this.contactTypeStatus = contactType;
+        this.listSelected = contactTypeStatus;
+
+        return this.accessibilityText
     }
 
     openModal() { this.showEditModal = true; }
@@ -127,7 +135,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     loaded(event) {
         this.isLoading = false;
         let fields = JSON.parse(JSON.stringify(event.detail.objectInfos.Contact.fields));
-        
+
     }
     loadedEdit() {
         this.isLoadingEdit = false;
@@ -139,11 +147,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.isSaving = false;
 
         let listSelected = JSON.parse(JSON.stringify(this.listSelected));
-        if (listSelected.length > 0) {
-            this.dispatchEvent(new CustomEvent('refreshview'));
-        }
+        this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
-        eval("$A.get('e.force:refreshView').fire();");
+        //eval("$A.get('e.force:refreshView').fire();");
     }
 
     handleError(event) {
@@ -251,7 +257,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let type = event.target.dataset.type;
         let isArea = (type == 'Area__c');
 
-        let options =  isArea ? JSON.parse(JSON.stringify(this.areasOptions)) : JSON.parse(JSON.stringify(this.functionOptions));
+        let options = isArea ? JSON.parse(JSON.stringify(this.areasOptions)) : JSON.parse(JSON.stringify(this.functionOptions));
         let selectedV = isArea ? JSON.parse(JSON.stringify(this.selectedvalues)) : JSON.parse(JSON.stringify(this.selectedValuesFunction));
 
 
@@ -270,10 +276,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
         }
 
-        if(isArea){
+        if (isArea) {
             this.areasOptions = options;
             this.selectedvalues = selectedV;
-        }else{
+        } else {
             this.functionOptions = options;
             this.selectedValuesFunction = selectedV;
         }
@@ -302,7 +308,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let selected = event.target.dataset.item;
         let type = event.target.dataset.type;
 
-        let fieldValue =  JSON.parse(JSON.stringify(this.listSelected));
+        let fieldValue = JSON.parse(JSON.stringify(this.listSelected));
 
         if (!fieldValue.includes(selected)) {
             fieldValue.push(selected)
@@ -318,4 +324,16 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     }
 
+    openChangeUserPortalStatus() {
+        this.changeUserPortalStatus = true;
+    }
+
+    closePortalChangeUserStatus() {
+        this.changeUserPortalStatus = false;
+    }
+
+    closePortalChangeUserStatusWithRefresh() {
+        this.dispatchEvent(new CustomEvent('refreshview'));
+        this.changeUserPortalStatus = false;
+    }
 }
