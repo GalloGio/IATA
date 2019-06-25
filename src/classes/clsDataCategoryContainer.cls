@@ -58,7 +58,8 @@ public with sharing class clsDataCategoryContainer {
                     }
                 }
             } 
-        } 
+        }
+    }
 
 	/**
 	 * [print description]
