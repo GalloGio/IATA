@@ -1,18 +1,18 @@
 <template>
-    <div class="customBorderlessCardWhite">
+    <div class="customLightShadow background-white">
 
         <!-- Header Part -->
-        <div class="slds-m-vertical_small">
+        <div class="slds-p-top_x-large slds-p-bottom_x-small">
             <div style="display: flex;justify-content: center;align-items: center;">
                 <div class="triangleRight" style="width:20px;">
                     &nbsp;
                 </div>
                 <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
                     <div style="width:100%;">
-                        <span class="text-small text-darkGray slds-p-left_small cardTitle"><slot name="cardTitle"></slot></span>
+                        <span class="text-medium text-darkGray text-bold slds-p-left_small"><slot name="cardTitle"></slot></span>
                     </div>
                 </div>
-                <div class="text-xxsmall">
+                <div class="text-xxsmall slds-m-right_large">
                     <slot name="cardButton"></slot>
                 </div>
             </div>
@@ -20,8 +20,9 @@
 
 
         <!-- Body Part -->
-        <slot name="cardBody"></slot>
-
+        <div class="slds-m-horizontal_x-large">
+            <slot name="cardBody"></slot>
+        </div>
         
     </div>
     

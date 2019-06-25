@@ -15,7 +15,7 @@
 }
 
 .bigTile{
-    height:252px;
+    height:228px;
 }
 
 .bigTile h1{
@@ -23,7 +23,7 @@
 }
 
 .smallTile{
-    height: 120px;
+    height: 110px;
 }
 
 .smallTile h1{
@@ -68,7 +68,7 @@
 }
 
 .cardBodyContent {
-    min-height: 331px;
+    min-height: 296px;
 }
 
 .serviceImageStyles {

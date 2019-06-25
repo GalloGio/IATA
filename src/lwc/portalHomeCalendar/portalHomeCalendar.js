@@ -47,11 +47,12 @@ export default class PortalHomeCalendar extends LightningElement {
         .then(results => {
             if(results === false){
                 //renders if user is not airline or agency
+                this.loading = true;
                 this.showCalendar = true;
                 this.getInitialMonth();
             }
         });
-        
+
     }
 
     get showCalendar(){

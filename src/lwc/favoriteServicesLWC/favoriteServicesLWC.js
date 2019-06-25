@@ -1,4 +1,4 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavoriteServicesList';
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
@@ -18,8 +18,7 @@ export default class FavoriteServicesLWC extends LightningElement {
     @track showPagination;
     @track sliderIcons;
 
-    //api variables
-    @api isLoaded = false;
+    @track isLoading = true;
 
     //global variables
     page = 1;
@@ -35,8 +34,6 @@ export default class FavoriteServicesLWC extends LightningElement {
 
     //Same as doInit() function on old aura components
     connectedCallback() {
-        //toggles the loading spinner on/off
-        this.toggleSpinner();
 
         /* @salesforce/apex/PortalServicesCtrl.getUserServicesList' (shared apex code)
         *  getUserServicesList grabs the Services of the Contact logged in on the portal and stores on the result
@@ -80,11 +77,10 @@ export default class FavoriteServicesLWC extends LightningElement {
                 }
 
                 //stop the spinner.
-                this.toggleSpinner();
+                this.isLoading = false;
             })
             .catch(error => {
-                //throws error
-                this.error = error;
+                this.isLoading = false;
             });
     }
 
@@ -94,10 +90,10 @@ export default class FavoriteServicesLWC extends LightningElement {
             for (let j = 0; j < this.globaList[i].length; j++) {
                 for (let k = 0; k < this.globaList[i][j].length; k++) {
                     if (this.globaList[i][j].length === 1) {
-                        this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-vertical_small aroundLightGrayBorder';
+                        this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-vertical_x-small aroundLightGrayBorder';
                     }
                     if (this.globaList[i][j].length === 2) {
-                        this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-vertical_small aroundLightGrayBorder';
+                        this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-vertical_x-small aroundLightGrayBorder';
                     }
                 }
             }
@@ -202,13 +198,11 @@ export default class FavoriteServicesLWC extends LightningElement {
         this.sliderIconsRenderer();
     }
 
-    //method that controls the loading spinner action
-    toggleSpinner() {
-        this.isLoaded = !this.isLoaded;
-    }
-
     //method that controls the redirection of the service's links
     redirect(event) {
+
+        this.isLoading = true;
+
         //attributes stored on element that is related to the event
         const appUrlData = event.target.attributes.getNamedItem('data-appurl');
         const appFullUrlData = event.target.attributes.getNamedItem('data-appfullurl');
@@ -224,12 +218,9 @@ export default class FavoriteServicesLWC extends LightningElement {
         const recordInput = { fields };
 
         updateRecord(recordInput)
-            .then(() => {
-                console.info('Updated Last Visit Date successfully!');
-            })
-            .catch(error => {
-                console.error('err ', error.body.message);
-            });
+        .then(() => {
+            console.info('Updated Last Visit Date successfully!');
+        });
         
         let myUrl = appUrlData.value;
         
@@ -268,8 +259,6 @@ export default class FavoriteServicesLWC extends LightningElement {
                     window.open(myUrl);
                 }
             } else {
-                //keep the spinner on until the page redirects
-                this.toggleSpinner();
                 //redirects on the same page
                 window.location.href = myUrl;
             }

@@ -3,7 +3,7 @@
     <c-portal-custom-card-container>
 
         <span slot="cardTitle">
-            {label.CSP_RecentCases}
+            <span class="text-small">{label.CSP_RecentCases}</span>
         </span>
 
         <span slot="cardButton" if:true={dataRecords}>
@@ -18,12 +18,11 @@
         </span>
 
         <span slot="cardBody">
-
-            <div class="slds-m-around_medium cardBodyContent">
-                <template if:true={loading}>
-                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                </template>            
-                <template if:false={loading}>
+            <div class="cardBodyContent">
+                <div if:true={loading} class="spinnerContainer">
+                    <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                </div>
+                <div if:false={loading}>
                     <div if:true={dataRecords}>
                         <lightning-datatable
                             key-field="Id"
@@ -50,9 +49,8 @@
                             </div>
                         </div>
                     </div>
-                </template>
+                </div>
             </div>
-
         </span>
 
     </c-portal-custom-card-container>
