@@ -323,6 +323,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             //Set inital value country Picklist/Combobox
             this.countryValue = '';
 
+            let divToTop = this.template.querySelectorAll('.category')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
+
         } else {
             //Hide Topic Picklist/Combobox
             this.topicCB = false;
@@ -402,6 +405,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             this.subTopic = '';
             //Set inital value country Picklist/Combobox
             this.countryValue = '';
+
+            let divToTop = this.template.querySelectorAll('.topic')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
         } else {
             //Hide subTopic Picklist/Combobox
             this.subTopicCB = false;
@@ -487,6 +493,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             this.emergencyButton = false;
             this.isEmergency = false;
 
+            let divToTopCountry = this.template.querySelectorAll('.subtopic')[0].offsetTop;
+            window.scrollTo({ top: divToTopCountry, left: 0, behavior: 'smooth' });
             //required to not show the country picklist if the selected value is included here
             let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
             if (countryExclusion.includes(this.topic + '__c')) {
@@ -511,6 +519,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.countryValue = event.target.value;
         if (this.countryValue !== "") {
             this.optionsButton = true;
+            let divToTop = this.template.querySelectorAll('.country')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
             if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                 && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
                 this.emergencyButton = true;

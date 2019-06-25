@@ -82,7 +82,7 @@
                 </div>
                 <div class="slds-align_absolute-center slds-p-bottom_xx-large">
                     <div class="slds-size_1-of-2">
-                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large category ">
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Category}</p>
                             <lightning-combobox name="progress"
                                 class="cursorPointerComboBox text-xxsmall customPickList"
@@ -91,7 +91,7 @@
                                 placeholder="Select Category" size=5>
                             </lightning-combobox>
                         </div>
-                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large" if:true={topicCB}>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large topic " if:true={topicCB}>
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Topic_Label}</p>
                             <lightning-combobox name="progress"
                                 class="cursorPointerComboBox text-xxsmall customPickList"
@@ -100,7 +100,7 @@
                                 placeholder="Select Topic" size=5>
                             </lightning-combobox>
                         </div>
-                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large" if:true={subTopicCB}>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large subtopic " if:true={subTopicCB}>
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Sub_Topic_Label}</p>
                             <lightning-combobox name="progress"
                                 class="cursorPointerComboBox text-xxsmall customPickList"
@@ -109,7 +109,7 @@
                                 onchange={subTopicHandler} data-id="topicCB">
                             </lightning-combobox>
                         </div>
-                        <div class="slds-p-horizontal_xx-large slds-p-bottom_xx-large" if:true={countryCB}>
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_xx-large country " if:true={countryCB}>
                             <p class="text-xxsmall">{label.csp_SupportReachUs_Country_Label}</p>
                             <lightning-combobox name="progress"
                                 class="cursorPointerComboBox text-xxsmall customPickList"
@@ -118,7 +118,7 @@
                                 onchange={countryHandler}>
                             </lightning-combobox>
                         </div>
-                        <div class="slds-checkbox slds-p-bottom_xx-large slds-align_absolute-center"
+                        <div class="slds-checkbox slds-p-bottom_xx-large slds-align_absolute-center emergency "
                             if:true={emergencyButton}>
                             <input type="checkbox" name="options" id="checkbox" value={isEmergency}
                                 onchange={handleEmergency} />
@@ -129,7 +129,7 @@
                                 </span>
                             </label>
                         </div>
-                        <div class="slds-p-bottom_xx-large slds-p-top_large slds-align_absolute-center text-xsmall"
+                        <div class="slds-p-bottom_xx-large slds-p-top_large slds-align_absolute-center text-xsmall options "
                             if:true={optionsButton}>
                             <lightning-button onclick={supportOptionsHandler}
                                 label={label.csp_SupportReachUs_btn_Support_Label}

@@ -52,7 +52,7 @@
                         <h1 class="text-large text-bold">{!$Label.c.csp_Support_Label}</h1>
                         <h2 class="text-xsmall slds-p-top_small">{!$Label.c.csp_Options_Label}</h2>
                     </div>
-                    <div class="slds-p-bottom_xx-large lower_gray_panel_half_border">
+                    <!-- <div class="slds-p-bottom_xx-large lower_gray_panel_half_border">
                         <div class="slds-p-vertical_large slds-text-align_center">
                             <h2 class="text-medium text-bold">{!$Label.c.csp_Suggestion_label}</h2>
                         </div>
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="slds-grid grid-margin-bottom-justified slds-wrap 
                         slds-p-bottom_xx-large slds-align_absolute-center ">
                         <div class="slds-col tile-column slds-size_1-of-2 
