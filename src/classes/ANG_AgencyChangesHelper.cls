@@ -136,6 +136,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 			accountIdsInvolvedSet.add(oscar.Account__c);
 
+			if(containsChange(new List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY}, oscar.ANG_Type_Of_Change__c) && oscar.Previous_HE__c != NULL){
+				accountIdsInvolvedSet.add(oscar.Previous_HE__c);
+			}
+
 			changesContainer.accountsMap = getAccounts(accountIdsInvolvedSet);
 
 			String currHEAccount = changesContainer.accountsMap.get(oscar.Account__c).ParentId == null ? oscar.Account__c : changesContainer.accountsMap.get(oscar.Account__c).ParentId;
@@ -215,10 +219,13 @@ public with sharing class ANG_AgencyChangesHelper {
 					
 					if(config == null) config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
-					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY}, oscar.ANG_Type_Of_Change__c))
+					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
+						oscar.Previous_HE__c = currHEAccount;
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
-					else 
+					}
+					else {
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+					}
 					
 					System.debug('[ANG_AgencyChangesHelper] Checkpoint2 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
