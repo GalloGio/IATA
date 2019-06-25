@@ -420,7 +420,7 @@ public class Data_Submission_List_CTRL_TEST {
     }
 
     @IsTest
-    private static void getRecords2Test() {
+    private static void getRecordsExceptionTest() {
 
         User testUser = [SELECT Id, ContactId FROM User WHERE Email = 'Neo.Smith.test@somedomain.com'];
 
@@ -436,7 +436,7 @@ public class Data_Submission_List_CTRL_TEST {
 
         Data_Submission__c submission = new Data_Submission__c();
         submission.User__c = testUser.ContactId;
-        submission.Result__c = 'Test result for status success';
+        submission.Result__c = 'Test result for status ' + testStatus;
         submission.Status__c = testStatus;
         submission.Type__c = 'Submission';
         submission.Submission_date__c = System.now();
@@ -448,15 +448,12 @@ public class Data_Submission_List_CTRL_TEST {
         String records = '';
 
         System.runAs(testUser) {
-            records = Data_Submission_List_CTRL.getRecords('Data_Submission__c', new List<String>{'Type__c', 'User__c', 'Result__c', 'Status__c'}, 'Status__c = ' + '\'' + testStatus + '\'', 'User__c', '');
+            records = Data_Submission_List_CTRL.getRecords('Data_Submission__c', new List<String>{'Type__c', 'User__c', 'Result__c', 'Status__c'}, 'Status = AND'/*'Status__c = ' + '\'' + testStatus + '\''*/, 'User__c', 'DESC');
         }
 
         Test.stopTest();
 
-        //only one Id in string
-        System.assertEquals(records.indexOf('Id'), records.lastIndexOf('Id'), 'Incorrect number of Data_Submission__c objects retrieved!');
-        //correct object retrieved
-        System.assertEquals(true, records.contains(submission.Id), 'Wrong Data_Submission__c object retrieved!');
+        System.assertEquals(true, records.contains('error_message'), 'Error should be thrown!');
 
     }
 

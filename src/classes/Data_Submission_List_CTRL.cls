@@ -332,6 +332,8 @@ public without sharing class Data_Submission_List_CTRL {
 
             info.usersWithSameBusinessUnits = new List<Id>(userIdWithSameBusinessUnit);
 
+        }else{
+            info.usersWithSameBusinessUnits = getUsersWithoutBusinessUnits(userId);
         }
 
         List<Account> visibleAccounts = Contact_Roles_Helper.getUserAccounts(userId);
@@ -344,6 +346,28 @@ public without sharing class Data_Submission_List_CTRL {
 
         return info;
 
+    }
+
+
+    private static List<Id> getUsersWithoutBusinessUnits(Id userId) {
+        List<Id> usersWithoutBusinessUnits = new List<Id>();
+
+        Set<Id> contactIds = new Set<Id>();
+        List<Contact_Roles_Helper.AggregatedRecordWrapper> wrappers = Contact_Roles_Helper.getContactsVisibleToUser(userId, true, false, new List<Id>(), null, true);
+        for(Contact_Roles_Helper.AggregatedRecordWrapper wrapper : wrappers) {
+            contactIds.add(wrapper.con.Id);
+        }
+
+        List<User> users = new List<User>();
+        if(! contactIds.isEmpty()) {
+            users = [SELECT Id FROM User WHERE ContactId = :contactIds];
+        }
+
+        for(User u : users) {
+            usersWithoutBusinessUnits.add(u.Id);
+        }
+
+        return usersWithoutBusinessUnits;
     }
 
 
@@ -364,6 +388,9 @@ public without sharing class Data_Submission_List_CTRL {
 
             if (accountsString.length() > 0) {
                 whereClause += 'Submitter__r.AccountId IN ' + accountsString;
+            }else{
+                //no accounts visible - show only own Data Submissions
+                whereClause += 'Submitter__c =\'' + userId + '\'';
             }
         }else if(isSuperUser) {
             String usersString = '';
@@ -377,7 +404,13 @@ public without sharing class Data_Submission_List_CTRL {
                 usersString += ')';
             }
 
-            whereClause += 'Submitter__c IN ' + usersString;
+            if(usersString.length() > 0) {
+                whereClause += 'Submitter__c IN ' + usersString;
+            }else{
+                //no other users visible - show only own Data Submissions
+                whereClause += 'Submitter__c =\'' + userId + '\'';
+            }
+
         }else if(isDataSubmitter) {
             whereClause += 'Submitter__c =\'' + userId + '\'';
         }
