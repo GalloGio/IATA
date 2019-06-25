@@ -252,6 +252,17 @@ public with sharing class CSP_Utils {
         pr.setCookies(new Cookie[]{new Cookie('lang',lang,null,100000000,false)});*/
    }
 
+       //Flag used to know if the new portal (CSPortal) is live or not.
+    @AuraEnabled
+    public static Boolean CSPortalRedirectExists(){
+        ISSP_CS__c issp_cs = ISSP_CS__c.getValues('CS Portal Redirect');
+        
+        if(issp_cs != null){
+            return true;
+        }
+        return false;
+    }
+
     /* 
     * @description Return a public URL from a shared file
     * @description The public URL (DistributionPublicUrl) is not ready in the moment it is inserted, so it's been retrieved using a SOQL instead
