@@ -266,6 +266,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         createCase({ countryiso: this.countryISO, isConcernCase: this.isConcernCase, topic: this.topic, subtopic: this.subtopic })
             .then(createCaseResult => {
                 this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
+                console.log(this.caseInitiated);
             });
     }
 
@@ -567,5 +568,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     //it really, really, really navigates to all cases. Promise!
     navigateToAllCases() {
         window.location.href = "/csportal/s/cases-list";
+    }
+
+    goBackToSupportReachUs() {
+        window.location.href = "/csportal/s/support-reach-us?category="
+            + this.category + "&topic=" + this.topic + "&subtopic=" + this.subtopic;
     }
 }

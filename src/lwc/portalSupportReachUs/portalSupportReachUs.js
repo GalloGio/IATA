@@ -210,7 +210,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 this.pageParams = getParamsFromPage();
                 if ('category' in this.pageParams && this.pageParams.category !== '') {
                     const checkCategory = obj => obj.value === this.pageParams.category;
-                    if (myCategoryOptions.some(checkCategory)) {
+                    if (this.categoryOptions.some(checkCategory)) {
                         this.category = this.pageParams.category;
                         this.topicCB = true;
                         this.topicValuesGetter();
@@ -274,7 +274,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
                 myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
                 //eslint-disable-next-line no-console
-
 
                 //set global with the options for later use
                 this.countryOptions = myCountryOptions;
@@ -377,7 +376,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         //set Topic value if included in URL
         if ('topic' in this.pageParams && this.pageParams.topic !== '') {
             const checkTopic = obj => obj.value === this.pageParams.topic;
-            if (myTopicOptions.some(checkTopic)) {
+            if (this.topicOptions.some(checkTopic)) {
 
                 this.topic = this.pageParams.topic;
                 this.subTopicCB = true;
@@ -455,7 +454,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
             const checkSubTopic = obj => obj.value === this.pageParams.subtopic;
-            if (mySubTopicOptions.some(checkSubTopic)) {
+            if (this.subTopicOptions.some(checkSubTopic)) {
                 this.subTopic = this.pageParams.subtopic;
 
                 //Excluded country list. 
