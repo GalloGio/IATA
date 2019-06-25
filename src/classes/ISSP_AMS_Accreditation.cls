@@ -7492,6 +7492,7 @@ system.debug('aqui sectorValue ' + sectorValue);
             auxAccreditCont.AddressCity__c = accRole.Contact__r.OtherCity;
             auxAccreditCont.AddressPostcode__c = accRole.Contact__r.OtherPostalCode;
             auxAccreditCont.AddressCountry__c = accRole.Contact__r.OtherCountry;
+            auxAccreditCont.AddressState__c = accRole.Contact__r.OtherState;
 
         }else
         //Check if owner is PERSON

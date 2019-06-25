@@ -289,7 +289,7 @@
         <script>
 
             var contactStateMap = JSON.parse(JSON.stringify({!stateListByCountryName}));
-        	console.log(contactStateMap);  
+        	var countryMap = JSON.parse(JSON.stringify({!countryInfoByCountryNameMapString})); 
         
             var defaultHQCountry = '{!currentAccount.isocountry.ISO_Code__c}';
 
@@ -971,7 +971,7 @@
                     <div class="modal-footer">
                         <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" id="submitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
                             oncomplete="if ({!contactSaved==true}){hideNewContactDialog(); cancelAgentUpdate();} this.removeAttribute('disabled');"
-                            onclick="this.disabled='disabled';"
+                            onclick="copyState(); this.disabled='disabled';"
                             reRender="currContactList, theMessages, ownershipMessage, noUpdateMessage">
                             <apex:param value="Current Owner" name="ownertype" assignTo="{!contactType}" />
                         </apex:commandButton>&nbsp;
@@ -1026,12 +1026,34 @@
                             $('[id$="contactStateInput"]').attr('style', 'display: block;');
                             $('[id$="contactStateList"]').attr('style', 'display: none;');
                         }
+
+                        var countrySelected = dropdownValue.toUpperCase();
+
+                        if (countryMap[countrySelected] != undefined) {
+                            if (countryMap[countrySelected]['State_Province_Mandatory__c']) {
+                                if ($('[id$="requiredStateInput"]').length == 0) {
+                                    $('[id$="contactStateInput"]').parent().append('<div id="requiredStateInput" class="requiredInput"><div id="requiredStateBlock" class="requiredBlock"></div></div>');
+
+                                    $('[id$="contactStateInput"]').appendTo($('[id$="requiredStateInput"]').first());
+                                    $('[id$="contactStateList"]').appendTo($('[id$="requiredStateInput"]').first());
+                                }
+                            } else {
+                                $('[id$="contactStateInput"]').first().prependTo($('[id$="requiredStateInput"]').first().parent());
+                                $('[id$="contactStateList"]').first().prependTo($('[id$="requiredStateInput"]').first().parent());
+
+                                $('[id$="requiredStateInput"]').first().remove();
+                                $('[id$="requiredStateBlock"]').first().remove();
+                            }
+                        }
                     }
                     
                     function copyState() {
-                       var dropdownValue = $('[id$="contactStateList"]').val();
-                       $('[id$="contactStateInput"]').val(dropdownValue);
-                       $('[id$="contactStateInput"]').change();
+                        var dropdownValue = $('[id$="contactStateList"]').val();
+
+                        if (dropdownValue != undefined && dropdownValue != '' && dropdownValue != null) { 
+                            $('[id$="contactStateInput"]').val(dropdownValue);
+                            $('[id$="contactStateInput"]').change();
+                        }
                     }
 
 
