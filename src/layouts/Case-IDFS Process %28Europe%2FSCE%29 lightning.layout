@@ -655,6 +655,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Case.Escalate_within_IATA_lightning</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.Log_Phone_case_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
