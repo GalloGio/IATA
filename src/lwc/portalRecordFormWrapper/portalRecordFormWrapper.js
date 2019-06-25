@@ -49,7 +49,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track listSelected = [];
     @track contactTypeStatus = [];
 
-    _labels = { SaveLabel, CancelLabel,MembershipFunction,Area };
+    @track changeUserPortalStatus = false;
+
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -318,4 +320,12 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     }
 
+    openChangeUserPortalStatus() {
+        this.changeUserPortalStatus = true;
+    }
+
+    closePortalChangeUserStatus() {
+        this.changeUserPortalStatus = false;
+        this.dispatchEvent(new CustomEvent('refreshview'));
+    }
 }

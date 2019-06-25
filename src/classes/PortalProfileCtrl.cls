@@ -318,6 +318,9 @@ public with sharing class PortalProfileCtrl {
         public Boolean outputOnly;
 
         @AuraEnabled
+        public Boolean changeUserStatus;
+
+        @AuraEnabled
         public Boolean isAccessibility;
 
         @AuraEnabled
@@ -333,8 +336,14 @@ public with sharing class PortalProfileCtrl {
             this.fieldName = fieldName;
             this.editable = editable;
             this.visible = visible;
-            this.outputOnly = output ;
+            this.outputOnly = output;
             this.labeled = false;
+
+            if (fieldName == 'User_Portal_Status__c') {
+                this.changeUserStatus = true;
+            } else {
+                this.changeUserStatus = false;
+            }
         }
 
         public FieldWrapper (String fieldName, Boolean editable, Boolean visible){
@@ -350,10 +359,12 @@ public with sharing class PortalProfileCtrl {
                         new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c'),
                         new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c')
                 };
+            }
 
-
-
-
+            if (fieldName == 'User_Portal_Status__c') {
+                this.changeUserStatus = true;
+            } else {
+                this.changeUserStatus = false;
             }
 
         }
@@ -466,7 +477,7 @@ public with sharing class PortalProfileCtrl {
             wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
         }
 
-        wrapperMap.get(editFields).add(new FieldWrapper('User_Portal_Status__c',true,true));
+        //wrapperMap.get(editFields).add(new FieldWrapper('User_Portal_Status__c',true,true));
 
         return wrapperMap;
 

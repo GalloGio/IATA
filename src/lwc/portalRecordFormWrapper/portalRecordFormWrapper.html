@@ -4,6 +4,11 @@
 
 <!-- Portal Record Form Wrapper -->
 <template>
+
+    <template if:true={changeUserPortalStatus}>
+        <c-portal-change-user-status record-id={recordId} onclosemodal={closePortalChangeUserStatus}></c-portal-change-user-status>
+    </template>
+
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
         <span slot="sectionTitle">{sectionTitle}</span>
         <span slot="sectionActions">
@@ -47,11 +52,32 @@
                             <template if:false={field.isAccessibility}>
                                 <span key={field.fieldName}
                                     class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <template if:true={field.visible}>
-                                        <lightning-output-field class="labelValue textValue"
-                                            field-name={field.fieldName}>
-                                        </lightning-output-field>
-                                    </template>
+                                    <div if:true={field.visible}>
+                                        <template if:false={field.changeUserStatus}>
+                                            <lightning-output-field class="labelValue textValue"
+                                                field-name={field.fieldName}>
+                                            </lightning-output-field>
+                                        </template>
+
+                                        <template if:true={field.changeUserStatus}>
+                                            <div class="changeUserStatus">
+                                                <lightning-output-field class="labelValue textValue"
+                                                    field-name={field.fieldName}>
+                                                </lightning-output-field>
+                                                <span class="changeUserStatusButton">
+                                                    <lightning-icon icon-name="utility:custom_apps" size="x-small"
+                                                        class="darkBlueIcon cursorPointer"
+                                                        onclick={openChangeUserPortalStatus}>
+                                                    </lightning-icon>
+                                                </span>
+
+                                            </div>
+
+                                        </template>
+
+
+
+                                    </div>
                                 </span>
                             </template>
                         </template>
