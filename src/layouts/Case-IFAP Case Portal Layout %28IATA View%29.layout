@@ -8,6 +8,8 @@
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
     <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>Apply_Cash_Condition</customButtons>
+    <customButtons>Remove_Cash_Condition</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
