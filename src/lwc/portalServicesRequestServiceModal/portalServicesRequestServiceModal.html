@@ -1,4 +1,5 @@
 <template>
+
     <template if:true={showConfirm}>
         <div class="modal">
             <div class="customPopupInteriorHalfScreenCentered">
@@ -34,7 +35,7 @@
                     <!-- Popup Body -->
                     <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
                         <div class="slds-p-vertical_large textMediumMessage">
-                            <lightning-formatted-rich-text class="richTextlinks" value={IEPOptionalMessages}>
+                            <lightning-formatted-rich-text class="richTextlinks introMessage" value={IEPOptionalMessages}>
                             </lightning-formatted-rich-text>
                         </div>
                     </div>
@@ -52,7 +53,7 @@
                                     </span>
                                 </label>
                                 <div class="slds-m-bottom_x-small">
-                                    <lightning-formatted-rich-text class="richTextlinks" value={role.label}>
+                                    <lightning-formatted-rich-text class="richTextlinks introMessage" value={role.label}>
                                     </lightning-formatted-rich-text>
                                 </div>
                             </div>
@@ -114,7 +115,7 @@
                 <!--For ICCS Role & Account Request-->
                 <div class="customPopupInteriorHalfScreenCentered" if:true={ICCSRoleSelectionModal}>
                     <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
-                        <lightning-formatted-rich-text class="richTextlinks" value={ICCSSuccessMessage}>
+                        <lightning-formatted-rich-text class="richTextlinks introMessage" value={ICCSSuccessMessage}>
                         </lightning-formatted-rich-text>
                     </div>
                     <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
@@ -130,7 +131,7 @@
                 <!--For SSWS Account Request-->
                 <div class="customPopupInteriorHalfScreenCentered" if:true={SSWSSuccessModal}>
                     <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
-                        <lightning-formatted-rich-text class="richTextlinks" value={label.ISSP_Access_Granted}>
+                        <lightning-formatted-rich-text class="richTextlinks introMessage" value={label.ISSP_Access_Granted}>
                         </lightning-formatted-rich-text>
                     </div>
                     <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
@@ -146,7 +147,7 @@
                 <!--For TD Account Request-->
                 <div class="customPopupInteriorHalfScreenCentered" if:true={TDSuccessModal}>
                     <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
-                        <lightning-formatted-rich-text class="richTextlinks" value={label.ISSP_Access_Granted}>
+                        <lightning-formatted-rich-text class="richTextlinks introMessage" value={label.ISSP_Access_Granted}>
                         </lightning-formatted-rich-text>
                     </div>
                     <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
@@ -172,7 +173,7 @@
 
                     <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
                         <div class="slds-p-vertical_large textMediumMessage">
-                            <lightning-formatted-rich-text class="richTextlinks" value={ICCSOptionalMessages}>
+                            <lightning-formatted-rich-text class="richTextlinks introMessage" value={ICCSOptionalMessages}>
                             </lightning-formatted-rich-text>
                         </div>
                     </div>
@@ -203,7 +204,7 @@
                     </div>
                     <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
                         <div class="slds-p-vertical_large textMediumMessage">
-                            <lightning-formatted-rich-text class="richTextlinks slds-text-title"
+                            <lightning-formatted-rich-text class="richTextlinks slds-text-title introMessage"
                                 value={SSWSOptionalMessages}>
                             </lightning-formatted-rich-text>
                         </div>
@@ -228,13 +229,13 @@
                     </div>
                     <!-- Popup Header -->
                     <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
-                        <span>{IEPIntroOptionalMessages}</span>
+                        <span class='introMessage'>{IEPIntroOptionalMessages}</span>
                     </div>
                     <!-- Popup Body -->
 
                     <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
                         <div class="slds-p-vertical_large textMediumMessage">
-                            <lightning-formatted-rich-text class="richTextlinks" value={TDOptionalMessages}>
+                            <lightning-formatted-rich-text class="richTextlinks introMessage" value={TDOptionalMessages}>
                             </lightning-formatted-rich-text>
                         </div>
                     </div>

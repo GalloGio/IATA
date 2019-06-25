@@ -49,7 +49,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         if (result.data) {
             let user = JSON.parse(JSON.stringify(result.data));
             this.displayAcceptTerms = user.fields.ToU_accepted__c.value;
-            console.log('DATA: ', user);
         }
     }
 
@@ -245,7 +244,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.openNotifications = !this.openNotifications;
 
         if (this.openNotifications) {
-            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000;';
+            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding: 0 8px 0 6px;';
             this.headerButtonNotificationsCloseIconStyle = 'display: block;';
             this.headerButtonNotificationsStyle = 'display: none;';
             this.notificationNumberStyle = 'display: none;';
@@ -327,27 +326,27 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                     this.dispatchEvent(showError);
 
                 });
-        } else {
-            if (notification.type === "Portal Service") {
-                let params = {};
-                params.serviceId = notification.id;
-                this.currentURL = window.location.href;
+        } else if (notification.type === "Portal Service") {
 
-                if (this.currentURL.includes(this.labels.PortalName)) {
-                    this[NavigationMixin.GenerateUrl]({
-                        type: "standard__namedPage",
-                        attributes: {
-                            pageName: "manage-service"
-                        }
-                    })
-                        .then(url => navigateToPage(url, params));
-                } else {
-                    goToManageService().then(results => {
-                        navigateToPage(results, params);
-                    });
-                }
+            let params = {};
+            params.serviceId = notification.id;
+            this.currentURL = window.location.href;
 
+            if (this.currentURL.includes(this.labels.PortalName)) {
+                this[NavigationMixin.GenerateUrl]({
+                    type: "standard__namedPage",
+                    attributes: {
+                        pageName: "manage-service"
+                    }
+                })
+                    .then(url => navigateToPage(url, params));
+            } else {
+                goToManageService().then(results => {
+                    navigateToPage(results, params);
+                });
             }
+        } else {
+            navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
         }
     }
 
