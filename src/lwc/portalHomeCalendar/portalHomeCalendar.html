@@ -4,7 +4,7 @@
         <c-portal-custom-card-container>
 
             <span slot="cardTitle">
-                {label.CSP_OperationalCalendar_HomeTileTitle}
+                <span class="text-small">{label.CSP_OperationalCalendar_HomeTileTitle}</span>
             </span>
 
             <span slot="cardButton">
@@ -19,14 +19,13 @@
             </span>
 
             <span slot="cardBody">
-                <div class="text-gray">
-                    <div if:true={loading}>
-                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                <div class="text-gray cardBodyContent">
+                    <div if:true={loading} class="spinnerContainer" >
+                        <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
                     </div>
                     <div if:false={loading}>
-        
                         <div if:true={showCalendar} class="cardBodyContent">
-                            <div class="slds-p-horizontal_small">
+                            <div >
                                 <div class="slds-m-top_large slds-m-bottom_medium slds-grid slds-wrap text-xxsmall">
                                     <div class="slds-size_10-of-12">
                                         {currentViewingMonth.monthName}, {currentViewingMonth.monthYear}
