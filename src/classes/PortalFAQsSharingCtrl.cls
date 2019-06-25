@@ -7,8 +7,8 @@
 
 public with sharing class PortalFAQsSharingCtrl {
 
-    PUBLIC STATIC FINAL STRING DEFAULT_PERMSET_NAME = 'FAQs_DEFAULT';
-    PUBLIC STATIC FINAL STRING FAQ_PERMSET_PREFIX = 'FAQ_Visibility';
+    PUBLIC STATIC FINAL STRING DEFAULT_METADATA_NAME = 'FAQs_DEFAULT';
+    PUBLIC STATIC FINAL STRING FAQ_PERMSET_PREFIX = 'FAQ_Visibility%';
     PRIVATE STATIC FINAL STRING UNKNOWN_VALUE = '--FAQ_UNKNOWN--';
     PRIVATE STATIC FINAL STRING ALL_VALUES = 'All';
 
@@ -17,24 +17,19 @@ public with sharing class PortalFAQsSharingCtrl {
     private static Boolean checkOnly = false;
 
 
-    @future
-    public static void assignFAQsToUser(Id userId){
-        assignFAQsPermissions(userId);
-    }
-
-    @future
-    public static void removeFAQsToUser(Id userId){
-        removeFAQsPermissions(userId);
-    }
-
-    @future
-    public static void updateUserFAQsAccess(Id userId){
-        updateFAQsPermissions(userId);
-    }
-
+    /**
+     *  This method acceepts userId and checks for existing FAQ permission set assignments.
+     *
+     *  If no assignments are found, assign them.
+     *
+     *  If assignments are found, we validate them against permission sets that are available for the given user. If available and existing permission set assignments are not identical:
+     *      remove existing and assign new.
+     *
+     * @param userId
+     */
 
     public static void checkPermissionSets(Id userId){
-        List <PermissionSetAssignment> existingAssignments = [SELECT Id, AssigneeId FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX];
+        List <PermissionSetAssignment> existingAssignments = [SELECT Id, AssigneeId,PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX];
         Set<Id> existingSetIds = new Set<Id>();
 
         if(!existingAssignments.isEmpty()){
@@ -45,14 +40,20 @@ public with sharing class PortalFAQsSharingCtrl {
             assignedPermissionSets = existingSetIds;
             checkOnly = true;
 
+            //Check only for available permset ids
+            assignFAQsPermissions(userId);
+
+            //Now we might actually want to assign some new permission sets
+            checkOnly = false;
+
             if(!availablePermissionSets.containsAll(assignedPermissionSets) || !assignedPermissionSets.containsAll(availablePermissionSets)){
-                //RE-ASSIGN FAQs sets
+                removeFAQsPermissions(userId);
+                assignFAQsPermissions(userId);
             }
 
         }else{
             assignFAQsPermissions(userId);
         }
-
     }
 
     public static void assignFAQsPermissions(Id userId){
@@ -107,12 +108,12 @@ public with sharing class PortalFAQsSharingCtrl {
                         permsetNames.add(setting.Permission_Set_Name__c);
                     }
                 }
-            }
+            }   
         }
 
         //If no permission set was found for given criteria, assign default set
         if(permsetNames.isEmpty()){
-            settings = [SELECT Permission_Set_Name__c FROM PortalFAQs__mdt WHERE DeveloperName =: DEFAULT_PERMSET_NAME];
+            settings = [SELECT Permission_Set_Name__c FROM PortalFAQs__mdt WHERE DeveloperName =: DEFAULT_METADATA_NAME];
             if(!settings.isEmpty()){
                 for(PortalFAQs__mdt setting:settings){
                     permsetNames.add(setting.Permission_Set_Name__c);
@@ -169,11 +170,6 @@ public with sharing class PortalFAQsSharingCtrl {
         if (!assignmentListRemove.isEmpty()){
             delete assignmentListRemove;
         }
-    }
-
-    public static void updateFAQsPermissions(String userId){
-        removeFAQsPermissions(userId);
-        assignFAQsPermissions(userId);
     }
 
 }
