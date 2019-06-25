@@ -191,6 +191,30 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public AsyncApexJob batchJob{get;set;}
 	public Boolean pollerBool{get;set;}
     public Integer progressBar{get;set;}
+
+    public Map<String, IATA_ISO_Country__c> countryInfoByCountryNameMap {
+    	get {
+    		if (countryInfoByCountryNameMap == null) {
+    			countryInfoByCountryNameMap = new Map<String, IATA_ISO_Country__c>();
+    			for (IATA_ISO_Country__c cnt: [SELECT Name, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, 
+                                            	IEC_Zip_Postal_Code_required__c, Informatica_Value__c
+	                                        FROM IATA_ISO_Country__c 
+	                                        WHERE Region__c != '' AND Iso_code__c NOT IN ('IO','TF','GS','UM','UP','VI') 
+	                                        ORDER BY name ASC]) {
+	                countryInfoByCountryNameMap.put(cnt.Name.toUpperCase(), cnt);
+	            }
+    		}
+			return countryInfoByCountryNameMap;
+    	}
+    	set;
+    }
+
+    public String countryInfoByCountryNameMapString {
+        get {
+            return JSON.serialize(countryInfoByCountryNameMap);
+        }
+        set;
+    }
         
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 		this.setHe = true;
