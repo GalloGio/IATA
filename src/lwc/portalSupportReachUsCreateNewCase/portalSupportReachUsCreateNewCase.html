@@ -94,9 +94,13 @@
             <!-- CASE CREATE MODAL -->
             <div class="customCard">
                 <div class="slds-theme_shade customCard">
-                    <div class="slds-text-align_center slds-p-vertical_xx-large">
+                    <lightning-icon class="cursorPointer slds-current-color blue_arrow slds-p-around_x-large"
+                        icon-name="utility:back" size="medium" onclick={goBackToSupportReachUs}>
+                    </lightning-icon>
+                    <div class="slds-text-align_center slds-p-vertical_x-large">
                         <h1 class="text-large text-bold slds-p-bottom_large">{label.csp_CreateNewCaseTopLabel}</h1>
-                        <h2 class="text-xsmall">{label.csp_CreateNewCaseTopSubLabel}: {categoryLabel}, {topicLabel}, {subtopicLabel}</h2>
+                        <h2 class="text-xsmall">{label.csp_CreateNewCaseTopSubLabel}: {categoryLabel}, {topicLabel},
+                            {subtopicLabel}</h2>
                         <h2 class="text-xsmall">{label.csp_CreateNewCaseTopSubSubLabel}</h2>
                     </div>
                     <div class="customWhiteBackground">

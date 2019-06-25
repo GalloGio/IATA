@@ -105,22 +105,31 @@ export default class PortalSearchFAQList extends NavigationMixin(LightningElemen
     }
 
     searchWithNewFilters() {
-        if(this.showComponentBool()) {
+        if(this.filteringObject !== undefined) {
             
             //put the component and the results number into loading mode
             let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
             //filteringObjectAux.faqsComponent.nrResults = 0;
 
-            if(this.pageNumber < 0 ){
-                filteringObjectAux.faqsComponent.loading = true;
-            }else{
-                this.loadingMoreResults = true;
-            }
-            const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "faqsComponent" }});
-            this.dispatchEvent(selectedEventLoading);
-            this.filteringObject = filteringObjectAux;
+            if(filteringObjectAux.searchText.length >2){
 
-            this.retrieveResultsFromServer();
+                if(this.pageNumber < 0 ){
+                    filteringObjectAux.faqsComponent.loading = true;
+                }else{
+                    this.loadingMoreResults = true;
+                }
+                const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "faqsComponent" }});
+                this.dispatchEvent(selectedEventLoading);
+                this.filteringObject = filteringObjectAux;
+
+                this.retrieveResultsFromServer();
+            }else{
+                filteringObjectAux.faqsComponent.nrResults = 0;
+                filteringObjectAux.faqsComponent.loading = false;
+                const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "faqsComponent" }});
+                this.dispatchEvent(selectedEventLoading);
+                this.filteringObject = filteringObjectAux;
+            }
         }
     }
 

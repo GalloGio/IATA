@@ -364,21 +364,32 @@ public static PagedResult getUserFilteredServices(String searchKey, String reque
 
 	Integer requestedPageAux = integer.valueof(requestedPage);
 
+	List<String> serachTextLst = new List<String>();
+	if(filtersWrapper != null && filtersWrapper.searchText != null && filtersWrapper.searchText != ''){
+		serachTextLst = filtersWrapper.searchText.split(' ');
+	}
+
 	//request all services
 	//yes, it is requesting all services and then filter locally instead of inside the query...
 	//this is to enforce all the protection around the services and since the user cannot have millions of
 	//services it won't be a big deal to do this way
 	List<ServiceWrapper> lstAllServices = PortalServicesCtrl.getAllServices();
 
-	List<Portal_Applications__c> lstFiltered = new List<Portal_Applications__c>();
+	Map<String,Portal_Applications__c> mapFiltered = new Map<String,Portal_Applications__c>();
 
 	for(ServiceWrapper serviceAux : lstAllServices) {
 		//filter the service name
-		if(filtersWrapper.searchText != null && filtersWrapper.searchText != '' && serviceAux.recordService.ServiceName__c.contains(filtersWrapper.searchText)) {
-			lstFiltered.add(serviceAux.recordService);
+		for(String searchStrAux : serachTextLst){
+			if(searchStrAux != '' && searchStrAux != ' ' && serviceAux.recordService.ServiceName__c.containsIgnoreCase(searchStrAux)) {
+				if(!mapFiltered.containsKey(serviceAux.recordService.Id)){
+					mapFiltered.put(serviceAux.recordService.Id,serviceAux.recordService);
+				}
+			}
 		}
 
 	}
+
+	List<Portal_Applications__c> lstFiltered = mapFiltered.values();
 
 	List<Portal_Applications__c> lstToReturn = new List<Portal_Applications__c>();
 	Integer offset = requestedPageAux * PortalServicesCtrl.RESULTS_PER_PAGE;

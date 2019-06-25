@@ -459,20 +459,44 @@ export default class PortalSearchFilters extends LightningElement {
         let returnLst = [];
         
         if(filteringObjectAux.faqsComponent.faqSubtopicFilter !== ''){
-            
-            //nothing yet
+            for (let category of this.faqsMapForPick) {
+                for(let topic of category.topics){
+                    for(let subtopic of topic.subtopics){
+                        if(subtopic.subtopicName === filteringObjectAux.faqsComponent.faqSubtopicFilter){
+                            returnLst.push(subtopic.subtopicName);
+                        }
+                    }
+                }     
+            }
 
         }else{
             if(filteringObjectAux.faqsComponent.faqTopicFilter !== ''){
-
-                //nothing yet
+                //get all the subtopics from the selected topic
+                for (let category of this.faqsMapForPick) {
+                    for(let topic of category.topics){
+                        if(topic.topicName === filteringObjectAux.faqsComponent.faqTopicFilter){
+                            for(let subtopic of topic.subtopics){
+                                returnLst.push(subtopic.subtopicName);
+                            }
+                        }
+                    }     
+                }
 
             }else{
                 if(filteringObjectAux.faqsComponent.faqCategoryFilter !== ''){
-
-                    //nothing yet
+                    //get all the subtopics from the selected category
+                    for (let category of this.faqsMapForPick) {
+                        if(category.categoryName === filteringObjectAux.faqsComponent.faqCategoryFilter){
+                            for(let topic of category.topics){
+                                for(let subtopic of topic.subtopics){
+                                    returnLst.push(subtopic.subtopicName);
+                                }
+                            }
+                        }
+                    }
                     
                 }else{
+                    //if nothing is selected, then get all the subtopics from all topics from all categories
                     for (let category of this.faqsMapForPick) {
                         for(let topic of category.topics){
                             for(let subtopic of topic.subtopics){
