@@ -212,7 +212,7 @@
                 locality : c.get("v.account."+mode+"City"),
                 postalCode : c.get("v.account."+mode+"PostalCode"),
                 province : c.get("v.account."+mode+"State"),
-                countryCode : c.get("v.country.ISO_Code__c")
+                countryCode : mode==='Billing'?c.get("v.country.ISO_Code__c"):c.get("v.countryShipping.ISO_Code__c")
             };
 
             var action = c.get("c.checkAddress");
