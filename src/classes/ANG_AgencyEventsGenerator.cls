@@ -6,7 +6,6 @@ public class ANG_AgencyEventsGenerator{
 
     private static final String IEP_HE_STATUS_FIELD = 'ANG_IEP_Status_FF__c';
     private static final String IEP_PCI_COMPLIANCE_CALLOUT_MAPPING_NAME = 'IEP_PCI_Compliance';
-    private static final Set<String> IEP_HE_STATUS_FOR_SENDING_PCI_COMPLIANCE = new Set<String>{'Open', 'In Progress'};
     
     public ANG_AgencyEventsGenerator(list<sObject> nrL,map<id,sObject>orM,string cmt,string acf){
         cmType=cmt;
@@ -48,9 +47,10 @@ public class ANG_AgencyEventsGenerator{
         for(sObject obj: newRecList){
             for(ANG_CalloutMapping__c cm:calloutmappingList){
                 
-                //Skip sending possible PCI Compliance modifications when the IEP Status of the HE is not 'Open' or 'In Progress'
-                if(cm.Name == IEP_PCI_COMPLIANCE_CALLOUT_MAPPING_NAME && !IEP_HE_STATUS_FOR_SENDING_PCI_COMPLIANCE.contains(String.valueOf(obj.get(IEP_HE_STATUS_FIELD)))){ 
-                    continue;
+                //Skip sending possible PCI Compliance modifications when the IEP Status of the HE is blank or 'No IEP Account'
+                if(cm.Name == IEP_PCI_COMPLIANCE_CALLOUT_MAPPING_NAME){
+                    String iepStatus = String.valueOf(obj.get(IEP_HE_STATUS_FIELD));
+                    if(String.isBlank(iepStatus) || iepStatus == AMS_Utils.NO_IEP_ACCOUNT) continue;
                 }
 
                 if((cmType=='ChangeCode' && String.valueOf(obj.get('Change_Code__c')) == cm.Change_Code__c && (cm.Change_Code__c != 'CWD' || runDelayed)) || (oldRecMap!= null && VerifyFieldChanges(String.valueOf(oldRecMap.get(String.valueOf(obj.get('id'))).get(cm.field__c)), String.valueOf(obj.get(cm.field__c)), cm.fieldValue__c))){
