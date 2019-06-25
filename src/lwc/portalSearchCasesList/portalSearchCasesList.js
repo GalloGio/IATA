@@ -122,22 +122,31 @@ export default class PortalSearchCasesList extends NavigationMixin(LightningElem
     } 
 
     searchWithNewFilters() {
-        if(this.showComponentBool()) {
+        if(this.filteringObject !== undefined) {
             
             //put the component and the results number into loading mode
             let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
-            filteringObjectAux.casesComponent.nrResults = 0;
 
-            if(this.pageNumber < 0 ){
-                filteringObjectAux.casesComponent.loading = true;
+            if(filteringObjectAux.searchText.length >2){
+                filteringObjectAux.casesComponent.nrResults = 0;
+
+                if(this.pageNumber < 0 ){
+                    filteringObjectAux.casesComponent.loading = true;
+                }else{
+                    this.loadingMoreResults = true;
+                }
+                const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "casesComponent" }});
+                this.dispatchEvent(selectedEventLoading);
+                this.filteringObject = filteringObjectAux;
+
+                this.retrieveResultsFromServer();
             }else{
-                this.loadingMoreResults = true;
+                filteringObjectAux.casesComponent.nrResults = 0;
+                filteringObjectAux.casesComponent.loading = false;
+                const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "casesComponent" }});
+                this.dispatchEvent(selectedEventLoading);
+                this.filteringObject = filteringObjectAux;
             }
-            const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "casesComponent" }});
-            this.dispatchEvent(selectedEventLoading);
-            this.filteringObject = filteringObjectAux;
-
-            this.retrieveResultsFromServer();
         }
     }
 
