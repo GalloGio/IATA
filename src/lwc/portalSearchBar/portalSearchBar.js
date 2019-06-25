@@ -5,11 +5,29 @@ import { navigateToPage } from'c/navigationUtils';
 
 //import custom labels
 import CSP_Search_AdvancedSearch from '@salesforce/label/c.CSP_Search_AdvancedSearch';
+import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
+import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
+import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';
 
 export default class PortalSearchBar extends NavigationMixin(LightningElement) {
 
+    //these are the filters passed from the search
+    @api
+    get filteringObjectParent() {
+        return this.filteringObject;
+    }
+    set filteringObjectParent(value) {
+        this.filteringObject = value;
+        this.setColumnsClass();
+    }
+
+    @api placeholder;
+
     label = {
-        CSP_Search_AdvancedSearch
+        CSP_Search_AdvancedSearch,
+        CSP_Search_NoResults_text1,
+        CSP_Search_NoResults_text2,
+        CSP_Search_NoResults_text3
     }
 
     @track showHoverResults = false;
@@ -19,24 +37,40 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     timeout = null;
 
     @track searchText = "";
-
-    @api placeholder;
     
     //clone of the filtering object passed from the parent
     @track filteringObject;
 
-    //these are the filters passed from the search
-    @api
-    get filteringObjectParent() {
-        return this.filteringObject;
-    }
-    set filteringObjectParent(value) {
-        this.filteringObject = value;
-    }
-
     searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
+    searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
 
     @track loadingTypehead = false;
+
+    @track leftColumnClass = '';
+    @track rightColumnClass = '';
+
+
+    @track noResultsClass = 'display: none;';
+    @track resultsClass = 'display: none;';
+
+
+    setColumnsClass(){
+        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+
+        this.leftColumnClass = 'slds-col slds-size_1-of-1 slds-large-size_2-of-3';
+        this.rightColumnClass = 'slds-col slds-size_1-of-1 slds-large-size_1-of-3';
+
+        if((filteringObjectAux.casesComponent.show || filteringObjectAux.faqsComponent.show) && (!filteringObjectAux.documentsComponent.show && !filteringObjectAux.servicesComponent.show)){
+            this.leftColumnClass = 'slds-col slds-size_1-of-1';
+            this.rightColumnClass = 'slds-col slds-size_1-of-1';
+        }
+
+        if((!filteringObjectAux.casesComponent.show && !filteringObjectAux.faqsComponent.show) && (filteringObjectAux.documentsComponent.show || filteringObjectAux.servicesComponent.show)){
+            this.leftColumnClass = 'slds-col slds-size_1-of-1';
+            this.rightColumnClass = 'slds-col slds-size_1-of-1';
+        }
+
+    }
 
     closeSearch(){
         this.searchText = "";
@@ -72,7 +106,7 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
         }
 
         this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
+            type: "comm__namedPage",
             attributes: {
                 pageName: "advanced-search"
             }})
@@ -114,6 +148,34 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
 
         }, 1500, this);
 
+    }
+
+    handlefilterchanged(event){
+
+        let eventObject = JSON.parse(JSON.stringify(event.detail.object));
+        let eventComponentName = JSON.parse(JSON.stringify(event.detail.componentName));
+
+        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+        filteringObjectAux[eventComponentName] = eventObject[eventComponentName];
+
+        this.filteringObject = filteringObjectAux;
+
+        this.updateResultsDiv();
+    }
+
+    updateResultsDiv(){
+        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+        if(this.searchText.length > 2 && filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.casesComponent.nrResults === 0 &&
+            filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0 && 
+            !filteringObjectAux.servicesComponent.loading && !filteringObjectAux.casesComponent.loading &&
+            !filteringObjectAux.faqsComponent.loading && !filteringObjectAux.casesComponent.loading){
+            this.noResultsClass = '';
+            this.resultsClass = 'display: none;';
+        }else{
+            this.noResultsClass = 'display: none;';
+            this.resultsClass = '';
+        }
+        
     }
 
 }

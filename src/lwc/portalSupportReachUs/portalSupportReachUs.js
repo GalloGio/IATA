@@ -210,7 +210,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 this.pageParams = getParamsFromPage();
                 if ('category' in this.pageParams && this.pageParams.category !== '') {
                     const checkCategory = obj => obj.value === this.pageParams.category;
-                    if (myCategoryOptions.some(checkCategory)) {
+                    if (this.categoryOptions.some(checkCategory)) {
                         this.category = this.pageParams.category;
                         this.topicCB = true;
                         this.topicValuesGetter();
@@ -275,7 +275,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
                 //eslint-disable-next-line no-console
 
-
                 //set global with the options for later use
                 this.countryOptions = myCountryOptions;
 
@@ -322,6 +321,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
             //Set inital value country Picklist/Combobox
             this.countryValue = '';
+
+            let divToTop = this.template.querySelectorAll('.category')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
 
         } else {
             //Hide Topic Picklist/Combobox
@@ -377,7 +379,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         //set Topic value if included in URL
         if ('topic' in this.pageParams && this.pageParams.topic !== '') {
             const checkTopic = obj => obj.value === this.pageParams.topic;
-            if (myTopicOptions.some(checkTopic)) {
+            if (this.topicOptions.some(checkTopic)) {
 
                 this.topic = this.pageParams.topic;
                 this.subTopicCB = true;
@@ -402,6 +404,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             this.subTopic = '';
             //Set inital value country Picklist/Combobox
             this.countryValue = '';
+
+            let divToTop = this.template.querySelectorAll('.topic')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
         } else {
             //Hide subTopic Picklist/Combobox
             this.subTopicCB = false;
@@ -455,7 +460,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
             const checkSubTopic = obj => obj.value === this.pageParams.subtopic;
-            if (mySubTopicOptions.some(checkSubTopic)) {
+            if (this.subTopicOptions.some(checkSubTopic)) {
                 this.subTopic = this.pageParams.subtopic;
 
                 //Excluded country list. 
@@ -487,6 +492,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             this.emergencyButton = false;
             this.isEmergency = false;
 
+            let divToTopCountry = this.template.querySelectorAll('.subtopic')[0].offsetTop;
+            window.scrollTo({ top: divToTopCountry, left: 0, behavior: 'smooth' });
             //required to not show the country picklist if the selected value is included here
             let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
             if (countryExclusion.includes(this.topic + '__c')) {
@@ -511,6 +518,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.countryValue = event.target.value;
         if (this.countryValue !== "") {
             this.optionsButton = true;
+            let divToTop = this.template.querySelectorAll('.country')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
             if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                 && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
                 this.emergencyButton = true;

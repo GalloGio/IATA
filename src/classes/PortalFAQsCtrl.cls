@@ -77,17 +77,6 @@ public with sharing class PortalFAQsCtrl {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<FAQ__kav> getSearchArticles(String searchTerm) {
-        String query = 'FIND \'' + String.escapeSingleQuotes(searchTerm) + '\' IN ALL FIELDS RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\' LIMIT 5 OFFSET 1)';
-        System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getSearchArticles] query - ' + query);
-
-        List<List<SObject>> searchList = Search.query(query);
-        List<FAQ__kav> kavs = (List<FAQ__kav>)searchList[0];
-
-        return kavs;
-    }   
-
-    @AuraEnabled(cacheable=true)
     public static List<PKB_Article_Feedback_Deflection__c> getArticlesFeedback(String articleIds, String sessionCookie) {
         String query = 'SELECT Article_ID__c, Article_Title__c, Deflection__c FROM PKB_Article_Feedback_Deflection__c WHERE Session_ID__c = \'' + String.escapeSingleQuotes(sessionCookie) + '\' AND Article_ID__c IN ' + articleIds;
         System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticlesFeedback] query - ' + query); 
