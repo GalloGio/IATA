@@ -25,7 +25,7 @@
             c.set("v.statesShipping", c.get("v.statesBilling"));        
             c.set("v.citiesShipping", c.get("v.citiesBilling"));
             c.set("v.allCitiesShipping", c.get("v.allCitiesBilling"));
-            c.set("v.idAndAlternateNamesBilling", c.get("v.idAndAlternateNamesShipping"));
+            c.set("v.idAndAlternateNamesShipping", c.get("v.idAndAlternateNamesBilling"));
             c.set("v.stateNameIdShipping", c.get("v.stateNameIdBilling"));
             c.set("v.cityNameIdShipping", c.get("v.cityNameIdBilling"));
             c.set("v.hierarchyCitiesShipping", c.get("v.hierarchyCitiesBilling"));

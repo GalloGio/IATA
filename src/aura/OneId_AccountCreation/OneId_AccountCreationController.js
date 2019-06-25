@@ -281,7 +281,7 @@
             c.set("v.statesShipping", []);        
             c.set("v.citiesShipping", []);
             c.set("v.allCitiesShipping", {});
-            c.set("v.idAndAlternateNamesBilling", {});
+            c.set("v.idAndAlternateNamesShipping", {});
             c.set("v.stateNameIdShipping", {});
             c.set("v.cityNameIdShipping", {});
             c.set("v.hierarchyCitiesShipping", {});
