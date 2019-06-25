@@ -635,9 +635,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     get confirmMessage() {
         if (this.isAdmin) {
-            return this.label.newServiceRequestConfirmMsglb;
+            return this.label.newServiceRequestConfirmMsglb + ' ' + this.serviceFullName;
         }
-        return this.label.newServiceAccessConfirmMsglb;
+        return this.label.newServiceAccessConfirmMsglb + ' ' + this.serviceFullName;
     }
 
 
