@@ -52,7 +52,7 @@ export default class PortalAdvancedSearchPage extends LightningElement {
 
         this.pageParams = getParamsFromPage();
         if (this.pageParams.searchText !== undefined) {
-            this.searchText = this.pageParams.searchText;
+            this.searchText = decodeURIComponent((this.pageParams.searchText+'').replace(/\+/g, '%20'));
         }
         if (this.pageParams.highlight !== undefined && 
                 (this.pageParams.highlight === 'servicesComponent' || this.pageParams.highlight === 'casesComponent' || 
@@ -66,13 +66,13 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             highlightTopResults : false,
             advancedSearch : true,
             servicesComponent : {
-                show : true,
+                show : false,
                 highlight : false,
                 loading : true,
                 nrResults : 0
             },
             casesComponent : {
-                show : true,
+                show : false,
                 loading : true,
                 highlight : false,
                 nrResults : 0,
@@ -80,7 +80,7 @@ export default class PortalAdvancedSearchPage extends LightningElement {
                 caseCountryFilter : ""
             },
             faqsComponent : {
-                show : true,
+                show : false,
                 loading : true,
                 highlight : false,
                 nrResults : 0,
@@ -90,7 +90,7 @@ export default class PortalAdvancedSearchPage extends LightningElement {
                 faqSubtopicsList : []
             },
             documentsComponent : {
-                show : true,
+                show : false,
                 loading : true,
                 highlight : false,
                 nrResults : 0,
@@ -102,13 +102,30 @@ export default class PortalAdvancedSearchPage extends LightningElement {
 
         if(hightlightComponent === ''){
             filteringObjectAux.highlightTopResults = true;
+            filteringObjectAux.servicesComponent.show = true;
+            filteringObjectAux.casesComponent.show = true;
+            filteringObjectAux.faqsComponent.show = true;
+            filteringObjectAux.documentsComponent.show = true;
         }else{
             filteringObjectAux[hightlightComponent].highlight = true;
+
+            if(hightlightComponent === 'servicesComponent'){
+                filteringObjectAux.servicesComponent.show = true;
+            }
+            if(hightlightComponent === 'casesComponent'){
+                filteringObjectAux.casesComponent.show = true;
+            }
+            if(hightlightComponent === 'faqsComponent'){
+                filteringObjectAux.faqsComponent.show = true;
+            }
+            if(hightlightComponent === 'documentsComponent'){
+                filteringObjectAux.documentsComponent.show = true;
+            }
         }
 
         this.filteringObject = filteringObjectAux;
 
-        //this.updateResultsDiv();
+        this.updateResultsDiv();
 
     }
 

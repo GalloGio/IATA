@@ -2,21 +2,14 @@ import { LightningElement, api, track } from 'lwc';
 
 export default class PortalSearchBarGlobalComponent extends LightningElement {
 
-    @api showServices;
-    @api showCases;
-    @api showFAQs;
-    @api showDocuments;
-    @api showPortalFeatures;
+    @api showServices = false;
+    @api showCases = false;
+    @api showFAQs = false;
+    @api showDocuments = false;
 
     @api searchBarPlaceholder;
 
     @track filteringObject;
-
-    showservicesComponent(){ return this.showServices === 'true'; }
-    showcasesComponent(){ return this.showCases === 'true'; }
-    showfaqsComponent(){ return this.showFAQs === 'true'; }
-    showdocumentsComponent(){ return this.showDocuments === 'true'; }
-    showportalFeaturesComponent(){ return this.showPortalFeatures === 'true'; }
 
     connectedCallback() {
 
@@ -26,13 +19,13 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
             highlightTopResults : false,
             advancedSearch : true,
             servicesComponent : {
-                show : this.showservicesComponent(),
+                show : this.showServices,
                 highlight : false,
                 loading : true,
                 nrResults : 0
             },
             casesComponent : {
-                show : this.showcasesComponent(),
+                show : this.showCases,
                 loading : true,
                 highlight : false,
                 nrResults : 0,
@@ -40,7 +33,7 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
                 caseCountryFilter : ""
             },
             faqsComponent : {
-                show : this.showfaqsComponent(),
+                show : this.showFAQs,
                 loading : true,
                 highlight : false,
                 nrResults : 0,
@@ -50,7 +43,7 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
                 faqSubtopicsList : []
             },
             documentsComponent : {
-                show : this.showdocumentsComponent(),
+                show : this.showDocuments,
                 loading : true,
                 highlight : false,
                 nrResults : 0,

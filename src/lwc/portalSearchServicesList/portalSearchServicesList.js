@@ -107,22 +107,30 @@ export default class PortalSearchServicesList extends NavigationMixin(LightningE
     }
 
     searchWithNewFilters() {
-        if(this.showComponentBool()) {
+        if(this.filteringObject !== undefined) {
             
             //put the component and the results number into loading mode
             let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
-            filteringObjectAux.servicesComponent.nrResults = 0;
+            if(filteringObjectAux.searchText.length >2){
+                filteringObjectAux.servicesComponent.nrResults = 0;
 
-            if(this.pageNumber < 0 ){
-                filteringObjectAux.servicesComponent.loading = true;
+                if(this.pageNumber < 0 ){
+                    filteringObjectAux.servicesComponent.loading = true;
+                }else{
+                    this.loadingMoreResults = true;
+                }
+                const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "servicesComponent" }});
+                this.dispatchEvent(selectedEventLoading);
+                this.filteringObject = filteringObjectAux;
+
+                this.retrieveResultsFromServer();
             }else{
-                this.loadingMoreResults = true;
+                filteringObjectAux.servicesComponent.nrResults = 0;
+                filteringObjectAux.servicesComponent.loading = false;
+                const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "servicesComponent" }});
+                this.dispatchEvent(selectedEventLoading);
+                this.filteringObject = filteringObjectAux;
             }
-            const selectedEventLoading = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "servicesComponent" }});
-            this.dispatchEvent(selectedEventLoading);
-            this.filteringObject = filteringObjectAux;
-
-            this.retrieveResultsFromServer();
         }
     }
 
