@@ -11,42 +11,49 @@
 
             <!-- MODAL -->
             <template if:true={openmodel}>
-                <div class="modalNotificationDetail">
-                    <section aria-modal="true" class="slds-modal slds-fade-in-open">
-                        <div class="slds-modal__container modalBox">
-                            <header class="slds-modal__header">
-                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                                    title="Close" onclick={closeModal}>
-                                    <lightning-icon icon-name="utility:close" size="medium">
-                                    </lightning-icon>
-                                    <span class="slds-assistive-text">Close</span>
-                                </button>
-                                <h2 class="notificationCenterTitle slds-text-heading_medium slds-hyphenate">
-                                    {labels.NotificationDetail} </h2>
-                            </header>
-                            <div class="modalBody slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                                <div class="slds-p-top_small modalType">
-                                    <span
-                                        class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
-                                    <span class="notificationCenterTextsize text-xxsmall slds-m-left_large">
-                                        <lightning-formatted-date-time value={notification.createdDate} year="numeric"
-                                            month="numeric" day="numeric" hour="2-digit" minute="2-digit" hour12="true">
-                                        </lightning-formatted-date-time>
-                                    </span>
-                                </div>
-                                <div class="text-xsmall slds-m-left_large slds-p-top_small">
-                                    {notification.subject}
-                                </div>
-                                <div class="text-xsmall slds-m-left_large slds-p-top_small"
-                                    style="text-align: justify; text-justify: inter-word;">
-                                    {notification.message}
+                <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10005;">
+                    <div class="modal">
+                        <div class="customPopupInteriorHalfScreenCentered">
+
+                            <!-- Popup Header -->
+                            <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                                <span>{labels.NotificationDetail}</span>
+                                <span class="slds-float_right slds-m-horizontal_x-small close-mark"
+                                    onclick={closeModal}>
+                                    <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                        onclick={closeModal}></lightning-icon>
+                                </span>
+                            </div>
+
+                            <div class="slds-is-relative">
+                                <div
+                                    class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large customWhiteBackground">
+
+                                    <div class="slds-p-top_small modalType">
+                                        <span
+                                            class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
+                                        <span class="notificationCenterTextsize text-xxsmall slds-m-left_large">
+                                            <lightning-formatted-date-time value={notification.createdDate}
+                                                year="2-digit" month="short" day="2-digit" hour="numeric"
+                                                minute="numeric">
+                                            </lightning-formatted-date-time>
+                                        </span>
+                                    </div>
+                                    <div class="text-xsmall slds-m-left_large slds-p-top_small">
+                                        {notification.subject}
+                                    </div>
+                                    <div class="text-xsmall slds-m-left_large slds-p-top_small"
+                                        style="text-align: justify; text-justify: inter-word;">
+                                        <lightning-formatted-rich-text value={notification.message}>
+                                        </lightning-formatted-rich-text>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
             </template>
-            <!-- END MODAL -->
 
             <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth slds-show_medium"></div>
             <div class="headerBarLogo slds-p-horizontal_x-small slds-show_medium">
@@ -98,7 +105,7 @@
                                 style={headerButtonNotificationsStyle}></div>
                             <div class="headerButtonNotificationsCloseIcon slds-m-left_xx-small slds-m-right_xxx-small"
                                 style={headerButtonNotificationsCloseIconStyle}>
-                                <div class="closeButton"> X </div>
+                                <div class="closeButton"> + </div>
                             </div>
                         </div>
 
@@ -126,14 +133,13 @@
                                                                 class="notificationCenterTextsize text-xxsmall slds-m-left_large"
                                                                 data-item={not.id}>
                                                                 <lightning-formatted-date-time value={not.createdDate}
-                                                                    year="numeric" month="numeric" day="numeric"
-                                                                    hour="2-digit" minute="2-digit" hour12="true">
+                                                                    year="2-digit" month="short" day="2-digit"
+                                                                    hour="numeric" minute="numeric">
                                                                 </lightning-formatted-date-time>
                                                             </span>
                                                             <template if:true={not.isNotification}>
                                                                 <template if:false={not.viewed}>
-                                                                    <span
-                                                                        class="circle cursorPointer tooltip"
+                                                                    <span class="circle cursorPointer tooltip"
                                                                         data-item={not.id} data-changebody="1"
                                                                         onclick={onClickAllNotificationsView}>
                                                                         <span class="tooltiptext" data-item={not.id}
@@ -183,8 +189,8 @@
                                                                 class="notificationCenterTextsize text-xxsmall slds-m-left_large"
                                                                 data-item={not.id}>
                                                                 <lightning-formatted-date-time value={not.createdDate}
-                                                                    year="numeric" month="numeric" day="numeric"
-                                                                    hour="2-digit" minute="2-digit" hour12="true">
+                                                                    year="2-digit" month="short" day="2-digit"
+                                                                    hour="numeric" minute="numeric">
                                                                 </lightning-formatted-date-time>
                                                             </span>
                                                             <template if:false={not.viewed}>
@@ -236,9 +242,9 @@
                                                                     class="notificationCenterTextsize text-xxsmall slds-m-left_large"
                                                                     data-item={not.id}>
                                                                     <lightning-formatted-date-time
-                                                                        value={not.createdDate} year="numeric"
-                                                                        month="numeric" day="numeric" hour="2-digit"
-                                                                        minute="2-digit" hour12="true">
+                                                                        value={not.createdDate} year="2-digit"
+                                                                        month="short" day="2-digit" hour="numeric"
+                                                                        minute="numeric">
                                                                     </lightning-formatted-date-time>
                                                                 </span>
                                                             </div>
