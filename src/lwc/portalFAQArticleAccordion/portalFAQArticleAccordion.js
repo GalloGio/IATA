@@ -4,7 +4,6 @@ import getFAQsInfo from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 import createFeedback from '@salesforce/apex/PortalFAQsCtrl.createFeedback';
 import getArticlesFeedback from '@salesforce/apex/PortalFAQsCtrl.getArticlesFeedback';
 import randomUUID from '@salesforce/apex/CSP_Utils.randomUUID';
-import getSearchArticles from '@salesforce/apex/PortalFAQsCtrl.getSearchArticles';
 import getArticleTitle from '@salesforce/apex/PortalFAQsCtrl.getArticleTitle';
 import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
 
@@ -49,6 +48,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     @track counter;
     @track renderConfirmation = false;
     @track searchText;
+    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
 
     @api
     get topic() {
@@ -133,9 +133,10 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                 /* GET ARTICLE TITLE FROM ITS ID, TO BE USED IN THE SOSL SEARCH */
                 getArticleTitle({ articleId : this.articleView.id1 })
                     .then(resultsTitle => {
-                        let articleTitle = resultsTitle;
-    
-                        this.renderSearchArticles(articleTitle);
+                        let filteringObject = {};
+                        filteringObject.searchText = resultsTitle;
+
+                        this.renderSearchArticles(JSON.stringify(filteringObject));
                     });
             }
         }
@@ -166,23 +167,34 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // SOSL SEARCH TO RETRIEVE RELATED ARTICLES FOR A GIVEN SEARCH PARAM
     renderSearchArticles(searchParam) {
-        getSearchArticles({ searchTerm : searchParam })
+        getFilteredFAQsResultsPage({ searchKey : searchParam, requestedPage : '0'})
             .then(resultsArticles => {
                 this.articles = [];
-                if(resultsArticles.length) {                    
-                    this.handleCallback(resultsArticles, this.articleView.id2);
+                if(resultsArticles.records.length) {                    
+                    this.handleCallback(resultsArticles.records);                   
                 }
             });
     }
 
     // HANDLE CALLBACK TO BUILD ARTICLE'S LIST, WITH AN OPEN ARTICLE, ARTICLE'S FEEDBACK AND A LIST OF RELATED ARTICLES
-    handleCallback(results, relatedArticleId) {
+    handleCallback(results) {        
         let res = JSON.parse(JSON.stringify(results));
     
         this.articleIds = [];
         let tempArticles = [];
         let tempArticleIds;
         let articleSelected = {};               
+        let relatedArticleId;
+
+        if(this.articleView !== undefined) {
+            if(this.articleView.q !== undefined) {
+                relatedArticleId = this.articleView.id1;
+            } else {
+                relatedArticleId = this.articleView.id2;
+            }
+        } else {
+            relatedArticleId = undefined;
+        }
 
         tempArticleIds = '(';
 
@@ -291,7 +303,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         this.articles = articleVals;
     }
 
-    onInputchange(event) {
+    onInputChange(event) {
         if(event.target.value !== '') {
             this.searchText = event.target.value;
 
@@ -299,7 +311,10 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
             this.timeout = setTimeout(() => {
                 if(this.searchText.length > 3) {
-                    this.renderSearchArticles(this.searchText);
+                    let filteringObject = {};
+                    filteringObject.searchText = this.searchText;
+
+                    this.renderSearchArticles(JSON.stringify(filteringObject));
                 }
             }, 1300, this);
         } else {
