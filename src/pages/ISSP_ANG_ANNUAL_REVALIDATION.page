@@ -971,7 +971,7 @@
                     <div class="modal-footer">
                         <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" id="submitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
                             oncomplete="if ({!contactSaved==true}){hideNewContactDialog(); cancelAgentUpdate();} this.removeAttribute('disabled');"
-                            onclick="this.disabled='disabled';"
+                            onclick="copyState(); this.disabled='disabled';"
                             reRender="currContactList, theMessages, ownershipMessage, noUpdateMessage">
                             <apex:param value="Current Owner" name="ownertype" assignTo="{!contactType}" />
                         </apex:commandButton>&nbsp;
@@ -1048,9 +1048,12 @@
                     }
                     
                     function copyState() {
-                       var dropdownValue = $('[id$="contactStateList"]').val();
-                       $('[id$="contactStateInput"]').val(dropdownValue);
-                       $('[id$="contactStateInput"]').change();
+                        var dropdownValue = $('[id$="contactStateList"]').val();
+
+                        if (dropdownValue != undefined && dropdownValue != '' && dropdownValue != null) { 
+                            $('[id$="contactStateInput"]').val(dropdownValue);
+                            $('[id$="contactStateInput"]').change();
+                        }
                     }
 
 
