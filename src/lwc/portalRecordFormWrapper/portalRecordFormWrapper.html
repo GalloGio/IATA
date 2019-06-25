@@ -6,7 +6,8 @@
 <template>
 
     <template if:true={changeUserPortalStatus}>
-        <c-portal-change-user-status record-id={recordId} onclosemodal={closePortalChangeUserStatus}></c-portal-change-user-status>
+        <c-portal-change-user-status record-id={recordId} onclosemodal={closePortalChangeUserStatus}
+            onrefreshview={closePortalChangeUserStatusWithRefresh}></c-portal-change-user-status>
     </template>
 
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>

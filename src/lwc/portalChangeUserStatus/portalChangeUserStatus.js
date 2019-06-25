@@ -140,7 +140,7 @@ export default class ChangeUserPortalStatus extends LightningElement {
                     })
                 );
                 this.loading = false;
-                this.dispatchEvent(new CustomEvent('closemodal'));
+                this.dispatchEvent(new CustomEvent('refreshview'));
                 // this.selected = [];
             })
             .catch(error => {
