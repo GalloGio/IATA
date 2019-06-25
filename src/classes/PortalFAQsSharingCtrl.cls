@@ -28,7 +28,8 @@ public with sharing class PortalFAQsSharingCtrl {
      * @param userId
      */
 
-    public static void checkPermissionSets(Id userId){
+    @future
+    public static void validateUserFAQsPermissions(Id userId){
         List <PermissionSetAssignment> existingAssignments = [SELECT Id, AssigneeId,PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX];
         Set<Id> existingSetIds = new Set<Id>();
 
@@ -46,7 +47,7 @@ public with sharing class PortalFAQsSharingCtrl {
             //Now we might actually want to assign some new permission sets
             checkOnly = false;
 
-            if(!availablePermissionSets.containsAll(assignedPermissionSets) || !assignedPermissionSets.containsAll(availablePermissionSets)){
+            if(availablePermissionSets != null && !availablePermissionSets.containsAll(assignedPermissionSets) || !assignedPermissionSets.containsAll(availablePermissionSets)){
                 removeFAQsPermissions(userId);
                 assignFAQsPermissions(userId);
             }
@@ -83,7 +84,7 @@ public with sharing class PortalFAQsSharingCtrl {
         if(!sectorSettingsMap.isEmpty()){
             for(PortalFAQs__mdt setting:sectorSettingsMap.values()){
 
-                List<String> categories = setting.Account_Categories__c != null ? setting.Account_Categories__c.split(',') : new List<String>();
+                List<String> categories = setting.Account_Categories__c != null ? setting.Account_Categories__c.split(';') : new List<String>();
                 Set<String> categorySet = new Set<String>();
                 categorySet.addAll(categories);
 
@@ -108,7 +109,7 @@ public with sharing class PortalFAQsSharingCtrl {
                         permsetNames.add(setting.Permission_Set_Name__c);
                     }
                 }
-            }   
+            }
         }
 
         //If no permission set was found for given criteria, assign default set
@@ -119,7 +120,7 @@ public with sharing class PortalFAQsSharingCtrl {
                     permsetNames.add(setting.Permission_Set_Name__c);
                 }
             }else{
-                System.debug('NO PERMISSION SET TO BE ASSIGN. Default FAQs permission set is missing.');
+                System.debug('NO FAQ PERMISSION SET TO BE ASSIGN. Default FAQs permission set is missing.');
                 return;
             }
         }
@@ -138,17 +139,18 @@ public with sharing class PortalFAQsSharingCtrl {
                     assignments.add(newPermission);
 
                     availableSetIds.add(permSet.Id);
-                    System.debug('To be inserted: '+newPermission);
                 }
 
                 if(!assignments.isEmpty()){
-                    System.debug('To insert: '+assignments.size());
                     if(!checkOnly){
                         insert assignments;
                     }else{
                         availablePermissionSets = availableSetIds;
                     }
                 }
+            }else{
+                System.debug('NO FAQ PERMISSION SETS FOUND.');
+                return;
             }
         }
     }

@@ -43,8 +43,10 @@ private class PortalFAQsSharingCtrlTest {
             PortalFAQsSharingCtrl.assignFAQsPermissions(portalUser.Id);
             List <PermissionSetAssignment> faqAssignments = [SELECT Id, AssigneeId FROM PermissionSetAssignment WHERE AssigneeId = :portalUser.Id AND PermissionSet.Name LIKE :PortalFAQsSharingCtrl.FAQ_PERMSET_PREFIX];
 
-            //System.assert(faqAssignments.size() > 0);
-            //Define assert when metadata values and permission sets are created
+            /**
+            TODO
+                System.assert(faqAssignments.size() > 0);
+                Define assert when metadata values and permission sets are created */
         }
     }
 
@@ -75,8 +77,10 @@ private class PortalFAQsSharingCtrlTest {
             PortalFAQsSharingCtrl.assignFAQsPermissions(portalUser.Id);
             List <PermissionSetAssignment> faqAssignments = [SELECT Id, AssigneeId FROM PermissionSetAssignment WHERE AssigneeId =: portalUser.Id AND PermissionSet.Name LIKE :PortalFAQsSharingCtrl.FAQ_PERMSET_PREFIX];
 
-            //System.assert(faqAssignments.size() == 1);
-            //Define assert when metadata values and permission sets are created
+            /**
+            TODO
+                System.assert(faqAssignments.size() > 0);
+                Define assert when metadata values and permission sets are created */
         }
     }
 
@@ -115,7 +119,7 @@ private class PortalFAQsSharingCtrlTest {
             MyAirline.IATA_ISO_Country__c = null;
             update MyAirline;
 
-            PortalFAQsSharingCtrl.checkPermissionSets(portalUser.Id);
+            PortalFAQsSharingCtrl.validateUserFAQsPermissions(portalUser.Id);
 
         }
     }
