@@ -16,6 +16,7 @@
 	<aura:attribute type="Integer" name="validBilling" default="0" access="private"/>
 	<aura:attribute type="Integer" name="validShipping" default="0" access="private"/>
 	<aura:attribute type="Boolean" name="validationError" default="false" access="private"/>
+    <aura:attribute type="Boolean" name="categoryOther" default="false" access="private"/>
 	
 
 	<aura:attribute type="Boolean" name="hasJquery" default="false" access="private"/>
@@ -69,12 +70,19 @@
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
 			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Category__c}</label>
 			<div class="slds-form-element__control slds-select_container">
-				<ui:inputSelect aura:id="categorySelection" value="{!v.account.Category__c}" class="slds-select" disabled="{!!v.changeCategory}"/>
+				<ui:inputSelect aura:id="categorySelection" value="{!v.account.Category__c}" class="slds-select" disabled="{!!v.changeCategory}" change="{!c.parseCategory}"/>
 				<!-- options are set on the setOption function -->
 			</div>
 		</div>
 
-		
+		<aura:if isTrue="{!v.categoryOther}">
+			<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Category_Other_Value__c}</label>
+				<div class="slds-form-element__control">
+					<ui:inputText aura:id="catOtherVal" value="{!v.account.Category_Other_Value__c}" class="slds-input"/>
+				</div>
+			</div>
+		</aura:if>
 	</div>
 
 
