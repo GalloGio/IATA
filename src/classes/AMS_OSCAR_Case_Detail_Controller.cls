@@ -291,7 +291,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         
         if(issOp.size() > 1) accreditationObj.addError('Too many BSP attribute records records, please contact support');
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
-        List<SelectOption> rfPicklistValues = new List<SelectOption>();
         Set<String> rightOptions;
         Set<String> auxOptions = new Set<String>();
 
