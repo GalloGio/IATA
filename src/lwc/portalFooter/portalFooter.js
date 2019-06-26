@@ -24,7 +24,7 @@ import csp_Footer_Privacy_URL from '@salesforce/label/c.csp_Footer_Privacy_URL';
 import csp_Footer_IataStore_URL from '@salesforce/label/c.csp_Footer_IataStore_URL';
 
 export default class PortalFooter extends LightningElement {
-    @track selectedLang = '';
+    @track selectedLang = 'en_US';
     @track langOptions = [];
     @track chagingLang = false;
     @track loadingLangs = true;
