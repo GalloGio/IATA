@@ -124,6 +124,7 @@ public class ANG_AccountTriggerHandler {
 		List<Account> downGradeAtoB = new List<Account>();
 		List<Account> downGradeBtoC = new List<Account>();
 		List<Account> createFOP = new List<Account>();
+		Set<Id> changeCodesForRiskChangesLst = new Set<Id>();
 
 		for(Account acc : triggerNew){
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Risk Status - ' + oldMap.get(acc.Id).ANG_HE_RiskStatus__c);
@@ -131,8 +132,14 @@ public class ANG_AccountTriggerHandler {
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Cash Condition - ' + oldMap.get(acc.Id).ANG_HE_CashCondition__c);
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Cash Condition - ' + acc.ANG_HE_CashCondition__c);
 
-			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c) downGradeAtoB.add(acc);
-			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B) downGradeBtoC.add(acc);
+			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c){
+				downGradeAtoB.add(acc);
+				changeCodesForRiskChangesLst.add(acc.Id);
+			}
+			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B){
+				downGradeBtoC.add(acc);
+				changeCodesForRiskChangesLst.add(acc.Id);
+			}
 			if(isExpiration && acc.Guaranteed_amount__c == 0 && acc.ANG_HE_CashCondition__c && !oldMap.get(acc.Id).ANG_HE_CashCondition__c) createFOP.add(acc);
 		}
 
@@ -191,6 +198,34 @@ public class ANG_AccountTriggerHandler {
 
 		//downgrade of cash conditions from "Fail Financial Statements" Risk Event
 		if(!createFOP.isEmpty()) createFOPOscar(createFOP, rhcContacts);
+
+		//NEWGEN-4880
+
+		if(isLastFinancialReviewUpgrade){
+			
+			AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgDownRisk');
+			List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
+			String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
+
+			for(Id accId : changeCodesForRiskChangesLst){
+				Account acc = newMap.get(accId);
+				changeCodes.add(new Agency_Applied_Change_code__c(
+					Active__c = true
+					, Account__c = acc.Id
+					, Change_Code__c = config.Change_Code__c
+					, Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
+					, Reason_Code__c = config.Reason_Code__c
+					, Reason_Description__c = config.Reason_Code_Description__c
+					, Source__c = source
+					, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
+					, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
+				));
+			}
+
+			if(!changeCodes.isEmpty())
+				insert changeCodes;
+		}
+
 	}
 
 	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
@@ -200,14 +235,23 @@ public class ANG_AccountTriggerHandler {
 		Set<Id> toNotify = new Set<Id>();
 		Set<Id> toChangeCode = new Set<Id>();
 
-		AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgradedRisk');
+		AMS_ChangeCodes__c config;
+
+		if(isExpiration)
+			config = AMS_ChangeCodes__c.getInstance('UpgradedRisk');
+		else {
+			config = AMS_ChangeCodes__c.getInstance('UpgDownRisk');
+		}
+
+		Account oldAcc;
 
 		for(Account acc : triggerNew){
-			Account oldAcc = oldMap.get(acc.Id);
 
-			if(oldAcc.ANG_HE_RiskStatus__c != acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A)){
+			oldAcc = oldMap.get(acc.Id);
+
+			if(oldAcc.ANG_HE_RiskStatus__c <> acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A)){
 				toNotify.add(acc.Id);
-				if(isExpiration && config != null) toChangeCode.add(acc.Id);
+				if((isExpiration||isLastFinancialReviewUpgrade) && config != null) toChangeCode.add(acc.Id);
 			}
 
 			if(oldAcc.ANG_HE_CashCondition__c != acc.ANG_HE_CashCondition__c && acc.ANG_HE_CashCondition__c == false){

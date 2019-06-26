@@ -284,6 +284,13 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return getRfPicklistValuesAMS();    
         }
         
+        List<ANG_BSP_Attributes__c> issOp = [SELECT Id, BSP__r.Remittance_Frequency_per_State__c, Remittance_Frequency__c 
+                                             FROM ANG_BSP_Attributes__c 
+                                             WHERE ISO_State__c =: accreditationObj.IATA_ISO_State__c 
+                                             AND RecordType.DeveloperName = 'Remittance_Frequency'];
+        
+        if(issOp.size() > 1) accreditationObj.addError('Too many BSP attribute records records, please contact support');
+        List<SelectOption> rfPicklistValues = new List<SelectOption>();
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         Set<String> rightOptions;
         Set<String> auxOptions = new Set<String>();
@@ -302,13 +309,16 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                // for new HE Accreditations get the values from the BSP configuration of all BSP operation codes related to this country
                 if(oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD) {
 
-                    for(AMS_Operation__c operation :operationCodes) {
-                        for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
-
-                            if(!auxOptions.contains(attribute.Remittance_Frequency__c)){                               
-                                rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c)));                               
-                                //prevent duplication
-                                auxOptions.add(attribute.Remittance_Frequency__c);
+                    if(!issOp.isEmpty() && issOp[0].BSP__r.Remittance_Frequency_per_State__c == True) {
+                        rfPicklistValues.add(new SelectOption (issOp[0].Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(issOp[0].Remittance_Frequency__c)));
+                    } else {
+                        for(AMS_Operation__c operation :operationCodes) {
+                            for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
+                                if(!auxOptions.contains(attribute.Remittance_Frequency__c)){                               
+                                    rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c)));                               
+                                    //prevent duplication
+                                    auxOptions.add(attribute.Remittance_Frequency__c);
+                                }
                             }
                         }
                     }
@@ -316,9 +326,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 // for New AE, remittance frequency is populated from the Parent Account and picklist values are restricted to the value of the parent
                 }else if(oscarObj.Process__c == AMS_Utils.NEWAE) {
 
-                    if(oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c != null )
+                    if(!issOp.isEmpty() && issOp[0].BSP__r.Remittance_Frequency_per_State__c == True) {
+                        rfPicklistValues.add(new SelectOption (issOp[0].Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(issOp[0].Remittance_Frequency__c)));
+                    } else if(oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c != null )
                         rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get( oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c)));                 
-                  
+                
                 // for changes and corrections populate only with BSP attributes of operation codes related with the current account
                 }else if((oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
 

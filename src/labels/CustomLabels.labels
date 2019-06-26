@@ -27571,6 +27571,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Cash</value>
     </labels>
     <labels>
+        <fullName>ISSP_RHC_HUB_AFP_China</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP China</shortDescription>
+        <value>Authorized Forms of Payment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_RHC_HUB_AFP_Credit_Card</fullName>
         <categories>ISSP,RHC</categories>
         <language>en_US</language>
