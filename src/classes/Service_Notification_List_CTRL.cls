@@ -35,17 +35,18 @@ public without sharing class Service_Notification_List_CTRL {
         Pattern MyPattern = Pattern.compile('href="([^"]*)"');
         for(Service_Notification__c message : messages){
             Matcher MyMatcher = MyPattern.matcher(message.Body__c);
+            if (message.Body__c != null && message.Body__c != '') {
+                while (MyMatcher.find()) {
 
-            while (MyMatcher.find()) {
-
-                string[] spl = MyMatcher.group().split('/');
-                if(spl.size() > 0 && spl[spl.size() - 1].startsWith('068')){
-                    string objId = spl[spl.size() - 1];
-                    if(objId.length() > 15 ){
-                        objId = objId.substring(0, 15);
+                    string[] spl = MyMatcher.group().split('/');
+                    if (spl.size() > 0 && spl[spl.size() - 1].startsWith('068')) {
+                        string objId = spl[spl.size() - 1];
+                        if (objId.length() > 15) {
+                            objId = objId.substring(0, 15);
+                        }
+                        message.Body__c = message.Body__c.replace(MyMatcher.group(),
+                                'href="' + Site.getBaseUrl() + '/sfc/servlet.shepherd/version/download/' + objId + '"');
                     }
-                    message.Body__c = message.Body__c.replace(MyMatcher.group(),
-                          'href="'+ Site.getBaseUrl()+'/sfc/servlet.shepherd/version/download/'+objId+'"');
                 }
             }
         }
