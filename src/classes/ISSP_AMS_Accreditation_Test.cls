@@ -3736,6 +3736,8 @@ private class ISSP_AMS_Accreditation_Test {
 	
 	            ctrl2.isNoticeOfChange = true;
 	            ctrl2.isBankAccountChange = true;
+
+                Boolean revCaseOpen = ctrl2.revCaseOpen;
 	
 	            ctrl2.newForm.Scope_of_Change__c = 'HO - Selected Branches';
 	            ctrl2.newForm.Agency_Codes_Concerned__c = '2000000';
