@@ -163,7 +163,7 @@ public with sharing class SidraLiteHelperForOSCAR {
                 return reason;
             }
         }
-        if (oscar.Step44__c == 'Failed') {
+        if (oscar.Step44__c == 'Passed') {
             String reason = MAP_STEP_REASON.get('44');
             if (!existentReasons.contains(reason) ) {
                 return reason;
