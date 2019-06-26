@@ -79,9 +79,10 @@ public with sharing class PortalProfileCtrl {
     * In the future - filtering, sorting to call backend methods and return data from the DB.
     */
     @AuraEnabled
-    public static List<ContactWrapper> searchAccountContacts(String queryString){
-        List<Contact> searchResults = new List<Contact>();
-        return new List<ContactWrapper>();
+    public static List<ContactWrapper> searchAccountContacts(String queryString, Integer offset){
+        List<Contact> searchResults = DAL_ISSP.searchContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH,queryString);
+        List<ContactWrapper> wrappers = getContactWrappers(searchResults);
+        return wrappers;
     }
 
     @AuraEnabled
@@ -93,11 +94,15 @@ public with sharing class PortalProfileCtrl {
     @AuraEnabled
     public static List<ContactWrapper> getAccountContacts(Integer offset){
         List<Contact> contacts = DAL_ISSP.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
+        List<ContactWrapper> wrappers = getContactWrappers(contacts);
+        return wrappers;
+    }
+
+    private static List<ContactWrapper> getContactWrappers(List<Contact> contacts){
+        List<ContactWrapper> wrappers = new List<ContactWrapper>();
         List<Id> contactIds = new List<Id>();
         List<User> users = new List<User>();
         Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
-
-        List<ContactWrapper> wrappers = new List<ContactWrapper>();
 
         if(!contacts.isEmpty()){
             for(Contact c :contacts){
@@ -119,6 +124,20 @@ public with sharing class PortalProfileCtrl {
         return wrappers;
     }
 
+
+    @AuraEnabled
+    public static List<Account> searchCompanyBranches(String queryString, Integer offset){
+        List<Account> branches = new List<Account>();
+
+        branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
+        from account
+        where (id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId)
+        and (TradeName__c LIKE :queryString OR Name LIKE :queryString OR BillingCity LIKE :queryString OR IATACode__c LIKE :queryString)
+        ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
+        ];
+
+        return branches;
+    }
 
     @AuraEnabled
     public static List<Account> getCompanyBranches(){
@@ -150,9 +169,7 @@ public with sharing class PortalProfileCtrl {
     public static Map<String,List<FieldWrapper>> ContactFields() {
 
         User loggedUser = CSP_Utils.getLoggedUser();
-        contactInfo = [SELECT Id, Invoicing_Contact__c, Authorized_Signatory__c, BSP_CASS_Payment_contact__c, Airline_Credit_Risk_Manager__c
-        FROM Contact
-        WHERE Id = :loggedUser.contactId];
+        contactInfo = DAL_ISSP.getContact(loggedUser.contactId);
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
         wrapperMap.put(LABEL_BASICS,new List<FieldWrapper>());
@@ -323,6 +340,9 @@ public with sharing class PortalProfileCtrl {
         public Boolean outputOnly;
 
         @AuraEnabled
+        public Boolean changeUserStatus;
+
+        @AuraEnabled
         public Boolean isAccessibility;
 
         @AuraEnabled
@@ -338,8 +358,14 @@ public with sharing class PortalProfileCtrl {
             this.fieldName = fieldName;
             this.editable = editable;
             this.visible = visible;
-            this.outputOnly = output ;
+            this.outputOnly = output;
             this.labeled = false;
+
+            if (fieldName == 'User_Portal_Status__c') {
+                this.changeUserStatus = true;
+            } else {
+                this.changeUserStatus = false;
+            }
         }
 
         public FieldWrapper (String fieldName, Boolean editable, Boolean visible){
@@ -355,10 +381,12 @@ public with sharing class PortalProfileCtrl {
                         new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c'),
                         new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c')
                 };
+            }
 
-
-
-
+            if (fieldName == 'User_Portal_Status__c') {
+                this.changeUserStatus = true;
+            } else {
+                this.changeUserStatus = false;
             }
 
         }
@@ -471,7 +499,7 @@ public with sharing class PortalProfileCtrl {
             wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
         }
 
-        wrapperMap.get(editFields).add(new FieldWrapper('User_Portal_Status__c',true,true));
+        //wrapperMap.get(editFields).add(new FieldWrapper('User_Portal_Status__c',true,true));
 
         return wrapperMap;
 

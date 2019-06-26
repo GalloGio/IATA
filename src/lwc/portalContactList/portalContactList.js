@@ -31,11 +31,11 @@ export default class PortalContactList extends LightningElement {
 
 
     @api
-    get fieldsList(){
+    get fieldsList() {
         return this._fieldsList;
     }
 
-    set fieldsList(value){
+    set fieldsList(value) {
         this._fieldsList = value;
     }
 
@@ -48,13 +48,13 @@ export default class PortalContactList extends LightningElement {
         this.recordsLocal = value;
 
         //In the first run, add rendering flags
-        if(!this.recordsInitDone){
+        if (!this.recordsInitDone) {
             this.recordsInitDone = true;
             this.processRecords();
         }
     }
 
-    get hasRecords() {return this.records !== undefined && this.records.length > 0;}
+    get hasRecords() { return this.records !== undefined && this.records.length > 0; }
 
     get fieldCount() {
         if (!this.fieldsList) {
@@ -66,11 +66,12 @@ export default class PortalContactList extends LightningElement {
 
 
 
-    _labels = {BasicsSection,CSP_NoSearchResults};
-    get labels() {return this._labels;}
-    set labels(value) {this._labels = value;}
+    _labels = { BasicsSection, CSP_NoSearchResults };
+    get labels() { return this._labels; }
+    set labels(value) { this._labels = value; }
 
     connectedCallback() {
+        this.fetching = false;
         this.isAccount = (this.isAccount === 'true' ? true : false);
     }
 
@@ -91,59 +92,65 @@ export default class PortalContactList extends LightningElement {
 
     }
 
-    @api resetInit(){
+    @api resetInit() {
         this.recordsInitDone = false;
     }
     @api
-    openModal() {this.openmodel = true;}
-    closeModal() {this.openmodel = false;}
+    openModal() { this.openmodel = true; }
+    closeModal() { this.openmodel = false; }
     closemodalWithSuccess() {
         this.openmodel = false;
         this.dispatchEvent(new CustomEvent('getcontacts'));
     }
     @api
-    searchRecords(searchParam){
+    searchRecords(searchParam) {
 
-        if(searchParam != null && searchParam.length>0){
-            let records = JSON.parse(JSON.stringify(this.originalRecords));
+        if (searchParam != null && searchParam.length > 0) {
+            /*let records = JSON.parse(JSON.stringify(this.originalRecords));
 
             let filtered = records.filter(function (el) {
-                 let stringed = JSON.stringify(el.rowValues).toLowerCase();
-                 return stringed.includes(searchParam.toLowerCase());
+                let stringed = JSON.stringify(el.rowValues).toLowerCase();
+                return stringed.includes(searchParam.toLowerCase());
             });
 
-            this.records = filtered;
-        }else{
-            this.records = this.originalRecords;
+            this.records = filtered;*/
+
+            //Dispatch event and do Apex search instead of JS
+            this.dispatchEvent(new CustomEvent('searchrecords', { detail: { 'sobjectType': this.objectName,'queryString':searchParam} }));
+
+
+        } else {
+            //this.records = this.originalRecords;
+            this.dispatchEvent(new CustomEvent('searchrecords', { detail: { 'sobjectType': this.objectName,'queryString': '--RESET--'} }));
         }
     }
 
 
 
-    processRecords(){
+    processRecords() {
         let records = JSON.parse(JSON.stringify(this.records));
         //let fields = this.rowFields;
         let fields = this.fieldsList.ROWS;
 
-        if(fields && records){
-            for(let r =0;r<records.length;r++){
+        if (fields && records) {
+            for (let r = 0; r < records.length; r++) {
                 let record = records[r];
                 let rowValues = [];
 
-                for(let i=0;i<fields.length;i++){
+                for (let i = 0; i < fields.length; i++) {
                     let field = fields[i];
                     let fieldName = fields[i].fieldName;
 
                     let rowValue = {};
 
-                    if(record[fieldName] != null){
+                    if (record[fieldName] != null) {
                         rowValue.value = record[fieldName];
                         rowValue.className = field.className;
-                        let extraStyle = this.getRowStyle(fieldName,record[fieldName]);
-                        if(extraStyle != null){
-                            rowValue.className += ' '+extraStyle;
+                        let extraStyle = this.getRowStyle(fieldName, record[fieldName]);
+                        if (extraStyle != null) {
+                            rowValue.className += ' ' + extraStyle;
                         }
-                    }else{
+                    } else {
                         rowValue.value = '';
                         rowValue.className = field.className;//this.getRowStyle(fieldName,null);
                     }
@@ -151,15 +158,15 @@ export default class PortalContactList extends LightningElement {
                     rowValues.push(rowValue);
                 }
                 record.rowValues = rowValues;
-                if(record.open == null){
+                if (record.open == null) {
                     record.open = false;
-                    }
+                }
             }
 
             this.records = records;
             this.originalRecords = records;
 
-            if(this.defaultSort != null){
+            if (this.defaultSort != null) {
 
                 //this.orderRows(this.defaultSort);
             }
@@ -169,18 +176,18 @@ export default class PortalContactList extends LightningElement {
     }
 
 
-    getRowStyle(fieldName,value){
+    getRowStyle(fieldName, value) {
         let objectName = this.objectName;
 
-        if(fieldName == 'Status__c' && objectName == 'Account'){
-            if(value != null){
-                if(value == 'Approved' || value == 'Resolved'){
+        if (fieldName == 'Status__c' && objectName == 'Account') {
+            if (value != null) {
+                if (value == 'Approved' || value == 'Resolved') {
                     return 'lightGreen';
                 }
-                if(value == 'Pending'){
+                if (value == 'Pending') {
                     return 'amber';
                 }
-            }else{
+            } else {
                 return 'underLinded';
             }
         }
@@ -188,28 +195,28 @@ export default class PortalContactList extends LightningElement {
         return 'underLinded';
     }
 
-    columnSort(event){
+    columnSort(event) {
         let fieldName = event.target.dataset.name;
         this.orderRows(fieldName);
     }
 
 
     /** Sort & Filer*/
-    orderRows(fieldName){
+    orderRows(fieldName) {
         let isAsc = this.isAsc;
         let sortBy = this.sortBy;
         let records = JSON.parse(JSON.stringify(this.records));
 
 
         //Choose different field for login date
-        if(fieldName === 'LastLogin'){fieldName == 'LastLoginDate';}
+        if (fieldName === 'LastLogin') { fieldName == 'LastLoginDate'; }
 
         //Handle sort direction
-        if(sortBy != null){
-            if(sortBy == fieldName){
+        if (sortBy != null) {
+            if (sortBy == fieldName) {
                 this.isAsc = !isAsc;
                 isAsc = !isAsc;
-            }else{
+            } else {
                 isAsc = true;
                 this.isAsc = true;
             }
@@ -221,16 +228,16 @@ export default class PortalContactList extends LightningElement {
             let aEmpty = (a[fieldName] == null) || (a[fieldName].length == 0);
             let bEmpty = (b[fieldName] == null) || (b[fieldName].length == 0);
 
-            if( (aEmpty && bEmpty) || (a[fieldName] == b[fieldName])){
+            if ((aEmpty && bEmpty) || (a[fieldName] == b[fieldName])) {
                 return 0;
             }
 
-            if(aEmpty){
-                return 1 *(isAsc ? 1 : -1);
+            if (aEmpty) {
+                return 1 * (isAsc ? 1 : -1);
             }
 
-            if(bEmpty){
-                return -1 *(isAsc ? 1 : -1);
+            if (bEmpty) {
+                return -1 * (isAsc ? 1 : -1);
             }
 
             return (a[fieldName].toLowerCase() < b[fieldName].toLowerCase() ? -1 : 1) * (isAsc ? 1 : -1)
@@ -242,12 +249,12 @@ export default class PortalContactList extends LightningElement {
         //Set field classes
         let fieldsList = JSON.parse(JSON.stringify(this.fieldsList));
         let rowFields = fieldsList.ROWS; //this.rowFields;
-        for(let f = 0;f<rowFields.length;f++){
-            if(rowFields[f].fieldName == fieldName){
+        for (let f = 0; f < rowFields.length; f++) {
+            if (rowFields[f].fieldName == fieldName) {
                 rowFields[f].className = rowFields[f].className.replace(/\inactive\b/g, ' active ');
                 rowFields[f].isAsc = isAsc;
                 rowFields[f].isDesc = !isAsc;
-            }else{
+            } else {
                 rowFields[f].className = rowFields[f].className.replace(/\active\b/g, ' inactive ');
                 rowFields[f].isAsc = false;
                 rowFields[f].isDesc = false;
@@ -256,5 +263,8 @@ export default class PortalContactList extends LightningElement {
         this.fieldsList = fieldsList;
     }
 
+    refreshview() {
+        this.dispatchEvent(new CustomEvent('refreshview'));
+    }
 
 }
