@@ -10,175 +10,180 @@
         <div class="profilePageWrapper">
             <template if:false={noAccount}>
                 <c-portal-page-container style-class="dark">
-                <span slot="componentContent">
-                    <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+                    <span slot="componentContent">
+                        <div class="slds-grid slds-wrap slds-gutters_direct-medium">
 
-                        <!-- Sections nav bar -->
-                        <div class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
+                            <!-- Sections nav bar -->
+                            <div class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
 
-                            <!--<div class="emptyGrayAreaSize"></div>-->
+                                <!--<div class="emptyGrayAreaSize"></div>-->
 
-                            <template for:each={lstTabs} for:item="tab">
-                                <span key={tab.id} class="slds-p-around_small text-small">
+                                <template for:each={lstTabs} for:item="tab">
+                                    <span key={tab.id} class="slds-p-around_small text-small">
 
-                                    <!-- Active tab -->
-                                    <span if:true={tab.active} data-item={tab.id}
-                                          class="slds-p-around_small text-bold selectedTab">
-                                        {tab.label}
+                                        <!-- Active tab -->
+                                        <span if:true={tab.active} data-item={tab.id}
+                                            class="slds-p-around_small text-bold selectedTab">
+                                            {tab.label}
+                                        </span>
+
+                                        <!-- Inactive tab -->
+                                        <span if:false={tab.active} data-item={tab.id} class={tab.class}
+                                            onmouseenter={onmouseenterTab} onmouseleave={onmouseleaveTab}
+                                            onclick={onclickTab}>
+                                            {tab.label}
+                                        </span>
+
                                     </span>
+                                </template>
 
-                                    <!-- Inactive tab -->
-                                    <span if:false={tab.active} data-item={tab.id} class={tab.class}
-                                          onmouseenter={onmouseenterTab} onmouseleave={onmouseleaveTab}
-                                          onclick={onclickTab}>
-                                        {tab.label}
-                                    </span>
-
-                                </span>
-                            </template>
+                            </div>
 
                         </div>
-
-                    </div>
-                </span>
+                    </span>
                 </c-portal-page-container>
 
                 <c-portal-page-container style-class="light">
-                <span slot="componentContent">
-                    <!-- Profile: Navigation & Sections -->
-                    <template if:true={tab0Active}>
-                        <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+                    <span slot="componentContent">
+                        <!-- Profile: Navigation & Sections -->
+                        <template if:true={tab0Active}>
+                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
 
-                            <!-- Sticky navigation -->
-                            <div class="stickyNav slds-col slds-size_1-of-3">
-                                <c-portal-company-profile-info-nav class="slds-large-show"
-                                                                   onnavigate={handleNavigation}></c-portal-company-profile-info-nav>
-                            </div>
+                                <!-- Sticky navigation -->
+                                <div class="stickyNav slds-col slds-size_1-of-3">
+                                    <c-portal-company-profile-info-nav class="slds-large-show"
+                                        onnavigate={handleNavigation}></c-portal-company-profile-info-nav>
+                                </div>
 
-                            <!-- Profile sections -->
-                            <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3">
+                                <!-- Profile sections -->
+                                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3">
 
-                                <template if:true={mapOfValues}>
-                                    <template for:each={mapOfValues} for:item="keyValue">
-                                        <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
-                                                                      record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
-                                                                      show-edit="true" class="section" section-title={keyValue.key}
-                                                                      data-name={keyValue.key}
-                                                                      section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
-                                        </c-portal-record-form-wrapper>
+                                    <template if:true={mapOfValues}>
+                                        <template for:each={mapOfValues} for:item="keyValue">
+                                            <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
+                                                record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
+                                                show-edit="true" class="section" section-title={keyValue.key}
+                                                data-name={keyValue.key}
+                                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                                            </c-portal-record-form-wrapper>
+                                        </template>
+
+                                        <div class="endOfPage"></div>
+
                                     </template>
-
-                                    <div class="endOfPage"></div>
-
-                                </template>
-                            </div>
-                        </div>
-                    </template>
-
-                    <!-- Profile: Branch Offices-->
-                    <template if:true={tab1Active}>
-                        <template if:true={branchesLoaded}>
-
-                            <div class="slds-clearfix slds-m-top_xx-large">
-                                <div class="slds-float_left class borderedSearch" >
-                                    <div class="slds-show_inline-block">
-                                        <img src="/csportal/s/CSPortal/Images/Icons/searchColored.svg" height="42"
-                                             width="42" class="slds-p-left_small">
-                                    </div>
-
-                                    <div class="slds-show_inline-block">
-                                        <div class="fullWidth">
-                                            <lightning-input name="branch-search" type="text" placeholder={labels.FindBranch}
-                                                             onchange={onchangeSearchInputBranches}
-                                                             class="borderlessInput grayInputBackground searchInput">
-                                            </lightning-input>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-
-                            <div class="slds-grid slds-wrap slds-m-top_x-small">
-                                <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
-                                                       fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
-                                                       default-sort="Name" records={branches} openmodel={openmodel} recordid={recordid}
-                                                       objectid={accountid} fetching={isFetching}>
-                                </c-portal-contact-list>
-                            </div>
                         </template>
 
-                        <template if:false={branchesLoaded}>
-                            <div class="slds-m-around_xx-large slds-is-relative">
-                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                            </div>
-                        </template>
-                    </template>
+                        <!-- Profile: Branch Offices-->
+                        <template if:true={tab1Active}>
+                            <template if:true={branchesLoaded}>
 
-                    <!-- Profile: Contacts-->
-                    <template if:true={tab2Active}>
+                                <div class="slds-clearfix slds-m-top_xx-large">
+                                    <div class="slds-float_left class borderedSearch">
+                                        <div class="slds-show_inline-block">
+                                            <img src="/csportal/s/CSPortal/Images/Icons/searchColored.svg" height="42"
+                                                width="42" class="slds-p-left_small">
+                                        </div>
 
-                        <template if:true={contactsLoaded}>
-
-                            <div class="slds-clearfix slds-m-top_xx-large">
-                                <div class="slds-float_left borderedSearch">
-                                    <div class="slds-show_inline-block">
-                                        <img src="/csportal/s/CSPortal/Images/Icons/searchColored.svg" height="42"
-                                             width="42" class="slds-p-left_small">
-                                    </div>
-
-                                    <div class="slds-show_inline-block">
-                                        <div class="fullWidth">
-                                            <lightning-input name="contact-search" type="text"
-                                                             placeholder={labels.FindContact} onchange={onchangeSearchInputContacts}
-                                                             class="borderlessInput grayInputBackground searchInput">
-                                            </lightning-input>
+                                        <div class="slds-show_inline-block">
+                                            <div class="fullWidth">
+                                                <lightning-input name="branch-search" type="text"
+                                                    placeholder={labels.FindBranch}
+                                                    onchange={onchangeSearchInputBranches}
+                                                    class="borderlessInput grayInputBackground searchInput">
+                                                </lightning-input>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="slds-float_right">
-                                    <!-- LABELS -->
-                                    <lightning-button variant="brand" label={labels.NewContact}
-                                                      title="Create New Contact" disabled={contactsNotLoaded} onclick={createContact}
-                                                      class="slds-float_right containedButton"></lightning-button>
+                                <div class="slds-grid slds-wrap slds-m-top_x-small">
+                                    <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
+                                        fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
+                                        default-sort="Name" records={branches} openmodel={openmodel} recordid={recordid}
+                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords}>
+                                    </c-portal-contact-list>
                                 </div>
-                            </div>
+                            </template>
 
-                            <div class="slds-grid slds-wrap slds-m-top_x-small">
-                                <c-portal-contact-list is-account="false" object-name="Contact" class="fullWidth" default-sort="Name"
-                                                       fields-list={contactFields} fields-list-to-create={fieldsListToCreate}
-                                                       records={contacts} openmodel={openmodel} recordid={recordid} accountid={accountid}
-                                                       objectid={objectid} ongetcontacts={getContacts}  fetching={isFetching}>
-                                </c-portal-contact-list>
-
-                            </div>
+                            <template if:false={branchesLoaded}>
+                                <div class="slds-m-around_xx-large slds-is-relative">
+                                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                                </div>
+                            </template>
                         </template>
 
-                        <template if:false={contactsLoaded}>
-                            <div class="slds-m-around_xx-large slds-is-relative">
-                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                            </div>
+                        <!-- Profile: Contacts-->
+                        <template if:true={tab2Active}>
+
+                            <template if:true={contactsLoaded}>
+
+                                <div class="slds-clearfix slds-m-top_xx-large">
+                                    <div class="slds-float_left borderedSearch">
+                                        <div class="slds-show_inline-block">
+                                            <img src="/csportal/s/CSPortal/Images/Icons/searchColored.svg" height="42"
+                                                width="42" class="slds-p-left_small">
+                                        </div>
+
+                                        <div class="slds-show_inline-block">
+                                            <div class="fullWidth">
+                                                <lightning-input name="contact-search" type="text" value={searchValue}
+                                                    placeholder={labels.FindContact}
+                                                    onchange={onchangeSearchInputContacts}
+                                                    class="borderlessInput grayInputBackground searchInput">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-float_right">
+                                        <!-- LABELS -->
+                                        <lightning-button variant="brand" label={labels.NewContact}
+                                            title="Create New Contact" disabled={contactsNotLoaded}
+                                            onclick={createContact} class="slds-float_right containedButton">
+                                        </lightning-button>
+                                    </div>
+                                </div>
+
+                                <div class="slds-grid slds-wrap slds-m-top_x-small">
+                                    <c-portal-contact-list is-account="false" object-name="Contact" class="fullWidth"
+                                        default-sort="Name" fields-list={contactFields}
+                                        fields-list-to-create={fieldsListToCreate} records={contacts}
+                                        openmodel={openmodel} recordid={recordid} accountid={accountid}
+                                        objectid={objectid} ongetcontacts={getContacts} fetching={isFetching}
+                                        onrefreshview={refreshview} onsearchrecords={searchRecords}>
+                                    </c-portal-contact-list>
+
+                                </div>
+                            </template>
+
+                            <template if:false={contactsLoaded}>
+                                <div class="slds-m-around_xx-large slds-is-relative">
+                                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                                </div>
+                            </template>
+
                         </template>
 
-                    </template>
+                        <!-- Profile: Company Calendar -->
+                        <template if:true={tab3Active}>
+                            Company Calendar
+                        </template>
 
-                    <!-- Profile: Company Calendar -->
-                    <template if:true={tab3Active}>
-                        Company Calendar
-                    </template>
-
-                    <!-- Profile: Activity Log -->
-                    <template if:true={tab4Active}>
-                        Activity Log
-                    </template>
-                </span>
+                        <!-- Profile: Activity Log -->
+                        <template if:true={tab4Active}>
+                            Activity Log
+                        </template>
+                    </span>
                 </c-portal-page-container>
             </template>
 
             <template if:true={noAccount}>
                 <c-portal-page-container style-class="light">
-                <span slot="componentContent">
-                    {labels.NoAccount}
-                </span>
+                    <span slot="componentContent">
+                        {labels.NoAccount}
+                    </span>
                 </c-portal-page-container>
 
             </template>
