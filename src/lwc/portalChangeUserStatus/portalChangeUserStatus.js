@@ -41,6 +41,9 @@ export default class ChangeUserPortalStatus extends LightningElement {
     @track loading = false;
     @track inactiveStatus = false;
 
+    @track hasError = false
+    @track errorMessage = '';
+
     label = {
         changeUserPortalStatusLABEL,
         submitLABEL,
@@ -85,7 +88,8 @@ export default class ChangeUserPortalStatus extends LightningElement {
     handlePortalStatusChange(event) {
         // Get the string of the "value" attribute on the selected option
         this.selectedPortalStatus = event.detail.value;
-
+        this.hasError = false;
+        this.selectedReason = null;
         if (this.selectedPortalStatus === DEACTIVATED_VAL) {
             this.inactiveStatus = true;
         } else {
@@ -97,14 +101,15 @@ export default class ChangeUserPortalStatus extends LightningElement {
     handleReasonCommChange(event) {
         // Get the string of the "value" attribute on the selected option
         this.selectedReason = event.detail.value;
-
+        this.hasError = false;
     }
 
     get noSelected() {
         var result = true;
         if (this.PortalStatVal != null && this.PortalStatVal !== DEACTIVATED_VAL)
             result = false;
-        else if (this.PortalStatVal === DEACTIVATED_VAL && this.InactReasonVal != null)
+        else if (this.PortalStatVal === DEACTIVATED_VAL && this.InactReasonVal != null
+            && this.selectedReason !== null && this.selectedReason !== '')
             result = false;
         return result;
     }
@@ -130,17 +135,20 @@ export default class ChangeUserPortalStatus extends LightningElement {
             inactivationReason: this.selectedReason.length === 0 ? '' : this.selectedReason
         })
             .then(msg => {
-             
-                this.dispatchEvent(
-
-                    new ShowToastEvent({
-                        title: msg.isSuccess ? 'Success' : 'Error',
-                        message: msg.isSuccess ? msg.successMsg : msg.errorMsg,
-                        variant: msg.isSuccess ? 'success' : 'error'
-                    })
-                );
                 this.loading = false;
-                this.dispatchEvent(new CustomEvent('refreshview'));
+                if (msg.isSuccess) {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Success',
+                            message: msg.successMsg,
+                            variant: 'success'
+                        })
+                    );
+                    this.dispatchEvent(new CustomEvent('refreshview'));
+                } else {
+                    this.hasError = true;
+                    this.errorMessage = msg.errorMsg;
+                }
                 // this.selected = [];
             })
             .catch(error => {
