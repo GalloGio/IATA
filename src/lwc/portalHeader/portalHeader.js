@@ -244,8 +244,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.openNotifications = !this.openNotifications;
 
         if (this.openNotifications) {
-            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding: 0 8px 0 6px;';
-            this.headerButtonNotificationsCloseIconStyle = 'display: block;';
+            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
             this.headerButtonNotificationsStyle = 'display: none;';
             this.notificationNumberStyle = 'display: none;';
             this.openNotificationsStyle = 'display: block;';
