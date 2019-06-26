@@ -47,6 +47,7 @@ public class ANG_AccountTriggerHandler {
 		manageDowngrades();
 		manageUpgrades();
 		createIEPModelAOscars();
+		handleAccountUpdate();
 	}
 
 	public void onBeforeDelete(){}
@@ -198,7 +199,7 @@ public class ANG_AccountTriggerHandler {
 	private void manageUpgrades() {
 		if(!isExpiration && !isLastFinancialReviewUpgrade) return;
 
-		Set<Id> toNotify = new Set<Id>();
+		//Set<Id> toNotify = new Set<Id>();
 		Set<Id> toChangeCode = new Set<Id>();
 
 		AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgradedRisk');
@@ -207,17 +208,17 @@ public class ANG_AccountTriggerHandler {
 			Account oldAcc = oldMap.get(acc.Id);
 
 			if(oldAcc.ANG_HE_RiskStatus__c != acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A)){
-				toNotify.add(acc.Id);
+				//toNotify.add(acc.Id);
 				if(isExpiration && config != null) toChangeCode.add(acc.Id);
 			}
 
 			if(oldAcc.ANG_HE_CashCondition__c != acc.ANG_HE_CashCondition__c && acc.ANG_HE_CashCondition__c == false){
-				toNotify.add(acc.Id);
+				//toNotify.add(acc.Id);
 				if(config != null) toChangeCode.add(acc.Id);
 			}
 		}
 
-		if(toChangeCode.isEmpty() && toNotify.isEmpty()) return;
+		if(toChangeCode.isEmpty() /*&& toNotify.isEmpty()*/) return;
 
 		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
@@ -239,7 +240,8 @@ public class ANG_AccountTriggerHandler {
 
 		if(!changeCodes.isEmpty()) insert changeCodes;
 		
-			
+		/* Replaced by the notification Risk_Information_Update (NEWGEN-5261)
+
 		List<EmailTemplate> emailTemplates = [SELECT DeveloperName,Id FROM EmailTemplate WHERE DeveloperName ='Risk_Status_Upgrade' AND isActive = true Order by DeveloperName desc];
 		
 		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='Risk_Status_Upgrade'];
@@ -280,7 +282,7 @@ public class ANG_AccountTriggerHandler {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageUpgrades] Notifications - ' + notifications);
 		
-		if(!notifications.isEmpty()) insert notifications;
+		if(!notifications.isEmpty()) insert notifications; */
 	}
 
 	public void updateRiskEventStatus (){
@@ -662,4 +664,20 @@ public class ANG_AccountTriggerHandler {
 			}
 		}
 	}
+
+	private void handleAccountUpdate(){
+		
+		Set<Id> toNotify = new Set<Id>();
+
+		for(account acc : triggerNew){
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(acc.Id) && acc.ANG_HE_RiskStatus__c != oldMap.get(acc.Id).ANG_HE_RiskStatus__c){
+				toNotify.add(acc.Id);
+			}
+		}
+
+		if(!toNotify.isEmpty()){
+			ANG_RHCHelper.handleRiskOrForecastedRhcAmountUpdates(toNotify);
+		}
+	}
+
 }
