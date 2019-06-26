@@ -200,12 +200,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                    }
                }
                //used to order alphabetically
-               // eslint-disable-next-line no-confusing-arrow
-               // auxmyCategoryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
 
-               // this.categoryOptions = auxmyCategoryOptions.concat(auxmyCategoryOptions);
                this.categoryOptions = myCategoryOptions;
-               //eslint-disable-next-line no-console
+              
 
                 //Set the category if in URL
                 this.pageParams = getParamsFromPage();
@@ -229,7 +226,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 //throws error
                 this.error = error;
                 this.toggleSpinner();
-                // eslint-disable-next-line no-console
                 console.log('Error: ', error);
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -270,11 +266,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 this.toggleSpinner();
 
                 //used to order alphabetically
-                // eslint-disable-next-line no-confusing-arrow
                 auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
 
                 myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
-                //eslint-disable-next-line no-console
 
                 //set global with the options for later use
                 this.countryOptions = myCountryOptions;
@@ -318,7 +312,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             //Set inital value subTopic Picklist/Combobox
             this.subTopic = '';
             //Remove Parameters. Reload is necessary
-            //this.pageParams.topic = '';
 
             //Set inital value country Picklist/Combobox
             this.countryValue = '';
@@ -372,10 +365,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         }
 
         //used to order alphabetically
-        // eslint-disable-next-line no-confusing-arrow
-        // auxmyTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
-        // //set the options of picklist
-        // this.topicOptions = myTopicOptions.concat(myTopicOptions);
+        //set the options of picklist
         this.topicOptions = myTopicOptions;
 
         //set Topic value if included in URL
@@ -453,9 +443,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         }
 
         //used to order alphabetically
-        // eslint-disable-next-line no-confusing-arrow
-        // auxmySubTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
-
+        
         //set the options
         // this.subTopicOptions = mySubTopicOptions.concat(auxmySubTopicOptions);
         this.subTopicOptions = mySubTopicOptions;
