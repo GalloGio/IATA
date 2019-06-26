@@ -154,7 +154,10 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
 
         Contact selectedContact = selectedUserInfo.con;
 
-        String userDomain = selectedContact.Email.substringAfter('@');
+        String userDomain = '';
+        if(selectedContact.Email != null) {
+            userDomain = selectedContact.Email.substringAfter('@');
+        }
 
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
         List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c = :selectedContact.Id AND Contact_Roles__r.Name = 'GADM User' AND Service_Rendered__c = 'GADM' AND RecordTypeId = :functionalRecordTypeId];
@@ -162,59 +165,63 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
         if(! accountContactRoles.isEmpty()) {
 
             String mainActorId = accountContactRoles[0].Account_Role__r.Account__c;
-            List<GADM_Account_Service_Detail__c> serviceDetails = [SELECT Id, Active_User_Count__c, Allowed_email_domain__c, Account_Role_Service__r.Account_Role__r.Account__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :accountContactRoles[0].Account_Role__r.Account__c];
-            if(! serviceDetails.isEmpty()) {
+            if(String.isNotBlank(mainActorId)) {
 
-                //get allowed domains
-                List<String> domains = new List<String>();
-                if(serviceDetails[0].Allowed_email_domain__c != null) {
-                    if(serviceDetails[0].Allowed_email_domain__c.indexOf(';') > -1) {
-                        domains = serviceDetails[0].Allowed_email_domain__c.split(';');
-                    }else{
-                        domains.add(serviceDetails[0].Allowed_email_domain__c);
-                    }
+                List<GADM_Account_Service_Detail__c> serviceDetails = [SELECT Id, Active_User_Count__c, Allowed_email_domain__c, Account_Role_Service__r.Account_Role__r.Account__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :accountContactRoles[0].Account_Role__r.Account__c];
+                if (!serviceDetails.isEmpty()) {
 
-                }
-
-                //check user actor against allowed domains
-                GADM_ExternalUserContactDetail_CTRL.Actor actor = userManagementData.actors.get(mainActorId);
-                if(actor != null) {
-                    actor.isDomainBlocked = !domains.contains(userDomain);
-                }
-
-                //fill max count of active users for actor
-                Integer maxUserCount = (Integer)serviceDetails[0].Active_User_Count__c;
-                if(maxUserCount != null) {
-                    userManagementData.actors.get(mainActorId).maxUserCount = maxUserCount;
-                }else{
-                    maxUserCount = 0;
-                    userManagementData.actors.get(mainActorId).maxUserCount = 0;
-                }
-
-                //check how many users are now active for actor
-                Integer actualUserCount = 0;
-                List<Contact_Role_Service_Access__c> accesses = [SELECT Id FROM Contact_Role_Service_Access__c WHERE Status__c = 'Granted' AND Contact_Role__r.Account_Role__r.Account__c = :mainActorId AND Contact_Role__r.Contact_Roles__r.Name = 'GADM User' AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId];
-                if(! accesses.isEmpty()) {
-                    actualUserCount = accesses.size();
-                }
-
-                //check GADM User role against allowed domains
-                for(Id roleId : userManagementData.roles.keySet()) {
-                    Role role = userManagementData.roles.get(roleId);
-                    if(role.role.Name == 'GADM User') {
-                        if(domains != null) {
-                            role.isDomainBlocked = !domains.contains(userDomain);
-                        }else{
-                            role.isDomainBlocked = true;
+                    //get allowed domains
+                    List<String> domains = new List<String>();
+                    if (serviceDetails[0].Allowed_email_domain__c != null) {
+                        if (serviceDetails[0].Allowed_email_domain__c.indexOf(';') > -1) {
+                            domains = serviceDetails[0].Allowed_email_domain__c.split(';');
+                        } else {
+                            domains.add(serviceDetails[0].Allowed_email_domain__c);
                         }
 
-                        break;
+                    }
+
+                    //check user actor against allowed domains
+                    GADM_ExternalUserContactDetail_CTRL.Actor actor = userManagementData.actors.get(mainActorId);
+                    if (actor != null) {
+                        actor.isDomainBlocked = !domains.contains(userDomain);
+
+                        //fill max count of active users for actor
+                        Integer maxUserCount = (Integer) serviceDetails[0].Active_User_Count__c;
+                        if (maxUserCount != null) {
+                            actor.maxUserCount = maxUserCount;
+                        } else {
+                            maxUserCount = 0;
+                            actor.maxUserCount = 0;
+                        }
+
+                        //check how many users are now active for actor
+                        Integer actualUserCount = 0;
+                        List<Contact_Role_Service_Access__c> accesses = [SELECT Id FROM Contact_Role_Service_Access__c WHERE Status__c = 'Granted' AND Contact_Role__r.Account_Role__r.Account__c = :mainActorId AND Contact_Role__r.Contact_Roles__r.Name = 'GADM User' AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId];
+                        if (!accesses.isEmpty()) {
+                            actualUserCount = accesses.size();
+                        }
+
+                        //check GADM User role against allowed domains
+                        for (Id roleId : userManagementData.roles.keySet()) {
+                            Role role = userManagementData.roles.get(roleId);
+                            if (role.role.Name == 'GADM User') {
+                                if (domains != null) {
+                                    role.isDomainBlocked = !domains.contains(userDomain);
+                                } else {
+                                    role.isDomainBlocked = true;
+                                }
+
+                                break;
+                            }
+                        }
+
+                        actor.currentUserCount = actualUserCount;
+
                     }
                 }
-
-                userManagementData.actors.get(mainActorId).currentUserCount = actualUserCount;
-
             }
+
         }
 
         //fill allowed domains for other actors
@@ -522,11 +529,40 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
         if(! businessUnitsForAccessGrantedIds.isEmpty()) {
 
             Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
-            List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Contact_Roles__r.Category__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : con.Id AND Contact_Role__r.Contact_Roles__c = :businessUnitsForAccessGrantedIds AND Contact_Role__r.RecordTypeId = :groupRecordTypeId AND Contact_Role__r.Contact_Roles__r.Category__c = 'Business Unit' AND Service__r.Name = 'GADM' AND Status__c != 'Granted'];
+            List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Contact_Roles__r.Category__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : con.Id AND Contact_Role__r.Contact_Roles__c = :businessUnitsForAccessGrantedIds AND Contact_Role__r.RecordTypeId = :groupRecordTypeId AND Contact_Role__r.Contact_Roles__r.Category__c = 'Business Unit' AND Service__r.Name = 'GADM' AND Status__c != 'Granted'];
+
+            Map<Id, Contact_Role_Service_Access__c> roleToAccessMap = new Map<Id, Contact_Role_Service_Access__c>();
+            for(Contact_Role_Service_Access__c access : serviceAccesses) {
+                roleToAccessMap.put(access.Contact_Role__r.Contact_Roles__c, access);
+            }
 
             List<Contact_Role_Service_Access__c> accessGrantedToUpdate = new List<Contact_Role_Service_Access__c>();
-            List<Id> businessUnitsToGranted = new List<Id>();
+            List<Id> createNewAccessBusinessUnits = new List<Id>();
 
+            for(Id roleId : businessUnitsForAccessGrantedIds) {
+                if(roleToAccessMap.get(roleId) != null) {
+                    accessGrantedToUpdate.add(roleToAccessMap.get(roleId));
+                }else{
+                    createNewAccessBusinessUnits.add(roleId);
+                }
+            }
+
+
+            //update
+            for(Contact_Role_Service_Access__c access : accessGrantedToUpdate) {
+                access.Status__c = 'Granted';
+            }
+
+            //create new access
+            List<Id> createNewBusinessUnitIds = new List<Id>();
+            createNewBusinessUnitIds.addAll(createNewAccessBusinessUnits);
+
+            /*for(Contact_Role_Service_Access__c access : serviceAccesses) {
+                System.debug('access:: ' +access.Contact_Role__r.Contact_Roles__c);
+            }
+            List<Contact_Role_Service_Access__c> accessGrantedToUpdate = new List<Contact_Role_Service_Access__c>();
+            List<Id> businessUnitsToGranted = new List<Id>();
+            List<Id> tempList = new List<Id>();
 
             if(! serviceAccesses.isEmpty()) {
                 for(Contact_Role_Service_Access__c access : serviceAccesses) {
@@ -547,7 +583,7 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
                 if(! businessUnitsToGranted.contains(newRoleToGrand)){
                     createNewBusinessUnitIds.add(newRoleToGrand);
                 }
-            }
+            }*/
             //create new granted access
             if(! createNewBusinessUnitIds.isEmpty()) {
 

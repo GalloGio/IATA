@@ -212,6 +212,10 @@
                         this.toggleTable(component);
                         this.toggleSpinner(component);
                     }
+                //empty result - show empty table
+                }else{
+                    this.toggleTable(component);
+                    this.toggleSpinner(component);
                 }
                 this.updateTableRows(component);
                 if(component.get('v.dataModified')) {

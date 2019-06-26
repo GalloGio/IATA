@@ -211,7 +211,12 @@ public without sharing class Contact_Roles_Helper {
         Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
 
         //current running user contact role
-        List<Account_Contact_Role__c> accountContactRoles  =  [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = 'GADM'];
+        List<Account_Contact_Role__c> accountContactRoles  =  [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = 'GADM' AND Contact_Roles__r.Name = 'GADM User'];
+        //if user has no visibility over group accounts - use his main account and display only his data
+        if(accountContactRoles.isEmpty()) {
+            accountContactRoles = [SELECT Id, Account_Role__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND RecordTypeId = :functionalRecordTypeId AND Service_Rendered__c = 'GADM' AND Contact_Roles__r.Name = 'GADM User'];
+            isGadmUser = true;
+        }
 
         Set<Id> accountContactIds = new Set<Id>();
         for(Account_Contact_Role__c acr : accountContactRoles) {

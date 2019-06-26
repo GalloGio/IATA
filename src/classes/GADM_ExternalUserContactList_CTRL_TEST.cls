@@ -45,11 +45,13 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
 
         Contact testContact = createContact('Neo', 'Smith', acc);
         Contact testContact2 = createContact('Leo', 'Black', acc2);
+        Contact testContact3 = createContact('Petr', 'Novy', acc);
 
         Id profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'].Id;
 
         User testUser = createUser(testContact, profileId);
         User testUser2 = createUser(testContact2, profileId);
+        User testUser3 = createUser(testContact3, profileId);
 
         //GADM service
         Portal_Applications__c portalApplications = new Portal_Applications__c();
@@ -257,6 +259,14 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
         accountContactRole5b.RecordTypeId = functionalRecordTypeId;
         accountContactRolesToInset.add(accountContactRole5b);
 
+        Account_Contact_Role__c accountContactRole6 = new Account_Contact_Role__c();
+        accountContactRole6.Contact__c = testContact3.Id;
+        accountContactRole6.Contact_Roles__c = contactRoles.Id;
+        accountContactRole6.Account_Role__c = accountRole.Id;
+        accountContactRole6.Service_Rendered__c = 'GADM';
+        accountContactRole6.RecordTypeId = functionalRecordTypeId;
+        accountContactRolesToInset.add(accountContactRole6);
+
         insert accountContactRolesToInset;
 
 
@@ -318,6 +328,13 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
         serviceAccess4.Service__c = portalApplications.Id;
         serviceAccess4.Status__c = 'Granted';
         contactRoleServiceAccessesToInsert.add(serviceAccess4);
+
+
+        Contact_Role_Service_Access__c serviceAccess5 = new Contact_Role_Service_Access__c();
+        serviceAccess5.Contact_Role__c = accountContactRole6.Id;
+        serviceAccess5.Service__c = portalApplications.Id;
+        serviceAccess5.Status__c = 'Granted';
+        contactRoleServiceAccessesToInsert.add(serviceAccess5);
 
         insert contactRoleServiceAccessesToInsert;
 
@@ -428,7 +445,6 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
         System.runAs(testUser) {
 
             wrapper = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser2.Id, false, false, new List<Id>(businessUnits.keySet()), false);
-            System.debug('wrapper:: ' + wrapper);
 
         }
 
@@ -472,6 +488,29 @@ public class GADM_ExternalUserContactList_CTRL_TEST {
         System.assertEquals(true, rolesData2.containsKey(gadmUserRole.Id), 'GADM User role should be visible!');
         System.assertEquals(true, rolesData2.containsKey(superUserRole.Id), 'Super User role should be visible!');
         System.assertEquals(true, rolesData2.containsKey(dataSubmitterRole.Id), 'GADM Data Submitter role should be visible!');
+
+    }
+
+    @IsTest
+    private static void getContactsVisibleToUser2Test() {
+
+        User testUser = [SELECT Id, Email FROM User WHERE Email = 'petr.novy.test@somedomain.com'];
+
+        Test.startTest();
+
+        List<Contact_Roles_Helper.AggregatedRecordWrapper> wrapper;
+
+        System.runAs(testUser) {
+
+            wrapper = GADM_ExternalUserContactList_CTRL.getContactsVisibleToUser(testUser.Id, false, false, new List<Id>(), false);
+            System.debug('wrapper:: ' + wrapper);
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(1, wrapper.size(), 'Wrong number of records retrieved!');
+        System.assertEquals(testUser.Email, wrapper[0].con.Email, 'Wrong record retrieved!');
 
     }
 
