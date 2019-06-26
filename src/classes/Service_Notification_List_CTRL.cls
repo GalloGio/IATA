@@ -48,7 +48,7 @@ public without sharing class Service_Notification_List_CTRL {
                                 'href="' + Site.getBaseUrl() + '/sfc/servlet.shepherd/version/download/' + objId + '"');
                     }
                 }
-            }
+            } 
         }
         return messages;
     }
