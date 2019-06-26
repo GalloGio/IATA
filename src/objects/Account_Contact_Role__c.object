@@ -96,6 +96,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Role_Name__c</fullName>
+        <description>Contact Role Name to fill accordingly to the application using the record</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Contact Role Name to fill accordingly to the application using the record</inlineHelpText>
+        <label>Contact Role Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Role__c</fullName>
         <description>Identify the role of the contact within the Account Role</description>
         <externalId>false</externalId>
@@ -194,6 +207,11 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
                     <fullName>TIP</fullName>
                     <default>false</default>
                     <label>TIP</label>
@@ -244,6 +262,30 @@
     </nameField>
     <pluralLabel>Account Contacts Role</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Master</fullName>
+        <active>true</active>
+        <description>Master RecordType</description>
+        <label>Master</label>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Service_Rendered__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>Payment_Provider_Contact</fullName>
         <active>true</active>
