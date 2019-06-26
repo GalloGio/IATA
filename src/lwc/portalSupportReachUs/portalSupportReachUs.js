@@ -725,6 +725,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.subTopicCB = false;
         this.countryCB = false;
         this.optionsButton = false;
+        this.emergencyButton = false;
         this.isEmergency = false;
     }
 
