@@ -548,6 +548,20 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             .then(result => {
                 this.recordTypeAndCountry = JSON.parse(JSON.stringify(result));
                 this.getLiveAgentButtonInfo();
+            }).catch(error => {
+                //throws error
+                this.error = error;
+                this.toggleSpinner();
+                // eslint-disable-next-line no-console
+                console.log('Error: ', JSON.parse(JSON.stringify(error)));
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: JSON.parse(JSON.stringify(error)),
+                        variant: 'error',
+                        mode: 'pester'
+                    })
+                );
             });
     }
 
