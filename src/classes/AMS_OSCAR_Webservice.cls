@@ -307,8 +307,13 @@ global class AMS_OSCAR_Webservice {
             throw new OSCARException(message);
         }       
         if (step=='44') {
-            if (oscar.Step44__c == 'Passed') return;
-            throw new OSCARException(messagePassed);
+            if (oscar.Step44__c == 'Failed' && oscar.Process__c != AMS_Utils.NGANNUALREVAL) return;
+            throw new OSCARException(message);
+        }
+        if (step=='44') {
+            if (oscar.Step44__c != 'Passed' && oscar.Process__c == AMS_Utils.NGANNUALREVAL) return;
+            message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Passed" in this step.';
+            throw new OSCARException(message);
         }
         if (step=='RPM') {
             if (oscar.RPM_Approval__c == 'Authorize Disapproval') return;
