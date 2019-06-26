@@ -159,15 +159,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			accountsList.addAll(h.get(key));
         }
         
+		Set<SelectOption> relAccs = new Set<SelectOption>();
         for(AMS_Agencies_relationhip__c r : accountsList) {
             if(r.Child_Account__c != currentAccount.account.Id && r.Child_Account__r.Status__c != 'Terminated'){
-                relatedAccounts.add(new SelectOption(String.valueOf(r.Child_Account__c), r.Child_Account__r.IATACode__c));
+                relAccs.add(new SelectOption(String.valueOf(r.Child_Account__c), r.Child_Account__r.IATACode__c));
             }
             
             if(r.Parent_Account__c != currentAccount.account.Id && r.Parent_Account__r.Status__c != 'Terminated'){
-                relatedAccounts.add(new SelectOption(String.valueOf(r.Parent_Account__c), r.Parent_Account__r.IATACode__c));
+                relAccs.add(new SelectOption(String.valueOf(r.Parent_Account__c), r.Parent_Account__r.IATACode__c));
             }
         }
+		relatedAccounts.addAll(relAccs);
         
         for(Integer i = relatedAccounts.size() - 1; i >= 0; i--) {
             for(Id completedId : completedForms){
