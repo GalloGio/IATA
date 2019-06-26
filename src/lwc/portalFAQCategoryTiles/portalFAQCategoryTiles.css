@@ -1,0 +1,9 @@
+.heightInfo {
+    min-height: 150px;
+}
+
+.folder {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+  }

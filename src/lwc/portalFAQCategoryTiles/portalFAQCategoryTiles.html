@@ -5,7 +5,7 @@
 
     <!-- RENDER AS TILES -->
     <div if:false={loading} class="spinnerContainer">
-        <template if:true={renderWithIcons}>
+        <div if:true={renderWithIcons}>
             <div class="text-medium text-darkGray text-bold slds-m-bottom_x-small">
                 {label.CSP_FAQ_HeaderTitle}
             </div>
@@ -23,17 +23,18 @@
                     </div>
                 </template>
             </div>
-        </template>
+        </div>
 
         <!-- RENDER AS A LIST -->
-        <template if:false={renderWithIcons}>
-            <div class="customBorderlessCardGray">
-                <template for:each={lstTiles} for:item="tile" for:index="index">
-                    <div key={tile.categoryName} class="slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle" onclick={handleTileButtonClick} data-item={tile.categoryName}>
-                        <span class="slds-p-left_small text-bold" data-item={tile.categoryName}>{tile.categoryLabel}</span>
+        <div if:false={renderWithIcons}>
+            <template for:each={lstTiles} for:item="tile" for:index="index">
+                <div key={tile.categoryName} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                    <div key={tile.categoryName} class="slds-p-around_xx-small customCardTitleBox cursorPointer customBorderlessCardWhite" onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                        <img src={tile.imageURL} class="folder" data-item={tile.categoryName}/>
+                        <span class="slds-p-left_x-small text-xsmall text-black" data-item={tile.categoryName}>{tile.categoryName}</span>
                     </div>
-                </template>
-            </div>
-        </template>
+                </div>
+            </template>
+        </div>
     </div>
 </template>

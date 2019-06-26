@@ -12,6 +12,7 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     @track _articleTitle;
     @track _articleId;
     @track relatedArticles;
+    @track loading = true;
 
     @api
     get article() {
@@ -45,6 +46,7 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
                     }
                     this.relatedArticles = articles;
                 }
+                this.loading = false;
             });
     }
 
