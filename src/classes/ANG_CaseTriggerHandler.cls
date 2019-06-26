@@ -71,7 +71,7 @@ public class ANG_CaseTriggerHandler {
 		if(casesPerAccount.isEmpty()) return;
 
 		//fetch account data. Legacy agents are handled on the CaseAfterTrigger
-		List<Account> ngAccounts = [SELECT Id, Assessment_Performed_Date__c, Financial_Review_Result__c FROM Account WHERE Id IN :casesPerAccount.keySet() AND ANG_IsNewGenAgency__c = true ];
+		List<Account> ngAccounts = [SELECT Id, Assessment_Performed_Date__c, Financial_Review_Result__c, Financial_Assessment_Points__c FROM Account WHERE Id IN :casesPerAccount.keySet() AND ANG_IsNewGenAgency__c = true ];
 
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] ngAccounts - ' + ngAccounts);
@@ -81,12 +81,18 @@ public class ANG_CaseTriggerHandler {
 		List<Account> toUpdate = new List<Account>();
 		for(Account a : ngAccounts){
 			for(Case c : casesPerAccount.get(a.Id)){
+				Boolean updateAcct = false;
+				if(a.Financial_Assessment_Points__c != c.Financial_Assessment_Points__c){
+					a.Financial_Assessment_Points__c = c.Financial_Assessment_Points__c;
+					updateAcct = true;
+				}
 				if(a.Financial_Review_Result__c != c.Financial_Review_Result__c){
 					a.Financial_Review_Result__c = c.Financial_Review_Result__c;
 					a.Assessment_Performed_Date__c = AMS_Utils.getBiggestDate(c.Assessment_Performed_Date__c, a.Assessment_Performed_Date__c);
-					toUpdate.add(a);
+					updateAcct = true;
 					ANG_AccountTriggerHandler.isLastFinancialReviewUpgrade = true;
 				}
+				if(updateAcct) toUpdate.add(a);
 			}
 		}
 		System.debug(loggingLevel.FINE, '____ [cls ANG_CaseTriggerHandler - updateFinancialReviewResultOnAccount] toUpdate - ' + toUpdate);

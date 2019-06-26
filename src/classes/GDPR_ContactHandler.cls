@@ -1,7 +1,7 @@
 public class GDPR_ContactHandler {
 
     public List<contact> triggerNew = (List<contact>) Trigger.new;
-    public List<contact> triggerOld = (List<contact>) Trigger.old;
+    public List<contact> triggerOld = (List<contact>) Trigger.old; 
 
     public Map<Id, contact> newMap = (Map<Id,contact>) Trigger.newMap;
     public Map<Id, contact> oldMap = (Map<Id,contact>) Trigger.oldMap;
@@ -18,16 +18,24 @@ public class GDPR_ContactHandler {
         Map<String, Contact> mapMailContact = new Map<String, Contact>();
 
         for (contact c : newcontacts){
-            contactsEmails.add(c.Email);
-            mapMailContact.put(c.Email, c);
+            if(!String.isBlank(c.Email)){
+                contactsEmails.add(c.Email);
+                mapMailContact.put(c.Email, c);
+            }
         }
 
-        try{
-            il = [SELECT ID, Email__c FROM Individual WHERE Email__c IN :contactsEmails];
-        }catch(Exception e){
-            System.debug(e.getMessage());
+        if(!contactsEmails.isEmpty()) {
+
+            try{
+
+                il = [SELECT ID, Email__c FROM Individual WHERE Email__c IN :contactsEmails];
+
+            }catch(Exception e){
+                
+                System.debug(e.getMessage());
+            }
         }
-        
+
         Integer numOfIndivs = il.size();
         
         //If at least one contact has an individual with a similar email on contact        
@@ -82,15 +90,17 @@ public class GDPR_ContactHandler {
 
         //Map the emails with the contacts looping on oldcontacts because the change field could be Email itself
         for(contact l : oldcontacts){
-            String email = String.isBlank(l.Email) ? null : l.Email.toLowerCase();
-            mapEmailcontact.put(email, l);
+            if(!String.isBlank(l.Email)){
+                String email = l.Email.toLowerCase();
+                mapEmailcontact.put(email, l);
+            }
         }
-   
+        
         List<String> individualsToSearchByEmail = new List<String>(mapEmailcontact.keySet());
         
         map<Id, contact> contactId2Contact = new map<Id, contact> ([SELECT accountId, account.Name FROM Contact WHERE Id IN : newcontactMap.keySet()]);
         //Search for existing Individuals, by Email
-        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c, Job_Function__c/*, Department__c*/ FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
+        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c, Job_Function__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
                
                 //Get the respective contact with the new version of the object
