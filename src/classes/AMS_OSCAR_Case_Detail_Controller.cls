@@ -334,6 +334,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                             }
                         }
                     }
+                //NEWGEN-5544 - Change of Location Where the ISS Operation field Remittance_Frequency_per_State__c = true
+                }else if(oscarObj.ANG_Type_Of_Change__c == AMS_Utils.LOCATION && (!issOp.isEmpty() && issOp[0].BSP__r.Remittance_Frequency_per_State__c && accreditationObj.IATA_ISO_State__c != oscarObj.Account__r.Iso_State__c)){
+                    System.debug('JR Debug call getRfPicklistValues - ANG_Type_Of_Change__c -> LOCATION ');
+                    rfPicklistValues.add(new SelectOption (issOp[0].Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(issOp[0].Remittance_Frequency__c)));
+    
                    //for all the other processes get all the values from the picklist
                 }else{
                     Schema.DescribeFieldResult dfr = AMS_Pax_Accreditation_Form__c.Remittance_frequency__c.getDescribe();
@@ -694,7 +699,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Owner.Phone,Owner.Email,Owner.Name,CreatedBy.Name,Owner.UserRole.Name,LastModifiedBy.Name,Contact_Name__c,Contact_Phone__c,Contact_Email__c,
                         createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c, Account__r.Sector__c,
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
-                        ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
+                        ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c, Account__r.Iso_State__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
                         Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151 
                         FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];

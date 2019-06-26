@@ -187,7 +187,7 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                 var rfPerState = '{!oscar.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c}';
                 var typeChange = '{!oscar.ANG_Type_Of_Change__c}';
             
-                if(typeChange == AMS_Utils.ANG_LOCATION && rfAccount != rfStagingArea && rfPerState == true && showConfirmationRFChange == true){
+                if(typeChange == 'Location' && rfAccount != rfStagingArea && rfPerState == true && showConfirmationRFChange == true){
 
                     var r = confirm("Remittance Frequency has changed. Do you want to proceed?");
                     if (r != true){
