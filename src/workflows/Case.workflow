@@ -5698,7 +5698,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
   CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;), 
   CONTAINS( $UserRole.Name, &quot;Operational Management&quot;) 
   ), 
-  &quot;Operations&quot;, 
+  &quot;Billing and Reporting&quot;, 
   (IF( 
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;, 
   (IF( 
@@ -7664,7 +7664,7 @@ CONTAINS( $UserRole.Name, &quot;Operations Manager&quot;),
 CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),
 CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
   ), 
-  &quot;Operations&quot;, 
+  &quot;Billing and Reporting&quot;, 
 (IF(
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,  
 (IF(
