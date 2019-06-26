@@ -277,7 +277,6 @@ global class AMS_OSCAR_Webservice {
     private static void checkOscarStep(AMS_OSCAR__c oscar, String step) {
         String reason = SidraLiteHelperForOSCAR.MAP_STEP_REASON.get(step);
         String message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Failed" in this step.';
-        String messagePassed = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Passed" in this step.';
         if (step=='6') {
             if (oscar.Step6__c == 'Failed') return;
             throw new OSCARException(message);
