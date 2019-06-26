@@ -27,7 +27,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                     tempAccordionMap[result[el].topicName] = result[el];
 
                     if(tempCategoryName === result[el].categoryName) {
-                        tempTopicOptions.push({ label: result[el].topicLabel, value: result[el].topicName, open: false, class: 'slds-p-around_medium customCardTitleBox cursorPointer customCardLightGrayService borderStyle cardStyle' });
+                        tempTopicOptions.push({ label: result[el].topicLabel, value: result[el].topicName, open: false, class: 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle' });
                     }
                 });
     
@@ -55,7 +55,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 topicVals[el].class = 'slds-p-around_medium customCardTitleBox cursorPointer customBorderlessCardWhite borderStyle';
             } else {
                 topicVals[el].open = false;
-                topicVals[el].class = 'slds-p-around_medium customCardTitleBox cursorPointer customCardLightGrayService borderStyle cardStyle';
+                topicVals[el].class = 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle';
             }
         });
 
@@ -63,13 +63,13 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
 
         let tempSubTopics = [];
         let subtopicVals = JSON.parse(JSON.stringify(this.accordionMap[topicName].childs)); //Get subtopics under each topic
-
+        
         Object.keys(subtopicVals).forEach(function (el) {            
             tempSubTopics.push({ label: el, value: subtopicVals[el], class: "slds-p-left_small slds-m-around_small text-xsmall slds-p-vertical_x-small slds-p-right_small cursorPointer" });
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics;
+        this.subTopicTiles = tempSubTopics.reverse();
 
         //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected topic  
         let topicInfo = {
