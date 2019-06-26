@@ -62,12 +62,12 @@ public with sharing class PortalCasesCtrl {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getRecentCases(Boolean seeAll) {
+    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll) {
         seeAllCases = seeAll;
 
         initialization();
 
-        return getCases();
+        return getCases(limitView);
     }
 
     /* 
@@ -126,7 +126,6 @@ public with sharing class PortalCasesCtrl {
     private static void initCaseListViewMap() {
         List<String> ListViewNameList = new List<String>();
         caseListViewMap = new Map<String, ISSPCaseListView__c>();
-        isAdmin = (seeAllCases && adminProfile);
 
         for(ISSPCaseListView__c caseListViewItem : csCaseListViews) {
             Boolean resultPermission1 = true; 
@@ -148,11 +147,11 @@ public with sharing class PortalCasesCtrl {
                         ListViewNameList.add(caseListViewItem.Name);
                     }
                 } else {
-                    if(!isAdmin && !caseListViewItem.isAdmin__c) {
+                    if(!seeAllCases && !caseListViewItem.isAdmin__c) {
                         caseListViewMap.put(caseListViewItem.Name, caseListViewItem);
                         ListViewNameList.add(caseListViewItem.Name);
                     } else {
-                        if(isAdmin && caseListViewItem.isAdmin__c) {
+                        if(seeAllCases && caseListViewItem.isAdmin__c) {
                             caseListViewMap.put(caseListViewItem.Name, caseListViewItem);
                             ListViewNameList.add(caseListViewItem.Name);
                         } 
@@ -177,7 +176,7 @@ public with sharing class PortalCasesCtrl {
     * @params
     * @return List<Case>
     */
-    private static PagedResult getCases() {
+    private static PagedResult getCases(Boolean limitView) {
         String queryString;
         Set<String> fieldPathSet = new Set<String>{'CaseNumber'};
 
@@ -204,7 +203,7 @@ public with sharing class PortalCasesCtrl {
         String queryLimit = '';
 
         if(filtersWrapper == null) {
-            if(!seeAllCases) {
+            if(limitView) {
                 queryLimit += 'LIMIT 4';
             } else {
                 queryLimit += 'LIMIT 2000';
@@ -301,12 +300,10 @@ public with sharing class PortalCasesCtrl {
 
         casesMap = new Map<Id, String>();
         caseURL = new Map<Id, String>();
-        System.debug('____ [cls PortalCasesCtrl - getCases] before records');
         for(Case record : records) {
             casesMap = pageLoad(record);
             caseURL.putAll(casesMap);
         }
-        System.debug('____ [cls PortalCasesCtrl - getCases] after records');
         
         System.debug('____ [cls PortalCasesCtrl - getCases] caseURL - ' + caseURL);
 
@@ -482,7 +479,7 @@ public with sharing class PortalCasesCtrl {
         Boolean isAdmin = ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
         System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdmin - ' + isAdmin);
 
-        PagedResult pages = getRecentCases(isAdmin);
+        PagedResult pages = getRecentCases(false, isAdmin);
 
         return pages;
     }
