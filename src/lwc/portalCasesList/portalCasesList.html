@@ -10,17 +10,17 @@
                     onchange={handleInputChange}>
                 </lightning-input>
             </div>
-        </lightning-layout-item>       
-        <lightning-layout-item padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3">
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-text-align_right" padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3">
             <lightning-button label={caseListName} class="containedButton" onclick={rerenderCases} if:true={isAdmin}></lightning-button>
-        </lightning-layout-item>                            
+        </lightning-layout-item>
     </lightning-layout>
     <div class="customCardWhite">        
         <div class="slds-m-around_medium">
-            <template if:true={loading}>
+            <div if:true={loading} class="spinnerContainer">
                 <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-            </template>            
-            <template if:false={loading}>
+            </div>
+            <div if:false={loading}>
                 <div if:true={dataRecords}>
                     <!-- DATA RECORDS -->
                     <lightning-datatable
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-            </template>
+            </div>
         </div>    
     </div>      
 </template>
