@@ -36,7 +36,7 @@
   
 .fadeWhite {
     position: relative;
-    height: 4.5.0em; /* exactly three lines */
+    height: 4.5rem; /* exactly three lines */
     overflow: hidden;
 }
   
@@ -53,7 +53,7 @@
 
 .fadeLightGray {
     position: relative;
-    height: 3.0em; /* exactly two lines */
+    height: 4.5em; /* exactly three lines */
     overflow: hidden;
 }
   
