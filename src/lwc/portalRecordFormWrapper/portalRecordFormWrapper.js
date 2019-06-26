@@ -36,7 +36,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api services;
     @api showfunction;
 
-
     @track isLoading = true;
     @track isLoadingEdit = true;
     @track isSaving = false;
@@ -58,7 +57,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     connectedCallback() {
         this.showEdit = (this.showEdit === 'true' ? true : false);
 
-        console.log('BLA: ', JSON.parse(JSON.stringify(this.fields)));
+        console.log('BLA: ', JSON.stringify(this.staticFields));
 
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
