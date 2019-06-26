@@ -370,6 +370,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Last_name__c = 'a';
 		ctrl.currentAccount.newContact.AddressStreet__c = 'a';
 		ctrl.currentAccount.newContact.AddressCity__c = 'a';
+        ctrl.currentAccount.newContact.AddressState__c = 'a';
 		ctrl.currentAccount.newContact.AddressPostcode__c = 'a';
 		ctrl.currentAccount.newContact.Job_title__c = 'a';
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = 'some';
@@ -1029,8 +1030,11 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
 
-
+		ctrl.updateDetails();
 		String mode = ctrl.mode;
+        List<SelectOption> relAc = ctrl.relatedAccounts;
+        ctrl.currentAccount.fw.newform.Copy_Ownership__c = true;
+        ctrl.currentAccount.fw.newform.Notify_Change_Ownership__c = true;
 
 		List<SelectOption> countryNameList = ctrl.countryNameList;
 		AMS_Accreditation_Country_CheckList__c CountryCheckList = ctrl.CountryCheckList;
@@ -1039,15 +1043,23 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		upd.ca = ctrl.currentAccount;
 		upd.newAgencyContact();
 		upd.editAgencyContact();
+        ctrl.cleanOwnership();
+        List<String> forms = new List<String>();
+        forms.add(child.Id);
+        ctrl.formsToCopyOwnersTo = forms;
+        ctrl.copyOwnership();
+        
 		AMS_Accreditation_Country_CheckList__c CountryCheckListUpd = upd.CountryCheckList;
         
         Test.startTest();
         
         upd.validateVATNumber();
         upd.validateVATNumber2();
+        ctrl.confirmUpdate();
+        ctrl.getBatchStatus();
                 
         Boolean c = upd.displayShipping;
-        system.assertEquals(true, c);
+        system.assertEquals(false, c);
         upd.displayShipping = false;
         upd.resetCheckbox();
         
