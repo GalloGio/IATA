@@ -3,7 +3,7 @@
     <c-portal-services-card-container image-url={service.recordService.Application_icon_URL__c} background-variant="white">
 
         <span slot="serviceName">{service.recordService.ServiceName__c}</span>
-        <span slot="serviceDescription">{service.recordService.Service_Description__c}</span>
+        <span class="introMessage" slot="serviceDescription">{service.recordService.Service_Description__c}</span>
     
         <span slot="leftButton">
             <lightning-button variant="base" 
