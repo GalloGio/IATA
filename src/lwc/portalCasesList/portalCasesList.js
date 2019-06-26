@@ -25,6 +25,7 @@ export default class PortalCasesList extends LightningElement {
         CSP_CompanyCases,
         CSP_SearchingOn
     };
+    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
     @track error;
     @track data;
     @track allData;

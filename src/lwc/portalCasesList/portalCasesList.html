@@ -1,8 +1,8 @@
 <template> 
-    <lightning-layout multiple-rows pull-to-boundary="small">
-        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="6" large-device-size="6">
+    <lightning-layout multiple-rows pull-to-boundary="small" horizontal-align="spread">
+        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="6">
             <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
-                <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+                <img src={searchIconUrl}>
                 <lightning-input name="newRecipientTextInput"
                     placeholder={label.CSP_SearchingOn}
                     class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
@@ -10,11 +10,8 @@
                     onchange={handleInputChange}>
                 </lightning-input>
             </div>
-        </lightning-layout-item>
-        <lightning-layout-item padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3" large-device-size="3">
-                <lightning-button label="Filter" class="filterButton"></lightning-button>
-        </lightning-layout-item>         
-        <lightning-layout-item padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3" large-device-size="3">
+        </lightning-layout-item>       
+        <lightning-layout-item padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3">
             <lightning-button label={caseListName} class="containedButton" onclick={rerenderCases} if:true={isAdmin}></lightning-button>
         </lightning-layout-item>                            
     </lightning-layout>
