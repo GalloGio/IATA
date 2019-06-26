@@ -38,8 +38,8 @@
             
             //Set shipping country picklist equals to billing country since account.BillingCountry and account.ShippingCountry
             //are the same from the previous component
-            c.find("ShippingCountry").set("v.value", c.get("v.country.Id"));
-            h.setCountry(c,e,h);
+           // c.find("ShippingCountry").set("v.value", c.get("v.country.Id"));
+           // h.setCountry(c,e,h);
                      
         //Data Quality//
     },
@@ -532,7 +532,7 @@
         c.set('v.account.'+m+'PostalCode','');        
         h.clearWarnings(c,e,h,m);        
         h.clearContextLabelWarnings(c,e,h,m);
-        h.setCities(c,e,m);
+        h.setCities(c,e,h,m);
         h.updateAddress(c,e,h,m);        
     },
     

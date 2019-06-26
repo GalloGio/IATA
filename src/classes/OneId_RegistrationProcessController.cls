@@ -720,7 +720,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
     
     @TestVisible
-    class StatesAndAlternateNames{
+    public class StatesAndAlternateNames{
         @AuraEnabled 
         public List<IATA_ISO_State__c> states;
         

@@ -15,8 +15,10 @@
     },
 
 	copyBillingToShipping : function(c, e, h) {
-    
-        if(c.get("v.copyAddress")) {       
+        
+        //the init attribute is used so this code runs when handleInit is called
+
+        if(c.get("v.copyAddress") || c.get("v.init")) {       
             
             c.set("v.showListShipping", false);
 
@@ -46,7 +48,7 @@
             c.set("v.account.ShippingPostalCode", c.get("v.account.BillingPostalCode"));
             c.set("v.countryHasStatesShipping", c.get("v.countryHasStatesBilling"));
             c.set("v.validShipping", c.get("v.validBilling"));
-        
+            c.set("v.init",false);
         }
 	},
 
@@ -64,7 +66,7 @@
         });
     },
     //Data quality
-    setCities: function(c,e,m){
+    setCities: function(c,e,h,m){
         
         let mode;
         let currentState;
@@ -100,6 +102,9 @@
         }else{
             c.set('v.hierarchyCitiesBilling', hierarchyCities);
             c.set('v.hierarchyCitiesShipping', hierarchyCities);
+        }
+        if(c.get("v.init")){
+            h.copyBillingToShipping(c,e,h);
         }
         
     },
@@ -254,7 +259,7 @@
             c.set('v.idAndAlternateNames'+m, idAndAlternateNames);
             c.set('v.stateNameId'+m, stateNameId);
             c.set('v.cityNameId'+m, cityNameId);
-            h.setCities(c, null, m);            
+            h.setCities(c, null, h, m);            
 
         });
 
@@ -268,7 +273,12 @@
            
             c.set("v.spinner", false);            
             c.set('v.allCitiesAllCountries'+m, JSON.stringify(response.getReturnValue())); 
-           
+            
+            //to run only when handleInit is called 
+            if(c.get("v.initAllCountries")){
+                c.set('v.allCitiesAllCountriesShipping',JSON.stringify(response.getReturnValue()));
+                c.set("v.initAllCountries",false);
+            }            
         });
 
         
@@ -296,15 +306,9 @@
 
         if(chs) {
             c.set("v.countryHasStates"+m, true);
-            if(m==='Shipping'){
-                $A.util.removeClass(c.find('ShippingContainer'),'slds-hide');
-            }
             c.set("v.spinner", true);
             h.getStates(c,e,h,m,cn.Name);
         }else{
-            if(m === 'Shipping'){
-                $A.util.addClass(c.find('ShippingContainer'),'slds-hide');
-            }
             c.set('v.cities'+m, null);
             c.set('v.states'+m, null);
             c.set('v.allCities'+m, null);

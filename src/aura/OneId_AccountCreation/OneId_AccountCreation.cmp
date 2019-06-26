@@ -95,6 +95,8 @@
 	<aura:attribute type="String[]" name="listOfCountriesWithStates" />
 	<aura:attribute type="String" name="mode" />
 	
+	<aura:attribute type="Boolean" name="init" default="true"/>
+	<aura:attribute type="Boolean" name="initAllCountries" default="true"/>
 	<!--Data Quality-->
 
 	<aura:attribute type="Boolean" name="copyAddress" default="false"/>
@@ -293,6 +295,14 @@
 							</lightning:select>				
 						</div>
 					</div>
+					<aura:set attribute="else">
+							<div class="slds-form-element slds-m-bottom_small">
+								<label class="slds-form-element__label">{!v.accountLabels.BillingState}</label>
+								<div class="slds-form-element__control">
+									<ui:inputText aura:id="BillingState" value="{!v.account.BillingState}" class="slds-input" change="{!c.updateAddress}"/>		
+								</div>
+							</div>							
+					</aura:set>
 				</aura:if>
 				
 				<div class="slds-form-element slds-m-bottom_small">
@@ -421,18 +431,36 @@
 								</aura:iteration>
 							</lightning:select>				
 						</div>
-					</div>
+					</div>	
+					<aura:set attribute="else">
+						<div class="slds-form-element slds-m-bottom_small">
+								<label class="slds-form-element__label">{!v.accountLabels.ShippingState}</label>
+								<div class="slds-form-element__control">
+									<ui:inputText aura:id="InputShippingState" disabled="{!v.copyAddress}" value="{!v.account.ShippingState}" class="slds-input"/>					
+								</div>
+							</div>
+					</aura:set>				
 			</aura:if>
 			
-			<!--This inputbox was added as a workaround due to a constraint on setting the correct state on the shipping picklist when the "Copy Billing Address to Shipping Address" checkbox is selected-->
+		<!--	<aura:if isTrue="{! and(!v.copyAddress, !v.countryHasStatesShipping)}">
+				<div aura:id="ShippingContainer" class="slds-form-element slds-m-bottom_small">
+						<label class="slds-form-element__label">{!v.accountLabels.ShippingState}</label>
+						<div class="slds-form-element__control">
+							<ui:inputText aura:id="ShippingState" value="{!v.account.ShippingState}" class="slds-input" change="{!c.updateAddress}"/>			
+						</div>
+					</div>					
+			</aura:if>
+			
+			
+			This inputbox was added as a workaround due to a constraint on setting the correct state on the shipping picklist when the "Copy Billing Address to Shipping Address" checkbox is selected
 			<aura:if isTrue="{! and(v.copyAddress, v.countryHasStatesShipping)}">
 					<div class="slds-form-element slds-m-bottom_small">
-						<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingState}</label>
+						<label class="slds-form-element__label">{!v.accountLabels.ShippingState}</label>
 						<div class="slds-form-element__control">
 							<ui:inputText aura:id="InputShippingState" disabled="{!v.copyAddress}" value="{!v.account.ShippingState}" class="slds-input"/>					
 						</div>
 					</div>
-			</aura:if>
+			</aura:if>-->
 				
 				<div class="slds-form-element slds-m-bottom_small">
 					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingCity}</label>
