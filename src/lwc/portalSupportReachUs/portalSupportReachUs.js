@@ -187,24 +187,25 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 //Array to consume category options
                 let myCategoryOptions = [];
 
-                //Set first value on the list
-                myCategoryOptions = [{ label: 'Select Category', value: '' }];
-                let auxmyCategoryOptions = [];
-                for (const item of this.myResult) {
-                    if (!map.has(item.categoryLabel) && item.categoryLabel !== 'All') {
-                        map.set(item.categoryLabel, true);
-                        auxmyCategoryOptions.push({
-                            label: item.categoryLabel,
-                            value: item.categoryName
-                        });
-                    }
-                }
-                //used to order alphabetically
-                // eslint-disable-next-line no-confusing-arrow
-                auxmyCategoryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
+               //Set first value on the list
+               myCategoryOptions = [{ label: 'Select Category', value: '' }];
+               // let auxmyCategoryOptions = [];
+               for (const item of this.myResult) {
+                   if (!map.has(item.categoryLabel) && item.categoryLabel !== 'All') {
+                       map.set(item.categoryLabel, true);
+                       myCategoryOptions.push({
+                           label: item.categoryLabel,
+                           value: item.categoryName
+                       });
+                   }
+               }
+               //used to order alphabetically
+               // eslint-disable-next-line no-confusing-arrow
+               // auxmyCategoryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
 
-                this.categoryOptions = myCategoryOptions.concat(auxmyCategoryOptions);
-                //eslint-disable-next-line no-console
+               // this.categoryOptions = auxmyCategoryOptions.concat(auxmyCategoryOptions);
+               this.categoryOptions = myCategoryOptions;
+               //eslint-disable-next-line no-console
 
                 //Set the category if in URL
                 this.pageParams = getParamsFromPage();
@@ -359,11 +360,11 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         myTopicOptions = [{ label: 'Select Topic', value: '' }];
-        let auxmyTopicOptions = [];
+        // let auxmyTopicOptions = [];
         for (const item of this.myResult) {
             if (!map.has(item.topicLabel) && item.categoryName === this.category) {
                 map.set(item.topicLabel, true);
-                auxmyTopicOptions.push({
+                myTopicOptions.push({
                     label: item.topicLabel,
                     value: item.topicName
                 });
@@ -372,9 +373,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //used to order alphabetically
         // eslint-disable-next-line no-confusing-arrow
-        auxmyTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
-        //set the options of picklist
-        this.topicOptions = myTopicOptions.concat(auxmyTopicOptions);
+        // auxmyTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
+        // //set the options of picklist
+        // this.topicOptions = myTopicOptions.concat(myTopicOptions);
+        this.topicOptions = myTopicOptions;
 
         //set Topic value if included in URL
         if ('topic' in this.pageParams && this.pageParams.topic !== '') {
@@ -439,11 +441,11 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         mySubTopicOptions = [{ label: 'Select Sub-Topic', value: '' }];
-        let auxmySubTopicOptions = []
+        // let auxmySubTopicOptions = []
         for (const item of this.myResult) {
             if (!map.has(item.childs) && item.topicName === this.topic) {
                 Object.keys(item.childs).forEach(function (el) {
-                    auxmySubTopicOptions.push({
+                    mySubTopicOptions.push({
                         label: el, value: item.childs[el]
                     });
                 })
@@ -452,10 +454,11 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //used to order alphabetically
         // eslint-disable-next-line no-confusing-arrow
-        auxmySubTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
+        // auxmySubTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
 
         //set the options
-        this.subTopicOptions = mySubTopicOptions.concat(auxmySubTopicOptions);
+        // this.subTopicOptions = mySubTopicOptions.concat(auxmySubTopicOptions);
+        this.subTopicOptions = mySubTopicOptions;
 
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
