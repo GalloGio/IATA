@@ -2,7 +2,7 @@ public class RecordUpdater implements Schedulable {
 
     List<SObject> scope = new List<SObject>();
     
-    public static boolean isExpiryREBatch;
+    public boolean isExpiryREBatch;
 
     public RecordUpdater(List<SObject> scope){
         this.scope = scope;
