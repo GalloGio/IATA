@@ -369,12 +369,6 @@
   visibility: visible;
 }
 
-.closeButton {
-  font-size: 30px;
-  transform: rotate(45deg);
-  color: blue;
-}
-
 .headerBarConatiner {
   height: calc(100% - 2px);
 }
