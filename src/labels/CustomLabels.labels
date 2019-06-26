@@ -1538,6 +1538,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Bank Contact Details</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_GDI_Apply</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Apply to GDI button</shortDescription>
+        <value>Apply Online to GDI</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_IEP_OpeningInProgress</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
