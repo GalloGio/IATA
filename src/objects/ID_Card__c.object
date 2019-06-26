@@ -1004,7 +1004,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
     </fields>
     <fields>
         <fullName>WebStar_P00_Key__c</fullName>
-        <caseSensitive>false</caseSensitive>
         <description>Primary Key assigned to Persons in WebStar. Used as junction key between US ID Card and related Contact</description>
         <externalId>true</externalId>
         <inlineHelpText>Primary Key assigned to Persons in WebStar. Used as junction key between US ID Card and related Contact</inlineHelpText>
@@ -1014,7 +1013,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>true</unique>
+        <unique>false</unique>
     </fields>
     <label>ID Card</label>
     <listViews>
