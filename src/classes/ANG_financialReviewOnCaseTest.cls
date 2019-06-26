@@ -28,6 +28,26 @@ private class ANG_financialReviewOnCaseTest {
             Integration_RecId__c = 'C'
         );
 
+        Notification_Template__c nt = new Notification_Template__c();
+		nt.Identifier__c = 'Risk_Information_Update';
+		nt.Language__c = 'English';
+		nt.Subject__c = 'Risk Information Update';
+		nt.Type__c = 'Information';
+		nt.Notification_color__c = '#007FFF';
+		nt.Expire_in_days__c = 180;
+		nt.Admins_Users__c = 'Administrators';
+		nt.Message__c = 
+			'We would like to inform you that your Risk Status has been updated. ' +
+			'Your risk information now stands as follow:' +
+			'<br><br>Risk Status: #RISK_STATUS#' +
+			'<br>Cash conditions limited to Financial Security: #CASH_CONDITION#'+
+			'<br>RHC Amount: #RHC_AMOUNT#'+
+			'<br>RHC Effective Date: #RHC_EFFECTIVE_DATE#'+
+			'<p>Please check more details on the RHC Information page.' +
+			'<br>Thank you</p>'+
+			'<p>IATA – Global Delivery Center</p>';
+
+		insert nt;
 
         // Create a new ISO Country
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
@@ -93,7 +113,14 @@ private class ANG_financialReviewOnCaseTest {
                         ValIdity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = c.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
         insert fs;
        
+        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+			ANG_AccountId__c = a.Id,
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO
+		);
 
+		insert rhcInfo;
+        
     }
 
     static testMethod void updateCaseStatusToNOTUpdateFinancialReview(){

@@ -53,6 +53,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AmountOrPercentage__c</fullName>
         <description>Amount or percentage of price or discount</description>

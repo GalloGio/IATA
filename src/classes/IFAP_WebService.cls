@@ -17,6 +17,16 @@ global class IFAP_WebService {
     public static final String CASE_STATUS_SANITY_CHECK_FAILURE = 'Sanity Check Failure';
     public static final String CASE_STATUS_FINANCIAL_SECURITY_REQUSTED = 'Financial Security Requested';
 
+    @TestVisible private static final String INVALID_ACTION_TRIGGER_SIDRA_LITE = 'Invalid action, you need to trigger SIDRA Lite action in order to put the agent Under review.';
+    @TestVisible private static final String INVALID_ACTION_REINSTATE_AGENT = 'Invalid action, you need to reinstate the agent from the SIDRA lite related case.';
+    @TestVisible private static final String INVALID_ACTION_REMOVE_CASH_CONDITIONS = 'Invalid action, you need to remove Cash conditions using the appropriate button.';
+    @TestVisible private static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY = 'Conditions are not satisfied to apply Cash Condition on the agent.';
+    @TestVisible private static final String CASH_CONDITION_SUCCESSFULLY_APPLIED = 'Cash condition applied successfully on the agent.';
+    @TestVisible private static final String UNABLE_TO_APPLY_CASH_CONDITION = 'Unable to apply cash condition on the agent.';
+    @TestVisible private static final String CASH_CONDITION_SUCCESSFULLY_REMOVED = 'Cash condition successfully removed from the agent.';
+    @TestVisible private static final String UNABLE_TO_REMOVE_CASH_CONDITION = 'Unable to remove cash condition from the agent.';
+    @TestVisible private static final String INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE = 'Conditions are not satisfied to remove Cash Condition from the agent.';
+    @TestVisible private static final String AGENT_DOES_NOT_HAVE_CASH_CONDITION = 'Agent does not have cash condition.';
 
     WebService static String FinancialSecurityInfo(String caseNumber, String currencyCode, Decimal amount) {
 
@@ -278,4 +288,196 @@ global class IFAP_WebService {
             return 'Failed, ' + e.getMessage();
         }
     }
+
+    private static Account fetchAccountInformation(Id caseId, Id accountId){
+
+			Account acct =
+				[SELECT 
+					Id,
+					ANG_IsNewgenAgency__c,
+                    ANG_HE_CashCondition__c,
+					(SELECT
+						Id,
+						Status,
+                        Deadline_Date__c,
+						FA_Second_Deadline_Date__c,
+						Financial_Review_Result__c,
+						Assessment_Performed_Date__c
+					FROM 
+						Cases 
+					WHERE 
+						Id = :caseId
+					),
+					(SELECT 
+						Id, 
+						Security_Status__c 
+					FROM 
+						Financial_Securities__r
+					)
+				FROM 
+					Account 
+				WHERE 
+					Id = :accountId
+				LIMIT 1
+				];
+
+        return acct;
+
+    }
+
+    private static Boolean hasAgentFinancialSecurity(List<Financial_Security__c> fsLst){
+
+        Set<String> fsStatusSet = new Set<String>{
+			ANG_Risk_Helper.SECURITY_STATUS_ACTIVE, 
+			ANG_Risk_Helper.SECURITY_STATUS_CLOSE_EXPIRY_DATE
+		};
+
+		for(Financial_Security__c fs : fsLst){
+			if(fsStatusSet.contains(fs.Security_Status__c)){
+				return true;
+			}
+		}
+
+        return false;
+
+    }
+
+	webservice static String applyCashCondition(Id caseId, Id accountId){
+
+		try {
+
+			Account acct = fetchAccountInformation(caseId, accountId);
+
+			Case cse = acct.Cases.get(0);
+            
+			String message = isValidForApplyingCashCondition(acct, cse, hasAgentFinancialSecurity(acct.Financial_Securities__r));
+
+			if('VALID' != message){
+				return message;
+			}
+
+			message = applyCashConditionAction(acct, cse);
+
+			if(message != 'SUCCESS'){
+				return UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
+			}
+
+			return CASH_CONDITION_SUCCESSFULLY_APPLIED;
+
+		}
+		catch(Exception e){
+			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+			return UNABLE_TO_APPLY_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(e.getMessage()) + '.';
+		}
+
+	}
+
+	private static String applyCashConditionAction(Account acct, Case cse){
+
+		Savepoint sp = Database.setSavePoint();
+
+		try {
+			acct.ANG_HE_CashCondition__c = true;
+			update acct;
+
+			cse.secondFAnonComplianceDate__c = System.today();
+			cse.FA_Third_Deadline_Date__c    = cse.Deadline_Date__c.addDays(365);
+			update cse;
+		}
+		catch(Exception e){
+			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+			Database.rollback(sp);
+			return e.getMessage();
+		}
+
+		return 'SUCCESS';
+
+	}
+
+	private static String isValidForApplyingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
+
+		Set<String> caseStatusSet = new Set<String>{
+			'Agent Notified (Email)',
+			'Agent Notified (Mail)',
+			'Sanity Check Failure'
+		};
+
+		if(acct.ANG_IsNewgenAgency__c && cse.FA_Second_Deadline_Date__c < System.Today() && caseStatusSet.contains(cse.Status) && !hasAgentFS){
+			return INVALID_ACTION_TRIGGER_SIDRA_LITE;
+		}
+
+		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
+			return INVALID_ACTION_REINSTATE_AGENT;
+		}
+
+		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && hasAgentFS){
+			return INVALID_ACTION_REMOVE_CASH_CONDITIONS;
+		}
+
+		if(!acct.ANG_IsNewgenAgency__c || cse.FA_Second_Deadline_Date__c >= System.Today() || !caseStatusSet.contains(cse.Status) || !hasAgentFS){
+			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY;
+		}
+
+		return 'VALID';
+
+	}
+
+    webservice static String removeCashCondition(Id caseId, Id accountId){
+
+        Account acct = fetchAccountInformation(caseId, accountId);
+
+        Case cse = acct.Cases.get(0);
+
+        String message = isValidForRemovingCashCondition(acct, cse, hasAgentFinancialSecurity(acct.Financial_Securities__r));
+
+        if('VALID' != message){
+            return message;
+        }
+
+        message = removeCashConditionAction(acct);
+
+        if(message != 'SUCCESS'){
+            return UNABLE_TO_REMOVE_CASH_CONDITION + '\n\n' + AMS_Utils.beautifyErrorMessage(message) + '.';
+        }
+
+        return CASH_CONDITION_SUCCESSFULLY_REMOVED;
+
+    }
+
+	private static String isValidForRemovingCashCondition(Account acct, Case cse, Boolean hasAgentFS){
+
+		if(acct.ANG_IsNewgenAgency__c && String.isNotBlank(cse.Financial_Review_Result__c) && cse.Assessment_Performed_Date__c > cse.FA_Second_Deadline_Date__c && !hasAgentFS){
+			return INVALID_ACTION_REINSTATE_AGENT;
+		}
+
+		if(!acct.ANG_IsNewgenAgency__c || cse.Assessment_Performed_Date__c <= cse.FA_Second_Deadline_Date__c || String.isBlank(cse.Financial_Review_Result__c)){
+			return INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE;
+		}
+
+        if(!acct.ANG_HE_CashCondition__c){
+            return AGENT_DOES_NOT_HAVE_CASH_CONDITION;
+        }
+
+		return 'VALID';
+
+    }
+
+    private static String removeCashConditionAction(Account acct){
+
+		try {
+			acct.ANG_HE_CashCondition__c = false;
+			update acct;
+		}
+		catch(Exception e){
+			system.debug(LoggingLevel.ERROR, e.getStackTraceString());
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+			return e.getMessage();
+		}
+
+		return 'SUCCESS';
+
+    }
+
 }
