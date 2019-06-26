@@ -38,7 +38,7 @@ private class PortalHeaderCtrlTest {
             PortalHeaderCtrl.increaseNotificationView(notification.Id);
             Test.stopTest();
 
-            System.assertEquals( 3 , notItemList.size() );
+            System.assertEquals( 2 , notItemList.size() );
         }
         
 
