@@ -54,7 +54,43 @@ public class AMS_AgencyAChangeCodeHandler {
             notifyAirlines(accToProcessPayment);
         }
 
+        //WMO-482 - ACAMBAS: Begin
+        processRelatedCases(setIdAACC);
+        //WMO-482 - ACAMBAS: End
     }
+
+    //WMO-482 - ACAMBAS: Begin
+    public static void processRelatedCases(set<id> AACCIdSet) {
+        Set<Id> CNSCaseIds = new Set<Id>();
+
+        List<Agency_Applied_Change_code__c> changeCodesList = 
+                    [SELECT Change_Code__c, SIDRA_Case__c, SIDRA_Case__r.RecordType.DeveloperName, 
+                            SIDRA_Case__r.ParentId, SIDRA_Case__r.Account.CNS_Agency__c
+                     FROM Agency_Applied_Change_code__c 
+                     WHERE Id IN :AACCIdSet];
+
+        for(Agency_Applied_Change_code__c aacc : changeCodesList) {
+            //If change code is RVW and created from CNS Sidra Lite case
+            if(aacc.SIDRA_Case__r != null && aacc.Change_Code__c == 'RVW' && 
+                aacc.SIDRA_Case__r.RecordType.DeveloperName == 'Sidra_Lite' && 
+                aacc.SIDRA_Case__r.ParentId != null && aacc.SIDRA_Case__r.Account.CNS_Agency__c == true) {
+                CNSCaseIds.add(aacc.SIDRA_Case__r.ParentId);
+            }
+        }
+
+        List<Case> CNSCasesToUpdate = [SELECT Id, New_IFAP_Deadline_date__c, BusinessHoursId 
+                                       FROM Case 
+                                       WHERE Id IN :CNSCaseIds];
+
+        for(Case cse : CNSCasesToUpdate) {
+            cse.New_IFAP_Deadline_date__c = BusinessDays.addNBusinessDays(DateTime.now(),7,cse.BusinessHoursId).date();
+        }
+
+        if(CNSCasesToUpdate.size() > 0) {
+            update CNSCasesToUpdate;
+        }
+    }
+    //WMO-482 - ACAMBAS: End
     
     /*** AMSU-198 ***/
     public static void notifyAirlines(List<Agency_Applied_Change_code__c> aaccs) {

@@ -84,6 +84,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>New_IFAP_Deadline_date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Deadline_Date__c</field>
             </layoutItems>
             <layoutItems>
