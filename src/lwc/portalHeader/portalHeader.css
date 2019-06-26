@@ -267,6 +267,15 @@
   max-height: 550px;
   right: calc(10%  + 40px);
 }
+
+.closeButton {
+  font-size: 30px;
+  line-height: 30px;
+  transform: rotate(45deg);
+  color: #1e32fa;
+  font-family: Arial;
+}
+
 .notificationOption {
   display: block;
   font-weight: 500;
