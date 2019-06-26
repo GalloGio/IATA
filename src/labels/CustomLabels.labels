@@ -34410,6 +34410,22 @@ title,Title,Name</value>
         <value>Job Title</value>
     </labels>
     <labels>
+        <fullName>csp_ServiceRequestConfirm</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Do you confirm you are requesting access to {0}?</value>
+    </labels>
+    <labels>
+        <fullName>csp_ServiceAccessConfirm</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Are you sure you want to enable {0}?</value>
+    </labels>
+    <labels>
         <fullName>csp_Concern</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

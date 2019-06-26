@@ -21,6 +21,29 @@ textarea:focus{
     justify-content: center;
 }
 
+.messagesContainer {
+    display: flex; 
+    flex-direction: column;
+}
+
+.caseMessagesSelfBubbleContainer, .caseMessagesOtherBubbleContainer {
+    max-width: 60%;
+}
+
+.caseMessagesSelfBubbleContainer {
+    align-self: flex-end;
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-end;
+}
+
+.caseMessagesOtherBubbleContainer {
+    align-self: flex-start; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start;
+}
+
 .caseMessagesSelfBubble, .caseMessagesOtherBubble {
     position: relative;   
 }
@@ -45,4 +68,8 @@ textarea:focus{
     border-top: 8px solid transparent;
     top: calc(100% - 16px);
     left: -15px;
+}
+
+.breakWord{
+    word-break: break-all;
 }
