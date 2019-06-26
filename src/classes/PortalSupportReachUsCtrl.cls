@@ -148,13 +148,18 @@ public static Map<String,String> getCaseTypeAndCountry(Contact contactInfo, Stri
 	Set<String> newset = new Set<String>();
 
 	if(country != null && country != '') {
-		newset.add(country.toUpperCase());
+		newset.add(country);
 	}else{
-		newset.add(contactInfo.Account.Country_ISO_Code__c);
+		if(contactInfo.Account.Country_ISO_Code__c != null && contactInfo.Account.Country_ISO_Code__c != '') {
+			newset.add(contactInfo.Account.Country_ISO_Code__c);
+		}
 	}
 
 	//Sets the region of either the Country selected from the picklist or the one from the user's account.
-	IATA_ISO_Country__c IATA_ISO_country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(newset)[0];
+	IATA_ISO_Country__c IATA_ISO_country = new IATA_ISO_Country__c();
+	if(!newset.isEmpty()) {
+		IATA_ISO_country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(newset)[0];
+	}
 
 	String recordType;
 
