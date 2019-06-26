@@ -76,7 +76,8 @@
             <recipient>torneroc@iata.org</recipient>
             <type>user</type>
         </recipients>
-        <recipient>vandenbusj@iata.org</recipient>
+        <recipients>
+            <recipient>vandenbusj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -94,7 +95,8 @@
             <recipient>torneroc@iata.org</recipient>
             <type>user</type>
         </recipients>
-        <recipient>vandenbusj@iata.org</recipient>
+        <recipients>
+            <recipient>vandenbusj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
