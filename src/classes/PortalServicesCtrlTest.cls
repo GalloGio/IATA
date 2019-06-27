@@ -113,25 +113,29 @@ public class PortalServicesCtrlTest {
         Contact c = new Contact (
                 LastName = 'ContactTest',
                 FirstName = 'Name',
-                accountID = a.id
+                accountID = a.id,
+                email='ContactTest@portalservices.test'
             );
 
         Contact c2 = new Contact (
                 LastName = 'ContactTest2',
                 FirstName = 'Name',
-                accountId = a2.id
+                accountId = a2.id,
+                email='ContactTest2@portalservices.test'
             );
 
         Contact c3 = new Contact (
                 LastName = 'ContactTest3',
                 FirstName = 'Name',
-                accountId = a3.id
+                accountId = a3.id,
+                email='ContactTest3@portalservices.test'
             );
 
         Contact c4 = new Contact (
                 LastName = 'ContactTest4',
                 FirstName = 'Name',
-                accountId = a4.id
+                accountId = a4.id,
+                email='ContactTest4@portalservices.test'
             );
 
         insert new List<Contact>{c,c2,c3,c4};
@@ -248,7 +252,7 @@ public class PortalServicesCtrlTest {
         
         System.runAs(testeUser1) {
             Test.StartTest();
-
+            
             PortalServicesCtrl.FilteringObject filteringObjectAux = new PortalServicesCtrl.FilteringObject();
             filteringObjectAux.searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
 
@@ -342,4 +346,34 @@ public class PortalServicesCtrlTest {
     }
 
 
+
+    @isTest
+    public static void PortalServicesCtrlTest_getAccessGrantedServicesForContacts() {
+
+        List<Contact> contacts = [SELECT Id,email,firstname,lastname from Contact WHERE LastName LIKE 'ContactTest%' LIMIT 3];
+
+        List<Id> contactIds = new List<Id>();
+        List<User> users = new List<User>();
+        Map<Id, Contact> contactIdtoContact = new Map<Id, Contact>();
+        Map<Id, List<PortalServicesCtrl.ServiceWrapper>> contactToServices = new Map<Id, List<PortalServicesCtrl.ServiceWrapper>>();
+
+        if (!contacts.isEmpty()) {
+            for (Contact c : contacts) {
+                User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+                contactIds.add(c.Id);
+                contactIdtoContact.put(c.Id, c);
+            }
+
+            users = DAL_ISSP.getUsersByContactId(contactIds);
+
+            Map<Id, Id> contactToUser = new Map<Id, Id>();
+            for (User u : users) {
+                contactToUser.put(u.ContactId, u.Id);
+            }
+
+            contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
+            System.assert(!contactToServices.keySet().isEmpty());
+
+        }
+    }
 }
