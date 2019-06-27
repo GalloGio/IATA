@@ -5,7 +5,7 @@ import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPor
 import { updateRecord } from 'lightning/uiRecordApi';
 
 //Navigation
-import { navigateToPage } from'c/navigationUtils';
+import { navigateToPage } from 'c/navigationUtils';
 
 //import labels 
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
@@ -45,7 +45,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                 
                 //removes undefined from images
                 for (let i = 0; i < this.auxResult.length; i++) {
-                    if(this.auxResult[i].Portal_Application__r === undefined || this.auxResult[i].Portal_Application__r.Application_icon_URL__c === undefined){
+                    if (this.auxResult[i].Portal_Application__r === undefined || this.auxResult[i].Portal_Application__r.Application_icon_URL__c === undefined) {
                         this.auxResult[i].Portal_Application__r.Application_icon_URL__c = '';
                     }
                 }
@@ -66,7 +66,7 @@ export default class FavoriteServicesLWC extends LightningElement {
 
                 //sets the first page
                 this.favoriteServices = this.globaList[0];
-
+                
                 //the maxSize of the List
                 this.maxSize = this.globaList.length;
 
@@ -198,10 +198,15 @@ export default class FavoriteServicesLWC extends LightningElement {
         this.sliderIconsRenderer();
     }
 
+    //method that controls the loading spinner action
+    toggleSpinner() {
+        this.isLoading = !this.isLoading;        
+    }
+
     //method that controls the redirection of the service's links
     redirect(event) {
 
-        this.isLoading = true;
+        this.toggleSpinner();
 
         //attributes stored on element that is related to the event
         const appUrlData = event.target.attributes.getNamedItem('data-appurl');
@@ -209,7 +214,7 @@ export default class FavoriteServicesLWC extends LightningElement {
         const openWindowData = event.target.attributes.getNamedItem('data-openwindow');
         const requestable = event.target.attributes.getNamedItem('data-requestable');
         const recordId = event.target.attributes.getNamedItem('data-recordid');
-        
+
         // update Last Visit Date on record
         // Create the recordInput object
         const fields = {};
@@ -218,32 +223,28 @@ export default class FavoriteServicesLWC extends LightningElement {
         const recordInput = { fields };
 
         updateRecord(recordInput)
-        .then(() => {
-            console.info('Updated Last Visit Date successfully!');
-        });
+            .then(() => {
+                console.info('Updated Last Visit Date successfully!');
+            });
+
+        let myUrl = appUrlData !== null && appUrlData !== undefined ? appUrlData.value : '';
         
-        let myUrl = appUrlData.value;
-        
+
         //verifies if the event target contains all data for correct redirection
-        if (openWindowData !== undefined) {
+        if (openWindowData !== null && openWindowData !== undefined) {
             //determines if the link is to be opened on a new window or on the current
             if (openWindowData.value === "true") {
-                if (appUrlData.value !== 'undefined') {
+                if ((appUrlData != null && appUrlData !== undefined) && appUrlData.value !== 'undefined') {
                     myUrl = appUrlData.value;
-                } else if (appFullUrlData.value !== 'undefined') {
+                } else if ((appFullUrlData != null && appFullUrlData !== undefined) && appFullUrlData.value !== 'undefined') {
                     myUrl = appFullUrlData.value;
                 }
 
-                //start the spinner
-                this.toggleSpinner();
-
                 //is this link a requestable Service?
-                if (requestable.value === "true") {
+                if ((requestable !== null && requestable !== undefined) && requestable.value === "true") {
                     //method that redirects the user to the old portal maintaing the same loginId
                     goToOldPortalService({ myurl: myUrl })
                         .then(result => {
-                            //stop the spinner
-                            this.toggleSpinner();
                             //open new tab with the redirection
                             window.open(result);
                         })
@@ -252,18 +253,17 @@ export default class FavoriteServicesLWC extends LightningElement {
                             this.error = error;
                         });
                 } else {
-                    //stop the spinner
-                    this.toggleSpinner();
                     //open new tab with the redirection
-                        myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
+                    myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
                     window.open(myUrl);
                 }
-            } else {
+            } else if(myUrl !== '') {
                 //redirects on the same page
                 window.location.href = myUrl;
             }
-            
         }
+
+        this.toggleSpinner();
     }
 
     //method to rerender the icons between the next and previous buttons
