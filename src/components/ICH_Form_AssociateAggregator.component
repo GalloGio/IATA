@@ -1,6 +1,6 @@
 <apex:component >
     <apex:attribute name="ctrl" description="controller" type="ISSP_APProcess" required="true"/>
-    <apex:attribute name="readOnly" description="show read only version to create a pdf" type="Boolean" required="true"/>
+    <apex:attribute name="readOnly" description="show read only version to create a pdf" type="Boolean" required="false" default="false"/>
 
     <apex:pageBlockSection columns="2" id="section1" collapsible="true">
         <apex:facet name="header">
@@ -57,12 +57,12 @@
         <apex:outputField value="{!ctrl.hqaccount.SIS_Sub_Status__c}" rendered="{!ctrl.isSISMember}"/>
 
         <apex:outputField value="{!ctrl.hqaccount.SIS_ID__c}" rendered="{!ctrl.isSISMember}"/>
-        <apex:pageBlockSectionItem></apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
 
-        <apex:pageBlockSectionItem></apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
         <apex:inputField styleclass="date required" value="{!ctrl.newform.Desired_date_to_start_in_ICH__c}" />
 
-        <apex:pageBlockSectionItem></apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
         <apex:inputField styleclass="date required" value="{!ctrl.newform.Desired_date_to_start_in_SIS__c}" rendered="{!!ctrl.isSISMember}"/>
 
     </apex:pageBlockSection>
@@ -88,7 +88,7 @@
 
         <apex:pageBlockSectionItem rendered="{!ctrl.newform.Is_publicly_traded_company__c=='Yes'}">
             <apex:outputLabel value="Confirm on which stock exchange the company is listed"/>
-            <apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
                 <apex:inputField styleclass="required" style="width:30%;" value="{!ctrl.newform.Stock_Exchange_Name__c}" rendered="{!!readOnly}"/>
                 <apex:outputField value="{!ctrl.newform.Stock_Exchange_Name__c}" rendered="{!readOnly}"/>
             </apex:pageBlockSectionItem>
@@ -200,17 +200,17 @@
             <apex:inputCheckbox value="{!ctrl.isICHPrimary}" styleclass="required hidden"/>
             <apex:inputCheckbox value="{!ctrl.isICHFinancial}" styleclass="required hidden"/>
             <apex:inputCheckbox value="{!ctrl.isICHAdvice}" styleclass="required hidden"/>
-            <apex:inputCheckbox value="{!ctrl.isICHCleanConfirmation}" styleclass="required hidden"/>
-            <apex:inputCheckbox value="{!ctrl.isICHCleanInitialization}" styleclass="required hidden"/>
+            <apex:inputCheckbox value="{!ctrl.isICHClearConfirmation}" styleclass="required hidden"/>
+            <apex:inputCheckbox value="{!ctrl.isICHClearInitialization}" styleclass="required hidden"/>
             <apex:outputPanel layout="block" styleclass="alert alert-danger" html-role="danger" 
-                rendered="{!AND(!ctrl.isSISMember,!ctrl.isSISSuperUser) || NOT(AND(ctrl.isICHPrimary,ctrl.isICHFinancial,ctrl.isICHAdvice,ctrl.isICHCleanConfirmation,ctrl.isICHCleanInitialization))}">
+                rendered="{!AND(!ctrl.isSISMember,!ctrl.isSISSuperUser) || NOT(AND(ctrl.isICHPrimary,ctrl.isICHFinancial,ctrl.isICHAdvice,ctrl.isICHClearConfirmation,ctrl.isICHClearInitialization))}">
                 <ul>
                     <apex:outputText value="<li>At least one contact must be SIS Super User</li>" rendered="{!AND(!ctrl.isSISMember,!ctrl.isSISSuperUser)}" escape="false"/>
                     <apex:outputText value="<li>At least one contact must be ICH Primary</li>" rendered="{!!ctrl.isICHPrimary}" escape="false"/>
                     <apex:outputText value="<li>At least one contact must be ICH Financial</li>" rendered="{!!ctrl.isICHFinancial}" escape="false"/>
-                    <apex:outputText value="<li>At least one contact must be ICH Advise Contact</li>" rendered="{!!ctrl.isICHAdvice}" escape="false"/>
-                    <apex:outputText value="<li>At least one contact must be ICH Clean Confirmation Contact</li>" rendered="{!!ctrl.isICHCleanConfirmation}" escape="false"/>
-                    <apex:outputText value="<li>At least one contact must be ICH Clean Initialization Contact</li>" rendered="{!!ctrl.isICHCleanInitialization}" escape="false"/>
+                    <apex:outputText value="<li>At least one contact must be ICH Advice Day Contact</li>" rendered="{!!ctrl.isICHAdvice}" escape="false"/>
+                    <apex:outputText value="<li>At least one contact must be ICH Clearance Confirmation Contact</li>" rendered="{!!ctrl.isICHClearConfirmation}" escape="false"/>
+                    <apex:outputText value="<li>At least one contact must be ICH Clearance Initialization Contact</li>" rendered="{!!ctrl.isICHClearInitialization}" escape="false"/>
                 </ul>
             </apex:outputPanel>
         </td></tr>
@@ -227,27 +227,27 @@
                 <apex:column headerValue="Email" value="{!contactEndorsement.Email__c}"/>
                 <apex:column styleclass="center" headerClass="center" rendered="{!!ctrl.isSISMember}">
                     <apex:facet name="header">SIS<br/>Super<br/>User</apex:facet>
-                    <input type="checkbox" disabled="disabled" class="{!IF(CONTAINS(contactEndorsement.Position__c,'SIS Super User'),'checked','')}"/>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'SIS Super User'),'check','unchecked')}"/>
                 </apex:column>
                 <apex:column styleclass="center" headerClass="center">
                     <apex:facet name="header">ICH<br/>Primary<br/>Contact</apex:facet>
-                    <input type="checkbox" disabled="disabled" class="{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Primary Contact'),'checked','')}"/>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Primary Contact'),'check','unchecked')}"/>
                 </apex:column>
                 <apex:column styleclass="center" headerClass="center">
                     <apex:facet name="header">ICH<br/>Financial<br/>Contact</apex:facet>
-                    <input type="checkbox" disabled="disabled" class="{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Financial Contact'),'checked','')}"/>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Financial Contact'),'check','unchecked')}"/>
                 </apex:column>
                 <apex:column styleclass="center" headerClass="center">
-                    <apex:facet name="header">ICH<br/>Advise<br/>Contact</apex:facet>
-                    <input type="checkbox" disabled="disabled" class="{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Advise Contact'),'checked','')}"/>
+                    <apex:facet name="header">ICH<br/>Advice Day<br/>Contact</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Advice Day Contact'),'check','unchecked')}"/>
                 </apex:column>
                 <apex:column styleclass="center" headerClass="center">
-                    <apex:facet name="header">ICH Clean<br/>Confirmation<br/>Contact</apex:facet>
-                    <input type="checkbox" disabled="disabled" class="{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Clean Confirmation Contact'),'checked','')}"/>
+                    <apex:facet name="header">ICH Clearance<br/>Confirmation<br/>Contact</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Clearance Confirmation Contact'),'check','unchecked')}"/>
                 </apex:column>
                 <apex:column styleclass="center" headerClass="center">
-                    <apex:facet name="header">ICH Clean<br/>Initialization<br/>Contact</apex:facet>
-                    <input type="checkbox" disabled="disabled" class="{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Clean Initialization Contact'),'checked','')}"/>
+                    <apex:facet name="header">ICH Clearance<br/>Initialization<br/>Contact</apex:facet>
+                    <span class="glyphicon glyphicon-{!IF(CONTAINS(contactEndorsement.Position__c,'ICH Clearance Initialization Contact'),'check','unchecked')}"/>
                 </apex:column>
                 <apex:column >
                     <a class="glyphicon glyphicon-pencil link-not-highlighted" href="#" onclick="editContact('{!contactEndorsement.Id}');return false;"></a>
@@ -386,7 +386,7 @@
             <!-- Selected Clearance A -->
             <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='A'}">
                 <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone A, please select one of the following three options available for the Currency of Settlement:" escape="false"/>
-                <apex:actionRegion>
+                <apex:actionRegion >
                     <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}">
                         <apex:selectOption itemValue="GBP" itemLabel="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amountsubmitted into clearance, therefore arriving at one GBP payable or receivable amount."/>
                         <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD remain the USD amount submitted into clearance and Zone A GBP would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."/>
@@ -398,7 +398,7 @@
             <!-- Selected Clearance B -->
             <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='B'}">
                 <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone B, please select one of the following three options available for the Currency of Settlement" escape="false"/>
-                <apex:actionRegion>
+                <apex:actionRegion >
                     <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}">
                         <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B, C and D in USD be remain as reported in USD therefore arriving at one USD payable or receivable amount."/>
                         <apex:selectOption itemValue="EUR" itemLabel="Entirely in EUR; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B, C and D in USD would be converted into EUR using the exchange rate on Advice Day, therefore arriving at one EUR payable or receivable amount."/>
@@ -410,7 +410,7 @@
             <!-- Selected Clearance D -->
             <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='D'}">
                 <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone D, please select one of the following three options available for the Currency of Settlement" escape="false" />
-                <apex:actionRegion>
+                <apex:actionRegion >
                     <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}">
                         <apex:selectOption itemValue="EUR" itemLabel="Entirely in EUR; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B and C in USD would be converted into EUR using the exchange rate on Advice Day and Zone D EUR would remain the EUR amount submitted into clearance, therefore arriving at one EUR payable or receivable amount."/>
                         <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A and B in USD remain the USD amount submitted into clearance and Zone D EUR would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."/>
@@ -491,7 +491,11 @@
             </apex:outputpanel>
         </apex:facet>
 
-        <apex:outputText value="[Download Form]" styleclass="strong-label"/>
+        <apex:outputPanel rendered="{!ctrl.AssociateAggregatorMemberApplicationUrl!=null}">
+            <apex:outputLink value="{!ctrl.AssociateAggregatorMemberApplicationUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">
+                {!ctrl.AssociateAggregatorMemberApplicationName}
+            </apex:outputLink>
+        </apex:outputPanel>
         <tr><td colspan="4" class="required">
             <apex:iframe scrolling="false" height="160px"
             src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=10&reqRequired=Mandatory&reqName={!URLENCODE('Aggregator/Affiliate Form')}&reqDescription=&reqIdentifier=AggregatorAffiliateForm&onlyOne=true"/>

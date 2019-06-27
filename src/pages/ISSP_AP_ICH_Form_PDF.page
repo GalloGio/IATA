@@ -182,12 +182,22 @@
 <body>
 
     <div class="panel-heading head_panel_green">
-        <h3 class="panel-title">ICH Joining Process</h3>
+        <h3 class="panel-title">{!PageTitle}</h3>
     </div>
 
     <apex:pageBlock id="main-block">
         <apex:form >
-            <c:ICH_Form_AssociateAggregator ctrl="{!thisController}" readOnly="true" rendered="{!IsICHType_AssociateAggregator}"/>
+            <apex:outputPanel rendered="{!strAreaType=='Airline Joining'}">
+                <c:ICH_Form_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_IATAMember}" readonly="true"/>
+                <c:ICH_Form_Non_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_NonIATAMember}" readonly="true"/>
+                <c:ICH_Form_AssociateAggregator ctrl="{!thisController}" rendered="{!IsICHType_AssociateAggregator}" readonly="true"/>
+                <c:ICH_Form_AssociateSubsidiary ctrl="{!thisController}" rendered="{!OR(IsICHType_AssociateSubsidiary,IsICHType_AssociateSP)}" readonly="true"/>
+                <c:ICH_Form_SponsoredAirline ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAirline}" readonly="true"/>
+                <c:ICH_Form_SponsoredAssociates ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAssociates}" readonly="true"/>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!strAreaType=='Airline Change'}">
+                <c:ICH_Form_Changes ctrl="{!thisController}" readonly="true"/>
+            </apex:outputPanel>
         </apex:form>
     </apex:pageBlock>
 </body>

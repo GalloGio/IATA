@@ -141,14 +141,14 @@
                                             </div>
                                             <script>$('.country-select').select2({width : 'resolve'});</script>
 
-                                            <div class="form-group {!IF(listOptionICHParticipation=null,'hidden','')}">
+                                            <apex:outputPanel layout="block" styleclass="form-group" rendered="{!strOperationType=='ICH' && strAreaType=='Airline Joining'}">
                                                 <label class="col-sm-2 control-label">* ICH Participation Type</label>
                                                 <div class="col-sm-10">
-                                                    <apex:selectList styleClass="ich-type-select"  value="{!newCase.Classification__c}" onchange="refreshCASSAirlineList(this.value);" required="{!isICH}" size="1">
+                                                    <apex:selectList styleClass="ich-type-select"  value="{!newCase.Classification_SIS__c}" onchange="refreshCASSAirlineList(this.value);" size="1">
                                                         <apex:selectOptions value="{!listOptionICHParticipation}"/>
                                                     </apex:selectList>
                                                 </div>
-                                            </div>
+                                            </apex:outputPanel>
                                             <script>$('.ich-type-select').select2({width : 'resolve'});</script>
                                         </apex:outputPanel>
 
@@ -171,15 +171,15 @@
                                             </div>
                                         </div>    
 
-                                        <apex:outputPanel id="ich-info" layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!strOperationType=='ICH'}">
+                                        <apex:outputPanel id="ich-info" layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!strOperationType=='ICH' && strAreaType=='Airline Joining'}">
                                             <ul>
-                                                <li><strong>IATA Member Airline:</strong> Description TBD</li>
-                                                <li><strong>Non-IATA Member Airline:</strong> Description TBD</li>
-                                                <li><strong>Sponsored Airline:</strong> Description TBD</li>
-                                                <li><strong>Sponsored Associates:</strong> Description TBD</li>
-                                                <li><strong>Associate Member (SP and Non-SP):</strong> Description TBD</li>
-                                                <li><strong>Associate Member - Subsidiary:</strong> Description TBD</li>
-                                                <li><strong>Associate Member - Aggregator:</strong> Description TBD</li>
+                                                <li><strong>IATA Member Airline:</strong>An Airline who participates in the IATA Membership Service</li>
+                                                <li><strong>Non-IATA Member Airline:</strong>An Airline who does not participates in the IATA Membership Service</li>
+                                                <li><strong>Sponsored Airline:</strong>An Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
+                                                <li><strong>Sponsored Associates:</strong>A Non-Airline whose revenue accounting functions are performed by an IATA Member Airline</li>
+                                                <li><strong>Associate Member:</strong>a Non-Airline who is providing services to Members of the IATA Clearing House</li>
+                                                <li><strong>Associate Member - Subsidiary:</strong>A Non-Airline who is providing services and who is a Subsidiary of an IATA Member Airline who participates in the IATA Clearing House</li>
+                                                <li><strong>Associate Member - Aggregator:</strong>An Aggregator Member is an Associate Member who participates in the IATA Clearing House and has Associate Subsidiaries participating under the responsibility of the parent organization</li>
                                             </ul>
                                         </apex:outputPanel>
 
@@ -234,7 +234,7 @@
                     <apex:outputText rendered="{!isStep2&&countryRequirementFound}">
                         <div class="panel-primary">
                             <div class="panel-heading head_panel_green">
-                                <h3 class="panel-title">{!app.ServiceName__c}</h3>
+                                <h3 class="panel-title">{!PageTitle}</h3>
                             </div>
                             <div class="panel-body" id="body-enquiries">
 

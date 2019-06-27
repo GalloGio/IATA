@@ -10,13 +10,13 @@ global without sharing class ISSP_APProcess {
 
     public ISSP_APProcess thisController {get{return this;}}
 
-    private static final String ICH_TYPE_IATA_MEMBER = 'IATA Member Airline'; //1
-    private static final String ICH_TYPE_NON_IATA_MEMBER = 'Non-IATA Member Airline'; //2
-    private static final String ICH_TYPE_SPONSORED_AIRLINE = 'Sponsored Airline'; //5
-    private static final String ICH_TYPE_SPONSORED_ASSOCIATES = 'Sponsored Associates'; //6
-    private static final String ICH_TYPE_ASSOCIATE_MEMBER_SP = 'Associate Member (SP and Non-SP)'; //10 (3 minus section9)
-    private static final String ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY = 'Associate Member - Subsidiary'; //4
-    private static final String ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR = 'Associate Member - Aggregator'; //3
+    public static final String ICH_TYPE_IATA_MEMBER = 'IATA Member Airline'; //1
+    public static final String ICH_TYPE_NON_IATA_MEMBER = 'Non-IATA Member Airline'; //2
+    public static final String ICH_TYPE_SPONSORED_AIRLINE = 'Sponsored Airline'; //5
+    public static final String ICH_TYPE_SPONSORED_ASSOCIATES = 'Sponsored Associates'; //6
+    public static final String ICH_TYPE_ASSOCIATE_MEMBER_SP = 'Associate Member (SP and Non-SP)'; //10 (3 minus section9)
+    public static final String ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY = 'Associate Member - Subsidiary'; //4
+    public static final String ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR = 'Associate Member - Aggregator'; //3
 
     private static final map<String,set<String>> ICH_FORM_ASSIGNATION = new map<String,set<String>>{
         'Airline|Cargo Only' => new set<String>{
@@ -162,6 +162,7 @@ global without sharing class ISSP_APProcess {
     public Integer airlineOptInDays {get;set;}
     public Integer airlineOptOutDays {get;set;}
     public Boolean isoCountryEligible {get;set;} //Variable to define if the isoCountry is EasyPay Eligible (used in VF Page)
+    public Boolean showTermsConditionsPopup {get;set;}
     //variable to store selected contact, if not null a popup should appear
     public Id selectedContactId {get;set;}
     public Contact_Endorsement__c selectedContact {get;set;}
@@ -180,21 +181,21 @@ global without sharing class ISSP_APProcess {
     }
 
     public Boolean selectedContactPosition_ICHNotificationContact  {
-        get { return getSelectedContactPosition('ICH Advise Contact'); }
-        set { setSelectedContactPosition('ICH Advise Contact',value); }
+        get { return getSelectedContactPosition('ICH Advice Day Contact'); }
+        set { setSelectedContactPosition('ICH Advice Day Contact',value); }
     }
 
     public Boolean selectedContactPosition_ICHAdvice {
-        get { return getSelectedContactPosition('ICH Advise Contact'); }
-        set { setSelectedContactPosition('ICH Advise Contact',value); }
+        get { return getSelectedContactPosition('ICH Advice Day Contact'); }
+        set { setSelectedContactPosition('ICH Advice Day Contact',value); }
     }
     public Boolean selectedContactPosition_ICHCleanConfirmation {
-        get { return getSelectedContactPosition('ICH Clean Confirmation Contact'); }
-        set { setSelectedContactPosition('ICH Clean Confirmation Contact',value); }
+        get { return getSelectedContactPosition('ICH Clearance Confirmation Contact'); }
+        set { setSelectedContactPosition('ICH Clearance Confirmation Contact',value); }
     }
     public Boolean selectedContactPosition_ICHCleanInitialization {
-        get { return getSelectedContactPosition('ICH Clean Initialization Contact'); }
-        set { setSelectedContactPosition('ICH Clean Initialization Contact',value); }
+        get { return getSelectedContactPosition('ICH Clearance Initialization Contact'); }
+        set { setSelectedContactPosition('ICH Clearance Initialization Contact',value); }
     }
 
 
@@ -267,6 +268,7 @@ global without sharing class ISSP_APProcess {
         displayPopup = false;
         flagShowCountries = false;
         isoCountryEligible = false;
+        showTermsConditionsPopup = false;
 
         newForm = new AP_Process_Form__c();
         newCase = new Case();
@@ -462,133 +464,135 @@ global without sharing class ISSP_APProcess {
                     BankMandateUrl = apcdef.Download_URL__c;
                 }
 
-                // check if all mandatory files were uploaded
-                List<String> listMandatoryFiles = new list<String>();
-                if (strAreaType=='Airline Joining' && apcountryisocode=='AR') {
-                    listMandatoryFiles.add('Additional_Information_AR1');
-                    listMandatoryFiles.add('Additional_Information_AR2');
-                    listMandatoryFiles.add('Additional_Information_AR3');
-                }
-                if (apcountryisocode=='BR') {
-                    listMandatoryFiles.add('Additional_Information_BR1');
-                    listMandatoryFiles.add('Additional_Information_BR2');
-                }
-                if (!checkMandatoryFiles(this.newCase.Id, listMandatoryFiles)) {
-                    allfieldsfilled = false;
-                }
-
-                //Test if BSP / CASS compulsory fields are filled
-                if (isBSP && strAreaType=='Airline Joining') {
-                    if(ISSP_AP_FieldLists.bsp_MandatoryFieldsbyCountry.get(apcountryisocode) != null) {
-                        Map<String, String> extraMandatoryFields = ISSP_AP_FieldLists.bsp_MandatoryFieldsbyCountry.get(apcountryisocode);
-                        for(String tmp : extraMandatoryFields.keySet()) {
-                            ISSP_AP_fieldLists.bspMandatoryFields.put(tmp, extraMandatoryFields.get(tmp));
-                        }
+                if (isBSP || isCASS) {
+                    // check if all mandatory files were uploaded
+                    List<String> listMandatoryFiles = new list<String>();
+                    if (strAreaType=='Airline Joining' && apcountryisocode=='AR') {
+                        listMandatoryFiles.add('Additional_Information_AR1');
+                        listMandatoryFiles.add('Additional_Information_AR2');
+                        listMandatoryFiles.add('Additional_Information_AR3');
                     }
-                    
-                    if (newForm.Receive_HOT_files__c=='YES - Daily' || newForm.Receive_HOT_files__c=='YES - Per Period') {
-                        ISSP_AP_fieldLists.bspMandatoryFields.put('Hot_files_delivery_format__c', '');
+                    if (apcountryisocode=='BR') {
+                        listMandatoryFiles.add('Additional_Information_BR1');
+                        listMandatoryFiles.add('Additional_Information_BR2');
                     }
-                    if (newForm.Hot_files_delivery_format__c=='iiNET') {
-                        ISSP_AP_fieldLists.bspMandatoryFields.put('IINET_account_number__c', '');
-                    }
-                    if (getlocalAddressMandatory()) {
-                        ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_address__c','');
-                        ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_Zip_Code__c','');
-                        ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_City__c','');
-                    }
-                    if (getLocalVATMandatory()) {
-                        ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Country_VAT_Tax_number__c','');
-                    }
-                    // either one or the other field is mandatory
-                    if (getVATAlwaysInserted()) {
-                        if (newForm.VAT_Tax_number_in_your_home_country__c==null && newForm.BSP_Country_VAT_Tax_number__c==null ) {
-                            allfieldsfilled = false;
-                            System.Debug('BSP validation FAIL VAT_Tax_number_in_your_home_country__c or BSP_Country_VAT_Tax_number__c');
-                        }
-                    }
-                    for (String fldLabel : ISSP_AP_fieldLists.bspMandatoryFields.keySet())
-                    {
-                        if (newForm.get(fldLabel)==null) {
-                            allfieldsfilled = false;
-                            System.Debug('BSP FldLabel FAIL ' + fldLabel);
-                            break;
-                        }
+                    if (!checkMandatoryFiles(this.newCase.Id, listMandatoryFiles)) {
+                        allfieldsfilled = false;
                     }
 
-                    // Patch to make mandatory some fields dependent from Participate_in_any_Commission_Control__c
-                    if (newForm.Participate_in_any_Commission_Control__c=='Yes') {
-                        for (String fieldName: getMandatoryFieldsForCommission()) {
-                            if (newForm.get(fieldName) == null) {
+                    //Test if BSP / CASS compulsory fields are filled
+                    if (isBSP && strAreaType=='Airline Joining') {
+                        if(ISSP_AP_FieldLists.bsp_MandatoryFieldsbyCountry.get(apcountryisocode) != null) {
+                            Map<String, String> extraMandatoryFields = ISSP_AP_FieldLists.bsp_MandatoryFieldsbyCountry.get(apcountryisocode);
+                            for(String tmp : extraMandatoryFields.keySet()) {
+                                ISSP_AP_fieldLists.bspMandatoryFields.put(tmp, extraMandatoryFields.get(tmp));
+                            }
+                        }
+                        
+                        if (newForm.Receive_HOT_files__c=='YES - Daily' || newForm.Receive_HOT_files__c=='YES - Per Period') {
+                            ISSP_AP_fieldLists.bspMandatoryFields.put('Hot_files_delivery_format__c', '');
+                        }
+                        if (newForm.Hot_files_delivery_format__c=='iiNET') {
+                            ISSP_AP_fieldLists.bspMandatoryFields.put('IINET_account_number__c', '');
+                        }
+                        if (getlocalAddressMandatory()) {
+                            ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_address__c','');
+                            ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_Zip_Code__c','');
+                            ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_City__c','');
+                        }
+                        if (getLocalVATMandatory()) {
+                            ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Country_VAT_Tax_number__c','');
+                        }
+                        // either one or the other field is mandatory
+                        if (getVATAlwaysInserted()) {
+                            if (newForm.VAT_Tax_number_in_your_home_country__c==null && newForm.BSP_Country_VAT_Tax_number__c==null ) {
+                                allfieldsfilled = false;
+                                System.Debug('BSP validation FAIL VAT_Tax_number_in_your_home_country__c or BSP_Country_VAT_Tax_number__c');
+                            }
+                        }
+                        for (String fldLabel : ISSP_AP_fieldLists.bspMandatoryFields.keySet())
+                        {
+                            if (newForm.get(fldLabel)==null) {
+                                allfieldsfilled = false;
+                                System.Debug('BSP FldLabel FAIL ' + fldLabel);
+                                break;
+                            }
+                        }
+
+                        // Patch to make mandatory some fields dependent from Participate_in_any_Commission_Control__c
+                        if (newForm.Participate_in_any_Commission_Control__c=='Yes') {
+                            for (String fieldName: getMandatoryFieldsForCommission()) {
+                                if (newForm.get(fieldName) == null) {
+                                    allfieldsfilled = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                    } else if(isCASS && strAreaType=='Airline Joining') {  //Test CASS mandatory fields
+                        if(ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode) != null) {
+                            Map<String, String> extraMandatoryFields = ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode);
+                            for(String tmp : extraMandatoryFields.keySet()) {
+                                ISSP_AP_fieldLists.cassMandatoryFields.put(tmp, extraMandatoryFields.get(tmp));
+                            }
+                        }
+                        if (this.newForm.Online_carrier_in_the_BSP_country__c!='No') {
+                            ISSP_AP_fieldLists.cassMandatoryFields.put('Flights_operated_in_the_BSP_country__c','');
+                        }
+                        if (this.newForm.Receive_HOT_files__c=='YES - Billing Period HOT' || this.newForm.Receive_HOT_files__c=='YES - Remittance Period HOT') {
+                            ISSP_AP_fieldLists.cassMandatoryFields.put('Hot_files_delivery_format__c','');
+                        }
+                        if (getlocalAddressMandatory()) {
+                            ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_address__c','');
+                            ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_Zip_Code__c','');
+                            ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_City__c','');
+                        }
+                        if (getLocalVATMandatory()) {
+                            ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Country_VAT_Tax_number__c','');
+                        }
+                        // either one or the other field is mandatory
+                        if (getVATAlwaysInserted()) {
+                            if (newForm.VAT_Tax_number_in_your_home_country__c==null && newForm.BSP_Country_VAT_Tax_number__c==null ) {
+                                allfieldsfilled = false;
+                                System.Debug('CASS validation FAIL VAT_Tax_number_in_your_home_country__c or BSP_Country_VAT_Tax_number__c');
+                            }
+                        }
+                        for (String fldLabel : ISSP_AP_fieldLists.cassMandatoryFields.keySet())
+                        {
+                            System.Debug('CASS FldLabel: '+ fldLabel);
+                            if (newForm.get(fldLabel)==null) {
+                                System.Debug('CASS FldLabel FAIL');
                                 allfieldsfilled = false;
                                 break;
                             }
                         }
-                    }
-
-                } else if(isCASS && strAreaType=='Airline Joining') {  //Test CASS mandatory fields
-                    if(ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode) != null) {
-                        Map<String, String> extraMandatoryFields = ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode);
-                        for(String tmp : extraMandatoryFields.keySet()) {
-                            ISSP_AP_fieldLists.cassMandatoryFields.put(tmp, extraMandatoryFields.get(tmp));
+                    } else if(strAreaType=='Airline Change' && strChangeType=='Minor database changes') {
+                        if(newForm.Type_of_Change_Requested__c != null) {
+                            if(newForm.Type_of_Change_Requested__c.contains('Master')) { //Need to include MasterTable mandatory fields
+                                Map<String, String> masterTableMandatoryFields = ISSP_AP_FieldLists.changeMasterTableMandatoryFields;
+                                    for(String tmp : masterTableMandatoryFields.keySet()) {
+                                        ISSP_AP_fieldLists.changeMandatoryFields.put(tmp, masterTableMandatoryFields.get(tmp));
+                                    }
+                              }
                         }
-                    }
-                    if (this.newForm.Online_carrier_in_the_BSP_country__c!='No') {
-                        ISSP_AP_fieldLists.cassMandatoryFields.put('Flights_operated_in_the_BSP_country__c','');
-                    }
-                    if (this.newForm.Receive_HOT_files__c=='YES - Billing Period HOT' || this.newForm.Receive_HOT_files__c=='YES - Remittance Period HOT') {
-                        ISSP_AP_fieldLists.cassMandatoryFields.put('Hot_files_delivery_format__c','');
-                    }
-                    if (getlocalAddressMandatory()) {
-                        ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_address__c','');
-                        ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_Zip_Code__c','');
-                        ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_City__c','');
-                    }
-                    if (getLocalVATMandatory()) {
-                        ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Country_VAT_Tax_number__c','');
-                    }
-                    // either one or the other field is mandatory
-                    if (getVATAlwaysInserted()) {
-                        if (newForm.VAT_Tax_number_in_your_home_country__c==null && newForm.BSP_Country_VAT_Tax_number__c==null ) {
-                            allfieldsfilled = false;
-                            System.Debug('CASS validation FAIL VAT_Tax_number_in_your_home_country__c or BSP_Country_VAT_Tax_number__c');
+                        for (String fldLabel : ISSP_AP_fieldLists.changeMandatoryFields.keySet()) {
+                            System.Debug('Change FldLabel: '+ fldLabel);
+                            if (newForm.get(fldLabel)==null) {
+                                allfieldsfilled = false;
+                                break;
+                            }
                         }
-                    }
-                    for (String fldLabel : ISSP_AP_fieldLists.cassMandatoryFields.keySet())
-                    {
-                        System.Debug('CASS FldLabel: '+ fldLabel);
-                        if (newForm.get(fldLabel)==null) {
-                            System.Debug('CASS FldLabel FAIL');
-                            allfieldsfilled = false;
-                            break;
+                    } else if(strAreaType=='Airline Change' && strChangeType=='Bank Account Instructions') {
+                        for (String fldLabel : ISSP_AP_fieldLists.changeBankMandatoryFields.keySet()) {
+                            System.Debug('Change FldLabel: '+ fldLabel);
+                            if (newForm.get(fldLabel)==null) {
+                                allfieldsfilled = false;
+                                break;
+                            }
                         }
+                    } else {
+                        allfieldsfilled = true;
                     }
-                } else if(strAreaType=='Airline Change' && strChangeType=='Minor database changes') {
-                    if(newForm.Type_of_Change_Requested__c != null) {
-                        if(newForm.Type_of_Change_Requested__c.contains('Master')) { //Need to include MasterTable mandatory fields
-                            Map<String, String> masterTableMandatoryFields = ISSP_AP_FieldLists.changeMasterTableMandatoryFields;
-                                for(String tmp : masterTableMandatoryFields.keySet()) {
-                                    ISSP_AP_fieldLists.changeMandatoryFields.put(tmp, masterTableMandatoryFields.get(tmp));
-                                }
-                          }
-                    }
-                    for (String fldLabel : ISSP_AP_fieldLists.changeMandatoryFields.keySet()) {
-                        System.Debug('Change FldLabel: '+ fldLabel);
-                        if (newForm.get(fldLabel)==null) {
-                            allfieldsfilled = false;
-                            break;
-                        }
-                    }
-                } else if(strAreaType=='Airline Change' && strChangeType=='Bank Account Instructions') {
-                    for (String fldLabel : ISSP_AP_fieldLists.changeBankMandatoryFields.keySet()) {
-                        System.Debug('Change FldLabel: '+ fldLabel);
-                        if (newForm.get(fldLabel)==null) {
-                            allfieldsfilled = false;
-                            break;
-                        }
-                    }
-                } else {
-                    allfieldsfilled = true;
                 }
             }else if(stepNumber == 'Final'){
                 isFinalStep = true;
@@ -686,8 +690,8 @@ global without sharing class ISSP_APProcess {
     public Boolean isICHPrimary {get;set;}
     public Boolean isICHFinancial {get;set;}
     public Boolean isICHAdvice {get;set;}
-    public Boolean isICHCleanConfirmation {get;set;}
-    public Boolean isICHCleanInitialization {get;set;}
+    public Boolean isICHClearConfirmation {get;set;}
+    public Boolean isICHClearInitialization {get;set;}
 
     public void retrieveContactEndorsements() {
         this.listContactEndorsement = [
@@ -699,16 +703,16 @@ global without sharing class ISSP_APProcess {
         this.isICHPrimary = false;
         this.isICHFinancial = false;
         this.isICHAdvice = false;
-        this.isICHCleanConfirmation = false;
-        this.isICHCleanInitialization = false;
+        this.isICHClearConfirmation = false;
+        this.isICHClearInitialization = false;
         for (Contact_Endorsement__c contact: this.listContactEndorsement) {
             if (contact.Position__c!=null) {
                 this.isSISSuperUser |= contact.Position__c.contains('SIS Super User');
                 this.isICHPrimary |= contact.Position__c.contains('ICH Primary Contact');
                 this.isICHFinancial |= contact.Position__c.contains('ICH Financial Contact');
-                this.isICHAdvice |= contact.Position__c.contains('ICH Advise Contact');
-                this.isICHCleanConfirmation |= contact.Position__c.contains('ICH Clean Confirmation Contact');
-                this.isICHCleanInitialization |= contact.Position__c.contains('ICH Clean Initialization Contact');
+                this.isICHAdvice |= contact.Position__c.contains('ICH Advice Day Contact');
+                this.isICHClearConfirmation |= contact.Position__c.contains('ICH Clearance Confirmation Contact');
+                this.isICHClearInitialization |= contact.Position__c.contains('ICH Clearance Initialization Contact');
             }
         }
     }
@@ -716,8 +720,8 @@ global without sharing class ISSP_APProcess {
     public Case retrieveCase(String vCaseId){
         List <Case> newCases = [
             SELECT OwnerId, Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-            Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c,
-            Account_Concerned__r.IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, Classification__c
+            Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c, Region__c,
+            Account_Concerned__r.IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, Classification_SIS__c
             FROM Case 
             WHERE Id=:vCaseId 
         ];
@@ -842,6 +846,7 @@ global without sharing class ISSP_APProcess {
 
         if (isICH) {
             newCase.IFAP_Country_ISO__c='WW';
+            newCase.Type= 'ICH Membership';
         }
         apcountryisocode = newCase.IFAP_Country_ISO__c; //Need Country ISO Code to search for AL Branch office (Account concerned) in case of GSSA applying
 
@@ -934,9 +939,8 @@ global without sharing class ISSP_APProcess {
             return goToStep2();
         } catch(DmlException ex) {
             ApexPages.addMessages(ex);
+            return null;
         }
-
-        return goToStep2();
     }
 
     public void saveBSPForm(){
@@ -1037,7 +1041,7 @@ global without sharing class ISSP_APProcess {
     private String caseReason(String strType, String strMembershipStatus) {
         String strReasonMembership;
         String strReason;
-
+        
         if(strMembershipStatus=='IATA member')
         {
             strReasonMembership = ' - Member';
@@ -1061,10 +1065,14 @@ global without sharing class ISSP_APProcess {
             strReason='CASS Direct' + strReasonMembership;
             isCASS = true;
             strLoB = 'CASS';
-        } else {
+        } else if (strType=='CASS Import') {
             strReason='CASS Import Direct' + strReasonMembership;
             isCASS = true;
             strLoB = 'CASS';
+        } else if (strType=='ICH') {
+            strReason='New ICH participant';
+            isICH = true;
+            strLoB = 'ICH';
         }
 
         return strReason;
@@ -1106,6 +1114,15 @@ global without sharing class ISSP_APProcess {
                 }
             }
 
+            if (this.isICH) {
+                if(!showTermsConditionsPopup) {
+                    showTermsConditionsPopup = true;
+                    return null;
+                } else if (!newForm.Accept_terms_and_conditions__c) {
+                    return null;
+                }
+            }
+
             List<String> listMandatoryFiles = getMandatoryFileList();
             if (!checkMandatoryFiles(this.newCase.Id, listMandatoryFiles)) {
                 newForm.addError('There are missing files to upload, Please attach them before submitting the application.');
@@ -1136,6 +1153,10 @@ global without sharing class ISSP_APProcess {
         }
 
         return null;
+    }
+
+    public void hideTermsConditionsPopup() {
+        this.showTermsConditionsPopup = false;
     }
 
     /**
@@ -1174,7 +1195,23 @@ global without sharing class ISSP_APProcess {
     }
 
     public Pagereference redirectToCasesList(){
-        return new Pagereference('/ISSP_APCases');
+        PageReference pageref = Page.ISSP_APCases;
+        pageref.getParameters().put('MainNav','Services');
+        pageref.getParameters().put('subNav','Access');
+        pageref.getParameters().put('mid','M3S1');
+        pageref.getParameters().put('retURL','ISSP_Homepage');
+         if( this.newCase.CaseArea__c=='Airline Change') {
+            String process='';
+            if(this.newCase.Reason1__c=='Minor database changes') {
+                process='chg';
+            }
+            if(this.newCase.Reason1__c=='Bank Account Instructions') {
+                process='bnk';
+            }
+            pageref.getParameters().put('proc',process);
+         }
+        pageref.setRedirect(true);
+        return pageref;
     }
 
     public Pagereference redirectToCasesListForDupe() {
@@ -1360,13 +1397,13 @@ global without sharing class ISSP_APProcess {
         return new list<String>(setTypes);
     }
 
-    public Boolean getIsICHType_IATAMember() { return this.newCase.Classification__c==ICH_TYPE_IATA_MEMBER;}
-    public Boolean getIsICHType_NonIATAMember() { return this.newCase.Classification__c==ICH_TYPE_NON_IATA_MEMBER;}
-    public Boolean getIsICHType_SponsoredAirline() { return this.newCase.Classification__c==ICH_TYPE_SPONSORED_AIRLINE;}
-    public Boolean getIsICHType_SponsoredAssociates() { return this.newCase.Classification__c==ICH_TYPE_SPONSORED_ASSOCIATES;}
-    public Boolean getIsICHType_AssociateSP() { return this.newCase.Classification__c==ICH_TYPE_ASSOCIATE_MEMBER_SP;}
-    public Boolean getIsICHType_AssociateSubsidiary() { return this.newCase.Classification__c==ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY;}
-    public Boolean getIsICHType_AssociateAggregator() { return this.newCase.Classification__c==ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR;}
+    public Boolean getIsICHType_IATAMember() { return this.newCase.Classification_SIS__c==ICH_TYPE_IATA_MEMBER;}
+    public Boolean getIsICHType_NonIATAMember() { return this.newCase.Classification_SIS__c==ICH_TYPE_NON_IATA_MEMBER;}
+    public Boolean getIsICHType_SponsoredAirline() { return this.newCase.Classification_SIS__c==ICH_TYPE_SPONSORED_AIRLINE;}
+    public Boolean getIsICHType_SponsoredAssociates() { return this.newCase.Classification_SIS__c==ICH_TYPE_SPONSORED_ASSOCIATES;}
+    public Boolean getIsICHType_AssociateSP() { return this.newCase.Classification_SIS__c==ICH_TYPE_ASSOCIATE_MEMBER_SP;}
+    public Boolean getIsICHType_AssociateSubsidiary() { return this.newCase.Classification_SIS__c==ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY;}
+    public Boolean getIsICHType_AssociateAggregator() { return this.newCase.Classification_SIS__c==ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR;}
 
     public List<SelectOption> getCassAirlines() {
         List <Account> casshq;
@@ -1793,37 +1830,46 @@ global without sharing class ISSP_APProcess {
         String emailTemplateName;
         String fromaddress;
 
-        if(newCase.BSPCountry__c.contains('Spain')) {
-            emailTemplateName = 'EUR_Case confirmation - online HTML (Spanish)';
-            fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
-        } else if(newCase.BSPCountry__c == 'France') {
-            emailTemplateName = 'EUR_Case Confirmation - online HTML (French)';
-            fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
-        } else if(newCase.Region__c == 'Europe') {
-            emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
-            fromaddress = 'IATA Europe (noreply@iata.org)';
-        } else if(newCase.BSPCountry__c == 'Canada') {
-            emailTemplateName = 'A1 - CS Auto-response confirmation (EN/FR)';
-            fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
-        } else if(newCase.BSPCountry__c == 'Brazil') {
-            emailTemplateName = 'A1 - CS Auto-response confirmation (EN/PT)';
-            fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
-        } else if(newCase.Region__c == 'Americas') {
-            emailTemplateName = 'A1 - CS Auto-response confirmation (EN/SP)';
-            fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
-        } else if(newCase.Region__c != null && newCase.Region__c.contains('China')) {
-            emailTemplateName = 'N.ASIA_Case confirmation - online HTML (English)- China';
-            fromaddress = 'IATA China - Customer Services (noreply@iata.org)';
-        } else if(newCase.Region__c != null && newCase.Region__c.contains('Africa')) {
-            fromaddress = 'IATA Customer Service - Africa (noreply@iata.org)';
-            emailTemplateName = 'MENA_Case confirmation - online HTML (English)';
-        } else {
-            emailTemplateName = 'A&P_Case confirmation - online HTML (English)- Singapore';
-            fromaddress = 'ISS Operations & Service Centre - Asia & Pacific (' + newCase.BSPCountry__c + ') (noreply@iata.org)';
+        if (isBSP || isCASS) {
+            if(newCase.BSPCountry__c!=null && newCase.BSPCountry__c.contains('Spain')) {
+                emailTemplateName = 'EUR_Case confirmation - online HTML (Spanish)';
+                fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
+            } else if(newCase.BSPCountry__c == 'France') {
+                emailTemplateName = 'EUR_Case Confirmation - online HTML (French)';
+                fromaddress = 'IATA Service Centre - Europe (noreply@iata.org)';
+            } else if(newCase.Region__c == 'Europe') {
+                emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
+                fromaddress = 'IATA Europe (noreply@iata.org)';
+            } else if(newCase.BSPCountry__c == 'Canada') {
+                emailTemplateName = 'A1 - CS Auto-response confirmation (EN/FR)';
+                fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
+            } else if(newCase.BSPCountry__c == 'Brazil') {
+                emailTemplateName = 'A1 - CS Auto-response confirmation (EN/PT)';
+                fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
+            } else if(newCase.Region__c == 'Americas') {
+                emailTemplateName = 'A1 - CS Auto-response confirmation (EN/SP)';
+                fromaddress = 'IATA Customer Service Americas (noreply@iata.org)';
+            } else if(newCase.Region__c != null && newCase.Region__c.contains('China')) {
+                emailTemplateName = 'N.ASIA_Case confirmation - online HTML (English)- China';
+                fromaddress = 'IATA China - Customer Services (noreply@iata.org)';
+            } else if(newCase.Region__c != null && newCase.Region__c.contains('Africa')) {
+                fromaddress = 'IATA Customer Service - Africa (noreply@iata.org)';
+                emailTemplateName = 'MENA_Case confirmation - online HTML (English)';
+            } else {
+                emailTemplateName = 'A&P_Case confirmation - online HTML (English)- Singapore';
+                fromaddress = 'ISS Operations & Service Centre - Asia & Pacific (' + newCase.BSPCountry__c + ') (noreply@iata.org)';
+            }
+        }
+        if (isICH) {
+            emailTemplateName = 'ICH Case Confirmation - online HTML';
         }
 
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
         List<EmailTemplate> ets = [Select Name, Id From EmailTemplate where Name = :emailTemplateName];
+        if(ets.isEmpty()) {
+            System.debug('____sendConfirmationEmail Email template not found (' + emailTemplateName + ')');
+            return;
+        }
         EmailTemplate et = ets[0];
 
         OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
@@ -1831,8 +1877,8 @@ global without sharing class ISSP_APProcess {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setTemplateID(et.Id);
         if ( owea.size() > 0 ) {
-        mail.setOrgWideEmailAddressId(owea[0].Id);
-    }
+            mail.setOrgWideEmailAddressId(owea[0].Id);
+        }
         //mail.setSenderDisplayName(fromaddress);
         mail.setTargetObjectId(newCase.ContactId);
         mail.setWhatId(newCase.Id);
@@ -1840,7 +1886,11 @@ global without sharing class ISSP_APProcess {
 
         emails.add(mail);
 
-        Messaging.sendEmail(emails);
+        try {
+            Messaging.sendEmail(emails);
+        } catch (Exception e) {
+            System.debug('____sendConfirmationEmail Error (' + emails + '):  ' + e.getMessage());
+        }
     }
 
     public void editGSTNumber()
@@ -2179,12 +2229,19 @@ global without sharing class ISSP_APProcess {
     };
 
     public String getICHTermsAndConditionsUrl() {
-        String docname = MAP_ICH_DOC_TERMS.get(this.newCase.Classification__c);
+        String docname = MAP_ICH_DOC_TERMS.get(this.newCase.Classification_SIS__c);
         return getDocumentUrl(docname);
     }
     public String getICHTermsAndConditionsName() {
-        String docname = MAP_ICH_DOC_TERMS.get(this.newCase.Classification__c);
+        String docname = MAP_ICH_DOC_TERMS.get(this.newCase.Classification_SIS__c);
         return getDocumentName(docname);
+    }
+
+    public String getAssociateAggregatorMemberApplicationUrl() {
+        return getDocumentUrl('Associate_Aggregator_Member_App');
+    }
+    public String getAssociateAggregatorMemberApplicationName() {
+        return getDocumentName('Associate_Aggregator_Member_App');
     }
 
     /**
@@ -2374,7 +2431,7 @@ global without sharing class ISSP_APProcess {
         String appName = '';
         try {
             if( this.strAreaType=='Airline Joining') {
-                appName = 'Joining Settlement Services';
+                appName = 'Join BSP / CASS';
             } else if(this.strChangeType=='Minor database changes') {
                 appName = 'BSP / CASS Change Request';
             } else {
@@ -2391,17 +2448,27 @@ global without sharing class ISSP_APProcess {
     }
 
     /**
-        Get the Page title in Submit page
+        Get the Page title in the other form pages
     **/
     public String getPageTitle() {
-        if( this.strAreaType=='Airline Joining') {
+        if( this.newCase.CaseArea__c=='Airline Joining') {
             if (isBSP) return 'Airline Participation Joining Application';
             if (isCASS) return 'Airline Participation Joining Application';
-            if (isICH) return 'ICH Joining Process';
-        } else if(this.strChangeType=='Minor database changes') {
-            return 'Airline Participation Change Request';
-        } else {
-            return 'Change of Bank Account details';
+            if (isICH) {
+                String title = 'ICH Joining Process';
+                if (!String.isBlank(this.newCase.Classification_SIS__c)) {
+                    title += '(' + this.newCase.Classification_SIS__c + ')';
+                }
+                return title;
+            }
+        } 
+        if( this.newCase.CaseArea__c=='Airline Change') {
+            if(this.newCase.Reason1__c=='Minor database changes') {
+                return 'Airline Participation Change Request';
+            }
+            if(this.newCase.Reason1__c=='Bank Account Instructions') {
+                return 'Change of Bank Account details';
+            }
         }
         return '';
     } 

@@ -147,9 +147,9 @@
                 while (!["INPUT","SELECT","TEXTAREA"].includes(checkInput.tagName)) {
                     checkInput = checkInput.children[0];
                 }
+                $(checkInput).removeClass("blink-me");
                 if (!checkInput.checkValidity()) {
                     var input = $(checkInput);
-                    input.removeClass("blink-me");
                     input.focus();
                     input.addClass("blink-me");
                     return false;
@@ -438,7 +438,7 @@
 <div class="panel-primary">
 
     <div class="panel-heading head_panel_green">
-        <h3 class="panel-title">ICH Joining Process</h3>  <sub>{!newCase.Classification__c}</sub>
+        <h3 class="panel-title">{!PageTitle}</h3>
     </div>
 
     <div class="panel-body" id="body-enquiries">
@@ -489,16 +489,12 @@
 
                 <div class="apcontainer">
                     <apex:outputPanel rendered="{!strAreaType=='Airline Joining'}">
-<!--
                         <c:ICH_Form_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_IATAMember}"/>
                         <c:ICH_Form_Non_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_NonIATAMember}"/>
--->
-                        <c:ICH_Form_AssociateAggregator ctrl="{!thisController}" readOnly="false" rendered="{!IsICHType_AssociateAggregator}"/>
-<!--
+                        <c:ICH_Form_AssociateAggregator ctrl="{!thisController}" rendered="{!IsICHType_AssociateAggregator}"/>
                         <c:ICH_Form_AssociateSubsidiary ctrl="{!thisController}" rendered="{!OR(IsICHType_AssociateSubsidiary,IsICHType_AssociateSP)}"/>
                         <c:ICH_Form_SponsoredAirline ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAirline}"/>
                         <c:ICH_Form_SponsoredAssociates ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAssociates}"/>
--->
                     </apex:outputPanel>
                     <apex:outputPanel rendered="{!strAreaType=='Airline Change'}">
                         <c:ICH_Form_Changes ctrl="{!thisController}"/>
@@ -532,15 +528,15 @@
                                 <apex:inputCheckbox value="{!selectedContactPosition_ICHFinancialContact}"/>
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem >
-                                <apex:outputLabel >ICH Advice Contact</apex:outputLabel>
+                                <apex:outputLabel >ICH Advice Day Contact</apex:outputLabel>
                                 <apex:inputCheckbox value="{!selectedContactPosition_ICHAdvice}"/>
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem >
-                                <apex:outputLabel >ICH Clean Confirmation Contact</apex:outputLabel>
+                                <apex:outputLabel >ICH Clearance Confirmation Contact</apex:outputLabel>
                                 <apex:inputCheckbox value="{!selectedContactPosition_ICHCleanConfirmation}"/>
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem >
-                                <apex:outputLabel >ICH Clean Initialization Contact</apex:outputLabel>
+                                <apex:outputLabel >ICH Clearance Initialization Contact</apex:outputLabel>
                                 <apex:inputCheckbox value="{!selectedContactPosition_ICHCleanInitialization}"/>
                             </apex:pageBlockSectionItem>
 

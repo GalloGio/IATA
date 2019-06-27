@@ -211,6 +211,5 @@ p.LOB {
     .apcontainer div .intl-tel-input {
         border: 0;
     }
-        
     </style>
 </apex:component>

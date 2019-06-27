@@ -1,15 +1,6 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true">
     <c:iss_ap_css />
 
-    <script>
-        function showICHTerms() {
-            $("#ich-terms-conditions-modal").removeClass("hidden");
-        }
-        function hideICHTerms() {
-            $("#ich-terms-conditions-modal").addClass("hidden");
-        }
-    </script>
-
     <div class="panel-primary">
             <div class="panel-heading head_panel_green">
                <h3 class="panel-title">{!pageTitle}</h3>
@@ -30,10 +21,9 @@
         <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
             
             <apex:pageBlockButtons id="buttonSection">
-                <apex:commandButton styleclass="apbutton" action="{!goToStep3}" value="Previous"/>&nbsp;
-                <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" rendered="{!!isICH}"/>
-                <input type="button" class="apbutton btn {!IF(isICH,'','hidden')}" value="Submit to IATA" onclick="showICHTerms();"/>
-                <apex:commandButton styleclass="apbutton" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" style="float:right"/>
+                <apex:commandButton styleclass="apbutton" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate=""/>&nbsp;
+                <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" status="WaitingStatus"/>
+                <apex:commandButton styleclass="apbutton" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" style="float:right" html-novalidate="" html-formnovalidate=""/>
             </apex:pageBlockButtons>
             
             <apex:pageMessages />
@@ -337,8 +327,28 @@
             </apex:outputPanel>
 
             <!-- ICH Submit section -->
-            <apex:outputPanel rendered="{!isICH}">
-                <apex:pageBlockSection columns="1" title="{!$Label.ISSP_SIS_Membership_Participation_Agreement}" collapsible="false">
+            <apex:outputPanel id="ich-section" rendered="{!isICH}">
+
+                <apex:pageBlockSection columns="1" collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            Form Summary
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:outputPanel >
+                        <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                        <apex:outputLink value="/ISSP_AP_ICH_Form_PDF?caseId={!newCase.Id}&step=3" style="color:#31708f; text-decoration: underline;" target="_new">
+                            Download PDF Form
+                        </apex:outputLink>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection columns="1" collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            {!$Label.ISSP_SIS_Membership_Participation_Agreement}
+                        </apex:outputpanel>
+                    </apex:facet>
                     <apex:outputPanel >
                         <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
                         <apex:outputPanel rendered="{!ICHTermsAndConditionsUrl!=null}">
@@ -347,16 +357,15 @@
                             </apex:outputLink>
                         </apex:outputPanel>
                     </apex:outputPanel>
-                    <apex:outputPanel>
-                        <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-                        <apex:outputLink value="/ISSP_AP_ICH_Form_PDF?caseId={!newCase.Id}&step=3" style="color:#31708f; text-decoration: underline;" target="_new">
-                            Download PDF Form
-                        </apex:outputLink>
-                    </apex:outputPanel>
                 </apex:pageBlockSection>
 
                 <!-- Accept Discalimer -->
-                <apex:pageBlockSection title="Disclaimer" columns="1">
+                <apex:pageBlockSection columns="1">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            Disclaimer
+                        </apex:outputpanel>
+                    </apex:facet>
 
                     <p style="text-align: justify; margin: 1em;">
                         {!$Label.ISSP_SIS_Membership_Disclaimer_Line1}
@@ -366,109 +375,76 @@
 
                 </apex:pageBlockSection>
 
-                <style>
-                    /* modal for Terms and conditions */
-                    .modalBackground {
-                        background-color:grey;
-                        opacity: 0.50;
-                        top: 0;
-                        left: 0;
-                        bottom: 0;
-                        right: 0;
-                        z-index: 100;
-                        position: fixed;
-                    }
-                    .modalPanel {
-                        width: 79em;
-                        top: 10%;
-                        z-index: 101;
-                        position: fixed;
-                        opacity: 1;
-                    }
-                    .modalPanel .apexp {
-                        -webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
-                        -moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
-                        box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
-                    }
-                    .modalPanel .pbBody {
-                        margin: 0px !important;
-                    }
-                    .modalPanel #text-box{
-                        height: 20em;
-                        width: auto;
-                        border: 1px solid #ccc;
-                        overflow: scroll;
-                        margin: 2em 2em auto 1em;
-                        overflow-y: scroll;
-                        overflow-x: hidden;
-                        scrollbar-color: darkgray white;
-                        scrollbar-width: thin;
-                    }
-                </style>
-                <div id="ich-terms-conditions-modal" class="">
-                    <div class="modalBackground"></div>
-                    <div class="modalPanel">
-                        <apex:pageBlock id="contactBlock">
-                            <a class="glyphicon glyphicon-print" href="#" onclick="alert('print')"></a>
-                            <div id="text-box">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eu purus dignissim, scelerisque quam vitae, vehicula quam. Nam non erat ut erat condimentum lacinia et at enim. Pellentesque tincidunt rutrum turpis consectetur fermentum. Curabitur at scelerisque mauris, vel malesuada ligula. Aliquam tortor leo, elementum nec tellus ac, laoreet iaculis velit. Quisque et pulvinar leo. Mauris sed elit rhoncus mi condimentum auctor. Fusce purus turpis, lacinia vel justo sed, vestibulum eleifend est. Donec egestas ipsum ac nunc faucibus, non sodales velit sodales. Suspendisse sapien enim, consequat sit amet felis vehicula, iaculis scelerisque mi. Aenean lorem augue, accumsan vel commodo imperdiet, varius vel eros. Vestibulum sed lorem a lacus scelerisque tempor nec a velit. Fusce ut vulputate tellus, eget fringilla lectus. Integer cursus, leo vitae lobortis gravida, nisi elit lobortis dui, ac feugiat ipsum augue consectetur nulla.
+                <!--  BEGIN Terms and conditions popup -->
+                <apex:outputPanel id="ich-modal" rendered="{!showTermsConditionsPopup}">
+                    <style>
+                        /* modal for Terms and conditions */
+                        .modalBackground {
+                            background-color:grey;
+                            opacity: 0.50;
+                            top: 0;
+                            left: 0;
+                            bottom: 0;
+                            right: 0;
+                            z-index: 100;
+                            position: fixed;
+                        }
+                        .modalPanel {
+                            width: 79em;
+                            top: 10%;
+                            z-index: 101;
+                            position: fixed;
+                            opacity: 1;
+                        }
+                        .modalPanel .apexp {
+                            -webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+                            -moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+                            box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.75);
+                        }
+                        .modalPanel .pbBody {
+                            margin: 0px !important;
+                        }
+                        .modalPanel #text-box{
+                            height: 20em;
+                            width: auto;
+                            border: 1px solid #ccc;
+                            overflow: scroll;
+                            margin: 2em 2em auto 1em;
+                            overflow-y: scroll;
+                            overflow-x: hidden;
+                            scrollbar-color: darkgray white;
+                            scrollbar-width: thin;
+                        }
+                    </style>
+                    <div id="ich-terms-conditions-modal">
+                        <div class="modalBackground"></div>
+                        <div class="modalPanel">
+                            <apex:pageBlock id="contactBlock">
+                                <object
+                                        data="/servlet/servlet.FileDownload?file=0151l000000EPsp"
+                                        style="height:500px; width:98%; margin:10px;"
+                                        type="application/pdf"
+                                        />
+                                <div class="center">
+                                    <apex:outputLabel value="I have read and accept Terms and Conditions" style="padding:1em;"/>
+                                    <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" styleclass="required" style="vertical-align: text-bottom;"/>
+                                </div>
+                            <!-- BUTTON SECTION -->
+                            <apex:pageBlockButtons location="bottom">
+                                <apex:commandButton styleclass="apbutton" action="{!hideTermsConditionsPopup}" value="Cancel" rerender="ich-section" status="WaitingStatus"/>
+                                <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" rerender="ich-modal" status="WaitingStatus"/>
+                            </apex:pageBlockButtons>
 
-                                Phasellus quis tellus lorem. In tincidunt enim eu quam dapibus rutrum. Vivamus nec urna lacus. Nunc faucibus, diam vel dapibus pulvinar, augue tellus mollis nisi, ac porttitor magna orci id lacus. Donec aliquet erat in eros porta, ut tincidunt felis luctus. Cras ullamcorper nec nibh nec pellentesque. Nunc quis dui neque. Donec quam est, cursus a arcu sed, elementum convallis nibh. Nunc hendrerit luctus blandit. Cras sit amet vehicula elit. Cras ut urna sit amet turpis suscipit commodo nec varius nisi. Nulla sed neque nulla. Aliquam vel lorem vitae erat faucibus pulvinar. Sed vel consectetur arcu. Morbi a tincidunt lorem, quis euismod dolor. Suspendisse dapibus neque dolor, et suscipit lorem molestie nec.
-
-                                Nunc non erat semper, varius arcu ac, mollis dui. Proin ipsum nisi, laoreet nec tincidunt ac, malesuada vitae arcu. Integer tempor convallis faucibus. Aliquam sapien felis, fringilla et tortor consectetur, porttitor efficitur lacus. Donec tellus nulla, feugiat ut augue quis, ullamcorper aliquet elit. Nullam commodo, lorem at mollis interdum, est eros eleifend ex, et vulputate quam eros a ante. Fusce laoreet felis ligula, eu gravida nibh elementum sed. Sed varius purus in tristique bibendum.
-
-                                Donec eget sem quis risus volutpat cursus nec in erat. Aliquam bibendum nisi luctus, convallis ex non, aliquam velit. Aliquam ac scelerisque tellus. Sed ut orci scelerisque, ultricies lacus et, egestas nulla. Ut lobortis id arcu porta auctor. Nulla id hendrerit enim. Etiam congue, mi sed volutpat placerat, nisi tortor maximus enim, vel tempus est metus eget velit. Nulla ligula arcu, laoreet id neque nec, cursus interdum mi. Duis at magna arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec felis ante, cursus sit amet posuere id, pretium nec sapien. Integer tristique ligula in lectus eleifend tempor. Donec eget faucibus mauris. Duis sodales lobortis risus, non mollis purus.
-
-                                Fusce tempor tellus sed rhoncus placerat. Nulla volutpat, velit ut tristique tempus, leo erat luctus nibh, a ultricies diam diam ac purus. Ut eget fermentum ante. In dictum tincidunt sapien ut pellentesque. Aliquam ut metus metus. Nunc sodales, mi ac convallis ornare, tellus augue rhoncus neque, mollis molestie velit purus non felis. Nullam quis cursus justo, in aliquet tellus. Donec commodo tincidunt lacus vel posuere. Ut vitae feugiat nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum consequat lorem in fermentum elementum. Phasellus placerat consequat felis id tincidunt. Sed euismod turpis ut nulla mollis, vitae eleifend tellus maximus. 
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eu purus dignissim, scelerisque quam vitae, vehicula quam. Nam non erat ut erat condimentum lacinia et at enim. Pellentesque tincidunt rutrum turpis consectetur fermentum. Curabitur at scelerisque mauris, vel malesuada ligula. Aliquam tortor leo, elementum nec tellus ac, laoreet iaculis velit. Quisque et pulvinar leo. Mauris sed elit rhoncus mi condimentum auctor. Fusce purus turpis, lacinia vel justo sed, vestibulum eleifend est. Donec egestas ipsum ac nunc faucibus, non sodales velit sodales. Suspendisse sapien enim, consequat sit amet felis vehicula, iaculis scelerisque mi. Aenean lorem augue, accumsan vel commodo imperdiet, varius vel eros. Vestibulum sed lorem a lacus scelerisque tempor nec a velit. Fusce ut vulputate tellus, eget fringilla lectus. Integer cursus, leo vitae lobortis gravida, nisi elit lobortis dui, ac feugiat ipsum augue consectetur nulla.
-
-                                Phasellus quis tellus lorem. In tincidunt enim eu quam dapibus rutrum. Vivamus nec urna lacus. Nunc faucibus, diam vel dapibus pulvinar, augue tellus mollis nisi, ac porttitor magna orci id lacus. Donec aliquet erat in eros porta, ut tincidunt felis luctus. Cras ullamcorper nec nibh nec pellentesque. Nunc quis dui neque. Donec quam est, cursus a arcu sed, elementum convallis nibh. Nunc hendrerit luctus blandit. Cras sit amet vehicula elit. Cras ut urna sit amet turpis suscipit commodo nec varius nisi. Nulla sed neque nulla. Aliquam vel lorem vitae erat faucibus pulvinar. Sed vel consectetur arcu. Morbi a tincidunt lorem, quis euismod dolor. Suspendisse dapibus neque dolor, et suscipit lorem molestie nec.
-
-                                Nunc non erat semper, varius arcu ac, mollis dui. Proin ipsum nisi, laoreet nec tincidunt ac, malesuada vitae arcu. Integer tempor convallis faucibus. Aliquam sapien felis, fringilla et tortor consectetur, porttitor efficitur lacus. Donec tellus nulla, feugiat ut augue quis, ullamcorper aliquet elit. Nullam commodo, lorem at mollis interdum, est eros eleifend ex, et vulputate quam eros a ante. Fusce laoreet felis ligula, eu gravida nibh elementum sed. Sed varius purus in tristique bibendum.
-
-                                Donec eget sem quis risus volutpat cursus nec in erat. Aliquam bibendum nisi luctus, convallis ex non, aliquam velit. Aliquam ac scelerisque tellus. Sed ut orci scelerisque, ultricies lacus et, egestas nulla. Ut lobortis id arcu porta auctor. Nulla id hendrerit enim. Etiam congue, mi sed volutpat placerat, nisi tortor maximus enim, vel tempus est metus eget velit. Nulla ligula arcu, laoreet id neque nec, cursus interdum mi. Duis at magna arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec felis ante, cursus sit amet posuere id, pretium nec sapien. Integer tristique ligula in lectus eleifend tempor. Donec eget faucibus mauris. Duis sodales lobortis risus, non mollis purus.
-
-                                Fusce tempor tellus sed rhoncus placerat. Nulla volutpat, velit ut tristique tempus, leo erat luctus nibh, a ultricies diam diam ac purus. Ut eget fermentum ante. In dictum tincidunt sapien ut pellentesque. Aliquam ut metus metus. Nunc sodales, mi ac convallis ornare, tellus augue rhoncus neque, mollis molestie velit purus non felis. Nullam quis cursus justo, in aliquet tellus. Donec commodo tincidunt lacus vel posuere. Ut vitae feugiat nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum consequat lorem in fermentum elementum. Phasellus placerat consequat felis id tincidunt. Sed euismod turpis ut nulla mollis, vitae eleifend tellus maximus.                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eu purus dignissim, scelerisque quam vitae, vehicula quam. Nam non erat ut erat condimentum lacinia et at enim. Pellentesque tincidunt rutrum turpis consectetur fermentum. Curabitur at scelerisque mauris, vel malesuada ligula. Aliquam tortor leo, elementum nec tellus ac, laoreet iaculis velit. Quisque et pulvinar leo. Mauris sed elit rhoncus mi condimentum auctor. Fusce purus turpis, lacinia vel justo sed, vestibulum eleifend est. Donec egestas ipsum ac nunc faucibus, non sodales velit sodales. Suspendisse sapien enim, consequat sit amet felis vehicula, iaculis scelerisque mi. Aenean lorem augue, accumsan vel commodo imperdiet, varius vel eros. Vestibulum sed lorem a lacus scelerisque tempor nec a velit. Fusce ut vulputate tellus, eget fringilla lectus. Integer cursus, leo vitae lobortis gravida, nisi elit lobortis dui, ac feugiat ipsum augue consectetur nulla.
-
-                                Phasellus quis tellus lorem. In tincidunt enim eu quam dapibus rutrum. Vivamus nec urna lacus. Nunc faucibus, diam vel dapibus pulvinar, augue tellus mollis nisi, ac porttitor magna orci id lacus. Donec aliquet erat in eros porta, ut tincidunt felis luctus. Cras ullamcorper nec nibh nec pellentesque. Nunc quis dui neque. Donec quam est, cursus a arcu sed, elementum convallis nibh. Nunc hendrerit luctus blandit. Cras sit amet vehicula elit. Cras ut urna sit amet turpis suscipit commodo nec varius nisi. Nulla sed neque nulla. Aliquam vel lorem vitae erat faucibus pulvinar. Sed vel consectetur arcu. Morbi a tincidunt lorem, quis euismod dolor. Suspendisse dapibus neque dolor, et suscipit lorem molestie nec.
-
-                                Nunc non erat semper, varius arcu ac, mollis dui. Proin ipsum nisi, laoreet nec tincidunt ac, malesuada vitae arcu. Integer tempor convallis faucibus. Aliquam sapien felis, fringilla et tortor consectetur, porttitor efficitur lacus. Donec tellus nulla, feugiat ut augue quis, ullamcorper aliquet elit. Nullam commodo, lorem at mollis interdum, est eros eleifend ex, et vulputate quam eros a ante. Fusce laoreet felis ligula, eu gravida nibh elementum sed. Sed varius purus in tristique bibendum.
-
-                                Donec eget sem quis risus volutpat cursus nec in erat. Aliquam bibendum nisi luctus, convallis ex non, aliquam velit. Aliquam ac scelerisque tellus. Sed ut orci scelerisque, ultricies lacus et, egestas nulla. Ut lobortis id arcu porta auctor. Nulla id hendrerit enim. Etiam congue, mi sed volutpat placerat, nisi tortor maximus enim, vel tempus est metus eget velit. Nulla ligula arcu, laoreet id neque nec, cursus interdum mi. Duis at magna arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec felis ante, cursus sit amet posuere id, pretium nec sapien. Integer tristique ligula in lectus eleifend tempor. Donec eget faucibus mauris. Duis sodales lobortis risus, non mollis purus.
-
-                                Fusce tempor tellus sed rhoncus placerat. Nulla volutpat, velit ut tristique tempus, leo erat luctus nibh, a ultricies diam diam ac purus. Ut eget fermentum ante. In dictum tincidunt sapien ut pellentesque. Aliquam ut metus metus. Nunc sodales, mi ac convallis ornare, tellus augue rhoncus neque, mollis molestie velit purus non felis. Nullam quis cursus justo, in aliquet tellus. Donec commodo tincidunt lacus vel posuere. Ut vitae feugiat nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum consequat lorem in fermentum elementum. Phasellus placerat consequat felis id tincidunt. Sed euismod turpis ut nulla mollis, vitae eleifend tellus maximus.                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eu purus dignissim, scelerisque quam vitae, vehicula quam. Nam non erat ut erat condimentum lacinia et at enim. Pellentesque tincidunt rutrum turpis consectetur fermentum. Curabitur at scelerisque mauris, vel malesuada ligula. Aliquam tortor leo, elementum nec tellus ac, laoreet iaculis velit. Quisque et pulvinar leo. Mauris sed elit rhoncus mi condimentum auctor. Fusce purus turpis, lacinia vel justo sed, vestibulum eleifend est. Donec egestas ipsum ac nunc faucibus, non sodales velit sodales. Suspendisse sapien enim, consequat sit amet felis vehicula, iaculis scelerisque mi. Aenean lorem augue, accumsan vel commodo imperdiet, varius vel eros. Vestibulum sed lorem a lacus scelerisque tempor nec a velit. Fusce ut vulputate tellus, eget fringilla lectus. Integer cursus, leo vitae lobortis gravida, nisi elit lobortis dui, ac feugiat ipsum augue consectetur nulla.
-
-                                Phasellus quis tellus lorem. In tincidunt enim eu quam dapibus rutrum. Vivamus nec urna lacus. Nunc faucibus, diam vel dapibus pulvinar, augue tellus mollis nisi, ac porttitor magna orci id lacus. Donec aliquet erat in eros porta, ut tincidunt felis luctus. Cras ullamcorper nec nibh nec pellentesque. Nunc quis dui neque. Donec quam est, cursus a arcu sed, elementum convallis nibh. Nunc hendrerit luctus blandit. Cras sit amet vehicula elit. Cras ut urna sit amet turpis suscipit commodo nec varius nisi. Nulla sed neque nulla. Aliquam vel lorem vitae erat faucibus pulvinar. Sed vel consectetur arcu. Morbi a tincidunt lorem, quis euismod dolor. Suspendisse dapibus neque dolor, et suscipit lorem molestie nec.
-
-                                Nunc non erat semper, varius arcu ac, mollis dui. Proin ipsum nisi, laoreet nec tincidunt ac, malesuada vitae arcu. Integer tempor convallis faucibus. Aliquam sapien felis, fringilla et tortor consectetur, porttitor efficitur lacus. Donec tellus nulla, feugiat ut augue quis, ullamcorper aliquet elit. Nullam commodo, lorem at mollis interdum, est eros eleifend ex, et vulputate quam eros a ante. Fusce laoreet felis ligula, eu gravida nibh elementum sed. Sed varius purus in tristique bibendum.
-
-                                Donec eget sem quis risus volutpat cursus nec in erat. Aliquam bibendum nisi luctus, convallis ex non, aliquam velit. Aliquam ac scelerisque tellus. Sed ut orci scelerisque, ultricies lacus et, egestas nulla. Ut lobortis id arcu porta auctor. Nulla id hendrerit enim. Etiam congue, mi sed volutpat placerat, nisi tortor maximus enim, vel tempus est metus eget velit. Nulla ligula arcu, laoreet id neque nec, cursus interdum mi. Duis at magna arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec felis ante, cursus sit amet posuere id, pretium nec sapien. Integer tristique ligula in lectus eleifend tempor. Donec eget faucibus mauris. Duis sodales lobortis risus, non mollis purus.
-
-                                Fusce tempor tellus sed rhoncus placerat. Nulla volutpat, velit ut tristique tempus, leo erat luctus nibh, a ultricies diam diam ac purus. Ut eget fermentum ante. In dictum tincidunt sapien ut pellentesque. Aliquam ut metus metus. Nunc sodales, mi ac convallis ornare, tellus augue rhoncus neque, mollis molestie velit purus non felis. Nullam quis cursus justo, in aliquet tellus. Donec commodo tincidunt lacus vel posuere. Ut vitae feugiat nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum consequat lorem in fermentum elementum. Phasellus placerat consequat felis id tincidunt. Sed euismod turpis ut nulla mollis, vitae eleifend tellus maximus.                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eu purus dignissim, scelerisque quam vitae, vehicula quam. Nam non erat ut erat condimentum lacinia et at enim. Pellentesque tincidunt rutrum turpis consectetur fermentum. Curabitur at scelerisque mauris, vel malesuada ligula. Aliquam tortor leo, elementum nec tellus ac, laoreet iaculis velit. Quisque et pulvinar leo. Mauris sed elit rhoncus mi condimentum auctor. Fusce purus turpis, lacinia vel justo sed, vestibulum eleifend est. Donec egestas ipsum ac nunc faucibus, non sodales velit sodales. Suspendisse sapien enim, consequat sit amet felis vehicula, iaculis scelerisque mi. Aenean lorem augue, accumsan vel commodo imperdiet, varius vel eros. Vestibulum sed lorem a lacus scelerisque tempor nec a velit. Fusce ut vulputate tellus, eget fringilla lectus. Integer cursus, leo vitae lobortis gravida, nisi elit lobortis dui, ac feugiat ipsum augue consectetur nulla.
-
-                                Phasellus quis tellus lorem. In tincidunt enim eu quam dapibus rutrum. Vivamus nec urna lacus. Nunc faucibus, diam vel dapibus pulvinar, augue tellus mollis nisi, ac porttitor magna orci id lacus. Donec aliquet erat in eros porta, ut tincidunt felis luctus. Cras ullamcorper nec nibh nec pellentesque. Nunc quis dui neque. Donec quam est, cursus a arcu sed, elementum convallis nibh. Nunc hendrerit luctus blandit. Cras sit amet vehicula elit. Cras ut urna sit amet turpis suscipit commodo nec varius nisi. Nulla sed neque nulla. Aliquam vel lorem vitae erat faucibus pulvinar. Sed vel consectetur arcu. Morbi a tincidunt lorem, quis euismod dolor. Suspendisse dapibus neque dolor, et suscipit lorem molestie nec.
-
-                                Nunc non erat semper, varius arcu ac, mollis dui. Proin ipsum nisi, laoreet nec tincidunt ac, malesuada vitae arcu. Integer tempor convallis faucibus. Aliquam sapien felis, fringilla et tortor consectetur, porttitor efficitur lacus. Donec tellus nulla, feugiat ut augue quis, ullamcorper aliquet elit. Nullam commodo, lorem at mollis interdum, est eros eleifend ex, et vulputate quam eros a ante. Fusce laoreet felis ligula, eu gravida nibh elementum sed. Sed varius purus in tristique bibendum.
-
-                                Donec eget sem quis risus volutpat cursus nec in erat. Aliquam bibendum nisi luctus, convallis ex non, aliquam velit. Aliquam ac scelerisque tellus. Sed ut orci scelerisque, ultricies lacus et, egestas nulla. Ut lobortis id arcu porta auctor. Nulla id hendrerit enim. Etiam congue, mi sed volutpat placerat, nisi tortor maximus enim, vel tempus est metus eget velit. Nulla ligula arcu, laoreet id neque nec, cursus interdum mi. Duis at magna arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec felis ante, cursus sit amet posuere id, pretium nec sapien. Integer tristique ligula in lectus eleifend tempor. Donec eget faucibus mauris. Duis sodales lobortis risus, non mollis purus.
-
-                                Fusce tempor tellus sed rhoncus placerat. Nulla volutpat, velit ut tristique tempus, leo erat luctus nibh, a ultricies diam diam ac purus. Ut eget fermentum ante. In dictum tincidunt sapien ut pellentesque. Aliquam ut metus metus. Nunc sodales, mi ac convallis ornare, tellus augue rhoncus neque, mollis molestie velit purus non felis. Nullam quis cursus justo, in aliquet tellus. Donec commodo tincidunt lacus vel posuere. Ut vitae feugiat nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum consequat lorem in fermentum elementum. Phasellus placerat consequat felis id tincidunt. Sed euismod turpis ut nulla mollis, vitae eleifend tellus maximus. 
-                            </div>
-                            <div class="center">
-                                <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Accept_terms_and_conditions__c.label}" style="padding:1em;"/>
-                                <apex:inputCheckbox value="{!newForm.Accept_terms_and_conditions__c}" required="true" styleclass="required" style="vertical-align: text-bottom;"/>
-                            </div>
-                        <!-- BUTTON SECTION -->
-                        <apex:pageBlockButtons location="bottom">
-                            <input type="button" class="apbutton btn" value="Cancel" onclick="hideICHTerms();"/>
-                            <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA"/>
-                        </apex:pageBlockButtons>
-
-                        </apex:pageBlock>
+                            </apex:pageBlock>
+                        </div>
                     </div>
-                </div>
+                    <script>$(".panel-primary input.required").prop('required',true);</script>
+                </apex:outputPanel>
+                <!--  END Terms and conditions popup -->
 
+                <script>$(".panel-primary input.required").prop('required',true);</script>
             </apex:outputPanel>
+            <!-- END ICH Submit section -->
 
         </apex:pageBlock>
     </apex:form>
