@@ -25,7 +25,7 @@
                         <template for:each={fields} for:item="field">
                             <template if:true={field.isAccessibility}>
                                 <span key={field.fieldName}
-                                      class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                                     <span class="specialLabel">
                                         {field.fieldName}
                                     </span>
@@ -35,15 +35,15 @@
                                 </span>
 
                                 <div key={field.fieldName}
-                                     class="specialLabel slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                    class="specialLabel slds-col slds-size_1-of-1 slds-m-bottom_medium">
                                     {labels.ServicesTitle}
                                 </div>
                                 <template for:each={services} for:item="service">
                                     <div key={service.recordService.ServiceName__c}
-                                         class="text-xsmall slds-m-left_medium slds-size_1-of-1">
+                                        class="text-xsmall slds-m-left_medium slds-size_1-of-1">
                                         <a class="text-blue" onclick={navigateTo}
-                                           data-url={service.recordService.Application_URL__c}
-                                           data-id={service.recordService.Id}>
+                                            data-url={service.recordService.Application_URL__c}
+                                            data-id={service.recordService.Id}>
                                             {service.recordService.ServiceName__c}
                                         </a>
                                     </div>
@@ -51,56 +51,57 @@
                             </template>
 
                             <template if:true={field.isContactServices}>
-                                <div key={field.fieldName} class=" slds-col slds-size_1-of-1 slds-large-size_1-of-2 labelValue">
-                                <div
-                                     class="slds-form-element__label">
-                                    {labels.ServicesTitle}
-                                </div>
+                                <div key={field.fieldName}
+                                    class=" slds-col slds-size_1-of-1 slds-large-size_1-of-2 labelValue">
+                                    <div class="slds-form-element__label">
+                                        {labels.ServicesTitle}
+                                    </div>
 
-                                <template for:each={staticFields.services} for:item="service">
-                                    <div key={service.recordService.Name}
-                                         class="text-xsmall">
-                                        <a class="text-blue" onclick={navigateTo}
-                                           data-url={service.recordService.Application_URL__c}
-                                           data-id={service.recordService.Id}>
-                                            {service.recordService.Name}
-                                        </a>
-                                    </div>
-                                </template>
-                                    </div>
+                                    <template for:each={staticFields.services} for:item="service">
+                                        <div key={service.recordService.Name} class="text-xsmall">
+                                            <a class="text-blue" onclick={navigateTo}
+                                                data-url={service.recordService.Application_URL__c}
+                                                data-id={service.recordService.Id}>
+                                                {service.recordService.Name}
+                                            </a>
+                                        </div>
+                                    </template>
+                                </div>
                             </template>
 
                             <template if:false={field.isAccessibility}>
                                 <template if:false={field.isContactServices}>
-                                <span key={field.fieldName}
-                                      class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <div if:true={field.visible}>
-                                        <template if:false={field.changeUserStatus}>
-                                            <lightning-output-field class="labelValue textValue"
-                                                field-name={field.fieldName}>
-                                            </lightning-output-field>
-                                        </template>
+                                    <span key={field.fieldName}
+                                        class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                        <div if:true={field.visible}>
+                                            <template if:false={field.changeUserStatus}>
+                                                <lightning-output-field class="labelValue textValue"
+                                                    field-name={field.fieldName}>
+                                                </lightning-output-field>
+                                            </template>
 
-                                        <template if:true={field.changeUserStatus}>
-                                            <div class="changeUserStatus">
-                                            <lightning-output-field class="labelValue textValue"
-                                                                    field-name={field.fieldName}>
-                                            </lightning-output-field>
-                                                <span class="changeUserStatusButton">
-                                                    <lightning-icon icon-name="utility:custom_apps" size="x-small"
-                                                        class="darkBlueIcon cursorPointer"
-                                                        onclick={openChangeUserPortalStatus}>
-                                                    </lightning-icon>
-                                                </span>
+                                            <template if:true={field.changeUserStatus}>
+                                                <div class="changeUserStatus">
+                                                    <lightning-output-field class="labelValue textValue"
+                                                        field-name={field.fieldName}>
+                                                    </lightning-output-field>
+                                                    <template if:false={isForEdit}>
+                                                        <span class="changeUserStatusButton">
+                                                            <lightning-icon icon-name="utility:custom_apps"
+                                                                size="x-small" class="darkBlueIcon cursorPointer"
+                                                                onclick={openChangeUserPortalStatus}>
+                                                            </lightning-icon>
+                                                        </span>
+                                                    </template>
+                                                </div>
 
-                                            </div>
-
-                                        </template>
+                                            </template>
 
 
 
-                                    </div>
-                                </span>
+                                        </div>
+                                    </span>
+                                </template>
                             </template>
                         </template>
                     </div>
