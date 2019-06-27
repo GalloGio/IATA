@@ -45,10 +45,11 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     }
     public String agencyType {
         get {
-            return agencyType == null ? 'Domestic' : agencyType;
+            return agencyType == null ? '' : agencyType;
         } 
         set;
     }
+    public Boolean isChinaAgent {get; set;}
 
     //Check is the user has access to this service
     public static Boolean isAllowedAccess() {
@@ -173,6 +174,14 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                 amsOfficeType = 'Branch';
             } else {
                 amsOfficeType = 'HO';    
+            }
+
+            if (agencyType == '' && isHOAccredited) {
+                if (user.contact.Account.Category__c == 'Domestic Agent') {
+                    agencyType = 'Domestic';
+                } else if (user.contact.Account.Category__c == 'IATA Passenger Sales Agent') {
+                    agencyType = 'International';
+                }
             }
 
             if(user.contact.Account.IATA_ISO_Country__r.ISO_Code__c != null) {
