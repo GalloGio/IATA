@@ -614,7 +614,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
             //this.testfunction();
             this.branchesQuery = this.searchTextBranches;
             this.searchRecords('Account');
-            if (this.searchTextBranches.length > 0) {
 
         }, 500, this);
 
