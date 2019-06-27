@@ -11,6 +11,8 @@
 }
 
 .fieldValue {
+  word-break: break-all;
+  white-space: normal;
   height: 26px;
   font-family: AktivGrotesk;
   font-size: 16px;
