@@ -336,6 +336,7 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
 	return lstToReturn;
 }
 
+    @AuraEnabled
     public static Map<Id,List<ServiceWrapper>> getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds){
 
         Map<Id,List<ServiceWrapper>> contactToServices = new Map<Id,List<ServiceWrapper>>();
