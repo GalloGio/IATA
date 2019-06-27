@@ -38,13 +38,13 @@ import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDet
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
+import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 
 // Access control methods
 import getPortalAdmins from '@salesforce/apex/PortalServicesCtrl.getPortalAdmins';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
 
-import { updateRecord } from 'lightning/uiRecordApi';
 
 
 
@@ -425,17 +425,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let recordId = serviceAux.Id;
 
         // update Last Visit Date on record
-        // Create the recordInput object
-        const fields = {};
-        fields.Id = recordId;
-        fields.Last_Visit_Date__c = new Date().toISOString();
-        const recordInput = { fields };
-
-        updateRecord(recordInput)
-            .then(() => {
-                //no user feedback required
-                console.info('Updated Last Visit Date successfully!');
-            });
+        updateLastModifiedService({ serviceId: recordId })
 
         let myUrl = appFullUrlData;
 
