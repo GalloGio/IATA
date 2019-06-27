@@ -14,7 +14,8 @@ public class portalServiceException extends Exception {}
 @AuraEnabled (cacheable=true)
 public static List<Portal_Applications__c> getNonRequestableServicesList(String contactId){
 
-	Contact con = [Select id, account.Sector__c, contact.account.Category__c from Contact where id =:contactId];
+	Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO', 'GE'};
+	Contact con = [Select id, account.Sector__c, account.Location_Type__c, contact.account.Category__c from Contact where id =:contactId];
 
 	List<Portal_Applications__c> externalLinksList = new List<Portal_Applications__c>();
 	List<Portal_Applications__c> portalApplicationList = new List<Portal_Applications__c>();
@@ -48,7 +49,7 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 		if (pApp.Name == 'Insurance Providers') {
 			if (((con.Account.Sector__c == 'Travel Agent' || con.Account.Sector__c == 'Cargo Agent')
 			     && con.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) &&
-			    (con.Account.Is_Branch_Abroad__c == 'Yes') &&
+			    (allowedLocTypes.contains(con.Account.Location_Type__c) || con.Account.Is_Branch_Abroad__c == 'Yes') &&
 			    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(con.Account.Status__c) || con.Account.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
 			    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == 'Approved Admin')) {
 				externalLinksList.add(pApp);
