@@ -66,8 +66,8 @@ global with sharing class ProvisionKaviAccess {
     
     public static Account IATASSWAccount{
         get{
-            if(IATASSWAccountId == null) IATASSWAccount = new FakeAccount().acc;
-            return IATASSWAccountId;
+            if(IATASSWAccount == null) IATASSWAccount = new FakeAccount().acc;
+            return IATASSWAccount;
         }
         private set;
     }
@@ -83,7 +83,7 @@ global with sharing class ProvisionKaviAccess {
                 Account a = new Account();
                 a.Name = 'IATA SSW ACCOUNT';
                 a.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-                insert a
+                insert a;
                 
                 this.acc = a;
             }
