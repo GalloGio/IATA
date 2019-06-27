@@ -1,0 +1,66 @@
+<apex:component >
+    <apex:attribute name="step" description="This the current step number that will be highlighted" type="Integer" required="true"/>
+    <apex:attribute name="operationType" description="Operation Type can be BSP, CASS, PASS or ICH" type="String" required="true"/>
+    <apex:attribute name="areaType" description="Area Type can be Airline Joining or Joining Form" type="String" required="true"/>
+    <apex:attribute name="changeType" description="Change Type can be Minor database changes or Change Request" type="String" required="true"/>
+    <apex:attribute name="isSIS" description="used for operationType=ICH only" type="Boolean" required="false" default="false"/>
+
+<style>
+    .progress .progress-bar-off {
+        color:#6BBBEA;
+        font-weight:bold;
+        background-image:none !important;
+        background-color:transparent !important;
+        border-right:2px solid white;
+    } 
+</style>
+
+    <!-- BSP -->
+    <apex:outputPanel layout="block" styleclass="progress" rendered="{!operationType=='BSP'}">
+        <div class="progress-bar {!IF(step==1,'','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            A. Participation Country &amp; Type
+        </div>
+        <div class="progress-bar {!IF(step==2,'','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            B. Review Country Requirements
+        </div>
+        <div class="progress-bar {!IF(step==3,'','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            C. BSP {!IF(areaType=='Airline Joining', 'Joining Form', IF(changeType=='Minor database changes','Change Request','Bank details change'))}
+        </div>
+        <div class="progress-bar {!IF(step==4,'','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            D. Submit to IATA
+        </div>
+    </apex:outputPanel>
+
+    <!-- CASS -->
+    <apex:outputPanel layout="block" styleclass="progress" rendered="{!operationType=='CASS'}">
+        <div class="progress-bar {!IF(step==1,'','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            A. Participation Country &amp; Type
+        </div>
+        <div class="progress-bar {!IF(step==2,'','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            B. Review Country Requirements
+        </div>
+        <div class="progress-bar {!IF(step==3,'','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            C. CASS {!IF(areaType=='Airline Joining', 'Joining Form', IF(changeType=='Minor database changes','Change Request','Bank details change'))}
+        </div>
+        <div class="progress-bar {!IF(step==4,'','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            D. Submit to IATA
+        </div>
+    </apex:outputPanel>
+
+        <!-- ICH -->
+    <apex:outputPanel layout="block" styleclass="progress" rendered="{!operationType=='ICH'}">
+        <div class="progress-bar {!IF(step==1,'','progress-bar-off')}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            A. Participation type
+        </div>
+        <div class="progress-bar {!IF(step==2,'','progress-bar-off')}" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            B. Review Requirements
+        </div>
+        <div class="progress-bar {!IF(step==3,'','progress-bar-off')}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            C. {!IF(isSIS, 'SIS & ICH Online Application', 'ICH Application')}
+        </div>
+        <div class="progress-bar {!IF(step==4,'','progress-bar-off')}" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            D. Support documents and Submit to IATA
+        </div>
+    </apex:outputPanel>
+
+</apex:component>

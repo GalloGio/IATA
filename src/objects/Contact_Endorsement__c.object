@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Helper object to store temporary information about contacts</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>AP_Process_Form__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Parent relation to object AP Process Form</description>
+        <externalId>false</externalId>
+        <label>AP Process Form</label>
+        <referenceTo>AP_Process_Form__c</referenceTo>
+        <relationshipLabel>Contact Endorsements</relationshipLabel>
+        <relationshipName>Contact_Endorsements</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <description>Email Address</description>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fax__c</fullName>
+        <description>Fax Number</description>
+        <externalId>false</externalId>
+        <label>Fax</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <description>First Name</description>
+        <externalId>false</externalId>
+        <label>First Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Name__c</fullName>
+        <description>Last Name</description>
+        <externalId>false</externalId>
+        <label>Last Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mobile_Phone__c</fullName>
+        <description>Mobile Phone Number</description>
+        <externalId>false</externalId>
+        <label>Mobile Phone</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Phone__c</fullName>
+        <description>Main Phone Number</description>
+        <externalId>false</externalId>
+        <label>Phone</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Position__c</fullName>
+        <description>Job position</description>
+        <externalId>false</externalId>
+        <label>Position</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>SIS Super User</fullName>
+                    <default>false</default>
+                    <label>SIS Super User</label>
+                </value>
+                <value>
+                    <fullName>ICH Primary Contact</fullName>
+                    <default>false</default>
+                    <label>ICH Primary Contact</label>
+                </value>
+                <value>
+                    <fullName>ICH Financial Contact</fullName>
+                    <default>false</default>
+                    <label>ICH Financial Contact</label>
+                </value>
+                <value>
+                    <fullName>ICH Advise Contact</fullName>
+                    <default>false</default>
+                    <label>ICH Advise Contact</label>
+                </value>
+                <value>
+                    <fullName>ICH Clean Confirmation Contact</fullName>
+                    <default>false</default>
+                    <label>ICH Clean Confirmation Contact</label>
+                </value>
+                <value>
+                    <fullName>ICH Clean Initialization Contact</fullName>
+                    <default>false</default>
+                    <label>ICH Clean Initialization Contact</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Salutation__c</fullName>
+        <description>Salutation</description>
+        <externalId>false</externalId>
+        <label>Salutation</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Mr</fullName>
+                    <default>false</default>
+                    <label>Mr</label>
+                </value>
+                <value>
+                    <fullName>Mrs</fullName>
+                    <default>false</default>
+                    <label>Mrs</label>
+                </value>
+                <value>
+                    <fullName>Miss</fullName>
+                    <default>false</default>
+                    <label>Miss</label>
+                </value>
+                <value>
+                    <fullName>Ms</fullName>
+                    <default>false</default>
+                    <label>Ms</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Contact Endorsement</label>
+    <nameField>
+        <displayFormat>CE-{00000000}</displayFormat>
+        <label>Contact Endorsement Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Contact Endorsements</pluralLabel>
+    <recordTypes>
+        <fullName>Person</fullName>
+        <active>true</active>
+        <description>Generic RT used for regular contacts</description>
+        <label>Person</label>
+        <picklistValues>
+            <picklist>Position__c</picklist>
+            <values>
+                <fullName>ICH Advise Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH Clean Confirmation Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH Clean Initialization Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH Financial Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH Primary Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS Super User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Salutation__c</picklist>
+            <values>
+                <fullName>Miss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

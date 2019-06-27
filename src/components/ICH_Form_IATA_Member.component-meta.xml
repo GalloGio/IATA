@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>46.0</apiVersion>
+    <description>ICH joining form for the IATA Member participation type</description>
+    <label>ICH Form IATA Member</label>
+</ApexComponent>

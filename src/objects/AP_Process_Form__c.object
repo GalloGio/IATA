@@ -1859,6 +1859,17 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Company_Email__c</fullName>
+        <description>Email field for company information required in some joining forms</description>
+        <externalId>false</externalId>
+        <label>Company Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Company_Registration_ID__c</fullName>
         <description>Used for SIS Recordtypes</description>
         <externalId>false</externalId>
@@ -2208,6 +2219,26 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <fullName>Desired_commencment_date__c</fullName>
         <externalId>false</externalId>
         <label>Desired commencment date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Desired_date_to_start_in_ICH__c</fullName>
+        <description>Desired date to start in ICH</description>
+        <externalId>false</externalId>
+        <label>Desired date to start in ICH</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Desired_date_to_start_in_SIS__c</fullName>
+        <description>Desired date to start in SIS</description>
+        <externalId>false</externalId>
+        <label>Desired date to start in SIS</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2971,6 +3002,77 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </valueSet>
     </fields>
     <fields>
+        <fullName>ICH_Currency_of_Clearance__c</fullName>
+        <externalId>false</externalId>
+        <label>ICH Currency of Clearance</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>GBP Currency of Clearance (Zone A)</label>
+                </value>
+                <value>
+                    <fullName>B</fullName>
+                    <default>false</default>
+                    <label>USD Currency of Clearance (Zone B)</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>EUR Currency of Clearance (Zone D)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ICH_Currency_of_Settlement__c</fullName>
+        <description>Currency of Settlement for ICH Joining Forms. It can be: GBP, USD, EUR, or a combination</description>
+        <externalId>false</externalId>
+        <label>ICH Currency of Settlement</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GBP</fullName>
+                    <default>false</default>
+                    <label>Entirely in GBP</label>
+                </value>
+                <value>
+                    <fullName>USD</fullName>
+                    <default>false</default>
+                    <label>Entirely in USD</label>
+                </value>
+                <value>
+                    <fullName>GBP-USD</fullName>
+                    <default>false</default>
+                    <label>In GBP with respect to balance with other Zone A members and in USD with respect to all other zones</label>
+                </value>
+                <value>
+                    <fullName>EUR</fullName>
+                    <default>false</default>
+                    <label>Entirely in EUR</label>
+                </value>
+                <value>
+                    <fullName>EUR-USD</fullName>
+                    <default>false</default>
+                    <label>In EUR and USD</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>IINET_account_number__c</fullName>
         <description>What BSPlink access level does your Airline require?</description>
         <externalId>false</externalId>
@@ -3016,6 +3118,32 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <label>Is company subject to EU laws?</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Is_publicly_traded_company__c</fullName>
+        <description>Is your company a publicly traded company?</description>
+        <externalId>false</externalId>
+        <label>Is publicly traded company</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -3598,6 +3726,18 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Stock_Exchange_Name__c</fullName>
+        <description>Confirm on which stock exchange the company is listed</description>
+        <externalId>false</externalId>
+        <label>Stock Exchange Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Submitted_to_IATA__c</fullName>

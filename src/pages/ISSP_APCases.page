@@ -183,7 +183,7 @@
 
 	<div class="container">
     <c:ISSP_CustomNavigation />
-    <h3>Airline Participation</h3>
+    <h3>{!app.ServiceName__c}</h3>
     <p/>
       <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
     <p/>
