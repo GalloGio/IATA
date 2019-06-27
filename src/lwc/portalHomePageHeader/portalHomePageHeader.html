@@ -6,7 +6,12 @@
             <c-portal-page-container>
                 <span slot="componentContent">
                     <div class="text-white text-xlarge text-bold titlePadding">
-                        {label.CSP_Home_WelcomeTitle}
+                        <div if:true={loadingGreeting} class="componentLoadingSpinner">
+                            <lightning-spinner alternative-text="Loading" size="small" variant="inverse"></lightning-spinner>
+                        </div>
+                        <div if:false={loadingGreeting}>
+                            {greetinglabel} &nbsp;
+                        </div>
                     </div>
 
                     <div class="slds-p-vertical_small">
