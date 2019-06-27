@@ -264,6 +264,9 @@
         <fields>Input_Requested_Date__c</fields>
         <relatedList>Airline_Input__c.Parent_Case__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedTeamMemberList</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>

@@ -206,7 +206,7 @@ if (ApexPages.currentPage().getParameters().get('type') == 'AirlineChargesUpdate
             system.debug('basto1p - isToShowFAQs='+resVal+'; isTopicDefault='+isTopicDefault+'; topic='+topic);
             //RN-INC451479
             if(topic.contains('-- Select --')){
-                topic = '0';
+                this.topic = '';
             }
             return resVal;
         }
@@ -1182,6 +1182,9 @@ if(ApexPages.currentPage() != null){
 		//System.debug('### WMO356 ### Topic: ' + topic);
 		//System.debug('### WMO356 ### Topic Label: ' + topiclabel);
 		
+        if(!topic.isNumeric()){
+            topic = '0';
+        }
 		Integer index = Integer.valueOf(topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 		System.debug(selectDataCategory);
@@ -2325,6 +2328,7 @@ if(ApexPages.currentPage() != null){
 
     public void refreshTopicPickList()
     {
+        showCallUsButton = false;
         System.debug('basto1p - refreshTopicPickList myTopic='+myTopic);
         system.debug('JK22 isComplain refreshTopicPickList START: ' + isComplain);
         resetCase();
@@ -2931,6 +2935,7 @@ if(ApexPages.currentPage() != null){
         //bypass for button per Topic
         if(TopicToLiveAgentButtonSettingMap.containsKey(topicLabel)){
             this.setButtonForTopic(topicLabel);
+            this.getAndSetCallUsString();
         } else {
         this.setLiveAgentButtonsNames();
     }
@@ -3525,6 +3530,7 @@ if(ApexPages.currentPage() != null){
         //bypass for button per Topic
         if(TopicToLiveAgentButtonSettingMap.containsKey(topicLabel)){
             setButtonForTopic(topicLabel);
+            this.getAndSetCallUsString();
         }else {
         setLiveAgentButtonsNames();
         }

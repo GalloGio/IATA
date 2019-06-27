@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Atom__c</fullName>
         <description>Will Allow to segregate the File Production. Selection of option 0 will deactivate the production of the file.</description>

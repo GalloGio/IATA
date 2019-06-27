@@ -1,5 +1,28 @@
 global class IDFS_Util
 {
+
+    private static map<String, String> mapFromEmailPerRTKey{
+        get{
+            if(mapFromEmailPerRTKey==null){
+                List<RecordTypeEmail__c> lstFromEmails = RecordTypeEmail__c.getAll().values();
+                mapFromEmailPerRTKey= new map<String, String>();
+                for (RecordTypeEmail__c fromEmail : lstFromEmails)
+                {
+                    if (fromEmail.Record_Type_Developer_Name__c != null && fromEmail.Email__c != null
+                        && fromEmail.Case_Group__c != null) {
+                        String key = fromEmail.Record_Type_Developer_Name__c + ' ' + fromEmail.Country_Name__c + ' ' + fromEmail.Case_Group__c;
+                        mapFromEmailPerRTKey.put(key, fromEmail.Email__c);
+                    }
+                }
+
+            } 
+            return  mapFromEmailPerRTKey;         
+        }
+    set;
+    }
+    
+
+
     webService static String getIATACountryEmail (String caseBSPCountry)
     {
         List<IATACountryEmail__c> cBSPCountry = IATACountryEmail__c.getAll().values();
@@ -16,19 +39,7 @@ global class IDFS_Util
 
     public static final String STR_DEFAULT = 'Default';
     webService static String getRecordTypeEmail (String caseRecordType, String caseBSPCountry, String caseGroup)
-    {
-        List<RecordTypeEmail__c> lstFromEmails = RecordTypeEmail__c.getAll().values();
-
-        map<String, String> mapFromEmailPerRTKey = new map<String, String>();
-        for (RecordTypeEmail__c fromEmail : lstFromEmails)
-        {
-            if (fromEmail.Record_Type_Developer_Name__c != null && fromEmail.Email__c != null
-                && fromEmail.Case_Group__c != null) {
-                String key = fromEmail.Record_Type_Developer_Name__c + ' ' + fromEmail.Country_Name__c + ' ' + fromEmail.Case_Group__c;
-                mapFromEmailPerRTKey.put(key, fromEmail.Email__c);
-            }
-        }
-        
+    {        
         String email;
         email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + caseGroup);
         if (email!=null) return email;

@@ -195,8 +195,9 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 				System.debug('[ANG_AgencyChangesHelper] oscar.Process__c = ' +oscar.Process__c);
 				//if(Pattern.matches(AMS_Utils.ANG_OWNERSHIP + '|' + AMS_Utils.ANG_MINOR_SHAREHOLDING + '|' + AMS_Utils.ANG_MAJOR_SHAREHOLDING, oscar.ANG_Type_Of_Change__c))
-				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c))
+				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c)) {
 					changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
+				}
 
 				if(oscar.Process__c == AMS_Utils.NGCHANGES){
 					
@@ -1032,7 +1033,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<ANG_RHC_Information__c> rhcInfoList = new List<ANG_RHC_Information__c>();
 		Set<Id> accountIdsToProcess = new Set<Id>();
 
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
 			rhcInfoList.add(r);
 			accountIdsToProcess.add(r.ANG_AccountId__c);
 		}
@@ -1076,6 +1077,10 @@ public with sharing class ANG_AgencyChangesHelper {
 		/*Capture Owner history for change codes*/
 
 		for(Id accId : accountsAffected) {
+
+			if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accId) ||
+                (toReturn.accountsMap.get(accId).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(toReturn.accountsMap.get(accId).Top_Parent__c)))
+				toReturn.accountsMap.get(accId).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(toReturn.accountsMap.get(accId).Top_Parent__c == null ? accId : toReturn.accountsMap.get(accId).Top_Parent__c);
 
 			AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(oscarToProcess.AMS_Online_Accreditation__c);
 
@@ -1366,7 +1371,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, Covered_Ownership__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 

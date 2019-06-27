@@ -54,6 +54,7 @@ It contains a currency to make the correspondance between contract + location + 
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Base_URL__c</fullName>
         <externalId>false</externalId>

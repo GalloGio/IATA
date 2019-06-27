@@ -688,7 +688,21 @@
                     <apex:inputField label="Standard Commission Rate (%)" value="{!newForm.Commission_Rate__c}"/>
                 </apex:pageBlockSection>    
                 
-                <span id="nav_nine"></span>   
+                <span id="nav_nine"></span>
+                <!-- DEFAULT SECTION 9 - START -->
+                <apex:pageBlockSection title="9. Other Cargo services" columns="1" rendered="{!AND(apcountryisocode!='BR',apcountryisocode!='MX',apcountryisocode!='AR',apcountryisocode!='PH',apcountryisocode!='CO')}">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Other Cargo services"/>
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel escape="false" value="<b>AWB Stock Management</b><br/>Are you interested in participating in the CASSLink stock Management system for distribution of AWB Serial Numbers?"/>
+                        <apex:inputField value="{!newForm.Participate_in_AWB_Stock_Management__c}" label=""/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+
+                 <!-- BRAZIL,MEXICO  - START -->
                 <apex:pageBlockSection id="section9" title="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
                     <apex:facet name="header">
                         <apex:outputpanel >
@@ -720,9 +734,9 @@
                     
                     <apex:pageBlockSection title="Please enclose" columns="1" rendered="{!apcountryisocode='BR'}">
                         <apex:iframe scrolling="false" height="160px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR1&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR1"/>
                         <apex:iframe scrolling="false" height="160px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR2&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR2"/>
                     </apex:pageBlockSection>
 
                 </apex:pageBlockSection>
@@ -742,11 +756,11 @@
                     
                     <apex:pageBlockSection title="Please provide copies of the following documents:" columns="1">
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=a. Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina.&reqDescription=If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.&reqIdentifier=Additional_Information_AR1&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=a. Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina.&reqDescription=If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.&reqIdentifier=Additional_Information_AR1"/>
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=b. Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).&reqDescription=If you are joining the BSP through a GSA, the GSA's fiscal ID number/CUIT will be accepted.<br/><br/>&reqIdentifier=Additional_Information_AR2&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=b. Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).&reqDescription=If you are joining the BSP through a GSA, the GSA's fiscal ID number/CUIT will be accepted.<br/><br/>&reqIdentifier=Additional_Information_AR2"/>
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=c. Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.&reqDescription=If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.&reqIdentifier=Additional_Information_AR3&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=c. Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.&reqDescription=If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.&reqIdentifier=Additional_Information_AR3"/>
                     </apex:pageBlockSection>
 
                 </apex:pageBlockSection>

@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>ISSP_Available_Services</fullName>
         <description>ISSP_Available_Services</description>
@@ -88,16 +89,6 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
-    </fields>
-	<fields>
-        <fullName>GDPR_PrivacyStatement__c</fullName>
-        <description>URL to privacy statement (document or web page) for each service</description>
-        <externalId>false</externalId>
-        <label>GDPR_PrivacyStatement</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Url</type>
     </fields>
     <fields>
         <fullName>ANG_Accredited_Agents_Only__c</fullName>
@@ -537,6 +528,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>GDPR_PrivacyStatement__c</fullName>
+        <description>URL to privacy statement (document or web page) for each service</description>
+        <externalId>false</externalId>
+        <label>GDPR_PrivacyStatement</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
     </fields>
     <fields>
         <fullName>GSA__c</fullName>

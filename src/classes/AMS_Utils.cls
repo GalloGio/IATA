@@ -81,6 +81,7 @@ public without sharing class AMS_Utils {
     public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
     public static final String IEPMODELAACCOUNTSETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
     public static final String IEPMODELBACCOUNTSETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
+    public static final String IEPMODELBPLUSACCOUNTSETUP = 'IEP.MODEL.B.PLUS.ACCOUNT.SETUP';
     public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
@@ -155,6 +156,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_BANK_ACCOUNT_SETUP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
     public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_A_ONBOARDING');
     public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_SCREENING');
+    public static final String RECTYPE_IEPMODELBPLUS    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_ONBOARDING');
     public static final String RECTYPE_GDI          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
@@ -172,10 +174,13 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
     public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
+	
+    public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
+    public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
-    public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP};
+    public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP,IEPMODELBPLUSACCOUNTSETUP};
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
 
@@ -328,6 +333,8 @@ public without sharing class AMS_Utils {
     public static final String APP_DISAPPROVED = '12-APPLICATION DISAPPROVED';
     public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
 
+    public static final String MBPDD_CHANGE_CODE = 'MBPDD';
+    
     public static String ENCRYPTION_KEY {
         get {
             return Test.isRunningTest() ? 'hasd==aSDFclDDGasjdhfclx' : AMS_SAP_Settings__c.getOrgDefaults().Encryption_Key__c;
@@ -965,7 +972,7 @@ public without sharing class AMS_Utils {
 
         if(oscar == null){
             List<AMS_OSCAR__c> oscarlst = [select Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c, Financial_Review_Result__c,
-                                        Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c, Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
+                                        Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c, Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_Currency__c
                                         from AMS_OSCAR__c where Id = : updatedIFAPCase.OSCAR__c];
             if(!oscarlst.isEmpty())
                 oscar = oscarlst.get(0);
@@ -1082,7 +1089,7 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode,
+                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Covered_Ownership__c,
                 (SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
@@ -1213,9 +1220,6 @@ public without sharing class AMS_Utils {
 
         try {
 
-            if (!accountsToUpdate.isEmpty())
-                update accountsToUpdate;
-
             if(!stagingToAccount.isEmpty() && runOwnershipMigration){
 
                 Map<Id,AMS_OSCAR__c> mapOscars = new Map<Id,AMS_OSCAR__c>();
@@ -1225,6 +1229,19 @@ public without sharing class AMS_Utils {
 
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar);
             }
+
+            if(!AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.isEmpty()) {
+
+                for(Account accToUpdate : accountsToUpdate) {
+
+                    if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Id) ||
+                       (accToUpdate.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Top_Parent__c)) )
+                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.Top_Parent__c == null ? accToUpdate.Id : accToUpdate.Top_Parent__c);
+                }
+            }
+
+            if (!accountsToUpdate.isEmpty())
+                update accountsToUpdate;
 
             if(!createRHCInfo.isEmpty()) ANG_RHCHelper.createRHCInfo(createRHCInfo, false);
 
