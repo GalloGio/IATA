@@ -85,7 +85,7 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
 
 
                         //Step6__c || RPM_Approval__c
-                        if(elem.id == 'STEP6__c' || elem.id == 'RPM_Approval__c'){
+                        if(elem.id =='STEP6__c' || elem.id == 'RPM_Approval__c'){
                             rfcontrol = true;
                         }
                         
@@ -136,7 +136,6 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                                 
                                 if (inputElem[0].value != null) {
 
-
                                     if(rfcontrol == true){
                                         rfcontrol = false;
                                         if(inputElem[0].value == 'Passed' || inputElem[0].value == 'Authorize Approval'){
@@ -186,8 +185,8 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                 var rfStagingArea = '{!oscar.AMS_Online_Accreditation__r.Remittance_Frequency__c}';
                 var rfPerState = '{!oscar.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c}';
                 var typeChange = '{!oscar.ANG_Type_Of_Change__c}';
-            
-                if(typeChange == 'Location' && rfAccount != rfStagingArea && rfPerState == true && showConfirmationRFChange == true){
+
+                if(typeChange == 'Location' && rfAccount != rfStagingArea && rfPerState && showConfirmationRFChange){
 
                     var r = confirm("Remittance Frequency has changed. Do you want to proceed?");
                     if (r != true){
