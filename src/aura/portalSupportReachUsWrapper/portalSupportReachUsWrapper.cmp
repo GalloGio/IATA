@@ -105,7 +105,7 @@
                                 <div class="noPointerEvents slds-p-around_small slds-m-bottom_medium">
                                     {!$Label.c.csp_Chat_Panel_sub_label}
                                 </div>
-                                <div class="slds-grid">
+                                <div class="slds-grid slds-align_absolute-center">
                                     <aura:if isTrue="{!v.isNoCountryLiveAgent}">
                                         <div id="btnContainer1"
                                             class="slds-col slds-size_1-of-3 selfServiceContactSupport forceCommunityCreateRecordButton">
