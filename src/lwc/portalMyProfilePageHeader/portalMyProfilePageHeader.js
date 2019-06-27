@@ -10,7 +10,7 @@ import csp_My_Profile_Email from '@salesforce/label/c.csp_My_Profile_Email';
 
 export default class PortalProfilePageHeader extends LightningElement {
 
-    backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
+    @track backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
 
     //Loading && Error
     @track loading = false;

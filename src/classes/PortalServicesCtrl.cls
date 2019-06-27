@@ -101,9 +101,14 @@ public static List<Portal_Application_Right__c> getFavoriteServicesList(){
 
 	if(!lstPortalApplications.isEmpty()) {
 		for(Portal_Applications__c pa : lstPortalApplications) {
-			Portal_Application_Right__c par = new Portal_Application_Right__c();
-			par.Portal_Application__r = pa;
-			lstPortalApplicationsRights.add(par);
+            for(Portal_Application_Right__c par : lstPortalApplicationsRights) {
+                if(par.Portal_Application__c == pa.Id) {
+                    Portal_Application_Right__c lstPar = new Portal_Application_Right__c();
+                    lstPar.Portal_Application__r = pa;
+                    lstPortalApplicationsRights.add(lstPar);
+                    break;
+                }
+            }
 		}
 	}
 
@@ -383,6 +388,18 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 	}
 
 	return lstToReturn;
+}
+
+@AuraEnabled
+public static void updateLastModifiedService(String serviceId) {
+    User u = CSP_Utils.getLoggedUser();
+    List<Portal_Application_Right__c> serviceToUpdate = [SELECT Last_Visit_Date__c FROM Portal_Application_Right__c WHERE Contact__c = :u.ContactId AND Portal_Application__c = :serviceId LIMIT 1];
+
+    if(!serviceToUpdate.isEmpty()) {
+        serviceToUpdate[0].Last_Visit_Date__c = Datetime.now();
+
+        update serviceToUpdate;
+    }
 }
 
 public static Integer RESULTS_PER_PAGE = 10;

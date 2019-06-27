@@ -48,7 +48,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     WiregetUserRecord(result) {
         if (result.data) {
             let user = JSON.parse(JSON.stringify(result.data));
-            this.displayAcceptTerms = user.fields.ToU_accepted__c.value;
+            let acceptTerms = user.fields.ToU_accepted__c.value;
+            let currentURL = window.location.href;
+            if (currentURL.includes(this.labels.PortalName)) {
+                this.displayAcceptTerms = acceptTerms;
+            }
+
         }
     }
 
