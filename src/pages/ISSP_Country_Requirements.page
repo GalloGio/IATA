@@ -234,7 +234,7 @@
                       						<apex:outputLabel value="Type of Agency:"/>
                     					</div>
                     					<div class="col-md-2">
-                      						<apex:selectList size="1" value="{!agencyType}" multiselect="false" id="agencyTypeSelection" onchange="changeAgencyType(this.value);">
+                      						<apex:selectList size="1" value="{!agencyType}" multiselect="false" id="agencyTypeSelection" onchange="changeAgencyType(this.value);" disabled="{!isHOAccredited}">
                         						<apex:selectOptions value="{!agencyTypes}"/>
                       						</apex:selectList>
                     					</div>   

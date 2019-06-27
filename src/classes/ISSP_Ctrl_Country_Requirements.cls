@@ -176,6 +176,14 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                 amsOfficeType = 'HO';    
             }
 
+            if (agencyType == '' && isHOAccredited) {
+                if (user.contact.Account.Category__c == 'Domestic Agent') {
+                    agencyType = 'Domestic';
+                } else if (user.contact.Account.Category__c == 'IATA Passenger Sales Agent') {
+                    agencyType = 'International';
+                }
+            }
+
             if(user.contact.Account.IATA_ISO_Country__r.ISO_Code__c != null) {
                 newlabels = user.contact.Account.IATA_ISO_Country__r.AMS_Accreditation_New_Labels__c;
             } else {            
