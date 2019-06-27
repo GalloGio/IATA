@@ -15,34 +15,34 @@
                 </div>
 
                 <div class="slds-scrollable caseMessagesContainer" style={messagingHeight} >
-                    <div class="slds-grid slds-wrap slds-p-around_medium">
+                    <div class="slds-grid slds-wrap slds-p-around_x-large messagesContainer">
 
-                            <template for:each={lstMessages} for:item="message" for:index="index">
-                                <div key={message.id} if:true={message.isSelf} class="slds-col slds-size_2-of-3 slds-col_bump-left">
-                                    <div class="slds-p-around_medium caseMessagesSelfBubble">
-                                        <lightning-formatted-text value={message.messageText}></lightning-formatted-text>
-                                    </div>
-                                    <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_right caseMessagesMyselfTimestamp">
-                                        {message.senderName},&nbsp;
-                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" >
-                                        </lightning-formatted-date-time>,&nbsp;
-                                        <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit" hour12="true">
-                                        </lightning-formatted-date-time>
-                                    </div>
+                        <template for:each={lstMessages} for:item="message" for:index="index">
+                            <div key={message.id} if:true={message.isSelf} class="caseMessagesSelfBubbleContainer">
+                                <div class="slds-p-around_medium caseMessagesSelfBubble">
+                                    <lightning-formatted-text value={message.messageText} class="breakWord"></lightning-formatted-text>
                                 </div>
-                                <div key={message.id} if:false={message.isSelf} class="slds-col slds-size_2-of-3 slds-col_bump-right"  >
-                                    <div class="slds-p-around_medium caseMessagesOtherBubble">
-                                        <lightning-formatted-text value={message.messageText}></lightning-formatted-text>
-                                    </div>
-                                    <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_left caseMessagesOtherTimestamp">
-                                        {message.senderName},&nbsp;
-                                        <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" >
-                                        </lightning-formatted-date-time>,&nbsp;
-                                        <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit" hour12="true">
-                                        </lightning-formatted-date-time>
-                                    </div>
+                                <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_right caseMessagesMyselfTimestamp">
+                                    {message.senderName},&nbsp;
+                                    <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" >
+                                    </lightning-formatted-date-time>,&nbsp;
+                                    <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit" hour12="true">
+                                    </lightning-formatted-date-time>
                                 </div>
-                            </template>
+                            </div>
+                            <div key={message.id} if:false={message.isSelf} class="caseMessagesOtherBubbleContainer">
+                                <div class="slds-p-around_medium caseMessagesOtherBubble">
+                                    <lightning-formatted-text value={message.messageText} class="breakWord"></lightning-formatted-text>
+                                </div>
+                                <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_left caseMessagesOtherTimestamp">
+                                    {message.senderName},&nbsp;
+                                    <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" >
+                                    </lightning-formatted-date-time>,&nbsp;
+                                    <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit" hour12="true">
+                                    </lightning-formatted-date-time>
+                                </div>
+                            </div>
+                        </template>
 
 
                     </div>

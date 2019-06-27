@@ -1,8 +1,8 @@
 <template> 
-    <lightning-layout multiple-rows pull-to-boundary="small">
-        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="6" large-device-size="6">
+    <lightning-layout multiple-rows pull-to-boundary="small" horizontal-align="spread">
+        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="6">
             <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
-                <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+                <img src={searchIconUrl}>
                 <lightning-input name="newRecipientTextInput"
                     placeholder={label.CSP_SearchingOn}
                     class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
@@ -11,27 +11,23 @@
                 </lightning-input>
             </div>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3" large-device-size="3">
-                <lightning-button label="Filter" class="filterButton"></lightning-button>
-        </lightning-layout-item>         
-        <lightning-layout-item padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3" large-device-size="3">
+        <lightning-layout-item class="slds-text-align_right" padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3">
             <lightning-button label={caseListName} class="containedButton" onclick={rerenderCases} if:true={isAdmin}></lightning-button>
-        </lightning-layout-item>                            
+        </lightning-layout-item>
     </lightning-layout>
     <div class="customCardWhite">        
         <div class="slds-m-around_medium">
-            <template if:true={loading}>
+            <div if:true={loading} class="spinnerContainer">
                 <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-            </template>            
-            <template if:false={loading}>
+            </div>
+            <div if:false={loading}>
                 <div if:true={dataRecords}>
                     <!-- DATA RECORDS -->
                     <lightning-datatable
                         key-field="Id"
                         data={data}
                         columns={columns}
-                        hide-checkbox-column
-                        resize-column-disabled>
+                        hide-checkbox-column>
                     </lightning-datatable>
                     <!-- DATA RECORDS -->
 
@@ -63,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-            </template>
+            </div>
         </div>    
     </div>      
 </template>

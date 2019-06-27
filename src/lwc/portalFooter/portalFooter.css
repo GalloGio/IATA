@@ -68,6 +68,10 @@
     cursor: pointer;
 }
 
+.portalFooter .iataSocial>div.youtube{
+    margin-top: 32px;
+}
+
 .portalFooter .langSelect {
     width: 120px;
     position: relative;

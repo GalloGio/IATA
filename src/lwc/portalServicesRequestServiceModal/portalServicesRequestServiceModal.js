@@ -6,8 +6,8 @@ import Id from '@salesforce/user/Id';
 //import labels
 
 import newServiceRequestlb from '@salesforce/label/c.ISSP_New_Service_Request';
-import newServiceAccessConfirmMsglb from '@salesforce/label/c.ISSP_ServiceAccessConfirm';
-import newServiceRequestConfirmMsglb from '@salesforce/label/c.ISSP_ServiceRequestConfirm';
+import newServiceAccessConfirmMsglb from '@salesforce/label/c.csp_ServiceAccessConfirm';
+import newServiceRequestConfirmMsglb from '@salesforce/label/c.csp_ServiceRequestConfirm';
 import confirmedRequestMsglb from '@salesforce/label/c.CSP_Confirmed_Requested_Service_Message';
 import goToServiceslb from '@salesforce/label/c.CSP_Services_GoToServices';
 import csp_RequestService_ContactPortalAdmin_LegalAuth from '@salesforce/label/c.csp_RequestService_ContactPortalAdmin_LegalAuth';
@@ -137,6 +137,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
             this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
+            this.popUpHandler();
+
         }
 
     }
@@ -148,6 +150,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     set displayConfirm(val) {
         this.showConfirm = val;
     }
+
+    get confirmMessage() {
+        if (this.isAdmin) {
+            return this.label.newServiceRequestConfirmMsglb + ' ' + this.serviceFullName;
+        }
+        return this.label.newServiceAccessConfirmMsglb + ' ' + this.serviceFullName;
+    }
+
 
     @track trackedServiceId;
     @track trackedServiceRecord = {};
@@ -213,147 +223,153 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 
     connectedCallback() {
-        if (this.serviceName.includes('IATA EasyPay')) {
-            this.defaultMessage = false;
-            this.showRoleSelection = false;
-            //stays true for any IATA EasyPay PopUp
-            this.IEPMessage = true;
-            this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
-            getUserOptions({ portalUser: this.userID })
-                .then(result => {
-                    let userOptions = JSON.parse(JSON.stringify(result));
-                    if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
-                        this.userContactId = userOptions.User_ContactId;
-                    }
-                    if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
-                        this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth;
-                    }
-                    else if (userOptions.IEP_Status === 'Open' && (userOptions.Legal_Auth_Signature === 'false' || userOptions.Legal_Auth_Signature === 'true')
-                        && (userOptions.User_Portal_Status === 'Approved User' || userOptions.User_Portal_Status === 'Approved Admin')) {
-                        this.IEPRoleChangeConfirm = true;
-                        this.showRoleSelection = true;
-                        this.IEPIntroOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_1;
-                        this.IEPOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_2;
-                        availableIEPPortalServiceRoles()
-                            .then(data => {
-                                this.roleList = JSON.parse(JSON.stringify(data));
-                                if (this.serviceFullName === 'IATA EasyPay (EDENRED)') {
-                                    this.roleList = this.roleList.filter(obj => obj.Connected_App__c === 'IATA EasyPay (EDENRED)');
-                                    for (const item of this.roleList) {
-                                        if (item.Connected_App__c === 'IATA EasyPay (EDENRED)') {
-                                            let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
-                                            item.label = this.label[newlabel];
-                                        }
-                                    }
-                                }
-
-                            });
-                    }
-                    else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
-                        && userOptions.Legal_Auth_Signature === 'false') {
-                        this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_Alt;
-                    }
-                    else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
-                        && userOptions.Legal_Auth_Signature === 'true') {
-                        this.IEPOpenAccount = true;
-                        this.IEPOptionalMessages = this.label.csp_RequestService_ProceedIEPAccountOpen;
-                    }
-                    else if (userOptions.IEP_Status === 'In Progress' && userOptions.User_Portal_Status === 'Approved Admin'
-                        && userOptions.Legal_Auth_Signature === 'false') {
-                        this.IEPOptionalMessages = this.label.csp_RequestService_ProceedIEPAccountOpen;
-                    }
-                });
-        }
-        else if (this.serviceName.includes('ICCS')) {
-            this.ICCSMessage = true;
-            this.defaultMessage = false;
-            this.showRoleSelection = false;
-            this.showButtons = true;
-            this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
-            getUserOptions({ portalUser: this.userID })
-                .then(result => {
-                    let userOptions = JSON.parse(JSON.stringify(result));
-                    if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
-                        this.userContactId = userOptions.User_ContactId;
-                    }
-                    if (userOptions.User_ICCS_Membership_Status === 'Member') {
-                        this.ICCSOptionalMessages = this.label.ICCS_Homepage_Select_Role_Label
-                            + '<br/><br/><br/>'
-                            + this.label.ICCS_Homepage_Request_Role_Message2;
-
-                        this.showICCSRoleSelection = true;
-                        this.ICCSRoleChangeConfirm = false;
-                        let myICCSRolesOptions = [];
-                        availableICCSPortalServiceRoles()
-                            .then(data => {
-                                let roles = JSON.parse(JSON.stringify(data));
-                                if (this.serviceFullName === 'ICCS') {
-                                    let allRoles = roles.filter(obj => obj.Connected_App__c === 'ICCS');
-                                    allRoles.forEach(element => {
-                                        myICCSRolesOptions.push({
-                                            label: element.Role__c, value: element.Role__c
-                                        });
-                                    });
-                                    this.roleICCSList = myICCSRolesOptions;
-                                }
-                            });
-                    } else {
-                        this.ICCSOptionalMessages = this.label.ICCS_Service_Access_Inactive;
-                        this.ICCSOpenAccount = true;
-                    }
-                });
-        }
-        else if (this.serviceName.includes('Standards Setting Workspace')) {
-            this.defaultMessage = false;
-            //stays true for any IATA EasyPay PopUp
-            this.SSWSMessage = true;
-            this.showButtons = true;
-            getUserOptions({ portalUser: this.userID })
-                .then(result => {
-                    let userOptions = JSON.parse(JSON.stringify(result));
-                    if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
-                        this.userContactId = userOptions.User_ContactId;
-                    }
-                });
-            this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
-            this.SSWSOptionalMessages = this.label.ISSP_KAVI_Terms_Conditions_Part1
-                + '<br/>' + this.label.ISSP_KAVI_Terms_Conditions_Part2
-                + '<br/>' + this.label.ISSP_KAVI_Terms_Conditions_Part3;
-        }
-        else if (this.serviceName.includes('Treasury Dashboard')) {
-            this.defaultMessage = false;
-            //stays true for any IATA EasyPay PopUp
-            this.TDMessage = true;
-            this.showButtons = true;
-            this.acceptTDConditions = true;
-            getUserOptions({ portalUser: this.userID })
-                .then(result => {
-                    let userOptions = JSON.parse(JSON.stringify(result));
-                    if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
-                        this.userContactId = userOptions.User_ContactId;
-                    }
-                });
-            this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
-            if (this.serviceName === 'Treasury Dashboard - Premium') {
-                this.TDOptionalMessages = '<b>' + this.label.csp_TDP_ServiceRequest_TopLabel + '</b>'
-                    + '<br/><br/>' + this.serviceName
-                    + '<br/><br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel1
-                    + '<br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel2;
-            } else {
-                this.TDOptionalMessages = '<b>' + this.label.csp_TD_ServiceRequest_TopLabel + '</b>'
-                    + '<br/><br/>' + this.serviceName
-                    + '<br/><br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel1
-                    + '<br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel2;
-            }
-        }
-
-        //get the parameters for this page  
-        this.pageParams = getParamsFromPage();
-        if (this.pageParams) {
-            this.serviceId = this.pageParams.serviceId;
-        }
+        this.popUpHandler();
         //this.submitMessage= this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
 
+    }
+
+    popUpHandler() {
+        if (this.serviceName !== undefined && this.serviceName !== '') {
+            if (this.serviceName.includes('IATA EasyPay')) {
+                this.defaultMessage = false;
+                this.showRoleSelection = false;
+                //stays true for any IATA EasyPay PopUp
+                this.IEPMessage = true;
+                this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
+                getUserOptions({ portalUser: this.userID })
+                    .then(result => {
+                        let userOptions = JSON.parse(JSON.stringify(result));
+                        if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
+                            this.userContactId = userOptions.User_ContactId;
+                        }
+                        if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth;
+                        }
+                        else if (userOptions.IEP_Status === 'Open' && (userOptions.Legal_Auth_Signature === 'false' || userOptions.Legal_Auth_Signature === 'true')
+                            && (userOptions.User_Portal_Status === 'Approved User' || userOptions.User_Portal_Status === 'Approved Admin')) {
+                            this.IEPRoleChangeConfirm = true;
+                            this.showRoleSelection = true;
+                            this.IEPIntroOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_1;
+                            this.IEPOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_2;
+                            availableIEPPortalServiceRoles()
+                                .then(data => {
+                                    this.roleList = JSON.parse(JSON.stringify(data));
+                                    if (this.serviceFullName === 'IATA EasyPay (EDENRED)') {
+                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === 'IATA EasyPay (EDENRED)');
+                                        for (const item of this.roleList) {
+                                            if (item.Connected_App__c === 'IATA EasyPay (EDENRED)') {
+                                                let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
+                                                item.label = this.label[newlabel];
+                                            }
+                                        }
+                                    }
+
+                                });
+                        }
+                        else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
+                            && userOptions.Legal_Auth_Signature === 'false') {
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_Alt;
+                        }
+                        else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
+                            && userOptions.Legal_Auth_Signature === 'true') {
+                            this.IEPOpenAccount = true;
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ProceedIEPAccountOpen;
+                        }
+                        else if (userOptions.IEP_Status === 'In Progress' && userOptions.User_Portal_Status === 'Approved Admin'
+                            && userOptions.Legal_Auth_Signature === 'false') {
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ProceedIEPAccountOpen;
+                        }
+                    });
+            }
+            else if (this.serviceName.includes('ICCS')) {
+                this.ICCSMessage = true;
+                this.defaultMessage = false;
+                this.showRoleSelection = false;
+                this.showButtons = true;
+                this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
+                getUserOptions({ portalUser: this.userID })
+                    .then(result => {
+                        let userOptions = JSON.parse(JSON.stringify(result));
+                        if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
+                            this.userContactId = userOptions.User_ContactId;
+                        }
+                        if (userOptions.User_ICCS_Membership_Status === 'Member') {
+                            this.ICCSOptionalMessages = this.label.ICCS_Homepage_Select_Role_Label
+                                + '<br/><br/><br/>'
+                                + this.label.ICCS_Homepage_Request_Role_Message2;
+
+                            this.showICCSRoleSelection = true;
+                            this.ICCSRoleChangeConfirm = false;
+                            let myICCSRolesOptions = [];
+                            availableICCSPortalServiceRoles()
+                                .then(data => {
+                                    let roles = JSON.parse(JSON.stringify(data));
+                                    if (this.serviceFullName === 'ICCS') {
+                                        let allRoles = roles.filter(obj => obj.Connected_App__c === 'ICCS');
+                                        allRoles.forEach(element => {
+                                            myICCSRolesOptions.push({
+                                                label: element.Role__c, value: element.Role__c
+                                            });
+                                        });
+                                        this.roleICCSList = myICCSRolesOptions;
+                                    }
+                                });
+                        } else {
+                            this.ICCSOptionalMessages = this.label.ICCS_Service_Access_Inactive;
+                            this.ICCSOpenAccount = true;
+                        }
+                    });
+            }
+            else if (this.serviceName.includes('Standards Setting Workspace')) {
+                this.defaultMessage = false;
+                //stays true for any IATA EasyPay PopUp
+                this.SSWSMessage = true;
+                this.showButtons = true;
+                getUserOptions({ portalUser: this.userID })
+                    .then(result => {
+                        let userOptions = JSON.parse(JSON.stringify(result));
+                        if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
+                            this.userContactId = userOptions.User_ContactId;
+                        }
+                    });
+                this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
+                this.SSWSOptionalMessages = this.label.ISSP_KAVI_Terms_Conditions_Part1
+                    + '<br/>' + this.label.ISSP_KAVI_Terms_Conditions_Part2
+                    + '<br/>' + this.label.ISSP_KAVI_Terms_Conditions_Part3;
+            }
+            else if (this.serviceName.includes('Treasury Dashboard')) {
+                this.defaultMessage = false;
+                //stays true for any IATA EasyPay PopUp
+                this.TDMessage = true;
+                this.showButtons = true;
+                this.acceptTDConditions = true;
+                getUserOptions({ portalUser: this.userID })
+                    .then(result => {
+                        let userOptions = JSON.parse(JSON.stringify(result));
+                        if (userOptions.User_ContactId !== null && userOptions.User_ContactId !== '') {
+                            this.userContactId = userOptions.User_ContactId;
+                        }
+                    });
+                this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
+                if (this.serviceName === 'Treasury Dashboard - Premium') {
+                    this.TDOptionalMessages = '<b>' + this.label.csp_TDP_ServiceRequest_TopLabel + '</b>'
+                        + '<br/><br/>' + this.serviceName
+                        + '<br/><br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel1
+                        + '<br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel2;
+                } else {
+                    this.TDOptionalMessages = '<b>' + this.label.csp_TD_ServiceRequest_TopLabel + '</b>'
+                        + '<br/><br/>' + this.serviceName
+                        + '<br/><br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel1
+                        + '<br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel2;
+                }
+            }
+
+            //get the parameters for this page  
+            this.pageParams = getParamsFromPage();
+            if (this.pageParams) {
+                this.serviceId = this.pageParams.serviceId;
+            }
+        }
     }
 
     changeIEPRole() {
@@ -645,13 +661,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 
 
-    get confirmMessage() {
-        if (this.isAdmin) {
-            return this.label.newServiceRequestConfirmMsglb + ' ' + this.serviceFullName;
-        }
-        return this.label.newServiceAccessConfirmMsglb + ' ' + this.serviceFullName;
-    }
-
+ 
 
 
     handleSubmitRequest() {
