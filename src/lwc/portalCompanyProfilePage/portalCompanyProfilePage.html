@@ -102,7 +102,7 @@
                                     <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
                                         fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
                                         default-sort="Name" records={branches} openmodel={openmodel} recordid={recordid}
-                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords}>
+                                        objectid={accountid} fetching={isFetching}>
                                     </c-portal-contact-list>
                                 </div>
                             </template>
@@ -152,7 +152,7 @@
                                         fields-list-to-create={fieldsListToCreate} records={contacts}
                                         openmodel={openmodel} recordid={recordid} accountid={accountid}
                                         objectid={objectid} ongetcontacts={getContacts} fetching={isFetching}
-                                        onrefreshview={refreshview} onsearchrecords={searchRecords}>
+                                        onrefreshview={refreshview}>
                                     </c-portal-contact-list>
 
                                 </div>

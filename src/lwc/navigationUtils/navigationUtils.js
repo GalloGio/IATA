@@ -8,26 +8,20 @@
  * @param {object} baseUrl - Pagereference object 
  * @param {object} paramsObject - Object containing the parameters to be incapsulated
  */
-const navigateToPage = (baseURl, paramsObject) => {
+const navigateToPage = (baseURl, paramsObject) => { 
+    console.log('paramsObject', paramsObject);
     
-    console.log('baseURl: ', baseURl);
-    console.log('paramsObject: ', paramsObject);
-    
-
     let ret = [];
-    for (let d in paramsObject){ 
+    for (let d in paramsObject) { 
         ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(paramsObject[d]));
     }
-    console.log('ret', ret);
     
     let url = baseURl;
     if(ret.length > 0) {
         url = url + '?' + ret.join('&');
     }
-    console.log('url', url);
     
-    location.replace(url);
-
+    window.location.href = url;
 };
 
 
@@ -50,7 +44,7 @@ const getParamsFromPage = () => {
 const getPageName = () => {
     return location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
 
-}
+    }
 
 
 

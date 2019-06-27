@@ -100,7 +100,7 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 	country = country.toLowerCase();
 
 	//adds __c to end of Topic value. Check Custom Settings or query below.
-	topicName = topicName + '__c';
+	topicName = '%' + topicName + '__c' + '%';
 
 	Contact con = contactInfo;
 
@@ -110,12 +110,24 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 
 	String region = con.Account.Region_formula__c != null ? con.Account.Region_formula__c : '';
 
+	String selectedCountryRegion;
+
+	Set<String> newset = new Set<String>();
+	if(country != null && country != '') {
+		newset.add(country.toUpperCase());
+		//Sets the region of either the Country selected from the picklist or the one from the user's account.
+		IATA_ISO_Country__c IATA_ISO_country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(newset)[0];
+		selectedCountryRegion = IATA_ISO_country.Region__c;
+	}else{
+		selectedCountryRegion =  con.Account.Region_formula__c != null ? con.Account.Region_formula__c : '';
+	}
+
 	if(country != null && country != '') {
 		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
 		         Language__c, Region__c, Sectors__c, Topic__c
 		         FROM LiveAgentButtonSettings__c
 		         WHERE Sectors__c Like : sector
-		         AND ((Language__c = 'en' AND Region__c =: region)
+		         AND ((Language__c = 'en' AND Region__c =: selectedCountryRegion)
 		              OR (Language__c =: country AND Region__c =: region))];
 
 	}
@@ -136,13 +148,18 @@ public static Map<String,String> getCaseTypeAndCountry(Contact contactInfo, Stri
 	Set<String> newset = new Set<String>();
 
 	if(country != null && country != '') {
-		newset.add(country.toUpperCase());
+		newset.add(country);
 	}else{
-		newset.add(contactInfo.Account.Country_ISO_Code__c);
+		if(contactInfo.Account.Country_ISO_Code__c != null && contactInfo.Account.Country_ISO_Code__c != '') {
+			newset.add(contactInfo.Account.Country_ISO_Code__c);
+		}
 	}
 
 	//Sets the region of either the Country selected from the picklist or the one from the user's account.
-	IATA_ISO_Country__c IATA_ISO_country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(newset)[0];
+	IATA_ISO_Country__c IATA_ISO_country = new IATA_ISO_Country__c();
+	if(!newset.isEmpty()) {
+		IATA_ISO_country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(newset)[0];
+	}
 
 	String recordType;
 

@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String WILDCARD = 'ALL';
 
 public class portalServiceException extends Exception {}
@@ -335,7 +336,6 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
 	return lstToReturn;
 }
 
-    //Return map of ContactIds to ServiceWrappers - for each contact contains a list of Access Granted services.
     public static Map<Id,List<ServiceWrapper>> getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds){
 
         Map<Id,List<ServiceWrapper>> contactToServices = new Map<Id,List<ServiceWrapper>>();
@@ -344,7 +344,10 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
         from Portal_Application_Right__c
         where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
 
+
         Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId from User WHERE Id in: contactToUserIds.values()]);
+
+        Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
         for(Portal_Application_Right__c accessRight : usersGrantedList){
 
             String iepStatus = accessRight.Contact__r.Account.ANG_IEP_Status_FF__c;
@@ -531,10 +534,6 @@ public static set<id> contactWithUserSet {
 }
 
 public class ContactWrapper {
-//@AuraEnabled
-//public Portal_Application_Right__c par {get; set;}
-//@AuraEnabled
-//public String contactStatus {get; set;}
 @AuraEnabled
 public Boolean cannotBeManagedByPortalAdmin {get; set;}
 @AuraEnabled
@@ -821,7 +820,6 @@ public static String newAppsRequestICCS(String applicationId, String application
 public static Integer userProvisioningRequests(){
 	Id userId = UserInfo.getUserId();
 	List<UserProvisioningRequest> userProvList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
-	System.debug(userProvList);
 	return userProvList.size();
 }
 
@@ -829,9 +827,6 @@ public static Integer userProvisioningRequests(){
 public static String performCheckonPoll(String permSetSSO, Integer failedCount){
 	Id userId = UserInfo.getUserId();
 	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
-	System.debug('HERE!!!');
-
-	System.debug(permissionSetList);
 
 	if(!permissionSetList.isEmpty()) {
 		return 'Success';
@@ -852,7 +847,7 @@ public static String serviceWrapperRedirect(String serviceId){
 	                          WHERE id =: UserInfo.getUserId()];
 
 
-	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == 'Approved Admin');
+	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == PORTAL_ADMIN_APPROVED);
 
 	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
 	                                                                                 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
@@ -864,7 +859,6 @@ public static String serviceWrapperRedirect(String serviceId){
 	return serviceWrap.recordService.Application_URL__c;
 }
 
-
 //gets Portal ADmins - Method based on existing funcionality ANG_RHCAlertTriggerHandler.sendAlertNotification
 @AuraEnabled(cacheable=true)
 public static list<contact> getPortalAdmins(){
@@ -872,31 +866,6 @@ public static list<contact> getPortalAdmins(){
 
 	return [SELECT Id,name,email FROM Contact WHERE User_Portal_Status__c = : ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (Account.Top_Parent__c =: u.contact.AccountId OR AccountId = : u.contact.AccountId)];
 }
-
-/**
-    Returns a list of all visible application names for the input account
-    according to the Custom Metadata Portal_Application_Setting__mdt
- **/
-@TestVisible
-private static List<String> getVisibleApplicationNames(Account account) {
-	// Get the list of services visible for thi input account based on the Custom metadata Portal_Application_Setting__mdt
-	List<String> requestableAppNameList = new List<String>();
-	if (account==null) return requestableAppNameList;
-	for (Portal_Application_Setting__mdt setting: [
-		     SELECT id, MasterLabel,
-		     (SELECT Sector__c, Category__c
-		      FROM Portal_Application_Visibilities__r
-		      WHERE is_Visible__c = true
-		                            AND Sector__c = :account.Sector__c
-		                                            AND Category__c IN (:account.Category__c,:WILDCARD))
-		     FROM Portal_Application_Setting__mdt]) {
-		if (setting.Portal_Application_Visibilities__r.size()>0) {
-			requestableAppNameList.add(setting.MasterLabel);
-		}
-	}
-	return requestableAppNameList;
-}
-
 
 // Denys Acccess to a portal service from the manage service page by an portal administrator
 @AuraEnabled

@@ -1,11 +1,11 @@
 <template>
     <div class="bottomLightGrayBorder slds-m-around_small">
-        <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+        <img src={searchIconUrl}>
         <lightning-input name="newRecipientTextInput"
             placeholder={label.CSP_SearchFAQ}
             class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
             value={searchText}
-            onchange={onInputchange}>
+            onchange={onInputChange}>
         </lightning-input>
     </div>
     <!-- ARTICLES -->

@@ -14,8 +14,8 @@ public with sharing class PortalCasesCtrl {
         set;
     }
 
+    public static Boolean isAdmin;
     public static Boolean seeAllCases;
-    public static Boolean limitCases;
     public static String currentListViewName;
     public static Boolean apUser;
     public static String selectedList;
@@ -33,6 +33,29 @@ public with sharing class PortalCasesCtrl {
     public static ISSP_Portal_Service_Ids__c serviceIdInstance;
     public static Boolean adminProfile = ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
 
+    public static Integer RESULTS_PER_PAGE = 10;
+    private static PortalSearchFilterWrapper filtersWrapper;
+    private static Integer requestedPageNumber;
+
+    /*
+    *
+    *
+    */
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> typeOfCasePortalCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper(System.Label.csp_Accreditation_Process, System.Label.csp_Accreditation_Process));
+        lstPickValues.add(new CSP_Utils.PickListWrapper(System.Label.csp_Financial_Review, System.Label.csp_Financial_Review));
+        lstPickValues.add(new CSP_Utils.PickListWrapper(System.Label.csp_IATA_Payment, System.Label.csp_IATA_Payment));
+        lstPickValues.add(new CSP_Utils.PickListWrapper(System.Label.csp_Sales_Payment, System.Label.csp_Sales_Payment));
+        lstPickValues.add(new CSP_Utils.PickListWrapper(System.Label.csp_Emergency_Query, System.Label.csp_Emergency_Query));
+        lstPickValues.add(new CSP_Utils.PickListWrapper(System.Label.csp_Concern, System.Label.csp_Concern));
+        lstPickValues.add(new CSP_Utils.PickListWrapper(System.Label.csp_Query, System.Label.csp_Query));
+        lstPickValues.add(new CSP_Utils.PickListWrapper(System.Label.csp_Process, System.Label.csp_Process));
+
+        return lstPickValues;
+    }
+
     /* 
     * @description Main method that returns a list of cases 
     * @params
@@ -41,11 +64,10 @@ public with sharing class PortalCasesCtrl {
     @AuraEnabled(cacheable=true)
     public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll) {
         seeAllCases = seeAll;
-        limitCases = limitView;
 
         initialization();
 
-        return getCases();
+        return getCases(limitView);
     }
 
     /* 
@@ -154,7 +176,7 @@ public with sharing class PortalCasesCtrl {
     * @params
     * @return List<Case>
     */
-    private static PagedResult getCases() {
+    private static PagedResult getCases(Boolean limitView) {
         String queryString;
         Set<String> fieldPathSet = new Set<String>{'CaseNumber'};
 
@@ -178,17 +200,60 @@ public with sharing class PortalCasesCtrl {
         
         String queryConditions = getQueryConditions();
 
-        queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ';
+        String queryLimit = '';
 
-        if(limitCases) {
-            queryString += 'LIMIT 4';
+        if(filtersWrapper == null) {
+            if(limitView) {
+                queryLimit += 'LIMIT 4';
+            } else {
+                queryLimit += 'LIMIT 2000';
+            }
         } else {
-            queryString += 'LIMIT 2000';
+            
+            //insert filters
+            if(filtersWrapper.searchText != null && filtersWrapper.searchText != ''){
+                if(queryConditions == ''){
+                    queryConditions = ' WHERE (CaseNumber LIKE \'%'+ String.escapeSingleQuotes(filtersWrapper.searchText) +'%\' OR Subject LIKE \'%'+ String.escapeSingleQuotes(filtersWrapper.searchText) +'%\') ';
+                }else{
+                    queryConditions += ' AND (CaseNumber LIKE \'%'+ String.escapeSingleQuotes(filtersWrapper.searchText) +'%\' OR Subject LIKE \'%'+ String.escapeSingleQuotes(filtersWrapper.searchText) +'%\') ';
+                }
+            }
+
+            if(filtersWrapper.casesComponent != null){
+                if(filtersWrapper.casesComponent.caseTypeFilter != null && filtersWrapper.casesComponent.caseTypeFilter != ''){
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE Type_of_case_Portal__c = \'' + filtersWrapper.casesComponent.caseTypeFilter + '\' ';
+                    }else{
+                        queryConditions += ' AND Type_of_case_Portal__c = \'' + filtersWrapper.casesComponent.caseTypeFilter + '\' ';
+                    }
+                }
+                if(filtersWrapper.casesComponent.caseCountryFilter != null && filtersWrapper.casesComponent.caseCountryFilter != ''){
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE Country_concerned__c includes (\'' + filtersWrapper.casesComponent.caseCountryFilter + '\') ';
+                    }else{
+                        queryConditions += ' AND Country_concerned__c includes (\'' + filtersWrapper.casesComponent.caseCountryFilter + '\') ';
+                    }
+                }
+            }
+
+            //pagination 
+            Integer offset = requestedPageNumber * PortalCasesCtrl.RESULTS_PER_PAGE;
+            queryLimit = ' LIMIT ' + PortalCasesCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ' ';
+
         }
+
+        queryString = 'SELECT ' + query.substring(1) + ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ' + queryLimit;
 
         result = new PagedResult();
         result.records = Database.query(queryString);
-        result.totalItemCount = result.records.size();
+
+        if(filtersWrapper == null){
+            result.totalItemCount = result.records.size();
+        }else{
+            String stringQueryCount = 'SELECT COUNT() FROM Case ' + queryConditions;
+            Integer queryCountResult = Database.countQuery(stringQueryCount);
+            result.totalItemCount = queryCountResult;
+        }
         result.userAdmin = adminProfile;
 
         System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - getCases] queryString - ' + queryString);
@@ -235,13 +300,12 @@ public with sharing class PortalCasesCtrl {
 
         casesMap = new Map<Id, String>();
         caseURL = new Map<Id, String>();
-
         for(Case record : records) {
             casesMap = pageLoad(record);
             caseURL.putAll(casesMap);
         }
         
-        System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - setCaseURLs] caseURL - ' + caseURL);
+        System.debug('____ [cls PortalCasesCtrl - getCases] caseURL - ' + caseURL);
 
         return caseURL;
     }
@@ -263,7 +327,7 @@ public with sharing class PortalCasesCtrl {
     private static String getQueryConditions() {
         
         if(caseListViewMap.isEmpty()) {
-            return 'WHERE ID = NULL';
+            return ' WHERE ID = NULL ';
         }
         
         String queryConditions;
@@ -400,37 +464,31 @@ public with sharing class PortalCasesCtrl {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getFilteredCases(String searchKey) {
+    public static PagedResult getFilteredCasesResultsPage(String searchKey, String requestedPage) {
+
+        PortalSearchFilterWrapper filterWrapperAux = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
+        System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] filterWrapperAux - ' + filterWrapperAux);
+
+        filtersWrapper = filterWrapperAux;
+
+        Integer requestedPageAux = integer.valueof(requestedPage);
+        System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] requestedPageAux - ' + requestedPageAux);
+
+        requestedPageNumber = requestedPageAux;
+
         Boolean isAdmin = ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
+        System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdmin - ' + isAdmin);
 
-        String finalQuery = 'SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, CreatedDate, LastModifiedDate, Portal_Case_Status__c, Status, CaseArea__c, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, CreatedBy.Name ' +
-            'FROM Case ' +
-            'WHERE Visible_on_ISS_Portal__c = true AND ' + 
-                '(CaseNumber LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\' OR Subject LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\') ';
+        PagedResult pages = getRecentCases(false, isAdmin);
 
-        if(isAdmin) {
-            finalQuery += 'AND AccountId = \''+ myUser.AccountId +'\' ';
-        } else {
-            finalQuery += 'AND is_Portal_user_equal_case_contact__c = \'true\' ';
-        }
+        return pages;
+    }
 
-        finalQuery += 'LIMIT 4';
 
-        List<Case> queryResult = Database.query(finalQuery);
-
-        System.debug('____ [cls PortalCasesCtrl - getFilteredCases] finalQuery - ' + finalQuery);
-        System.debug('____ [cls PortalCasesCtrl - getFilteredCases] queryResult - ' + queryResult);
-
-        result = new PagedResult();
-        result.records = queryResult;
-        result.totalItemCount = result.records.size();
-        result.userAdmin = adminProfile;
-
-        /* Generate Case URL */
-        result.url = JSON.serialize(setCaseURLs(queryResult));
-
-        return result;
-    } 
+    @AuraEnabled
+    public static Boolean isAirlineAdmin() {
+        return Id.valueOf(ISSP_Constant.customSetingMap.get('ISS_Portal_Airline_Delegated_Admin')) == UserInfo.getProfileId();
+    }
 
     /* 
     * @description Return a specific case to display the case details
@@ -442,8 +500,8 @@ public with sharing class PortalCasesCtrl {
         Case caseAux = [SELECT CaseNumber, Type_of_case_Portal__c, Subject, Country_concerned_by_the_query__c, 
                         CreatedDate, CreatedBy.Name,LastModifiedDate, Portal_Case_Status__c,Topic__c,
                         Subtopic__c, Region__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
-                        Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status
-
+                        Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,
+                        BSPCountry__c
                         FROM Case 
                         WHERE Id = :caseId];
 

@@ -2,69 +2,58 @@ import { LightningElement, api, track } from 'lwc';
 
 export default class PortalSearchBarGlobalComponent extends LightningElement {
 
-    @api showServices;
-    @api showCases;
-    @api showFAQs;
-    @api showDocuments;
-    @api showPortalFeatures;
+    @api showServices = false;
+    @api showCases = false;
+    @api showFAQs = false;
+    @api showDocuments = false;
 
     @api searchBarPlaceholder;
 
     @track filteringObject;
 
-    showservicesComponent(){ return this.showServices === 'true'; }
-    showcasesComponent(){ return this.showCases === 'true'; }
-    showfaqsComponent(){ return this.showFAQs === 'true'; }
-    showdocumentsComponent(){ return this.showDocuments === 'true'; }
-    showportalFeaturesComponent(){ return this.showPortalFeatures === 'true'; }
-
     connectedCallback() {
-       //console.log(this.searchBarPlaceholder);
 
-        this.filteringObject = {
-            "showAllComponents" : false,
-            "searchText" : "",
-            "servicesComponent" : {
-                "show" : this.showservicesComponent(),
-                "searchable" : this.showservicesComponent(),
-                "filters" : {
-                    "type" : ""
-                }
+        let filteringObjectAux = {
+            showAllComponents : true,
+            searchText : "",
+            highlightTopResults : false,
+            advancedSearch : true,
+            servicesComponent : {
+                show : this.showServices,
+                highlight : false,
+                loading : true,
+                nrResults : 0
             },
-            "casesComponent" : {
-                "show" : this.showcasesComponent(),
-                "searchable" : this.showcasesComponent(),
-                "filters" : {
-                    "type" : "",
-                    "status" : ""
-                }
+            casesComponent : {
+                show : this.showCases,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                caseTypeFilter : "",
+                caseCountryFilter : ""
             },
-            "faqsComponent" : {
-                "show" : this.showfaqsComponent(),
-                "searchable" : this.showfaqsComponent(),
-                "filters" : {
-                    "category" : "",
-                    "topic" : ""
-                }
+            faqsComponent : {
+                show : this.showFAQs,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                faqCategoryFilter : "",
+                faqTopicFilter : "",
+                faqSubtopicFilter : "",
+                faqSubtopicsList : []
             },
-            "documentsComponent" : {
-                "show" : this.showdocumentsComponent(),
-                "searchable" : this.showdocumentsComponent(),
-                "filters" : {
-                    "category" : "",
-                    "topic" : "",
-                    "productType" : "",
-                    "publishedCountry" : ""
-                }
-            },
-            "portalFeaturesComponent" : {
-                "show" : this.showportalFeaturesComponent(),
-                "searchable" : this.showportalFeaturesComponent(),
-                "filters" : {
-
-                }
+            documentsComponent : {
+                show : this.showDocuments,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                documentCategoryFilter : "",
+                documentProductCategoryFilter : "",
+                documentCountryFilter : ""
             }
         };
+
+        this.filteringObject = filteringObjectAux;
 
     }    
 

@@ -135,6 +135,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             if (pageParams.contactName !== undefined && pageParams.contactName !== '') {
                 this.searchValue = decodeURIComponent((pageParams.contactName+'').replace(/\+/g, '%20'));
                 this.onchangeSearchInputContactsFromNotification(this.searchValue);
+                console.log(this.searchValue);
             }
 
             this.lstTabs = tabsAux;
@@ -355,15 +356,15 @@ export default class PortalCompanyProfilePage extends LightningElement {
     processContacts(result,unwrappedContacts){
         let contacts = JSON.parse(JSON.stringify(result));
 
-        for (let i = 0; i < contacts.length; i++) {
+            for (let i = 0; i < contacts.length; i++) {
             let contact = contacts[i].contact;
             let user = contacts[i].contactUser;
             let services = contacts[i].services;
 
 
-            contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
-            if (user.LastLoginDate != null) {
-                let locale = user.LanguageLocaleKey.replace('_', '-');
+                contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
+                if (user.LastLoginDate != null) {
+                    let locale = user.LanguageLocaleKey.replace('_', '-');
                 let lastLogin = new Date(user.LastLoginDate);
                 contact.LastLoginDate = lastLogin;
 
@@ -372,12 +373,12 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 let year = lastLogin.getFullYear();
                 let month;
 
-                try {
+                    try {
                     month = lastLogin.toLocaleString(locale, { month: "long" });
-                    contact.LastLogin = month + ' ' + day + ', ' + year;
+                        contact.LastLogin = month + ' ' + day + ', ' + year;
                 }
-                catch (e) {
-                    contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
+                    catch (e) {
+                        contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
                 }
             }
 
@@ -573,6 +574,31 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     }
 
+    onchangeSearchInputContactsFromNotification(name) {
+        this.searchTextContacts = name;
+
+        // Clear the timeout if it has already been set.
+        // This will prevent the previous task from executing
+        // if it has been less than <MILLISECONDS>
+        clearTimeout(this.timeout);
+
+        // Make a new timeout set to go off in 1500ms
+        // eslint-disable-next-line @lwc/lwc/no-async-operation
+        this.timeout = setTimeout(() => {
+            //this.testfunction();
+
+            let contactList = this.template.querySelector('c-portal-contact-list');
+
+            if (this.searchTextContacts.length > 0) {
+                contactList.searchRecords(this.searchTextContacts);
+            } else {
+                contactList.searchRecords(null);
+            }
+
+        }, 500, this);
+
+    }
+
     onchangeSearchInputBranches(event) {
         this.searchFromRedirect = false;
         this.searchTextBranches = event.target.value;
@@ -588,6 +614,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             //this.testfunction();
             this.branchesQuery = this.searchTextBranches;
             this.searchRecords('Account');
+            if (this.searchTextBranches.length > 0) {
 
         }, 500, this);
 

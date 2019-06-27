@@ -176,7 +176,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                     this.category = pageParams.category;
                     this.topic = pageParams.topic;
                     this.subtopic = pageParams.subtopic;
-                    if (this.countryISO === undefined || this.countryISO === '') {
+                    if (pageParams.countryISO === undefined || pageParams.countryISO === '') {
                         this.countryISO = ''
                     } else {
                         this.countryISO = pageParams.countryISO;
@@ -266,6 +266,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         createCase({ countryiso: this.countryISO, isConcernCase: this.isConcernCase, topic: this.topic, subtopic: this.subtopic })
             .then(createCaseResult => {
                 this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
+                console.log(this.caseInitiated);
             });
     }
 
@@ -472,9 +473,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             record.Country_concerned_by_the_query__c = this.caseInitiated.Country_concerned_by_the_query__c;
             record.Origin = this.caseInitiated.Origin;
             record.Status = this.caseInitiated.Status;
-            record.CaseArea__c = this.caseInitiated.CaseArea__c;
-            record.Topic__c = this.topic + '__c';
-            record.Subtopic__c = this.subtopicLabel + '__c';
+            record.Topic__c = this.topicLabel;
+            record.Subtopic__c = this.subtopicLabel;
             record.IFAP_Country_ISO__c = this.caseInitiated.IFAP_Country_ISO__c.toUpperCase();
             record.Subject = this.caseInitiated.Subject;
             record.Description = this.caseInitiated.Description;
@@ -568,5 +568,10 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     //it really, really, really navigates to all cases. Promise!
     navigateToAllCases() {
         window.location.href = "/csportal/s/cases-list";
+    }
+
+    goBackToSupportReachUs() {
+        window.location.href = "/csportal/s/support-reach-us?category="
+            + this.category + "&topic=" + this.topic + "&subtopic=" + this.subtopic;
     }
 }

@@ -1,19 +1,15 @@
 import { LightningElement, track, api} from 'lwc';
 
-export default class PortalSearchBar extends LightningElement {
+import { NavigationMixin } from 'lightning/navigation';
+import { navigateToPage } from'c/navigationUtils';
 
-    @track showHoverResults = false;
+//import custom labels
+import CSP_Search_AdvancedSearch from '@salesforce/label/c.CSP_Search_AdvancedSearch';
+import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
+import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
+import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';
 
-    @track showBackdrop = false;
-
-    timeout = null;
-
-    @api placeholder;
-    
-    @track searchText = "";
-
-    //clone of the filtering object passed from the parent
-    @track filteringObject;
+export default class PortalSearchBar extends NavigationMixin(LightningElement) {
 
     //these are the filters passed from the search
     @api
@@ -22,10 +18,58 @@ export default class PortalSearchBar extends LightningElement {
     }
     set filteringObjectParent(value) {
         this.filteringObject = value;
+        this.setColumnsClass();
     }
 
-    connectedCallback() {
-        //nothing to do here... yet
+    @api placeholder;
+
+    label = {
+        CSP_Search_AdvancedSearch,
+        CSP_Search_NoResults_text1,
+        CSP_Search_NoResults_text2,
+        CSP_Search_NoResults_text3
+    }
+
+    @track showHoverResults = false;
+
+    @track showBackdrop = false;
+
+    timeout = null;
+
+    @track searchText = "";
+    
+    //clone of the filtering object passed from the parent
+    @track filteringObject;
+
+    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
+    searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
+
+    @track loadingTypehead = false;
+
+    @track leftColumnClass = '';
+    @track rightColumnClass = '';
+
+
+    @track noResultsClass = 'display: none;';
+    @track resultsClass = 'display: none;';
+
+
+    setColumnsClass(){
+        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+
+        this.leftColumnClass = 'slds-col slds-size_1-of-1 slds-large-size_2-of-3';
+        this.rightColumnClass = 'slds-col slds-size_1-of-1 slds-large-size_1-of-3';
+
+        if((filteringObjectAux.casesComponent.show || filteringObjectAux.faqsComponent.show) && (!filteringObjectAux.documentsComponent.show && !filteringObjectAux.servicesComponent.show)){
+            this.leftColumnClass = 'slds-col slds-size_1-of-1';
+            this.rightColumnClass = 'slds-col slds-size_1-of-1';
+        }
+
+        if((!filteringObjectAux.casesComponent.show && !filteringObjectAux.faqsComponent.show) && (filteringObjectAux.documentsComponent.show || filteringObjectAux.servicesComponent.show)){
+            this.leftColumnClass = 'slds-col slds-size_1-of-1';
+            this.rightColumnClass = 'slds-col slds-size_1-of-1';
+        }
+
     }
 
     closeSearch(){
@@ -40,13 +84,33 @@ export default class PortalSearchBar extends LightningElement {
 
         //if enter
         if(keyEntered === 13){
-            //go somewhere...
+            this.navigateToAdvancedSearchPage();
         } 
 
         //if escape
         if(keyEntered === 27){
             this.closeSearch();
         }
+    }
+
+    goToAdvancedSearch(event){
+        event.preventDefault();
+        event.stopPropagation();
+        this.navigateToAdvancedSearchPage();
+    }
+
+    navigateToAdvancedSearchPage(){
+        let params = {};
+        if(this.searchText !== '') {
+            params.searchText = this.searchText;
+        }
+
+        this[NavigationMixin.GenerateUrl]({
+            type: "comm__namedPage",
+            attributes: {
+                pageName: "advanced-search"
+            }})
+        .then(url => navigateToPage(url, params));
     }
 
     onclickSearchInput(){
@@ -60,10 +124,14 @@ export default class PortalSearchBar extends LightningElement {
         // if it has been less than <MILLISECONDS>
         clearTimeout(this.timeout);
 
+        this.loadingTypehead = true;
+
         // Make a new timeout set to go off in 1500ms
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
             //this.testfunction();
+
+            this.loadingTypehead = false;
 
             if(this.searchText.length > 0){
                 this.showHoverResults = true;
@@ -80,6 +148,34 @@ export default class PortalSearchBar extends LightningElement {
 
         }, 1500, this);
 
+    }
+
+    handlefilterchanged(event){
+
+        let eventObject = JSON.parse(JSON.stringify(event.detail.object));
+        let eventComponentName = JSON.parse(JSON.stringify(event.detail.componentName));
+
+        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+        filteringObjectAux[eventComponentName] = eventObject[eventComponentName];
+
+        this.filteringObject = filteringObjectAux;
+
+        this.updateResultsDiv();
+    }
+
+    updateResultsDiv(){
+        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+        if(this.searchText.length > 2 && filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.casesComponent.nrResults === 0 &&
+            filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0 && 
+            !filteringObjectAux.servicesComponent.loading && !filteringObjectAux.casesComponent.loading &&
+            !filteringObjectAux.faqsComponent.loading && !filteringObjectAux.casesComponent.loading){
+            this.noResultsClass = '';
+            this.resultsClass = 'display: none;';
+        }else{
+            this.noResultsClass = 'display: none;';
+            this.resultsClass = '';
+        }
+        
     }
 
 }

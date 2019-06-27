@@ -5,3 +5,7 @@
 .light{
     background-color: #f0f2f5
 }
+
+.maxPageContainerWidth {
+    max-width: calc( (1440px / 12) * 10);
+}

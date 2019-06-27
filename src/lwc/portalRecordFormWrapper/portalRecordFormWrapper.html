@@ -77,23 +77,22 @@
                                     <div if:true={field.visible}>
                                         <template if:false={field.changeUserStatus}>
                                             <lightning-output-field class="labelValue textValue"
-                                                                    field-name={field.fieldName}>
+                                                field-name={field.fieldName}>
                                             </lightning-output-field>
                                         </template>
 
                                         <template if:true={field.changeUserStatus}>
                                             <div class="changeUserStatus">
-                                                <lightning-output-field class="labelValue textValue"
-                                                                        field-name={field.fieldName}>
-                                                </lightning-output-field>
-                                                <template if:false={isForEdit}>
-                                                    <span class="changeUserStatusButton">
-                                                        <lightning-icon icon-name="utility:custom_apps" size="x-small"
-                                                                        class="darkBlueIcon cursorPointer"
-                                                                        onclick={openChangeUserPortalStatus}>
-                                                        </lightning-icon>
-                                                    </span>
-                                                </template>
+                                            <lightning-output-field class="labelValue textValue"
+                                                                    field-name={field.fieldName}>
+                                            </lightning-output-field>
+                                                <span class="changeUserStatusButton">
+                                                    <lightning-icon icon-name="utility:custom_apps" size="x-small"
+                                                        class="darkBlueIcon cursorPointer"
+                                                        onclick={openChangeUserPortalStatus}>
+                                                    </lightning-icon>
+                                                </span>
+
                                             </div>
 
                                         </template>
@@ -103,7 +102,6 @@
                                     </div>
                                 </span>
                             </template>
-                        </template>
                         </template>
                     </div>
                 </template>

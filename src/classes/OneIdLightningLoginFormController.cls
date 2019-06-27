@@ -151,11 +151,19 @@ public without sharing class OneIdLightningLoginFormController {
                 String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
                 lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/OneId_ChangePassword'+serviceNameParam));
             }
-            
+
+
+            //Check user permissions for FAQs, reassign if needed
+            try{
+                PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
+            }catch(Exception e){
+                System.debug('Unable to validate FAQs permissions assignments. \n'+e);
+            }
+
             //redirect to startUrl or some other page returned from the login 
             //for different login cases scenarios
             aura.redirect(lgn);
-            
+
             //return null in case of login success
             return null;
         }

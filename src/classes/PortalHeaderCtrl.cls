@@ -40,12 +40,12 @@ public without sharing class PortalHeaderCtrl {
     * @params String topParentId
     * @return List<Contact>
     */
-    public static List<Contact> getContactsToApprove(String topParentId) {
+    public static List<User> getContactsToApprove(String topParentId) {
 
-        return [SELECT Id, Name, User_Portal_Status__c, Owner.CreatedDate 
-                FROM Contact 
+        return [SELECT Contactid, Contact.Name, Contact.User_Portal_Status__c, CreatedDate 
+                FROM User 
                 WHERE (Account.Top_Parent__c =: topParentId OR AccountId =: topParentId) 
-                    AND User_Portal_Status__c = 'Pending Approval'];
+                    AND Contact.User_Portal_Status__c = 'Pending Approval'];
     }
 
     /* 
@@ -76,29 +76,31 @@ public without sharing class PortalHeaderCtrl {
         List<Notification__c> notificationList = getAllContactNotifications(loggedUser, isAdmin);
         List<NotificationItem> notificationItemList = new List<NotificationItem>();
 
-        List<Contact> userPortalAccessRequestList = new List<Contact>();
+        List<User> userPortalAccessRequestList = new List<User>();
         List<Portal_Application_Right__c> userPortalServiceAccessRequestList = new List<Portal_Application_Right__c>();
         if ( isAdmin ) {
             String topParentId = loggedUser.Contact.Account.Top_Parent__c == null ? loggedUser.Contact.AccountId : loggedUser.Contact.Account.Top_Parent__c;
             userPortalAccessRequestList = getContactsToApprove(topParentId);
             userPortalServiceAccessRequestList = getPortalAppRightsToApprove(topParentId);
             
-            for (Contact contact : userPortalAccessRequestList){
+            for (User contact : userPortalAccessRequestList){
                 // USER ACCESS (CONTACT)
-                NotificationItem notif = new NotificationItem(contact.Id, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Name}), contact.Owner.CreatedDate, false, 'Task', String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Name}), false, 'Portal Access');
+
+                // Contactid, Contact.Name, Contact.User_Portal_Status__c, CreatedDate 
+                NotificationItem notif = new NotificationItem(contact.Contactid, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), contact.CreatedDate, false, 'Task', String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), false, 'Portal Access', contact.Contact.Name);
                 notificationItemList.add(notif);
             }
             
             for (Portal_Application_Right__c application : userPortalServiceAccessRequestList){
                 // PORTAL SERVICE
-                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), application.CreatedDate, false, 'Task', String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), false, 'Portal Service');
+                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), application.CreatedDate, false, 'Task', String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), false, 'Portal Service', application.Contact__r.Name);
                 notificationItemList.add(notif);
                 }
 
         }
 
         for(Notification__c notification : notificationList){
-            NotificationItem notif = new NotificationItem(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c > 0, 'Announcement', notification.Message__c, true, 'Notification');
+            NotificationItem notif = new NotificationItem(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c > 0, 'Announcement', notification.Message__c, true, 'Notification', '');
             notificationItemList.add(notif);
         }
 
@@ -149,8 +151,10 @@ public without sharing class PortalHeaderCtrl {
         public String type { get; set;} // Notification / Access to Portal / Access to Service
         @AuraEnabled
         public String styles { get; set;}
+        @AuraEnabled
+        public String contactName { get; set;}
 
-        public NotificationItem(Id id, String subject, Datetime createdDate, Boolean viewed, String typeNotification, String message, Boolean isNotification, String type) {
+        public NotificationItem(Id id, String subject, Datetime createdDate, Boolean viewed, String typeNotification, String message, Boolean isNotification, String type, String contactName) {
             this.id = id;
             this.subject = subject;
             this.createdDate = CreatedDate;
@@ -160,8 +164,15 @@ public without sharing class PortalHeaderCtrl {
             this.isNotification = isNotification;
             this.type = type;
             this.styles = (viewed != true ? 'unreadNotification' : 'readNotification');
+            this.contactName = contactName;
         }
 
     }
+
+    @AuraEnabled
+    public static String goToOldChangePassword(){
+        return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_ChangePassword');
+    }
+
 
 }

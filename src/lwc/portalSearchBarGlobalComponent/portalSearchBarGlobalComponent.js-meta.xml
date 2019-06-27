@@ -7,14 +7,4 @@
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
     </targets>
-    <targetConfigs>
-        <targetConfig targets="lightningCommunity__Default">
-            <property name="showServices" type="Boolean" default="true" description="Shows Services Filter Section" required="true"/>
-            <property name="showCases" type="Boolean" default="true" description="Shows Cases Filter Section" required="true"/>
-            <property name="showFAQs" type="Boolean" default="true" description="Shows FAQs Filter Section" required="true"/>
-            <property name="showDocuments" type="Boolean" default="true" description="Shows Documents Filter Section" required="true"/>
-            <property name="showPortalFeatures" type="Boolean" default="true" description="Shows Portal Features Filter Section" required="true"/>
-            <property name="searchBarPlaceholder" type="String" default="Search here" required="true"/>
-        </targetConfig>
-    </targetConfigs>
 </LightningComponentBundle>

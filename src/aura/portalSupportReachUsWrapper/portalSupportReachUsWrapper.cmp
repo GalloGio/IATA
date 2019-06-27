@@ -4,12 +4,9 @@
     <aura:attribute name="deploymentUrl" type="String" required="true" />
     <aura:attribute name="endpoint" type="String" required="true" />
     <aura:attribute name="deploymentId" type="String" required="true" />
-    <aura:attribute name="chatButtontId" type="String" required="true" />
     <aura:attribute name="liveAgentOnlineDefault" type="String" />
     <aura:attribute name="liveAgentOnlineWithCountry" type="String" />
     <aura:attribute name="liveAgentOnlineNoCountry" type="String" />
-    <aura:attribute name="onlineText" type="String" required="true" default="" />
-    <aura:attribute name="offlineText" type="String" required="true" default="No Chat" />
     <aura:attribute name="liveAgentOnlineDefaultIdLanguage" type="String" />
     <aura:attribute name="liveAgentOnlineDefaultName" type="String" />
     <aura:attribute name="liveAgentOnlineWithCountryLanguage" type="String" />
@@ -23,9 +20,9 @@
     <aura:attribute name="isWithCountryLiveAgent" type="Boolean" default="false" />
     <aura:attribute name="isEmergency" type="Boolean" default="false" />
     <aura:attribute name="showOptions" type="Boolean" default="false" />
-    <aura:attribute name="userSessionData" type="Boolean" default="true" />
     <aura:attribute name="isQuestion" type="Boolean" default="true" />
     <aura:attribute name="phoneNumber" type="String" default="" />
+    <aura:attribute name="showPhoneNumber" type="Boolean" default="true" />
 
     <aura:attribute name="contact" type="Contact" />
     <aura:attribute name="category" type="String" />
@@ -55,7 +52,7 @@
                         <h1 class="text-large text-bold">{!$Label.c.csp_Support_Label}</h1>
                         <h2 class="text-xsmall slds-p-top_small">{!$Label.c.csp_Options_Label}</h2>
                     </div>
-                    <div class="slds-p-bottom_xx-large lower_gray_panel_half_border">
+                    <!-- <div class="slds-p-bottom_xx-large lower_gray_panel_half_border">
                         <div class="slds-p-vertical_large slds-text-align_center">
                             <h2 class="text-medium text-bold">{!$Label.c.csp_Suggestion_label}</h2>
                         </div>
@@ -76,7 +73,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="slds-grid grid-margin-bottom-justified slds-wrap 
                         slds-p-bottom_xx-large slds-align_absolute-center ">
                         <div class="slds-col tile-column slds-size_1-of-2 
@@ -88,7 +85,7 @@
                             <div class="text-small noPointerEvents slds-p-around_small ">
                                 {!$Label.c.csp_Case_Panel_label}
                             </div>
-                            <div class="noPointerEvents slds-p-around_small">
+                            <div class="noPointerEvents slds-p-around_small slds-m-bottom_medium">
                                 {!$Label.c.csp_Case_Panel_sub_label}
                             </div>
                             <lightning:button label="{!$Label.c.csp_CreateNewCaseTopLabel}"
@@ -105,7 +102,7 @@
                                 <div class="text-small noPointerEvents slds-p-around_small ">
                                     {!$Label.c.csp_Chat_Panel_label}
                                 </div>
-                                <div class="noPointerEvents slds-p-around_small">
+                                <div class="noPointerEvents slds-p-around_small slds-m-bottom_medium">
                                     {!$Label.c.csp_Chat_Panel_sub_label}
                                 </div>
                                 <div class="slds-grid">
@@ -174,19 +171,21 @@
                                     </aura:if>
                                 </div>
                             </div>
-                            <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
+                            <aura:if isTrue="{!v.showPhoneNumber}">
+                                <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
                                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                                    slds-m-horizontal_small customCard cardSizing">
-                                <div class="text-small noPointerEvents slds-p-around_small ">
-                                    {!$Label.c.csp_Call_Panel_label}
+                                                    slds-m-horizontal_small customCard cardSizing slds-scrollable_y">
+                                    <div class="text-small noPointerEvents slds-p-around_small ">
+                                        {!$Label.c.csp_Call_Panel_label}
+                                    </div>
+                                    <div class="noPointerEvents slds-p-around_small">
+                                        {!v.callCenterInfo_Label}
+                                    </div>
+                                    <div class="text-small noPointerEvents slds-p-around_small ">
+                                        {!v.phoneNumber_Label}
+                                    </div>
                                 </div>
-                                <div class="noPointerEvents slds-p-around_small">
-                                    {!v.callCenterInfo_Label}
-                                </div>
-                                <div class="text-small noPointerEvents slds-p-around_small ">
-                                    {!v.phoneNumber_Label}
-                                </div>
-                            </div>
+                            </aura:if>
                         </aura:if>
                     </div>
                 </aura:if>

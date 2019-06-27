@@ -77,6 +77,7 @@ public class PortalServicesCtrlTest {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
                 OwnerId = UserInfo.getUserId(),
+            	Reason_for_creation__c = 'Created by customer',
                 Location_Class__c = 'P'
             );
 
@@ -87,6 +88,7 @@ public class PortalServicesCtrlTest {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
                 Location_type__c = 'HE',
                 OwnerId = UserInfo.getUserId(),
+            	Reason_for_creation__c = 'Created by customer',
                 Location_Class__c = 'P'
             );
 
@@ -96,6 +98,7 @@ public class PortalServicesCtrlTest {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS,
                 Location_type__c = 'AO',
+            	Reason_for_creation__c = 'Created by customer',
                 OwnerId = UserInfo.getUserId()
             );
 
@@ -105,6 +108,7 @@ public class PortalServicesCtrlTest {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
                 Location_type__c = 'HO',
+              	Reason_for_creation__c = 'Created by customer',
                 OwnerId = UserInfo.getUserId()
             );
 
@@ -113,52 +117,58 @@ public class PortalServicesCtrlTest {
         Contact c = new Contact (
                 LastName = 'ContactTest',
                 FirstName = 'Name',
-                accountID = a.id,
-                email='ContactTest@portalservices.test'
+            	email = 'teste1@test.com',
+                accountID = a.id
             );
 
         Contact c2 = new Contact (
                 LastName = 'ContactTest2',
                 FirstName = 'Name',
-                accountId = a2.id,
-                email='ContactTest2@portalservices.test'
+            	email = 'teste2@test.com',
+                accountId = a2.id
             );
 
         Contact c3 = new Contact (
                 LastName = 'ContactTest3',
                 FirstName = 'Name',
-                accountId = a3.id,
-                email='ContactTest3@portalservices.test'
+            	email = 'teste3@test.com',
+                accountId = a3.id
             );
 
         Contact c4 = new Contact (
                 LastName = 'ContactTest4',
                 FirstName = 'Name',
-                accountId = a4.id,
-                email='ContactTest4@portalservices.test'
+            	email = 'teste4@test.com',
+                accountId = a4.id
             );
 
         insert new List<Contact>{c,c2,c3,c4};
 
         Portal_Application_Right__c appRight = new Portal_Application_Right__c(
-                Portal_Application__c = easyPay1.id,
+                Portal_Application__c = serviceTest3.id,
                 Right__c = 'Access Granted',
                 Contact__c = c.Id
         );
 
         Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
-                Portal_Application__c = easyPay2.id,
+                Portal_Application__c = serviceTest3.id,
                 Right__c = 'Access Granted',
                 Contact__c = c2.Id
         );
 
         Portal_Application_Right__c appRight3 = new Portal_Application_Right__c(
-                Portal_Application__c = easyPay3.id,
+                Portal_Application__c = serviceTest3.id,
                 Right__c = 'Access Requested',
                 Contact__c = c3.Id
         );
+        Portal_Application_Right__c appRight4 = new Portal_Application_Right__c(
+                Portal_Application__c = serviceTest3.id,
+                Right__c = 'Access Granted',
+                Contact__c = c4.Id
+        );
 
-        insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3};
+        insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3,appRight4};
+
 
     }
 
@@ -168,7 +178,6 @@ public class PortalServicesCtrlTest {
 
         Contact c = [select id from contact where lastName = 'ContactTest2'];
 
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -200,7 +209,6 @@ public class PortalServicesCtrlTest {
     public static void PortalServicesCtrlTest_getAccessRequestedServices() {
         Contact c = [select id from contact where lastName = 'ContactTest3'];
 
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -230,9 +238,8 @@ public class PortalServicesCtrlTest {
 
     @isTest
     public static void PortalServicesCtrlTest_getUserServicesList() {
-        Contact c = [select id from contact where lastName = 'ContactTest'];
+        Contact c = [select id from contact where lastName = 'ContactTest2'];
 
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -252,15 +259,11 @@ public class PortalServicesCtrlTest {
         
         System.runAs(testeUser1) {
             Test.StartTest();
+			PortalSearchFilterWrapper psfwrapper= new PortalSearchFilterWrapper();
             
-            PortalServicesCtrl.FilteringObject filteringObjectAux = new PortalServicesCtrl.FilteringObject();
-            filteringObjectAux.searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
-
-            String filteringObjectAuxStr = JSON.serialize(filteringObjectAux);
-
-
-            List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getUserServicesList(filteringObjectAuxStr);
-            System.assertEquals(lstResults.size() == 0, true);
+            psfwrapper.searchText = 'serviceTest2';
+            PortalServicesCtrl.PagedResult results = PortalServicesCtrl.getUserFilteredServices(JSON.serialize(psfwrapper), '0');
+            System.assertEquals(results.totalItemCount <= 0, true);
 
             Test.StopTest();
         }
@@ -271,7 +274,6 @@ public class PortalServicesCtrlTest {
 
         Contact c = [select id from contact where lastName = 'ContactTest'];
 
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -304,7 +306,6 @@ public class PortalServicesCtrlTest {
 
         Contact c = [select id from contact where lastName = 'ContactTest3'];
 
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -376,4 +377,5 @@ public class PortalServicesCtrlTest {
 
         }
     }
+
 }

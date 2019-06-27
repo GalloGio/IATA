@@ -1,5 +1,7 @@
 public with sharing class PortalFAQsCtrl {
 
+    public static Integer RESULTS_PER_PAGE = 10;
+
     @AuraEnabled(cacheable=true)    
     public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getCategoryTiles() {
         List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstOriginal = PortalFAQsCtrl.getFAQsInfo();
@@ -75,17 +77,6 @@ public with sharing class PortalFAQsCtrl {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<FAQ__kav> getSearchArticles(String searchTerm) {
-        String query = 'FIND \'' + String.escapeSingleQuotes(searchTerm) + '\' IN ALL FIELDS RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\' LIMIT 5 OFFSET 1)';
-        System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getSearchArticles] query - ' + query);
-
-        List<List<SObject>> searchList = Search.query(query);
-        List<FAQ__kav> kavs = (List<FAQ__kav>)searchList[0];
-
-        return kavs;
-    }   
-
-    @AuraEnabled(cacheable=true)
     public static List<PKB_Article_Feedback_Deflection__c> getArticlesFeedback(String articleIds, String sessionCookie) {
         String query = 'SELECT Article_ID__c, Article_Title__c, Deflection__c FROM PKB_Article_Feedback_Deflection__c WHERE Session_ID__c = \'' + String.escapeSingleQuotes(sessionCookie) + '\' AND Article_ID__c IN ' + articleIds;
         System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticlesFeedback] query - ' + query); 
@@ -116,66 +107,90 @@ public with sharing class PortalFAQsCtrl {
         );
 
         insert articleFeedback;
-    }             
+    }
 
     /*
         This method is used for CS Portal searchbar. 
         @refinedSearchSerialized - is a serialized filter object sent from the LWC controller for further filtering 
     */
     @AuraEnabled (cacheable=true)
-    public static List<FAQ__kav> getFaqsList(String refinedSearchSerialized, Boolean moreFields){
-        //User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
-        //String contactId = userAux.ContactId;
+    public static PagedResult getFilteredFAQsResultsPage(String searchKey, String requestedPage){
+        PortalSearchFilterWrapper filtersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
+        Integer requestedPageAux = integer.valueof(requestedPage);
 
-        System.debug('refinedSearchSerialized: ' + refinedSearchSerialized);
-        FilteringObject refinedSearch = null;
-        if(refinedSearchSerialized != null && refinedSearchSerialized != ''){
-            refinedSearch = (FilteringObject) JSON.deserialize(refinedSearchSerialized, FilteringObject.class);
+        List<FAQ__kav> lstToReturn = new List<FAQ__kav>();
+        //Create an empty default return object
+        PagedResult result = new PagedResult();
+        result.records = lstToReturn;
+        result.totalItemCount = 0;
+
+        if(filtersWrapper != null && filtersWrapper.searchText != null && filtersWrapper.searchText != '') {
+
+            List<String> subtopics = new List<String>();
+            if(filtersWrapper.faqsComponent == null || filtersWrapper.faqsComponent.faqSubtopicsList == null || filtersWrapper.faqsComponent.faqSubtopicsList.isEmpty()){
+                List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstStructure = PortalFAQsCtrl.getFAQsInfo();
+                if(lstStructure != null && !lstStructure.isEmpty()){
+                    for(DescribeDataCategoryGroupStructures.DataCategoryWrapper category : lstStructure){
+                        if(category.categoryName != 'All'){
+                            for(String subtopicAux : category.childs.values()){
+                                subtopics.add(subtopicAux+'__c');
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                for(String subtopicAux : filtersWrapper.faqsComponent.faqSubtopicsList){
+                    subtopics.add(subtopicAux + '__c');
+                }
+            }
+
+            String levels = '(' + String.join(subtopics,' , ') + ' ) ';
+            
+            String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
+                           'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\' ';
+            String queryPartTwo = ' ) WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
+
+
+            //Since SOSL don't have count, the first requested page is queried to all records
+            //and then the count is retrived from the returned results list. For the next pages
+            //limit and offset is used to improve loading times. 
+            if(requestedPageAux == 0){
+                String finalQuery = queryPartOne + queryPartTwo;
+                List<List<SObject>> searchList = Search.query(finalQuery);
+                List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
+
+                for(Integer i = 0; i<tmpList.size() && i < PortalFAQsCtrl.RESULTS_PER_PAGE; i++){
+                    lstToReturn.add(tmpList.get(i));
+                }
+                
+                result.records = lstToReturn;
+                result.totalItemCount = tmpList.size();
+            }else{
+                Integer offset = requestedPageAux * PortalFAQsCtrl.RESULTS_PER_PAGE;
+                String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ' ';
+
+                String finalQuery = queryPartOne + offsetQuery + queryPartTwo;
+
+                List<List<SObject>> searchList = Search.query(finalQuery);
+                List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
+                result.records = tmpList;
+            }
+            
         }
-        System.debug('refinedSearch: ' + refinedSearch);
-
-        //base query 
-        String finalQuery = 'SELECT Title';
-
-        if(moreFields) finalQuery += ', ArticleNumber, Answer__c';
-
-        finalQuery += ' FROM FAQ__kav WHERE PublishStatus= \'Online\' ';
-
-        //Add the clauses for further filtering 
-        if(refinedSearch != null ){
-            finalQuery += ' AND (Title LIKE \'%' + refinedSearch.searchText + '%\' OR Summary LIKE \'%' + refinedSearch.searchText + '%\' )';
-        }
-
-        finalQuery += ' LIMIT 10 ';
-
-        System.debug('finalQuery: ' + finalQuery);
-
-        List<FAQ__kav> lstArticles = Database.query(finalQuery);
-
-        System.debug('lstArticles: ' + lstArticles);
-
-        return lstArticles;
+        
+        return result;
     }
 
-
-
-    /*
-        Classes for the search filtering 
-    
-    */
-
-    public class FilteringObject {
-
+    public class PagedResult {
         @AuraEnabled
-        public String searchText {get; set;}
-
-        //the rest of the filters should be here too
-
-        public FilteringObject(){}
-
-
+        public Integer totalItemCount { get;set; }        
+        @AuraEnabled
+        public SObject[] records { get;set; }
+        @AuraEnabled
+        public Boolean userAdmin { get;set; }
+        @AuraEnabled
+        public String url { get;set; }
     }
-
-
 
 }

@@ -1,4 +1,4 @@
-public without sharing class CSP_Utils {
+public with sharing class CSP_Utils {
 
     /* 
     * @description Return field labels. It needs to pass the sObject and the necessary fields to retrieve
@@ -48,7 +48,79 @@ public without sharing class CSP_Utils {
         return loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
     }
 
+    /* 
+    * @description Return list of notifications for a specific contact. It needs to pass contact Id to get the respective notifications
+    * @params String contactId
+    * @return List<Notification__c>
+    */
+    public static List<Notification__c> getContactNotifications(String contactId) {
+
+        return [SELECT Id 
+                FROM Notification__c 
+                WHERE Contact__c =: contactId 
+                    AND (Number_of_views__c = 0 OR Number_of_views__c = null) 
+                    AND Archive__c = false 
+                ORDER BY Critical_notification__c DESC, CreatedDate DESC];
+    }
     
+    /* 
+    * @description Return list of portal users to approve. It needs to pass top parent Id to get the respective pending contacts to be approved
+    * @params String topParentId
+    * @return List<Contact>
+    */
+    public static List<Contact> getContactsToApprove(String topParentId) {
+
+        return [SELECT Id 
+                FROM Contact 
+                WHERE (Account.Top_Parent__c =: topParentId OR AccountId =: topParentId) 
+                    AND User_Portal_Status__c = 'Pending Approval'];
+    }
+
+    /* 
+    * @description Return list of portal users to approve. It needs to pass top parent Id to get the respective pending contacts
+    * @params String topParentId
+    * @return List<Notification__c>
+    */
+    public static List<Portal_Application_Right__c> getPortalAppRightsToApprove(String topParentId) {
+
+        return [SELECT Id 
+                FROM Portal_Application_Right__c 
+                WHERE Contact__r.AccountId =: topParentId 
+                    AND Right__c = 'Access Requested' 
+                    AND Portal_Application__r.Cannot_be_managed_by_portal_admin__c = false];
+    }
+
+    /* 
+    * @description Return number of notifications for the respective user. It needs to be a string to let the result be 99+ for more than 99
+    * @return String
+    */
+    @AuraEnabled
+    public static String getNotificationsCount() {
+    
+        User loggedUser = [SELECT Id, ContactId , Contact.AccountId, Contact.Account.Top_Parent__c, Contact.User_Portal_Status__c
+                           FROM User
+                           WHERE Id =: UserInfo.getUserId()];
+
+        //check if the user is a portal user
+        if(loggedUser == null || loggedUser.ContactId == null) return null;
+
+        Integer numNotifications = 0;        
+        List<Notification__c> notifications = getContactNotifications(loggedUser.ContactId);
+
+        if(!notifications.isEmpty())
+            numNotifications += notifications.size();
+
+        //Count also Users and Portal Service Requests to Approve for Admin Users
+        if(loggedUser.Contact.User_Portal_Status__c == 'Approved Admin') {
+
+            String topParentId = loggedUser.Contact.Account.Top_Parent__c == null ? loggedUser.Contact.AccountId : loggedUser.Contact.Account.Top_Parent__c;
+            
+            numNotifications += getContactsToApprove(topParentId).size() + getPortalAppRightsToApprove(topParentId).size();
+        }
+
+        return numNotifications > 99 ? '99+' : String.valueOf(numNotifications);
+    }
+
      @AuraEnabled
     public static String redirectToOldPortal(string url) {
         return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, url);
@@ -58,24 +130,37 @@ public without sharing class CSP_Utils {
     * @description Returns picklist values from a specific fields
     * @return list<PickListWrapper> //wrapper used for picklist values- picklistEntry not available in lightning atm
     */
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<PickListWrapper> getPickListValues(string sobj,string field){
-        Schema.DescribeSObjectResult sobjectDescribe = Schema.getGlobalDescribe().get(sobj).getDescribe();
-        List<Schema.PicklistEntry> pickListValues = sobjectDescribe.fields.getMap().get(field).getDescribe().getPickListValues();
-        
+        Map<String,Schema.SOBjectType> gd = Schema.getGlobalDescribe();
         List<PickListWrapper> options = new List<PickListWrapper>();
+
+        // return empty list if object name was not found in the schema
+        if (!gd.containsKey(sobj)) return options;
+
+        Schema.DescribeSObjectResult sor = gd.get(sobj).getDescribe();
+        Map<String,Schema.SObjectField> sofs = sor.fields.getMap();
+
+        // return empty list if field name was not found in the object's field list
+        if (!sofs.containsKey(field)) return options;
+
+        Schema.DescribeFieldResult dfr = sofs.get(field).getDescribe();
+
+        // return empty list if the field type is not picklist
+        if (dfr.getType() != Schema.DisplayType.Picklist && dfr.getType() != Schema.DisplayType.MultiPicklist) return options;
         
-        PickListWrapper emptySelection = new PickListWrapper(); 
-        
-        for (Schema.PicklistEntry a : pickListValues) {
-            PickListWrapper selection = new PickListWrapper();  
-            selection.label = a.getLabel();
-            selection.value = a.getValue();
-            selection.checked = false;
-            options.add(selection);
+        for (Schema.PicklistEntry ple : dfr.getPicklistValues()) {
+            if (ple.isActive()) {
+                PickListWrapper selection = new PickListWrapper();  
+                selection.label = ple.getLabel();
+                selection.value = ple.getValue();
+                selection.checked = false;
+                options.add(selection);
+            }
         }
+
         return options;
-    }
+    }    
 
     @AuraEnabled(cacheable=true)
     public static String randomUUID() {
@@ -117,40 +202,7 @@ public without sharing class CSP_Utils {
         return str.substring(index, index+1);
     }
 
-
-   /* 
-    * @description Return a public URL from a shared file
-    * @description The public URL (DistributionPublicUrl) is not ready in the moment it is inserted, so it's been retrieved using a SOQL instead
-    * @params String documentName, Id documentId
-    * @return String
-    */
-    @AuraEnabled
-    public static ContentDistribution getContentDistribution(String documentName, Id documentId) {
-        Datetime dt = Datetime.now();
-        List<ContentDistribution> contentInfo = [SELECT ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE ContentVersionId = :documentId AND ExpiryDate >= :dt LIMIT 1];
-        ContentDistribution contentToInsert;
-
-        if(!contentInfo.isEmpty()) {
-            return contentInfo[0];
-        } else {
-            contentToInsert = new ContentDistribution();
-            contentToInsert.Name = documentName;
-            contentToInsert.ContentVersionId = documentId;
-            contentToInsert.PreferencesExpires = true;
-            contentToInsert.ExpiryDate = Datetime.now().addMinutes(10);
-            contentToInsert.PreferencesAllowViewInBrowser = true;
-            contentToInsert.PreferencesLinkLatestVersion = true;
-            contentToInsert.PreferencesAllowPDFDownload = false;
-            contentToInsert.PreferencesNotifyOnVisit = false;
-            contentToInsert.PreferencesPasswordRequired = false;
-            contentToInsert.PreferencesAllowOriginalDownload = true;
-
-            insert contentToInsert; 
-        }
-
-        return [SELECT ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE Id = :contentToInsert.Id LIMIT 1][0];
-    } 
-
+    
     //* Retrieves available lanaguages for the community*/
     @AuraEnabled
     public static List<PickListWrapper> getCommunityAvailableLanguages(string sobj,string field){
@@ -200,6 +252,52 @@ public without sharing class CSP_Utils {
         pr.setCookies(new Cookie[]{new Cookie('lang',lang,null,100000000,false)});*/
    }
 
+       //Flag used to know if the new portal (CSPortal) is live or not.
+    @AuraEnabled
+    public static Boolean CSPortalRedirectExists(){
+        ISSP_CS__c issp_cs = ISSP_CS__c.getValues('CS Portal Redirect');
+        
+        if(issp_cs != null){
+            return true;
+        }
+        return false;
+    }
+
+    /* 
+    * @description Return a public URL from a shared file
+    * @description The public URL (DistributionPublicUrl) is not ready in the moment it is inserted, so it's been retrieved using a SOQL instead
+    * @params String documentName, Id documentId
+    * @return String
+    */
+    @AuraEnabled
+    public static ContentDistribution getContentDistribution(String documentName, Id documentId) {
+        Datetime dt = Datetime.now();
+        List<ContentDistribution> contentInfo = [SELECT ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE ContentVersionId = :documentId AND ExpiryDate >= :dt LIMIT 1];
+        ContentDistribution contentToInsert;
+
+        if(!contentInfo.isEmpty()) {
+            return contentInfo[0];
+        } else {
+            contentToInsert = new ContentDistribution();
+            contentToInsert.Name = documentName;
+            contentToInsert.ContentVersionId = documentId;
+            contentToInsert.PreferencesExpires = true;
+            contentToInsert.ExpiryDate = Datetime.now().addMinutes(10);
+            contentToInsert.PreferencesAllowViewInBrowser = true;
+            contentToInsert.PreferencesLinkLatestVersion = true;
+            contentToInsert.PreferencesAllowPDFDownload = false;
+            contentToInsert.PreferencesNotifyOnVisit = false;
+            contentToInsert.PreferencesPasswordRequired = false;
+            contentToInsert.PreferencesAllowOriginalDownload = true;
+
+            insert contentToInsert; 
+        }
+
+        return [SELECT ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE Id = :contentToInsert.Id LIMIT 1][0];
+    } 
+
+
+
     /*============================== Sidekick classes ==============*/
 
     // class side class used to wrap picklist values/
@@ -214,12 +312,12 @@ public without sharing class CSP_Utils {
         public PickListWrapper (){
 
         }
-        
         public PickListWrapper (string value,string label){
             this.value=value;
             this.label=label;
         }
     }
+    
     
 
 

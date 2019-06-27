@@ -1,14 +1,16 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 
 //navigation
-import { NavigationMixin } from 'lightning/navigation';
-import { navigateToPage } from 'c/navigationUtils';
+import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
+import { navigateToPage, getPageName } from 'c/navigationUtils';
+import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
 
 //notification apex method
 import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
+import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 
 
 // Toast
@@ -33,7 +35,23 @@ import Announcement from '@salesforce/label/c.Announcements_Notification';
 import Tasks from '@salesforce/label/c.Tasks_Notification';
 import AllNotifications from '@salesforce/label/c.All_Notifications_Notification';
 
+// Accept Terms
+import { updateRecord } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
+import Id from '@salesforce/user/Id';
+import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
+
 export default class PortalHeader extends NavigationMixin(LightningElement) {
+    @track displayAcceptTerms = true;
+
+    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept] })
+    WiregetUserRecord(result) {
+        if (result.data) {
+            let user = JSON.parse(JSON.stringify(result.data));
+            this.displayAcceptTerms = user.fields.ToU_accepted__c.value;
+        }
+    }
+
 
     _labels = {
         ISSP_Services,
@@ -101,6 +119,15 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     @track mainBackground = 'z-index: 9999;';
 
+    @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonService';
+    @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport';
+
+
+    @wire(CurrentPageReference)
+    getPageRef() {
+        this.handlePageRefChanged();
+    }
+
     connectedCallback() {
 
         isAdmin().then(result => {
@@ -110,8 +137,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         getNotifications().then(result => {
             this.baseURL = window.location.href;
             let resultsAux = JSON.parse(JSON.stringify(result));
-
-            console.log('AUX: ', resultsAux);
 
             resultsAux.sort(function (a, b) {
                 return new Date(b.createdDate) - new Date(a.createdDate);
@@ -200,6 +225,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         //this.navigateToOtherPage("");
     }
 
+    navigateToChangePassword() {
+        goToOldChangePassword({}).then(results => {
+            window.open(results, "_self");
+        });
+
+    }
 
     //user logout
     logOut() {
@@ -213,8 +244,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.openNotifications = !this.openNotifications;
 
         if (this.openNotifications) {
-            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000;';
-            this.headerButtonNotificationsCloseIconStyle = 'display: block;';
+            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
             this.headerButtonNotificationsStyle = 'display: none;';
             this.notificationNumberStyle = 'display: none;';
             this.openNotificationsStyle = 'display: block;';
@@ -295,40 +326,74 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                     this.dispatchEvent(showError);
 
                 });
-        } else {
-            if (notification.type === "Portal Service") {
-                let params = {};
-                params.serviceId = notification.id;
-                this.currentURL = window.location.href;
+        } else if (notification.type === "Portal Service") {
 
-                if (this.currentURL.includes(this.labels.PortalName)) {
-                    this[NavigationMixin.GenerateUrl]({
-                        type: "standard__namedPage",
-                        attributes: {
-                            pageName: "manage-service"
-                        }
-                    })
-                        .then(url => navigateToPage(url, params));
-                } else {
-                    goToManageService().then(results => {
-                        navigateToPage(results, params);
-                    });
-                }
+            let params = {};
+            params.serviceId = notification.id;
+            this.currentURL = window.location.href;
 
+            if (this.currentURL.includes(this.labels.PortalName)) {
+                this[NavigationMixin.GenerateUrl]({
+                    type: "standard__namedPage",
+                    attributes: {
+                        pageName: "manage-service"
+                    }
+                })
+                    .then(url => navigateToPage(url, params));
+            } else {
+                goToManageService().then(results => {
+                    navigateToPage(results, params);
+                });
             }
+        } else {
+            navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
         }
     }
 
-    goToAdvancedSearchPage(event) {
-        let params = {};
+    goToAdvancedSearchPage() {
+        this.navigationCheck("advanced-search", "advanced-search");
+    }
 
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: "advanced-search"
-            }
-        })
-            .then(url => navigateToPage(url, params));
+    handlePageRefChanged() {
+        let pagename = getPageName();
+        if (pagename) {
+            getBreadcrumbs({ pageName: pagename })
+                .then(results => {
+                    let breadCrumbs = JSON.parse(JSON.stringify(results));
+                    if (breadCrumbs && breadCrumbs[1] && (breadCrumbs[1].DeveloperName === 'services' || breadCrumbs[1].DeveloperName === 'support')) {
+                        if (breadCrumbs[1].DeveloperName === 'services') {
+                            this.buttonServiceStyle = `${this.buttonServiceStyle} selectedButton`;
+                            this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+                        } else if (breadCrumbs[1].DeveloperName === 'support') {
+                            this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+                            this.buttonSupportStyle = `${this.buttonSupportStyle} selectedButton`;
+                        }
+                    } else {
+                        this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+                        this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+                    }
+                });
+        } else {
+            this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+            this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+        }
+    }
+
+    acceptTerms() {
+
+        const fields = {};
+        fields.Id = Id;
+        fields.ToU_accepted__c = true;
+        fields.Date_ToU_accepted__c = new Date().toISOString();
+        const recordInput = { fields };
+
+        updateRecord(recordInput)
+            .then(() => {
+                this.displayAcceptTerms = true;
+            });
+
+
+
     }
 
 }

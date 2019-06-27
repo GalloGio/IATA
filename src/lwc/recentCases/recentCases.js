@@ -26,7 +26,6 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         CSP_Question1URL,
         CSP_Question2URL
     };
-    @track error;
     @track data;
     @track columns;
     @track loading = true;
@@ -46,18 +45,15 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
             .then(url => this.casesListUrl = url);
 
         getSelectedColumns({ sObjectType: 'Case', sObjectFields: this.fieldLabels })
-            .then(results => {
-                this.columns = [
-                    { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
-                    { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130, },
-                    { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_blank'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
-                    { label: results.Country_concerned__c, fieldName: 'Country', type: 'text' },
-                    { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'Portal_Case_Status__c' } } }
-                ];
-            })
-            .catch(error => {
-                this.error = error;
-            });
+        .then(results => {
+            this.columns = [
+                { label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 137, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'} },
+                { label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 130, },
+                { label: results.Subject, fieldName: 'CaseURL', type: 'url', typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'} },
+                { label: results.Country_concerned__c, fieldName: 'Country', type: 'text' },
+                { label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: { class: { fieldName: 'Portal_Case_Status__c' } } }
+            ];
+        });
 
     }
 
@@ -77,7 +73,6 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
             this.data = allDataAux.records;
             this.loading = false;
         } else if (results.error) {
-            this.error = results.error;
             this.loading = false;
         }
     }
@@ -91,6 +86,5 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         event.stopPropagation();
 
         navigateToPage(this.casesListUrl, {});
-
     }
 }

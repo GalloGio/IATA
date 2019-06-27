@@ -327,4 +327,11 @@ public  class PortalCalendarCtrlTest {
         }
     }
 
+    @isTest
+    public static void testController_isAirlineOrAgencyUser() {
+        
+            PortalCalendarCtrl.isAirlineOrAgencyUser();
+        
+    }
+
 }
