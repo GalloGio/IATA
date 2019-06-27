@@ -7430,7 +7430,7 @@ system.debug('aqui sectorValue ' + sectorValue);
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
                 Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
-                Legacy_External_ID__c
+                Legacy_External_ID__c, Contact__r.OtherState
                 FROM AMS_Account_Role__c
                 where Account__c = :lAccountConcerned
                 and RecordTypeId = :rtAccRoleOwnership
