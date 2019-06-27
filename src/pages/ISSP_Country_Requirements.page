@@ -210,7 +210,8 @@
                     					<div class="col-md-12" style="display: {!IF(returnpage == true,'none','')}">                
                       						<h4>
                         						<span class="glyphicon glyphicon-menu-left"></span>
-                        						<a href="/ISSP_ANG_ProductComparison">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
+                        						<a href="/ISSP_ANG_ProductComparison" style="display: {!IF(agencyType != '', 'none', '')}">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
+                                    <a href="/ISSP_ANG_ProductComparison?chinaAccred={!agencyType}" style="display: {!IF(agencyType != '', '', 'none')}">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
                       						</h4>
                     					</div>
                 						<div class="col-md-12" style="display: {!IF(returnpage != true,'none','')}">                

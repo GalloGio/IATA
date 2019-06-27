@@ -45,10 +45,11 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     }
     public String agencyType {
         get {
-            return agencyType == null ? 'Domestic' : agencyType;
+            return agencyType == null ? '' : agencyType;
         } 
         set;
     }
+    public Boolean isChinaAgent {get; set;}
 
     //Check is the user has access to this service
     public static Boolean isAllowedAccess() {
