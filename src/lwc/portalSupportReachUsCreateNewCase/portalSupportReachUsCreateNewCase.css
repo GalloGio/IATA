@@ -205,3 +205,14 @@
     top: 12px;
     position: absolute;
 }
+
+.createModalContainer {
+    position: absolute;
+    height: calc(100% + 700px);
+    top: -160px;
+}
+
+.createModalContainer>section{
+    position: relative;
+    height: 100%;
+}

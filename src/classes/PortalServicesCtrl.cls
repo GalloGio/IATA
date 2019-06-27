@@ -14,7 +14,8 @@ public class portalServiceException extends Exception {}
 @AuraEnabled (cacheable=true)
 public static List<Portal_Applications__c> getNonRequestableServicesList(String contactId){
 
-	Contact con = [Select id, account.Sector__c, contact.account.Category__c from Contact where id =:contactId];
+	Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO', 'GE'};
+	Contact con = [Select id, account.Sector__c, account.Location_Type__c, contact.account.Category__c from Contact where id =:contactId];
 
 	List<Portal_Applications__c> externalLinksList = new List<Portal_Applications__c>();
 	List<Portal_Applications__c> portalApplicationList = new List<Portal_Applications__c>();
@@ -48,7 +49,7 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 		if (pApp.Name == 'Insurance Providers') {
 			if (((con.Account.Sector__c == 'Travel Agent' || con.Account.Sector__c == 'Cargo Agent')
 			     && con.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) &&
-			    (con.Account.Is_Branch_Abroad__c == 'Yes') &&
+			    (allowedLocTypes.contains(con.Account.Location_Type__c) || con.Account.Is_Branch_Abroad__c == 'Yes') &&
 			    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(con.Account.Status__c) || con.Account.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
 			    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == 'Approved Admin')) {
 				externalLinksList.add(pApp);
@@ -335,6 +336,39 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
 
 	return lstToReturn;
 }
+
+    @AuraEnabled
+    public static Map<Id,List<ServiceWrapper>> getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds){
+
+        Map<Id,List<ServiceWrapper>> contactToServices = new Map<Id,List<ServiceWrapper>>();
+
+        List<Portal_Application_Right__c > usersGrantedList = [select id,Application_Name__c,Right__c,Portal_Application__r.ServiceName__c,Portal_Application__r.Id,Portal_Application__r.Application_URL__c,Contact__r.Account.ANG_IEP_Status_FF__c
+        from Portal_Application_Right__c
+        where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
+
+
+        Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId from User WHERE Id in: contactToUserIds.values()]);
+
+        Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
+        for(Portal_Application_Right__c accessRight : usersGrantedList){
+
+            String iepStatus = accessRight.Contact__r.Account.ANG_IEP_Status_FF__c;
+
+            Boolean isAdmin = ISSP_Constant.adminIdSet.contains(userInfos.get(contactToUserIds.get(accessRight.Contact__c)).ProfileId);
+
+            Portal_Applications__c portalAppAux = new Portal_Applications__c(Id=accessRight.Portal_Application__r.Id,Application_URL__c=accessRight.Portal_Application__r.Application_URL__c,Name=accessRight.Application_Name__c);
+
+            ServiceWrapper wrap = new ServiceWrapper(portalAppAux, isAdmin, iepStatus,false, '');
+
+            if(!contactToServices.containsKey(accessRight.Contact__c)){
+                contactToServices.put(accessRight.Contact__c,new List<ServiceWrapper>{wrap});
+            }else{
+                contactToServices.get(accessRight.Contact__c).add(wrap);
+            }
+        }
+
+        return contactToServices;
+    }
 
 @AuraEnabled
 public static List<ServiceWrapper> getUserAccessGrantedServices(){

@@ -16,6 +16,8 @@ import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
 import MembershipFunction from '@salesforce/label/c.csp_MembershipFunction';
 import Area from '@salesforce/label/c.csp_WorkingAreas';
+import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
+
 
 
 
@@ -36,6 +38,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api services;
     @api showfunction;
 
+    @api isForEdit = false;
 
     @track isLoading = true;
     @track isLoadingEdit = true;
@@ -51,16 +54,15 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     @track changeUserPortalStatus = false;
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area };
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
     connectedCallback() {
         this.showEdit = (this.showEdit === 'true' ? true : false);
 
-        console.log('BLA: ', JSON.parse(JSON.stringify(this.fields)));
+        if (this.isContact && !this.isForEdit) {
 
-        if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
                 let contact = JSON.parse(JSON.stringify(this.staticFields));
@@ -149,7 +151,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let listSelected = JSON.parse(JSON.stringify(this.listSelected));
         this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
-        //eval("$A.get('e.force:refreshView').fire();");
     }
 
     handleError(event) {

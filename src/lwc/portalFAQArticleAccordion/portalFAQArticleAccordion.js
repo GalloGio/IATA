@@ -96,6 +96,10 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     // GET COOKIE SESSION AND INITIALIZE LIST OF ARTICLES
     connectedCallback() {
         let cookie = this.getCookie('PKB2SessionId');
+        
+        if(this.articleView !== undefined && this.articleView.q !== undefined) {
+            this.searchText = this.articleView.q;
+        }
 
         if(cookie !== null && cookie !== undefined) {
             this.sessionCookie = cookie;
@@ -116,7 +120,6 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
             this.renderFAQs(); // RENDER ARTICLES FROM DEEPEST SUBTOPICS
         } else if(this.articleView !== undefined) {
             if(this.articleView.q !== undefined) {
-                this.searchText = this.articleView.q;
                 let filteringObject = {};
                 filteringObject.searchText = this.articleView.q;
     
