@@ -248,7 +248,7 @@ public class HigherLogicIntegrationHelper {
 				accId = fetchAssociatedAccountId(newUser);
 			}
 			//Only for Internal users
-			else accId = ProvisionKaviAccess.getFakeAccount().Id;
+			else accId = ProvisionKaviAccess.IATASSWAccount.Id;
 
 			newAccountsIds.add(accId);
 			contactIdMap.put(accId, contactId);
