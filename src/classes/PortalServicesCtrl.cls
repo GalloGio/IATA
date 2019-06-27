@@ -336,6 +336,39 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
 	return lstToReturn;
 }
 
+    @AuraEnabled
+    public static Map<Id,List<ServiceWrapper>> getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds){
+
+        Map<Id,List<ServiceWrapper>> contactToServices = new Map<Id,List<ServiceWrapper>>();
+
+        List<Portal_Application_Right__c > usersGrantedList = [select id,Application_Name__c,Right__c,Portal_Application__r.ServiceName__c,Portal_Application__r.Id,Portal_Application__r.Application_URL__c,Contact__r.Account.ANG_IEP_Status_FF__c
+        from Portal_Application_Right__c
+        where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
+
+
+        Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId from User WHERE Id in: contactToUserIds.values()]);
+
+        Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
+        for(Portal_Application_Right__c accessRight : usersGrantedList){
+
+            String iepStatus = accessRight.Contact__r.Account.ANG_IEP_Status_FF__c;
+
+            Boolean isAdmin = ISSP_Constant.adminIdSet.contains(userInfos.get(contactToUserIds.get(accessRight.Contact__c)).ProfileId);
+
+            Portal_Applications__c portalAppAux = new Portal_Applications__c(Id=accessRight.Portal_Application__r.Id,Application_URL__c=accessRight.Portal_Application__r.Application_URL__c,Name=accessRight.Application_Name__c);
+
+            ServiceWrapper wrap = new ServiceWrapper(portalAppAux, isAdmin, iepStatus,false, '');
+
+            if(!contactToServices.containsKey(accessRight.Contact__c)){
+                contactToServices.put(accessRight.Contact__c,new List<ServiceWrapper>{wrap});
+            }else{
+                contactToServices.get(accessRight.Contact__c).add(wrap);
+            }
+        }
+
+        return contactToServices;
+    }
+
 @AuraEnabled
 public static List<ServiceWrapper> getUserAccessGrantedServices(){
 

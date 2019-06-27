@@ -361,4 +361,40 @@ public class PortalServicesCtrlTest {
         
     }
 
+    @isTest
+    public static void PortalServicesCtrlTest_getAccessGrantedServicesForContacts() {
+
+        List<Contact> contacts = [SELECT Id,email,firstname,lastname from Contact WHERE LastName LIKE 'ContactTest%' LIMIT 3];
+
+        List<Id> contactIds = new List<Id>();
+        List<User> users = new List<User>();
+        Map<Id, Contact> contactIdtoContact = new Map<Id, Contact>();
+        Map<Id, List<PortalServicesCtrl.ServiceWrapper>> contactToServices = new Map<Id, List<PortalServicesCtrl.ServiceWrapper>>();
+
+        Map<Id, Id> contactToUser = new Map<Id, Id>();
+
+        if (!contacts.isEmpty()) {
+            for (Contact c : contacts) {
+                User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+                contactToUser.put(c.Id, portalUser.Id);
+                contactIds.add(c.Id);
+                contactIdtoContact.put(c.Id, c);
+            }
+
+            users = DAL_ISSP.getUsersByContactId(contactIds);
+
+
+            for (User u : users) {
+                contactToUser.put(u.ContactId, u.Id);
+            }
+
+            contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
+            System.assert(!contactToServices.keySet().isEmpty());
+
+        }
+    }
+
+
+
+
 }
