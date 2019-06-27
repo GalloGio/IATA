@@ -104,6 +104,8 @@ public with sharing class PortalProfileCtrl {
         List<User> users = new List<User>();
         Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
 
+        Map<Id,List<PortalServicesCtrl.ServiceWrapper>> contactToServices = new Map<Id,List<PortalServicesCtrl.ServiceWrapper>>();
+
         if(!contacts.isEmpty()){
             for(Contact c :contacts){
                 contactIds.add(c.Id);
@@ -111,11 +113,20 @@ public with sharing class PortalProfileCtrl {
             }
 
             users = DAL_ISSP.getUsersByContactId(contactIds);
+
+            Map<Id,Id> contactToUser = new Map<Id,Id>();
+            for(User u :users){
+                contactToUser.put(u.ContactId,u.Id);
+            }
+
+            contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
+
             ContactWrapper wrapper;
             for(User u :users){
                 wrapper = new ContactWrapper();
                 wrapper.contact = contactIdtoContact.get(u.ContactId);
                 wrapper.contactUser = u;
+                wrapper.services = contactToServices.get(u.ContactId);
 
                 wrappers.add(wrapper);
             }
@@ -162,6 +173,9 @@ public with sharing class PortalProfileCtrl {
 
         @AuraEnabled
         public User contactUser;
+
+        @AuraEnabled
+        public List<PortalServicesCtrl.ServiceWrapper> services;
     }
 
 
@@ -177,12 +191,11 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.put(LABEL_ACCESSIBILITY,new List<FieldWrapper>());
         wrapperMap.put(LABEL_PROFESSIONAL,new List<FieldWrapper>());
 
-
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Birthdate',true,true));
-        /*wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Salutation',true,true));
+        /*wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Salutation',false,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('FirstName',true,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('LastName',true,true));*/
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true)); // !Add name field, it will fetch Salutation picklist values
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Preferred_Language__c',true,true));
 
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Email',false,true));
@@ -194,7 +207,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingStreet',true,true));
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingPostalCode',true,true));
 
-        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Status__c',true,true));
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('User_Portal_Status__c',false,true));
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorisation',false,true));
 
         wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
@@ -346,6 +359,9 @@ public with sharing class PortalProfileCtrl {
         public Boolean isAccessibility;
 
         @AuraEnabled
+        public Boolean isContactServices;
+
+        @AuraEnabled
         public List<accessibilityWrapper> accessibilityList;
 
         public FieldWrapper (String fieldName, Boolean fullSize) {
@@ -388,6 +404,8 @@ public with sharing class PortalProfileCtrl {
             } else {
                 this.changeUserStatus = false;
             }
+
+            this.isContactServices = fieldName == 'ContactServices' ? true : false;
 
         }
         public FieldWrapper (String fieldName, Boolean editable, Boolean visible,String className, String label){
@@ -470,10 +488,10 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('ISO_Country__c',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('MobilePhone',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
-        wrapperMap.get(viewFields).add(new FieldWrapper('Available_Services_Images__c',false,true,true));
-        wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
+        //wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Membership_Function__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
 
         //EDIT
         wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));

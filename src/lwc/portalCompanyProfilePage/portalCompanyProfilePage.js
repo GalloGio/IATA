@@ -340,7 +340,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     retrieveContacts() {
         getContacts({ offset: this.contactsOffset }).then(result => {
-
             this.isFetching = false;
             if (result.length == 0) { this.contactsEnded = true; return; }
 
@@ -359,6 +358,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         for (let i = 0; i < contacts.length; i++) {
             let contact = contacts[i].contact;
             let user = contacts[i].contactUser;
+            let services = contacts[i].services;
 
 
             contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
@@ -379,6 +379,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 catch (e) {
                     contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
                 }
+            }
+
+            if(services!= null){
+                contact.services = services;
             }
             //contact.LastLogin = user.LastLoginDate;
             contact.IsoCountry = contact.Account.IATA_ISO_Country__r.Name;
@@ -421,17 +425,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
     getContactsFieldMap() {
         getContactsListFields().then(result => {
             let sectionMap = JSON.parse(JSON.stringify(result));
-
-            let localMap = [];
-            for (let key in sectionMap) {
-                // Preventing unexcepted data
-                if (sectionMap.hasOwnProperty(key)) { // Filtering the data in the loop
-                    let value = sectionMap[key];
-                    localMap.push({ 'value': value, 'key': key });
-                }
-            }
-
-            //this.contactFields = localMap;
             this.contactFields = sectionMap;
         });
     }
@@ -439,16 +432,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
     getBranchesFieldMap() {
         getBranchesListFields().then(result => {
             let sectionMap = JSON.parse(JSON.stringify(result));
-
-            let localMap = [];
-            for (let key in sectionMap) {
-                // Preventing unexcepted data
-                if (sectionMap.hasOwnProperty(key)) { // Filtering the data in the loop
-                    let value = sectionMap[key];
-                    localMap.push({ 'value': value, 'key': key });
-                }
-            }
-            //this.contactFields = localMap;
             this.branchFields = sectionMap;
         });
     }
@@ -525,10 +508,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     searchBranches(query){
-
-        console.log('searchingBranches '+query+', off: '+this.branchesOffsetSearch);
         searchContacts({queryString:query, offset:this.branchesOffsetSearch }).then(result => {
-            console.log('gotBranches: '+result.length);
             let branchesList = this.template.querySelector('c-portal-contact-list');
             this.isFetching = false;
             this.searchMode = true;
