@@ -186,6 +186,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track ICCSRoleChangeConfirm = false;
     @track showICCSRoleSelection = false;
     @track ICCSRoleSelectionModal = false;
+    @track ICCSRole;
     @track ICCSOpenAccountModal = false;
     @track acceptSSWSConditions = false;
     @track SSWSSuccessModal = false;
@@ -197,7 +198,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track TDSuccessModal = false;
     @track ICCSSuccessMessage;
     @track SSWSSuccessMessage;
+    @track defaultPortalUserRole = [];
     @track roleICCSList = [];
+    @track radioOption;
     @track roleList;
 
 
@@ -393,10 +396,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         availableIEPPortalServiceRoles()
             .then(result => {
                 let myResults = JSON.parse(JSON.stringify(result));
-                this.defaultPortalUserRole = myResults.find(obj => obj.Default_User_Role__c === true).Role__c;
+
+                let mydefaultPortalUserRole = myResults.filter(obj => obj.Default_User_Role__c === true && obj.Connected_App__c === this.serviceFullName);
+
+                if (mydefaultPortalUserRole) {
+                    this.defaultPortalUserRole = mydefaultPortalUserRole[0].Role__c;
+                    this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
+                } else {
+                    console.log('Custom Setting configuration missing');
+                }
             });
 
-        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
     }
 
     ICCSRolePick(event) {
@@ -452,9 +462,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 if (this.ICCSRole !== undefined && this.ICSSRole !== '') {
                     this.ICCSMessage = false;
                     this.ICCSRoleSelectionModal = true;
+                    this.showButtons = false;
                 }
 
-                if (results === 'okauto') {
+                if (results === 'okauto' || results === 'ok') {
                     this.preparePolling();
                 }
             });
@@ -519,28 +530,29 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     preparePolling() {
         userProvisioningRequests()
             .then(NumberofUserProvisioningRequests => {
-                this.NumberOfUseProvisioningRequests = NumberofUserProvisioningRequests;
+                this.NumberOfUseProvisioningRequests = JSON.parse(JSON.stringify(NumberofUserProvisioningRequests));
                 availableIEPPortalServiceRoles()
                     .then(result => {
                         let results = JSON.parse(JSON.stringify(result));
                         let myRolesObj = [];
-                        let iepRoles = results.filter(obj => { return obj.Connected_App__c.startsWith('IATA EasyPay') && obj.Permission_set_SSO__c != null });
-                        for (const role of iepRoles) {
-                            myRolesObj.push({ label: role.Connected_App__c + ' - ' + role.Role__c, value: role.Permission_set_SSO__c });
-                        }
-                        if (this.radioOption !== undefined && this.radioOption !== '') {
-                            this.permSetSSO = myRolesObj.find(obj => obj.label === this.serviceFullName + ' - ' + this.radioOption).value;
-                        } else {
-                            this.permSetSSO = myRolesObj.find(obj => obj.label === this.serviceFullName + ' - ' + this.defaultPortalUserRole).value;
-                        }
-                        this.onchangeSearchInput();
+                        if (this.ICCSRole === undefined || this.ICSSRole === '') {
+                            let iepRoles = results.filter(obj => { return obj.Connected_App__c.startsWith('IATA EasyPay') && obj.Permission_set_SSO__c != null });
+                            for (const role of iepRoles) {
+                                myRolesObj.push({ label: role.Connected_App__c + ' - ' + role.Role__c, value: role.Permission_set_SSO__c });
+                            }
 
+                            if (this.radioOption !== undefined && this.radioOption !== '') {
+                                this.permSetSSO = myRolesObj.find(obj => obj.label === this.serviceFullName + ' - ' + this.radioOption).value;
+                            } else {
+                                this.permSetSSO = myRolesObj.find(obj => obj.label === this.serviceFullName + ' - ' + this.defaultPortalUserRole).value;
+                            }
+                        }
+                        this.pollServer();
                     });
             })
     }
 
-    onchangeSearchInput() {
-
+    pollServer() {
         // Clear the timeout if it has already been set.
         // This will prevent the previous task from executing
         // if it has been less than <MILLISECONDS>
@@ -557,7 +569,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     if (results === 'Success') {
 
                         if ((this.radioOption === undefined || this.radioOption === '')
-                            && (this.ICCSRole === undefined && this.ICSSRole === '')) {
+                            && (this.ICCSRole === undefined || this.ICSSRole === '')) {
                             serviceWrapperRedirect({ serviceId: this.trackedServiceId })
                                 .then(result => {
                                     window.open(JSON.parse(JSON.stringify(result)));
@@ -566,12 +578,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
 
                     } else if (results === 'Incomplete') {
-                        this.onchangeSearchInput();
-                    } else {
+                        this.pollServer();
+                    } else if (results === 'Error') {
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: 'Error',
-                                message: 'Timeout on service request. Please try again later.',
+                                message: 'Error on service request. Please try again later.',
                                 variant: 'error',
                                 mode: 'pester'
                             })
