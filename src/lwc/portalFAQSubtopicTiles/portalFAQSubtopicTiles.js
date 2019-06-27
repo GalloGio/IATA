@@ -94,7 +94,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics;      
+        this.subTopicTiles = tempSubTopics.reverse();      
         
         //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected subtopic
         let subtopicInfo = {
