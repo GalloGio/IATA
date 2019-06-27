@@ -72,7 +72,6 @@ public with sharing class PortalProfileCtrl {
 
         set;
     }
-    
 
     /**
     * Todo: Implement contact search.
@@ -192,10 +191,8 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.put(LABEL_ACCESSIBILITY,new List<FieldWrapper>());
         wrapperMap.put(LABEL_PROFESSIONAL,new List<FieldWrapper>());
 
-
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Birthdate',true,true));
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('FirstName',true,true));
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('LastName',true,true));*/
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Preferred_Language__c',true,true));
 
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Email',false,true));
@@ -488,9 +485,10 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('ISO_Country__c',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('MobilePhone',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Membership_Function__c',false,true,true));
-        wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));
 
         //EDIT
         wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
@@ -515,7 +513,6 @@ public with sharing class PortalProfileCtrl {
         if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){
             wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
         }
-
 
         return wrapperMap;
 
