@@ -10456,6 +10456,15 @@ WSPN-Worldspan</inlineHelpText>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Global_ID__c</fullName>
+        <description>global unique identifier</description>
+        <displayFormat>001{0000000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
         <fullName>Guaranteed_amount__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
@@ -77949,7 +77958,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypes>
         <fullName>Others</fullName>
         <active>true</active>
-        <description>The new record type for TIESS, Non IATA agents, Partners - NEW data model</description>
+        <description>Use only for non-airline, non-agency accounts, that you have verified.</description>
         <label>Others</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
@@ -83876,7 +83885,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypes>
         <fullName>Standard_Account</fullName>
         <active>true</active>
-        <description>New Record Type to be used for standard account</description>
+        <description>Use for all other accounts.</description>
         <label>Standard Account</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
@@ -99791,14 +99800,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Field_Head_Office__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>IATA_Member__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Strategic_Partners__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ICCS_Membership_Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>IATA_ISO_Country__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>

@@ -64,9 +64,11 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
                are.ANG_Expired__c = true;    
                are.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE;
             }
-            if(are.ANG_Cash_Conditions_Activation_FF__c <= System.today() && are.ANG_Event_Status__c == ANG_Risk_Helper.STATUS_ACTIVE && !are.ANG_Limit_Cash_Conditions__c){
+
+            /*NEWGEN-4998 Fail Financial Statement Risk Event must not apply delayed cash conditions automatically*/
+            /*if(are.ANG_Cash_Conditions_Activation_FF__c <= System.today() && are.ANG_Event_Status__c == ANG_Risk_Helper.STATUS_ACTIVE && !are.ANG_Limit_Cash_Conditions__c){
                are.ANG_Limit_Cash_Conditions__c = true;
-            }
+            }*/
         }
         
         ANG_AccountTriggerHandler.isExpiration = true;
