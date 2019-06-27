@@ -23,3 +23,11 @@
 .searchDivStyle {
     position:relative;
 }
+
+.componentLoadingSpinner{
+    position: relative;
+    display: inline-block;
+    margin: 6px 8px;
+    width: 16px;
+    vertical-align: middle;
+}
