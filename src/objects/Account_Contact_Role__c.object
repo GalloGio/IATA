@@ -97,7 +97,7 @@
     </fields>
     <fields>
         <fullName>Contact_Role_Name__c</fullName>
-        <description>Contact Role Name to fill accordingly to the application using the record</description>
+        <description>A functional role that a Contact belonging to an Account may assume when interacting with an IATA Salesforce functional capability. This designation technically supports the provisioning and delivery of IATA Salesforce functional capabilities.</description>
         <externalId>false</externalId>
         <inlineHelpText>Contact Role Name to fill accordingly to the application using the record</inlineHelpText>
         <label>Contact Role Name</label>

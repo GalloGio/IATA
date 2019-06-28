@@ -1647,7 +1647,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
     <recordTypes>
         <fullName>Amsterdam_Publications</fullName>
         <active>true</active>
-        <description>Amsterdam Publications</description>
+        <description>For records migrated and synchronized with Amsterdam Publications system.</description>
         <label>Amsterdam Publications</label>
         <picklistValues>
             <picklist>Contract_Renewal__c</picklist>
