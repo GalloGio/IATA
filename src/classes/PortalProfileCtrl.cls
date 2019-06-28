@@ -193,6 +193,7 @@ public with sharing class PortalProfileCtrl {
 
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Birthdate',true,true));
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Title',true,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Preferred_Language__c',true,true));
 
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Email',false,true));
