@@ -461,9 +461,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let contactList = this.template.querySelector('c-portal-contact-list');
 
            this.contactsQuery = this.searchTextContacts;
-           this.searchRecords('Contact');
-        }else if(sobjectType == 'Account'){
-
+           this.searchRecords('Contact');       
         }, 500, this);
 
     }
@@ -522,7 +520,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.isFetching = false;
             this.searchMode = true;
 
-            console.log('searchBranches '+result.length);
 
             if (result.length == 0) {
                 this.branchesEndedSearch = true;
