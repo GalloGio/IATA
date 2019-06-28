@@ -280,19 +280,19 @@ global class IFAP_WebService {
 				[SELECT 
 					Id,
 					ANG_IsNewgenAgency__c,
-                 	(SELECT
-                     	Id,
-                     	ANG_Limit_Cash_Conditions__c
+                    (SELECT
+                        Id,
+                        ANG_Limit_Cash_Conditions__c
                      FROM
-                     	Location_Risk_Events__r
+                        Location_Risk_Events__r
                      WHERE
-                     	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
+                        ANG_Risk_Type__r.Name = 'Fail Financial Statements'
                      AND
-                     	ANG_Event_Status__c = 'Active'
+                        ANG_Event_Status__c IN ('Active', 'Inactive_Revoked')
                      ORDER BY LastModifiedDate DESC
                      LIMIT 1
-                    ),                    
-					(SELECT
+                    ),
+                    (SELECT
 						Id,
 						Status,
                         Deadline_Date__c,
