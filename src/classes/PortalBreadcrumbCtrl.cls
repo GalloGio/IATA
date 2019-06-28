@@ -15,9 +15,12 @@ public with sharing class PortalBreadcrumbCtrl {
         if(lstAux != null && !lstAux.isEmpty()){
             Boolean finishedSearch = false;
             while(!finishedSearch){
+
+                Breadcrumb__mdt foundBreadcrumb = null;
+
                 for(Breadcrumb__mdt breadcrumbAux : lstAux){
                     if(breadcrumbAux.DeveloperName == finalPageName){
-                        lstbreadcrumbs.add(0,breadcrumbAux);
+                        foundBreadcrumb = breadcrumbAux;
                         
                         if(breadcrumbAux.ParentPage__c == null || breadcrumbAux.ParentPage__c == ''){
                             finishedSearch = true;
@@ -27,12 +30,15 @@ public with sharing class PortalBreadcrumbCtrl {
                         break;
                     }
                 }
+
+                if(foundBreadcrumb == null){
+                    finishedSearch = true;
+                }else{
+                    lstbreadcrumbs.add(0,foundBreadcrumb);
+                }
             }
         }
 
         return lstbreadcrumbs;
     }
-
-
-
 }
