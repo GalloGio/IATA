@@ -1257,6 +1257,10 @@ lightning-datatable .slds-th__action {
     display:none;
 }
 
+.invalidValue input, .invalidValue textArea{
+    box-shadow: 0px 0px 4px 1px rgba(255, 0, 0, 1) !important;
+}
+
 .textValue .slds-form-element__legend{
     display:none;
 }
