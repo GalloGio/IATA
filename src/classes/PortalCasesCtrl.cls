@@ -31,7 +31,7 @@ public with sharing class PortalCasesCtrl {
     public static Map<String, ISSPCaseListView__c> caseListViewMap;
     public static List<Portal_Application_Right__c> appRightList;
     public static ISSP_Portal_Service_Ids__c serviceIdInstance;
-    public static Boolean adminProfile = ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
+    public static Boolean adminProfile = CSP_Utils.isAdmin();
 
     public static Integer RESULTS_PER_PAGE = 10;
     private static PortalSearchFilterWrapper filtersWrapper;
