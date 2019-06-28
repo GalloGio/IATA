@@ -71,6 +71,7 @@ export default class PortalContactList extends LightningElement {
     set labels(value) { this._labels = value; }
 
     connectedCallback() {
+        this.fetching = false;
         this.isAccount = (this.isAccount === 'true' ? true : false);
     }
 
@@ -105,16 +106,22 @@ export default class PortalContactList extends LightningElement {
     searchRecords(searchParam) {
 
         if (searchParam != null && searchParam.length > 0) {
-            let records = JSON.parse(JSON.stringify(this.originalRecords));
+            /*let records = JSON.parse(JSON.stringify(this.originalRecords));
 
             let filtered = records.filter(function (el) {
                 let stringed = JSON.stringify(el.rowValues).toLowerCase();
                 return stringed.includes(searchParam.toLowerCase());
             });
 
-            this.records = filtered;
+            this.records = filtered;*/
+
+            //Dispatch event and do Apex search instead of JS
+            this.dispatchEvent(new CustomEvent('searchrecords', { detail: { 'sobjectType': this.objectName,'queryString':searchParam} }));
+
+
         } else {
-            this.records = this.originalRecords;
+            //this.records = this.originalRecords;
+            this.dispatchEvent(new CustomEvent('searchrecords', { detail: { 'sobjectType': this.objectName,'queryString': '--RESET--'} }));
         }
     }
 

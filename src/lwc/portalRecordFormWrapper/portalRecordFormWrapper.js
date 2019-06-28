@@ -16,6 +16,8 @@ import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
 import MembershipFunction from '@salesforce/label/c.csp_MembershipFunction';
 import Area from '@salesforce/label/c.csp_WorkingAreas';
+import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
+
 
 
 
@@ -36,6 +38,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api services;
     @api showfunction;
 
+    @api isForEdit = false;
 
     @track isLoading = true;
     @track isLoadingEdit = true;
@@ -45,22 +48,21 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track accessibilityText = '';
     @track functionOptions = [];
     @track selectedValuesFunction = [];
+    @track fieldsValid = true;
 
     @track listSelected = [];
     @track contactTypeStatus = [];
 
     @track changeUserPortalStatus = false;
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area };
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
     connectedCallback() {
         this.showEdit = (this.showEdit === 'true' ? true : false);
 
-        console.log('BLA: ', JSON.parse(JSON.stringify(this.fields)));
-
-        if (this.isContact) {
+        if (this.isContact && !this.isForEdit) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
                 let contact = JSON.parse(JSON.stringify(this.staticFields));
@@ -178,6 +180,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     styleInputs() {
         let inputs = this.template.querySelectorAll('lightning-input-field');
+        let phoneRegex = /[^0-9+]|(?!^)\+/g;
+        let numberFields = ['Phone','MobilePhone','Phone_Number__c'];
+
+        let fieldsValid = true;
+
         if (inputs) {
             if (inputs.length) {
                 for (let i = 0; i < inputs.length; i++) {
@@ -195,6 +202,21 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                             }
                         }
                     }
+
+                    if(numberFields.includes(inputs[i].fieldName)){
+                        if(inputs[i].value != null){
+                            let inputValue = inputs[i].value.replace(/ /g,'');
+                            let isNotPhone = phoneRegex.test(inputValue);
+                            if(isNotPhone){
+                                inputs[i].classList.add('invalidValue');
+                                fieldsValid = false;
+                            }else{
+                                inputs[i].classList.remove('invalidValue');
+                            }
+                            inputs[i].inputValue = inputValue;
+                        }
+                    }
+
                 }
             } else {
                 if (!inputs.disabled) {
@@ -211,8 +233,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                     }
                 }
             }
-
         }
+
+        this.fieldsValid = fieldsValid;
     }
 
     handleSubmit(event) {
@@ -333,7 +356,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     closePortalChangeUserStatusWithRefresh() {
-        this.changeUserPortalStatus = false;
         this.dispatchEvent(new CustomEvent('refreshview'));
+        this.changeUserPortalStatus = false;
+    }
+
+    get canSave(){
+        return !this.fieldsValid || this.isSaving;
     }
 }

@@ -72,7 +72,6 @@ public with sharing class PortalProfileCtrl {
 
         set;
     }
-    
 
     /**
     * Todo: Implement contact search.
@@ -80,37 +79,54 @@ public with sharing class PortalProfileCtrl {
     * In the future - filtering, sorting to call backend methods and return data from the DB.
     */
     @AuraEnabled
-    public static List<ContactWrapper> searchAccountContacts(String queryString){
-        List<Contact> searchResults = new List<Contact>();
-        return new List<ContactWrapper>();
+    public static List<ContactWrapper> searchAccountContacts(String queryString, Integer offset){
+        List<Contact> searchResults = DAL_ISSP.searchContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH,queryString);
+        List<ContactWrapper> wrappers = getContactWrappers(searchResults);
+        return wrappers;
+    }
+
+    @AuraEnabled
+    public static List<ContactWrapper> getAccountContacts(){
+        return getAccountContacts(0);
     }
 
 
     @AuraEnabled
     public static List<ContactWrapper> getAccountContacts(Integer offset){
-        if(offset == null){
-            offset = 0;
-        }
-
         List<Contact> contacts = DAL_ISSP.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
+        List<ContactWrapper> wrappers = getContactWrappers(contacts);
+        return wrappers;
+    }
+
+    private static List<ContactWrapper> getContactWrappers(List<Contact> contacts){
+        List<ContactWrapper> wrappers = new List<ContactWrapper>();
         List<Id> contactIds = new List<Id>();
         List<User> users = new List<User>();
         Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
 
-        List<ContactWrapper> wrappers = new List<ContactWrapper>();
+        Map<Id,List<PortalServicesCtrl.ServiceWrapper>> contactToServices = new Map<Id,List<PortalServicesCtrl.ServiceWrapper>>();
 
-        if(contacts != null && !contacts.isEmpty()){
+        if(!contacts.isEmpty()){
             for(Contact c :contacts){
                 contactIds.add(c.Id);
                 contactIdtoContact.put(c.Id,c);
             }
 
             users = DAL_ISSP.getUsersByContactId(contactIds);
+
+            Map<Id,Id> contactToUser = new Map<Id,Id>();
+            for(User u :users){
+                contactToUser.put(u.ContactId,u.Id);
+            }
+
+            contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
+
             ContactWrapper wrapper;
             for(User u :users){
                 wrapper = new ContactWrapper();
                 wrapper.contact = contactIdtoContact.get(u.ContactId);
                 wrapper.contactUser = u;
+                wrapper.services = contactToServices.get(u.ContactId);
 
                 wrappers.add(wrapper);
             }
@@ -119,11 +135,29 @@ public with sharing class PortalProfileCtrl {
         return wrappers;
     }
 
+
+    @AuraEnabled
+    public static List<Account> searchCompanyBranches(String queryString, Integer offset){
+        List<Account> branches = new List<Account>();
+        queryString =queryString+'%';
+
+        branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
+        from account
+        where (id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId)
+        and (TradeName__c LIKE :queryString OR Name LIKE :queryString OR BillingCity LIKE :queryString OR IATACode__c LIKE :queryString)
+        ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
+        ];
+
+        return branches;
+    }
+
+    @AuraEnabled
+    public static List<Account> getCompanyBranches(){
+        return getCompanyBranches(0);
+    }
+
     @AuraEnabled
     public static List<Account> getCompanyBranches(Integer offset){
-        if(offset == null){
-            offset = 0;
-        }
         List<Account> branches = new List<Account>();
 
         branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
@@ -140,6 +174,9 @@ public with sharing class PortalProfileCtrl {
 
         @AuraEnabled
         public User contactUser;
+
+        @AuraEnabled
+        public List<PortalServicesCtrl.ServiceWrapper> services;
     }
 
 
@@ -155,12 +192,8 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.put(LABEL_ACCESSIBILITY,new List<FieldWrapper>());
         wrapperMap.put(LABEL_PROFESSIONAL,new List<FieldWrapper>());
 
-
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Birthdate',true,true));
-        /*wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Salutation',true,true));
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('FirstName',true,true));
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('LastName',true,true));*/
-        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true)); // !Add name field, it will fetch Salutation picklist values
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Preferred_Language__c',true,true));
 
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Email',false,true));
@@ -172,7 +205,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingStreet',true,true));
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingPostalCode',true,true));
 
-        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Status__c',true,true));
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('User_Portal_Status__c',false,true));
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorisation',false,true));
 
         wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
@@ -187,6 +220,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.put(LABEL_BUSINESS_CONTACT,new List<FieldWrapper>());
 
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone_Number__c',true,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone',true,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Fax',true,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingCountry',false,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingState',false,true));
@@ -274,7 +308,8 @@ public with sharing class PortalProfileCtrl {
 
         for(Schema.FieldSetMember f : basicsFields) {
             Boolean editable = true;
-            if(newGen && f.getFieldPath() == 'TradeName__c'){
+            String fieldName = f.getFieldPath();
+            if((newGen && f.getFieldPath() == 'TradeName__c') || fieldName =='Legal_Name__c' || fieldName =='Sector__c' || fieldName == 'Category__c'){
                 editable = false;
             }
 
@@ -324,6 +359,9 @@ public with sharing class PortalProfileCtrl {
         public Boolean isAccessibility;
 
         @AuraEnabled
+        public Boolean isContactServices;
+
+        @AuraEnabled
         public List<accessibilityWrapper> accessibilityList;
 
         public FieldWrapper (String fieldName, Boolean fullSize) {
@@ -366,6 +404,8 @@ public with sharing class PortalProfileCtrl {
             } else {
                 this.changeUserStatus = false;
             }
+
+            this.isContactServices = fieldName == 'ContactServices' ? true : false;
 
         }
         public FieldWrapper (String fieldName, Boolean editable, Boolean visible,String className, String label){
@@ -448,9 +488,9 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('ISO_Country__c',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('MobilePhone',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
-        wrapperMap.get(viewFields).add(new FieldWrapper('Available_Services_Images__c',false,true,true));
-        wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
+        //wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Membership_Function__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));
 
         //EDIT
@@ -476,8 +516,6 @@ public with sharing class PortalProfileCtrl {
         if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){
             wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
         }
-
-        //wrapperMap.get(editFields).add(new FieldWrapper('User_Portal_Status__c',true,true));
 
         return wrapperMap;
 
