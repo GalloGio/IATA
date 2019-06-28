@@ -393,8 +393,8 @@ public with sharing class PortalProfileCtrl {
                         new accessibilityWrapper(false, LABEL_AUTHORISED_SIGNATORY, 'Authorized_Signatory__c'),
                         new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c')
                 };
-
-                if ( contactInfo.Account.RecordType.DeveloperName.touppercase().contains('AIRLINE') ) {
+                
+                if ( myUser.profile.Name.touppercase().contains('AIRLINE') ) {
                     this.accessibilityList.add(new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c'));
                 }
             }
