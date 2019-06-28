@@ -11,48 +11,46 @@
 
             <!-- MODAL -->
             <template if:true={openmodel}>
-                <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10005;">
-                    <div class="modal">
-                        <div class="customPopupInteriorHalfScreenCentered">
 
-                            <!-- Popup Header -->
-                            <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
-                                <span>{labels.NotificationDetail}</span>
-                                <span class="slds-float_right slds-m-horizontal_x-small close-mark"
-                                    onclick={closeModal}>
-                                    <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
-                                        onclick={closeModal}></lightning-icon>
-                                </span>
-                            </div>
+                <section role="dialog" aria-modal="true" style="z-index: 10005;" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header headerTitle">
+                            <span>{labels.NotificationDetail}</span>
+                            <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                    onclick={closeModal}></lightning-icon>
+                            </span>
+                        </header>
 
-                            <div class="slds-is-relative">
-                                <div
-                                    class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large customWhiteBackground">
-
-                                    <div class="slds-p-top_small modalType">
-                                        <span
-                                            class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
-                                        <span class="notificationCenterTextsize text-xxsmall slds-m-left_large">
-                                            <lightning-formatted-date-time value={notification.createdDate}
-                                                year="2-digit" month="short" day="2-digit" hour="numeric"
-                                                minute="numeric">
-                                            </lightning-formatted-date-time>
-                                        </span>
-                                    </div>
-                                    <div class="text-xsmall slds-m-left_large slds-p-top_small">
-                                        {notification.subject}
-                                    </div>
-                                    <div class="text-xsmall slds-m-left_large slds-p-top_small"
-                                        style="text-align: justify; text-justify: inter-word;">
-                                        <lightning-formatted-rich-text value={notification.message}>
-                                        </lightning-formatted-rich-text>
-                                    </div>
-
+                        <div class="slds-is-relative addOverflow">
+                            <div
+                                class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large background">
+                                
+                                <div class="slds-p-top_small modalType">
+                                    <span
+                                        class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
+                                    <span class="notificationCenterTextsize text-xxsmall slds-m-left_large">
+                                        <lightning-formatted-date-time value={notification.createdDate} year="2-digit"
+                                            month="short" day="2-digit" hour="numeric" minute="numeric">
+                                        </lightning-formatted-date-time>
+                                    </span>
                                 </div>
+                                <div class="text-xsmall slds-m-left_large slds-p-top_small">
+                                    {notification.subject}
+                                </div>
+                                <div class="text-xsmall slds-m-left_large slds-p-top_small"
+                                    style="text-align: justify; text-justify: inter-word;">
+                                    <lightning-formatted-rich-text value={notification.message}>
+                                    </lightning-formatted-rich-text>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </section>
+
+
+                <!-- END MODAL -->
             </template>
 
             <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth slds-show_medium"></div>
@@ -153,17 +151,10 @@
                                                             data-item={not.id}>
                                                             <span class="cursorPointer" data-item={not.id}
                                                                 data-changebody="1"
-                                                                onclick={onClickAllNotificationsView}>
+                                                                onclick={openmodal}>
                                                                 {not.subject}
                                                             </span>
-                                                            <template if:true={not.isNotification}>
-                                                                <span
-                                                                    class="text-xxxsmall cursorPointer text-blue slds-float_right"
-                                                                    data-item={not.id} data-changebody="1"
-                                                                    onclick={openmodal}>
-                                                                    {labels.ViewDetails}
-                                                                </span>
-                                                            </template>
+                                                           
                                                         </div>
                                                     </div>
                                                 </div>
@@ -208,15 +199,10 @@
                                                             data-item={not.id}>
                                                             <span class="cursorPointer" data-item={not.id}
                                                                 data-changebody="1"
-                                                                onclick={onClickAllNotificationsView}>
+                                                                onclick={openmodal}>
                                                                 {not.subject}
                                                             </span>
-                                                            <span
-                                                                class="text-xxxsmall cursorPointer text-blue slds-float_right"
-                                                                data-item={not.id} data-changebody="1"
-                                                                onclick={openmodal}>
-                                                                {labels.ViewDetails}
-                                                            </span>
+                                                           
                                                         </div>
                                                     </div>
                                                 </div>
