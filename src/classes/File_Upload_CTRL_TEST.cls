@@ -213,7 +213,7 @@ public class File_Upload_CTRL_TEST {
         Test.startTest();
 
         System.runAs(testUser) {
-            File_Upload_CTRL.createDataSubmission(testUser.Id, testAccount.Id);
+            File_Upload_CTRL.createDataSubmission(testUser.Id, testAccount.Id, 'testFile.xml');
         }
 
         Test.stopTest();
