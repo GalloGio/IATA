@@ -44,15 +44,7 @@ TEXT(Max_Range__c)+&apos;]&apos;</formula>
         </actions>
         <active>true</active>
         <description>Updates Unique_Key__c and Range (Name) fields on Code Range object</description>
-        <formula>OR( isNew(), OR(
- ischanged(Area_Code__c),
-				ischanged(Prefix__c ),
-				ischanged(IATA_ISO_Country__c),
-				ischanged(IATA_ISO_State__c),
-				ischanged(ProgramCode__c),
-				ischanged(Min_Range__c),
-				ischanged(Max_Range__c)
-))</formula>
+        <formula>OR( isNew(), OR(  ischanged(Area_Code__c), 				ischanged(Prefix__c ), 				ischanged(IATA_ISO_Country__c), 				ischanged(IATA_ISO_State__c), 				ischanged(ProgramCode__c), 				ischanged(Min_Range__c), 				ischanged(Max_Range__c) ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

@@ -7897,6 +7897,10 @@
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Copy Ownership Warning --></label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -9677,6 +9681,10 @@
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Select Accounts --></label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Selected Associate Entities --></label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9695,6 +9703,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS State --></label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -11085,6 +11097,22 @@
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_COPY_OWNERSHIP_CHECKING --></label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG COPY OWNERSHIP HINT --></label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROCESSED --></label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROGRESS --></label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ANG_Click_Here_PCI --></label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -12055,6 +12083,10 @@
     <customLabels>
         <label><!-- ISSP_ClosedIFAPCasesStatus --></label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CompanyAddressInformation --></label>
@@ -13139,6 +13171,10 @@
     <customLabels>
         <label><!-- ISSP_GSSA --></label>
         <name>ISSP_GSSA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Gdp Opt In Hint --></label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
@@ -14917,8 +14953,16 @@
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Rev Case Open Acc Info --></label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP SELECT COUNTRY --></label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SELECT_STATE --></label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP SELECT THREE or MORE --></label>
