@@ -34,8 +34,8 @@ public without sharing class Service_Notification_List_CTRL {
     private static List<Service_Notification__c> convertLinksToExternal(List<Service_Notification__c> messages){
         Pattern MyPattern = Pattern.compile('href="([^"]*)"');
         for(Service_Notification__c message : messages){
-            Matcher MyMatcher = MyPattern.matcher(message.Body__c);
             if (message.Body__c != null && message.Body__c != '') {
+                Matcher MyMatcher = MyPattern.matcher(message.Body__c);
                 while (MyMatcher.find()) {
 
                     string[] spl = MyMatcher.group().split('/');
@@ -48,7 +48,7 @@ public without sharing class Service_Notification_List_CTRL {
                                 'href="' + Site.getBaseUrl() + '/sfc/servlet.shepherd/version/download/' + objId + '"');
                     }
                 }
-            } 
+            }
         }
         return messages;
     }
