@@ -15,3 +15,10 @@
 .THIS .back_button {
     padding-bottom: 1.0rem;
 }
+.THIS .noCategories p {
+   text-align: center;
+   font-family: AktivGrotesk-Regular;
+   font-size: 15px;
+   line-height: 22px;
+   color: black;
+}

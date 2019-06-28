@@ -21,15 +21,14 @@
                     this.toggleSpinner(component, event);
 
                 }else{
-                    console.log('getAvailableDashboards error');
+                    console.log('getAvailableDashboards no categories found');
                     this.toggleSpinner(component, event);
-                    this.showToast(component, 'error', 'Unexpected error', $A.get("$Label.c.GADM_PowerBI_no_categories"));
                 }
 
             }else{
                 console.log('getAvailableDashboards error');
                 this.toggleSpinner(component, event);
-                this.showToast(component, 'error', 'Unexpected error', $A.get("$Label.c.GADM_PowerBI_no_categories"));
+                this.showToast(component, 'error', 'Unexpected error', $A.get("$Label.c.GADM_PowerBI_categories_error"));
 
             }
         });

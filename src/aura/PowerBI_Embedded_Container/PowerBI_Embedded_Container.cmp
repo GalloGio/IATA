@@ -34,7 +34,11 @@
                     </aura:iteration>
 
                 </ul>
-
+                <aura:set attribute="else">
+                    <div class="noCategories">
+                        <p>{!$Label.c.GADM_PowerBI_no_categories}</p>
+                    </div>
+                </aura:set>
             </aura:if>
 
 
