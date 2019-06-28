@@ -15,6 +15,7 @@ import CSP_Breadcrumb_Support_CreateNewCase from '@salesforce/label/c.CSP_Breadc
 import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
 import CSP_Breadcrumb_Services_Title from '@salesforce/label/c.CSP_Breadcrumb_Services_Title';
 import CSP_Breadcrumb_Company_Profile_Title from '@salesforce/label/c.CSP_Breadcrumb_CompanyProfile_Title';
+import CSP_Breadcrump_MyProfile_Title from '@salesforce/label/c.CSP_Breadcrump_MyProfile_Title';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
@@ -29,6 +30,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Breadcrumb_FAQ_Title,
         CSP_Breadcrumb_Services_Title,
         CSP_Breadcrumb_Company_Profile_Title,
+        CSP_Breadcrump_MyProfile_Title,
         CSP_Cases
     };
 
