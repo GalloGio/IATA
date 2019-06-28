@@ -832,13 +832,14 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>External_Id__c</fullName>
-        <externalId>false</externalId>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
         <label>External Id</label>
         <length>20</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>IATA_Contract_Share__c</fullName>
