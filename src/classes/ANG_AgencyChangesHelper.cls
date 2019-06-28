@@ -912,6 +912,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Set<String> fieldsToMigrate = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarToProcess.ANG_Type_Of_Change__c);
 
+		Account oscarAcc = toReturn.accountsMap.get(oscarToProcess.Account__c);
+
+		if(oscarAcc != null && oscarAcc.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.LOCATION) fieldsToMigrate.add('Remittance_frequency__c');
+
 		System.debug('[ANG_AgencyChangesHelper]: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
 		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();

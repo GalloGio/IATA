@@ -744,6 +744,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                                          AND RecordType.DeveloperName = 'Remittance_Frequency'][0].Remittance_Frequency__c;
 
                     update accreditationObj;
+                    this.saveAction = true;
                 }
 
                 else if(rightOptionsRF != null && rightOptionsRF.size()>2){
