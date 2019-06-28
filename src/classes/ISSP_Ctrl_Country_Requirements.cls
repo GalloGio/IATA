@@ -45,7 +45,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     }
     public String agencyType {
         get {
-            return agencyType == null ? '' : agencyType;
+            return agencyType == null ? 'Domestic' : agencyType;
         } 
         set;
     }
@@ -172,16 +172,14 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
             if (isHOAccredited) {
                 amsOfficeType = 'Branch';
-            } else {
-                amsOfficeType = 'HO';    
-            }
 
-            if (agencyType == '' && isHOAccredited) {
                 if (user.contact.Account.Category__c == 'Domestic Agent') {
                     agencyType = 'Domestic';
                 } else if (user.contact.Account.Category__c == 'IATA Passenger Sales Agent') {
                     agencyType = 'International';
                 }
+            } else {
+                amsOfficeType = 'HO';    
             }
 
             if(user.contact.Account.IATA_ISO_Country__r.ISO_Code__c != null) {
