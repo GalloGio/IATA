@@ -102,30 +102,6 @@ export default class PortalContactList extends LightningElement {
         this.openmodel = false;
         this.dispatchEvent(new CustomEvent('getcontacts'));
     }
-    @api
-    searchRecords(searchParam) {
-
-        if (searchParam != null && searchParam.length > 0) {
-            /*let records = JSON.parse(JSON.stringify(this.originalRecords));
-
-            let filtered = records.filter(function (el) {
-                let stringed = JSON.stringify(el.rowValues).toLowerCase();
-                return stringed.includes(searchParam.toLowerCase());
-            });
-
-            this.records = filtered;*/
-
-            //Dispatch event and do Apex search instead of JS
-            this.dispatchEvent(new CustomEvent('searchrecords', { detail: { 'sobjectType': this.objectName,'queryString':searchParam} }));
-
-
-        } else {
-            //this.records = this.originalRecords;
-            this.dispatchEvent(new CustomEvent('searchrecords', { detail: { 'sobjectType': this.objectName,'queryString': '--RESET--'} }));
-        }
-    }
-
-
 
     processRecords() {
         let records = JSON.parse(JSON.stringify(this.records));

@@ -17,7 +17,9 @@ import Datelabel from '@salesforce/label/c.ISSP_Date';
 import Viewlabel from '@salesforce/label/c.ISSP_View';
 import Deletelabel from '@salesforce/label/c.ISSP_AMC_DELETE';
 import GenericErrorMsg from '@salesforce/label/c.ISSP_ANG_GenericError';
-import  ErrorTitle from '@salesforce/label/c.PKB2_js_error';
+import ErrorTitle from '@salesforce/label/c.PKB2_js_error';
+import Done from '@salesforce/label/c.Done';
+
 
 
 export default class AttachmentListCmp extends LightningElement {
@@ -67,7 +69,8 @@ export default class AttachmentListCmp extends LightningElement {
     Viewlabel,
     Deletelabel,
     GenericErrorMsg,
-    ErrorTitle
+    ErrorTitle,
+    Done
 };
     
     @track loading = true;

@@ -139,7 +139,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             this.lstTabs = tabsAux;
             if (viewContacts) {
-                //this.retrieveContacts();
                 this.contactsLoaded = true;
                 this.isFetching = true;
                 this.searchContacts(this.searchValue);
@@ -348,7 +347,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.contactsOffset = this.contactsOffset + result.length;
             let unwrappedContacts =  this.processContacts(result,loadedContacts);
 
-            this.contacts = unwrappedContacts; //contacts;
+            this.contacts = unwrappedContacts;
             this.contactsLoaded = true;
         });
     }
@@ -409,8 +408,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.isFetching = false;
             if (result.length == 0) { this.branchesEnded = true; return; }
 
-            console.log('retrieveBranches '+result.length);
-
             this.branchesOffset = this.branchesOffset + result.length;
 
             let existingBranches = offset != 0 ? JSON.parse(JSON.stringify(this.branches)) : [];
@@ -465,6 +462,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
            this.contactsQuery = this.searchTextContacts;
            this.searchRecords('Contact');
+        }else if(sobjectType == 'Account'){
 
         }, 500, this);
 

@@ -151,7 +151,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let listSelected = JSON.parse(JSON.stringify(this.listSelected));
         this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
-        //eval("$A.get('e.force:refreshView').fire();");
     }
 
     handleError(event) {
@@ -356,8 +355,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     closePortalChangeUserStatusWithRefresh() {
-        this.dispatchEvent(new CustomEvent('refreshview'));
         this.changeUserPortalStatus = false;
+        this.dispatchEvent(new CustomEvent('refreshview'));
     }
 
     get canSave(){

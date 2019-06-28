@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
-import { updateRecord } from 'lightning/uiRecordApi';
+import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
@@ -22,7 +22,6 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 
     goToManageServiceButtonClick(event){
         let serviceAux = JSON.parse(JSON.stringify(this.service));
-        //console.log(serviceAux);
 
         let params = {};
         params.serviceId = serviceAux.recordService.Id;
@@ -37,10 +36,9 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         .then(url => navigateToPage(url, params));
     }
 
-    goToServiceButtonClick(event){
+    goToServiceButtonClick(){
         //because proxy.......
         let serviceAux = JSON.parse(JSON.stringify(this.service)).recordService;
-        //console.log(serviceAux);
 
         //attributes stored on element that is related to the event
         let appUrlData = serviceAux.Application_URL__c
@@ -50,55 +48,33 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         let recordId = serviceAux.Id;
         
         // update Last Visit Date on record
-        // Create the recordInput object
-        const fields = {};
-        fields.Id = recordId;
-        fields.Last_Visit_Date__c = new Date().toISOString();
-        const recordInput = { fields };
-
-        updateRecord(recordInput)
-            .then(() => {
-                //console.info('Updated Last Visit Date successfully!');
-            })
+        updateLastModifiedService({ serviceId: recordId })
         
         let myUrl = appUrlData;
         
         //verifies if the event target contains all data for correct redirection
         if (openWindowData !== undefined) {
             //determines if the link is to be opened on a new window or on the current
-            if (openWindowData === "true") {
+            if (openWindowData === true) {
                 if (appUrlData !== 'undefined') {
                     myUrl = appUrlData.replace("/", "");
                 } else if (appFullUrlData !== 'undefined') {
                     myUrl = appFullUrlData;
                 }
 
-                //start the spinner
-                //this.toggleSpinner();
-
                 //is this link a requestable Service?
-                if (requestable === "true") {
+                if (requestable === true) {
                     //method that redirects the user to the old portal maintaing the same loginId
                     goToOldPortalService({ myurl: myUrl })
                         .then(result => {
-                            //stop the spinner
-                            this.toggleSpinner();
                             //open new tab with the redirection
                             window.open(result);
-                        })
-                        .catch(error => {
-                            //throws error
-                            this.error = error;
                         });
                 } else {
-                    //stop the spinner
-                    //this.toggleSpinner();
                     //open new tab with the redirection
                     window.open(myUrl);
                 }
             } else {
-                //keep the spinner on until the page redirects
-                //this.toggleSpinner();
                 //redirects on the same page
                 window.location.href = myUrl;
             }

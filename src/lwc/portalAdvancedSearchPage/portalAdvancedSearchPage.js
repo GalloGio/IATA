@@ -190,8 +190,18 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             this.resultsClass = 'display: none;';
             this.emptySearchStringClass = '';
         }else{
-            if(this.searchText.length > 2 && filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.casesComponent.nrResults === 0 &&
-                filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0){
+            if(this.searchText.length > 2 &&
+                
+                ((filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.casesComponent.nrResults === 0 &&
+                filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0) ||
+                
+                (filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.servicesComponent.highlight ) ||
+                (filteringObjectAux.casesComponent.nrResults === 0 && filteringObjectAux.casesComponent.highlight ) ||
+                (filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.faqsComponent.highlight ) ||
+                (filteringObjectAux.documentsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.highlight )
+
+                )
+                ){
                 this.noResultsClass = '';
                 this.emptySearchStringClass = 'display: none;';
                 this.resultsClass = 'display: none;';
