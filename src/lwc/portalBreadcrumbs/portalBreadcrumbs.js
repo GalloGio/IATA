@@ -15,6 +15,7 @@ import CSP_Breadcrumb_Support_CreateNewCase from '@salesforce/label/c.CSP_Breadc
 import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
 import CSP_Breadcrumb_Services_Title from '@salesforce/label/c.CSP_Breadcrumb_Services_Title';
 import CSP_Breadcrumb_Company_Profile_Title from '@salesforce/label/c.CSP_Breadcrumb_CompanyProfile_Title';
+import CSP_Breadcrump_MyProfile_Title from '@salesforce/label/c.CSP_Breadcrump_MyProfile_Title';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
@@ -29,6 +30,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Breadcrumb_FAQ_Title,
         CSP_Breadcrumb_Services_Title,
         CSP_Breadcrumb_Company_Profile_Title,
+        CSP_Breadcrump_MyProfile_Title,
         CSP_Cases
     };
 
@@ -51,10 +53,10 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
 
     pagename = '';
 
+    @track loadingBreadcrumbs = true;
+
     connectedCallback() {
-        
         this.pagename = getPageName();
-        // console.log(this.pagename);
 
         this.classNameAllBreadCrumbs = 'text-linkBlue';
         this.classNameLastBreadCrumb = 'text-black';
@@ -65,23 +67,19 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
 
         if(this.pagename !== undefined && this.pagename !== ''){
             getBreadcrumbs({ pageName : this.pagename })
-                .then(results => {
-                    //console.log(results);
-                    this.results = results;
-                    this.processLstBreadcrumbs();
-                    
-                })
-                .catch(error => {
-                    console.log('PortalBreadcrumbs connectedCallback getBreadcrumbs error: ' , error);
-                });
+            .then(results => {
+                this.results = results;
+                this.processLstBreadcrumbs();
+            })
+            .catch(error => {
+                this.loadingBreadcrumbs = false;
+            });
         }
-
     }
 
     processLstBreadcrumbs(){
-
-        //because proxy.......
         if(this.results !== undefined){
+            //because proxy.......
             let resultsAux = JSON.parse(JSON.stringify(this.results));
 
             if(resultsAux !== undefined && resultsAux !== null && resultsAux.length > 0){
@@ -109,8 +107,8 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
             }
 
             this.lstBreadcrumbs = resultsAux;
-            //console.log('processLstBreadcrumbs', this.lstBreadcrumbs);
         }
+        this.loadingBreadcrumbs = false;
     }
 
     navigateToBreadcrumb(event){

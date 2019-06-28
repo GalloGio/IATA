@@ -265,7 +265,7 @@
   min-width: 340px;
   height: 550px;
   max-height: 550px;
-  right: calc(10%  + 40px);
+  right: calc(10% + 40px);
 }
 
 .closeButton {
@@ -346,6 +346,14 @@
 .modalType {
   font-weight: 500;
   text-align: center;
+}
+
+.background {
+  background-color: white;
+}
+
+.addOverflow {
+  overflow-y: auto;
 }
 
 .tooltip {

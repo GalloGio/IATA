@@ -135,12 +135,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
             if (pageParams.contactName !== undefined && pageParams.contactName !== '') {
                 this.searchValue = decodeURIComponent((pageParams.contactName+'').replace(/\+/g, '%20'));
                 this.onchangeSearchInputContactsFromNotification(this.searchValue);
-                console.log(this.searchValue);
             }
 
             this.lstTabs = tabsAux;
             if (viewContacts) {
-                //this.retrieveContacts();
                 this.contactsLoaded = true;
                 this.isFetching = true;
                 this.searchContacts(this.searchValue);
@@ -340,15 +338,16 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
 
     retrieveContacts() {
-        getContacts({ offset: this.contactsOffset }).then(result => {
+        let offset = this.contactsOffset;
+        getContacts({ offset: offset}).then(result => {
             this.isFetching = false;
             if (result.length == 0) { this.contactsEnded = true; return; }
 
-            let loadedContacts = JSON.parse(JSON.stringify(this.contacts));
+            let loadedContacts = offset != 0 ? JSON.parse(JSON.stringify(this.contacts)) : [];
             this.contactsOffset = this.contactsOffset + result.length;
             let unwrappedContacts =  this.processContacts(result,loadedContacts);
 
-            this.contacts = unwrappedContacts; //contacts;
+            this.contacts = unwrappedContacts;
             this.contactsLoaded = true;
         });
     }
@@ -356,15 +355,15 @@ export default class PortalCompanyProfilePage extends LightningElement {
     processContacts(result,unwrappedContacts){
         let contacts = JSON.parse(JSON.stringify(result));
 
-            for (let i = 0; i < contacts.length; i++) {
+        for (let i = 0; i < contacts.length; i++) {
             let contact = contacts[i].contact;
             let user = contacts[i].contactUser;
             let services = contacts[i].services;
 
 
-                contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
-                if (user.LastLoginDate != null) {
-                    let locale = user.LanguageLocaleKey.replace('_', '-');
+            contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
+            if (user.LastLoginDate != null) {
+                let locale = user.LanguageLocaleKey.replace('_', '-');
                 let lastLogin = new Date(user.LastLoginDate);
                 contact.LastLoginDate = lastLogin;
 
@@ -373,12 +372,12 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 let year = lastLogin.getFullYear();
                 let month;
 
-                    try {
+                try {
                     month = lastLogin.toLocaleString(locale, { month: "long" });
-                        contact.LastLogin = month + ' ' + day + ', ' + year;
+                    contact.LastLogin = month + ' ' + day + ', ' + year;
                 }
-                    catch (e) {
-                        contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
+                catch (e) {
+                    contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
                 }
             }
 
@@ -403,21 +402,29 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     retrieveBranches() {
-
-        getBranches({ offset: this.branchesOffset }).then(result => {
+        let offset = this.branchesOffset;
+        getBranches({ offset: offset }).then(result => {
 
             this.isFetching = false;
             if (result.length == 0) { this.branchesEnded = true; return; }
 
             this.branchesOffset = this.branchesOffset + result.length;
+
+            let existingBranches = offset != 0 ? JSON.parse(JSON.stringify(this.branches)) : [];
+
             let branches = JSON.parse(JSON.stringify(result));
 
             for (let i = 0; i < branches.length; i++) {
                 let branch = branches[i];
                 branch.LocationCode = branch.IATACode__c;
-                branch.IsoCountry = branch.IATA_ISO_Country__r.Name;
+                if(branch.IATA_ISO_Country__r != null){
+                    branch.IsoCountry = branch.IATA_ISO_Country__r.Name;
+                }
+                existingBranches.push(branch);
             }
-            this.branches = branches;
+
+            this.branches = existingBranches;
+
             this.branchesLoaded = true;
         });
     }
@@ -455,6 +462,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
            this.contactsQuery = this.searchTextContacts;
            this.searchRecords('Contact');
+        }else if(sobjectType == 'Account'){
 
         }, 500, this);
 
@@ -509,10 +517,12 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     searchBranches(query){
-        searchContacts({queryString:query, offset:this.branchesOffsetSearch }).then(result => {
+        searchBranches({queryString:query, offset:this.branchesOffsetSearch }).then(result => {
             let branchesList = this.template.querySelector('c-portal-contact-list');
             this.isFetching = false;
             this.searchMode = true;
+
+            console.log('searchBranches '+result.length);
 
             if (result.length == 0) {
                 this.branchesEndedSearch = true;
@@ -523,17 +533,14 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 return;
             }
 
-             branchesList.records = result;
+            branchesList.recordsInitDone = false;
+            branchesList.records = result;
 
              this.branchesOffsetSearch += result.length;
         });
     }
 
-    searchRecords(sobjectType){//searchRecords(event){
-        //let sobjectType = event.detail.sobjectType;
-        //let query = event.detail.queryString;
-        //this.contactsQuery = query;
-
+    searchRecords(sobjectType){
         let query;
         if(sobjectType == 'Contact'){
             query = this.contactsQuery;
@@ -541,7 +548,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.contactsEndedSearch = false;
             this.contactsSearch = [];
 
-            if(query == '--RESET--'){
+            if(query == null || query.length == 0){
                 this.contactsOffset = 0;
                 this.searchMode = false;
                 this.contactsQuery = '';
@@ -559,7 +566,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.branchesEndedSearch = false;
             this.branchesSearch = [];
 
-            if(query == '--RESET--'){
+            if(query == null || query.length == 0){
+                this.branchesOffset = 0;
                 this.searchMode = false;
                 this.branchesQuery = '';
 
@@ -571,31 +579,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 this.searchMode = true;
             }
         }
-
-    }
-
-    onchangeSearchInputContactsFromNotification(name) {
-        this.searchTextContacts = name;
-
-        // Clear the timeout if it has already been set.
-        // This will prevent the previous task from executing
-        // if it has been less than <MILLISECONDS>
-        clearTimeout(this.timeout);
-
-        // Make a new timeout set to go off in 1500ms
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
-        this.timeout = setTimeout(() => {
-            //this.testfunction();
-
-            let contactList = this.template.querySelector('c-portal-contact-list');
-
-            if (this.searchTextContacts.length > 0) {
-                contactList.searchRecords(this.searchTextContacts);
-            } else {
-                contactList.searchRecords(null);
-            }
-
-        }, 500, this);
 
     }
 

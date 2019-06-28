@@ -139,6 +139,7 @@ public with sharing class PortalProfileCtrl {
     @AuraEnabled
     public static List<Account> searchCompanyBranches(String queryString, Integer offset){
         List<Account> branches = new List<Account>();
+        queryString =queryString+'%';
 
         branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
         from account
@@ -193,6 +194,7 @@ public with sharing class PortalProfileCtrl {
 
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Name',true,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Birthdate',true,true));
+        wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Title',true,true));
         wrapperMap.get(LABEL_BASICS).add(new FieldWrapper('Preferred_Language__c',true,true));
 
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('Email',false,true));
@@ -205,7 +207,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingPostalCode',true,true));
 
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('User_Portal_Status__c',false,true));
-        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorisation',false,true));
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorization',false,true));
 
         wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
 
@@ -219,6 +221,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.put(LABEL_BUSINESS_CONTACT,new List<FieldWrapper>());
 
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone_Number__c',true,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone',true,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Fax',true,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingCountry',false,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingState',false,true));
@@ -306,7 +309,8 @@ public with sharing class PortalProfileCtrl {
 
         for(Schema.FieldSetMember f : basicsFields) {
             Boolean editable = true;
-            if(newGen && f.getFieldPath() == 'TradeName__c'){
+            String fieldName = f.getFieldPath();
+            if((newGen && f.getFieldPath() == 'TradeName__c') || fieldName =='Legal_Name__c' || fieldName =='Sector__c' || fieldName == 'Category__c'){
                 editable = false;
             }
 
@@ -386,14 +390,17 @@ public with sharing class PortalProfileCtrl {
             this.editable = editable;
             this.visible = visible;
             this.labeled = false;
-            this.isAccessibility = (fieldName == 'Authorisation' ? true : false);
-            if (fieldName == 'Authorisation') {
+            this.isAccessibility = (fieldName == 'Authorization' ? true : false);
+            if (fieldName == 'Authorization') {
                 this.accessibilityList = new List<accessibilityWrapper>{
                         new accessibilityWrapper(false, LABEL_INVOICE_CONTACT, 'Invoicing_Contact__c'),
                         new accessibilityWrapper(false, LABEL_AUTHORISED_SIGNATORY, 'Authorized_Signatory__c'),
-                        new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c'),
-                        new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c')
+                        new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c')
                 };
+                
+                if ( myUser.profile.Name.touppercase().contains('AIRLINE') ) {
+                    this.accessibilityList.add(new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c'));
+                }
             }
 
             if (fieldName == 'User_Portal_Status__c') {
@@ -485,7 +492,6 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('ISO_Country__c',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('MobilePhone',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
-        wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Membership_Function__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));

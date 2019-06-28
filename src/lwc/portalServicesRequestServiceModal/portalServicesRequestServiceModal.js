@@ -277,7 +277,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         else if (userOptions.IEP_Status === 'In Progress' && userOptions.User_Portal_Status === 'Approved Admin'
                             && userOptions.Legal_Auth_Signature === 'false') {
-                            this.IEPOptionalMessages = this.label.csp_RequestService_ProceedIEPAccountOpen;
+                            this.IEPOptionalMessages = this.label.csp_RequestService_IEPAccountOpenInProgress;
+                        }
+                        else if (userOptions.IEP_Status !== 'In Progress' && userOptions.IEP_Status !== 'No IEP Account'
+                            && userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved Admin') {
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth;
                         }
                     });
             }

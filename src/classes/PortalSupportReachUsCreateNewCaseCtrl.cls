@@ -1,6 +1,6 @@
 public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
 
-private final static Integer MAX_RESULTS = 100;
+private final static Integer MAX_RESULTS = 7;
 
 private static User USER = DAL_ISSP.getUser(Userinfo.getUserId());
 private static Contact CONTACT = DAL_ISSP.getContact(DAL_ISSP.getUser(Userinfo.getUserId()).ContactId);
