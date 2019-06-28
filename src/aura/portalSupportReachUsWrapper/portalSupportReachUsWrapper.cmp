@@ -80,7 +80,6 @@
                         slds-small-size_1-of-3 
                         slds-medium-size_1-of-3 
                         slds-large-size_1-of-8 
-                        slds-m-horizontal_small 
                         customCard cardSizing">
                             <div class="text-small noPointerEvents slds-p-around_small ">
                                 {!$Label.c.csp_Case_Panel_label}
