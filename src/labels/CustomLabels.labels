@@ -3538,8 +3538,8 @@ Payment required on receipt of this Payment Advice
         <fullName>CSP_cpcc_Authorised_Signatory</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Authorised Signatory</shortDescription>
-        <value>Authorised Signatory</value>
+        <shortDescription>Authorized Signatory</shortDescription>
+        <value>Authorized Signatory</value>
     </labels>
     <labels>
         <fullName>CSP_cpcc_BSP_CASS_Payment_Contact</fullName>
