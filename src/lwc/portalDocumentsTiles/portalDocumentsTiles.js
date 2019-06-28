@@ -1,6 +1,6 @@
 import { LightningElement, track } from 'lwc';
 import getDocumentsCategories from '@salesforce/apex/CSP_Utils.getPickListValues';
-import CSP_DocumentsLabel from '@salesforce/label/c.CSP_DocumentsLabel';
+import CSP_DocumentsLabel from '@salesforce/label/c.CSP_Documents';
 import CSP_DocumentsSelCat from '@salesforce/label/c.CSP_DocumentsSelCat';
 import CSP_DocumentsAll from '@salesforce/label/c.CSP_DocumentsAll';
 
