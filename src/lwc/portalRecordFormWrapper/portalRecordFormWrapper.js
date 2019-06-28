@@ -232,7 +232,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             let fields = event.detail.fields;
             fields.accountId = this.accountId;
 
-            fields.Area__c = selected;
+            if (selected.length > 0) {
+                fields.Area__c = selected;
+            }
+
             fields.Membership_Function__c = selectedF;
 
             let listSelected = JSON.parse(JSON.stringify(this.listSelected));
