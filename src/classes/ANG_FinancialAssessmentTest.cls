@@ -154,6 +154,25 @@ private class ANG_FinancialAssessmentTest {
 
 		insert fs; 
 
+		ANG_Risk_Event_Type__c riskEventType = new ANG_Risk_Event_Type__c(
+			Name = 'Fail Financial Statements', 
+			ANG_Risk_ID__c = '5', 
+			ANG_Expiration__c = 12,
+			Limit_Cash_conditions__c=false
+		);
+
+		insert riskEventType;
+
+		ANG_Agency_Risk_Event__c are = new ANG_Agency_Risk_Event__c(
+    		ANG_AccountId__c = agentSG.Id,
+			ANG_Event_Status__c = 'Active',
+    		ANG_HE_AccountId__c = agentSG.Id,
+    		ANG_Risk_Type__c = riskEventType.Id,
+    		ANG_Issued_Date__c = System.today()
+		);
+
+		insert are;
+
 		Test.stopTest();
 		
 	}
@@ -275,18 +294,19 @@ private class ANG_FinancialAssessmentTest {
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
 		System.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, message);
 
-		Account updAcct = 
-			[SELECT 
-				Id, 
-				ANG_HE_CashCondition__c 
-			 FROM 
-				Account 
-			 WHERE 
-				Id = :cse.AccountId
-			 LIMIT 1
+		ANG_Agency_Risk_Event__c riskEvent = 
+			[SELECT
+				Id,
+				ANG_Limit_Cash_Conditions__c
+			 FROM
+			 	ANG_Agency_Risk_Event__c
+			 WHERE
+			 	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
+			 AND 
+			 	ANG_Event_Status__c = 'Active'
 			];
 
-		system.assert(updAcct.ANG_HE_CashCondition__c);
+		system.assert(riskEvent.ANG_Limit_Cash_Conditions__c, 'Risk Event must have limit cash conditions TRUE');
 
 		Case updCse = 
 			[SELECT
@@ -421,18 +441,19 @@ private class ANG_FinancialAssessmentTest {
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_REMOVED, message); 
 
-		acct = 
-			[SELECT 
-				Id, 
-				ANG_HE_CashCondition__c 
-			 FROM 
-				Account 
-			 WHERE 
-				Id = :cse.AccountId
-			 LIMIT 1
+		ANG_Agency_Risk_Event__c riskEvent = 
+			[SELECT
+				Id,
+				ANG_Limit_Cash_Conditions__c
+			 FROM
+			 	ANG_Agency_Risk_Event__c
+			 WHERE
+			 	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
+			 AND 
+			 	ANG_Event_Status__c = 'Active'
 			];
 
-		system.assert(!acct.ANG_HE_CashCondition__c);
+		system.assert(!riskEvent.ANG_Limit_Cash_Conditions__c, 'Risk Event must have limit cash conditions FALSE');
 
 	}
 
