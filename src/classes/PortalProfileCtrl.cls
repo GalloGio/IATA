@@ -139,6 +139,7 @@ public with sharing class PortalProfileCtrl {
     @AuraEnabled
     public static List<Account> searchCompanyBranches(String queryString, Integer offset){
         List<Account> branches = new List<Account>();
+        queryString =queryString+'%';
 
         branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
         from account
@@ -219,6 +220,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.put(LABEL_BUSINESS_CONTACT,new List<FieldWrapper>());
 
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone_Number__c',true,true));
+        wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Phone',true,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('Fax',true,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingCountry',false,true));
         wrapperMap.get(LABEL_BUSINESS_CONTACT).add(new FieldWrapper('BillingState',false,true));
@@ -306,7 +308,8 @@ public with sharing class PortalProfileCtrl {
 
         for(Schema.FieldSetMember f : basicsFields) {
             Boolean editable = true;
-            if(newGen && f.getFieldPath() == 'TradeName__c'){
+            String fieldName = f.getFieldPath();
+            if((newGen && f.getFieldPath() == 'TradeName__c') || fieldName =='Legal_Name__c' || fieldName =='Sector__c' || fieldName == 'Category__c'){
                 editable = false;
             }
 
@@ -485,7 +488,6 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(new FieldWrapper('ISO_Country__c',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('MobilePhone',true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
-        wrapperMap.get(viewFields).add(new FieldWrapper('Area__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('Membership_Function__c',false,true,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
         wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));
