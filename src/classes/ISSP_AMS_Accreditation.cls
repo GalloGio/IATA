@@ -242,12 +242,13 @@ public without sharing class ISSP_AMS_Accreditation {
     public Boolean revCaseOpen {
         get{
             List<Case> revCases = [SELECT Id 
-                                FROM Case 
-                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
-                                    AND Reason1__c = 'Annual revalidation' 
-                                    AND Status != 'Closed' 
-                                    AND Status != 'Closed_Rejected' 
-                                    AND Status != 'Closed_Withdrawn'];
+                                   FROM Case 
+                                   WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                   AND Reason1__c = 'Annual revalidation' 
+                                   AND Status != 'Closed' 
+                                   AND Status != 'Closed_Rejected' 
+                                   AND Status != 'Closed_Withdrawn'
+                                   AND Status != 'Closed_ Not Accepted'];
             
             return !revCases.isEmpty();
         } 
