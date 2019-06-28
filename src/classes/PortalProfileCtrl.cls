@@ -205,7 +205,7 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(LABEL_PERSONAL_CONTACT).add(new FieldWrapper('MailingPostalCode',true,true));
 
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('User_Portal_Status__c',false,true));
-        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorisation',false,true));
+        wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorization',false,true));
 
         wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
 
@@ -386,14 +386,17 @@ public with sharing class PortalProfileCtrl {
             this.editable = editable;
             this.visible = visible;
             this.labeled = false;
-            this.isAccessibility = (fieldName == 'Authorisation' ? true : false);
-            if (fieldName == 'Authorisation') {
+            this.isAccessibility = (fieldName == 'Authorization' ? true : false);
+            if (fieldName == 'Authorization') {
                 this.accessibilityList = new List<accessibilityWrapper>{
                         new accessibilityWrapper(false, LABEL_INVOICE_CONTACT, 'Invoicing_Contact__c'),
                         new accessibilityWrapper(false, LABEL_AUTHORISED_SIGNATORY, 'Authorized_Signatory__c'),
-                        new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c'),
-                        new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c')
+                        new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c')
                 };
+
+                if ( contactInfo.Account.RecordType.DeveloperName.touppercase().contains('AIRLINE') ) {
+                    this.accessibilityList.add(new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c'));
+                }
             }
 
             if (fieldName == 'User_Portal_Status__c') {
