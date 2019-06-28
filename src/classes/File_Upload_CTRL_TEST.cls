@@ -173,7 +173,7 @@ public class File_Upload_CTRL_TEST {
         dataSubmission.Account__c = actorId;
         dataSubmission.User__c = Contact.Id;
         dataSubmission.Type__c = 'Submission';
-        dataSubmission.Status__c = 'Not Submitted';
+        dataSubmission.Status__c = 'Data Submission Error';
         dataSubmission.Submission_date__c = System.now();
 
         insert dataSubmission;

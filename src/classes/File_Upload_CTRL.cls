@@ -43,7 +43,7 @@ public without sharing class File_Upload_CTRL {
             List<Account_Role__c> accountRoles = [SELECT Id, Account__c FROM Account_Role__c WHERE Account_Roles__r.Name = 'GADM Participant' AND Account__c = :accounts];
 
             List<GADM_Account_Service_Detail__c> serviceDetails = [SELECT Id, Account_Role_Service__r.Account_Role__r.Account__c FROM GADM_Account_Service_Detail__c WHERE (External_Actor_Id__c != null AND External_Actor_Id__c != '') AND Account_Role_Service__r.Account_Role__c = :accountRoles];
-
+            
             Set<Id> relatedAccountsIds = new Set<Id>();
             for(GADM_Account_Service_Detail__c detail : serviceDetails) {
                 relatedAccountsIds.add(detail.Account_Role_Service__r.Account_Role__r.Account__c);
@@ -131,7 +131,7 @@ public without sharing class File_Upload_CTRL {
 
 
     @AuraEnabled
-    public static Data_Submission__c createDataSubmission(Id submitterId, Id actorId) {
+    public static Data_Submission__c createDataSubmission(Id submitterId, Id actorId, string fileName) {
 
         List<GADM_Account_Service_Detail__c> serviceDetail = [SELECT Id, External_Actor_Id__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :actorId LIMIT 1];
 
@@ -146,8 +146,9 @@ public without sharing class File_Upload_CTRL {
         dataSubmission.External_Actor_Id__c = externalActorId;
         dataSubmission.Original_User__c = userId;
         dataSubmission.Submitter__c = submitterId;
+        dataSubmission.File_Name__c = fileName;
         dataSubmission.Type__c = 'Submission';
-        dataSubmission.Status__c = 'Not Submitted';
+        dataSubmission.Status__c = 'Data Submission Error';
         dataSubmission.Submission_date__c = System.now();
 
         try{

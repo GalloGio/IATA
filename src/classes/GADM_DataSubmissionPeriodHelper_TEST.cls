@@ -255,6 +255,14 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         accountContactRole6.RecordTypeId = groupRecordTypeId;
         accountContactRolesToInsert.add(accountContactRole6);
 
+        Account_Contact_Role__c accountContactRole2x = new Account_Contact_Role__c();
+        accountContactRole2x.Contact__c = testContact2.Id;
+        accountContactRole2x.Contact_Roles__c = contactRoles.Id;
+        accountContactRole2x.Account_Role__c = accountRole.Id;
+        accountContactRole2x.Service_Rendered__c = 'GADM';
+        accountContactRole2x.RecordTypeId = functionalRecordTypeId;
+        accountContactRolesToInsert.add(accountContactRole2x);
+
         //for testUser3
         Account_Contact_Role__c accountContactRole3 = new Account_Contact_Role__c();
         accountContactRole3.Contact__c = testContact3.Id;
@@ -323,6 +331,12 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         serviceAccess3c.Status__c = 'Granted';
         contactRoleServiceAccessesToInsert.add(serviceAccess3c);
 
+        Contact_Role_Service_Access__c serviceAccess2x = new Contact_Role_Service_Access__c();
+        serviceAccess2x.Contact_Role__c = accountContactRole2x.Id;
+        serviceAccess2x.Service__c = portalApplications.Id;
+        serviceAccess2x.Status__c = 'Granted';
+        contactRoleServiceAccessesToInsert.add(serviceAccess2x);
+
         insert contactRoleServiceAccessesToInsert;
 
         Date today2 = Date.today();
@@ -333,7 +347,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         dataSubmission.Original_User__c = testUser.Id;
         dataSubmission.Submitter__c = testUser.Id;
         dataSubmission.Type__c = 'Submission';
-        dataSubmission.Status__c = 'Not Submitted';
+        dataSubmission.Status__c = 'Data Submission Error';
         dataSubmission.Submission_date__c = testDate2;
 
         insert dataSubmission;
@@ -382,7 +396,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
 
 
     @IsTest
-    private static void isSubmissionOnTime_positiveTest() {
+    private static void isSubmissionOnTime_positiveTest1() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
         GADM_Data_Submission_Period__c testPeriod = [SELECT Id FROM GADM_Data_Submission_Period__c WHERE Name = 'Test'];
@@ -457,7 +471,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         System.assertEquals(1, timesSent, 'Email should be sent!');
 
     }
-
+	
     @IsTest
     private static void notifyContacts_UpcomingTest() {
 
@@ -486,5 +500,34 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         System.assertEquals(1, timesSent, 'Email should be sent!');
 
     }
+	@IsTest
+    private static void notifyContacts_UpcomingTest2() {
 
+        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
+		User testUser2 = [SELECT Id, ContactId FROM User WHERE Email = 'Leo.Black.test@somedomain.com'];
+
+        Date today = Date.today();
+        Date testDate = Date.newInstance(today.year(), 3, 29);
+
+
+        String result = '';
+        Integer timesSent = 0;
+
+        Test.startTest();
+		List<Contact_Role_Service_Access__c> gadmUser = [Select Id FROM Contact_Role_Service_Access__c WHERE Contact_Roles_Name__c = 'GADM Data Submitter'];
+        delete gadmUser;
+        
+        System.runAs(testUser) {
+
+            result = GADM_DataSubmissionPeriodHelper.notifyContacts(testDate);
+            timesSent = Limits.getEmailInvocations();
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('sent', result, 'Notification emails should be correctly sent!');
+        System.assertEquals(1, timesSent, 'Email should be sent!');
+
+    }
 }

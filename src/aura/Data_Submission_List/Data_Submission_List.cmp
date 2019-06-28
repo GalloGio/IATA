@@ -14,10 +14,10 @@
 
     <!--Criteria-->
     <aura:attribute name="SObjectName" type="String" required="true" default="Data_Submission__c" description="SObject from which records will be retrieved." />
-    <aura:attribute name="FieldNames" type="String[]" required="true" default="Name,Submission_date__c,Account__r.Name,Submitter__r.Name,Status__c" description="Fields, which should be retrieved. One field = one column." />
+    <aura:attribute name="FieldNames" type="String[]" required="true" default="File_Name__c,Name,Submission_date__c,Account__r.Name,Submitter__r.Name,Status__c,Result__c" description="Fields, which should be retrieved. One field = one column." />
     <aura:attribute name="MatchCriteria" type="String" required="true" description="Only records which meet this criteria will be retrieved." />
-    <aura:attribute name="FieldLabels" type="String[]" default="Name:Id,Account__r.Name:Account,Submitter__r.Name:Submitter,Submission_date__c:Date" description="Custom labels for retrieved fields." />
-    <aura:attribute name="SortableFieldNames" type="String[]" default="Name,Account__r.Name,Submitter__r.Name,Status__c,Submission_date__c" description="Which fields should be sortable? If not specified, all fields will be sortable." />
+    <aura:attribute name="FieldLabels" type="String[]" default="Name:Id,Account__r.Name:Account,Submitter__r.Name:Submitter,Submission_date__c:Date,File_Name__c:File" description="Custom labels for retrieved fields." />
+    <aura:attribute name="SortableFieldNames" type="String[]" default="Name,Account__r.Name,Submitter__r.Name,Status__c,Submission_date__c,File_Name__c" description="Which fields should be sortable? If not specified, all fields will be sortable." />
     <aura:attribute name="ReferenceFields" type="String[]" default="" description="Which fields should be linked converted into references to records? If not specified, none of fields will be converted." />
     <aura:attribute name="OverrideFieldType" type="String[]" description="Which fields should be converted to be another type? If not specified, none of fields will be converted." />
 
@@ -94,7 +94,8 @@
 
                                 </th>
                                 <aura:iteration items="{!v.TableColumns}" var="column">
-                                    <aura:if isTrue="{!column.is_selection_column}">
+
+                                    <aura:if isTrue="{!or(column.is_selection_column, column.is_column_hidden)}">
 
                                         <aura:set attribute="else">
                                             <aura:if isTrue="{!column.field_is_sortable}">
@@ -146,7 +147,8 @@
                                             </td>
 
                                             <aura:iteration items="{!row}" var="column" indexVar="indexColumn">
-                                                <aura:if isTrue="{!column.is_selection_column}">
+
+                                                <aura:if isTrue="{!or(column.is_selection_column, column.is_column_hidden)}">
 
                                                     <aura:set attribute="else">
                                                         <td class="{! if(indexColumn == row.length - 1, '', 'right2px')}">

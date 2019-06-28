@@ -49,7 +49,8 @@
                             field_type: column_metadata_wrapper.column_metadata[field_names[i]].field_type,
                             field_override_type: column_metadata_wrapper.column_metadata[field_names[i]].field_override_type,
                             field_is_reference: column_metadata_wrapper.column_metadata[field_names[i]].field_is_reference,
-                            field_is_sortable: column_metadata_wrapper.column_metadata[field_names[i]].field_is_sortable
+                            field_is_sortable: column_metadata_wrapper.column_metadata[field_names[i]].field_is_sortable,
+                            is_column_hidden: (column_metadata_wrapper.column_metadata[field_names[i]].field_api_name == 'Result__c' || column_metadata_wrapper.column_metadata[field_names[i]].field_api_name == 'Name')
                         });
                     }
                     component.set('v.ColumnMetadata', column_metadata_wrapper.column_metadata);
@@ -263,6 +264,7 @@
                             }
                         }
                         row.push({
+                            is_column_hidden: table_columns[j].is_column_hidden,
                             is_selection_column: false,
                             field_type: table_columns[j].field_override_type ? table_columns[j].field_override_type : table_columns[j].field_type,
                             reference: table_columns[j].field_is_reference ? reference : null,

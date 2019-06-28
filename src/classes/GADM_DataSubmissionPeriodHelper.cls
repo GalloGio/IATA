@@ -49,7 +49,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
             if (period != null && accountIds != null) {
                 string accounts = '\''+String.join(accountIds,'\',\'')+'\'';
-                filters.add(' (Account__c IN (' + accounts + ') AND CreatedDate >=' +  dtFrom.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + '  AND CreatedDate <=' + dtTo.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + ' ) ');
+                filters.add(' (Account__c IN (' + accounts + ') AND Submission_date__c >=' +  dtFrom.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + '  AND Submission_date__c <=' + dtTo.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + ' ) ');
             }
         }
 
@@ -110,14 +110,23 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             contactIds.Add(acr.Contact__c);
         }
 
-        List<Contact_Role_Service_Access__c> usersAccess = [SELECT Account__c, Contact__c, Email_Address__c, Contact_Roles_Name__c FROM Contact_Role_Service_Access__c
+        List<Contact_Role_Service_Access__c> usersAccess = [SELECT Status__c, Account__c, Contact__c, Email_Address__c, Contact_Roles_Name__c FROM Contact_Role_Service_Access__c
         WHERE Contact__c =: contactIds AND Status__c = 'Granted' AND
-        (Contact_Roles_Name__c = 'GADM Data Submitter' OR Contact_Roles_Name__c = 'Service Super User') ];
+        (Contact_Roles_Name__c = 'GADM Data Submitter' OR Contact_Roles_Name__c = 'Service Super User' OR Contact_Roles_Name__c = 'GADM User') ];
         Set<Id> businessUnitsIds = new Set<Id>();
         Map<Id, List<Contact_Role_Service_Access__c>> accountAccess = new Map<Id, List<Contact_Role_Service_Access__c>>();
         List<Id> addedSubmitters = new List<Id>();
+
+        Set<Id> grantedContacts = new Set<Id>();
         for(Contact_Role_Service_Access__c access: usersAccess){
-            if(access.Contact_Roles_Name__c != 'GADM Data Submitter') {continue;}
+            if(access.Contact_Roles_Name__c == 'GADM User' && access.Status__c == 'Granted') {
+                grantedContacts.add(access.Contact__c);
+            }
+        }
+
+        for(Contact_Role_Service_Access__c access: usersAccess){
+            if(access.Contact_Roles_Name__c != 'GADM Data Submitter' || access.Status__c != 'Granted') {continue;}
+            if(!grantedContacts.contains(access.Contact__c)) {continue;}
             Set<Id> contactAccounts = contactToAccount.get(access.Contact__c);
             if(contactAccounts != null){
                 for (Id accId: contactAccounts){
@@ -134,13 +143,25 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
         Map<Id, Set<Id>> accountSuperUsers = new Map<Id,Set<Id>>();
         for(Contact_Role_Service_Access__c access: usersAccess){
-            if(access.Contact_Roles_Name__c != 'Service Super User') {continue;}
+            if(access.Contact_Roles_Name__c != 'Service Super User' || access.Status__c != 'Granted') {continue;}
+            if(!grantedContacts.contains(access.Contact__c)) {continue;}
             Set<Id> suAccounts = contactToAccount.get(access.Contact__c);
             Set<Id> suBu = contactsToBU.get(access.Contact__c);
             system.debug(addedSubmitters);
             system.debug(addedSubmitters.contains(access.Contact__c));
             system.debug(access.Contact__c);
             if(addedSubmitters.contains(access.Contact__c)){continue;}
+            if(addedSubmitters == null || addedSubmitters.isEmpty()){
+                for(Id suAcc: suAccounts){
+                    Set<Id> superUsersforAccount = accountSuperUsers.get(suAcc);
+                    if(superUsersforAccount == null){
+                        accountSuperUsers.put(suAcc, new Set<Id>{access.Contact__c});
+                    } else {
+                        superUsersforAccount.add(access.Contact__c);
+                    }
+                }
+            }
+
             for(Id submId: addedSubmitters){
                 Set<Id> dsAccounts = contactToAccount.get(submId);
                 Set<Id> dsBus = contactsToBU.get(submId);

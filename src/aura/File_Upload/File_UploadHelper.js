@@ -588,7 +588,8 @@
             let action = component.get('c.createDataSubmission');
             action.setParams({
                 'submitterId' : component.get('v.userId'),
-                'actorId' : component.get('v.actorId')
+                'actorId' : component.get('v.actorId'),
+                'fileName': file.name
             });
             action.setCallback(this, function(response){
                 const state = response.getState();

@@ -46,11 +46,11 @@
     <description>Object encapsulating metadata and status of data submission in some external system. 
 
 * Part of IATA GADM project</description>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
-    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -73,6 +73,16 @@
         <externalId>false</externalId>
         <label>External Actor Id</label>
         <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>File_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>File Name</label>
+        <length>80</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -113,17 +123,6 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Status_Icon__c</fullName>
-        <externalId>false</externalId>
-        <formula>&quot;da&quot;</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Status Icon</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
@@ -155,9 +154,9 @@
                     <label>Submitted</label>
                 </value>
                 <value>
-                    <fullName>Not Submitted</fullName>
+                    <fullName>Data Submission Error</fullName>
                     <default>false</default>
-                    <label>Not Submitted</label>
+                    <label>Data Submission Error</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
