@@ -1783,6 +1783,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Feature 10 Tooltip</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature11</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature11</shortDescription>
+        <value>BOP</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
