@@ -51,7 +51,7 @@ public  class ISSP_TC_Accept {
         if(isPortalNavigationBar == null) {
             User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
 
-            isPortalNavigationBar = ISSP_CS__c.getValues('CS Portal Redirect') == null || usr.Profile.Name.toUpperCase().contains('DPC') || usr.Profile.Name.toUpperCase().contains('PWC') || usr.CNS_Account_or_Agency__c;
+            isPortalNavigationBar = CSP_Utils.isNewPortalActive();
          }
 
         system.debug('SS## isPortalNavigationBar: ' + isPortalNavigationBar);
