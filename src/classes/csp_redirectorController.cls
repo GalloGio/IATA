@@ -6,7 +6,7 @@ public class csp_redirectorController {
 		if(!String.isBlank(ipAddress))	csp_redirectorController.findLocation(true,ipAddress);
         string oneIDStatus = 'OFF';
         string identityLogin = '/identity/s/login'; // will work on sandboxes
-		string tempserviceName='ISSPs'; // default value old portal
+		string tempserviceName='ISSP'; // default value old portal
 		string tempStart='%2FISSP_Homepage'; // default value old portal
 
         string oldLoginForm ='/issp_login?communityName='+communityName;
