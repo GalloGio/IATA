@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 
 //navigation
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
@@ -12,6 +12,7 @@ import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increase
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 
+import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
 
 // Toast
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -127,6 +128,15 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonService';
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport';
 
+    @track trackedIsInOldPortal;
+
+    @api
+    get isInOldPortal() {
+        return this.trackedIsInOldPortal;
+    }
+    set isInOldPortal(value) {
+        this.trackedIsInOldPortal = value;
+    }
 
     @wire(CurrentPageReference)
     getPageRef() {
@@ -189,14 +199,15 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // Check if we are in the Old/New Portal
     navigationCheck(pageNameToNavigate, currentService) {
-        this.currentURL = window.location.href;
-        if (!this.currentURL.includes(this.labels.PortalName)) {
-            window.history.pushState("", "", "/" + this.labels.PortalName + "/s/" + currentService);
-            location.reload();
+
+        if (this.trackedIsInOldPortal) {
+            redirectfromPortalHeader({pageName : currentService}).then(result => {
+                window.location.href = result;
+            });
         } else {
             this.navigateToOtherPage(pageNameToNavigate);
         }
-
+        
     }
 
     navigateToHomePage() {

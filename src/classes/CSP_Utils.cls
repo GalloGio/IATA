@@ -318,7 +318,22 @@ public with sharing class CSP_Utils {
         }
     }
     
-    
+    @AuraEnabled
+    public static Boolean isNewPortalActive() {
+        User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
+        return ISSP_CS__c.getValues('CS Portal Redirect') != null && !usr.Profile.Name.toUpperCase().contains('DPC') && !usr.Profile.Name.toUpperCase().contains('PWC') && !usr.CNS_Account_or_Agency__c;
+    }
+
+    public static Pagereference redirectToNewPortalPage(String pageName) {
+        String host = ISSP_Constant.customSetingMap.get('HostCSP');
+        return new Pagereference('https://' + host + pageName);
+    }
+
+    @AuraEnabled
+    public static String redirectfromPortalHeader(String pageName) {
+        String host = ISSP_Constant.customSetingMap.get('HostCSP');
+        return 'https://' + host + pageName;
+    }
 
 
 }
