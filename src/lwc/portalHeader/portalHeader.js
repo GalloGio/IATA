@@ -40,6 +40,7 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
 import Id from '@salesforce/user/Id';
 import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
+import AccountSector from '@salesforce/schema/User.Contact.Account.Sector__c';
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track displayAcceptTerms = true;
@@ -54,6 +55,22 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 this.displayAcceptTerms = acceptTerms;
             }
 
+        }
+    }
+
+    @track displayCompanyTab = false;
+
+    @wire(getRecord, { recordId: Id, fields: [AccountSector] })
+    WiregetAccountSector(result) {
+        if (result.data) {
+            let user = JSON.parse(JSON.stringify(result.data));
+            let accountSector = user.fields.Contact.value.fields.Account.value.fields.Sector__c.value;
+
+            if (accountSector === 'General Public') {
+                this.displayCompanyTab = false;
+            } else {
+                this.displayCompanyTab = true;
+            }
         }
     }
 
