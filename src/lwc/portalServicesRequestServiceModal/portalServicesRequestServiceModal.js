@@ -42,6 +42,10 @@ import csp_TDP_ServiceRequest_TopLabel from '@salesforce/label/c.csp_TDP_Service
 import csp_TDP_ServiceRequest_MediumLabel1 from '@salesforce/label/c.csp_TDP_ServiceRequest_MediumLabel1';
 import csp_TDP_ServiceRequest_MediumLabel2 from '@salesforce/label/c.csp_TDP_ServiceRequest_MediumLabel2';
 import csp_TD_ServiceRequest_TopLabel from '@salesforce/label/c.csp_TD_ServiceRequest_TopLabel';
+import ISSP_Registration_MyInformation from '@salesforce/label/c.ISSP_Registration_MyInformation';
+import ISSP_Company_Administration from '@salesforce/label/c.ISSP_Company_Administration';
+import csp_RequestService_ContactSupport from '@salesforce/label/c.csp_RequestService_ContactSupport';
+
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -270,7 +274,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
                             && userOptions.Legal_Auth_Signature === 'false') {
-                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_Alt;
+                            let string1 = this.label.ISSP_Registration_MyInformation;
+                            let link0 = window.location.toString().replace('/services', '');
+                            let link1 = link0 + '/my-profile';
+                            let string2 = this.label.ISSP_Company_Administration;
+                            let link2 = link0 + '/company-profile';
+                            let string3 = this.label.csp_RequestService_ContactSupport;
+                            let link3 = link0 + '/support-reach-us';
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_Alt.replace('{0}', string1.link(link1)).replace('{1}', string2.link(link2)).replace('{2}', string3.link(link3));
                         }
                         else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
                             && userOptions.Legal_Auth_Signature === 'true') {
@@ -283,7 +294,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         else if (userOptions.IEP_Status !== 'In Progress' && userOptions.IEP_Status !== 'No IEP Account'
                             && userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved Admin') {
-                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth;
+                                let string1 = this.label.csp_RequestService_ContactSupport;
+                                let link0 = window.location.toString().replace('/services', '');
+                                let link1 = link0 + '/support-reach-us';
+                                this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string1.link(link1));
                         }
                     });
             }
