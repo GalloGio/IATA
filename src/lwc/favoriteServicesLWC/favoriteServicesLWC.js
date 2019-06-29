@@ -214,33 +214,35 @@ export default class FavoriteServicesLWC extends LightningElement {
         const openWindowData = event.target.attributes.getNamedItem('data-openwindow');
         const requestable = event.target.attributes.getNamedItem('data-requestable');
         const recordId = event.target.attributes.getNamedItem('data-recordid');
+        if (requestable.value === 'true') {
+            // update Last Visit Date on record only if the clicked service is requestable
+            // Create the recordInput object
+            const fields = {};
+            fields.Id = recordId.value;
+            fields.Last_Visit_Date__c = new Date().toISOString();
+            const recordInput = { fields };
 
-        // update Last Visit Date on record
-        // Create the recordInput object
-        const fields = {};
-        fields.Id = recordId.value;
-        fields.Last_Visit_Date__c = new Date().toISOString();
-        const recordInput = { fields };
+            updateRecord(recordInput)
+                .then(() => {
+                    console.info('Updated Last Visit Date successfully!');
+                });
+        }
 
-        updateRecord(recordInput)
-            .then(() => {
-                console.info('Updated Last Visit Date successfully!');
-            });
-
-        let myUrl = appUrlData !== null && appUrlData !== undefined ? appUrlData.value : '';
-        
+        let myUrl;
+        if ((appUrlData !== null && appUrlData !== undefined && appUrlData.value !== 'undefined')) {
+            myUrl = appUrlData.value;
+        } else if ((appFullUrlData !== null && appFullUrlData !== undefined)) {
+            myUrl = appFullUrlData.value;
+        } else {
+            console.info('No link to the service has been set.')
+            this.toggleSpinner();
+        }
 
         //verifies if the event target contains all data for correct redirection
         if (openWindowData !== null && openWindowData !== undefined) {
             //determines if the link is to be opened on a new window or on the current
             if (openWindowData.value === "true") {
-                if ((appUrlData != null && appUrlData !== undefined) && appUrlData.value !== 'undefined') {
-                    myUrl = appUrlData.value;
-                } else if ((appFullUrlData != null && appFullUrlData !== undefined) && appFullUrlData.value !== 'undefined') {
-                    myUrl = appFullUrlData.value;
-                }
-
-                //is this link a requestable Service?
+                //is this link a requestable Service?   
                 if ((requestable !== null && requestable !== undefined) && requestable.value === "true") {
                     //method that redirects the user to the old portal maintaing the same loginId
                     goToOldPortalService({ myurl: myUrl })
@@ -254,16 +256,22 @@ export default class FavoriteServicesLWC extends LightningElement {
                         });
                 } else {
                     //open new tab with the redirection
-                    myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
+                    if (myUrl.startsWith('/')) {
+                        myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
+                    } else if (myUrl.startsWith('http')) {
+                        myUrl = window.location.protocol + '//' + myUrl.replace('http://', '');
+                    } else {
+                        myUrl = window.location.protocol + '//' + myUrl;
+                    }
+                    this.toggleSpinner();
                     window.open(myUrl);
                 }
-            } else if(myUrl !== '') {
+            } else if (myUrl !== '') {
                 //redirects on the same page
-                window.location.href = myUrl;
+                console.log('wtf');
+                window.location.href = window.location.protocol + '//' + window.location.hostname + myUrl;
             }
         }
-
-        this.toggleSpinner();
     }
 
     //method to rerender the icons between the next and previous buttons
