@@ -15,15 +15,11 @@ public without sharing class PortalHeaderCtrl {
     * @params String contactId
     * @return List<Notification__c>
     */
-    public static List<Notification__c> getAllContactNotifications(User loggedUser, Boolean isAdmin) {
+    public static List<Notification__c> getAllContactNotifications(User loggedUser) {
         String whereClause = '';
-		if (isAdmin){
-            String topParentId = loggedUser.Contact.Account.Top_Parent__c == null ? loggedUser.Contact.AccountId : loggedUser.Contact.Account.Top_Parent__c;
-			whereClause += '(Contact__r.Account.Top_Parent__c =:topParentId OR Contact__r.AccountId =:topParentId)';
-		}
-		else {
-			whereClause += 'Contact__c = \'' + loggedUser.contactId + '\'';
-		}
+        
+        whereClause += 'Contact__c = \'' + loggedUser.contactId + '\'';
+
         whereClause += ' AND Archive__c = false ORDER BY Critical_notification__c DESC, CreatedDate DESC';
 
         String notificationQuery = String.format('SELECT {0} FROM Notification__c WHERE {1}', 
@@ -73,7 +69,7 @@ public without sharing class PortalHeaderCtrl {
         Boolean isAdmin = loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
 
         // Get Notifications
-        List<Notification__c> notificationList = getAllContactNotifications(loggedUser, isAdmin);
+        List<Notification__c> notificationList = getAllContactNotifications(loggedUser);
         List<NotificationItem> notificationItemList = new List<NotificationItem>();
 
         List<User> userPortalAccessRequestList = new List<User>();
