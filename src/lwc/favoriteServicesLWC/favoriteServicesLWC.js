@@ -48,6 +48,12 @@ export default class FavoriteServicesLWC extends LightningElement {
                     if (this.auxResult[i].Portal_Application__r === undefined || this.auxResult[i].Portal_Application__r.Application_icon_URL__c === undefined) {
                         this.auxResult[i].Portal_Application__r.Application_icon_URL__c = '';
                     }
+                    if (this.auxResult[i].Application_Start_URL__c === undefined || this.auxResult[i].Application_Start_URL__c === '') {
+                        this.auxResult[i].Application_Start_URL__c = '';
+                    }
+                    if (this.auxResult[i].Portal_Application__r.Application_URL__c === undefined || this.auxResult[i].Portal_Application__r.Application_URL__c === '') {
+                        this.auxResult[i].Portal_Application__r.Application_URL__c = '';
+                    }
                 }
 
 
@@ -228,50 +234,66 @@ export default class FavoriteServicesLWC extends LightningElement {
                 });
         }
 
-        let myUrl;
-        if ((appUrlData !== null && appUrlData !== undefined && appUrlData.value !== 'undefined')) {
-            myUrl = appUrlData.value;
-        } else if ((appFullUrlData !== null && appFullUrlData !== undefined)) {
-            myUrl = appFullUrlData.value;
-        } else {
-            console.info('No link to the service has been set.')
-            this.toggleSpinner();
-        }
 
-        //verifies if the event target contains all data for correct redirection
-        if (openWindowData !== null && openWindowData !== undefined) {
-            //determines if the link is to be opened on a new window or on the current
-            if (openWindowData.value === "true") {
-                //is this link a requestable Service?   
-                if ((requestable !== null && requestable !== undefined) && requestable.value === "true") {
+        let myUrl;
+        let flag = false;
+        if (appUrlData.value !== '') {
+            myUrl = appUrlData.value;
+            flag = true;
+        } else if (appFullUrlData.value !== '') {
+            myUrl = appFullUrlData.value;
+            flag = true;
+        }
+        if (flag) {
+            //verifies if the event target contains all data for correct redirection
+
+            if (openWindowData !== null && openWindowData !== undefined) {
+                //determines if the link is to be opened on a new window or on the current
+                if (openWindowData.value === "true") {
+                    //open new tab with the redirection
+
+                    if (myUrl.startsWith('/')) {
+                        goToOldPortalService({ myurl: myUrl })
+                            .then(result => {
+                                //open new tab with the redirection
+                                window.open(result);
+                                this.toggleSpinner();
+                            })
+                            .catch(error => {
+                                //throws error
+                                this.error = error;
+                            });
+
+                    } else {
+                        if (!myUrl.startsWith('http')) {
+                            myUrl = window.location.protocol + '//' + myUrl;
+                        }
+                        window.open(myUrl);
+                        this.toggleSpinner();
+                    }
+
+
+                } else if (myUrl !== '') {
+                    //redirects on the same page
                     //method that redirects the user to the old portal maintaing the same loginId
                     goToOldPortalService({ myurl: myUrl })
                         .then(result => {
                             //open new tab with the redirection
-                            window.open(result);
+                            window.location.href = result;
+                            this.toggleSpinner();
                         })
                         .catch(error => {
                             //throws error
                             this.error = error;
                         });
-                } else {
-                    //open new tab with the redirection
-                    if (myUrl.startsWith('/')) {
-                        myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
-                    } else if (myUrl.startsWith('http')) {
-                        myUrl = window.location.protocol + '//' + myUrl.replace('http://', '');
-                    } else {
-                        myUrl = window.location.protocol + '//' + myUrl;
-                    }
-                    this.toggleSpinner();
-                    window.open(myUrl);
+
                 }
-            } else if (myUrl !== '') {
-                //redirects on the same page
-                console.log('wtf');
-                window.location.href = window.location.protocol + '//' + window.location.hostname + myUrl;
             }
+        } else {
+            console.info('No link to the service has been set.')
+            this.toggleSpinner();
         }
+
     }
 
     //method to rerender the icons between the next and previous buttons
