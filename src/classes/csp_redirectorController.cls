@@ -1,9 +1,9 @@
 public class csp_redirectorController {
   
     @AuraEnabled
-    public static string redirectToLogin(string startUrl,string retURL,string communityName,string servicename){                
-        string ipAddress=ApexPages.currentPage().getHeaders().get('X-Salesforce-SIP');
-        csp_redirectorController.findLocation(true,ipAddress);
+    public static string redirectToLogin(string startUrl,string retURL,string communityName,string servicename,string ipAddress){                
+      
+		if(!String.isBlank(ipAddress))	csp_redirectorController.findLocation(true,ipAddress);
         string oneIDStatus = 'OFF';
         string identityLogin = '/identity/s/login'; // will work on sandboxes
 		string tempserviceName='ISSP'; // default value old portal
@@ -60,9 +60,9 @@ public class csp_redirectorController {
 
     @AuraEnabled
     public static void findLocation(Boolean saveLog,string ipAddress){ 
+		//Adapted method found in ISSP_Login
     	string country = '';
         
-        system.debug('PFFF'+ipAddress);
     	ISSP_CS__c cs = ISSP_CS__c.getInstance('ipinfo_token');
         String ipinfo_token = cs.value__c;
 
@@ -85,12 +85,9 @@ public class csp_redirectorController {
             JSONParser parser = JSON.createParser(res.getBody());
             system.debug('message:' + String.valueOf(parser));
 	        while (parser.nextToken() != null) {
-	        	system.debug('field name:' + JSONToken.FIELD_NAME);
-	        	system.debug('value:' + parser.getText());
 	            if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) &&
 	                (parser.getText() == 'country')) {
 	                parser.nextToken();
-	                system.debug('COUNTRY:' + parser.getText());
 	                country = parser.getText();
 	            }
 	        }
@@ -135,19 +132,12 @@ public class csp_redirectorController {
         }
 
     	if (ipAddress != '' && ipAddress != null && country == ''){
-	    	system.debug('ipAddress: ' + ipAddress);
 	    	List <String> ipList = ipAddress.split('\\.');
-	    	system.debug('ipList: ' + ipList);
 	    	Decimal ipInteger_1 = Decimal.valueOf(ipList[0]);
 	    	Decimal ipInteger_2 = Decimal.valueOf(ipList[1]);
 	    	Decimal ipInteger_3 = Decimal.valueOf(ipList[2]);
 	    	Decimal ipInteger_4 = Decimal.valueOf(ipList[3]);
-	    	system.debug('ipInteger_1: ' + ipInteger_1);
-	    	system.debug('ipInteger_2: ' + ipInteger_2);
-	    	system.debug('ipInteger_3: ' + ipInteger_3);
-	    	system.debug('ipInteger_4: ' + ipInteger_4);
 	    	Decimal ipTotal = (ipInteger_1*256*256*256) + (ipInteger_2*256*256) + (ipInteger_3*256) + (ipInteger_4);
-	    	system.debug('ipTotal: ' + ipTotal);
     	}
 
     }   
