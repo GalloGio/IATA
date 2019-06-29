@@ -4,11 +4,11 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">GSSA Cargo</value>
+        <value xsi:type="xsd:string">GSA General Sales Agent</value>
     </values>
     <values>
         <field>Account_Sector__c</field>
-        <value xsi:type="xsd:string">GSA</value>
+        <value xsi:type="xsd:string">General Sales Agent</value>
     </values>
     <values>
         <field>DataCategoryVisibility__c</field>
@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">FAQs_Visibility_GSA_GSSA</value>
     </values>
 </CustomMetadata>
