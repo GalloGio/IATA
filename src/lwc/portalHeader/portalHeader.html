@@ -23,9 +23,8 @@
                         </header>
 
                         <div class="slds-is-relative addOverflow">
-                            <div
-                                class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large background">
-                                
+                            <div class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large background">
+
                                 <div class="slds-p-top_small modalType">
                                     <span
                                         class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
@@ -83,7 +82,8 @@
                             <div class="openProfile customCardWhite">
                                 <span class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={navigateToMyProfile}>{labels.ISSP_MyProfile}</span>
-                                <span class="slds-p-around_small text-xsmall text-black profileOption"
+                                <span if:true={displayCompanyTab}
+                                    class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={navigateToCompanyProfile}>{labels.CSP_CompanyProfile}</span>
                                 <span class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={navigateToCases}>{labels.CSP_Cases}</span>
@@ -150,11 +150,10 @@
                                                         <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
                                                             data-item={not.id}>
                                                             <span class="cursorPointer" data-item={not.id}
-                                                                data-changebody="1"
-                                                                onclick={openmodal}>
+                                                                data-changebody="1" onclick={openmodal}>
                                                                 {not.subject}
                                                             </span>
-                                                           
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,11 +197,10 @@
                                                         <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
                                                             data-item={not.id}>
                                                             <span class="cursorPointer" data-item={not.id}
-                                                                data-changebody="1"
-                                                                onclick={openmodal}>
+                                                                data-changebody="1" onclick={openmodal}>
                                                                 {not.subject}
                                                             </span>
-                                                           
+
                                                         </div>
                                                     </div>
                                                 </div>

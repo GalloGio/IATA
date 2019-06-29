@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Account_Categories__c</field>
-        <value xsi:type="xsd:string">Airline Global Card Acquirer;Banking Service;Card Brand;Lessor;Payment Provider</value>
+        <value xsi:type="xsd:string">All</value>
     </values>
     <values>
         <field>Account_Sector__c</field>
@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">FAQs_Visibility_Financial_Institution_All</value>
     </values>
 </CustomMetadata>
