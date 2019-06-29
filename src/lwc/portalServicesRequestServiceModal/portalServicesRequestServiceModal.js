@@ -65,7 +65,7 @@ import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsReque
 
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
-
+    
     //exposed labels
     @track label = {
         newServiceRequestlb,
@@ -104,7 +104,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         csp_TDP_ServiceRequest_TopLabel,
         csp_TDP_ServiceRequest_MediumLabel1,
         csp_TDP_ServiceRequest_MediumLabel2,
-        csp_TD_ServiceRequest_TopLabel
+        csp_TD_ServiceRequest_TopLabel,
+        csp_NoPortalServiceNameFound
 
     };
 
@@ -138,7 +139,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
             this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
             this.popUpHandler();
-
         }
 
     }
@@ -153,11 +153,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     get confirmMessage() {
         if (this.isAdmin) {
-            return this.label.newServiceRequestConfirmMsglb + ' ' + this.serviceFullName;
-        }
-        return this.label.newServiceAccessConfirmMsglb + ' ' + this.serviceFullName;
-    }
 
+            return this.label.newServiceRequestConfirmMsglb.replace('{0}', this.serviceFullName);
+        }
+        return this.label.newServiceAccessConfirmMsglb.replace('{0}', this.serviceFullName);
+    }
 
     @track trackedServiceId;
     @track trackedServiceRecord = {};
@@ -210,6 +210,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     timeout = null;
     permSetSSO;
     IATA_IEP_RadioButtons;
+    timeoutLimit = 18;
+    timeoutCounter;
 
     @track isAdmin = false;
     @track serviceName = '';
@@ -299,17 +301,18 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         if (userOptions.User_ICCS_Membership_Status === 'Member') {
                             this.ICCSOptionalMessages = this.label.ICCS_Homepage_Select_Role_Label
-                                + '<br/><br/><br/>'
+                                + ':<br/><br/>'
                                 + this.label.ICCS_Homepage_Request_Role_Message2;
 
                             this.showICCSRoleSelection = true;
                             this.ICCSRoleChangeConfirm = false;
                             let myICCSRolesOptions = [];
+                            myICCSRolesOptions.push({ label: this.label.ICCS_Homepage_Select_Role_Label, value: '' });
                             availableICCSPortalServiceRoles()
                                 .then(data => {
                                     let roles = JSON.parse(JSON.stringify(data));
                                     if (this.serviceFullName === 'ICCS') {
-                                        let allRoles = roles.filter(obj => obj.Connected_App__c === 'ICCS');
+                                        let allRoles = roles.filter(obj => obj.Connected_App__c === 'ICCS' && (obj.Role__c === 'Read-only' || obj.Role__c === 'Level 1'));
                                         allRoles.forEach(element => {
                                             myICCSRolesOptions.push({
                                                 label: element.Role__c, value: element.Role__c
@@ -565,13 +568,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         // Make a new timeout set to go off in 5000ms
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
-
+            //this.testfunction();
             performCheckonPoll({ permSetSSO: this.permSetSSO, failedCount: this.NumberOfUseProvisioningRequests })
                 .then(data => {
                     // you can access your data here
                     let results = JSON.parse(JSON.stringify(data));
                     if (results === 'Success') {
-
                         if ((this.radioOption === undefined || this.radioOption === '')
                             && (this.ICCSRole === undefined || this.ICSSRole === '')) {
                             serviceWrapperRedirect({ serviceId: this.trackedServiceId })
@@ -582,6 +584,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
 
                     } else if (results === 'Incomplete') {
+                        this.timeout++;
+                        if (this.timeout === this.timeoutLimit) {
+                            location.reload();
+                        }
                         this.pollServer();
                     } else if (results === 'Error') {
                         this.dispatchEvent(
