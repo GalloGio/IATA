@@ -6,9 +6,6 @@
         <publicGroups>
             <publicGroup>L3_Training_Partnership</publicGroup>
         </publicGroups>
-        <users>
-            <user>thierry.costa@b-i.com</user>
-        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
