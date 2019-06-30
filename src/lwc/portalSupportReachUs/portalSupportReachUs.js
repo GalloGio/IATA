@@ -57,7 +57,7 @@ import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
 import csp_caseSubject from '@salesforce/schema/Case.Subject';
 import csp_caseDescription from '@salesforce/schema/Case.Description';
 
-
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalSupportReachUs extends NavigationMixin(LightningElement) {
     //track variables
@@ -145,7 +145,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     }
 
     //links for images
-    iconsBaseLink = '/csportal/s/CSPortal/Images/Support/';
+    iconsBaseLink = CSP_PortalPath + 'CSPortal/Images/Support/';
     iconsExtension = '.svg';
 
 

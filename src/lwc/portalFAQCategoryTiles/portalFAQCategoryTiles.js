@@ -7,6 +7,8 @@ import { navigateToPage } from'c/navigationUtils';
 import CSP_FAQ_HeaderTitle from '@salesforce/label/c.CSP_FAQ_HeaderTitle';
 import CSP_FAQ_Subtitle from '@salesforce/label/c.CSP_FAQ_Subtitle';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalFAQCategoryTiles extends NavigationMixin(LightningElement) {
 
     label = {
@@ -17,7 +19,7 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
     @track lstTiles = [];
     @track loading = true;
 
-    iconsBaseLink = '/csportal/s/CSPortal/Images/FAQ/';
+    iconsBaseLink = CSP_PortalPath + 'CSPortal/Images/FAQ/';
     iconsExtension = '.svg';
     
     connectedCallback() {                

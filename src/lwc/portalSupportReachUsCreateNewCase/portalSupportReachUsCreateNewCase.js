@@ -49,6 +49,8 @@ import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
 import csp_caseSubject from '@salesforce/schema/Case.Subject';
 import csp_caseDescription from '@salesforce/schema/Case.Description';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalSupportReachUsCreateNewCase extends LightningElement {
     //label construct
     label = {
@@ -493,7 +495,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                         this.openModal();
                     }
                     else if (process === 'Add_Attachment') {
-                        window.location.href = "/csportal/s/case-details?caseId=" + this.caseID + '&Att=true';
+                        window.location.href = CSP_PortalPath + "case-details?caseId=" + this.caseID + '&Att=true';
                     }
                 })
                 .catch(error => {
@@ -557,21 +559,21 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //Simple navigate to the reach us page.
     navigateToSupport() {
-        window.location.href = "/csportal/s/support-reach-us";
+        window.location.href = CSP_PortalPath + "support-reach-us";
     }
 
     //Simple navigate to the case details of the created case.
     navigateToCase() {
-        window.location.href = "/csportal/s/case-details?caseId=" + this.caseID;
+        window.location.href = CSP_PortalPath + "case-details?caseId=" + this.caseID;
     }
 
     //it really, really, really navigates to all cases. Promise!
     navigateToAllCases() {
-        window.location.href = "/csportal/s/cases-list";
+        window.location.href = CSP_PortalPath + "cases-list";
     }
 
     goBackToSupportReachUs() {
-        window.location.href = "/csportal/s/support-reach-us?category="
+        window.location.href = CSP_PortalPath + "support-reach-us?category="
             + this.category + "&topic=" + this.topic + "&subtopic=" + this.subtopic;
     }
 }

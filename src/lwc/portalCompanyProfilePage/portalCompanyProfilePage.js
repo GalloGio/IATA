@@ -26,10 +26,13 @@ import NoAccount from '@salesforce/label/c.CSP_NoAccount';
 import CSP_Branch_Offices from '@salesforce/label/c.CSP_Branch_Offices';
 import ISSP_Contacts from '@salesforce/label/c.ISSP_Contacts';
 
-
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
 export default class PortalCompanyProfilePage extends LightningElement {
+
+    //icons
+    searchColored = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
 
     constructor() {
         super();

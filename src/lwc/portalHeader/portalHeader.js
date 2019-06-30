@@ -43,6 +43,9 @@ import Id from '@salesforce/user/Id';
 import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
 import AccountSector from '@salesforce/schema/User.Contact.Account.Sector__c';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
+
 export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track displayAcceptTerms = true;
 
@@ -102,7 +105,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     //links for images
-    logoIcon = '/csportal/s/CSPortal/Images/Logo/group.svg';
+    logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
 
     //notifications
     @track numberOfNotifications;
@@ -218,13 +221,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     navigationCheck(pageNameToNavigate, currentService) {
 
         if (this.trackedIsInOldPortal) {
-            redirectfromPortalHeader({pageName : currentService}).then(result => {
+            redirectfromPortalHeader({ pageName: currentService }).then(result => {
                 window.location.href = result;
             });
         } else {
             this.navigateToOtherPage(pageNameToNavigate);
         }
-        
+
     }
 
     navigateToHomePage() {

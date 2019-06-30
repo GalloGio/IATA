@@ -9,6 +9,8 @@ import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults
 import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';	
 import CurrencyCenter_Open from '@salesforce/label/c.CurrencyCenter_Open';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalDocumentsCategory extends LightningElement {
     @track label = {
         CSP_Search_Documents_ProdType,
@@ -28,7 +30,7 @@ export default class PortalDocumentsCategory extends LightningElement {
     @track totalResults = 0;
     @track firstLoad = true;
 
-    searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
+    searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
     @api
     get documentObject() {

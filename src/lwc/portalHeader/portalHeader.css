@@ -138,13 +138,7 @@
   cursor: pointer;
 }
 
-.headerButtonNotifications {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
-  width: 24px;
-  height: 24px;
-}
+
 
 .headerButtonNotificationsCloseIcon {
   display: none;
@@ -159,15 +153,6 @@
   z-index: 2;
   float: right;
   position: relative;
-}
-
-.headerButtonProfile {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
 }
 
 .headerButtonProfileContainer:hover .openProfile,
@@ -197,45 +182,13 @@
   box-shadow: 5px 10px 20px #e2e2e2;
 }
 
-.headerButtonSupport {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
 
-.headerButtonService {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
 
 .headerBarButton:hover div.headerButtonArrow {
   transform: rotate(180deg);
 }
 
-.headerButtonArrow {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
 
-.headerButtonSearch {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
 
 .headerMarginRight {
   margin-right: 10%;
@@ -396,4 +349,57 @@
   line-height: 1.6;
   letter-spacing: normal;
   color: #333333;
+}
+
+.headerButtonNotifications {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
+  width: 24px;
+  height: 24px;
+}
+
+.headerButtonProfile {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonSupport {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonService {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonArrow {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonSearch {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
 }

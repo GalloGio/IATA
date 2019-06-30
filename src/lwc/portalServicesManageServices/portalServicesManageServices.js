@@ -47,7 +47,7 @@ import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
 
 
 
-
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
 
@@ -80,7 +80,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     };
 
     //links for images
-    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
+    searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
 
     @track iconLink;
     @track loadReady = false; // to prevent flicking between user and admin view's
@@ -106,7 +106,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     searchMode=false;
 
     
-    searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
+    searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
 
     //Variables to trak

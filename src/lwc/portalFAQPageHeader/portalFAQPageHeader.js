@@ -9,6 +9,8 @@ import { getParamsFromPage } from'c/navigationUtils';
 
 import getCategoryTiles from '@salesforce/apex/PortalFAQsCtrl.getCategoryTiles';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalFAQPageHeader extends NavigationMixin(LightningElement) {
 
     label = {
@@ -16,7 +18,7 @@ export default class PortalFAQPageHeader extends NavigationMixin(LightningElemen
     };
 
     //links for images
-    backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
+    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
 
     @track iconLink;
 
@@ -46,7 +48,7 @@ export default class PortalFAQPageHeader extends NavigationMixin(LightningElemen
                     for(i = 0; i < resultsAux.length; i++){
                         if(resultsAux[i].categoryName === this.pageParams.category){
                             this.category = resultsAux[i].categoryLabel;
-                            this.iconLink = '/csportal/s/CSPortal/Images/FAQ/' + this.pageParams.category + '.svg';
+                            this.iconLink = CSP_PortalPath + 'CSPortal/Images/FAQ/' + this.pageParams.category + '.svg';
                             break;
                         }
                     }

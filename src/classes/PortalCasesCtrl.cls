@@ -443,7 +443,7 @@ public with sharing class PortalCasesCtrl {
         /*If no match was done*/
         return new Map<Id, String>{
             record.Id => 
-            '/csportal/s/case-details?caseId=' + record.Id
+                Label.CSP_PortalPath + 'case-details?caseId=' + record.Id
         };
     }
 

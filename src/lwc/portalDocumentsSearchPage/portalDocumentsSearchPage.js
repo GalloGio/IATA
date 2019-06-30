@@ -2,6 +2,8 @@ import { LightningElement, track } from 'lwc';
 import { getParamsFromPage } from'c/navigationUtils';
 import CSP_SearchDocuments from '@salesforce/label/c.CSP_SearchDocuments';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalDocumentsSearchPage extends LightningElement {
     @track label = {
         CSP_SearchDocuments
@@ -13,9 +15,11 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     @track searchText = "";
     timeout = null;
 
-    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
+    searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
 
     connectedCallback() {
+        console.log('connectedCallback Page');
+        
         let pageParams = getParamsFromPage();
 
         if(pageParams !== undefined && pageParams.category !== undefined) {

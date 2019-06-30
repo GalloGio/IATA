@@ -9,6 +9,8 @@ import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults
 import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
 import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalSearchBar extends NavigationMixin(LightningElement) {
 
     //these are the filters passed from the search
@@ -41,8 +43,8 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     //clone of the filtering object passed from the parent
     @track filteringObject;
 
-    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
-    searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
+    searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
+    searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
     @track loadingTypehead = false;
 

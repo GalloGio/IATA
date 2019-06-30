@@ -67,9 +67,13 @@ import performCheckonPoll from '@salesforce/apex/PortalServicesCtrl.performCheck
 import ISSP_AvailableService_newAppsRequest2 from '@salesforce/apex/PortalServicesCtrl.newAppsRequest2';
 import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsRequestICCS';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
-    
+
+    //icons
+    exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
+
     //exposed labels
     @track label = {
         newServiceRequestlb,
@@ -688,7 +692,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 
 
- 
+
 
 
     handleSubmitRequest() {
