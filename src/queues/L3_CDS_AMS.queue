@@ -6,9 +6,6 @@
         <publicGroups>
             <publicGroup>L3_CDS_AMS</publicGroup>
         </publicGroups>
-        <users>
-            <user>sucklinga@iata.org.qa</user>
-        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
