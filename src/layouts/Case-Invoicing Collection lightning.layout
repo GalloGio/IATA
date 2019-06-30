@@ -376,11 +376,6 @@
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Escalate_within_IATA_lightning</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Case.New_Copy_Parent_Details_InvoiceCollection</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
