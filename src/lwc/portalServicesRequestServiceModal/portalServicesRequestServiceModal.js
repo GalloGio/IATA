@@ -42,6 +42,10 @@ import csp_TDP_ServiceRequest_TopLabel from '@salesforce/label/c.csp_TDP_Service
 import csp_TDP_ServiceRequest_MediumLabel1 from '@salesforce/label/c.csp_TDP_ServiceRequest_MediumLabel1';
 import csp_TDP_ServiceRequest_MediumLabel2 from '@salesforce/label/c.csp_TDP_ServiceRequest_MediumLabel2';
 import csp_TD_ServiceRequest_TopLabel from '@salesforce/label/c.csp_TD_ServiceRequest_TopLabel';
+import ISSP_Registration_MyInformation from '@salesforce/label/c.ISSP_Registration_MyInformation';
+import ISSP_Company_Administration from '@salesforce/label/c.ISSP_Company_Administration';
+import csp_RequestService_ContactSupport from '@salesforce/label/c.csp_RequestService_ContactSupport';
+
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -65,7 +69,7 @@ import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsReque
 
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
-
+    
     //exposed labels
     @track label = {
         newServiceRequestlb,
@@ -104,7 +108,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         csp_TDP_ServiceRequest_TopLabel,
         csp_TDP_ServiceRequest_MediumLabel1,
         csp_TDP_ServiceRequest_MediumLabel2,
-        csp_TD_ServiceRequest_TopLabel
+        csp_TD_ServiceRequest_TopLabel,
+        csp_NoPortalServiceNameFound,
+        ISSP_Registration_MyInformation,
+        ISSP_Company_Administration,
+        csp_RequestService_ContactSupport
 
     };
 
@@ -138,7 +146,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
             this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
             this.popUpHandler();
-
         }
 
     }
@@ -153,11 +160,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     get confirmMessage() {
         if (this.isAdmin) {
-            return this.label.newServiceRequestConfirmMsglb + ' ' + this.serviceFullName;
-        }
-        return this.label.newServiceAccessConfirmMsglb + ' ' + this.serviceFullName;
-    }
 
+            return this.label.newServiceRequestConfirmMsglb.replace('{0}', this.serviceFullName);
+        }
+        return this.label.newServiceAccessConfirmMsglb.replace('{0}', this.serviceFullName);
+    }
 
     @track trackedServiceId;
     @track trackedServiceRecord = {};
@@ -210,6 +217,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     timeout = null;
     permSetSSO;
     IATA_IEP_RadioButtons;
+    timeoutLimit = 18;
+    timeoutCounter;
 
     @track isAdmin = false;
     @track serviceName = '';
@@ -268,7 +277,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
                             && userOptions.Legal_Auth_Signature === 'false') {
-                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_Alt;
+                            let string1 = this.label.ISSP_Registration_MyInformation;
+                            let link0 = window.location.toString().replace('/services', '');
+                            let link1 = link0 + '/my-profile';
+                            let string2 = this.label.ISSP_Company_Administration;
+                            let link2 = link0 + '/company-profile';
+                            let string3 = this.label.csp_RequestService_ContactSupport;
+                            let link3 = link0 + '/support-reach-us';
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_Alt.replace('{0}', string1.link(link1)).replace('{1}', string2.link(link2)).replace('{2}', string3.link(link3));
                         }
                         else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
                             && userOptions.Legal_Auth_Signature === 'true') {
@@ -281,7 +297,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         else if (userOptions.IEP_Status !== 'In Progress' && userOptions.IEP_Status !== 'No IEP Account'
                             && userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved Admin') {
-                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth;
+                                let string1 = this.label.csp_RequestService_ContactSupport;
+                                let link0 = window.location.toString().replace('/services', '');
+                                let link1 = link0 + '/support-reach-us';
+                                this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string1.link(link1));
                         }
                     });
             }
@@ -299,17 +318,18 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         if (userOptions.User_ICCS_Membership_Status === 'Member') {
                             this.ICCSOptionalMessages = this.label.ICCS_Homepage_Select_Role_Label
-                                + '<br/><br/><br/>'
+                                + ':<br/><br/>'
                                 + this.label.ICCS_Homepage_Request_Role_Message2;
 
                             this.showICCSRoleSelection = true;
                             this.ICCSRoleChangeConfirm = false;
                             let myICCSRolesOptions = [];
+                            myICCSRolesOptions.push({ label: this.label.ICCS_Homepage_Select_Role_Label, value: '' });
                             availableICCSPortalServiceRoles()
                                 .then(data => {
                                     let roles = JSON.parse(JSON.stringify(data));
                                     if (this.serviceFullName === 'ICCS') {
-                                        let allRoles = roles.filter(obj => obj.Connected_App__c === 'ICCS');
+                                        let allRoles = roles.filter(obj => obj.Connected_App__c === 'ICCS' && (obj.Role__c === 'Read-only' || obj.Role__c === 'Level 1'));
                                         allRoles.forEach(element => {
                                             myICCSRolesOptions.push({
                                                 label: element.Role__c, value: element.Role__c
@@ -565,13 +585,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         // Make a new timeout set to go off in 5000ms
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
-
+            //this.testfunction();
             performCheckonPoll({ permSetSSO: this.permSetSSO, failedCount: this.NumberOfUseProvisioningRequests })
                 .then(data => {
                     // you can access your data here
                     let results = JSON.parse(JSON.stringify(data));
                     if (results === 'Success') {
-
                         if ((this.radioOption === undefined || this.radioOption === '')
                             && (this.ICCSRole === undefined || this.ICSSRole === '')) {
                             serviceWrapperRedirect({ serviceId: this.trackedServiceId })
@@ -582,6 +601,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
 
                     } else if (results === 'Incomplete') {
+                        this.timeout++;
+                        if (this.timeout === this.timeoutLimit) {
+                            location.reload();
+                        }
                         this.pollServer();
                     } else if (results === 'Error') {
                         this.dispatchEvent(

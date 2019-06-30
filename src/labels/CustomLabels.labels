@@ -34800,13 +34800,21 @@ title,Title,Name</value>
         <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;
         Please contact your Head Office&#39;s Authorized Signatory to request them to open an IATA EasyPay Account. 
         As a Portal Administrator you can either update your 
-        &lt;a href=&quot;/my-profile&quot;&gt;Personal Information&lt;/a&gt; 
+        {0}
         to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the 
-        &lt;a href=&quot;/company-profile&quot;&gt;Company Administration -&gt; Contacts&lt;/a&gt; 
+        {1} 
         page and ask them to open your EasyPay account.
         &lt;br/&gt;
         &lt;br/&gt;
-        Please &lt;a href=&quot;/Support-Reach-Us?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
+        Please {2} if you need help.</value>
+    </labels>
+    <labels>
+        <fullName>csp_RequestService_ContactSupport</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value> contact support </value>
     </labels>
     <labels>
         <fullName>csp_RequestService_ContactPortalAdmin_LegalAuth</fullName>
@@ -34817,7 +34825,7 @@ title,Title,Name</value>
         <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&#39;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency.
         &lt;br/&gt;
         &lt;br/&gt;
-        Please &lt;a href=&quot;/Support-Reach-Us?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
+        Please {0} if you need help.</value>
     </labels>
     <labels>
         <fullName>csp_RequestService_IEPAccountOpenInProgress</fullName>
