@@ -7,6 +7,9 @@
         <roles>
             <role>Legal</role>
         </roles>
+        <publicGroups>
+            <publicGroup>GDPR</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
