@@ -22,7 +22,7 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 
 	string queryFields = 'Name, Description__c, Service_Description__c, Service_Description_Label__c, Visible__c, ' +
 	                     'Requestable__c, Application_icon__c, Application_URL__c, New_Window__c, VisibleCNS__c, ' +
-	                     'ANG_Flag_Restrict_Accredited_Agent__c, ANG_Flag_Restrict_Sector__c';
+	                     'ANG_Flag_Restrict_Accredited_Agent__c, ANG_Flag_Restrict_Sector__c, ServiceName__c ';
 
 	string query = 'SELECT '  + queryFields +
 	               ' FROM Portal_Applications__c' +
@@ -75,7 +75,7 @@ public static List<Portal_Application_Right__c> getUsersFavoriteServicesList(Str
 	                    'Portal_Application__r.New_Window__c, Right__c, Portal_Application__r.Application_icon_URL__c, ' +
 	                    'Portal_Application__r.Name, Portal_Application__c, My_Apps__c, Contact__c, ' +
 	                    'Application_Start_URL__c,Technical_Provisioning_Status__c, Case_creation_record_Type__c, ' +
-	                    'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c ' +
+	                    'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c, Portal_Application__r.ServiceName__c  ' +
 	                    'FROM Portal_Application_Right__c ' +
 	                    'WHERE (Contact__c = \'' + contactId + '\' AND '+
 	                    '   Right__c = \'Access Granted\' AND ' +
