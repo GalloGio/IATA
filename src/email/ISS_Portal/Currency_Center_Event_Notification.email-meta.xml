@@ -6,7 +6,7 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>Currency Center Event Notification</name>
     <style>freeForm</style>
-    <subject>Upcoming event regarding your subscribed country</subject>
+    <subject>Upcoming action regarding {!Country_Profile__c.Country_Name__c}</subject>
     <textOnly>Dear Currency Center users,
 
 This serves to inform you about an upcoming event regarding your subscribed country(ies).
