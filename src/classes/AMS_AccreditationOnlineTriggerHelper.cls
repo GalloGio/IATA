@@ -143,7 +143,7 @@ public class AMS_AccreditationOnlineTriggerHelper {
         for(AMS_Pax_Accreditation_Form__c form : newList) {
             stateIdList.add(form.IATA_ISO_State__c);
         }
-        for(ANG_BSP_Attributes__c issOp : [SELECT Id, ISO_State__c, BSP__r.Remittance_Frequency_per_State__c, Remittance_Frequency__c 
+        for(ANG_BSP_Attributes__c issOp : [SELECT Id, ISO_State__c, Class_Type__c, BSP__r.Remittance_Frequency_per_State__c, Remittance_Frequency__c 
                                            FROM ANG_BSP_Attributes__c 
                                            WHERE ISO_State__c =: stateIdList
                                            AND RecordType.DeveloperName = 'Remittance_Frequency']) {
@@ -152,7 +152,7 @@ public class AMS_AccreditationOnlineTriggerHelper {
         
         for(AMS_Pax_Accreditation_Form__c form : newList) {
             ANG_BSP_Attributes__c bsp = bspPerState.get(form.IATA_ISO_State__c);
-            if(bsp != null && bsp.BSP__r.Remittance_Frequency_per_State__c == True && bsp.Remittance_Frequency__c != form.Remittance_Frequency__c) {
+            if(bsp != null && bsp.BSP__r.Remittance_Frequency_per_State__c == True && bsp.Class_Type__c == form.Location_Class__c && bsp.Remittance_Frequency__c != form.Remittance_Frequency__c) {
                 form.Remittance_frequency__c = '';
             }
         }
