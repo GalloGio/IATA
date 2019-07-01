@@ -6785,7 +6785,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>,E-mail to Case - QMS - Jordan,E-mail to Case - QMS - Syria,&quot;E-mail to Case - Jordan, Syria &amp; Lebanon&quot;,E-mail to Case - QMS - Lebanon</value>
+                <value>E-mail to Case - QMS - Jordan,E-mail to Case - QMS - Syria,&quot;E-mail to Case - Jordan, Syria &amp; Lebanon&quot;,E-mail to Case - QMS - Lebanon</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>

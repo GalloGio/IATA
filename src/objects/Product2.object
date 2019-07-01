@@ -4124,7 +4124,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
-
     </fields>
     <fields>
         <fullName>Non_IATA_product__c</fullName>
