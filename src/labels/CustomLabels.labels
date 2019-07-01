@@ -34656,6 +34656,14 @@ title,Title,Name</value>
         <value>Contact Support</value>
     </labels>
     <labels>
+        <fullName>csp_InvalidPhoneValue</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_InvalidPhoneValue</shortDescription>
+        <value>Invalid number format.</value>
+    </labels>
+    <labels>
         <fullName>csp_IsEmergency</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
