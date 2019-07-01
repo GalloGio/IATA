@@ -332,8 +332,6 @@ public without sharing class Data_Submission_List_CTRL {
 
             info.usersWithSameBusinessUnits = new List<Id>(userIdWithSameBusinessUnit);
 
-        }else{
-            info.usersWithSameBusinessUnits = getUsersWithoutBusinessUnits(userId);
         }
 
         List<Account> visibleAccounts = Contact_Roles_Helper.getUserAccounts(userId);
@@ -349,77 +347,80 @@ public without sharing class Data_Submission_List_CTRL {
     }
 
 
-    private static List<Id> getUsersWithoutBusinessUnits(Id userId) {
-        List<Id> usersWithoutBusinessUnits = new List<Id>();
-
-        Set<Id> contactIds = new Set<Id>();
-        List<Contact_Roles_Helper.AggregatedRecordWrapper> wrappers = Contact_Roles_Helper.getContactsVisibleToUser(userId, true, false, new List<Id>(), null, true);
-        for(Contact_Roles_Helper.AggregatedRecordWrapper wrapper : wrappers) {
-            contactIds.add(wrapper.con.Id);
-        }
-
-        List<User> users = new List<User>();
-        if(! contactIds.isEmpty()) {
-            users = [SELECT Id FROM User WHERE ContactId = :contactIds];
-        }
-
-        for(User u : users) {
-            usersWithoutBusinessUnits.add(u.Id);
-        }
-
-        return usersWithoutBusinessUnits;
-    }
-
 
     private static String buildWhereClause(Id userId, Boolean isPowerUser, Boolean isSuperUser, Boolean isDataSubmitter, List<Account> visibleAccounts, List<Id> usersWithSameBusinessUnits) {
         String whereClause = '';
 
-        if(isPowerUser) {
-            String accountsString = '';
+        String accountsString = '';
+        String usersString = '';
 
-            if (!visibleAccounts.isEmpty()) {
-                accountsString = '(' + '\'' + visibleAccounts[0].Id + '\'';
+        if (!visibleAccounts.isEmpty()) {
+            accountsString = '(' + '\'' + visibleAccounts[0].Id + '\'';
 
-                for (Integer i = 1; i < visibleAccounts.size(); i++) {
-                    accountsString += ', \'' + visibleAccounts[i].Id + '\'';
-                }
-                accountsString += ')';
+            for (Integer i = 1; i < visibleAccounts.size(); i++) {
+                accountsString += ', \'' + visibleAccounts[i].Id + '\'';
             }
-
-            if (accountsString.length() > 0) {
-                whereClause += 'Submitter__r.AccountId IN ' + accountsString;
-            }else{
-                //no accounts visible - show only own Data Submissions
-                whereClause += 'Submitter__c =\'' + userId + '\'';
-            }
-        }else if(isSuperUser) {
-            String usersString = '';
-
-            if(! usersWithSameBusinessUnits.isEmpty()) {
-                usersString = '(' + '\'' + usersWithSameBusinessUnits[0] + '\'';
-
-                for(Integer i = 1; i < usersWithSameBusinessUnits.size(); i++) {
-                    usersString += ', \'' + usersWithSameBusinessUnits[i] + '\'';
-                }
-                usersString += ')';
-            }
-
-            if(usersString.length() > 0) {
-                whereClause += 'Submitter__c IN ' + usersString;
-            }else{
-                //no other users visible - show only own Data Submissions
-                whereClause += 'Submitter__c =\'' + userId + '\'';
-            }
-
-        }else if(isDataSubmitter) {
-            whereClause += 'Submitter__c =\'' + userId + '\'';
+            accountsString += ')';
         }
 
-        Datetime now = System.now().addMonths(-6);
-        String startTime = now.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+        if(! usersWithSameBusinessUnits.isEmpty()) {
+            usersString = '(' + '\'' + usersWithSameBusinessUnits[0] + '\'';
+
+            for(Integer i = 1; i < usersWithSameBusinessUnits.size(); i++) {
+                usersString += ', \'' + usersWithSameBusinessUnits[i] + '\'';
+            }
+            usersString += ')';
+        }
+
+        if(isPowerUser) {
+            if (accountsString.length() > 0) {
+
+                whereClause += 'Submitter__r.AccountId IN ' + accountsString + ' AND Account__c IN ' + accountsString;
+
+            }else{
+
+                return whereClause;
+            }
+
+        } else if(isSuperUser) {
+
+            if(usersString.length() > 0) {
+
+                whereClause += 'Submitter__c IN ' + usersString;
+
+                if (accountsString.length() > 0) {
+
+                    whereClause += ' AND Account__c IN ' + accountsString;
+                }else{
+
+                    return '';
+
+                }
+
+            }else{
+
+                return whereClause;
+
+            }
+        } else if(isDataSubmitter) {
+
+            if(accountsString.length() > 0) {
+
+                whereClause += 'Submitter__c =\'' + userId + '\'' + ' AND Account__c IN ' + accountsString;
+
+            }else{
+
+                return whereClause;
+
+            }
+        }
 
 
         if(isSuperUser || isDataSubmitter) {
+
+            Datetime now = System.now().addMonths(-6);
+            String startTime = now.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+
             whereClause += ' AND Submission_date__c >=' + startTime;
         }
 

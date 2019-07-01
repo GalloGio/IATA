@@ -4599,6 +4599,13 @@ You can choose one or more of the following topics:</value>
         <value>Please select file to upload.</value>
     </labels>
     <labels>
+        <fullName>GADM_Data_Submission_no_records</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no records</shortDescription>
+        <value>No records to display.</value>
+    </labels>
+    <labels>
         <fullName>GADM_FileAlreadyAttached</fullName>
         <language>en_US</language>
         <protected>false</protected>

@@ -84,10 +84,16 @@
                             }
                             actorsData.push({value:actors[i], key:i, errorText:error});
                         }
+
+                        let maxUserCount = 0;
+                        let currentUserCount = 0;
+                        let userCountReached = 0;
                         let accountDetail = actors[selectedUserInfo.con.AccountId];
-                        let maxUserCount = accountDetail.maxUserCount;
-                        let currentUserCount = accountDetail.currentUserCount;
-                        let userCountReached = currentUserCount >= maxUserCount;
+                        if(! $A.util.isEmpty(accountDetail)) {
+                            maxUserCount = accountDetail.maxUserCount;
+                            currentUserCount = accountDetail.currentUserCount;
+                            userCountReached = currentUserCount >= maxUserCount;
+                        }
 
                         component.set('v.userCountReached', userCountReached);
                         component.set('v.maxUserCount', maxUserCount);
