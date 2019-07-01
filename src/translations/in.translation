@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>Daftar Lembaga Keuangan yang menyediakan Asuransi Jaminan Keuangan di negara Anda</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7921,7 +7925,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Copy Ownership Warning --></label>
+        <label>Perhatian! Dengan menyalin informasi kepemilikan ke sebuah Agensi, Anda akan menghapus informasi kepemilikan lama dari Agensi target.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -9705,7 +9709,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Select Accounts --></label>
+        <label>Pilih Akun Target</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -9729,7 +9733,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS State --></label>
+        <label>Negara Bagian/Provinsi</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -11121,19 +11125,19 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_CHECKING --></label>
+        <label>Memeriksa...</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG COPY OWNERSHIP HINT --></label>
+        <label>Tindakan ini memungkinkan Anda untuk menyalin detail kepemilikan dari akun ini ke lokasi yang dipilih milik hierarki Anda. Berikutnya Anda dapat memvisualisasikan perubahan yang diterapkan oleh tindakan ini pada agensi target, hanya setelah Mengonfirmasi Pembaruan atas semua detail di halaman ini.</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROCESSED --></label>
+        <label>Agensi diproses</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROGRESS --></label>
+        <label>Salin Progres Kepemilikan</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -13200,7 +13204,7 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Gdp Opt In Hint --></label>
+        <label>Dengan menyatakan keikutsertaan, pemasok Industri seperti maskapai, hotel, dan operator tur akan bisa mengedarkan pesan ke agensi Anda tentang produk, promosi, penjualan, dan kebijakan agensi.</label>
         <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
@@ -14998,7 +15002,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Rev Case Open Acc Info --></label>
+        <label>Perubahan, kecuali GDP Opt-in, harus dibuat selama proses Revalidasi Tahunan</label>
         <name>ISSP_Rev_Case_Open_Acc_Info</name>
     </customLabels>
     <customLabels>
@@ -15006,7 +15010,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_SELECT_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_SELECT_STATE --></label>
+        <label>- Pilih Negara Bagian -</label>
         <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>

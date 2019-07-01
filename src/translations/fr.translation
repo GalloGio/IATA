@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>La liste des Institutions financières qui fournissent une Garantie financière dans votre pays</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7938,7 +7942,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Copy Ownership Warning --></label>
+        <label>Attention ! En copiant les données de propriété vers une agence, vous effacerez toutes les données de propriété existantes dans l’agence cible.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -9731,7 +9735,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Select Accounts --></label>
+        <label>Sélectionner les comptes cibles</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -9755,7 +9759,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS State --></label>
+        <label>Pays/Département</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -11149,19 +11153,19 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_CHECKING --></label>
+        <label>Vérification...</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG COPY OWNERSHIP HINT --></label>
+        <label>Cette action vous permet de copier les données de propriété de ce compte vers les emplacements sélectionnés faisant partie de votre hiérarchie. Vous pourrez alors visualiser les modifications effectuées par cette action sur les agences cibles, uniquement après confirmation de la mise à jour de tous les détails de cette page.</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROCESSED --></label>
+        <label>Agences traitées</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROGRESS --></label>
+        <label>Copie des données de propriété en cours</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -13230,7 +13234,7 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Gdp Opt In Hint --></label>
+        <label>En choisissant cette option, les fournisseurs du secteur tels que les compagnies aériennes, les hôtels et les voyagistes, pourront faire passer des messages importants à votre agence sur leurs produits, promotions, conditions de vente et d’agence.</label>
         <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
@@ -15027,7 +15031,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Rev Case Open Acc Info --></label>
+        <label>Les modifications, à l’exception du GDP Opt-in, sont à effectuer le cadre du processus annuel de revalidation (Annual Revalidation Process)</label>
         <name>ISSP_Rev_Case_Open_Acc_Info</name>
     </customLabels>
     <customLabels>
@@ -15035,7 +15039,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_SELECT_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_SELECT_STATE --></label>
+        <label>- Sélectionner le pays -</label>
         <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>

@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>รายชื่อสถาบันการเงินที่มีประกันภัยความมั่นคงทางการเงินในประเทศของคุณ</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7909,7 +7913,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Copy Ownership Warning --></label>
+        <label>โปรดทราบ! เมื่อคัดลอกข้อมูลความเป็นเจ้าของไปยังบริษัทตัวแทนแห่งใดแห่งหนึ่ง คุณจะลบข้อมูลความเป็นเจ้าของที่มีอยู่ของบริษัทตัวแทนเป้าหมาย</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -9693,7 +9697,7 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Select Accounts --></label>
+        <label>เลือกบัญชีเป้าหมาย</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -9717,7 +9721,7 @@ and
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS State --></label>
+        <label>รัฐ/จังหวัด</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -11109,19 +11113,19 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_CHECKING --></label>
+        <label>กำลังตรวจสอบ...</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG COPY OWNERSHIP HINT --></label>
+        <label>การดำเนินการนี้จะทำให้คุณสามารถคัดลอกรายละเอียดความเป็นเจ้าของจากบัญชีนี้ไปยังบัญชีที่เลือกซึ่งอยู่ในลำดับชั้นของคุณ คุณจะสามารถเห็นภาพการเปลี่ยนแปลงที่เกิดจากการดำเนินการนี้ในบริษัทตัวแทนเป้าหมายเมื่อยืนยันการอัปเดตรายละเอียดทั้งหมดของหน้านี้แล้วเท่านั้น</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROCESSED --></label>
+        <label>บริษัทตัวแทนที่ได้ทำการประมวลผล</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROGRESS --></label>
+        <label>ความคืบหน้าการคัดลอกความเป็นเจ้าของ</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -13189,7 +13193,7 @@ and
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Gdp Opt In Hint --></label>
+        <label>เมื่อสมัครเข้าร่วม ผู้จัดหาในอุตสาหกรรม เช่น สายการบิน โรงแรม และผู้ประกอบการท่องเที่ยวจะสามารถส่งข้อความสำคัญถึงหน่วยงานของคุณเกี่ยวกับผลิตภัณฑ์ การส่งเสริมการขาย นโยบายการขาย และนโยบายของบริษัทตัวแทน</label>
         <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
@@ -14987,7 +14991,7 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Rev Case Open Acc Info --></label>
+        <label>การเปลี่ยนแปลงต่าง ๆ ยกเว้น GDP Opt-in ควรดำเนินการผ่านกระบวนการตรวจสอบใหม่ประจำปี</label>
         <name>ISSP_Rev_Case_Open_Acc_Info</name>
     </customLabels>
     <customLabels>
@@ -14995,7 +14999,7 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_SELECT_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_SELECT_STATE --></label>
+        <label>- เลือกรัฐ -</label>
         <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
