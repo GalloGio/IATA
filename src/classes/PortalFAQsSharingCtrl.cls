@@ -7,8 +7,9 @@
 
 public with sharing class PortalFAQsSharingCtrl {
 
-    PUBLIC STATIC FINAL STRING DEFAULT_METADATA_NAME = 'FAQ_Visibility_DEFAULT';
+    PUBLIC STATIC FINAL STRING DEFAULT_METADATA_NAME = 'FAQs_DEFAULT';
     PUBLIC STATIC FINAL STRING FAQ_PERMSET_PREFIX = 'FAQ_Visibility%';
+    PUBLIC STATIC FINAL STRING FAQ_PERMSET_PREFIX2 = 'FAQs_Visibility%';
     PRIVATE STATIC FINAL STRING UNKNOWN_VALUE = '--FAQ_UNKNOWN--';
     PRIVATE STATIC FINAL STRING ALL_VALUES = 'All';
 
@@ -30,7 +31,7 @@ public with sharing class PortalFAQsSharingCtrl {
 
     @future
     public static void validateUserFAQsPermissions(Id userId){
-        List <PermissionSetAssignment> existingAssignments = [SELECT Id, AssigneeId,PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX];
+        List <PermissionSetAssignment> existingAssignments = [SELECT Id, AssigneeId,PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId =: userId AND (PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX OR PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX2)];
         Set<Id> existingSetIds = new Set<Id>();
 
         if(!existingAssignments.isEmpty()){
@@ -166,7 +167,7 @@ public with sharing class PortalFAQsSharingCtrl {
 
         List <PermissionSetAssignment> assignmentListRemove = [SELECT Id, AssigneeId FROM PermissionSetAssignment
         WHERE AssigneeId =: userId
-        AND PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX];
+        AND (PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX OR PermissionSet.Name LIKE :FAQ_PERMSET_PREFIX2)];
 
 
         if (!assignmentListRemove.isEmpty()){
