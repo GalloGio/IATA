@@ -22,7 +22,7 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 
 	string queryFields = 'Name, Description__c, Service_Description__c, Service_Description_Label__c, Visible__c, ' +
 	                     'Requestable__c, Application_icon__c, Application_URL__c, New_Window__c, VisibleCNS__c, ' +
-	                     'ANG_Flag_Restrict_Accredited_Agent__c, ANG_Flag_Restrict_Sector__c';
+	                     'ANG_Flag_Restrict_Accredited_Agent__c, ANG_Flag_Restrict_Sector__c, ServiceName__c ';
 
 	string query = 'SELECT '  + queryFields +
 	               ' FROM Portal_Applications__c' +
@@ -75,7 +75,7 @@ public static List<Portal_Application_Right__c> getUsersFavoriteServicesList(Str
 	                    'Portal_Application__r.New_Window__c, Right__c, Portal_Application__r.Application_icon_URL__c, ' +
 	                    'Portal_Application__r.Name, Portal_Application__c, My_Apps__c, Contact__c, ' +
 	                    'Application_Start_URL__c,Technical_Provisioning_Status__c, Case_creation_record_Type__c, ' +
-	                    'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c ' +
+	                    'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c, Portal_Application__r.ServiceName__c  ' +
 	                    'FROM Portal_Application_Right__c ' +
 	                    'WHERE (Contact__c = \'' + contactId + '\' AND '+
 	                    '   Right__c = \'Access Granted\' AND ' +
@@ -101,14 +101,9 @@ public static List<Portal_Application_Right__c> getFavoriteServicesList(){
 
 	if(!lstPortalApplications.isEmpty()) {
 		for(Portal_Applications__c pa : lstPortalApplications) {
-            for(Portal_Application_Right__c par : lstPortalApplicationsRights) {
-                if(par.Portal_Application__c == pa.Id) {
-                    Portal_Application_Right__c lstPar = new Portal_Application_Right__c();
-                    lstPar.Portal_Application__r = pa;
-                    lstPortalApplicationsRights.add(lstPar);
-                    break;
-                }
-            }
+			Portal_Application_Right__c lstPar = new Portal_Application_Right__c();
+			lstPar.Portal_Application__r = pa;
+			lstPortalApplicationsRights.add(lstPar);
 		}
 	}
 
@@ -746,7 +741,11 @@ private static void alignStatus(ServiceWrapper sw,string newStatus){
 		sw.accessRequested =true;
 	}else{
 		if(sw.isAdmin) {
-			sw.btnLabel =System.Label.ISSP_Enable_Service;
+			if (sw.recordService.Cannot_be_managed_by_portal_admin__c == true) {
+				sw.btnLabel = System.Label.CSP_Request_Service;
+			}else{
+				sw.btnLabel =System.Label.ISSP_Enable_Service;
+			}
 		}
 		else sw.btnLabel =System.Label.CSP_Request_Service;
 		sw.accessGranted =false;
@@ -761,7 +760,7 @@ private static void alignStatus(ServiceWrapper sw,string newStatus){
 			sw.useDefaultRole = false;
 			if (flagIsIepPortalService && sw.iepStatus == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
 				sw.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
-			} else if (sw.isAdmin && sw.recordService.Cannot_be_managed_by_portal_admin__c == false) {
+			} else if (sw.isAdmin && sw.recordService.Cannot_be_managed_by_portal_admin__c == true) {
 				sw.btnLabel = System.Label.CSP_Request_Service;
 			}
 		}

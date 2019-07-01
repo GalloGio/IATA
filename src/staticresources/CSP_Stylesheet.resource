@@ -1177,7 +1177,7 @@ lightning-datatable .slds-th__action {
 /* Base CMP overrides for Profile sections */
 
 .labelValue .slds-form-element__label {
-    font-family: AktivGrotesk;
+    font-family: DaMaWebFont;
     font-size: 14px;
     font-weight: normal;
     font-style: normal;
@@ -1190,7 +1190,7 @@ lightning-datatable .slds-th__action {
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {
-    font-family: AktivGrotesk;
+    font-family: DaMaWebFont;
     font-size: 14px;
     font-weight: 500;
     font-style: normal;
@@ -1201,7 +1201,7 @@ lightning-datatable .slds-th__action {
 }
 
 .textValue .slds-form-element__static {
-  	font-family: AktivGrotesk;
+  	font-family: DaMaWebFont;
   	font-size: 18px;
   	font-weight: normal;
   	font-style: normal;
@@ -1252,6 +1252,14 @@ lightning-datatable .slds-th__action {
     color:#999999 !important;
 }
 
+.invalidValue input, .invalidValue textArea{
+    /*box-shadow: 0px 0px 4px 1px rgba(255, 0, 0, 1) !important;*/
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(194, 57, 52) !important;
+    box-shadow: rgb(194, 57, 52) 0 0 0 1px inset  !important;
+    background-clip: padding-box  !important;
+}
+
 
 .disabledValue .slds-input__icon-group_right{
     display:none;
@@ -1274,7 +1282,7 @@ lightning-datatable .slds-th__action {
 }
 
 .searchInput, .searchInput input::placeholder{
-    font-family: AktivGrotesk;
+    font-family: DaMaWebFont;
     font-size: 16px;
     font-weight: normal;
     font-style: normal;

@@ -25,6 +25,7 @@ export default class PortalContactList extends LightningElement {
     @api fieldsListToCreate;
     @track recordsLocal;
     @api recordsInitDone = false;
+    @track openId;
 
     /* Dynamic fields*/
     @api sectionMap;
@@ -76,12 +77,14 @@ export default class PortalContactList extends LightningElement {
     }
 
     openRecordDetail(event) {
+        this.openId = null;
         let recordIndex = parseInt(event.target.dataset.item, 10);
 
         let records = JSON.parse(JSON.stringify(this.records));
 
         for (let i = 0; i < records.length; i++) {
             if (recordIndex == i && records[i].open === false) {
+                this.openId = records[i].Id;
                 records[i].open = true;
             } else {
                 records[i].open = false;
@@ -134,8 +137,9 @@ export default class PortalContactList extends LightningElement {
                     rowValues.push(rowValue);
                 }
                 record.rowValues = rowValues;
-                if (record.open == null) {
-                    record.open = false;
+
+                if (this.openId != null && this.openId == record.Id) {
+                    record.open = true;
                 }
             }
 
