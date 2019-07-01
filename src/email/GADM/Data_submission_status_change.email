@@ -1,0 +1,7 @@
+Dear {!Contact.FirstName} {!Contact.LastName}
+File {!Data_Submission__c.File_Name__c} submitted for {!Data_Submission__c.Account__c} on {!Data_Submission__c.Submission_date__c}. New status is {!Data_Submission__c.Status__c}
+<p/>
+<img width="94.5px" height="60.5px" src="https://iata--gadm--c.cs100.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Jpg&versionId=0681x000000FwFd&operationContext=DELIVERY&contentId=05T1x000001paJo&page=0&d=/a/1x000000CamZ/iMGtA0Lsxf.TKxvpN8nBDWl6a3Db_jAwcB3AOfDwDJU&oid=00D1x0000000QGD&dpt=null&viewId="/>
+<p>
+GADM Team
+</p>
