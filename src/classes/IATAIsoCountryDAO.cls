@@ -68,7 +68,7 @@ public class IATAIsoCountryDAO {
                                                   ORDER BY Name),
                                                  
                                                  (SELECT Id, Minimum_DGR_BR__c, Minimum_DGR_HO__c, Location_Class__c, RecordType.Name, 
-                                                  Threshold__c, RecordType.DeveloperName
+                                                  		 Threshold__c, RecordType.DeveloperName, CurrencyIsoCode, ANG_Minimum_RHC_Amount__c
                                                   FROM AMS_Country_Specific_Attributes__r)
                                                  
                                                  FROM IATA_ISO_Country__c ]);

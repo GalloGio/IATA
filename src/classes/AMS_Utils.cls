@@ -158,6 +158,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_SCREENING');
     public static final String RECTYPE_IEPMODELBPLUS    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_ONBOARDING');
     public static final String RECTYPE_GDI          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
+    public static final String RECTYPE_CHINA        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
@@ -194,6 +195,7 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+    public static final String ACC_S10_ENDORSED = 'Endorsed';
 
     public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{ACC_S4_LISTED, ACC_S5_CASHNOCOMMISSION, ACC_S6_CASHWITHCOMMISSION, ACC_S7_UNDERREVIEW, ACC_S8_CHANGESPROCESSED, ACC_S9_APPROVED};
 
@@ -242,7 +244,7 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_CHG_DATA_MAINTENANCE = 'CHG – Data Maintenance';
 
     //set with the ifap status to update the account's last financial review
-    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED};
+    public static final Set<String> CASE_STATUS_UPDATE_FINANCIAL_REVIEW_SET= new Set<string>{CASE_STATUS_CLOSED, CASE_STATUS_FINANCIAL_SECURITY_REQUESTED};
 
     public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
@@ -1170,11 +1172,6 @@ public without sharing class AMS_Utils {
                     accountHasChanges = true;
                 }
 
-                if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
-                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                    accountHasChanges = true;
-                }
-
                 if(onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true && (acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name || acc.BillingState != onlineAcc.IATA_ISO_State__r.Name)){
                     acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
                     acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
@@ -1292,11 +1289,8 @@ public without sharing class AMS_Utils {
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
-        if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-            return true;
-
-        return false;
-
+        
+        return (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'));
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
@@ -2678,4 +2672,28 @@ public without sharing class AMS_Utils {
         return res;
     }
     /*** AMSU-195 End ***/
+
+    public static String beautifyErrorMessage(String message){
+		
+		try {
+
+	        Pattern patt  = Pattern.compile('(.+)EXCEPTION, ((.+)):(.+)');
+	        Matcher match = patt.matcher(message);
+			
+			if(match.matches()){
+		        //Extract useful message from the exception message
+		        String userFriendlyMsg = match.group(3);
+		        return userFriendlyMsg;
+			}
+				        
+		}catch(Exception e){
+			//If something went wrong with the matcher 
+			//we just return the original message
+			system.debug(LoggingLevel.ERROR, e.getMessage());
+		}
+
+		return message;
+
+    }
+
 }

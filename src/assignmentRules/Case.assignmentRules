@@ -4315,7 +4315,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>France,Guadeloupe,Martinique</value>
+                <value>France,Guadeloupe,Martinique,Mayotte</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -4394,8 +4394,8 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <booleanFilter>(1 OR 2 OR (6 AND 4)) AND (3 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
-                <operation>equals</operation>
-                <value>Spain &amp; Andorra</value>
+                <operation>contains</operation>
+                <value>Spain &amp; Andorra,Spain</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -6577,7 +6577,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>People&apos;s Republic of China</value>
+                <value>People&apos;s Republic of China,&quot;Hong Kong (SAR), China&quot;</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>
@@ -6635,7 +6635,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>&quot;Hong Kong (SAR), China&quot;,&quot;Macau SAR, China&quot;</value>
+                <value>&quot;Hong Kong SAR, China&quot;,&quot;Macau SAR, China&quot;,&quot;Hong Kong (SAR), China&quot;</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>
@@ -6785,7 +6785,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>,E-mail to Case - QMS - Jordan,E-mail to Case - QMS - Syria,&quot;E-mail to Case - Jordan, Syria &amp; Lebanon&quot;,E-mail to Case - QMS - Lebanon</value>
+                <value>E-mail to Case - QMS - Jordan,E-mail to Case - QMS - Syria,&quot;E-mail to Case - Jordan, Syria &amp; Lebanon&quot;,E-mail to Case - QMS - Lebanon</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>
@@ -7439,7 +7439,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>Angola,Lesotho,Zambia,Swaziland,Mozambique,Botswana,South Africa,Malawi,Namibia,Zimbabwe</value>
+                <value>Angola,Lesotho,Zambia,Swaziland,Mozambique,Botswana,South Africa,Malawi,Namibia,Zimbabwe,Eswatini</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>

@@ -413,6 +413,7 @@ public without sharing class OneId_RegistrationProcessController {
             'BillingState',
             'BillingStreet',
             'Category__c',
+            'Category_Other_Value__c',
             'Email__c',
             'IATACode__c',
             'Legal_name__c',

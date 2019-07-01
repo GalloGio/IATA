@@ -7569,6 +7569,15 @@ IFAP Application.</description>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Global_ID__c</fullName>
+        <description>global unique identifier</description>
+        <displayFormat>003{0000000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
         <fullName>HasOptedOutOfEmail</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -12940,7 +12949,7 @@ IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006
     <fields>
         <fullName>UIR__c</fullName>
         <externalId>false</externalId>
-        <label>UIR</label>
+        <label>UIR/PRIN</label>
         <length>8</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -13143,7 +13152,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <fullName>WebStar_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
-        <label>WebStar ID</label>
+        <label>WebStar P00 Key</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -19905,7 +19914,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Available_Services_Images__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
