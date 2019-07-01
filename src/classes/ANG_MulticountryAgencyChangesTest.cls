@@ -4,7 +4,10 @@ private class ANG_MulticountryAgencyChangesTest {
 	@testSetup static void setup(){
 
 		Test.startTest();
-
+		
+        Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
+		insert par;
+        
 		Amazon_Cred__c amazon_Cred =  new Amazon_Cred__c(
 			Name = 'IFAP', 
 			Prod_Configuration__c = 'adevconf', 
@@ -614,6 +617,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.GE){
+                accountsInvolvedSet.add(item.acc.Id);
 				item.selected = true;
 				break;
 			}
@@ -695,6 +699,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.HE && item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c == acct.IATA_ISO_Country__r.AMS_Settlement_System__c){
+                accountsInvolvedSet.add(item.acc.Id);
 				item.selected = true;
 				break;
 			}
@@ -776,6 +781,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.GE){
+                accountsInvolvedSet.add(item.acc.Id);
 				item.selected = true;
 				break;
 			}
@@ -857,6 +863,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
 			if(item.acc.Location_Type__c == AMS_Utils.GE){
+                accountsInvolvedSet.add(item.acc.Id);
 				item.selected = true;
 				break;
 			}

@@ -213,11 +213,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
-					else if(isMulticountry && containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
-						Id acctParentId = changesContainer.accountsMap.get(oscar.Account__c).ParentId;
-						Id parentInThisRel = (acctParentId != NULL && changesContainer.accountsMap.containsKey(acctParentId)) ? changesContainer.accountsMap.get(acctParentId).Id : oscar.Account__c;
-						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, new Set<Id>{parentInThisRel}, changesContainer);
-					}
 					else {
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
 					}
@@ -330,18 +325,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
-				Set<Id> accountsIdSet = new Set<Id>();
-
-				if(isMulticountry && containsChange(new List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
-					Id acctParentId = changesContainer.accountsMap.get(oscar.Account__c).ParentId;
-					Id parentInThisRel = (acctParentId != NULL && changesContainer.accountsMap.containsKey(acctParentId)) ? changesContainer.accountsMap.get(acctParentId).Id : oscar.Account__c;
-					accountsIdSet.add(parentInThisRel);
-				}
-				else {
-					accountsIdSet.addAll(accountIdsInvolvedSet);
-				}
-
-				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountsIdSet, changesContainer);
+				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
 				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
@@ -383,18 +367,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(config == null)
 					config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
-				Set<Id> accountsIdSet = new Set<Id>();
-
-				if(isMulticountry && containsChange(new List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
-					Id acctParentId = changesContainer.accountsMap.get(oscar.Account__c).ParentId;
-					Id parentInThisRel = (acctParentId != NULL && changesContainer.accountsMap.containsKey(acctParentId)) ? changesContainer.accountsMap.get(acctParentId).Id : oscar.Account__c;
-					accountsIdSet.add(parentInThisRel);
-				}
-				else {
-					accountsIdSet.addAll(accountIdsInvolvedSet);
-				}
-
-				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountsIdSet, changesContainer);
+				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountIdsInvolvedSet, changesContainer);
 
 			}else if (!oldOSCAR.Apply_Penalty_Fee__c && oscar.Apply_Penalty_Fee__c) {
 
