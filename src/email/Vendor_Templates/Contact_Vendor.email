@@ -1,0 +1,22 @@
+Dear Support Team, 
+
+The following Case # [{!Case.CaseNumber}]: [{!Case.Subject}] has been created or updated. 
+
+Case Description: {!Case.Description}
+Customer: {!Case.Account}
+Contact: {!Case.Contact} 
+Contact Email: {!Contact.Email}
+Comment: {!Case.E2CP__Most_Recent_Private_Comment__c} 
+
+
+Sincerely/SFDC System 
+
+
+
+
+
+
+
+
+
+Thread Id: {!Case.Thread_Id}
