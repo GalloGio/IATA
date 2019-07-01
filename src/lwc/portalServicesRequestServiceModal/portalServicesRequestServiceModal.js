@@ -109,7 +109,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         csp_TDP_ServiceRequest_MediumLabel1,
         csp_TDP_ServiceRequest_MediumLabel2,
         csp_TD_ServiceRequest_TopLabel,
-        csp_NoPortalServiceNameFound,
         ISSP_Registration_MyInformation,
         ISSP_Company_Administration,
         csp_RequestService_ContactSupport
