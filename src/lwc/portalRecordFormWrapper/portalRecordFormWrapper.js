@@ -17,6 +17,8 @@ import CancelLabel from '@salesforce/label/c.CSP_Cancel';
 import MembershipFunction from '@salesforce/label/c.csp_MembershipFunction';
 import Area from '@salesforce/label/c.csp_WorkingAreas';
 import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
+import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
+
 
 
 
@@ -27,7 +29,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api headerClass;
     @api sectionTitle;
     @api showEdit;
-    @api fields;
+
     @api editFields;
     @api recordId;
     @api objectName;
@@ -49,13 +51,20 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track functionOptions = [];
     @track selectedValuesFunction = [];
     @track fieldsValid = true;
+    @track fieldsLocal;
+
+    timeout = null;
 
     @track listSelected = [];
     @track contactTypeStatus = [];
 
     @track changeUserPortalStatus = false;
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle };
+    @api
+    get fields(){ return this.fieldsLocal;}
+    set fields(value){ this.fieldsLocal = value;}
+
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle,InvalidValue };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -151,6 +160,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let listSelected = JSON.parse(JSON.stringify(this.listSelected));
         this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
+        //eval("$A.get('e.force:refreshView').fire();");
     }
 
     handleError(event) {
@@ -180,6 +190,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     styleInputs() {
         let inputs = this.template.querySelectorAll('lightning-input-field');
         let phoneRegex = /[^0-9+]|(?!^)\+/g;
+
+        let haveEditFields = this.haveEditFields;
+
+        let fields = haveEditFields ? JSON.parse(JSON.stringify(this.editFields)) : JSON.parse(JSON.stringify(this.fields));
+        let fieldsChanged = false;
         let numberFields = ['Phone','MobilePhone','Phone_Number__c'];
 
         let fieldsValid = true;
@@ -209,10 +224,25 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                             if(isNotPhone){
                                 inputs[i].classList.add('invalidValue');
                                 fieldsValid = false;
+
+                                for(let f = 0;f<fields.length;f++){
+                                    if(fields[f].fieldName == inputs[i].fieldName){
+                                        if(fields[f].invalid == null || fields[f].invalid == false){
+                                            fields[f].invalid = true;
+                                            fieldsChanged = true;
+                                        }
+                                    }
+                                }
+
                             }else{
+                                for(let f = 0;f<fields.length;f++){
+                                    if(fields[f].invalid != null && fields[f].invalid == true){
+                                        fields[f].invalid = false;
+                                        fieldsChanged = true;
+                                    }
+                                }
                                 inputs[i].classList.remove('invalidValue');
                             }
-                            inputs[i].inputValue = inputValue;
                         }
                     }
 
@@ -234,6 +264,16 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
         }
 
+        if(fieldsChanged){
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                if(haveEditFields){
+                    this.editFields = fields;
+                }else{
+                    this.fields = fields;
+                }
+            },600,this);
+        }
         this.fieldsValid = fieldsValid;
     }
 
@@ -358,8 +398,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     closePortalChangeUserStatusWithRefresh() {
-        this.changeUserPortalStatus = false;
         this.dispatchEvent(new CustomEvent('refreshview'));
+        this.changeUserPortalStatus = false;
     }
 
     get canSave(){
