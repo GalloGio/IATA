@@ -10,20 +10,28 @@ export default class Redirector extends LightningElement {
     @api community;    
     
     renderedCallback(){
-
         let com=getParamsFromPage();
-        console.log(com);
+            let xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'https://api.ipify.org?format=jsonp='); // returns user Ip Address
+            xhr.send();
+
+            xhr.onload = function() {
+                if (xhr.status == 200) { //             
+                    redirectToLoginPage({ 
+                        servicename: this.serviceName, 
+                        startUrl: null,
+                        retURL: '',
+                        communityName:com.communityName,
+                        ipAddress:xhr.response
+                     })
+                        .then(link => {
+                                window.open(link,'_top');
+                        });
+                }
+            };
         
-        redirectToLoginPage({ 
-            servicename: this.serviceName, 
-            startUrl: null,
-            retURL: '',
-            communityName:com.communityName
-         })
-            .then(link => {
-                    console.log(link);
-                    window.open(link,'_top');
-            });
+        
     }
     
 

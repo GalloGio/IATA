@@ -3,7 +3,9 @@
     <c-portal-services-card-container image-url={service.recordService.Application_icon_URL__c} background-variant="white">
 
         <span slot="serviceName">{service.recordService.ServiceName__c}</span>
-        <span slot="serviceDescription">{service.recordService.Service_Description__c}</span>
+        <span slot="serviceDescription">
+            <lightning-formatted-rich-text value={service.recordService.Service_Description__c} class="breakWord introMessage"></lightning-formatted-rich-text>
+        </span>
     
         <span slot="leftButton">
             <lightning-button variant="base" 
@@ -21,7 +23,7 @@
             </lightning-button>
         </span>
     </c-portal-services-card-container>
-    <!--<c-portal-services-request-service-modal service-record={serviceInfo} display-confirm={showConfirm} onrequestcompleted={requestComplete}></c-portal-services-request-service-modal>-->
+    <c-portal-services-request-service-modal service-record={serviceInfo} display-confirm={showConfirm} onrequestcompleted={requestComplete}></c-portal-services-request-service-modal>
 
     
 </template>

@@ -562,7 +562,7 @@ background-color:#428bca;
       
    </script>
    
-<apex:outputPanel rendered="{!NOT(isPortalNavigationBar)}">
+<apex:outputPanel rendered="{!isPortalNavigationBar}">
   <apex:slds />
   <apex:includeScript value="/lightning/lightning.out.js"/>
   <apex:stylesheet value="{!URLFOR($Resource.PortalHeader_NotiticationCenter_Tab_CSS, '/CSP_CSS/portalHeader_NotiticationCenter_Tab_CSS.css')}"/>
@@ -570,7 +570,7 @@ background-color:#428bca;
       $Lightning.use("c:portalHeaderApp", function() {
           $Lightning.createComponent(
               "c:portalHeader",
-              {},
+              {isInOldPortal: true},
               "headerBar",
               function(cmp) {
               });
@@ -580,7 +580,7 @@ background-color:#428bca;
 </apex:outputPanel>
 
 
-<apex:outputPanel rendered="{!isPortalNavigationBar}">
+<apex:outputPanel rendered="{!NOT(isPortalNavigationBar)}">
 <nav class="navbar navbar-primary"  role="navigation" id="topmenu">
  <div class="container-fluid">
 
@@ -598,8 +598,6 @@ background-color:#428bca;
        <img class="navbar-brand" height="70px" src="{!urlfor($Resource.IIS_Portal,'/images/logocns.png')}" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px; display:{!if(communityName=='CNS','','none')};"></img>
      </a>
       
-     
- 
     <div  class="navbar-brand brandtext">
        <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"> {!$Label.IFAP_Home_Page_Title_4}</a>
     </div>

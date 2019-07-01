@@ -2,31 +2,35 @@
 
     <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
 
-    <div class="customWhiteBackground headerContainer">
-        <div class="slds-grid slds-wrap">
+    <template if:false={displayAcceptTerms}>
+        <c-portal-accept-terms oncloseacceptterms={logOut} onacceptterms={acceptTerms}></c-portal-accept-terms>
+    </template>
+
+    <div class="headerContainer">
+        <div class="slds-grid slds-wrap maxWidthHeader">
 
             <!-- MODAL -->
             <template if:true={openmodel}>
-                <div class="modalNotificationDetail">
-                    <section aria-modal="true" class="slds-modal slds-fade-in-open">
-                        <div class="slds-modal__container modalBox">
-                            <header class="slds-modal__header">
-                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                                    title="Close" onclick={closeModal}>
-                                    <lightning-icon icon-name="utility:close" size="medium">
-                                    </lightning-icon>
-                                    <span class="slds-assistive-text">Close</span>
-                                </button>
-                                <h2 class="notificationCenterTitle slds-text-heading_medium slds-hyphenate">
-                                    {labels.NotificationDetail} </h2>
-                            </header>
-                            <div class="modalBody slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                <section role="dialog" aria-modal="true" style="z-index: 10005;" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header headerTitle">
+                            <span>{labels.NotificationDetail}</span>
+                            <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                    onclick={closeModal}></lightning-icon>
+                            </span>
+                        </header>
+
+                        <div class="slds-is-relative addOverflow">
+                            <div class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large background">
+
                                 <div class="slds-p-top_small modalType">
                                     <span
                                         class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
                                     <span class="notificationCenterTextsize text-xxsmall slds-m-left_large">
-                                        <lightning-formatted-date-time value={notification.createdDate} year="numeric"
-                                            month="numeric" day="numeric" hour="2-digit" minute="2-digit" hour12="true">
+                                        <lightning-formatted-date-time value={notification.createdDate} year="2-digit"
+                                            month="short" day="2-digit" hour="numeric" minute="numeric">
                                         </lightning-formatted-date-time>
                                     </span>
                                 </div>
@@ -35,17 +39,21 @@
                                 </div>
                                 <div class="text-xsmall slds-m-left_large slds-p-top_small"
                                     style="text-align: justify; text-justify: inter-word;">
-                                    {notification.message}
+                                    <lightning-formatted-rich-text value={notification.message}>
+                                    </lightning-formatted-rich-text>
                                 </div>
+
                             </div>
                         </div>
-                    </section>
-                </div>
-            </template>
-            <!-- END MODAL -->
+                    </div>
+                </section>
 
-            <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth"></div>
-            <div class="headerBarLogo slds-p-horizontal_x-small">
+
+                <!-- END MODAL -->
+            </template>
+
+            <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth slds-show_medium"></div>
+            <div class="headerBarLogo slds-p-horizontal_x-small slds-show_medium">
                 <span onclick={navigateToHomePage}>
                     <img src={logoIcon}>
                 </span>
@@ -74,13 +82,17 @@
                             <div class="openProfile customCardWhite">
                                 <span class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={navigateToMyProfile}>{labels.ISSP_MyProfile}</span>
-                                <span class="slds-p-around_small text-xsmall text-black profileOption"
+                                <span if:true={displayCompanyTab}
+                                    class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={navigateToCompanyProfile}>{labels.CSP_CompanyProfile}</span>
                                 <span class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={navigateToCases}>{labels.CSP_Cases}</span>
                                 <!--<span class="slds-p-around_small text-xsmall text-black profileOption" onclick={navigateToSettings}>{labels.CSP_Settings}</span>-->
                                 <span class="slds-p-around_small text-xsmall text-black profileOption"
+                                    onclick={navigateToChangePassword}> Change Password</span>
+                                <span class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={logOut}>{labels.CSP_LogOut}</span>
+
                             </div>
                         </div>
                         <div class="slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer"
@@ -89,9 +101,9 @@
                                 style={notificationNumberStyle}>{numberOfNotifications}</div>
                             <div class="headerButtonNotifications slds-m-right_x-small"
                                 style={headerButtonNotificationsStyle}></div>
-                            <div class="headerButtonNotificationsCloseIcon slds-m-left_xx-small slds-m-right_xxx-small"
+                            <div class="headerButtonNotificationsCloseIcon"
                                 style={headerButtonNotificationsCloseIconStyle}>
-                                <div class="closeButton"> X </div>
+                                <div class="closeButton"> + </div>
                             </div>
                         </div>
 
@@ -119,14 +131,13 @@
                                                                 class="notificationCenterTextsize text-xxsmall slds-m-left_large"
                                                                 data-item={not.id}>
                                                                 <lightning-formatted-date-time value={not.createdDate}
-                                                                    year="numeric" month="numeric" day="numeric"
-                                                                    hour="2-digit" minute="2-digit" hour12="true">
+                                                                    year="2-digit" month="short" day="2-digit"
+                                                                    hour="numeric" minute="numeric">
                                                                 </lightning-formatted-date-time>
                                                             </span>
                                                             <template if:true={not.isNotification}>
                                                                 <template if:false={not.viewed}>
-                                                                    <span
-                                                                        class="circle cursorPointer slds-m-right_small tooltip"
+                                                                    <span class="circle cursorPointer tooltip"
                                                                         data-item={not.id} data-changebody="1"
                                                                         onclick={onClickAllNotificationsView}>
                                                                         <span class="tooltiptext" data-item={not.id}
@@ -139,18 +150,10 @@
                                                         <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
                                                             data-item={not.id}>
                                                             <span class="cursorPointer" data-item={not.id}
-                                                                data-changebody="1"
-                                                                onclick={onClickAllNotificationsView}>
+                                                                data-changebody="1" onclick={openmodal}>
                                                                 {not.subject}
                                                             </span>
-                                                            <template if:true={not.isNotification}>
-                                                                <span
-                                                                    class="text-xxxsmall cursorPointer text-blue slds-float_right"
-                                                                    data-item={not.id} data-changebody="1"
-                                                                    onclick={openmodal}>
-                                                                    {labels.ViewDetails}
-                                                                </span>
-                                                            </template>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -176,8 +179,8 @@
                                                                 class="notificationCenterTextsize text-xxsmall slds-m-left_large"
                                                                 data-item={not.id}>
                                                                 <lightning-formatted-date-time value={not.createdDate}
-                                                                    year="numeric" month="numeric" day="numeric"
-                                                                    hour="2-digit" minute="2-digit" hour12="true">
+                                                                    year="2-digit" month="short" day="2-digit"
+                                                                    hour="numeric" minute="numeric">
                                                                 </lightning-formatted-date-time>
                                                             </span>
                                                             <template if:false={not.viewed}>
@@ -194,16 +197,10 @@
                                                         <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
                                                             data-item={not.id}>
                                                             <span class="cursorPointer" data-item={not.id}
-                                                                data-changebody="1"
-                                                                onclick={onClickAllNotificationsView}>
+                                                                data-changebody="1" onclick={openmodal}>
                                                                 {not.subject}
                                                             </span>
-                                                            <span
-                                                                class="text-xxxsmall cursorPointer text-blue slds-float_right"
-                                                                data-item={not.id} data-changebody="1"
-                                                                onclick={openmodal}>
-                                                                {labels.ViewDetails}
-                                                            </span>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -229,9 +226,9 @@
                                                                     class="notificationCenterTextsize text-xxsmall slds-m-left_large"
                                                                     data-item={not.id}>
                                                                     <lightning-formatted-date-time
-                                                                        value={not.createdDate} year="numeric"
-                                                                        month="numeric" day="numeric" hour="2-digit"
-                                                                        minute="2-digit" hour12="true">
+                                                                        value={not.createdDate} year="2-digit"
+                                                                        month="short" day="2-digit" hour="numeric"
+                                                                        minute="numeric">
                                                                     </lightning-formatted-date-time>
                                                                 </span>
                                                             </div>

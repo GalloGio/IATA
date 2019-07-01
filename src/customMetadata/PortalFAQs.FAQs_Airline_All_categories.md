@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>ISO_Country_Codes1__c</field>
-        <value xsi:type="xsd:string">PT,CZ,SK,ES,CH</value>
+        <value xsi:type="xsd:string">All</value>
     </values>
     <values>
         <field>ISO_Country_Codes2__c</field>
@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
-        <value xsi:type="xsd:string">FAQ_Visibility_Airlines</value>
+        <value xsi:type="xsd:string">FAQs_Visibility_Airlines_All</value>
     </values>
 </CustomMetadata>

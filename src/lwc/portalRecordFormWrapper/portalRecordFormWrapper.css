@@ -1,30 +1,36 @@
 /**
  * Created by pvavruska on 5/28/2019.
  */
-.modalSpinnerContainer{
-    position: absolute;
-    width: 100%;
-    height: 100%;
+.modalSpinnerContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
-.maxWidth{
-    max-width:800px;
+.maxWidth {
+  max-width: 800px;
 }
 
-.editIcon{
-    font-size: 20px;font-weight: 600;font-style: normal;font-stretch: normal;line-height: 1.6;letter-spacing: normal;color: #333333;
+.editIcon {
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #333333;
 }
 
-.slds-required{
-    display:none;
+.slds-required {
+  display: none;
 }
 
-.slds-input__icon-group_right{
-    display:none;
+.slds-input__icon-group_right {
+  display: none;
 }
 
-.slds-form-element__legend{
-    display:none;
+.slds-form-element__legend {
+  display: none;
 }
 
 .headerTitle {
@@ -69,7 +75,6 @@ input[type="checkbox"] {
   padding: 0;
 }
 
-
 .checkbox-button__input {
   font-size: 1rem;
   opacity: 0;
@@ -105,4 +110,14 @@ input[type="checkbox"] {
 
 .checkbox-button__control {
   transform: scale(0.75);
+}
+
+.changeUserStatus {
+  display: flex;
+  float: left;
+}
+
+.changeUserStatusButton {
+  margin-top: 15px;
+  margin-left: 10px;
 }

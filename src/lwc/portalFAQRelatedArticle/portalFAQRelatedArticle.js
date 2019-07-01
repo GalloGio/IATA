@@ -1,5 +1,5 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import getSearchArticles from '@salesforce/apex/PortalFAQsCtrl.getSearchArticles';
+import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
 import CSP_RelatedArticles from '@salesforce/label/c.CSP_RelatedArticles';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
@@ -12,6 +12,7 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
     @track _articleTitle;
     @track _articleId;
     @track relatedArticles;
+    @track loading = true;
 
     @api
     get article() {
@@ -23,6 +24,11 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
             let articleInfo = JSON.parse(JSON.stringify(value));
             this._articleTitle = articleInfo.title;
             this._articleId = articleInfo.id;
+
+            let filteringObject = {};
+            filteringObject.searchText = this._articleTitle;
+
+            this.renderSearchArticles(JSON.stringify(filteringObject));
         }
     }
     
@@ -30,13 +36,18 @@ export default class PortalFAQRelatedArticle extends NavigationMixin(LightningEl
         return this.relatedArticles !== undefined && this.relatedArticles.length > 0;
     }
 
-    @wire(getSearchArticles, { searchTerm : '$_articleTitle' })
-    wiredSearchArticles(results) {        
-        if (results.data) {
-            this.relatedArticles = JSON.parse(JSON.stringify(results.data));
-        } else if (results.error) {
-            this.error = results.error;
-        }
+    renderSearchArticles(searchParam) {
+        getFilteredFAQsResultsPage({ searchKey : searchParam, requestedPage : '0'})
+            .then(results => {                
+                if(results.records.length) {
+                    let articles = [];
+                    for(let i=1; i < 6 && i < results.records.length; i++) {
+                        articles.push({ id: results.records[i].Id, title: results.records[i].Title });
+                    }
+                    this.relatedArticles = articles;
+                }
+                this.loading = false;
+            });
     }
 
     renderArticle(event) {        

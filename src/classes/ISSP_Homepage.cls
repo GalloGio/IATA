@@ -266,6 +266,10 @@ public with sharing class ISSP_Homepage {
             return new Pagereference('https://' + host+ '/ISSP_Login');
         }
         else{
+
+            if (  CSP_Utils.isNewPortalActive() ) {
+                return CSP_Utils.redirectToNewPortalPage('');
+            }
             //TF - force logout for TD
             PageReference newPR = ISSP_TD.toLogout_TD();
             if (newPR != null){

@@ -67,7 +67,40 @@ public with sharing class DAL_ISSP {
             return contacts;
         }
 
-        return null;
+        return new List<Contact>();
+    }
+
+    public static List<Contact> getContactsByAccountId(Id accountId, Integer offset, Integer batchSize){
+        List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
+                OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
+                User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
+                Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
+        from Contact where AccountId=:accountId ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
+
+        if(!contacts.isEmpty()){
+            return contacts;
+        }
+
+        return new List<Contact>();
+    }
+
+    public static List<Contact> searchContactsByAccountId(Id accountId, Integer offset, Integer batchSize, String queryString){
+        String wildString = queryString +'%';
+
+        List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
+                OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
+                User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
+                Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
+        from Contact
+        where AccountId=:accountId
+        and (FirstName LIKE :wildString OR LastName LIKE :wildString OR Name LIKE :wildString OR Email LIKE :wildString OR Name = :queryString)
+        ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
+
+        if(!contacts.isEmpty()){
+            return contacts;
+        }
+
+        return new List<Contact>();
     }
 
 
@@ -138,7 +171,7 @@ public with sharing class DAL_ISSP {
             List<User> users = [SELECT Id,ContactId,AccountId,Email,LanguageLocaleKey,LastLoginDate,IsActive FROM User WHERE ContactId IN: contactIds];
             return users;
         }
-        return null;
+        return new List<User>();
 
     }
 }

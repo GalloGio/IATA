@@ -1,5 +1,6 @@
 public with sharing class PortalApplicationRight_Sel extends Selector {
- 
+	private static final integer CONTACTSBATCH =50; // returns batches of 50 contacts in the
+	
 	public List<Schema.SObjectField> getSObjectFieldList(){
 		return new List<Schema.SObjectField> {
 			Portal_Application_Right__c.Id,
@@ -36,7 +37,9 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
 			'Portal_Application_Right__c.Contact__r.Account.Name',
 			'Portal_Application_Right__c.ANG_Portal_Service_Role__c',
 			'Portal_Application_Right__c.Contact__r.User_Portal_Status__c',
-			'Portal_Application_Right__c.Account__c'		
+			'Portal_Application_Right__c.Account__c',		
+			'Portal_Application_Right__c.Contact__r.Account.IATACode__c',		
+			'Portal_Application_Right__c.Contact__r.Account.BillingCity'		
 		};
 	}
 
@@ -60,20 +63,53 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
 		
 		return Database.query(query);
 	}
-	public List<Portal_Application_Right__c> getPortalApplicationRightsByPortalService(String serviceId) {
+	public integer getTotalNrContacts(string serviceId){
 		string access_granted=PortalServicesCtrl.PORTAL_ACCESS_GRANTED;
 		string access_requested=PortalServicesCtrl.PORTAL_ACCESS_REQUESTED;
+		string access_denied=PortalServicesCtrl.PORTAL_ACCESS_DENIED;
+		
 		String query = String.format(
-            'SELECT {0} , Portal_Application__r.Name ' +
+            'SELECT count() ' +
             'FROM {1} ' + 
             'where Portal_Application__c =:serviceId '+
-			'and (Right__c =:access_granted or Right__c =:access_requested) '+
-			'and Portal_Application__r.Hide_on_Homepage__c = false' , 
+			'and (Right__c =:access_granted or Right__c =:access_requested or Right__c =:access_denied) '+
+			'and Portal_Application__r.Hide_on_Homepage__c = false ',  
             new List<String>{
                 String.join(getSObjectFieldListForWithContactInfo(), ', '),
                 getSObjectType().getDescribe().getName()
             }
         );
+		return Database.countQuery(query);
+	} 
+	public List<Portal_Application_Right__c> getPortalApplicationRightsByPortalService(String serviceId,integer offset) {
+		return getPortalApplicationRightsByPortalService(serviceId,offset,'');
+	}
+
+	public List<Portal_Application_Right__c> getPortalApplicationRightsByPortalService(String serviceId,integer offset,String extraFilter) {
+		string access_granted=PortalServicesCtrl.PORTAL_ACCESS_GRANTED;
+		string access_requested=PortalServicesCtrl.PORTAL_ACCESS_REQUESTED;
+		string access_denied=PortalServicesCtrl.PORTAL_ACCESS_DENIED;
+
+		string range='';
+		if(offset!=null){
+			range=' ORDER BY Portal_Application_Right__c.Contact__r.Name ASC LIMIT '+CONTACTSBATCH+' OFFSET '+offset;
+		}
+		
+
+		String query = String.format(
+            'SELECT {0} , Portal_Application__r.Name ' +
+            'FROM {1} ' + 
+            'where Portal_Application__c =:serviceId '+
+			'and (Right__c =:access_granted or Right__c =:access_requested or Right__c =:access_denied) '+
+			'and Portal_Application__r.Hide_on_Homepage__c = false ',			
+            new List<String>{
+                String.join(getSObjectFieldListForWithContactInfo(), ', '),
+                getSObjectType().getDescribe().getName()
+            }
+        )
+		+extraFilter
+		+range;
+		system.debug(query.right(250));
 		return Database.query(query);
 	}
 

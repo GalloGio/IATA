@@ -1,11 +1,11 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavoriteServicesList';
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import { updateRecord } from 'lightning/uiRecordApi';
 
 //Navigation
-import { navigateToPage } from'c/navigationUtils';
+import { navigateToPage } from 'c/navigationUtils';
 
 //import labels 
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
@@ -18,8 +18,7 @@ export default class FavoriteServicesLWC extends LightningElement {
     @track showPagination;
     @track sliderIcons;
 
-    //api variables
-    @api isLoaded = false;
+    @track isLoading = true;
 
     //global variables
     page = 1;
@@ -35,8 +34,6 @@ export default class FavoriteServicesLWC extends LightningElement {
 
     //Same as doInit() function on old aura components
     connectedCallback() {
-        //toggles the loading spinner on/off
-        this.toggleSpinner();
 
         /* @salesforce/apex/PortalServicesCtrl.getUserServicesList' (shared apex code)
         *  getUserServicesList grabs the Services of the Contact logged in on the portal and stores on the result
@@ -48,8 +45,14 @@ export default class FavoriteServicesLWC extends LightningElement {
                 
                 //removes undefined from images
                 for (let i = 0; i < this.auxResult.length; i++) {
-                    if(this.auxResult[i].Portal_Application__r === undefined || this.auxResult[i].Portal_Application__r.Application_icon_URL__c === undefined){
+                    if (this.auxResult[i].Portal_Application__r === undefined || this.auxResult[i].Portal_Application__r.Application_icon_URL__c === undefined) {
                         this.auxResult[i].Portal_Application__r.Application_icon_URL__c = '';
+                    }
+                    if (this.auxResult[i].Application_Start_URL__c === undefined || this.auxResult[i].Application_Start_URL__c === '') {
+                        this.auxResult[i].Application_Start_URL__c = '';
+                    }
+                    if (this.auxResult[i].Portal_Application__r.Application_URL__c === undefined || this.auxResult[i].Portal_Application__r.Application_URL__c === '') {
+                        this.auxResult[i].Portal_Application__r.Application_URL__c = '';
                     }
                 }
 
@@ -69,7 +72,7 @@ export default class FavoriteServicesLWC extends LightningElement {
 
                 //sets the first page
                 this.favoriteServices = this.globaList[0];
-
+                
                 //the maxSize of the List
                 this.maxSize = this.globaList.length;
 
@@ -80,11 +83,10 @@ export default class FavoriteServicesLWC extends LightningElement {
                 }
 
                 //stop the spinner.
-                this.toggleSpinner();
+                this.isLoading = false;
             })
             .catch(error => {
-                //throws error
-                this.error = error;
+                this.isLoading = false;
             });
     }
 
@@ -94,10 +96,10 @@ export default class FavoriteServicesLWC extends LightningElement {
             for (let j = 0; j < this.globaList[i].length; j++) {
                 for (let k = 0; k < this.globaList[i][j].length; k++) {
                     if (this.globaList[i][j].length === 1) {
-                        this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-vertical_small aroundLightGrayBorder';
+                        this.globaList[i][j][k].myclass = 'withPointerTile bigTile slds-m-vertical_x-small aroundLightGrayBorder';
                     }
                     if (this.globaList[i][j].length === 2) {
-                        this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-vertical_small aroundLightGrayBorder';
+                        this.globaList[i][j][k].myclass = 'withPointerTile smallTile slds-m-vertical_x-small aroundLightGrayBorder';
                     }
                 }
             }
@@ -204,77 +206,94 @@ export default class FavoriteServicesLWC extends LightningElement {
 
     //method that controls the loading spinner action
     toggleSpinner() {
-        this.isLoaded = !this.isLoaded;
+        this.isLoading = !this.isLoading;        
     }
 
     //method that controls the redirection of the service's links
     redirect(event) {
+
+        this.toggleSpinner();
+
         //attributes stored on element that is related to the event
         const appUrlData = event.target.attributes.getNamedItem('data-appurl');
         const appFullUrlData = event.target.attributes.getNamedItem('data-appfullurl');
         const openWindowData = event.target.attributes.getNamedItem('data-openwindow');
         const requestable = event.target.attributes.getNamedItem('data-requestable');
         const recordId = event.target.attributes.getNamedItem('data-recordid');
-        
-        // update Last Visit Date on record
-        // Create the recordInput object
-        const fields = {};
-        fields.Id = recordId.value;
-        fields.Last_Visit_Date__c = new Date().toISOString();
-        const recordInput = { fields };
+        if (requestable.value === 'true') {
+            // update Last Visit Date on record only if the clicked service is requestable
+            // Create the recordInput object
+            const fields = {};
+            fields.Id = recordId.value;
+            fields.Last_Visit_Date__c = new Date().toISOString();
+            const recordInput = { fields };
 
-        updateRecord(recordInput)
-            .then(() => {
-                console.info('Updated Last Visit Date successfully!');
-            })
-            .catch(error => {
-                console.error('err ', error.body.message);
-            });
-        
-        let myUrl = appUrlData.value;
-        
-        //verifies if the event target contains all data for correct redirection
-        if (openWindowData !== undefined) {
-            //determines if the link is to be opened on a new window or on the current
-            if (openWindowData.value === "true") {
-                if (appUrlData.value !== 'undefined') {
-                    myUrl = appUrlData.value;
-                } else if (appFullUrlData.value !== 'undefined') {
-                    myUrl = appFullUrlData.value;
-                }
+            updateRecord(recordInput)
+                .then(() => {
+                    console.info('Updated Last Visit Date successfully!');
+                });
+        }
 
-                //start the spinner
-                this.toggleSpinner();
 
-                //is this link a requestable Service?
-                if (requestable.value === "true") {
+        let myUrl;
+        let flag = false;
+        if (appUrlData.value !== '') {
+            myUrl = appUrlData.value;
+            flag = true;
+        } else if (appFullUrlData.value !== '') {
+            myUrl = appFullUrlData.value;
+            flag = true;
+        }
+        if (flag) {
+            //verifies if the event target contains all data for correct redirection
+
+            if (openWindowData !== null && openWindowData !== undefined) {
+                //determines if the link is to be opened on a new window or on the current
+                if (openWindowData.value === "true") {
+                    //open new tab with the redirection
+
+                    if (myUrl.startsWith('/')) {
+                        goToOldPortalService({ myurl: myUrl })
+                            .then(result => {
+                                //open new tab with the redirection
+                                window.open(result);
+                                this.toggleSpinner();
+                            })
+                            .catch(error => {
+                                //throws error
+                                this.error = error;
+                            });
+
+                    } else {
+                        if (!myUrl.startsWith('http')) {
+                            myUrl = window.location.protocol + '//' + myUrl;
+                        }
+                        window.open(myUrl);
+                        this.toggleSpinner();
+                    }
+
+
+                } else if (myUrl !== '') {
+                    //redirects on the same page
                     //method that redirects the user to the old portal maintaing the same loginId
                     goToOldPortalService({ myurl: myUrl })
                         .then(result => {
-                            //stop the spinner
-                            this.toggleSpinner();
                             //open new tab with the redirection
-                            window.open(result);
+                            window.location.href = result;
+                            this.toggleSpinner();
                         })
                         .catch(error => {
                             //throws error
                             this.error = error;
                         });
-                } else {
-                    //stop the spinner
-                    this.toggleSpinner();
-                    //open new tab with the redirection
-                        myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
-                    window.open(myUrl);
+
                 }
-            } else {
-                //keep the spinner on until the page redirects
-                this.toggleSpinner();
-                //redirects on the same page
-                window.location.href = myUrl;
             }
-            
+        } else {
+            console.info('No link to the service has been set.')
+            this.toggleSpinner();
         }
+
     }
 
     //method to rerender the icons between the next and previous buttons

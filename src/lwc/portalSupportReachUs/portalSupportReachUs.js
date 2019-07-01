@@ -154,11 +154,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     connectedCallback() {
 
         //Data Pickup methods
+
+        this.getCountryList();
+
         this.getAllPickListValues();
 
         this.getEmergencyDependencies();
-
-        this.getCountryList();
 
         this.getContact();
 
@@ -182,30 +183,32 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 this.myResult = JSON.parse(JSON.stringify(result));
                 //Auxiliary Map
                 const map = new Map();
+
                 //Array to consume category options
                 let myCategoryOptions = [];
 
-                //Set first value on the list
-                myCategoryOptions = [{ label: 'Select Category', value: '' }];
+               //Set first value on the list
+               myCategoryOptions = [{ label: 'Select Category', value: '' }];
+               // let auxmyCategoryOptions = [];
+               for (const item of this.myResult) {
+                   if (!map.has(item.categoryLabel) && item.categoryLabel !== 'All') {
+                       map.set(item.categoryLabel, true);
+                       myCategoryOptions.push({
+                           label: item.categoryLabel,
+                           value: item.categoryName
+                       });
+                   }
+               }
+               //used to order alphabetically
 
-                for (const item of this.myResult) {
-                    if (!map.has(item.categoryLabel) && item.categoryLabel !== 'All') {
-                        map.set(item.categoryLabel, true);
-                        myCategoryOptions.push({
-                            label: item.categoryLabel,
-                            value: item.categoryName
-                        });
-                    }
-                }
-
-                this.categoryOptions = myCategoryOptions;
-                //eslint-disable-next-line no-console
+               this.categoryOptions = myCategoryOptions;
+              
 
                 //Set the category if in URL
                 this.pageParams = getParamsFromPage();
                 if ('category' in this.pageParams && this.pageParams.category !== '') {
                     const checkCategory = obj => obj.value === this.pageParams.category;
-                    if (myCategoryOptions.some(checkCategory)) {
+                    if (this.categoryOptions.some(checkCategory)) {
                         this.category = this.pageParams.category;
                         this.topicCB = true;
                         this.topicValuesGetter();
@@ -217,11 +220,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                         this.pageParams.subtopic = '';
                     }
                 }
+                this.toggleSpinner();
             })
             .catch(error => {
                 //throws error
                 this.error = error;
-                // eslint-disable-next-line no-console
+                this.toggleSpinner();
                 console.log('Error: ', error);
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -235,25 +239,36 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     }
 
     getEmergencyDependencies() {
+        this.toggleSpinner();
+
         getEmergencyDependencies()
             .then(result => {
+                this.toggleSpinner();
+
                 this.emergencyCategories = JSON.parse(JSON.stringify(result));
             });
     }
 
     //gets Country for picklist
     getCountryList() {
+        this.toggleSpinner();
         getCountryList()
             .then(result => {
                 let myResult = JSON.parse(JSON.stringify(result));
 
                 //first element on the picklist
                 let myCountryOptions = [{ label: 'Select Country', value: '' }];
-
+                let auxmyCountryOptions = [];
                 //ex: {label: My Topic, value: my_topic__c}
                 Object.keys(myResult).forEach(function (el) {
-                    myCountryOptions.push({ label: myResult[el], value: el });
+                    auxmyCountryOptions.push({ label: myResult[el], value: el });
                 });
+                this.toggleSpinner();
+
+                //used to order alphabetically
+                auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
+
+                myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
 
                 //set global with the options for later use
                 this.countryOptions = myCountryOptions;
@@ -263,11 +278,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             .catch(error => {
                 //throws error
                 this.error = error;
+                this.toggleSpinner();
                 console.log('Error: ', error);
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: JSON.parse(JSON.stringify(error)).body.message,
+                        message: JSON.parse(JSON.stringify(error)),
                         variant: 'error',
                         mode: 'pester'
                     })
@@ -277,8 +293,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
     //gets Contact Info
     getContact() {
+        this.toggleSpinner();
         getContactInfo()
             .then(result => {
+                this.toggleSpinner();
                 this.contact = JSON.parse(JSON.stringify(result));
             });
     }
@@ -294,10 +312,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             //Set inital value subTopic Picklist/Combobox
             this.subTopic = '';
             //Remove Parameters. Reload is necessary
-            //this.pageParams.topic = '';
 
             //Set inital value country Picklist/Combobox
             this.countryValue = '';
+
+            let divToTop = this.template.querySelectorAll('.category')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
 
         } else {
             //Hide Topic Picklist/Combobox
@@ -317,6 +337,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.countryCB = false;
         //sets emergency to the default value
         this.emergencyButton = false;
+        this.isEmergency = false;
 
         //get topics
         this.topicValuesGetter();
@@ -332,7 +353,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         myTopicOptions = [{ label: 'Select Topic', value: '' }];
-
+        // let auxmyTopicOptions = [];
         for (const item of this.myResult) {
             if (!map.has(item.topicLabel) && item.categoryName === this.category) {
                 map.set(item.topicLabel, true);
@@ -343,13 +364,14 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             }
         }
 
+        //used to order alphabetically
         //set the options of picklist
         this.topicOptions = myTopicOptions;
 
         //set Topic value if included in URL
         if ('topic' in this.pageParams && this.pageParams.topic !== '') {
             const checkTopic = obj => obj.value === this.pageParams.topic;
-            if (myTopicOptions.some(checkTopic)) {
+            if (this.topicOptions.some(checkTopic)) {
 
                 this.topic = this.pageParams.topic;
                 this.subTopicCB = true;
@@ -374,6 +396,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             this.subTopic = '';
             //Set inital value country Picklist/Combobox
             this.countryValue = '';
+
+            let divToTop = this.template.querySelectorAll('.topic')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
         } else {
             //Hide subTopic Picklist/Combobox
             this.subTopicCB = false;
@@ -390,6 +415,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.countryCB = false;
         //Hide Emergency button
         this.emergencyButton = false;
+        this.isEmergency = false;
         //get subtopics
         this.subTopicValuesGetter();
 
@@ -405,7 +431,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         mySubTopicOptions = [{ label: 'Select Sub-Topic', value: '' }];
-
+        // let auxmySubTopicOptions = []
         for (const item of this.myResult) {
             if (!map.has(item.childs) && item.topicName === this.topic) {
                 Object.keys(item.childs).forEach(function (el) {
@@ -416,13 +442,16 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             }
         }
 
+        //used to order alphabetically
+        
         //set the options
+        // this.subTopicOptions = mySubTopicOptions.concat(auxmySubTopicOptions);
         this.subTopicOptions = mySubTopicOptions;
 
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
             const checkSubTopic = obj => obj.value === this.pageParams.subtopic;
-            if (mySubTopicOptions.some(checkSubTopic)) {
+            if (this.subTopicOptions.some(checkSubTopic)) {
                 this.subTopic = this.pageParams.subtopic;
 
                 //Excluded country list. 
@@ -452,7 +481,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             this.countryValue = '';
             this.countryCB = true;
             this.emergencyButton = false;
+            this.isEmergency = false;
 
+            let divToTopCountry = this.template.querySelectorAll('.subtopic')[0].offsetTop;
+            window.scrollTo({ top: divToTopCountry, left: 0, behavior: 'smooth' });
             //required to not show the country picklist if the selected value is included here
             let countryExclusion = this.label.csp_SupportReachUs_ISSP_Topics_To_Exclude_Country_PL.split(',');
             if (countryExclusion.includes(this.topic + '__c')) {
@@ -477,6 +509,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.countryValue = event.target.value;
         if (this.countryValue !== "") {
             this.optionsButton = true;
+            let divToTop = this.template.querySelectorAll('.country')[0].offsetTop;
+            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
             if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                 && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
                 this.emergencyButton = true;
@@ -505,6 +539,20 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             .then(result => {
                 this.recordTypeAndCountry = JSON.parse(JSON.stringify(result));
                 this.getLiveAgentButtonInfo();
+            }).catch(error => {
+                //throws error
+                this.error = error;
+                this.toggleSpinner();
+                // eslint-disable-next-line no-console
+                console.log('Error: ', JSON.parse(JSON.stringify(error)));
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: JSON.parse(JSON.stringify(error)),
+                        variant: 'error',
+                        mode: 'pester'
+                    })
+                );
             });
     }
 
@@ -682,6 +730,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.subTopicCB = false;
         this.countryCB = false;
         this.optionsButton = false;
+        this.emergencyButton = false;
+        this.isEmergency = false;
     }
 
     /*################# COMPLIMENT JS ########################*/
@@ -711,12 +761,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             createCase({ countryiso: this.compliment_countryValue, isConcernCase: false, topic: '', subtopic: '' })
                 .then(createCaseResult => {
                     this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
-
                     const record = { 'sobjectType': 'Case' };
                     record.RecordTypeId = this.caseInitiated.RecordTypeId;
                     record.Subject = this.subject;
+                    record.Compliment__c = true;
                     record.Description = this.description + '\n-COMPLIMENT-';
-                    record.BSPCountry__c = this.compliment_countryValue;
+                    record.BSPCountry__c = this.caseInitiated.Country_concerned_by_the_query__c;
 
                     insertCase({ caseToInsert: record, recipientsToAdd: [] })
                         .then(() => {
@@ -766,45 +816,54 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     }
 
     getCallUsPhoneNumber() {
+        this.toggleSpinner();
         getCallUsPhoneNumber()
             .then(result => {
+                this.toggleSpinner();
                 this.callUsPhoneNumberConfigs = JSON.parse(JSON.stringify(result));
             });
     }
 
     getPhoneNumber() {
         if (this.callUsPhoneNumberConfigs.length > 0) {
+            let sector;
+            if (this.topic === 'E_F') {
+                sector = 'All';
+            } else {
+                sector = this.contact.Account.Sector__c;
+            }
             this.phoneNumber = this.callUsPhoneNumberConfigs.filter(item => {
                 //This magical function brought about from an ancient civilization performs beautifully to capture the one value we need based on the conditions bellow
                 //We have a list of PhoneNumberConfigs from the custom meta data type with the same name and we extract one value from it.
+
                 return (item.Topic
-                    && item.Topic === this.topic
-                    && (item.Sector === this.contact.Account.Sector__c)
+                    && item.Topic === (this.topic + '__c')
+                    && (item.Sector === sector)
                     && (item.IsoCountry === this.countryValue)) // ---- First Condition ------//
 
                     || (item.Topic
-                        && item.Topic === this.topic
-                        && item.Sector === this.contact.Account.Sector__c
+                        && item.Topic === (this.topic + '__c')
+                        && item.Sector === sector
                         && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Second Condition ------//
 
                     || (item.Topic
-                        && item.Topic === this.topic
+                        && item.Topic === (this.topic + '__c')
                         && (item.Sector === 'All' || item.Sector === '' || item.Sector === undefined)
                         && item.IsoCountry === this.countryValue) // ---- Third Condition ------//
 
                     || (item.Topic
-                        && item.Topic === this.topic
+                        && item.Topic === (this.topic + '__c')
                         && (item.Sector === 'All' || item.Sector === '' || item.Sector === undefined)
                         && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Fourth Condition ------//
 
                     || (item.Sector
-                        && item.Sector === this.contact.Account.Sector__c
                         && (item.Topic === '' || item.Topic === undefined)
+                        && (item.Sector === sector)
                         && (item.IsoCountry === this.countryValue)) // ---- Fifth Condition ------//
 
                     || (item.Sector
-                        && item.Sector === this.contact.Account.Sector__c
                         && (item.Topic === '' || item.Topic === undefined)
+                        && (item.Sector === sector)
                         && (item.IsoCountry === 'All' || item.IsoCountry === '' || item.IsoCountry === undefined)) // ---- Sixth Condition ------//
 
                     || (item.DeveloperName

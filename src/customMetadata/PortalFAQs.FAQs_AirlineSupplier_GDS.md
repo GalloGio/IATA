@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">FAQS_Visibility_Airline_Supplier_GDS</value>
     </values>
 </CustomMetadata>

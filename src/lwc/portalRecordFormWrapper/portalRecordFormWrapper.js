@@ -4,12 +4,24 @@
 
 import { LightningElement, api, track } from 'lwc';
 
+
+//navigation
+import { NavigationMixin } from 'lightning/navigation';
+import { navigateToPage } from 'c/navigationUtils';
+
+
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
+import MembershipFunction from '@salesforce/label/c.csp_MembershipFunction';
+import Area from '@salesforce/label/c.csp_WorkingAreas';
+import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 
-export default class PortalRecordFormWrapper extends LightningElement {
+
+
+
+export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
 
     @api sectionClass;
     @api headerClass;
@@ -23,33 +35,45 @@ export default class PortalRecordFormWrapper extends LightningElement {
     @api isLoading;
     @api staticFields;
     @api showarea;
+    @api services;
+    @api showfunction;
+
+    @api isForEdit = false;
 
     @track isLoading = true;
     @track isLoadingEdit = true;
     @track isSaving = false;
     @track areasOptions = [];
     @track selectedvalues = [];
+    @track accessibilityText = '';
+    @track functionOptions = [];
+    @track selectedValuesFunction = [];
+    @track fieldsValid = true;
 
+    @track listSelected = [];
+    @track contactTypeStatus = [];
 
-    _labels = { SaveLabel, CancelLabel };
+    @track changeUserPortalStatus = false;
+
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
     connectedCallback() {
         this.showEdit = (this.showEdit === 'true' ? true : false);
 
-        if(this.isContact){
+        if (this.isContact && !this.isForEdit) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
-                let options = result;
+                let options = JSON.parse(JSON.stringify(result));
                 let contact = JSON.parse(JSON.stringify(this.staticFields));
                 let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
 
-                if(contact.Area__c != null){
+                if (contact.Area__c != null) {
 
                     let values = contact.Area__c.split(";");
                     values.forEach(function (value) {
                         options.forEach(function (option) {
-                            if(option.label == value){option.checked = true; selectedV.push(option.value);}
+                            if (option.label == value) { option.checked = true; selectedV.push(option.value); }
                         });
                     });
 
@@ -58,13 +82,63 @@ export default class PortalRecordFormWrapper extends LightningElement {
 
                 this.areasOptions = options;
             });
+
+            //Get membership function values
+            getPickListValues({ sobj: 'Contact', field: 'Membership_Function__c' }).then(result => {
+                let options = JSON.parse(JSON.stringify(result));
+                let contact = JSON.parse(JSON.stringify(this.staticFields));
+                let selectedV = JSON.parse(JSON.stringify(this.selectedValuesFunction));
+
+                if (contact.Membership_Function__c != null) {
+
+                    let values = contact.Membership_Function__c.split(";");
+                    values.forEach(function (value) {
+                        options.forEach(function (option) {
+                            if (option.label == value) { option.checked = true; selectedV.push(option.value); }
+                        });
+                    });
+
+                    this.selectedValuesFunction = selectedV;
+                }
+
+                this.functionOptions = options;
+            });
+
         }
+
+    }
+
+    get accessibilityGetter() {
+
+        let contactTypeStatus = [];
+        let contactType = [];
+        let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
+        fieldsToIterate.forEach(function (item) {
+            if (item.isAccessibility) {
+                contactType = item.accessibilityList;
+                item.accessibilityList.forEach(function (acc) {
+                    if (acc.checked) {
+                        contactTypeStatus.push(acc.label);
+                    }
+                });
+            }
+        });
+
+        this.accessibilityText = contactTypeStatus.join(', ');
+        this.contactTypeStatus = contactType;
+        this.listSelected = contactTypeStatus;
+
+        return this.accessibilityText
     }
 
     openModal() { this.showEditModal = true; }
     closeModal() { this.showEditModal = false; }
 
-    loaded() { this.isLoading = false; }
+    loaded(event) {
+        this.isLoading = false;
+        let fields = JSON.parse(JSON.stringify(event.detail.objectInfos.Contact.fields));
+
+    }
     loadedEdit() {
         this.isLoadingEdit = false;
         this.styleInputs();
@@ -73,6 +147,9 @@ export default class PortalRecordFormWrapper extends LightningElement {
     handleSucess(event) {
         const updatedRecord = event.detail.id;
         this.isSaving = false;
+
+        let listSelected = JSON.parse(JSON.stringify(this.listSelected));
+        this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
     }
 
@@ -88,16 +165,25 @@ export default class PortalRecordFormWrapper extends LightningElement {
         return this.editFields != null;
     }
 
-    get isContact(){
+    get isContact() {
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
 
-    get showAreas(){
+    get showAreas() {
         return this.showarea;
+    }
+
+    get showMembershipFunction() {
+        return this.showfunction;
     }
 
     styleInputs() {
         let inputs = this.template.querySelectorAll('lightning-input-field');
+        let phoneRegex = /[^0-9+]|(?!^)\+/g;
+        let numberFields = ['Phone','MobilePhone','Phone_Number__c'];
+
+        let fieldsValid = true;
+
         if (inputs) {
             if (inputs.length) {
                 for (let i = 0; i < inputs.length; i++) {
@@ -115,6 +201,21 @@ export default class PortalRecordFormWrapper extends LightningElement {
                             }
                         }
                     }
+
+                    if(numberFields.includes(inputs[i].fieldName)){
+                        if(inputs[i].value != null){
+                            let inputValue = inputs[i].value.replace(/ /g,'');
+                            let isNotPhone = phoneRegex.test(inputValue);
+                            if(isNotPhone){
+                                inputs[i].classList.add('invalidValue');
+                                fieldsValid = false;
+                            }else{
+                                inputs[i].classList.remove('invalidValue');
+                            }
+                            inputs[i].inputValue = inputValue;
+                        }
+                    }
+
                 }
             } else {
                 if (!inputs.disabled) {
@@ -131,52 +232,137 @@ export default class PortalRecordFormWrapper extends LightningElement {
                     }
                 }
             }
-
         }
+
+        this.fieldsValid = fieldsValid;
     }
 
     handleSubmit(event) {
-    	this.isSaving = true;
-    	if(this.isContact){
+        this.isSaving = true;
+        if (this.isContact) {
             event.preventDefault();
 
             let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
             let selected = '';
             selectedV.forEach(function (item) { selected += item + ';'; });
 
+            let selectedFunction = JSON.parse(JSON.stringify(this.selectedValuesFunction));
+            let selectedF = '';
+            selectedFunction.forEach(function (item) { selectedF += item + ';'; });
+
             let fields = event.detail.fields;
             fields.accountId = this.accountId;
 
-            fields.Area__c = selected;
+            if (selected.length > 0) {
+                fields.Area__c = selected;
+            }
+
+            fields.Membership_Function__c = selectedF;
+
+            let listSelected = JSON.parse(JSON.stringify(this.listSelected));
+            if (listSelected.length > 0) {
+                let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
+
+                contactTypeStatusLocal.forEach(function (item) {
+                    if (listSelected.includes(item.label)) {
+                        fields[item.APINAME] = true;
+                    } else {
+                        fields[item.APINAME] = false;
+                    }
+                });
+
+            }
 
             this.template.querySelector('lightning-record-edit-form').submit(fields);
-    	}
+        }
     }
 
     getValueSelected(event) {
         let selected = event.target.dataset.item;
-        let options = JSON.parse(JSON.stringify(this.areasOptions));
+        let type = event.target.dataset.type;
+        let isArea = (type == 'Area__c');
 
-        let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
+        let options = isArea ? JSON.parse(JSON.stringify(this.areasOptions)) : JSON.parse(JSON.stringify(this.functionOptions));
+        let selectedV = isArea ? JSON.parse(JSON.stringify(this.selectedvalues)) : JSON.parse(JSON.stringify(this.selectedValuesFunction));
 
 
         if (!selectedV.includes(selected)) {
             selectedV.push(selected);
             options.forEach(function (option) {
-                if(option.value == selected){option.checked = true;}
+                if (option.value == selected) { option.checked = true; }
             });
         } else {
             let index = selectedV.indexOf(selected);
             if (index > -1) {
                 selectedV.splice(index, 1);
                 options.forEach(function (option) {
-                    if(option.value == selected){option.checked = false;}
+                    if (option.value == selected) { option.checked = false; }
                 });
             }
         }
 
-        this.areasOptions = options;
-        this.selectedvalues = selectedV;
+        if (isArea) {
+            this.areasOptions = options;
+            this.selectedvalues = selectedV;
+        } else {
+            this.functionOptions = options;
+            this.selectedValuesFunction = selectedV;
+        }
     }
 
+    navigateTo(event) {
+        let serviceId = event.target.dataset.id;
+
+        let params = {};
+        params.serviceId = serviceId;
+
+        event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "manage-service"
+            }
+        })
+            .then(url => navigateToPage(url, params));
+
+    }
+
+    getValueSelectedTypeStatus(event) {
+
+        let selected = event.target.dataset.item;
+        let type = event.target.dataset.type;
+
+        let fieldValue = JSON.parse(JSON.stringify(this.listSelected));
+
+        if (!fieldValue.includes(selected)) {
+            fieldValue.push(selected)
+        } else {
+            for (let i = fieldValue.length - 1; i >= 0; i--) {
+                if (fieldValue[i] === selected) {
+                    fieldValue.splice(i, 1);
+                }
+            }
+        }
+
+        this.listSelected = fieldValue;
+
+    }
+
+    openChangeUserPortalStatus() {
+        this.changeUserPortalStatus = true;
+    }
+
+    closePortalChangeUserStatus() {
+        this.changeUserPortalStatus = false;
+    }
+
+    closePortalChangeUserStatusWithRefresh() {
+        this.changeUserPortalStatus = false;
+        this.dispatchEvent(new CustomEvent('refreshview'));
+    }
+
+    get canSave(){
+        return !this.fieldsValid || this.isSaving;
+    }
 }

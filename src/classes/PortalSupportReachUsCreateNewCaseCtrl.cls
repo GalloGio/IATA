@@ -1,6 +1,6 @@
 public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
 
-private final static Integer MAX_RESULTS = 100;
+private final static Integer MAX_RESULTS = 7;
 
 private static User USER = DAL_ISSP.getUser(Userinfo.getUserId());
 private static Contact CONTACT = DAL_ISSP.getContact(DAL_ISSP.getUser(Userinfo.getUserId()).ContactId);
@@ -92,16 +92,16 @@ public static Contact getContact() {
 @AuraEnabled(Cacheable=true)
 public static Case createCase(String countryiso, Boolean isConcernCase, String topic, String subtopic) {
 	Case newCase = new Case();
-
 	Map<String,String> recordTypeCountry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(CONTACT, countryiso.toUpperCase());
-
+	topic = topic + '__c';
+	subtopic = subtopic + '__c';
 	if(recordTypeCountry != null) {
 		if(isConcernCase) {
-			List<ISSP_FAQ2Case_Record_Type__c> complaintRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic + '%', true);
+			List<ISSP_FAQ2Case_Record_Type__c> complaintRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic  + '%', true);
 			newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', complaintRecordType[0].RecordType__c);
 		}
 		else{
-			List<ISSP_FAQ2Case_Record_Type__c> caseRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic + '%', false);
+			List<ISSP_FAQ2Case_Record_Type__c> caseRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic  + '%', '%' + subtopic + '%', false);
 			for(ISSP_FAQ2Case_Record_Type__c rt : caseRecordType) {
 				if(rt.Topic__c == topic || rt.SubTopic__c == subtopic) {
 					newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', rt.RecordType__c);

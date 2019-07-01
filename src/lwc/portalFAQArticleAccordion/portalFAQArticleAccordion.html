@@ -1,11 +1,11 @@
 <template>
     <div class="bottomLightGrayBorder slds-m-around_small">
-        <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+        <img src={searchIconUrl}>
         <lightning-input name="newRecipientTextInput"
             placeholder={label.CSP_SearchFAQ}
             class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
             value={searchText}
-            onchange={onInputchange}>
+            onchange={onInputChange}>
         </lightning-input>
     </div>
     <!-- ARTICLES -->
@@ -110,8 +110,16 @@
             <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open"
                 style="text-align: center;">
-                <lightning-icon icon-name="action:approval" alternative-text="Approved" size="large"
-                    class="overlap-top-center"></lightning-icon>
+                <div class="dot-lightgreen overlap-top-center">
+                    <div class="dot-green dot-allign">
+                        <div class="dot-white-small dot-allign">
+                            <lightning-icon icon-name="utility:check" variant="success"
+                                alternative-text="Approved" size="medium"
+                                class="dot-allign slds-current-color success-variant">
+                            </lightning-icon>
+                        </div>
+                    </div>
+                </div>
                 <div class="slds-modal__container customModal">
                     <div>
                         <h2 id="modal-heading-01"

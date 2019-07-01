@@ -59,10 +59,15 @@ public with sharing class DAL_ISSP_Test {
         User portalUser = ISSP_ObjectFactory.createPortalUser(contact);
 
         List<Contact> contacts = DAL_ISSP.getContactsByAccountId(account.Id);
+        List<Contact> contacts2 = DAL_ISSP.getContactsByAccountId(account.Id,0,5);
+
+        List<Contact> searchResults = DAL_ISSP.searchContactsByAccountId(account.Id,0,5,'test');
 
         List<User> users = DAL_ISSP.getUsersByContactId(new List<Id>{contact.Id});
 
         System.assert(!contacts.isEmpty());
+        System.assert(!contacts2.isEmpty());
+        System.assert(!searchResults.isEmpty());
         System.assert(!users.isEmpty());
 
     }
