@@ -5,7 +5,7 @@
  * The permission sets, starting with 'FAQ_Visibility' should grant access to certain data categories.
  */
 
-public with sharing class PortalFAQsSharingCtrl {
+public without sharing class PortalFAQsSharingCtrl {
 
     PUBLIC STATIC FINAL STRING DEFAULT_METADATA_NAME = 'FAQs_DEFAULT';
     PUBLIC STATIC FINAL STRING FAQ_PERMSET_PREFIX = 'FAQ_Visibility%';
