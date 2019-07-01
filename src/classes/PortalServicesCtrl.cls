@@ -746,7 +746,11 @@ private static void alignStatus(ServiceWrapper sw,string newStatus){
 		sw.accessRequested =true;
 	}else{
 		if(sw.isAdmin) {
-			sw.btnLabel =System.Label.ISSP_Enable_Service;
+			if (sw.recordService.Cannot_be_managed_by_portal_admin__c == true) {
+				sw.btnLabel = System.Label.CSP_Request_Service;
+			}else{
+				sw.btnLabel =System.Label.ISSP_Enable_Service;
+			}
 		}
 		else sw.btnLabel =System.Label.CSP_Request_Service;
 		sw.accessGranted =false;
@@ -761,7 +765,7 @@ private static void alignStatus(ServiceWrapper sw,string newStatus){
 			sw.useDefaultRole = false;
 			if (flagIsIepPortalService && sw.iepStatus == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
 				sw.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
-			} else if (sw.isAdmin && sw.recordService.Cannot_be_managed_by_portal_admin__c == false) {
+			} else if (sw.isAdmin && sw.recordService.Cannot_be_managed_by_portal_admin__c == true) {
 				sw.btnLabel = System.Label.CSP_Request_Service;
 			}
 		}
