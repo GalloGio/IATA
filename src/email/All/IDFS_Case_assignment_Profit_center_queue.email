@@ -1,0 +1,20 @@
+The following case has been assigned to the queue {!Case.OwnerFullName}. 
+
+
+Record type: {!Case.RecordType} 
+Region: {!Case.Region__c} / Country: {!Case.BSPCountry__c} 
+Case Area: {!Case.CaseArea__c} 
+Reason: {!Case.Reason1__c} 
+
+Case number: {!Case.CaseNumber} 
+Account site: {!Account.Site}/{!Case.00N20000000vf3w} 
+Case subject: {!Case.Subject} 
+Case description: {!Case.Description} 
+
+Product Name: {!Product2.Name} 
+Product number: {!Product2.SAP_Material_Number__c} 
+Product Manager: {!Product2.Product_Manager__c} 
+Name of the SME: {!Product2.00Nw0000003qz1u} 
+
+
+{!Case.Link}

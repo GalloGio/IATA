@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>귀하의 국가에서 금융 보안 보험을 제공하는 금융 기관 목록</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7914,7 +7918,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Copy Ownership Warning --></label>
+        <label>주의! 소유권 정보를 대행사에 복사하면 대상 대행사의 기존 소유권 정보가 전부 삭제됩니다.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -9698,7 +9702,7 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Select Accounts --></label>
+        <label>대상 계정 선택</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -9722,7 +9726,7 @@ and
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS State --></label>
+        <label>시/도</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -11114,19 +11118,19 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_CHECKING --></label>
+        <label>확인 중...</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG COPY OWNERSHIP HINT --></label>
+        <label>이 조치를 통해 이 계정의 소유권 상세정보를 귀사 계층 구조의 선택한 위치로 복사할 수 있습니다. 이 페이지의 모든 상세정보에 대한 업데이트 확인 후에만, 이러한 조치로 적용된 변화를 대상 대행사에 표시할 수 있습니다.</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROCESSED --></label>
+        <label>처리된 대행사</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROGRESS --></label>
+        <label>소유권 복사 진행상황</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -13193,7 +13197,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Gdp Opt In Hint --></label>
+        <label>옵트인 방식을 통해, 항공사, 호텔 및 여행사와 같은 공급업체 산업에서 제품, 프로모션, 판매 및 대행사 정책과 같은 중요한 메시지를 대행사에 회람할 수 있습니다.</label>
         <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
@@ -14990,7 +14994,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Rev Case Open Acc Info --></label>
+        <label>GDP Opt-in을 제외한 변경사항은 연례 재검증 프로세스를 통해 처리해야 합니다</label>
         <name>ISSP_Rev_Case_Open_Acc_Info</name>
     </customLabels>
     <customLabels>
@@ -14998,7 +15002,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_SELECT_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_SELECT_STATE --></label>
+        <label>- 지역 선택 -</label>
         <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>

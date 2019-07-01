@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>Список финансовых организаций, предлагающих страхование финансового обеспечения в вашей стране</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>

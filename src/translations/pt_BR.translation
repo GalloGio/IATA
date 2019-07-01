@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>A lista de Instituições Financeiras que fornecem Seguro/Segurança Financeira no seu país</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7912,7 +7916,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Copy Ownership Warning --></label>
+        <label>Atenção! Ao copiar informações de titularidade para uma Agência, você apagará qualquer informação de titularidade existente na Agência designada.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -9696,7 +9700,7 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Select Accounts --></label>
+        <label>Selecionar contas designadas</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -9720,7 +9724,7 @@ and
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS State --></label>
+        <label>Estado/Província</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -11112,19 +11116,19 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_CHECKING --></label>
+        <label>Verificando…</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG COPY OWNERSHIP HINT --></label>
+        <label>Esta ação permite que você copie as informações de titularidade desta conta para os locais escolhidos de sua hierarquia. Você poderá visualizar as alterações aplicadas por esta ação nas agências designadas, somente após Confirmar a atualização de todas as informações nesta página.</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROCESSED --></label>
+        <label>Agências processadas</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROGRESS --></label>
+        <label>Andamento da cópia de titularidade</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -13190,7 +13194,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Gdp Opt In Hint --></label>
+        <label>Ao confirmar a adesão, fornecedores do setor, como companhias aéreas, hotéis e operadoras de turismo, poderão veicular mensagens importantes para sua agência sobre seus produtos, promoções, vendas e políticas de agência.</label>
         <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
@@ -14987,7 +14991,7 @@ Se desejar redefinir a sua senha, volte à tela de login e use a função Esquec
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Rev Case Open Acc Info --></label>
+        <label>As alterações, exceto para GDP Opt-in, devem ser feitas por meio do processo de Revalidação anual</label>
         <name>ISSP_Rev_Case_Open_Acc_Info</name>
     </customLabels>
     <customLabels>
@@ -14995,7 +14999,7 @@ Se desejar redefinir a sua senha, volte à tela de login e use a função Esquec
         <name>ISSP_SELECT_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_SELECT_STATE --></label>
+        <label>- Selecionar Estado -</label>
         <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
