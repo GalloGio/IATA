@@ -4073,16 +4073,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
-        <fullName>Name_of_SME__c</fullName>
-        <externalId>false</externalId>
-        <label>Name of the SME</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Non_IATA_product__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
