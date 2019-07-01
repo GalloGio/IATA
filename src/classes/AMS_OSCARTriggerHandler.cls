@@ -3428,7 +3428,8 @@ public class AMS_OSCARTriggerHandler {
                 if(ANG_MulticountryHelper.multicountryAccountHasRemittenceFrequencyEmpty(updatedOscar))
                     updatedOscar.addError('Approval can\'t be set if Remittance frequency is empty');
                 
-                if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP34__c != AMS_Utils.PASSED)
+                //NEWGEN-5110 - Added validation FS mandatory in new GE accreditations
+                if ((updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD) && updatedOscar.STEP34__c != AMS_Utils.PASSED)
                      updatedOscar.addError('Approval can\'t be set if Request financial security step is not Passed.');
 
                 if(updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION) {
