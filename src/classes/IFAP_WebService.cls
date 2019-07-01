@@ -280,6 +280,7 @@ global class IFAP_WebService {
 				[SELECT 
 					Id,
 					ANG_IsNewgenAgency__c,
+                    ANG_HE_CashCondition__c,
                     (SELECT
                         Id,
                         ANG_Limit_Cash_Conditions__c
