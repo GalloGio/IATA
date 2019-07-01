@@ -101,14 +101,9 @@ public static List<Portal_Application_Right__c> getFavoriteServicesList(){
 
 	if(!lstPortalApplications.isEmpty()) {
 		for(Portal_Applications__c pa : lstPortalApplications) {
-            for(Portal_Application_Right__c par : lstPortalApplicationsRights) {
-                if(par.Portal_Application__c == pa.Id) {
-                    Portal_Application_Right__c lstPar = new Portal_Application_Right__c();
-                    lstPar.Portal_Application__r = pa;
-                    lstPortalApplicationsRights.add(lstPar);
-                    break;
-                }
-            }
+			Portal_Application_Right__c lstPar = new Portal_Application_Right__c();
+			lstPar.Portal_Application__r = pa;
+			lstPortalApplicationsRights.add(lstPar);
 		}
 	}
 
