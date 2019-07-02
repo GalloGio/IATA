@@ -230,6 +230,7 @@ public with sharing class CSP_Utils {
 
         User user = [select Id,ContactId from User where Id=:Userinfo.getUserId()];
         user.LanguageLocaleKey = lang;
+        user.LocaleSidKey = lang;
         update user;
 
         List<Contact> contacts = [select Id,Preferred_Language__c  from Contact where Id=:user.ContactId];
