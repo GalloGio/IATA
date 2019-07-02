@@ -16,6 +16,7 @@
 	<aura:attribute type="Integer" name="validBilling" default="0" access="private"/>
 	<aura:attribute type="Integer" name="validShipping" default="0" access="private"/>
 	<aura:attribute type="Boolean" name="validationError" default="false" access="private"/>
+    <aura:attribute type="Boolean" name="categoryOther" default="false" access="private"/>
 	
 
 	<aura:attribute type="Boolean" name="hasJquery" default="false" access="private"/>
@@ -27,6 +28,8 @@
 	<aura:registerEvent name="addressSelected" type="c:OneId_AddressSelected_EVT"/>
 	<aura:handler name="addressSelected" event="c:OneId_AddressSelected_EVT" action="{!c.setAddress}"/>
 
+    <aura:registerEvent name="newAccountSet" type="c:OneId_NewAccountSet_EVT"/>
+    
 	<aura:method name="validateRequiredFields"/>
 	
 	<ltng:require scripts="{!join(',', 
@@ -45,7 +48,7 @@
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
 			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Legal_name__c}</label>
 			<div class="slds-form-element__control">
-				<ui:inputText value="{!v.account.Name}" class="slds-input" disabled="{!!v.changeName}" />
+				<ui:inputText value="{!v.account.Name}" class="slds-input" disabled="{!!v.changeName}" change="{! c.validateRequiredFields}"/>
 			</div>
 		</div>
 
@@ -67,12 +70,19 @@
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
 			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Category__c}</label>
 			<div class="slds-form-element__control slds-select_container">
-				<ui:inputSelect aura:id="categorySelection" value="{!v.account.Category__c}" class="slds-select" disabled="{!!v.changeCategory}"/>
+				<ui:inputSelect aura:id="categorySelection" value="{!v.account.Category__c}" class="slds-select" disabled="{!!v.changeCategory}" change="{!c.parseCategory}"/>
 				<!-- options are set on the setOption function -->
 			</div>
 		</div>
 
-		
+		<aura:if isTrue="{!v.categoryOther}">
+			<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Category_Other_Value__c}</label>
+				<div class="slds-form-element__control">
+					<ui:inputText aura:id="catOtherVal" value="{!v.account.Category_Other_Value__c}" class="slds-input"/>
+				</div>
+			</div>
+		</aura:if>
 	</div>
 
 
@@ -272,7 +282,7 @@
 			<div class="slds-form-element">
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Office_Phone}</label>
 				<div class="slds-form-element__control">
-					<ui:inputPhone aura:id="officePhone" value="{!v.account.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" />
+					<ui:inputPhone aura:id="officePhone" value="{!v.account.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" change="{!c.validateRequiredFields}"/>
 				</div>
 			</div>
 		</div>

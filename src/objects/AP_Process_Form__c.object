@@ -46,13 +46,14 @@
     <description>Used for Airline participation process to save the BSP/CASS Form.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</fullName>
         <description>Defines if an airline will accept EasyPay transactions in the BSP settlement.</description>
@@ -60,7 +61,7 @@
         <inlineHelpText>Will you accept EasyPay transactions in the BSP settlement?</inlineHelpText>
         <label>Airline accepts EasyPay trans. in BSP</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>

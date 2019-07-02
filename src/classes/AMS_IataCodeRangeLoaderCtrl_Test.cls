@@ -39,8 +39,8 @@ private class AMS_IataCodeRangeLoaderCtrl_Test {
     	//Import file
     	pf = ctrl.SaveRecord();
     	
-    	system.assert(ctrl.SuccessNumber==4);
-    	system.assert(ctrl.ErrorNumber==1);
+    	system.assert(ctrl.SuccessNumber==3);
+    	system.assert(ctrl.ErrorNumber==2);
     	system.assert(ctrl.sMessage == 'Some errors occoured. Please check errors\' file');
     	
     	//Just test open page resutl

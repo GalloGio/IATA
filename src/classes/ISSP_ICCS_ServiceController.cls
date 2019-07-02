@@ -37,7 +37,11 @@ public class ISSP_ICCS_ServiceController{
 			if(participantId == null){
 				if(isAirline){
 					Boolean iataCodeEmpty = topAccount.IATACode__c == '' || topAccount.IATACode__c == null;
+					if(topAccount.IATACode__c == null && topAccount.Airline_designator__c == null && topAccount.Airline_Prefix__c == null) {
+						participantId = topAccount.Old_Airline_designator__c + (iataCodeEmpty? topAccount.Old_Airline_Prefix__c : topAccount.Old_IATA_Code__c);
+					} else {
 					participantId = topAccount.Airline_designator__c + (iataCodeEmpty? topAccount.Airline_Prefix__c : topAccount.IATACode__c);
+					}
 				}
 				if(isAgency){
 					participantId = topAccount.IATACode__c;
@@ -282,7 +286,7 @@ public class ISSP_ICCS_ServiceController{
 			// Set top account
 			Id topAccountId = portalUserContact.Account.Top_Parent__c != null ? portalUserContact.Account.Top_Parent__c : portalUserContact.AccountId;
 
-			topAccount = [	select Id, Name, ICCS_Membership_Status__c, Field_Head_Office__c, Airline_designator__c, duplicate_flag_indicato__c, IATACode__c, Airline_Prefix__c, Key_Customer__c, RecordTypeId 
+			topAccount = [	select Id, Name, ICCS_Membership_Status__c, Field_Head_Office__c, Airline_designator__c, Old_Airline_designator__c, duplicate_flag_indicato__c, IATACode__c, Old_IATA_Code__c, Airline_Prefix__c, Old_Airline_Prefix__c, Key_Customer__c, RecordTypeId 
 							from Account 
 							where Id =: topAccountId];
 							
@@ -309,10 +313,6 @@ public class ISSP_ICCS_ServiceController{
 		coreRest = new ISSP_ICCS_CoreRest(this);
 		
 		currentComponent = ISSP_ICCS_Utils.Page.HOMEPAGE;
-
-		if(!Test.isRunningTest()){
-			checkLogginAs();
-        }
 		
 		if(!isActivePortalUser){
 			setMessage(Label.ICCS_Homepage_UnapprovedUser, false);
@@ -548,18 +548,4 @@ public class ISSP_ICCS_ServiceController{
 
 		setMessage(message, true);
     }
-
-
-	public void checkLogginAs(){
-		// check if the user is logged as an other user. In that case, the parentId would not be null)
-        Map<String,String> currentSessionAttributes = Auth.SessionManagement.getCurrentSession();
-        String parentId = currentSessionAttributes.get('ParentId');
-       	System.debug('Current session attributes: ' + parentId);
-		   if(parentId != null){
-			   portalUserRights = ISSP_ICCS_Utils.ICCS_ROLE_READ_ONLY;
-		   }
-        for(String key : currentSessionAttributes.keySet()){
-        	System.debug(key + ' : ' + currentSessionAttributes.get(key));
-		}
-	}
 }

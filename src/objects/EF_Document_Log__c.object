@@ -46,13 +46,14 @@
     <description>Used for E&amp;F document mass-upload metadata storage and logs the activity statuses for document upload to transformation of standard Attachment into Amazon attachment.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Additional_Information__c</fullName>
         <description>Same type of a field as AmazonFile&apos;s Additional Information.</description>

@@ -41,6 +41,10 @@
                 <behavior>Readonly</behavior>
                 <field>Application_icon__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDPR_PrivacyStatement__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -67,6 +71,17 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Version_Number__c</fields>
+        <fields>Status__c</fields>
+        <fields>Effective_Start_Date__c</fields>
+        <relatedList>Term_and_Condition__c.NewGenApp_PortalService__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Account_Role_Services__c.Portal_Service__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>IATA_ISO_Country__c.ANG_Portal_Service__c</relatedList>

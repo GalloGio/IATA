@@ -49,14 +49,15 @@ two record types:
 2- WebStar contains WebStar data (WebStar is master data)</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Agency_Accreditation_Class__c</fullName>
         <description>Agency Accreditation Class taken from the related GDP Account View</description>
@@ -1000,6 +1001,19 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>WebStar_P00_Key__c</fullName>
+        <description>Primary Key assigned to Persons in WebStar. Used as junction key between US ID Card and related Contact</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Primary Key assigned to Persons in WebStar. Used as junction key between US ID Card and related Contact</inlineHelpText>
+        <label>WebStar P00 Key</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>ID Card</label>
     <listViews>

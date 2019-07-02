@@ -46,13 +46,14 @@
     <description>Object used to store annualized revenue from RCRM opportunities and report on it. Used for the RCRM project.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Annualized_value__c</fullName>
         <description>The expected revenue from the contract for the period covered by the Revenue Stream Line record.</description>

@@ -776,9 +776,10 @@
                         <div style="display:{!IF(AND(isAirline, sRefererCommunity != 'iec'),'none','')}" >
                         <apex:inputField styleclass="form-control rec" id="sector" value="{!acc.Sector__c}" rendered="{!OR(sRefererCommunity == 'iec', AND(!hqFound, !createAgency))}" />
                         </div>
-                        <apex:outputText styleclass="form-control" id="sectorHQ" value="{!hqAccount.Sector__c}" rendered="{!AND(hqFound, !createAgency)}" />
-                        <apex:outputText styleclass="form-control" id="sectorAgency" value="{!acc.Sector__c}" rendered="{!AND(!hqFound, createAgency)}" />
-                        <apex:outputText styleclass="form-control" id="sectorAirline" value="{!acc.Sector__c}" rendered="{!AND(isAirline, !toSearchDesignatorCode)}" />
+                        <!-- WMO-391 -->
+                        <apex:outputField styleclass="form-control" id="sectorHQ" value="{!hqAccount.Sector__c}" rendered="{!AND(hqFound, !createAgency)}" />
+                        <apex:outputField styleclass="form-control" id="sectorAgency" value="{!acc.Sector__c}" rendered="{!AND(!hqFound, createAgency)}" />
+                        <apex:outputField styleclass="form-control" id="sectorAirline" value="{!acc.Sector__c}" rendered="{!AND(isAirline, !toSearchDesignatorCode)}" />
                     </div>
                     <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
 	                    <div class="form-group col-lg-6" >
@@ -817,14 +818,14 @@
                     <apex:outputPanel layout="block" rendered="{!AND(hqFound, !createAgency)}" >
                     <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.Category__c.Label}</label>
-                        <apex:outputText styleclass="form-control" id="categoryFieldHQ" value="{!hqAccount.Category__c}" />
+                        <apex:outputField styleclass="form-control" id="categoryFieldHQ" value="{!hqAccount.Category__c}" />
                     </div>
                     </apex:outputPanel>
                     <!-- TF - SP08 -->
                     <apex:outputPanel layout="block" rendered="{!AND(!hqFound, createAgency)}" >
                     <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.Category__c.Label}</label>
-                        <apex:outputText styleclass="form-control" id="categoryFieldAgency" value="{!acc.Category__c}" />
+                        <apex:outputField styleclass="form-control" id="categoryFieldAgency" value="{!acc.Category__c}" />
                     </div>
                     </apex:outputPanel>
                     <div class="form-group col-lg-6" id="categoryDiv1" style="display:none" >
@@ -877,12 +878,12 @@
 	                        StatusStyle="{!IF(sRefererCommunity == 'iec','elementBAddressToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1')}"
 	                        FormControlStyle="form-control req" rendered="{!preventAddressDoctorService==false}">
 	                      </DSE:DS_DataQuality>
-	                      <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
-	                      		<div id="divToMove2" class="col-lg-6" style="display: none;">
-	                      			<select class="form-control rec" id="drpdwnBState" onchange="copyToAccBState();">
-	                      				<option value="">--Select One--</option>
-	                      			</select>                		 	
-	                        	</div>
+                          <apex:outputPanel layout="block" styleClass="requiredBlock"  rendered="{!sRefererCommunity == 'iec'}">
+                                <div id="divToMove2" class="col-lg-6" style="display: none;">
+                                    <select class="form-control rec" html-required="true" id="drpdwnBState" onchange="copyToAccBState();">
+                                        <option value=" ">--Select One--</option>
+                                    </select>                           
+                                </div>
                        	  </apex:outputPanel>	
                       </div>
                       <div class="form-group col-lg-6">
