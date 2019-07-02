@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>قائمة المؤسسات المالية التي توفر تأمين الضمان المالي في بلدكم</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7909,7 +7913,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Copy Ownership Warning --></label>
+        <label>انتباه! بنسخِ معلومات مِلكية إلى وكالةٍ ما فإنكم ستحذفون بذلك أي معلومات مِلكية موجودة حول الوكالة المستهدفة.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -9693,7 +9697,7 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Select Accounts --></label>
+        <label>اختر الحسابات المستهدفة</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -9717,7 +9721,7 @@ and
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS State --></label>
+        <label>الولاية/المقاطعة</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -11109,19 +11113,19 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_CHECKING --></label>
+        <label>جارٍ البحث...</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG COPY OWNERSHIP HINT --></label>
+        <label>يسمح لكم هذا الإجراء بنسخ بيانات المِلكية من هذا الحساب إلى المواقع المختارة التي تخصّ التسلسل الخاص بكم. وسوف تتمكنون من إظهار التغييرات المطبّقة بواسطة هذا الإجراء على الوكالات المستهدفة فقط بعد تأكيد تحديث جميع التفاصيل في هذه الصفحة.</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROCESSED --></label>
+        <label>الوكالات التي تمت معالجتها</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROGRESS --></label>
+        <label>سيْر نسخ المِلكية</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -13187,7 +13191,7 @@ and
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Gdp Opt In Hint --></label>
+        <label>باختيار الاشتراك، سيتمكن مورّدو القطاع مثل شركات الطيران والفنادق ومشغّلي الرحلات من توزيع رسائل هامّة إلى وكالتكم حول المنتجات والعروض الترويجية والمبيعات وسياسات الوكالة.</label>
         <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
@@ -14975,7 +14979,7 @@ and
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Rev Case Open Acc Info --></label>
+        <label>ينبغي اتخاذ التغييرات، باستثناء ما يتعلق بالاشتراك في GDP، من خلال عملية إعادة التفعيل السنوية</label>
         <name>ISSP_Rev_Case_Open_Acc_Info</name>
     </customLabels>
     <customLabels>
@@ -14983,7 +14987,7 @@ and
         <name>ISSP_SELECT_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_SELECT_STATE --></label>
+        <label>- اختر الولاية -</label>
         <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>

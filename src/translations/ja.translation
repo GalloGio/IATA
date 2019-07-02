@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>あなたの国内で金融保証保険を提供している金融機関のリスト</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7913,7 +7917,7 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Copy Ownership Warning --></label>
+        <label>ご注意ください！所有者情報を代理店にコピーすると、対象代理店の既存の所有者情報が削除されます。</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
     </customLabels>
     <customLabels>
@@ -9697,7 +9701,7 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Select Accounts --></label>
+        <label>対象となるアカウントを選択する</label>
         <name>ISSP_AMS_Select_Accounts</name>
     </customLabels>
     <customLabels>
@@ -9721,7 +9725,7 @@ and
         <name>ISSP_AMS_Signatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS State --></label>
+        <label>都道府県/州</label>
         <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
@@ -11113,19 +11117,19 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_CHECKING --></label>
+        <label>確認しています...</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG COPY OWNERSHIP HINT --></label>
+        <label>この操作により、このアカウントの所有者の詳細を、貴社の階層内の希望のロケーションにコピーすることができます。この操作によって対象代理店に適用される変更は、このページの全ての詳細の[更新の確認] が行われるまで表示されません。</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROCESSED --></label>
+        <label>処理の対象となる代理店</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_COPY_OWNERSHIP_PROGRESS --></label>
+        <label>所有者情報のコピーの進捗</label>
         <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
     </customLabels>
     <customLabels>
@@ -13191,7 +13195,7 @@ and
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Gdp Opt In Hint --></label>
+        <label>オプトインすることにより、航空会社、ホテル、ツアー催行会社などの業界のサプライヤーは、商品、キャンペーン、販売および代理店に関するポリシーなど、重要なメッセージを代理店に送信することができるようになります。</label>
         <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
@@ -14987,7 +14991,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Rev Case Open Acc Info --></label>
+        <label>GDP Opt-inを除き、変更は年次再評価プロセスを通じて行わなければなりません</label>
         <name>ISSP_Rev_Case_Open_Acc_Info</name>
     </customLabels>
     <customLabels>
@@ -14995,7 +14999,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_SELECT_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_SELECT_STATE --></label>
+        <label>- 都道府県/州を選択してください -</label>
         <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
