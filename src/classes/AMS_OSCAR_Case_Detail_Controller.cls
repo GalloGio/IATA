@@ -289,7 +289,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                                              WHERE ISO_State__c =: accreditationObj.IATA_ISO_State__c 
                                              AND RecordType.DeveloperName = 'Remittance_Frequency'
                                              AND BSP__r.Remittance_Frequency_per_State__c = True
-                                             AND Class_Type__c = accreditationObj.Location_Class__c];
+                                             AND Class_Type__c = :accreditationObj.Location_Class__c];
         
         if(issOp.size() > 1) accreditationObj.addError('Too many BSP attribute records, please contact support');
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
