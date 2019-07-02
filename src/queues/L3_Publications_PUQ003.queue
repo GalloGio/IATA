@@ -2,6 +2,16 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3 Publications PUQ003</name>
+    <queueMembers>
+        <users>
+            <user>majeresa@iata.org</user>
+            <user>grubera@iata.org</user>
+            <user>sullivanb@iata.org</user>
+            <user>carlonen@iata.org</user>
+            <user>syedt@iata.org</user>
+            <user>liaozy@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
