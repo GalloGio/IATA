@@ -128,6 +128,15 @@ public without sharing class ISSP_Login {
 		system.debug('pageLink: ' + pageLink);
         PageReference ans = Site.login(null != oneUser ? oneUser.Username : username, password, pageLink);
         system.debug('ans ans '+ans);
+
+
+        //Check user permissions for FAQs, reassign if needed. Used mainly for CNS accounts as they don't go through OneId.
+        try{
+            PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
+        }catch(Exception e){
+            System.debug('Unable to validate FAQs permissions assignments. \n'+e);
+        }
+
         return ans;
     }
 

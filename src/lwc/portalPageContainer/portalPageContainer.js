@@ -10,7 +10,17 @@ export default class PortalPageContainer extends LightningElement {
     }
 
     set styleClass(value) {
-        this._styleClass = this.defaultClass+value;
+        if(value !== undefined){
+            this._styleClass = this.defaultClass+value;
+        }else{
+            this._styleClass = this.defaultClass;
+        }
+    }
+
+    connectedCallback() {
+        if(this.styleClass == undefined){
+            this.styleClass = this.defaultClass;
+        }
     }
     
 }
