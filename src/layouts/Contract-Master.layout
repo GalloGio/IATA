@@ -92,6 +92,116 @@
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>E&amp;F Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>EF_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Group_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EF_Client_SIS_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EF_Client_SIS_Designator__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Trading_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_SIS_Aggregator__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Admin_Fee__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Dunning_Procedure__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Payment_Terms__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EF_Payment_Terms_Code__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Billing_Frequency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Reporting_Frequency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Reporting_Level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_BSP_Periods__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_ICH_Period__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_IA_Specialist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_DT_Specialist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Allow_Billing_Agreements__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>EF_Comments__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Currency Info</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Data_Currency__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EF_Billing_Currency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Payment_Currency__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
@@ -109,6 +219,19 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Active Change Requests</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Requested_Changes__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -143,6 +266,38 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Files</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>350</height>
+                <page>EF_Contract_Attachment_List</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Comment History &amp; Linked Relationships</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>100</height>
+                <page>EF_ContractHistoryPage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
@@ -151,6 +306,61 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedContent>
+        <relatedContentItems>
+            <layoutItem>
+                <behavior>Readonly</behavior>
+                <field>AccountId</field>
+            </layoutItem>
+        </relatedContentItems>
+    </relatedContent>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contract_Name__c</fields>
+        <fields>EF_Contact__c</fields>
+        <fields>Contact_Account__c</fields>
+        <fields>EF_Status__c</fields>
+        <fields>Role__c</fields>
+        <relatedList>EF_Contact_EF_Contract__c.EF_Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EF_Material__c</fields>
+        <fields>EF_Status__c</fields>
+        <relatedList>EF_Material_Line_Item__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EF_Related_Records__c.NAME</fields>
+        <fields>EF_Billing_Currency__c</fields>
+        <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Location_Code__c</fields>
+        <fields>Location_Code_Details__c</fields>
+        <relatedList>EF_Location_Code__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>Edit_All</customButtons>
+        <fields>NAME</fields>
+        <fields>BillingAgreement_Name__c</fields>
+        <fields>Client__c</fields>
+        <fields>Airline__c</fields>
+        <fields>EF_Location_ID__c</fields>
+        <fields>Data_Currency__c</fields>
+        <fields>Payment_Method_Code__c</fields>
+        <fields>Payment_Currency__c</fields>
+        <fields>Billing_Currency__c</fields>
+        <relatedList>EF_Billing_Agreement__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EF_Related_Records__c.NAME</fields>
+        <fields>EF_Related_Records__c.FIR_Code_Name__c</fields>
+        <fields>EF_Related_Records__c.Type__c</fields>
+        <relatedList>FIR_Code__c.Contract__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
