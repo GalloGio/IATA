@@ -1350,6 +1350,13 @@ IATA Customer Service</value>
         <value>I agree</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_GDI_Apply</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Apply to GDI button</shortDescription>
+        <value>Apply Online to GDI</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_GDI_Breadcrumb</fullName>
         <categories>ISSP, ANG, GDI</categories>
         <language>en_US</language>
@@ -2986,6 +2993,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
         <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees</value>
+    </labels>
+    <labels>
+        <fullName>CaseValidation_Area2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseValidation - Area2</shortDescription>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),	IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,	Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,	Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -14619,6 +14633,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Contact Name</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Copy_Ownership_Warning</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Copy Ownership Warning</shortDescription>
+        <value>Attention! By copying ownership information to an Agency you will delete any existing ownership information on the target Agency.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Country_Select</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18049,6 +18071,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Section 2.2</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Select_Accounts</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Select Accounts</shortDescription>
+        <value>Select Target Accounts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Selected_Associate_Entities</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18083,6 +18113,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Signatory</shortDescription>
         <value>Signatory:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_State</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS State</shortDescription>
+        <value>State/Province</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_State_Names_Addresses_Field_Label</fullName>
@@ -20749,6 +20786,38 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>Location type SA name</shortDescription>
         <value>Specific Sales Activity (SA)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_CHECKING</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_CHECKING</shortDescription>
+        <value>Checking...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_HINT</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG COPY OWNERSHIP HINT</shortDescription>
+        <value>This action allows you to copy the ownership details from this account into the chosen locations belonging to your hierarchy. You will be able to visualize the changes applied by this action on the target agencies, only after Confirming Update of all the details of this page.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</shortDescription>
+        <value>Agencies processed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</shortDescription>
+        <value>Copy Ownership Progress</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Click_Here_PCI</fullName>
@@ -24766,6 +24835,14 @@ Please add below all your company valid email domains, including different ones 
         <value>General Sales and Service Agent</value>
     </labels>
     <labels>
+        <fullName>ISSP_Gdp_Opt_In_Hint</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Gdp Opt In Hint</shortDescription>
+        <value>By opting-in, Industry suppliers like airlines, hotels and tour operators will be able to circulate important messages to your agency about their products, promotions, sales and agency policies.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_GeneralPublicNotFound</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
@@ -28289,12 +28366,27 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Return to case</value>
     </labels>
     <labels>
+        <fullName>ISSP_Rev_Case_Open_Acc_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Rev Case Open Acc Info</shortDescription>
+        <value>Changes, except for GDP Opt-in, should be made through Annual Revalidation process</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SELECT_COUNTRY</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SELECT COUNTRY</shortDescription>
         <value>- Select Country -</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SELECT_STATE</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SELECT_STATE</shortDescription>
+        <value>- Select State -</value>
     </labels>
     <labels>
         <fullName>ISSP_SELECT_THREE_or_MORE</fullName>
@@ -30275,7 +30367,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
-        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c</value>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,TACT__c,Weblink__c,NDClink__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
@@ -33586,7 +33678,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
-        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
+        <value>https://www.iata.org/whatwedo/airline-distribution/ndc/Pages/matchmaker.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_NDCMM_Terms_Of_Use_Link</fullName>
