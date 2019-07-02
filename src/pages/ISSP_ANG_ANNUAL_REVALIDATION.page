@@ -5,6 +5,8 @@
     <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
 
     <body>
+        
+        <apex:slds />
 
         <script src="{!URLFOR($Resource.bootbox)}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
@@ -286,6 +288,9 @@
 
         <script>
 
+            var contactStateMap = JSON.parse(JSON.stringify({!stateListByCountryName}));
+        	var countryMap = JSON.parse(JSON.stringify({!countryInfoByCountryNameMapString})); 
+        
             var defaultHQCountry = '{!currentAccount.isocountry.ISO_Code__c}';
 
             var $j = jQuery.noConflict();
@@ -334,6 +339,10 @@
                 var etop = $('[id$=errorMessages]').offset().top;
                 $(window).scrollTop(etop);
             }
+        
+        //$(document).ready(function() {
+        //	$('[id$="contactStateList"]').attr('style', 'display: none;');
+        //}
 
         </script>
 
@@ -379,8 +388,15 @@
                                     <apex:param name="AgentSector" assignTo="{!agentsector}" value="Both"/>
                                     <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
                                 </apex:actionFunction>
+                                
+                                <apex:actionFunction name="copyOwnershipAction" action="{!cleanOwnership}" rerender="" />
 
                                 <apex:actionFunction name="rerenderTreeArea" rerender="treeArea" />
+                                
+                                <apex:actionFunction name="changeContactStateOptions" reRender="contactStateList" action="{!getContactStates}">
+                                    <apex:param id="country" name="countryName" value="" />
+                                </apex:actionFunction>
+
 
                                 <apex:pageBlock id="step1Block" mode="edit">
                                     <div class="progress">
@@ -415,6 +431,31 @@
                                                         <p><span class="{!CONFIRMED_ICON}"></span> = {! $Label.ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED}</p>
                                                         <p><span class="{!PROGRESS_ICON}"></span> = {! $Label.ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS}</p>
                                                     </div>
+                                                    
+                                                    <!-- Progress status for batch -->
+                                                    <apex:pageBlock id="StatusPageBlock">
+                                                        
+                                                        <apex:pageBlockSection columns="1" title="{! $Label.ISSP_ANG_COPY_OWNERSHIP_PROGRESS}" rendered="{!batchStatusBool}">
+                                                            
+                                                            <apex:actionStatus id="act" startText="{! $Label.ISSP_ANG_COPY_OWNERSHIP_CHECKING}" />
+                                                            
+                                                            <apex:outputText styleClass="processText" value="{! $Label.ISSP_Status}: {!batchJob.Status}"/>
+                                                               
+                                                            <div class="slds-scope">
+                                                                <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="{!batchJob.TotalJobItems}" aria-valuenow="{!batchJob.JobItemsProcessed}" role="progressbar">
+                                                                    <span class="slds-progress-bar__value" style="width:{!progressBar}%">
+                                                                        <span class="slds-assistive-text" value="{!batchJob.JobItemsProcessed}/{!batchJob.TotalJobItems}"/>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <apex:outputText styleClass="processText" value="{! $Label.ISSP_ANG_COPY_OWNERSHIP_PROCESSED}: {!batchJob.JobItemsProcessed}/{!batchJob.TotalJobItems}"/>
+                                                                                                                        
+                                                            <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="treeArea" status="act"/>
+                                                            
+                                                        </apex:pageBlockSection>
+                                                        
+                                                    </apex:pageBlock>
 
                                                     <script>
                                                         //console.log('LOADING');
@@ -692,6 +733,8 @@
 
             function showNewContactDialog() {
                 $( '#addNewContactModal').modal('show');
+                $('[id$="contactStateList"]').val($('[id$="contactStateInput"]').val());
+                toggleContactState();
             }
 
             function hideNewContactDialog() {
@@ -705,9 +748,23 @@
             function hideNewCompanyDialog() {
                 $( '#addNewCompanyModal' ).modal('hide');
             }
+        
+        	function showCopyOwnershipDialog() {
+                $( '#copyOwnershipModal').modal('show');
+            }
+
+            function hideCopyOwnershipDialog() {
+                $( '#copyOwnershipModal' ).modal('hide');
+            }
+        
+        	function copyOwnershipClear() {
+                $('[id$=sameOwnershipList]').val('');
+                copyOwnershipAction();
+            }
 
             var ownerModalFields = [];
             ownerModalFields[0] = "{!$Component.newContact.contactBlock.contactFinInterest}";
+        	ownerModalFields[1] = "{!$Component.newContact.contactBlock.contactTimeToBusiness}";
 
             function toggleModalContactFields(ownerId) {
 
@@ -719,6 +776,7 @@
                         }
 
                         $('[id$=contactFinInterest]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
+                        $('[id$=contactTimeToBusiness]').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>');
 
                     } else {
                         for (index = 0; index < ownerModalFields.length; index++) {
@@ -727,6 +785,10 @@
                         }
                         if($('[id$=contactFinInterest]').parent().is('div')) {
                             $('[id$=contactFinInterest]').unwrap().prev('.requiredBlock').remove();
+                        }
+                        
+                        if($('[id$=contactTimeToBusiness]').parent().is('div')) {
+                            $('[id$=contactTimeToBusiness]').unwrap().prev('.requiredBlock').remove();
                         }
                     }
                 }
@@ -783,7 +845,7 @@
                     <button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Person}</h4>
                     </div>
-                    <!--apex:actionRegion immediate="true" renderRegionOnly="false"-->
+                    
                     <apex:pageMessages id="theMessages" />
                     <div class="modal-body">
                         <apex:pageBlock id="contactBlock">
@@ -879,27 +941,37 @@
                                             <tr><td class="modalrow">
                                                 <apex:inputField value="{!currentAccount.newContact.AddressPostcode__c}" id="contactPostalCode" html-placeholder="{!$Label.ISSP_AMS_PostCode}"/>
                                                 </td></tr>
+                                            <tr><td class="modalrow">
+                                                <apex:selectList styleClass="contactStateList" id="contactStateList" style="width:85%" value="{!currentAccount.newContact.AddressState__c}" size="1" onchange="copyState()" >
+                                                    <apex:selectOptions value="{!contactStateList}"/>
+                                                </apex:selectList>
+                                                <apex:inputField value="{!currentAccount.newContact.AddressState__c}" id="contactStateInput" html-placeholder="{!$Label.ISSP_AMS_State}"/>
+                                                
+                                                </td></tr>
                                             <tr><td class="modalrow" style="vertical-align:top;padding-bottom:30px">
                                                 <div class="requiredInput">
                                                     <div class="requiredBlock"></div>
-                                                    <apex:selectList styleClass="contactcountry" id="contactcountry" style="width:85%" value="{!amsContactCountry}" size="1">
-                                                        <apex:selectOptions value="{!countryNameList}"/>
-                                                    </apex:selectList>
+                                                    <apex:actionRegion >
+                                                        <apex:selectList styleClass="contactcountry" id="contactcountry" style="width:85%" value="{!amsContactCountry}" onchange="toggleContactStateOnChange()" size="1">
+                                                            <apex:selectOptions value="{!countryNameList}"/>
+                                                        </apex:selectList>
+                                                    </apex:actionRegion>
                                                 </div>
                                                 </td></tr>
                                         </table>
                                     </td>
                                 </tr>
                             </table>
+                           
                         </apex:pageBlock>
                     </div>
 
-                    <!--/apex:actionRegion-->
+                    
 
                     <div class="modal-footer">
                         <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" id="submitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
                             oncomplete="if ({!contactSaved==true}){hideNewContactDialog(); cancelAgentUpdate();} this.removeAttribute('disabled');"
-                            onclick="this.disabled='disabled';"
+                            onclick="copyState(); this.disabled='disabled';"
                             reRender="currContactList, theMessages, ownershipMessage, noUpdateMessage">
                             <apex:param value="Current Owner" name="ownertype" assignTo="{!contactType}" />
                         </apex:commandButton>&nbsp;
@@ -907,35 +979,82 @@
                     </div>
 
                     <script>
-
-
-                        function closeModalByCommandButton() {
-                            closeModal();
+                    
+                    
+                    function closeModalByCommandButton() {
+                        closeModal();
+                    }
+                    
+                    toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}');
+                    
+                    var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
+                    var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
+                    
+                    natphone.intlTelInput({
+                        nationalMode: true,
+                        defaultCountry: defaultHQCountry,
+                        numberType: "FIXED_LINE",
+                        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+                    });
+                    
+                    natphone.intlTelInput("setNumber", phone.val());
+                    
+                    function setInternationalPhoneNo(p) {
+                        if(p=='phone') {
+                            phone.val(natphone.intlTelInput("getNumber"));
+                        } else if(p=='mobile') {
+                            mobile.val(natmobile.intlTelInput("getNumber"));
+                        } else {
+                            fax.val(natfax.intlTelInput("getNumber"));
+                        }
+                    }
+                    
+                    function toggleContactStateOnChange() {
+                    	$('[id$="contactStateInput"]').val('');
+                        $('[id$="contactStateList"]').val('');
+                        toggleContactState();
+                    }
+                    
+                    function toggleContactState() {
+                        var dropdownValue = $('[id$="contactcountry"]').val();
+                        if (contactStateMap[dropdownValue] != undefined) {
+                            $('[id$="contactStateInput"]').val('');
+                            $('[id$="contactStateInput"]').attr('style', 'display: none;');
+                            $('[id$="contactStateList"]').attr('style', 'display: block;');
+                            changeContactStateOptions(dropdownValue);
+                        } else {
+                            $('[id$="contactStateInput"]').attr('style', 'display: block;');
+                            $('[id$="contactStateList"]').attr('style', 'display: none;');
                         }
 
-                        toggleModalContactFields('{!$Component.newContact.contactBlock.contactSection.contactItemOwner.owner}');
+                        var countrySelected = dropdownValue.toUpperCase();
 
-                        var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
-                        var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
+                        if (countryMap[countrySelected] != undefined) {
+                            if (countryMap[countrySelected]['State_Province_Mandatory__c']) {
+                                if ($('[id$="requiredStateInput"]').length == 0) {
+                                    $('[id$="contactStateInput"]').parent().append('<div id="requiredStateInput" class="requiredInput"><div id="requiredStateBlock" class="requiredBlock"></div></div>');
 
-                        natphone.intlTelInput({
-                            nationalMode: true,
-                            defaultCountry: defaultHQCountry,
-                            numberType: "FIXED_LINE",
-                            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-                        });
-
-                        natphone.intlTelInput("setNumber", phone.val());
-
-                        function setInternationalPhoneNo(p) {
-                            if(p=='phone') {
-                                phone.val(natphone.intlTelInput("getNumber"));
-                            } else if(p=='mobile') {
-                                mobile.val(natmobile.intlTelInput("getNumber"));
+                                    $('[id$="contactStateInput"]').appendTo($('[id$="requiredStateInput"]').first());
+                                    $('[id$="contactStateList"]').appendTo($('[id$="requiredStateInput"]').first());
+                                }
                             } else {
-                                fax.val(natfax.intlTelInput("getNumber"));
+                                $('[id$="contactStateInput"]').first().prependTo($('[id$="requiredStateInput"]').first().parent());
+                                $('[id$="contactStateList"]').first().prependTo($('[id$="requiredStateInput"]').first().parent());
+
+                                $('[id$="requiredStateInput"]').first().remove();
+                                $('[id$="requiredStateBlock"]').first().remove();
                             }
                         }
+                    }
+                    
+                    function copyState() {
+                        var dropdownValue = $('[id$="contactStateList"]').val();
+
+                        if (dropdownValue != undefined && dropdownValue != '' && dropdownValue != null) { 
+                            $('[id$="contactStateInput"]').val(dropdownValue);
+                            $('[id$="contactStateInput"]').change();
+                        }
+                    }
 
 
                     </script>
@@ -1016,6 +1135,35 @@
             </div>
 
         </div>
+        </apex:form>
+        
+        <!-- Modal Apply same ownership to other codes -->
+        
+        <apex:form id="copyOwnership">
+            <div class="modal fade" id="copyOwnershipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" onclick="return false;"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Select_Accounts}</h4>
+                        </div>
+                        <div class="modal-body" style="text-align: center;">
+                            <apex:selectList value="{!formsToCopyOwnersTo}" style="width:200px;" size="5" multiselect="true" label="sameOwnership" id="sameOwnershipList" >
+                                <apex:selectOptions value="{!relatedAccounts}" />
+                            </apex:selectList>
+                            <br/><h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Copy_Ownership_Warning}</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <apex:commandButton action="{!copyOwnership}" id="copyOwnersSubmitBut" styleClass="btn btn-default" value="{!$Label.Save}"
+                                                oncomplete="hideCopyOwnershipDialog(); this.removeAttr('disabled');"
+                                                reRender=""
+                                                onclick="this.disabled='disabled';">
+                            </apex:commandButton>&nbsp;
+                            <button type="button" class="btn btn-default" onclick="return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </apex:form>
 
     </body>

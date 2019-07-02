@@ -2888,6 +2888,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2901,10 +2905,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3028,6 +3028,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3041,10 +3045,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
