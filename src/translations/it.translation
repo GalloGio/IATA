@@ -1717,6 +1717,10 @@ la seguente procedura per completarlo :
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
         <name>CaseValidation_InDepthArea</name>
     </customLabels>
