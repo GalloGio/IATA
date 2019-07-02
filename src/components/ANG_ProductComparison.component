@@ -174,7 +174,7 @@
 
 										<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
 										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label}: {! cell.fees.AE_Application_Registration_Fees}</p>
-										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel}: </p>
+										<p style="padding-left: 20px">{!helper.prodCompAnnualFeesFormattedLabel}: {! cell.fees.AE_Annual_Fees}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_First_10_locations__c.Label}: {! cell.fees.AE_Fees_First_10_locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Next_15_Locations__c.Label}: {! cell.fees.AE_Fees_Next_15_Locations}</p>
 										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Additional_Locations__c.Label}: {! cell.fees.AE_Fees_Additional_Locations}</p>

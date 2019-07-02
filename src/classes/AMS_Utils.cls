@@ -336,6 +336,7 @@ public without sharing class AMS_Utils {
     public static final String CC = 'CC';
     public static final String CA = 'CA';
     public static final string EP = 'EP';
+    public static final string BOP = 'BOP';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
@@ -2612,10 +2613,10 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
         List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
 
-        authorizations = [SELECT Id,
-                                     ANG_FormOfPayment_ID__c
-                                FROM Agency_Authorization__c
-                               WHERE Account__c = :acc.Id AND Status__c = 'Active'];
+        authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
+                        FROM Agency_Authorization__c
+                        WHERE Account__c = :acc.Id 
+                            AND (Status__c = 'Active' OR Status__c = 'Authorized')];
 
         if(con != null) {
             services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c

@@ -50,6 +50,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         } 
         set;
     }
+    public Boolean isChinaAgent {get; set;}
 
     //Check is the user has access to this service
     public static Boolean isAllowedAccess() {
@@ -174,6 +175,12 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
             if (isHOAccredited) {
                 amsOfficeType = 'Branch';
+
+                if (user.contact.Account.Category__c == 'Domestic Agent') {
+                    agencyType = 'Domestic';
+                } else if (user.contact.Account.Category__c == 'IATA Passenger Sales Agent') {
+                    agencyType = 'International';
+                }
             } else {
                 amsOfficeType = 'HO';    
             }

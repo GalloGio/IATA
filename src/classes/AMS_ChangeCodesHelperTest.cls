@@ -167,11 +167,11 @@ private class AMS_ChangeCodesHelperTest {
 
         Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
-		Agency_Authorization__c cashfop = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Refer to ASD', RecordTypeId = formOfPaymentRT);
+		Agency_Authorization__c cashfop = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
 		insert cashfop;
-		Agency_Authorization__c creditCardfop = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Refer to ASD', RecordTypeId = formOfPaymentRT);
+		Agency_Authorization__c creditCardfop = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
 		insert creditCardfop;
-		Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'BOP', Status__c = 'Refer to ASD', RecordTypeId = formOfPaymentRT);
+		Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'BOP', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
 		insert bopMethod;
 
 		List<Agency_Authorization__c> listAgencyAuth = [SELECT id, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorization__c];
@@ -180,7 +180,7 @@ private class AMS_ChangeCodesHelperTest {
 		String formOfPayments = AMS_ChangeCodesHelper.generateFOPString(listAgencyAuth, isNewgen, changeCode);
 		Test.stopTest();
 
-		System.assertEquals('BOP - Cash - Credit Card - Refer to ASD', formOfPayments);
+		System.assertEquals('BOP: Authorized - Cash - Credit Card', formOfPayments);
 	}
 
 

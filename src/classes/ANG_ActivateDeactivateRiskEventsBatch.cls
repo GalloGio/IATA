@@ -74,7 +74,7 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
         ANG_AccountTriggerHandler.isExpiration = true;
         try{
             //update scope;
-            RecordUpdater updater = new RecordUpdater(scope);
+            RecordUpdater updater = new RecordUpdater(scope, true);
             updater.schedule(System.now().addSeconds(2));
         }catch(Exception e){
             //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_ActivateDeactivateRiskEventsBatch', 'ANG_ActivateDeactivateRiskEventsBatch', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');

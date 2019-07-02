@@ -149,6 +149,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 			accountIdsInvolvedSet.add(oscar.Account__c);
 
+			if(containsChange(new List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY}, oscar.ANG_Type_Of_Change__c) && oscar.Previous_HE__c != NULL){
+				accountIdsInvolvedSet.add(oscar.Previous_HE__c);
+			}
+
 			changesContainer.accountsMap = getAccounts(accountIdsInvolvedSet);
 
 			String currHEAccount = changesContainer.accountsMap.get(oscar.Account__c).ParentId == null ? oscar.Account__c : changesContainer.accountsMap.get(oscar.Account__c).ParentId;
@@ -231,8 +235,10 @@ public with sharing class ANG_AgencyChangesHelper {
 					
 					if(config == null) config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
-					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
+					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
+						oscar.Previous_HE__c = currHEAccount;
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
+					}
 					else {
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
 					}
@@ -1060,6 +1066,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		Set<String> fieldsToMigrate = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarToProcess.ANG_Type_Of_Change__c);
 
+		Account oscarAcc = toReturn.accountsMap.get(oscarToProcess.Account__c);
+
+		if(oscarAcc != null && oscarAcc.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.LOCATION) fieldsToMigrate.add('Remittance_frequency__c');
+
 		System.debug('[ANG_AgencyChangesHelper]: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
 		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
@@ -1171,7 +1181,8 @@ public with sharing class ANG_AgencyChangesHelper {
 					if (oldValue != newValue)
 						objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
 
-					if(toReturn.accountsMap.containsKey(accId) && (toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE || toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.GE) && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR){
+                    
+					if(toReturn.accountsMap.containsKey(accId) && (toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE || toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.GE) && (oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR || (oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.LOCATION && acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c && accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue))){
 						involvedAccounts.put(accID,null);
 						
 						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue){
@@ -1379,36 +1390,27 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	public static List<Agency_Authorization__c> performCashTransformation(Set<Id> accountsAffected){
-
-		Set<Id> accountsToProcess = accountsAffected.clone();
-
+		
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-		Set<Id> accountsUpdated = new Set<Id>();
+		List<Account> accs = [SELECT ID,Country_ISO_Code__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
+															  WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
+							FROM ACCOUNT WHERE ID IN :accountsAffected];
 
-		For(Agency_Authorization__c aa: [Select Id ,Account__c, Status__c from Agency_Authorization__c where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment']){
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
-			aa.Status__c = 'Active';
-			toUpsert.add(aa);
-			accountsUpdated.add(aa.Account__c);
-
+		for(Account a: accs){
+			if(a.Agency_Authorizations__r.isEmpty())
+				toUpsert.add(new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CA', 
+					Status__c = AMS_Utils.setChinaCountries.contains(a.Country_ISO_Code__c) ? 'Authorized' : 'Active', RecordTypeId = FormOfPaymentRT));
+			else{
+				for(Agency_Authorization__c aa : a.Agency_Authorizations__r){
+					aa.Status__c = AMS_Utils.setChinaCountries.contains(a.Country_ISO_Code__c) ? 'Authorized' : 'Active';
+					toUpsert.add(aa);
+				}
+			}
 		}
-
-		accountsToProcess.removeAll(accountsUpdated);
-
-		Id formOfPaymentRT = null;
-
-		if(!accountsToProcess.isEmpty())
-			formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-
-		For(Id accountId: accountsToProcess){
-
-			toUpsert.add(new Agency_Authorization__c(Account__c = accountId, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-
-		}
-
 		return toUpsert;
-
 	}
 
 	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar) {
@@ -1549,7 +1551,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, Covered_Ownership__c,
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Covered_Ownership__c,
 		        ANG_IEP_Status__c, ANG_HE_RiskStatus__c, ANG_IEP_HE_AccntNum__c, ANG_HE_CashCondition__c, Financial_Review_Result__c, ANG_HE_RiskHistoryAssessment__c, Financial_Assessment_Points__c,
 		        (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r)
 		         FROM Account WHERE Id IN :accountIds]);

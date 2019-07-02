@@ -220,9 +220,9 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
                     <label>Not Authorized</label>
                 </value>
                 <value>
-                    <fullName>Refer to ASD</fullName>
+                    <fullName>Authorized</fullName>
                     <default>false</default>
-                    <label>Refer to ASD</label>
+                    <label>Authorized</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -325,7 +325,7 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Refer to ASD</fullName>
+                <fullName>Authorized</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

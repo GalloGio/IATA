@@ -2026,7 +2026,7 @@ public class AMS_OSCARTriggerHandler {
                 c.OwnerId = updatedOSCAR.OwnerId;
                 caseChanged = true;
             }
-            if(c.Process_Start_Date__c == null && updatedOSCAR.Process__c != AMS_Utils.VOLRELINQUISH){
+			if(c.Process_Start_Date__c == null && updatedOSCAR.Process__c != AMS_Utils.VOLRELINQUISH && c.Process_Start_Date__c <> updatedOSCAR.Sanity_check_received__c){
                 c.Process_Start_Date__c = updatedOSCAR.Sanity_check_received__c;
                 caseChanged = true;
             }
@@ -4280,10 +4280,10 @@ public class AMS_OSCARTriggerHandler {
                 statusForCC = 'Non-Active';
         }
 
-        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Refer to ASD' : statusForCC), RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : statusForCC), RecordTypeId = FormOfPaymentRT));
         if(oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
-            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Refer to ASD' : 'Active'), RecordTypeId = FormOfPaymentRT));
-        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'BOP' : 'EP'), Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Refer to ASD' : statusForIEP), RecordTypeId = FormOfPaymentRT));
+            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : 'Active'), RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'BOP' : 'EP'), Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : statusForIEP), RecordTypeId = FormOfPaymentRT));
 
         insert authorizations;
     }
@@ -4293,19 +4293,19 @@ public class AMS_OSCARTriggerHandler {
         ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Account account = [SELECT ParentId FROM Account WHERE Id =: oscar.Account__c ];
-        List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: account.ParentId AND Status__c = 'Active' AND RecordTypeId =: FormOfPaymentRT];
+        List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: account.ParentId AND Status__c IN ('Active','Authorized') AND RecordTypeId =: FormOfPaymentRT];
         
         boolean isCCCreated = false;
-        
+
         for(Agency_Authorization__c fop: parentFormsOfPayment){
             
             if(fop.ANG_FormOfPayment_ID__c == 'CC')
                 isCCCreated = true;
 
             if(fop.ANG_FormOfPayment_ID__c == 'CC' && (oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE) && oscar.Is_PCI_compliant__c == 'No')
-                authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Refer to ASD' : 'Non-Active'), RecordTypeId = fop.RecordTypeId));
+                authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : 'Non-Active'), RecordTypeId = fop.RecordTypeId));
             else {
-                String statusForFOP = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Refer to ASD' : (oscar.Is_NewGen_Pilot__c ? 'Non-Active' : fop.Status__c));
+                String statusForFOP = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : (oscar.Is_NewGen_Pilot__c ? 'Non-Active' : fop.Status__c));
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = statusForFOP, RecordTypeId = fop.RecordTypeId));
             }
         }
@@ -4317,7 +4317,7 @@ public class AMS_OSCARTriggerHandler {
             else
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) : 'Refer to ASD' ? 'Active'), RecordTypeId = FormOfPaymentRT));
         */
-            String status = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Refer to ASD' : ((oscar.Is_PCI_compliant__c == 'No' || oscar.Is_NewGen_Pilot__c) ? 'Active' : 'Non-Active'));
+            String status = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : ((oscar.Is_PCI_compliant__c == 'No' || oscar.Is_NewGen_Pilot__c) ? 'Active' : 'Non-Active'));
             authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = status, RecordTypeId = FormOfPaymentRT));
         }
 

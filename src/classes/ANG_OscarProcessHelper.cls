@@ -1029,6 +1029,7 @@ global class ANG_OscarProcessHelper {
 			this.changedCA = false;
 			this.oldCA = null;
 			this.oldCC = null;
+			this.preventCCActivation = false;
 		}
 
 		public void addCreditCard(Agency_Authorization__c aa){

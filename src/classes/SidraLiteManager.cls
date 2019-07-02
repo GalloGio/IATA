@@ -4,6 +4,7 @@
 public with sharing class SidraLiteManager {
 
     public static Boolean BLOCK_EXECUTION = false;
+    public static Boolean runGroupSingleAgentSidraValidation = true;
 
     public static final Id RECORDTYPE_SIDRA_LITE = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final Id RECORDTYPE_SIDRA = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');

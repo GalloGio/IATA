@@ -18,6 +18,8 @@ public with sharing class ANG_ISSP_AfpWrapper {
 	public Boolean isCashFlag {get; set;}
 	public String iepModel {get; set;}
 	public Boolean isChinaAgent {get; set;}
+	public Boolean isBOPFlag {get; set;}
+	public Integer authQuantity {get; set;}
 
 	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, List<Portal_Application_Right__c> services, Account account, Boolean isSearch) {
 		this.isCash = NO;
@@ -30,6 +32,8 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.isIEPFlag = false;
 		this.isCashFlag = false;
 		this.iepModel = '';
+		this.isBOPFlag = false;
+		this.authQuantity = 0;
 
 		isChinaAgent = account.IATA_ISO_Country__r.ISO_Code__c == 'CN';
 
@@ -68,15 +72,23 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CA && !this.isCashless) {					
 					this.isCash = YES;
 					this.isCashFlag = true;
+					this.authQuantity++;
 				}
 				if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CC) {
 					this.isCreditCard = YES;
 					this.isCreditCardFlag = true;
+					this.authQuantity++;
+				}
+				if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.BOP) {
+					this.isBOPFlag = true;
+					this.authQuantity++;
 				}
 			}
 		}
 
-		if (this.iepModel == 'Banking Model') {
+		if (isChinaAgent) {
+			this.iepLink = 'https://www.dovepay.com/dovePay/default.jsp#proPay';
+		} else if (this.iepModel == 'Banking Model') {
 			this.iepLink = '#';
 			this.iepLinkLabel = Label.ANG_ISSP_IEP_ModelBanking_link;
 			this.modalErrorMessageFlag = '-';

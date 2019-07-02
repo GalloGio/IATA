@@ -1111,6 +1111,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>Annual Fees :</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ASD_HelpText</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ASD_HelpText</shortDescription>
+        <value>Please access ASD to view more details on the Remittance Holding Capacity</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_AssociateEntity</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1848,6 +1856,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature10Tooltip</shortDescription>
         <value>Quarterly Financial Review Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature11</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature11</shortDescription>
+        <value>BOP</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
@@ -27833,6 +27849,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP RHC HUB AFP Cash</shortDescription>
         <value>Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_China</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP China</shortDescription>
+        <value>Authorized Forms of Payment</value>
     </labels>
     <labels>
         <fullName>ISSP_RHC_HUB_AFP_Credit_Card</fullName>
