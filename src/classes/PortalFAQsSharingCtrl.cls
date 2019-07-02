@@ -8,8 +8,11 @@
 public without sharing class PortalFAQsSharingCtrl {
 
     PUBLIC STATIC FINAL STRING DEFAULT_METADATA_NAME = 'FAQs_DEFAULT';
+    PUBLIC STATIC FINAL STRING CNS_DEFAULT_METADATA_NAME = 'FAQs_DEFAULT_CNS';
+
     PUBLIC STATIC FINAL STRING FAQ_PERMSET_PREFIX = 'FAQ_Visibility%';
     PUBLIC STATIC FINAL STRING FAQ_PERMSET_PREFIX2 = 'FAQs_Visibility%';
+
     PRIVATE STATIC FINAL STRING UNKNOWN_VALUE = '--FAQ_UNKNOWN--';
     PRIVATE STATIC FINAL STRING ALL_VALUES = 'All';
 
@@ -61,7 +64,7 @@ public without sharing class PortalFAQsSharingCtrl {
     public static void assignFAQsPermissions(Id userId){
         Set<Id> availableSetIds = new Set<Id>();
 
-        User userInfo = [SELECT Id,AccountId,Account.Sector__c,Account.Category__c,Account.IATA_ISO_Country__c,Account.IATA_ISO_Country__r.ISO_Code__c FROM User WHERE Id =:userId];
+        User userInfo = [SELECT Id,AccountId,Account.Sector__c,Account.Category__c,Account.IATA_ISO_Country__c,Account.IATA_ISO_Country__r.ISO_Code__c,CNS_Account_or_Agency__c FROM User WHERE Id =:userId];
 
         String countryCode;
         String accountSector;
@@ -78,38 +81,56 @@ public without sharing class PortalFAQsSharingCtrl {
 
         List<PortalFAQs__mdt> settings = new List<PortalFAQs__mdt>();
 
-        //Get permission set with a matching Sector -> this value must be matched, no wildcards here.
-        Map<Id,PortalFAQs__mdt> sectorSettingsMap = new Map<Id,PortalFAQs__mdt>([
-                SELECT Permission_Set_Name__c,Account_Categories__c,Account_Sector__c,ISO_Country_Codes1__c,ISO_Country_Codes2__c,ISO_Country_Codes3__c FROM PortalFAQs__mdt WHERE Account_Sector__c = :accountSector]);
+        if(!userInfo.CNS_Account_or_Agency__c) {
+            //Get permission set with a matching Sector -> this value must be matched, no wildcards here.
+            Map<Id, PortalFAQs__mdt> sectorSettingsMap = new Map<Id, PortalFAQs__mdt>([
+                    SELECT Permission_Set_Name__c,Account_Categories__c,Account_Sector__c,ISO_Country_Codes1__c,ISO_Country_Codes2__c,ISO_Country_Codes3__c
+                    FROM PortalFAQs__mdt
+                    WHERE Account_Sector__c = :accountSector
+            ]);
 
-        if(!sectorSettingsMap.isEmpty()){
-            for(PortalFAQs__mdt setting:sectorSettingsMap.values()){
+            if (!sectorSettingsMap.isEmpty()) {
+                for (PortalFAQs__mdt setting : sectorSettingsMap.values()) {
 
-                List<String> categories = setting.Account_Categories__c != null ? setting.Account_Categories__c.split(';') : new List<String>();
-                Set<String> categorySet = new Set<String>();
-                categorySet.addAll(categories);
+                    List<String> categories = setting.Account_Categories__c != null ? setting.Account_Categories__c.split(';') : new List<String>();
+                    Set<String> categorySet = new Set<String>();
+                    categorySet.addAll(categories);
 
-                Boolean matchingCategory = categorySet.contains(accountCategory) || categorySet.contains(ALL_VALUES);
+                    Boolean matchingCategory = categorySet.contains(accountCategory) || categorySet.contains(ALL_VALUES);
 
-                //If matching category is found, check countries
-                if(matchingCategory){
-                    List<String> countries1 = setting.ISO_Country_Codes1__c != null ? setting.ISO_Country_Codes1__c.split(',') : new List<String>();
-                    List<String> countries2 = setting.ISO_Country_Codes2__c != null ? setting.ISO_Country_Codes2__c.split(',') : new List<String>();
-                    List<String> countries3 = setting.ISO_Country_Codes3__c != null ? setting.ISO_Country_Codes3__c.split(',') : new List<String>();
+                    //If matching category is found, check countries
+                    if (matchingCategory) {
+                        List<String> countries1 = setting.ISO_Country_Codes1__c != null ? setting.ISO_Country_Codes1__c.split(',') : new List<String>();
+                        List<String> countries2 = setting.ISO_Country_Codes2__c != null ? setting.ISO_Country_Codes2__c.split(',') : new List<String>();
+                        List<String> countries3 = setting.ISO_Country_Codes3__c != null ? setting.ISO_Country_Codes3__c.split(',') : new List<String>();
 
-                    Set<String> countrySet = new Set<String>();
-                    countrySet.addAll(countries1);
-                    countrySet.addAll(countries2);
-                    countrySet.addAll(countries3);
+                        Set<String> countrySet = new Set<String>();
+                        countrySet.addAll(countries1);
+                        countrySet.addAll(countries2);
+                        countrySet.addAll(countries3);
 
-                    //Country code present or a wildcard found
-                    Boolean matchingCountry = countrySet.contains(countryCode) || countrySet.contains(ALL_VALUES);
+                        //Country code present or a wildcard found
+                        Boolean matchingCountry = countrySet.contains(countryCode) || countrySet.contains(ALL_VALUES);
 
-                    //If country match found
-                    if(matchingCountry){
-                        permsetNames.add(setting.Permission_Set_Name__c);
+                        //If country match found
+                        if (matchingCountry) {
+                            permsetNames.add(setting.Permission_Set_Name__c);
+                        }
                     }
                 }
+            }
+        }
+
+        //CNS Accounts have a special setting
+        if(userInfo.CNS_Account_or_Agency__c){
+            settings = [SELECT Permission_Set_Name__c FROM PortalFAQs__mdt WHERE DeveloperName =: CNS_DEFAULT_METADATA_NAME];
+            if(!settings.isEmpty()){
+                for(PortalFAQs__mdt setting:settings){
+                    permsetNames.add(setting.Permission_Set_Name__c);
+                }
+            }else{
+                System.debug('NO FAQ PERMISSION SET TO BE ASSIGN FOR CNS ACC. Default FAQs permission set for CNS is missing.');
+                return;
             }
         }
 
