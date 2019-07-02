@@ -70,3 +70,10 @@ input[type="checkbox"] {
 .checkbox-button__control {
   transform: scale(0.75);
 }
+
+.fieldError {
+  font-size: 0.75rem;
+  color: rgb(194, 57, 52);
+  margin-left: 5px;
+  margin-top: -10px;
+}

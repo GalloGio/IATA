@@ -849,9 +849,9 @@ public static String performCheckonPoll(String permSetSSO, Integer failedCount){
 	if(!permissionSetList.isEmpty()) {
 		return 'Success';
 	} else {
-		List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed '];
+		List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
 		if(userProvisioningList.size() != failedCount) {
-			return 'Error ';
+			return 'Error';
 		}
 	}
 	return 'Incomplete';
@@ -962,7 +962,7 @@ public static void grantAccess(string contactId,string serviceId,string reason) 
 		ISSP_ContactList ctrl = new ISSP_ContactList();
 
 		//generates user active with the portal
-		ctrl.processMultiplePortalUserStatusChange(idSet, PortalServicesCtrl.PORTAL_USER_APPROVED, 'Active ');
+		ctrl.processMultiplePortalUserStatusChange(idSet, PortalServicesCtrl.PORTAL_USER_APPROVED, 'Active');
 
 	}
 	psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_GRANTED;
