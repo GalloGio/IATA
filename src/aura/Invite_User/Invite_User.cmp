@@ -30,9 +30,9 @@
     <div aura:id="container" class="slds-container--fluid">
 
 
-        <div aura:id="form" class="slds-grid slds-wrap content">
+        <div aura:id="form" class="slds-grid slds-wrap slds-size--8-of-12 content">
 
-            <div class="slds-col slds-size--8-of-12 center">
+            <div class="slds-col center slds-size--8-of-12 ">
                 <h2>Invite User</h2>
             </div>
 
@@ -44,20 +44,18 @@
             </div>
 
             <!--BACK AND VALIDATE BUTTONS-->
-            <div class="slds-grid slds-col slds-size--8-of-12 center">
+            <div class="slds-grid slds-wrap slds-col slds-size--8-of-12 center">
                 <!--LIGHTNING-->
                 <aura:if isTrue="{! v.theme == 'Theme4d'}">
 
-                    <div class="slds-col--padded slds-size-1-of-2 ">
+                    <div class="slds-col slds-size-1-of-1 text_center">
                         <lightning:button variant="base" label="Back" title="Back" onclick="{! c.back }" class="btn btn-primary btn-grey button_width right" />
-                    </div>
-                    <div class="slds-col--padded slds-size-1-of-2 ">
                         <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left" />
                     </div>
 
                     <!--NOT LIGHTNING-->
                     <aura:set attribute="else">
-                        <div class="slds-col--padded slds-size-1-of-1 text_center">
+                        <div class="slds-col--padded  text_center">
                             <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left" />
                         </div>
                     </aura:set>
@@ -67,9 +65,9 @@
             </div>
 
             <!--EMAIL EXISTS - NOTIFY USER-->
-            <div aura:id="emailExists" class="slds-hide">
+            <div aura:id="emailExists" class="center slds-size--8-of-12 slds-hide">
                 <div class="slds-col--padded slds-size--8-of-12 center">
-                    <div>{!$Label.c.OneId_Registration_UserExist}</div>
+                    <div class="text_center">{!$Label.c.GADM_User_Invitation_user_exists}</div>
                     <div class="slds-col--padded text_center">
                         <lightning:button aura:id="notifyUserButton" variant="base" label="Notify user" title="Notify user" onclick="{! c.inviteUser}" class="btn btn-primary btn-grey center" />
                     </div>
@@ -87,10 +85,10 @@
                 <div class="slds-col--padded slds-size--1-of-1">
                     <label class="slds-form-element__label">{!v.contactLabels.Salutation}</label>
                     <ui:inputSelect aura:id="salutation" class="slds-select" value="{!v.invitation.Salutation__c}" >
-                        <ui:inputSelectOption text="" label="{!$Label.c.ISSP_Registration_None}" />
-                        <ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}" />
-                        <ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}" />
-                        <ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}" />
+                        <ui:inputSelectOption text="" label="{!$Label.c.GADM_User_Invitation_none}" />
+                        <ui:inputSelectOption text="Mr." label="{!$Label.c.GADM_User_Invitation_Mr}" />
+                        <ui:inputSelectOption text="Mrs." label="{!$Label.c.GADM_User_Invitation_Mrs}" />
+                        <ui:inputSelectOption text="Ms." label="{!$Label.c.GADM_User_Invitation_Ms}" />
                     </ui:inputSelect>
                 </div>
                 <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
@@ -104,7 +102,7 @@
                 </div>
 
                 <div class="slds-col--padded slds-size--1-of-1">
-                    <label class="slds-form-element__label">{!$Label.c.ISSP_Registration_JobTitle}</label>
+                    <label class="slds-form-element__label">{!$Label.c.GADM_User_Invitation_job_title}</label>
                     <ui:inputText aura:id="title" value="{!v.invitation.Job_Title__c}" class="slds-input" />
                 </div>
                 <div class="slds-col--padded slds-size--1-of-1">
@@ -115,7 +113,7 @@
                         </aura:iteration>
                     </ui:inputSelect>
                     <ul aura:id="jobHelp inblock">
-                        <li class="slds-form-element__help inblock">{!$Label.c.OneId_JobFunction_Help_Msg}</li>
+                        <li class="slds-form-element__help inblock">{!$Label.c.GADM_User_Invitation_job_function_help_text}</li>
                     </ul>
                 </div>
 

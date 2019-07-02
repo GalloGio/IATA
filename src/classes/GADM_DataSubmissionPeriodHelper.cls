@@ -255,7 +255,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
         Map<Id, Id> upcomingPeriodAccounts = getActorsBySubmisionPeriod(upcomingPeriods);
         Map<Id, Id> inDuePeriodAccounts = getActorsBySubmisionPeriod(inDuePeriods);
-        system.debug(inDuePeriodAccounts);
+
         Map<String, List<NotificationWrapper>> contactToBeNotifiedWrapperMap = new Map<String, List<NotificationWrapper>>();
 
         Map<Id, List<Id>> inDuePeriodsWithAccounts = new Map<Id, List<Id>>();
@@ -458,12 +458,12 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
                 Date sDate = period.Start_Date__c;
                 Date periodStartDate = sDate.toStartOfMonth();
-                Date comparedDate = dateToCompare;//.addDays(-1);
+                Date comparedDate = dateToCompare;
                 Integer monthsCount = periodStartDate.monthsBetween(comparedDate) + 1;
-                system.debug(monthsCount);
+
 
                 integer monthsToRemove = (math.mod(monthsCount,(integer)period.Period_Length__c) <> 0) ? 0 : 1;
-                system.debug(monthsToRemove);
+
                 CurrentPeriodStart = period.Start_Date__c.addMonths((integer)(period.Period_Length__c*((integer)(monthsCount/period.Period_Length__c )- monthsToRemove)));
                 CurrentPeriodEnd = period.Start_Date__c.addMonths((integer)(period.Period_Length__c*((integer)(monthsCount/period.Period_Length__c )- monthsToRemove))+(Integer)period.Period_Length__c).addDays(-1);
 
@@ -505,18 +505,6 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
                 Integer endDayNext = (integer)period.Submission_Cycle_End_Day__c > numberOfDaysEndNext ? numberOfDaysEndNext : (integer)period.Submission_Cycle_End_Day__c;
                 NextSubmissionCycleStart =  date.newInstance(startDateNext.year(), startDateNext.month(), startDayNext);
                 NextSubmissionCycleEnd =  date.newInstance(endDateNext.year(), endDateNext.month(), endDayNext);
-
-                system.debug('Current');
-                system.debug(CurrentPeriodStart);
-                system.debug(CurrentPeriodEnd);
-
-                system.debug('Prev');
-                system.debug(PreviousSubmissionCycleStart);
-                system.debug(PreviousSubmissionCycleEnd);
-
-                system.debug('Next');
-                system.debug(NextSubmissionCycleStart);
-                system.debug(NextSubmissionCycleEnd);
 
                 Date upcomingDate = CurrentSubmissionCycleStart.addDays((integer)period.Upcoming_Notification__c*-1);
                 Date dueDate = CurrentSubmissionCycleEnd.addDays((integer)period.In_Due_Notification__c *-1);

@@ -4732,6 +4732,55 @@ You can choose one or more of the following topics:</value>
         <value>GADM Power User</value>
     </labels>
     <labels>
+        <fullName>GADM_User_Invitation_Mr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Mr</shortDescription>
+        <value>Mr.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_Mrs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Mrs</shortDescription>
+        <value>Mrs.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_Ms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Ms</shortDescription>
+        <value>Ms.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_job_function_help_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_job_function_help_text</shortDescription>
+        <value>*Select all functions that apply</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_job_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_job_title</shortDescription>
+        <value>Job Function</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_none</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_none</shortDescription>
+        <value>-None-</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_user_exists</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_user_exist</shortDescription>
+        <value>This Email is already registered with us.</value>
+    </labels>
+    <labels>
         <fullName>GADM_User_Management_actor_not_available</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4765,6 +4814,13 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>GADM_User_Management_gadm_user_domain_blocked</shortDescription>
         <value>User can not be activated for main account as user email domain does not match with allowed email domains for this actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_no_records</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Management no records</shortDescription>
+        <value>No records to display.</value>
     </labels>
     <labels>
         <fullName>GADM_User_Management_role_not_editable</fullName>

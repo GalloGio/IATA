@@ -84,7 +84,11 @@
                         this.retrieveTotalRecords(component);
                         this.retrieveRecords(component, true);
                     }else{
-                        //GADM Data Submission role is denied - show empty table
+                        //no date returned
+                        let table = component.find('table');
+                        if(! $A.util.isEmpty(table)) {
+                           $A.util.addClass(table, 'empty_table');
+                        }
                         this.toggleSpinner(component);
                         this.toggleTable(component);
                     }

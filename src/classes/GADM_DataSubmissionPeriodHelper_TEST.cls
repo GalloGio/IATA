@@ -117,7 +117,6 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         submissionPeriod.Upcoming_Notification__c = 3;
         submissionPeriod.In_Due_Notification__c = 2;
         submissionPeriod.Start_Date__c = startDate;
-        submissionPeriod.TestDate__c = testDate;
         insert submissionPeriod;
 
         GADM_Data_Submission_Period__c submissionPeriod2 = new GADM_Data_Submission_Period__c();
@@ -130,7 +129,6 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         submissionPeriod2.Upcoming_Notification__c = 3;
         submissionPeriod2.In_Due_Notification__c = 0;
         submissionPeriod2.Start_Date__c = startDate;
-        submissionPeriod2.TestDate__c = testDate;
         insert submissionPeriod2;
 
         GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
@@ -175,6 +173,18 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         contactRoles4.Name = 'GADM Data Submitter';
         contactRoles4.RecordTypeId = externalRecordTypeId;
         contactRolesToInsert.add(contactRoles4);
+
+        Contact_Roles__c contactRoles5 = new Contact_Roles__c();
+        contactRoles5.Name = 'Security';
+        contactRoles5.RecordTypeId = externalRecordTypeId;
+        contactRoles5.Category__c = 'Business Unit';
+        contactRolesToInsert.add(contactRoles5);
+
+        Contact_Roles__c contactRoles6 = new Contact_Roles__c();
+        contactRoles6.Name = 'Ground';
+        contactRoles6.RecordTypeId = externalRecordTypeId;
+        contactRoles6.Category__c = 'Business Unit';
+        contactRolesToInsert.add(contactRoles6);
 
         insert contactRolesToInsert;
 
@@ -255,13 +265,13 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         accountContactRole6.RecordTypeId = groupRecordTypeId;
         accountContactRolesToInsert.add(accountContactRole6);
 
-        Account_Contact_Role__c accountContactRole2x = new Account_Contact_Role__c();
-        accountContactRole2x.Contact__c = testContact2.Id;
-        accountContactRole2x.Contact_Roles__c = contactRoles.Id;
-        accountContactRole2x.Account_Role__c = accountRole.Id;
-        accountContactRole2x.Service_Rendered__c = 'GADM';
-        accountContactRole2x.RecordTypeId = functionalRecordTypeId;
-        accountContactRolesToInsert.add(accountContactRole2x);
+        Account_Contact_Role__c accountContactRole7 = new Account_Contact_Role__c();
+        accountContactRole7.Contact__c = testContact2.Id;
+        accountContactRole7.Contact_Roles__c = contactRoles5.Id;
+        accountContactRole7.Account_Role__c = accountRole.Id;
+        accountContactRole7.Service_Rendered__c = 'GADM';
+        accountContactRole7.RecordTypeId = groupRecordTypeId;
+        accountContactRolesToInsert.add(accountContactRole7);
 
         //for testUser3
         Account_Contact_Role__c accountContactRole3 = new Account_Contact_Role__c();
@@ -287,6 +297,14 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         accountContactRole4.Service_Rendered__c = 'GADM';
         accountContactRole4.RecordTypeId = functionalRecordTypeId;
         accountContactRolesToInsert.add(accountContactRole4);
+
+        Account_Contact_Role__c accountContactRole5 = new Account_Contact_Role__c();
+        accountContactRole5.Contact__c = testContact3.Id;
+        accountContactRole5.Contact_Roles__c = contactRoles4.Id;
+        accountContactRole5.Account_Role__c = accountRole2.Id;
+        accountContactRole5.Service_Rendered__c = 'GADM';
+        accountContactRole5.RecordTypeId = functionalRecordTypeId;
+        accountContactRolesToInsert.add(accountContactRole5);
 
 
         insert accountContactRolesToInsert;
@@ -331,28 +349,21 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         serviceAccess3c.Status__c = 'Granted';
         contactRoleServiceAccessesToInsert.add(serviceAccess3c);
 
-        Contact_Role_Service_Access__c serviceAccess2x = new Contact_Role_Service_Access__c();
-        serviceAccess2x.Contact_Role__c = accountContactRole2x.Id;
-        serviceAccess2x.Service__c = portalApplications.Id;
-        serviceAccess2x.Status__c = 'Granted';
-        contactRoleServiceAccessesToInsert.add(serviceAccess2x);
+        Contact_Role_Service_Access__c serviceAccess4 = new Contact_Role_Service_Access__c();
+        serviceAccess4.Contact_Role__c = accountContactRole7.Id;
+        serviceAccess4.Service__c = portalApplications.Id;
+        serviceAccess4.Status__c = 'Granted';
+        contactRoleServiceAccessesToInsert.add(serviceAccess4);
+
+        Contact_Role_Service_Access__c serviceAccess5 = new Contact_Role_Service_Access__c();
+        serviceAccess5.Contact_Role__c = accountContactRole5.Id;
+        serviceAccess5.Service__c = portalApplications.Id;
+        serviceAccess5.Status__c = 'Granted';
+        contactRoleServiceAccessesToInsert.add(serviceAccess5);
 
         insert contactRoleServiceAccessesToInsert;
 
-        Date today2 = Date.today();
-        Date testDate2 = Date.newInstance(today2.year(), 4, 4);
 
-        Data_Submission__c dataSubmission = new Data_Submission__c();
-        dataSubmission.Account__c = acc.Id;
-        dataSubmission.Original_User__c = testUser.Id;
-        dataSubmission.Submitter__c = testUser.Id;
-        dataSubmission.Type__c = 'Submission';
-        dataSubmission.Status__c = 'Data Submission Error';
-        dataSubmission.Submission_date__c = testDate2;
-
-        insert dataSubmission;
-
-        Test.setCreatedDate(dataSubmission.Id, testDate2);
 
     }
 
@@ -387,16 +398,32 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         testUser.Username = testContact.Email;
         testUser.PortalRole = 'Manager';
         testUser.CommunityNickname = (testContact.FirstName + testContact.LastName).substring(0,8);
-        testUser.ProfileId = profileId; //ISSP_Constant.TEST_User_ProfileID;
+        testUser.ProfileId = profileId;
         testUser.IsActive = true;
         insert testUser;
         return testUser;
     }
 
+    private static List<String> getPicklistValues(String ObjectApi_name,String Field_name) {
+
+        List<String> lstPickvals = new List<String>();
+        Schema.SObjectType targetType = Schema.getGlobalDescribe().get(ObjectApi_name);
+        Sobject Object_name = targetType.newSObject();
+        Schema.sObjectType sobject_type = Object_name.getSObjectType();
+        Schema.DescribeSObjectResult sobject_describe = sobject_type.getDescribe();
+        Map<String, Schema.SObjectField> field_map = sobject_describe.fields.getMap();
+        List<Schema.PicklistEntry> pick_list_values = field_map.get(Field_name).getDescribe().getPickListValues();
+        for (Schema.PicklistEntry a : pick_list_values) {
+            lstPickvals.add(a.getValue());
+        }
+
+        return lstPickvals;
+    }
+
 
 
     @IsTest
-    private static void isSubmissionOnTime_positiveTest1() {
+    private static void isSubmissionOnTime_positiveTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
         GADM_Data_Submission_Period__c testPeriod = [SELECT Id FROM GADM_Data_Submission_Period__c WHERE Name = 'Test'];
@@ -471,7 +498,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         System.assertEquals(1, timesSent, 'Email should be sent!');
 
     }
-	
+
     @IsTest
     private static void notifyContacts_UpcomingTest() {
 
@@ -500,23 +527,40 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         System.assertEquals(1, timesSent, 'Email should be sent!');
 
     }
-	@IsTest
-    private static void notifyContacts_UpcomingTest2() {
 
-        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
-		User testUser2 = [SELECT Id, ContactId FROM User WHERE Email = 'Leo.Black.test@somedomain.com'];
+
+    @IsTest
+    private static void notifyContacts_withDataSubmissionsTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'leo.black.test@somedomain.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account 2'];
+
+        List<String> statusValues = getPicklistValues('Data_Submission__c', 'Status__c');
+        List<String> typeValues = getPicklistValues('Data_Submission__c', 'Type__c');
 
         Date today = Date.today();
-        Date testDate = Date.newInstance(today.year(), 3, 29);
+        Date submissionDate = Date.newInstance(today.year(), 4, 5);
 
+        Data_Submission__c dataSubmission = new Data_Submission__c();
+        dataSubmission.Account__c = testAccount.Id;
+        dataSubmission.Submission_date__c = submissionDate;
+        dataSubmission.External_Actor_Id__c = 'ExtTestId002';
+        dataSubmission.Original_User__c = testUser.Id;
+        dataSubmission.Submitter__c = testUser.Id;
+        dataSubmission.Status__c = statusValues[0];
+        dataSubmission.Type__c = typeValues[0];
+
+        insert dataSubmission;
+
+        Test.setCreatedDate(dataSubmission.Id, submissionDate);
+
+        Date testDate = Date.newInstance(today.year(), 4, 8);
 
         String result = '';
         Integer timesSent = 0;
 
         Test.startTest();
-		List<Contact_Role_Service_Access__c> gadmUser = [Select Id FROM Contact_Role_Service_Access__c WHERE Contact_Roles_Name__c = 'GADM Data Submitter'];
-        delete gadmUser;
-        
+
         System.runAs(testUser) {
 
             result = GADM_DataSubmissionPeriodHelper.notifyContacts(testDate);
@@ -530,4 +574,5 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         System.assertEquals(1, timesSent, 'Email should be sent!');
 
     }
+
 }

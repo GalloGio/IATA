@@ -129,7 +129,7 @@
                                 <tr>
                                     <td colspan="{!if(v.SelectionColumn, v.TableColumns.length+1, v.TableColumns.length)}">
                                         <div class="slds-p-around--small slds-align--absolute-center">
-                                            No records to display.
+                                            {! $Label.c.GADM_User_Management_no_records}
                                         </div>
                                     </td>
                                 </tr>

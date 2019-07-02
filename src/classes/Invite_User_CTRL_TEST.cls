@@ -320,6 +320,38 @@ public class Invite_User_CTRL_TEST {
 
     }
 
+    @IsTest
+    private static void invitationWithInvitation2Test() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account 1'];
+
+        Invitation__c invitation = new Invitation__c();
+        invitation.AccountId__c = testAccount.Id;
+        invitation.Email__c = 'some.name@some.domain.com';
+        invitation.Last_Name__c = 'Dehausenknopf';
+        invitation.First_Name__c = 'Frederik';
+
+        Integer count = 0;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            String invitationString = JSON.serialize(invitation);
+
+            Invite_User_CTRL.sendInvitation(null, invitationString);
+
+            count = Limits.getEmailInvocations();
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(1, count, 'Invitation emails should be sent!');
+
+    }
+
 
 
     @IsTest

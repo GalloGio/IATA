@@ -78,7 +78,7 @@
 
 
                     <div class="slds-card__body">
-                        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered/*slds-table--bordered slds-table--fixed-layout slds-table--cell-buffer*/">
+                        <table  aura:id="table" class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered/*slds-table--bordered slds-table--fixed-layout slds-table--cell-buffer*/">
                             <colgroup>
                                 <col class="firstColumn "/>
                                 <col class="secondColumn "/>
