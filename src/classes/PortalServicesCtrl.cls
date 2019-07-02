@@ -75,7 +75,7 @@ public static List<Portal_Application_Right__c> getUsersFavoriteServicesList(Str
 	                    'Portal_Application__r.New_Window__c, Right__c, Portal_Application__r.Application_icon_URL__c, ' +
 	                    'Portal_Application__r.Name, Portal_Application__c, My_Apps__c, Contact__c, ' +
 	                    'Application_Start_URL__c,Technical_Provisioning_Status__c, Case_creation_record_Type__c, ' +
-	                    'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c, Portal_Application__r.ServiceName__c  ' +
+	                    'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c  ' +
 	                    'FROM Portal_Application_Right__c ' +
 	                    'WHERE (Contact__c = \'' + contactId + '\' AND '+
 	                    '   Right__c = \'Access Granted\' AND ' +
