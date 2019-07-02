@@ -453,4 +453,36 @@ private class ANG_MulticountryHelperTest {
 		Test.stopTest();
 
 	}
+
+
+    @isTest static void testGEAccreditationWithoutRequestFinancialSecurityStep() {
+
+        AMS_ChangeCodes__c changeCodeCustomsettings = new AMS_ChangeCodes__c(Name = 'FIN-AMS', Change_Code__c = 'FIN', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C');
+        insert changeCodeCustomsettings;
+
+        Account accountGE = [SELECT Id, ParentId, Name FROM Account WHERE Name IN ('Multicountry GE PT') Limit 1];
+
+        accountGE.IATACode__c = '12345678';
+        update accountGE;
+
+        AMS_Oscar__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_MCAE, Account__c = accountGE.Id, STEP6__c = AMS_Utils.PASSED, Process__c = AMS_Utils.NEWGESTANDARD);
+
+        insert oscar;
+
+        Test.startTest();
+
+        oscar.STEP10__c = AMS_Utils.PASSED;
+        oscar.Validation_Status__c = AMS_Utils.PASSED;
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        try{
+            update oscar;
+        }catch(Exception ex){
+            Boolean expectedExceptionThrown = ex.getMessage().contains('Approval can\'t be set if Request financial security step is not Passed.');
+            System.assert(expectedExceptionThrown,'Should throw ' +  ex.getMessage());
+        }
+
+        Test.stopTest();
+    }
+
+
 }

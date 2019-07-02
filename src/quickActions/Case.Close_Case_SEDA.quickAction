@@ -71,7 +71,7 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>BSPCountry__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -96,6 +96,11 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Effective_time_spent__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Support_Evaluation_Grade__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>

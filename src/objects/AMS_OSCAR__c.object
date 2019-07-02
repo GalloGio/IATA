@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AIMS_updated__c</fullName>
         <externalId>false</externalId>
@@ -1698,6 +1699,17 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Change_of_Entity_Location_within_EU__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field related to the scenario of an accredited agency relocating in a different BSP, but within European Union</description>
+        <externalId>false</externalId>
+        <label>Change of Entity Location within EU</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Change_of_location_type_behavior__c</fullName>
         <description>This field is only applicable when the OSCAR is opened on an SA Account. It&apos;s used to define the behavior in terms of hierarchy change, that will be applied to the SA Account.</description>
         <externalId>false</externalId>
@@ -3202,8 +3214,8 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <fields>
         <fullName>Notification_days__c</fullName>
         <externalId>false</externalId>
-        <formula>if(DGR_Expiry_Date__c - today() &gt; 60,&quot;90&quot;,
-if(DGR_Expiry_Date__c - today() &gt; 30,&quot;60&quot;,
+        <formula>if(DGR_Expiry_Date__c - today() &gt; 62,&quot;90&quot;,
+if(DGR_Expiry_Date__c - today() &gt; 32,&quot;60&quot;,
 if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Notification days</label>

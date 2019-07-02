@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>La lista de instituciones financieras que ofrecen seguro de Garantía Financiera en su país</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7936,6 +7940,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>Recuerde: Al copiar la información de propiedad en una agencia, se borrará toda la información de propiedad previa de la agencia destino.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>-- Seleccionar país -</label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -9716,6 +9724,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>Seleccionar las cuentas destino</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>* Entidades asociadas seleccionadas</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9734,6 +9746,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>Comunidad autónoma/Provincia</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -11126,6 +11142,22 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>Verificando...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>Esta acción le permite copiar los datos de propiedad desde esta cuenta a las ubicaciones elegidas y pertenecientes a su jerarquía. Podrá visualizar los cambios aplicados por esta acción en las agencias destino, únicamente tras la Confirmación de actualización de todos los datos de esta página.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>Agencias procesadas</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>Copiar Trámite de la propiedad</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>Haga clic aquí para continuar con el cumplimiento con la PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -12099,6 +12131,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Cerrado</label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label>Dirección</label>
@@ -13184,6 +13220,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>GSA (General Sales and Service Agent)</label>
         <name>ISSP_GSSA</name>
+    </customLabels>
+    <customLabels>
+        <label>Con la inclusión, los proveedores del sector (p. ej., compañías aéreas, hoteles y operadores turísticos) podrán distribuir mensajes importantes a su agencia respecto a sus políticas de agencias y ventas, promociones y productos.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
         <label>No General Public Account was found matching your search criteria. Please click on â€œNextâ€ to return to login page.</label>
@@ -14979,8 +15019,16 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>Los cambios, a excepción de la GDP Opt-in, deben hacerse a través del proceso de Revalidación Anual</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label>- Seleccionar país -</label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>-Seleccione comunidad autónoma-</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label>2 o más</label>

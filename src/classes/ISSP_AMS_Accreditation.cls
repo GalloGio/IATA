@@ -267,6 +267,22 @@ public without sharing class ISSP_AMS_Accreditation {
     public String optInOutSuccessMessage {get; set;}
     public String optInOutBtn {get; set;}
     public String optInOutErrorNoDate {get; set;}
+	
+	//this checks if there's an open Annual Revalidation case on the user's account
+    public Boolean revCaseOpen {
+        get{
+            List<Case> revCases = [SELECT Id 
+                                FROM Case 
+                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                    AND Reason1__c = 'Annual revalidation' 
+                                    AND Status != 'Closed' 
+                                    AND Status != 'Closed_Rejected' 
+                                    AND Status != 'Closed_Withdrawn'];
+            
+            return !revCases.isEmpty();
+        } 	
+		set;
+    }
 
     public List<SelectOption> countryList {
         get {
@@ -7209,9 +7225,23 @@ public without sharing class ISSP_AMS_Accreditation {
                 break;
             }
         }
-        
-        if (isScopeOfChangeChanged || countAccreditationContact.isEmpty() || ((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE) && notToAdd == true)) {
-            List<AMS_Accreditation_Contact__c> lstAccreditationContact = new List<AMS_Accreditation_Contact__c>();
+        if (isScopeOfChangeChanged || countAccreditationContact.size() == 0 || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD  && notToAdd == true)) {
+            List<AMS_Account_Role__c> amsOwners = [SELECT Account__c,Active__c,
+                Employee_Name__c,Employee_type__c,Id,
+                Owner_Account__c,Owner_Account__r.Name,Owner_Account__r.IATACode__c,Owner_Account__r.Email__c,
+                Owner_Name__c,Percentage__c,
+                Position__c,RecordTypeId,Title__c,Valid__c,
+                Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
+                Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
+                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
+                Legacy_External_ID__c
+                FROM AMS_Account_Role__c
+                where Account__c = :lAccountConcerned
+                and RecordTypeId = :rtAccRoleOwnership
+                and Active__c = true
+                and Percentage__c > 0];
+
+            for(AMS_Account_Role__c accRole : amsOwners){
 
             for(AMS_Account_Role__c accRole: [SELECT Account__c, Active__c, Employee_Name__c, Employee_type__c, Id, Owner_Account__c,
                                                     Owner_Account__r.Name, Owner_Account__r.IATACode__c, Owner_Account__r.Email__c, Owner_Name__c, 
@@ -7260,6 +7290,7 @@ public without sharing class ISSP_AMS_Accreditation {
             auxAccreditCont.AddressCity__c = accRole.Contact__r.OtherCity;
             auxAccreditCont.AddressPostcode__c = accRole.Contact__r.OtherPostalCode;
             auxAccreditCont.AddressCountry__c = accRole.Contact__r.OtherCountry;
+            auxAccreditCont.AddressState__c = accRole.Contact__r.OtherState;
 
         } else if (accRole.Person__c != null) {//Check if owner is PERSON
             auxAccreditCont.First_name__c = accRole.Person__r.First_Name__c;
