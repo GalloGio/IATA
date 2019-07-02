@@ -917,6 +917,76 @@ case (CX_Overall_Satisfaction__c , &quot;Very satisfied&quot;, 1, &quot;Somewhat
         </valueSet>
     </fields>
     <fields>
+        <fullName>Process_product_Satisfaction__c</fullName>
+        <description>Rating on process/product satisfaction by customer</description>
+        <externalId>false</externalId>
+        <label>Process/product Satisfaction</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Reason__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT(Relationship_to_Case__r.Reason1__c )</formula>
@@ -2444,6 +2514,13 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Process_product_Satisfaction__c</picklist>
+            <values>
+                <fullName>0</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Relevance_of_explanations__c</picklist>
             <values>
                 <fullName>Somewhat dissatisfied</fullName>
@@ -2859,6 +2936,53 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
             </values>
             <values>
                 <fullName>Very satisfied</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Process_product_Satisfaction__c</picklist>
+            <values>
+                <fullName>0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3796,6 +3920,53 @@ case(CX_Quality_of_CSR__c,&quot;Very Satisfied&quot;,1,&quot;Somewhat Satisfied&
             </values>
             <values>
                 <fullName>Very satisfied</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Process_product_Satisfaction__c</picklist>
+            <values>
+                <fullName>0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

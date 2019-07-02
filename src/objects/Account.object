@@ -10456,6 +10456,15 @@ WSPN-Worldspan</inlineHelpText>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Global_ID__c</fullName>
+        <description>global unique identifier</description>
+        <displayFormat>001{0000000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
         <fullName>Guaranteed_amount__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
@@ -26044,6 +26053,18 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <group>IATAGulfArea</group>
             <group>IDFSAfricaMERegionalOffice</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Org_Account_Hierarchy</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>ACCOUNT.INDUSTRY</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>Org_Account_Hierarchy</label>
     </listViews>
     <listViews>
         <fullName>OthersuppliersEurope</fullName>
@@ -77937,7 +77958,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypes>
         <fullName>Others</fullName>
         <active>true</active>
-        <description>The new record type for TIESS, Non IATA agents, Partners - NEW data model</description>
+        <description>Use only for non-airline, non-agency accounts, that you have verified.</description>
         <label>Others</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
@@ -83864,7 +83885,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypes>
         <fullName>Standard_Account</fullName>
         <active>true</active>
-        <description>New Record Type to be used for standard account</description>
+        <description>Use for all other accounts.</description>
         <label>Standard Account</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
