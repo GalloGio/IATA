@@ -33,23 +33,8 @@ export default class PortalMyProfilePage extends LightningElement {
 
         this.refreshview();
 
-        getFieldsMap({ type: 'MyProfileAccFields' }).then(result => {
-
-            this.sectionMapAccount = JSON.parse(JSON.stringify(result));
-
-            let sectionMap = this.sectionMapAccount;
-
-            let localMap = [];
-            for (let key in this.sectionMapAccount) {
-                if (sectionMap.hasOwnProperty(key)) {
-                    let value = sectionMap[key];
-                    localMap.push({ 'value': value, 'key': key });
-                }
-            }
-
-            this.mapOfValuesAccount = localMap;
-
-        });
+        /* Hide business contact section for now*/
+        //this.getBusinessContact();
 
         getServices().then(result => {
             this.services = result;
@@ -132,6 +117,24 @@ export default class PortalMyProfilePage extends LightningElement {
         this.timeout = setTimeout(function () {
             this.handleScrolling = true;
         }.bind(this), 1000);
+    }
+
+    getBusinessContact(){
+        getFieldsMap({ type: 'MyProfileAccFields' }).then(result => {
+            this.sectionMapAccount = JSON.parse(JSON.stringify(result));
+
+            let sectionMap = this.sectionMapAccount;
+
+            let localMap = [];
+            for (let key in this.sectionMapAccount) {
+                if (sectionMap.hasOwnProperty(key)) {
+                    let value = sectionMap[key];
+                    localMap.push({ 'value': value, 'key': key });
+                }
+            }
+
+            this.mapOfValuesAccount = localMap;
+        });
     }
 
 }
