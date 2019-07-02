@@ -14,6 +14,8 @@ import Invoice_Contact from '@salesforce/label/c.CSP_cpcc_Invoice_Contact';
 import Authorised_Signatory from '@salesforce/label/c.CSP_cpcc_Authorised_Signatory';
 import BSP_CASS_Payment_Contact from '@salesforce/label/c.CSP_cpcc_BSP_CASS_Payment_Contact';
 import Agent_Credit_Risk from '@salesforce/label/c.CSP_cpcc_Agent_Credit_Risk';
+import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
+import completeField from '@salesforce/label/c.CSP_Create_Contact_Complete_Field';
 
 
 export default class PortalProfileCustomBox extends LightningElement {
@@ -22,13 +24,36 @@ export default class PortalProfileCustomBox extends LightningElement {
     @api recordId;
     @api objectId;
     @api objectName;
-    @api fieldsList = [];
+
+    @api
+    get fieldsList() {
+        return this.trackedFieldsList === undefined ? [] : this.trackedFieldsList;
+    }
+
+    set fieldsList(value) {
+        let fieldsListAux = JSON.parse(JSON.stringify(value));
+        fieldsListAux.forEach(function (item) {
+            item.class = item.fieldName + ' labelValue textValue';
+            item.hasError = false;
+        });
+
+        this.trackedFieldsList = fieldsListAux;
+    }
+
+    @track trackedFieldsList = [];
 
     @track options = [];
     @track selectedvalues = [];
 
     @track isLoading = true;
     @track userType = 'Approved User';
+
+    @track errorFieds = ['Email', 'Phone'];
+    @track errorMessage = '';
+
+    @track checkNumbers = ['Phone', 'MobilePhone'];
+
+    @track canSave = true;
 
     @track
     _labels = {
@@ -42,7 +67,9 @@ export default class PortalProfileCustomBox extends LightningElement {
         Invoice_Contact,
         Authorised_Signatory,
         BSP_CASS_Payment_Contact,
-        Agent_Credit_Risk
+        Agent_Credit_Risk,
+        InvalidValue,
+        completeField
     };
 
     get labels() {
@@ -53,18 +80,17 @@ export default class PortalProfileCustomBox extends LightningElement {
         this._labels = value;
     }
 
+    @track numberHasError = false;
+    @track errorfieldsHasError = false;
+
     // LABEL
     @track contactTypeStatus = [{ checked: false, label: this.labels.Portal_Administrator, APINAME: "PortalAdmin" },
-    { checked: false, label: this.labels.Financial_Assessment_Contact, APINAME: "Financial_Assessment_Contact__c" },
     { checked: false, label: this.labels.Invoice_Contact, APINAME: "Invoicing_Contact__c" },
     { checked: false, label: this.labels.Authorised_Signatory, APINAME: "Authorized_Signatory__c" },
     { checked: false, label: this.labels.BSP_CASS_Payment_Contact, APINAME: "BSP_CASS_Payment_contact__c" },
     { checked: false, label: this.labels.Agent_Credit_Risk, APINAME: "Airline_Credit_Risk_Manager__c" }];
 
-
-
     connectedCallback() {
-
         getPickListValues({ sobj: 'Contact', field: 'Membership_Function__c' }).then(result => {
             this.options = result;
         });
@@ -171,10 +197,23 @@ export default class PortalProfileCustomBox extends LightningElement {
         fields.Membership_Function__c = selected;
         fields.User_Portal_Status__c = this.userType;
 
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
+        if (!fields.Email && !fields.Phone) {
+            this.checkErrorOnErrorFields('', true);
+        }
+
+        let numberError = this.numberHasError;
+        let fieldError = this.errorfieldsHasError;
+
+        this.canSave = (numberError || fieldError ? false : true);
+
+        if (this.canSave) {
+            this.template.querySelector('lightning-record-edit-form').submit(fields);
+        }
+
     }
 
     handleSuccess(event) {
+
         let contact = JSON.parse(JSON.stringify(event.detail));
         let res;
         createUserForContact({ contactId: contact.id, portalStatus: contact.fields.User_Portal_Status__c.value, oldPortalStatus: '' }).then(result => {
@@ -186,8 +225,129 @@ export default class PortalProfileCustomBox extends LightningElement {
     }
 
     handleError(event) {
-        console.log('ERROR!');
         this.isLoading = false;
     }
 
+    checkValue(event) {
+        let currentField = JSON.parse(JSON.stringify(event.target.dataset.field));
+        this.checkSave(currentField, false);
+    }
+
+    checkSave(currentField, forcePass) {
+        this.checkErrorOnErrorFields(currentField, forcePass);
+        this.checkIfNumberHasErrors(currentField);
+    }
+
+    checkErrorOnErrorFields(currentField, forcePass) {
+        let isErrorField = JSON.parse(JSON.stringify(this.errorFieds));
+        let isErrorfieldError = false;
+        let errorMessage = '';
+        if (isErrorField.includes(currentField) || forcePass) {
+            let emailCheck = this.template.querySelector('.Email').value;
+            let phoneCheck = this.template.querySelector('.Phone').value;
+
+            if (emailCheck || phoneCheck) {
+                this.template.querySelector('.Email').classList.remove('slds-has-error');
+                this.template.querySelector('.Phone').classList.remove('slds-has-error');
+                errorMessage = '';
+            } else {
+                this.template.querySelector('.Email').classList.add('slds-has-error');
+                this.template.querySelector('.Phone').classList.add('slds-has-error');
+                errorMessage = this._labels.completeField;
+            }
+
+            let fieldsListAux = JSON.parse(JSON.stringify(this.trackedFieldsList));
+            let toCheck = JSON.parse(JSON.stringify(this.errorFieds));
+            fieldsListAux.forEach(function (item) {
+                if (toCheck.includes(item.fieldName)) {
+                    item.hasError = (emailCheck || phoneCheck ? false : true);
+                    item.errorToDisplay = errorMessage;
+                }
+            });
+            this.trackedFieldsList = fieldsListAux;
+            isErrorfieldError = (emailCheck || phoneCheck ? false : true);
+        }
+
+        this.errorfieldsHasError = isErrorfieldError;
+
+    }
+
+    checkIfNumberHasErrors(currentField) {
+        let isNumberType = JSON.parse(JSON.stringify(this.checkNumbers));
+        let isNumberError = false;
+        let errorMessage = '';
+        let phoneRegex = /[^0-9+]|(?!^)\+/g;
+
+        if (isNumberType.includes(currentField)) {
+
+            let fieldToCheck = '.' + currentField;
+            let value = this.template.querySelector(fieldToCheck).value;
+            let inputValue = value.replace(/ /g, '');
+            let isPhone = !phoneRegex.test(inputValue);
+
+            if (inputValue.length > 0) {
+                if (!isPhone) {
+                    this.template.querySelector(fieldToCheck).classList.add('slds-has-error');
+                    isNumberError = true;
+                    errorMessage = this._labels.InvalidValue;
+                } else {
+                    this.template.querySelector(fieldToCheck).classList.remove('slds-has-error');
+                    isNumberError = false;
+                    errorMessage = '';
+                }
+            } else if (currentField === 'Phone' && this.template.querySelector('.Email').value.length === 0) {
+                this.template.querySelector(fieldToCheck).classList.add('slds-has-error');
+                isNumberError = true;
+                errorMessage = this._labels.completeField;
+            } else {
+                this.template.querySelector(fieldToCheck).classList.remove('slds-has-error');
+                isNumberError = false;
+                errorMessage = '';
+            }
+
+            let fieldsListAux = JSON.parse(JSON.stringify(this.trackedFieldsList));
+
+            fieldsListAux.forEach(function (item) {
+                if (item.fieldName === currentField) {
+                    item.hasError = isNumberError;
+                    item.errorToDisplay = errorMessage;
+                }
+            });
+            this.trackedFieldsList = fieldsListAux;
+
+        } else if (currentField === 'Email') {
+            if (this.template.querySelector('.Phone').value.length > 0) {
+
+                let value = this.template.querySelector('.Phone').value;
+                let inputValue = value.replace(/ /g, '');
+                let isPhone = !phoneRegex.test(inputValue);
+                if (!isPhone) {
+                    this.template.querySelector('.Phone').classList.add('slds-has-error');
+                    isNumberError = true;
+                    errorMessage = this._labels.InvalidValue;
+                } else {
+                    this.template.querySelector('.Phone').classList.remove('slds-has-error');
+                    isNumberError = false;
+                    errorMessage = '';
+                }
+
+                let fieldsListAux = JSON.parse(JSON.stringify(this.trackedFieldsList));
+
+                fieldsListAux.forEach(function (item) {
+                    if (item.fieldName === 'Phone') {
+                        item.hasError = isNumberError;
+                        item.errorToDisplay = errorMessage;
+                    }
+                });
+                this.trackedFieldsList = fieldsListAux;
+
+            }
+
+        }
+
+
+
+        this.numberHasError = isNumberError;
+
+    }
 }
