@@ -64,16 +64,16 @@ public without sharing class PortalFAQsSharingCtrl {
     public static void assignFAQsPermissions(Id userId){
         Set<Id> availableSetIds = new Set<Id>();
 
-        User userInfo = [SELECT Id,AccountId,Account.Sector__c,Account.Category__c,Account.IATA_ISO_Country__c,Account.IATA_ISO_Country__r.ISO_Code__c,CNS_Account_or_Agency__c FROM User WHERE Id =:userId];
+        User userInfo = [SELECT Id,contact.AccountId,contact.Account.Sector__c,contact.Account.Category__c,contact.Account.IATA_ISO_Country__c,contact.Account.IATA_ISO_Country__r.ISO_Code__c,CNS_Account_or_Agency__c FROM User WHERE Id =:userId];
 
         String countryCode;
         String accountSector;
         String accountCategory;
 
         if(userInfo.AccountId != null){
-            countryCode = userInfo.Account.IATA_ISO_Country__c != null ? userInfo.Account.IATA_ISO_Country__r.ISO_Code__c : UNKNOWN_VALUE;
-            accountSector = userInfo.Account.Sector__c  != null ? userInfo.Account.Sector__c : UNKNOWN_VALUE;
-            accountCategory = userInfo.Account.Category__c != null ? userInfo.Account.Category__c : UNKNOWN_VALUE;
+            countryCode = userInfo.contact.Account.IATA_ISO_Country__c != null ? userInfo.contact.Account.IATA_ISO_Country__r.ISO_Code__c : UNKNOWN_VALUE;
+            accountSector = userInfo.contact.Account.Sector__c  != null ? userInfo.contact.Account.Sector__c : UNKNOWN_VALUE;
+            accountCategory = userInfo.contact.Account.Category__c != null ? userInfo.contact.Account.Category__c : UNKNOWN_VALUE;
         }
 
 
