@@ -1,0 +1,2 @@
+Dear {!Contact.Name}
+Role {!Contact_Role_Service_Access__c.Contact_Roles_Name__c} status has been changed to {!Contact_Role_Service_Access__c.Status__c}.

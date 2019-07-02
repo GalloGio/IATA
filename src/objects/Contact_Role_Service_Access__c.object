@@ -166,6 +166,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Service_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Service__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -314,4 +325,15 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
+    <webLinks>
+        <fullName>TEST</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>TEST</masterLabel>
+        <openType>noSidebar</openType>
+        <page>TEST</page>
+        <protected>false</protected>
+    </webLinks>
 </CustomObject>

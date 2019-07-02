@@ -6,6 +6,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         IATA_ISO_Country__c canada = createIataCountry('Canada', 'CA', 'Canada');
         Account testAccount = createTestAccount('Test Account', canada);
         Contact testContact = createTestContact(testAccount, 'testContactRoleServiceAccessTrigger@test.com');
+        Contact testContact2 = createTestContact(testAccount, 'testContactRoleServiceAccessTrigger2@test.com');
         User testUser = createTestUser(testContact);
 
 
@@ -50,6 +51,20 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         serviceAccess.Service__c = portalApplications.Id;
         serviceAccess.Status__c = 'Pending';
         insert serviceAccess;
+
+        Account_Contact_Role__c accountContactRole2 = new Account_Contact_Role__c();
+        accountContactRole2.Contact__c = testContact2.Id;
+        accountContactRole2.Contact_Roles__c = contactRoles.Id;
+        accountContactRole2.Account_Role__c = accountRole.Id;
+        accountContactRole2.Service_Rendered__c = 'GADM';
+        insert accountContactRole2;
+
+        //role GADM User is pending
+        Contact_Role_Service_Access__c serviceAccess2 = new Contact_Role_Service_Access__c();
+        serviceAccess2.Contact_Role__c = accountContactRole2.Id;
+        serviceAccess2.Service__c = portalApplications.Id;
+        serviceAccess2.Status__c = 'Pending';
+        insert serviceAccess2;
 
     }
 
@@ -246,7 +261,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
 
         String errorMessage = '';
         //setup inserts only one Contact_Role_Service_Access__c object
-        Contact_Role_Service_Access__c serviceAccessesOrig = [SELECT Id, Status__c, Service__c, Contact_Role__c, UniqueKey__c FROM Contact_Role_Service_Access__c];
+        Contact_Role_Service_Access__c serviceAccessesOrig = [SELECT Id, Status__c, Service__c, Contact_Role__c, UniqueKey__c FROM Contact_Role_Service_Access__c LIMIT 1];
 
         //create new Contact_Role_Service_Access__c with different Service__c -> allowed
         Contact_Role_Service_Access__c contactRoleServiceAccess = new Contact_Role_Service_Access__c();
@@ -315,4 +330,34 @@ public class ContactRoleServiceAccessTriggerHandlTest {
 
     }
 
+    @IsTest
+    private static void sendNotificationOnStatusChange() {
+
+        List<Contact> contacts = [SELECT Id FROM Contact];//testContact
+        List<Account> accounts = [SELECT Id FROM Account];//testAccount
+
+        Test.startTest();
+
+        List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Account__c, Contact__c, Status__c FROM Contact_Role_Service_Access__c];
+        accesses[0].Status__c = 'Granted';
+        update  accesses[0];
+
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void usersNotifiedOnStatusChange() {
+
+        List<Contact> contacts = [SELECT Id FROM Contact];//testContact
+        List<Account> accounts = [SELECT Id FROM Account];//testAccount
+
+        Test.startTest();
+
+        List<Contact_Role_Service_Access__c> accesses = [SELECT Id, Contact_Roles_Name__c, Account__c, Contact__c, Status__c FROM Contact_Role_Service_Access__c];
+        accesses[0].Status__c = 'Granted';
+        accesses[1].Status__c = 'Granted';
+        List<ContactRoleServiceAccessTriggerHandler.NotificationWrapper> wrappers = ContactRoleServiceAccessTriggerHandler.notifyUserAboutStatusChange(accesses);
+        system.assertEquals(wrappers.size(), 2);
+        Test.stopTest();
+    }
 }

@@ -1,4 +1,4 @@
-trigger Contact_Role_Service_Access_Trigger on Contact_Role_Service_Access__c (before insert, before update) {
+trigger Contact_Role_Service_Access_Trigger on Contact_Role_Service_Access__c (before insert, before update, after update) {
 
     ContactRoleServiceAccessTriggerHandler triggerHandler = new ContactRoleServiceAccessTriggerHandler();
 
@@ -12,5 +12,7 @@ trigger Contact_Role_Service_Access_Trigger on Contact_Role_Service_Access__c (b
         triggerHandler.OnBeforeUpdate(Trigger.Old, Trigger.New, Trigger.oldMap);
     }
 
-
+    if(Trigger.isUpdate && Trigger.isAfter){
+        ContactRoleServiceAccessTriggerHandler.notifyUserAboutStatusChange(Trigger.oldMap, Trigger.new);
+    }
 }
