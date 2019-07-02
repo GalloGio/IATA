@@ -33,6 +33,7 @@ private class ISSP_CurrCenterReportingActionsCtrlTest {
             Portal_Application_Right__c portalAppRight = new Portal_Application_Right__c(Portal_Application__c = currencyCenter.Id, Contact__c = portalUser.ContactId, Right__c= 'Access Granted');
             insert portalAppRight ;
             ISSP_CurrencyCenterReportingActionsCtrl ctrl = new ISSP_CurrencyCenterReportingActionsCtrl();
+            ctrl.updateAppRight();
         }
         
         test.stopTest();
