@@ -69,7 +69,7 @@ import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsReque
 
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
-    
+
     //exposed labels
     @track label = {
         newServiceRequestlb,
@@ -109,7 +109,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         csp_TDP_ServiceRequest_MediumLabel1,
         csp_TDP_ServiceRequest_MediumLabel2,
         csp_TD_ServiceRequest_TopLabel,
-        csp_NoPortalServiceNameFound,
         ISSP_Registration_MyInformation,
         ISSP_Company_Administration,
         csp_RequestService_ContactSupport
@@ -192,7 +191,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track ICCSOpenAccount = false;
     @track ICCSRoleChangeConfirm = false;
     @track showICCSRoleSelection = false;
-    @track ICCSRoleSelectionModal = false;
+    @track ICCSsuccessModal = false;
     @track ICCSRole;
     @track ICCSOpenAccountModal = false;
     @track acceptSSWSConditions = false;
@@ -297,10 +296,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         else if (userOptions.IEP_Status !== 'In Progress' && userOptions.IEP_Status !== 'No IEP Account'
                             && userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved Admin') {
-                                let string1 = this.label.csp_RequestService_ContactSupport;
-                                let link0 = window.location.toString().replace('/services', '');
-                                let link1 = link0 + '/support-reach-us';
-                                this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string1.link(link1));
+                            let string1 = this.label.csp_RequestService_ContactSupport;
+                            let link0 = window.location.toString().replace('/services', '');
+                            let link1 = link0 + '/support-reach-us';
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string1.link(link1));
                         }
                     });
             }
@@ -485,7 +484,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.showSpinner = false;
                 if (this.ICCSRole !== undefined && this.ICSSRole !== '') {
                     this.ICCSMessage = false;
-                    this.ICCSRoleSelectionModal = true;
+                    this.ICCSsuccessModal = true;
                     this.showButtons = false;
                 }
 
@@ -508,8 +507,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.ICCSMessage = false;
                 this.showButtons = false;
 
-                if (results === 'okauto') {
-                    this.ICCSRoleSelectionModal = true;
+                if (results === 'okauto' || results === 'ok') {
+                    this.ICCSsuccessModal = true;
                 }
             });
     }
@@ -527,7 +526,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.SSWSMessage = false;
                 this.showButtons = false;
 
-                if (results === 'okauto') {
+                if (results === 'okauto' || results === 'ok') {
                     this.SSWSSuccessModal = true;
                 }
             });
@@ -545,7 +544,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.showSpinner = false;
                 this.TDMessage = false;
                 this.showButtons = false;
-                if (results === 'ok') {
+                if (results === 'okauto' || results === 'ok') {
                     this.TDSuccessModal = true;
                 }
             });
@@ -688,7 +687,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 
 
- 
+
 
 
     handleSubmitRequest() {

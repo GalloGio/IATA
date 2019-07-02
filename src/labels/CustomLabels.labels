@@ -7170,7 +7170,7 @@ After verification, if all documents are compliant, you will receive a confirmat
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ICCS Service Access Granted Message</shortDescription>
-        <value>&lt;b&gt;Access granted&lt;br/&gt;You can now create a registration case in the&amp;nbsp;&lt;apex:outputLink value=&quot;/ISSP_ICCS_Service&quot;&gt;ICCS Service&lt;/apex:outputLink&gt;&lt;/b&gt;</value>
+        <value>&lt;b&gt;Access granted&lt;/b&gt;&lt;br/&gt;You can now create a registration case in the&amp;nbsp;&lt;apex:outputLink value=&quot;/ISSP_ICCS_Service&quot;&gt;ICCS Service&lt;/apex:outputLink&gt;</value>
     </labels>
     <labels>
         <fullName>ICCS_Service_Access_Granted_Title</fullName>
@@ -34654,6 +34654,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Contact Support</value>
+    </labels>
+    <labels>
+        <fullName>csp_InvalidPhoneValue</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_InvalidPhoneValue</shortDescription>
+        <value>Invalid number format.</value>
     </labels>
     <labels>
         <fullName>csp_IsEmergency</fullName>
