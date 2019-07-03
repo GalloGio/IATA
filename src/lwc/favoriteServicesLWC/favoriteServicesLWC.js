@@ -45,6 +45,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                 
                 //removes undefined from images
                 for (let i = 0; i < this.auxResult.length; i++) {
+                    this.auxResult[i].serviceName=this.auxResult[i].Portal_Application__r.ServiceName__c===undefined?this.auxResult[i].PortalServiceTranslatedName__c:this.auxResult[i].Portal_Application__r.ServiceName__c;
                     if (this.auxResult[i].Portal_Application__r === undefined || this.auxResult[i].Portal_Application__r.Application_icon_URL__c === undefined) {
                         this.auxResult[i].Portal_Application__r.Application_icon_URL__c = '';
                     }
