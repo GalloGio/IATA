@@ -15,7 +15,9 @@ public class portalServiceException extends Exception {}
 public static List<Portal_Applications__c> getNonRequestableServicesList(String contactId){
 
 	Set<String> allowedLocTypes = new Set<String>{'HO', 'HE', 'AO', 'GE'};
-	Contact con = [Select id, account.Sector__c, account.Location_Type__c, contact.account.Category__c from Contact where id =:contactId];
+	Contact con = [Select id, account.Sector__c, account.Location_Type__c, contact.account.Category__c,
+	               User_Portal_Status__c, Financial_Assessment_Contact__c,
+	               Account.RecordTypeId, Account.Is_Branch_Abroad__c, Account.Status__c from Contact where id =:contactId];
 
 	List<Portal_Applications__c> externalLinksList = new List<Portal_Applications__c>();
 	List<Portal_Applications__c> portalApplicationList = new List<Portal_Applications__c>();
