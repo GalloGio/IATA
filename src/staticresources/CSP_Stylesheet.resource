@@ -1,34 +1,3 @@
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_XBd.ttf') format("truetype");
-    font-weight: 700;
-	font-style: normal;
-}
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_Bd.ttf') format("truetype");
-    font-weight: 600;
-	font-style: normal;
-}
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_Md.ttf') format("truetype");
-    font-weight: 500;
-	font-style: normal;
-}
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_Rg.ttf') format("truetype");
-    font-weight: 400;
-	font-style: normal;
-}
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_Th.ttf') format("truetype");
-    font-weight: 300;
-	font-style: normal;
-}
-
 body {
     background-color: #f0f2f5;
     /*font-weight: 300;*/
@@ -378,25 +347,19 @@ body {
 
 
 /* ############################################## */
-/* Table classes */
+/* Table header */
 lightning-datatable .slds-th__action {
   text-transform: capitalize;
   font-size: 14px;
 }
-.Closed lightning-primitive-cell-wrapper lightning-formatted-text{
-    background-color: #ffa499;
-    padding: 4px 6px 2px 6px;
-    border-radius: 1px;
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: 500;
-    color: #525252;
-    display: flex;
-    align-items: center;
-    vertical-align: middle;
-}
 
-.In lightning-primitive-cell-wrapper lightning-formatted-text{
+/* Cases table status styles*/
+.Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Escalated lightning-primitive-cell-wrapper lightning-formatted-text, .EscalatedInternally lightning-primitive-cell-wrapper lightning-formatted-text, 
+.EscalatedExternally lightning-primitive-cell-wrapper lightning-formatted-text, .ForReviewandAcceptance lightning-primitive-cell-wrapper lightning-formatted-text, 
+.OnHoldExternal lightning-primitive-cell-wrapper lightning-formatted-text, .OnHoldInternal lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Reopen lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedNotAccepted lightning-primitive-cell-wrapper lightning-formatted-text, 
+.InputRequested lightning-primitive-cell-wrapper lightning-formatted-text, .PendingReconsideration lightning-primitive-cell-wrapper lightning-formatted-text{
     background-color: #fac832;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -409,8 +372,38 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 
-.Escalated lightning-primitive-cell-wrapper lightning-formatted-text{
+.Pendingcustomer lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedRejected lightning-primitive-cell-wrapper lightning-formatted-text, 
+.ClosedDisapproved lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedWithdrawn lightning-primitive-cell-wrapper lightning-formatted-text, 
+.AcceptedPendingBG lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedPendingDocs lightning-primitive-cell-wrapper lightning-formatted-text, 
+.AcceptedPendingAgreement lightning-primitive-cell-wrapper lightning-formatted-text, .Returnapplicationtocustomer lightning-primitive-cell-wrapper lightning-formatted-text{
+    background-color: #ffa499;
+    padding: 4px 6px 2px 6px;
+    border-radius: 1px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 500;
+    color: #525252;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Submitted lightning-primitive-cell-wrapper lightning-formatted-text{
     background-color: #b1e8b5;
+    padding: 4px 6px 2px 6px;
+    border-radius: 1px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 500;
+    color: #525252;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text{
+    background-color: #f0f2f5;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
     text-transform: uppercase;
@@ -1263,10 +1256,6 @@ lightning-datatable .slds-th__action {
     display:none;
 }
 
-.invalidValue input, .invalidValue textArea{
-    box-shadow: 0px 0px 4px 1px rgba(255, 0, 0, 1) !important;
-}
-
 .textValue .slds-form-element__legend{
     display:none;
 }
@@ -1433,4 +1422,58 @@ visibility: hidden;
 /*Used to limit the height of the dropdownlist*/
 .customDropDownMaxHeight .slds-dropdown_length-with-icon-10 {
     max-height: calc(10rem);
+}
+
+/* header */
+.headerButtonNotifications {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
+  width: 24px;
+  height: 24px;
+}
+
+.headerButtonProfile {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonSupport {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonService {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonArrow {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonSearch {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
 }

@@ -1,9 +1,13 @@
 import { LightningElement, track } from 'lwc';
+
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
+
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 
 export default class PortalCasesListPageHeader extends LightningElement {
     @track label = { CSP_Cases };
-    backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
+    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
     @track imageInfo;
 
     connectedCallback() {

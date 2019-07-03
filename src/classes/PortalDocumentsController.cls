@@ -10,7 +10,7 @@ public with sharing class PortalDocumentsController {
     * @return PagedResult
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getSearchDocuments(String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage) {
+    public static PagedResult getSearchDocuments(String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage, String docId) {
         String UserPortalStatus;
         String UserPortalCountry;
         String UserPortalRegion;
@@ -112,6 +112,7 @@ public with sharing class PortalDocumentsController {
         if(String.isNotBlank(category)) queryConditions += ' AND Document_Category__c LIKE \'%'+ String.escapeSingleQuotes(category) +'%\'';
         if(String.isNotBlank(prodCat)) queryConditions += ' AND Product_Category__c LIKE \'%'+ String.escapeSingleQuotes(prodCat) +'%\'';
         if(String.isNotBlank(publiCountry)) queryConditions += ' AND Country_of_publication__c includes (\''+ String.escapeSingleQuotes(publiCountry) +'\')';
+        if(String.isNotBlank(docId)) queryConditions += ' AND Id = \''+ String.escapeSingleQuotes(docId) +'\'';
 
         queryConditions += ' AND User_status_access__c includes (\''+ String.escapeSingleQuotes(UserPortalStatus) +'\')'+
                     ' AND ((ContentDocumentId IN: DocIds_set'+
@@ -135,33 +136,11 @@ public with sharing class PortalDocumentsController {
             }
         }
 
-        List<ContentVersion> documentsToReturn = sortContentVersions(contents, UserPortalCountry, UserPortalRegion);
-
-        List<CSP_Utils.PickListWrapper> categoryPicklist = CSP_Utils.getPickListValues('ContentVersion', 'Document_Category__c');
-
-        Set<String> categoryLabel = new Set<String>();
-        for(CSP_Utils.PickListWrapper pklst : categoryPicklist) {
-            categoryLabel.add(pklst.label);
-        }
-
-        Map<String, Integer> docsByCategory = new Map<String, Integer>();
-        for(ContentVersion docs : documentsToReturn) {
-            if(categoryLabel.contains(docs.Document_Category__c)) {
-                if(!docsByCategory.containsKey(docs.Document_Category__c)) {
-                    docsByCategory.put(docs.Document_Category__c, Database.countQuery('SELECT COUNT() FROM ContentVersion' + queryConditions + ' AND Document_Category__c LIKE \'%'+ String.escapeSingleQuotes(docs.Document_Category__c) +'%\''));
-                    continue;
-                }
-            }
-        }
-
-        System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] docsByCategory - ' + docsByCategory);
-
         result = new PagedResult();
-        if(Integer.valueOf(requestedPage) == 0) {
+        if(requestedPage == 0) {
             result.totalItemCount = Database.countQuery('SELECT COUNT() FROM ContentVersion' + queryConditions);
         }
-        result.documentsMap = docsByCategory;
-        result.records = documentsToReturn;
+        result.records = sortContentVersions(contents, UserPortalCountry, UserPortalRegion);
 
         return result;
     }
@@ -243,7 +222,5 @@ public with sharing class PortalDocumentsController {
         public Integer totalItemCount { get;set; }       
         @AuraEnabled
         public SObject[] records { get;set; }
-        @AuraEnabled
-        Map<String, Integer> documentsMap { get;set; }
     }    
 }

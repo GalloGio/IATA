@@ -23,12 +23,20 @@ import csp_Footer_Legal_URL from '@salesforce/label/c.csp_Footer_Legal_URL';
 import csp_Footer_Privacy_URL from '@salesforce/label/c.csp_Footer_Privacy_URL';
 import csp_Footer_IataStore_URL from '@salesforce/label/c.csp_Footer_IataStore_URL';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalFooter extends LightningElement {
     @track selectedLang = 'en_US';
     @track langOptions = [];
     @track chagingLang = false;
     @track loadingLangs = true;
     @track userId = userId;
+
+    iataLogo = CSP_PortalPath + 'CSPortal/Images/Logo/logo-group-white.svg';
+    facebookIcon = CSP_PortalPath + 'CSPortal/Images/Icons/facebook-icon.svg';
+    twitterIcon = CSP_PortalPath + 'CSPortal/Images/Icons/twitter-icon.svg';
+    linkedinIcon = CSP_PortalPath + 'CSPortal/Images/Icons/linkedin-icon.svg';
+    youtubeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youtube-icon.svg';
 
     @wire(getRecord, { recordId: "$userId", fields: ['User.LanguageLocaleKey'] })
     getUserLang(result) {
@@ -104,11 +112,11 @@ export default class PortalFooter extends LightningElement {
     }
 
     navigateToSupport() {
-        navigateToPage("/csportal/s/support");
+        navigateToPage(CSP_PortalPath + "support");
     }
 
     navigateToServices() {
-        navigateToPage("/csportal/s/services");
+        navigateToPage(CSP_PortalPath +"services");
     }
 
     navigateToIataStore() {

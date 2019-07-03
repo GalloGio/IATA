@@ -20,6 +20,7 @@ import CSP_Cancel from '@salesforce/label/c.CSP_Cancel';
 import csp_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
 import CSP_SearchFAQ from '@salesforce/label/c.CSP_SearchFAQ';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalFAQArticleAccordion extends NavigationMixin(LightningElement) {
     label = {
@@ -48,7 +49,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     @track counter;
     @track renderConfirmation = false;
     @track searchText;
-    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
+    searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
 
     @api
     get topic() {
