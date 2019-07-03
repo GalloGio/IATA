@@ -10,21 +10,13 @@ import newServiceAccessConfirmMsglb from '@salesforce/label/c.csp_ServiceAccessC
 import newServiceRequestConfirmMsglb from '@salesforce/label/c.csp_ServiceRequestConfirm';
 import confirmedRequestMsglb from '@salesforce/label/c.CSP_Confirmed_Requested_Service_Message';
 import goToServiceslb from '@salesforce/label/c.CSP_Services_GoToServices';
-import csp_RequestService_ContactPortalAdmin_LegalAuth from '@salesforce/label/c.csp_RequestService_ContactPortalAdmin_LegalAuth';
-import csp_RequestService_ContactPortalAdmin_Alt from '@salesforce/label/c.csp_RequestService_ContactPortalAdmin_Alt';
-import csp_RequestService_ProceedIEPAccountOpen from '@salesforce/label/c.csp_RequestService_ProceedIEPAccountOpen';
-import csp_RequestService_IEPAccountOpenInProgress from '@salesforce/label/c.csp_RequestService_IEPAccountOpenInProgress';
 import ANG_ISSP_ConfirmRequestIEP_1 from '@salesforce/label/c.ANG_ISSP_ConfirmRequestIEP_1';
-import csp_AgencyReadOnly from '@salesforce/label/c.csp_AgencyReadOnly';
 import ANG_ISSP_ConfirmRequestIEP_2 from '@salesforce/label/c.ANG_ISSP_ConfirmRequestIEP_2';
 import ANG_ISSP_PORTAL_SERVICE_ROLE from '@salesforce/label/c.ANG_ISSP_PORTAL_SERVICE_ROLE';
 import ISSP_ANG_Portal_Role_AgencyReadOnly from '@salesforce/label/c.ISSP_ANG_Portal_Role_AgencyReadOnly';
 import ISSP_ANG_Portal_Role_TicketIssuer from '@salesforce/label/c.ISSP_ANG_Portal_Role_TicketIssuer';
 import ISSP_ANG_Portal_Role_MasterWalletManager from '@salesforce/label/c.ISSP_ANG_Portal_Role_MasterWalletManager';
 import ISSP_ANG_Portal_Role_IEPAdmin from '@salesforce/label/c.ISSP_ANG_Portal_Role_IEPAdmin';
-import csp_MasterWalletManager from '@salesforce/label/c.csp_MasterWalletManager';
-import csp_TicketIssuer from '@salesforce/label/c.csp_TicketIssuer';
-import csp_IEPAdmin from '@salesforce/label/c.csp_IEPAdmin';
 import ANG_ISSP_PortalRoleErrorMessage from '@salesforce/label/c.ANG_ISSP_PortalRoleErrorMessage';
 import ANG_ISSP_UserProvisioningWait from '@salesforce/label/c.ANG_ISSP_UserProvisioningWait';
 import ANG_ISSP_Open_IATA_EasyPay_Account from '@salesforce/label/c.ANG_ISSP_Open_IATA_EasyPay_Account';
@@ -42,9 +34,22 @@ import csp_TDP_ServiceRequest_TopLabel from '@salesforce/label/c.csp_TDP_Service
 import csp_TDP_ServiceRequest_MediumLabel1 from '@salesforce/label/c.csp_TDP_ServiceRequest_MediumLabel1';
 import csp_TDP_ServiceRequest_MediumLabel2 from '@salesforce/label/c.csp_TDP_ServiceRequest_MediumLabel2';
 import csp_TD_ServiceRequest_TopLabel from '@salesforce/label/c.csp_TD_ServiceRequest_TopLabel';
+import csp_RequestService_ContactPortalAdmin_LegalAuth from '@salesforce/label/c.csp_RequestService_ContactPortalAdmin_LegalAuth';
+import csp_RequestService_ProceedIEPAccountOpen from '@salesforce/label/c.csp_RequestService_ProceedIEPAccountOpen';
+import csp_MasterWalletManager from '@salesforce/label/c.csp_MasterWalletManager';
+import csp_TicketIssuer from '@salesforce/label/c.csp_TicketIssuer';
+import csp_IEPAdmin from '@salesforce/label/c.csp_IEPAdmin';
+import csp_RequestService_ContactPortalAdmin_Alt from '@salesforce/label/c.csp_RequestService_ContactPortalAdmin_Alt';
+import csp_RequestService_IEPAccountOpenInProgress from '@salesforce/label/c.csp_RequestService_IEPAccountOpenInProgress';
+import csp_NoPortalServiceNameFound from '@salesforce/label/c.csp_NoPortalServiceNameFound';
+import csp_AgencyReadOnly from '@salesforce/label/c.csp_AgencyReadOnly';
 import ISSP_Registration_MyInformation from '@salesforce/label/c.ISSP_Registration_MyInformation';
 import ISSP_Company_Administration from '@salesforce/label/c.ISSP_Company_Administration';
 import csp_RequestService_ContactSupport from '@salesforce/label/c.csp_RequestService_ContactSupport';
+import Button_Cancel from '@salesforce/label/c.Button_Cancel';
+import IDCard_Confirm_Replacement from '@salesforce/label/c.IDCard_Confirm_Replacement';
+import csp_TimeoutIEP from '@salesforce/label/c.csp_TimeoutIEP';
+
 
 
 //import navigation methods
@@ -109,9 +114,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         csp_TDP_ServiceRequest_MediumLabel1,
         csp_TDP_ServiceRequest_MediumLabel2,
         csp_TD_ServiceRequest_TopLabel,
+        csp_NoPortalServiceNameFound,
         ISSP_Registration_MyInformation,
         ISSP_Company_Administration,
-        csp_RequestService_ContactSupport
+        csp_RequestService_ContactSupport,
+        Button_Cancel,
+        IDCard_Confirm_Replacement,
+        csp_TimeoutIEP
 
     };
 
@@ -159,10 +168,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     get confirmMessage() {
         if (this.isAdmin) {
-
-            return this.label.newServiceRequestConfirmMsglb.replace('{0}', this.serviceFullName);
+            return this.label.newServiceAccessConfirmMsglb.replace('{0}', this.serviceFullName);
         }
-        return this.label.newServiceAccessConfirmMsglb.replace('{0}', this.serviceFullName);
+        return this.label.newServiceRequestConfirmMsglb.replace('{0}', this.serviceFullName);
     }
 
     @track trackedServiceId;
@@ -173,42 +181,58 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track showPopUp = false;
     @track showSpinner = false;
     @track defaultMessage = true;
-    @track IEPMessage = false;
-    @track IATARequestConfirm = false;
-    @track IEPOptionalMessages;
-    @track IEPIntroOptionalMessages;
-    @track IEPRoleChangeConfirm = false;
     @track AgencyReadOnly = false;
     @track TicketIssuer = false;
     @track MasterWalletManager = false;
     @track IEPAdmin = false;
     @track showRoleSelection = false;
-    @track IEPOpenAccount = false;
     @track IEPOpenAccountModal = false;
-    @track IEPRoleSelectionModal = false;
+    @track IEPRoleSuccessModal = false;
     @track ICCSMessage = false;
-    @track ICCSOptionalMessages;
-    @track ICCSOpenAccount = false;
-    @track ICCSRoleChangeConfirm = false;
     @track showICCSRoleSelection = false;
     @track ICCSsuccessModal = false;
-    @track ICCSRole;
     @track ICCSOpenAccountModal = false;
-    @track acceptSSWSConditions = false;
     @track SSWSSuccessModal = false;
     @track TDMessage = false;
-    @track TDOptionalMessages;
-    @track acceptTDConditions = false;
     @track SSWSMessage = false;
     @track showButtons = false;
     @track TDSuccessModal = false;
+    @track ShowIEPIntroMessage = false;
+    @track IEPIntroOptionalMessages;
+    @track IEPOptionalMessages;
+    @track ICCSOptionalMessages;
+    @track TDOptionalMessages;
     @track ICCSSuccessMessage;
     @track SSWSSuccessMessage;
     @track defaultPortalUserRole = [];
     @track roleICCSList = [];
-    @track radioOption;
+    @track radioOption = '';
     @track roleList;
 
+    //tracks ICCSRole
+    @track ICCSRole;
+
+    //tracks visibility of intro modal
+
+    //tracks visibility of 
+
+    //tracks visibility of buttons
+    @track IEPRoleChangeButton = false;
+    @track IEPOpenAccountButton = false;
+    @track DefaultRequestButton = true;
+    @track ICCSOpenAccount = false;
+    @track ICCSRoleChangeConfirm = false;
+    @track acceptSSWSConditions = false;
+    @track acceptTDConditions = false;
+
+    //tracks visibility of modals
+    @track ShowIEPModal = false;
+    @track ShowICCSModal = false;
+    @track ShowSSWSModal = false;
+    @track ShowTDModal = false;
+
+    //tracks loading message IEP
+    @track loadingMessage = '';
 
     serviceDetailsResult;
     userContactId;
@@ -217,7 +241,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     permSetSSO;
     IATA_IEP_RadioButtons;
     timeoutLimit = 18;
-    timeoutCounter;
+    timeoutCounter = 0;
 
     @track isAdmin = false;
     @track serviceName = '';
@@ -232,17 +256,26 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     connectedCallback() {
         this.popUpHandler();
-        //this.submitMessage= this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
 
+        //this.submitMessage= this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
     }
 
     popUpHandler() {
-        if (this.serviceName !== undefined && this.serviceName !== '') {
+        if (this.serviceName) {
+            this.ShowIEPModal = false;
+            this.ShowICCSModal = false;
+            this.ShowSSWSModal = false;
+            this.TDSuccessModal = false;
+            this.ShowTDModal = false;
+            this.showButtons = true;
+            this.ShowIEPIntroMessage = false;
+            this.DefaultRequestButton = true;
             if (this.serviceName.includes('IATA EasyPay')) {
+                this.ShowIEPModal = true;
                 this.defaultMessage = false;
                 this.showRoleSelection = false;
-                //stays true for any IATA EasyPay PopUp
-                this.IEPMessage = true;
+                this.ShowIEPIntroMessage = true;
+                this.DefaultRequestButton = false;
                 this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
                 getUserOptions({ portalUser: this.userID })
                     .then(result => {
@@ -251,11 +284,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                             this.userContactId = userOptions.User_ContactId;
                         }
                         if (userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved User') {
-                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth;
+                            let string3 = this.label.csp_RequestService_ContactSupport;
+                            let link0 = window.location.toString().replace('/services', '');
+                            let link3 = link0 + '/support-reach-us';
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string3.link(link3));
                         }
                         else if (userOptions.IEP_Status === 'Open' && (userOptions.Legal_Auth_Signature === 'false' || userOptions.Legal_Auth_Signature === 'true')
                             && (userOptions.User_Portal_Status === 'Approved User' || userOptions.User_Portal_Status === 'Approved Admin')) {
-                            this.IEPRoleChangeConfirm = true;
+                            this.IEPRoleChangeButton = true;
                             this.showRoleSelection = true;
                             this.IEPIntroOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_1;
                             this.IEPOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_2;
@@ -266,6 +302,15 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                                         this.roleList = this.roleList.filter(obj => obj.Connected_App__c === 'IATA EasyPay (EDENRED)');
                                         for (const item of this.roleList) {
                                             if (item.Connected_App__c === 'IATA EasyPay (EDENRED)') {
+                                                let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
+                                                item.label = this.label[newlabel];
+                                            }
+                                        }
+                                    }
+                                    else if (this.serviceFullName === 'IATA EasyPay (MSTS)') {
+                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === 'IATA EasyPay (MSTS)');
+                                        for (const item of this.roleList) {
+                                            if (item.Connected_App__c === 'IATA EasyPay (MSTS)') {
                                                 let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
                                                 item.label = this.label[newlabel];
                                             }
@@ -284,10 +329,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                             let string3 = this.label.csp_RequestService_ContactSupport;
                             let link3 = link0 + '/support-reach-us';
                             this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_Alt.replace('{0}', string1.link(link1)).replace('{1}', string2.link(link2)).replace('{2}', string3.link(link3));
+
                         }
                         else if (userOptions.IEP_Status === 'No IEP Account' && userOptions.User_Portal_Status === 'Approved Admin'
                             && userOptions.Legal_Auth_Signature === 'true') {
-                            this.IEPOpenAccount = true;
+                            this.IEPOpenAccountButton = true;
                             this.IEPOptionalMessages = this.label.csp_RequestService_ProceedIEPAccountOpen;
                         }
                         else if (userOptions.IEP_Status === 'In Progress' && userOptions.User_Portal_Status === 'Approved Admin'
@@ -296,18 +342,20 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         }
                         else if (userOptions.IEP_Status !== 'In Progress' && userOptions.IEP_Status !== 'No IEP Account'
                             && userOptions.IEP_Status !== 'Open' && userOptions.User_Portal_Status === 'Approved Admin') {
-                            let string1 = this.label.csp_RequestService_ContactSupport;
+                            let string3 = this.label.csp_RequestService_ContactSupport;
                             let link0 = window.location.toString().replace('/services', '');
-                            let link1 = link0 + '/support-reach-us';
-                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string1.link(link1));
+                            let link3 = link0 + '/support-reach-us';
+                            this.IEPOptionalMessages = this.label.csp_RequestService_ContactPortalAdmin_LegalAuth.replace('{0}', string3.link(link3));
+
                         }
                     });
             }
             else if (this.serviceName.includes('ICCS')) {
                 this.ICCSMessage = true;
+                this.ShowICCSModal = true;
+                this.DefaultRequestButton = false;
                 this.defaultMessage = false;
                 this.showRoleSelection = false;
-                this.showButtons = true;
                 this.IEPIntroOptionalMessages = this.label.newServiceRequestlb;
                 getUserOptions({ portalUser: this.userID })
                     .then(result => {
@@ -347,7 +395,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.defaultMessage = false;
                 //stays true for any IATA EasyPay PopUp
                 this.SSWSMessage = true;
-                this.showButtons = true;
+                this.ShowSSWSModal = true;
+                this.DefaultRequestButton = false;
+
                 getUserOptions({ portalUser: this.userID })
                     .then(result => {
                         let userOptions = JSON.parse(JSON.stringify(result));
@@ -363,9 +413,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             else if (this.serviceName.includes('Treasury Dashboard')) {
                 this.defaultMessage = false;
                 //stays true for any IATA EasyPay PopUp
+                this.ShowTDModal = true;
                 this.TDMessage = true;
-                this.showButtons = true;
+                this.DefaultRequestButton = false;
                 this.acceptTDConditions = true;
+
                 getUserOptions({ portalUser: this.userID })
                     .then(result => {
                         let userOptions = JSON.parse(JSON.stringify(result));
@@ -407,15 +459,19 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             );
         }
         else {
-            this.IEPMessage = false;
-            this.IEPRoleSelectionModal = true;
+            this.ShowIEPIntroMessage = false;
+            this.showButtons = false;
+            this.IEPRoleSuccessModal = true;
+            this.showRoleSelection = false;
             this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.radioOption, false, '');
         }
     }
 
     openIEPAccount() {
-        this.IEPMessage = false;
         this.IEPOpenAccountModal = true;
+        this.ShowIEPIntroMessage = false;
+        this.showButtons = false;
+        this.loadingMessage = this.label.ANG_ISSP_UserProvisioningWait;
         availableIEPPortalServiceRoles()
             .then(result => {
                 let myResults = JSON.parse(JSON.stringify(result));
@@ -434,15 +490,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     ICCSRolePick(event) {
         this.ICCSRole = event.target.value;
-        if (this.ICCSRole !== undefined && this.ICCSRole !== '') {
+        if (this.ICCSRole) {
             this.ICCSRoleChangeConfirm = true;
         } else {
             this.ICCSRoleChangeConfirm = false;
         }
-    }
-
-    handleSSWSConditions(event) {
-        this.acceptSSWSConditions = event.target.value;
     }
 
     openICCSAccount() {
@@ -450,6 +502,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showSpinner = true;
 
         this.newAppsRequestICCS(this.trackedServiceId, this.serviceFullName, this.userContactId);
+    }
+
+    handleSSWSConditions(event) {
+        this.acceptSSWSConditions = event.target.value;
     }
 
     changeICCSRole() {
@@ -482,7 +538,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             .then(result => {
                 let results = JSON.parse(JSON.stringify(result));
                 this.showSpinner = false;
-                if (this.ICCSRole !== undefined && this.ICSSRole !== '') {
+                if (this.ICCSRole) {
                     this.ICCSMessage = false;
                     this.ICCSsuccessModal = true;
                     this.showButtons = false;
@@ -551,31 +607,34 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     preparePolling() {
-        userProvisioningRequests()
-            .then(NumberofUserProvisioningRequests => {
-                this.NumberOfUseProvisioningRequests = JSON.parse(JSON.stringify(NumberofUserProvisioningRequests));
-                availableIEPPortalServiceRoles()
+        userProvisioningRequests({})
+            .then(numberofUserProvisioningRequests => {
+                this.numberofUserProvisioningRequests = JSON.parse(JSON.stringify(numberofUserProvisioningRequests));
+
+                availableIEPPortalServiceRoles({})
                     .then(result => {
                         let results = JSON.parse(JSON.stringify(result));
                         let myRolesObj = [];
-                        if (this.ICCSRole === undefined || this.ICSSRole === '') {
+                        if (!this.ICCSRole) {
                             let iepRoles = results.filter(obj => { return obj.Connected_App__c.startsWith('IATA EasyPay') && obj.Permission_set_SSO__c != null });
                             for (const role of iepRoles) {
                                 myRolesObj.push({ label: role.Connected_App__c + ' - ' + role.Role__c, value: role.Permission_set_SSO__c });
                             }
-
-                            if (this.radioOption !== undefined && this.radioOption !== '') {
+                            if (this.radioOption) {
                                 this.permSetSSO = myRolesObj.find(obj => obj.label === this.serviceFullName + ' - ' + this.radioOption).value;
                             } else {
                                 this.permSetSSO = myRolesObj.find(obj => obj.label === this.serviceFullName + ' - ' + this.defaultPortalUserRole).value;
                             }
                         }
+                        this.timeoutCounter = 0;
                         this.pollServer();
                     });
-            })
+
+            });
     }
 
     pollServer() {
+
         // Clear the timeout if it has already been set.
         // This will prevent the previous task from executing
         // if it has been less than <MILLISECONDS>
@@ -585,13 +644,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
             //this.testfunction();
-            performCheckonPoll({ permSetSSO: this.permSetSSO, failedCount: this.NumberOfUseProvisioningRequests })
+            performCheckonPoll({ permSetSSO: this.permSetSSO, failedCount: this.numberofUserProvisioningRequests })
                 .then(data => {
                     // you can access your data here
                     let results = JSON.parse(JSON.stringify(data));
                     if (results === 'Success') {
-                        if ((this.radioOption === undefined || this.radioOption === '')
-                            && (this.ICCSRole === undefined || this.ICSSRole === '')) {
+                        if (!this.radioOption && !this.ICSSRole) {
                             serviceWrapperRedirect({ serviceId: this.trackedServiceId })
                                 .then(result => {
                                     window.open(JSON.parse(JSON.stringify(result)));
@@ -599,13 +657,20 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                                 });
                         }
 
-                    } else if (results === 'Incomplete') {
-                        this.timeout++;
-                        if (this.timeout === this.timeoutLimit) {
+                    }
+                    if (results === 'Incomplete') {
+                        this.timeoutCounter = this.timeoutCounter + 1;
+                        if (this.timeoutCounter === 22) {
+                            this.loadingMessage = this.label.csp_TimeoutIEP;
+                        }
+                        if (this.timeoutCounter >= 24) {
                             location.reload();
                         }
                         this.pollServer();
-                    } else if (results === 'Error') {
+                    }
+                    if (results === 'Error') {
+                        this.IEPOpenAccountModal = false;
+                        this.showConfirm = false;
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: 'Error',
@@ -630,7 +695,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 });
 
         }, 5000, this);
-
     }
 
     reloadPage() {
@@ -684,6 +748,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             }
         }*/
     }
+
 
 
 
