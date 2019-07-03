@@ -2975,10 +2975,12 @@ public class AMS_OSCARTriggerHandler {
 
                 if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
                     if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
+                        
+                        /* TA-ENHC0012754
                         if (oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null) {
                             oscar.addError('Please specify the PCI compliance expiry date.');
                             return;
-                        }
+                        }*/
 
                         if((oscar.Is_PCI_compliant__c == 'No' || oscar.Is_PCI_compliant__c == null) && oscar.ANG_PCI_compliance_expiry_date__c <> null){
                             oscar.addError('Cannot change the PCI compliance expiry date if the Agent is not PCI compliant.');
@@ -4314,7 +4316,7 @@ public class AMS_OSCARTriggerHandler {
                     continue;
                 }
 
-                if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null){
+                if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null && oscar.process__c != AMS_Utils.NGCORRECTION){
                     oscar.addError('For PCI compliance, you need to add an expiry date.');
                     continue;
                 }
@@ -4332,8 +4334,13 @@ public class AMS_OSCARTriggerHandler {
                         acct.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
                         accountToAdd = true;
                     }
-
-                    if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC'){
+                    /* TA-ENHC0012754 */
+                    if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
+                        if ((oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') && oscar.ANG_PCI_compliance_expiry_date__c != null) {
+                            acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
+                            accountToAdd = true;
+                        }
+                    } else if (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') {
                         acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
                         accountToAdd = true;
                     }
