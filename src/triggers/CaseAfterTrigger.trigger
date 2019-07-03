@@ -102,6 +102,50 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /*Maps, Sets, Lists*/
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
+
+	/** WMO-564 **/
+	if(Trigger.isUpdate) {
+		Map<Id,Case> mapOscarToCase = new Map<Id,Case>();
+		Date x1stDay = Date.newInstance(2019, 1, 1);
+		for(Case cse : Trigger.new) {
+			Case oldCase = Trigger.oldMap.get(cse.Id);
+			if(!oldCase.IsClosed && cse.IsClosed && cse.OSCAR__c <> null && AMS_Utils.REASONS_FOR_KPI_CALCULATION.contains(cse.Reason1__c) && cse.CreatedDate >= x1stDay) {
+				mapOscarToCase.put(cse.OSCAR__c, cse);
+			}
+		}
+
+		if(!mapOscarToCase.isEmpty()) {
+			List<String> fieldsToQuery = new List<String> {
+				'Id', 'Dossier_Reception_Date__c', 'Payment_requested__c', 'Proof_of_payment_received__c',
+				'Bank_Guarantee_requested__c', 'Bank_Guarantee_received__c', 'Agreement_requested__c', 
+				'PSAA_EACP_Agreement_received__c', 'Disapproval_date__c', 'Reconsideration_date__c', 
+				'Process_Eff_Age__c', 'Change_effective_as_of__c'
+			};
+			Set<Id> oscarIds = mapOscarToCase.keySet();
+			List<Case> cases = mapOscarToCase.values();
+			String queryStr = 'SELECT ' + String.join(fieldsToQuery, ', ') + ' FROM AMS_OSCAR__c ';
+			queryStr += 'WHERE Id IN :oscarIds AND Dossier_Reception_Date__c <> null AND ';
+			queryStr += 'Id NOT IN (SELECT OSCAR__c FROM Case WHERE Owner.Name LIKE \'%Recycle%\' AND Id IN :cases)';
+
+			List<AMS_OSCAR__c> oscars = Database.query(queryStr);
+
+			if(!oscars.isEmpty()) {
+				List<AMS_OSCAR__c> listToUpdate = new List<AMS_OSCAR__c>();
+				for(AMS_OSCAR__c oscar : oscars) {
+					AMS_OSCAR__c oscarWithNullValues = new AMS_OSCAR__c();
+					for(String fieldName : fieldsToQuery) {
+						oscarWithNullValues.put(fieldName, oscar.get(fieldName));
+					}
+					listToUpdate.add(oscarWithNullValues);
+					AMS_OSCAR_Age_Calculator.calculate(mapOscarToCase.get(oscarWithNullValues.Id), oscarWithNullValues);
+				}	
+
+				update listToUpdate;
+			}
+		}            
+	}
+	
+
     /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete && !CaseChildHelper.noValidationsOnTrgCAseIFAP){
         System.debug('____ [cls CaseAfterTrigger - trgCaseIFAP_AfterInsertDeleteUpdateUndelete]');
