@@ -34440,6 +34440,14 @@ title,Title,Name</value>
         <value>Job Title</value>
     </labels>
     <labels>
+        <fullName>csp_NoPortalServiceNameFound</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>No Portal Service Name found</value>
+    </labels>
+    <labels>
         <fullName>csp_ServiceRequestConfirm</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
