@@ -78,10 +78,12 @@ private class PortalFAQsSharingCtrlTest {
 
     @IsTest
     static void testPermsetChange(){
-        Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c iso_swiss = new IATA_ISO_Country__c(Name = 'CH', ISO_Code__c = 'CH');
-        insert iso_swiss;
+        IATA_ISO_Country__c iso_pt = new IATA_ISO_Country__c(Name = 'PT', ISO_Code__c = 'PT');
+        
+        insert new list<IATA_ISO_Country__c>{iso_swiss,iso_pt};
 
         MyAirline = new Account(
                 RecordTypeId = rtHQ,
@@ -107,7 +109,7 @@ private class PortalFAQsSharingCtrlTest {
         System.runAs([SELECT Id FROM User WHERE Id = :UserInfo.getUserId()][0]) {
             PortalFAQsSharingCtrl.assignFAQsPermissions(portalUser.Id);
 
-            MyAirline.IATA_ISO_Country__c = null;
+            MyAirline.IATA_ISO_Country__c = iso_pt.id;
             update MyAirline;
 
             PortalFAQsSharingCtrl.validateUserFAQsPermissions(portalUser.Id);
