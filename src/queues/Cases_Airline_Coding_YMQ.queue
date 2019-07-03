@@ -8,11 +8,8 @@
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>DistributionAirlineManagementHO</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
-        <users>
-            <user>shalbakf@iata.org</user>
-        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
