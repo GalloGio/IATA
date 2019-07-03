@@ -20176,7 +20176,7 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
 )</errorConditionFormula>
         <errorMessage>Only an admin can assign a Financial Assessment contact to a branch agency (BR).</errorMessage>
     </validationRules>
-        <validationRules>
+    <validationRules>
         <fullName>ID_card_Holder_no_change</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
@@ -20191,7 +20191,7 @@ $User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quo
 $UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
 ), 
 
-				
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,				
 				
 ID_Card_Holder__c=false,
 
