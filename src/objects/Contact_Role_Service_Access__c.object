@@ -325,15 +325,4 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
-    <webLinks>
-        <fullName>TEST</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>TEST</masterLabel>
-        <openType>noSidebar</openType>
-        <page>TEST</page>
-        <protected>false</protected>
-    </webLinks>
 </CustomObject>
