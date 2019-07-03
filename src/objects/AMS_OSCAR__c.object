@@ -71902,7 +71902,8 @@ NOT(ISPICKVAL(STEP35__c, &quot;Passed&quot;)),
 OR(
 ISPICKVAL(Process__c, &quot;ANG.MAJOR.CHANGES.1.0&quot;),
 ISPICKVAL(Process__c, &quot;ANG.NEW.HE.LITE.1.0&quot;),
-ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;)
+ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;),
+ISPICKVAL(Process__c, &quot;ANG.NEW.GE.STANDARD.1.0&quot;)
 )
 )</errorConditionFormula>
         <errorMessage>If &quot;Request financial security&quot; step is set to passed and &quot;Confirm financial security received&quot; is not set to passed then the Manager is not allowed to approve the OSCAR</errorMessage>
