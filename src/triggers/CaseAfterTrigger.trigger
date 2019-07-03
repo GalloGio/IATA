@@ -65,7 +65,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
-    Id CNSRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
+    Id ClaimEU261RTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ClaimEU261');
+
 /*Record type*/	
     
     /*Variables*/
@@ -270,6 +271,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 			List<Case> caseFDSProducManagement = new List<Case>();
 			List<Case> caseFDSBankAccountManagement = new List<Case>();
+			List<CaseShare> caseShareList = new List<CaseShare>();
+			Id usersGroupRoleId;
 
 			for (Case c : Trigger.new) {
 			    // only interested in cases being closed
@@ -281,7 +284,22 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			        	caseFDSBankAccountManagement.add(c);
 			      	}
 			    }
+
+			    if(c.RecordTypeId == ClaimEU261RTId){
+			    	CaseShare caseShare = new CaseShare();
+			    	caseShare.CaseAccessLevel = 'Read';
+			    	caseShare.CaseId = c.Id;
+			    	caseShare.RowCause = 'Manual';
+			    	if(usersGroupRoleId == null){
+			    		usersGroupRoleId = [Select Id FROM Group WHERE RelatedId =: UserInfo.getUserRoleId() AND Type = 'Role' LIMIT 1].Id;
+			    	}
+			    	caseShare.UserOrGroupId = usersGroupRoleId;
+			    	caseShareList.add(caseShare);
+			    }
 			}
+
+			if(!caseShareList.isEmpty())
+				insert caseShareList;
 			if (!caseFDSBankAccountManagement.isEmpty()) {
 				// List of trigger-related  ICCS Bank Accounts
 			    List<Id> lstBankAccountIds = new List<Id>();
@@ -597,7 +615,31 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			        } else if( !ServicesToCheck.contains(c.reason1__c)){
 						c.addError(' The reason you entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting ' );                  
 		            }
+		            if(c.Status == 'Closed' && c.BSPCountry__c == AMS_Utils.passIATAMultipleCountries && c.Reason1__c.startsWith('PASS') && trigger.oldmap.get(c.id).Status != 'Closed'){
+		            	checkChildCasesId.add(c.Id);
+		            }
 		        }
+
+		        //This prevents the parent case to be closed before closing the child cases. Only used in the PASS Airline Participation
+		        if(checkChildCasesId.size()>0){
+		        	List<Case> notClosedChildCaseList=[SELECT Id,CaseNumber,ParentId FROM Case WHERE ParentId In:checkChildCasesId AND Status != 'Closed'];
+		        	Map<Id,String> notClosedChildCaseParentMap= new Map<Id,String>();
+
+		        	for(Case openedChildCase:notClosedChildCaseList){
+		        		if(notClosedChildCaseParentMap.containsKey(openedChildCase.ParentId)){
+		        			notClosedChildCaseParentMap.put(openedChildCase.ParentId,notClosedChildCaseParentMap.get(openedChildCase.ParentId)+'; '+openedChildCase.CaseNumber);
+	        			}else{
+	        				notClosedChildCaseParentMap.put(openedChildCase.ParentId,openedChildCase.CaseNumber);
+	        			}
+		        	}
+
+		        	for (Case c : casesToTrigger){
+			        	if(notClosedChildCaseParentMap.containsKey(c.Id)){
+			        		c.addError('Please close the following child case(s) before closing this case: '+notClosedChildCaseParentMap.get(c.Id)+'.');
+			        	}
+			        }
+		        }
+
 		       	if(caseMap.size()>0){ //validation and at the same time change of recordtype of the accts if they were standard 
 		        	map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, caseMap);
 					for (Id idc : caseMap.keySet()) {
