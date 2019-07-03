@@ -3896,7 +3896,7 @@
         <ccEmails>iata@servicenow.org</ccEmails>
         <description>Send Email to Online store support</description>
         <protected>false</protected>
-        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderAddress>onlinestoresupport@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Vendor_Templates/Contact_Vendor</template>
     </alerts>
