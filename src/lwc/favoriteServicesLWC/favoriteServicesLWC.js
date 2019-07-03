@@ -10,6 +10,7 @@ import { navigateToPage } from 'c/navigationUtils';
 //import labels 
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import csp_Request_New_Service from '@salesforce/label/c.csp_Request_New_Service';
+import CSP_FavoriteServices_Title from '@salesforce/label/c.CSP_FavoriteServices_Title';
 
 export default class FavoriteServicesLWC extends LightningElement {
     //track variables
@@ -29,7 +30,8 @@ export default class FavoriteServicesLWC extends LightningElement {
     // Expose the labels to use in the template.
     label = {
         csp_Request_New_Service,
-        CSP_SeeAll
+        CSP_SeeAll,
+        CSP_FavoriteServices_Title
     };
 
     //Same as doInit() function on old aura components
@@ -42,7 +44,7 @@ export default class FavoriteServicesLWC extends LightningElement {
             .then(result => {
                 //auxResult stores the results globaly
                 this.auxResult = JSON.parse(JSON.stringify(result));
-                
+
                 //removes undefined from images
                 for (let i = 0; i < this.auxResult.length; i++) {
                     if (this.auxResult[i].Portal_Application__r === undefined || this.auxResult[i].Portal_Application__r.Application_icon_URL__c === undefined) {
@@ -72,7 +74,7 @@ export default class FavoriteServicesLWC extends LightningElement {
 
                 //sets the first page
                 this.favoriteServices = this.globaList[0];
-                
+
                 //the maxSize of the List
                 this.maxSize = this.globaList.length;
 
@@ -206,7 +208,7 @@ export default class FavoriteServicesLWC extends LightningElement {
 
     //method that controls the loading spinner action
     toggleSpinner() {
-        this.isLoading = !this.isLoading;        
+        this.isLoading = !this.isLoading;
     }
 
     //method that controls the redirection of the service's links
