@@ -84,7 +84,7 @@ global with sharing class ANG_AccreditationAreaViewer {
                     ,'ANG_IsNewGenAgency__c' => 'General Information'
                     ,'ANG_Accreditation_Model_to_Change__c' => 'General Information'
                     ,'Abbreviated_name__c' => 'General Information'
-                    ,'TradeName__c' => 'General Information'
+                    ,'Trade_Name__c' => 'General Information'
                     ,'Location_Class__c' => 'General Information'
                     ,'VAT_Number_2__c' => 'General Information'
                     ,'Branch_Office_Email__c' => 'General Information'
@@ -268,7 +268,7 @@ global with sharing class ANG_AccreditationAreaViewer {
                 ,AMS_Pax_Accreditation_Form__c.Short_Name__c
                 ,AMS_Pax_Accreditation_Form__c.Location_Class__c
                 ,AMS_Pax_Accreditation_Form__c.Location_Type__c
-                //,AMS_Pax_Accreditation_Form__c.Trade_Name__c
+                ,AMS_Pax_Accreditation_Form__c.Trade_Name__c
                 ,AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c
                 ,AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c
                 ,AMS_Pax_Accreditation_Form__c.ISSP_AMS_GDS_with_signed_contract__c
@@ -293,7 +293,7 @@ global with sharing class ANG_AccreditationAreaViewer {
                 ,AMS_Pax_Accreditation_Form__c.Abbreviated_name__c
                 ,AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c
                 ,AMS_Pax_Accreditation_Form__c.Remittance_frequency__c
-                //,AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
+                ,AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
                 ,AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
                 ,AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
                 //,AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
