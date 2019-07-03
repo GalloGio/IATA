@@ -9989,6 +9989,103 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
         <type>Date</type>
     </fields>
     <fields>
+		<fullName>External_Entities_CARGO__c</fullName>
+		<externalId>false</externalId>
+		<label>External Entities CARGO</label>
+		<required>false</required>
+		<trackFeedHistory>false</trackFeedHistory>
+		<trackHistory>false</trackHistory>
+		<type>MultiselectPicklist</type>
+		<valueSet>
+			<restricted>true</restricted>
+			<valueSetDefinition>
+				<sorted>false</sorted>
+				<value>
+					<fullName>International Federation of Freight Forwarders (FIATA)</fullName>
+					<default>false</default>
+					<label>International Federation of Freight Forwarders (FIATA)</label>
+				</value>
+				<value>
+					<fullName>International Air Cargo Association (TIACA)</fullName>
+					<default>false</default>
+					<label>International Air Cargo Association (TIACA)</label>
+				</value>
+				<value>
+					<fullName>International Freight Association (IFA)</fullName>
+					<default>false</default>
+					<label>International Freight Association (IFA)</label>
+				</value>
+				<value>
+					<fullName>Global Freight Alliance</fullName>
+					<default>false</default>
+					<label>Global Freight Alliance</label>
+				</value>
+			</valueSetDefinition>
+		</valueSet>
+		<visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+		<fullName>External_Entities_CARGO_OTHER__c</fullName>
+		<externalId>false</externalId>
+		<label>External Entities CARGO (OTHER)</label>
+		<length>1000</length>
+		<trackFeedHistory>false</trackFeedHistory>
+		<trackHistory>false</trackHistory>
+		<type>LongTextArea</type>
+		<visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+		<fullName>External_Entities_PAX__c</fullName>
+		<externalId>false</externalId>
+		<label>External Entities PAX</label>
+		<required>false</required>
+		<trackFeedHistory>false</trackFeedHistory>
+		<trackHistory>false</trackHistory>
+		<type>MultiselectPicklist</type>
+		<valueSet>
+			<restricted>true</restricted>
+			<valueSetDefinition>
+				<sorted>false</sorted>
+				<value>
+					<fullName>American Society of Travel Advisors (ASTA)</fullName>
+					<default>false</default>
+					<label>American Society of Travel Advisors (ASTA)</label>
+				</value>
+				<value>
+					<fullName>ASTA Small Business Network (former NACTA)</fullName>
+					<default>false</default>
+					<label>ASTA Small Business Network (former NACTA)</label>
+				</value>
+				<value>
+					<fullName>Professional Association of Travel Hosts (PATH)</fullName>
+					<default>false</default>
+					<label>Professional Association of Travel Hosts (PATH)</label>
+				</value>
+				<value>
+					<fullName>Travel Leaders Network</fullName>
+					<default>false</default>
+					<label>Travel Leaders Network</label>
+				</value>
+				<value>
+					<fullName>World Travel &amp; Tourism Council (WTTC)</fullName>
+					<default>false</default>
+					<label>World Travel &amp; Tourism Council (WTTC)</label>
+				</value>
+			</valueSetDefinition>
+		</valueSet>
+		<visibleLines>4</visibleLines>
+    </fields>
+	<fields>
+		<fullName>External_Entities_PAX_OTHER__c</fullName>
+		<externalId>false</externalId>
+		<label>External Entities PAX (OTHER)</label>
+		<length>1000</length>
+		<trackFeedHistory>false</trackFeedHistory>
+		<trackHistory>false</trackHistory>
+		<type>LongTextArea</type>
+		<visibleLines>3</visibleLines>
+	</fields>
+    <fields>
         <fullName>FAXNational__c</fullName>
         <description>Used to capture and display National FAX number on portal -&gt; full International Number stored in FAX field</description>
         <externalId>false</externalId>
@@ -14259,6 +14356,16 @@ J-Joint Vent</inlineHelpText>
         <fullName>Name</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+		<fullName>NDC_engagement__c</fullName>
+		<defaultValue>false</defaultValue>
+		<description>Flag to indicate NDC</description>
+		<externalId>false</externalId>
+		<label>NDC engagement</label>
+		<trackFeedHistory>false</trackFeedHistory>
+		<trackHistory>false</trackHistory>
+		<type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Name_on_AOC__c</fullName>
