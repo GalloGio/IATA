@@ -1,8 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
 
-//images
-import PORTAL_RESOURCES from '@salesforce/resourceUrl/csPortalResources';
-
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
