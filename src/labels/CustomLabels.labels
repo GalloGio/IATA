@@ -2738,6 +2738,14 @@ Payment required on receipt of this Payment Advice
         <value>Agency Read Only</value>
     </labels>
     <labels>
+        <fullName>csp_TimeoutIEP</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>The request is taking a long time. You will be taken to the Service page.</value>
+    </labels>
+    <labels>
         <fullName>csp_Basics_Section_label</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
