@@ -299,13 +299,16 @@ global class ANG_MasterData_Interface{
                 //EasyPay
                 if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c)){
                     this.externalSystems.add(acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name);
-                    this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
                 }
 
                 //GDI - note: we do publish HE/HO only
                 if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c))
                    this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
             
+                //Fill isPciDss attribute for every Account IEP Status except "No IEP Account" or blank 
+                if(String.isNotBlank(acc.ANG_IEP_Status_FF__c) && acc.ANG_IEP_Status_FF__c != AMS_Utils.NO_IEP_ACCOUNT){
+                    this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
+                }
 
             }
             catch(exception e){

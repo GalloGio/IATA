@@ -246,11 +246,20 @@ public with sharing class ANG_Risk_Helper{
 		return sum;
 	}
 
-	public static void convertFSAmount(list<Financial_Security__c> fsList,Set<id> accIdSet){
-		ANG_Risk_Helper.accIdSet=accIdSet;
+	public static void convertFSAmount(list<Financial_Security__c> fsList, Map<id, Account> mapAccount){	
+		accIdSet = new Set<ID>();
+		//list of HE Accounts to be used when get the RHC Information currency (only He accounts have RHC)
+		for(Account acc : mapAccount.values()){
+			if(acc.Location_Type__c == AMS_Utils.HE) accIdSet.add(acc.id);
+			else accIdSet.add(acc.ParentID);
+		}
+
 		list<Financial_Security__c> tempList= new list<Financial_Security__c>();
+
 		for(Financial_Security__c fs:fsList){
-			String targetoCurIso =accCurMap.get(fs.account__C);
+			//Get parent account Id to match with RHC Information object
+			Id accountId = mapAccount.get(fs.Account__c).Location_Type__c == AMS_Utils.HE ? fs.account__C : mapAccount.get(fs.Account__c).ParentID;
+			String targetoCurIso =accCurMap.get(accountId);
 			Decimal convertedValue=ANG_Risk_Helper.currencyConverter(fs.CurrencyIsoCode,fs.Amount__c,targetoCurIso==null?fs.CurrencyIsoCode:targetoCurIso);
 			if(fs.ANG_ConvertedAmount__c != convertedValue){
 				fs.ANG_ConvertedAmount__c=convertedValue;

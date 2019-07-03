@@ -242,18 +242,14 @@ public without sharing class ISSP_AMS_Accreditation {
     public Boolean revCaseOpen {
         get{
             List<Case> revCases = [SELECT Id 
-                                   FROM Case 
-                                   WHERE AccountId =: con.Account.Id 
-                                   AND Reason1__c = 'Annual revalidation' 
-                                   AND Status != 'Closed' 
-                                   AND Status != 'Closed_Rejected' 
-                                   AND Status != 'Closed_Withdrawn'];
-            if(revCases.size() > 0) {
-                revCaseOpen = true;
-            } else {
-                revCaseOpen = false;
-            }
-            return revCaseOpen;
+                                FROM Case 
+                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                    AND Reason1__c = 'Annual revalidation' 
+                                    AND Status != 'Closed' 
+                                    AND Status != 'Closed_Rejected' 
+                                    AND Status != 'Closed_Withdrawn'];
+            
+            return !revCases.isEmpty();
         } 
         set;
     }
@@ -443,6 +439,10 @@ public without sharing class ISSP_AMS_Accreditation {
         else
             Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Application_Summary.pdf');
 
+        if (ApexPages.currentPage().getParameters().containsKey('typeOfAgency')) {
+            newForm.Local_Agent_Type__c = ApexPages.currentPage().getParameters().get('typeOfAgency');
+        }
+
         //AS - NoC V2.0 - Now Other Change will always be for 3 types of changes
         if(isBankAccountChange) {
             newForm.Is_change_bank_account_details__c = true;
@@ -548,6 +548,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
+
+                    if (isocountry.ISO_Code__c == 'CN') {
+                        sector += ' - ' + newForm.Local_Agent_Type__c;
+                    }
 
                     if (isNoticeOfChange) {
                         sectorDisplay = Label.ISSP_AMS_NoC_Request_for_Change;
@@ -774,6 +778,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 setFacilityList();
 
             sector = sectorValue.replace('_', ' ');
+
+            if (isocountry.ISO_Code__c == 'CN') {
+                sector += ' - ' + newForm.Local_Agent_Type__c;
+            } 
 
             if(isNoticeOfChange) {
                 SYSTEM.DEBUG('Accreditation Attachment NoC Sector: ' + sectorValue);
@@ -1445,11 +1453,15 @@ public without sharing class ISSP_AMS_Accreditation {
                         newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
                     }
 
-                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) //NEWGEN-1249
+                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+                    //NEWGEN-1249
                         upsert newform;
+                    }
+                    String auxLocalAgentType = newform.Local_Agent_Type__c;
                     fetchAMSProcessForm();
-
+                    newform.Local_Agent_Type__c = auxLocalAgentType;
                 }
+
                 // Creation of first draft case (either HO or BR)
                 upsert newCase;
 
@@ -3783,7 +3795,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, Country_ISO_Code__c
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
@@ -3798,7 +3810,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                             Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                             ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                             Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Country_ISO_Code__c
                                FROM Account
                                WHERE Id = :vAccountConcernedId
                                           LIMIT 1
@@ -4716,7 +4728,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     }
 
     public Void checkEligibilityForAChange() {
-        if ((sector == AMS_Utils.SECTOR_PASSENGER && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT)) ||
+        if ((sector == AMS_Utils.SECTOR_PASSENGER && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) || (isocountry.ISO_Code__c == 'CN' && con.Account.Category__c == 'Domestic Agent' && isocountry.ANG_Enable_NewGen__c)) ||
                 (sector == AMS_Utils.SECTOR_CARGO && (con.Account.Category__c == 'Non-IATA Cargo Agent' || con.Account.Category__c == 'IATA Cargo Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == 'CASS Associates' || con.Account.Category__c == AMS_Utils.CATEGORY_COURIER || con.Account.Category__c == AMS_Utils.CATEGORY_IMPORT_AGENT)))
             isEligableForChange = true;
     }
@@ -6033,7 +6045,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
 
-                    if (cntIFAPContacts == 0 && newForm.Agent_Type__c != AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH) {
+                    if (cntIFAPContacts == 0 && newForm.Agent_Type__c != AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH && newForm.Local_Agent_Type__c != 'Domestic') {
                          ApexPages.Message myMsg;
                          myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Financial_Contact);
                          ApexPages.addMessage(myMsg);
@@ -7433,7 +7445,7 @@ system.debug('aqui sectorValue ' + sectorValue);
                 Position__c,RecordTypeId,Title__c,Valid__c,
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
-                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
+                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry, Contact__r.OtherState,
                 Legacy_External_ID__c
                 FROM AMS_Account_Role__c
                 where Account__c = :lAccountConcerned
@@ -7496,6 +7508,7 @@ system.debug('aqui sectorValue ' + sectorValue);
             auxAccreditCont.AddressCity__c = accRole.Contact__r.OtherCity;
             auxAccreditCont.AddressPostcode__c = accRole.Contact__r.OtherPostalCode;
             auxAccreditCont.AddressCountry__c = accRole.Contact__r.OtherCountry;
+            auxAccreditCont.AddressState__c = accRole.Contact__r.OtherState;
 
         }else
         //Check if owner is PERSON

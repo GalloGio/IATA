@@ -101,7 +101,9 @@ public without sharing class AMS_Utils {
     public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
     public static final String CONVERTTOINTERNATIONAL = 'Conversion to International'; //ACAMBAS - NEWGEN-4445
-    
+    public static final String OPT_OUT_ACCREDITATION_CFG_RT_NAME = 'Opt_out_at_Accreditation';
+    public static final String FA_OPT_OUT = 'Opt-Out';
+     
     public static final Map<String, List<String>> OSCARBackupProcessMap = new Map<String, List<String>>{
         NGCHANGES => new List<String>{'Step4__c'},
         NGCHINACONVERSION => new List<String>{'Step4__c', 'Step3__c'}
@@ -131,6 +133,9 @@ public without sharing class AMS_Utils {
     public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
     public static final Set<String> oscarPCICompliantValidationAttachement = new Set <String>{'Yes','Nil CC','Corporate Card'};
     public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
+
+    public static final Set<String> setChinaCountries = new Set <String>{'CN'};
+
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -198,6 +203,7 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+    public static final String ACC_S10_ENDORSED = 'Endorsed';
 
     public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{ACC_S4_LISTED, ACC_S5_CASHNOCOMMISSION, ACC_S6_CASHWITHCOMMISSION, ACC_S7_UNDERREVIEW, ACC_S8_CHANGESPROCESSED, ACC_S9_APPROVED};
 
@@ -318,6 +324,7 @@ public without sharing class AMS_Utils {
     public static final String CC = 'CC';
     public static final String CA = 'CA';
     public static final string EP = 'EP';
+    public static final string BOP = 'BOP';
     public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
@@ -2586,10 +2593,10 @@ public without sharing class AMS_Utils {
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
         List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
 
-        authorizations = [SELECT Id,
-                                     ANG_FormOfPayment_ID__c
-                                FROM Agency_Authorization__c
-                               WHERE Account__c = :acc.Id AND Status__c = 'Active'];
+        authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
+                        FROM Agency_Authorization__c
+                        WHERE Account__c = :acc.Id 
+                            AND (Status__c = 'Active' OR Status__c = 'Authorized')];
 
         if(con != null) {
             services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c

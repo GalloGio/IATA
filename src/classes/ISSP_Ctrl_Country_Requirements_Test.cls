@@ -1,111 +1,78 @@
 @isTest
 private class ISSP_Ctrl_Country_Requirements_Test {
-
 	static list<IATA_ISO_Country__c> listCountries;
 
-	public static list<IATA_ISO_Country__c> populateCountries() {
-		if(listCountries == null) {
-			listCountries = new list<IATA_ISO_Country__c>();
-			listCountries.add( new IATA_ISO_Country__c( Name = 'Switzerland', ISO_Code__c = 'CH', ANG_Enable_NewGen__c = true));
-			listCountries.add( new IATA_ISO_Country__c( Name = 'Canada', ISO_Code__c = 'CA'));
-			listCountries.add( new IATA_ISO_Country__c( Name = 'Portugal', ISO_Code__c = 'PT',ANG_Enable_NewGen__c = true));
-			insert listCountries;
-		}
-		return listCountries;
-	}
+	@testSetup static void setup() {
+		IATA_ISO_Country__c c1 = new IATA_ISO_Country__c(Name = 'Switzerland', ISO_Code__c = 'CH', ANG_Enable_NewGen__c = true);
+		IATA_ISO_Country__c c2 = new IATA_ISO_Country__c(Name = 'Canada', ISO_Code__c = 'CA');
+		IATA_ISO_Country__c c3 = new IATA_ISO_Country__c(Name = 'Portugal', ISO_Code__c = 'PT', ANG_Enable_NewGen__c = true);
 
-	public static void populateRequirements() {
-		list<IATA_ISO_Country__c> listCountries =  populateCountries();
+		insert new List<IATA_ISO_Country__c>{c1, c2, c3};
+		
+		AP_Country_Requierment__c apcr1 = new AP_Country_Requierment__c(Name = 'Req1', 
+																		Country__c = c1.Id,
+																		Line_of_business__c = 'BSP');
 
-		list<AP_Country_Requierment__c> listRequirements = new list<AP_Country_Requierment__c>();
-		listRequirements.add( new AP_Country_Requierment__c(
-			Name = 'Req1',
-			Country__c = listCountries.get(0).Id,
-			Line_of_business__c = 'BSP')
-		);
-		listRequirements.add( new AP_Country_Requierment__c(
-			Name = 'Req2',
-			Country__c = listCountries.get(1).Id,
-			Line_of_business__c = 'CASS')
-		);
-		listRequirements.add( new AP_Country_Requierment__c(
-			Name = 'Req3',
-			Country__c = listCountries.get(2).Id,
-			Line_of_business__c = 'XPTO')
-		);		
-		insert listRequirements;
+		AP_Country_Requierment__c apcr2 = new AP_Country_Requierment__c(Name = 'Req2',
+																		Country__c = c2.Id,
+																		Line_of_business__c = 'CASS');
+		
+		AP_Country_Requierment__c apcr3 = new AP_Country_Requierment__c(Name = 'Req3',
+																		Country__c = c3.Id,
+																		Line_of_business__c = 'XPTO');
+	
+		insert new List<AP_Country_Requierment__c>{apcr1, apcr2, apcr3};
+		
+		AMS_Accreditation_Country_CheckList__c cc1 = new AMS_Accreditation_Country_CheckList__c(IATA_ISO_Country__c = c3.Id,
+																								Operation__c = 'Airline');
 
-		list<AMS_Accreditation_Country_CheckList__c> ll = new List<AMS_Accreditation_Country_CheckList__c>();
-		AMS_Accreditation_Country_CheckList__c cc = new AMS_Accreditation_Country_CheckList__c(
-				IATA_ISO_Country__c = listCountries.get(2).id,
-				Operation__c = 'Airline'
-			);
+		AMS_Accreditation_Country_CheckList__c cc2 = new AMS_Accreditation_Country_CheckList__c(IATA_ISO_Country__c = c3.Id,
+																								Operation__c = 'Travel Agent');
 
-		AMS_Accreditation_Country_CheckList__c cc2 = new AMS_Accreditation_Country_CheckList__c(
-				IATA_ISO_Country__c = listCountries.get(2).id,
-				Operation__c = 'Travel Agent'
-			);
+		AMS_Accreditation_Country_CheckList__c cc3 = new AMS_Accreditation_Country_CheckList__c(IATA_ISO_Country__c = c1.Id,
+																								Operation__c = 'Travel Agent');
 
-		AMS_Accreditation_Country_CheckList__c cc3 = new AMS_Accreditation_Country_CheckList__c(
-				IATA_ISO_Country__c = listCountries.get(0).id,
-				Operation__c = 'Travel Agent'
-			);
+		insert new List<AMS_Accreditation_Country_CheckList__c>{cc1, cc2, cc3};
 
-		ll.add(cc);
-		ll.add(cc2);
-		ll.add(cc3);
+		AMS_Accreditation_Requirement__c ar1 = new AMS_Accreditation_Requirement__c(AMS_Accreditation_Country_CheckList__c = cc1.id,
+																					Name = 'Name1',
+																					Requirement_text__c = 'Text1',
+																					Location_type__c = 'HO',
+																					ANG_Accreditation_Model__c = 'Legacy',
+																					Language__c = 'en_AU');
 
-		insert ll;
+		AMS_Accreditation_Requirement__c ar2 = new AMS_Accreditation_Requirement__c(AMS_Accreditation_Country_CheckList__c = cc1.id,
+																					Name = 'Name2',
+																					Requirement_text__c = 'Text2',
+																					Location_type__c = 'HO',
+																					ANG_Accreditation_Model__c = 'Cash',
+																					Language__c = 'pt_PT');
 
-		List<AMS_Accreditation_Requirement__c> lst = new List<AMS_Accreditation_Requirement__c>();
+		AMS_Accreditation_Requirement__c ar3 = new AMS_Accreditation_Requirement__c(AMS_Accreditation_Country_CheckList__c = cc1.id,
+																					Name = 'Name3',
+																					Requirement_text__c = 'Text3',
+																					Location_type__c = 'HO',
+																					ANG_Accreditation_Model__c = 'Cashless',
+																					Language__c = 'de');
 
-		lst.add(new AMS_Accreditation_Requirement__c(
-				AMS_Accreditation_Country_CheckList__c = cc.id,
-				Name = 'Name1',
-				Requirement_text__c = 'Text1',
-				Location_type__c = 'HO',
-				ANG_Accreditation_Model__c = 'Legacy',
-				Language__c = 'en_AU'
-			));
-		lst.add(new AMS_Accreditation_Requirement__c(
-				AMS_Accreditation_Country_CheckList__c = cc.id,
-				Name = 'Name2',
-				Requirement_text__c = 'Text2',
-				Location_type__c = 'HO',
-				ANG_Accreditation_Model__c = 'Cash',
-				Language__c = 'pt_PT'
-			));		
-		lst.add(new AMS_Accreditation_Requirement__c(
-				AMS_Accreditation_Country_CheckList__c = cc.id,
-				Name = 'Name3',
-				Requirement_text__c = 'Text3',
-				Location_type__c = 'HO',
-				ANG_Accreditation_Model__c = 'Cashless',
-				Language__c = 'de'
-			));
-		lst.add(new AMS_Accreditation_Requirement__c(
-				AMS_Accreditation_Country_CheckList__c = cc2.id,
-				Name = 'Name3',
-				Requirement_text__c = 'Text3',
-				Location_type__c = 'HO',
-				ANG_Accreditation_Model__c = 'Legacy',
-				Language__c = 'de'
-			));		
-		lst.add(new AMS_Accreditation_Requirement__c(
-				AMS_Accreditation_Country_CheckList__c = cc3.id,
-				Name = 'Name3',
-				Requirement_text__c = 'Text3',
-				Location_type__c = 'HO',
-				ANG_Accreditation_Model__c = 'Legacy',
-				Language__c = 'de'
-			));		
+		AMS_Accreditation_Requirement__c ar4 = new AMS_Accreditation_Requirement__c(AMS_Accreditation_Country_CheckList__c = cc2.id,
+																					Name = 'Name3',
+																					Requirement_text__c = 'Text3',
+																					Location_type__c = 'HO',
+																					ANG_Accreditation_Model__c = 'Legacy',
+																					Language__c = 'de');
 
-		insert lst;
+		AMS_Accreditation_Requirement__c ar5 = new AMS_Accreditation_Requirement__c(AMS_Accreditation_Country_CheckList__c = cc3.id,
+																					Name = 'Name3',
+																					Requirement_text__c = 'Text3',
+																					Location_type__c = 'HO',
+																					ANG_Accreditation_Model__c = 'Legacy',
+																					Language__c = 'de');		
 
+		insert new List<AMS_Accreditation_Requirement__c>{ar1, ar2, ar3, ar4, ar5};
 	}
 
 	@isTest static void test_Controller() {
-
 		Test.startTest();
 		ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
 		Test.stopTest();
@@ -114,7 +81,6 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 	}
 
 	@isTest static void test_GetCountries() {
-		populateCountries();
 		ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
 
 		Test.startTest();
@@ -138,8 +104,6 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 
 	// with type filter, 1 results
 	@isTest static void test_ControllerWithTypeFilter() {
-		populateRequirements();
-
 		Test.startTest();
 		ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
 		controller.typeFilter = 'CASS';
@@ -151,8 +115,6 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 
 	// with country filter, 1 results
 	@isTest static void test_ControllerWithCountryFilter() {
-		populateRequirements();
-
 		Test.startTest();
 		ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
 		controller.countryFilter = [Select Id from IATA_ISO_Country__c where Name = 'Canada'].id;
@@ -165,8 +127,6 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 
 	// with string filter, 1 results
 	@isTest static void test_ControllerWithStringFilter() {
-		populateRequirements();
-
 		Test.startTest();
 		ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
 		controller.searchFilter = 'Req1';
@@ -177,21 +137,20 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 	}
 
     private static User createPortalUser() {
-         Account account = ISSP_ObjectFactory.createNewAccount();
-         insert account;
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        insert account;
 
-         Contact con = ISSP_ObjectFactory.createNewContact();
-         con.AccountId= account.Id;
-         con.Email = 'Test@test11.com';
-         insert con;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = account.Id;
+        con.Email = 'Test@test11.com';
+        insert con;
 
-         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-         System.debug('newUser Id: ' + newUser.Id);
-         con.OwnerId = newUser.Id;
-         update con;
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        con.OwnerId = newUser.Id;
+        update con;
 
-         newUser = [Select Id, ContactId from User where Id = :newUser.Id];
-         return newUser;
+        newUser = [Select Id, ContactId from User where Id = :newUser.Id];
+        return newUser;
      }
 
     @isTest static void test_checkAccess_False() {
@@ -209,16 +168,14 @@ private class ISSP_Ctrl_Country_Requirements_Test {
     }
 
     @isTest static void test_checkAccess_True() {
-    	list<IATA_ISO_Country__c> listCountries =  populateCountries();
-
-    	populateRequirements();
+    	IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
 
         User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
         Account acc = [Select Sector__c from Account limit 1];
         acc.Sector__c = 'Airline';
         acc.IATACode__c = '1234567890';
-        acc.IATA_ISO_Country__c = listCountries.get(2).id;
+        acc.IATA_ISO_Country__c = country.Id;
         update acc;
 
         PageReference result;
@@ -239,11 +196,11 @@ private class ISSP_Ctrl_Country_Requirements_Test {
     }
 
     @isTest static void test_checkAccess_True_2() {
-    	list<IATA_ISO_Country__c> listCountries =  populateCountries();
+    	IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
 
         Account topParent = new Account (
                 name = 'AccountTest',
-                IATA_ISO_Country__c = listCountries.get(2).id,
+                IATA_ISO_Country__c = country.Id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
@@ -254,7 +211,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 
         Account a = new Account (
                 name = 'AccountTest',
-                IATA_ISO_Country__c = listCountries.get(2).id,
+                IATA_ISO_Country__c = country.Id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
@@ -264,8 +221,6 @@ private class ISSP_Ctrl_Country_Requirements_Test {
             );
 
         insert a;
-
-    	populateRequirements();
 
         User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
         
@@ -285,9 +240,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
     } 
 
     @isTest static void test_getCountryRequirementsList() {
-    	list<IATA_ISO_Country__c> listCountries =  populateCountries();
-
-    	populateRequirements();
+    	IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
 
         User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
@@ -295,7 +248,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
         acc.Sector__c = 'Travel Agent';
         acc.IATACode__c = '1234567890';
         acc.Location_type__c = 'HO';
-        acc.IATA_ISO_Country__c = listCountries.get(2).id;
+        acc.IATA_ISO_Country__c = country.Id;
         update acc;
 
         PageReference result;
@@ -314,9 +267,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
     }
 
     @isTest static void test_getCountryRequirementsList2() {
-    	list<IATA_ISO_Country__c> listCountries =  populateCountries();
-
-    	populateRequirements();
+    	IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Switzerland'];
 
         User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
@@ -327,7 +278,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
         acc.Location_type__c = 'HO';
         acc.Status__c = 'Approved';
         acc.Category__c = AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT;
-        acc.IATA_ISO_Country__c = listCountries.get(0).id;
+        acc.IATA_ISO_Country__c = country.Id;
         update acc;
 
         PageReference result;

@@ -47,6 +47,7 @@ public class ANG_AccountTriggerHandler {
 		manageDowngrades();
 		manageUpgrades();
 		createIEPModelAOscars();
+		updateFormsOfPayment();
 		handleAccountUpdate();
 	}
 
@@ -126,6 +127,7 @@ public class ANG_AccountTriggerHandler {
 		List<Account> downGradeAtoB = new List<Account>();
 		List<Account> downGradeBtoC = new List<Account>();
 		List<Account> createFOP = new List<Account>();
+		Set<Id> changeCodesForRiskChangesLst = new Set<Id>();
 
 		for(Account acc : triggerNew){
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Risk Status - ' + oldMap.get(acc.Id).ANG_HE_RiskStatus__c);
@@ -133,8 +135,14 @@ public class ANG_AccountTriggerHandler {
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Cash Condition - ' + oldMap.get(acc.Id).ANG_HE_CashCondition__c);
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Cash Condition - ' + acc.ANG_HE_CashCondition__c);
 
-			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c) downGradeAtoB.add(acc);
-			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B) downGradeBtoC.add(acc);
+			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c){
+				downGradeAtoB.add(acc);
+				changeCodesForRiskChangesLst.add(acc.Id);
+			}
+			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B){
+				downGradeBtoC.add(acc);
+				changeCodesForRiskChangesLst.add(acc.Id);
+			}
 			if(isExpiration && acc.Guaranteed_amount__c == 0 && acc.ANG_HE_CashCondition__c && !oldMap.get(acc.Id).ANG_HE_CashCondition__c) createFOP.add(acc);
 		}
 
@@ -193,6 +201,34 @@ public class ANG_AccountTriggerHandler {
 
 		//downgrade of cash conditions from "Fail Financial Statements" Risk Event
 		if(!createFOP.isEmpty()) createFOPOscar(createFOP, rhcContacts);
+
+		//NEWGEN-4880
+
+		if(isLastFinancialReviewUpgrade){
+			
+			AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgDownRisk');
+			List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
+			String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
+
+			for(Id accId : changeCodesForRiskChangesLst){
+				Account acc = newMap.get(accId);
+				changeCodes.add(new Agency_Applied_Change_code__c(
+					Active__c = true
+					, Account__c = acc.Id
+					, Change_Code__c = config.Change_Code__c
+					, Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
+					, Reason_Code__c = config.Reason_Code__c
+					, Reason_Description__c = config.Reason_Code_Description__c
+					, Source__c = source
+					, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
+					, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
+				));
+			}
+
+			if(!changeCodes.isEmpty())
+				insert changeCodes;
+		}
+
 	}
 
 	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
@@ -202,14 +238,23 @@ public class ANG_AccountTriggerHandler {
 		//Set<Id> toNotify = new Set<Id>();
 		Set<Id> toChangeCode = new Set<Id>();
 
-		AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgradedRisk');
+		AMS_ChangeCodes__c config;
+
+		if(isExpiration)
+			config = AMS_ChangeCodes__c.getInstance('UpgradedRisk');
+		else {
+			config = AMS_ChangeCodes__c.getInstance('UpgDownRisk');
+		}
+
+		Account oldAcc;
 
 		for(Account acc : triggerNew){
-			Account oldAcc = oldMap.get(acc.Id);
 
-			if(oldAcc.ANG_HE_RiskStatus__c != acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A)){
-				//toNotify.add(acc.Id);
-				if(isExpiration && config != null) toChangeCode.add(acc.Id);
+			oldAcc = oldMap.get(acc.Id);
+
+			if(oldAcc.ANG_HE_RiskStatus__c <> acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A)){
+				toNotify.add(acc.Id);
+				if((isExpiration||isLastFinancialReviewUpgrade) && config != null) toChangeCode.add(acc.Id);
 			}
 
 			if(oldAcc.ANG_HE_CashCondition__c != acc.ANG_HE_CashCondition__c && acc.ANG_HE_CashCondition__c == false){
@@ -647,6 +692,42 @@ public class ANG_AccountTriggerHandler {
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBAccounts, 'B');
 		if(!iepModelBPlusAccounts.isEmpty())
 			ANG_OscarProcessHelper.createIEPAccountOscar(iepModelBPlusAccounts, 'B+');
+	}
+
+	public void updateFormsOfPayment(){
+
+		Set<ID> setAccountIDs = new Set<ID>();
+
+		for(Account a :triggerNew){
+			if(a.Status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c != AMS_Utils.ACC_S0_TERMINATED) setAccountIDs.add(a.id);
+			if(a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED) setAccountIDs.add(a.id);
+		}
+
+		List<Agency_Authorization__c> AgencyAuthorizationsToUpdate = new List<Agency_Authorization__c>();
+		for (Agency_Authorization__c aa : [SELECT ID, Account__c, ANG_FormOfPayment_ID__c FROM Agency_Authorization__c WHERE Account__c IN :setAccountIDs] ){
+			Account currentAccount = newMap.get(aa.Account__c);
+
+			if(currentAccount.Status__c == AMS_Utils.ACC_S0_TERMINATED) aa.Status__c = 'Non-Active';
+			
+			else {
+
+				if(AMS_Utils.setChinaCountries.contains(currentAccount.Country_ISO_Code__c)) aa.Status__c = 'Authorized';
+				
+				else if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CC) {
+
+					if (currentAccount.Is_PCI_compliant__c == 'Yes' ) aa.Status__c = 'Active';
+					if (currentAccount.Is_PCI_compliant__c == 'No' ) aa.Status__c = 'Non-Active';
+					if (currentAccount.Is_PCI_compliant__c == 'Nil CC' ) aa.Status__c = 'Not Authorized';
+				}
+
+				else aa.Status__c = 'Active';
+
+			}
+			AgencyAuthorizationsToUpdate.add(aa);
+		}
+	
+	if(!AgencyAuthorizationsToUpdate.isEmpty()) update AgencyAuthorizationsToUpdate;
+
 	}
 
 	private void populateIEPStatus() {

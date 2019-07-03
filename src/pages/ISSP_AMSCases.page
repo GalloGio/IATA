@@ -123,7 +123,7 @@
             }
 
             function newnAccreditationApplicationNavigateTo() {
-                if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
+                if (('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false')) {
                     $('#modalChooseAccreditationType').modal('toggle');
                 } else {
                     navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
@@ -156,6 +156,10 @@
                 } else {
                     if(typeAccredSelected == 'Travel_Agent') {
                         navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
+                    } else if (typeAccredSelected == 'China_Domestic') {
+                        navigateToUrl('/ISSP_ANG_ProductComparison?chinaAccred=Domestic','LIST_VIEW','newCase');
+                    } else if (typeAccredSelected == 'China_International') {
+                        navigateToUrl('/ISSP_ANG_ProductComparison?chinaAccred=International','LIST_VIEW','newCase');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent','LIST_VIEW','newCase');
                     }
@@ -345,8 +349,8 @@
                             
                     </section>
                         
-                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
-                        <header>
+                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c)), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                        <header> 
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
                                 <strong>{!$Label.ISSP_AMS_Step0_Other_Forms}</strong>
@@ -387,12 +391,25 @@
                         <div class="row" id="modalChooseAccreditationRow">
                             <apex:outputPanel layout="block" styleClass="col-md-12 text-normal" id="modalChooseAccreditationPanel">
                                 <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId">
-                                    <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
-                                    <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" />
+                                    <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" rendered="{!hqAccount.Country_ISO_Code__c != 'CN'}"/>
+
+                                    <apex:selectOption itemValue="China_Domestic" itemLabel="{!$Label.ISSP_China_Domestic}" id="chinaDomesticCheck" rendered="{!hqAccount.Country_ISO_Code__c == 'CN'}"/>
+                                
+                                    <apex:selectOption itemValue="China_International" itemLabel="{!$Label.ISSP_China_International}" id="chinaInternationalCheck" rendered="{!hqAccount.Country_ISO_Code__c == 'CN'}"/> 
+
+                                    <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck"/>
                                 </apex:selectRadio>
                             </apex:outputPanel>
                         </div>
                     </div>
+
+                    <!--<script type="text/javascript">
+                        $('[value="China_International"]').parent().append($('<apex:image/>',{id: 'dasd', value: '/img/msg_icons/info16.png',
+                                                html-data-html: 'true',
+                                                html-data-placement: 'right',
+                                                html-data-toggle: 'tooltip',
+                                                title: '{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}'}));
+                    </script>-->
 
                     <div class="modal-footer">
                         <div class="col-md-12">

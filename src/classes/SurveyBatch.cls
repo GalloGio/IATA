@@ -126,6 +126,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
                                AND Instant_Survey_Feedback_requested__c = false
                                AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
+                               AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR' //WMO-571
                                    ORDER BY ClosedDate DESC]);
 
     CasesPart1 = new Set<Id>();
@@ -178,7 +179,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                   WhoClosedCase__r.UserRole.Name, Reason1__c, Origin, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c, BSPCountry__c
                                FROM Case
                                WHERE Id IN :lstCaseIds
-                               AND RecordType.DeveloperName IN :lstRecordTypesInScope]);
+                               AND RecordType.DeveloperName IN :lstRecordTypesInScope AND Account.IATA_ISO_Country__r.ISO_Code__c <> 'IR']);//WMO-571
 
     system.debug(LoggingLevel.error, '################### START() -> AFTER PART 2 I FOUND IN TOTAL ' + casesToBeProcessed.size() + ' CASES');
 
