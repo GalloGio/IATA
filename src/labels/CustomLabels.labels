@@ -3180,6 +3180,14 @@ Payment required on receipt of this Payment Advice
         <value>We need your input to proceed with your case.</value>
     </labels>
     <labels>
+        <fullName>CSP_PortalPath</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PortalPath</shortDescription>
+        <value>/csportal/s/</value>
+    </labels>
+    <labels>
         <fullName>CSP_Portal_Status</fullName>
         <language>en_US</language>
         <protected>false</protected>

@@ -1,34 +1,3 @@
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_XBd.ttf') format("truetype");
-    font-weight: 700;
-	font-style: normal;
-}
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_Bd.ttf') format("truetype");
-    font-weight: 600;
-	font-style: normal;
-}
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_Md.ttf') format("truetype");
-    font-weight: 500;
-	font-style: normal;
-}
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_Rg.ttf') format("truetype");
-    font-weight: 400;
-	font-style: normal;
-}
-@font-face{
-    font-family:"AktivGrotesk";
-    src: url('/csportal/s/CSPortal/Fonts/AktivGrotesk_Th.ttf') format("truetype");
-    font-weight: 300;
-	font-style: normal;
-}
-
 body {
     background-color: #f0f2f5;
     /*font-weight: 300;*/
@@ -1263,10 +1232,6 @@ lightning-datatable .slds-th__action {
     display:none;
 }
 
-.invalidValue input, .invalidValue textArea{
-    box-shadow: 0px 0px 4px 1px rgba(255, 0, 0, 1) !important;
-}
-
 .textValue .slds-form-element__legend{
     display:none;
 }
@@ -1433,4 +1398,58 @@ visibility: hidden;
 /*Used to limit the height of the dropdownlist*/
 .customDropDownMaxHeight .slds-dropdown_length-with-icon-10 {
     max-height: calc(10rem);
+}
+
+/* header */
+.headerButtonNotifications {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
+  width: 24px;
+  height: 24px;
+}
+
+.headerButtonProfile {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonSupport {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonService {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonArrow {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.headerButtonSearch {
+  background-color: #ffffff;
+  mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
+  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
 }

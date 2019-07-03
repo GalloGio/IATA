@@ -21,12 +21,12 @@ import csp_Profile_IATACode from '@salesforce/label/c.csp_Profile_IATACode';
 import csp_Profile_Website from '@salesforce/label/c.csp_Profile_Website';
 import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 
-
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
 export default class PortalProfilePageHeader extends LightningElement {
 
-    backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
+    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
 
         //Loading && Error
         @track loading = true;
@@ -113,7 +113,7 @@ export default class PortalProfilePageHeader extends LightningElement {
                         for(i = 0; i < resultsAux.length; i++){
                             if(resultsAux[i].categoryName === this.pageParams.category){
                                 this.category = resultsAux[i].categoryLabel;
-                                this.iconLink = '/csportal/s/CSPortal/Images/FAQ/' + this.pageParams.category + '.svg';
+                                this.iconLink = CSP_PortalPath + 'CSPortal/Images/FAQ/' + this.pageParams.category + '.svg';
                                 break;
                             }
                         }

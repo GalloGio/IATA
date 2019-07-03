@@ -8,9 +8,11 @@ import csp_My_Profile_Job_Title from '@salesforce/label/c.csp_My_Profile_Job_Tit
 import csp_My_Profile_Company from '@salesforce/label/c.csp_My_Profile_Company';
 import csp_My_Profile_Email from '@salesforce/label/c.csp_My_Profile_Email';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalProfilePageHeader extends LightningElement {
 
-    @track backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
+    @track backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
 
     //Loading && Error
     @track loading = false;

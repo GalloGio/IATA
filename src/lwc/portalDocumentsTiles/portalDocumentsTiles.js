@@ -7,6 +7,8 @@ import CSP_DocumentsAll from '@salesforce/label/c.CSP_DocumentsAll';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalDocumentsTiles extends NavigationMixin(LightningElement) {
     @track label = {
         CSP_DocumentsLabel,
@@ -15,7 +17,7 @@ export default class PortalDocumentsTiles extends NavigationMixin(LightningEleme
     };
     @track lstTiles = [];
     @track loading = true;
-    iconFolder = '/csportal/s/CSPortal/Images/Support/Documents.svg';
+    iconFolder = CSP_PortalPath + 'CSPortal/Images/Support/Documents.svg';
 
     connectedCallback() {
         getDocumentsCategories({ sobj : 'ContentVersion', field : 'Document_Category__c' })

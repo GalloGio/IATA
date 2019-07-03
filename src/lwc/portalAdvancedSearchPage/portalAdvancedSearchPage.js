@@ -12,6 +12,8 @@ import CSP_Search_TypeIn_text1 from '@salesforce/label/c.CSP_Search_TypeIn_text1
 import CSP_Search_TypeIn_text2 from '@salesforce/label/c.CSP_Search_TypeIn_text2';
 import CSP_Search_TypeIn_text3 from '@salesforce/label/c.CSP_Search_TypeIn_text3';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalAdvancedSearchPage extends LightningElement {
 
     label = {
@@ -25,8 +27,8 @@ export default class PortalAdvancedSearchPage extends LightningElement {
         CSP_Search_TypeIn_text3
     };
 
-    searchIconUrl = '/csportal/s/CSPortal/Images/Icons/searchColored.svg';
-    searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
+    searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
+    searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
 
     @track filteringObject;
@@ -41,7 +43,7 @@ export default class PortalAdvancedSearchPage extends LightningElement {
     @track loadingTypehead = false;
 
     //links for images
-    backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
+    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
     @track backgroundStyle;
 
     connectedCallback(){

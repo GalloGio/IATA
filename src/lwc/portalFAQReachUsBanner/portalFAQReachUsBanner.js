@@ -1,5 +1,8 @@
 import { LightningElement, track, api } from 'lwc';
 
+//images
+import PORTAL_RESOURCES from '@salesforce/resourceUrl/csPortalResources';
+
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
@@ -8,6 +11,8 @@ import { navigateToPage } from'c/navigationUtils';
 import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 import CSP_FAQReachUsBanner_Title from '@salesforce/label/c.CSP_FAQReachUsBanner_Title';
 import CSP_FAQReachUsBanner_Text from '@salesforce/label/c.CSP_FAQReachUsBanner_Text';
+
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalFAQReachUsBanner extends NavigationMixin(LightningElement) {
 
@@ -23,7 +28,7 @@ export default class PortalFAQReachUsBanner extends NavigationMixin(LightningEle
     @api topic;
     @api subTopic;
 
-    conversationImageURL = '/csportal/s/CSPortal/Images/Icons/messageBallons.svg';
+    conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
     connectedCallback() {        
         this[NavigationMixin.GenerateUrl]({

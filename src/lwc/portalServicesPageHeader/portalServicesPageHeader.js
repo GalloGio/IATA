@@ -4,6 +4,8 @@ import { LightningElement, track } from 'lwc';
 import CSP_Search_Services_Placeholder from '@salesforce/label/c.CSP_Search_Services_Placeholder';
 import CSP_Services_HeaderTitle from '@salesforce/label/c.CSP_Services_HeaderTitle';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class PortalServicesPageHeader extends LightningElement {
 
     label = {
@@ -12,7 +14,7 @@ export default class PortalServicesPageHeader extends LightningElement {
     };
 
     //links for images
-    backgroundIcon = '/csportal/s/CSPortal/Images/Backgrounds/ControlTower.jpg';
+    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
 
     @track backgroundStyle;
 
