@@ -1,0 +1,131 @@
+<aura:component controller="AWW_KeyContactsCtrl">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="filteredData" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="sortField" type="String" default="Name"/>
+    <aura:attribute name="ascOrder" type="Boolean" default="true"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div class="slds-p-around_medium">
+        <div class="slds-box slds-p-around_none slds-theme_shade">
+            <lightning:card class="bckColor" title="Key Contacts" iconName="standard:contact">
+                <aura:set attribute="actions">
+                    <div class="slds-grid slds-gutters_direct slds-grid_vertical-align-end">
+                        <div class="slds-col">
+                            <div class="slds-grid">
+                                <div class="slds-col">
+                                    <lightning:input variant="label-hidden" aura:id="search-contact" name="search-contact" placeholder="Search" type="search" onchange="{!c.search}"/>
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:helptext class="slds-p-left_x-small" content="Search applies to Name and Site" iconName="utility:info"/>
+                                </div>                               
+                            </div>
+                        </div>
+                        <div class="slds-col">
+                            <lightning:button variant="Neutral" label="Print" title="Print" onclick="{!c.printKeyContacts}"/>
+                        </div>
+                        <div class="slds-col">
+                            <lightning:button variant="Neutral" label="Export Details" title="Export Details" onclick="{!c.showPopUp}"/>
+                        </div>
+                    </div>
+                </aura:set>
+                <div class="slds-p-around_none slds-m-around_medium">
+                    <!-- HTML table used because of formula fields to display html code -->
+                    <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+                        <thead>
+                            <tr>
+                                <aura:iteration items="{!v.columns}" var="item">
+                                    <th scope="col">
+                                        <div class="sortColumn" title="{!item.title}" onclick="{!c.sortContacts}" data-sortable="{!item.sortable}" data-fieldname="{!item.fieldname}">
+                                            <lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="{!item.title}"/>
+                                            <aura:if isTrue="{!and(v.sortField == item.title, item.sortable)}">
+                                                <aura:if isTrue="{!v.ascOrder}">
+                                                        <lightning:icon iconName="utility:arrowup" size="x-small" class="slds-p-left_small"/>
+                                                    <aura:set attribute="else">
+                                                        <lightning:icon iconName="utility:arrowdown" size="x-small" class="slds-p-left_small"/>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </aura:if>
+                                        </div>
+                                    </th>
+                                </aura:iteration>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.filteredData}" var="item">
+                                <tr class="slds-hint-parent">                            
+                                    <th data-label="Name" scope="row" class="slds-cell-wrap">
+                                        <a href="{!item.contactLink}" target="_blank">
+                                            <lightning:formattedText value="{!item.contactName}"/>
+                                        </a>
+                                    </th>
+                                    <th data-label="Account Name" scope="row" class="slds-cell-wrap">
+                                        <a href="{!item.accountLink}" target="_blank">
+                                            <lightning:formattedText value="{!item.accountName}"/>
+                                        </a>
+                                    </th>
+                                    <th data-label="Site" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedRichText value="{!item.accountSite}"/>
+                                    </th>  
+                                    <th data-label="Type" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedRichText value="{!item.contactType}"/>
+                                    </th>  
+                                    <th data-label="Primary for" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedText value="{!item.primaryFor}"/>
+                                    </th>
+                                    <th data-label="Title" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedText value="{!item.title}"/>
+                                    </th>  
+                                    <th data-label="Phone" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedPhone value="{!item.phone}"/>
+                                    </th>  
+                                    <th data-label="Mobile" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedPhone value="{!item.mobile}"/>
+                                    </th>  
+                                    <th data-label="Email" scope="row" class="slds-cell-wrap">
+                                        <lightning:formattedEmail value="{!item.email}"/>
+                                    </th>                             
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning:card>
+        </div>
+    
+    </div>
+
+    <div aura:id="popup-warning" class="slds-hide"> 
+        <section role="dialog" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                        onclick="{!c.hidePopUp}"
+                        alternativeText="close"
+                        variant="bare-inverse"
+                        size="large"
+                        class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"></h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Please remove column A once you have exported details.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button 
+                        variant="neutral" 
+                        label="Cancel" 
+                        title="Cancel"
+                        onclick="{!c.hidePopUp}"/>  
+                    <lightning:button
+                        variant="brand" 
+                        label="OK" 
+                        title="OK"
+                        onclick="{!c.openReport}"/> 
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>    
+</aura:component>

@@ -1,0 +1,31 @@
+<aura:component controller="AWW_AccountOwnershipCtrl">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="canEdit" type="Boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/> 
+
+    <div class="slds-m-top_medium">
+        <div class="slds-box slds-p-around_none slds-theme_shade">
+            <lightning:card class="bckColor" title="Subsidiaries" iconName="standard:hierarchy">
+                <aura:set attribute="actions">
+                    <lightning:button variant="Neutral" label="Add" title="Add" onclick="{!c.add}" class="{!if(v.canEdit,'','slds-hide')}"/>  
+                </aura:set>
+                <div class="slds-m-around_x-small slds-table_bordered slds-border_left slds-border_right">
+                    <lightning:datatable
+                        keyField="ownershipRecordId"
+                        data="{!v.data}"
+                        columns="{!v.columns}"
+                        resizeColumnDisabled="true"
+                        hideCheckboxColumn="true"
+                        onrowaction="{!c.handleRowAction}"/>
+                </div>
+            </lightning:card>
+        </div>
+    </div>
+
+    <c:AWW_OwnershipEdit aura:id="owners-edit" accountId="{!v.accountId}"/>
+    <c:AWW_OwnershipDelete aura:id="delete-record"/>
+</aura:component>

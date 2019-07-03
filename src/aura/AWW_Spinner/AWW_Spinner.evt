@@ -1,0 +1,3 @@
+<aura:event type="Component" description="Control Spinner visibility">
+    <aura:attribute name="option" type="String"/>
+</aura:event>

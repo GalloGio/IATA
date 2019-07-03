@@ -1,0 +1,50 @@
+<aura:component controller="AWW_HeadOfficesCtrl">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="filteredData" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="searchInput" type="String"/>
+    <aura:attribute name="canEdit" type="Boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/>
+
+    <div class="slds-p-around_medium">
+        <div class="slds-box slds-p-around_none slds-theme_shade">
+            <lightning:card class="bckColor" title="Head Offices" iconName="standard:account">
+                <aura:set attribute="actions">
+                    <div class="slds-grid slds-gutters_direct slds-grid_vertical-align-start">
+                        <div class="slds-col">
+                            <div class="slds-grid">
+                                <div class="slds-col">
+                                    <lightning:input type="search" class="slds-m-right_xx-small" value="{!v.searchInput}" onchange="{!c.search}" variant="label-hidden" aura:id="search-agency" name="search-agency" placeholder="Search"/>                                    
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:helptext class="slds-p-left_x-small" content="Search applies to Name, IATA Code and Country" iconName="utility:info"/>  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col">
+                            <lightning:button variant="neutral" label="Print" title="Print" onclick="{!c.print}"/>
+                        </div>
+                        <div class="{!'slds-col' + if(v.canEdit, '', ' slds-hide')}">
+                            <lightning:button variant="neutral" label="Manage Hierarchy" title="Manage Hierarchy" onclick="{!c.showManageHierarchy}"/>
+                        </div>
+                    </div>
+                </aura:set>
+                <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
+                    <lightning:datatable
+                        keyField="accountId"
+                        data="{!v.filteredData}"
+                        columns="{!v.columns}"
+                        resizeColumnDisabled="true"
+                        hideCheckboxColumn="true"
+                        onrowaction="{!c.handleRowAction}"/>
+                </div>
+            </lightning:card>
+        </div>
+    </div>
+
+    <c:AWW_AccountManageHierarchy aura:id="manageHierarchyCmp" accountId="{!v.accountId}"/>
+    <c:AWW_AccountViewHierarchy aura:id="viewHierarchyCmp"/>
+</aura:component>
