@@ -1,0 +1,99 @@
+<apex:page showHeader="false" standardStylesheets="true" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Account" extensions="AWW_AccountGroupsCtrl">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <style>
+                @page {
+                    size: A4 landscape; /* A4 landscape (297mm×210mm) */
+                    margin: 3%;
+                }
+
+                .maingroup {background-color: #f0f0f0;}
+                th { text-align: left;}
+                th.narrowColumn {width: 10%;}
+                th.headerRow {background-color: #bdbdbd !important;}
+                td { white-space: normal; word-wrap: break-word; max-width: 10em; vertical-align: top !important; border-width: 1px !important;}
+            </style>
+        </head>
+
+        <body onload="window.print()" >
+            <apex:form >
+                <apex:pageBlock >
+                    <table class="list"  border="0" cellpadding="0" cellspacing="0">
+                        <thead class="rich-table-thead">
+                            <tr>
+                                <th scope="col" colspan="8" ><div>Participation to IATA Industry Groups</div></th>
+                            </tr>
+                            <tr>
+                                <th scope="col" colspan="8" ><div>Account: {!Account.Name}</div></th>
+                            </tr>
+                            <tr class="headerRow" >
+                                <th class="headerRow" scope="col" colspan="3" ><div>Group Information</div></th>
+                                <th class="headerRow" scope="col" colspan="5" ><div>Participant Information</div></th>            
+                            </tr>
+                            <tr class="headerRow" >
+                                <th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Main Group</div></th>
+                                <th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Group Name</div></th>
+                                <th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>Group Owner</div></th>                            
+                                <th class="headerRow" scope="col" colspan="1" style="width: 11%;"><div>Role</div></th>
+                                <th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>First Name</div></th>
+                                <th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>Last Name</div></th>
+                                <th class="headerRow" scope="col" colspan="1" style="width: 9%;"><div>Job Title</div></th>
+                                <th class="headerRow" scope="col" colspan="1" style="width: 9%;"><div>Email</div></th>
+                            </tr>
+                        </thead>
+                    
+                        <apex:repeat value="{!wrapper.groups}" var="mainGroup">
+                            <tr class="dataRow">
+                                <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}">{!mainGroup.groupName}</td>
+                                <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}"></td>
+                                <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}">{!mainGroup.ownerName}</td>
+                                <apex:outputPanel layout="none" rendered="{!mainGroup.members.size == 0}">
+                                    <td class="dataCell maingroup"></td>
+                                    <td class="dataCell maingroup"></td>
+                                    <td class="dataCell maingroup"></td>
+                                    <td class="dataCell maingroup"></td>
+                                    <td class="dataCell maingroup"></td>
+                                </apex:outputPanel>
+                            </tr>
+                            <apex:outputPanel layout="none" rendered="{!mainGroup.members.size > 0}">
+                                <apex:repeat value="{!mainGroup.members}" var="member">
+                                    <tr>
+                                        <td class="dataCell maingroup">{!member.role}</td>
+                                        <td class="dataCell maingroup">{!member.firstName}</td>
+                                        <td class="dataCell maingroup">{!member.lastName}</td>
+                                        <td class="dataCell maingroup">{!member.title}</td>
+                                        <td class="dataCell maingroup">{!member.email}</td>
+                                    </tr> 
+                                </apex:repeat>
+                            </apex:outputPanel>
+                            <apex:repeat value="{!mainGroup.childrens}" var="localGroup">
+                                <tr>
+                                    <td class="dataCell" rowspan="{!localGroup.childrens.size + 1}"></td>
+                                    <td class="dataCell" rowspan="{!localGroup.childrens.size + 1}">{!localGroup.groupName}</td>
+                                    <td class="dataCell" rowspan="{!localGroup.childrens.size + 1}">{!localGroup.ownerName}</td>                                    
+                                </tr>
+                                <apex:repeat value="{!localGroup.childrens}" var="member">
+                                    <tr>
+                                        <td class="dataCell">{!member.role}</td>
+                                        <td class="dataCell">{!member.firstName}</td>
+                                        <td class="dataCell">{!member.lastName}</td>
+                                        <td class="dataCell">
+                                            {!member.title}
+                                            <apex:outputPanel layout="none" rendered="{!member.isRepresentative}">
+                                                <apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>
+                                            </apex:outputPanel>
+                                        </td>
+                                        <td class="dataCell">{!member.email}</td>
+                                    </tr>
+                                </apex:repeat>
+                            </apex:repeat>
+                        </apex:repeat>   
+                        <apex:outputPanel layout="none" rendered="{!wrapper.hasRepresentatives}">
+                            <tr><td colspan="8"><apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>This participant represents the account on that specific group.</td></tr>
+                        </apex:outputPanel>                     
+                    </table>
+                </apex:pageBlock>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>
