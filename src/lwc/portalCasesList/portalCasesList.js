@@ -60,14 +60,11 @@ export default class PortalCasesList extends LightningElement {
                     {label: Created_By, fieldName: 'CreatedBy', type: 'text'},
                     {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
                     {label: results.Country_concerned__c, fieldName: 'Country', type: 'text'},
-                    {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: {class: {fieldName: 'Status'}}}
+                    {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text', initialWidth: 140, cellAttributes: {class: {fieldName: 'statusClass'}}}
                 ];
                 /*Column 'Created By' is only visible by Portal Admin on list 'My Company Cases'*/
                 this.columnsAux = this.columns[3];
                 this.columns = this.columns.slice(0, 3).concat(this.columns.slice(4));
-        })
-        .catch(error => {
-            this.error = error;
         });
         
         this.renderCases();
@@ -83,7 +80,8 @@ export default class PortalCasesList extends LightningElement {
                     let row = allDataAux.records[i];
                     row.CaseURL = urlMap[row.Id];
                     row.CreatedBy = row.CreatedBy.Name;
-                    row.Country = row.Country_concerned_by_the_query__c;            
+                    row.Country = row.Country_concerned_by_the_query__c;
+                    row.statusClass= row.Status.replace(' ','').replace('_', '').replace('-','');
                 }
                 
                 this.allData = allDataAux.records;     
@@ -93,7 +91,6 @@ export default class PortalCasesList extends LightningElement {
                 this.buildData();
             })
             .catch(error => {
-                this.error = error;
                 this.loading = false;
             }
         );         

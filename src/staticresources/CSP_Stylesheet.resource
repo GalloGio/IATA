@@ -347,25 +347,19 @@ body {
 
 
 /* ############################################## */
-/* Table classes */
+/* Table header */
 lightning-datatable .slds-th__action {
   text-transform: capitalize;
   font-size: 14px;
 }
-.Closed lightning-primitive-cell-wrapper lightning-formatted-text{
-    background-color: #ffa499;
-    padding: 4px 6px 2px 6px;
-    border-radius: 1px;
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: 500;
-    color: #525252;
-    display: flex;
-    align-items: center;
-    vertical-align: middle;
-}
 
-.In lightning-primitive-cell-wrapper lightning-formatted-text{
+/* Cases table status styles*/
+.Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Escalated lightning-primitive-cell-wrapper lightning-formatted-text, .EscalatedInternally lightning-primitive-cell-wrapper lightning-formatted-text, 
+.EscalatedExternally lightning-primitive-cell-wrapper lightning-formatted-text, .ForReviewandAcceptance lightning-primitive-cell-wrapper lightning-formatted-text, 
+.OnHoldExternal lightning-primitive-cell-wrapper lightning-formatted-text, .OnHoldInternal lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Reopen lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedNotAccepted lightning-primitive-cell-wrapper lightning-formatted-text, 
+.InputRequested lightning-primitive-cell-wrapper lightning-formatted-text, .PendingReconsideration lightning-primitive-cell-wrapper lightning-formatted-text{
     background-color: #fac832;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -378,8 +372,38 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 
-.Escalated lightning-primitive-cell-wrapper lightning-formatted-text{
+.Pendingcustomer lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedRejected lightning-primitive-cell-wrapper lightning-formatted-text, 
+.ClosedDisapproved lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedWithdrawn lightning-primitive-cell-wrapper lightning-formatted-text, 
+.AcceptedPendingBG lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedPendingDocs lightning-primitive-cell-wrapper lightning-formatted-text, 
+.AcceptedPendingAgreement lightning-primitive-cell-wrapper lightning-formatted-text, .Returnapplicationtocustomer lightning-primitive-cell-wrapper lightning-formatted-text{
+    background-color: #ffa499;
+    padding: 4px 6px 2px 6px;
+    border-radius: 1px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 500;
+    color: #525252;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Submitted lightning-primitive-cell-wrapper lightning-formatted-text{
     background-color: #b1e8b5;
+    padding: 4px 6px 2px 6px;
+    border-radius: 1px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 500;
+    color: #525252;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text{
+    background-color: #f0f2f5;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
     text-transform: uppercase;
