@@ -2657,6 +2657,28 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             upsert contactToUpsert;
+
+            if (isMultiCountry) {
+                List<AMS_Accreditation_Contact__c> contactsToUpdate = new List<AMS_Accreditation_Contact__c>();
+                
+                for (AMS_Accreditation_Contact__c otherFormCon: [SELECT Id, Name, Salutation__c, Email__c
+                                                                FROM AMS_Accreditation_Contact__c
+                                                                WHERE Cloned_From_Contact__c = :contactToUpsert.Id
+                                                                    OR Id = :contactToUpsert.Cloned_From_Contact__c]) {
+                    System.debug('yoorui: ' + otherFormCon);
+                    if (otherFormCon.Name != contactToUpsert.Name || otherFormCon.Email__c != contactToUpsert.Email__c || otherFormCon.Salutation__c != contactToUpsert.Salutation__c) {
+                        otherFormCon.Name = contactToUpsert.Name;
+                        otherFormCon.Last_name__c = contactToUpsert.Last_name__c;
+                        otherFormCon.First_name__c = contactToUpsert.First_name__c;
+                        otherFormCon.Email__c = contactToUpsert.Email__c;
+                        otherFormCon.Salutation__c = contactToUpsert.Salutation__c;
+                        contactsToUpdate.add(otherFormCon);
+                    }
+                }
+
+                update contactsToUpdate;
+            }
+            
             if (contactToUpsert.Financial_Assessment_Contact__c && cntIFAPContacts < 1) {
                 cntIFAPContacts = 1;
             }
@@ -2790,7 +2812,8 @@ public without sharing class ISSP_AMS_Accreditation {
                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, Registration_number__c, IATAcode__c, Company_Name_Local__c,Contact__c,
                       Phone__c, PhoneNational__c, FAX__c, FAXNational__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, MobileNational__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
                       Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, CASS_contact__c, Number_Of_Shares__c,
-                      Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, AMS_ContactId__c, AMS_OwnershipId__c, Authorised_to_make_customs_declarations__c
+                      Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, AMS_ContactId__c, AMS_OwnershipId__c, Authorised_to_make_customs_declarations__c,
+                      Cloned_From_Contact__c
                       FROM AMS_Accreditation_Contact__c
                       WHERE Id = : editContactId];
 
@@ -4384,7 +4407,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 query += 'Job_title__c, Agencies_prev_worked_for__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, ';
                 query += 'Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, ';
                 query += 'Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, Duplicate_contact_exists__c, ';
-                query += 'Portal_administrator__c, Authorised_to_make_customs_declarations__c , Is_Cloned_From_Another_Form__c ';
+                query += 'Portal_administrator__c, Authorised_to_make_customs_declarations__c, Is_Cloned_From_Another_Form__c, Cloned_From_Contact__c ';
             }
         }
 
@@ -7515,21 +7538,22 @@ public without sharing class ISSP_AMS_Accreditation {
             newCon.First_name__c = con.First_name__c;
             newCon.Last_name__c = con.Last_name__c;
             newCon.Name = con.Name;
-            newCon.Financial_interest__c = con.Financial_interest__c;
-            newCon.Agency_owner__c = con.Agency_owner__c;
             newCon.RecordTypeId = con.RecordTypeId;
             newCon.Email__c = con.Email__c;
             newCon.Phone__c = con.Phone__c;
             newCon.Contact__c = con.Contact__c;
-            newCon.AddressStreet__c = con.AddressStreet__c;
-            newCon.AddressCity__c = con.AddressCity__c;
-            newCon.AddressPostcode__c = con.AddressPostcode__c;
-            newCon.AddressCountry__c = con.AddressCountry__c;
 
             if (isCloned) {
                 newCon.Is_Cloned_From_Another_Form__c = true;
+                newCon.Cloned_From_Contact__c = con.Id;
             } else {
                 newCon.Is_Cloned_From_Another_Form__c = con.Is_Cloned_From_Another_Form__c;
+                newCon.Agency_owner__c = con.Agency_owner__c;
+                newCon.Financial_interest__c = con.Financial_interest__c;
+                newCon.AddressStreet__c = con.AddressStreet__c;
+                newCon.AddressCity__c = con.AddressCity__c;
+                newCon.AddressPostcode__c = con.AddressPostcode__c;
+                newCon.AddressCountry__c = con.AddressCountry__c;
             }
 
             contactsToBeCreated.add(newCon);
@@ -7629,7 +7653,6 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
         }
-        //Improve logic to avoid queries on deleting;
 
         return ownersThatCanBeCopiedList;
     }
