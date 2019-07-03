@@ -240,6 +240,45 @@ public without sharing class ISSP_AMS_Accreditation {
     public String optInOutBtn {get; set;}
     public String optInOutErrorNoDate {get; set;}
 
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
+            isNewPortal = CSP_Utils.isNewPortalActive();
+         }
+         
+        return isNewPortal;
+    }
+    set;
+    }
+
+    public String portalRedirectToCase {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_Case?caseId=' + newCase.Id + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('case-details');
+            return url + '?caseId=' + newCase.Id;
+        }
+        
+    }
+    set;
+    }
+
+    public String portalRedirectToCaseList {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_CaseList' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('cases-list');
+            return url;
+        }
+    }
+    set;
+    }
+
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;
