@@ -24,9 +24,8 @@ public class AMS_AgencyAChangeCodeHandler {
         for(Agency_Applied_Change_Code__c aaccRecord : aacc) {
         	setIdAACC.add(aaccRecord.id);
             if(aaccRecord.RecordTypeId == irregRtId)
-            {
                 aaccToBeProcessed.add(aaccRecord);
-            }
+
             //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
             if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
                 setIdAACCForNewApplicationPending.add(aaccRecord.id);
@@ -37,16 +36,23 @@ public class AMS_AgencyAChangeCodeHandler {
             }
         }
 
-        AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
-
         if(!AMS_OscarCase_RiskMgmt.mapAccntToUpdate.isEmpty())
             mapAccntToUpdate = AMS_OscarCase_RiskMgmt.mapAccntToUpdate;
+
+        aaccToBeProcessed.addAll(AMS_OscarCase_RiskMgmt.irrsToExp.values());
+
+        AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed, mapAccntToUpdate, AMS_OscarCase_RiskMgmt.irrsToExp);
 
 		if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR){
 		   updateAccountReason(setIdAACC, false);
         }else{
              if(!setIdAACCForNewApplicationPending.isEmpty()) 
                 updateAccountReason(setIdAACCForNewApplicationPending, true);
+        }
+
+        if(!mapAccntToUpdate.isEmpty()){
+            update mapAccntToUpdate.values();
+            mapAccntToUpdate = new Map<Id, Account>();
         }
 		
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
@@ -88,9 +94,13 @@ public class AMS_AgencyAChangeCodeHandler {
             if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
                 setIdAACCForNewApplicationPending.add(aaccRecord.id);
         }
-        AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
+
+        if(!AMS_OscarCase_RiskMgmt.mapAccntToUpdate.isEmpty())
+            mapAccntToUpdate = AMS_OscarCase_RiskMgmt.mapAccntToUpdate;
+
+        AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed, mapAccntToUpdate, AMS_OscarCase_RiskMgmt.irrsToExp);
         
-       if(!setIdAACC.isEmpty() && (AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR)){
+        if(!setIdAACC.isEmpty() && (AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR)){
 	        if(!setIdAACCForNewApplicationPending.isEmpty()) 
                 setIdAACC.addAll(setIdAACCForNewApplicationPending);
 
@@ -98,6 +108,11 @@ public class AMS_AgencyAChangeCodeHandler {
         } else {
              if(!setIdAACCForNewApplicationPending.isEmpty()) 
                 updateAccountReason(setIdAACCForNewApplicationPending, true);
+        }
+
+        if(!mapAccntToUpdate.isEmpty()){
+            update mapAccntToUpdate.values();
+            mapAccntToUpdate = new Map<Id, Account>();
         }
     }
 
@@ -217,9 +232,8 @@ public class AMS_AgencyAChangeCodeHandler {
         for(Id acc : mapLastAACC.keyset())
             aACCtoUpdate.addAll(mapLastAACC.get(acc));
 
-        if(!aACCtoUpdate.isEmpty()){
+        if(!aACCtoUpdate.isEmpty())
             update aACCtoUpdate;
-        }
 
     }
 

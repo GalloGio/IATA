@@ -30,11 +30,11 @@ public without sharing class AMS_AgencyUpdateHelper {
 
 
         //get the already existing Agency Updates related to the agency to ensure that there is only one record in agency update related to the agency
-        List<Account> aulist = [select id,  Name, IATACode__c,BillingStreet,IATA_ISO_Country__c,BillingCity,BillingPostalCode,
-                                            Top_Parent__c,Location_Type__c,Status__c,CASS_Number__c,Check_Digit__c,Location_Class__c,
-                (select id,Update_Type__c,Change_Code__c,Account__c,Status__c from AMS_Agency_Updates__r where Integration_System__c = 'SAP PI' ), 
-                (SELECT Account__c,Account__r.IATACode__c,Active__c,Change_Code__c,For_Integration__c from Agencies_Applied_Change_codes__r WHERE Change_Code__c != null AND For_Integration__c = true)
-                from Account where id in :agencyIds];
+        List<Account> aulist = [SELECT Id, Name, IATACode__c, BillingStreet, IATA_ISO_Country__c, BillingCity, BillingPostalCode,
+                                            Top_Parent__c, Location_Type__c, Status__c, CASS_Number__c, Check_Digit__c, Location_Class__c,
+                (SELECT Id, Update_Type__c, Change_Code__c, Account__c, Status__c, Agency_Applied_Change_code__r.Integration_RecId__c FROM AMS_Agency_Updates__r WHERE Integration_System__c = 'SAP PI' ), 
+                (SELECT Account__c, Account__r.IATACode__c, Active__c, Change_Code__c, For_Integration__c, Integration_RecId__c FROM Agencies_Applied_Change_codes__r WHERE Change_Code__c != null AND For_Integration__c = true)
+                FROM Account WHERE id IN: agencyIds];
 
 
         //Checks for for the accounts passed on the trigger, to see if existing records with status different from "Update_Sent", already exist for those accounts
@@ -90,8 +90,8 @@ public without sharing class AMS_AgencyUpdateHelper {
                         if(auxACC == null){
                             auxACC = aacc;
                         }else{
-                            String sRecIdA = AMS_Utils.getRecIdFromChangeCode( auxACC.Change_Code__c );
-                            String sRecIdB = AMS_Utils.getRecIdFromChangeCode( aacc.Change_Code__c );
+                            String sRecIdA = auxACC.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( auxACC.Change_Code__c ) : auxACC.Integration_RecId__c;
+                            String sRecIdB = aacc.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( aacc.Change_Code__c ) : aacc.Integration_RecId__c;
 
                             //Validates if the RecId for both Change Codes are equal or not
                             if(sRecIdA != sRecIdB){
@@ -126,8 +126,8 @@ public without sharing class AMS_AgencyUpdateHelper {
                     for(AMS_Agency_Updates__c au3: reEvaluateAgencyUpdate){
 
                         if(au3.Account__c == auxACC.Account__c){
-                            String sRecIdA = AMS_Utils.getRecIdFromChangeCode( au3.Change_Code__c );
-                            String sRecIdB = AMS_Utils.getRecIdFromChangeCode( auxACC.Change_Code__c);
+                            String sRecIdA = au3.Agency_Applied_Change_code__r.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( au3.Change_Code__c ) : au3.Agency_Applied_Change_code__r.Integration_RecId__c;
+                            String sRecIdB = auxACC.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( auxACC.Change_Code__c ) : auxACC.Integration_RecId__c;
 
                             if(sRecIdWinner != ''){
                                 sRecIdB = sRecIdWinner;
@@ -194,7 +194,7 @@ public without sharing class AMS_AgencyUpdateHelper {
 
             Agency_Applied_Change_code__c agApplCC = mAgencyChangeCode.get(au.Id);
             String sChangeCode = agApplCC == null ? '' : agApplCC.Change_Code__c;
-            String sRecId = AMS_Utils.getRecIdFromChangeCode(sChangeCode);
+            String sRecId = agApplCC == null || agApplCC.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( sChangeCode ) : agApplCC.Integration_RecId__c;
 
             String accErrors = '';
             

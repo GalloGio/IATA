@@ -53,6 +53,7 @@ public class AMS_OscarCase_RiskMgmt {
     	Map<Id,List<AMS_Process_Detail__c>> hierarchySelectionPerCase = new Map<Id,List<AMS_Process_Detail__c>>();
     	List<Case> toCreateHierarchySelection = new List<Case>();
     	Map<Id,Id> casePerParentAcc = new Map<Id,Id>();
+    	Map<Id,Id> parentAccPerCase = new Map<Id,Id>();
     	Set<String> setFSStatus = new Set<String>{'Close to Expiry Date', 'Active', 'Encashed', 'Encashment in progress'};
     	Set<String> setOperationCalendarExtID = new Set<String>();
     	Map<Case,List<AMS_ChangeCodes__c>> changeCodesToCreatePerCase = new Map<Case,List<AMS_ChangeCodes__c>>();
@@ -79,6 +80,8 @@ public class AMS_OscarCase_RiskMgmt {
     	//Get all the change code configurations
     	ReadConfiguration();
 
+    	if(changeCodesPerAccModel.isEmpty()) return;
+
     	//Get all previously generated change code from same sidra/sidra lite
 		for(Agency_Applied_Change_code__c aa : [SELECT id, Createddate, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c,
 											   Account__c, Account__r.Location_Class__c, Account__r.ParentId, Change_Code__c, SIDRA_Case__c
@@ -92,26 +95,31 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 
     	for(Case c : mapCases.values()){
+
+    		if(!c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c)
+				continue;
     		
     		//get operational calendar external id for each case
     		String sExtId = GetOpCalendarExtId(c.External_ID__c);
 			if(sExtId != '') setOperationCalendarExtID.add(sExtId);
 
 			//get all the hierarchy account selections for the respective case
-    		if(c.Hierarchy_Account_Selections__r.isEmpty())
+    		if(c.Hierarchy_Account_Selections__r.isEmpty()){
     			toCreateHierarchySelection.add(c);
-    		else
+    		} else {
     			hierarchySelectionPerCase.put(c.Id, c.Hierarchy_Account_Selections__r);
+    		}
 
     		Id caseHOId = c.Account.ParentId == null ? c.AccountId : c.Account.Parent.ParentId == null ? c.Account.ParentId : c.Account.Parent.ParentId;
 
     		casePerParentAcc.put(caseHOId, c.Id);
+    		parentAccPerCase.put(c.Id, caseHOId);
 
     		//Get the change codes to create
     		for(AMS_ChangeCodes__c ccConfig : changeCodesPerAccModel.get(c.Account.ANG_IsNewGenAgency__c ? 'NEWGEN' : 'AMS')){
     			Set<String> setLocClass = ccConfig.Class_Type__c == null ? new Set<String>() : new Set<String>(ccConfig.Class_Type__c.toUpperCase().split(';'));
 
-				if(!setLocClass.contains(c.Account.Location_Class__c.toUpperCase()) || !c.recordType.DeveloperName.equalsIgnoreCase(ccConfig.Record_Type__c) || (c.Account.CNS_Agency__c != ccConfig.Used_By_CNS__c))
+				if(!setLocClass.contains(c.Account.Location_Class__c.toUpperCase()) || !c.recordType.DeveloperName.equalsIgnoreCase(ccConfig.Record_Type__c) || (c.Account.CNS_Agency__c && !ccConfig.Used_By_CNS__c))
 					continue;
 
 				//Check that the same change code does not exists generated from the same SIDRA (Lite)
@@ -162,9 +170,8 @@ public class AMS_OscarCase_RiskMgmt {
     	}
 
     	//create missing hierarchy account selections for each case
-    	if(!toCreateHierarchySelection.isEmpty()){
-			hierarchySelectionPerCase = AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(toCreateHierarchySelection, casePerParentAcc);
-		}
+    	if(!toCreateHierarchySelection.isEmpty())
+			hierarchySelectionPerCase.putAll(AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(toCreateHierarchySelection, casePerParentAcc));
 
 		//get the operational calendars
 		if(!setOperationCalendarExtID.isEmpty()){
@@ -175,10 +182,11 @@ public class AMS_OscarCase_RiskMgmt {
 		//get all parents and all accounts per parent
 		for(List<AMS_Process_Detail__c> pdList : hierarchySelectionPerCase.values()){
 			for(AMS_Process_Detail__c pd : pdList) {
-				mapAllHOs.put(pd.Account__c, pd.HOId__c);
-				if(!allHierarchyPerParent.containsKey(pd.HOId__c))
-					allHierarchyPerParent.put(pd.HOId__c, new Set<Id>());
-				allHierarchyPerParent.get(pd.HOId__c).add(pd.Account__c);
+				Id hoId = pd.HOId__c == null ? parentAccPerCase.get(pd.Case__c) : pd.HOId__c;
+				mapAllHOs.put(pd.Account__c, hoId);
+				if(!allHierarchyPerParent.containsKey(hoId))
+					allHierarchyPerParent.put(hoId, new Set<Id>());
+				allHierarchyPerParent.get(hoId).add(pd.Account__c);
 			}
 		}
 
@@ -205,7 +213,7 @@ public class AMS_OscarCase_RiskMgmt {
         	for(Id acct : accountsToFetchFOPs) {
         		accountIdsFOP.addAll(allHierarchyPerParent.get(acct));
         	}
-            fOPsMap = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIdsFOP);
+            fOPsMap = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIdsFOP);	
         }
 
         //get all accounts and respective change codes created previously for the same case
@@ -267,10 +275,12 @@ public class AMS_OscarCase_RiskMgmt {
 
 				} else{
 					aacc = CreateChangeCode(cs, ccToCreate, mapAccounts.get(cs.AccountId), mapAccounts.get(cs.AccountId).CNS_Agency__c, fOPsMap.get(cs.AccountId));
+
 				}
 
 				if(aacc != null)
 					lsAACC.add(aacc);				
+				
 			}
 		}
 
@@ -317,7 +327,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 		if(toUpdateReason || toUpdateStatus)
 			generateReasonAndStatus(newCC, ccToCreate, toUpdateReason, toUpdateStatus, acct);
-			
+
     }
     
 
@@ -411,7 +421,7 @@ public class AMS_OscarCase_RiskMgmt {
 
         String extraMemoText = '';
         if(isHO && !cc.Apply_to_hierarchy__c){
-        	extraMemoText = allHierarchyPerParent.get(AccountId).size() > 1 ? cc.Extra_memo_text_for_HO__c : '';
+        	extraMemoText = allHierarchyPerParent.containsKey(AccountId) && allHierarchyPerParent.get(AccountId).size() > 1 ? cc.Extra_memo_text_for_HO__c : '';
         }
 		
 		//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
@@ -490,6 +500,7 @@ public class AMS_OscarCase_RiskMgmt {
 		AACC.CreatedDate_User__c = GenerateDateForBulletin(System.today());
 
 		AACC.AIMS_ID__C = createUniqueAIMSId(cse, cc.Change_Code__c);
+		AACC.Integration_RecId__c = cc.Integration_RecId__c;
 
 		//Handles update on account
 		Boolean bAccntToUpd = false;
@@ -745,9 +756,9 @@ public class AMS_OscarCase_RiskMgmt {
 			return setValues.contains(sValue.toUpperCase());
 		}
 		
-		if(condition.equals('NOT BLANK') || condition.equals('BLANK')){
-			return String.valueOf(newCaseValues.get(sFieldToCheck))!=null;
-		}
+		if(condition.equals('NOT BLANK')) return String.valueOf(newCaseValues.get(sFieldToCheck))!=null;
+		
+		if(condition.equals('BLANK')) return String.valueOf(newCaseValues.get(sFieldToCheck))==null;
 
 		if(condition.startsWithIgnoreCase('NOT EQUAL TO:')){
 			String sValue = sFieldToCheck == 'Parent.Status' ? newCaseValues.Parent.Status : (String)newCaseValues.get(sFieldToCheck);

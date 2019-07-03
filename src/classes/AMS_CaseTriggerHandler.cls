@@ -64,39 +64,43 @@ public class AMS_CaseTriggerHandler {
        
 		ID RTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'CaseRelatedAgencies');
         List<AMS_Process_Detail__c> listToInsert = new List<AMS_Process_Detail__c>();
+        Set<Id> casePerParentKeys = casePerParent.keyset();
 		
-        for(Account a : [select id, status__c
+        for(Account a : [SELECT Id, Status__c
 						, ParentId, Parent.Status__c
 						, Parent.ParentId, Parent.Parent.Status__c 
-					   from Account 
-					   where (id in:casePerParent.keyset()
-					   or parentid in :casePerParent.keyset()
-					   or parent.parentId in:casePerParent.keyset())
-					   and status__c in:setStatusToInclude]){
+					   FROM Account 
+					   WHERE (Id IN: casePerParentKeys
+					   OR ParentId IN: casePerParentKeys
+					   OR Parent.ParentId IN: casePerParentKeys)
+					   AND Status__c IN: setStatusToInclude]){
 			
-			if(a.ParentId==null && casePerParent.containsKey(a.Id)){ //HO
-                if(!hierarchySelectionToInsert.containsKey(casePerParent.get(a.Id)))
-                    hierarchySelectionToInsert.put(casePerParent.get(a.Id), new List<AMS_Process_Detail__c>());
-				AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = casePerParent.get(a.Id), Account__c = a.Id, RecordTypeId = RTId);
-                hierarchySelectionToInsert.get(casePerParent.get(a.Id)).add(pd);
+			if(a.ParentId == null && casePerParent.containsKey(a.Id)){ //HO
+                Id cseAux = casePerParent.get(a.Id);
+                if(!hierarchySelectionToInsert.containsKey(cseAux))
+                    hierarchySelectionToInsert.put(cseAux, new List<AMS_Process_Detail__c>());
+				AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = cseAux, Account__c = a.Id, RecordTypeId = RTId);
+                hierarchySelectionToInsert.get(cseAux).add(pd);
                 listToInsert.add(pd);
 				continue;
 			}
 			
-			if(a.ParentId!=null && a.Parent.ParentId==null && casePerParent.containsKey(a.ParentId)){ //BR
-				if(!hierarchySelectionToInsert.containsKey(casePerParent.get(a.ParentId)))
-                    hierarchySelectionToInsert.put(casePerParent.get(a.ParentId), new List<AMS_Process_Detail__c>());
-                AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = casePerParent.get(a.ParentId), Account__c = a.Id, RecordTypeId = RTId);
-                hierarchySelectionToInsert.get(casePerParent.get(a.ParentId)).add(pd);
+			if(a.ParentId != null && a.Parent.ParentId == null && casePerParent.containsKey(a.ParentId)){ //BR
+                Id cseAux = casePerParent.get(a.ParentId);
+				if(!hierarchySelectionToInsert.containsKey(cseAux))
+                    hierarchySelectionToInsert.put(cseAux, new List<AMS_Process_Detail__c>());
+                AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = cseAux, Account__c = a.Id, RecordTypeId = RTId);
+                hierarchySelectionToInsert.get(cseAux).add(pd);
                 listToInsert.add(pd);
 				continue;
 			}
 			
-			if(a.ParentId!=null && a.Parent.ParentId!=null && casePerParent.containsKey(a.Parent.ParentId)){ //SA
-				if(!hierarchySelectionToInsert.containsKey(casePerParent.get(a.Parent.ParentId)))
-                    hierarchySelectionToInsert.put(casePerParent.get(a.Parent.ParentId), new List<AMS_Process_Detail__c>());
-                AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = casePerParent.get(a.Parent.ParentId), Account__c = a.Id, RecordTypeId = RTId);
-                hierarchySelectionToInsert.get(casePerParent.get(a.Parent.ParentId)).add(pd);
+			if(a.ParentId != null && a.Parent.ParentId != null && casePerParent.containsKey(a.Parent.ParentId)){ //SA
+                Id cseAux = casePerParent.get(a.Parent.ParentId);
+				if(!hierarchySelectionToInsert.containsKey(cseAux))
+                    hierarchySelectionToInsert.put(cseAux, new List<AMS_Process_Detail__c>());
+                AMS_Process_Detail__c pd = new AMS_Process_Detail__c(Case__c = cseAux, Account__c = a.Id, RecordTypeId = RTId);
+                hierarchySelectionToInsert.get(cseAux).add(pd);
 				listToInsert.add(pd);
                 continue;
 			}

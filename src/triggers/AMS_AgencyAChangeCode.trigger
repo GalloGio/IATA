@@ -7,10 +7,7 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
         AMS_AgencyAChangeCodeHandler.firstRun = false;
         if(Trigger.isBefore) {
             if(Trigger.isInsert){
-                System.debug('Entering handleBeforeInsert');
                 AMS_AgencyAChangeCodeHandler.handleBeforeInsert(Trigger.new);
-                System.debug('Finished handleBeforeInsert');
-
             }
             
             if(Trigger.isUpdate){
