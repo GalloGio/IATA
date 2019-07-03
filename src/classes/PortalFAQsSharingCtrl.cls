@@ -70,7 +70,7 @@ public without sharing class PortalFAQsSharingCtrl {
         String accountSector;
         String accountCategory;
 
-        if(userInfo.AccountId != null){
+        if(userInfo.contact.AccountId != null){
             countryCode = userInfo.contact.Account.IATA_ISO_Country__c != null ? userInfo.contact.Account.IATA_ISO_Country__r.ISO_Code__c : UNKNOWN_VALUE;
             accountSector = userInfo.contact.Account.Sector__c  != null ? userInfo.contact.Account.Sector__c : UNKNOWN_VALUE;
             accountCategory = userInfo.contact.Account.Category__c != null ? userInfo.contact.Account.Category__c : UNKNOWN_VALUE;
