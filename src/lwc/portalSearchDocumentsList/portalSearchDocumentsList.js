@@ -148,7 +148,8 @@ export default class PortalSearchDocumentsList extends NavigationMixin(Lightning
                 category : filteringObjectAux.documentsComponent.documentCategoryFilter, 
                 prodCat : filteringObjectAux.documentsComponent.documentProductCategoryFilter,
                 publiCountry : filteringObjectAux.documentsComponent.documentCountryFilter,
-                requestedPage : requestedPageNumber })
+                requestedPage : requestedPageNumber,
+                docId: '' })
         .then(results => {
 
             if(results.records && results.records.length > 0) {
@@ -253,7 +254,7 @@ export default class PortalSearchDocumentsList extends NavigationMixin(Lightning
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
 
         let params = {};
-        params.serchText = filteringObjectAux.searchText; // SEARCH TERM
+        params.searchText = filteringObjectAux.searchText; // SEARCH TERM
         params.docId = event.target.attributes.getNamedItem('data-item').value; // SPECIFIC SELECTED DOCUMENT
 
         this[NavigationMixin.GenerateUrl]({

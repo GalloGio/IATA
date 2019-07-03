@@ -21,20 +21,22 @@ export default class PortalDocumentsFilters extends LightningElement {
     }
     set documentObject(value) {
         let _value = JSON.parse(JSON.stringify(value));
-
+        
         if(this._documentObject !== undefined) {
-            let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
+            let __documentObjectOld = JSON.parse(JSON.stringify(this._documentObject));
 
             this._documentObject = _value;
-            if(_value.topResults !== __documentObject.topResults || _value.category.name !== __documentObject.category.name) {
-                this.renderFilters(_value.category.name);
+            if(_value.topResults !== __documentObjectOld.topResults || _value.categorySelected !== __documentObjectOld.categorySelected) {
+                this.renderFilters(_value.categorySelected);
             }
 
             let modifiedCategories = [];
-            for(let key in this._documentObject) {
-                if (this._documentObject.hasOwnProperty(key)) {
-                    if((this.localTiles[key] !== undefined && this.localTiles[key] !== null) && this.localTiles[key].noResults !== this._documentObject[key].noResults) {
-                        modifiedCategories.push({ name: this._documentObject[key].name, noResults: this._documentObject[key].noResults, loading: false });
+            let __documentObject = JSON.parse(JSON.stringify(this._documentObject.categories));
+            for(let i = 0; i < __documentObjectOld.categories.length; i++) {
+                for(let j = 0; j < __documentObject.length; j++) {
+                    if(__documentObjectOld.categories[i].name === __documentObject[j].name && __documentObjectOld.categories[i].noResults !== __documentObject[j].noResults) {
+                        modifiedCategories.push({ name: __documentObject[j].name, noResults: __documentObject[j].noResults, loading: false });
+                        break;
                     }
                 }
             }
@@ -56,12 +58,12 @@ export default class PortalDocumentsFilters extends LightningElement {
         // DOCUMENT CATEGORY PICKLIST VALUES
         getDocumentsCategories({ sobj : 'ContentVersion', field : 'Document_Category__c' }) 
         .then(results => {           
-            let docs = JSON.parse(JSON.stringify(results));
+            let docs = JSON.parse(JSON.stringify(results));            
             
             let tempDocs = [];
-            let tempCategory = this._documentObject !== undefined && this._documentObject.category.name !== undefined ? this._documentObject.category.name : undefined;
+            let tempCategory = this._documentObject !== undefined && this._documentObject.categorySelected !== undefined ? this._documentObject.categorySelected : undefined;
             
-            Object.keys(docs).forEach(function (el) {                 
+            Object.keys(docs).forEach(function (el) {
                 if(tempCategory !== undefined && tempCategory === docs[el].label) {
                     tempDocs.push({ categoryName : docs[el].label, open: true, noResults: 0, class: 'slds-p-around_medium customCardTitleBox customBorderlessCardWhite' });
                 } else {
@@ -69,13 +71,15 @@ export default class PortalDocumentsFilters extends LightningElement {
                 }
             });
             let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
-            let localTiles = {};
+            let localTiles = [];
             for(let key in tempDocs) {
                 if (tempDocs.hasOwnProperty(key)) {
-                    __documentObject[tempDocs[key].categoryName] = { name: tempDocs[key].categoryName, noResults: 0, loading: false };
-                    localTiles[tempDocs[key].categoryName] = { name: tempDocs[key].categoryName, noResults: 0, loading: false };
+                    // __documentObject.categories[tempDocs[key].categoryName] = { name: tempDocs[key].categoryName, noResults: 0, loading: false, searchText: '', productCategory: '', countryOfPublication: '' };
+                    __documentObject.categories.push({ name: tempDocs[key].categoryName, noResults: 0, loading: false, searchText: '', productCategory: '', countryOfPublication: '', topResults: __documentObject.categorySelected !== '' ? false : true, docId: __documentObject.docId !== '' ? __documentObject.docId : '' });
+                    localTiles.push({ name: tempDocs[key].categoryName, noResults: 0, loading: false });
                 }
             }
+            
             this.localTiles = localTiles;
             
             const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
@@ -128,12 +132,18 @@ export default class PortalDocumentsFilters extends LightningElement {
     handleTopSearch() {
         let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
         
-        if(__documentObject.topResults === false) {
-            __documentObject.category.name = undefined;
+        if(__documentObject.topResults === false || __documentObject.categories.find(obj => obj.searchText !== '').searchText !== '') {
+            __documentObject.categorySelected = '';
             __documentObject.topResults = true;
-            __documentObject.productCategory = '';
-            __documentObject.countryOfPublication = '';
 
+            for(let i = 0; i < __documentObject.categories.length; i++) {
+                __documentObject.categories[i].topResults = true;
+                __documentObject.categories[i].countryOfPublication = '';
+                __documentObject.categories[i].productCategory = '';
+                __documentObject.categories[i].searchText = '';
+                __documentObject.categories[i].docId = '';
+            }
+            
             const selectedEvent = new CustomEvent('highlightfilter', { detail: __documentObject });
             this.dispatchEvent(selectedEvent);
         }
@@ -141,7 +151,7 @@ export default class PortalDocumentsFilters extends LightningElement {
 
     renderFilters(category) {
         let topicVals = JSON.parse(JSON.stringify(this.lstTiles));
-        
+
         Object.keys(topicVals).forEach(function (el) {
             if(category !== undefined && category === topicVals[el].categoryName) {
                 topicVals[el].open = true;
@@ -158,15 +168,20 @@ export default class PortalDocumentsFilters extends LightningElement {
     categorySelected(event) {
         let categoryName = event.target.dataset.item;
         let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
-        
-        if(__documentObject.category.name !== categoryName) {
-            __documentObject.category.name = categoryName;
+        if(__documentObject.categorySelected !== categoryName) {            
+            __documentObject.categorySelected = categoryName;
             __documentObject.topResults = false;
-            __documentObject.productCategory = '';
-            __documentObject.countryOfPublication = '';
-
+            for(let i = 0; i < __documentObject.categories.length; i++) {
+                if(__documentObject.categories[i].name === categoryName) {
+                    __documentObject.categories[i].topResults = false;
+                    __documentObject.categories[i].productCategory = '';
+                    __documentObject.categories[i].countryOfPublication = '';
+                }
+            }
+    
             const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
             this.dispatchEvent(selectedEvent);
+    
         }
     }
 
@@ -174,7 +189,13 @@ export default class PortalDocumentsFilters extends LightningElement {
         let prodCat = event.detail.value;
         let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
 
-        __documentObject.productCategory = prodCat;
+        for(let i = 0; i < __documentObject.categories.length; i++) {
+            if(__documentObject.categories[i].name === __documentObject.categorySelected) {
+                __documentObject.categories[i].productCategory = prodCat;
+                break;
+            }
+        }
+
         const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
         this.dispatchEvent(selectedEvent);
     }
@@ -183,7 +204,13 @@ export default class PortalDocumentsFilters extends LightningElement {
         let publiCountry = event.detail.value;
         let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
 
-        __documentObject.countryOfPublication = publiCountry;
+        for(let i = 0; i < __documentObject.categories.length; i++) {
+            if(__documentObject.categories[i].name === __documentObject.categorySelected) {
+                __documentObject.categories[i].countryOfPublication = publiCountry;
+                break;
+            }
+        }
+
         const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
         this.dispatchEvent(selectedEvent);
     }
