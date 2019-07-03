@@ -471,6 +471,14 @@ public with sharing class ANG_AgencyChangesHelper {
 		
 		}
 
+		//NEWGEN-4856 - Set Monitored Account with the previous account before the change of Location / Hierarchy
+		List<ANG_Risk_Alert__c> riskAlertList = [SELECT id, ANG_Account__c, Monitored_Account__c FROM ANG_Risk_Alert__c WHERE ANG_Account__c = :oscar.Account__c];
+		for(ANG_Risk_Alert__c riskAlert : riskAlertList){
+			riskAlert.Monitored_Account__c = riskAlert.ANG_Account__c;
+			riskAlert.ANG_Account__c = oscar.New_parent__c;
+		}
+		if(!riskAlertList.isEmpty()) update riskAlertList;
+
 		
 		return changesContainer;
 	}

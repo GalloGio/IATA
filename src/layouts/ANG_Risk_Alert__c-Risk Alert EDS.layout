@@ -13,6 +13,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Monitored_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ANG_RME_Last_Update__c</field>
             </layoutItems>
             <layoutItems>
