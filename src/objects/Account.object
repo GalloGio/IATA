@@ -9469,6 +9469,46 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
                     <default>false</default>
                     <label>Other</label>
                 </value>
+                <value>
+                    <fullName>Billing city found in another state</fullName>
+                    <default>false</default>
+                    <label>Billing city found in another state</label>
+                </value>
+                <value>
+                    <fullName>Shipping city found in another state</fullName>
+                    <default>false</default>
+                    <label>Shipping city found in another state</label>
+                </value>
+                <value>
+                    <fullName>Billing city not found in our Database</fullName>
+                    <default>false</default>
+                    <label>Billing city not found in our Database</label>
+                </value>
+                <value>
+                    <fullName>Shipping city not found in our Database</fullName>
+                    <default>false</default>
+                    <label>Shipping city not found in our Database</label>
+                </value>
+                <value>
+                    <fullName>Billing Address not found by address doctor</fullName>
+                    <default>false</default>
+                    <label>Billing Address not found by address doctor</label>
+                </value>
+                <value>
+                    <fullName>Shipping Address not found by address doctor</fullName>
+                    <default>false</default>
+                    <label>Shipping Address not found by address doctor</label>
+                </value>
+                <value>
+                    <fullName>Billing city found in another country</fullName>
+                    <default>false</default>
+                    <label>Billing city found in another country</label>
+                </value>
+                <value>
+                    <fullName>Shipping city found in another country</fullName>
+                    <default>false</default>
+                    <label>Shipping city found in another country</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>3</visibleLines>
