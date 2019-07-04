@@ -80,6 +80,7 @@
   border-bottom: 20px solid transparent;
   position: absolute;
   left: 0;
+  top: 0;
 }
 
 .headerBarLeftRightWidth {
@@ -97,6 +98,10 @@
 .headerBarButton {
   position: relative;
   max-height: 37px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  padding-top: 5px;
 }
 
 .headerBarButton:hover {
@@ -115,6 +120,10 @@
   bottom: 1px;
   right: 0;
   left: 0;
+}
+
+.tabText {
+  display: inline-block;
 }
 
 .headerBarButton:hover span.tabText {
@@ -153,10 +162,28 @@
   z-index: 2;
   float: right;
   position: relative;
+  margin-left: -6px;
 }
 
 .headerButtonProfileContainer:hover .openProfile,
 .openProfile:hover {
+  display: block;
+}
+
+.headerButtonProfileIconOver, .headerButtonProfileArrowOver {
+  display: none;
+}
+
+.headerButtonProfileArrowOver {
+  transform: rotate(180deg);
+  margin-top: 2px;
+}
+
+.headerButtonProfileContainer:hover .headerButtonProfileIcon, .headerButtonProfileContainer:hover .headerButtonProfileArrow {
+  display: none;
+}
+
+.headerButtonProfileContainer:hover .headerButtonProfileIconOver, .headerButtonProfileContainer:hover .headerButtonProfileArrowOver {
   display: block;
 }
 
@@ -166,6 +193,9 @@
   margin-top: 3px;
   z-index: 9005;
   min-width: 160px;
+  align-self: baseline;
+  top: 33px;
+  left: 0;
 }
 
 .profileOption {
@@ -339,6 +369,7 @@
 
 .headerBarConatiner {
   height: calc(100% - 2px);
+  margin-top: 4px;
 }
 
 .headerTitle {
@@ -350,4 +381,3 @@
   letter-spacing: normal;
   color: #333333;
 }
-

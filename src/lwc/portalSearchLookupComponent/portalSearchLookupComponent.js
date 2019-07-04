@@ -277,7 +277,7 @@ export default class Lookup extends LightningElement {
     }
 
     get getListboxClass() {
-        return 'slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-p-around_small '
+        return 'slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-p-around_small customMaxHeight slds-scrollable_y '
             + (this.scrollAfterNItems ? 'slds-dropdown_length-with-icon-' + this.scrollAfterNItems : '');
     }
 

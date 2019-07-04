@@ -68,7 +68,7 @@ import availableIEPPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.
 import availableICCSPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableICCSPortalServiceRoles';
 import userProvisioningRequests from '@salesforce/apex/PortalServicesCtrl.userProvisioningRequests';
 import serviceWrapperRedirect from '@salesforce/apex/PortalServicesCtrl.serviceWrapperRedirect';
-import performCheckonPoll from '@salesforce/apex/PortalServicesCtrl.performCheckonPoll';
+import performCheckonPoll from '@salesforce/apex/DAL_WithoutSharing.performCheckonPoll';
 import ISSP_AvailableService_newAppsRequest2 from '@salesforce/apex/PortalServicesCtrl.newAppsRequest2';
 import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsRequestICCS';
 
@@ -156,7 +156,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.addUsersEnable = this.trackedServiceRecord.addUsersEnable;
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
-            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
             this.popUpHandler();
         }
 
@@ -299,27 +298,16 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                             this.showRoleSelection = true;
                             this.IEPIntroOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_1;
                             this.IEPOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_2;
-                            availableIEPPortalServiceRoles()
+                            availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
                                 .then(data => {
                                     this.roleList = JSON.parse(JSON.stringify(data));
-                                    if (this.serviceFullName === 'IATA EasyPay (EDENRED)') {
-                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === 'IATA EasyPay (EDENRED)');
-                                        for (const item of this.roleList) {
-                                            if (item.Connected_App__c === 'IATA EasyPay (EDENRED)') {
-                                                let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
-                                                item.label = this.label[newlabel];
-                                            }
-                                        }
+                                    this.roleList = this.roleList.filter(obj => obj.Connected_App__c === this.serviceFullName);
+                                    this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
+                                    for (const item of this.roleList) {
+                                        let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
+                                        item.label = this.label[newlabel];
                                     }
-                                    else if (this.serviceFullName === 'IATA EasyPay (MSTS)') {
-                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === 'IATA EasyPay (MSTS)');
-                                        for (const item of this.roleList) {
-                                            if (item.Connected_App__c === 'IATA EasyPay (MSTS)') {
-                                                let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
-                                                item.label = this.label[newlabel];
-                                            }
-                                        }
-                                    }
+
 
                                 });
                         }
@@ -765,6 +753,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         //displays popup with active spinner
         this.showPopUp = true;
         this.showSpinner = true;
+        let serviceNameaux = this.serviceName;
+        this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
 
         requestServiceAccess({ applicationId: this.trackedServiceId })
             .then(() => {

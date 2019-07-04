@@ -492,7 +492,36 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
                     //Open the modal upon case insert with the success message if is the Create Case button pressed.
                     if (process === 'Show_Success') {
-                        this.openModal();
+
+                        let showSuccessModal = new Promise((resolve, reject) => {
+                            this.openModal();
+
+                            let error = false;
+                            if (!error)
+                                resolve();
+                            else
+                                reject();
+                        });
+
+                        let scrollWindowUp = new Promise((resolve, reject) => {
+                            let divToTop = this.template.querySelectorAll('.topOfModal')[0].offsetTop;
+                            window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
+
+                            let error = false;
+                            if (!error)
+                                resolve();
+                            else
+                                reject();
+                        });
+
+                        let willScrollUp = function () {
+                            Promise.all([
+                                showSuccessModal,
+                                scrollWindowUp]);
+                        }
+
+                        //Execute async actions
+                        willScrollUp();
                     }
                     else if (process === 'Add_Attachment') {
                         window.location.href = CSP_PortalPath + "case-details?caseId=" + this.caseID + '&Att=true';

@@ -107,7 +107,7 @@
             function proceedToVMFR() {
                 bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step0_Proceed_VMFR)}", function(result) {
                     if(result) {
-                        window.open('/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1', '_self');
+                        window.open('{!portalRedirectToSupport}', '_self');
                     }
                 });
             }

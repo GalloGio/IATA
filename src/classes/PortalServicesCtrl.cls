@@ -803,14 +803,21 @@ public static Map<String, String> getUserOptions(String portalUser){
 }
 
 @AuraEnabled(cacheable=true)
-public static List<Connected_App_Roles__c> availableIEPPortalServiceRoles(){
+public static List<Connected_App_Roles__c> availableIEPPortalServiceRoles(String serviceId){
+	List<Portal_Applications__c> portalApps = [SELECT Id, Name FROM Portal_Applications__c WHERE id =:serviceId];
+
 	List<Connected_App_Roles__c> allAppRoles = Connected_App_Roles__c.getAll().values();
 	List<Connected_App_Roles__c> finalAllAppRoles = new List<Connected_App_Roles__c>();
-	for(Connected_App_Roles__c car : allAppRoles) {
-		if(car.Connected_App__c.startsWith('IATA EasyPay')) {
-			finalAllAppRoles.add(car);
+
+	if(!portalApps.isEmpty()) {
+		for(Connected_App_Roles__c car : allAppRoles) {
+
+			if(car.Connected_App__c == portalApps[0].Name) {
+				finalAllAppRoles.add(car);
+			}
 		}
 	}
+
 	return finalAllAppRoles;
 }
 
@@ -841,22 +848,6 @@ public static Integer userProvisioningRequests(){
 	Id userId = UserInfo.getUserId();
 	List<UserProvisioningRequest> userProvList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
 	return userProvList.size();
-}
-
-@AuraEnabled(cacheable=true)
-public static String performCheckonPoll(String permSetSSO, Integer failedCount){
-	Id userId = UserInfo.getUserId();
-	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
-
-	if(!permissionSetList.isEmpty()) {
-		return 'Success';
-	} else {
-		List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
-		if(userProvisioningList.size() != failedCount) {
-			return 'Error';
-		}
-	}
-	return 'Incomplete';
 }
 
 @AuraEnabled(cacheable=true)
