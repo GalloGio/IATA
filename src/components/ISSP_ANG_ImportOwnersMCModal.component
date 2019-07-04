@@ -5,8 +5,7 @@
           		<div class="modal-content">
             		<div class="modal-header">
               			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              			<!--<h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Company}</h4>-->
-              			<h4 class="modal-title" id="myModalLabel">Copy Owners</h4>
+              			<h4 class="modal-title" id="myModalLabel">{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_ANG_Import_Owners_Directors, $Label.ISSP_ANG_Import_Directors)}</h4>
             		</div>
             		<div class="modal-body" style="text-align: center;">
               			<apex:pageBlock>
@@ -29,8 +28,6 @@
 								<apex:column headervalue="{!$ObjectType.Contact.fields.Email.Label}" value="{!ownerCon.owner.Email__c}" style="text-align: left;"/>
 
 							</apex:dataTable>
-
-							<apex:outputText value="ola rui empty" rendered="{!ownersThatCanBeCopied.size == 0}"/>
               			</apex:pageBlock>
             		</div>
 
