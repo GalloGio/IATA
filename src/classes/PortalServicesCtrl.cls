@@ -9,6 +9,8 @@ Public static final String PORTAL_USER_APPROVED='Approved User';
 Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String WILDCARD = 'ALL';
 
+private static Id USERID = Userinfo.getUserId();
+
 public class portalServiceException extends Exception {}
 
 @AuraEnabled (cacheable=true)
@@ -843,13 +845,12 @@ public static Integer userProvisioningRequests(){
 
 @AuraEnabled(cacheable=true)
 public static String performCheckonPoll(String permSetSSO, Integer failedCount){
-	Id userId = UserInfo.getUserId();
-	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
+	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: USERID AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
 
 	if(!permissionSetList.isEmpty()) {
 		return 'Success';
 	} else {
-		List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
+		List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: USERID AND State = 'Failed'];
 		if(userProvisioningList.size() != failedCount) {
 			return 'Error';
 		}
