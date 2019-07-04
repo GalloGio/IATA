@@ -188,7 +188,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 let myCategoryOptions = [];
 
                //Set first value on the list
-                //myCategoryOptions = [{ label: ' ', value: '' }];
                // let auxmyCategoryOptions = [];
                for (const item of this.myResult) {
                    if (!map.has(item.categoryLabel) && item.categoryLabel !== 'All') {
@@ -257,7 +256,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                 let myResult = JSON.parse(JSON.stringify(result));
 
                 //first element on the picklist
-                //let myCountryOptions = [{ label: ' ', value: '' }];
                 let myCountryOptions = [];
                 let auxmyCountryOptions = [];
                 //ex: {label: My Topic, value: my_topic__c}
@@ -353,7 +351,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         let myTopicOptions = [];
 
         //first element on the picklist
-        //myTopicOptions = [{ label: ' ', value: '' }];
         // let auxmyTopicOptions = [];
         for (const item of this.myResult) {
             if (!map.has(item.topicLabel) && item.categoryName === this.category) {
@@ -431,7 +428,6 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         let mySubTopicOptions = [];
 
         //first element on the picklist
-        //mySubTopicOptions = [{ label: ' ', value: '' }];
         // let auxmySubTopicOptions = []
         for (const item of this.myResult) {
             if (!map.has(item.childs) && item.topicName === this.topic) {
