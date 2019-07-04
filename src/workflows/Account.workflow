@@ -22,7 +22,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Airline_Becomes_Active_for_the_First_Time_Notification</template>
+        <template>TA_all/Airline_Becomes_Active_for_the_First_Time_Notification</template>
     </alerts>
     <alerts>
         <fullName>Airline_Becomes_Inactive_Alert</fullName>
@@ -46,7 +46,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Airline_Becomes_Inactive_Notification</template>
+        <template>TA_all/Airline_Becomes_Inactive_Notification</template>
     </alerts>
     <alerts>
         <fullName>Airline_Becomes_Re_Activated_Alert</fullName>
@@ -70,7 +70,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Airline_Becomes_Re_Activated_Notification</template>
+        <template>TA_all/Airline_Becomes_Re_Activated_Notification</template>
     </alerts>
     <alerts>
         <fullName>FDS_CodingAOC</fullName>
@@ -262,6 +262,15 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <field>IATA_Member__c</field>
         <literalValue>0</literalValue>
         <name>Member Airline: False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>PCI_Not_Compliant</fullName>
+        <field>Is_PCI_compliant__c</field>
+        <literalValue>No</literalValue>
+        <name>PCI_Not_Compliant</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -553,6 +562,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </criteriaItems>
         <description>to fix the fact that webstar accounts do not have sector and category</description>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>AMS_PCI_Auto_Expire</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Is_PCI_compliant__c</field>
+            <operation>equals</operation>
+            <value>Yes</value>
+        </criteriaItems>
+        <description>When PCI Expire date is reach auto change PCI to &quot;No&quot;</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>PCI_Not_Compliant</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Account.ANG_PCI_compliance_expiry_date__c</offsetFromField>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Account incomplete</fullName>

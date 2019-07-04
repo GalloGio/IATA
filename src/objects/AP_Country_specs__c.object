@@ -40,6 +40,7 @@
         <columns>Link_label__c</columns>
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>Country specs bank mandates</label>
         <language>en_US</language>

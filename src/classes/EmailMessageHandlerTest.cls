@@ -28,6 +28,8 @@ private class EmailMessageHandlerTest {
             + '"url":"/services/data/v25.0/sobjects/Case/500E0000002nH2fIAE"},'
             + '"CreatedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
             + '"Subject":"Test Case Subject",'
+            + '"Reason1__c":"New Account request",'
+            + '"CaseArea__c":"Global System Solution",'
             + '"Status":"Closed",'
             + '"ClosedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
             + '"RecordTypeId":"' + RecordTypeSingleton.getInstance().getRecordTypeId('Case', EmailMessageHandler.LIST_VALID_RT.get(0)) + '"'

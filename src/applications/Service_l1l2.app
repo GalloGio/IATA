@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
@@ -156,7 +165,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SIDRA</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -201,7 +210,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.SEDA</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -246,7 +255,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ProcessEuropeSCE</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -408,7 +417,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Invoicing_Collection_Cases</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -471,7 +480,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_China_North_Asia</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -516,7 +525,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_Global</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -543,7 +552,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -552,7 +561,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesEurope</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -606,7 +615,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesAmericas</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -624,7 +633,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ComplaintIDFS</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -912,7 +921,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CasesMENA</recordType>
         <type>Flexipage</type>
-        <profile>BIS profile lightning</profile>
+        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
