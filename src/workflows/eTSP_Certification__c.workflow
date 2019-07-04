@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <tasks>
         <fullName>eTSP_approved</fullName>
-        <assignedTo>mcbrideg@iata.org</assignedTo>
+        <assignedTo>jimenezm@iata.org</assignedTo>
         <assignedToType>user</assignedToType>
         <dueDateOffset>0</dueDateOffset>
         <notifyAssignee>false</notifyAssignee>

@@ -17,7 +17,12 @@
 
                 c.find("sectorSelection").set("v.options", options);
             }else{
-                c.find("sectorSelection").set("v.options", [{label: sector, value : sector, selected : true}]);
+                var option = sectorsMap[sector];/* WMO-391 */
+                if(option) {
+                    c.find("sectorSelection").set("v.options", [{label: option.label, value : option.value, selected : true}]);
+                } else {
+                	c.find("sectorSelection").set("v.options", [{label: sector, value : sector, selected : true}]);
+            	}
             }
 
             h.setCategory(c);
@@ -420,10 +425,21 @@
         var isAllFilled = true;
 
         if($A.util.isEmpty(category.get("v.value"))){
-           category.set("v.errors",[{message: $A.get("$Label.c.OneId_CategoryError")}]);
-           isAllFilled = false;
-        }else{
-           category.set("v.errors",null);
+            category.set("v.errors",[{message: $A.get("$Label.c.OneId_CategoryError")}]);
+            isAllFilled = false;
+        } else {
+            category.set("v.errors",null);
+            var catValue = category.get("v.value");
+            if(catValue == 'Other') {
+                var catOther = c.find("catOtherVal");
+               
+                if(!$A.util.isEmpty(catOther) && $A.util.isEmpty(catOther.get("v.value"))) {            
+                    catOther.set("v.errors",[{message: $A.get("$Label.c.ISSP_YouMustEnter")}]);
+                    isAllFilled = false;
+                } else {
+                    catOther.set("v.errors", false);                
+                }            
+            }
         }
 
         if(!$A.util.isEmpty(emailValue) && !emailValue.match(regExpEmailformat)){
@@ -464,9 +480,16 @@
         }
         
         
-        //Data quality//
+       /* MME TEMP for test purpose*/
+//        isAllFilled = true;        
+//Data quality//
         if(isAllFilled){
-            
+          c.getEvent("newAccountSet")
+            .setParams({
+                "state" : "newAccountSet",
+                "account" : c.get("v.account")
+            }).fire();             
+        }  
             let dataQualityFeedback = ''; 
             
             if(billingCityInAnotherCountry) dataQualityFeedback=';Billing city found in another country';                    
@@ -504,6 +527,16 @@
 
     closeModal: function(c){
         c.set("v.suggestionsMode", "hidden");
+    },
+
+    parseCategory: function(c){
+        var category = c.find("categorySelection");
+        var catValue = category.get("v.value");
+        if(!$A.util.isEmpty(catValue) && catValue == 'Other') {
+            c.set("v.categoryOther", true);
+        } else {
+            c.set("v.categoryOther", false);
+        }
     },
 
     suggestionSelected: function(c, e) {

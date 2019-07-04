@@ -14,7 +14,7 @@
 
         var agencyTypes = [
             {value : 'Travel Agent', label: $A.get('{!$Label.c.ISSP_Travel}')},
-            {value : 'Cargo Agent', label: $A.get('{!$Label.c.ISSP_Cargo}')}
+            {value : 'Cargo Agent', label: $A.get('{!$Label.c.ISSP_Cargo_Label_Value}')} /* WMO-391 */
         ];
 
         c.set("v.agencyTypes", agencyTypes);
