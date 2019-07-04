@@ -28,6 +28,9 @@ public with sharing class AMS_AccountRoleCreator
 
     public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{'HO','AO', 'HE', 'AE'};
 
+    public static boolean isAccountRoleCreationRunning = false;
+    public static Map<Id,Double> totalCoveredOwnershipByAccount = new Map<Id,Double>();
+
     private static String createContactRecordTypes(List<String> types){
         String toReturn = '';
 
@@ -211,6 +214,12 @@ public with sharing class AMS_AccountRoleCreator
                 accConBucketPerAccount.put(bucket.accountId, new List<AccreditationContactBucket>());
 
             accConBucketPerAccount.get(bucket.accountId).add(bucket);
+
+            //calculate total Covered Ownership By Account
+            if(bucket.isOwner && !bucket.accreditationContact.RecordType.DeveloperName.toUpperCase().contains('PREVIOUS')) {
+                Double totalCovered = totalCoveredOwnershipByAccount.containsKey(bucket.accountId) ? (totalCoveredOwnershipByAccount.get(bucket.accountId) + bucket.accreditationContact.Financial_interest__c) : bucket.accreditationContact.Financial_interest__c;
+                totalCoveredOwnershipByAccount.put(bucket.accountId, totalCovered);
+            }
         }
 
         //upsert contacts
@@ -303,7 +312,7 @@ public with sharing class AMS_AccountRoleCreator
 
         }
 
-        if((newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty()) || oldRolesPerAccount.isEmpty())
+        if(newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty())
             return oldAndNewOwnersMap;
 
         //clone the roles for each account in the hierarchy
@@ -329,7 +338,9 @@ public with sharing class AMS_AccountRoleCreator
 
         //upsert roles
         listClonesRoles.addAll(rolesToUpsert.values());
+        isAccountRoleCreationRunning = true;
         upsert listClonesRoles;
+        isAccountRoleCreationRunning = false;
 
         // fill the accreditation contacts with the new roles ids
         for(AMS_Account_Role__c roleAfterUpsert : listClonesRoles) {
@@ -371,9 +382,6 @@ public with sharing class AMS_AccountRoleCreator
         System.debug('Assigning roles '+ rolesToClone+' to new account ' + accountId);
 
         List<AMS_Account_role__c> toReturn = new List<AMS_Account_role__c>();
-        
-        if(rolesToClone == null)
-            return toReturn;
 
         for(AMS_Account_Role__c role: rolesToClone){
 

@@ -405,4 +405,42 @@ private class IFAP_WebServiceTest {
         
         Test.stopTest();
     }
+
+    @isTest static void testIsPortalUser() {
+        Boolean isPortalUser = false;
+        Test.startTest();
+        System.runAs(createPortalUser()){
+            System.assert(IFAP_WebService.isPortalUser());
+        }       
+        Test.stopTest();
+    }
+    
+    @isTest static void testGetLocaleLang(){
+        Test.startTest();
+        System.runAs(createPortalUser()){
+            System.assertEquals('en', IFAP_WebService.getLocaleLang());
+        }
+       
+        Test.stopTest();
+    }
+    
+    private static User createPortalUser(){
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        IATA_ISO_Country__c us = new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US', Region__c='Americas', ISS_Office_Location__c='United States');
+        insert us;     
+        
+        Account acc1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = us.id, 
+                        Location_Type__c = 'HO', Status__c = 'Approved',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com');
+
+        insert acc1;
+        
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= acc1.Id;
+        con.Email = 'Test@test11.com';
+        con.User_Portal_Status__c='Administrator';
+        insert con;
+    
+        return ISSP_ObjectFactory.createPortalUser(con);
+    }
 }
