@@ -548,7 +548,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CHL,CHN,CHC,CHO,NEW</value>
+            <value>RTR,CTA</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
@@ -699,6 +699,16 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Change_Code__c</columns>
         <columns>Class_Type__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Account_status_change__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Record_Type__c</field>

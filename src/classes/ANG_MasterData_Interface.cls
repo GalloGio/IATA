@@ -143,7 +143,7 @@ global class ANG_MasterData_Interface{
         'Corporate Card' => TRUE
     };
     
-	@TestVisible
+    @TestVisible
     private class MasterDataPayload{
         /* Agency Information */
         public string isBranchAbroad;

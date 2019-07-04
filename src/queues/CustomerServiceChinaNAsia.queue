@@ -4,9 +4,14 @@
     <email>zhangxl@iata.org</email>
     <name>Customer Service - China &amp; N.Asia</name>
     <queueMembers>
+        <publicGroups>
+            <publicGroup>Hub_BJS_Key_controls_CS</publicGroup>
+        </publicGroups>
         <roles>
+            <role>ChinaNAsiaAgencyManagementStaffA</role>
             <role>ChinaNAsiaCustomerServiceManagerA</role>
             <role>ChinaNAsiaCustomerServiceStaffA</role>
+            <role>IDFSChinaNorthAsiaRegionalOfficeA</role>
         </roles>
     </queueMembers>
     <queueSobject>

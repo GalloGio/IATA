@@ -4521,6 +4521,8 @@
                 "DisplayFields": [
                   "Is_PCI_compliant__c",
                   "ANG_PCI_compliance_expiry_date__c",
+                  "ANG_Change_Entity_Location__c",
+                  "Change_of_Entity_Location_within_EU__c",                  
                   "STEP6__c"
                 ],
                 "IsDependent": false

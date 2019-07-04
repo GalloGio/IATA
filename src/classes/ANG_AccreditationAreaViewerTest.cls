@@ -114,7 +114,10 @@ private class ANG_AccreditationAreaViewerTest {
 		Set<String> notes = accreditationAreaV.notes;
 		String existingOscarCaseNumber = accreditationAreaV.existingOscarCaseNumber;
 		Id existingOscarCaseId = accreditationAreaV.existingOscarCaseId;
-
+        Set<String> pageSections = accreditationAreaV.pageSections;
+		Map<String, String> fieldsSectionMap = accreditationAreaV.fieldsSectionMap;
+        List<ANG_AccreditationAreaViewer.AccreditationContact> accreditationContactFormList = accreditationAreaV.accreditationContactFormList;
+        
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
 		Test.stopTest();

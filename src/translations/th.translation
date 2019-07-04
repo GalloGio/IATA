@@ -869,6 +869,10 @@
         <name>ANG_ISSP_GDI_Agreement</name>
     </customLabels>
     <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
+    </customLabels>
+    <customLabels>
         <label>รายชื่อสถาบันการเงินที่มีประกันภัยความมั่นคงทางการเงินในประเทศของคุณ</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
     </customLabels>
@@ -7909,6 +7913,10 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>โปรดทราบ! เมื่อคัดลอกข้อมูลความเป็นเจ้าของไปยังบริษัทตัวแทนแห่งใดแห่งหนึ่ง คุณจะลบข้อมูลความเป็นเจ้าของที่มีอยู่ของบริษัทตัวแทนเป้าหมาย</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -9689,6 +9697,10 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>เลือกบัญชีเป้าหมาย</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>* บริษัทในเครือที่เลือก</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9707,6 +9719,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>รัฐ/จังหวัด</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -11097,6 +11113,22 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>กำลังตรวจสอบ...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>การดำเนินการนี้จะทำให้คุณสามารถคัดลอกรายละเอียดความเป็นเจ้าของจากบัญชีนี้ไปยังบัญชีที่เลือกซึ่งอยู่ในลำดับชั้นของคุณ คุณจะสามารถเห็นภาพการเปลี่ยนแปลงที่เกิดจากการดำเนินการนี้ในบริษัทตัวแทนเป้าหมายเมื่อยืนยันการอัปเดตรายละเอียดทั้งหมดของหน้านี้แล้วเท่านั้น</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>บริษัทตัวแทนที่ได้ทำการประมวลผล</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>ความคืบหน้าการคัดลอกความเป็นเจ้าของ</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>คลิก ที่นี่ เพื่อดำเนินการต่อกับความสอดคล้อง PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -12071,6 +12103,10 @@ and
     <customLabels>
         <label>ปิด</label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label>ที่อยู่</label>
@@ -13155,6 +13191,10 @@ and
     <customLabels>
         <label>ตัวแทนการขายทั่วไป และบริการ</label>
         <name>ISSP_GSSA</name>
+    </customLabels>
+    <customLabels>
+        <label>เมื่อสมัครเข้าร่วม ผู้จัดหาในอุตสาหกรรม เช่น สายการบิน โรงแรม และผู้ประกอบการท่องเที่ยวจะสามารถส่งข้อความสำคัญถึงหน่วยงานของคุณเกี่ยวกับผลิตภัณฑ์ การส่งเสริมการขาย นโยบายการขาย และนโยบายของบริษัทตัวแทน</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
@@ -14951,8 +14991,16 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>การเปลี่ยนแปลงต่าง ๆ ยกเว้น GDP Opt-in ควรดำเนินการผ่านกระบวนการตรวจสอบใหม่ประจำปี</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP SELECT COUNTRY --></label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>- เลือกรัฐ -</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP SELECT THREE or MORE --></label>

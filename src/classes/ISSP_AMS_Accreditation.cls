@@ -242,18 +242,14 @@ public without sharing class ISSP_AMS_Accreditation {
     public Boolean revCaseOpen {
         get{
             List<Case> revCases = [SELECT Id 
-                                   FROM Case 
-                                   WHERE AccountId =: con.Account.Id 
-                                   AND Reason1__c = 'Annual revalidation' 
-                                   AND Status != 'Closed' 
-                                   AND Status != 'Closed_Rejected' 
-                                   AND Status != 'Closed_Withdrawn'];
-            if(revCases.size() > 0) {
-                revCaseOpen = true;
-            } else {
-                revCaseOpen = false;
-            }
-            return revCaseOpen;
+                                FROM Case 
+                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                    AND Reason1__c = 'Annual revalidation' 
+                                    AND Status != 'Closed' 
+                                    AND Status != 'Closed_Rejected' 
+                                    AND Status != 'Closed_Withdrawn'];
+            
+            return !revCases.isEmpty();
         } 
         set;
     }
@@ -7449,7 +7445,7 @@ system.debug('aqui sectorValue ' + sectorValue);
                 Position__c,RecordTypeId,Title__c,Valid__c,
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
-                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
+                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry, Contact__r.OtherState,
                 Legacy_External_ID__c
                 FROM AMS_Account_Role__c
                 where Account__c = :lAccountConcerned
@@ -7512,6 +7508,7 @@ system.debug('aqui sectorValue ' + sectorValue);
             auxAccreditCont.AddressCity__c = accRole.Contact__r.OtherCity;
             auxAccreditCont.AddressPostcode__c = accRole.Contact__r.OtherPostalCode;
             auxAccreditCont.AddressCountry__c = accRole.Contact__r.OtherCountry;
+            auxAccreditCont.AddressState__c = accRole.Contact__r.OtherState;
 
         }else
         //Check if owner is PERSON
