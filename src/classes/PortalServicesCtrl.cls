@@ -803,14 +803,21 @@ public static Map<String, String> getUserOptions(String portalUser){
 }
 
 @AuraEnabled(cacheable=true)
-public static List<Connected_App_Roles__c> availableIEPPortalServiceRoles(){
+public static List<Connected_App_Roles__c> availableIEPPortalServiceRoles(String serviceId){
+	List<Portal_Applications__c> portalApps = [SELECT Id, Name FROM Portal_Applications__c WHERE id =:serviceId];
+
 	List<Connected_App_Roles__c> allAppRoles = Connected_App_Roles__c.getAll().values();
 	List<Connected_App_Roles__c> finalAllAppRoles = new List<Connected_App_Roles__c>();
-	for(Connected_App_Roles__c car : allAppRoles) {
-		if(car.Connected_App__c.startsWith('IATA EasyPay')) {
-			finalAllAppRoles.add(car);
+
+	if(!portalApps.isEmpty()) {
+		for(Connected_App_Roles__c car : allAppRoles) {
+
+			if(car.Connected_App__c == portalApps[0].Name) {
+				finalAllAppRoles.add(car);
+			}
 		}
 	}
+
 	return finalAllAppRoles;
 }
 
