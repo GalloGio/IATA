@@ -213,6 +213,7 @@ public without sharing class AMS_Utils {
     public static final String SECTOR_PASSENGER = 'Travel Agent';
     public static final String SECTOR_AIRLINE = 'Airline';
     public static final String SECTOR_INFRASTRUCTURE = 'Infrastructure Partner';
+    public static final String SECTOR_IATA = 'IATA';
 
     public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
@@ -249,7 +250,6 @@ public without sharing class AMS_Utils {
 
     public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
-    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
     public static final String CATEGORY_NON_IATA_PASSENGER = 'Non-IATA Passenger Agent';
     public static final String CATEGORY_NON_IATA_TRAVEL = 'Non-IATA Travel Agent';
@@ -260,7 +260,12 @@ public without sharing class AMS_Utils {
     public static final String CATEGORY_IATA_CARGO_AGENT = 'IATA Cargo Agent';
     public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
     public static final String CATEGORY_ANSP = 'ANSP';
-    
+    public static final String CATEGORY_AIRPORT_AUTHORITY = 'Airport Authority';
+    public static final String CATEGORY_AIRPORT_CONCESSIONAIRE = 'Airport Concessionaire';
+    public static final String CATEGORY_AIRPORT_OPERATOR = 'Airport Operator';
+	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
+  	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
+
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
     public static final String TYPECHANGE_LOCATION = 'Location';
