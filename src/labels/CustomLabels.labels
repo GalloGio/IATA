@@ -21154,6 +21154,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Import Directors</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_Import_Owners_Tooltip</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_Import_Owners_Tooltip</shortDescription>
+        <value>Only Owners from the same legal entity can be imported</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Import_Owners_Directors</fullName>
         <categories>ISSP, ANG</categories>
         <language>en_US</language>

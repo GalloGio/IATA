@@ -782,7 +782,7 @@
                 			<apex:param name="vatno" value="" assignto="{!vatNUmber}" />
               			</apex:actionfunction>
               			<apex:actionFunction name="updateStatus" action="{!updateStatusMCForm}" rerender=""/>
-                    <apex:actionFunction name="reRenderImportOwnersMCModal" rerender="importOwnersMCModal"/>
+                    <apex:actionFunction name="reRenderImportOwnersMCModal" rerender="importOwnersMCModal, ownershipLinks"/>
 
               			<apex:pageBlock id="AMSBlock">
                 			<div class="alert alert-info" role="alert">
@@ -1097,6 +1097,7 @@
 					                            $(".shipping_postal_code__c").attr('disabled', 'disabled');
 					                            $(".shipping_state__c").attr('disabled', 'disabled');
 					                            $('[id$="ShippingCountryList"]').attr('disabled', 'disabled');
+                                      $('[id$="ShippingCountryList"]').change();
 					                        } else {
 					                        	$(".shipping_street__c").removeAttr('disabled');
 					                            $(".shipping_city__c").removeAttr('disabled');
@@ -1268,10 +1269,16 @@
 					                      {!$Label.ISSP_AMS_Not_Listed_Msg}
 					                    </div>
 
-                              			<apex:outputPanel>
-                    						<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
+                              			<apex:outputPanel id="ownershipLinks">
+                                    <div style="width: 100%; display: flex; justify-content: space-between;">
+                                      <div style="width: calc(100% - 20px);">
+                            						<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
 
-                    						<apex:commandLink style="float: right;" onfocus="showCopyOwneresMulticountry();" rendered="{!isMultiCountry}"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_ANG_Import_Owners_Directors, $Label.ISSP_ANG_Import_Directors)}</apex:commandLink>
+                            						<apex:commandLink onfocus="showCopyOwneresMulticountry();" style="float: right; {!IF(ownersThatCanBeCopied.size == 0,'pointer-events: none !important; cursor: default; color: gray !important;','')}" rendered="{!isMultiCountry}"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_ANG_Import_Owners_Directors, $Label.ISSP_ANG_Import_Directors)}</apex:commandLink>
+                                      </div>
+
+                                      <apex:image value="/img/msg_icons/info16.png" style="height: 16px;" title="{!$Label.ISSP_ANG_Import_Owners_Tooltip}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" />
+                                    </div>
                               			</apex:outputPanel>
 
                     					<apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon" id="contactList" styleClass="table-hover table table-condensed table-responsive">
@@ -1454,7 +1461,7 @@
                           							<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" rerender="companyList" />
                         						</apex:column> 
                       						</apex:pageBlockTable>
-                      						<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" rerender="contactList,companyList,ownerList, importOwnersMCModal">
+                      						<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" rerender="contactList,companyList,ownerList, importOwnersMCModal, ownershipLinks">
                         						<apex:param value="" name="recordId" assignTo="{!editContactId}" />
                       						</apex:actionFunction>
                    			 			</apex:pageBlockSection>

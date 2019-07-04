@@ -519,6 +519,7 @@
         function runMultiCountry() {
             if({!isMultiCountryNewAE}) {
                 $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
+                populateLegalAndSeparateFields();
                 enableDisableLegalName();
                 $('[id$=officetypelist]').prop('disabled', true);
             }

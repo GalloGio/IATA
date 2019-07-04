@@ -28,8 +28,6 @@
 								<apex:column headervalue="{!$ObjectType.Contact.fields.Email.Label}" value="{!ownerCon.owner.Email__c}" style="text-align: left;"/>
 
 							</apex:dataTable>
-
-							<apex:outputText value="ola rui empty" rendered="{!ownersThatCanBeCopied.size == 0}"/>
               			</apex:pageBlock>
             		</div>
 
