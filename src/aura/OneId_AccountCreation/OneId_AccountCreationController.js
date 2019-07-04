@@ -489,7 +489,7 @@
                 "state" : "newAccountSet",
                 "account" : c.get("v.account")
             }).fire();             
-        }  
+          
             let dataQualityFeedback = ''; 
             
             if(billingCityInAnotherCountry) dataQualityFeedback=';Billing city found in another country';                    

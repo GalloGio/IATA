@@ -75,7 +75,8 @@
                     return categories[i].label;
                 }
             }
-        },
+        }
+    },
 //Data quality
     setCities: function(c,e,h,m){
         
