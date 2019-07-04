@@ -106,6 +106,14 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //links for images
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+    servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
+    supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
+    profileIcon = CSP_PortalPath + 'CSPortal/Images/Icons/profile-white.svg';
+    profileIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/profile-blue.svg';
+    arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
+    arrowIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-blue.svg';
+    notificationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/notification-white.svg';
+    searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.svg';
 
     //notifications
     @track numberOfNotifications;
@@ -145,8 +153,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     @track mainBackground = 'z-index: 9999;';
 
-    @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonService';
-    @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small slds-p-vertical_xx-small headerBarButton buttonSupport';
+    @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small headerBarButton buttonService';
+    @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonSupport';
 
     @track trackedIsInOldPortal;
 
