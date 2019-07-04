@@ -299,29 +299,16 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                             this.showRoleSelection = true;
                             this.IEPIntroOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_1;
                             this.IEPOptionalMessages = this.label.ANG_ISSP_ConfirmRequestIEP_2;
-                            availableIEPPortalServiceRoles()
+                            availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
                                 .then(data => {
                                     this.roleList = JSON.parse(JSON.stringify(data));
-                                    if (this.serviceFullName === 'IATA EasyPay (EDENRED)') {
-                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === 'IATA EasyPay (EDENRED)');
-                                        this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
-                                        for (const item of this.roleList) {
-                                            if (item.Connected_App__c === 'IATA EasyPay (EDENRED)') {
-                                                let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
-                                                item.label = this.label[newlabel];
-                                            }
-                                        }
+                                    this.roleList = this.roleList.filter(obj => obj.Connected_App__c === this.serviceFullName);
+                                    this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
+                                    for (const item of this.roleList) {
+                                        let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
+                                        item.label = this.label[newlabel];
                                     }
-                                    else if (this.serviceFullName === 'IATA EasyPay (MSTS)') {
-                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === 'IATA EasyPay (MSTS)');
-                                        this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
-                                        for (const item of this.roleList) {
-                                            if (item.Connected_App__c === 'IATA EasyPay (MSTS)') {
-                                                let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
-                                                item.label = this.label[newlabel];
-                                            }
-                                        }
-                                    }
+
 
                                 });
                         }
