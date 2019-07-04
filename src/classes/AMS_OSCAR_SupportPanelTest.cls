@@ -19,6 +19,7 @@ public class AMS_OSCAR_SupportPanelTest {
         oscar.STEP25__c = 'Passed';
         oscar.STEP2__c = 'Passed';
         oscar.STEP1__c = 'Passed';
+        oscar.Bank_Guarantee_Requested__c = Date.today();
         update oscar;
 
         Case c = new Case(OSCAR__c = oscar.Id, recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));

@@ -35,7 +35,7 @@ private class AMS_MigrationToolHelperTest {
 		saamCase.Reason1__c = 'New HO';
 		insert saamCase;
 
-		List<Case> casesList = [SELECT id, Status, Financial_Assessment_received__c, Bank_Guarantee_amount__c, Bank_Guarantee_deadline__c, Bank_Guarantee_received__c, Bank_Guarantee_requested__c, Change_effective_as_of__c, Criteria_remarks__c, Documentation_remarks__c, Dossier_reception_date__c, Fees_refund_requested__c, Finalization_checklist__c, Financial_Assessment_deadline__c, Financial_Assessment_requested__c, Financial_Review_Result__c, Invoice_number__c, Local_Inspection_compliant__c, Local_Inspection_deadline__c, Local_Inspection_received__c, Local_Inspection_requested__c, Process_Start_Date__c, Proof_of_payment_received__c, PSAA_EACP_Agreement_received__c, PSAA_signed_copy_sent__c, SAAM_Deadline_Date__c, AIMS_updated__c, Finalized_in_AIMS__c from case];
+		List<Case> casesList = [SELECT id, Status, Financial_Assessment_received__c, Bank_Guarantee_amount__c, Bank_Guarantee_deadline__c, Bank_Guarantee_received__c, Bank_Guarantee_requested__c, Change_effective_as_of__c, Criteria_remarks__c, Documentation_remarks__c, Dossier_reception_date__c, Fees_refund_requested__c, Finalization_checklist__c, Financial_Assessment_deadline__c, Financial_Assessment_requested__c, Financial_Review_Result__c, Invoice_number__c, Local_Inspection_compliant__c, Local_Inspection_deadline__c, Local_Inspection_received__c, Local_Inspection_requested__c, Process_Start_Date__c, Proof_of_payment_received__c, PSAA_EACP_Agreement_received__c, PSAA_signed_copy_sent__c, SAAM_Deadline_Date__c, AIMS_updated__c, Finalized_in_AIMS__c, Proof_of_payment_requested__c from case];
 
 		if (!casesList.isEmpty()) {
 
@@ -62,6 +62,7 @@ private class AMS_MigrationToolHelperTest {
 			thecase.Local_Inspection_received__c = Date.Today();
 			thecase.Local_Inspection_requested__c = Date.Today();
 			thecase.Process_Start_Date__c = Date.Today();
+			thecase.Proof_of_payment_requested__c = Date.today();
 			thecase.Proof_of_payment_received__c = Date.Today();
 			thecase.PSAA_EACP_Agreement_received__c = Date.Today();
 			thecase.PSAA_signed_copy_sent__c = Date.Today();

@@ -113,6 +113,10 @@
         oscar.STEP14__c = 'Passed';
         oscar.STEP15__c = 'Passed';
         oscar.STEP17__c = 'Passed';
+        //WMO-564
+        oscar.Payment_Requested__c = Date.today();
+        oscar.Agreement_Requested__c = Date.today();
+        oscar.Bank_Guarantee_requested__c = Date.today();
         
         update oscar;
 
@@ -295,6 +299,10 @@
         oscar.STEP2__c = 'Passed';
         oscar.STEP3__c = 'Passed';
         oscar.STEP4__c = 'Passed';
+        //WMO-564
+        oscar.Payment_Requested__c = Date.today();
+        oscar.Bank_Guarantee_requested__c = Date.today();
+        oscar.Reason_for_unsuccessful_application__c = 'Financial Security Requirements not met';
 
         update oscar;
 
@@ -359,6 +367,11 @@
         oscar.STEP14__c = 'Passed';
         oscar.STEP15__c = 'Passed';
         oscar.STEP17__c = 'Passed';
+        //WMO-564
+        oscar.Payment_Requested__c = Date.today();
+        oscar.Agreement_Requested__c = Date.today();
+        oscar.Bank_Guarantee_requested__c = Date.today();
+        oscar.Disapproval_date__c = Date.today();
         
         update oscar;
 
@@ -631,7 +644,8 @@
         oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
         oscar.STEP15__c = 'Passed';
         oscar.STEP12__c = 'Passed';
-
+        //WMO-564
+        oscar.Bank_Guarantee_requested__c = Date.today();
         update oscar;
 
 
@@ -691,6 +705,7 @@
         oscarT.STEP2__c = 'Not Started';
         oscarT.STEP12__c = 'Passed';
         oscarT.STEP15__c = 'Passed';
+        oscarT.Bank_Guarantee_requested__c = Date.today();
 
         update oscarT;
 
@@ -862,7 +877,7 @@
         oscar.Process__c = AMS_Utils.AGENCYCHANGES;
         oscar.STEP12__c = AMS_Utils.PASSED;
         oscar.STEP25__c = AMS_Utils.PASSED;
-
+        oscar.Bank_Guarantee_requested__c = Date.today();
         update oscar;
 
         oscar = [SELECT id, Dossier_Validation__c, Validation_result__c, Status__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];

@@ -639,7 +639,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, String caseId){
 		
-		List<Case> cases = [SELECT id, Financial_Assessment_compliant__c,Reason_for_change_of_Financial_result__c, Documentation_Complete__c, Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from Case where Id = :caseId];
+		List<Case> cases = [SELECT id, Proof_of_payment_requested__c, Financial_Assessment_compliant__c,Reason_for_change_of_Financial_result__c, Documentation_Complete__c, Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from Case where Id = :caseId];
 
 		if(cases.isEmpty())
 			return null;
@@ -676,8 +676,12 @@ public without sharing class AMS_MigrationToolHelper {
 		oscar.Local_Inspection_received__c = saamCase.Local_Inspection_received__c;
 		oscar.Local_Inspection_requested__c = saamCase.Local_Inspection_requested__c;
 		oscar.Process_Start_Date__c = saamCase.Process_Start_Date__c;
+		//WMO-564
+		oscar.Payment_requested__c = saamCase.Proof_of_payment_requested__c == null ? null : saamCase.Proof_of_payment_requested__c.date();
 		oscar.Proof_of_payment_received__c = saamCase.Proof_of_payment_received__c;
 		oscar.PSAA_EACP_Agreement_received__c = saamCase.PSAA_EACP_Agreement_received__c;
+		//WMO-564
+		oscar.Agreement_requested__c = saamCase.PSAA_signed_copy_sent__c;
 		oscar.Welcome_Pack_Sent__c = saamCase.PSAA_signed_copy_sent__c;
 		oscar.Sanity_check_deadline__c = saamCase.SAAM_Deadline_Date__c;
 		oscar.Sanity_check_received__c = saamCase.Documentation_Complete__c;

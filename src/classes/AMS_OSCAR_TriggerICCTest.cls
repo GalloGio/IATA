@@ -109,6 +109,7 @@ private class AMS_OSCAR_TriggerICCTest {
         oscar.STEP2__c = 'Passed';
         oscar.STEP1__c = 'Passed';
 		oscar.STEP2__c = 'Passed';
+        oscar.Bank_Guarantee_Requested__c = Date.today();
         
         update oscar;
 
@@ -165,7 +166,7 @@ private class AMS_OSCAR_TriggerICCTest {
         oscar.RPM_Approval__c = 'Authorize Disapproval';
         oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
-
+        oscar.Bank_Guarantee_Requested__c = Date.today();
         update oscar;
 
         Test.stopTest();

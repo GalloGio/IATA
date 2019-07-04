@@ -12,7 +12,7 @@ private class ANG_OSCARNewGenTest {
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		oscar.STEP34__c = AMS_Utils.PASSED;
 		oscar.STEP35__c = AMS_Utils.PASSED;
-
+		oscar.Bank_Guarantee_Requested__c = Date.today();
 		update oscar;
 
 		//confirm that email sent is on the case

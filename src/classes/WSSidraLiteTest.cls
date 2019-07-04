@@ -792,6 +792,7 @@ public class WSSidraLiteTest {
         insert oscarCase;
 
         oscar.Step9__c = 'Failed';
+        oscar.Payment_Requested__c = Date.today();
         update oscar;
 
         Test.startTest();
@@ -858,6 +859,7 @@ public class WSSidraLiteTest {
         insert oscarCase;
 
         oscar.Step14__c = 'Failed';
+        oscar.Agreement_requested__c = Date.today();
         update oscar;
 
         Test.startTest();

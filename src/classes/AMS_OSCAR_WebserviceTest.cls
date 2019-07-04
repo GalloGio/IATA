@@ -172,6 +172,7 @@ public class AMS_OSCAR_WebserviceTest {
         oscar6.STEP12__c = 'Passed';
         oscar6.Validation_Status__c = 'Passed';
         oscar6.RPM_Approval__c='Authorize Disapproval';
+        oscar6.Bank_Guarantee_Requested__c = Date.today();
         update oscar6;
         
         oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
