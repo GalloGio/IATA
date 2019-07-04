@@ -76,7 +76,31 @@
                     <apex:outputText value="{0, number, #,##0.00}">
                         <apex:param value="{!netBalance}" />
                     </apex:outputText></p>
+
+                <!-- ACAMBAS - WMO-546 - Begin -->
+                <p style="font-weight: bold;">Interest amount: {!instalmentsDetails.Interest_Currency__c}
+                    <apex:outputText value="{0, number, #,##0.00}">
+                        <apex:param value="{!instalmentsDetails.Interest_Amount__c}" />
+                    </apex:outputText></p>
+                    
+                <!--p style="font-weight: bold;">Interest currency:  {!cs.Currency__c} 
+                    <!--apex:outputText value="{0, number, #,##0.00}">
+                        <apex:param value="{!netBalance}" /.>
+                    </apex:outputText></p>
+                <!-- ACAMBAS - WMO-546 - End -->
             </apex:outputPanel>
+
+            <!-- ACAMBAS - WMO-546 - Begin -->
+            <apex:outputPanel rendered="{!isEditMode}">
+                <p style="font-weight: bold;">Interest amount: 
+                    <apex:inputField value="{!instalmentsDetails.Interest_Amount__c}"/>
+                </p>
+                    
+                <p style="font-weight: bold;">Interest currency:  
+                    <apex:inputField value="{!instalmentsDetails.Interest_Currency__c}"/>
+                </p>
+            </apex:outputPanel>
+            <!-- ACAMBAS - WMO-546 - End -->
             
         </apex:pageBlock>
     </apex:form>
