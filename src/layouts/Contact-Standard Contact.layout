@@ -789,6 +789,14 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contact_Role_Name__c</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <fields>UniqueKey__c</fields>
+        <relatedList>Account_Contact_Role__c.Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Card_Status__c</fields>
         <fields>Nature_of_ID_Card__c</fields>
         <fields>Valid_To_Date__c</fields>
