@@ -844,22 +844,6 @@ public static Integer userProvisioningRequests(){
 }
 
 @AuraEnabled(cacheable=true)
-public static String performCheckonPoll(String permSetSSO, Integer failedCount){
-	Id userId = UserInfo.getUserId();
-	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: userId AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
-
-	if(!permissionSetList.isEmpty()) {
-		return 'Success';
-	} else {
-		List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: userId AND State = 'Failed'];
-		if(userProvisioningList.size() != failedCount) {
-			return 'Error';
-		}
-	}
-	return 'Incomplete';
-}
-
-@AuraEnabled(cacheable=true)
 public static String serviceWrapperRedirect(String serviceId){
 
 	User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status_FF__c, contact.Authorized_Signatory__c, contact.User_Portal_Status__c
