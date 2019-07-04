@@ -201,7 +201,7 @@ public with sharing class DAL_ISSP {
 
     }
 
-    public class DAL_WithoutSharing{
+    public without sharing class DAL_WithoutSharing{
         public List<Contact> getContactsByAccountId(Id accountId, Integer offset, Integer batchSize){
             //Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
             List<Account> allBranches = [select id from account where (id =:accountId or parentId=:accountId or top_parent__c =:accountId)];
