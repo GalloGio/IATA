@@ -68,7 +68,7 @@ import availableIEPPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.
 import availableICCSPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableICCSPortalServiceRoles';
 import userProvisioningRequests from '@salesforce/apex/PortalServicesCtrl.userProvisioningRequests';
 import serviceWrapperRedirect from '@salesforce/apex/PortalServicesCtrl.serviceWrapperRedirect';
-import performCheckonPoll from '@salesforce/apex/PortalServicesCtrl.performCheckonPoll';
+import performCheckonPoll from '@salesforce/apex/DAL_WithoutSharing.performCheckonPoll';
 import ISSP_AvailableService_newAppsRequest2 from '@salesforce/apex/PortalServicesCtrl.newAppsRequest2';
 import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsRequestICCS';
 
