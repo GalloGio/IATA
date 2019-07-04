@@ -70,6 +70,66 @@ public with sharing class DAL_ISSP {
         return new List<Contact>();
     }
 
+    public static List<Contact> getContactsByAccountId(Id accountId, Integer offset, Integer batchSize){
+        //Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
+        List<Account> allBranches = [select id from account where (id =:accountId or parentId=:accountId or top_parent__c =:accountId)];
+        Set<Id> accountIds = new Set<Id>();
+
+        accountIds.add(accountId);
+        if(!allBranches.isEmpty()){
+            for(Account acc:allBranches){
+                if(!accountIds.contains(acc.Id)){
+                    accountIds.add(acc.Id);
+                }
+            }
+        }
+
+        List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
+                OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
+                User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
+                Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
+        from Contact where AccountId IN:accountIds ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
+
+        if(!contacts.isEmpty()){
+            return contacts;
+        }
+
+        return new List<Contact>();
+    }
+
+    public static List<Contact> searchContactsByAccountId(Id accountId, Integer offset, Integer batchSize, String queryString){
+        String wildString = queryString +'%';
+
+        //Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
+        List<Account> allBranches = [select id from account where (id =:accountId or parentId=:accountId or top_parent__c =:accountId)];
+        Set<Id> accountIds = new Set<Id>();
+
+        accountIds.add(accountId);
+        if(!allBranches.isEmpty()){
+            for(Account acc:allBranches){
+                if(!accountIds.contains(acc.Id)){
+                    accountIds.add(acc.Id);
+                }
+            }
+        }
+
+        List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
+                OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
+                User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
+                Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
+        from Contact
+        where AccountId IN:accountIds
+        and (FirstName LIKE :wildString OR LastName LIKE :wildString OR Name LIKE :wildString OR Email LIKE :wildString OR Name = :queryString)
+        ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
+
+        if(!contacts.isEmpty()){
+            return contacts;
+        }
+
+        return new List<Contact>();
+    }
+
+
     public static List<AccountTeamMember> getPortalAdmins(Id accountId) {
         if (accountId == null)
             return null;

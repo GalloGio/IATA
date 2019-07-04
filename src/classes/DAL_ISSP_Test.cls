@@ -62,14 +62,18 @@ public with sharing class DAL_ISSP_Test {
 
         DAL_ISSP.DAL_WithoutSharing withoutSharing = new DAL_ISSP.DAL_WithoutSharing();
         List<Contact> contacts2 = withoutSharing.getContactsByAccountId(account.Id,0,5);
+        List<Contact> contacts3 = DAL_ISSP.getContactsByAccountId(account.Id,0,5);
 
         List<Contact> searchResults = withoutSharing.searchContactsByAccountId(account.Id,0,5,'test');
+        List<Contact> searchResults2 = DAL_ISSP.searchContactsByAccountId(account.Id,0,5,'test');
 
         List<User> users = DAL_ISSP.getUsersByContactId(new List<Id>{contact.Id});
 
         System.assert(!contacts.isEmpty());
         System.assert(!contacts2.isEmpty());
+        System.assert(!contacts3.isEmpty());
         System.assert(!searchResults.isEmpty());
+        System.assert(!searchResults2.isEmpty());
         System.assert(!users.isEmpty());
 
     }
