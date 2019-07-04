@@ -124,3 +124,9 @@ input[type="checkbox"] {
     color: rgb(194, 57, 52);
     padding-left: 5px;
 }
+
+.removeLinks {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
