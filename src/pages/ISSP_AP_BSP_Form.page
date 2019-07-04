@@ -687,7 +687,7 @@
                         <apex:iframe scrolling="false" height="160px"
                             src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR1"/>
                         <apex:iframe scrolling="false" height="160px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR2"/>
                     </apex:pageBlockSection>
                     
                 </apex:pageBlockSection>
