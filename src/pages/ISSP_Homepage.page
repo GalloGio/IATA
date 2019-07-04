@@ -188,9 +188,9 @@
       </div>
       <!-- /.modal-dialog -->
     </div>
-        
-   <c:ISSP_CustomNavigation communityName="{!communityName}" />
+  
    <div class="container">
+   <c:ISSP_CustomNavigation communityName="{!communityName}" />
         
         <c:ISSP_Notification attShowPopUp="{!showSidraPopup}" attRecordId="{!sidraCaseIdToShow}"/>
           <div class="row">
