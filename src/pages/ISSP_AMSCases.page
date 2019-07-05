@@ -82,6 +82,17 @@
                 left: 50%;
             }
 
+            .customlink {
+                cursor: pointer;
+                color: #337ab7;
+            }
+
+            .customlink:hover {
+                cursor: pointer;
+                color: #337ab7;
+                text-decoration: underline;
+            }
+
         </style>
         <script type="text/javascript">
             var typeAccredSelected = '';
@@ -120,6 +131,10 @@
                 } else {
                     navigateToUrl('/ISSP_ANG_VoluntaryRelinquishment','_self');
                 }
+            }
+
+            function redirectToMyProfileJs() {
+                window.open('{!portalRedirectToMyProfile}', '_self');
             }
 
             function newnAccreditationApplicationNavigateTo() {
@@ -191,6 +206,10 @@
                 
             function endLoading() {
                 $('.loadingBox').hide();
+            }
+
+            function redirectToCompanyInformationJs(){
+                window.open('{!portalRedirectToCompanyProfile}', '_self');
             }
 
             </script>
