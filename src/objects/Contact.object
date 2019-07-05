@@ -1810,6 +1810,11 @@
     <fieldSets>
         <fullName>FieldsExcludedFromTracking</fullName>
         <description>The fields in this list will be tracked on the Contact Tracking History object</description>
+        <displayedFields>
+            <field>Available_Services_Images__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>FieldsExcludedFromTracking</label>
     </fieldSets>
     <fieldSets>
@@ -20000,13 +20005,44 @@ $Profile.Name &lt;&gt; &quot;System Administrator&quot;
         <errorMessage>Internal Users can&apos;t change Portal Status to Administrator.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Change_id_card_holder_account_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+
+
+ID_Card_Holder__c=true,
+
+ISCHANGED(AccountId),
+
+NOT(ISBLANK(PRIORVALUE(AccountId))),
+				
+				or(
+	 $User.Profile_Name__c &lt;&gt;  &quot;IDFS Passenger - Distribution Solutions&quot;,
+		$UserRole.Name  &lt;&gt;   &quot;IDO Industry Solutions&quot;												
+								)				
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. please raise an internal case to ID Card team to move the contact to another account</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;),
+			
+				or(
+	 $User.Profile_Name__c &lt;&gt;  &quot;IDFS Passenger - Distribution Solutions&quot;,
+		$UserRole.Name  &lt;&gt;   &quot;IDO Industry Solutions&quot;												
+								),				
 ID_Card_Holder__c=true,
+	Or(			
+					and(
 ISCHANGED(LastName),
 UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
+									),
+					and(
+ISCHANGED(FirstName), 
+UPPER(PRIORVALUE(FirstName)) &lt;&gt; UPPER(FirstName)																		
+									)
+				)
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
     </validationRules>
