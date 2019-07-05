@@ -1477,3 +1477,12 @@ visibility: hidden;
   height: 24px;
   display: inline-block;
 }
+
+
+/* Hide Label on Lightning Input Field */
+.hideLabel slds-form-element__label, .hideLabel .slds-form-element__label {
+  display: none;
+  visibility: hidden;
+}
+
+

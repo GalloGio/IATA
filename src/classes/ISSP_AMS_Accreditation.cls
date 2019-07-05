@@ -279,6 +279,19 @@ public without sharing class ISSP_AMS_Accreditation {
     set;
     }
 
+    public String portalRedirectToSupport {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('support-reach-us');
+            return url;
+        }
+    }
+    set;
+    }
+
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;
