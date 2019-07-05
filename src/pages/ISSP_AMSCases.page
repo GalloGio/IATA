@@ -82,6 +82,17 @@
                 left: 50%;
             }
 
+            .customlink {
+                cursor: pointer;
+                color: #337ab7;
+            }
+
+            .customlink:hover {
+                cursor: pointer;
+                color: #337ab7;
+                text-decoration: underline;
+            }
+
         </style>
         <script type="text/javascript">
             var typeAccredSelected = '';
