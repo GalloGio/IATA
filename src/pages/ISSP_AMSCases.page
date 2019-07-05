@@ -122,6 +122,10 @@
                 }
             }
 
+            function redirectToMyProfileJs() {
+                window.open('{!portalRedirectToMyProfile}', '_self');
+            }
+
             function newnAccreditationApplicationNavigateTo() {
                 if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
                     $('#modalChooseAccreditationType').modal('toggle');
