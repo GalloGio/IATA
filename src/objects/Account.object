@@ -100569,6 +100569,7 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
     	<description>The &quot;Identify as Multicountry Key Hierarchy&quot; field can only be edited in Accounts with location type GE.</description>
         <errorConditionFormula>AND(
   ISCHANGED( Identify_as_Multicountry_Key_Hierarchy__c ),
+  Identify_as_Multicountry_Key_Hierarchy__c = true,
   NOT(ISPICKVAL( Location_Type__c , &apos;GE&apos;))
 )</errorConditionFormula>
         <errorDisplayField>Identify_as_Multicountry_Key_Hierarchy__c</errorDisplayField>
