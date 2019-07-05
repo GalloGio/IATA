@@ -2712,11 +2712,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>IATA_ISO_Country__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>BillingStreet</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>

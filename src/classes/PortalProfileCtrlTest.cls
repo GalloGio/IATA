@@ -31,8 +31,13 @@ public with sharing class PortalProfileCtrlTest {
 
         User portalUser = ISSP_ObjectFactory.createPortalUser(con);
 
+
         System.runAs(portalUser){
             Account airline = PortalProfileCtrl.getCompanyInfo(MyAirline.Id);
+
+            Boolean canEdit = PortalProfileCtrl.canEditBasics();
+
+            System.assert(canEdit == false);
 
             System.assert(airline.Id == MyAirline.Id);
 

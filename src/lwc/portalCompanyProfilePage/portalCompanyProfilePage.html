@@ -63,7 +63,7 @@
                                             <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
                                                 record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
                                                 show-edit="true" class="section" section-title={keyValue.key}
-                                                data-name={keyValue.key}
+                                                data-name={keyValue.key} edit-basics={editBasics}
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
                                         </template>
@@ -102,7 +102,7 @@
                                     <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
                                         fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
                                         default-sort="Name" records={branches} openmodel={openmodel} recordid={recordid}
-                                        objectid={accountid} fetching={isFetching}>
+                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords}>
                                     </c-portal-contact-list>
                                 </div>
                             </template>
@@ -152,7 +152,7 @@
                                         fields-list-to-create={fieldsListToCreate} records={contacts}
                                         openmodel={openmodel} recordid={recordid} accountid={accountid}
                                         objectid={objectid} ongetcontacts={getContacts} fetching={isFetching}
-                                        onrefreshview={refreshview}>
+                                        onrefreshview={refreshview} onsearchrecords={searchRecords}>
                                     </c-portal-contact-list>
 
                                 </div>

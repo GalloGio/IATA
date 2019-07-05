@@ -4,6 +4,7 @@
 
 import { LightningElement, wire, track } from 'lwc';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
+import canEditBasics from '@salesforce/apex/PortalProfileCtrl.canEditBasics';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getFieldsMap from '@salesforce/apex/PortalProfileCtrl.getFieldsMap';
 import getContactFieldsToInsert from '@salesforce/apex/PortalProfileCtrl.getContactFieldsToInsert';
@@ -55,6 +56,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track contactsLoaded = false;
     @track branchFields;
     @track contactFields;
+    @track editBasics = false;
 
     //Search
     @track searchMode = false;
@@ -142,11 +144,16 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             this.lstTabs = tabsAux;
             if (viewContacts) {
+                //this.retrieveContacts();
                 this.contactsLoaded = true;
                 this.isFetching = true;
                 this.searchContacts(this.searchValue);
             }
 
+        });
+
+        canEditBasics().then(result =>{
+            this.editBasics = result;
         });
 
         getLoggedUser().then(result => {
@@ -350,7 +357,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.contactsOffset = this.contactsOffset + result.length;
             let unwrappedContacts =  this.processContacts(result,loadedContacts);
 
-            this.contacts = unwrappedContacts;
+            this.contacts = unwrappedContacts; //contacts;
             this.contactsLoaded = true;
         });
     }
@@ -464,7 +471,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let contactList = this.template.querySelector('c-portal-contact-list');
 
            this.contactsQuery = this.searchTextContacts;
-           this.searchRecords('Contact');       
+           this.searchRecords('Contact');
+
         }, 500, this);
 
     }
@@ -522,7 +530,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let branchesList = this.template.querySelector('c-portal-contact-list');
             this.isFetching = false;
             this.searchMode = true;
-
 
             if (result.length == 0) {
                 this.branchesEndedSearch = true;
