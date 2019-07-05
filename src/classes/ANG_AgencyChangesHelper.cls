@@ -93,6 +93,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
 
+			if(!accountsToRecalculateRHC.isEmpty()){
+				recalculateRHCInformation(accountsToRecalculateRHC);
+			}
+			
 			if(moveFsAndRiskEventsMap != NULL && !moveFsAndRiskEventsMap.isEmpty()){
         		System.enqueueJob(new ANG_Risk_Helper.FutureHandler(moveFsAndRiskEventsMap));
 			}
@@ -1232,9 +1236,6 @@ public with sharing class ANG_AgencyChangesHelper {
                 (toReturn.accountsMap.get(accId).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(toReturn.accountsMap.get(accId).Top_Parent__c)))
 				toReturn.accountsMap.get(accId).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(toReturn.accountsMap.get(accId).Top_Parent__c == null ? accId : toReturn.accountsMap.get(accId).Top_Parent__c);
 			
-			if(!accountsToRecalculateRHC.isEmpty()){
-				recalculateRHCInformation(accountsToRecalculateRHC);
-			}
 
 			AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(oscarToProcess.AMS_Online_Accreditation__c);
 
