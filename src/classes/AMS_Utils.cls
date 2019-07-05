@@ -250,6 +250,7 @@ public without sharing class AMS_Utils {
 
     public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
+    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';// To replaces uses with SECTOR_PASSENGER
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
     public static final String CATEGORY_NON_IATA_PASSENGER = 'Non-IATA Passenger Agent';
     public static final String CATEGORY_NON_IATA_TRAVEL = 'Non-IATA Travel Agent';
