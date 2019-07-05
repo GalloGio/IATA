@@ -1715,6 +1715,16 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Skip_Agency_Update__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if the change code should or should not be picked by the DPC integration</description>
+        <externalId>false</externalId>
+        <label>Skip Agency Update</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Source__c</fullName>
         <description>Identify the source of the IRR (Ext system)</description>
         <externalId>false</externalId>

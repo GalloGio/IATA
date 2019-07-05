@@ -501,6 +501,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 		AACC.AIMS_ID__C = createUniqueAIMSId(cse, cc.Change_Code__c);
 		AACC.Integration_RecId__c = cc.Integration_RecId__c;
+		AACC.Skip_Agency_Update__c = cc.Skip_Agency_Update__c;
 
 		//Handles update on account
 		Boolean bAccntToUpd = false;

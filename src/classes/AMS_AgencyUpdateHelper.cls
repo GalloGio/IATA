@@ -9,18 +9,16 @@ public without sharing class AMS_AgencyUpdateHelper {
         List<AMS_Agency_Updates__c> reEvaluateAgencyUpdate = new List<AMS_Agency_Updates__c>();
         List<AMS_Agency_Updates__c> toRemoveAgencyUpdate = new List<AMS_Agency_Updates__c>();
 
-        //get the change code settings to skip agency update generation
-        Set<String> codesToSkipUpdate = new Set<String>();
-        for(AMS_ChangeCodes__c codeConf :[SELECT Change_Code__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true]){
-            codesToSkipUpdate.add(codeConf.Change_Code__c);
-        }
-
         Map<Id, Agency_Applied_Change_code__c> mAgencyChangeCode= new Map<Id, Agency_Applied_Change_code__c>();
         Set<Id> agencyIds = new Set<Id>();
-        for(SObject obj: updatedRecords){
+
+        Schema.SObjectType objType = updatedRecords.get(0).getSObjectType();
+        String objName = objType.getDescribe().getName();
+
+        for(SObject obj : updatedRecords){
             //only create update if the change code corresponding change code setting is not flagged to skip agency update;
-            if (obj.getSObjectType().getDescribe().getName() == 'Agency_Applied_Change_code__c' && !codesToSKipUpdate.contains((String)obj.get(Schema.Agency_Applied_Change_code__c.Change_Code__c))){
-                if(obj.getSObjectType() != Schema.Account.getSObjectType()){
+            if (objName == 'Agency_Applied_Change_code__c' && !(Boolean)obj.get('Skip_Agency_Update__c')){
+                if(objType != Schema.Account.getSObjectType()){
                     agencyIds.add((Id)obj.get('Account__c'));//all the fields relating to Agency in every other object as API name Agency__c
                 }
                 else
@@ -43,50 +41,42 @@ public without sharing class AMS_AgencyUpdateHelper {
         Set<Id> agenciesUpdateNotToCreate = new Set<Id>();
         Set<Id> setToRemoveAgencyUpdate = new Set<Id>();
         Set<Id> setReEvaluateAgencyUpdate = new Set<Id>();
+        Set<Id> agenciesValidateError = new Set<Id>();
+        Set<Id> agenciesInvalid = new Set<Id>();
+        List<Technical_Logs__c> tlogList = new List<Technical_Logs__c>();
         
-        
-        for(Account au: aulist){
+        for(Account au : aulist){
             Boolean bAlreadyUpdated = false;
             Boolean bToReEvaluateUpdate = false;
+            AMS_Agency_Updates__c agencyUpdateToReEvaluate;
+
             for(AMS_Agency_Updates__c au2: au.AMS_Agency_Updates__r){
 
-                //FM 22-09-2016 - added condition to "Invalid" status to be not ignored
-                if(!au2.Update_Type__c.equalsIgnoreCase('Update_Sent') && !au2.Update_Type__c.equalsIgnoreCase('Invalid') && !au2.Update_Type__c.equalsIgnoreCase('Deleted')){
-                    bAlreadyUpdated = true;
-                    break;
-                }
-            }
-            if(bAlreadyUpdated) agenciesAlreadyUpdated.add(au.Id);
-
-            //Checks if there's a record on update status that needs to be rechecked
-            for(AMS_Agency_Updates__c au2: au.AMS_Agency_Updates__r){
-
-                if(au2.Update_Type__c.equalsIgnoreCase('Update') ){
+                if(!bToReEvaluateUpdate && au2.Update_Type__c.equalsIgnoreCase('Update')){
                     bToReEvaluateUpdate = true;
+                    agencyUpdateToReEvaluate = au2;
                     reEvaluateAgencyUpdate.add(au2);
                     setReEvaluateAgencyUpdate.add(au2.Account__c);
-                    break;
+                } else if(!bAlreadyUpdated && !au2.Update_Type__c.equalsIgnoreCase('Update_Sent') && !au2.Update_Type__c.equalsIgnoreCase('Invalid') && !au2.Update_Type__c.equalsIgnoreCase('Deleted')){
+                    bAlreadyUpdated = true;
+                    agenciesAlreadyUpdated.add(au.Id);
                 }
-                
+
+                if(bAlreadyUpdated && bToReEvaluateUpdate) break;
             }
-            
-        }
 
- 
-        //remove agencies that already have an agency update record
-        agencyIds.removeAll(agenciesAlreadyUpdated);
+            Boolean bToValidate;
+            Agency_Applied_Change_code__c agApplCC;
 
-        //Validate IATACode
-        Set<Id> setAccountsToValidate = new Set<Id>();
-      
-        for(Account au: aulist){
-            if(au.Agencies_Applied_Change_codes__r.size() > 0){
-
+            if(au.Agencies_Applied_Change_codes__r.isEmpty()){
+                bToValidate = false;
+                agApplCC = null;
+            } else {
                 List<Agency_Applied_Change_code__c> lAuxACC = au.Agencies_Applied_Change_codes__r;
                 Agency_Applied_Change_code__c auxACC = new Agency_Applied_Change_code__c();
 
                 for(Agency_Applied_Change_code__c aacc : lAuxACC){
-                    if(aacc.For_Integration__c == true){
+                    if(aacc.For_Integration__c){
                         if(auxACC == null){
                             auxACC = aacc;
                         }else{
@@ -119,80 +109,54 @@ public without sharing class AMS_AgencyUpdateHelper {
                     }
                 }
                 //Check again, this time against the already existing agecy update record
-                if(reEvaluateAgencyUpdate.size() > 0){
+                if(agencyUpdateToReEvaluate != null){
 
                     String sRecIdWinner = '';
 
-                    for(AMS_Agency_Updates__c au3: reEvaluateAgencyUpdate){
+                    String sRecIdA = agencyUpdateToReEvaluate.Agency_Applied_Change_code__r.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( agencyUpdateToReEvaluate.Change_Code__c ) : agencyUpdateToReEvaluate.Agency_Applied_Change_code__r.Integration_RecId__c;
+                    String sRecIdB = sRecIdWinner == '' ? (auxACC.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( auxACC.Change_Code__c ) : auxACC.Integration_RecId__c) : sRecIdWinner;
 
-                        if(au3.Account__c == auxACC.Account__c){
-                            String sRecIdA = au3.Agency_Applied_Change_code__r.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( au3.Change_Code__c ) : au3.Agency_Applied_Change_code__r.Integration_RecId__c;
-                            String sRecIdB = auxACC.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( auxACC.Change_Code__c ) : auxACC.Integration_RecId__c;
+                    //Validates if the RecId for both Change Codes are equal or not
+                    if(sRecIdA != sRecIdB){
 
-                            if(sRecIdWinner != ''){
-                                sRecIdB = sRecIdWinner;
+                        String sRecIdRes = sRecIdWinner = AMS_Utils.getRecIdFromIntegrationMatriz( sRecIdA, sRecIdB );
+
+                        //RB 10-11-2017 - If the determined recId is 'D' check the account status, and if not Terminated, force recId = 'C'
+                        if(sRecIdRes == 'D' && agencyUpdateToReEvaluate.Status__c != 'Terminated'){
+                            sRecIdRes = 'C';
+                        }
+                        //Check if the agency update record is to delete or not save at all!!
+                        if(sRecIdRes == 'F'){
+                            //remove entry
+                            agencyUpdateToReEvaluate.Update_Type__c = 'Deleted';
+                            agencyUpdateToReEvaluate.Change_Code__c = '';
+                            if(setToRemoveAgencyUpdate == null || !setToRemoveAgencyUpdate.contains(agencyUpdateToReEvaluate.Account__c) ){
+                             
+                                toRemoveAgencyUpdate.add(agencyUpdateToReEvaluate);
+                                setToRemoveAgencyUpdate.add(agencyUpdateToReEvaluate.Account__c);
                             }
-
-                            //Validates if the RecId for both Change Codes are equal or not
-                            if(sRecIdA != sRecIdB){
-
-                                String sRecIdRes = AMS_Utils.getRecIdFromIntegrationMatriz( sRecIdA, sRecIdB );
-                                sRecIdWinner = sRecIdRes;
-
-                                //RB 10-11-2017 - If the determined recId is 'D' check the account status, and if not Terminated, force recId = 'C'
-                                if(sRecIdRes == 'D' && au3.Status__c != 'Terminated'){
-                                    sRecIdRes = 'C';
-                                }
-                                //Check if the agency update record is to delete or not save at all!!
-                                if(sRecIdRes == 'F'){
-                                    //remove entry
-                                    au3.Update_Type__c = 'Deleted';
-                                    au3.Change_Code__c = '';
-                                    if(setToRemoveAgencyUpdate == null || !setToRemoveAgencyUpdate.contains(au3.Account__c) ){
-                                     
-                                        toRemoveAgencyUpdate.add(au3);
-                                        setToRemoveAgencyUpdate.add(au3.Account__c);
-                                    }
-                                
-                                      //only need to check against "B" value, if "B" wins we change the auxACC to the 2nd change code
-                                }else if(sRecIdRes == sRecIdB){
-                                    au3.Change_Code__c = auxACC.Change_Code__c;
-                                }
-
-                            }else{
-                                //if both change code are of the same type (ex:"C") we check if the record being tested is the active one, if so that one becomes the one to use
-                                au3.Change_Code__c = auxACC.Change_Code__c;
-                                
-                            }
+                        
+                              //only need to check against "B" value, if "B" wins we change the auxACC to the 2nd change code
+                        }else if(sRecIdRes == sRecIdB){
+                            agencyUpdateToReEvaluate.Change_Code__c = auxACC.Change_Code__c;
                         }
 
+                    }else{
+                        //if both change code are of the same type (ex:"C") we check if the record being tested is the active one, if so that one becomes the one to use
+                        agencyUpdateToReEvaluate.Change_Code__c = auxACC.Change_Code__c;
+                        
                     }
-
                 }
 
-                
+                bToValidate = true;
+                agApplCC = auxACC;
                 mAgencyChangeCode.put(au.Id, auxACC); //Storing change code for use later
-                setAccountsToValidate.add(au.Id);
             }
-        }
-
-        //remove agencies that have 2 Change codes that cancel each other (ex: an "A" and a "D")
-        agencyIds.removeAll(agenciesUpdateNotToCreate);
-        agencyIds.removeAll(setToRemoveAgencyUpdate);
-        
-
-        Set<Id> agenciesValidateError = new Set<Id>();
-        Set<Id> agenciesInvalid = new Set<Id>();
-        List<Technical_Logs__c> tlogList = new List<Technical_Logs__c>();
-        for(Account au: aulist){
 
             Boolean bError = false;
             Boolean bErrorLog = false;
             Boolean bInvalid = false;
-
-            Boolean bToValidate = setAccountsToValidate.contains(au.Id);
-
-            Agency_Applied_Change_code__c agApplCC = mAgencyChangeCode.get(au.Id);
+            
             String sChangeCode = agApplCC == null ? '' : agApplCC.Change_Code__c;
             String sRecId = agApplCC == null || agApplCC.Integration_RecId__c == null ? AMS_Utils.getRecIdFromChangeCode( sChangeCode ) : agApplCC.Integration_RecId__c;
 
@@ -206,62 +170,61 @@ public without sharing class AMS_AgencyUpdateHelper {
                 bInvalid = true;
             }
 
-            //Validates if IATACODE is empty and if a Active Change code exists
-            //result: on Fail - will create the Agency Update Record in "Invalid" Status and will create a Log entry
-            if(String.isEmpty(au.IATACode__c) && bToValidate ){
-                accErrors += 'IATACode empty - Agency:' + au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
-                bError = true;
-                bErrorLog = true;
-                bInvalid = true;
-            }
+            if(bToValidate){
+                //Validates if IATACODE is empty and if a Active Change code exists
+                //result: on Fail - will create the Agency Update Record in "Invalid" Status and will create a Log entry
+                if(String.isEmpty(au.IATACode__c)){
+                    accErrors += 'IATACode empty - Agency:' + au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
+                    bError = true;
+                    bErrorLog = true;
+                    bInvalid = true;
+                }
 
-            //Validates if billing address is empty 
-            //result: on Fail - will create the Agency Update Record in "Invalid" Status and will create a Log entry
-            if(AMS_Utils.isAddressEmpty(au, 'Billing') && bToValidate ){
-                accErrors += '\nBilling address empty - Agency: '+au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
-                bError = true;
-                bErrorLog = true;
-                bInvalid = true;
-            }
+                //Validates if billing address is empty 
+                //result: on Fail - will create the Agency Update Record in "Invalid" Status and will create a Log entry
+                if(AMS_Utils.isAddressEmpty(au, 'Billing')){
+                    accErrors += '\nBilling address empty - Agency: '+au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
+                    bError = true;
+                    bErrorLog = true;
+                    bInvalid = true;
+                }
 
-            //Validates Hierarchy (null top parent cannot be sent to SAP except for HO, AO)
-            //result: on Fail - will create the Agency Update Record in "Invalid" Status and will NOT create a Log entry
-            //Site type EP, AO, SP, AA & HO are all considered as HO in PI. - Jitender
-            if(au.Top_Parent__c == null && !AMS_Utils.LocationTypeAllHOTypes.contains(au.Location_Type__c) && bToValidate){
+                //Validates Hierarchy (null top parent cannot be sent to SAP except for HO, AO)
+                //result: on Fail - will create the Agency Update Record in "Invalid" Status and will NOT create a Log entry
+                //Site type EP, AO, SP, AA & HO are all considered as HO in PI. - Jitender
+                if(au.Top_Parent__c == null && !AMS_Utils.LocationTypeAllHOTypes.contains(au.Location_Type__c)){
+                    accErrors += '\nHO Id empty - Agency: '+au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
+                    bError = true;
+                    bErrorLog = true;     
+                    bInvalid = true;          
+                }
 
-                
+                //Validates if In case change code created will be sent with C or T (change or terminate) to sap check if the account is in status 
+                //      “New application pending” and if yes, do not mark the account for update
+                //result: on Fail - will NOT create the Agency Update Record Status and will NOT create a Log entry
+                if(au.Status__c != null && au.Status__c.equalsIgnoreCase('New application pending') && sRecId != 'A'){
+                    bError = true;
+                    bErrorLog = false;
+                    bInvalid = false;
+                }
 
-                accErrors += '\nHO Id empty - Agency: '+au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
-                bError = true;
-                bErrorLog = true;     
-                bInvalid = true;          
-            }
+                //Validates if CASS number field is not empty for all accounts that are C, R , I=Import, Q=Courier?? (need to check from where these values are)
+                //result: on Fail - will create the Agency Update Record in "Invalid" Status and will create a Log entry
+                if(String.isEmpty(au.CASS_Number__c) && AMS_Utils.LocationClassCARGO.contains(au.Location_Class__c)){
+                    accErrors += '\nCASS Number empty - Agency:' + au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
+                    bError = true;
+                    bErrorLog = true;
+                    bInvalid = true;
+                }
 
-            //Validates if In case change code created will be sent with C or T (change or terminate) to sap check if the account is in status 
-            //      “New application pending” and if yes, do not mark the account for update
-            //result: on Fail - will NOT create the Agency Update Record Status and will NOT create a Log entry
-            if(au.Status__c != null && au.Status__c.equalsIgnoreCase('New application pending') && sRecId != 'A' && bToValidate){
-                bError = true;
-                bErrorLog = false;
-                bInvalid = false;
-            }
-
-            //Validates if CASS number field is not empty for all accounts that are C, R , I=Import, Q=Courier?? (need to check from where these values are)
-            //result: on Fail - will create the Agency Update Record in "Invalid" Status and will create a Log entry
-            if(String.isEmpty(au.CASS_Number__c) && AMS_Utils.LocationClassCARGO.contains(au.Location_Class__c) && bToValidate ){
-                accErrors += '\nCASS Number empty - Agency:' + au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
-                bError = true;
-                bErrorLog = true;
-                bInvalid = true;
-            }
-
-            //Validates if Check that check digit is not empty
-            //result: on Fail - will create the Agency Update Record in "Invalid" Status and will create a Log entry
-            if(String.isEmpty(au.Check_Digit__c) && bToValidate ){
-                accErrors += '\nCheck Digit empty - Agency:' + au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
-                bError = true;
-                bErrorLog = true;
-                bInvalid = true;
+                //Validates if Check that check digit is not empty
+                //result: on Fail - will create the Agency Update Record in "Invalid" Status and will create a Log entry
+                if(String.isEmpty(au.Check_Digit__c)){
+                    accErrors += '\nCheck Digit empty - Agency:' + au.Name+' ('+au.IATACode__c+'-'+au.id+'): Active Change Code - ' + sChangeCode ;
+                    bError = true;
+                    bErrorLog = true;
+                    bInvalid = true;
+                }
             }
 
             if(bError){
@@ -290,19 +253,23 @@ public without sharing class AMS_AgencyUpdateHelper {
         try {
             insert tlogList;
         }catch (Exception ex) {
-                system.debug('Log writing error: ' + ex.getMessage());
+                System.debug('____ [AMS_AgencyUpdateHelper - agencyUpdate] Log writing error: ' + ex.getMessage());
         }
 
+        //remove agencies that already have an agency update record
+        agencyIds.removeAll(agenciesAlreadyUpdated);
+        //remove agencies that have 2 Change codes that cancel each other (ex: an "A" and a "D")
+        agencyIds.removeAll(agenciesUpdateNotToCreate);
+        agencyIds.removeAll(setToRemoveAgencyUpdate);
         //remove agencies that had Shipping validation errors 
         agencyIds.removeAll(agenciesValidateError);
-        
-
-        system.debug('accSentToExternalSystemFlag: ' + accSentToExternalSystemFlag);
         //remove agencies that have been updated on integration with SAP 
         agencyIds.removeAll(accSentToExternalSystemFlag);
 
+        
+
         //create the Agency Update records - with "Update" status
-        for(Id toCreate: agencyIds){
+        for(Id toCreate : agencyIds){
             
             //Get change code to store on agency update record
             Agency_Applied_Change_code__c agApplCC = mAgencyChangeCode.get(toCreate);
@@ -332,16 +299,11 @@ public without sharing class AMS_AgencyUpdateHelper {
             }
         }
 
-        //create the Agency Update records - with "Invalid" status
-        for(AMS_Agency_Updates__c toUpdateDelete: toRemoveAgencyUpdate){
-            agencyUpdateToUpdate.add(toUpdateDelete);
-        }
+        agencyUpdateToUpdate.addAll(toRemoveAgencyUpdate);
 
-
-        System.debug('toRemoveAgencyUpdate:' + toRemoveAgencyUpdate);
-        System.debug('agencyUpdateToInsert:' + agencyUpdateToInsert);
-        System.debug('invalidAgencyUpdateToInsert:' + invalidAgencyUpdateToInsert);
-        System.debug('agencyUpdateToUpdate:' + agencyUpdateToUpdate);
+        System.debug('____ [AMS_AgencyUpdateHelper - agencyUpdate] agencyUpdateToInsert: ' + agencyUpdateToInsert);
+        System.debug('____ [AMS_AgencyUpdateHelper - agencyUpdate] invalidAgencyUpdateToInsert: ' + invalidAgencyUpdateToInsert);
+        System.debug('____ [AMS_AgencyUpdateHelper - agencyUpdate] agencyUpdateToUpdate: ' + agencyUpdateToUpdate);
 
         if(agencyUpdateToInsert.size() > 0)
             insert agencyUpdateToInsert;
@@ -356,15 +318,14 @@ public without sharing class AMS_AgencyUpdateHelper {
     }
 
     public static void accountUpdate(List<AMS_Agency_Updates__c> sentUpdates) {   
-        List<Account> integratedAccounts = new List<Account>();
+        Set<Account> setIntegratedAccounts = new Set<Account>();
         List<Account> integratedAccountsNoDuplicates = new List<Account>();
         for(AMS_Agency_Updates__c updatedAgency : sentUpdates){
-            integratedAccounts.add(new Account(Id = updatedAgency.Account__c, Sent_to_External_System__c = true, Last_Integration_Date__c = datetime.now()));
+            setIntegratedAccounts.add(new Account(Id = updatedAgency.Account__c, Sent_to_External_System__c = true, Last_Integration_Date__c = datetime.now()));
         }
 
-        //remove duplicates - Sets, by definition, contain no duplicates.  So, the first addAll() causes any dupes to overwrite themselves when going into the set
-        Set<Account> setIntegratedAccounts = new Set<Account>();
-        setIntegratedAccounts.addAll(integratedAccounts);
+        //we can't add the accounts directly in the list to avoid duplicates
+        //needs to be in a list since we can't use set in dml operations
         integratedAccountsNoDuplicates.addAll(setIntegratedAccounts);
 
         update integratedAccountsNoDuplicates;
