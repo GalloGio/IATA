@@ -1556,7 +1556,7 @@
                                 <div style="width: calc(100% - 20px);">
                                     <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!IF(OR(amsOfficeType=='Branch',newCase.Reason1__c=='New BR Abroad'), IF(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Manager), $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
 
-                                    <apex:commandLink style="float: right; {!IF(ownersThatCanBeCopied.size == 0,'pointer-events: none !important; cursor: default; color: gray !important;','')}" onfocus="showCopyOwneresMulticountry();"><span class="glyphicon glyphicon-plus" rendered="{!isMultiCountry}"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_ANG_Import_Owners_Directors, $Label.ISSP_ANG_Import_Directors)}</apex:commandLink>
+                                    <apex:commandLink style="float: right; {!IF(ownersThatCanBeCopied.size == 0,'pointer-events: none !important; cursor: default; color: gray !important;','')}" onfocus="showCopyOwneresMulticountry();"><span class="glyphicon glyphicon-arrow-down" rendered="{!isMultiCountry}"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_ANG_Import_Owners_Directors, $Label.ISSP_ANG_Import_Directors)}</apex:commandLink>
                                 </div>
 
                                 <apex:image value="/img/msg_icons/info16.png" style="height: 16px;" title="{!$Label.ISSP_ANG_Import_Owners_Tooltip}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" />
