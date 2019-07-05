@@ -33,20 +33,23 @@
                         </lightning-datatable>
                     </div>
                     <div if:false={dataRecords}>
-                        <div class="noRecentCases">
+                        <div class="noRecentCases slds-text-align_center">
                             <div>
                                 <img src={noCasesImg}/>
                             </div>
-                            <div class="noCasesTitle slds-p-around_small">
+                            <span class="text-medium text-darkGray slds-p-around_small">
                                 {label.CSP_NoCases1}
-                            </div>
-                            <div class="noCasesSubtitle">
+                            </span>
+                            <span class="text-xsmall text-lightGray">
                                 {label.CSP_NoCases2}
-                            </div>
-                            <div class="noCasesUrls slds-p-around_large">
-                                <a href={label.CSP_Question1URL}>{label.CSP_Question1}</a>
-                                <a href={label.CSP_Question2URL}>{label.CSP_Question2}</a>
-                            </div>
+                            </span>
+                            <span class="noCasesUrls slds-p-around_large">
+                                <span class="text-xxsmall text-linkBlue cursorPointer" onclick={navigateToLinkOne}>{label.CSP_Question1}</span>
+                                <br />
+                                <span class="text-xxsmall text-linkBlue cursorPointer" onclick={navigateToLinkTwo}>{label.CSP_Question2}</span>
+                                <!--<a href={label.CSP_Question1URL}>{label.CSP_Question1}</a>-->
+                                <!--<a href={label.CSP_Question2URL}>{label.CSP_Question2}</a>-->
+                            </span>
                         </div>
                     </div>
                 </div>
