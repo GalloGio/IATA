@@ -76,12 +76,14 @@ public with sharing class DataSubmissionTriggerHandler {
         if(dataSubmitters.isEmpty()){return new Map<Id, Set<Id>>();}
 
         Map<Id, User> usersWithContacts = new Map<Id, User>([SELECT Id, ContactId FROM User WHERE Id = :dataSubmitters]);
-
+        Set<Id> originalDataSubmittersContacts  = new Set<Id>();
+        for(User u : usersWithContacts.values()){
+            originalDataSubmittersContacts.add(u.ContactId);
+        }
 
         List<Account_Contact_Role__c> grantedAccounts = [
                 SELECT Id, Contact__c, Contact_Roles__c, Account_Role__r.Account__c
-                FROM Account_Contact_Role__c
-                WHERE Account_Role__r.Account__c = :allAccounts AND RecordTypeId = :groupRecordTypeId AND Contact_Roles__r.Name = 'GADM User'
+                FROM Account_Contact_Role__c WHERE Account_Role__r.Account__c IN: allAccounts AND RecordTypeId =: groupRecordTypeId
         ];
 
         Set<Id> contactsForBUs = new Set<Id>();
@@ -132,7 +134,7 @@ public with sharing class DataSubmissionTriggerHandler {
         List<Contact_Role_Service_Access__c> usersAccess = [
                 SELECT Account__c, Contact__c, Email_Address__c, Contact_Roles_Name__c, Status__c
                 FROM Contact_Role_Service_Access__c
-                WHERE Contact__c = :contactIds AND Status__c = 'Granted' AND
+                WHERE Contact__c IN :contactIds AND Status__c = 'Granted' AND
                 (Contact_Roles_Name__c = 'GADM Data Submitter' OR Contact_Roles_Name__c = 'Service Super User' OR Contact_Roles_Name__c = 'GADM User')  AND Service__r.Name = 'GADM'
         ];
 
@@ -148,6 +150,7 @@ public with sharing class DataSubmissionTriggerHandler {
         Set<Id> activeDataSubmitters = new Set<Id>();
         for(Contact_Role_Service_Access__c access: usersAccess){
             if(access.Contact_Roles_Name__c != 'GADM Data Submitter' || access.Status__c != 'Granted') {continue;}
+            if(!originalDataSubmittersContacts.contains(access.Contact__c)) {continue;}
             if(!grantedContacts.contains(access.Contact__c)) {continue;}
             activeDataSubmitters.add(access.Contact__c);
         }
@@ -166,7 +169,7 @@ public with sharing class DataSubmissionTriggerHandler {
                 if (submId == null) { continue; }
                 Set<Id> dsAccounts = contactToAccount.get(submId);
                 Set<Id> dsBus = contactsToBU.get(submId);
-                if (dsBus == null) { break; }
+                if (dsBus == null) { continue; }
                 boolean breakAccountLoop = false;
                 for (Id dsAcc : dsAccounts) {
                     if (breakAccountLoop) { break; }

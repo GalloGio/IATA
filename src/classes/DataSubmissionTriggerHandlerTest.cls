@@ -53,21 +53,7 @@ private class DataSubmissionTriggerHandlerTest {
         system.assertEquals(new list<Id>(users)[0], superUser.Id);
     }
 
-    static testMethod void getNotifiedUsers4() {
-        Contact submitter = [SELECT id FROM Contact WHERE Email = 'Neo.Smith.test@somedomain.com' LIMIT 1];
-        Contact superUser = [SELECT id FROM Contact WHERE Email = 'Leo.Smith.test@somedomain.com' LIMIT 1];
-        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
-        Account_Contact_Role__c accountAccess = [SELECT Id FROM Account_Contact_Role__c WHERE Contact__c =: superUser.Id AND RecordTypeId =: groupRecordTypeId AND Contact_Roles__r.Name = 'GADM User' LIMIT 1];
 
-        delete accountAccess;
-
-        Data_Submission__c subm = [SELECT Id, Submitter__c,Account__c FROM Data_Submission__c LIMIT 1];
-        Account a = [SELECT Id FROM Account WHERE Name = 'Test account' LIMIT 1];
-        Map<Id, Set<Id>> result = DataSubmissionTriggerHandler.getAllDataSubmittersAndSuperUsers(new List<Id>{a.Id}, new List<Data_Submission__c>{subm});
-        Set<id> users = result.get(subm.Id);
-        system.assertEquals(result.get(subm.Id).size(), 1);
-        system.assertEquals(new list<Id>(users)[0], submitter.Id);
-    }
 
     @TestSetup
     private static void setup() {

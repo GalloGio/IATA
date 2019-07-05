@@ -1,4 +1,4 @@
-public class ContactRoleServiceAccessTriggerHandler {
+public without sharing class ContactRoleServiceAccessTriggerHandler {
 
     public void OnBeforeInsert(List<Contact_Role_Service_Access__c> newObjects) {
         fillUniqueKey(newObjects);
@@ -55,8 +55,35 @@ public class ContactRoleServiceAccessTriggerHandler {
                 }
             }
         }
-
+        nofifyInternalGADMUsers(changedOrNewAccesses);
         notifyUserAboutStatusChange(changedOrNewAccesses);
+    }
+
+    private static void nofifyInternalGADMUsers(List<Contact_Role_Service_Access__c> changedOrNewAccesses) {
+        List<Contact_Role_Service_Access__c> powerUsers = new List<Contact_Role_Service_Access__c>();
+        List<Messaging.SingleEmailMessage> allmsg = new List<Messaging.SingleEmailMessage>();
+
+        for(Contact_Role_Service_Access__c access: changedOrNewAccesses){
+             if(access.Contact_Roles_Name__c == 'Service Power User'){
+                 powerUsers.add(access);
+             }
+        }
+
+        List<User> users = GADM_InternalUsersHandler.getUsersFromGroup('GADM Internal Users Notification Group');
+        system.debug('PUs');
+        system.debug(users);
+        system.debug(powerUsers);
+        for(Contact_Role_Service_Access__c puAccess: powerUsers) {
+            for (User u : users) {
+                allmsg.add(createNotification(puAccess.Id, u, puAccess.Status__c));
+            }
+        }
+
+        try {
+            Messaging.sendEmail(allmsg, false);
+        } catch (Exception e) {
+            system.debug(e);
+        }
     }
 
     private static Set<Id> getGrantedContacts(Set<Id> contactIds){
@@ -92,11 +119,19 @@ public class ContactRoleServiceAccessTriggerHandler {
     }
 
     private static Messaging.SingleEmailMessage createNotification(Id access, Contact cnt, string status) {
-        string emailTemplateName = 'Contact_Role_Status_Changed';
+        return createNotification(access, cnt.Email, cnt.Id, status, 'Contact_Role_Status_Changed');
+    }
+
+    private static Messaging.SingleEmailMessage createNotification(Id access, User usr, string status) {
+        return createNotification(access, usr.Email, usr.Id, status, 'Contact_Role_Status_Changed');
+}
+
+    private static Messaging.SingleEmailMessage createNotification(Id access, string emailAddress, Id person, string status, string emailTemplateName) {
+        emailTemplateName = 'Contact_Role_Status_Changed';
         EmailTemplate et = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateName];
-        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(et.Id, cnt.Id, access);
+        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(et.Id, person, access);
         mail.setToAddresses(new List<string>{
-                cnt.Email
+                emailAddress
         });
         mail.setSaveAsActivity(false);
         mail.setUseSignature(false);
