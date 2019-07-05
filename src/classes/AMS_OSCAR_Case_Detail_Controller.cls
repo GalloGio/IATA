@@ -17,6 +17,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isNewAE { get{ return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
     public Boolean displayErrorMsg{get{return false;} set;}
     public Boolean showStagingArea {get; set;}
+    public Boolean rfPerState{get{return [SELECT Id, AMS_Settlement_System__r.Remittance_Frequency_per_State__c
+                                          FROM IATA_ISO_Country__c
+                                          WHERE Id =: accreditationObj.Branch_Office_Country__c].AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+                                 }set;}
 
     private Set<Id> hierarchyAccountIds = new Set<Id>();
     private Map<Id, Account> hierarchyAccountsMap = new Map<Id, Account>();
@@ -191,7 +195,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         //if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
         //if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
         if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;
-        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && oscarObj.Process__c == AMS_Utils.NEWAE) return false;     
+        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && oscarObj.Process__c == AMS_Utils.NEWAE && rfPerState == false) return false;     
         if(fieldName == 'Location_Type__c' && !isAgencyChanges && accreditationObj.Location_Type__c == AMS_Utils.HO && !String.isBlank(accreditationObj.IATACode__c)) return false; //AC-ENHC0012276
         if(!isAgencyChanges && !isAgencyCorrection) return true;
 

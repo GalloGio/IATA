@@ -147,11 +147,11 @@ public class AMS_AccreditationOnlineTriggerHelper {
                                            FROM ANG_BSP_Attributes__c 
                                            WHERE ISO_State__c =: stateIdList
                                            AND RecordType.DeveloperName = 'Remittance_Frequency']) {
-                                               bspPerState.put(issOp.ISO_State__c, issOp);
+                                               bspPerState.put(issOp.ISO_State__c + issOp.Class_Type__c, issOp);
                                            }
         
         for(AMS_Pax_Accreditation_Form__c form : newList) {
-            ANG_BSP_Attributes__c bsp = bspPerState.get(form.IATA_ISO_State__c);
+            ANG_BSP_Attributes__c bsp = bspPerState.get(form.IATA_ISO_State__c + form.Location_Class__c);
             if(bsp != null && bsp.BSP__r.Remittance_Frequency_per_State__c == True && bsp.Class_Type__c == form.Location_Class__c && bsp.Remittance_Frequency__c != form.Remittance_Frequency__c) {
                 form.Remittance_frequency__c = '';
             }
