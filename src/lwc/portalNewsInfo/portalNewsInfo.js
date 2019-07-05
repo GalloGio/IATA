@@ -66,15 +66,23 @@ export default class PortalNewsInfo extends LightningElement {
         if (this.page > 1) {
             this.page = this.page - 1;
             this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];
+        } else {
+            this.page = this.maxSize;
+            this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];
         }
+
         this.sliderIconsRenderer();
     }
 
     handleNext() {
         if (this.page < this.maxSize) {
             this.page = this.page + 1;
-            this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];            
+            this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];
+        } else {
+            this.page = 1;
+            this.bannerImages = '/sfc/servlet.shepherd/version/download/' + this.globaList[this.page - 1];
         }
+
         this.sliderIconsRenderer();
     }
 
