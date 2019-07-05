@@ -7611,7 +7611,7 @@ public without sharing class ISSP_AMS_Accreditation {
             contactsToImportQuery += 'AND Id != \'' + newForm.Id + '\' ';
         }
 
-        contactsToImportQuery += 'AND SAAM_Case__r.Status == Draft';
+        contactsToImportQuery += 'AND SAAM_Case__r.Status = \'Draft\' ';
 
         allOwnersThatCanBeCopied = Database.query(contactsToImportQuery);
     }
