@@ -80,8 +80,7 @@ public with sharing class PortalProfileCtrl {
     */
     @AuraEnabled
     public static List<ContactWrapper> searchAccountContacts(String queryString, Integer offset){
-        DAL_ISSP.DAL_WithoutSharing withoutSharing = new DAL_ISSP.DAL_WithoutSharing();
-        List<Contact> searchResults = withoutSharing.searchContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH,queryString);
+        List<Contact> searchResults = DAL_WithoutSharing.searchContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH,queryString);
         List<ContactWrapper> wrappers = getContactWrappers(searchResults);
         return wrappers;
     }
@@ -94,8 +93,7 @@ public with sharing class PortalProfileCtrl {
 
     @AuraEnabled
     public static List<ContactWrapper> getAccountContacts(Integer offset){
-        DAL_ISSP.DAL_WithoutSharing withoutSharing = new DAL_ISSP.DAL_WithoutSharing();
-        List<Contact> contacts = withoutSharing.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
+        List<Contact> contacts = DAL_WithoutSharing.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
         List<ContactWrapper> wrappers = getContactWrappers(contacts);
         return wrappers;
     }
@@ -147,6 +145,7 @@ public with sharing class PortalProfileCtrl {
         from account
         where (id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId)
         and (TradeName__c LIKE :queryString OR Name LIKE :queryString OR BillingCity LIKE :queryString OR IATACode__c LIKE :queryString)
+        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
         ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
         ];
 
@@ -163,7 +162,8 @@ public with sharing class PortalProfileCtrl {
         List<Account> branches = new List<Account>();
 
         branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
-        from account where id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId
+        from account where (id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId)
+        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
         ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
         ];
 

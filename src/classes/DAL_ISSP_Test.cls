@@ -60,11 +60,11 @@ public with sharing class DAL_ISSP_Test {
 
         List<Contact> contacts = DAL_ISSP.getContactsByAccountId(account.Id);
 
-        DAL_ISSP.DAL_WithoutSharing withoutSharing = new DAL_ISSP.DAL_WithoutSharing();
-        List<Contact> contacts2 = withoutSharing.getContactsByAccountId(account.Id,0,5);
+
+        List<Contact> contacts2 = DAL_WithoutSharing.getContactsByAccountId(account.Id,0,5);
         List<Contact> contacts3 = DAL_ISSP.getContactsByAccountId(account.Id,0,5);
 
-        List<Contact> searchResults = withoutSharing.searchContactsByAccountId(account.Id,0,5,'test');
+        List<Contact> searchResults = DAL_WithoutSharing.searchContactsByAccountId(account.Id,0,5,'test');
         List<Contact> searchResults2 = DAL_ISSP.searchContactsByAccountId(account.Id,0,5,'test');
 
         List<User> users = DAL_ISSP.getUsersByContactId(new List<Id>{contact.Id});
