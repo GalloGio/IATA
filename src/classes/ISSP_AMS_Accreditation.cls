@@ -2640,6 +2640,17 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
+            if (isMultiCountry) {
+                for (AMS_Pax_Accreditation_Form__c form: allOwnersThatCanBeCopied) {
+                    for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
+                        if (con.Name == contactToUpsert.Name && con.Email__c == contactToUpsert.Email__c) {
+                            contactToUpsert.Cloned_From_Contact__c = con.Id;
+                            break;
+                        }
+                    }
+                }
+            }
+
             upsert contactToUpsert;
 
             if (isMultiCountry) {
