@@ -197,6 +197,10 @@
                 $('.loadingBox').hide();
             }
 
+            function redirectToCompanyInformationJs(){
+                window.open('{!portalRedirectToCompanyProfile}', '_self');
+            }
+
             </script>
         <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
