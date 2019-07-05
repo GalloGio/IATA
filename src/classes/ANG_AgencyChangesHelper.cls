@@ -93,6 +93,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
 
+			if(!accountsToRecalculateRHC.isEmpty()){
+				recalculateRHCInformation(accountsToRecalculateRHC);
+			}
+			
 			if(moveFsAndRiskEventsMap != NULL && !moveFsAndRiskEventsMap.isEmpty()){
         		System.enqueueJob(new ANG_Risk_Helper.FutureHandler(moveFsAndRiskEventsMap));
 			}
@@ -1267,9 +1271,6 @@ public with sharing class ANG_AgencyChangesHelper {
                 (toReturn.accountsMap.get(accId).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(toReturn.accountsMap.get(accId).Top_Parent__c)))
 				toReturn.accountsMap.get(accId).Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(toReturn.accountsMap.get(accId).Top_Parent__c == null ? accId : toReturn.accountsMap.get(accId).Top_Parent__c);
 			
-			if(!accountsToRecalculateRHC.isEmpty()){
-				recalculateRHCInformation(accountsToRecalculateRHC);
-			}
 
 			AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(oscarToProcess.AMS_Online_Accreditation__c);
 
@@ -1554,6 +1555,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, 
 				IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Covered_Ownership__c,
 		        ANG_IEP_Status__c, ANG_HE_RiskStatus__c, ANG_IEP_HE_AccntNum__c, ANG_HE_CashCondition__c, Financial_Review_Result__c, ANG_HE_RiskHistoryAssessment__c, Financial_Assessment_Points__c,
+				Identify_as_Multicountry_Key_Hierarchy__c, Multicountry_Key_Hierarchy__c,
 		        (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r)
 		         FROM Account WHERE Id IN :accountIds]);
 	}
