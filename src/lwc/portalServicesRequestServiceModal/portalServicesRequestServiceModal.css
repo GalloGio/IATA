@@ -21,6 +21,8 @@
 .successBoxContainer {
     text-align: left;
     padding: 25px;
+    overflow: auto;
+    max-height: -webkit-fill-available;
 }
 
 .headerTextContainer {
@@ -145,9 +147,4 @@
 
 .richTextlinks.span a{
     color:#3333ff;
-}
-
-.modalScroll {
-    overflow: auto;
-    max-height: -webkit-fill-available;
 }
