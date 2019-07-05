@@ -52,7 +52,7 @@ public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
 	// Extract Contacts & convert them into PortalLookupSearchResult (check this class for more info)
 	String contactIcon = 'standard:contact';
 	for (Contact contact : searchRelatedContacts(searchTerm)) {
-		results.add(new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Email, contact.Name));
+		results.add(new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Name, contact.Email));
 	}
 
 	return results;
