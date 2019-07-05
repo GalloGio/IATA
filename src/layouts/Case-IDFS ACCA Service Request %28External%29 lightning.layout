@@ -391,7 +391,7 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Close_Case_lightning</actionName>
+            <actionName>Case.Close_Case_Acca_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>
@@ -431,6 +431,9 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <relatedList>RelatedEmailMessageList</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>

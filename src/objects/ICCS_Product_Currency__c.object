@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Country__c</fullName>
         <description>Represents the name of the related ICCS Product Country</description>
