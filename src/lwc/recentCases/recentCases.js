@@ -89,4 +89,31 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
 
         navigateToPage(this.casesListUrl, {});
     }
+
+    navigateToLinkOne(event) {
+        let params = {};
+        params.q = 'case';
+
+        event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "comm__namedPage",
+            attributes: {
+                pageName: "support-view-article"
+            }})
+        .then(url => navigateToPage(url, params));
+    }
+    navigateToLinkTwo(event) {
+        let params = {};
+        params.q = 'case';
+
+        event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "comm__namedPage",
+            attributes: {
+                pageName: "support-view-article"
+            }})
+        .then(url => navigateToPage(url, params));
+    }
 }

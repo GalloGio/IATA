@@ -1,6 +1,14 @@
 import { LightningElement, track } from 'lwc';
+
+//import other js utils
+import { NavigationMixin } from 'lightning/navigation';
+import { navigateToPage } from 'c/navigationUtils';
+
+//import apex methods
 import getRecentCases from '@salesforce/apex/PortalCasesCtrl.getRecentCases';
 import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
+
+//import labels
 import CSP_NoCases1 from '@salesforce/label/c.CSP_NoCases1';
 import CSP_NoCases2 from '@salesforce/label/c.CSP_NoCases2';
 import CSP_RecentCases from '@salesforce/label/c.CSP_RecentCases';
@@ -14,7 +22,11 @@ import CSP_SearchingOn from '@salesforce/label/c.CSP_SearchingOn';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
-export default class PortalCasesList extends LightningElement {
+export default class PortalCasesList extends NavigationMixin(LightningElement) {
+    
+    //assets 
+    noCasesImg = CSP_PortalPath + 'CSPortal/Images/Icons/nocases.svg';
+
     label = {
         CSP_NoCases1,
         CSP_NoCases2,
@@ -28,7 +40,6 @@ export default class PortalCasesList extends LightningElement {
         CSP_SearchingOn
     };
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
-    @track error;
     @track data;
     @track allData;
     @track columns;
@@ -256,5 +267,31 @@ export default class PortalCasesList extends LightningElement {
         
         this.pageList = currentPageList;
     }
-    /*PAGINATION METHODS*/
+    
+    navigateToLinkOne(event) {
+        let params = {};
+        params.q = 'case';
+
+        event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "comm__namedPage",
+            attributes: {
+                pageName: "support-view-article"
+            }})
+        .then(url => navigateToPage(url, params));
+    }
+    navigateToLinkTwo(event) {
+        let params = {};
+        params.q = 'case';
+
+        event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "comm__namedPage",
+            attributes: {
+                pageName: "support-view-article"
+            }})
+        .then(url => navigateToPage(url, params));
+    }
 }
