@@ -186,7 +186,7 @@ public class EmailMessagesViewCon {
     public EmailMessagesViewCon (ApexPages.StandardController controller) {
         try {
             if (!Test.isRunningTest()) {
-                controller.addFields(new List<String> {'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c', 'Account.Identify_as_Key_Customer__c', 'RecordType.Name'});
+                controller.addFields(new List<String> {'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c', 'Account.Identify_as_Key_Customer__c', 'RecordType.Name', 'Account.CNS_Agency__c'});
             }
             this.cse = (Case)controller.getRecord();
             loadEmails();

@@ -54,7 +54,7 @@ public class SidraLiteHelperForCNS {
         }
 
         childCase.Propose_Default__c = Date.today();
-        childCase.Termination_Reason__c = 'Non Payment';
+        //childCase.Termination_Reason__c = 'Non Payment';
 
         list<Case> listUpdate = new list<Case>();
         listUpdate.add(childCase);
