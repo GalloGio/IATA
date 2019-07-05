@@ -1,0 +1,48 @@
+.slds-combobox__input, .slds-combobox_container .customborder{
+    transition: border .1s linear, box-shadow .1 linear;
+}
+
+.slds-combobox__input.no-boxshadow{
+    box-shadow: none;
+}
+
+.slds-combobox__input.has-custom-border {
+    box-shadow: none;
+}
+
+.slds-combobox__input.has-custom-border:focus{
+    box-shadow: none;
+    border-color:white;
+}
+
+.slds-combobox__input.has-custom-error {
+    border: 1px solid rgb(194, 57, 52);
+    box-shadow: rgb(194, 57, 52) 0 0 0 1px inset;
+}
+
+.slds-combobox_container.has-custom-error {
+    border: none !important;
+}
+
+.slds-combobox__input.has-custom-height {
+    height: 32px !important;
+}
+
+.form-error {
+    color: rgb(194, 57, 52);
+    display: block;
+}
+
+.squareBorder {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 1px;
+}
+
+.squareShadow.slds-has-error  {
+    box-shadow: rgb(194, 57, 52) 0px 0px 0px 1px inset;
+}
+
+.customMaxHeight {
+    max-height: 320px;
+}

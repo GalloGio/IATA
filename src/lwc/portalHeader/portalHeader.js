@@ -1,0 +1,443 @@
+import { LightningElement, track, wire, api } from 'lwc';
+
+//navigation
+import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
+import { navigateToPage, getPageName } from 'c/navigationUtils';
+import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
+
+//notification apex method
+import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
+import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
+import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
+import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
+import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
+
+import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
+
+// Toast
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
+
+//custom labels
+import ISSP_Services from '@salesforce/label/c.ISSP_Services';
+import CSP_Support from '@salesforce/label/c.CSP_Support';
+import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
+import ISSP_MyProfile from '@salesforce/label/c.ISSP_MyProfile';
+import CSP_CompanyProfile from '@salesforce/label/c.CSP_CompanyProfile';
+import CSP_Cases from '@salesforce/label/c.CSP_Cases';
+import CSP_Settings from '@salesforce/label/c.CSP_Settings';
+import CSP_LogOut from '@salesforce/label/c.CSP_LogOut';
+import PortalName from '@salesforce/label/c.PortalNameRedirect';
+import MarkAsRead from '@salesforce/label/c.MarkAsRead_Notification';
+import NotificationCenter from '@salesforce/label/c.NotificationCenter_Title';
+import ViewDetails from '@salesforce/label/c.ViewDetails_Notification';
+import NotificationDetail from '@salesforce/label/c.NotificationDetail_Detail';
+
+import Announcement from '@salesforce/label/c.Announcements_Notification';
+import Tasks from '@salesforce/label/c.Tasks_Notification';
+import AllNotifications from '@salesforce/label/c.All_Notifications_Notification';
+
+// Accept Terms
+import { updateRecord } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
+import Id from '@salesforce/user/Id';
+import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
+import AccountSector from '@salesforce/schema/User.Contact.Account.Sector__c';
+
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
+
+export default class PortalHeader extends NavigationMixin(LightningElement) {
+    @track displayAcceptTerms = true;
+
+    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept] })
+    WiregetUserRecord(result) {
+        if (result.data) {
+            let user = JSON.parse(JSON.stringify(result.data));
+            let acceptTerms = user.fields.ToU_accepted__c.value;
+            let currentURL = window.location.href;
+            if (currentURL.includes(this.labels.PortalName)) {
+                this.displayAcceptTerms = acceptTerms;
+            }
+
+        }
+    }
+
+    @track displayCompanyTab = false;
+
+    @wire(getRecord, { recordId: Id, fields: [AccountSector] })
+    WiregetAccountSector(result) {
+        if (result.data) {
+            let user = JSON.parse(JSON.stringify(result.data));
+            let accountSector = user.fields.Contact.value.fields.Account.value.fields.Sector__c.value;
+
+            if (accountSector === 'General Public') {
+                this.displayCompanyTab = false;
+            } else {
+                this.displayCompanyTab = true;
+            }
+        }
+    }
+
+
+    _labels = {
+        ISSP_Services,
+        CSP_Support,
+        ICCS_Profile,
+        ISSP_MyProfile,
+        CSP_CompanyProfile,
+        CSP_Cases,
+        CSP_Settings,
+        CSP_LogOut,
+        PortalName,
+        MarkAsRead,
+        NotificationCenter,
+        ViewDetails,
+        NotificationDetail,
+        Announcement,
+        Tasks,
+        AllNotifications
+    };
+    get labels() {
+        return this._labels;
+    }
+    set labels(value) {
+        this._labels = value;
+    }
+
+    //links for images
+    logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+    servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
+    supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
+    profileIcon = CSP_PortalPath + 'CSPortal/Images/Icons/profile-white.svg';
+    profileIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/profile-blue.svg';
+    arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
+    arrowIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-blue.svg';
+    notificationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/notification-white.svg';
+    searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.svg';
+
+    //notifications
+    @track numberOfNotifications;
+    @track openNotifications = false;
+    @track notification;
+
+    //notification Center Tab
+    @track allNotificationTab;
+    @track announcementTab;
+    @track taskTab;
+
+    //notification counter
+    @track notificationCounter = 0;
+    @track taskCounter = 0;
+
+    @track notificationsList;
+    @track currentURL;
+    @track baseURL;
+    @track showBackdrop = false;
+
+    //User Type
+    @track userAdmin;
+
+    //style variables for notifications
+    @track headerButtonNotificationsContainerStyle;
+    @track headerButtonNotificationsCloseIconStyle;
+    @track headerButtonNotificationsStyle;
+    @track notificationNumberStyle;
+    @track openNotificationsStyle;
+    @track displayBodyStyle;
+    @track displayNotificationStyle;
+    //
+    @track checkDisplayBodyStyle
+
+    // MODAL
+    @track openmodel = false;
+
+    @track mainBackground = 'z-index: 9999;';
+
+    @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small headerBarButton buttonService';
+    @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonSupport';
+
+    @track trackedIsInOldPortal;
+
+    @api
+    get isInOldPortal() {
+        return this.trackedIsInOldPortal;
+    }
+    set isInOldPortal(value) {
+        this.trackedIsInOldPortal = value;
+    }
+
+    @wire(CurrentPageReference)
+    getPageRef() {
+        this.handlePageRefChanged();
+    }
+
+    connectedCallback() {
+
+        isAdmin().then(result => {
+            this.userAdmin = result;
+        });
+
+        getNotifications().then(result => {
+            this.baseURL = window.location.href;
+            let resultsAux = JSON.parse(JSON.stringify(result));
+
+            resultsAux.sort(function (a, b) {
+                return new Date(b.createdDate) - new Date(a.createdDate);
+            });
+
+            this.notificationsList = resultsAux;
+
+            let notificationCounter = 0;
+            let taskCounter = 0;
+            resultsAux.forEach(function (element) {
+                if (element.type === 'Notification') {
+                    if (element.viewed === false) {
+                        notificationCounter++;
+                    }
+                } else {
+                    taskCounter++;
+                }
+            });
+
+            this.notificationCounter = notificationCounter;
+            this.taskCounter = taskCounter;
+
+            this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+            this.taskTab = this.labels.Tasks + ' (' + taskCounter + ')';
+            this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
+            this.numberOfNotifications = (notificationCounter + taskCounter);
+
+            if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+                this.notificationNumberStyle = 'display: none;';
+            }
+
+        });
+
+    }
+
+    //navigation methods
+    navigateToOtherPage(pageNameToNavigate) {
+        this[NavigationMixin.Navigate]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: pageNameToNavigate
+            },
+        });
+    }
+
+    // Check if we are in the Old/New Portal
+    navigationCheck(pageNameToNavigate, currentService) {
+
+        if (this.trackedIsInOldPortal) {
+            redirectfromPortalHeader({ pageName: currentService }).then(result => {
+                window.location.href = result;
+            });
+        } else {
+            this.navigateToOtherPage(pageNameToNavigate);
+        }
+
+    }
+
+    navigateToHomePage() {
+        this.navigationCheck("home", "");
+        //this.navigateToOtherPage("home");
+    }
+
+    navigateToServices() {
+        this.navigationCheck("services", "services");
+        //this.navigateToOtherPage("services");
+    }
+
+    navigateToSupport() {
+        this.navigationCheck("support", "support");
+        //this.navigateToOtherPage("support");
+    }
+
+    navigateToMyProfile() {
+        this.navigationCheck("my-profile", "my-profile");
+    }
+
+    navigateToCompanyProfile() {
+        this.navigationCheck("company-profile", "company-profile");
+    }
+
+    navigateToCases() {
+        this.navigationCheck("cases-list", "cases-list");
+    }
+
+    navigateToSettings() {
+        //this.navigateToOtherPage("");
+    }
+
+    navigateToChangePassword() {
+        goToOldChangePassword({}).then(results => {
+            window.open(results, "_self");
+        });
+
+    }
+
+    //user logout
+    logOut() {
+        navigateToPage("/secur/logout.jsp");
+    }
+
+
+    //method to change the style when the user clicks on the notifications
+    toggleNotifications() {
+
+        this.openNotifications = !this.openNotifications;
+
+        if (this.openNotifications) {
+            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
+            this.headerButtonNotificationsStyle = 'display: none;';
+            this.notificationNumberStyle = 'display: none;';
+            this.openNotificationsStyle = 'display: block;';
+            this.showBackdrop = true;
+            this.displayBodyStyle = 'width: 35vw';
+            this.displayNotificationStyle = 'width: 100%'
+        } else {
+            this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
+            this.headerButtonNotificationsStyle = 'display: block;';
+            this.notificationNumberStyle = 'display: block;';
+            this.openNotificationsStyle = 'display: none;';
+            this.showBackdrop = false;
+        }
+    }
+
+    onClickAllNotificationsView(event) {
+        this.notificationsView(event);
+    }
+
+    openmodal(event) {
+        this.notificationsView(event);
+
+        this.mainBackground = "z-index: 10004;"
+        this.openmodel = true
+    }
+
+    closeModal() {
+        this.mainBackground = "z-index: 10000;"
+        this.openmodel = false
+    }
+
+    notificationsView(event) {
+        let selectedNotificationId = event.target.dataset.item;
+
+        let notificationsListAux = JSON.parse(JSON.stringify(this.notificationsList));
+
+        let notification = notificationsListAux.find(function (element) {
+            if (element.id === selectedNotificationId) {
+                return element;
+            }
+            return null;
+        });
+
+        this.notification = notification;
+
+        if (notification.typeNotification === 'Announcement') {
+            increaseNotificationView({ id: selectedNotificationId })
+                .then(results => {
+
+                    if (!notification.viewed) {
+                        let notificationCounter = this.notificationCounter;
+                        let taskCounter = this.taskCounter;
+
+                        notificationCounter--;
+                        this.numberOfNotifications = notificationCounter + taskCounter;
+                        this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+                        this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
+                        this.notificationCounter = notificationCounter;
+
+                        this.numberOfNotifications = (notificationCounter + taskCounter);
+                        if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+                            this.notificationNumberStyle = 'display: none;';
+                        }
+
+                        notification.viewed = true;
+                        notification.styles = 'readNotification';
+                        this.notificationsList = notificationsListAux;
+                    }
+
+                })
+                .catch(error => {
+                    const showError = new ShowToastEvent({
+                        title: 'Error',
+                        message: 'An error has occurred: ' + error.getMessage,
+                        variant: 'error',
+                    });
+                    this.dispatchEvent(showError);
+
+                });
+        } else if (notification.type === "Portal Service") {
+
+            let params = {};
+            params.serviceId = notification.id;
+            this.currentURL = window.location.href;
+
+            if (this.currentURL.includes(this.labels.PortalName)) {
+                this[NavigationMixin.GenerateUrl]({
+                    type: "standard__namedPage",
+                    attributes: {
+                        pageName: "manage-service"
+                    }
+                })
+                    .then(url => navigateToPage(url, params));
+            } else {
+                goToManageService().then(results => {
+                    navigateToPage(results, params);
+                });
+            }
+        } else {
+            navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
+        }
+    }
+
+    goToAdvancedSearchPage() {
+        this.navigationCheck("advanced-search", "advanced-search");
+    }
+
+    handlePageRefChanged() {
+        let pagename = getPageName();
+        if (pagename) {
+            getBreadcrumbs({ pageName: pagename })
+                .then(results => {
+                    let breadCrumbs = JSON.parse(JSON.stringify(results));
+                    if (breadCrumbs && breadCrumbs[1] && (breadCrumbs[1].DeveloperName === 'services' || breadCrumbs[1].DeveloperName === 'support')) {
+                        if (breadCrumbs[1].DeveloperName === 'services') {
+                            this.buttonServiceStyle = `${this.buttonServiceStyle} selectedButton`;
+                            this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+                        } else if (breadCrumbs[1].DeveloperName === 'support') {
+                            this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+                            this.buttonSupportStyle = `${this.buttonSupportStyle} selectedButton`;
+                        }
+                    } else {
+                        this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+                        this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+                    }
+                });
+        } else {
+            this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+            this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+        }
+    }
+
+    acceptTerms() {
+
+        const fields = {};
+        fields.Id = Id;
+        fields.ToU_accepted__c = true;
+        fields.Date_ToU_accepted__c = new Date().toISOString();
+        const recordInput = { fields };
+
+        updateRecord(recordInput)
+            .then(() => {
+                this.displayAcceptTerms = true;
+            });
+
+
+
+    }
+
+}

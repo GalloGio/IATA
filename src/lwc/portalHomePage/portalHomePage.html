@@ -1,0 +1,31 @@
+<template>
+
+    <c-portal-page-container>
+        <span slot="componentContent">
+            <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-p-top_xx-large homeContainer">
+                
+                <!-- Favorite Services -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3 slds-m-vertical_medium" >
+                    <c-favorite-services-l-w-c></c-favorite-services-l-w-c>
+                </div>
+
+                <!-- For You -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-m-vertical_medium" >
+                    <c-portal-news-info></c-portal-news-info>
+                </div>
+
+                <!-- Recent Cases -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3 slds-m-vertical_medium" >
+                    <c-recent-cases></c-recent-cases>
+                </div>
+
+                <!-- Weekly Calnedar -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-m-vertical_medium" >
+                    <c-portal-home-calendar></c-portal-home-calendar>
+                </div>
+
+            </div>
+        </span>
+    </c-portal-page-container>
+    
+</template>

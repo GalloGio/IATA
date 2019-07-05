@@ -1,0 +1,52 @@
+.WarningRectangle {
+    height: 40px;
+    border-radius: 1px;
+    background-color: rgba(250, 200, 50, 0.32);
+    align-items: center;
+    display: inline-flex;
+    width: 100%;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-xxxsmall {
+  font-size: 12px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+}
+
+.text-bold {
+    font-weight: 500;
+}
+
+.recipients-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.recipients-label {
+    color: #9a9eb0;
+}
+
+.recipients-data {
+    padding: 0 20px;
+    white-space: nowrap;
+    max-width:50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display:inline-block;
+}
+
+.recipients {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.recipients lightning-button{
+    padding: 0 10px;
+}

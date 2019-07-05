@@ -4,57 +4,45 @@ public with sharing class AttachmentListCtrl {
     
     public static final List<String> LST_SAAM_AND_SIDRA_RTYPES_NAME = new List<String>{'ProcessEuropeSCE', 'SIDRA', 'SIDRA_BR', 'SIDRA_BR'};
     
-    @AuraEnabled
-    public static List<PickListWrapper> getFileIdentifierPickValues(){
-        Schema.DescribeSObjectResult sobjectDescribe = Schema.getGlobalDescribe().get('AmazonFile__c').getDescribe();
-        List<Schema.PicklistEntry> pickListValues = sobjectDescribe.fields.getMap().get('File_Identifier_picklist__c').getDescribe().getPickListValues();
-        
-        List<PickListWrapper> options = new List<PickListWrapper>();
-        
-        PickListWrapper emptySelection = new PickListWrapper();  
-        /*emptySelection.label = '-- Select One --';
-        emptySelection.value = null;
-        emptySelection.checked = true;
-        options.add(emptySelection);*/
-        
-        for (Schema.PicklistEntry a : pickListValues) {
-            PickListWrapper selection = new PickListWrapper();  
-            selection.label = a.getLabel();
-            selection.value = a.getValue();
-            selection.checked = false;
-            options.add(selection);
-        }
-        return options;
-    }
+    
     
     @AuraEnabled
-    public static List<PickListWrapper> getReviewStatusPickValues(){
-        Schema.DescribeSObjectResult sobjectDescribe = Schema.getGlobalDescribe().get('AmazonFile__c').getDescribe();
-        List<Schema.PicklistEntry> pickListValues = sobjectDescribe.fields.getMap().get('Review_Status__c').getDescribe().getPickListValues();
-        
-        List<PickListWrapper> options = new List<PickListWrapper>();
-        
-        PickListWrapper emptySelection = new PickListWrapper();  
-        /*emptySelection.label = '-- Select One --';
-        emptySelection.value = null;
-        emptySelection.checked = true;
-        options.add(emptySelection);*/
-        
-        for (Schema.PicklistEntry a : pickListValues) {
-            PickListWrapper selection = new PickListWrapper();  
-            selection.label = a.getLabel();
-            selection.value = a.getValue();
-            selection.checked = false;
-            options.add(selection);
+    public static List<CSP_Utils.PickListWrapper> FileIdentifierPickValues{
+        get{
+            if(FileIdentifierPickValues==null){                      
+                FileIdentifierPickValues=CSP_Utils.getPickListValues('AmazonFile__c','File_Identifier_picklist__c');
+            }
+            return FileIdentifierPickValues;
         }
-        return options;
+        set;
     }
+    
+    
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> ReviewStatusPickValues{
+         get{
+            if(ReviewStatusPickValues==null){                      
+                FileIdentifierPickValues=CSP_Utils.getPickListValues('AmazonFile__c','Review_Status__c');
+            }
+            return FileIdentifierPickValues;
+        }
+        set;
+    }   
+
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> getFileIdentifierPickValues(){
+        return AttachmentListCtrl.FileIdentifierPickValues;
+    }
+    
+    
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> getReviewStatusPickValues(){
+        return AttachmentListCtrl.ReviewStatusPickValues;
+    } 
 
     @AuraEnabled
     public static PropertiesWrapper getPanelProperties(String parentId, Boolean isPortal, String communityName) {
-        System.debug('parentId: ' + parentId);
-        System.debug('isPortal: ' + isPortal);
-        
+      
         PropertiesWrapper propWrapper = new PropertiesWrapper();
         propWrapper.amazonURL = WrapperAttach.CREDENTIAL.EndpointBaseURL + WrapperAttach.CREDENTIAL.Bucket;
         propWrapper.credentialName = WrapperAttach.CREDENTIAL_NAME;
@@ -114,14 +102,19 @@ public with sharing class AttachmentListCtrl {
         }
         
         //check if is saam or sidra record type
-		propWrapper.isSAAMorSIDRA = [SELECT Count() FROM Case WHERE Id = :parentId AND RecordType.DeveloperName IN :LST_SAAM_AND_SIDRA_RTYPES_NAME] > 0 ;
-        System.debug('isSAAMorSIDRA: ' + propWrapper.isSAAMorSIDRA);
-        
+		propWrapper.isSAAMorSIDRA = checkIfSidraSaam(parentId) ;
+       
         return propWrapper;
     }
 
     @AuraEnabled
-    public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortal(String parentId, Boolean isPortal, Boolean isSAAMorSIDRA) {
+    public static boolean checkIfSidraSaam(string caseId){
+        return [SELECT Count() FROM Case WHERE Id = :caseId AND RecordType.DeveloperName IN :LST_SAAM_AND_SIDRA_RTYPES_NAME] > 0 ;
+        
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortal(string parentId, boolean isPortal, boolean isSAAMorSIDRA) {
     //public static List<WrapperAttach> getAllAttachments(String parentId, Boolean isPortal) {
         System.debug('parentId: ' + parentId);
         System.debug('isPortal: ' + isPortal);
@@ -129,75 +122,68 @@ public with sharing class AttachmentListCtrl {
 
         List<WrapperAttach> listAttachments;
         try {
-            
-            if(isSAAMorSIDRA){
-                if (isPortal) {
+            if (isPortal) {           
                     listAttachments = WrapperAttach.getListAttachmentsForPortal(parentId);
-                } else {
+            } else {
+                if(isSAAMorSIDRA){
                     listAttachments = WrapperAttach.getListAttachments(parentId);
-                }
-            }else{
-                Boolean fullAttachmentAccess = AttachmentListCtrl.checkIfUSerHaveFullAccess();
-                listAttachments = new List<WrapperAttach>();
-                if(fullAttachmentAccess){
-                    //Get attachments 
-                    List<Attachment> lstAttachAux = [SELECT IsPrivate, Id, ParentId, OwnerId, Name, CreatedById, CreatedBy.Name, LastModifiedDate, BodyLength, 
-                                                     LastModifiedById, CreatedDate, Description, ContentType,body
-                                                     FROM Attachment WHERE ParentId = :parentId AND (NOT Name LIKE 'TMP_FINANCIAL_2DELETE%') ORDER BY CreatedDate DESC ];
-                    Set <Id> setAttachIds = new Set <Id>();
-                    
-                    if (lstAttachAux != null && !lstAttachAux.isEmpty()){
-                        for (Attachment attachAux : lstAttachAux){
-                            setAttachIds.add(attachAux.Id);
+                } else {            
+                    Boolean fullAttachmentAccess = AttachmentListCtrl.checkIfUSerHaveFullAccess();
+                    listAttachments = new List<WrapperAttach>();
+                    if(fullAttachmentAccess){
+                        //Get attachments 
+                        List<Attachment> lstAttachAux = [SELECT IsPrivate, Id, ParentId, OwnerId, Name, CreatedById, CreatedBy.Name, LastModifiedDate, BodyLength, 
+                                                        LastModifiedById, CreatedDate, Description, ContentType,body
+                                                        FROM Attachment WHERE ParentId = :parentId AND (NOT Name LIKE 'TMP_FINANCIAL_2DELETE%') ORDER BY CreatedDate DESC ];
+                        Set <Id> setAttachIds = new Set <Id>();
+                        
+                        if (lstAttachAux != null && !lstAttachAux.isEmpty()){
+                            for (Attachment attachAux : lstAttachAux){
+                                setAttachIds.add(attachAux.Id);
+                            }
+                            //Get public permissions for attachments
+                            List <ISSPAttachmentPermission__c> permList = [SELECT Id, AttachmentId__c, ShowToPortalUsers__c
+                                                                        FROM ISSPAttachmentPermission__c
+                                                                        WHERE AttachmentId__c IN :setAttachIds];
+                            Map<Id,ISSPAttachmentPermission__c> mapAttachIdAndPermission = new Map<Id,ISSPAttachmentPermission__c>();
+                            if (permList != null && !permList.isEmpty()){
+                                for (ISSPAttachmentPermission__c thisPerm : permList){
+                                    mapAttachIdAndPermission.put(thisPerm.AttachmentId__c, thisPerm);
+                                }
+                            }
+                            
+                            for(Attachment attachAux : lstAttachAux){
+                                listAttachments.add(new WrapperAttach(attachAux, mapAttachIdAndPermission.get(attachAux.Id)));
+                            }
                         }
-                        //Get public permissions for attachments
-                        List <ISSPAttachmentPermission__c> permList = [SELECT Id, AttachmentId__c, ShowToPortalUsers__c
-                                                                       FROM ISSPAttachmentPermission__c
-                                                                       WHERE AttachmentId__c IN :setAttachIds];
-                        Map<Id,ISSPAttachmentPermission__c> mapAttachIdAndPermission = new Map<Id,ISSPAttachmentPermission__c>();
-                        if (permList != null && !permList.isEmpty()){
-                            for (ISSPAttachmentPermission__c thisPerm : permList){
-                                mapAttachIdAndPermission.put(thisPerm.AttachmentId__c, thisPerm);
+                        //get amazon attachments
+                        String folder = AttachmentListCtrl.getAmazonFolder(parentId);            
+                        list<AmazonRest.S3File> listS3Files = AmazonRest.getListFiles(folder, AmazonCredentials.getCredentials('GenericAttach'));
+                        list<AmazonFile> listAmazonfiles = AmazonFile.getFiles( parentId, listS3Files);
+                        if(listAmazonfiles != null && !listAmazonfiles.isEmpty()){
+                            for(AmazonFile file: listAmazonfiles){
+                                listAttachments.add(new WrapperAttach(file));
                             }
                         }
                         
-                        for(Attachment attachAux : lstAttachAux){
-                            listAttachments.add(new WrapperAttach(attachAux, mapAttachIdAndPermission.get(attachAux.Id)));
-                        }
+                        //get archived attachments Silenced for lightning migration
+                        /*List<Archived_Attachment__c> lstArchivedAttach = [SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id, BodyLength__c, 
+                                                                        Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c, Originally_created_by__c 
+                                                                        FROM Archived_Attachment__c 
+                                                                        WHERE Case__c = :parentId AND ArchivedMessage__c = null ORDER BY Original_Creation_Date__c DESC];*/
+                       /* if(lstArchivedAttach != null && !lstArchivedAttach.isEmpty()){
+                            for(Archived_Attachment__c attachAux : lstArchivedAttach){
+                                listAttachments.add(new WrapperAttach(attachAux));
+                            }
+                        }*/
+
+                        listAttachments.addAll(WrapperAttach.getContentAttachments(parentId,isPortal));                        
                     }
-                    //get amazon attachments
-                    String folder = AttachmentListCtrl.getAmazonFolder(parentId);            
-                    list<AmazonRest.S3File> listS3Files = AmazonRest.getListFiles(folder, AmazonCredentials.getCredentials('GenericAttach'));
-                    list<AmazonFile> listAmazonfiles = AmazonFile.getFiles( parentId, listS3Files);
-                    if(listAmazonfiles != null && !listAmazonfiles.isEmpty()){
-                        for(AmazonFile file: listAmazonfiles){
-                            listAttachments.add(new WrapperAttach(file));
-                        }
-                    }
-                    
-                    //get archived attachments
-                    List<Archived_Attachment__c> lstArchivedAttach = [SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id, BodyLength__c, 
-                                                                      Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c, Originally_created_by__c 
-                                                                      FROM Archived_Attachment__c 
-                                                                      WHERE Case__c = :parentId AND ArchivedMessage__c = null ORDER BY Original_Creation_Date__c DESC];
-                    if(lstArchivedAttach != null && !lstArchivedAttach.isEmpty()){
-                        for(Archived_Attachment__c attachAux : lstArchivedAttach){
-                            listAttachments.add(new WrapperAttach(attachAux));
-                        }
-                    }
-                        
-                }else{
-                    //reserved for portal users attachments list retrive. 
-                    //It's possibly the same as the above but just for salesforce attach and archived attach
-                }
-                
+                }                
             }
-            
-            
-			//listAttachments.sort();
 		} catch (Exception e ) {
 			//TransformationHelper.sendEmailSupport('FATAL: GenericAttachmentListController in function refreshList()  ' ,'STACKTRACE   ' + e.getStackTraceString()  + '  '  + e.getMessage());
-		}
+		}     
 		return listAttachments;
     }
     
@@ -210,6 +196,22 @@ public with sharing class AttachmentListCtrl {
     private static String getAmazonFolder(Id sobjectId) {
         String suffix = String.ValueOf(sobjectId).substring(0,3);
         return '' + suffix + '/' + String.valueOf(sobjectId) + '/';
+    }
+
+    
+    @AuraEnabled
+    public static List<WrapperAttach> getContentDetails(list<id> attachList){
+    //gets details on uploaded files
+        set<id> attachSet= new set<id>(attachList);
+        
+        list<ContentDistribution> linkList= new list<ContentDistribution>(); 
+        set<id> lastVersionIdSet= new set<id>();
+        for(ContentDocument cd :WrapperAttach.getContentDocInfo(attachSet)){
+            lastVersionIdSet.add(cd.LatestPublishedVersionId);
+        }
+        
+        //gets file details
+        return WrapperAttach.getContentInfo(lastVersionIdSet);
     }
     
     @AuraEnabled
@@ -322,6 +324,9 @@ public with sharing class AttachmentListCtrl {
 		if (objectName.equals('AmazonFile__c')) {
 			returnWrapper = deleteAmazonAttachment(attachId, fullName);
 		}
+		if (objectName.equals('ContentDocument')) {
+			returnWrapper = deleteContentAttachment(attachId);
+		}
 
 		return returnWrapper;
 	}
@@ -336,9 +341,24 @@ public with sharing class AttachmentListCtrl {
      @AuraEnabled
 	public static string getExpiringLinkWithRecId(String recId ) {
 		Integer secondsValid = 300;
-        AmazonFile__c amazonFile = [select Full_Name_Unique__c from AmazonFile__C where id=:Id.valueOF(recId)];
+        String link='';
+        if(String.isblank(recId)) return '';
+        
+        Id idRec =Id.valueOf(recId);
+        Schema.SObjectType recObjTp = idRec.getSObjectType();
+
+
+        if(recObjTp ==Schema.AmazonFile__C.getSObjectType() ){  // IF amazon file record       
+            AmazonFile__c amazonFile = [select Full_Name_Unique__c from AmazonFile__C where id=:idRec];
            
-		String link = AmazonRest.genPublicExpiringAWSLink( amazonFile.Full_Name_Unique__c, WrapperAttach.CREDENTIAL, secondsValid);
+            link = AmazonRest.genPublicExpiringAWSLink( amazonFile.Full_Name_Unique__c, WrapperAttach.CREDENTIAL, secondsValid);
+        }else if(recObjTp ==Schema.ContentDocument.getSObjectType()){ // If content document file
+           ContentDocument cd=[select title,LatestPublishedVersionId  from ContentDocument where id =:idRec];
+           
+           //generates temporary link
+           ContentDistribution cdist= CSP_Utils.getContentDistribution(cd.title,cd.LatestPublishedVersionId);
+           link= cdist.DistributionPublicUrl;
+        }
 		return link;
 	}
 
@@ -349,6 +369,17 @@ public with sharing class AttachmentListCtrl {
         ReturnWrapper returnWrapper = new ReturnWrapper();
 		try {
 			delete [SELECT Id  FROM Attachment where Id=:id];
+			returnWrapper.severity = 'SUCCESS';
+		} catch (Exception e ) {
+            returnWrapper.extraDetails = e.getMessage() + '';
+		}        
+        return returnWrapper;
+	}
+
+	private static ReturnWrapper deleteContentAttachment(String id) {
+        ReturnWrapper returnWrapper = new ReturnWrapper();
+		try {
+			delete [SELECT Id  FROM ContentDocument where Id=:id];
 			returnWrapper.severity = 'SUCCESS';
 		} catch (Exception e ) {
             returnWrapper.extraDetails = e.getMessage() + '';
@@ -494,16 +525,7 @@ public with sharing class AttachmentListCtrl {
         public PropertiesWrapper(){}
     }
     
-    public class PickListWrapper{
-        @AuraEnabled
-        public String label;
-        @AuraEnabled
-        public String value;
-        @AuraEnabled
-        public Boolean checked;
-        
-        public PickListWrapper (){}
-    }
+    
     
     @AuraEnabled
     public static UploadFile createUploadFile(String id, String filenameupload, String contentType, Long filesize, String folder, String credentialName) {
@@ -522,11 +544,11 @@ public with sharing class AttachmentListCtrl {
         }
 
         //check file size
-       /* if (filesize > MAX_FILE_SIZE) {
+        if (filesize > MAX_FILE_SIZE) {
             upf.isSuccess = false;
             upf.errorMessage =  Label.Overall_maximum_size;
             return upf;
-        }*/
+        }
 
         //Check file name length: no more than 80 characters
         if (filenameupload.length() > 80) {
@@ -636,9 +658,6 @@ public with sharing class AttachmentListCtrl {
     public static list<CaseWrapper> getParentCaseRelatedCases(string parentId,string caseId){
        list<CaseWrapper> lstRelatedCases = new list<CaseWrapper>();
 
-       system.debug(parentId);
-       system.debug(caseId);
-       
         for (Case c : [SELECT Id, ParentId, CaseNumber, Status, Subject, Account.Name, Owner.Name, RecordType.Name, CreatedDate
                                 FROM Case
                                 WHERE Id <> :caseId AND (
@@ -684,8 +703,6 @@ public with sharing class AttachmentListCtrl {
             if(selAttachIdSet.contains(wa.id))
                 listAttachmentSelected.add(wa);
         }
-
-        system.debug(listAttachmentSelected);
 
         if ( listAttachmentSelected.isEmpty() ) {
            // ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.Select_one_Attachment));
