@@ -106,14 +106,24 @@ public with sharing class SIDRARepaymentInstalmentsController {
         try {
             upsert lstRepaymentInstalments;
 
-            //ACAMBAS - WMO-546: Begin
-            if(this.lstRepaymentInstalments.size() > 0) {
-                upsert this.instalmentsDetails;
-            }
-            //ACAMBAS - WMO-546: End
+            //ACAMBAS - WMO-546: Begin         
+            Case_Detail__c oldInstalmentDetails = getInstalmentsDetails(this.cs.Id);
 
-            this.isEditMode = false;        
-        } catch (DMLException e) {
+            if(oldInstalmentDetails == null) {
+                if(this.instalmentsDetails.Interest_Amount__c >= 0 && !String.isBlank(this.instalmentsDetails.Interest_Currency__c)) {
+                    insert this.instalmentsDetails; 
+                    this.isEditMode = false;
+                }
+                else {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Interest Amount and Interest Currency are mandatory fields!'));
+                }
+            }
+            else {
+                this.isEditMode = false;
+            }
+            //ACAMBAS - WMO-546: End        
+        } 
+        catch (DMLException e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
         }
         return null;

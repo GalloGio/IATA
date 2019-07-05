@@ -1,5 +1,5 @@
 <apex:page standardcontroller="Case" extensions="SIDRARepaymentInstalmentsController">
-    <apex:pageMessages ></apex:pageMessages>
+    
     
     <script>
         function confirmDeleteInstalment() {
@@ -12,7 +12,7 @@
     
     <apex:form id="mainform">
         <apex:pageBlock >
-        
+            <apex:pageMessages></apex:pageMessages>
             <apex:pageBlockButtons location="top">
                 <apex:commandButton value="Save" action="{!Save}" rendered="{! isEditMode }" rerender="mainform"/>
                 <apex:commandButton value="Cancel" action="{!Cancel}" rendered="{! isEditMode }" rerender="mainform" immediate="true"/>
@@ -82,23 +82,27 @@
                     <apex:outputText value="{0, number, #,##0.00}">
                         <apex:param value="{!instalmentsDetails.Interest_Amount__c}" />
                     </apex:outputText></p>
-                    
-                <!--p style="font-weight: bold;">Interest currency:  {!cs.Currency__c} 
-                    <!--apex:outputText value="{0, number, #,##0.00}">
-                        <apex:param value="{!netBalance}" /.>
-                    </apex:outputText></p>
-                <!-- ACAMBAS - WMO-546 - End -->
+                  <!-- ACAMBAS - WMO-546 - End -->
             </apex:outputPanel>
 
             <!-- ACAMBAS - WMO-546 - Begin -->
-            <apex:outputPanel rendered="{!isEditMode}">
-                <p style="font-weight: bold;">Interest amount: 
-                    <apex:inputField value="{!instalmentsDetails.Interest_Amount__c}"/>
+            <apex:outputPanel rendered="{!isEditMode && (instalmentsDetails.Interest_Currency__c == null)}">
+                <p style="font-weight: bold;">
+                    Interest amount*: &nbsp; <apex:inputField value="{!instalmentsDetails.Interest_Amount__c}"/>&nbsp;&nbsp;&nbsp; 
+                    Interest currency*: &nbsp; <apex:inputField value="{!instalmentsDetails.Interest_Currency__c}"/>&nbsp;&nbsp;&nbsp; 
+                    (Interest on repayment plan to be paid to Finance once recovered)
                 </p>
-                    
-                <p style="font-weight: bold;">Interest currency:  
-                    <apex:inputField value="{!instalmentsDetails.Interest_Currency__c}"/>
+                <br/>
+                *Values are mandatory and cannot be changed afterwards!
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!isEditMode && (instalmentsDetails.Interest_Currency__c != null)}">
+                <p style="font-weight: bold;">Interest amount: {!instalmentsDetails.Interest_Currency__c}
+                    <apex:outputText value="{0, number, #,##0.00}">
+                        <apex:param value="{!instalmentsDetails.Interest_Amount__c}" /> 
+                    </apex:outputText>*
                 </p>
+                <br/>
+                *Value cannot be changed. Any update should be requested to SF team.
             </apex:outputPanel>
             <!-- ACAMBAS - WMO-546 - End -->
             
