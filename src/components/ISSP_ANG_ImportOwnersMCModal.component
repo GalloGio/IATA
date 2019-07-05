@@ -13,12 +13,12 @@
 								<apex:column>
 									<apex:facet name="header"> 
 										<apex:inputCheckbox>
-											<apex:actionSupport event="onclick" action="{!getSelectedOwners}" onsubmit="checkAll(this)" rerender=""/>
+											<apex:actionSupport event="onclick" action="{!getSelectedOwners}" onsubmit="checkAll(this)" rerender="importButton"/>
 										</apex:inputCheckbox>
 									</apex:facet>
 
-									<apex:inputCheckbox value="{!ownerCon.selected}" id="checkedone">
-										<apex:actionSupport event="onclick" action="{!getSelectedOwners}" rerender=""/>
+									<apex:inputCheckbox value="{!ownerCon.selected}" id="checkedone" style="float: left;">
+										<apex:actionSupport event="onclick" action="{!getSelectedOwners}" rerender="importButton"/>
 									</apex:inputCheckbox>
 								</apex:column>
 
@@ -31,8 +31,8 @@
               			</apex:pageBlock>
             		</div>
 
-            		<div class="modal-footer">
-              			<apex:commandButton action="{!importOwners}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="closeCopyOwneresMulticountry(); this.removeAttribute('disabled'); return false;" onclick="this.disabled='disabled'" reRender="contactList, companyList, ownerList" disabled="{!ownersThatCanBeCopied.size == 0}"/>
+            		<div class="modal-footer">            			
+              			<apex:commandButton id="importButton" action="{!importOwners}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_ANG_Import}" oncomplete="closeCopyOwneresMulticountry(); this.removeAttribute('disabled'); return false;" onclick="this.disabled='disabled'" reRender="contactList, companyList, ownerList" disabled="{!OR(selectedOwnersToImport == '', selectedOwnersToImport.size == 0)}"/>
               			<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
             		</div>
 

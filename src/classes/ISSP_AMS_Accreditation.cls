@@ -2656,6 +2656,17 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
+            if (isMultiCountry) {
+                for (AMS_Pax_Accreditation_Form__c form: allOwnersThatCanBeCopied) {
+                    for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
+                        if (con.Name == contactToUpsert.Name && con.Email__c == contactToUpsert.Email__c) {
+                            contactToUpsert.Cloned_From_Contact__c = con.Id;
+                            break;
+                        }
+                    }
+                }
+            }
+
             upsert contactToUpsert;
 
             if (isMultiCountry) {
@@ -7426,7 +7437,8 @@ public without sharing class ISSP_AMS_Accreditation {
                                                                             Branch_Office_FAX__c, Branch_Office_Email__c, Branch_Office_City__c,
                                                                             State_Province__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
                                                                             Same_Legal_Entity_Agency_Form__c, Same_Legal_Entity_Agency_Account__c, Account_Name__c, Location_Type__c,
-                                                                            Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c
+                                                                            Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c,
+                                                                            SAAM_Case__r.Status
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
                                                                         ORDER BY Name ASC];
@@ -7630,6 +7642,8 @@ public without sharing class ISSP_AMS_Accreditation {
             contactsToImportQuery += 'OR Id = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ) ';
             contactsToImportQuery += 'AND Id != \'' + newForm.Id + '\' ';
         }
+
+        contactsToImportQuery += 'AND SAAM_Case__r.Status = \'Draft\' ';
 
         allOwnersThatCanBeCopied = Database.query(contactsToImportQuery);
     }
