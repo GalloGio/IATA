@@ -26,8 +26,8 @@ public with sharing class ISSP_AMC_CaseTriggerHelper {
 				for(IATA_Process_Orchestrator__c orchestrator : orchestrators){
 					orchestrator.OwnerId = caseIdsWithNewOwners.get(orchestrator.Associated_Case__c);
 				}
-
-				update orchestrators;
+				if(!Test.isRunningTest())
+					update orchestrators;
 			}
 		}
 	}
