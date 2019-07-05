@@ -13,7 +13,7 @@
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
         <span slot="sectionTitle">{sectionTitle}</span>
         <span slot="sectionActions">
-            <lightning-icon if:true={showEdit} icon-name="utility:edit" size="x-small"
+            <lightning-icon if:true={canEditBasics} icon-name="utility:edit" size="x-small"
                 class="darkBlueIcon cursorPointer" onclick={openModal}></lightning-icon>
         </span>
         <span slot="componentContent">
@@ -70,40 +70,58 @@
                                     </div>
                             </template>
 
+
+
                             <template if:false={field.isAccessibility}>
                                 <template if:false={field.isContactServices}>
-                                <span key={field.fieldName}
-                                      class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <div if:true={field.visible}>
-                                        <template if:false={field.changeUserStatus}>
-                                            <lightning-output-field class="labelValue textValue"
-                                                                    field-name={field.fieldName}>
-                                            </lightning-output-field>
-                                        </template>
+                                    <template if:false={field.isJobFunction}>
+                                        <span key={field.fieldName} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                            <div if:true={field.visible}>
+                                                <template if:false={field.changeUserStatus}>
+                                                    <lightning-output-field class="labelValue textValue"
+                                                                            field-name={field.fieldName}>
+                                                    </lightning-output-field>
+                                                </template>
 
-                                        <template if:true={field.changeUserStatus}>
-                                            <div class="changeUserStatus">
-                                                <lightning-output-field class="labelValue textValue"
-                                                                        field-name={field.fieldName}>
-                                                </lightning-output-field>
-                                                <template if:false={isForEdit}>
-                                                    <span class="changeUserStatusButton">
-                                                        <lightning-icon icon-name="utility:custom_apps" size="x-small"
-                                                                        class="darkBlueIcon cursorPointer"
-                                                                        onclick={openChangeUserPortalStatus}>
-                                                        </lightning-icon>
-                                                    </span>
+                                                <template if:true={field.changeUserStatus}>
+                                                    <div class="changeUserStatus">
+                                                        <lightning-output-field class="labelValue textValue"
+                                                                                field-name={field.fieldName}>
+                                                        </lightning-output-field>
+                                                        <template if:false={isForEdit}>
+                                                            <span class="changeUserStatusButton">
+                                                                <lightning-icon icon-name="utility:custom_apps" size="x-small"
+                                                                                class="darkBlueIcon cursorPointer"
+                                                                                onclick={openChangeUserPortalStatus}>
+                                                                </lightning-icon>
+                                                            </span>
+                                                        </template>
+                                                    </div>
+
                                                 </template>
                                             </div>
+                                        </span>
+                                    </template>
+                                </template>
 
-                                        </template>
+                                <template if:true={field.isJobFunction}>
+                                    <div key={field.fieldName} class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue">
+                                        <div class="slds-form-element__label">
+                                            {labels.MembershipFunction}
+                                        </div>
 
-
-
+                                        <div class="textValue">
+                                            <template for:each={jobFunctions} for:item="jobFunction">
+                                                <div key={jobFunction}>
+                                                    <div class="slds-form-element__static">
+                                                        {jobFunction}
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
                                     </div>
-                                </span>
+                                </template>
                             </template>
-                        </template>
                         </template>
                     </div>
                 </template>
@@ -153,6 +171,9 @@
                                             <div
                                                 class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
 
+                                                <lightning-messages>
+                                                </lightning-messages>
+                                                
                                                 <!-- Display same fields for edit -->
                                                 <template if:false={haveEditFields}>
                                                     <template for:each={fields} for:item="field">
@@ -208,6 +229,10 @@
                                                                                 <template if:true={field.invalid}>
                                                                                     <div class="slds-form-element__help invalidValueLabel">{labels.InvalidValue}</div>
                                                                                 </template>
+
+                                                                                <template if:true={field.missing}>
+                                                                                    <div class="slds-form-element__help invalidValueLabel">{labels.CompleteField}</div>
+                                                                                </template>
                                                                             </template>
 
 
@@ -251,6 +276,10 @@
                                                                             <template if:true={field.invalid}>
                                                                                 <div class="slds-form-element__help invalidValueLabel">{labels.InvalidValue}</div>
                                                                             </template>
+                                                                            <template if:true={field.missing}>
+                                                                                <div class="slds-form-element__help invalidValueLabel">{labels.CompleteField}</div>
+                                                                            </template>
+
 
                                                                         </template>
                                                                         <template if:false={field.editable}>

@@ -862,7 +862,7 @@ public static String serviceWrapperRedirect(String serviceId){
 
 	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
 	                                                                                 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
-	                                                                                 ServiceName__c,Cannot_be_managed_by_portal_admin__c
+	                                                                                 ServiceName__c,Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c
 	                                                                                 FROM Portal_Applications__c WHERE Id =: serviceId ]);
 
 	ISSP_AvailableServices.ServiceWrapper serviceWrap = new ISSP_AvailableServices.ServiceWrapper (Servicetmp_List[0], currentPortalUser.contact.account.ANG_IEP_Status_FF__c, isAdmin, currentPortalUser.contact.Authorized_Signatory__c);

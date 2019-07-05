@@ -21,6 +21,8 @@
 .successBoxContainer {
     text-align: left;
     padding: 25px;
+    overflow: auto;
+    max-height: -webkit-fill-available;
 }
 
 .headerTextContainer {

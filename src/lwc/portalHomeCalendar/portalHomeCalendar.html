@@ -1,10 +1,10 @@
 <template >
 
     <div if:true={showCalendar}>
-        <c-portal-custom-card-container>
+        <c-portal-custom-card-container body-without-margins>
 
             <span slot="cardTitle">
-                <span class="text-small">{label.CSP_OperationalCalendar_HomeTileTitle}</span>
+                {label.CSP_OperationalCalendar_HomeTileTitle}
             </span>
 
             <span slot="cardButton">
@@ -25,7 +25,7 @@
                     </div>
                     <div if:false={loading}>
                         <div if:true={showCalendar} class="cardBodyContent">
-                            <div >
+                            <div class="slds-m-horizontal_x-large">
                                 <div class="slds-m-top_large slds-m-bottom_medium slds-grid slds-wrap text-xxsmall">
                                     <div class="slds-size_10-of-12">
                                         {currentViewingMonth.monthName}, {currentViewingMonth.monthYear}
@@ -70,18 +70,17 @@
                                             </div>
                                             <div if:false={dayItem.isEmpty} class={dayItem.isSelectedClass} >
                                                 <div if:true={dayItem.isSelected} class="cursorPointer">
-                                                    <div class="slds-p-around_xx-small slds-align_absolute-center" >
+                                                    <div class="slds-p-bottom_xx-small slds-align_absolute-center" >
                                                         <div if:true={dayItem.isHighlighted} class="dayBoxSize selectedDay" data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
                                                             {dayItem.dayNumber}
                                                         </div>
-                                                        <div if:false={dayItem.isHighlighted} class="dayBoxSize " 
-                                                        data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                        <div if:false={dayItem.isHighlighted} class="dayBoxSize" data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
                                                             {dayItem.dayNumber}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div if:false={dayItem.isSelected}>
-                                                    <div class="slds-p-around_xx-small slds-align_absolute-center cursorPointer" >
+                                                    <div class="slds-p-bottom_xx-small slds-align_absolute-center cursorPointer" >
                                                         <div if:true={dayItem.isHighlighted} class="dayBoxSize selectedDay" data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
                                                             {dayItem.dayNumber}
                                                         </div>
@@ -102,7 +101,7 @@
         
                                 </div>
                             </div>
-                            <div if:true={viewEvents} class="slds-p-around_medium lightGrayBackgorund eventsList" >
+                            <div if:true={viewEvents} class="slds-p-horizontal_x-large slds-p-vertical_medium lightGrayBackgorund eventsList" >
                                 <template for:each={lstEventsForCardFooter} for:item="eventTitle">
                                     <div key={eventTitle.className}>
                                         <span class={eventTitle.className} style="margin-right:8px;"></span>
