@@ -464,7 +464,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.ShowIEPIntroMessage = false;
         this.showButtons = false;
         this.loadingMessage = this.label.ANG_ISSP_UserProvisioningWait;
-        availableIEPPortalServiceRoles()
+        availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
             .then(result => {
                 let myResults = JSON.parse(JSON.stringify(result));
 
@@ -603,7 +603,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             .then(numberofUserProvisioningRequests => {
                 this.numberofUserProvisioningRequests = JSON.parse(JSON.stringify(numberofUserProvisioningRequests));
 
-                availableIEPPortalServiceRoles({})
+                availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
                     .then(result => {
                         let results = JSON.parse(JSON.stringify(result));
                         let myRolesObj = [];
