@@ -193,7 +193,11 @@ export default class FavoriteServicesLWC extends LightningElement {
         if (this.page > 1) {
             this.page = this.page - 1;
             this.favoriteServices = this.globaList[this.page - 1];
+        } else {
+            this.page = this.maxSize;
+            this.favoriteServices = this.globaList[this.page - 1];
         }
+
         this.sliderIconsRenderer();
     }
 
@@ -202,8 +206,11 @@ export default class FavoriteServicesLWC extends LightningElement {
         if (this.page < this.maxSize) {
             this.page = this.page + 1;
             this.favoriteServices = this.globaList[this.page - 1];
-
+        } else {
+            this.page = 1;
+            this.favoriteServices = this.globaList[this.page - 1];
         }
+
         this.sliderIconsRenderer();
     }
 
