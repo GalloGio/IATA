@@ -195,7 +195,8 @@ global class ANG_RME_Alert_Service {
 			ANG_Agent_Sales__c = req.agentSales,
 			CurrencyIsoCode = req.storedBaseCurrency,
 			ANG_Account__c = accountId,
-			ANG_EventId__c = req.eventId
+			ANG_EventId__c = req.eventId,
+			ANG_RME_Last_Update__c = req.eventTime
 		);
     	insert rtsAlert;
     	setResponse(null, 202);
@@ -256,6 +257,14 @@ global class ANG_RME_Alert_Service {
 		private WebserviceResult(){
 			isSuccess = true;
 		}
+        
+        public RHCMessage getResultMessage(){
+            return this.res;
+        }
+		
+        public void setResultMessage(RHCMessage inRes){
+            this.res = inRes;
+        }
 	}
 
 	public static WebserviceResult testWebserviceResult(){
@@ -271,14 +280,16 @@ global class ANG_RME_Alert_Service {
 	//webservice called by salesforce (javascript button and portal) to request an update of RHC Consumption Status
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 
-		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_RHC_Amount_Forecasted__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
 			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
-			Decimal rounded = toRound.setScale(2, RoundingMode.HALF_UP);
-			system.debug(rounded);
+			Integer decimalPlaces = (result.res.storedRHCValue).scale();
+			Decimal rounded = toRound.setScale(decimalPlaces, RoundingMode.HALF_UP);
+			
+			system.debug('rounded value :: ' + rounded + ' |  result storedRHCValue :: ' +  result.res.storedRHCValue + ' | Decimal Places :: ' +  decimalPlaces);
 
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
@@ -317,8 +328,13 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
-	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
 	webservice static WebserviceResult requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
+		return ANG_RME_Alert_Service.requestProvisionalRHCAux(accountId,flagUpdateProvisioning,true);
+	}
+
+	//webservice called by salesforce (javascript button) to request an update on Provisional RHC status
+	webservice static WebserviceResult requestProvisionalRHCAux(String accountId, Boolean flagUpdateProvisioning, Boolean updateResults){
+
 
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 		
@@ -341,7 +357,7 @@ global class ANG_RME_Alert_Service {
 				log.Error_Code__c = 'RHC Value Mismatch';
 				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 			}*/
-			else{
+			else if(updateResults){
 				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
 				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
 				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();

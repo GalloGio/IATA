@@ -101,9 +101,6 @@ public class LVA_AfterChatTriggerTest {
 
             insert lcte;
 
-            // to remove after salesforce fix live chat case creationg bug
-            system.debug([select id,status from LiveChatTranscript]);
-               
             LVA_ChatTriggerHandler.ProcessLiveChatTranscript(lct);
             test.stopTest();
             

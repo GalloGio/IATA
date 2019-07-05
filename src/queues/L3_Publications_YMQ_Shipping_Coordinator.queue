@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>L3 Publications YMQ Shipping Coordinator</name>
+    <queueMembers>
+        <users>
+            <user>jaradatn@iata.org</user>
+            <user>divitot@iata.org</user>
+            <user>garfieldt@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

@@ -1,4 +1,15 @@
 public class PlatformEvents_Helper {
+
+    private static Map<String, Schema.SObjectType> schemaInfoMap = new Map<String, Schema.SObjectType>();
+
+    private static Schema.SObjectType getSchemaInfo(String objectName) {
+
+        if(!schemaInfoMap.containsKey(objectName)){
+            schemaInfoMap.put(objectName, Schema.getGlobalDescribe().get(objectName));
+        }
+
+        return schemaInfoMap.get(objectName);
+    }
     
     public static void publishEvents(Map<Id,sObject> ObjectMap, string PE_Name, string ObjSource, boolean bIsInsert, boolean bIsUpdate, boolean bIsDelete, boolean bIsUndelete){
     	//Map that stores the name of the platform event based on the type of object received
@@ -43,14 +54,10 @@ public class PlatformEvents_Helper {
             for(Id ObjId : InternalObjectMap.keySet()){
             	map<string, string> MapMapping = getMappingMap(PEObjName.get(string.valueOf(ObjId.getsobjecttype())));
             	if(MapMapping==null) continue;
-                SObject sObj = Schema.getGlobalDescribe().get(PEObjName.get(string.valueOf(ObjId.getsobjecttype()))).newSObject();
+                SObject sObj = getSchemaInfo(PEObjName.get(string.valueOf(ObjId.getsobjecttype()))).newSObject();
                 for(string FieldSource:MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
-                        if(!rtList.isEmpty()) 
-                            //sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))).Name);
-                            sObj.put(MapMapping.get(FieldSource) , RTName(string.valueOf(ObjId.getsobjecttype()), (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))));
-                        else
-                            sObj.put(MapMapping.get(FieldSource), null);
+                        sObj.put(MapMapping.get(FieldSource), rtList.isEmpty() ? null : RTName(string.valueOf(ObjId.getsobjecttype()), (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))));
                         
                     else if(FieldSource=='EventType')
                         sObj.put(MapMapping.get(FieldSource), sEventType);
@@ -134,8 +141,6 @@ public class PlatformEvents_Helper {
         if(mapAccnt.keyset().isEmpty()) return mapToRet;
 
     	for(Account_Role__c AccntRole: [select id, RecordTypeId, Account__c from Account_Role__c where Account__c in:mapAccnt.keyset() and recordtypeId=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID]){
-//    		if(mapToRet.ContainsKey(accntRole.Account__c))
-//    			mapToRet.remove(accntRole.Account__c);
     		mapToRet.put(accntRole.Id, AccntRole);
     	}
     	return mapToRet;
@@ -145,9 +150,10 @@ public class PlatformEvents_Helper {
     private static Map<Id,sObject> getAccountContactRoleToPublish(Map<Id,sObject> mapCnt){
     	map<id, sObject> mapToRet = new map<id, sObject>();
     	mapToRet.putAll(mapCnt);
+
+        if(mapCnt.keyset().isEmpty()) return mapToRet;
+        
     	for(Account_Contact_Role__c AccntConRole: [select id, RecordTypeId, Account__c from Account_Contact_Role__c where Account__c in:mapCnt.keyset() and Service_Rendered__c = 'TIP']){
-//    		if(mapToRet.ContainsKey(AccntConRole.Account__c))
-//    			mapToRet.remove(AccntConRole.Account__c);
     		mapToRet.put(AccntConRole.Id, AccntConRole);
     	}
     	return mapToRet;
