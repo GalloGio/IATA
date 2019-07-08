@@ -75,6 +75,10 @@
                 <behavior>Edit</behavior>
                 <field>Active_User_Count__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Periods_without_data_submission_notify__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
