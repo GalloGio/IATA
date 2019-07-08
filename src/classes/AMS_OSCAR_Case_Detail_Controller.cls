@@ -17,10 +17,13 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isNewAE { get{ return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
     public Boolean displayErrorMsg{get{return false;} set;}
     public Boolean showStagingArea {get; set;}
-    public Boolean rfPerState{get{return [SELECT Id, AMS_Settlement_System__r.Remittance_Frequency_per_State__c
-                                          FROM IATA_ISO_Country__c
-                                          WHERE Id =: accreditationObj.Branch_Office_Country__c].AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
-                                 }set;}
+    public Boolean rfPerState{get{
+        List<IATA_ISO_Country__c> cList = [SELECT Id, AMS_Settlement_System__r.Remittance_Frequency_per_State__c
+                                           FROM IATA_ISO_Country__c
+                                           WHERE Id =: accreditationObj.Branch_Office_Country__c];
+        if(cList.isEmpty())return false;
+            else return cList[0].AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+    }set;}
 
     private Set<Id> hierarchyAccountIds = new Set<Id>();
     private Map<Id, Account> hierarchyAccountsMap = new Map<Id, Account>();
