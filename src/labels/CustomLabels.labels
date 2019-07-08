@@ -2737,6 +2737,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>Request New Service</shortDescription>
         <value>Agency Read Only</value>
     </labels>
+	<labels>
+        <fullName>CSP_Announcement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Announcement</shortDescription>
+        <value>Announcement</value>
+    </labels>
     <labels>
         <fullName>csp_TimeoutIEP</fullName>
         <categories>CS Portal</categories>
@@ -3548,6 +3555,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Support_HeaderTitle</shortDescription>
         <value>How can we help?</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Task</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Task</shortDescription>
+        <value>Task</value>
     </labels>
     <labels>
         <fullName>CSP_ThanksFeedback</fullName>
@@ -19267,7 +19281,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
+        <fullName>ISSP_ANG_Portal_Role_SubWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>

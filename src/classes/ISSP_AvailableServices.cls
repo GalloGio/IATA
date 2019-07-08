@@ -603,7 +603,7 @@ public with sharing class ISSP_AvailableServices{
             ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService, IepStatus, isAdmin, isAuthorisedSignatory);
             allServiceList.add(thisServiceRecord);
         }
-        
+
         //TF
         //system.debug(LoggingLevel.ERROR, '--CON ID: ' + conId);
         List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
@@ -827,8 +827,9 @@ public with sharing class ISSP_AvailableServices{
             res = 'okauto';
         }
                     
-        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight, ANG_Portal_Service_Role__c = appRole);
-        insert app;
+        Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId, Portal_Application__c = applicationId,Right__c = appRight, ANG_Portal_Service_Role__c = appRole);
+        app.Application_uniqueness_for_contact__c = contactId.left(15) + applicationId.left(15);
+        upsert app Application_uniqueness_for_contact__c;
         submitApprovalProcess(app.id);
         return res;
     }

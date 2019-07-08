@@ -1,5 +1,6 @@
 .fieldLabel {
   height: 20px;
+  font-family: AktivGrotesk;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
@@ -11,6 +12,7 @@
 
 .fieldValue {
   height: 26px;
+  font-family: AktivGrotesk;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;

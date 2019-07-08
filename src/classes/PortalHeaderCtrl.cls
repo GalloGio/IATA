@@ -83,20 +83,20 @@ public without sharing class PortalHeaderCtrl {
                 // USER ACCESS (CONTACT)
 
                 // Contactid, Contact.Name, Contact.User_Portal_Status__c, CreatedDate 
-                NotificationItem notif = new NotificationItem(contact.Contactid, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), contact.CreatedDate, false, 'Task', String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), false, 'Portal Access', contact.Contact.Name);
+                NotificationItem notif = new NotificationItem(contact.Contactid, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), contact.CreatedDate, false, System.label.CSP_Task, String.format(System.Label.UserRequestPortalAccess, new String[]{contact.Contact.Name}), false, 'Portal Access', contact.Contact.Name);
                 notificationItemList.add(notif);
             }
             
             for (Portal_Application_Right__c application : userPortalServiceAccessRequestList){
                 // PORTAL SERVICE
-                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), application.CreatedDate, false, 'Task', String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), false, 'Portal Service', application.Contact__r.Name);
+                NotificationItem notif = new NotificationItem(application.Portal_Application__c, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), application.CreatedDate, false, System.label.CSP_Task, String.format(System.Label.UserRequestServiceAccess, new String[]{application.Contact__r.Name, application.Portal_Application__r.Name}), false, 'Portal Service', application.Contact__r.Name);
                 notificationItemList.add(notif);
                 }
 
         }
 
         for(Notification__c notification : notificationList){
-            NotificationItem notif = new NotificationItem(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c > 0, 'Announcement', notification.Message__c, true, 'Notification', '');
+            NotificationItem notif = new NotificationItem(notification.Id, notification.Subject__c, notification.CreatedDate, notification.Number_of_views__c > 0, System.label.CSP_Announcement, notification.Message__c, true, 'Notification', '');
             notificationItemList.add(notif);
         }
 
