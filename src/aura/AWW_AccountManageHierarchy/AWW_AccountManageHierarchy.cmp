@@ -1,4 +1,4 @@
-<aura:component controller="AWW_AccountProfileController">
+<aura:component controller="AWW_HeadOfficesCtrl">
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="columns" type="List"/> 
