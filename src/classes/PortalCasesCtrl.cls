@@ -342,7 +342,7 @@ public with sharing class PortalCasesCtrl {
             }
         }
 
-        apList = [SELECT Id FROM AP_Process_Form__c WHERE Case__c IN :caseSetIds];
+        apList = [SELECT Case__c FROM AP_Process_Form__c WHERE Case__c IN :caseSetIds];
 
         if(!apList.isEmpty()) {
             apListForm = new Set<Id>();
