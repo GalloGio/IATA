@@ -216,6 +216,18 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Periods_without_data_submission_notify__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Super users are notified if files were not submitted for specified count of periods</inlineHelpText>
+        <label>Periods without data submission</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <formula>Account_Role_Service__r.Account_Role__r.Account__r.Region_formula__c</formula>
