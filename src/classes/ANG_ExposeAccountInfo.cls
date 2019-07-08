@@ -125,9 +125,7 @@ global without sharing class ANG_ExposeAccountInfo {
             }
             
             if(lsAccnt.size()>1){
-                if(Caller == ANG_RestServiceHelper.Caller_Mulesoft && requestType==ANG_RestServiceHelper.URIRequest_AccountMasterdata && MDMode=='F')
-                    continue;
-                else{
+                if(!(Caller == ANG_RestServiceHelper.Caller_Mulesoft && requestType==ANG_RestServiceHelper.URIRequest_AccountMasterdata && MDMode=='F')){
                     ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'Multiple records found with IATA Code ' + IATACode + ' !') ), 409);
                     return;
                 }
