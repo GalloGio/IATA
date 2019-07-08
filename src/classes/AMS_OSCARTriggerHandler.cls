@@ -215,6 +215,7 @@ public class AMS_OSCARTriggerHandler {
         updateCaseInfo();
         createHoAdminNotifications();
         updateIfapForOptinOut();
+        updateRiskAlertAccount((Map<Id, AMS_OSCAR__c>) Trigger.newMap, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-113 Start ***/
         updateAccountPCICompliant((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         /*** AMSU-113 End ***/
@@ -4611,8 +4612,8 @@ public class AMS_OSCARTriggerHandler {
             for(ID oscarId:newMap.keySet()){
                 if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessMap.containsKey(newMap.get(oscarId).Process__c) && newMap.get(oscarId).ANG_Type_of_change__c != AMS_Utils.CONVERTTOINTERNATIONAL)
                     oscarsToProcess.add(oscarId);
+                }
             }
-        }
 
         if(Trigger.isUpdate){
 
@@ -4624,7 +4625,7 @@ public class AMS_OSCARTriggerHandler {
 
             }
         }
-       
+
 
         for(Id oscarId: oscarsToProcess){
             ID jobID = System.enqueueJob(new ANG_BackupEngineHelper(oscarId,true));
@@ -4635,7 +4636,7 @@ public class AMS_OSCARTriggerHandler {
     }
 
     public static void performRollbackANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
-        
+
         if(ANG_AgencyChangesHelper.testRunnningForNonBackup)
             return;
 
@@ -4697,6 +4698,62 @@ public class AMS_OSCARTriggerHandler {
             ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
         
     }         
+
+    //NEWGEN-4856 - Set Monitored Account with the previous account when Sanity Check is passed 
+    //The change of Location / Hierarchy
+    private static void updateRiskAlertAccount(Map<Id, AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap){
+
+        System.debug('[AMS_OSCARTriggerHandler]  Start updateRiskAlertAccount');
+
+        List<ANG_Risk_Alert__c> riskAlertToUpdate = new List<ANG_Risk_Alert__c>();
+        Map<ID,ID> mapAccountOscar = new Map<ID,ID>();
+
+        for(AMS_Oscar__c oscar : oscars.values()){
+
+            AMS_Oscar__c oldOscar = oldMap.get(oscar.id);
+
+            if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.ANG_Type_Of_Change__c != null && oldOscar.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
+
+                if(ANG_AgencyChangesHelper.containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY, AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
+                    mapAccountOscar.put(oscar.Account__c, oscar.ID);
+                }
+            }
+        }
+
+        System.debug('[AMS_OSCARTriggerHandler] Start updateRiskAlertAccount - mapAccountOscar: ' + mapAccountOscar);
+
+        if(!mapAccountOscar.isEmpty()){
+
+            Schema.DescribeSObjectResult r = ANG_Risk_Alert__c.sObjectType.getDescribe();
+            Set<ID> accountIDs = mapAccountOscar.keySet();
+            String riskAlertQuery = 'SELECT ';
+            for(String field : r.fields.getMap().keySet()){
+                riskAlertQuery+= field + ', ';
+            }
+            riskAlertQuery = riskAlertQuery.removeEnd(', ');
+            riskAlertQuery += ' FROM ANG_Risk_Alert__c WHERE ANG_Account__c in :accountIDs';
+
+            List<ANG_Risk_Alert__c> riskAlertList = Database.query(riskAlertQuery);            
+            List<ANG_Risk_Alert__c> newRiskAlertList = new List<ANG_Risk_Alert__c>();
+
+            for(ANG_Risk_Alert__c riskAlert : riskAlertList){
+
+                ANG_Risk_Alert__c newRiskAlert = riskAlert.clone(false, false, false, false);
+                newRiskAlert.Monitored_Account__c = riskAlert.ANG_Account__c;
+                newRiskAlert.ANG_Account__c = oscars.get(mapAccountOscar.get(riskAlert.ANG_Account__c)).New_parent__c;
+                newRiskAlertList.add(newRiskAlert);
+
+                System.debug('[AMS_OSCARTriggerHandler] NEW RiskAlert changed: ' + newRiskAlert);
+            }
+
+            if(!newRiskAlertList.isEmpty()){
+                delete riskAlertList;
+                insert newRiskAlertList;
+            }
+        }
+
+    }
+
 
     // to be removed
   public void fakeMethod(){
