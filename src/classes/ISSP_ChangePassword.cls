@@ -117,6 +117,10 @@ public without sharing class ISSP_ChangePassword {
                 }
 
                 System.debug(loggingLevel.FINE, '____ [cls ISSP_ChangePassword - changePassword] pageRef - ' + pageRef);
+
+                System.debug(loggingLevel.FINE, '____ [cls ISSP_ChangePassword - changePassword]  - Validating FAQ permissions' );
+                PortalFAQsSharingCtrl.validateUserFAQsPermissions(UserInfo.getUserId());
+
                 return pageRef;
             }
         }
