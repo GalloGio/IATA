@@ -216,8 +216,13 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('User_Portal_Status__c',false,true));
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorization',false,true));
 
-        wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
+        fw = new FieldWrapper('ID_CARD',false,true,true);
+        fw.isIdCardInfo = true;
+        wrapperMap.get(LABEL_PROFESSIONAL).add(fw);
 
+        fw = new FieldWrapper('Membership_Function__c',false,true,true);
+        fw.isJobFunction = true;
+        wrapperMap.get(LABEL_PROFESSIONAL).add(fw);
 
         return wrapperMap;
     }
@@ -381,6 +386,9 @@ public with sharing class PortalProfileCtrl {
 
         @AuraEnabled
         public Boolean isJobFunction;
+
+        @AuraEnabled
+        public Boolean isIdCardInfo;
 
         @AuraEnabled
         public Boolean isContactServices;

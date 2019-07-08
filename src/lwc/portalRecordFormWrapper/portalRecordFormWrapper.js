@@ -20,7 +20,8 @@ import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import CompleteField from '@salesforce/label/c.csp_CompleteField';
 
-
+import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
+import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 
 
 
@@ -67,14 +68,17 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get fields(){ return this.fieldsLocal;}
     set fields(value){ this.fieldsLocal = value;}
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle,InvalidValue,CompleteField};
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle,InvalidValue,CompleteField,IdCardNumber,IdCardValidTo};
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
+
+    emptyStaticServices = 'emptyStaticServices';
+    emptyServices = 'emptyServices';
 
     connectedCallback() {
         this.showEdit = (this.showEdit === 'true' ? true : false);
 
-        if (this.isContact && !this.isForEdit) {
+        if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
                 let contact = JSON.parse(JSON.stringify(this.staticFields));
@@ -457,4 +461,20 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get canEditBasics(){
         return (this.editBasics && this.sectionTitle == 'Basics' && this.showEdit) || (this.sectionTitle != 'Basics' && this.showEdit);
     }
+
+    get hasIdCard(){
+        return (this.staticFields !== undefined && this.staticFields.cardNumber !== undefined);
+    }
+
+    get hasFunction(){
+        return this.jobFunctions !== undefined && this.jobFunctions.length>0;
+    }
+
+    get hasServices(){
+        return this.services !== undefined && this.services.length>0;
+    }
+
+    get hasStaticServices(){
+            return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length>0;
+        }
 }
