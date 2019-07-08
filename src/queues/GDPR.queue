@@ -4,12 +4,12 @@
     <email>noreply@iata.org</email>
     <name>GDPR</name>
     <queueMembers>
-        <roles>
-            <role>Legal</role>
-        </roles>
         <publicGroups>
             <publicGroup>GDPR</publicGroup>
         </publicGroups>
+        <roles>
+            <role>Legal</role>
+        </roles>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

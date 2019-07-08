@@ -314,6 +314,18 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>
+        <fullName>APCS</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>share cases between APCS users</description>
+        <label>APCS</label>
+        <sharedTo>
+            <role>Airport_Passenger_Cargo_Security</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Airport_Passenger_Cargo_Security</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Case_Sharing_Rule_with_IFG_Support_Team</fullName>
         <accessLevel>Edit</accessLevel>
         <description>Share cases between IFG Team</description>
