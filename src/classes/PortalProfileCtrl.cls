@@ -526,6 +526,14 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(viewFields).add(fw);
         wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
 
+        //For Airlines & agencies only
+        if((rType == 'IATA_Airline_BR' || rType == 'IATA_Airline') || rType == 'IATA_Agency') {
+            wrapperMap.get(viewFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
+            wrapperMap.get(viewFields).add(new FieldWrapper('Invoicing_Contact__c', true, true));
+        }
+
+        wrapperMap.get(viewFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
+
         //EDIT
         wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
         //wrapperMap.get(editFields).add(new FieldWrapper('Salutation',true,true)); - Salesforce bug, salutation picklist not loading values
