@@ -2737,6 +2737,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>Request New Service</shortDescription>
         <value>Agency Read Only</value>
     </labels>
+	<labels>
+        <fullName>CSP_Announcement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Announcement</shortDescription>
+        <value>Announcement</value>
+    </labels>
     <labels>
         <fullName>csp_TimeoutIEP</fullName>
         <categories>CS Portal</categories>
@@ -3548,6 +3555,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Support_HeaderTitle</shortDescription>
         <value>How can we help?</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Task</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Task</shortDescription>
+        <value>Task</value>
     </labels>
     <labels>
         <fullName>CSP_ThanksFeedback</fullName>
