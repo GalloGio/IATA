@@ -1,17 +1,17 @@
 /***********************************************************
     2019-07-03. Author: Daniele Tullo
-	Class to expose to external source account's data
+    Class to expose to external source account's data
     
     Interface catalogue [INT_008] Jira issue: https://iatasfdc.atlassian.net/browse/NEWGEN-4597
-	confluence specification: https://iatasfdc.atlassian.net/wiki/spaces/MUL/pages/688095239/Accreditation+GO-Global+Requirements
+    confluence specification: https://iatasfdc.atlassian.net/wiki/spaces/MUL/pages/688095239/Accreditation+GO-Global+Requirements
 
 ***********************************************************/
 
 public without sharing class ANG_ExposeAccountInfo_Masterdata {
-	
+    
     public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY', AMS_Utils.MBPDD_CHANGE_CODE};
-	public static final string CurrencyBSP = 'BspCurrency';
-	public static final string CurrencyMulticountry = 'Multicountry';
+    public static final string CurrencyBSP = 'BspCurrency';
+    public static final string CurrencyMulticountry = 'Multicountry';
 
     /***************************************
                 Constructor
@@ -19,7 +19,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 
     public static void ANG_ExposeAccountInfo_Masterdata(map<id, Account> mapAccnt, string sMode, string sChangeCode) {
         try{
-			list<INT008_SuccessPayload> lsToReturn = new list<INT008_SuccessPayload>();
+            list<INT008_SuccessPayload> lsToReturn = new list<INT008_SuccessPayload>();
             
             switch on sMode {
                 when 'F' {
@@ -46,14 +46,14 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                     for(Account accnt:mapAccnt.values()){ //only 1 account is coming here
                         list<Account> lsAccntTmp;
                         if(!string.isBlank(accnt.Parent.IATACode__c)){
-                            for(Account acc: database.query(QueryAgencyToProcess('S', accnt.Parent.IATACode__c))){
+                            for(Account acc: QueryAgencyToProcess('S', accnt.Parent.IATACode__c)){
                                 mapAccnt.put(acc.Id, acc);
                             }
                         }
 
                         if(!string.isBlank(accnt.Top_Parent__r.IATACode__c)){
                             if(accnt.Top_Parent__c <> accnt.ParentID) //useless to query twice the same record if parent = top parent
-                                for(Account acc: database.query(QueryAgencyToProcess('S', accnt.Top_Parent__r.IATACode__c))){
+                                for(Account acc: QueryAgencyToProcess('S', accnt.Top_Parent__r.IATACode__c)){
                                     mapAccnt.put(acc.Id, acc);
                                 }
                         }
@@ -70,7 +70,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                 }
             }
 
-			ANG_RestServiceHelper.GenerateResponse(json.serialize(lsToReturn), 200);
+            ANG_RestServiceHelper.GenerateResponse(json.serialize(lsToReturn), 200);
         }
         catch(exception e){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);
@@ -100,33 +100,33 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
         else return theDate.Year() + '-' + string.valueOf(theDate.Month()).leftPad(2).replace(' ', '0') + '-' + string.valueOf(theDate.Day()).leftPad(2).replace(' ', '0');
     }
 
-	public static string QueryAgencyToProcess (string MDMode, string IATACode){
-		Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB, AMS_Utils.RECTYPE_IEPMODELBPLUS};
+    public static list<Account> QueryAgencyToProcess (string MDMode, string IATACode){
+        Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB, AMS_Utils.RECTYPE_IEPMODELBPLUS};
                     
-		string sQueryMD = '[select Guaranteed_amount__c, CurrencyIsoCode, Due_Diligence_Status__c, ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,'
-							+' billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, '
-							+' Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, '
-							+' IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, '
-							+' VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c, ParentId,'
-							+' GDI_Status__c, Location_Type_Ordered__c '
-							+' , (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in (\'BSPLink\',\'FormOfPayment\'))'  //Accelya Email + FOP
-							+' , (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' )' //List of children
-							+' , (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r)'  //RHC Information
-							+' , (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC)' //OSCAR
+        string sQueryMD = 'select Guaranteed_amount__c, CurrencyIsoCode, Due_Diligence_Status__c, ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,'
+                            +' billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, '
+                            +' Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, '
+                            +' IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, '
+                            +' VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c, ParentId,'
+                            +' GDI_Status__c, Location_Type_Ordered__c '
+                            +' , (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in (\'BSPLink\',\'FormOfPayment\'))'  //Accelya Email + FOP
+                            +' , (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' )' //List of children
+                            +' , (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r)'  //RHC Information
+                            +' , (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC)' //OSCAR
                             +' , (select Hierarchy__r.name from AMS_Agencies_relationships__r limit 1)' //hierarchy name 
-//							+' , (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles1__r where Active__c = true and RecordType.Name = \'Ownership\') ' // List of Ownwer
-							+' from Account';
+//                          +' , (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles1__r where Active__c = true and RecordType.Name = \'Ownership\') ' // List of Ownwer
+                            +' from Account';
 
-		if(MDMode=='F'){
-			sQueryMD = sQueryMD + ' where recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' and (IATACode__c =:IATACode or Top_Parent__r.IATACode__c =:IATACode)';
-		}else{
-			sQueryMD = sQueryMD + ' where recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' and IATACode__c =:IATACode';
-		}
+        if(MDMode=='F'){
+            sQueryMD = sQueryMD + ' where recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' and (IATACode__c =:IATACode or Top_Parent__r.IATACode__c =:IATACode)';
+        }else{
+            sQueryMD = sQueryMD + ' where recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' and IATACode__c =:IATACode';
+        }
 
-		sQueryMD = sQueryMD + ' order by Location_Type_Ordered__c asc';
+        sQueryMD = sQueryMD + ' order by Location_Type_Ordered__c asc';
 
-		return sQueryMD;
-	}
+        return database.query(sQueryMD);
+    }
 
     private static  map<id, list<AMS_Account_Role__c>> fetchHierarchyOwners(list<Account> lsAccnt){
         map<id, list<AMS_Account_Role__c>> mapOwner= new map<id, list<AMS_Account_Role__c>>();
@@ -151,7 +151,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
     ******************************************/
 
 
-	/* RHC Information */
+    /* RHC Information */
 
     private class RHCInfoClass{
         public string RiskStatus;
@@ -166,8 +166,8 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
         }
     }
 
-	/* Currency Wrapper */
-	private class theCurrency{
+    /* Currency Wrapper */
+    private class theCurrency{
         public string scurrency;
         public string type;
         public theCurrency(string type, string scurrency){
@@ -203,8 +203,6 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
         }
     }
 
-    
-
     /* Due Diligence */
     private class DueDiligence{
         public string type;
@@ -217,8 +215,8 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
     }
 
     /* Succesfull payload when the caller is GDI */
-	private class INT008_SuccessPayload{
-		/* Agency Information */
+    private class INT008_SuccessPayload{
+        /* Agency Information */
         public string isBranchAbroad;
         public boolean PurgeCode;
         public string AccreditationDate;
@@ -263,12 +261,11 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
         public list<Owner> owners;
         public list<DueDiligence> dueDiligence;
         public list<string> externalSystems; //NEWGEN-4276
-		public list<theCurrency> currencies;
-		public string hierarchyId;
-		public boolean isMultiCountryKeyCustomer;
+        public list<theCurrency> currencies;
+        public string hierarchyId;
+        public boolean isMultiCountryKeyCustomer;
 
-
-		/*Constructor*/
+        /*Constructor*/
         public INT008_SuccessPayload(Account acc, String changeCode, list<AMS_Account_Role__c> lsAccRoleOwners){
             set<string> setIEPStatusToPublish = new set<string>{'Open','In Progress'};
             set<string> setGDIStatusToPublish = new set<string>{'Open','In Progress'};
@@ -321,18 +318,18 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                         this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
                 }
 
-				list<theCurrency> lsCurrencies = new list<theCurrency>();
-				string sBSPCurrency = acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
-				
-				lsCurrencies.add(new theCurrency(CurrencyBSP, sBSPCurrency));
+                list<theCurrency> lsCurrencies = new list<theCurrency>();
+                string sBSPCurrency = acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
+                
+                lsCurrencies.add(new theCurrency(CurrencyBSP, sBSPCurrency));
 
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r){
                     this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
-					////////////// WARNING
-					//ADD REAL FIELD
-					lsCurrencies.add(new theCurrency(CurrencyMulticountry, rhc.CurrencyIsoCode));
-				}
+                    ////////////// WARNING
+                    //ADD REAL FIELD
+                    lsCurrencies.add(new theCurrency(CurrencyMulticountry, rhc.CurrencyIsoCode));
+                }
 
                 if(this.RHCInfo ==null)
                 this.RHCInfo = new RHCInfoClass(null,
@@ -340,8 +337,8 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                     String.IsBlank(sBSPCurrency)?acc.CurrencyIsoCode:sBSPCurrency,
                     String.IsBlank(sBSPCurrency)?acc.Guaranteed_amount__c:ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c,acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode)
                 );
-                				
-				this.currencies = lsCurrencies;
+                                
+                this.currencies = lsCurrencies;
 
                 this.FormOfPayment = new list<FOP>();
                 //Form of Payment and AcceleyaEmail
@@ -378,5 +375,5 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                 throw e;
             }
         }
-	}
+    }
 }

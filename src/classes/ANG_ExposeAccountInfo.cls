@@ -115,7 +115,7 @@ global without sharing class ANG_ExposeAccountInfo {
 
             if(Caller == ANG_RestServiceHelper.Caller_Mulesoft){
                 if(requestType==ANG_RestServiceHelper.URIRequest_AccountMasterdata){
-                    lsAccnt = database.query(ANG_ExposeAccountInfo_Masterdata.QueryAgencyToProcess(MDMode, IATACode));
+                    lsAccnt = ANG_ExposeAccountInfo_Masterdata.QueryAgencyToProcess(MDMode, IATACode);
                 }
             }
 
