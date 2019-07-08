@@ -416,4 +416,276 @@ public class GADM_AccountServiceDetailTriggerTest {
 
     }
 
+    @IsTest
+    private static void checkGadmDuplicatesInsertTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
+
+        Account_Role_Service__c existingAccountRoleService = [SELECT Id FROM Account_Role_Service__c];
+
+        Test.startTest();
+
+        String errorMessage = '';
+        String existingServiceDetailId = '';
+
+        System.runAs(testUser) {
+
+            GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
+            serviceDetail.Account_Role_Service__c = existingAccountRoleService.Id;
+            serviceDetail.Allowed_email_domain__c = 'somedomain.com';
+            serviceDetail.Active_User_Count__c = 5;
+            serviceDetail.External_Actor_Id__c = 'ExtId0001test';
+            insert serviceDetail;
+
+            existingServiceDetailId = serviceDetail.Id;
+
+            try{
+
+                GADM_Account_Service_Detail__c serviceDetail2 = new GADM_Account_Service_Detail__c();
+                serviceDetail2.Account_Role_Service__c = existingAccountRoleService.Id;
+                serviceDetail2.Allowed_email_domain__c = 'somedomain.com';
+                serviceDetail2.Active_User_Count__c = 5;
+                serviceDetail2.External_Actor_Id__c = 'ExtId0001test';
+                insert serviceDetail2;
+
+            }catch(DmlException e) {
+                errorMessage = e.getMessage();
+            }
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(true, errorMessage.contains(existingServiceDetailId), 'Duplicates of GADM_Account_Service_Detail__c for GADM service are not allowed!');
+
+    }
+
+    @IsTest
+    private static void checkGadmDuplicatesInsert2Test() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account 2'];
+        Account_Role__c accountRole = [SELECT Id FROM Account_Role__c WHERE Account__c = :testAccount.Id];
+
+        Account_Roles__c accountRoles = new Account_Roles__c();
+        accountRoles.Name = 'GADM Participant';
+        insert accountRoles;
+
+        Portal_Applications__c portalApplications = new Portal_Applications__c();
+        portalApplications.Name = 'ISSP';
+        insert portalApplications;
+
+        Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
+        accountRoleServices.Portal_Service__c = portalApplications.Id;
+        accountRoleServices.Account_Roles__c = accountRoles.Id;
+        insert accountRoleServices;
+
+        Account_Role_Service__c accountRoleService = new Account_Role_Service__c();
+        accountRoleService.Account_Role__c = accountRole.Id;
+        accountRoleService.Account_Role_Services__c = accountRoleServices.Id;
+        insert accountRoleService;
+
+
+        Test.startTest();
+
+        String errorMessage = '';
+
+        System.runAs(testUser) {
+
+            GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
+            serviceDetail.Account_Role_Service__c = accountRoleService.Id;
+            serviceDetail.Allowed_email_domain__c = 'somedomain.com';
+            serviceDetail.Active_User_Count__c = 5;
+            serviceDetail.External_Actor_Id__c = 'ExtId0001test';
+            insert serviceDetail;
+
+            try{
+
+                GADM_Account_Service_Detail__c serviceDetail2 = new GADM_Account_Service_Detail__c();
+                serviceDetail2.Account_Role_Service__c = accountRoleService.Id;
+                serviceDetail2.Allowed_email_domain__c = 'somedomain.com';
+                serviceDetail2.Active_User_Count__c = 5;
+                serviceDetail2.External_Actor_Id__c = 'ExtId0002test';
+                insert serviceDetail2;
+
+            }catch(DmlException e) {
+                errorMessage = e.getMessage();
+
+            }
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('', errorMessage, 'Duplicates of GADM_Account_Service_Detail__c for non GADM service should be allowed!');
+
+    }
+
+    @IsTest
+    private static void checkGadmDuplicatesUpdateTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
+
+        Account_Role_Service__c existingAccountRoleService = [SELECT Id FROM Account_Role_Service__c];
+
+        Test.startTest();
+
+        String errorMessage = '';
+        String existingServiceDetailId = '';
+
+        System.runAs(testUser) {
+
+            GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
+            serviceDetail.Account_Role_Service__c = existingAccountRoleService.Id;
+            serviceDetail.Allowed_email_domain__c = 'somedomain.com';
+            serviceDetail.Active_User_Count__c = 5;
+            serviceDetail.External_Actor_Id__c = 'ExtId0001test';
+            insert serviceDetail;
+
+            existingServiceDetailId = serviceDetail.Id;
+
+            try{
+
+                serviceDetail.Allowed_email_domain__c += ';someotherdomain.com';
+                update serviceDetail;
+
+            }catch(DmlException e) {
+                errorMessage = e.getMessage();
+            }
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('', errorMessage, 'Update where Account_Role_Service__c nor Service_Name__c are not changed should be allowed!');
+
+    }
+
+    @IsTest
+    private static void checkGadmDuplicatesUpdate2Test() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account 2'];
+        Account_Role__c accountRole = [SELECT Id FROM Account_Role__c WHERE Account__c = :testAccount.Id];
+
+        Account_Role_Service__c existingGadmAccountRoleService = [SELECT Id FROM Account_Role_Service__c];
+
+        GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
+        serviceDetail.Account_Role_Service__c = existingGadmAccountRoleService.Id;
+        serviceDetail.Allowed_email_domain__c = 'somedomain.com';
+        serviceDetail.Active_User_Count__c = 5;
+        serviceDetail.External_Actor_Id__c = 'ExtId0001test';
+        insert serviceDetail;
+
+        Account_Roles__c accountRoles = new Account_Roles__c();
+        accountRoles.Name = 'GADM Participant';
+        insert accountRoles;
+
+        Portal_Applications__c portalApplications = new Portal_Applications__c();
+        portalApplications.Name = 'ISSP';
+        insert portalApplications;
+
+        Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
+        accountRoleServices.Portal_Service__c = portalApplications.Id;
+        accountRoleServices.Account_Roles__c = accountRoles.Id;
+        insert accountRoleServices;
+
+        Account_Role_Service__c accountRoleService = new Account_Role_Service__c();
+        accountRoleService.Account_Role__c = accountRole.Id;
+        accountRoleService.Account_Role_Services__c = accountRoleServices.Id;
+        insert accountRoleService;
+
+
+        Test.startTest();
+
+        String errorMessage = '';
+        String existingServiceDetailId = '';
+
+        System.runAs(testUser) {
+
+            GADM_Account_Service_Detail__c serviceDetail2 = new GADM_Account_Service_Detail__c();
+            serviceDetail2.Account_Role_Service__c = accountRoleService.Id;
+            serviceDetail2.Allowed_email_domain__c = 'somedomain.com';
+            serviceDetail2.Active_User_Count__c = 5;
+            serviceDetail2.External_Actor_Id__c = 'ExtId0002test';
+            insert serviceDetail2;
+
+            existingServiceDetailId = serviceDetail.Id;
+
+            try{
+
+                serviceDetail2.Account_Role_Service__c = existingGadmAccountRoleService.Id;
+                update serviceDetail2;
+
+
+            }catch(DmlException e) {
+                errorMessage = e.getMessage();
+            }
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(true, errorMessage.contains(serviceDetail.Id), 'Duplicates of GADM_Account_Service_Detail__c for GADM service are not allowed!');
+
+    }
+
+    @IsTest
+    private static void checkGadmDuplicatesUpdate3Test() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account 2'];
+        Account_Role__c accountRole = [SELECT Id FROM Account_Role__c WHERE Account__c = :testAccount.Id];
+
+        Account_Roles__c accountRoles = new Account_Roles__c();
+        accountRoles.Name = 'GADM Participant';
+        insert accountRoles;
+
+        Portal_Applications__c portalApplications = new Portal_Applications__c();
+        portalApplications.Name = 'ISSP';
+        insert portalApplications;
+
+        Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
+        accountRoleServices.Portal_Service__c = portalApplications.Id;
+        accountRoleServices.Account_Roles__c = accountRoles.Id;
+        insert accountRoleServices;
+
+        Account_Role_Service__c accountRoleService = new Account_Role_Service__c();
+        accountRoleService.Account_Role__c = accountRole.Id;
+        accountRoleService.Account_Role_Services__c = accountRoleServices.Id;
+        insert accountRoleService;
+
+
+        Test.startTest();
+
+        String errorMessage = '';
+
+        System.runAs(testUser) {
+
+            GADM_Account_Service_Detail__c serviceDetail2 = new GADM_Account_Service_Detail__c();
+            serviceDetail2.Account_Role_Service__c = accountRoleService.Id;
+            serviceDetail2.Allowed_email_domain__c = 'somedomain.com';
+            serviceDetail2.Active_User_Count__c = 5;
+            serviceDetail2.External_Actor_Id__c = 'ExtId0002test';
+            insert serviceDetail2;
+
+
+            try{
+
+                serviceDetail2.Allowed_email_domain__c += '; gmail.com';
+                update serviceDetail2;
+
+
+            }catch(DmlException e) {
+                errorMessage = e.getMessage();
+            }
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('', errorMessage, 'Duplicates of GADM_Account_Service_Detail__c for non GADM service should be allowed!');
+
+    }
+
 }

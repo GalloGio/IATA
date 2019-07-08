@@ -3,16 +3,20 @@
     <label>GADM</label>
     <protected>false</protected>
     <values>
+        <field>Actor_Membership_Termination__c</field>
+        <value xsi:type="xsd:double">30.0</value>
+    </values>
+    <values>
         <field>Credentials_Name__c</field>
         <value xsi:type="xsd:string">GADM</value>
     </values>
     <values>
         <field>Empty_File_Size_B__c</field>
-        <value xsi:type="xsd:double">10.0</value>
+        <value xsi:type="xsd:double">1.0</value>
     </values>
     <values>
         <field>Max_File_Size_MB__c</field>
-        <value xsi:type="xsd:double">1.0</value>
+        <value xsi:type="xsd:double">1000.0</value>
     </values>
     <values>
         <field>Max_Files_Count__c</field>

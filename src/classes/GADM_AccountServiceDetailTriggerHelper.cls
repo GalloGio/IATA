@@ -144,4 +144,60 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
 
     }
 
+
+
+    public static void checkGadmDuplicates(Boolean isInsert, Boolean isUpdate,  Map<Id, GADM_Account_Service_Detail__c> oldMap, List<GADM_Account_Service_Detail__c> newObjects) {
+
+        Set<Id> accountRoleServiceIds = new Set<Id>();
+
+        if(isInsert) {
+            for(GADM_Account_Service_Detail__c detail : newObjects) {
+                if(detail.Service_Name__c == 'GADM') {
+                    accountRoleServiceIds.add(detail.Account_Role_Service__c);
+                }
+            }
+        }
+
+        if(isUpdate) {
+            for(GADM_Account_Service_Detail__c detail : newObjects) {
+                GADM_Account_Service_Detail__c oldObj = oldMap.get(detail.Id);
+                if(detail.Service_Name__c == 'GADM') {
+                    if((oldObj.Account_Role_Service__c != detail.Account_Role_Service__c) || (oldObj.Service_Name__c != detail.Service_Name__c)) {
+                        accountRoleServiceIds.add(detail.Account_Role_Service__c);
+                    }
+                }
+            }
+        }
+
+
+        List<GADM_Account_Service_Detail__c> existingList = [SELECT Id, Account_Role_Service__c, Service_Name__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__c = :accountRoleServiceIds AND Service_Name__c = 'GADM'];
+
+
+        Map<Id, List<GADM_Account_Service_Detail__c>> serviceToDetailsMap = new Map<Id, List<GADM_Account_Service_Detail__c>>();
+        for(GADM_Account_Service_Detail__c detail : existingList) {
+            if(serviceToDetailsMap.get(detail.Account_Role_Service__c) == null) {
+                serviceToDetailsMap.put(detail.Account_Role_Service__c, new List<GADM_Account_Service_Detail__c>{detail});
+            }else{
+                serviceToDetailsMap.get(detail.Account_Role_Service__c).add(detail);
+            }
+        }
+
+
+        if(! serviceToDetailsMap.isEmpty()) {
+            for(GADM_Account_Service_Detail__c detail : newObjects) {
+                if(serviceToDetailsMap.get(detail.Account_Role_Service__c) != null) {
+                    List<GADM_Account_Service_Detail__c> detailsList = serviceToDetailsMap.get(detail.Account_Role_Service__c);
+                    String ids = '[' + detailsList[0].Id;
+                    for(Integer i = 1 ; i < detailsList.size(); i++) {
+                        ids += ',' + detailsList[i].Id;
+                    }
+                    ids += ']';
+                    detail.addError('Duplicate record found! ' + ids);
+                }
+            }
+
+        }
+
+    }
+
 }
