@@ -1810,6 +1810,11 @@
     <fieldSets>
         <fullName>FieldsExcludedFromTracking</fullName>
         <description>The fields in this list will be tracked on the Contact Tracking History object</description>
+        <displayedFields>
+            <field>Available_Services_Images__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>FieldsExcludedFromTracking</label>
     </fieldSets>
     <fieldSets>
