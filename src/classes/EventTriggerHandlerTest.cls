@@ -34,8 +34,8 @@ private class EventTriggerHandlerTest {
 									LocaleSidKey='en_US', ProfileId = p.Id, ContactId = contacts[1].Id,
 									TimeZoneSidKey='America/Los_Angeles', UserName='jane.doe@testorg.com', License_Cost_Center__c = 'XSMW01JO01'));*/
 		users.add(ISSP_ObjectFactory.createPortalUser(contacts[0]));
-		//contacts[0].OwnerId = users[0].Id;
-		contacts[1].OwnerId = users[1].Id;
+		contacts[0].OwnerId = users[0].Id;
+		//contacts[1].OwnerId = users[1].Id;
         update contacts;
 
 		Network community = [SELECT id, name, status FROM Network WHERE Name = 'IATA Portal' LIMIT 1];
