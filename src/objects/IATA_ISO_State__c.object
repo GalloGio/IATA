@@ -54,20 +54,6 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
-        <fullName>IATA_ISO_Country__c</fullName>
-        <externalId>false</externalId>
-        <label>IATA ISO Country</label>
-        <referenceTo>IATA_ISO_Country__c</referenceTo>
-        <relationshipLabel>IATA ISO States</relationshipLabel>
-        <relationshipName>IATA_ISO_States</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
-    </fields>
-	<fields>
         <fullName>GeonameAsciiName__c</fullName>
         <externalId>false</externalId>
         <label>GeonameAsciiName</label>
@@ -100,6 +86,20 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>IATA ISO States</relationshipLabel>
+        <relationshipName>IATA_ISO_States</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>IEC_Valid_SAP__c</fullName>
