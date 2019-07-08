@@ -73,6 +73,7 @@
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>AMS_ACCOUNT_FIELDS_TO_VALIDATE</fullName>
         <description>This field set is used to know which fields cannot contain non latin characters</description>
@@ -10455,6 +10456,15 @@ WSPN-Worldspan</inlineHelpText>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Global_ID__c</fullName>
+        <description>global unique identifier</description>
+        <displayFormat>001{0000000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
         <fullName>Guaranteed_amount__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
@@ -15751,11 +15761,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <label>Association</label>
                 </value>
                 <value>
-                    <fullName>Cargo Agent</fullName>
-                    <default>false</default>
-                    <label>Freight Forwarder</label>
-                </value>
-                <value>
                     <fullName>Education</fullName>
                     <default>false</default>
                     <label>Education</label>
@@ -15769,6 +15774,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Financial Institution</fullName>
                     <default>false</default>
                     <label>Financial Institution</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>General Sales Agent</fullName>
@@ -26053,6 +26063,18 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <group>IATAGulfArea</group>
             <group>IDFSAfricaMERegionalOffice</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Org_Account_Hierarchy</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>ACCOUNT.INDUSTRY</columns>
+        <columns>ACCOUNT.ADDRESS1_CITY</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>Org_Account_Hierarchy</label>
     </listViews>
     <listViews>
         <fullName>OthersuppliersEurope</fullName>
@@ -77946,7 +77968,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypes>
         <fullName>Others</fullName>
         <active>true</active>
-        <description>The new record type for TIESS, Non IATA agents, Partners - NEW data model</description>
+        <description>Use only for non-airline, non-agency accounts, that you have verified.</description>
         <label>Others</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
@@ -83873,7 +83895,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypes>
         <fullName>Standard_Account</fullName>
         <active>true</active>
-        <description>New Record Type to be used for standard account</description>
+        <description>Use for all other accounts.</description>
         <label>Standard Account</label>
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
@@ -85555,6 +85577,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Domestic Agent</fullName>
                 <default>false</default>
             </values>
@@ -85611,7 +85637,23 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local office</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Passenger Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85676,6 +85718,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -99885,16 +99931,17 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
     <validationRules>
         <fullName>Airline_HQ_Account_Type</fullName>
         <active>true</active>
-        <description>For Airline HQ only the Account Management Team can update the Account Type field</description>
+        <description>For Airline HQ only the Account Management Team can update the Account Type and Website field</description>
         <errorConditionFormula>AND(
- RecordType.DeveloperName=&apos;IATA_Airline&apos;,
- ISCHANGED(Account_Type__c),
- NOT(CONTAINS($Profile.Name, &quot;Developer&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Administrator&quot;)),
- NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
+RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+OR(
+ISCHANGED(Account_Type__c),
+ISCHANGED(Website)
+),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;))
 )</errorConditionFormula>
-        <errorDisplayField>Account_Type__c</errorDisplayField>
-        <errorMessage>For Airline HQ, only the Account Management Team can update the Account Type field</errorMessage>
+        <errorMessage>For accounts with record type AL HQ, only the Account Management Team can update the content of the following fields: Account Type and Website</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>

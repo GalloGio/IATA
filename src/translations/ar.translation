@@ -165,6 +165,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_CountrySAttr_Validation --></label>
+        <name>AMS_CountrySAttr_Validation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
         <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
@@ -863,6 +867,10 @@
     <customLabels>
         <label>أوافق</label>
         <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
     </customLabels>
     <customLabels>
         <label>قائمة المؤسسات المالية التي توفر تأمين الضمان المالي في بلدكم</label>
@@ -1685,6 +1693,10 @@
         <name>CaseKPI2_RecordType</name>
     </customLabels>
     <customLabels>
+        <label><!-- CaseRTtrackedByCS --></label>
+        <name>CaseRTtrackedByCS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CaseTypeReason1List1 --></label>
         <name>CaseTypeReason1List1</name>
     </customLabels>
@@ -1699,6 +1711,10 @@
     <customLabels>
         <label><!-- CaseValidation - Area --></label>
         <name>CaseValidation_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -7901,6 +7917,10 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>انتباه! بنسخِ معلومات مِلكية إلى وكالةٍ ما فإنكم ستحذفون بذلك أي معلومات مِلكية موجودة حول الوكالة المستهدفة.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -9681,6 +9701,10 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>اختر الحسابات المستهدفة</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>*يرجى اختيار الكيانات المنتسبة</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9699,6 +9723,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>الولاية/المقاطعة</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -11089,6 +11117,22 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>جارٍ البحث...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>يسمح لكم هذا الإجراء بنسخ بيانات المِلكية من هذا الحساب إلى المواقع المختارة التي تخصّ التسلسل الخاص بكم. وسوف تتمكنون من إظهار التغييرات المطبّقة بواسطة هذا الإجراء على الوكالات المستهدفة فقط بعد تأكيد تحديث جميع التفاصيل في هذه الصفحة.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>الوكالات التي تمت معالجتها</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>سيْر نسخ المِلكية</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>يرجى النقر هنا لمتابعة التوافق مع اشتراطات قطاع بطاقات الدفع PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -11906,6 +11950,10 @@ and
         <name>ISSP_Cargo_Agent_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Cargo --></label>
+        <name>ISSP_Cargo_Label_Value</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CaseCommentEmail --></label>
         <name>ISSP_CaseCommentEmail</name>
     </customLabels>
@@ -12057,6 +12105,10 @@ and
     <customLabels>
         <label>مغلقة</label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label>تفاصيل العنوان</label>
@@ -13141,6 +13193,10 @@ and
     <customLabels>
         <label>GSA (مكتب مبيعات وخدمات عامة)</label>
         <name>ISSP_GSSA</name>
+    </customLabels>
+    <customLabels>
+        <label>باختيار الاشتراك، سيتمكن مورّدو القطاع مثل شركات الطيران والفنادق ومشغّلي الرحلات من توزيع رسائل هامّة إلى وكالتكم حول المنتجات والعروض الترويجية والمبيعات وسياسات الوكالة.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
@@ -14927,8 +14983,16 @@ and
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>ينبغي اتخاذ التغييرات، باستثناء ما يتعلق بالاشتراك في GDP، من خلال عملية إعادة التفعيل السنوية</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP SELECT COUNTRY --></label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>- اختر الولاية -</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP SELECT THREE or MORE --></label>

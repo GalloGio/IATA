@@ -158,7 +158,7 @@
                 <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
                     <table border="0" cellpadding="3">
                         <tr>
-                            <th colspan="2">{!IF(newForm.Is_change_ownership_or_shareholding__c,$Label.ISSP_AMS_NoC_Transferor , $Label.ISSP_AMS_NoC_Authorized_Signature)}</th>
+                            <th colspan="2">{!IF(AND(newForm.Is_change_ownership_or_shareholding__c,NOT(newForm.Is_change_legal_name__c)),$Label.ISSP_AMS_NoC_Transferor , $Label.ISSP_AMS_NoC_Authorized_Signature)}</th>
                         </tr>
                         <tr>
                             <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
@@ -179,7 +179,7 @@
                     </table>
                 </div>
             </apex:repeat>
-            <apex:repeat value="{!List_CurrentCompaniesOwners}" var="transfereeOwner">
+            <apex:repeat value="{!List_CurrentCompaniesOwners}" var="transfereeOwner" rendered="NOT({!newForm.Is_change_legal_name__c})">
                 <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
                     <table border="0" cellpadding="3">
                         <tr>
