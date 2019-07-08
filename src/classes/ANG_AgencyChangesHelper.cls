@@ -474,7 +474,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 		
 		}
-
 		
 		return changesContainer;
 	}
