@@ -512,12 +512,13 @@ private class WorkflowHelperTest {
         fieldsOfObject.put('Company_Type__c','A');
         fieldsOfObject.put('Industry','Travel Agent');
         fieldsOfObject.put('Site','Site');
-
+        fieldsOfObject.put('Sector__c','Travel Agent');
+        
         Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('Name','NewGenAgency2');
-        fieldsOfObject.put('Short_Name__c','NewGenAgency');
+        fieldsOfObject.put('Short_Name__c','NewGenAgency2');
         fieldsOfObject.put('Location_Class__c','P');
         fieldsOfObject.put('Location_Type__c','HE');
         fieldsOfObject.put('Remittance_frequency__c','M');
@@ -529,7 +530,7 @@ private class WorkflowHelperTest {
         fieldsOfObject.put('Sector__c','Airline');
 
         Account acct2 = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
-
+            
         insert new List<Account>{acct,acct2};
 
         Test.stopTest();
