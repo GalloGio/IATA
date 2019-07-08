@@ -1,6 +1,6 @@
 ({
     loadHierarchy : function(component, topParentId) {
-        var action = component.get('c.getHierarchy');
+        var action = component.get('c.getAgencyHierarchy');
         action.setParams({
             'topParentId' : topParentId
         });
