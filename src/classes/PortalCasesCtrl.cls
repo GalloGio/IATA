@@ -333,7 +333,7 @@ public with sharing class PortalCasesCtrl {
             caseSetIds.add(cs.Id);
         }
 
-        amsList = [SELECT Id, Operation_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c IN :caseSetIds];
+        amsList = [SELECT SAAM_Case__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c IN :caseSetIds];
 
         if(!amsList.isEmpty()) {
             amsListForm = new Set<Id>();
