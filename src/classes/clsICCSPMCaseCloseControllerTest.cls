@@ -58,8 +58,7 @@ private class clsICCSPMCaseCloseControllerTest {
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'EUR',
                         ICCS_Bank_Account__c = ba.Id); 
         
-        //////////////////////////
-        test.startTest();
+        
 
         isFirstCase = true;
 
@@ -68,6 +67,9 @@ private class clsICCSPMCaseCloseControllerTest {
         
         // 2nd case 
         insert cs2;
+        
+        //////////////////////////
+        test.startTest();
 
         closeCaseAndNotif(cs2);
         
