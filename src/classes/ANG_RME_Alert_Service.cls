@@ -285,7 +285,7 @@ global class ANG_RME_Alert_Service {
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
-			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount_Forecasted__c;
+			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
 			Integer decimalPlaces = (result.res.storedRHCValue).scale();
 			Decimal rounded = toRound.setScale(decimalPlaces, RoundingMode.HALF_UP);
 			

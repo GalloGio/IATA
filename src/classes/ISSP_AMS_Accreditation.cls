@@ -2826,10 +2826,6 @@ public without sharing class ISSP_AMS_Accreditation {
             accChanges_List.add(new AccountChanges('Email__c', accountConcerned.Email__c, newForm.Branch_Office_Email__c));
             accountConcerned.Email__c = newForm.Branch_Office_Email__c;
         }
-        if (!isocountry.Prevent_Portal_Trade_Name_Change__c && newForm.Trade_Name__c != null) {
-            accChanges_List.add(new AccountChanges('TradeName__c', accountConcerned.TradeName__c, newForm.Trade_Name__c));
-            accountConcerned.TradeName__c = newForm.Trade_Name__c;
-        }
 
         upsert accountConcerned;
     }

@@ -257,6 +257,7 @@ private class FDSKPIReportingTest {
         
         caseToProcess.Status = 'Closed';
         caseToProcess.Reason1__c = 'New Account request';
+        caseToProcess.CaseArea__c  = 'Global System Solution';
         update caseToProcess;
         
         Test.stopTest();
@@ -288,6 +289,7 @@ private class FDSKPIReportingTest {
         for(Case cas : casesToProcess){
             cas.Status = 'Closed';
             cas.Reason1__c = 'New Account request';
+            cas.CaseArea__c  = 'Global System Solution';
         }
 
         update casesToProcess;
@@ -392,6 +394,8 @@ private class FDSKPIReportingTest {
         Test.startTest();
         
         caseToProcess.Status = 'Closed';
+        caseToProcess.Reason1__c = 'New Account request';
+        caseToProcess.CaseArea__c  = 'Global System Solution';
         caseToProcess.Reopening_reason__c = 'same query';
         update caseToProcess;
         
@@ -452,6 +456,8 @@ private class FDSKPIReportingTest {
 
         for(Case cas : casesToProcess){
             cas.Status = 'Closed';
+            cas.Reason1__c = 'New Account request';
+            cas.CaseArea__c  = 'Global System Solution';
             cas.Reopening_reason__c = 'same query';
         }
 
