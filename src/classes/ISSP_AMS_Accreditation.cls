@@ -3402,6 +3402,17 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private void copyOwnersOnMCSubmit(Set<AMS_Pax_Accreditation_Form__c> sameLegalEntityForms) {
+        Map<String, Set<AMS_Pax_Accreditation_Form__c>> formsByLegalEntity = new Map<String, Set<AMS_Pax_Accreditation_Form__c>>();
+
+        for (AMS_Pax_Accreditation_Form__c form: sameLegalEntityForms) {
+            if (!formsByLegalEntity.keySet().contains(form.Same_Legal_Entity_Agency_Form__c)) {
+                formsByLegalEntity.put(form.Same_Legal_Entity_Agency_Form__c, new Set<AMS_Pax_Accreditation_Form__c>());
+            }
+            formsByLegalEntity.get(form.Same_Legal_Entity_Agency_Form__c).add(form);
+        }
+
+        Set<String> parentForms = formsByLegalEntity.keySet();
+
         String query = 'SELECT ';
         Map<String, Schema.SObjectField> objectFields = Schema.getGlobalDescribe().get('AMS_Accreditation_Contact__c').getDescribe().fields.getMap();
 
@@ -3411,33 +3422,32 @@ public without sharing class ISSP_AMS_Accreditation {
 
         query = query.removeEnd(', ');
         query += ' FROM AMS_Accreditation_Contact__c ';
-        query += 'WHERE AMS_Pax_Accreditation_Form__c = \'' + geMCForm.Id + '\'';
-
-        Set<AMS_Pax_Accreditation_Form__c> sameLegalEntityFormsFromAccount = new Set<AMS_Pax_Accreditation_Form__c>();
-        Set<AMS_Pax_Accreditation_Form__c> sameLegalEntityFormsFromSRecord = new Set<AMS_Pax_Accreditation_Form__c>();
+        query += 'WHERE AMS_Pax_Accreditation_Form__c IN :parentForms';
 
         List<AMS_Accreditation_Contact__c> ownersCopy = new List<AMS_Accreditation_Contact__c>();
 
         for (AMS_Accreditation_Contact__c owner: Database.query(query)) {
             for (AMS_Pax_Accreditation_Form__c form: sameLegalEntityForms) {
-                AMS_Accreditation_Contact__c auxAccreditCont = new AMS_Accreditation_Contact__c();
+                if (owner.AMS_Pax_Accreditation_Form__c == form.Same_Legal_Entity_Agency_Form__c) {
+                    AMS_Accreditation_Contact__c auxAccreditCont = new AMS_Accreditation_Contact__c();
 
-                auxAccreditCont.AMS_Pax_Accreditation_Form__c = form.Id;
-                auxAccreditCont.First_name__c = owner.First_name__c;
-                auxAccreditCont.Last_name__c = owner.Last_name__c;
-                auxAccreditCont.Name = owner.Name;
-                auxAccreditCont.Financial_interest__c = owner.Financial_interest__c;
-                auxAccreditCont.Agency_owner__c = owner.Agency_owner__c;
-                auxAccreditCont.RecordTypeId = owner.RecordTypeId;
-                auxAccreditCont.Email__c = owner.Email__c;
-                auxAccreditCont.Phone__c = owner.Phone__c;
-                auxAccreditCont.Contact__c = owner.Contact__c;
-                auxAccreditCont.AddressStreet__c = owner.AddressStreet__c;
-                auxAccreditCont.AddressCity__c = owner.AddressCity__c;
-                auxAccreditCont.AddressPostcode__c = owner.AddressPostcode__c;
-                auxAccreditCont.AddressCountry__c = owner.AddressCountry__c;
+                    auxAccreditCont.AMS_Pax_Accreditation_Form__c = form.Id;
+                    auxAccreditCont.First_name__c = owner.First_name__c;
+                    auxAccreditCont.Last_name__c = owner.Last_name__c;
+                    auxAccreditCont.Name = owner.Name;
+                    auxAccreditCont.Financial_interest__c = owner.Financial_interest__c;
+                    auxAccreditCont.Agency_owner__c = owner.Agency_owner__c;
+                    auxAccreditCont.RecordTypeId = owner.RecordTypeId;
+                    auxAccreditCont.Email__c = owner.Email__c;
+                    auxAccreditCont.Phone__c = owner.Phone__c;
+                    auxAccreditCont.Contact__c = owner.Contact__c;
+                    auxAccreditCont.AddressStreet__c = owner.AddressStreet__c;
+                    auxAccreditCont.AddressCity__c = owner.AddressCity__c;
+                    auxAccreditCont.AddressPostcode__c = owner.AddressPostcode__c;
+                    auxAccreditCont.AddressCountry__c = owner.AddressCountry__c;
 
-                ownersCopy.add(auxAccreditCont);
+                    ownersCopy.add(auxAccreditCont);
+                }
             }
         }
 
