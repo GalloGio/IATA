@@ -4,6 +4,8 @@ import getFieldsMap from '@salesforce/apex/PortalProfileCtrl.getFieldsMap';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import getServices from '@salesforce/apex/PortalServicesCtrl.getUserAccessGrantedServices';
 
+import getContactDetails from '@salesforce/apex/PortalMyProfileCtrl.getContactInfo';
+
 
 export default class PortalMyProfilePage extends LightningElement {
 
@@ -14,6 +16,7 @@ export default class PortalMyProfilePage extends LightningElement {
     }
 
     @track services = [];
+    @track contactInfo;
 
     @track handleScrolling = true;
     @track currentSection;
@@ -38,6 +41,14 @@ export default class PortalMyProfilePage extends LightningElement {
 
         getServices().then(result => {
             this.services = result;
+        });
+
+        getContactDetails().then(result => {
+            let contact = result.contact;
+            contact.cardNumber = result.cardNumber !== undefined ? result.cardNumber : undefined;
+            contact.cardDate = result.cardDate !== undefined ? result.cardDate : undefined;
+
+            this.contactInfo = contact;
         });
 
     }
@@ -74,7 +85,8 @@ export default class PortalMyProfilePage extends LightningElement {
 
                 if (sectionMap.hasOwnProperty(key)) {
                     let value = sectionMap[key];
-                    localMap.push({ 'value': value, 'key': key });
+                    localMap.push({ 'value': value, 'key': key,'showfunction' : (key === 'Professional') });//
+
                 }
             }
             this.mapOfValuesContact = localMap;

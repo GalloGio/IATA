@@ -10,6 +10,11 @@ public class PortalMyProfileCtrlTest {
         insert newCon;
 
         User newUser = ISSP_ObjectFactory.createPortalUser(newCon);
+
+        Date validTo = Date.today().addYears(2);
+
+        ID_Card__c card = new ID_Card__c(Related_Contact__c =newCon.Id, Valid_To_Date__c =validTo, VER_Number__c='123321', Valid_From_Date__c =Date.today().addDays(-2), Name_on_ID_Card__c='TestCard123');
+        insert card;
     }
 
     @IsTest
@@ -19,7 +24,7 @@ public class PortalMyProfileCtrlTest {
         Contact testContact = new Contact();
         System.runAs(usr){
             Test.startTest();
-            testContact = PortalMyProfileCtrl.getContactInfo();
+            testContact = PortalMyProfileCtrl.getContactInfo().contact;
             Test.stopTest();
 
             System.assert( testContact!=null );

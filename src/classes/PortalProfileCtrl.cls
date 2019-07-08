@@ -216,8 +216,13 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('User_Portal_Status__c',false,true));
         wrapperMap.get(LABEL_ACCESSIBILITY).add(new FieldWrapper('Authorization',false,true));
 
-        wrapperMap.get(LABEL_PROFESSIONAL).add(new FieldWrapper('Area__c',true,true));
+        fw = new FieldWrapper('ID_CARD',false,true,true);
+        fw.isIdCardInfo = true;
+        wrapperMap.get(LABEL_PROFESSIONAL).add(fw);
 
+        fw = new FieldWrapper('Membership_Function__c',false,true,true);
+        fw.isJobFunction = true;
+        wrapperMap.get(LABEL_PROFESSIONAL).add(fw);
 
         return wrapperMap;
     }
@@ -383,6 +388,9 @@ public with sharing class PortalProfileCtrl {
         public Boolean isJobFunction;
 
         @AuraEnabled
+        public Boolean isIdCardInfo;
+
+        @AuraEnabled
         public Boolean isContactServices;
 
         @AuraEnabled
@@ -525,6 +533,14 @@ public with sharing class PortalProfileCtrl {
         fw.isJobFunction = true;
         wrapperMap.get(viewFields).add(fw);
         wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
+
+        //For Airlines & agencies only
+        if((rType == 'IATA_Airline_BR' || rType == 'IATA_Airline') || rType == 'IATA_Agency') {
+            wrapperMap.get(viewFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
+            wrapperMap.get(viewFields).add(new FieldWrapper('Invoicing_Contact__c', true, true));
+        }
+
+        wrapperMap.get(viewFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
 
         //EDIT
         wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
