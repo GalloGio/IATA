@@ -1147,6 +1147,11 @@
         <label>Exact Target commercial TEST</label>
     </standardValue>
     <standardValue>
+        <fullName>Facebook</fullName>
+        <default>false</default>
+        <label>Facebook</label>
+    </standardValue>
+    <standardValue>
         <fullName>Fax</fullName>
         <default>false</default>
         <label>Fax</label>
