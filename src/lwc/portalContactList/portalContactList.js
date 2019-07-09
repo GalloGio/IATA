@@ -26,9 +26,20 @@ export default class PortalContactList extends LightningElement {
     @track recordsLocal;
     @api recordsInitDone = false;
     @track openId;
+    @track showEditLocal = false;
 
     /* Dynamic fields*/
     @api sectionMap;
+
+
+    @api
+    get showEdit(){
+        return this.showEditLocal;
+    }
+
+    set showEdit(value){
+        this.showEditLocal = value;
+    }
 
 
     @api

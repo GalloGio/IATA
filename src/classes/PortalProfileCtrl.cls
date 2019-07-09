@@ -340,6 +340,11 @@ public with sharing class PortalProfileCtrl {
         for(Schema.FieldSetMember f : basicsFields) {
             Boolean editable = true;
             String fieldName = f.getFieldPath();
+
+            if(fieldName == 'IATACode__c' && (String.isBlank(myContact.Account.Status__c) || myContact.Account.Status__c =='New application pending')){
+                continue;
+            }
+
             if((newGen && f.getFieldPath() == 'TradeName__c') || fieldName =='Legal_Name__c' || fieldName =='Sector__c' || fieldName == 'Category__c'){
                 editable = false;
             }

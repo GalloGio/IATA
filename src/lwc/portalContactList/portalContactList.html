@@ -74,7 +74,7 @@
                                             <c-portal-record-form-wrapper section-title="Basics"
                                                 object-name={objectName} record-id={record.Id}
                                                 edit-fields={fieldsList.Basics} fields={fieldsList.Basics}
-                                                show-edit="false"
+                                                show-edit={showEditLocal}
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
 
@@ -83,7 +83,7 @@
                                             <c-portal-record-form-wrapper section-title="Branch Contact"
                                                 object-name={objectName} record-id={record.Id}
                                                 edit-fields={fieldsList.BranchContact} fields={fieldsList.BranchContact}
-                                                show-edit="true"
+                                                show-edit={showEditLocal} edit-basics={showEditLocal}
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
                                         </template>
