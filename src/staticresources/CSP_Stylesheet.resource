@@ -227,6 +227,7 @@ body {
     vertical-align: middle;
     white-space: nowrap;
     height:250px;
+    z-index: 3000;
 }
 
 /* ############################################## */
@@ -353,7 +354,7 @@ lightning-datatable .slds-th__action {
   font-size: 14px;
 }
 
-/* Cases table status styles*/
+/* Cases table status styles */
 .Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, 
 .Escalated lightning-primitive-cell-wrapper lightning-formatted-text, .EscalatedInternally lightning-primitive-cell-wrapper lightning-formatted-text, 
 .EscalatedExternally lightning-primitive-cell-wrapper lightning-formatted-text, .ForReviewandAcceptance lightning-primitive-cell-wrapper lightning-formatted-text, 
