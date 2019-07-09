@@ -11,17 +11,21 @@ global class AcliNewScheduler implements Schedulable{
 
     @future (callout=true)
     public static void readAcliFile() {
-        if ( !test.isRunningTest()) acliResponse = AcliJavaTool.getFile();
 
-        if (acliResponse.success) {
-			Document doc = new Document();
-			doc.Name = ACLI_DOC_NAME;
-			doc.Body = Blob.ValueOf(acliResponse.content);
-			doc.FolderId = ACLI_FOLDER.Id;
-			upsert doc;
-        } else {
-            sendEmail('Error reading ACLI file ' + datetime.now(), acliResponse.toString());
+        for(Integer i = 0; i < 10; i++) {
+            if ( !test.isRunningTest()) acliResponse = AcliJavaTool.getFile();
+
+            if (acliResponse.success) {
+                Document doc = new Document();
+                doc.Name = ACLI_DOC_NAME;
+                doc.Body = Blob.ValueOf(acliResponse.content);
+                doc.FolderId = ACLI_FOLDER.Id;
+                upsert doc;
+
+                return;
+            }
         }
+        sendEmail('Error reading ACLI file ' + datetime.now(), acliResponse.toString());
     }
 
     public static void sendEmail(String subject, String message) {
