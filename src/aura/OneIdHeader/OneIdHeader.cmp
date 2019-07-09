@@ -6,6 +6,8 @@
             '../OneIdResources/css/salesforce-lightning-design-system-ltng.css')}"
     />
 
+    
+
     <aura:attribute type="String" name="greeting" default="OneId" access="global" />
 
     <aura:attribute type="Boolean" name="loaded" default="false" />

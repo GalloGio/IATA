@@ -1363,6 +1363,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1372,10 +1376,6 @@
         </recipients>
         <recipients>
             <recipient>moutany@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1424,10 +1424,6 @@
         </recipients>
         <recipients>
             <recipient>taverasr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2888,6 +2884,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2901,10 +2901,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3028,6 +3024,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3041,10 +3041,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3900,7 +3896,7 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>Vendor_Templates/Contact_Vendor</template>
     </alerts>
-	<alerts>
+    <alerts>
         <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
         <description>Send a notification to SIS Customer Support when a SIS E-Joining form is submitted</description>
         <protected>false</protected>
