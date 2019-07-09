@@ -326,6 +326,7 @@ private class ANG_AccountTriggerHandlerTest {
         
         rhcList1[0].CurrencyIsoCode = 'USD';
         rhcList1[0].ANG_RME_Amount__c = 200;
+		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
         upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
@@ -399,6 +400,7 @@ private class ANG_AccountTriggerHandlerTest {
         
         rhcList1[0].CurrencyIsoCode = 'USD';
         rhcList1[0].ANG_RME_Amount__c = 200;
+		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
         upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
@@ -486,6 +488,7 @@ private class ANG_AccountTriggerHandlerTest {
         
         rhcList1[0].CurrencyIsoCode = 'USD';
         rhcList1[0].ANG_RME_Amount__c = 200;
+		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
         upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();

@@ -3170,8 +3170,8 @@ public without sharing class ISSP_AMS_Accreditation {
         if (newForm.Branch_Office_Email__c != null) {
             accountConcerned.Email__c = newForm.Branch_Office_Email__c;
         }
-        
         if (!isocountry.Prevent_Portal_Trade_Name_Change__c && newForm.Trade_Name__c != null) {
+            accChanges_List.add(new AccountChanges('TradeName__c', accountConcerned.TradeName__c, newForm.Trade_Name__c));
             accountConcerned.TradeName__c = newForm.Trade_Name__c;
         }
 

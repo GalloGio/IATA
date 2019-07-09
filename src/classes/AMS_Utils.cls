@@ -1370,6 +1370,8 @@ public without sharing class AMS_Utils {
                 accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
             if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
                 accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
+            if (fieldsToMigrate.contains('Trade_Name__c'))
+                accountFieldNewValue.put('TradeName__c', oscarOnlineAccreditation.Trade_Name__c);
             if (fieldsToMigrate.contains('IATA_ISO_State__c'))
                 accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
 
