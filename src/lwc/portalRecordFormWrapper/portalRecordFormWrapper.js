@@ -459,7 +459,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     get canEditBasics(){
-        return (this.editBasics && this.sectionTitle == 'Basics' && this.showEdit) || (this.sectionTitle != 'Basics' && this.showEdit);
+        let isRestrictedSection =  this.sectionTitle == 'Basics' ||  this.sectionTitle == 'Branch Contact';
+        return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
     }
 
     get hasIdCard(){
