@@ -1,5 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 
+import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
+
 const MINIMAL_SEARCH_TERM_LENGTH = 3; // Min number of chars required to search
 const SEARCH_DELAY = 300; // Wait 300 ms after user stops typing then, peform search
 
@@ -57,10 +59,21 @@ export default class Lookup extends LightningElement {
         return this.selection;
     }
     set singleLookupResult(result) {
-        if (result !== undefined) {
-            const newSelection = [...this.selection];
-            newSelection.push(result);
+        if ((result !== undefined && JSON.parse(JSON.stringify(result))[0].title !== this.label.CSP_NoSearchResults)) {
+            let newSelection = [...this.selection];
+            newSelection.push(JSON.parse(JSON.stringify(result))[0]);
             this.selection = newSelection;
+        } else if (result !== undefined && JSON.parse(JSON.stringify(result))[0].title === this.label.CSP_NoSearchResults) {
+            let newSelection = [...this.selection];
+            newSelection.push({ title: this.label.CSP_NoSearchResults, value: '' });
+            this.selection = newSelection;
+        }
+    }
+
+    renderedCallback() {
+        if (this.selection.length === 1 && this.selection[0].title === this.label.CSP_NoSearchResults) {
+            let mod = this.template.querySelector('input');
+            mod.setAttribute('disabled', 'true');
         }
     }
 
