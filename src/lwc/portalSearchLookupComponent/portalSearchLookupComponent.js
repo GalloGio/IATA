@@ -59,14 +59,19 @@ export default class Lookup extends LightningElement {
         return this.selection;
     }
     set singleLookupResult(result) {
-        if ((result !== undefined && JSON.parse(JSON.stringify(result))[0].title !== this.label.CSP_NoSearchResults)) {
-            let newSelection = [...this.selection];
-            newSelection.push(JSON.parse(JSON.stringify(result))[0]);
-            this.selection = newSelection;
-        } else if (result !== undefined && JSON.parse(JSON.stringify(result))[0].title === this.label.CSP_NoSearchResults) {
-            let newSelection = [...this.selection];
-            newSelection.push({ title: this.label.CSP_NoSearchResults, value: '' });
-            this.selection = newSelection;
+        if (result !== undefined) {
+            let ui = JSON.parse(JSON.stringify(result));
+            if (ui.length > 0) {
+                if (JSON.parse(JSON.stringify(result))[0].title === this.label.CSP_NoSearchResults) {
+                    let newSelection = [...this.selection];
+                    newSelection.push({ title: this.label.CSP_NoSearchResults, value: '' });
+                    this.selection = newSelection;
+                } else {
+                    let newSelection = [...this.selection];
+                    newSelection.push(JSON.parse(JSON.stringify(result))[0]);
+                    this.selection = newSelection;
+                }
+            }
         }
     }
 
