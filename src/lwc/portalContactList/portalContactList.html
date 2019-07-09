@@ -43,8 +43,8 @@
                     <tbody key={record.Id}>
                         <tr>
                             <td class="tableLefty"></td>
-                            <td class="underLinded chevronColumn">
-                                <div class="cursorPointer inline-block" onclick={openRecordDetail} data-item={index}>
+                            <td class="underLinded chevronColumn" onclick={openRecordDetail} data-item={index}>
+                                <div class="cursorPointer inline-block">
                                     <lightning-icon class="darkBlueIcon" if:true={record.open}
                                         icon-name="utility:chevrondown" size="xx-small" data-item={index}>
                                     </lightning-icon>
@@ -55,7 +55,7 @@
                             </td>
 
                             <template for:each={record.rowValues} for:item="rowValue">
-                                <td key={rowValue.value} class={rowValue.className}>
+                                <td key={rowValue.value} class={rowValue.className} onclick={openRecordDetail} data-item={index}>
                                     <span>{rowValue.value}</span>
                                 </td>
                             </template>
