@@ -31,6 +31,7 @@ import MarkAsRead from '@salesforce/label/c.MarkAsRead_Notification';
 import NotificationCenter from '@salesforce/label/c.NotificationCenter_Title';
 import ViewDetails from '@salesforce/label/c.ViewDetails_Notification';
 import NotificationDetail from '@salesforce/label/c.NotificationDetail_Detail';
+import ISSP_Reset_Password from '@salesforce/label/c.ISSP_Reset_Password';
 
 import Announcement from '@salesforce/label/c.Announcements_Notification';
 import Tasks from '@salesforce/label/c.Tasks_Notification';
@@ -95,7 +96,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         NotificationDetail,
         Announcement,
         Tasks,
-        AllNotifications
+        AllNotifications,
+        ISSP_Reset_Password
     };
     get labels() {
         return this._labels;
