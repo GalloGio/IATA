@@ -1,6 +1,6 @@
 ({
 	doInit: function (c, helper) {
-	    debugger;
+
         var countryAction = c.get("c.getISOCountries");
         countryAction.setCallback(this, function(resp) {
             c.set("v.countryInformation", resp.getReturnValue());

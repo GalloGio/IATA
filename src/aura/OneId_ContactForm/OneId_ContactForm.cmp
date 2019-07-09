@@ -6,10 +6,12 @@
     <aura:attribute name="hasJquery" type="Boolean"/>
     <aura:attribute name="contact" type="Contact" default="{'sObjectType':'Contact'}"/>
     <aura:attribute name="serviceName" type="String"/>
+    <aura:attribute name="invitationId" type="String"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler event="c:OneId_RequestCompletionCheck_EVT" action="{!c.checkCompletion}"/>
     <aura:handler name="change" value="{!v.userCountry}" action="{!c.changedCountry}"/>
+    <aura:handler name="change" value="{! v.invitationId}" action="{! c.loadInvitation}"/>
 
     <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
     <aura:registerEvent name="GADM_PowerUser" type="c:GADM_PowerUser_EVT"/>
@@ -58,9 +60,9 @@
         </div>
 
         <aura:if isTrue="{! v.serviceName == 'GADM'}">
-            <div class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
+            <div aura:id="gadmCheckbox" class="slds-col--padded slds-m-bottom--large slds-size--1-of-1">
                 <label class="slds-form-element__label" >{!$Label.c.GADM_Power_User}</label>
-                <ui:inputCheckbox  class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" click="{! c.checkPowerUser}"/>
+                <ui:inputCheckbox aura:id="gadmPowerUserCheckbox"  class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" click="{! c.checkPowerUser}"/>
             </div>
         </aura:if>
         

@@ -4,6 +4,10 @@ public without sharing class Service_Notification_List_CTRL {
     public static List<Service_Notification__c> getMessages() {
 
         Contact con = Contact_Roles_Helper.getContactFromUser(UserInfo.getUserId());
+        if(con.Id == null) {
+            return new List<Service_Notification__c>();
+        }
+
         Map<String, String> rolesMap = Contact_Roles_Helper.getAllAvailableRoles(con.Id, 'GADM');
 
         Set<String> grantedRoles = new Set<String>();

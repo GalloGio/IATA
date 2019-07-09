@@ -117,10 +117,12 @@
                     </ul>
                 </div>
 
-                <aura:if isTrue="{! v.serviceName == 'GADM'}">
+                <aura:if isTrue="{! v.theme != 'Theme4d'}">
                     <div class="slds-col--padded  slds-size--1-of-1">
                         <label class="slds-form-element__label">{!$Label.c.GADM_Power_User}</label>
-                        <ui:inputCheckbox class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" click="{! c.checkPowerUser}" />
+                    </div>
+                    <div class="slds-col--padded  slds-size--1-of-1">
+                        <ui:inputCheckbox class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" value="{! v.invitation.GADM_Power_User__c}" />
                     </div>
                 </aura:if>
 

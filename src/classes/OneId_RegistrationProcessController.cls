@@ -925,6 +925,19 @@ public without sharing class OneId_RegistrationProcessController {
         return null;
     }
 
+    @AuraEnabled
+    public static Invitation__c getInvitation(String invitationId) {
+        if(String.isNotBlank(invitationId)) {
+            List<Invitation__c> invitations = [SELECT Id, GADM_Power_User__c FROM Invitation__c WHERE Id = :invitationId LIMIT 1];
+            if(! invitations.isEmpty()) {
+                return invitations[0];
+            }else{
+                return new Invitation__c();
+            }
+        }
+        return new Invitation__c();
+    }
+
 
     @AuraEnabled
     public static Account loadGadmAccount(String gadmAccountId) {

@@ -31,6 +31,7 @@
     <aura:attribute name="isServiceEligible" type="Boolean"/>
     <aura:attribute name="isGadmPowerUser" type="Boolean" default="false"/>
     <aura:attribute name="gadmAccountId" type="String"/>
+    <aura:attribute name="invitationId" type="String"/>
 
     <!-- URL parameters -->
     <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
@@ -133,7 +134,7 @@
 
                                 </div>
                                 <div aria-hidden="false" class="slds-accordion__content" id="step2">
-                                    <c:OneId_ContactForm contact="{!v.contact}" serviceName="{!v.serviceName}" userCountry="{!v.userCountry}"/>
+                                    <c:OneId_ContactForm contact="{!v.contact}" serviceName="{!v.serviceName}" userCountry="{!v.userCountry}" invitationId ="{! v.invitationId}" />
                                 </div>
                             </section>
                         </div>

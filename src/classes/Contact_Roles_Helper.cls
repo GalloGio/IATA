@@ -118,45 +118,24 @@ public without sharing class Contact_Roles_Helper {
         List<Account> accountsToReturn = new List<Account>();
 
         Contact con = getContactFromUser(userId);
+        if(con.Id != null) {
+            Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
+            List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND Contact_Roles__r.Name = 'GADM User' AND RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = 'GADM'];
 
-        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
-        List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND Contact_Roles__r.Name = 'GADM User' AND RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = 'GADM'];
+            Set<Id> accountIds = new Set<Id>();
+            for(Account_Contact_Role__c accountContactRole : accountContactRoles) {
+                accountIds.add(accountContactRole.Account_Role__r.Account__c);
+            }
 
-        Set<Id> accountIds = new Set<Id>();
-        for(Account_Contact_Role__c accountContactRole : accountContactRoles) {
-            accountIds.add(accountContactRole.Account_Role__r.Account__c);
+            if(! accountIds.isEmpty()) {
+                accountsToReturn = [SELECT Id, Name FROM Account WHERE Id = :accountIds];
+            }
         }
 
-        if(! accountIds.isEmpty()) {
-            accountsToReturn = [SELECT Id, Name FROM Account WHERE Id = :accountIds];
-        }
 
         return accountsToReturn;
     }
 
-    public static List<Contact_Roles__c> getAllUserRoles(Id userId, String serviceName) {
-        List<Contact_Roles__c> contactRolesToReturn = new List<Contact_Roles__c>();
-
-        Contact con = getContactFromUser(userId);
-
-
-        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
-        Id funcRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
-        List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact_Roles__c FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND
-        ((RecordTypeId = :groupRecordTypeId AND Service_Rendered__c = :serviceName AND Contact_Roles__r.Category__c = 'Business Unit') OR (RecordTypeId = :funcRecordTypeId AND Service_Rendered__c = :serviceName))];
-
-        Set<Id> rolesId = new Set<Id>();
-        for(Account_Contact_Role__c accountContactRole : accountContactRoles) {
-            rolesId.add(accountContactRole.Contact_Roles__c);
-        }
-
-        if(! rolesId.isEmpty()) {
-            contactRolesToReturn = [SELECT Id, Name, Category__c FROM Contact_Roles__c WHERE Id = :rolesId];
-        }
-
-        return contactRolesToReturn;
-
-    }
 
 
     public static List<Contact_Roles__c> getGrantedUserRoles(Id userId, String serviceName) {
@@ -206,6 +185,9 @@ public without sharing class Contact_Roles_Helper {
     public static List<AggregatedRecordWrapper> getContactsVisibleToUser(Id userId, Boolean isSuperUser, Boolean isGadmUser, List<Id> businessUnits, Contact selectedContact, Boolean sortDesc) {
 
         Contact con = Contact_Roles_Helper.getContactFromUser(UserId);
+        if(con.Id == null) {
+            return new List<AggregatedRecordWrapper>();
+        }
 
         Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
         Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');

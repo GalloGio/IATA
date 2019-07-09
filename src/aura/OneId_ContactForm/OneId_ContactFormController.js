@@ -42,4 +42,13 @@
         gadmPowerUserEvent.fire();
     },
 
+    loadInvitation : function(component, event, helper) {
+        let invitationId = event.getParam('value');
+        let serviceName = component.get('v.serviceName');
+        if(! $A.util.isEmpty(invitationId) && serviceName === 'GADM') {
+            helper.getInvitationDetails(component, invitationId);
+        }
+
+    },
+
 })

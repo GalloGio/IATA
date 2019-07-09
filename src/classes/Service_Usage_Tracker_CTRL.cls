@@ -6,11 +6,9 @@ public without sharing class Service_Usage_Tracker_CTRL {
         boolean result = false;
 
         String cacheKey = userId + key;
-        System.debug('cacheKey:: ' + cacheKey);
+        
         Cache.SessionPartition sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
 
-        /*Set<String> allKeys = sessionPartition.getKeys();
-        System.debug('all keys:: ' + allKeys);*/
 
         if(sessionPartition != null) {
             sessionPartition.put(cacheKey, true, 28800);

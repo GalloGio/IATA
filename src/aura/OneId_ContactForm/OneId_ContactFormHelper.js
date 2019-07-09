@@ -29,6 +29,46 @@
         });
     },
 
+    getInvitationDetails : function(component, invitationId) {
+        let action = component.get('c.getInvitation');
+        action.setParams({
+            'invitationId' : invitationId
+        });
+        action.setCallback(this, function(response){
+            const state = response.getState();
+            if(state === 'SUCCESS') {
+                const invitation = response.getReturnValue();
+                if(! $A.util.isEmpty(invitation)) {
+                    let isPowerUser = invitation.GADM_Power_User__c;
+                    if(isPowerUser) {//set as Power User
+                        let checkbox = component.find('gadmPowerUserCheckbox');
+                        checkbox.set('v.value', true);
+                        checkbox.set('v.disabled', true);
+
+                        let gadmCheckbox = component.find('gadmCheckbox');
+                        $A.util.addClass(gadmCheckbox, 'slds-hide');
+
+                        let gadmPowerUserEvent = component.getEvent('GADM_PowerUser');
+                        gadmPowerUserEvent.setParams({
+                            'isPowerUser' : true
+                        });
+                        gadmPowerUserEvent.fire();
+                    }else{//not set as Power User
+                        let checkbox = component.find('gadmPowerUserCheckbox');
+                        checkbox.set('v.value', false);
+                        checkbox.set('v.disabled', true);
+
+                        let gadmCheckbox = component.find('gadmCheckbox');
+                        $A.util.addClass(gadmCheckbox, 'slds-hide');
+                    }
+                }
+
+            }
+        });
+        $A.enqueueAction(action);
+
+    },
+
     checkRequiredFields :function(component) {
         var isAllFilled = true;
 

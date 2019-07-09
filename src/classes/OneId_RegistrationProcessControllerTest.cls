@@ -705,6 +705,71 @@ private class OneId_RegistrationProcessControllerTest {
 
     }
 
+    @IsTest
+    private static void getInvitationNullTest() {
+
+        Invitation__c testInvitation = null;
+
+
+        Test.startTest();
+
+        testInvitation = OneId_RegistrationProcessController.getInvitation('');
+
+        Test.stopTest();
+
+
+        System.assertEquals(true, testInvitation != null, 'Null should be never returned!');
+
+    }
+
+    @IsTest
+    private static void getInvitationTest() {
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c();
+        country.Name = 'Czech Republic';
+        country.ISO_Code__c = 'Cs';
+        country.AIMS_Area_Name__c = 'Czech Republic';
+        country.AIMS_Area_ID__c = '1';
+        insert country;
+
+        Id headquarters = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+
+        List<Account> accountsToInsert = new List<Account>();
+
+        Account acc = new Account();
+        acc.Name = 'Test account';
+        acc.BillingCity = 'Montreal';
+        acc.BillingCountry = 'Canada';
+        acc.BillingStreet = 'some street';
+        acc.IATA_ISO_Country__c = country.Id;
+        acc.Location_Type__c = 'HO';
+        acc.IATACode__c = '1234567';
+        acc.Type = 'IATA Cargo Agent';
+        acc.Status__c = 'Approved';
+        acc.RecordTypeId = headquarters;
+        accountsToInsert.add(acc);
+
+        insert accountsToInsert;
+
+        Invitation__c testInvitation = new Invitation__c();
+        testInvitation.AccountId__c = acc.Id;
+        testInvitation.GADM_Power_User__c = true;
+        insert testInvitation;
+
+
+        Invitation__c returnedInvitation = new Invitation__c();
+
+        Test.startTest();
+
+        returnedInvitation = OneId_RegistrationProcessController.getInvitation(testInvitation.Id);
+
+        Test.stopTest();
+
+
+        System.assertEquals(testInvitation.Id, returnedInvitation.Id, 'Wrong invitation returned returned!');
+
+    }
+
 
 
 }
