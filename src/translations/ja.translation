@@ -9722,7 +9722,7 @@ and
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;割り当てられたサブウォレットの資金を管理&lt;/li&gt; &lt;li&gt;「チケット発行者」IATA EasyPay ユーザーのアクセスとサブウォレットの管理&lt;/li&gt; &lt;li&gt;割り当てられたウォレットからGDS を介した発券に使われる IATA EasyPay 番号を作成&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;いずれかの割り当てられたウォレットからGDS を介した発券に使われる IATA EasyPay 番号を作成&lt;/li&gt;&lt;/ul&gt;</label>

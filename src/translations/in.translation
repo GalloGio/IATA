@@ -9730,7 +9730,7 @@ In order to upload your financial documents, please, login to Customer Portal on
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Mengelola dana Sub-dompet yang ditetapkan&lt;/li&gt; &lt;li&gt;Mengelola akses dan Sub-dompet pengguna IATA EasyPay “Penerbit Tiket”&lt;/li&gt; &lt;li&gt;Menghasilkan Nomor IATA EasyPay dari dompet yang ditetapkan untuk digunakan menerbitkan tiket melalui GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Menghasilkan Nomor IATA EasyPay dari dompet mana saja yang ditetapkan untuk digunakan menerbitkan tiket melalui GDS&lt;/li&gt;&lt;/ul&gt;</label>
