@@ -61,8 +61,8 @@ export default class PortalProfilePageHeader extends LightningElement {
         }
 
         get emptyCode(){
-            let isPending = this.userAccount.Status__c.toLowerCase() == 'new application pending';
-            return (isPending || this.userAccount == null || this.userAccount.IATACode__c == null || this.userAccount.IATACode__c.length == 0);
+            let isPending = this.userAccount === undefined || this.userAccount.Status__c == undefined || this.userAccount.Status__c.toLowerCase() == 'new application pending';
+            return (isPending || this.userAccount === undefined || this.userAccount.IATACode__c === undefined || this.userAccount.IATACode__c.length == 0);
         }
 
         connectedCallback() {

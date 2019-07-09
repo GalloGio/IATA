@@ -19,7 +19,8 @@ public without sharing class DAL_WithoutSharing {
 
     public static List<Contact> getContactsByAccountId(Id accountId, Integer offset, Integer batchSize){
         //Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
-        Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =:accountId or parentId=:accountId or top_parent__c =:accountId)]);
+        Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =:accountId or parentId=:accountId or top_parent__c =:accountId)
+        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))]);
 
         List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
                 OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
@@ -38,7 +39,8 @@ public without sharing class DAL_WithoutSharing {
         String wildString = queryString +'%';
 
         //Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
-        Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =:accountId or parentId=:accountId or top_parent__c =:accountId)]);
+        Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =:accountId or parentId=:accountId or top_parent__c =:accountId)
+        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))]);
 
         List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
                 OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,

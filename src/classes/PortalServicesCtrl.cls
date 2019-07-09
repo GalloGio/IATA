@@ -531,7 +531,7 @@ private static List<ContactWrapper> getContactsAndStatusRelatedToServiceList(str
 
 
 
-		if(((sw.isEasyPayService && !sw.cannotBeManagedByPortalAdmin) ||
+		if(sw.isInactive || ((sw.isEasyPayService && !sw.cannotBeManagedByPortalAdmin) ||
 		    (sw.isEasyPayService && sw.cannotBeManagedByPortalAdmin && par.right__c != PortalServicesCtrl.PORTAL_ACCESS_GRANTED) ||
 		    (!sw.isEasyPayService && sw.cannotBeManagedByPortalAdmin)
 		    )) {
@@ -620,7 +620,7 @@ public ContactWrapper(Portal_Application_Right__c par){
 
 	if (this.userPortalStatus == PortalServicesCtrl.PORTAL_USER_PENDING_APPR) {
 		this.isPendingAccess=true;
-	} else if (this.userPortalStatus == 'Inactive' || this.userPortalStatus == 'Rejected' || par.contact__r.User_Portal_Status__c == 'Deactivated') {
+	} else if (par.Contact__r.Status__c != 'Active' || this.userPortalStatus == 'Rejected' || this.userPortalStatus == 'Deactivated') {
 		this.isInactive = true;
 	} else if (!PortalServicesCtrl.contactWithUserSet.contains(par.Contact__c)) {
 		this.hasNoContact = true;
@@ -788,7 +788,8 @@ public static Map<String, String> getUserOptions(String portalUser){
 	Map<String,String> userOptions = new Map<String,String>();
 
 	List<User> userContactAccountOptions = [SELECT id, Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
-	                                        Contact.User_Portal_Status__c, ContactId, Account.ICCS_Membership_Status__c
+	                                        Contact.User_Portal_Status__c, ContactId, Account.ICCS_Membership_Status__c,
+	                                        Account.Top_Parent__r.ICCS_Membership_Status__c, Account.Top_Parent__c
 	                                        FROM User WHERE Id =:portalUser];
 
 	if(!userContactAccountOptions.isEmpty()) {
@@ -805,8 +806,12 @@ public static Map<String, String> getUserOptions(String portalUser){
 			if(u.ContactId != null) {
 				userOptions.put('User_ContactId', u.ContactId);
 			}
-			if(u.Account.ICCS_Membership_Status__c != null) {
-				userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
+			if(u.Account.Top_Parent__c != null) {
+				if(u.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
+					userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
+				}else if(u.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
+					userOptions.put('User_ICCS_Membership_Status', u.Account.Top_Parent__r.ICCS_Membership_Status__c);
+				}
 			}
 		}
 	}

@@ -92,7 +92,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
                     row.CaseURL = urlMap[row.Id];
                     row.CreatedBy = row.CreatedBy.Name;
                     row.Country = row.Country_concerned_by_the_query__c;
-                    row.statusClass= row.Status.replace(' ','').replace('_', '').replace('-','');
+                    row.statusClass= row.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
                 }
                 
                 this.allData = allDataAux.records;     

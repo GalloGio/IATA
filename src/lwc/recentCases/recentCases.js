@@ -70,7 +70,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 let row = allDataAux.records[i];
                 row.CaseURL = urlMap[row.Id];
                 row.Country = row.Country_concerned_by_the_query__c;
-                row.statusClass= row.Status.replace(' ','').replace('_', '').replace('-','');
+                row.statusClass= row.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
             }
             this.data = allDataAux.records;
             this.loading = false;

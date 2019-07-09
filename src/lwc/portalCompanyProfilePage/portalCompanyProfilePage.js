@@ -351,7 +351,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         let offset = this.contactsOffset;
         getContacts({ offset: offset}).then(result => {
             this.isFetching = false;
-            if (result.length == 0) { this.contactsEnded = true; return; }
+            if (result.length == 0) { this.contactsEnded = true; this.contactsLoaded = true; return; }
 
             let loadedContacts = offset != 0 ? JSON.parse(JSON.stringify(this.contacts)) : [];
             this.contactsOffset = this.contactsOffset + result.length;
@@ -372,7 +372,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
 
             contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
-            if (user.LastLoginDate != null) {
+            if (user && user.LastLoginDate != null) {
                 let locale = user.LanguageLocaleKey.replace('_', '-');
                 let lastLogin = new Date(user.LastLoginDate);
                 contact.LastLoginDate = lastLogin;
@@ -416,7 +416,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         getBranches({ offset: offset }).then(result => {
 
             this.isFetching = false;
-            if (result.length == 0) { this.branchesEnded = true; return; }
+            if (result.length == 0) { this.branchesEnded = true; this.branchesLoaded = true; return; }
 
             this.branchesOffset = this.branchesOffset + result.length;
 

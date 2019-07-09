@@ -26,9 +26,20 @@ export default class PortalContactList extends LightningElement {
     @track recordsLocal;
     @api recordsInitDone = false;
     @track openId;
+    @track showEditLocal = false;
 
     /* Dynamic fields*/
     @api sectionMap;
+
+
+    @api
+    get showEdit(){
+        return this.showEditLocal;
+    }
+
+    set showEdit(value){
+        this.showEditLocal = value;
+    }
 
 
     @api
@@ -83,7 +94,7 @@ export default class PortalContactList extends LightningElement {
         let records = JSON.parse(JSON.stringify(this.records));
 
         for (let i = 0; i < records.length; i++) {
-            if (recordIndex == i && records[i].open === false) {
+            if (recordIndex == i && (records[i].open === undefined || records[i].open === false)) {
                 this.openId = records[i].Id;
                 records[i].open = true;
             } else {
@@ -92,7 +103,6 @@ export default class PortalContactList extends LightningElement {
         }
 
         this.records = records;
-
     }
 
     @api resetInit() {
