@@ -789,7 +789,7 @@ public static Map<String, String> getUserOptions(String portalUser){
 
 	List<User> userContactAccountOptions = [SELECT id, Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
 	                                        Contact.User_Portal_Status__c, ContactId, Account.ICCS_Membership_Status__c,
-											Account.Top_Parent__r.ICCS_Membership_Status__c
+	                                        Account.Top_Parent__r.ICCS_Membership_Status__c, Account.Top_Parent__c
 	                                        FROM User WHERE Id =:portalUser];
 
 	if(!userContactAccountOptions.isEmpty()) {
@@ -806,10 +806,12 @@ public static Map<String, String> getUserOptions(String portalUser){
 			if(u.ContactId != null) {
 				userOptions.put('User_ContactId', u.ContactId);
 			}
-			if(u.Account.Top_Parent__r.ICCS_Membership_Status__c == null){
-				userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
-			}else if(u.Account.Top_Parent__r.ICCS_Membership_Status__c != null){
-				userOptions.put('User_ICCS_Membership_Status', u.Account.Top_Parent__r.ICCS_Membership_Status__c);
+			if(u.Account.Top_Parent__c != null) {
+				if(u.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
+					userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
+				}else if(u.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
+					userOptions.put('User_ICCS_Membership_Status', u.Account.Top_Parent__r.ICCS_Membership_Status__c);
+				}
 			}
 		}
 	}
