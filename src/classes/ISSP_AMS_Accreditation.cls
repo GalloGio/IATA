@@ -29,7 +29,7 @@ public without sharing class ISSP_AMS_Accreditation {
         PARAMCODE_IFAP_CONTACTS,
         PARAMCODE_TRAINED_STAFF,
         PARAMCODE_COPY_OWNERS,
-        PARAMCODE_IMPORT_OWNERS
+        PARAMCODE_MAIN_LEGAL_OWNERS
     }
 
     private String vSAAMCaseId;
@@ -340,9 +340,6 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         set;
     }
-    public List<ImportOwnerModalRecord> ownersThatCanBeCopiedList {get; set;}
-
-    public List<AMS_Accreditation_Contact__c> selectedOwnersToImport {get; set;}
 
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
@@ -2656,39 +2653,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            if (isMultiCountry) {
-                for (AMS_Pax_Accreditation_Form__c form: allOwnersThatCanBeCopied) {
-                    for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
-                        if (con.Name == contactToUpsert.Name && con.Email__c == contactToUpsert.Email__c) {
-                            contactToUpsert.Cloned_From_Contact__c = con.Id;
-                            break;
-                        }
-                    }
-                }
-            }
-
             upsert contactToUpsert;
-
-            if (isMultiCountry) {
-                List<AMS_Accreditation_Contact__c> contactsToUpdate = new List<AMS_Accreditation_Contact__c>();
-                
-                for (AMS_Accreditation_Contact__c otherFormCon: [SELECT Id, Name, Salutation__c, Email__c
-                                                                FROM AMS_Accreditation_Contact__c
-                                                                WHERE Cloned_From_Contact__c = :contactToUpsert.Id
-                                                                    OR Id = :contactToUpsert.Cloned_From_Contact__c]) {
-                    System.debug('yoorui: ' + otherFormCon);
-                    if (otherFormCon.Name != contactToUpsert.Name || otherFormCon.Email__c != contactToUpsert.Email__c || otherFormCon.Salutation__c != contactToUpsert.Salutation__c) {
-                        otherFormCon.Name = contactToUpsert.Name;
-                        otherFormCon.Last_name__c = contactToUpsert.Last_name__c;
-                        otherFormCon.First_name__c = contactToUpsert.First_name__c;
-                        otherFormCon.Email__c = contactToUpsert.Email__c;
-                        otherFormCon.Salutation__c = contactToUpsert.Salutation__c;
-                        contactsToUpdate.add(otherFormCon);
-                    }
-                }
-
-                update contactsToUpdate;
-            }
             
             if (contactToUpsert.Financial_Assessment_Contact__c && cntIFAPContacts < 1) {
                 cntIFAPContacts = 1;
@@ -2700,10 +2665,6 @@ public without sharing class ISSP_AMS_Accreditation {
             ApexPages.addMessages(ex);
         }
         iatacode = '';
-
-        if (isMultiCountry) {
-            getOwnersThatCanBeCopied();
-        }
     }
 
     public Pagereference securityCheck() {
@@ -2781,10 +2742,6 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         refreshCntIFAPContacts();
-
-        if (isMultiCountry) {
-            getOwnersThatCanBeCopied();
-        }
     }
 
     public void deleteTrainedStaff() {
@@ -2823,8 +2780,7 @@ public without sharing class ISSP_AMS_Accreditation {
                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, Registration_number__c, IATAcode__c, Company_Name_Local__c,Contact__c,
                       Phone__c, PhoneNational__c, FAX__c, FAXNational__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, MobileNational__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
                       Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, CASS_contact__c, Number_Of_Shares__c,
-                      Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, AMS_ContactId__c, AMS_OwnershipId__c, Authorised_to_make_customs_declarations__c,
-                      Cloned_From_Contact__c
+                      Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, AMS_ContactId__c, AMS_OwnershipId__c, Authorised_to_make_customs_declarations__c
                       FROM AMS_Accreditation_Contact__c
                       WHERE Id = : editContactId];
 
@@ -4428,11 +4384,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 query += 'Job_title__c, Agencies_prev_worked_for__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, ';
                 query += 'Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, ';
                 query += 'Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, Duplicate_contact_exists__c, ';
-                query += 'Portal_administrator__c, Authorised_to_make_customs_declarations__c, Is_Cloned_From_Another_Form__c, Cloned_From_Contact__c ';
+                query += 'Portal_administrator__c, Authorised_to_make_customs_declarations__c ';
             }
         }
 
-        if (paramCodeWhere != AccredContactEnum.PARAMCODE_IMPORT_OWNERS) {
+        if (paramCodeWhere != AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS) {
             query += 'FROM AMS_Accreditation_Contact__c ';
 
             if (String.isBlank(parentFormId)) {
@@ -4493,8 +4449,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 query += 'AND (RecordType.DeveloperName = \'Person\' OR RecordType.DeveloperName = \'Company\') ';
             }
 
-            when PARAMCODE_IMPORT_OWNERS {
-                query += 'WHERE Is_Cloned_From_Another_Form__c = false ';
+            when PARAMCODE_MAIN_LEGAL_OWNERS {
+                query += 'WHERE Agency_owner__c = true ';
             }
         }
 
@@ -7539,7 +7495,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 if (formToBeUpdated != null) {
-                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)), false);
+                    copyOwnersFromOtherForm(formToBeUpdated, executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_COPY_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, formToBeUpdated.Same_Legal_Entity_Agency_Form__c)));
                     update formToBeUpdated;
                 }
             }
@@ -7550,7 +7506,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-    private void copyOwnersFromOtherForm(AMS_Pax_Accreditation_Form__c formToBeUpdated, List<AMS_Accreditation_Contact__c> contactList, Boolean isCloned) {
+    private void copyOwnersFromOtherForm(AMS_Pax_Accreditation_Form__c formToBeUpdated, List<AMS_Accreditation_Contact__c> contactList) {
         List<AMS_Accreditation_Contact__c> contactsToBeCreated = new List<AMS_Accreditation_Contact__c>();
         
         for (AMS_Accreditation_Contact__c con: contactList) {
@@ -7564,19 +7520,12 @@ public without sharing class ISSP_AMS_Accreditation {
             newCon.Email__c = con.Email__c;
             newCon.Phone__c = con.Phone__c;
             newCon.Contact__c = con.Contact__c;
-
-            if (isCloned) {
-                newCon.Is_Cloned_From_Another_Form__c = true;
-                newCon.Cloned_From_Contact__c = con.Id;
-            } else {
-                newCon.Is_Cloned_From_Another_Form__c = con.Is_Cloned_From_Another_Form__c;
-                newCon.Agency_owner__c = con.Agency_owner__c;
-                newCon.Financial_interest__c = con.Financial_interest__c;
-                newCon.AddressStreet__c = con.AddressStreet__c;
-                newCon.AddressCity__c = con.AddressCity__c;
-                newCon.AddressPostcode__c = con.AddressPostcode__c;
-                newCon.AddressCountry__c = con.AddressCountry__c;
-            }
+            newCon.Agency_owner__c = con.Agency_owner__c;
+            newCon.Financial_interest__c = con.Financial_interest__c;
+            newCon.AddressStreet__c = con.AddressStreet__c;
+            newCon.AddressCity__c = con.AddressCity__c;
+            newCon.AddressPostcode__c = con.AddressPostcode__c;
+            newCon.AddressCountry__c = con.AddressCountry__c;
 
             contactsToBeCreated.add(newCon);
         }
@@ -7619,85 +7568,48 @@ public without sharing class ISSP_AMS_Accreditation {
         update newForm;
     }
 
-    public class ImportOwnerModalRecord {
-        public AMS_Accreditation_Contact__c owner {get; set;}
-        public Boolean selected {get; set;}
-
-        public ImportOwnerModalRecord(AMS_Accreditation_Contact__c con) {
-            owner = con;
-            selected = false;
-        }
-    }
-
-    public List<AMS_Pax_Accreditation_Form__c> allOwnersThatCanBeCopied {
+    public List<AMS_Pax_Accreditation_Form__c> allOwnersOfTheLegalEntity {
         get {
-            if (allOwnersThatCanBeCopied == null) {
-                fetchOwnersThatCanBeCopied();
+            if (allOwnersOfTheLegalEntity == null) {
+                fetchOwnersFromLegalEntity();
             }
 
-            return allOwnersThatCanBeCopied;
+            return allOwnersOfTheLegalEntity;
         }
         set;
     }
 
-    public void fetchOwnersThatCanBeCopied() {
-        String contactsToImportQuery = 'SELECT Id, (';
-        contactsToImportQuery += dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_IMPORT_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
-        contactsToImportQuery += ') FROM AMS_Pax_Accreditation_Form__c ';
+    public void fetchOwnersFromLegalEntity() {
+        String contactsFromMainEntity = 'SELECT Id, (';
+        contactsFromMainEntity += dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
+        contactsFromMainEntity += ') FROM AMS_Pax_Accreditation_Form__c ';
 
         if (newForm.Same_Legal_Entity_Agency_Form__c == null) {
-            contactsToImportQuery += 'WHERE Same_Legal_Entity_Agency_Form__c = \'' + newForm.Id + '\' ';
+            contactsFromMainEntity += 'WHERE Same_Legal_Entity_Agency_Form__c = \'' + newForm.Id + '\' ';
         } else {
-            contactsToImportQuery += 'WHERE (Same_Legal_Entity_Agency_Form__c = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ';
-            contactsToImportQuery += 'OR Id = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ) ';
-            contactsToImportQuery += 'AND Id != \'' + newForm.Id + '\' ';
+            contactsFromMainEntity += 'WHERE (Same_Legal_Entity_Agency_Form__c = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ';
+            contactsFromMainEntity += 'OR Id = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ) ';
+            contactsFromMainEntity += 'AND Id != \'' + newForm.Id + '\' ';
         }
 
-        contactsToImportQuery += 'AND SAAM_Case__r.Status = \'Draft\' ';
+        contactsFromMainEntity += 'AND SAAM_Case__r.Status = \'Draft\' ';
 
-        allOwnersThatCanBeCopied = Database.query(contactsToImportQuery);
+        allOwnersOfTheLegalEntity = Database.query(contactsFromMainEntity);
     }
 
-    public List<ImportOwnerModalRecord> getOwnersThatCanBeCopied() {
-        ownersThatCanBeCopiedList = new List<ImportOwnerModalRecord>();
-        Set<String> repeatedContacts = new Set<String>();
+    public List<AMS_Accreditation_Contact__c> getOwnersFromMainLegalEntity() {
+        List<AMS_Accreditation_Contact__c> ownersFromMainLegalEntity = new List<AMS_Accreditation_Contact__c>();
 
-        for (AMS_Accreditation_Contact__c con: List_AgencyContacts) {
-            repeatedContacts.add(con.Name + con.Email__c);
-        }
-
-        for (AMS_Accreditation_Contact__c con: List_AgencyCompanies) {
-            repeatedContacts.add(con.Name + con.Email__c);
-        }
-
-        for (AMS_Pax_Accreditation_Form__c form: allOwnersThatCanBeCopied) {
+        for (AMS_Pax_Accreditation_Form__c form: allOwnersOfTheLegalEntity) {
             for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
-                if (!repeatedContacts.contains(con.Name + con.Email__c)) {
-                    ownersThatCanBeCopiedList.add(new ImportOwnerModalRecord(con));
-                }
+                ownersFromMainLegalEntity.add(con);
             }
         }
 
-        return ownersThatCanBeCopiedList;
+        return ownersFromMainLegalEntity;
     }
 
-    public void getSelectedOwners() {
-        selectedOwnersToImport = new List<AMS_Accreditation_Contact__c>();
-
-        for(ImportOwnerModalRecord owner: ownersThatCanBeCopiedList) {
-            if(owner.selected == true) {
-                selectedOwnersToImport.add(owner.owner);
-            }
-        }
-    }
-
-    public List<AMS_Accreditation_Contact__c> getSelectedOwnersToImport() {
-        return (selectedOwnersToImport.isEmpty()) ? null : selectedOwnersToImport;
-    }
-
-    public void importOwners() {
-        getSelectedOwners();
-        copyOwnersFromOtherForm(newForm, getSelectedOwnersToImport(), true);
-        getOwnersThatCanBeCopied();
+    public void importOwners() { //to be renamed
+        getOwnersFromMainLegalEntity();
     }
 }
