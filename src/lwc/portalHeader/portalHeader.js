@@ -11,6 +11,7 @@ import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
+import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectChangePassword';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
 
@@ -179,6 +180,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.userAdmin = result;
         });
 
+        this.redirectChangePassword();
+
         getNotifications().then(result => {
             this.baseURL = window.location.href;
             let resultsAux = JSON.parse(JSON.stringify(result));
@@ -216,6 +219,20 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         });
 
     }
+
+    redirectChangePassword() {
+        redirectChangePassword().then(result => {
+            if (result) {
+                let location = window.location.href;
+                location = String(location);
+                let terms = JSON.parse(JSON.stringify(this.displayAcceptTerms));
+                if (!location.includes("ISSP_ChangePassword") && terms === true) {
+                    this.navigateToChangePassword();
+                }
+            }
+        });
+    }
+
 
     //navigation methods
     navigateToOtherPage(pageNameToNavigate) {
@@ -436,9 +453,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         updateRecord(recordInput)
             .then(() => {
                 this.displayAcceptTerms = true;
+                this.redirectChangePassword();
             });
-
-
 
     }
 
