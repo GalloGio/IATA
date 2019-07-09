@@ -2306,7 +2306,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>TA_all/NDC_Case_Assignment</template>
+        <template>unfiled$public/NDC_Case_Assignment</template>
     </alerts>
     <alerts>
         <fullName>NewALmanagementprocess</fullName>

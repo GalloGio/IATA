@@ -51,7 +51,14 @@
         <shortDescription>AMS Conga Merge</shortDescription>
         <value>Conga Merge</value>
     </labels>
-	<labels>
+    <labels>
+        <fullName>AMS_CountrySAttr_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
+        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
+    </labels>
+    <labels>
         <fullName>AMS_DQ_Cannot_Check</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -169,13 +176,6 @@
         <protected>false</protected>
         <shortDescription>AMS DQ Street Compulsory</shortDescription>
         <value>The {0} street is compulsory. Please fill in the {1} street field.</value>
-    </labels>
-    <labels>
-        <fullName>AMS_CountrySAttr_Validation</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
-        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
     </labels>
     <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
