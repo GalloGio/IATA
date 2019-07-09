@@ -531,7 +531,7 @@ private static List<ContactWrapper> getContactsAndStatusRelatedToServiceList(str
 
 
 
-		if(((sw.isEasyPayService && !sw.cannotBeManagedByPortalAdmin) ||
+		if(sw.isInactive || ((sw.isEasyPayService && !sw.cannotBeManagedByPortalAdmin) ||
 		    (sw.isEasyPayService && sw.cannotBeManagedByPortalAdmin && par.right__c != PortalServicesCtrl.PORTAL_ACCESS_GRANTED) ||
 		    (!sw.isEasyPayService && sw.cannotBeManagedByPortalAdmin)
 		    )) {
@@ -620,7 +620,7 @@ public ContactWrapper(Portal_Application_Right__c par){
 
 	if (this.userPortalStatus == PortalServicesCtrl.PORTAL_USER_PENDING_APPR) {
 		this.isPendingAccess=true;
-	} else if (this.userPortalStatus == 'Inactive' || this.userPortalStatus == 'Rejected' || par.contact__r.User_Portal_Status__c == 'Deactivated') {
+	} else if (par.Contact__r.Status__c != 'Active' || this.userPortalStatus == 'Rejected' || this.userPortalStatus == 'Deactivated') {
 		this.isInactive = true;
 	} else if (!PortalServicesCtrl.contactWithUserSet.contains(par.Contact__c)) {
 		this.hasNoContact = true;
