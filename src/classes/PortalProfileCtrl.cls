@@ -130,7 +130,18 @@ public with sharing class PortalProfileCtrl {
 
                 wrappers.add(wrapper);
             }
+
+            for(Contact c: contacts){
+                if(!contactToUser.containsKey(c.Id)){
+                    wrapper = new ContactWrapper();
+                    wrapper.contact = c;
+                    wrapper.services = new List<PortalServicesCtrl.ServiceWrapper>();
+                    wrappers.add(wrapper);
+                }
+            }
         }
+
+
 
         return wrappers;
     }
@@ -581,6 +592,8 @@ public with sharing class PortalProfileCtrl {
         String sectionBasic = LABEL_BASICS; //Fields to display in open accordion section/record detail - first section
         String sectionBranchContact = 'BranchContact'; //Fields to display in open accordion section/record detail + in edit modal dialog
 
+        String rType = myContact.Account.RecordType.DeveloperName;
+
         List<String> toView = new List<String>{'Name','Status__c'};
         List<String> toRow = new List<String>{'TradeName__c','LocationCode','IsoCountry','BillingCity','Status__c'};
         List<String> toEdit = new List<String>{'Name','Status__c'};
@@ -628,8 +641,11 @@ public with sharing class PortalProfileCtrl {
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Website',true,true));
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Phone',true,true));
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Fax',true,true));
-        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingAddress',true,true));
 
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingState',(rType == 'Standard_Account'),true));
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingStreet',(rType == 'Standard_Account'),true));
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingPostalCode',(rType == 'Standard_Account'),true));
+        wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingCountry',false,true));
 
         for(String fieldName : toRow){
             wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));

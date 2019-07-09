@@ -372,7 +372,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
 
             contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
-            if (user.LastLoginDate != null) {
+            if (user && user.LastLoginDate != null) {
                 let locale = user.LanguageLocaleKey.replace('_', '-');
                 let lastLogin = new Date(user.LastLoginDate);
                 contact.LastLoginDate = lastLogin;
