@@ -9715,7 +9715,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Atanan Alt Cüzdanlar?n finansmanlar?n? yönetir&lt;/li&gt; &lt;li&gt;“Bilet Olu?turucu” IATA EasyPay kullan?c?lar?n?n eri?imini ve Alt Cüzdanlar?n? yönetir&lt;/li&gt; &lt;li&gt;GDS arac?l???yla bilet olu?turmak için kullan?lacak olan atanm?? cüzdanlardan IATA EasyPay Numaralar? olu?turur&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;GDS arac?l???yla bilet olu?turmak için kullan?lacak olan herhangi bir atanm?? cüzdandan IATA EasyPay Numaralar? olu?turur&lt;/li&gt;&lt;/ul&gt;</label>
