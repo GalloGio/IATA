@@ -436,26 +436,22 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         const map = new Map();
         //Array to consume SubTopic Options
         let mySubTopicOptions = [];
+        let mySubTopicOptionsAux = [];
 
         //first element on the picklist
-        mySubTopicOptions = [{ label: 'Select Sub-Topic', value: '' }];
-        let auxmySubTopicOptions = []
+        // let auxmySubTopicOptions = []
         for (const item of this.myResult) {
             if (!map.has(item.childs) && item.topicName === this.topic) {
                 Object.keys(item.childs).forEach(function (el) {
-                    auxmySubTopicOptions.push({
+                    mySubTopicOptionsAux.push({
                         label: el, value: item.childs[el]
                     });
                 })
             }
         }
 
-        //used to order alphabetically
-        // eslint-disable-next-line no-confusing-arrow
-        auxmySubTopicOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
-
         //set the options
-        this.subTopicOptions = mySubTopicOptions.concat(auxmySubTopicOptions);
+        this.subTopicOptions = mySubTopicOptions.concat(mySubTopicOptionsAux.reverse());
 
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
