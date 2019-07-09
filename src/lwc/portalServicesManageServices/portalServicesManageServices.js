@@ -1,11 +1,10 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track} from 'lwc';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 
 //import labels
-import manageServiceslb from '@salesforce/label/c.CSP_Manage_Services';
 import aboutlb from '@salesforce/label/c.CSP_About';
 import contactslb from '@salesforce/label/c.ISSP_Contacts';
 import manageUserslb from '@salesforce/label/c.CSP_Manage_Portal_Users';
@@ -47,7 +46,6 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
 
     label = {
-        manageServiceslb,
         aboutlb,
         contactslb,
         manageUserslb,
