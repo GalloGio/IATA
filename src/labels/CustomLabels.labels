@@ -2738,6 +2738,13 @@ Payment required on receipt of this Payment Advice
         <value>Agency Read Only</value>
     </labels>
 	<labels>
+        <fullName>CSP_ANG_Portal_Admin_Authorized_Signature</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToMyProfileJs();&quot;&gt;My Profile -&gt; Portal Accessibility&lt;/span&gt; page.</value>
+    </labels>
+	<labels>
         <fullName>CSP_Announcement</fullName>
         <language>en_US</language>
         <protected>false</protected>
