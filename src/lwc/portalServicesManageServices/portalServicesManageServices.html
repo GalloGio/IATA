@@ -222,12 +222,12 @@
 
             <!-- Popup Body -->
             <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
-                <a class="slds-p-vertical_large textMediumMessage">
+                <a class="slds-p-around_large textMediumMessage">
 
                 </a>
                 </div>
 
-                <div class="slds-p-vertical_large textMediumMessage">
+                <div class="slds-p-around_large textMediumMessage">
                     <lightning-formatted-rich-text value="You can search and add new portal users to this service. If the user you are looking for is not a portal contact yet, you can create <a href=&quot;&quot;>a new contact profile</a> for them.">
                     </lightning-formatted-rich-text>
                 </div>
@@ -239,18 +239,17 @@
 
                     <div class="slds-m-vertical--large">
                         <div class="slds-p-horizontal_xx-large">
-                            <p class="text-xsmall">Label (Optional)</p>
                             <p class="text-xxsmall text-gray slds-p-bottom_small">
-                                Sublabel
+                                Add user
                             </p>
                             <c-portal-search-lookup-component onsearch={handleContactSearch}
-                                                              item-name="emaillookup" data-id="userlookup" onemaillookup={getAvailableUsers}
-                                                              required-class='' placeholder="Search users"
-                                                              onselectionchange={addNewUserClick}>
+                                                              item-name="contactlookup" data-id="contactlookup" oncontactlookup={getAvailableContacts}
+                                                              required-class='' placeholder="Search users" is-multi-entry="true"
+                                                              onselectionchange={addContactEntry} selection={contactsToAdd}>
                             </c-portal-search-lookup-component>
 
                             <div class="slds-m-top_large slds-scrollable_y recipients-box">
-                                <template for:each={usersToAdd} for:item="user">
+                                <template for:each={contactsToAdd} for:item="user">
                                             <span key={user.id} class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
                                                 {user.Name}
 

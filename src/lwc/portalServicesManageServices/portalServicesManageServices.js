@@ -39,7 +39,7 @@ import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPor
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
-
+import getContactsForAssignment from '@salesforce/apex/PortalServicesCtrl.getContactsForServiceAssignment';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -127,8 +127,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     //Add new user
     @track showAddUserModal = false;
-    @track availableUsers = [];
-    @track usersToAdd = [];
+    @track availableContacts = [];
+    @track contactsToAdd = [];
 
     
 
@@ -155,6 +155,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         //get the service details
         this.getServiceDetailsJS();
+
+        //get contacts for service assignment
+        this.getContactsForAssignment();
 
     }
 
@@ -636,13 +639,22 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         console.log('confirmAddUser..');
     }
 
-    getAvailableUsers(){
-        console.log('getAvailableUsers..');
-        this.template.querySelector('[data-id="userlookup"]').setSearchResults([{'id':'testid','name':'userName'},{'id':'testid2','name':'userName2'},{'id':'testid3','name':'userName3'}]);
+    getAvailableContacts(){
+        console.log('getAvailableContacts..');
+        //[{'id':'testid','name':'userName'},{'id':'testid2','name':'userName2'},{'id':'testid3','name':'userName3'}]
+        this.template.querySelector('[data-id="contactlookup"]').setSearchResults(this.availableContacts);
     }
 
-    addNewUserClick(){
-        console.log('addNewUserClick..');
+    addContactEntry(){
+        console.log('addContactEntry..');
+    }
+
+    getContactsForAssignment(){
+        getContactsForAssignment({ serviceId: this.serviceId }).then(result => {
+            console.log('got availableContacts: '+result.length);
+            console.log(result[0]);
+            this.availableContacts = JSON.parse(JSON.stringify(result));
+        });
     }
 
 }

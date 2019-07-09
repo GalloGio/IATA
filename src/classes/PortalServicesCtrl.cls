@@ -1006,8 +1006,9 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 }
 
     @AuraEnabled
-    public static List<Contact> getContactsForServiceAssignment(String serviceId){
+    public static List<PortalLookupSearchResult> getContactsForServiceAssignment(String serviceId){
         List<Contact> contacts = new List<Contact>();
+        List<PortalLookupSearchResult> results = new List<PortalLookupSearchResult>();
 
         User u = [SELECT id, contact.account.ANG_IEP_Status_FF__c, contact.Authorized_Signatory__c, contact.User_Portal_Status__c
         FROM User
@@ -1028,7 +1029,13 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
         contacts = [SELECT Id,Name,Email FROM Contact WHERE (Account.Top_Parent__c =: u.contact.AccountId OR AccountId = : u.contact.AccountId) AND Id NOT IN:alreadyAssignedContactIds LIMIT 50];
 
-        return contacts;
+        // Extract Contacts & convert them into PortalLookupSearchResult (check this class for more info)
+        String contactIcon = 'standard:contact';
+        for (Contact contact : contacts) {
+            results.add(new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Name, contact.Email));
+        }
+
+        return results;
     }
 
 }
