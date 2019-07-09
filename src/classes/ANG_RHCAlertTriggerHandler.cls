@@ -651,7 +651,7 @@ public class ANG_RHCAlertTriggerHandler{
             List<Case> smapParentCases = new List<Case>();
             Map<String,case> mapCaseRiskAlert = new Map<String,case>();
             Set<Id> accountsIds = new Set<Id>();
-            Map<Id,Operational_Calendar__c> mapAccountOpCalendar = fetchCalendar(redAlerts);
+            mapAccountOpCalendar = fetchCalendar(redAlerts);
             Id accId;
 
             for(ANG_Risk_Alert__c ra: redAlerts){
