@@ -124,6 +124,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     
     @track showSpinner=false;
     @track loadingContacts=false;
+
+    //Add new user
+    @track showAddUserModal = false;
+    @track availableUsers = [];
+    @track usersToAdd = [];
+
     
 
     serviceDetailsResult; // wire result holder
@@ -619,6 +625,24 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             default:
                 this.showSpinner=false;
         }        
+    }
+
+    /* Add Users to service */
+    toggleAddUserModal(){
+        this.showAddUserModal = !this.showAddUserModal;
+    }
+
+    confirmAddUser(){
+        console.log('confirmAddUser..');
+    }
+
+    getAvailableUsers(){
+        console.log('getAvailableUsers..');
+        this.template.querySelector('[data-id="userlookup"]').setSearchResults([{'id':'testid','name':'userName'},{'id':'testid2','name':'userName2'},{'id':'testid3','name':'userName3'}]);
+    }
+
+    addNewUserClick(){
+        console.log('addNewUserClick..');
     }
 
 }

@@ -1005,4 +1005,30 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
 }
 
+    @AuraEnabled
+    public static List<Contact> getContactsForServiceAssignment(String serviceId){
+        List<Contact> contacts = new List<Contact>();
+
+        User u = [SELECT id, contact.account.ANG_IEP_Status_FF__c, contact.Authorized_Signatory__c, contact.User_Portal_Status__c
+        FROM User
+        WHERE id =: UserInfo.getUserId()];
+
+        List<Id> alreadyAssignedContactIds = new List<Id>();
+
+
+        List<Portal_Application_Right__c> existingRights = [SELECT Id,Contact__c
+        FROM Portal_Application_Right__c
+        WHERE (Contact__r.Account.Top_Parent__c =: u.contact.AccountId OR Contact__r.AccountId = : u.contact.AccountId)
+        OR Right__c !=: PORTAL_ACCESS_GRANTED];
+
+        for(Portal_Application_Right__c right:existingRights){
+            alreadyAssignedContactIds.add(right.Contact__c);
+        }
+
+
+        contacts = [SELECT Id,Name,Email FROM Contact WHERE (Account.Top_Parent__c =: u.contact.AccountId OR AccountId = : u.contact.AccountId) AND Id NOT IN:alreadyAssignedContactIds LIMIT 50];
+
+        return contacts;
+    }
+
 }
