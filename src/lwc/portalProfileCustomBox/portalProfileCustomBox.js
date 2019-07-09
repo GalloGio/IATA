@@ -45,7 +45,7 @@ export default class PortalProfileCustomBox extends LightningElement {
     @track options = [];
     @track selectedvalues = [];
 
-    @track isLoading = true;
+    @track isLoading = false;
     @track userType = 'Approved User';
 
     @track errorFieds = ['Email', 'Phone'];
@@ -135,7 +135,7 @@ export default class PortalProfileCustomBox extends LightningElement {
     }
 
     loaded() {
-        this.isLoading = false;
+
     }
 
     loadedEdit() {
@@ -169,10 +169,10 @@ export default class PortalProfileCustomBox extends LightningElement {
             }
 
         }
-        this.isLoading = false;
+
     }
 
-    handleSubmit(event) {
+    handleSubmit(event) { 
         this.isLoading = true;
         event.preventDefault();
         let fields = event.detail.fields;
