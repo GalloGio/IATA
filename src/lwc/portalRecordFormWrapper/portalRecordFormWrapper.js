@@ -76,8 +76,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     emptyServices = 'emptyServices';
 
     connectedCallback() {
-        this.showEdit = (this.showEdit === 'true' ? true : false);
-
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
@@ -459,7 +457,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     get canEditBasics(){
-        return (this.editBasics && this.sectionTitle == 'Basics' && this.showEdit) || (this.sectionTitle != 'Basics' && this.showEdit);
+        let isRestrictedSection =  this.sectionTitle == 'Basics' ||  this.sectionTitle == 'Branch Contact';
+        return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
     }
 
     get hasIdCard(){
