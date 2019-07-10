@@ -135,7 +135,7 @@
             <!--Internal User - No Permission Set-->
             <aura:if isTrue="{! and(v.isInternalUser, !v.hasPermissionSet) }">
                 <div class="noRight">
-                    <p>You do not have the right to see this page!</p>
+                    <p>{! $Label.c.GADM_Data_Submission_no_access}</p>
                 </div>
             </aura:if>
 

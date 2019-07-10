@@ -7,7 +7,6 @@ public without sharing class GADM_ActorMembershipNotifier {
         List<Messaging.SingleEmailMessage> emailMessages = new List<Messaging.SingleEmailMessage>();
 
         List<NotifierWrapper> wrappers = getUsersToNotify();
-        System.debug('wrappers: ' +  JSON.serialize(wrappers));
 
         if(wrappers != null && wrappers.size() > 0) {
 
@@ -83,7 +82,6 @@ public without sharing class GADM_ActorMembershipNotifier {
             }
 
         }
-        System.debug('email messages:: ' + emailMessages);
 
         try {
 
@@ -119,132 +117,132 @@ public without sharing class GADM_ActorMembershipNotifier {
 
             //accounts that will be terminated
             List<Account_Role__c> accountRoles = [SELECT Id, Account__c, Account__r.Name, Effective_From_Date__c, Effective_To_Date__c FROM Account_Role__c WHERE Account_Roles__r.Name = 'GADM Participant' AND Effective_To_Date__c = :targetDate];
-            Map<Id, Account_Role__c> accountToGadmAccountRoleMap = new Map<Id, Account_Role__c>();
-            for (Account_Role__c role : accountRoles) {
-                accountToGadmAccountRoleMap.put(role.Account__c, role);
-            }
-
-
-            Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
-
-            List<Contact_Role_Service_Access__c> powerUserAccess = [
-                                    SELECT Id, Contact_Role__r.Account_Role__r.Account__c, Contact__c
-                                    FROM Contact_Role_Service_Access__c
-                                    WHERE Status__c = 'Granted'
-                                    AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId
-                                    AND Contact_Roles_Name__c = 'Service Power User'
-                                    AND Service__r.Name = 'GADM'];
-
-            Map<Id, List<Id>> accountToPowerUsersMap = new Map<Id, List<Id>>();
-            for(Contact_Role_Service_Access__c access : powerUserAccess) {
-                if(accountToPowerUsersMap.get(access.Contact_Role__r.Account_Role__r.Account__c) == null) {
-                    accountToPowerUsersMap.put(access.Contact_Role__r.Account_Role__r.Account__c, new List<String>{access.Contact__c});
-                }else{
-                    accountToPowerUsersMap.get(access.Contact_Role__r.Account_Role__r.Account__c).add(access.Contact__c);
+            if(! accountRoles.isEmpty()) {
+                Map<Id, Account_Role__c> accountToGadmAccountRoleMap = new Map<Id, Account_Role__c>();
+                for (Account_Role__c role : accountRoles) {
+                    accountToGadmAccountRoleMap.put(role.Account__c, role);
                 }
-            }
 
-            System.debug('accountToPowerUsersMap:: ' + accountToPowerUsersMap);
 
-            List<Contact_Role_Service_Access__c> gadmUserAccess = [
-                    SELECT Id, Contact_Role__r.Account_Role__r.Account__c, Contact__c
-                    FROM Contact_Role_Service_Access__c
-                    WHERE Status__c = 'Granted'
-                    AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId
-                    AND Contact_Roles_Name__c = 'GADM User'
-                    AND Service__r.Name = 'GADM'];
+                Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
 
-            Map<Id, List<Id>> accountToGadmUsersMap = new Map<Id, List<Id>>();
-            for(Contact_Role_Service_Access__c access : gadmUserAccess) {
-                if(accountToGadmUsersMap.get(access.Contact_Role__r.Account_Role__r.Account__c) == null) {
-                    accountToGadmUsersMap.put(access.Contact_Role__r.Account_Role__r.Account__c, new List<String>{access.Contact__c});
-                }else{
-                    accountToGadmUsersMap.get(access.Contact_Role__r.Account_Role__r.Account__c).add(access.Contact__c);
-                }
-            }
+                List<Contact_Role_Service_Access__c> powerUserAccess = [
+                        SELECT Id, Contact_Role__r.Account_Role__r.Account__c, Contact__c
+                        FROM Contact_Role_Service_Access__c
+                        WHERE Status__c = 'Granted'
+                        AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId
+                        AND Contact_Roles_Name__c = 'Service Power User'
+                        AND Service__r.Name = 'GADM'];
 
-            System.debug('accountToGadmUsersMap:: ' + accountToGadmUsersMap);
-
-            //active gadm users with active power user role
-            Set<Id> gadmAndPowerUsers = new Set<Id>();
-            for(Id accountId : accountToPowerUsersMap.keySet()) {
-                if(accountToGadmUsersMap.get(accountId) == null) {continue;}
-                if(accountToPowerUsersMap.get(accountId) == null) {continue;}
-                List<Id> powerUsers = accountToPowerUsersMap.get(accountId);
-                List<Id> gadmUser = accountToGadmUsersMap.get(accountId);
-                if(powerUsers == null || gadmUser == null) {continue;}
-                for(Id powerUserId : powerUsers) {
-                    if(gadmUser.contains(powerUserId)) {
-                        gadmAndPowerUsers.add(powerUserId);
+                Map<Id, List<Id>> accountToPowerUsersMap = new Map<Id, List<Id>>();
+                for(Contact_Role_Service_Access__c access : powerUserAccess) {
+                    if(accountToPowerUsersMap.get(access.Contact_Role__r.Account_Role__r.Account__c) == null) {
+                        accountToPowerUsersMap.put(access.Contact_Role__r.Account_Role__r.Account__c, new List<String>{access.Contact__c});
+                    }else{
+                        accountToPowerUsersMap.get(access.Contact_Role__r.Account_Role__r.Account__c).add(access.Contact__c);
                     }
                 }
-            }
-
-            System.debug('temp:: ' + gadmAndPowerUsers);
-
-            Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName FROM Contact WHERE Id = :gadmAndPowerUsers]);
-
-            Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
-
-            List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact__c, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c = :gadmAndPowerUsers AND RecordTypeId = :groupRecordTypeId AND Contact_Roles__r.Name = 'GADM User' AND Service_Rendered__c =  'GADM' AND Account_Role__c = :accountRoles];
-
-            Map<Id, List<Id>> visibleAccountToContactsMap = new Map<Id, List<Id>>();
-            for(Account_Contact_Role__c contactRole : accountContactRoles) {
-                if(visibleAccountToContactsMap.get(contactRole.Account_Role__r.Account__c) == null) {
-                    visibleAccountToContactsMap.put(contactRole.Account_Role__r.Account__c, new List<Id>{contactRole.Contact__c});
-                }else{
-                    visibleAccountToContactsMap.get(contactRole.Account_Role__r.Account__c).add(contactRole.Contact__c);
-                }
-            }
-
-            System.debug('contactVisibleAccountsMap:: ' + visibleAccountToContactsMap);
 
 
-            //create wrappers for contacts
-            for(Id accountId : visibleAccountToContactsMap.keySet()) {
-                if(accountToGadmAccountRoleMap.get(accountId) == null) {continue;}
+                List<Contact_Role_Service_Access__c> gadmUserAccess = [
+                        SELECT Id, Contact_Role__r.Account_Role__r.Account__c, Contact__c
+                        FROM Contact_Role_Service_Access__c
+                        WHERE Status__c = 'Granted'
+                        AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId
+                        AND Contact_Roles_Name__c = 'GADM User'
+                        AND Service__r.Name = 'GADM'];
 
-                NotifierWrapper wrapper = new NotifierWrapper();
-                wrapper.priorDaysToNotify = priorDaysToNotify;
-                wrapper.effectiveFrom = accountToGadmAccountRoleMap.get(accountId).Effective_From_Date__c;
-                wrapper.effectiveTo = accountToGadmAccountRoleMap.get(accountId).Effective_To_Date__c;
-                wrapper.accountName = accountToGadmAccountRoleMap.get(accountId).Account__r.Name;
-                wrapper.contacts = new List<Contact>();
-                wrapper.users = new List<User>();
-
-                List<Id> contactList = visibleAccountToContactsMap.get(accountId);
-                for(Id contactId : contactList) {
-                    if(contactsMap.get(contactId) == null) {continue;}
-                    wrapper.contacts.add(contactsMap.get(contactId));
+                Map<Id, List<Id>> accountToGadmUsersMap = new Map<Id, List<Id>>();
+                for(Contact_Role_Service_Access__c access : gadmUserAccess) {
+                    if(accountToGadmUsersMap.get(access.Contact_Role__r.Account_Role__r.Account__c) == null) {
+                        accountToGadmUsersMap.put(access.Contact_Role__r.Account_Role__r.Account__c, new List<String>{access.Contact__c});
+                    }else{
+                        accountToGadmUsersMap.get(access.Contact_Role__r.Account_Role__r.Account__c).add(access.Contact__c);
+                    }
                 }
 
-                notificationWrappers.add(wrapper);
-            }
 
-            List<User> usersFromGroup = GADM_InternalUsersHandler.getUsersFromGroup(GADM_NOTIFICATION_GROUP);
-            Map<Id, User> usersMap = new Map<Id, User>([SELECT Id, FirstName, LastName FROM User WHERE Id = :usersFromGroup]);
-
-            //create wrappers for users from public group
-            for(Account_Role__c accountRole : accountRoles) {
-                if(accountToGadmAccountRoleMap.get(accountRole.Account__c) == null) {continue;}
-
-                NotifierWrapper wrapper = new NotifierWrapper();
-                wrapper.priorDaysToNotify = priorDaysToNotify;
-                wrapper.effectiveFrom = accountToGadmAccountRoleMap.get(accountRole.Account__c).Effective_From_Date__c;
-                wrapper.effectiveTo = accountToGadmAccountRoleMap.get(accountRole.Account__c).Effective_To_Date__c;
-                wrapper.accountName = accountToGadmAccountRoleMap.get(accountRole.Account__c).Account__r.Name;
-                wrapper.contacts = new List<Contact>();
-                wrapper.users = new List<User>();
-
-                for(Id userId : usersMap.keySet()) {
-                    if(usersMap.get(userId) == null) {continue;}
-                    wrapper.users.add(usersMap.get(userId));
+                //active gadm users with active power user role
+                Set<Id> gadmAndPowerUsers = new Set<Id>();
+                for(Id accountId : accountToPowerUsersMap.keySet()) {
+                    if(accountToGadmUsersMap.get(accountId) == null) {continue;}
+                    if(accountToPowerUsersMap.get(accountId) == null) {continue;}
+                    List<Id> powerUsers = accountToPowerUsersMap.get(accountId);
+                    List<Id> gadmUser = accountToGadmUsersMap.get(accountId);
+                    if(powerUsers == null || gadmUser == null) {continue;}
+                    for(Id powerUserId : powerUsers) {
+                        if(gadmUser.contains(powerUserId)) {
+                            gadmAndPowerUsers.add(powerUserId);
+                        }
+                    }
                 }
 
-                notificationWrappers.add(wrapper);
+
+                Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Id, FirstName, LastName FROM Contact WHERE Id = :gadmAndPowerUsers]);
+
+                Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
+
+                List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact__c, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c = :gadmAndPowerUsers AND RecordTypeId = :groupRecordTypeId AND Contact_Roles__r.Name = 'GADM User' AND Service_Rendered__c =  'GADM' AND Account_Role__c = :accountRoles];
+
+                Map<Id, List<Id>> visibleAccountToContactsMap = new Map<Id, List<Id>>();
+                for(Account_Contact_Role__c contactRole : accountContactRoles) {
+                    if(visibleAccountToContactsMap.get(contactRole.Account_Role__r.Account__c) == null) {
+                        visibleAccountToContactsMap.put(contactRole.Account_Role__r.Account__c, new List<Id>{contactRole.Contact__c});
+                    }else{
+                        visibleAccountToContactsMap.get(contactRole.Account_Role__r.Account__c).add(contactRole.Contact__c);
+                    }
+                }
+
+
+                //create wrappers for contacts
+                for(Id accountId : visibleAccountToContactsMap.keySet()) {
+                    if(accountToGadmAccountRoleMap.get(accountId) == null) {continue;}
+
+                    NotifierWrapper wrapper = new NotifierWrapper();
+                    wrapper.priorDaysToNotify = priorDaysToNotify;
+                    wrapper.effectiveFrom = accountToGadmAccountRoleMap.get(accountId).Effective_From_Date__c;
+                    wrapper.effectiveTo = accountToGadmAccountRoleMap.get(accountId).Effective_To_Date__c;
+                    wrapper.accountName = accountToGadmAccountRoleMap.get(accountId).Account__r.Name;
+                    wrapper.contacts = new List<Contact>();
+                    wrapper.users = new List<User>();
+
+                    List<Id> contactList = visibleAccountToContactsMap.get(accountId);
+                    for(Id contactId : contactList) {
+                        if(contactsMap.get(contactId) == null) {continue;}
+                        wrapper.contacts.add(contactsMap.get(contactId));
+                    }
+
+                    notificationWrappers.add(wrapper);
+                }
+
+                List<User> usersFromGroup = GADM_InternalUsersHandler.getUsersFromGroup(GADM_NOTIFICATION_GROUP);
+                Map<Id, User> usersMap = new Map<Id, User>([SELECT Id, FirstName, LastName FROM User WHERE Id = :usersFromGroup]);
+
+                //create wrappers for users from public group
+                for(Account_Role__c accountRole : accountRoles) {
+                    if(accountToGadmAccountRoleMap.get(accountRole.Account__c) == null) {continue;}
+
+                    NotifierWrapper wrapper = new NotifierWrapper();
+                    wrapper.priorDaysToNotify = priorDaysToNotify;
+                    wrapper.effectiveFrom = accountToGadmAccountRoleMap.get(accountRole.Account__c).Effective_From_Date__c;
+                    wrapper.effectiveTo = accountToGadmAccountRoleMap.get(accountRole.Account__c).Effective_To_Date__c;
+                    wrapper.accountName = accountToGadmAccountRoleMap.get(accountRole.Account__c).Account__r.Name;
+                    wrapper.contacts = new List<Contact>();
+                    wrapper.users = new List<User>();
+
+                    for(Id userId : usersMap.keySet()) {
+                        if(usersMap.get(userId) == null) {continue;}
+                        wrapper.users.add(usersMap.get(userId));
+                    }
+
+                    notificationWrappers.add(wrapper);
+                }
+
             }
+
 
         }
+
 
         return notificationWrappers;
     }

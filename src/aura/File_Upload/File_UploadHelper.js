@@ -9,21 +9,32 @@
                 let gadmSettings = response.getReturnValue();
                 if(! $A.util.isEmpty(gadmSettings)) {
                     let maxFileSize = gadmSettings.Max_File_Size_MB__c;
-                    let maxFileCount = gadmSettings.Max_Files_Count__c;
-                    let emptyFileSize = gadmSettings.Empty_File_Size_B__c;
-                    let permittedExtensions = gadmSettings.Permitted_File_Extensions__c;
-                    let credentialsName = gadmSettings.Credentials_Name__c;
-
-                    if(maxFileSize === 0) {
+                    if($A.util.isEmpty(maxFileSize) || maxFileSize < 0) {
+                        maxFileSize = 1;
+                    }
+                    if(maxFileSize === 0) {//this means unlimited file size
                         component.set('v.maxFileSize', 0);
                     }else{
                         component.set('v.maxFileSize', maxFileSize*1048576);//in bytes
                     }
 
+                    let maxFileCount = gadmSettings.Max_Files_Count__c;
+                    if($A.util.isEmpty(maxFileCount) || maxFileCount < 0) {
+                        maxFileCount = 0;
+                    }
+
+                    let emptyFileSize = gadmSettings.Empty_File_Size_B__c;
+                    if($A.util.isEmpty(emptyFileSize) || emptyFileSize < 0) {
+                        emptyFileSize = 1;
+                    }
+
+                    let credentialsName = gadmSettings.Credentials_Name__c;
+
                     component.set('v.maxFileCount', maxFileCount);
                     component.set('v.emptyFileSize', emptyFileSize);
                     component.set('v.credentialsName', credentialsName);
 
+                    let permittedExtensions = gadmSettings.Permitted_File_Extensions__c;
                     if(! $A.util.isEmpty(permittedExtensions)) {
                         let allowedExtensions = [];
                         allowedExtensions = permittedExtensions.split(';');
@@ -36,12 +47,12 @@
 
                 }else{
                     console.log('getSettings method returned empty settings');
-                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to retrieve gadm settings!');
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submission_no_gadm_settings'));
                     this.toggleSpinner(component);
                 }
             }else{
                 console.log('getSettings error');
-                this.showToast(component, 'error', 'Unexpected error!', 'Unable to retrieve gadm settings!');
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submission_no_gadm_settings'));
                 this.toggleSpinner(component);
             }
 
@@ -95,7 +106,7 @@
                             }
                         }else{
                             console.log('no actors retrieved');
-                            this.showToast(component, 'error', 'Unexpected error!', 'No valid actor found!');
+                            this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submission_no_valid_actor'));
                             this.toggleSpinner(component);
                             this.showContent(component);
                             this.disableContent(component, event);
@@ -104,12 +115,12 @@
 
                 }else{
                     console.log('empty user information retrieved');
-                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to retrieve user information!');
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submssion_no_user_information'));
                     this.toggleSpinner(component);
                 }
             }else{
                 console.log('error retrieving user information');
-                this.showToast(component, 'error', 'Unexpected error!', 'Unable to retrieve user information!');
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submssion_no_user_information'));
                 this.toggleSpinner(component);
             }
         });
@@ -139,12 +150,12 @@
                     }
                 }else{
                     console.log('checkInternalUserPermissionSet error');
-                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to verify user permission set!');
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submission_no_permission_set'));
                     this.toggleSpinner(component);
                 }
             }else{
                 console.log('checkInternalUserPermissionSet error');
-                this.showToast(component, 'error', 'Unexpected error!', 'Unable to verify user permission set!');
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submission_no_permission_set'));
                 this.toggleSpinner(component);
             }
 
@@ -168,11 +179,11 @@
 
                 }else {
                     console.log('error retrieving user information');
-                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!');
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submssion_no_user_information'));
                 }
             }else{
                 console.log('error retrieving user information');
-                this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!');
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submssion_no_user_information'));
             }
         });
         $A.enqueueAction(action);
@@ -209,15 +220,15 @@
                     }else{
                         console.log('no actors with configured ExternalActorId found');
                         this.disableContentInternal(component, event);
-                        this.showToast(component, 'error', 'Unexpected error!', 'No valid actor found!');
+                        this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submission_no_valid_actor'));
                     }
                 }else{
                     console.log('error retrieving user information');
-                    this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!');
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submssion_no_user_information'));
                 }
             }else{
                 console.log('error retrieving user information');
-                this.showToast(component, 'error', 'Unexpected error!', 'Unable to get user information!');
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_unexpected_error'), $A.get('$Label.c.GADM_Data_Submssion_no_user_information'));
             }
         });
         $A.enqueueAction(action);
@@ -240,15 +251,15 @@
                         filesToAdd.push(file);
                         console.log(i + ':... file[' + i + '].name = ' + file.name);
                     }else if(validationResult === 2) {
-                        this.showToast(component, 'error', 'Unexpected file extension!', 'File: ' + file.name + ' could not be added. Allowed file extensions: ' + this.getAllowedExtensions(component));
+                        this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_bad_file_extension'), 'File: ' + file.name + ' could not be added. Allowed file extensions: ' + this.getAllowedExtensions(component));
                     }else if(validationResult === 3) {
-                        this.showToast(component, 'error', 'File is empty!', 'File: ' + file.name + ' could not be added.');
+                        this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_empty_file'), 'File: ' + file.name + ' could not be added.');
                     }else if(validationResult === 4) {
-                        this.showToast(component, 'error', 'File is already selected!', 'File: ' + file.name + ' could not be added.');
+                        this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_file_is_selected'), 'File: ' + file.name + ' could not be added.');
                     }else if(validationResult === 5) {
-                        this.showToast(component, 'error', 'File is too large! Allowed file size is ' + component.get('v.maxFileSize')/1048576 +' MB!', 'File: ' + file.name);
+                        this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_file_is_big') + ' Allowed file size is ' + component.get('v.maxFileSize')/1048576 +' MB!', 'File: ' + file.name);
                     }else if(validationResult === 6){
-                        this.showToast(component, 'error', 'Too many files!', 'Only ' + component.get('v.maxFileCount') + ' files allowed to attach!');
+                        this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_too_many_files'), 'Only ' + component.get('v.maxFileCount') + ' files allowed to attach!');
                     }
                 }else{
                     //add error - it is not a file!
@@ -265,15 +276,15 @@
                     filesToAdd.push(file);
                     console.log(i + ':... file[' + i + '].name = ' + file.name);
                 }else if(validationResult === 2) {
-                    this.showToast(component, 'error', 'Unexpected file extension!', 'File: ' + file.name + ' could not be added. Allowed file extensions: ' + this.getAllowedExtensions(component));
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_bad_file_extension'), 'File: ' + file.name + ' could not be added. Allowed file extensions: ' + this.getAllowedExtensions(component));
                 }else if(validationResult === 3) {
-                    this.showToast(component, 'error', 'File is empty!', 'File: ' + file.name + ' could not be added.');
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_empty_file'), 'File: ' + file.name + ' could not be added.');
                 }else if(validationResult === 4) {
-                    this.showToast(component, 'error', 'File is already selected!', 'File: ' + file.name + ' could not be added.');
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_file_is_selected'), 'File: ' + file.name + ' could not be added.');
                 }else if(validationResult === 5) {
-                    this.showToast(component, 'error', 'File is too large! Allowed file size is ' + component.get('v.maxFileSize')/1048576 +' MB!', 'File: ' + file.name);
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_file_is_big') + ' Allowed file size is ' + component.get('v.maxFileSize')/1048576 +' MB!', 'File: ' + file.name);
                 }else if(validationResult === 6){
-                    this.showToast(component, 'error', 'Too many files!', 'Only ' + component.get('v.maxFileCount') + ' files allowed to attach!');
+                    this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_too_many_files'), 'Only ' + component.get('v.maxFileCount') + ' files allowed to attach!');
                 }
             }
         }
@@ -333,15 +344,15 @@
                 filesToAdd.push(file);
                 console.log(i + ':... file[' + i + '].name = ' + file.name);
             }else if(validationResult === 2) {
-                this.showToast(component, 'error', 'Unexpected file extension!', 'File: ' + file.name + ' could not be added. Allowed file extensions: ' + this.getAllowedExtensions(component));
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_bad_file_extension'), 'File: ' + file.name + ' could not be added. Allowed file extensions: ' + this.getAllowedExtensions(component));
             }else if(validationResult === 3) {
-                this.showToast(component, 'error', 'File is empty!', 'File: ' + file.name + ' could not be added.');
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_empty_file'), 'File: ' + file.name + ' could not be added.');
             }else if(validationResult === 4) {
-                this.showToast(component, 'error', 'File is already selected!', 'File: ' + file.name + ' could not be added.');
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_file_is_selected'), 'File: ' + file.name + ' could not be added.');
             }else if(validationResult === 5) {
-                this.showToast(component, 'error', 'File is too large! Allowed file size is ' + component.get('v.maxFileSize')/1048576 +' MB!', 'File: ' + file.name);
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_file_is_big') + ' Allowed file size is ' + component.get('v.maxFileSize')/1048576 +' MB!', 'File: ' + file.name);
             }else if(validationResult === 6){
-                this.showToast(component, 'error', 'Too many files!', 'Only ' + component.get('v.maxFileCount') + ' files allowed to attach!');
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_too_many_files'), 'Only ' + component.get('v.maxFileCount') + ' files allowed to attach!');
             }
         }
 
@@ -496,11 +507,11 @@
         let isLightning = component.get('v.theme') === 'Theme4d';
         if(isLightning) {
             for(let i = 0; i < successes.length; i++) {
-                this.showToast(component, 'success', 'Upload successful.', 'File uploaded successfully: ' + successes[i].fileName);
+                this.showToast(component, 'success', $A.get('$Label.c.GADM_Data_Submission_upload_successful'), $A.get('$Label.c.GADM_Data_Submission_file_uploaded') + ' ' + successes[i].fileName);
             }
 
             for(let i = 0; i < errors.length; i++) {
-                this.showToast(component, 'error', 'Error uploading file!', 'Error uploading file: ' + errors[i].fileName);
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_upload_error'), $A.get('$Label.c.GADM_Data_Submission_upload_error') + ' ' + errors[i].fileName);
             }
 
         }else{
@@ -509,7 +520,7 @@
                 for(let success in successes) {
                     successMessage += successes[success].fileName + '\n';
                 }
-                this.showToast(component, 'success', 'Upload successful.', successMessage);
+                this.showToast(component, 'success', $A.get('$Label.c.GADM_Data_Submission_upload_successful'), successMessage);
             }
 
             if(! $A.util.isEmpty(errors)) {
@@ -517,7 +528,7 @@
                 for(let error in errors) {
                     errorMessage += errors[error].fileName + '\n';
                 }
-                this.showToast(component, 'error', 'Error uploading file/s:', errorMessage);
+                this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_upload_errors'), errorMessage);
             }
 
         }
@@ -553,13 +564,13 @@
         let actorId = component.get('v.actorId');
 
         if($A.util.isEmpty(userId)) {
-            this.showToast(component, 'error', 'No user selected!', 'Please select an user.');
+            this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_no_user'), $A.get('$Label.c.GADM_Data_Submission_select_user'));
             this.toggleSpinner(component);
             return;
         }
 
         if($A.util.isEmpty(actorId)) {
-            this.showToast(component, 'error', 'No actor selected!', 'Please select an actor.');
+            this.showToast(component, 'error', $A.get('$Label.c.GADM_Data_Submission_no_actor'), $A.get('$Label.c.GADM_Data_Submission_select_actor'));
             this.toggleSpinner(component);
             return;
         }

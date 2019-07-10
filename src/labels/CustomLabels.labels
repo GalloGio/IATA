@@ -4599,11 +4599,158 @@ You can choose one or more of the following topics:</value>
         <value>Please select file to upload.</value>
     </labels>
     <labels>
+        <fullName>GADM_Data_Submission_bad_file_extension</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission bad file extension</shortDescription>
+        <value>Unexpected file extension!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_empty_file</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission empty file</shortDescription>
+        <value>File is empty!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_error_uploading_file</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission error uploading file</shortDescription>
+        <value>Error uploading file:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_is_big</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file is big</shortDescription>
+        <value>File is too large!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_is_selected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file is selected</shortDescription>
+        <value>File is already selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_uploaded</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file uploaded</shortDescription>
+        <value>File uploaded successfully:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no access</shortDescription>
+        <value>You do not have permissions to see this page!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no actor</shortDescription>
+        <value>No actor selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_gadm_settings</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no gadm settings</shortDescription>
+        <value>Unable to retrieve gadm settings!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_permission_set</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no permission set</shortDescription>
+        <value>Unable to verify user permission set!</value>
+    </labels>
+    <labels>
         <fullName>GADM_Data_Submission_no_records</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GADM Data Submission no records</shortDescription>
         <value>No records to display.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no user</shortDescription>
+        <value>No user selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_valid_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no valid actor</shortDescription>
+        <value>No valid actor found!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_select_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission select actor</shortDescription>
+        <value>Please select an actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_select_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission select user</shortDescription>
+        <value>Please select an user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_too_many_files</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission too many files</shortDescription>
+        <value>Too many files!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_unexpected_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission unexpected error</shortDescription>
+        <value>Unexpected error!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload error</shortDescription>
+        <value>Error uploading file!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_errors</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload errors</shortDescription>
+        <value>Error uploading file/s:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_successful</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload successful</shortDescription>
+        <value>Upload successful.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_user_search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission user search</shortDescription>
+        <value>Search User...</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submssion_no_user_information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submssion no user information</shortDescription>
+        <value>Unable to retrieve user information!</value>
     </labels>
     <labels>
         <fullName>GADM_FileAlreadyAttached</fullName>
