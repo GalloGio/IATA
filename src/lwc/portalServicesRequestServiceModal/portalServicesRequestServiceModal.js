@@ -37,6 +37,7 @@ import csp_TD_ServiceRequest_TopLabel from '@salesforce/label/c.csp_TD_ServiceRe
 import csp_RequestService_ContactPortalAdmin_LegalAuth from '@salesforce/label/c.csp_RequestService_ContactPortalAdmin_LegalAuth';
 import csp_RequestService_ProceedIEPAccountOpen from '@salesforce/label/c.csp_RequestService_ProceedIEPAccountOpen';
 import csp_MasterWalletManager from '@salesforce/label/c.csp_MasterWalletManager';
+import ISSP_ANG_Portal_Role_SubWalletManager from '@salesforce/label/c.ISSP_ANG_Portal_Role_SubWalletManager';
 import csp_TicketIssuer from '@salesforce/label/c.csp_TicketIssuer';
 import csp_IEPAdmin from '@salesforce/label/c.csp_IEPAdmin';
 import csp_RequestService_ContactPortalAdmin_Alt from '@salesforce/label/c.csp_RequestService_ContactPortalAdmin_Alt';
@@ -124,7 +125,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         csp_RequestService_ContactSupport,
         Button_Cancel,
         IDCard_Confirm_Replacement,
-        csp_TimeoutIEP
+        csp_TimeoutIEP,
+        ISSP_ANG_Portal_Role_SubWalletManager
 
     };
 
