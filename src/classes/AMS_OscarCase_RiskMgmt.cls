@@ -100,6 +100,11 @@ public class AMS_OscarCase_RiskMgmt {
 
 		for(Case c : mapCases.values()){
 			if(c.ParentId != null) parentCasesIds.add(c.ParentId);
+
+			Id caseHOId = c.Account.ParentId == null ? c.AccountId : c.Account.Parent.ParentId == null ? c.Account.ParentId : c.Account.Parent.ParentId;
+
+			casePerParentAcc.put(caseHOId, c.Id);
+    		parentAccPerCase.put(c.Id, caseHOId);
 			//get all the hierarchy account selections for the respective case
     		if(c.Hierarchy_Account_Selections__r.isEmpty()){
     			toCreateHierarchySelection.add(c);
@@ -146,10 +151,7 @@ public class AMS_OscarCase_RiskMgmt {
     		String sExtId = GetOpCalendarExtId(c.External_ID__c);
 			if(sExtId != '') setOperationCalendarExtID.add(sExtId);
 
-    		Id caseHOId = c.Account.ParentId == null ? c.AccountId : c.Account.Parent.ParentId == null ? c.Account.ParentId : c.Account.Parent.ParentId;
-
-    		casePerParentAcc.put(caseHOId, c.Id);
-    		parentAccPerCase.put(c.Id, caseHOId);
+    		Id caseHOId = parentAccPerCase.get(c.Id);
 
     		//Get the change codes to create
     		for(AMS_ChangeCodes__c ccConfig : changeCodesPerAccModel.get(c.Account.ANG_IsNewGenAgency__c ? 'NEWGEN' : 'AMS')){
