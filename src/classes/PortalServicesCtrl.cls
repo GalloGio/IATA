@@ -772,7 +772,7 @@ private static void alignStatus(ServiceWrapper sw,string newStatus){
 		} else {
 			sw.useDefaultRole = false;
 			if (flagIsIepPortalService && sw.iepStatus == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
-				sw.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
+				sw.btnLabel = System.Label.CSP_Services_GoToService;
 			} else if (sw.isAdmin && sw.recordService.Cannot_be_managed_by_portal_admin__c == true) {
 				sw.btnLabel = System.Label.CSP_Request_Service;
 			}
