@@ -210,6 +210,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let requiredFields = [];
         let skipValidation = false;
 
+        /*
         for(let f=0;f<fields.length;f++){
             if(fields[f].isRequired !== undefined && fields[f].isRequired == true){
                 requiredFields.push(fields[f].fieldName);
@@ -217,6 +218,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         }
 
         let fieldsValid = true;
+
+        */
 
         if (inputs) {
             if (inputs.length) {
@@ -235,7 +238,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                             }
                         }
                     }
-
+                    /*
                     if(requiredFields.includes(inputs[i].fieldName)){
                         if(inputs[i].value === undefined || inputs[i].value.length == 0){
                             skipValidation = true;
@@ -293,7 +296,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                                 }
                             }
                         }
-                    }
+                        
+                    }*/
 
                 }
             } else {
@@ -313,7 +317,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
         }
 
-
+        /*
         if(fieldsChanged){
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
@@ -325,6 +329,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             },400,this);
         }
         this.fieldsValid = fieldsValid;
+        */
     }
 
     handleSubmit(event) {

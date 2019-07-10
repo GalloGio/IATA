@@ -2,6 +2,8 @@ import { LightningElement, track, api } from 'lwc';
 
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import createUserForContact from '@salesforce/apex/ISSP_PortalUserStatusChange.preformActionNewPortal';
+import getAccounts from '@salesforce/apex/portalProfileCustomBoxCtrl.getAccounts';
+import updateUserStatus from '@salesforce/apex/portalProfileCustomBoxCtrl.updateUserStatus';
 
 import New_Contact_Profile from '@salesforce/label/c.CSP_cpcc_New_Contact_Profile';
 import Working_Areas from '@salesforce/label/c.CSP_cpcc_Working_Areas';
@@ -16,6 +18,8 @@ import BSP_CASS_Payment_Contact from '@salesforce/label/c.CSP_cpcc_BSP_CASS_Paym
 import Agent_Credit_Risk from '@salesforce/label/c.CSP_cpcc_Agent_Credit_Risk';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import completeField from '@salesforce/label/c.CSP_Create_Contact_Complete_Field';
+import ICCS_Account_Name_Label from '@salesforce/label/c.ICCS_Account_Name_Label';
+
 
 
 export default class PortalProfileCustomBox extends LightningElement {
@@ -69,7 +73,8 @@ export default class PortalProfileCustomBox extends LightningElement {
         BSP_CASS_Payment_Contact,
         Agent_Credit_Risk,
         InvalidValue,
-        completeField
+        completeField,
+        ICCS_Account_Name_Label
     };
 
     get labels() {
@@ -83,6 +88,9 @@ export default class PortalProfileCustomBox extends LightningElement {
     @track numberHasError = false;
     @track errorfieldsHasError = false;
 
+    @track accountList = [];
+    @track accountSelected;
+
     // LABEL
     @track contactTypeStatus = [{ checked: false, label: this.labels.Portal_Administrator, APINAME: "PortalAdmin" },
     { checked: false, label: this.labels.Invoice_Contact, APINAME: "Invoicing_Contact__c" },
@@ -95,6 +103,18 @@ export default class PortalProfileCustomBox extends LightningElement {
             this.options = result;
         });
 
+        getAccounts().then(result => {
+            let accountListLocal = JSON.parse(JSON.stringify(result));
+            let accountBuilder = [];
+            accountListLocal.forEach(function (account) {
+                accountBuilder.push({ 'label': account.label, 'value': account.accountId });
+            });
+            this.accountList = accountBuilder;
+        });
+    }
+
+    handleChangeAccount(event) {
+        this.accountSelected = event.detail.value;
     }
 
     getValueSelected(event) {
@@ -172,7 +192,7 @@ export default class PortalProfileCustomBox extends LightningElement {
 
     }
 
-    handleSubmit(event) { 
+    handleSubmit(event) {
         this.isLoading = true;
         event.preventDefault();
         let fields = event.detail.fields;
@@ -183,7 +203,6 @@ export default class PortalProfileCustomBox extends LightningElement {
             selected += item + ';';
         });
 
-
         let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
 
         contactTypeStatusLocal.forEach(function (item) {
@@ -192,10 +211,11 @@ export default class PortalProfileCustomBox extends LightningElement {
 
         this.userType = (contactTypeStatusLocal[0].checked === true ? 'Approved Admin' : 'Approved User');
 
-        fields.accountId = this.accountId;
+        fields.AccountId = this.accountSelected;
 
         fields.Membership_Function__c = selected;
-        fields.User_Portal_Status__c = this.userType;
+
+        fields.Community__c = 'ISS Customer Portal';
 
         if (!fields.Email && !fields.Phone) {
             this.checkErrorOnErrorFields('', true);
@@ -216,12 +236,19 @@ export default class PortalProfileCustomBox extends LightningElement {
 
         let contact = JSON.parse(JSON.stringify(event.detail));
         let res;
-        createUserForContact({ contactId: contact.id, portalStatus: contact.fields.User_Portal_Status__c.value, oldPortalStatus: '' }).then(result => {
-            res = result;
-            this.isLoading = false;
-            this.dispatchEvent(new CustomEvent('closemodalwithsuccess'));
-        });
 
+        createUserForContact({ contactId: contact.id, portalStatus: this.userType, oldPortalStatus: '' }).then(result => {
+            res = JSON.parse(JSON.stringify(result));
+
+            if (res.status === 'ok') {
+                updateUserStatus({ contactId: contact.id, userPortalStatus: this.userType }).then(results => {
+                    this.isLoading = false;
+                    this.dispatchEvent(new CustomEvent('closemodalwithsuccess'));
+                });
+
+            }
+
+        });
     }
 
     handleError(event) {
@@ -235,7 +262,7 @@ export default class PortalProfileCustomBox extends LightningElement {
 
     checkSave(currentField, forcePass) {
         this.checkErrorOnErrorFields(currentField, forcePass);
-        this.checkIfNumberHasErrors(currentField);
+        //this.checkIfNumberHasErrors(currentField);
     }
 
     checkErrorOnErrorFields(currentField, forcePass) {
@@ -276,7 +303,8 @@ export default class PortalProfileCustomBox extends LightningElement {
         let isNumberType = JSON.parse(JSON.stringify(this.checkNumbers));
         let isNumberError = false;
         let errorMessage = '';
-        let phoneRegex = /[^0-9+]|(?!^)\+/g;
+        
+        let phoneRegex = /[^0-9()+-]|(?!^)\+/g;
 
         if (isNumberType.includes(currentField)) {
 

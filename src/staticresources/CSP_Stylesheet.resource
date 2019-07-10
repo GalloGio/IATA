@@ -1479,11 +1479,7 @@ visibility: hidden;
   display: inline-block;
 }
 
-
-/* Hide Label on Lightning Input Field */
-.hideLabel slds-form-element__label, .hideLabel .slds-form-element__label {
-  display: none;
-  visibility: hidden;
+/* USER INACTIVE POPUP */
+#div>.siteforcePanelsContainer{
+    z-index: 5000;
 }
-
-

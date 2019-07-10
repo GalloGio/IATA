@@ -173,7 +173,7 @@
                             <aura:if isTrue="{!v.showPhoneNumber}">
                                 <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
                                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
-                                                    slds-m-horizontal_small customCard cardSizing slds-scrollable_y">
+                                                    slds-m-horizontal_small customCard cardSizing">
                                     <div class="text-small noPointerEvents slds-p-around_small ">
                                         {!$Label.c.csp_Call_Panel_label}
                                     </div>
