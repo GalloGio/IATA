@@ -5906,6 +5906,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Bulletin_Headquarter__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Account name to publish in bulletin for multicountry hierarchies that have headquarter in a non-NewGen country</inlineHelpText>
+        <label>Bulletin Headquarter</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>CAMP_Agreement__c</fullName>
         <description>FDS. Agency Accounts. Used to track Agent compliance / submission of executed CAMP Agreements and to follow up with Agents pending submission of agreements to IATA.</description>
         <externalId>false</externalId>
