@@ -2817,13 +2817,4 @@ public class ANG_AgencyChangesHelperTest {
 
 	}
 
-
-	@isTest static void testANGChangeOfLocationTypeWithRiskAlert(){
-
-
-	}
-
-
-
-
 }
