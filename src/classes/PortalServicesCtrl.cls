@@ -473,10 +473,10 @@ public String url { get; set; }
 @AuraEnabled (cacheable=false)
 public static ServiceWrapper getServiceDetails(string serviceId){
 
+	ServiceWrapper temp = null;
+
+	//use all salesforce logic and the custom settings logic to get the services and filter by the requested service
 	List<ServiceWrapper> lstAllServices = PortalServicesCtrl.getAllServices();
-
-
-	ServiceWrapper temp=null;
 	for(ServiceWrapper serviceWrapperAux : lstAllServices) {
 		if(serviceWrapperAux.recordService.id == serviceId) {
 			serviceWrapperAux.userContactId=DAL_ISSP.getUser(UserInfo.getUserId()).contactId; //Adds user contact to wrapper
@@ -487,6 +487,25 @@ public static ServiceWrapper getServiceDetails(string serviceId){
 			temp= serviceWrapperAux;
 		}
 	}
+
+	//if user is admin and does not have access to this service, it's ok to retrieve anyway
+	if(PortalServicesCtrl.isPortalAdminUser() && temp == null){
+		User userAux = [SELECT Id, ContactId, Contact.Account.ANG_IEP_Status_FF__c FROM User WHERE Id = :UserInfo.getUserId()];
+		String contactId = userAux.ContactId;
+		String iepStatus = userAux.Contact.Account.ANG_IEP_Status_FF__c;
+		Boolean isAdmin = PortalServicesCtrl.isPortalAdminUser();
+		Contact contAcc = AMS_Utils.getIEPContact(contactId);
+		Boolean isAuthorisedSignatory = (isAdmin && contAcc.Authorized_Signatory__c);
+
+		PortalApplications_Sel portalApplicationsSelector = new PortalApplications_Sel();
+		List<Portal_Applications__c> lstServicesAux = portalApplicationsSelector.getPortalApplicationsByApplicationsList(new Set<String>{serviceId});
+
+		if(lstServicesAux != null && !lstServicesAux.isEmpty()){
+			temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '');
+			temp.totalNrContacts = PortalServicesCtrl.getTotalNrContatsRelatedToService(serviceId);
+		}
+	}
+
 	return temp;
 }
 
