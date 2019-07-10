@@ -1,3 +1,9 @@
+.portalFAQPageHeader {
+    background-color: rgb(30, 50, 250, 0.7);
+    background-size: cover;
+    height:184px;
+}
+
 .breadcrumbsHeight{
     height: 69px;
 }
