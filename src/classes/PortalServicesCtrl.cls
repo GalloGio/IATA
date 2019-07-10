@@ -923,13 +923,11 @@ private static List<String> getVisibleApplicationNames(Account account) {
 
 // Denys Acccess to a portal service from the manage service page by an portal administrator
 @AuraEnabled(cacheable=false)
-public static Boolean denyAccess(String contactId,string serviceId, String reason) {
+public static Boolean denyAccess(String contactId,string serviceId, String reason, Boolean isFromContactTable) {
 
-
-
-	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate 
-												 FROM Portal_Application_Right__c 
-												 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
+	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
+	                                             FROM Portal_Application_Right__c
+	                                             WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 
 	System.debug('psaList: ' + psaList);
 	if(psaList == null || psaList.isEmpty()) {
@@ -937,12 +935,25 @@ public static Boolean denyAccess(String contactId,string serviceId, String reaso
 	}
 	Portal_Application_Right__c psa = psaList.get(0);
 
-	try {
-		delete psa;
-		return true;
-	} catch(Exception e) {
-		throw new portalServiceException(Label.ISSP_ANG_GenericError);
+	if(isFromContactTable){
+		psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_DENIED;
+		psa.Access_Status_Reason__c = reason;
+
+		try {
+			update psa;
+			return true;
+		} catch(Exception e) {
+			throw new portalServiceException(Label.ISSP_ANG_GenericError);
+		}
+	}else{
+		try {
+			delete psa;
+			return true;
+		} catch(Exception e) {
+			throw new portalServiceException(Label.ISSP_ANG_GenericError);
+		}
 	}
+
 }
 
 
