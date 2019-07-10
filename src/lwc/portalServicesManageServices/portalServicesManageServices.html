@@ -46,9 +46,17 @@
 
                             <div class="slds-col slds-size_1-of-4">
                                 <div if:false={renderRequest} >
-                                    <lightning-button class="slds-float_right containedButtonSlim" label={serviceRecord.btnLabel}
-                                        onclick={handleTopAction}>
-                                    </lightning-button>
+                                        <div if:true={serviceRecord.accessGranted}>
+                                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                                    label={label.goToServicelb} onclick={handleTopAction}>
+                                                </lightning-button>
+                                            </div>
+        
+                                            <div if:false={serviceRecord.accessGranted}>
+                                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                                    label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                                </lightning-button>
+                                            </div>
                                 </div>
     
                                 <div if:true={renderRequest} >
@@ -81,9 +89,17 @@
                                 </div>
                             </div>
 
-                            <div class="slds-col slds-size_1-of-4 slds-m-bottom_large">
-                                <lightning-button class=" slds-float_right containedButtonSlim" label={serviceRecord.btnLabel}
-                                    onclick={handleTopAction}>
+                            <div class="slds-col slds-size_1-of-4 slds-m-bottom_large"
+                                if:true={serviceRecord.accessGranted}>
+                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                    label={label.goToServicelb} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-m-bottom_large"
+                                if:false={serviceRecord.accessGranted}>
+                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                    label={serviceRecord.btnLabel} onclick={handleTopAction}>
                                 </lightning-button>
                             </div>
 
