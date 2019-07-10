@@ -49,6 +49,7 @@ import csp_RequestService_ContactSupport from '@salesforce/label/c.csp_RequestSe
 import Button_Cancel from '@salesforce/label/c.Button_Cancel';
 import IDCard_Confirm_Replacement from '@salesforce/label/c.IDCard_Confirm_Replacement';
 import csp_TimeoutIEP from '@salesforce/label/c.csp_TimeoutIEP';
+import newAppsRequestICCS from '@salesforce/apex/PortalServicesCtrl.newAppsRequestICCS';
 
 
 
@@ -124,7 +125,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         csp_RequestService_ContactSupport,
         Button_Cancel,
         IDCard_Confirm_Replacement,
-        csp_TimeoutIEP
+        csp_TimeoutIEP,
+        newAppsRequestICCS
 
     };
 
