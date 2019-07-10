@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>ISSP_Page_Detail_For_BSP_Agency</fullName>
         <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Agencies and BSP</description>

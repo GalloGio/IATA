@@ -231,6 +231,17 @@
         <fields>Order_Product__c</fields>
         <relatedList>Coupon_Used__c.Order__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Billing_Name__c</fields>
+        <fields>Status__c</fields>
+        <fields>Status_Date__c</fields>
+        <relatedList>IEC_SAP_Invoice__c.Order__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>SAP_Invoice__c.Order__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContractId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

@@ -15,7 +15,6 @@ public class AMS_AgencyAChangeCodeHandler {
         Set<Id> setIdAACC = new Set<Id>();
         Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
-        Set<Id> setIdAACCForNewApplicationPending = new Set<Id>();
 
         /*** AMSU-198 ***/
         List<Agency_Applied_Change_code__c> accToProcessPayment = new List<Agency_Applied_Change_code__c>();
@@ -24,11 +23,9 @@ public class AMS_AgencyAChangeCodeHandler {
         for(Agency_Applied_Change_Code__c aaccRecord : aacc) {
         	setIdAACC.add(aaccRecord.id);
             if(aaccRecord.RecordTypeId == irregRtId)
+            {
                 aaccToBeProcessed.add(aaccRecord);
-
-            //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
-            if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
-                setIdAACCForNewApplicationPending.add(aaccRecord.id);
+            }
 
             /*** AMSU-198 ***/
             if(accPaymentDefault.contains(aaccRecord.Change_Code__c)) {
@@ -45,9 +42,6 @@ public class AMS_AgencyAChangeCodeHandler {
 
 		if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR){
 		   updateAccountReason(setIdAACC, false);
-        }else{
-             if(!setIdAACCForNewApplicationPending.isEmpty()) 
-                updateAccountReason(setIdAACCForNewApplicationPending, true);
         }
 
         if(!mapAccntToUpdate.isEmpty()){

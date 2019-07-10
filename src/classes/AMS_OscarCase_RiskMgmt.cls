@@ -62,6 +62,8 @@ public class AMS_OscarCase_RiskMgmt {
     	Set<Id> accountsToFetchFOPs = new Set<Id>();
     	Map<Id, List<Agency_Applied_Change_code__c>> aaccsPerAccount = new Map<Id, List<Agency_Applied_Change_code__c>>();
     	Set<Id> allAccts = new Set<Id>();
+    	List<Technical_Logs__c> notifications = new List<Technical_Logs__c>();
+		Boolean generateNOTnotification = true;
 
 
     	//Get all cases and respective Hierarchy Selections
@@ -73,7 +75,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c, ParentId, Parent.RecordtypeId, Parent.AccountId,
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c,
 								  Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c, 
-								  Account.ParentId, Account.Parent.ParentId, Account.Parent.Parent.ParentId, Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, 
+								  Account.ParentId, Account.Parent.ParentId, Account.Parent.Parent.ParentId, Account.CNS_Agency__c, Currency__c, OSCAR__r.ANG_Type_Of_Change__c, Parent.IFAP_Financial_Year__c,
 								  (SELECT Id, HOId__c, Case__c, Account__c FROM Hierarchy_Account_Selections__r)
 								  FROM Case WHERE Id IN: mapTrgNew.keySet()]);
 
@@ -94,6 +96,52 @@ public class AMS_OscarCase_RiskMgmt {
 			mapExistingChangeCodes.get(aa.Account__c).add(aa);
 		}
 
+		Set<Id> parentCasesIds = new Set<Id>();
+
+		for(Case c : mapCases.values()){
+			if(c.ParentId != null) parentCasesIds.add(c.ParentId);
+
+			Id caseHOId = c.Account.ParentId == null ? c.AccountId : c.Account.Parent.ParentId == null ? c.Account.ParentId : c.Account.Parent.ParentId;
+
+			casePerParentAcc.put(caseHOId, c.Id);
+    		parentAccPerCase.put(c.Id, caseHOId);
+			//get all the hierarchy account selections for the respective case
+    		if(c.Hierarchy_Account_Selections__r.isEmpty()){
+    			toCreateHierarchySelection.add(c);
+    		} else {
+    			hierarchySelectionPerCase.put(c.Id, c.Hierarchy_Account_Selections__r);
+    		}
+		}
+
+		//create missing hierarchy account selections for each case
+    	if(!toCreateHierarchySelection.isEmpty())
+			hierarchySelectionPerCase.putAll(AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(toCreateHierarchySelection, casePerParentAcc));
+
+		//get all parents and all accounts per parent
+		for(List<AMS_Process_Detail__c> pdList : hierarchySelectionPerCase.values()){
+			for(AMS_Process_Detail__c pd : pdList) {
+				Id hoId = pd.HOId__c == null ? parentAccPerCase.get(pd.Case__c) : pd.HOId__c;
+				mapAllHOs.put(pd.Account__c, hoId);
+				if(!allHierarchyPerParent.containsKey(hoId))
+					allHierarchyPerParent.put(hoId, new Set<Id>());
+				allHierarchyPerParent.get(hoId).add(pd.Account__c);
+			}
+		}
+
+		//get all accounts
+		for(Set<Id> accIdSet : allHierarchyPerParent.values())
+			allAccts.addAll(accIdSet);
+
+
+		//get all accounts and respective change codes created previously for the same case
+        Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, ParentId, Parent.ParentId, CNS_Agency__c, ANG_IsNewGenAgency__c, Default_date__c, Status__c, Reason__c, Previous_Reason__c, PreviousStatus__c, Location_Class__c, Expiry_Date__c, 
+													 	(SELECT Id, Change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, CreatedDate, Created_Date_To_Show__c,
+													 	RecordType.DeveloperName, Irregularities_Expired__c, Account__c, Effective_Date__c, Operation__c, Irregularity_Type__c, Irregularities_Points__c, SIDRA_Case__c
+													 	FROM Agencies_Applied_Change_codes__r
+													 	ORDER BY Created_Date_To_Show__c DESC),
+													 	(SELECT Id, RecordTypeId, CreatedDate, AccountId, Status, IFAP_Financial_Year__c FROM Cases WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP AND Id NOT IN :parentCasesIds) 
+														FROM Account WHERE Id IN: allAccts]);
+
     	for(Case c : mapCases.values()){
 
     		if(!c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c)
@@ -103,17 +151,7 @@ public class AMS_OscarCase_RiskMgmt {
     		String sExtId = GetOpCalendarExtId(c.External_ID__c);
 			if(sExtId != '') setOperationCalendarExtID.add(sExtId);
 
-			//get all the hierarchy account selections for the respective case
-    		if(c.Hierarchy_Account_Selections__r.isEmpty()){
-    			toCreateHierarchySelection.add(c);
-    		} else {
-    			hierarchySelectionPerCase.put(c.Id, c.Hierarchy_Account_Selections__r);
-    		}
-
-    		Id caseHOId = c.Account.ParentId == null ? c.AccountId : c.Account.Parent.ParentId == null ? c.Account.ParentId : c.Account.Parent.ParentId;
-
-    		casePerParentAcc.put(caseHOId, c.Id);
-    		parentAccPerCase.put(c.Id, caseHOId);
+    		Id caseHOId = parentAccPerCase.get(c.Id);
 
     		//Get the change codes to create
     		for(AMS_ChangeCodes__c ccConfig : changeCodesPerAccModel.get(c.Account.ANG_IsNewGenAgency__c ? 'NEWGEN' : 'AMS')){
@@ -143,51 +181,56 @@ public class AMS_OscarCase_RiskMgmt {
 				if(ccConfig.Field5__c!=null && ccToBeGenerated)
 					ccToBeGenerated = bCheckCondition(c, ccConfig.Field5__c, ccConfig.Field5Values__c.toUpperCase(), mapExistingChangeCodes);
 
-				if(ccConfig.Field6__c!=null && ccToBeGenerated)
-					ccToBeGenerated = bCheckCondition(c, ccConfig.Field6__c, ccConfig.Field6Values__c.toUpperCase(), mapExistingChangeCodes);
+				if(ccConfig.Field6__c!=null && ccToBeGenerated){
+					//NEWGEN-5318 - Get the last IFAP case from the related Account's Cases
+					Case lastIFAP;
+					if(ccConfig.Field6__c == 'LastYearIFAP.Status')
+						lastIFAP = findLastIFAP(mapAccounts.get(c.AccountId).Cases, c.Parent.IFAP_Financial_Year__c);
+
+					ccToBeGenerated = bCheckCondition(c, ccConfig.Field6__c, ccConfig.Field6Values__c.toUpperCase(), mapExistingChangeCodes, lastIFAP);
+
+					if(!CCToBeGenerated && generateNOTnotification && ccConfig.Change_Code__c == 'NOT'){
+						generateNOTnotification = false;
+						notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NOT change code'));
+					}
+				}
 
 				if(ccToBeGenerated){
-					if(!changeCodesToCreatePerCase.containsKey(c))
-						changeCodesToCreatePerCase.put(c, new List<AMS_ChangeCodes__c>());
-					changeCodesToCreatePerCase.get(c).add(ccConfig);
 
-					if((ccConfig.Bulletin_Memo_Text__c != null && ccConfig.Bulletin_Memo_Text__c.contains('<Financial Securities>')) 
-						|| (ccConfig.Bulletin_Memo_Text2__c != null && ccConfig.Bulletin_Memo_Text2__c.contains('<Financial Securities>'))
-						|| (ccConfig.Bulletin_Memo_Text3__c != null && ccConfig.Bulletin_Memo_Text3__c.contains('<Financial Securities>'))
-						|| ccConfig.Calculate_BG_to_HO__c)
-						accToGetFS.add(caseHOId);
+					//NEWGEN-2719 check if we need to skip CC creation depending on previous ifap status
+					if(ccConfig.Change_Code__c == 'NFS' && c.Parent.RecordTypeId == AMS_Utils.RECTYPE_IFAP && c.Account.ANG_IsNewGenAgency__c 
+							&& !mapAccounts.get(c.AccountId).Cases.isEmpty() && IFAP_BusinessRules.isPreviousIFAPStatusEquals(mapAccounts.get(c.AccountId).Cases, 'Closed_Non compliance')){
+							
+							notifications.add(new Technical_Logs__c(Record__c = c.Id, Log__c = 'NFS change code'));
+					} else {
 
-					if((ccConfig.Bulletin_Memo_Text__c != null && ccConfig.Bulletin_Memo_Text__c.contains('<IRRS Sequence>')) 
-						|| (ccConfig.Bulletin_Memo_Text2__c != null && ccConfig.Bulletin_Memo_Text2__c.contains('<IRRS Sequence>'))
-						|| (ccConfig.Bulletin_Memo_Text3__c != null && ccConfig.Bulletin_Memo_Text3__c.contains('<IRRS Sequence>'))
-						|| ccConfig.Generate_Irregularity_Sequence__c)
-						accToGetPreviousIrr.add(caseHOId);
+						if(!changeCodesToCreatePerCase.containsKey(c))
+							changeCodesToCreatePerCase.put(c, new List<AMS_ChangeCodes__c>());
+						changeCodesToCreatePerCase.get(c).add(ccConfig);
 
-					if(c.Account.ANG_IsNewGenAgency__c)
-						accountsToFetchFOPs.add(caseHOId);
+						if((ccConfig.Bulletin_Memo_Text__c != null && ccConfig.Bulletin_Memo_Text__c.contains('<Financial Securities>')) 
+							|| (ccConfig.Bulletin_Memo_Text2__c != null && ccConfig.Bulletin_Memo_Text2__c.contains('<Financial Securities>'))
+							|| (ccConfig.Bulletin_Memo_Text3__c != null && ccConfig.Bulletin_Memo_Text3__c.contains('<Financial Securities>'))
+							|| ccConfig.Calculate_BG_to_HO__c)
+							accToGetFS.add(caseHOId);
+
+						if((ccConfig.Bulletin_Memo_Text__c != null && ccConfig.Bulletin_Memo_Text__c.contains('<IRRS Sequence>')) 
+							|| (ccConfig.Bulletin_Memo_Text2__c != null && ccConfig.Bulletin_Memo_Text2__c.contains('<IRRS Sequence>'))
+							|| (ccConfig.Bulletin_Memo_Text3__c != null && ccConfig.Bulletin_Memo_Text3__c.contains('<IRRS Sequence>'))
+							|| ccConfig.Generate_Irregularity_Sequence__c)
+							accToGetPreviousIrr.add(caseHOId);
+
+						if(c.Account.ANG_IsNewGenAgency__c)
+							accountsToFetchFOPs.add(caseHOId);
+					}
 				}
     		}
     	}
-
-    	//create missing hierarchy account selections for each case
-    	if(!toCreateHierarchySelection.isEmpty())
-			hierarchySelectionPerCase.putAll(AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(toCreateHierarchySelection, casePerParentAcc));
 
 		//get the operational calendars
 		if(!setOperationCalendarExtID.isEmpty()){
 			for(Operational_Calendar__c oc : [SELECT Operation_Period_code__c, First_Day__c, Last_Day__c FROM Operational_Calendar__c WHERE Operation_Period_code__c IN: setOperationCalendarExtID])
 				mapOperationalCalendar.put(oc.Operation_Period_code__c, oc);
-		}
-
-		//get all parents and all accounts per parent
-		for(List<AMS_Process_Detail__c> pdList : hierarchySelectionPerCase.values()){
-			for(AMS_Process_Detail__c pd : pdList) {
-				Id hoId = pd.HOId__c == null ? parentAccPerCase.get(pd.Case__c) : pd.HOId__c;
-				mapAllHOs.put(pd.Account__c, hoId);
-				if(!allHierarchyPerParent.containsKey(hoId))
-					allHierarchyPerParent.put(hoId, new Set<Id>());
-				allHierarchyPerParent.get(hoId).add(pd.Account__c);
-			}
 		}
 
 		//get the necessary financial securities
@@ -202,10 +245,6 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 		}
 
-		//get all accounts
-		for(Set<Id> accIdSet : allHierarchyPerParent.values())
-			allAccts.addAll(accIdSet);
-
 		//get necessary fops
 		Map<Id,List<Agency_Authorization__c>> fOPsMap = new Map<Id,List<Agency_Authorization__c>>();
         if (!accountsToFetchFOPs.isEmpty()) {
@@ -215,14 +254,6 @@ public class AMS_OscarCase_RiskMgmt {
         	}
             fOPsMap = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIdsFOP);	
         }
-
-        //get all accounts and respective change codes created previously for the same case
-        Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, ParentId, Parent.ParentId, CNS_Agency__c, ANG_IsNewGenAgency__c, Default_date__c, Status__c, Reason__c, Previous_Reason__c, PreviousStatus__c, Location_Class__c, Expiry_Date__c, 
-													 	(SELECT Id, Change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, CreatedDate, Created_Date_To_Show__c,
-													 	RecordType.DeveloperName, Irregularities_Expired__c, Account__c, Effective_Date__c, Operation__c, Irregularity_Type__c, Irregularities_Points__c, SIDRA_Case__c
-													 	FROM Agencies_Applied_Change_codes__r
-													 	ORDER BY Created_Date_To_Show__c DESC)
-														FROM Account WHERE Id IN: allAccts]);
 
         for(Account acc : mapAccounts.values()){
         	for(Agency_Applied_Change_code__c aaccode : mapAccounts.get(acc.Id).Agencies_Applied_Change_codes__r){
@@ -250,7 +281,7 @@ public class AMS_OscarCase_RiskMgmt {
 			for(AMS_ChangeCodes__c ccToCreate : changeCodesToCreatePerCase.get(cs)){
 				Agency_Applied_Change_code__c aacc;
 				if(ccToCreate.Apply_to_hierarchy__c){
-					Id caseHOId = cs.Account.ParentId == null ? cs.AccountId : cs.Account.Parent.ParentId == null ? cs.Account.ParentId : cs.Account.Parent.ParentId;
+					Id caseHOId = parentAccPerCase.get(cs.Id);
 
 					aacc = CreateChangeCode(cs, ccToCreate, mapAccounts.get(caseHOId), mapAccounts.get(caseHOId).CNS_Agency__c, fOPsMap.get(cs.AccountId));
 
@@ -292,6 +323,9 @@ public class AMS_OscarCase_RiskMgmt {
 
 		if(!lsAACC.isEmpty())
 			insert lsAACC;
+
+		if(!notifications.isEmpty())
+			insert notifications;
     }
 
     private static void applyChangeCodeToAllHierarchy(Agency_Applied_Change_code__c newCC, Account acct, AMS_ChangeCodes__c ccToCreate, Boolean isCNS, Case cs, Account parentAcc){
@@ -731,6 +765,16 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 	}
 
+	/**
+	 * Overloaded method to be able call 
+	 * the bCheckCondition with new paramenter
+	 *
+	 */
+	@TestVisible
+	private static boolean bCheckCondition(Case newCaseValues, String sFieldToCheck, String condition, Map<Id, List<Agency_Applied_Change_code__c>> mapCC){		
+		return bCheckCondition(NewCaseValues, sFieldToCheck, condition, mapCC, null);
+	}
+
 
 	/**********************************************************************************************************************
 		Method return true if condition is verified.
@@ -747,11 +791,20 @@ public class AMS_OscarCase_RiskMgmt {
 		Most of the time, field to check is taken directly from the SIDRA/SIDRA Lite case.
 	***********************************************************************************************************************/
 	@TestVisible
-	private static Boolean bCheckCondition(Case newCaseValues, String sFieldToCheck, String condition, Map<Id, List<Agency_Applied_Change_code__c>> mapCC){
+	private static Boolean bCheckCondition(Case newCaseValues, String sFieldToCheck, String condition, Map<Id, List<Agency_Applied_Change_code__c>> mapCC, Case lastIFAP){
 		set<string> setValues = new set<string>();
 
 		if(condition.startsWithIgnoreCase('VALUES:')){
-			String sValue = sFieldToCheck == 'Parent.Status' ? newCaseValues.Parent.Status : (String)newCaseValues.get(sFieldToCheck);
+			String sValue = null;
+			if(sFieldToCheck == 'Parent.Status')
+				sValue = NewCaseValues.Parent.Status;
+			else if(sFieldToCheck == 'LastYearIFAP.Status'){
+				//Account must have an IFAP Case from last year to be possible to generate NOT change code
+				if(lastIFAP != null) sValue = lastIFAP.Status;
+			}
+			else {
+				sValue = (String)NewCaseValues.get(sFieldToCheck);
+			}
 			if(sValue==null)return false;
 			setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
 			return setValues.contains(sValue.toUpperCase());
@@ -844,7 +897,8 @@ public class AMS_OscarCase_RiskMgmt {
 				((Field3==null || Field3.toUpperCase() == 'PARENT.STATUS' || Field3.toUpperCase() ==  'CHANGECODE' || Field3.toUpperCase()== 'EXISTS') || (Field3 != null && NewCaseValues.get(Field3) == OldCaseValues.get(Field3))) &&
 				((Field4==null || Field4.toUpperCase() == 'PARENT.STATUS' || Field4.toUpperCase() ==  'CHANGECODE' || Field4.toUpperCase()== 'EXISTS') || (Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4))) &&
 				((Field5==null || Field5.toUpperCase() == 'PARENT.STATUS' || Field5.toUpperCase() ==  'CHANGECODE' || Field5.toUpperCase()== 'EXISTS') || (Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5))) &&
-				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
+				//NEWGEN-5318 - avoid validation when Field6 Value = LASTYEARIFAP.STATUS
+				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && Field6.toUpperCase() != 'LASTYEARIFAP.STATUS' && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
 				)
 				return false;
 		}
@@ -1085,5 +1139,24 @@ public class AMS_OscarCase_RiskMgmt {
             return String.ValueOf(detail.Due_Date__c);
         }
         return '';
+    }
+
+    /**
+     * For the given Case list 
+     * find the Last IFAP case in the last Financial Year
+     * 
+     */
+    private static Case findLastIFAP(List<Case> caseList, String financialYear){
+
+    	Case lastIfapCase = null;
+    	if(financialYear == null) return null;
+
+    	Integer lastYearIfap = Integer.valueOf(financialYear) - 1;
+    	
+    	for(Case c : caseList){
+    		if(c.IFAP_Financial_Year__c == String.valueOf(lastYearIfap) && (lastIfapCase == null || lastIfapCase.CreatedDate < c.CreatedDate))
+    			lastIfapCase = c;
+    	}
+    	return lastIfapCase;
     }
 }
