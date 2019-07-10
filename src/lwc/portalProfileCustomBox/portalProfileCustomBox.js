@@ -235,7 +235,7 @@ export default class PortalProfileCustomBox extends LightningElement {
 
     checkSave(currentField, forcePass) {
         this.checkErrorOnErrorFields(currentField, forcePass);
-        this.checkIfNumberHasErrors(currentField);
+        //this.checkIfNumberHasErrors(currentField);
     }
 
     checkErrorOnErrorFields(currentField, forcePass) {
