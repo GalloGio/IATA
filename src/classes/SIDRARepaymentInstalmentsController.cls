@@ -107,7 +107,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
             upsert lstRepaymentInstalments;
 
             //ACAMBAS - WMO-546: Begin         
-            Case_Detail__c oldInstalmentDetails = getInstalmentsDetails(this.cs.Id);
+            Case_Detail__c oldInstalmentDetails = this.cs != null ? getInstalmentsDetails(this.cs.Id) : null;
 
             if(oldInstalmentDetails == null) {
                 if(this.instalmentsDetails.Interest_Amount__c >= 0 && !String.isBlank(this.instalmentsDetails.Interest_Currency__c)) {
