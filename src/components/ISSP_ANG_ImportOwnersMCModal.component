@@ -1,11 +1,11 @@
 <apex:component controller="ISSP_AMS_Accreditation" allowDML="true">
-    <apex:form id="copyOwnersMc">
-      	<div class="modal fade" id="copyOwnersMcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <apex:form id="viewOwnersMc">
+      	<div class="modal fade" id="viewOwnersMcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         	<div class="modal-dialog" role="document">
-          		<div class="modal-content" style="width: 900px; margin-left: -150px;">
+          		<div class="modal-content">
             		<div class="modal-header">
               			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              			<h4 class="modal-title" id="myModalLabel">{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_ANG_Import_Owners_Directors, $Label.ISSP_ANG_Import_Directors)}</h4>
+              			<h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_ANG_View_Owners}</h4>
             		</div>
             		<div class="modal-body" style="text-align: center;">
               			<apex:pageBlock>
@@ -22,7 +22,7 @@
             		</div>
 
             		<div class="modal-footer">            			
-              			<apex:commandButton id="importButton" action="{!importOwners}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_ANG_Import}" oncomplete="closeOwnersMulticountry(); this.removeAttribute('disabled'); return false;" onclick="this.disabled='disabled'" reRender="contactList, companyList, ownerList"/>
+              			<apex:commandButton id="modifyButton" action="{!saveAndNavigateToOwnersForm}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_ANG_View_Owners_Modify}" oncomplete="closeOwnersMulticountry(); this.removeAttribute('disabled'); return false;" onclick="this.disabled='disabled'"/>
               			<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
             		</div>
 
@@ -34,14 +34,13 @@
     <script>
 		function showOwnersMulticountry() {
       		$j(function () {
-          		$j('#copyOwnersMcModal').modal('show');
+          		$j('#viewOwnersMcModal').modal('show');
         	});
       	}
 
       	function closeOwnersMulticountry() {
         	$j(function () {
-          		$j('#copyOwnersMcModal').modal('hide');
-          		reRenderImportOwnersMCModal();
+          		$j('#viewOwnersMcModal').modal('hide');
         	});
       	}
 	</script>
