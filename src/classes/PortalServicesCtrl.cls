@@ -47,7 +47,7 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	portalApplicationList.addAll(requestableAppList);
 
 	for (Portal_Applications__c pApp: portalApplicationList) {
-		if (pApp.Name == 'Insurance Providers') {
+		if (pApp.Name == 'Insurance Providers' || pApp.Name == 'Financial Securities') {
 			if (((con.Account.Sector__c == 'Travel Agent' || con.Account.Sector__c == 'Cargo Agent')
 			     && con.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) &&
 			    (allowedLocTypes.contains(con.Account.Location_Type__c) || con.Account.Is_Branch_Abroad__c == 'Yes') &&
