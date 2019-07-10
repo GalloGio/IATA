@@ -1737,6 +1737,8 @@ public with sharing class ANG_AgencyChangesHelper {
      */
     private static void processRiskAlertChanges(AMS_OSCAR__c osc, Id topParentAcc){
 
+        System.debug('[ANG_AgencyChangesHelper] Start processRiskAlertChanges');
+
     	Schema.DescribeSObjectResult r = ANG_Risk_Alert__c.sObjectType.getDescribe();
         ID accID = topParentAcc == null ? osc.Account__c : topParentAcc;
 
@@ -1756,7 +1758,7 @@ public with sharing class ANG_AgencyChangesHelper {
             newRiskAlert.ANG_Account__c = osc.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY ? osc.New_parent__c : osc.Account__c;
             newRiskAlertList.add(newRiskAlert);
 
-            System.debug('[AMS_OSCARTriggerHandler] NEW RiskAlert changed: ' + newRiskAlert);
+            System.debug('[ANG_AgencyChangesHelper] NEW RiskAlert: ' + newRiskAlert);
         }
 
         if(!newRiskAlertList.isEmpty()){
