@@ -84,6 +84,17 @@ public class AccountHandler{
 				listAccountId.add(newAccount.parentId);
 			}
 		}
+
+		if(ANG_AgencyChangesHelper.changesContainer == null)
+			updateParentAccountFields(listAccountId);
+		else		
+			updateParentAccountFieldsFuture(listAccountId);
+
+
+	}
+
+    @future(callout=false)
+	public static void updateParentAccountFieldsFuture(list<Id> listAccountId){
 		updateParentAccountFields(listAccountId);
 	}
 

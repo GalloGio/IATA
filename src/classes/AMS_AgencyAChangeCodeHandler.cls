@@ -127,8 +127,24 @@ public class AMS_AgencyAChangeCodeHandler {
     		string sReason = (aacc.Reason_Code__c==null?'':aacc.Reason_Code__c)+ '-' + (aacc.Reason_Description__c==null?'':aacc.Reason_Description__c);
     		string sStatus = (aacc.AccountNewStatus__c==null?'':aacc.AccountNewStatus__c);
     		boolean bUpdateAccnt = false;
-    		Account acc = new Account(id = aacc.Account__c);
-    		if(!bIsUpdate) acc.Organization_Last_Change_Date__c = Date.Today();
+
+            Account acc = null; 
+
+            if(ANG_AgencyChangesHelper.changesContainer <> null){
+                acc = ANG_AgencyChangesHelper.changesContainer.accountsMap.get(aacc.Account__c);
+
+                if(acc == null){
+
+                    acc = new Account(id = aacc.Account__c);
+                    ANG_AgencyChangesHelper.changesContainer.addAccount(acc);
+                }
+            }
+            
+            if(acc == null)
+    		    acc = new Account(id = aacc.Account__c);
+
+            
+            if(!bIsUpdate) acc.Organization_Last_Change_Date__c = Date.Today();
     		if(sReason != '-'){
     			if(aacc.Account__c != null){
 	    			string sAccntReason = aacc.Account__r.reason__c;
@@ -157,9 +173,13 @@ public class AMS_AgencyAChangeCodeHandler {
     			mapAccntToUpdate.put(aacc.Account__c, acc);
     	}
     	
-    	if(!mapAccntToUpdate.isEmpty()){
+    	if(!mapAccntToUpdate.isEmpty() && ANG_AgencyChangesHelper.changesContainer == null){
             System.debug('[AMS_AgencyAChangeCodeHandler] Preparing to update ' + mapAccntToUpdate.size() + ' accounts.');
     		update mapAccntToUpdate.values();
+        }else{
+            if(ANG_AgencyChangesHelper.changesContainer <> null){
+            System.debug('[AMS_AgencyAChangeCodeHandler] Setting ' + mapAccntToUpdate.size() + ' accounts to delayed update.');
+            }
         }
     }
     

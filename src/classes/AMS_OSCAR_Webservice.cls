@@ -157,7 +157,7 @@ global class AMS_OSCAR_Webservice {
     }
 
     WebService static String createAMLCaseWithNoOscarUpdate(AMS_OSCAR__c oscar) {
-        return execCreateAMLCase(oscar, false);
+        return execCreateAMLCase(oscar, false, false);
     }
 
     WebService static String createAMLCase(String oscarId) {
@@ -168,7 +168,11 @@ global class AMS_OSCAR_Webservice {
         return 'ERROR: OSCAR not found.';
     }
 
-    private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar) {
+    private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar){
+        return execCreateAMLCase(oscar, updateOscar, true);
+    }
+
+    private static String execCreateAMLCase(AMS_OSCAR__c oscar, Boolean updateOscar, Boolean toUpdateAccount) {
         String result = '';
 
         if (oscar.STEP17__c == AMS_Utils.IN_PROGRESS) return 'ERROR: Due Diligence already in progress';
@@ -206,7 +210,8 @@ global class AMS_OSCAR_Webservice {
                 update oscar;
             }
 
-            update new Account(Id = oscar.Account__c, Due_Diligence_Status__c = 'In Progress');
+            if(toUpdateAccount)
+                update new Account(Id = oscar.Account__c, Due_Diligence_Status__c = 'In Progress');
 
             return issCase.Id;
 
