@@ -35,9 +35,10 @@
                                 class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
                                 <div key={field} class="slds-size_1-of-2">
 
-                                    <lightning-combobox class="text-small labelValue textValue" name={labels.ICCS_Account_Name_Label}
-                                        label={labels.ICCS_Account_Name_Label} value={accountSelected} placeholder="--None--"
-                                        options={accountList} onchange={handleChangeAccount}>
+                                    <lightning-combobox class="text-small labelValue textValue"
+                                        name={labels.ICCS_Account_Name_Label} label={labels.ICCS_Account_Name_Label}
+                                        value={accountSelected} placeholder="--None--" options={accountList}
+                                        onchange={handleChangeAccount} required>
                                     </lightning-combobox>
 
                                 </div>
