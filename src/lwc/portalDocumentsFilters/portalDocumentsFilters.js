@@ -12,7 +12,6 @@ export default class PortalDocumentsFilters extends LightningElement {
     @track topicValues;
     @track typeValues;
     @track countryValues;
-    @track localTiles;
     renderas = false;
 
     @api
@@ -21,7 +20,7 @@ export default class PortalDocumentsFilters extends LightningElement {
     }
     set documentObject(value) {
         let _value = JSON.parse(JSON.stringify(value));
-        
+
         if(this._documentObject !== undefined) {
             let __documentObjectOld = JSON.parse(JSON.stringify(this._documentObject));
 
@@ -54,7 +53,7 @@ export default class PortalDocumentsFilters extends LightningElement {
         return this.countryValues;
     }
 
-    connectedCallback() {
+    connectedCallback() {        
         // DOCUMENT CATEGORY PICKLIST VALUES
         getDocumentsCategories({ sobj : 'ContentVersion', field : 'Document_Category__c' }) 
         .then(results => {           
@@ -71,16 +70,20 @@ export default class PortalDocumentsFilters extends LightningElement {
                 }
             });
             let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
-            let localTiles = [];
             for(let key in tempDocs) {
                 if (tempDocs.hasOwnProperty(key)) {
-                    // __documentObject.categories[tempDocs[key].categoryName] = { name: tempDocs[key].categoryName, noResults: 0, loading: false, searchText: '', productCategory: '', countryOfPublication: '' };
-                    __documentObject.categories.push({ name: tempDocs[key].categoryName, noResults: 0, loading: false, searchText: '', productCategory: '', countryOfPublication: '', topResults: __documentObject.categorySelected !== '' ? false : true, docId: __documentObject.docId !== '' ? __documentObject.docId : '' });
-                    localTiles.push({ name: tempDocs[key].categoryName, noResults: 0, loading: false });
+                    __documentObject.categories.push({ 
+                        name: tempDocs[key].categoryName, 
+                        noResults: 0, 
+                        loading: false, 
+                        searchText: '', 
+                        productCategory: '', 
+                        countryOfPublication: '', 
+                        topResults: __documentObject.categorySelected !== '' ? false : true, 
+                        docId: __documentObject.docId !== '' ? __documentObject.docId : '', 
+                        show: __documentObject.categorySelected === '' || tempDocs[key].open ? true : false });
                 }
             }
-            
-            this.localTiles = localTiles;
             
             const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
             this.dispatchEvent(selectedEvent);
@@ -142,6 +145,7 @@ export default class PortalDocumentsFilters extends LightningElement {
                 __documentObject.categories[i].productCategory = '';
                 __documentObject.categories[i].searchText = '';
                 __documentObject.categories[i].docId = '';
+                __documentObject.categories[i].show = true;
             }
             
             const selectedEvent = new CustomEvent('highlightfilter', { detail: __documentObject });
@@ -176,9 +180,12 @@ export default class PortalDocumentsFilters extends LightningElement {
                     __documentObject.categories[i].topResults = false;
                     __documentObject.categories[i].productCategory = '';
                     __documentObject.categories[i].countryOfPublication = '';
+                    __documentObject.categories[i].show = true;
+                } else {
+                    __documentObject.categories[i].show = false;
                 }
             }
-    
+
             const selectedEvent = new CustomEvent('filter', { detail: __documentObject });
             this.dispatchEvent(selectedEvent);
     
