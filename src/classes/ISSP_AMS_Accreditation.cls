@@ -3127,7 +3127,6 @@ public without sharing class ISSP_AMS_Accreditation {
             accountConcerned.Email__c = newForm.Branch_Office_Email__c;
         }
         if (!isocountry.Prevent_Portal_Trade_Name_Change__c && newForm.Trade_Name__c != null) {
-            accChanges_List.add(new AccountChanges('TradeName__c', accountConcerned.TradeName__c, newForm.Trade_Name__c));
             accountConcerned.TradeName__c = newForm.Trade_Name__c;
         }
 
@@ -4158,7 +4157,7 @@ public without sharing class ISSP_AMS_Accreditation {
            query += field + ', ';
         }
 
-        query += 'Branch_Office_Country__r.Name, SAAM_Case__r.Reason1__c, Branch_Office_Country__r.ISO_Code__c, Branch_Office_Country__r.AMS_Settlement_System__c ';
+        query += 'Branch_Office_Country__r.Name, SAAM_Case__r.Reason1__c, Branch_Office_Country__r.ISO_Code__c, Branch_Office_Country__r.AMS_Settlement_System__c, Same_Legal_Entity_Agency_Form__r.Status__c, Same_Legal_Entity_Agency_Form__r.ISSP_Branch_AccountId__c ';
         query += 'FROM AMS_Pax_Accreditation_Form__c ';
         
         if (String.isNotBlank(currentMCFormId)) {
@@ -4388,18 +4387,14 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-        if (paramCodeWhere != AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS) {
-            query += 'FROM AMS_Accreditation_Contact__c ';
+        query += 'FROM AMS_Accreditation_Contact__c ';
 
-            if (String.isBlank(parentFormId)) {
-                query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
-            } else {
-                query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
-            }
+        if (String.isBlank(parentFormId)) {
+            query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
         } else {
-            query += 'FROM AMS_Accreditation_Contacts__r ';
+            query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
         }
-    
+         
         switch on paramCodeWhere {
             when PARAMCODE_OWNERSHIP_SUMMARY {
                 query += 'AND (Financial_interest__c > 0) ';
@@ -4450,7 +4445,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             when PARAMCODE_MAIN_LEGAL_OWNERS {
-                query += 'WHERE Agency_owner__c = true ';
+                query += 'AND Agency_owner__c = true AND AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Status = \'Draft\' ';
             }
         }
 
@@ -7193,7 +7188,8 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
-    public void setOwners(String type){
+    public void setOwners(String type) {
+        List<AMS_Accreditation_Contact__c> lstAccreditationContact = new List<AMS_Accreditation_Contact__c>();
         Boolean notToAdd = false;
         //Get owners related to the account
 
@@ -7226,23 +7222,6 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
         if (isScopeOfChangeChanged || countAccreditationContact.size() == 0 || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD  && notToAdd == true)) {
-            List<AMS_Account_Role__c> amsOwners = [SELECT Account__c,Active__c,
-                Employee_Name__c,Employee_type__c,Id,
-                Owner_Account__c,Owner_Account__r.Name,Owner_Account__r.IATACode__c,Owner_Account__r.Email__c,
-                Owner_Name__c,Percentage__c,
-                Position__c,RecordTypeId,Title__c,Valid__c,
-                Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
-                Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
-                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
-                Legacy_External_ID__c
-                FROM AMS_Account_Role__c
-                where Account__c = :lAccountConcerned
-                and RecordTypeId = :rtAccRoleOwnership
-                and Active__c = true
-                and Percentage__c > 0];
-
-            for(AMS_Account_Role__c accRole : amsOwners){
-
             for(AMS_Account_Role__c accRole: [SELECT Account__c, Active__c, Employee_Name__c, Employee_type__c, Id, Owner_Account__c,
                                                     Owner_Account__r.Name, Owner_Account__r.IATACode__c, Owner_Account__r.Email__c, Owner_Name__c, 
                                                     Percentage__c, Position__c, RecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,
@@ -7404,7 +7383,7 @@ public without sharing class ISSP_AMS_Accreditation {
                                                                             State_Province__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
                                                                             Same_Legal_Entity_Agency_Form__c, Same_Legal_Entity_Agency_Account__c, Account_Name__c, Location_Type__c,
                                                                             Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c,
-                                                                            SAAM_Case__r.Status
+                                                                            SAAM_Case__r.Status, Same_Legal_Entity_Agency_Form__r.Status__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
                                                                         ORDER BY Name ASC];
@@ -7568,48 +7547,29 @@ public without sharing class ISSP_AMS_Accreditation {
         update newForm;
     }
 
-    public List<AMS_Pax_Accreditation_Form__c> allOwnersOfTheLegalEntity {
-        get {
-            if (allOwnersOfTheLegalEntity == null) {
-                fetchOwnersFromLegalEntity();
-            }
-
-            return allOwnersOfTheLegalEntity;
-        }
-        set;
-    }
-
-    public void fetchOwnersFromLegalEntity() {
-        String contactsFromMainEntity = 'SELECT Id, (';
-        contactsFromMainEntity += dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, '');
-        contactsFromMainEntity += ') FROM AMS_Pax_Accreditation_Form__c ';
-
-        if (newForm.Same_Legal_Entity_Agency_Form__c == null) {
-            contactsFromMainEntity += 'WHERE Same_Legal_Entity_Agency_Form__c = \'' + newForm.Id + '\' ';
-        } else {
-            contactsFromMainEntity += 'WHERE (Same_Legal_Entity_Agency_Form__c = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ';
-            contactsFromMainEntity += 'OR Id = \'' + newForm.Same_Legal_Entity_Agency_Form__c + '\' ) ';
-            contactsFromMainEntity += 'AND Id != \'' + newForm.Id + '\' ';
-        }
-
-        contactsFromMainEntity += 'AND SAAM_Case__r.Status = \'Draft\' ';
-
-        allOwnersOfTheLegalEntity = Database.query(contactsFromMainEntity);
-    }
-
     public List<AMS_Accreditation_Contact__c> getOwnersFromMainLegalEntity() {
-        List<AMS_Accreditation_Contact__c> ownersFromMainLegalEntity = new List<AMS_Accreditation_Contact__c>();
-
-        for (AMS_Pax_Accreditation_Form__c form: allOwnersOfTheLegalEntity) {
-            for (AMS_Accreditation_Contact__c con: form.AMS_Accreditation_Contacts__r) {
-                ownersFromMainLegalEntity.add(con);
-            }
-        }
-
-        return ownersFromMainLegalEntity;
+        return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c));
     }
 
-    public void importOwners() { //to be renamed
-        getOwnersFromMainLegalEntity();
+    public PageReference saveAndNavigateToOwnersForm() {
+        if (newform.Same_Legal_Entity_Agency_Form__r.Status__c != 'InProgress') {
+            delete [SELECT Id FROM Account WHERE Id = :newForm.Same_Legal_Entity_Agency_Form__r.ISSP_Branch_AccountId__c];
+
+            update new AMS_Pax_Accreditation_Form__c(Id = newform.Same_Legal_Entity_Agency_Form__c,
+                                                    Status__c = 'InProgress');
+        }
+        
+        String pageURL = '/';
+
+        if (newForm.HO_Account__c == null) {
+            pageURL += 'ISSP_ANG_PAX_AE?caseId=' + newCase.Id + commParam +'&step=3&isMultiCountryNewAE=true&currentMCFormId=' + newForm.Same_Legal_Entity_Agency_Form__c;
+        } else {
+            pageURL += 'ISSP_ANG_PAX_HE?caseId=' + newCase.Id + commParam +'&step=3&currentMCFormId=' + newForm.Same_Legal_Entity_Agency_Form__c;
+        }
+
+        newForm.Validation_ERRORS__c = false;
+        saveAMSForm();
+
+        return new Pagereference(pageURL);
     }
 }

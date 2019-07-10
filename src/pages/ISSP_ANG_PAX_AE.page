@@ -1272,12 +1272,12 @@
                               			<apex:outputPanel id="ownershipLinks">
                                     <div style="width: 100%; display: flex; justify-content: space-between;">
                                       <div style="width: calc(100% - 20px);">
-                            						<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
+                            						<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(AND(isMultiCountryNewAE, NOT(isHOAccredited)), $Label.ISSP_AMS_Add_Contact, IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person))}</apex:commandLink>
 
-                            						<apex:commandLink onfocus="showOwnersMulticountry();" style="float: right; {!IF(ownersFromMainLegalEntity.size == 0,'pointer-events: none !important; cursor: default; color: gray !important;','')}" rendered="{!OR(isMultiCountry || isMultiCountryNewAE || isMCNewAEAccredited)}"><span class="glyphicon glyphicon-arrow-down"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_ANG_Import_Owners_Directors, $Label.ISSP_ANG_Import_Directors)}</apex:commandLink>
+                            						<apex:commandLink onfocus="showOwnersMulticountry();" style="float: right; {!IF(ownersFromMainLegalEntity.size == 0,'pointer-events: none !important; cursor: default; color: gray !important;','')}" rendered="{!AND(OR(isMultiCountry || isMultiCountryNewAE || isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}"><span class="glyphicon glyphicon-arrow-down"></span>&nbsp;{!$Label.ISSP_ANG_View_Owners}</apex:commandLink>
                                       </div>
 
-                                      <apex:image value="/img/msg_icons/info16.png" style="height: 16px;" title="{!$Label.ISSP_ANG_Import_Owners_Tooltip}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" rendered="{!OR(isMultiCountry || isMultiCountryNewAE || isMCNewAEAccredited)}"/>
+                                      <apex:image value="/img/msg_icons/info16.png" style="height: 16px;" title="{!$Label.ISSP_ANG_View_Owners_Tooltip}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip" rendered="{!AND(OR(isMultiCountry || isMultiCountryNewAE || isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}"/>
                                     </div>
                               			</apex:outputPanel>
 
