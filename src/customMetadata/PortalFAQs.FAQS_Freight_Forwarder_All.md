@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Account_Sector__c</field>
-        <value xsi:type="xsd:string">Freight Forwarder</value>
+        <value xsi:type="xsd:string">Cargo Agent</value>
     </values>
     <values>
         <field>DataCategoryVisibility__c</field>
