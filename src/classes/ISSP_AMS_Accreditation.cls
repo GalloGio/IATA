@@ -2148,7 +2148,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (isMultiCountryNewAE) {
                 newform.HO_Account__c = null;
-            }
+            } 
                  
             upsert newForm;
 
@@ -3330,10 +3330,12 @@ public without sharing class ISSP_AMS_Accreditation {
     public void submitMultiCountryApplication() {
         Set<AMS_Pax_Accreditation_Form__c> sameLegalEntityForms = new Set<AMS_Pax_Accreditation_Form__c>();
         Boolean wasNotGE;
+        List<AMS_Pax_Accreditation_Form__c> mcFormsToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
 
         for (AMS_Pax_Accreditation_Form__c mcForm: multiCountryApplicationForms) {
             if (mcform.HO_Account__c == null) {
                 if (mcform.AE_separate_Legal_Entity__c == 'No') {
+                    populateFieldsFromParentForm(mcForm);
                     sameLegalEntityForms.add(mcform);
                 }
             } else {
@@ -3347,9 +3349,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
             mcForm.Accept_terms_and_conditions__c = true;
             mcForm.Submitted_to_IATA__c = true;
+
+            mcFormsToUpdate.add(mcForm);
         }
 
-        update multiCountryApplicationForms;
+        update mcFormsToUpdate;
 
         if (wasNotGE) {
             update hqAccount;
@@ -3364,7 +3368,7 @@ public without sharing class ISSP_AMS_Accreditation {
         dmo.assignmentRuleHeader.useDefaultRule = true;
         Database.update(newCase, dmo);
 
-        OSCARIntegration(geMCForm.HO_Account__c, geMCForm.Id, 'ANG.NEW.GE.STANDARD.1.0', newCase.Id); //mudar aqui com ternario o process
+        OSCARIntegration(geMCForm.HO_Account__c, geMCForm.Id, 'ANG.NEW.GE.STANDARD.1.0', newCase.Id);
         sendConfirmationEmail(newCase);
 
         setConn = null;
