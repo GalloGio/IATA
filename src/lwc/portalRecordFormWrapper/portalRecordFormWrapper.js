@@ -27,9 +27,6 @@ import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
     
-    //User Type
-    @track userAdmin;
-
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
@@ -150,10 +147,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.accessibilityText = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
-        
+
         isAdmin().then(result => {
-            this.userAdmin = result;
-            this.showEdit = (this.userAdmin ? true : false);
+            this.showEdit = (result ? true : false);
         });
         
         return this.accessibilityText
