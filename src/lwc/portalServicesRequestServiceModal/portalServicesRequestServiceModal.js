@@ -160,7 +160,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.addUsersEnable = this.trackedServiceRecord.addUsersEnable;
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
-            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
             this.popUpHandler();
         }
 
