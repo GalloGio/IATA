@@ -40,11 +40,10 @@ export default class PortalDocumentsCategory extends LightningElement {
             let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
 
             this._documentObject = _value;
-            if((_value.topResults !== __documentObject.topResults ||
+            if(_value.topResults !== __documentObject.topResults ||
                 _value.searchText !== __documentObject.searchText ||
                 _value.productCategory !== __documentObject.productCategory ||
-                _value.countryOfPublication !== __documentObject.countryOfPublication) ||
-                _value.show === true) {
+                _value.countryOfPublication !== __documentObject.countryOfPublication) {
 
                 this.resetPagination();
                 this.searchDocuments();
@@ -130,12 +129,8 @@ export default class PortalDocumentsCategory extends LightningElement {
                             if(this._documentObject.topResults === false) { // INFINITE SCROLL
                                 this.concatValues = this.concatValues.concat(tempDocs[this._documentObject.name]);
                                 docsList.push({ key: key, value: this.concatValues, noResults: this.totalResults });
-                                if(this._documentObject.show === true) {
                                     __documentObject.noResults = this.totalResults;
                                 } else {
-                                    __documentObject.noResults = this.totalResults > 10 ? '10+' : this.totalResults;
-                                }
-                            } else {
                                 let noResults = results.totalItemCount > 10 ? '10+' : results.totalItemCount;
                                 docsList.push({ key: key, value: tempDocs[key], noResults: noResults });
                                 if(__documentObject.name === key) {
@@ -213,9 +208,6 @@ export default class PortalDocumentsCategory extends LightningElement {
                     __documentObject.categories[i].topResults = false;
                     __documentObject.categories[i].productCategory = '';
                     __documentObject.categories[i].countryOfPublication = '';
-                    __documentObject.categories[i].show = true;
-                } else {
-                    __documentObject.categories[i].show = false;
                 }
             }
 

@@ -80,8 +80,8 @@ export default class PortalDocumentsFilters extends LightningElement {
                         productCategory: '', 
                         countryOfPublication: '', 
                         topResults: __documentObject.categorySelected !== '' ? false : true, 
-                        docId: __documentObject.docId !== '' ? __documentObject.docId : '', 
-                        show: __documentObject.categorySelected === '' || tempDocs[key].open ? true : false });
+                        docId: __documentObject.docId !== '' ? __documentObject.docId : '' 
+                    });
                 }
             }
             
@@ -145,7 +145,6 @@ export default class PortalDocumentsFilters extends LightningElement {
                 __documentObject.categories[i].productCategory = '';
                 __documentObject.categories[i].searchText = '';
                 __documentObject.categories[i].docId = '';
-                __documentObject.categories[i].show = true;
             }
             
             const selectedEvent = new CustomEvent('highlightfilter', { detail: __documentObject });
@@ -180,9 +179,6 @@ export default class PortalDocumentsFilters extends LightningElement {
                     __documentObject.categories[i].topResults = false;
                     __documentObject.categories[i].productCategory = '';
                     __documentObject.categories[i].countryOfPublication = '';
-                    __documentObject.categories[i].show = true;
-                } else {
-                    __documentObject.categories[i].show = false;
                 }
             }
 
