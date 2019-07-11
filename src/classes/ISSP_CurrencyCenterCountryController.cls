@@ -21,7 +21,6 @@ public with sharing class ISSP_CurrencyCenterCountryController {
     public Boolean isNewPortal {
     get {
         if(isNewPortal == null) {
-            User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
             isNewPortal = CSP_Utils.isNewPortalActive();
          }
          
