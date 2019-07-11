@@ -29,9 +29,9 @@
                                 data-name={field.fieldName}>
                                 {field.label}
                                 <lightning-icon class="slds-is-absolute" if:true={field.isAsc}
-                                    icon-name="utility:arrowup" size="xx-small"></lightning-icon>
+                                    icon-name="utility:arrowup" size="xx-small" data-name={field.fieldName}>></lightning-icon>
                                 <lightning-icon class="slds-is-absolute" if:true={field.isDesc}
-                                    icon-name="utility:arrowdown" size="xx-small"></lightning-icon>
+                                    icon-name="utility:arrowdown" size="xx-small" data-name={field.fieldName}>></lightning-icon>
                             </th>
                         </template>
                         <th class="tableLefty"></th>
