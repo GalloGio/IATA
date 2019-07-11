@@ -1061,19 +1061,19 @@
                                     $('[id$="ShippingCountryList"]').val($(".billingcountry").val().toUpperCase());
                                     $('#shippingcountry > input').val($(".billingcountry").val().toUpperCase());
 
-                                    $(".shippingstreet").attr('disabled', 'disabled');
+                                    /*$(".shippingstreet").attr('disabled', 'disabled');
                                     $(".shippingcity").attr('disabled', 'disabled');
                                     $(".shippingpostalcode").attr('disabled', 'disabled');
                                     $(".shippingstate").attr('disabled', 'disabled');
                                     $('[id$="ShippingCountryList"]').attr('disabled', 'disabled');
-                                    $('[id$="ShippingCountryList"]').change();
-                                } else {
+                                    $('[id$="ShippingCountryList"]').change();*/
+                                } /*else {
                                     $(".shippingstreet").removeAttr('disabled');
                                     $(".shippingcity").removeAttr('disabled');
                                     $(".shippingpostalcode").removeAttr('disabled');
                                     $(".shippingstate").removeAttr('disabled');
                                     $('[id$="ShippingCountryList"]').removeAttr('disabled');
-                                }
+                                }*/
                             }
                         </script>
                       </apex:pageBlock>
@@ -1317,19 +1317,19 @@
                             $('[id$="ShippingCountryList"]').val($(".country__c").val().toUpperCase());
                             $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
                         
-                            $(".shipping_street__c").attr('disabled', 'disabled');
+                            /*$(".shipping_street__c").attr('disabled', 'disabled');
                             $(".shipping_city__c").attr('disabled', 'disabled');
                             $(".shipping_postal_code__c").attr('disabled', 'disabled');
                             $(".shipping_state__c").attr('disabled', 'disabled');
                             $('[id$="ShippingCountryList"]').attr('disabled', 'disabled');
-                            $('[id$="ShippingCountryList"]').change();
-                        } else {
+                            $('[id$="ShippingCountryList"]').change();*/
+                        } /*else {
                             $(".shipping_street__c").removeAttr('disabled');
                             $(".shipping_city__c").removeAttr('disabled');
                             $(".shipping_postal_code__c").removeAttr('disabled');
                             $(".shipping_state__c").removeAttr('disabled');
                             $('[id$="ShippingCountryList"]').removeAttr('disabled');
-                        }
+                        }*/
                     }
                 </script>           
         </apex:pageblock>
