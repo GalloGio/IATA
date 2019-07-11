@@ -4,6 +4,27 @@ public class PortalServicesCtrlTest {
     @testSetup
     static void setup() {
 
+        Portal_Applications__c easyPay1 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        Portal_Applications__c easyPay2 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        Portal_Applications__c easyPay3 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_WEX,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = true,
+                Agency__c = true
+            );
+
         Portal_Applications__c serviceTest = new Portal_Applications__c (
                 Name = 'serviceTest',
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
@@ -24,11 +45,12 @@ public class PortalServicesCtrlTest {
                 Agency__c = true
             );
 
-        insert new List<Portal_Applications__c>{serviceTest,serviceTest2,serviceTest3};
+        insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3};
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
+                ANG_Portal_Service__c = easyPay1.id,
                 ANG_Enable_NewGen__c = true
             );
 
@@ -36,13 +58,15 @@ public class PortalServicesCtrlTest {
         IATA_ISO_Country__c switzerland = new IATA_ISO_Country__c (
                 Name = 'Switzerland_test',
                 ISO_Code__c = 'CH',
+                ANG_Portal_Service__c = easyPay2.id,
                 ANG_Enable_NewGen__c = true
             );
 
 
         IATA_ISO_Country__c germany = new IATA_ISO_Country__c (
                 Name = 'Germany_test',
-                ISO_Code__c = 'DH'
+                ISO_Code__c = 'DH',
+                ANG_Portal_Service__c = easyPay3.id
             );
 
         IATA_ISO_Country__c spain = new IATA_ISO_Country__c (
@@ -59,7 +83,6 @@ public class PortalServicesCtrlTest {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
                 OwnerId = UserInfo.getUserId(),
-            	Reason_for_creation__c = 'Created by customer',
                 Location_Class__c = 'P'
             );
 
@@ -70,7 +93,6 @@ public class PortalServicesCtrlTest {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
                 Location_type__c = 'HE',
                 OwnerId = UserInfo.getUserId(),
-            	Reason_for_creation__c = 'Created by customer',
                 Location_Class__c = 'P'
             );
 
@@ -80,7 +102,6 @@ public class PortalServicesCtrlTest {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS,
                 Location_type__c = 'AO',
-            	Reason_for_creation__c = 'Created by customer',
                 OwnerId = UserInfo.getUserId()
             );
 
@@ -90,7 +111,6 @@ public class PortalServicesCtrlTest {
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
                 Location_type__c = 'HO',
-              	Reason_for_creation__c = 'Created by customer',
                 OwnerId = UserInfo.getUserId()
             );
 
@@ -99,58 +119,57 @@ public class PortalServicesCtrlTest {
         Contact c = new Contact (
                 LastName = 'ContactTest',
                 FirstName = 'Name',
-            	email = 'teste1@test.com',
-                accountID = a.id
+                accountID = a.id,
+                email='ContactTest@portalservices.test'
             );
 
         Contact c2 = new Contact (
                 LastName = 'ContactTest2',
                 FirstName = 'Name',
-            	email = 'teste2@test.com',
-                accountId = a2.id
+                accountId = a2.id,
+                email='ContactTest2@portalservices.test'
             );
 
         Contact c3 = new Contact (
                 LastName = 'ContactTest3',
                 FirstName = 'Name',
-            	email = 'teste3@test.com',
-                accountId = a3.id
+                accountId = a3.id,
+                email='ContactTest3@portalservices.test'
             );
 
         Contact c4 = new Contact (
                 LastName = 'ContactTest4',
                 FirstName = 'Name',
-            	email = 'teste4@test.com',
-                accountId = a4.id
+                accountId = a4.id,
+                email='ContactTest4@portalservices.test'
             );
 
         insert new List<Contact>{c,c2,c3,c4};
 
         Portal_Application_Right__c appRight = new Portal_Application_Right__c(
-                Portal_Application__c = serviceTest3.id,
+                Portal_Application__c = easyPay1.id,
                 Right__c = 'Access Granted',
                 Contact__c = c.Id
         );
 
         Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
-                Portal_Application__c = serviceTest3.id,
+                Portal_Application__c = easyPay2.id,
                 Right__c = 'Access Granted',
                 Contact__c = c2.Id
         );
 
         Portal_Application_Right__c appRight3 = new Portal_Application_Right__c(
-                Portal_Application__c = serviceTest3.id,
+                Portal_Application__c = easyPay3.id,
                 Right__c = 'Access Requested',
                 Contact__c = c3.Id
         );
         Portal_Application_Right__c appRight4 = new Portal_Application_Right__c(
                 Portal_Application__c = serviceTest3.id,
                 Right__c = 'Access Granted',
-                Contact__c = c4.Id
+                Contact__c = c2.Id
         );
 
         insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3,appRight4};
-
 
     }
 
@@ -160,6 +179,7 @@ public class PortalServicesCtrlTest {
 
         Contact c = [select id from contact where lastName = 'ContactTest2'];
 
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -191,6 +211,7 @@ public class PortalServicesCtrlTest {
     public static void PortalServicesCtrlTest_getAccessRequestedServices() {
         Contact c = [select id from contact where lastName = 'ContactTest3'];
 
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -220,8 +241,9 @@ public class PortalServicesCtrlTest {
 
     @isTest
     public static void PortalServicesCtrlTest_getUserServicesList() {
-        Contact c = [select id from contact where lastName = 'ContactTest2'];
+        Contact c = [select id from contact where lastName = 'ContactTest'];
 
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -243,9 +265,9 @@ public class PortalServicesCtrlTest {
             Test.StartTest();
 			PortalSearchFilterWrapper psfwrapper= new PortalSearchFilterWrapper();
             
-            psfwrapper.searchText = 'serviceTest2';
+            psfwrapper.searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
             PortalServicesCtrl.PagedResult results = PortalServicesCtrl.getUserFilteredServices(JSON.serialize(psfwrapper), '0');
-            System.assertEquals(results.totalItemCount <= 0, true);
+            System.assertEquals(results.totalItemCount == 1, true);
 
             Test.StopTest();
         }
@@ -256,6 +278,7 @@ public class PortalServicesCtrlTest {
 
         Contact c = [select id from contact where lastName = 'ContactTest'];
 
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -288,6 +311,7 @@ public class PortalServicesCtrlTest {
 
         Contact c = [select id from contact where lastName = 'ContactTest3'];
 
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
 
@@ -332,7 +356,8 @@ public class PortalServicesCtrlTest {
     public static void PortalServicesCtrlTest_getServiceInformation() {
         Contact c = [select id from contact where lastName = 'ContactTest2'];
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
 
 
         User testeUser1 = new User (
@@ -371,19 +396,16 @@ public class PortalServicesCtrlTest {
         Map<Id, Contact> contactIdtoContact = new Map<Id, Contact>();
         Map<Id, List<PortalServicesCtrl.ServiceWrapper>> contactToServices = new Map<Id, List<PortalServicesCtrl.ServiceWrapper>>();
 
-        Map<Id, Id> contactToUser = new Map<Id, Id>();
-
         if (!contacts.isEmpty()) {
             for (Contact c : contacts) {
                 User portalUser = ISSP_ObjectFactory.createPortalUser(c);
-                contactToUser.put(c.Id, portalUser.Id);
                 contactIds.add(c.Id);
                 contactIdtoContact.put(c.Id, c);
             }
 
             users = DAL_ISSP.getUsersByContactId(contactIds);
 
-
+            Map<Id, Id> contactToUser = new Map<Id, Id>();
             for (User u : users) {
                 contactToUser.put(u.ContactId, u.Id);
             }
@@ -393,8 +415,4 @@ public class PortalServicesCtrlTest {
 
         }
     }
-
-
-
-
 }
