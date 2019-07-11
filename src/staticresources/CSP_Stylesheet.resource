@@ -1425,61 +1425,29 @@ visibility: hidden;
     max-height: calc(10rem);
 }
 
-/* header */
-.headerButtonNotifications {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/notification.svg);
-  width: 24px;
-  height: 24px;
-}
-
-.headerButtonProfile {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/profile.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
-
-.headerButtonSupport {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/support.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
-
-.headerButtonService {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/service.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
-
-.headerButtonArrow {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/arrow-down.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
-
-.headerButtonSearch {
-  background-color: #ffffff;
-  mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
-  -webkit-mask-image: url(/csportal/s/CSPortal/Images/Icons/searchWhite.svg);
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-}
-
 /* USER INACTIVE POPUP */
 #div>.siteforcePanelsContainer{
     z-index: 5000;
+}
+
+.headerContainerShadow {
+    position: relative;
+    display: flex;
+}
+
+.headerContainerShadow > div {
+    z-index: 1;
+}
+
+.headerContainerShadow::after {
+    content: "";
+    position: absolute;
+    width: calc(100vw/2);
+    height: 125px;
+    left: calc((-100vw + 100%) / 2);
+    top: -10px;
+    border-radius: 150px 0 0 0;
+    z-index: 0;
+    opacity: 0.1;
+    background-image: linear-gradient(256deg, rgba(0, 0, 0, 0), #000000);
 }
