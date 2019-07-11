@@ -18,6 +18,18 @@ public with sharing class ISSP_CurrencyCenterCountryController {
     public List<AttWrapper> attICCS {get;set;}
     public List<AttWrapper> attAC {get;set;}
 
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
+            isNewPortal = CSP_Utils.isNewPortalActive();
+         }
+         
+        return isNewPortal;
+    }
+    set;
+    }
+
     public Datetime previousVisit {get{
             return ISSP_CurrencyCenterUtil.getPreviousVisitDateTime();
         }set;}

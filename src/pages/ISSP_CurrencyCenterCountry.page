@@ -198,7 +198,15 @@
                 <button type="button" class="btn btn-download" onclick="window.open('/ISSP_CurrencyCenterCountryPdf?id={!Country_Profile__c.Id}','_blank');">
                   <span class="glyphicon download-icon" aria-hidden="true"></span>{!$Label.CurrencyCenter_Download_Pdf}
                 </button>
-                
+                <button type="button" class="btn btn-download" onclick="if({!isNewPortal}){
+                    window.open('csportal/s/support-reach-us-create-new-case?category=Queries&topic=MyQueries&subtopic=M1S1&countryISO={!Country_Profile__c.ISO_Code__c}&concerncase=false&emergency=false','_blank');
+                    }
+                    else{
+                    window.open('/ISSP_FAQ2Case??MainNav=Queries&subNav=MyQueries&mid=M1S1&type=CurrencyRepatriationIssues&isocode={!Country_Profile__c.ISO_Code__c}','_blank');
+                    }
+                    ">
+                  <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;{!$Label.ISSP_F2CCreate}
+                </button>
               </div>
 
               <div class="row row-buttons">
