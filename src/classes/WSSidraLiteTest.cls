@@ -2205,7 +2205,6 @@ public class WSSidraLiteTest {
 
         System.RunAs(testUser) {
             Case cnsCase = SidraLiteManagerTest.createCNSAgent();
-            //cnsCase.SAAM_Deadline_Date__c = Date.today(); //to avoid validation error
             insert cnsCase;
 
             cnsCase.SAAM_Deadline_Date__c = Date.today();
@@ -2224,23 +2223,12 @@ public class WSSidraLiteTest {
                 System.assert(true);
             }
 
-            /*try {
-                 //Should fail with the error: 'Sidra Lite case cannot be updated before New Deadline Date'
-                 WSSidraLite.updateSecondAndThirdDeadline(cnsCase.Id);
-            }
-            catch (Exception e) {
-                System.assert(true);
-            }*/
-
-            //cnsCase.New_IFAP_Deadline_date__c = Date.today(); //to avoid validation error
-            //update cnsCase;
-
             WSSidraLite.updateSecondAndThirdDeadline(cnsCase.Id);
 
             sidraLiteCase = [SELECT Propose_Default__c, Termination_Reason__c FROM Case WHERE Id = :sidraLiteCase.Id];
 
             System.assertEquals(Date.today(), sidraLiteCase.Propose_Default__c);
-            System.assertEquals('Non Payment', sidraLiteCase.Termination_Reason__c);
+            System.assertEquals(null, sidraLiteCase.Termination_Reason__c);
 
             Test.stopTest();
         }

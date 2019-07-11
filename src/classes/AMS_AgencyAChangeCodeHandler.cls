@@ -46,40 +46,38 @@ public class AMS_AgencyAChangeCodeHandler {
             notifyAirlines(accToProcessPayment);
         }
 
-        //WMO-482 - ACAMBAS: Begin
-        processRelatedCases(setIdAACC);
-        //WMO-482 - ACAMBAS: End
+        processRelatedCases(aacc);  //WMO-482 - ACAMBAS
     }
 
     //WMO-482 - ACAMBAS: Begin
-    public static void processRelatedCases(set<id> AACCIdSet) {
-        Set<Id> CNSCaseIds = new Set<Id>();
+    public static void processRelatedCases(List<Agency_Applied_Change_code__c> aaccLst) {
+        List<Id> aaccLstCase = new List<Id>();
 
-        List<Agency_Applied_Change_code__c> changeCodesList = 
-                    [SELECT Change_Code__c, SIDRA_Case__c, SIDRA_Case__r.RecordType.DeveloperName, 
-                            SIDRA_Case__r.ParentId, SIDRA_Case__r.Account.CNS_Agency__c
-                     FROM Agency_Applied_Change_code__c 
-                     WHERE Id IN :AACCIdSet];
-
-        for(Agency_Applied_Change_code__c aacc : changeCodesList) {
-            //If change code is RVW and created from CNS Sidra Lite case
-            if(aacc.SIDRA_Case__r != null && aacc.Change_Code__c == 'RVW' && 
-                aacc.SIDRA_Case__r.RecordType.DeveloperName == 'Sidra_Lite' && 
-                aacc.SIDRA_Case__r.ParentId != null && aacc.SIDRA_Case__r.Account.CNS_Agency__c == true) {
-                CNSCaseIds.add(aacc.SIDRA_Case__r.ParentId);
+        for(Agency_Applied_Change_code__c aacc: aaccLst) {
+            if(aacc.Change_Code__c == 'RVW' && aacc.SIDRA_Case__c != null) {
+                aaccLstCase.add(aacc.SIDRA_Case__c);
             }
         }
 
-        List<Case> CNSCasesToUpdate = [SELECT Id, New_IFAP_Deadline_date__c, BusinessHoursId 
-                                       FROM Case 
-                                       WHERE Id IN :CNSCaseIds];
+        if(aaccLstCase.isEmpty()) return;
 
-        for(Case cse : CNSCasesToUpdate) {
-            cse.New_IFAP_Deadline_date__c = BusinessDays.addNBusinessDays(DateTime.now(),7,cse.BusinessHoursId).date();
+        List<Case> casesToUpdate = new List<Case>();
+
+        for(Case caseToProcess : [SELECT Id, Parent.BusinessHoursId, ParentId, Parent.New_IFAP_Deadline_date__c
+                                  FROM Case 
+                                  WHERE Id IN :aaccLstCase AND RecordType.DeveloperName = 'Sidra_Lite' AND ParentId != null AND Account.CNS_Agency__c = true]) {
+
+            Case parentCase = new Case(Id = caseToProcess.parentId);                         
+            Date newDateToUpdate = BusinessDays.addNBusinessDays(DateTime.now(), 7, caseToProcess.Parent.BusinessHoursId).date();
+
+            if(caseToProcess.parent.New_IFAP_Deadline_date__c <> newDateToUpdate){
+                parentCase.New_IFAP_Deadline_date__c = newDateToUpdate;
+                casesToUpdate.add(parentCase);
+            }
         }
 
-        if(CNSCasesToUpdate.size() > 0) {
-            update CNSCasesToUpdate;
+        if(!casesToUpdate.isEmpty()) {
+            update casesToUpdate;
         }
     }
     //WMO-482 - ACAMBAS: End
