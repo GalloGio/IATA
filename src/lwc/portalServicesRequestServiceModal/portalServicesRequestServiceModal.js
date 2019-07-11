@@ -50,6 +50,7 @@ import csp_RequestService_ContactSupport from '@salesforce/label/c.csp_RequestSe
 import Button_Cancel from '@salesforce/label/c.Button_Cancel';
 import IDCard_Confirm_Replacement from '@salesforce/label/c.IDCard_Confirm_Replacement';
 import csp_TimeoutIEP from '@salesforce/label/c.csp_TimeoutIEP';
+import ISSP_Access_Requested from '@salesforce/label/c.ISSP_Access_Requested';
 
 
 
@@ -126,7 +127,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         Button_Cancel,
         IDCard_Confirm_Replacement,
         csp_TimeoutIEP,
-        ISSP_ANG_Portal_Role_SubWalletManager
+        ISSP_ANG_Portal_Role_SubWalletManager,
+        ISSP_Access_Requested
 
     };
 
@@ -158,6 +160,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.addUsersEnable = this.trackedServiceRecord.addUsersEnable;
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
+            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
             this.popUpHandler();
         }
 
@@ -520,14 +523,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
 
-    newAppRequest(AppId, AppName, ContactId, AppPortalRole, FlagUseDefaultRole, defaultPortalUserRole) {
+    newAppRequest(AppId, AppName, ContactId, AppPortalRole, FlagUseDefaultRole, adefaultPortalUserRole) {
         ISSP_AvailableService_newAppsRequest2({
             applicationId: AppId,
             applicationName: AppName,
             contactId: ContactId,
             portalServiceRole: AppPortalRole,
             flagUseDefaultRole: FlagUseDefaultRole,
-            defaultPortalUserRole: defaultPortalUserRole
+            defaultPortalUserRole: adefaultPortalUserRole
         })
             .then(result => {
                 let results = JSON.parse(JSON.stringify(result));
