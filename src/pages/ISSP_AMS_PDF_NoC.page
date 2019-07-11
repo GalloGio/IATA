@@ -153,7 +153,7 @@
           </table>
           <br/>
         </apex:outputPanel>
-        <apex:outputPanel rendered="{!sectorValue=='Travel_Agent'}">
+        <apex:outputPanel rendered="{!AND(sectorValue=='Travel_Agent', NOT(newForm.Is_change_legal_name__c))}">
             <apex:repeat value="{!List_PreviousCompaniesOwners}" var="transferorOwner">
                 <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
                     <table border="0" cellpadding="3">
@@ -204,22 +204,47 @@
                     </table>
                 </div>
             </apex:repeat>
+                <div class="row" style="width:100%; float:left; page-break-inside:avoid; margin-top:20px;">
+                    <table border="0" cellpadding="3">
+                        <tr>
+                            <th colspan="2">{!$Label.ISSP_AMS_NoC_Witness}</th>
+                        </tr>
+                        <tr>
+                            <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
+                            <td>________________________</td>
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td>
+                            <td>________________________</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>________________________</td>
+                        </tr>
+                        <tr>
+                            <td>{!$Label.ISSP_Date}</td>
+                            <td>________________________</td>
+                        </tr>
+                    </table>
+                </div>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(sectorValue=='Travel_Agent', newForm.Is_change_legal_name__c)}">
             <div class="row" style="width:100%; float:left; page-break-inside:avoid; margin-top:20px;">
                 <table border="0" cellpadding="3">
                     <tr>
-                        <th colspan="2">{!$Label.ISSP_AMS_NoC_Witness}</th>
+                        <th colspan="2">{!$Label.ISSP_AMS_NoC_Authorized_Signature}</th>
                     </tr>
                     <tr>
                         <td>{!$Label.ISSP_AMS_NoC_Signature}</td>
                         <td>________________________</td>
                     </tr>
                     <tr>
-                        <td style="padding-bottom:15px">{!$Label.ISSP_AMS_NoC_Name_address}</td>
-                        <td>________________________</td>
+                        <td style="padding-bottom:30px">{!$Label.IFAP_name}</td>
+                        <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
-                        <td>________________________</td>
+                        <td style="padding-bottom:30px"><apex:outputText value="{!$Label.ISSP_AMS_NoC_title_or_capacity}" escape="false"/></td>
+                        <td>________________________<br/>{!$Label.ISSP_AMS_NoC_type_or_print}</td>
                     </tr>
                     <tr>
                         <td>{!$Label.ISSP_Date}</td>
@@ -230,7 +255,7 @@
         </apex:outputPanel>
 
         <div class="row" style="width: 100%; float:left; page-break-inside:avoid; margin-top:30px;">
-          <table style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')};border:1px solid #000;margin-left:100px" cellpadding="3">
+          <table style="display:{!IF(newForm.Is_change_ownership_or_shareholding__c,'','none')};border:1px solid #000;" cellpadding="3" width="100%">
               <tr style="border:none;font-weight:bold;color:red"><td>{!$Label.ISSP_AMS_NoC_IATA_Only}</td></tr>
               <tr style="border:none"><th>{!$Label.ISSP_AMS_NoC_IATA_Acknowledged}</th></tr>
               <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_AMS_NoC_IATA_Admin}</td></tr>
