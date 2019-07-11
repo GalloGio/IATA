@@ -37,6 +37,10 @@ import ISSP_Reset_Password from '@salesforce/label/c.ISSP_Reset_Password';
 import Announcement from '@salesforce/label/c.Announcements_Notification';
 import Tasks from '@salesforce/label/c.Tasks_Notification';
 import AllNotifications from '@salesforce/label/c.All_Notifications_Notification';
+import CSP_You_Dont_Have_Notifications from '@salesforce/label/c.CSP_You_Dont_Have_Notifications';
+import CSP_You_Dont_Have_Announcements from '@salesforce/label/c.CSP_You_Dont_Have_Announcements';
+import CSP_You_Dont_Have_Tasks from '@salesforce/label/c.CSP_You_Dont_Have_Tasks';
+
 
 // Accept Terms
 import { updateRecord } from 'lightning/uiRecordApi';
@@ -98,8 +102,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         Announcement,
         Tasks,
         AllNotifications,
-        ISSP_Reset_Password
+        ISSP_Reset_Password,
+        CSP_You_Dont_Have_Notifications,
+        CSP_You_Dont_Have_Announcements,
+        CSP_You_Dont_Have_Tasks
+
     };
+
     get labels() {
         return this._labels;
     }
@@ -319,10 +328,11 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
             this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
             this.headerButtonNotificationsStyle = 'display: block;';
-            this.notificationNumberStyle = 'display: block;';
+            this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: block;');
             this.openNotificationsStyle = 'display: none;';
             this.showBackdrop = false;
         }
+           
     }
 
     onClickAllNotificationsView(event) {
@@ -332,13 +342,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     openmodal(event) {
         this.notificationsView(event);
 
-        this.mainBackground = "z-index: 10004;"
-        this.openmodel = true
+        this.mainBackground = "z-index: 10004;";
+        this.openmodel = true;
     }
 
     closeModal() {
-        this.mainBackground = "z-index: 10000;"
-        this.openmodel = false
+        this.mainBackground = "z-index: 10000;";
+        this.openmodel = false;
     }
 
     notificationsView(event) {
@@ -456,6 +466,56 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 this.redirectChangePassword();
             });
 
+    }
+
+    close() {
+        if (this.openNotifications) {
+            this.openNotifications = true;
+            this.toggleNotifications();
+        }
+
+    }
+
+    get totalNotification() {
+        let toReturn = true;
+        if (this.notificationsList !== undefined) {
+            let notList = JSON.parse(JSON.stringify(this.notificationsList));
+            if (notList !== undefined && notList.length > 0) {
+                notList.forEach(function (element) {
+                    if (element.type === 'Notification' || element.type === 'Portal Service' || element.type === 'Portal Access')
+                        toReturn = false;
+                });
+            }
+        }
+        return toReturn;
+    }
+
+    get announcementNumber() {
+        let toReturn = true;
+        if (this.notificationsList !== undefined) {
+            let notList = JSON.parse(JSON.stringify(this.notificationsList));
+            if (notList !== undefined && notList.length > 0) {
+                notList.forEach(function (element) {
+                    if (element.type === 'Notification')
+                        toReturn = false;
+                });
+            }
+        }
+        return toReturn;
+    }
+
+    get taskNumber() {
+        let toReturn = true;
+        if (this.notificationsList !== undefined) {
+            let notList = JSON.parse(JSON.stringify(this.notificationsList));
+            if (notList !== undefined && notList.length > 0) {
+                notList.forEach(function (element) {
+                    if (element.type === 'Portal Service' || element.type === 'Portal Access')
+                        toReturn = false;
+                });
+            }
+        }
+        return toReturn;
     }
 
 }

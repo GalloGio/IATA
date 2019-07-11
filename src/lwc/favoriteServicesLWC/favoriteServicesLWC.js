@@ -2,6 +2,7 @@ import { LightningElement, track } from 'lwc';
 
 import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavoriteServicesList';
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
+import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import { updateRecord } from 'lightning/uiRecordApi';
 
 //Navigation
@@ -230,6 +231,7 @@ export default class FavoriteServicesLWC extends LightningElement {
         const openWindowData = event.target.attributes.getNamedItem('data-openwindow');
         const requestable = event.target.attributes.getNamedItem('data-requestable');
         const recordId = event.target.attributes.getNamedItem('data-recordid');
+        const recordName = event.target.attributes.getNamedItem('data-recordname');
         if (requestable.value === 'true') {
             // update Last Visit Date on record only if the clicked service is requestable
             // Create the recordInput object
@@ -275,11 +277,26 @@ export default class FavoriteServicesLWC extends LightningElement {
                             });
 
                     } else {
-                        if (!myUrl.startsWith('http')) {
-                            myUrl = window.location.protocol + '//' + myUrl;
+                        if (recordName.value === 'Payment Link') {
+                            paymentLinkRedirect()
+                                .then(result => {
+                                    if (result !== undefined && result !== '') {
+                                        myUrl = result;
+                                        if (!myUrl.startsWith('http')) {
+                                            myUrl = window.location.protocol + '//' + myUrl;
+                                        }
+                                    }
+                                    window.open(myUrl);
+                                    this.toggleSpinner();
+                                });
+
+                        } else {
+                            if (!myUrl.startsWith('http')) {
+                                myUrl = window.location.protocol + '//' + myUrl;
+                            }
+                            window.open(myUrl);
+                            this.toggleSpinner();
                         }
-                        window.open(myUrl);
-                        this.toggleSpinner();
                     }
 
 
