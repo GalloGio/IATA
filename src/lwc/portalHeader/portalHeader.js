@@ -458,4 +458,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
+    close() {
+        if (this.openNotifications) {
+            this.openNotifications = true;
+            this.toggleNotifications();
+        }
+
+    }
+
 }
