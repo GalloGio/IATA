@@ -62,7 +62,14 @@ export default class PortalContactList extends LightningElement {
         //In the first run, add rendering flags
         if (!this.recordsInitDone) {
             this.recordsInitDone = true;
-            this.processRecords();
+            if (this.sortBy != null) {
+                this.orderRows(this.sortBy);
+            }else if(this.defaultSort != null){
+                this.orderRows(this.defaultSort);
+            }
+            else{
+                this.processRecords();
+            }
         }
     }
 
@@ -161,11 +168,6 @@ export default class PortalContactList extends LightningElement {
 
             this.records = records;
             this.originalRecords = records;
-
-            if (this.defaultSort != null) {
-
-                //this.orderRows(this.defaultSort);
-            }
         }
 
 
