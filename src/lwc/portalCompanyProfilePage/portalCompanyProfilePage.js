@@ -370,8 +370,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let user = contacts[i].contactUser;
             let services = contacts[i].services;
 
+            let locationType = contact.Account.Location_Type__c === undefined ? '' : contact.Account.Location_Type__c;
+            contact.LocationCode = contact.IATA_Code__c + ' ' + locationType;
 
-            contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
             if (user && user.LastLoginDate != null) {
                 let locale = user.LanguageLocaleKey.replace('_', '-');
                 let lastLogin = new Date(user.LastLoginDate);
