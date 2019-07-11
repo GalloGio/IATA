@@ -22,15 +22,15 @@ public without sharing class DAL_WithoutSharing {
     
     	Map<String,String> userOptions = new Map<String,String>();
     
-    	List<User> userContactAccountOptions = [SELECT id, Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
-    	                                        Contact.User_Portal_Status__c, ContactId, Account.ICCS_Membership_Status__c,
-    	                                        Account.Top_Parent__r.ICCS_Membership_Status__c, Account.Top_Parent__c
+    	List<User> userContactAccountOptions = [SELECT id, Contact.Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
+    	                                        Contact.User_Portal_Status__c, ContactId, Contact.Account.ICCS_Membership_Status__c,
+    	                                        Contact.Account.Top_Parent__r.ICCS_Membership_Status__c, Contact.Account.Top_Parent__c
     	                                        FROM User WHERE Id =:portalUser];
     
     	if(!userContactAccountOptions.isEmpty()) {
     		for(User u : userContactAccountOptions) {
-    			if(u.Account.ANG_IEP_Status_FF__c != null) {
-    				userOptions.put('IEP_Status', u.Account.ANG_IEP_Status_FF__c);
+    			if(u.Contact.Account.ANG_IEP_Status_FF__c != null) {
+    				userOptions.put('IEP_Status', u.Contact.Account.ANG_IEP_Status_FF__c);
     			}
     			if(u.Contact.Authorized_Signatory__c != null) {
     				userOptions.put('Legal_Auth_Signature', String.valueOf(u.Contact.Authorized_Signatory__c));
@@ -41,11 +41,11 @@ public without sharing class DAL_WithoutSharing {
     			if(u.ContactId != null) {
     				userOptions.put('User_ContactId', u.ContactId);
     			}
-    			if(u.Account.Top_Parent__c != null) {
-    				if(u.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
-    					userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
+    			if(u.Contact.Account.Top_Parent__c != null) {
+    				if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
+    					userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.ICCS_Membership_Status__c);
     				}else if(u.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
-    					userOptions.put('User_ICCS_Membership_Status', u.Account.Top_Parent__r.ICCS_Membership_Status__c);
+    					userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c);
     				}
     			}
     		}
