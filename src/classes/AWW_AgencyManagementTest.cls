@@ -1,7 +1,7 @@
 @isTest
 private class AWW_AgencyManagementTest {
 
-    @testSetup static void setup() {  
+    @testSetup static void setup() {         
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
             Name= 'Portugal',
             ISO_Code__c= 'PT',
@@ -149,49 +149,6 @@ private class AWW_AgencyManagementTest {
         Account wwAccount = [SELECT Id FROM Account WHERE RecordType.DeveloperName= 'Agency_WW_HQ'];
         Test.startTest();
         AWW_CoreRelationshipCtrl.calculateAccountRelations(wwAccount.Id);
-        Test.stopTest();
-    }
-
-    @isTest static void testAccountGroups() {
-        Account wwAccount = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'Agency_WW_HQ'];
-        Account agency = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'IATA_Agency'];
-        Contact c = new Contact(
-            AccountId= agency.Id,
-            FirstName= 'FirstName',
-            LastName= 'LastName',
-            Title= 'Mr.',
-            Email= 'email@test.com',
-            Membership_Function__c= 'Training'
-        );
-        insert c;
-        Test.startTest();
-        LocalGovernance__c topGroup = new LocalGovernance__c(
-            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Reg_Div_Groups'),
-            Country__c= [SELECT Id FROM IATA_ISO_Country__c].Id,
-            Active__c= true,
-            Division__c= 'FDS',
-            Region__c= 'Europe',
-            Name= 'Test 1'
-        );
-        insert topGroup;
-        LocalGovernance__c localGroup = new LocalGovernance__c(
-            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups'),
-            Country__c= [SELECT Id FROM IATA_ISO_Country__c].Id,
-            Active__c= true,            
-            Division__c= 'FDS',
-            Region__c= 'Europe',
-            Name= 'Test 1',
-            AM_Under__c= topGroup.Id
-        );
-        insert localGroup;
-        Participant__c p = new Participant__c(
-            Representing__c= agency.Id,
-            Local_Group_Type__c= 'CAPJC',
-            Local_Governance__c	= localGroup.Id,
-            Contact__c= c.Id
-        );
-        insert p;
-        AWW_AccountGroupsCtrl.getParticipants(wwAccount.Id, true);
         Test.stopTest();
     }
 
