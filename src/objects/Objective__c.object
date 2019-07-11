@@ -329,7 +329,7 @@ Object used to store objectives that can be independent, related to other object
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Agency, Airline Headquarters, Airline Branch, General Sales Agent Headquarters, Others</value>
+                <value>Agency, Airline Headquarters, Airline Branch, General Sales Agent Headquarters, Others, Agency WW HQ</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>

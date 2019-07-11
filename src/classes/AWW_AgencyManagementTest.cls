@@ -161,7 +161,6 @@ private class AWW_AgencyManagementTest {
             LastName= 'LastName',
             Title= 'Mr.',
             Email= 'email@test.com',
-            CEO_CFO__c= 'CEO',
             Membership_Function__c= 'Training'
         );
         insert c;
