@@ -47,7 +47,7 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	portalApplicationList.addAll(requestableAppList);
 
 	for (Portal_Applications__c pApp: portalApplicationList) {
-		if (pApp.Name == 'Insurance Providers') {
+		if (pApp.Name == 'Insurance Providers' || pApp.Name == 'Financial Securities') {
 			if (((con.Account.Sector__c == 'Travel Agent' || con.Account.Sector__c == 'Cargo Agent')
 			     && con.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) &&
 			    (allowedLocTypes.contains(con.Account.Location_Type__c) || con.Account.Is_Branch_Abroad__c == 'Yes') &&
@@ -473,10 +473,10 @@ public String url { get; set; }
 @AuraEnabled (cacheable=false)
 public static ServiceWrapper getServiceDetails(string serviceId){
 
+	ServiceWrapper temp = null;
+
+	//use all salesforce logic and the custom settings logic to get the services and filter by the requested service
 	List<ServiceWrapper> lstAllServices = PortalServicesCtrl.getAllServices();
-
-
-	ServiceWrapper temp=null;
 	for(ServiceWrapper serviceWrapperAux : lstAllServices) {
 		if(serviceWrapperAux.recordService.id == serviceId) {
 			serviceWrapperAux.userContactId=DAL_ISSP.getUser(UserInfo.getUserId()).contactId; //Adds user contact to wrapper
@@ -487,6 +487,25 @@ public static ServiceWrapper getServiceDetails(string serviceId){
 			temp= serviceWrapperAux;
 		}
 	}
+
+	//if user is admin and does not have access to this service, it's ok to retrieve anyway
+	if(PortalServicesCtrl.isPortalAdminUser() && temp == null){
+		User userAux = [SELECT Id, ContactId, Contact.Account.ANG_IEP_Status_FF__c FROM User WHERE Id = :UserInfo.getUserId()];
+		String contactId = userAux.ContactId;
+		String iepStatus = userAux.Contact.Account.ANG_IEP_Status_FF__c;
+		Boolean isAdmin = PortalServicesCtrl.isPortalAdminUser();
+		Contact contAcc = AMS_Utils.getIEPContact(contactId);
+		Boolean isAuthorisedSignatory = (isAdmin && contAcc.Authorized_Signatory__c);
+
+		PortalApplications_Sel portalApplicationsSelector = new PortalApplications_Sel();
+		List<Portal_Applications__c> lstServicesAux = portalApplicationsSelector.getPortalApplicationsByApplicationsList(new Set<String>{serviceId});
+
+		if(lstServicesAux != null && !lstServicesAux.isEmpty()){
+			temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '');
+			temp.totalNrContacts = PortalServicesCtrl.getTotalNrContatsRelatedToService(serviceId);
+		}
+	}
+
 	return temp;
 }
 
@@ -785,37 +804,7 @@ private static void alignStatus(ServiceWrapper sw,string newStatus){
 @AuraEnabled(cacheable=true)
 public static Map<String, String> getUserOptions(String portalUser){
 
-	Map<String,String> userOptions = new Map<String,String>();
-
-	List<User> userContactAccountOptions = [SELECT id, Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
-	                                        Contact.User_Portal_Status__c, ContactId, Account.ICCS_Membership_Status__c,
-	                                        Account.Top_Parent__r.ICCS_Membership_Status__c, Account.Top_Parent__c
-	                                        FROM User WHERE Id =:portalUser];
-
-	if(!userContactAccountOptions.isEmpty()) {
-		for(User u : userContactAccountOptions) {
-			if(u.Account.ANG_IEP_Status_FF__c != null) {
-				userOptions.put('IEP_Status', u.Account.ANG_IEP_Status_FF__c);
-			}
-			if(u.Contact.Authorized_Signatory__c != null) {
-				userOptions.put('Legal_Auth_Signature', String.valueOf(u.Contact.Authorized_Signatory__c));
-			}
-			if(u.Contact.User_Portal_Status__c != null  && u.Contact.User_Portal_Status__c != '') {
-				userOptions.put('User_Portal_Status', u.Contact.User_Portal_Status__c);
-			}
-			if(u.ContactId != null) {
-				userOptions.put('User_ContactId', u.ContactId);
-			}
-			if(u.Account.Top_Parent__c != null) {
-				if(u.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
-					userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
-				}else if(u.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
-					userOptions.put('User_ICCS_Membership_Status', u.Account.Top_Parent__r.ICCS_Membership_Status__c);
-				}
-			}
-		}
-	}
-	return userOptions;
+	return DAL_WithoutSharing.getUserOptions(portalUser);
 }
 
 @AuraEnabled(cacheable=true)
@@ -923,13 +912,11 @@ private static List<String> getVisibleApplicationNames(Account account) {
 
 // Denys Acccess to a portal service from the manage service page by an portal administrator
 @AuraEnabled(cacheable=false)
-public static Boolean denyAccess(String contactId,string serviceId, String reason) {
+public static Boolean denyAccess(String contactId,string serviceId, String reason, Boolean isFromContactTable) {
 
-
-
-	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate 
-												 FROM Portal_Application_Right__c 
-												 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
+	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
+	                                             FROM Portal_Application_Right__c
+	                                             WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 
 	System.debug('psaList: ' + psaList);
 	if(psaList == null || psaList.isEmpty()) {
@@ -937,12 +924,25 @@ public static Boolean denyAccess(String contactId,string serviceId, String reaso
 	}
 	Portal_Application_Right__c psa = psaList.get(0);
 
-	try {
-		delete psa;
-		return true;
-	} catch(Exception e) {
-		throw new portalServiceException(Label.ISSP_ANG_GenericError);
+	if(isFromContactTable){
+		psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_DENIED;
+		psa.Access_Status_Reason__c = reason;
+
+		try {
+			update psa;
+			return true;
+		} catch(Exception e) {
+			throw new portalServiceException(Label.ISSP_ANG_GenericError);
+		}
+	}else{
+		try {
+			delete psa;
+			return true;
+		} catch(Exception e) {
+			throw new portalServiceException(Label.ISSP_ANG_GenericError);
+		}
 	}
+
 }
 
 

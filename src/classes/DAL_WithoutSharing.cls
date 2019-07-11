@@ -17,6 +17,42 @@ public without sharing class DAL_WithoutSharing {
         return 'Incomplete';
     }
 
+    @AuraEnabled(cacheable=true)
+    public static Map<String, String> getUserOptions(String portalUser){
+    
+    	Map<String,String> userOptions = new Map<String,String>();
+    
+    	List<User> userContactAccountOptions = [SELECT id, Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
+    	                                        Contact.User_Portal_Status__c, ContactId, Account.ICCS_Membership_Status__c,
+    	                                        Account.Top_Parent__r.ICCS_Membership_Status__c, Account.Top_Parent__c
+    	                                        FROM User WHERE Id =:portalUser];
+    
+    	if(!userContactAccountOptions.isEmpty()) {
+    		for(User u : userContactAccountOptions) {
+    			if(u.Account.ANG_IEP_Status_FF__c != null) {
+    				userOptions.put('IEP_Status', u.Account.ANG_IEP_Status_FF__c);
+    			}
+    			if(u.Contact.Authorized_Signatory__c != null) {
+    				userOptions.put('Legal_Auth_Signature', String.valueOf(u.Contact.Authorized_Signatory__c));
+    			}
+    			if(u.Contact.User_Portal_Status__c != null  && u.Contact.User_Portal_Status__c != '') {
+    				userOptions.put('User_Portal_Status', u.Contact.User_Portal_Status__c);
+    			}
+    			if(u.ContactId != null) {
+    				userOptions.put('User_ContactId', u.ContactId);
+    			}
+    			if(u.Account.Top_Parent__c != null) {
+    				if(u.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
+    					userOptions.put('User_ICCS_Membership_Status', u.Account.ICCS_Membership_Status__c);
+    				}else if(u.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
+    					userOptions.put('User_ICCS_Membership_Status', u.Account.Top_Parent__r.ICCS_Membership_Status__c);
+    				}
+    			}
+    		}
+    	}
+    	return userOptions;
+    }
+
     public static List<Contact> getContactsByAccountId(Id accountId, Integer offset, Integer batchSize){
         //Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
         Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =:accountId or parentId=:accountId or top_parent__c =:accountId)
