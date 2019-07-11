@@ -332,6 +332,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.openNotificationsStyle = 'display: none;';
             this.showBackdrop = false;
         }
+           
     }
 
     onClickAllNotificationsView(event) {
@@ -464,6 +465,14 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 this.displayAcceptTerms = true;
                 this.redirectChangePassword();
             });
+
+    }
+
+    close() {
+        if (this.openNotifications) {
+            this.openNotifications = true;
+            this.toggleNotifications();
+        }
 
     }
 
