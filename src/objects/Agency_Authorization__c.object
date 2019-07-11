@@ -176,7 +176,7 @@ IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
         <label>Last Request Result</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

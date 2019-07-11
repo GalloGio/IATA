@@ -506,14 +506,46 @@ public without sharing class OneId_RegistrationProcessController {
         return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
     }
 
+    //Method created as a workaround due to not be able to populate lookups in the Lightning Component. This was a quick fix in order to not change registration method signature. 
+    //Probably the way to set this IDs should be reviewed. 
+    @AuraEnabled
+    public static boolean registrationAux(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
+        
+        if(cityAndStateIds != null){
+            String billingCityId = (String) cityAndStateIds.get('billingCityId');
+            String billingStateId = (String) cityAndStateIds.get('billingStateId');
+            String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
+            String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
+            
+            if(!String.isBlank(billingCityId)){
+                acc.Geoname_Billing_City__c = billingCityId;                
+            }
+
+            if(!String.isBlank(billingStateId)){
+                acc.ISO_State__c = billingStateId;
+                acc.IATA_ISO_Billing_State__c = billingStateId;                            
+            }
+
+            if(!String.isBlank(shippingCityId)){
+                acc.Geoname_Shipping_City__c = shippingCityId;                
+            }
+
+            if(!String.isBlank(shippingStateId)){
+                acc.IATA_ISO_Shipping_State__c = shippingStateId;                            
+            }
+        }
+
+        return OneId_RegistrationProcessController.registration(acc, con, serviceName);
+    }
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName){
+              
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
 
-        if(serviceName == null)
+       if(serviceName == null)
             serviceName = 'IDENTITY';
 
         //it's general public account? create contact / user
@@ -577,7 +609,7 @@ public without sharing class OneId_RegistrationProcessController {
 
         //create contact        
         con.ISO_Country__c = acc.IATA_ISO_Country__c;
-        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Country__c;
+        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
         con.Country__c = acc.IATA_ISO_Country__c;
         con.Preferred_Language__c = languageString;
         con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
@@ -675,10 +707,17 @@ public without sharing class OneId_RegistrationProcessController {
                 if (!String.isBlank(acc.BillingCountry)) {
                     List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
-                        acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                        acc.IATA_ISO_Country__c = cn[0].id;
                     }
                 }
-            
+                
+                if (!String.isBlank(acc.ShippingCountry)) {
+                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.ShippingCountry});
+                    if (cn.size()!=0) {
+                        acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                    }
+                }
+
                 database.insert(acc);
             }
           
@@ -891,7 +930,42 @@ public without sharing class OneId_RegistrationProcessController {
         }
         return null;
     }
+   @AuraEnabled
+    public static StatesAndAlternateNames getStates(String country){
+        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+        Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT GeonameAlternateNames__c FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
+        StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
+
+        return states;
+    }
     
+    @TestVisible
+    public class StatesAndAlternateNames{
+        @AuraEnabled 
+        public List<IATA_ISO_State__c> states;
+        
+        @AuraEnabled
+        public Map<ID, IATA_ISO_City__c> idAndAlternateNames;
+
+         public StatesAndAlternateNames(List<IATA_ISO_State__c> states, Map<ID, IATA_ISO_City__c> idAndAlternateNames){
+           this.states = states;
+           this.idAndAlternateNames = idAndAlternateNames;  
+        }
+        
+    }
+
+    @AuraEnabled
+    public static String getAllCities(String country){
+        String allCities = '';
+        
+        for(IATA_ISO_City__c iic : [SELECT Name FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name != :country] ){
+            allCities += iic.Name+', ';
+        }
+        
+        Integer allCitiesSize = allCities.length(); 
+        
+        return allCitiesSize > 0 ? allCities.substring(0,allCitiesSize-2):null;
+    } 
     /* Manuel Conde commented this... 
 
     public static void increaseCodeCoverage(){

@@ -449,6 +449,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field6__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Clear_Irregularities__c</columns>
+        <columns>Risk_ChangeCode__c</columns>
         <filterScope>Everything</filterScope>
         <label>ALL</label>
         <language>en_US</language>
@@ -572,6 +573,21 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <operation>equals</operation>
         </filters>
         <label>CNS_JG</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Irregularities</fullName>
+        <columns>Change_Code__c</columns>
+        <columns>NAME</columns>
+        <columns>Risk_ChangeCode__c</columns>
+        <columns>Clear_Irregularities__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>IRR</value>
+        </filters>
+        <label>Irregularities</label>
         <language>en_US</language>
     </listViews>
     <listViews>
