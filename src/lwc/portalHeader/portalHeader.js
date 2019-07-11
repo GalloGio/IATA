@@ -319,7 +319,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
             this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
             this.headerButtonNotificationsStyle = 'display: block;';
-            this.notificationNumberStyle = (this.notificationCounter + this.taskCounter === 0 ? 'display: none;' : 'display: block;');
+            this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: block;');
             this.openNotificationsStyle = 'display: none;';
             this.showBackdrop = false;
         }
