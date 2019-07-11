@@ -116,6 +116,20 @@ public static List<Portal_Application_Right__c> getFavoriteServicesList(){
 	return lstPortalApplicationsRights;
 }
 
+@AuraEnabled(cacheable=true)
+public static String paymentLinkRedirect(){
+
+	User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+
+	Contact con = [Select id, Credit_Card_Payment_Link__c from Contact where id =:userAux.ContactId];
+
+	if(con.Credit_Card_Payment_Link__c != null) {
+		return con.Credit_Card_Payment_Link__c;
+	}else{
+		return '';
+	}
+}
+
 /*
  * Method used to retrieve the old link when redirecting the users to the old Portals
  */
