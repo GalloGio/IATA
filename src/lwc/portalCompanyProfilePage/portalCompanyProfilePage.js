@@ -370,8 +370,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let user = contacts[i].contactUser;
             let services = contacts[i].services;
 
-            let locationType = contact.Account.Location_Type__c === undefined ? '' : contact.Account.Location_Type__c;
-            contact.LocationCode = contact.IATA_Code__c + ' ' + locationType;
+            let locationType = contact.Account.Location_Type__c ? contact.Account.Location_Type__c : '';
+            let iataCode = contact.IATA_Code__c ? contact.IATA_Code__c  : '';
+
+            contact.LocationCode = iataCode + ' ' + locationType;
 
             if (user && user.LastLoginDate != null) {
                 let locale = user.LanguageLocaleKey.replace('_', '-');
@@ -395,8 +397,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             if(services!= null){
                 contact.services = services;
             }
-            //contact.LastLogin = user.LastLoginDate;
-            contact.IsoCountry = contact.Account.IATA_ISO_Country__r.Name;
+
+            contact.IsoCountry = (contact.Account.IATA_ISO_Country__r != null) ? contact.Account.IATA_ISO_Country__r.Name : '';
+
             unwrappedContacts.push(contact);
 
         }
@@ -541,8 +544,21 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 return;
             }
 
+            let branches = JSON.parse(JSON.stringify(result));
+            let branchesSearch = this.branchesSearch;
+
+            for (let i = 0; i < branches.length; i++) {
+                let branch = branches[i];
+                branch.LocationCode = branch.IATACode__c;
+
+                if(branch.IATA_ISO_Country__r != null){
+                    branch.IsoCountry = branch.IATA_ISO_Country__r.Name;
+                }
+                branchesSearch.push(branch);
+            }
+
             branchesList.recordsInitDone = false;
-            branchesList.records = result;
+            branchesList.records = branchesSearch;
 
              this.branchesOffsetSearch += result.length;
         });
