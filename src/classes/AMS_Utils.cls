@@ -1231,9 +1231,10 @@ public without sharing class AMS_Utils {
 
                 for(Account accToUpdate : accountsToUpdate) {
 
-                    if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Id) ||
-                       (accToUpdate.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Top_Parent__c)) )
-                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.Top_Parent__c == null ? accToUpdate.Id : accToUpdate.Top_Parent__c);
+                    if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.id))
+                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.id);
+                    else if(accToUpdate.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accToUpdate.Top_Parent__c))
+                        accToUpdate.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accToUpdate.Top_Parent__c);
                 }
             }
 

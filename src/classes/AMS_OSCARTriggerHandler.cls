@@ -2155,9 +2155,10 @@ public class AMS_OSCARTriggerHandler {
             System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - mergeAccountsToUpdate] a - ' + a);
             if(a!=null) {
 
-                if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Id) ||
-                    (accounts.get(a.Id).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accounts.get(a.Id).Top_Parent__c)))
-                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accounts.get(a.Id).Top_Parent__c == null ? a.Id : accounts.get(a.Id).Top_Parent__c);
+                if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.id))
+                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(a.id);
+                else if(a.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Top_Parent__c))
+                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(a.Top_Parent__c);
 
                 mergedAccountsToUpdate.add(a);
             }
@@ -4015,9 +4016,10 @@ public class AMS_OSCARTriggerHandler {
                                 }
                             }
 
-                            if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(forAccount.Id) ||
-                                (accounts.get(forAccount.Id).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accounts.get(forAccount.Id).Top_Parent__c)))
-                                forAccount.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accounts.get(forAccount.Id).Top_Parent__c == null ? forAccount.Id : accounts.get(forAccount.Id).Top_Parent__c);
+                             if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(acct_reason.id))
+                                acct_reason.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(acct_reason.id);
+                            else if(acct_reason.Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(acct_reason.Top_Parent__c))
+                                acct_reason.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(acct_reason.Top_Parent__c);
 
                             System.debug('auxChangeCodeHO: ' + auxChangeCodeHO );
                             System.debug('auxChangeCode: ' + auxChangeCode );
