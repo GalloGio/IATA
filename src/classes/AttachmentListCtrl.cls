@@ -3,6 +3,7 @@ public with sharing class AttachmentListCtrl {
     public static final Long MAX_FILE_SIZE = 20971520; // 20 MB
     
     public static final List<String> LST_SAAM_AND_SIDRA_RTYPES_NAME = new List<String>{'ProcessEuropeSCE', 'SIDRA', 'SIDRA_BR', 'SIDRA_BR'};
+    public static final List<String> LST_SAAM_AND_SIDRA_OSCAR_RTYPES_NAME = new List<String>{'ProcessEuropeSCE', 'SIDRA', 'SIDRA_BR', 'OSCAR_Communication'};
     
     
     
@@ -39,6 +40,7 @@ public with sharing class AttachmentListCtrl {
     public static List<CSP_Utils.PickListWrapper> getReviewStatusPickValues(){
         return AttachmentListCtrl.ReviewStatusPickValues;
     } 
+
 
     @AuraEnabled
     public static PropertiesWrapper getPanelProperties(String parentId, Boolean isPortal, String communityName) {
@@ -110,6 +112,14 @@ public with sharing class AttachmentListCtrl {
     @AuraEnabled
     public static boolean checkIfSidraSaam(string caseId){
         return [SELECT Count() FROM Case WHERE Id = :caseId AND RecordType.DeveloperName IN :LST_SAAM_AND_SIDRA_RTYPES_NAME] > 0 ;
+        
+    }
+
+    @AuraEnabled
+    public static boolean checkIfSidraSaamOSCAR(string caseId){
+        //returns true if case record type is sidra/saam/oscar 
+        //used to redirect to correct page to add attachments
+        return [SELECT Count() FROM Case WHERE Id = :caseId AND RecordType.DeveloperName IN :LST_SAAM_AND_SIDRA_OSCAR_RTYPES_NAME] > 0 ;
         
     }
 
@@ -201,7 +211,7 @@ public with sharing class AttachmentListCtrl {
     
     @AuraEnabled
     public static List<WrapperAttach> getContentDetails(list<id> attachList){
-    //gets details on uploaded files
+    //generates link to be externally acessible
         set<id> attachSet= new set<id>(attachList);
         
         list<ContentDistribution> linkList= new list<ContentDistribution>(); 

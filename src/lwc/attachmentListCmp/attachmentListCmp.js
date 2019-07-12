@@ -1,6 +1,6 @@
 import { api, LightningElement, track, wire } from 'lwc';
 import getAllAttachments from '@salesforce/apex/AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal';
-import checkIfSaamSidra from '@salesforce/apex/AttachmentListCtrl.checkIfSidraSaam';
+import checkIfSaamSidra from '@salesforce/apex/AttachmentListCtrl.checkIfSidraSaamOSCAR';
 import getExpiringLinkWithRecId from '@salesforce/apex/AttachmentListCtrl.getExpiringLinkWithRecId';
 import redirectToOldPortal from '@salesforce/apex/CSP_Utils.redirectToOldPortal';
 
@@ -168,7 +168,7 @@ export default class AttachmentListCmp extends LightningElement {
         redirectToOldPortal({ url: '/ISSP_AddAttachment?caseId=' + this.parentid }).then(
             result => {
                 if (result)
-                    window.open(result);
+                    window.open(result,'_self');
             }
         ).error(error => {
             console.error('Error', error);
