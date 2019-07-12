@@ -705,6 +705,17 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>ICH_Requirements__c</fullName>
+        <description>Global requirements for ICH participation</description>
+        <externalId>false</externalId>
+        <label>ICH Requirements</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
         <fullName>Line_of_business__c</fullName>
         <externalId>false</externalId>
         <label>Line of business</label>
