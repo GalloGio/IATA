@@ -249,7 +249,7 @@ private  class AttachmentListCtrlTest {
             List<ContentDocument> contentDocList = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument];
 
             ContentDocumentLink contentlink=new ContentDocumentLink();
-            contentlink.ShareType= 'C';
+            contentlink.ShareType= 'V';
             contentlink.LinkedEntityId = c.Id; 
             contentlink.ContentDocumentId=contentDocList[0].Id;
             contentlink.Visibility = 'AllUsers'; 
@@ -257,6 +257,17 @@ private  class AttachmentListCtrlTest {
 
             List<WrapperAttach> wra=AttachmentListCtrl.getContentDetails(new list<id>{contentDocList.get(0).id});
             system.AssertEquals(wra.size(),1);
+
+
+            //get Link
+
+           String fileLink= AttachmentListCtrl.getExpiringLinkWithRecId(contentDocList.get(0).id);
+           system.AssertEquals(fileLink==null,false);
+
+           // delete Content Document
+
+           AttachmentListCtrl.ReturnWrapper res= AttachmentListCtrl.deleteAttachment(contentDocList.get(0).id,'');
+           system.AssertEquals(res.severity=='SUCCESS',true);
         Test.stopTest();
      }
 }
