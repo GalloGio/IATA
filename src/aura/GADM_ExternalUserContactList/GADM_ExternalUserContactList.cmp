@@ -107,7 +107,7 @@
                                                 </th>
                                                 <aura:set attribute="else">
                                                     <th scope="col" class="{!(v.SortByField == column.field_name) ? ((v.SortOrder == 'DESC') ? 'slds-is-sortable slds-is-resizable slds-is-sorted slds-is-sorted--desc' : 'slds-is-sortable slds-is-resizable slds-is-sorted slds-is-sorted--asc') : 'slds-is-sortable'}">
-                                                        <a data-id="{!column.field_name}" class="">
+                                                        <a data-id="{!column.field_name}" class="no_pointer">
 
                                                             <div data-id="{!column.field_name}" class="" title="{!column.field_label}">{!column.field_label}</div>
                                                         </a>

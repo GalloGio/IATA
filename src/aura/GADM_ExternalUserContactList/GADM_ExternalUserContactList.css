@@ -115,3 +115,15 @@
 .THIS a {
     color: #666666 !important;
 }
+
+.THIS a:hover{
+    text-decoration: none !important;
+}
+
+.THIS a:focus{
+   text-decoration: none !important;
+}
+
+.THIS .no_pointer {
+    cursor:default;
+}

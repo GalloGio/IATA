@@ -134,6 +134,16 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>Accepted for Processing</fullName>
+                    <default>false</default>
+                    <label>Accepted for Processing</label>
+                </value>
+                <value>
+                    <fullName>Data Submission Error</fullName>
+                    <default>false</default>
+                    <label>Data Submission Error</label>
+                </value>
+                <value>
                     <fullName>File processed</fullName>
                     <default>false</default>
                     <label>File processed</label>
@@ -144,19 +154,9 @@
                     <label>Rejected</label>
                 </value>
                 <value>
-                    <fullName>Accepted for Processing</fullName>
-                    <default>false</default>
-                    <label>Accepted for Processing</label>
-                </value>
-                <value>
                     <fullName>Submitted</fullName>
                     <default>false</default>
                     <label>Submitted</label>
-                </value>
-                <value>
-                    <fullName>Data Submission Error</fullName>
-                    <default>false</default>
-                    <label>Data Submission Error</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
