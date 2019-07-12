@@ -59,6 +59,125 @@
         <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
     </labels>
     <labels>
+        <fullName>AMS_DQ_Cannot_Check</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Check</shortDescription>
+        <value>We are not able to check the address in the specified location.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Find</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Find</shortDescription>
+        <value>We could not find that address. If you are sure that your input is correct, you can still submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Validate_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Validate City</shortDescription>
+        <value>We cannot validate address without a {0} city.Please fill in the field.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Validate_City_and_Street</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Validate City and Street</shortDescription>
+        <value>We cannot validate address without a {0} city and street. Please fill in the field.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Validate_Street</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Validate Street</shortDescription>
+        <value>We cannot validate address without a {0} street. Please fill in the field.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Check_Addr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Check Addr</shortDescription>
+        <value>Check Address</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_City_Cumpulsory</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ City Cumpulsory</shortDescription>
+        <value>The {0} city is compulsory. Please fill in the {1} city field.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_City_Not_in_Database</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ City Not in Database</shortDescription>
+        <value>The city {0} is not in our database (or it was spelled differently).</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_City_in_Another_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ City in Another Country</shortDescription>
+        <value>The city {0} is in our database but apparently it belongs to another country according to our database.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_City_in_Another_State</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ City in Another State</shortDescription>
+        <value>The city {0} is in our database but it is associated with another State/Province.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Enter_Valid_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Enter Valid City</shortDescription>
+        <value>Enter a valid city.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Found_Addr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Found Addr</shortDescription>
+        <value>Matching address(es) was(were) found.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Review_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Review City</shortDescription>
+        <value>Review the city name. If you are sure that your input is correct, click submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Review_Country_or_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Review Country or City</shortDescription>
+        <value>Review the country and/or city name(s). If you are sure that your input is correct, click submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Review_State</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Review State</shortDescription>
+        <value>Review state/province and/or city name.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Review_State_or_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Review State or City</shortDescription>
+        <value>Review the state/province and/or the city name. If you are sure that your input is correct, click submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Street_Compulsory</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Street Compulsory</shortDescription>
+        <value>The {0} street is compulsory. Please fill in the {1} street field.</value>
+    </labels>
+    <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2427,7 +2546,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AddressDoctorValidate</shortDescription>
-        <value>Please validate your billing and shipping addresses by clicking on the &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D5E0000008wRK&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; button</value>
+        <value>Please check your billing and shipping addresses by clicking on the check address button</value>
     </labels>
     <labels>
         <fullName>AddressDoctorValidate2</fullName>
