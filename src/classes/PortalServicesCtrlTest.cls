@@ -1,82 +1,88 @@
 @isTest
 public class PortalServicesCtrlTest {
-
+    
     @testSetup
     static void setup() {
-
+        
         Portal_Applications__c easyPay1 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
-
+            Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+            ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_Accredited_Agents_Only__c = false,
+            Agency__c = true
+        );
+        
         Portal_Applications__c easyPay2 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
-
+            Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
+            ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_Accredited_Agents_Only__c = false,
+            Agency__c = true
+        );
+        
         Portal_Applications__c easyPay3 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_WEX,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = true,
-                Agency__c = true
-            );
-
+            Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_WEX,
+            ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_Accredited_Agents_Only__c = true,
+            Agency__c = true
+        );
+        
         Portal_Applications__c serviceTest = new Portal_Applications__c (
-                Name = 'serviceTest',
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
-
+            Name = 'serviceTest',
+            ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_Accredited_Agents_Only__c = false,
+            Agency__c = true
+        );
+        
         Portal_Applications__c serviceTest2 = new Portal_Applications__c (
-                Name = 'serviceTest2',
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
-
+            Name = 'serviceTest2',
+            ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_Accredited_Agents_Only__c = false,
+            Agency__c = true
+        );
+        
         Portal_Applications__c serviceTest3 = new Portal_Applications__c (
-                Name = 'serviceTest3',
-                requestable__c=true,
-                Agency__c = true
-            );
-
-        insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3};
-
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
+            Name = 'serviceTest3',
+            requestable__c=true,
+            Agency__c = true
+        );
+        
+        Portal_Applications__c serviceTest4 = new Portal_Applications__c (
+            Name = 'serviceTest4',
+            requestable__c=true,
+            Agency__c = true
+        );
+        
+        insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3,serviceTest4};
+            
+            IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
                 Name = 'Portugal_test',
                 ISO_Code__c = 'PT',
                 ANG_Portal_Service__c = easyPay1.id,
                 ANG_Enable_NewGen__c = true
             );
-
-
+        
+        
         IATA_ISO_Country__c switzerland = new IATA_ISO_Country__c (
-                Name = 'Switzerland_test',
-                ISO_Code__c = 'CH',
-                ANG_Portal_Service__c = easyPay2.id,
-                ANG_Enable_NewGen__c = true
-            );
-
-
+            Name = 'Switzerland_test',
+            ISO_Code__c = 'CH',
+            ANG_Portal_Service__c = easyPay2.id,
+            ANG_Enable_NewGen__c = true
+        );
+        
+        
         IATA_ISO_Country__c germany = new IATA_ISO_Country__c (
-                Name = 'Germany_test',
-                ISO_Code__c = 'DH',
-                ANG_Portal_Service__c = easyPay3.id
-            );
-
+            Name = 'Germany_test',
+            ISO_Code__c = 'DH',
+            ANG_Portal_Service__c = easyPay3.id
+        );
+        
         IATA_ISO_Country__c spain = new IATA_ISO_Country__c (
-                Name = 'Spain_test',
-                ISO_Code__c = 'SP'
-            );
-
+            Name = 'Spain_test',
+            ISO_Code__c = 'SP'
+        );
+        
         insert new List<IATA_ISO_Country__c>{portugal,switzerland,germany,spain};
-
-        Account a = new Account (
+            
+            Account a = new Account (
                 name = 'AccountTest',
                 IATA_ISO_Country__c = portugal.id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
@@ -85,334 +91,469 @@ public class PortalServicesCtrlTest {
                 OwnerId = UserInfo.getUserId(),
                 Location_Class__c = 'P'
             );
-
+        
         Account a2 = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = switzerland.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
-                Location_type__c = 'HE',
-                OwnerId = UserInfo.getUserId(),
-                Location_Class__c = 'P'
-            );
-
+            name = 'AccountTest',
+            IATA_ISO_Country__c = switzerland.id,
+            Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
+            Location_type__c = 'HE',
+            OwnerId = UserInfo.getUserId(),
+            Location_Class__c = 'P'
+        );
+        
         Account a3 = new Account (
-                name = 'AccountTest3',
-                IATA_ISO_Country__c = germany.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS,
-                Location_type__c = 'AO',
-                OwnerId = UserInfo.getUserId()
-            );
-
+            name = 'AccountTest3',
+            IATA_ISO_Country__c = germany.id,
+            Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS,
+            Location_type__c = 'AO',
+            OwnerId = UserInfo.getUserId()
+        );
+        
         Account a4 = new Account (
-                name = 'AccountTest4',
-                IATA_ISO_Country__c = spain.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
-                Location_type__c = 'HO',
-                OwnerId = UserInfo.getUserId()
-            );
-
+            name = 'AccountTest4',
+            IATA_ISO_Country__c = spain.id,
+            Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
+            Location_type__c = 'HO',
+            OwnerId = UserInfo.getUserId()
+        );
+        
         insert new List<Account>{a,a2,a3,a4};
-
-        Contact c = new Contact (
+            
+            Contact c = new Contact (
                 LastName = 'ContactTest',
                 FirstName = 'Name',
                 accountID = a.id,
                 email='ContactTest@portalservices.test'
             );
-
+        
         Contact c2 = new Contact (
-                LastName = 'ContactTest2',
-                FirstName = 'Name',
-                accountId = a2.id,
-                email='ContactTest2@portalservices.test'
-            );
-
+            LastName = 'ContactTest2',
+            FirstName = 'Name',
+            accountId = a2.id,
+            email='ContactTest2@portalservices.test'
+        );
+        
         Contact c3 = new Contact (
-                LastName = 'ContactTest3',
-                FirstName = 'Name',
-                accountId = a3.id,
-                email='ContactTest3@portalservices.test'
-            );
-
+            LastName = 'ContactTest3',
+            FirstName = 'Name',
+            accountId = a3.id,
+            email='ContactTest3@portalservices.test'
+        );
+        
         Contact c4 = new Contact (
-                LastName = 'ContactTest4',
-                FirstName = 'Name',
-                accountId = a4.id,
-                email='ContactTest4@portalservices.test'
-            );
-
+            LastName = 'ContactTest4',
+            FirstName = 'Name',
+            accountId = a4.id,
+            email='ContactTest4@portalservices.test'
+        );
+        
         insert new List<Contact>{c,c2,c3,c4};
-
-        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            
+            Portal_Application_Right__c appRight = new Portal_Application_Right__c(
                 Portal_Application__c = easyPay1.id,
                 Right__c = 'Access Granted',
                 Contact__c = c.Id
-        );
-
+            );
+        
         Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
-                Portal_Application__c = easyPay2.id,
-                Right__c = 'Access Granted',
-                Contact__c = c2.Id
+            Portal_Application__c = easyPay2.id,
+            Right__c = 'Access Granted',
+            Contact__c = c2.Id
         );
-
+        
         Portal_Application_Right__c appRight3 = new Portal_Application_Right__c(
-                Portal_Application__c = easyPay3.id,
-                Right__c = 'Access Requested',
-                Contact__c = c3.Id
+            Portal_Application__c = easyPay3.id,
+            Right__c = 'Access Requested',
+            Contact__c = c3.Id
         );
         Portal_Application_Right__c appRight4 = new Portal_Application_Right__c(
-                Portal_Application__c = serviceTest3.id,
-                Right__c = 'Access Granted',
-                Contact__c = c2.Id
+            Portal_Application__c = serviceTest3.id,
+            Right__c = 'Access Granted',
+            Contact__c = c2.Id
         );
-
-        insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3,appRight4};
-
-    }
-
-
+        
+        Portal_Application_Right__c appRight5 = new Portal_Application_Right__c(
+            Portal_Application__c = serviceTest4.id,
+            Right__c = 'Access Requested',
+            Contact__c = c4.Id
+        );
+        
+        insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3,appRight4,appRight5};
+            
+            }
+    
+    
     @isTest
     public static void PortalServicesCtrlTest_getAccessGrantedServices() {
-
+        
         Contact c = [select id from contact where lastName = 'ContactTest2'];
-
+        
         //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-
-
+        
+        
         User testeUser1 = new User (
-                Alias = 'newUser', 
-                Email='newuser@testorg.com', 
-                EmailEncodingKey='UTF-8', 
-                LastName='Testing1', 
-                LanguageLocaleKey='en_US', 
-                ContactId = c.id,            
-                LocaleSidKey='en_US',
-                ProfileId = p.Id, 
-                TimeZoneSidKey='America/Los_Angeles', 
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
         
         System.runAs(testeUser1) {
             Test.StartTest();
-
+            
             List<PortalServicesCtrl.ServiceWrapper> lstResults = PortalServicesCtrl.getUserAccessGrantedServices();
             System.assertEquals(lstResults.size() > 0, true);
-
+            
             Test.StopTest();
         }
     }
-
+    
     @isTest
     public static void PortalServicesCtrlTest_getAccessRequestedServices() {
         Contact c = [select id from contact where lastName = 'ContactTest3'];
-
+        
         //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-
-
+        
+        
         User testeUser1 = new User (
-                Alias = 'newUser', 
-                Email='newuser@testorg.com', 
-                EmailEncodingKey='UTF-8', 
-                LastName='Testing1', 
-                LanguageLocaleKey='en_US', 
-                ContactId = c.id,            
-                LocaleSidKey='en_US',
-                ProfileId = p.Id, 
-                TimeZoneSidKey='America/Los_Angeles', 
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
         
         System.runAs(testeUser1) {
             Test.StartTest();
-
+            
             List<PortalServicesCtrl.ServiceWrapper> lstResults = PortalServicesCtrl.getUserAccessRequestedServices();
             System.assertEquals(lstResults.size() > 0, true);
-
+            
             Test.StopTest();
         }
     }
-
+    
     @isTest
     public static void PortalServicesCtrlTest_getUserServicesList() {
         Contact c = [select id from contact where lastName = 'ContactTest'];
-
+        
         //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-
-
+        
+        
         User testeUser1 = new User (
-                Alias = 'newUser', 
-                Email='newuser@testorg.com', 
-                EmailEncodingKey='UTF-8', 
-                LastName='Testing1', 
-                LanguageLocaleKey='en_US', 
-                ContactId = c.id,            
-                LocaleSidKey='en_US',
-                ProfileId = p.Id, 
-                TimeZoneSidKey='America/Los_Angeles', 
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
         
         System.runAs(testeUser1) {
             Test.StartTest();
-			PortalSearchFilterWrapper psfwrapper= new PortalSearchFilterWrapper();
+            PortalSearchFilterWrapper psfwrapper= new PortalSearchFilterWrapper();
             
             psfwrapper.searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
             PortalServicesCtrl.PagedResult results = PortalServicesCtrl.getUserFilteredServices(JSON.serialize(psfwrapper), '0');
             System.assertEquals(results.totalItemCount == 1, true);
-
+            
             Test.StopTest();
         }
     }
-
+    
     @isTest
     public static void PortalServicesCtrlTest_getFavoriteServicesList() {
-
+        
         Contact c = [select id from contact where lastName = 'ContactTest'];
-
+        
         //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-
-
+        
+        
         User testeUser1 = new User (
-                Alias = 'newUser', 
-                Email='newuser@testorg.com', 
-                EmailEncodingKey='UTF-8', 
-                LastName='Testing1', 
-                LanguageLocaleKey='en_US', 
-                ContactId = c.id,            
-                LocaleSidKey='en_US',
-                ProfileId = p.Id, 
-                TimeZoneSidKey='America/Los_Angeles', 
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
         
         System.runAs(testeUser1) {
             Test.StartTest();
-
+            
             List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
             System.assertEquals(lstResults.size() > 0, true);
-
+            
             Test.StopTest();
         }
     }
-
+    
     @isTest
     public static void PortalServicesCtrlTest_getFavoriteServicesList_noRightsGiven() {
-
+        
         Contact c = [select id from contact where lastName = 'ContactTest3'];
-
+        
         //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-
-
+        
+        
         List<Portal_Applications__c> lstApps = [SELECT Id from Portal_Applications__c];
         Database.delete(lstApps);
-
+        
         User testeUser1 = new User (
-                Alias = 'newUser', 
-                Email='newuser@testorg.com', 
-                EmailEncodingKey='UTF-8', 
-                LastName='Testing1', 
-                LanguageLocaleKey='en_US', 
-                ContactId = c.id,
-                LocaleSidKey='en_US',
-                ProfileId = p.Id, 
-                TimeZoneSidKey='America/Los_Angeles', 
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
         
         System.runAs(testeUser1) {
             Test.StartTest();
-
+            
             List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
             System.assertEquals(lstResults.size() == 0, true);
-
+            
             Test.StopTest();
         }
     }
-
+    
     @isTest
     public static void PortalServicesCtrlTest_goToOldPortalService() {
         Test.StartTest();
-
+        
         PortalServicesCtrl.goToOldPortalService('');
-
+        
         Test.StopTest();
         
     }
-
+    
     @isTest
     public static void PortalServicesCtrlTest_getServiceInformation() {
         Contact c = [select id from contact where lastName = 'ContactTest2'];
-
+        
         //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
-
-
+        
         User testeUser1 = new User (
-                Alias = 'newUser', 
-                Email='newuser@testorg.com', 
-                EmailEncodingKey='UTF-8', 
-                LastName='Testing1', 
-                LanguageLocaleKey='en_US', 
-                ContactId = c.id,            
-                LocaleSidKey='en_US',
-                ProfileId = p.Id, 
-                TimeZoneSidKey='America/Los_Angeles', 
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
+        
         
         System.runAs(testeUser1) {
             Test.StartTest();
             list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where name ='serviceTest3'];
             PortalServicesCtrl.ServiceWrapper result = PortalServicesCtrl.getServiceDetails(portalServicelist.get(0).id);
-            
             System.assertEquals(result.accessGranted, true);
-
+            
             Test.StopTest();
         }
         
     }
-
+    
     @isTest
     public static void PortalServicesCtrlTest_getAccessGrantedServicesForContacts() {
-
+        
         List<Contact> contacts = [SELECT Id,email,firstname,lastname from Contact WHERE LastName LIKE 'ContactTest%' LIMIT 3];
-
+        
         List<Id> contactIds = new List<Id>();
         List<User> users = new List<User>();
         Map<Id, Contact> contactIdtoContact = new Map<Id, Contact>();
         Map<Id, List<PortalServicesCtrl.ServiceWrapper>> contactToServices = new Map<Id, List<PortalServicesCtrl.ServiceWrapper>>();
-
+        
         if (!contacts.isEmpty()) {
             for (Contact c : contacts) {
                 User portalUser = ISSP_ObjectFactory.createPortalUser(c);
                 contactIds.add(c.Id);
                 contactIdtoContact.put(c.Id, c);
             }
-
+            
             users = DAL_ISSP.getUsersByContactId(contactIds);
-
+            
             Map<Id, Id> contactToUser = new Map<Id, Id>();
             for (User u : users) {
                 contactToUser.put(u.ContactId, u.Id);
             }
-
+            
             contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
             System.assert(!contactToServices.keySet().isEmpty());
-
+            
+        }
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_grantAccess() {
+        Contact c = [select id from contact where lastName = 'ContactTest4'];
+        
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
+        
+        User testeUser1 = new User (
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
+        
+        insert testeUser1;
+        
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+        
+        Test.StartTest();    
+        Boolean isReq =PortalServicesCtrl.grantAccess(c.id, portalServicelist[0].id, 'Test');
+        Test.StopTest();        
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_denyAccess() {
+        Contact c = [select id from contact where lastName = 'ContactTest4'];
+        
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
+        
+        User testeUser1 = new User (
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
+        
+        insert testeUser1;
+        
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+        
+        Test.StartTest();    
+        Boolean isReq =PortalServicesCtrl.denyAccess(c.id, portalServicelist[0].id, 'Test'); 
+        Test.StopTest();
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_serviceWrapperRedirect() {
+        
+        Contact c = [select id from contact where lastName = 'ContactTest4'];
+        
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
+        
+        User testeUser1 = new User (
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
+        
+        insert testeUser1;
+        
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+        
+        System.runAs(testeUser1) {
+            Test.StartTest();    
+            String redirect  =PortalServicesCtrl.serviceWrapperRedirect(portalServicelist[0].id); 
+            Test.StopTest();
+        }
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_getContactsAndStatusRelatedToServiceList() {
+        
+        Contact c = [select id from contact where lastName = 'ContactTest4'];
+        
+        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
+        
+        User testeUser1 = new User (
+            Alias = 'newUser', 
+            Email='newuser@testorg.com', 
+            EmailEncodingKey='UTF-8', 
+            LastName='Testing1', 
+            LanguageLocaleKey='en_US', 
+            ContactId = c.id,            
+            LocaleSidKey='en_US',
+            ProfileId = p.Id, 
+            TimeZoneSidKey='America/Los_Angeles', 
+            UserName='newuser@testorg.com',
+            Mgmt_Report_Team__c = true
+        );
+        
+        insert testeUser1;
+        List<PortalServicesCtrl.ContactWrapper> cw = new List<PortalServicesCtrl.ContactWrapper>();
+        List<PortalServicesCtrl.ContactWrapper> cw2 = new List<PortalServicesCtrl.ContactWrapper>();
+        
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+        
+        System.runAs(testeUser1) {
+            Test.StartTest();    
+            cw = PortalServicesCtrl.getContactsAndStatusRelatedToServiceList(portalServicelist[0].id,3);
+            cw2 = PortalServicesCtrl.searchContactsInService(portalServicelist[0].id,'serv'); 
+             
+            Test.StopTest();
         }
     }
 }
