@@ -77,6 +77,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>vandenbusj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <field>Meeting_Responsible__c</field>
             <type>userLookup</type>
         </recipients>
@@ -89,6 +93,10 @@
         <protected>false</protected>
         <recipients>
             <recipient>torneroc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vandenbusj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

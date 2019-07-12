@@ -10,7 +10,7 @@ global class AMS_HierarchyHelper {
 		system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> accountsIds ' + accountsIds);
 
 		if(!accountsIds.isEmpty()) {
-			for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
+			for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Parent_Account__r.IATACode__c, Child_Account__c, Child_Account__r.IATACode__c
 			                                      FROM AMS_Agencies_relationhip__c 
 			                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
 

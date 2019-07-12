@@ -48,19 +48,7 @@ public class ANG_MulticountryCopyParentInfo implements Queueable {
 					onlineAcc = new AMS_Pax_Accreditation_Form__c(
 
 						id = osc.AMS_Online_Accreditation__c,
-						Account_Name__c = osc.Account__r.Parent.Name,
-												
-						ISSP_AMS_Legal_Status__c = AMS_Utils.transformLegalStatus(osc.Account__r.Parent.Company_Type__c), 	
-
-
-						Branch_Office_Country__c = osc.Account__r.Parent.IATA_ISO_Country__c,				//ISO Country 
-						Location_Class__c = osc.Account__r.Parent.Location_Class__c,						//Location Class
-
-						Trade_Name__c = osc.Account__r.Parent.TradeName__c,									//Account Trade Name
-						Short_Name__c = osc.Account__r.Parent.Short_Name__c,								//Short Name
-						Website__c = osc.Account__r.Parent.Website,											//Wesite
-						ISSP_AMS_VAT_number__c = osc.Account__r.Parent.VAT_Number__c,						//VATNumber1,
-						IATA_ISO_State__c = osc.Account__r.Parent.Iso_State__c,								//ISO state 
+						
 						ANG_Accreditation_type__c = osc.Account__r.Parent.ANG_Accreditation_Model__c		//accreditation type
 					);
 					onlineAccList.add(onlineAcc);

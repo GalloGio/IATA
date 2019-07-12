@@ -4,6 +4,7 @@
     <customButtons>Request_RHC_Calculation</customButtons>
     <customButtons>Confirm_RHC</customButtons>
     <customButtons>Change_the_RHC_currency</customButtons>
+    <customButtons>Request_Provisional</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
@@ -86,6 +87,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_RHC_Amount_Forecasted__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Forecasted_RHC_Effective_date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
