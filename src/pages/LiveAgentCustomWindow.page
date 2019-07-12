@@ -125,8 +125,8 @@
     	
     	function savechat(){
     		SfdcApp.LiveAgent.Chasitor.saveChat();
-    	}
-    	
+        }
+        
     	liveagent.addEventListener(liveagent.chasitor.Events.CHAT_ESTABLISHED, showhidebuttons);
     	liveagent.addEventListener(liveagent.chasitor.Events.CHAT_ESTABLISHED, newagent);
     	liveagent.addEventListener(liveagent.chasitor.Events.AGENT_CHAT_TRANSFERRED,newagent);
@@ -243,11 +243,12 @@
             }
     
     	function showhidebuttons(){
-    		document.getElementById("chatbuttonscontainer").style.display = 'block';
+    		//document.getElementById("chatbuttonscontainer").style.display = 'block';
     		document.getElementById("laSaveButton").style.display = 'block';
     		document.getElementById("laEndButton").style.display = 'block';
-            document.getElementById("chatAgent").style.display = 'inline-flex';
-            document.getElementById("footer").style.display = 'inline-flex';
+            //document.getElementById("chatAgent").style.display = 'inline-flex';
+            //document.getElementById("footer").style.display = 'inline-flex';
+            document.getElementById("livechatcontainer").style.height = "calc(100% - 71px)";
             
             liveAgentClientChatHeight = document.getElementById("liveAgentChatLog").style.height;
                                    
@@ -290,7 +291,7 @@
     }
     
     function clearShrinkChat(){
-        document.getElementById("livechatcontainer").style.height = "calc(100% - 310px)";
+        document.getElementById("livechatcontainer").style.height = "calc(100% - 71px)";
         transferAttempt = false;
     }
     
@@ -306,6 +307,10 @@
     function scrollOnMessage(){
         var objDiv = document.getElementById("liveAgentChatLog");
         objDiv.scrollTop = objDiv.scrollHeight;
+
+        let agentTyping = document.getElementById("liveAgentChatLogTyping");
+        let bubble = '<div class="bubbleMessageContainer"><div class="arrow-left"></div><span class="messageText">. . .</span></div>';
+        agentTyping.innerHTML = bubble;
     }
         
         function notifyOnNewMessage(){
@@ -357,6 +362,10 @@
     </script>
 
     <style>
+
+        body {
+            background-color: #f0f2f5;
+        }
     
         .liveAgentCancelButton{
             padding: 7px 7px;
@@ -388,13 +397,11 @@
         }
 
         .liveAgentChatInput {
-            width: calc(100% - 90px);
-            border-color: #337ab7;
+            width: calc(100% - 60px);
+            border: unset;
             padding: 6px;
-            font-size: 13px;
+            font-size: 16px;
             border-radius: 0px;
-        	margin-top: 5px;
-    		margin-left: 5px;
         }
         
         .liveAgentMessage {
@@ -418,7 +425,7 @@
     
 
         #liveAgentChatLogText {
-            font-size: 13px;
+            font-size: 14px;
         	padding-top: 10px;
         }
 
@@ -431,12 +438,11 @@
         }
 
         #liveAgentChatLog {
-            border-color: #337ab7;
-		    margin: auto;
-		    width: calc(100% - 8px);
+		    width: 100%;
 		    height: calc(100% - 40px);
-		    overflow-y: auto;
-		    background-color: white;
+            overflow-y: auto;
+            border: unset;
+            padding: 0 16px;
         }
         
         #liveAgentChatLogText .client{
@@ -453,7 +459,7 @@
             clear:both;
         }
                 
-        #liveAgentChatLogText .messageText{
+        #liveAgentChatLogText .messageText, #liveAgentChatLogTyping .messageText {
             position: relative;
             max-width: 250px;
             -webkit-border-radius: 0px;
@@ -468,32 +474,34 @@
             margin-top: 0px;
             margin-right: 0px;
             margin-left: 0px;
-        	margin-bottom: 5px;
+        	margin-bottom: 0px;
         }
         
-        #liveAgentChatLogText .operator .messageText{
-            background: #0b3f75;
+        #liveAgentChatLogText .operator .messageText, #liveAgentChatLogTyping .messageText{
+            background: #fff;
         	word-wrap: break-word;
-        	margin-right: 25px;
-        	        	
-            border-top-left-radius: 0px;
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 4px;
+            margin-right: 25px;
+            color: #525252;
         }
 
         #liveAgentChatLogText .client .messageText{
-           	background: #438bcb;
+           	background: #1e32fa;
         	word-wrap: break-word;
         	margin-left: 25px;
         	margin-right: 0px;
+        }
         
-        	
-            border-top-left-radius: 4px;
-            border-top-right-radius: 0px;
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 4px;
-    	}
+        #liveAgentChatLogTyping .messageText{
+            font-weight: bold;
+            font-size: 20px;
+            font-family: 'Times New Roman';
+            line-height: 10px;
+            height: 40px;
+        }
+
+        #liveAgentChatLogTyping em{
+            display: none;
+        }
         
         #liveAgentChatLogText .image{
             position: relative;
@@ -514,11 +522,11 @@
         	clear:both;
         }
         
-        #liveAgentChatLogText .operator .arrow-left {
+        #liveAgentChatLogText .operator .arrow-left, #liveAgentChatLogTyping .arrow-left{
             width: 0;
             height: 0;
-            border-bottom: 10px solid transparent;
-            border-right: 10px solid #073f76;
+            border-top: 10px solid transparent;
+            border-right: 10px solid #fff;
             display: inline-flex;
             position: relative;
             margin-left: 5px;
@@ -528,8 +536,8 @@
        	#liveAgentChatLogText .client .arrow-right {
             width: 0;
             height: 0;
-            border-bottom: 10px solid transparent;
-            border-left: 10px solid #448bcb;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #1e32fa;
             display: inline-flex;
             position: relative;
         }
@@ -555,27 +563,31 @@
             margin-left: 25px;
         	padding-bottom: 5px;
         }
+
+        #liveAgentChatLogText .timestamp {
+            font-size: 12px;
+            color: #999999;
+        }
         
         .liveAgentSendButton {
         	border: none;
         	color: transparent;
             margin-left: 10px;
-        	width: 50px;
-            height: 50px;
+        	width: 20px;
+            height: 20px;
         	background: transparent url({!$Resource.LVA_SEND_BUTTON}) no-repeat;
             background-position: center;
-    		background-size: 75%;
+            background-size: 75%;
+            position: absolute;
+            bottom: -2px;
+            right: 15px;
+            outline: unset;
         }
         
         .liveAgentSendButton:hover{
-        	border: none;
-        	color: transparent;
-        	width: 50px;
-            height: 50px;
-            margin-left: 10px;
-        	background: transparent url({!$Resource.LVA_SEND_BUTTON_HOVER}) no-repeat;
-           	background-position: center;
-        	background-size: 75%;
+            background: transparent url({!$Resource.LVA_SEND_BUTTON_HOVER}) no-repeat;
+            background-position: center;
+            background-size: 75%;
         }
         
         em {
@@ -690,7 +702,7 @@
 	        min-height:100vh;
 	        //opacity: 0.5;
 	        //background-color:rgba(200, 200, 200, 0.5);
-	        max-width: 410px;
+	        max-width: 600px;
     		max-height: max-content;
     		margin: 0 auto;
     		overflow-y: auto;
@@ -698,8 +710,6 @@
 	          
 	      #modalbox{
 	          display:block;
-	          //background-color:white;
-	          background-color: #f8f8f8;
 	          opacity: 1;
 	          width:80%;
 	          height:60%;
@@ -730,6 +740,7 @@
           }
         
     	  #headerbackground{
+              overflow: hidden;
         //max-width: 410px;
         //    max-height: max-content;
             //float: none;
@@ -750,7 +761,7 @@
       	  #livechatcontainer{
             position: relative;
             width: 100%;
-            height: calc(100% - 310px);
+            height: 0;
       	  }
         
         @media screen and (min-width: 400px) {
@@ -759,7 +770,7 @@
             }
         }
         
-        @media screen and (max-height: 480px) and (orientation: portrait) {
+        /*@media screen and (max-height: 480px) and (orientation: portrait) {
             #livechatcontainer{
         		height: 62%;
             }
@@ -769,7 +780,7 @@
             #livechatcontainer{
         		height: 100%;
             }
-        }
+        }*/
       	  
       	  .buttonEnd {
 			padding: 7px 7px;
@@ -860,12 +871,13 @@
 			
 			#headerImage, #headerImageEnd{
 			    width: 100%;
-			    height: 85px;
+			    height: 50px;
 			    margin: auto;
         		display: inline-flex;
-				position: relative;
-			}
-        
+                position: relative;
+                box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+            }
+
         	#divImage, #divImageEnd{
                 padding: 10px;
                 background-color: white;
@@ -876,21 +888,25 @@
                 margin-top: 5px;
                 margin-left: 5px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        	}
+            }
+            
+            #divImage, #divImageEnd{
+                display: none;
+            }
 		
 			#livechat, #livechatEnd{
                 width: 100%;
                 color: #fff;
                 text-decoration-color: white;
-                padding-top: 10px;
-                padding-bottom: 10px;
-                font-size: 20px;
-                text-align: center;
-                font-weight: bold;
-                background-color: #0a3e75;
+                padding: 12px 16px;
+                font-size: 18px;
+                text-align: left;
+                font-weight: 500;
+                background-color: #1e32fa;
                 position: absolute;
-                margin-top: 20px;
-                padding-left: 100px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: space-between;
     		}
     			
     		#liveAgentClientChatSettings{
@@ -899,14 +915,23 @@
     		
     		#liveAgentClientChat{
     			height: 100%;
-    		}
+            }
+            
+            #liveAgentClientChat form[action="javascript://submit"]{
+                width: 100%;
+                display: inline-flex;
+                background-color: #fff;
+                border-top: 1px solid #ccc;
+                padding: 5px;
+            }
     		
     		#liveAgentChatElement{
     			height: 75%;
     		}
     		
     		#liveAgentChatInput{
-    			height: 50px;
+                height: 50px;
+                outline: unset;
     		}
         
         	#liveAgentChatLogAlertMessage{
@@ -1008,6 +1033,24 @@
             	font-size: 13px;
             	border-radius: 0px;
             }
+
+            .bubbleMessageContainer {
+                display: inline-flex;
+                align-items: flex-end;
+                margin-bottom: 5px;
+            }
+
+            .liveAgentStateWaiting {
+                display: none;
+            }
+
+            .liveAgentEndButtonTopHeader {
+                border: unset;
+                background: unset;
+                color: #fff;
+                font-size: 14px;
+                font-weight: 500;
+            }
 			
     </style>
 
@@ -1021,7 +1064,11 @@
                 <div id="divImage">
                     <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
                 </div>
-                <div id="livechat" style="{!if(isRTL, 'padding-left:0px', 'padding-left:100px')}">LIVE CHAT</div>
+                <!--<div id="livechat" style="{!if(isRTL, 'padding-left:0px', 'padding-left:100px')}">LIVE CHAT</div>-->
+                <div id="livechat">
+                    <span>IATA Live Support</span>
+                    <button type="button" class="liveAgentEndButtonTopHeader" onclick="showmodal();">End Chat</button>
+                </div>
             </div>
             <!-- <button id="liveAgentEndButton" type="button" class="liveAgentEndButton" onclick="showmodal();">End Chat</button> -->
             <div class="waitingMessage"></div>
@@ -1111,16 +1158,16 @@
                         if(node.className == 'operator'){
                             arrow = '<div class="arrow-left"></div>';
                             if({!isRTL}){
-                                textNode.innerHTML = '<div style="display: inline-flex;">' + textNode.innerHTML + arrow + '</div>';
+                                textNode.innerHTML = '<div class="bubbleMessageContainer">' + textNode.innerHTML + arrow + '</div>';
                             } else {
-                            	textNode.innerHTML = '<div style="display: inline-flex;">' + arrow + textNode.innerHTML + '</div>';
+                            	textNode.innerHTML = '<div class="bubbleMessageContainer">' + arrow + textNode.innerHTML + '</div>';
                             }
                         } else {
                             arrow = '<div class="arrow-right"></div>';
                             if({!isRTL}){
-                            	textNode.innerHTML = '<div style="display: inline-flex;">' + arrow + textNode.innerHTML + '</div>' ;
+                            	textNode.innerHTML = '<div class="bubbleMessageContainer">' + arrow + textNode.innerHTML + '</div>' ;
                             } else {
-                                textNode.innerHTML = '<div style="display: inline-flex;">' + textNode.innerHTML + arrow + '</div>' ;
+                                textNode.innerHTML = '<div class="bubbleMessageContainer">' + textNode.innerHTML + arrow + '</div>' ;
                             }
                         }
                         
@@ -1185,7 +1232,7 @@
                 <div id="divImageEnd">
                     <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
                 </div>
-                <div id="livechatEnd">LIVE CHAT</div>
+                <div id="livechatEnd">IATA Live Support</div>
             </div>
             <div id="modalbox">
                 <p id="modalmessage"></p>
