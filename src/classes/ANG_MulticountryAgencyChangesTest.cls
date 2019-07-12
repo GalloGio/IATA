@@ -128,22 +128,26 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
 			Name = 'BSP-PT',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'EUR'
 		);
 
 		AMS_Settlement_System__c bspGB = new AMS_Settlement_System__c(
 			Name = 'BSP-GB',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'EUR'
 		);
 
 		AMS_Settlement_System__c bspFR = new AMS_Settlement_System__c(
 			Name = 'BSP-FR',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'EUR'
 		);
 
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'EUR'
 		);
 
 		insert new List<AMS_Settlement_System__c>{bspPT, bspGB, bspFR, bspSG};
@@ -517,9 +521,6 @@ private class ANG_MulticountryAgencyChangesTest {
 		Map<Id, List<AMS_Agencies_relationhip__c>> relationsLst = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acct.Id});
 
 		for(AMS_Agencies_relationhip__c rel : relationsLst.get(acct.Id)){
-			system.debug('RELATIONSHIP:CHILD: ' + rel.Child_account__r.IATACode__c);
-			system.debug('RELATIONSHIP:PARENT ' + rel.pAREnt_account__r.IATACode__c);
-			system.debug('EXPECTED PARENT: ' + expectedHierarchyByIataCode.get(rel.Child_Account__r.IATACode__c));
 			system.assert(expectedHierarchyByIataCode.get(rel.Child_Account__r.IATACode__c) == rel.Parent_Account__r.IATACode__c);
 		}
 
@@ -1266,6 +1267,130 @@ private class ANG_MulticountryAgencyChangesTest {
 			'42300091' => '42300095'
 		};
 		
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
+
+	}
+
+	@isTest static void changeOfMulticountryHierarchySplitTest(){
+		
+		Set<String> iataCodesToSelectSet = new Set<String>{
+			'12300097',
+			'12300094',
+			'12300093',
+			'12300092',
+			'12300091'
+		};
+
+		List<Account> acctLst = new List<Account>( 
+			[SELECT 
+				Id, 
+				Name, 
+				IATACode__c,
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c,
+				Top_Parent__c
+			 FROM 
+			 	Account 
+			 WHERE
+			 	IATACode__c IN :iataCodesToSelectSet
+			]
+		);
+	
+		Id formOfPaymentRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+
+		Account acct = null;
+		
+		List<Agency_Authorization__c> authorizationLst = new List<Agency_Authorization__c>();
+
+		for(Account acc : acctLst){
+
+			if(acc.IATACode__c == '12300094'){
+				acct = acc;
+			}
+
+			Agency_Authorization__c fopCC = new Agency_Authorization__c(
+				Account__c = acc.Id, 
+				ANG_FormOfPayment_ID__c = 'CC', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRecId
+			);	
+								
+			Agency_Authorization__c fopCA = new Agency_Authorization__c(
+				Account__c = acc.Id, 
+				ANG_FormOfPayment_ID__c = 'CA', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRecId
+			);	
+								
+			Agency_Authorization__c fopEP = new Agency_Authorization__c(
+				Account__c = acc.Id, 
+				ANG_FormOfPayment_ID__c = 'EP', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRecId
+			);
+
+			authorizationLst.add(fopCC);
+			authorizationLst.add(fopCA);
+			authorizationLst.add(fopEP);	
+
+		}
+
+		insert authorizationLst;
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(iataCodesToSelectSet.contains(item.acc.IATACode__c)){
+				accountsInvolvedSet.add(item.acc.Id);
+				item.selected = true;	
+			}		
+		}
+
+		con.oscar.New_Parent__c = acct.Id;
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		con.save();
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Change_effective_as_of__c = System.today();
+
+		update oscar;
+
+		assertChangeCodes(oscar.Id, 'CHH', accountsInvolvedSet);
+
+		oscar.STEP2__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+		
+		assertChangeCodes(oscar.Id, 'HCF', accountsInvolvedSet);
+
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300093' => '12300094',
+			'12300097' => '12300094',
+			'12300092' => '12300097',
+			'12300091' => '12300097'
+		};
+		
+		acct = [SELECT Id, IATACode__c, Top_Parent__c FROM Account WHERE ParentId = :acct.Id][0];
+
 		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
 
 	}
