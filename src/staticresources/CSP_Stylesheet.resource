@@ -376,7 +376,8 @@ lightning-datatable .slds-th__action {
 .EscalatedExternally lightning-primitive-cell-wrapper lightning-formatted-text, .ForReviewandAcceptance lightning-primitive-cell-wrapper lightning-formatted-text, 
 .OnHoldExternal lightning-primitive-cell-wrapper lightning-formatted-text, .OnHoldInternal lightning-primitive-cell-wrapper lightning-formatted-text, 
 .Reopen lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedNotAccepted lightning-primitive-cell-wrapper lightning-formatted-text, 
-.InputRequested lightning-primitive-cell-wrapper lightning-formatted-text, .PendingReconsideration lightning-primitive-cell-wrapper lightning-formatted-text {
+.InputRequested lightning-primitive-cell-wrapper lightning-formatted-text, .PendingReconsideration lightning-primitive-cell-wrapper lightning-formatted-text,
+.ActionNeeded lightning-primitive-cell-wrapper lightning-formatted-text {
     background-color: #fac832;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -1043,19 +1044,18 @@ lightning-datatable .slds-th__action {
 .attlist .view_attachment_link a:active, .attlist .view_attachment_link a:hover{
     color: #3333ff;
     font-weight: 600;
-}
-.attlist .view_attachment_link{
-  font-family: AktivGrotesk;
-  font-size: 14px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.71;
-  letter-spacing: normal;
-  color: #4a4d61;
-}
-
-.attlist .slds-scrollable_y{
+  }
+  .attlist .view_attachment_link {
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #4a4d61;
+  }
+  
+  .attlist .slds-scrollable_y {
     min-height: 200px;
     max-height: 500px;
 	overflow-x:hidden;
@@ -1094,19 +1094,10 @@ lightning-datatable .slds-th__action {
 .whiteButtonBlueBorder{
     background-color: #ffffff;
     border-radius: 1px;
-  	border: solid 1px #1e32fa;
-
-}
-.whiteButtonBlueBorder button{
-    font-family: AktivGrotesk;
-    font-size: 16px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-align: center;
-    color: #3333ff;
+    border: solid 1px #1e32fa;
+  }
+  .whiteButtonBlueBorder button {
+    
     /*Overide button*/
     background: inherit;
     border: 0px;

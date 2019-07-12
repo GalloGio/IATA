@@ -9,7 +9,7 @@ import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 
-
+import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
@@ -26,7 +26,7 @@ import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
-
+    
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
@@ -148,6 +148,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
 
+        isAdmin().then(result => {
+            this.showEdit = (result ? true : false);
+        });
+        
         return this.accessibilityText
     }
 
