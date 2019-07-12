@@ -351,12 +351,45 @@ public class GADM_AccountServiceDetailTriggerTest {
             serviceDetail.Allowed_email_domain__c = 'somedomain.com';
             serviceDetail.Active_User_Count__c = 5;
             serviceDetail.External_Actor_Id__c = 'ExtId002test';
+            serviceDetail.Expected_amount_of_data_submissions__c = 5;
             insert serviceDetail;
 
             serviceDetail.External_Actor_Id__c = '';
+            serviceDetail.Expected_amount_of_data_submissions__c = null;
             update serviceDetail;
 
             serviceDetail.Active_User_Count__c = 6;
+            update serviceDetail;
+
+        }
+
+        Test.stopTest();
+
+    }
+
+    @IsTest
+    private static void update3bTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'neo.smith.test@somedomain.com'];
+        //only one exists now
+        Account_Role_Service__c accountRoleService = [SELECT Id FROM Account_Role_Service__c];
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            GADM_Account_Service_Detail__c serviceDetail = new GADM_Account_Service_Detail__c();
+            serviceDetail.Account_Role_Service__c = accountRoleService.Id;
+            serviceDetail.Allowed_email_domain__c = 'somedomain.com';
+            serviceDetail.Active_User_Count__c = 5;
+            serviceDetail.External_Actor_Id__c = 'ExtId002test';
+            serviceDetail.Expected_amount_of_data_submissions__c = 5;
+            insert serviceDetail;
+
+            serviceDetail.External_Actor_Id__c = '';
+            serviceDetail.Expected_amount_of_data_submissions__c = null;
+            update serviceDetail;
+
+            serviceDetail.Expected_amount_of_data_submissions__c = 6;
             update serviceDetail;
 
         }
@@ -380,6 +413,7 @@ public class GADM_AccountServiceDetailTriggerTest {
             serviceDetail.Allowed_email_domain__c = 'somedomain.com';
             serviceDetail.Active_User_Count__c = 5;
             serviceDetail.External_Actor_Id__c = 'ExtId002test';
+            serviceDetail.Expected_amount_of_data_submissions__c = 5;
             insert serviceDetail;
 
             serviceDetail.External_Actor_Id__c = null;
@@ -406,6 +440,7 @@ public class GADM_AccountServiceDetailTriggerTest {
             serviceDetail.Allowed_email_domain__c = 'somedomain.com';
             serviceDetail.Active_User_Count__c = 5;
             serviceDetail.External_Actor_Id__c = 'ExtId002test';
+            serviceDetail.Expected_amount_of_data_submissions__c = 5;
             insert serviceDetail;
 
             update serviceDetail;

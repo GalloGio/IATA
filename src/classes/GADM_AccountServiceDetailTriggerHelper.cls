@@ -53,7 +53,7 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
         if(isInsert) {
             List<GADM_Account_Service_Detail__c> toInsert = new List<GADM_Account_Service_Detail__c>();
             for(GADM_Account_Service_Detail__c detail : newMap.values()) {
-                if(detail.External_Actor_Id__c != null && detail.External_Actor_Id__c != '') {
+                if((detail.External_Actor_Id__c != null && detail.External_Actor_Id__c != '') || (detail.Expected_amount_of_data_submissions__c != null)) {
                     toInsert.add(detail);
                 }
             }
@@ -74,16 +74,18 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
             for(GADM_Account_Service_Detail__c accountServiceDetail : newMap.values()) {
                 GADM_Account_Service_Detail__c oldObj = oldMap.get(accountServiceDetail.Id);
 
-                if(oldObj.External_Actor_Id__c == accountServiceDetail.External_Actor_Id__c) {
+                //no changes in monitored fields
+                if((oldObj.External_Actor_Id__c == accountServiceDetail.External_Actor_Id__c) && (oldObj.Expected_amount_of_data_submissions__c == accountServiceDetail.Expected_amount_of_data_submissions__c)) {
                     continue;
-                }
-
-                if((oldObj.External_Actor_Id__c == null || oldObj.External_Actor_Id__c == '') && (accountServiceDetail.External_Actor_Id__c != null && accountServiceDetail.External_Actor_Id__c != '')) {
-                    toInsert.add(accountServiceDetail);
-                }else if(accountServiceDetail.External_Actor_Id__c == null || accountServiceDetail.External_Actor_Id__c == '') {
+                //values changed and are blank
+                }else if((accountServiceDetail.External_Actor_Id__c == null || accountServiceDetail.External_Actor_Id__c == '') && accountServiceDetail.Expected_amount_of_data_submissions__c == null) {
                     toDelete.add(accountServiceDetail);
-                }else if(oldObj.External_Actor_Id__c != accountServiceDetail.External_Actor_Id__c) {
+                //values changed are not blank and old values were not blank
+                }else if(oldObj.External_Actor_Id__c != null || oldObj.External_Actor_Id__c != '' && oldObj.Expected_amount_of_data_submissions__c != null){
                     toUpdate.add(accountServiceDetail);
+                //values changed are not blank and old values were blank
+                }else if(((oldObj.External_Actor_Id__c == null || oldObj.External_Actor_Id__c == '') && (accountServiceDetail.External_Actor_Id__c != null || accountServiceDetail.External_Actor_Id__c != '')) || (oldObj.Expected_amount_of_data_submissions__c == null && accountServiceDetail.Expected_amount_of_data_submissions__c != null)) {
+                    toInsert.add(accountServiceDetail);
                 }
 
             }
@@ -98,7 +100,7 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
                 toReturn.put('Insert', toInsert);
             }
         }
-
+        System.debug('events:: ' + toReturn);
         return toReturn;
     }
 

@@ -79,6 +79,10 @@
                 <behavior>Edit</behavior>
                 <field>Periods_without_data_submission_notify__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Expected_amount_of_data_submissions__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
