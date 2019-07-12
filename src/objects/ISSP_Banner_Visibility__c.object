@@ -198,12 +198,6 @@
                     <label>Airline Holding Company</label>
                 </value>
                 <value>
-                    <fullName>Airline Point of Sale</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Airline Point of Sale</label>
-                </value>
-                <value>
                     <fullName>Airport Authority</fullName>
                     <default>false</default>
                     <label>Airport Authority</label>
@@ -269,12 +263,6 @@
                     <label>Casino</label>
                 </value>
                 <value>
-                    <fullName>CASS Associate</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>CASS Associate</label>
-                </value>
-                <value>
                     <fullName>Caterer</fullName>
                     <default>false</default>
                     <label>Caterer</label>
@@ -295,38 +283,14 @@
                     <label>Coordinator</label>
                 </value>
                 <value>
-                    <fullName>Courier</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Courier</label>
-                </value>
-                <value>
                     <fullName>Cruise Line</fullName>
                     <default>false</default>
                     <label>Cruise Line</label>
                 </value>
                 <value>
-                    <fullName>Domestic Agent</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Domestic Agent</label>
-                </value>
-                <value>
-                    <fullName>DPC</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>DPC</label>
-                </value>
-                <value>
                     <fullName>Engine Manufacturer</fullName>
                     <default>false</default>
                     <label>Engine Manufacturer</label>
-                </value>
-                <value>
-                    <fullName>ERSP Agent</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>ERSP Agent</label>
                 </value>
                 <value>
                     <fullName>Freight Forwarder Association</fullName>
@@ -381,12 +345,6 @@
                     <label>GSSA Cargo</label>
                 </value>
                 <value>
-                    <fullName>Handling Agent</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Handling Agent</label>
-                </value>
-                <value>
                     <fullName>Hotel</fullName>
                     <default>false</default>
                     <label>Hotel</label>
@@ -397,45 +355,9 @@
                     <label>IATA Cargo Agent</label>
                 </value>
                 <value>
-                    <fullName>IATA Head Office</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>IATA Head Office</label>
-                </value>
-                <value>
-                    <fullName>IATA Local office</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>IATA Local office</label>
-                </value>
-                <value>
-                    <fullName>IATAN Passenger Agent</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>IATAN Passenger Agent</label>
-                </value>
-                <value>
                     <fullName>IATA Passenger Sales Agent</fullName>
                     <default>false</default>
                     <label>IATA Passenger Sales Agent</label>
-                </value>
-                <value>
-                    <fullName>IATA Regional Office</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>IATA Regional Office</label>
-                </value>
-                <value>
-                    <fullName>IBCS consolidator</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>IBCS consolidator</label>
-                </value>
-                <value>
-                    <fullName>Import Agent</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Import Agent</label>
                 </value>
                 <value>
                     <fullName>Individual Government</fullName>
@@ -473,12 +395,6 @@
                     <label>Military</label>
                 </value>
                 <value>
-                    <fullName>MSO Member Sales Office</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>MSO Member Sales Office</label>
-                </value>
-                <value>
                     <fullName>Museum</fullName>
                     <default>false</default>
                     <label>Museum</label>
@@ -494,27 +410,9 @@
                     <label>Non-IATA Cargo Agent</label>
                 </value>
                 <value>
-                    <fullName>Non-IATA Passenger Agent</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Non-IATA Passenger Agent</label>
-                </value>
-                <value>
                     <fullName>Non-IATA Travel Agent</fullName>
                     <default>false</default>
                     <label>Non-IATA Travel Agent</label>
-                </value>
-                <value>
-                    <fullName>Other</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Other</label>
-                </value>
-                <value>
-                    <fullName>Other Equipment Manufacturer</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Other Equipment Manufacturer</label>
                 </value>
                 <value>
                     <fullName>Other Private Sector Association</fullName>
@@ -621,33 +519,7 @@
                     <default>false</default>
                     <label>Travel Agency Association</label>
                 </value>
-                <value>
-                    <fullName>Vendor</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Vendor</label>
-                </value>
             </valueSetDefinition>
-            <valueSettings>
-                <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>GSA General Sales Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>General Sales Agent</controllingFieldValue>
-                <valueName>GSSA Cargo</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Governmental Institution</controllingFieldValue>
-                <valueName>Civil Aviation Authority</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Governmental Institution</controllingFieldValue>
-                <valueName>Individual Government</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Governmental Institution</controllingFieldValue>
-                <valueName>Inter-Governmental Body</valueName>
-            </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Holding Company</controllingFieldValue>
                 <valueName>Agency Holding Company</valueName>
@@ -729,6 +601,38 @@
                 <valueName>Park (Theme Park)</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>IATA Passenger Sales Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>Non-IATA Travel Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>TIDS Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Public</controllingFieldValue>
+                <valueName>Passenger</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Public</controllingFieldValue>
+                <valueName>Student</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>GSA General Sales Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>General Sales Agent</controllingFieldValue>
+                <valueName>GSSA Cargo</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>All</controllingFieldValue>
+                <valueName>All</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Accommodation</controllingFieldValue>
                 <valueName>Apartment &amp; Villa Rental</valueName>
             </valueSettings>
@@ -801,10 +705,6 @@
                 <valueName>System Solutions Provider</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>All</controllingFieldValue>
-                <valueName>All</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Association</controllingFieldValue>
                 <valueName>Airline Alliance</valueName>
             </valueSettings>
@@ -823,6 +723,30 @@
             <valueSettings>
                 <controllingFieldValue>Association</controllingFieldValue>
                 <valueName>Travel Agency Association</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>IATA Cargo Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Non-IATA Cargo Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <valueName>Academic/Research Body</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <valueName>Coordinator</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <valueName>Provider</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <valueName>Training Center</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Equipment Manufacturer</controllingFieldValue>
@@ -857,48 +781,16 @@
                 <valueName>Payment Provider</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>IATA Cargo Agent</valueName>
+                <controllingFieldValue>Governmental Institution</controllingFieldValue>
+                <valueName>Civil Aviation Authority</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Non-IATA Cargo Agent</valueName>
+                <controllingFieldValue>Governmental Institution</controllingFieldValue>
+                <valueName>Individual Government</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Training</controllingFieldValue>
-                <valueName>Academic/Research Body</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Training</controllingFieldValue>
-                <valueName>Coordinator</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Training</controllingFieldValue>
-                <valueName>Provider</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Training</controllingFieldValue>
-                <valueName>Training Center</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>General Public</controllingFieldValue>
-                <valueName>Passenger</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>General Public</controllingFieldValue>
-                <valueName>Student</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>IATA Passenger Sales Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>Non-IATA Travel Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <valueName>TIDS Agent</valueName>
+                <controllingFieldValue>Governmental Institution</controllingFieldValue>
+                <valueName>Inter-Governmental Body</valueName>
             </valueSettings>
         </valueSet>
         <visibleLines>4</visibleLines>
@@ -954,12 +846,6 @@
                     <label>Association</label>
                 </value>
                 <value>
-                    <fullName>Education</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Education</label>
-                </value>
-                <value>
                     <fullName>Equipment Manufacturer</fullName>
                     <default>false</default>
                     <label>Equipment Manufacturer</label>
@@ -995,21 +881,9 @@
                     <label>Holding Company</label>
                 </value>
                 <value>
-                    <fullName>IATA</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>IATA</label>
-                </value>
-                <value>
                     <fullName>Infrastructure Partner</fullName>
                     <default>false</default>
                     <label>Infrastructure Partner</label>
-                </value>
-                <value>
-                    <fullName>Internal Use</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Internal Use</label>
                 </value>
                 <value>
                     <fullName>Media</fullName>
