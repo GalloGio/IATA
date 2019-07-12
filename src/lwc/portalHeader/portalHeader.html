@@ -150,14 +150,24 @@
                                                                     </template>
                                                                 </template>
                                                             </div>
+
                                                             <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
                                                                 data-item={not.id}>
-                                                                <span class="cursorPointer" data-item={not.id}
-                                                                    data-changebody="1" onclick={openmodal}>
-                                                                    {not.subject}
-                                                                </span>
-
+                                                                <template if:true={not.isNotification}>
+                                                                    <span class="cursorPointer" data-item={not.id}
+                                                                        data-changebody="1" onclick={openmodal}>
+                                                                        {not.subject}
+                                                                    </span>
+                                                                </template>
+                                                                <template if:false={not.isNotification}>
+                                                                    <span class="cursorPointer" data-item={not.id}
+                                                                        data-changebody="1"
+                                                                        onclick={onClickAllNotificationsView}>
+                                                                        {not.subject}
+                                                                    </span>
+                                                                </template>
                                                             </div>
+
                                                         </div>
                                                     </div>
 
