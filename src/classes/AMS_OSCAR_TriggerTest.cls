@@ -98,6 +98,7 @@
             Last_name__c = 'owner',
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
+            Agency_owner__c= true,
             Financial_interest__c= 100,
             AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
@@ -344,6 +345,7 @@
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_owner__c= true,
             AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
@@ -801,6 +803,7 @@
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_owner__c= true,
             AMS_Pax_Accreditation_Form__c= oscar.AMS_Online_Accreditation__c,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
@@ -1083,6 +1086,7 @@
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_owner__c= true,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
@@ -1231,6 +1235,7 @@
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_owner__c= true,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
@@ -1309,6 +1314,7 @@
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_owner__c= true,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
@@ -1520,6 +1526,7 @@
         owner.Phone__c = '123456789';
         owner.Financial_interest__c = 100;
         owner.AMS_Pax_Accreditation_Form__c = stagingArea.Id;
+        owner.Agency_Owner__c = true;
         owner.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
         insert owner;
 

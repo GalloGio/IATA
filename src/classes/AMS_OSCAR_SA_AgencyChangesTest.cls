@@ -112,19 +112,36 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         update oscar;
 
         /*** AMSU-180 ***/
+        Id cId;
+        if(typeOfChange == 'Ownership to IATA Agent' && targetAgency <> null) {            
+            C1.AccountId = targetAgency.Id;
+            update C1;
+
+            cId = C1.Id;
+            AMS_Account_Role__c targetOwner = new AMS_Account_Role__c(
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'),
+                Percentage__c = 100,
+                Contact__c = cId,
+                Account__c = targetAgency.Id
+            );
+            insert targetOwner;            
+        }
+
         AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
             Name= 'test owner',
             First_name__c= 'test',
             Last_name__c = 'owner',
-            Email__c= 'owner.test@test.com',
+            Email__c= 'owner.test2@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Contact__c = cId,
+            Agency_Owner__c= true,
             AMS_Pax_Accreditation_Form__c= stagingArea.Id,
-            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')
         );
         insert owner;
 
-        return [SELECT Id, Account__c, Type_of_change__c,Change_effective_as_of__c FROM AMS_OSCAR__c LIMIT 1];
+        return oscar;
 
     }
 
@@ -858,6 +875,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
+        Test.stopTest();
 
         getUpdatedAccountDataV2();
 
@@ -921,7 +939,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 7);
 
-        Test.stopTest();
+        
 
     }
 
