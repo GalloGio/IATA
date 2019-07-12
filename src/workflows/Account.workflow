@@ -22,7 +22,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>TA_all/Airline_Becomes_Active_for_the_First_Time_Notification</template>
+        <template>unfiled$public/Airline_Becomes_Active_for_the_First_Time_Notification</template>
     </alerts>
     <alerts>
         <fullName>Airline_Becomes_Inactive_Alert</fullName>
@@ -46,7 +46,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>TA_all/Airline_Becomes_Inactive_Notification</template>
+        <template>unfiled$public/Airline_Becomes_Inactive_Notification</template>
     </alerts>
     <alerts>
         <fullName>Airline_Becomes_Re_Activated_Alert</fullName>
@@ -70,7 +70,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>TA_all/Airline_Becomes_Re_Activated_Notification</template>
+        <template>unfiled$public/Airline_Becomes_Re_Activated_Notification</template>
     </alerts>
     <alerts>
         <fullName>FDS_CodingAOC</fullName>
