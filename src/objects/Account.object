@@ -5906,6 +5906,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Bulletin_Headquarter__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Account name to publish in bulletin for multicountry hierarchies that have headquarter in a non-NewGen country</inlineHelpText>
+        <label>Bulletin Headquarter</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>CAMP_Agreement__c</fullName>
         <description>FDS. Agency Accounts. Used to track Agent compliance / submission of executed CAMP Agreements and to follow up with Agents pending submission of agreements to IATA.</description>
         <externalId>false</externalId>
@@ -9480,6 +9492,46 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
                     <default>false</default>
                     <label>Other</label>
                 </value>
+                <value>
+                    <fullName>Billing city found in another state</fullName>
+                    <default>false</default>
+                    <label>Billing city found in another state</label>
+                </value>
+                <value>
+                    <fullName>Shipping city found in another state</fullName>
+                    <default>false</default>
+                    <label>Shipping city found in another state</label>
+                </value>
+                <value>
+                    <fullName>Billing city not found in our Database</fullName>
+                    <default>false</default>
+                    <label>Billing city not found in our Database</label>
+                </value>
+                <value>
+                    <fullName>Shipping city not found in our Database</fullName>
+                    <default>false</default>
+                    <label>Shipping city not found in our Database</label>
+                </value>
+                <value>
+                    <fullName>Billing Address not found by address doctor</fullName>
+                    <default>false</default>
+                    <label>Billing Address not found by address doctor</label>
+                </value>
+                <value>
+                    <fullName>Shipping Address not found by address doctor</fullName>
+                    <default>false</default>
+                    <label>Shipping Address not found by address doctor</label>
+                </value>
+                <value>
+                    <fullName>Billing city found in another country</fullName>
+                    <default>false</default>
+                    <label>Billing city found in another country</label>
+                </value>
+                <value>
+                    <fullName>Shipping city found in another country</fullName>
+                    <default>false</default>
+                    <label>Shipping city found in another country</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>3</visibleLines>
@@ -10433,6 +10485,32 @@ WSPN-Worldspan</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Geoname_Billing_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Geoname Billing City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with this Billing City</relationshipLabel>
+        <relationshipName>Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geoname_Shipping_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Geoname Shipping City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with this Shipping City</relationshipLabel>
+        <relationshipName>AccountsShipping</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Give_SIS_Membership__c</fullName>
