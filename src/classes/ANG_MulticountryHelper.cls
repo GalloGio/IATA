@@ -636,7 +636,8 @@ public class ANG_MulticountryHelper {
 			splitAgency.Location_Type__c = AMS_Utils.GE;
 			splitAgency.ParentId = null;
 			splitAgency.Top_Parent__c = null;
-			
+			splitAgency.Identify_as_Multicountry_Key_Hierarchy__c = true;
+
 			toReturn.addAccountToCreateRHC(splitAgency);
 
 			if(currentRelation != NULL){
@@ -688,6 +689,7 @@ public class ANG_MulticountryHelper {
 			acquiredAgency.Financial_Review_Result__c = null;
 			acquiredAgency.ANG_HE_CashCondition__c = false;
 			acquiredAgency.Financial_Assessment_Points__c = null;
+			acquiredAgency.Identify_as_Multicountry_Key_Hierarchy__c = false;
 			
 			if(acquiredAgency.RHC_Informations__r != NULL){
 				toReturn.addRhcInformationToDeactivate(acquiredAgency.RHC_Informations__r[0]);
