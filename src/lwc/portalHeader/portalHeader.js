@@ -365,7 +365,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
         this.notification = notification;
 
-        if (notification.typeNotification === 'Announcement') {
+        if (notification.type === 'Notification') {
             increaseNotificationView({ id: selectedNotificationId })
                 .then(results => {
 
