@@ -68,5 +68,6 @@
             "addressSelected" : { 'street' : c.get("v.inputValue") } 
         });
         cmpEvent.fire();
-    }
+    },
+
 })
