@@ -6,7 +6,6 @@
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
-        <ccEmails>gwars77@hotmail.com</ccEmails>
         <description>ACCA: Notification on new Application Change Request</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -2306,7 +2305,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>TA_all/NDC_Case_Assignment</template>
+        <template>unfiled$public/NDC_Case_Assignment</template>
     </alerts>
     <alerts>
         <fullName>NewALmanagementprocess</fullName>

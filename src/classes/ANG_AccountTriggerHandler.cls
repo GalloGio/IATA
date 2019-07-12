@@ -217,8 +217,8 @@ public class ANG_AccountTriggerHandler {
 					, Account__c = acc.Id
 					, Change_Code__c = config.Change_Code__c
 					, Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
-					, Reason_Code__c = config.Reason_Code__c
-					, Reason_Description__c = config.Reason_Code_Description__c
+					, Reason_Code__c = acc.Reason__c.left(2)
+					, Reason_Description__c = acc.Reason__c.right(acc.Reason__c.length()-3)
 					, Source__c = source
 					, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
 					, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
@@ -275,8 +275,8 @@ public class ANG_AccountTriggerHandler {
 				, Account__c = acc.Id
 				, Change_Code__c = config.Change_Code__c
 				, Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
-				, Reason_Code__c = config.Reason_Code__c
-				, Reason_Description__c = config.Reason_Code_Description__c
+				, Reason_Code__c = acc.Reason__c.left(2)
+				, Reason_Description__c = acc.Reason__c.right(acc.Reason__c.length()-3)
 				, Source__c = source
 				, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
 				, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
