@@ -40,6 +40,9 @@ import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updat
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
 import getContactsForAssignment from '@salesforce/apex/PortalServicesCtrl.getContactsForServiceAssignment';
+import grantServiceAccessToContacts from '@salesforce/apex/PortalServicesCtrl.grantAccessToContacts';
+
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -156,9 +159,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         //get the service details
         this.getServiceDetailsJS();
 
-        //get contacts for service assignment
-        this.getContactsForAssignment();
-
     }
 
     resetComponent(){
@@ -191,6 +191,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
                 if (this.isAdmin){
                     this.getContactsForPage();
+                    this.getContactsForAssignment();
                 }else{
                     //this.showSpinner = false;
                     this.componentLoading = false;
@@ -552,8 +553,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.grantUserAccess(row);
                 break;
             case 'deactivateUser':
-                let title=this.label.denyAccessTitle;
-                let msg=this.label.confirmDenyAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',row.contactName);
+                let title = this.label.denyAccessTitle;
+                let msg = this.label.confirmDenyAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',row.contactName);
                 this.denyUserAccessJS(row,msg,title);
                 break;
             case 'ifapContact':
@@ -637,24 +638,97 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     confirmAddUser(){
         console.log('confirmAddUser..');
+
+        let contactIds = [];
+
+        this.contactsToAdd.forEach((el,pos,arr)=>{
+            contactIds.push(el.id);
+        });
+
+        if(contactIds.length>0){
+            grantServiceAccessToContacts({contactIds:contactIds, serviceId : this.serviceId}).then(result=>{
+                this.showAddUserModal = false;
+                this.resetComponent()
+            }).catch((error) => {
+                  this.dispatchEvent(
+                      new ShowToastEvent({
+                          title: 'Error',
+                          message: 'Unable to grant service access.\n'+error ,
+                          variant: 'error'
+                      })
+                  );
+              });
+        }
     }
 
     getAvailableContacts(){
-        console.log('getAvailableContacts..');
-        //[{'id':'testid','name':'userName'},{'id':'testid2','name':'userName2'},{'id':'testid3','name':'userName3'}]
-        this.template.querySelector('[data-id="contactlookup"]').setSearchResults(this.availableContacts);
+        let availableContacts = JSON.parse(JSON.stringify(this.availableContacts));
+        let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
+
+        let available = availableContacts.filter(function(c){
+            return !toAdd.some(contact => contact.id === c.id)
+        });
+        this.template.querySelector('[data-id="contactlookup"]').setSearchResults(available);
     }
 
     addContactEntry(){
         console.log('addContactEntry..');
+        let inputCmp = this.template.querySelector('[data-id="contactlookup"]').getSelection()[0].id;
+        let comp = this.template.querySelector('[data-id="contactlookup"]');
+
+        let value = inputCmp;
+        inputCmp = '';
+        comp.focus();
+
+        let availableContacts = JSON.parse(JSON.stringify(this.availableContacts));
+
+        let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
+
+        if (!contactsToAdd.some(contact => contact.id === value)) {
+            let contact = availableContacts.find(function(c){return c.id === value;});
+
+            if(contact){
+                contactsToAdd.push(contact);
+            }
+        }
+
+        this.contactsToAdd = contactsToAdd;
+    }
+
+    removeContact(event){
+        let itemVal = event.target.dataset.item;
+        let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
+
+        this.contactsToAdd = contactsToAdd.filter(item => item.id !== itemVal);
     }
 
     getContactsForAssignment(){
         getContactsForAssignment({ serviceId: this.serviceId }).then(result => {
             console.log('got availableContacts: '+result.length);
-            console.log(result[0]);
             this.availableContacts = JSON.parse(JSON.stringify(result));
         });
+    }
+
+    handleContactSearch(event){
+        let details = event.detail;
+
+        if(details.searchTerm !== undefined && details.searchTerm.length > 0){
+            getContactsForAssignment({serviceId:this.serviceId,queryString:details.searchTerm})
+                .then(results => {
+                    let availableContacts = JSON.parse(JSON.stringify(results));
+                    let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
+
+                    let available = availableContacts.filter(function(c){
+                        return !toAdd.some(contact => contact.id === c.id)
+                    });
+
+                    this.template.querySelector('[data-id="contactlookup"]').setSearchResults(available);
+                    this.requiredClass = '';
+                })
+                .catch((error) => {
+                    console.log('Lookup Error: ' + error);
+                });
+        }
     }
 
 }

@@ -1006,7 +1006,8 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 }
 
     @AuraEnabled
-    public static List<PortalLookupSearchResult> getContactsForServiceAssignment(String serviceId){
+    public static List<PortalLookupSearchResult> getContactsForServiceAssignment(String serviceId,String queryString){
+
         List<Contact> contacts = new List<Contact>();
         List<PortalLookupSearchResult> results = new List<PortalLookupSearchResult>();
 
@@ -1019,15 +1020,24 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
         List<Portal_Application_Right__c> existingRights = [SELECT Id,Contact__c
         FROM Portal_Application_Right__c
-        WHERE (Contact__r.Account.Top_Parent__c =: u.contact.AccountId OR Contact__r.AccountId = : u.contact.AccountId)
-        OR Right__c !=: PORTAL_ACCESS_GRANTED];
+        WHERE ((Contact__r.Account.Top_Parent__c =: u.contact.AccountId OR Contact__r.AccountId = : u.contact.AccountId) OR Right__c !=: PORTAL_ACCESS_GRANTED)
+        AND Portal_Application__c =: serviceId];
 
-        for(Portal_Application_Right__c right:existingRights){
+        for(Portal_Application_Right__c right:existingRights) {
             alreadyAssignedContactIds.add(right.Contact__c);
         }
 
 
-        contacts = [SELECT Id,Name,Email FROM Contact WHERE (Account.Top_Parent__c =: u.contact.AccountId OR AccountId = : u.contact.AccountId) AND Id NOT IN:alreadyAssignedContactIds LIMIT 50];
+        String contactsQuery = 'SELECT Id,Name,Email FROM Contact '
+                + 'WHERE (Account.Top_Parent__c =\''+u.contact.AccountId+'\' OR AccountId = \''+ u.contact.AccountId+'\') '
+                + ' AND Id NOT IN :alreadyAssignedContactIds ';
+
+        if(!String.isBlank(queryString)){
+            contactsQuery += ' AND (Name LIKE \'%'+queryString+'%\' ) ';
+        }
+
+        contactsQuery+=' LIMIT 20';
+        contacts = Database.query(contactsQuery);
 
         // Extract Contacts & convert them into PortalLookupSearchResult (check this class for more info)
         String contactIcon = 'standard:contact';
@@ -1036,6 +1046,36 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
         }
 
         return results;
+    }
+
+    @AuraEnabled
+    public static void grantAccessToContacts(List<String> contactIds, String serviceId){
+        List<Portal_Application_Right__c> existingRights = [SELECT Id,Right__c,Contact__c from Portal_Application_Right__c WHERE Contact__c IN:contactIds];
+
+        Set<Id> toUpdateIds = new Set<Id>();
+
+        if(!existingRights.isEmpty()){
+            for(Portal_Application_Right__c right:existingRights){
+                right.Right__c = 'Access Granted';
+                toUpdateIds.add(right.Contact__c);
+            }
+
+            update existingRights;
+        }
+
+        List<Portal_Application_Right__c> newRights = new List<Portal_Application_Right__c>();
+
+        for(String contactId : contactIds){
+            if(!toUpdateIds.contains(contactId)){
+                Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contactId, Portal_Application__c = serviceid, Right__c = 'Access Granted');
+                newRights.add(appRight);
+            }
+        }
+
+        if(!newRights.isEmpty()){
+            insert newRights;
+        }
+
     }
 
 }
