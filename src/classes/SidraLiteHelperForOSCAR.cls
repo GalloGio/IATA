@@ -76,7 +76,7 @@ public with sharing class SidraLiteHelperForOSCAR {
         if (SidraLiteUtil.isAccountActive(cse.account)) {
             newCase.NOT_Date__c = Date.today();
             newCase.SIDRA_Lite_Default_Date__c = Date.Today();
-            newCase.Reason_for_Default__c = 'Disapproval of Change';
+            newCase.Reason_for_Default__c = 'Suspension - ARV non compliance';
             newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
             newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
         } else {
@@ -163,7 +163,7 @@ public with sharing class SidraLiteHelperForOSCAR {
                 return reason;
             }
         }
-        if (oscar.Step44__c == 'Failed') {
+        if (oscar.Step44__c == 'Passed') {
             String reason = MAP_STEP_REASON.get('44');
             if (!existentReasons.contains(reason) ) {
                 return reason;

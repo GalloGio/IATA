@@ -543,4 +543,33 @@ private class OneId_RegistrationProcessControllerTest {
 
         Test.stopTest();
     }
+@isTest
+     static void amsDataQuality(){
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Canada',
+                                                               ISO_Code__c='CA')  ;
+        insert country ;
+
+        IATA_ISO_STATE__C state = new IATA_ISO_STATE__c (Name='Quebec',
+                                                         ISO_Code__c='CA-QC',
+                                                         IATA_ISO_Country__c=country.Id,
+                                                         GeonameName__c='Quebec',
+                                                         GeonameAsciiName__c='Quebec',
+                                                         GeonameId__c='6115047');
+         insert state;
+         IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Montreal', 
+                                                       IATA_ISO_State__c = state.ID,
+                                                       GeonameID__c = '6077243',
+                                                       GeonameAlternateNames__c = 'Lungsod ng Montreal,Lungsod ng Montréal,Monreal,Monreal\','+
+                                                                                  'Monreala,Monrealis,Monreyal,Monreāla,Mons Regius,Mont-real,Montreal,Montreal - Montreal,Montreal - Montréal,Montreal City,Montreali,Montrealo,'+
+                                                                                  'Montréal,YMQ,meng te li er,monreali,monteuliol,montorioru,mwntral,mwntryal,Μοντρεαλ,Μόντρεαλ,Монреал,Монреаль,Монтреал,מונטריאול,مونترآل,مونتریال,مونترېئال,'+
+                                                                                  'მონრეალი,ᒧᕆᐊᓪ,モントリオール,蒙特利尔,몬트리올' );
+        insert city;
+
+        OneId_RegistrationProcessController.getStates('Canada');
+        OneId_RegistrationProcessController.getAllCities('Portugal');        
+        OneId_RegistrationProcessController.registrationAux(new Account(), new Contact(), null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
+                                                                                                                       'billingStateId' => String.valueOf(state.Id),
+                                                                                                                       'shippingCityId' => String.valueOf(city.Id),
+                                                                                                                       'shippingStateId' => String.valueOf(state.Id)});
+     }
 }

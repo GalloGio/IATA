@@ -1,5 +1,6 @@
 public with sharing class FinancialInstitutionHandler {
 
+    public static final Id RT_GENERIC_FI_ID = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Generic_FI').getRecordTypeId();
     public static list<Id> LIST_UPDATED_FINANCIALINSTITUTIONS;
 
     public static void doBeforeUpdate(map<Id,Financial_Institution__c> mapNews, map<Id,Financial_Institution__c> mapOlds) {
@@ -17,7 +18,8 @@ public with sharing class FinancialInstitutionHandler {
         LIST_UPDATED_FINANCIALINSTITUTIONS = new list<Id>();
         for (Financial_Institution__c newInstitution: mapNews.values()) {
             Financial_Institution__c oldInstitution = mapOlds.get(newInstitution.Id);
-            if (newInstitution.First_Call_Letter_Required__c != oldInstitution.First_Call_Letter_Required__c) {
+            if (newInstitution.RecordTypeId == RT_GENERIC_FI_ID &&
+                newInstitution.First_Call_Letter_Required__c != oldInstitution.First_Call_Letter_Required__c) {
                 LIST_UPDATED_FINANCIALINSTITUTIONS.add(newInstitution.Id);
             }
         }
