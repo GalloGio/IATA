@@ -167,6 +167,10 @@
                 <behavior>Edit</behavior>
                 <field>Purge_Flag__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bulletin_Headquarter__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
