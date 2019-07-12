@@ -217,4 +217,19 @@ private  class AttachmentListCtrlTest {
 
         ApexMessageHandling attMsg=AttachmentListCtrl.createAttachment(cse.id, 'asdasd', 'File1',12, 'text');
      }
+
+    static testMethod void testCheckTypeOfcase() {
+
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+        Case cse = new Case();
+        cse.recordtypeId=recordTypeId;
+        insert cse;
+
+        //Check if case is SAAM or Sidra, should return false
+        system.assertEquals(AttachmentListCtrl.checkIfSidraSaam(cse.id),false);
+
+        //Check if case is SAAM , Sidra or Oscar, should return true
+        system.assertEquals(AttachmentListCtrl.checkIfSidraSaamOSCAR(cse.id),true);
+
+     }
 }
