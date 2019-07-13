@@ -581,22 +581,14 @@ public class PortalServicesCtrlTest {
         lstString.add(c.id);        
         List<Contact> contList = new List<Contact>();
         List<PortalServicesCtrl.ServiceWrapper> paList = new List<PortalServicesCtrl.ServiceWrapper>(); 
-        System.runAs(portalUser) {
-            
-            Test.StartTest();    
+        Test.StartTest();    
             list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name in ('serviceTest3','serviceTest2','Insurance Providers')];
             
-            PortalServicesCtrl.requestAccess(portalServicelist.get(0).id);                        
-            contList = PortalServicesCtrl.getPortalAdmins();
-            paList = PortalServicesCtrl.getAllServices(); 
-
-
             //requestAccessToICCS
             PortalServicesCtrl.newAppsRequestICCS(portalServicelist.get(1).id, '', c.id);   
 
             PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false, ''); 
-            Test.StopTest();
-        }
+        Test.StopTest();
     }
     
     @isTest
@@ -617,4 +609,40 @@ public class PortalServicesCtrlTest {
         }
     }
 
+    @isTest
+    public static void PortalServicesCtrlTest_grantAccessToContacts() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+        
+        List<String> lstString = new List<String>();
+        lstString.add(c.id);        
+        
+        Test.StartTest();    
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+        
+        PortalServicesCtrl.grantAccessToContacts(lstString, portalServicelist.get(0).id);                        
+        
+        Test.StopTest();
+    }
+
+    @isTest
+    public static void PortalServicesCtrlTest_getContactsForServiceAssignment() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        
+        
+        list<PortalLookupSearchResult> plsr = new List<PortalLookupSearchResult>();
+        
+        System.runAs(portalUser) {
+            
+            Test.StartTest();    
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+            
+            plsr = PortalServicesCtrl.getContactsForServiceAssignment(portalServicelist.get(0).id, '');                        
+            
+            Test.StopTest();
+        }
+    }
 }
