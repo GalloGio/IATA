@@ -617,40 +617,4 @@ public class PortalServicesCtrlTest {
         }
     }
 
-    @isTest
-    public static void PortalServicesCtrlTest_grantAccessToContacts() {
-        
-        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
-        
-        List<String> lstString = new List<String>();
-        lstString.add(c.id);        
-        
-        Test.StartTest();    
-        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
-        
-        PortalServicesCtrl.grantAccessToContacts(lstString, portalServicelist.get(0).id);                        
-        
-        Test.StopTest();
-    }
-
-    @isTest
-    public static void PortalServicesCtrlTest_getContactsForServiceAssignment() {
-        
-        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
-
-        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
-        
-        
-        list<PortalLookupSearchResult> plsr = new List<PortalLookupSearchResult>();
-        
-        System.runAs(portalUser) {
-            
-            Test.StartTest();    
-            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
-            
-            plsr = PortalServicesCtrl.getContactsForServiceAssignment(portalServicelist.get(0).id, '');                        
-            
-            Test.StopTest();
-        }
-    }
 }
