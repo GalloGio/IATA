@@ -21,6 +21,7 @@ private class ISSP_PortalUserStatusChangeTest {
         controler.con.User_Portal_Status__c = 'Deactivate';
         actionName = ISSP_PortalUserStatusChange.getActionName(controler.con.User_Portal_Status__c,'');
         ISSP_PortalUserStatusChange.preformAction(actionName,controler.con.Id,controler.con.User_Portal_Status__c);
+        ISSP_PortalUserStatusChange.preformActionNewPortal (controler.con.Id,controler.con.User_Portal_Status__c,'');
 
         //ISSP_PortalUserStatusChange.isUserDisabel(con.Id);
         //ISSP_PortalUserStatusChange.disabelUser(con.Id);

@@ -11,23 +11,29 @@ public class PortalMyProfileCtrlTest {
 
         User newUser = ISSP_ObjectFactory.createPortalUser(newCon);
 
-        Date validTo = Date.today().addYears(2);
 
-        ID_Card__c card = new ID_Card__c(Related_Contact__c =newCon.Id, Valid_To_Date__c =validTo, VER_Number__c='123321', Valid_From_Date__c =Date.today().addDays(-2), Name_on_ID_Card__c='TestCard123');
-        insert card;
+        ID_Card__c idc= new ID_Card__c();
+        idc.recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
+        idc.Name_on_ID_Card__c='test card 1';
+        idc.related_contact__C=newCon.id;
+        idc.ver_number__c='123123';
+        idc.Valid_From_Date__c=system.today().addDays(-200);
+        idc.valid_to_Date__C=system.today().addDays(200);
+        
+        insert idc;
     }
 
     @IsTest
     static void testgetContactInfo(){
         User usr = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
-        Contact testContact = new Contact();
+        PortalMyProfileCtrl.ContactWrapper testContact = new PortalMyProfileCtrl.ContactWrapper();
         System.runAs(usr){
             Test.startTest();
-            testContact = PortalMyProfileCtrl.getContactInfo().contact;
+            testContact = PortalMyProfileCtrl.getContactInfo();
             Test.stopTest();
 
-            System.assert( testContact!=null );
+            System.assert( testContact.contact.Name =='John Doe',true);
         }
     }
 
