@@ -42,7 +42,8 @@ public class PortalServicesCtrlTest {
         Portal_Applications__c serviceTest3 = new Portal_Applications__c (
             Name = 'serviceTest3',
             requestable__c=true,
-            Agency__c = true
+            Agency__c = true,
+            Hide_on_Homepage__c=false
         );
         
         Portal_Applications__c serviceTest4 = new Portal_Applications__c (
@@ -51,14 +52,24 @@ public class PortalServicesCtrlTest {
             Agency__c = true
         );
         
-        insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3,serviceTest4};
-            
-            IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
-                Name = 'Portugal_test',
-                ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = easyPay1.id,
-                ANG_Enable_NewGen__c = true
-            );
+        Portal_Applications__c serviceTest5 = new Portal_Applications__c (
+            Name = 'Insurance Providers',
+            requestable__c=false, 
+            Agency__c = true
+        );
+        Portal_Applications__c serviceTest6 = new Portal_Applications__c (
+            Name = 'Financial Securities',
+	        Requestable__c = false
+        );
+        
+        insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2,serviceTest3,serviceTest4,serviceTest5,serviceTest6};
+        
+        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c ( 
+            Name = 'Portugal_test',
+            ISO_Code__c = 'PT', 
+            ANG_Portal_Service__c = easyPay1.id,
+            ANG_Enable_NewGen__c = true
+        );
         
         
         IATA_ISO_Country__c switzerland = new IATA_ISO_Country__c (
@@ -81,25 +92,29 @@ public class PortalServicesCtrlTest {
         );
         
         insert new List<IATA_ISO_Country__c>{portugal,switzerland,germany,spain};
-            
-            Account a = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = portugal.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
-                Location_type__c = 'HE',
-                OwnerId = UserInfo.getUserId(),
-                Location_Class__c = 'P'
-            );
+        
+
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Account a = new Account (
+            name = 'AccountTest',
+            IATA_ISO_Country__c = portugal.id,
+            Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+            ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
+            Location_type__c = 'HE',
+            OwnerId = UserInfo.getUserId(),
+            Location_Class__c = 'P',
+            recordtypeId=rtId
+        );
         
         Account a2 = new Account (
-            name = 'AccountTest',
+            name = 'AccountTest2',
             IATA_ISO_Country__c = switzerland.id,
             Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
             ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
             Location_type__c = 'HE',
             OwnerId = UserInfo.getUserId(),
-            Location_Class__c = 'P'
+            Location_Class__c = 'P',
+            recordtypeId=rtId
         );
         
         Account a3 = new Account (
@@ -126,31 +141,43 @@ public class PortalServicesCtrlTest {
                 LastName = 'ContactTest',
                 FirstName = 'Name',
                 accountID = a.id,
-                email='ContactTest@portalservices.test'
+                email='ContactTest@portalservices.test',
+                user_portal_status__c='Approved Admin'
             );
         
         Contact c2 = new Contact (
             LastName = 'ContactTest2',
             FirstName = 'Name',
             accountId = a2.id,
-            email='ContactTest2@portalservices.test'
+            email='ContactTest2@portalservices.test',
+            user_portal_status__c='Approved Admin'
         );
         
         Contact c3 = new Contact (
             LastName = 'ContactTest3',
             FirstName = 'Name',
             accountId = a3.id,
-            email='ContactTest3@portalservices.test'
+            email='ContactTest3@portalservices.test',
+            user_portal_status__c='Approved Admin'
         );
         
         Contact c4 = new Contact (
             LastName = 'ContactTest4',
             FirstName = 'Name',
             accountId = a4.id,
-            email='ContactTest4@portalservices.test'
+            email='ContactTest4@portalservices.test',
+            user_portal_status__c='Approved Admin'
+        );
+
+        Contact c21 = new Contact (
+            LastName = 'ContactTest2.1',
+            FirstName = 'Name',
+            accountId = a2.id,
+            email='ContactTest2.1@portalservices.test',
+            user_portal_status__c='Approved Admin'
         );
         
-        insert new List<Contact>{c,c2,c3,c4};
+        insert new List<Contact>{c,c2,c3,c4,c21};
             
             Portal_Application_Right__c appRight = new Portal_Application_Right__c(
                 Portal_Application__c = easyPay1.id,
@@ -169,6 +196,7 @@ public class PortalServicesCtrlTest {
             Right__c = 'Access Requested',
             Contact__c = c3.Id
         );
+
         Portal_Application_Right__c appRight4 = new Portal_Application_Right__c(
             Portal_Application__c = serviceTest3.id,
             Right__c = 'Access Granted',
@@ -180,36 +208,60 @@ public class PortalServicesCtrlTest {
             Right__c = 'Access Requested',
             Contact__c = c4.Id
         );
+        Portal_Application_Right__c appRight6 = new Portal_Application_Right__c(
+            Portal_Application__c = serviceTest3.id,
+            Right__c = 'Access Granted',
+            Contact__c = c21.Id
+        );
         
-        insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3,appRight4,appRight5};
+        insert new List<Portal_Application_Right__c>{appRight,appRight2,appRight3,appRight4,appRight5,appRight6};
             
-            }
+            
+        PortalServicesCtrl.ContactWrapper cw = new PortalServicesCtrl.ContactWrapper(appRight5);
+
+        ISSP_CS__c cs= new ISSP_CS__c(
+            name='ISS_Portal_Agency_Delegated_Admin',
+            Value__c=ISSP_Constant.TEST_User_ProfileID
+        );
+        insert cs;
+
+        map<string,ID> profileMap = new map<string,id>();
+        for(profile pr : [SELECT Id, Name FROM Profile WHERE Name in ('ISS Portal Agency User','ISS Portal Agency Delegated Admin User')]){
+            profileMap.put(pr.name,pr.id);
+        }
+
+        List<ISSP_CS__c> cSettings = new List<ISSP_CS__c>();
+
+        ISSP_CS__c cSetting = new ISSP_CS__c();
+        cSetting.Name = 'ISS_Portal_Agency_User';
+        cSetting.Value__c = String.valueOf(profileMap.get('ISS Portal Agency User')).substring(0, 15);
+        cSettings.add(cSetting);
+
+        ISSP_CS__c cSetting2 = new ISSP_CS__c();
+        cSetting2.Name = 'Host';
+        cSetting2.Value__c = 'portal.iata.org';
+        cSettings.add(cSetting2);
+
+        insert cSettings;
+    }
     
     
     @isTest
     public static void PortalServicesCtrlTest_getAccessGrantedServices() {
         
-        Contact c = [select id from contact where lastName = 'ContactTest2'];
-        
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-        
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        System.runAs(testeUser1) {
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+
+        ISSPServiceListView__c cslv = new ISSPServiceListView__c();
+        cslv.Name = 'Available services';
+        cslv.Profiles_Id__c = String.valueOf(portalUser.profileId).substring(0,15);
+        cslv.Field_Set_API_Name__c = 'ISSP_Available_services';
+        cslv.SOQL_Filter__c = 'WHERE Name != \'12345\' ';
+        insert cslv;
+
+        System.runAs(portalUser) {
             Test.StartTest();
             
             List<PortalServicesCtrl.ServiceWrapper> lstResults = PortalServicesCtrl.getUserAccessGrantedServices();
@@ -221,27 +273,11 @@ public class PortalServicesCtrlTest {
     
     @isTest
     public static void PortalServicesCtrlTest_getAccessRequestedServices() {
-        Contact c = [select id from contact where lastName = 'ContactTest3'];
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest3'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
         
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-        
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        System.runAs(testeUser1) {
+        System.runAs(portalUser) {
             Test.StartTest();
             
             List<PortalServicesCtrl.ServiceWrapper> lstResults = PortalServicesCtrl.getUserAccessRequestedServices();
@@ -253,27 +289,12 @@ public class PortalServicesCtrlTest {
     
     @isTest
     public static void PortalServicesCtrlTest_getUserServicesList() {
-        Contact c = [select id from contact where lastName = 'ContactTest'];
-        
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-        
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        System.runAs(testeUser1) {
+
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+        System.runAs(portalUser) {
             Test.StartTest();
             PortalSearchFilterWrapper psfwrapper= new PortalSearchFilterWrapper();
             
@@ -287,28 +308,11 @@ public class PortalServicesCtrlTest {
     
     @isTest
     public static void PortalServicesCtrlTest_getFavoriteServicesList() {
-        
-        Contact c = [select id from contact where lastName = 'ContactTest'];
-        
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-        
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        System.runAs(testeUser1) {
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest'];
+       
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+        System.runAs(portalUser) {
             Test.StartTest();
             
             List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
@@ -321,30 +325,11 @@ public class PortalServicesCtrlTest {
     @isTest
     public static void PortalServicesCtrlTest_getFavoriteServicesList_noRightsGiven() {
         
-        Contact c = [select id from contact where lastName = 'ContactTest3'];
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest3'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
         
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
-        
-        
-        List<Portal_Applications__c> lstApps = [SELECT Id from Portal_Applications__c];
-        Database.delete(lstApps);
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        System.runAs(testeUser1) {
+        System.runAs(portalUser) {
             Test.StartTest();
             
             List<Portal_Application_Right__c> lstResults = PortalServicesCtrl.getFavoriteServicesList();
@@ -366,27 +351,12 @@ public class PortalServicesCtrlTest {
     
     @isTest
     public static void PortalServicesCtrlTest_getServiceInformation() {
-        Contact c = [select id from contact where lastName = 'ContactTest2'];
-        
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
         
         
-        System.runAs(testeUser1) {
+        System.runAs(portalUser) {
             Test.StartTest();
             list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where name ='serviceTest3'];
             PortalServicesCtrl.ServiceWrapper result = PortalServicesCtrl.getServiceDetails(portalServicelist.get(0).id);
@@ -396,6 +366,34 @@ public class PortalServicesCtrlTest {
         }
         
     }
+
+    @isTest
+    public static void PortalServicesCtrlTest_getServiceInfoForAdminWithoutAccess() {
+        account acc=[select id from account where name='AccountTest2'];
+
+        Contact c = new Contact (
+            LastName = 'ContactTest34',
+            FirstName = 'Name',
+            accountId = acc.id,
+            user_portal_status__c='Approved Admin',
+            email='ContactTest444@portalservices.test'
+        );
+        insert c;
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        
+        
+        System.runAs(portalUser) {
+            Test.StartTest();
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where name ='serviceTest3'];
+            PortalServicesCtrl.ServiceWrapper result = PortalServicesCtrl.getServiceDetails(portalServicelist.get(0).id);
+            
+            List<PortalServicesCtrl.ContactWrapper>  resultList = PortalServicesCtrl.getContactsAndStatusRelatedToServiceList(portalServicelist.get(0).id,0);
+           
+            Test.StopTest();
+        }
+        
+    }
+
     
     @isTest
     public static void PortalServicesCtrlTest_getAccessGrantedServicesForContacts() {
@@ -429,26 +427,7 @@ public class PortalServicesCtrlTest {
     
     @isTest
     public static void PortalServicesCtrlTest_grantAccess() {
-        Contact c = [select id from contact where lastName = 'ContactTest4'];
-        
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        insert testeUser1;
+        Contact c = [select id from contact where lastName = 'ContactTest4'];        
         
         list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
         
@@ -456,29 +435,69 @@ public class PortalServicesCtrlTest {
         Boolean isReq =PortalServicesCtrl.grantAccess(c.id, portalServicelist[0].id, 'Test');
         Test.StopTest();        
     }
+
+    @isTest
+    public static void PortalServicesCtrlTest_grantAccessToContactPendingApproval() {
+        
+    
+        account  acc =[select id from account where name='AccountTest'];
+        Contact newCon2 = new Contact(
+            AccountId = acc.Id, 
+            FirstName = 'CSP', 
+            LastName = 'Tester', 
+            Email = System.today().dayOfYear() + 'testemail2@csp.testclass', 
+            User_Portal_Status__c = 'Pending Approval',
+            Community__c='ISSP portal');
+        insert newCon2;
+       
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+        
+        Test.StartTest(); 
+            portal_Application_Right__c appRight = new Portal_Application_Right__c(
+                Portal_Application__c = portalServicelist[0].id,
+                Right__c = 'Access Requested',
+                Contact__c = newCon2.Id
+            );
+            insert appRight;
+            Boolean isReq =PortalServicesCtrl.grantAccess(newCon2.id, portalServicelist[0].id, 'Test');
+        Test.StopTest();        
+    }
+
+    @isTest
+    public static void PortalServicesCtrlTest_grantAccessToContactWithoutUser() {
+        
+        Account  acc =[select id from account where name='AccountTest'];
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.FirstName = 'test';
+        con.LastName = 'contact';
+        con.AccountId= acc.Id;
+        con.Email = 'test1@test.com';
+        con.Preferred_Language__c = 'English';
+        insert con;
+
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+        
+        
+        portal_Application_Right__c appRight = new Portal_Application_Right__c(
+                Portal_Application__c = portalServicelist[0].id,
+                Right__c = 'Access Requested',
+                Contact__c = con.Id
+            );
+
+        insert appRight;
+        
+        
+        Test.StartTest();    
+        Boolean isReq =PortalServicesCtrl.grantAccess(con.id, portalServicelist[0].id, 'Test');
+        Test.StopTest();        
+    }
     
     @isTest
     public static void PortalServicesCtrlTest_denyAccess() {
         Contact c = [select id from contact where lastName = 'ContactTest4'];
-        
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        insert testeUser1;
+        c.Status__c='Active';
+        update c;
         
         list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
         
@@ -490,30 +509,13 @@ public class PortalServicesCtrlTest {
     @isTest
     public static void PortalServicesCtrlTest_serviceWrapperRedirect() {
         
-        Contact c = [select id from contact where lastName = 'ContactTest4'];
-        
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        insert testeUser1;
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
         
         list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
         
-        System.runAs(testeUser1) {
+        System.runAs(portalUser) {
             Test.StartTest();    
             String redirect  =PortalServicesCtrl.serviceWrapperRedirect(portalServicelist[0].id); 
             Test.StopTest();
@@ -523,36 +525,128 @@ public class PortalServicesCtrlTest {
     @isTest
     public static void PortalServicesCtrlTest_getContactsAndStatusRelatedToServiceList() {
         
-        Contact c = [select id from contact where lastName = 'ContactTest4'];
-        
-        //Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
-        
-        User testeUser1 = new User (
-            Alias = 'newUser', 
-            Email='newuser@testorg.com', 
-            EmailEncodingKey='UTF-8', 
-            LastName='Testing1', 
-            LanguageLocaleKey='en_US', 
-            ContactId = c.id,            
-            LocaleSidKey='en_US',
-            ProfileId = p.Id, 
-            TimeZoneSidKey='America/Los_Angeles', 
-            UserName='newuser@testorg.com',
-            Mgmt_Report_Team__c = true
-        );
-        
-        insert testeUser1;
-        List<PortalServicesCtrl.ContactWrapper> cw = new List<PortalServicesCtrl.ContactWrapper>();
-        List<PortalServicesCtrl.ContactWrapper> cw2 = new List<PortalServicesCtrl.ContactWrapper>();
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+       
         
         list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
         
-        System.runAs(testeUser1) {
+        System.runAs(portalUser) {
             Test.StartTest();    
-            cw = PortalServicesCtrl.getContactsAndStatusRelatedToServiceList(portalServicelist[0].id,3);
-            cw2 = PortalServicesCtrl.searchContactsInService(portalServicelist[0].id,'serv'); 
-             
+            List<PortalServicesCtrl.ContactWrapper> cw = PortalServicesCtrl.getContactsAndStatusRelatedToServiceList(portalServicelist[0].id,3);
+            List<PortalServicesCtrl.ContactWrapper> cw2 = PortalServicesCtrl.searchContactsInService(portalServicelist[0].id,'serv'); 
+            List<PortalServicesCtrl.ServiceWrapper> sw3 = PortalServicesCtrl.getUserAvailableServices(); 
+            
+            Test.StopTest();
+        }
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_paymentLinkRedirect() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+       
+        Test.StartTest();    
+            PortalServicesCtrl.updateLastModifiedService(portalServicelist.get(0).id);
+            Map<String,String> userOptions = new Map<String,String>();
+            System.runAs(portalUser) {
+                
+                String paymentLink = PortalServicesCtrl.paymentLinkRedirect();
+                Integer userProvisioningRequests = PortalServicesCtrl.userProvisioningRequests();
+                userOptions = PortalServicesCtrl.getUserOptions(portalUser.id);
+                List<Connected_App_Roles__c> cap = PortalServicesCtrl.availableIEPPortalServiceRoles(portalUser.id);
+                List<Connected_App_Roles__c> cap2 = PortalServicesCtrl.availableICCSPortalServiceRoles();
+                
+            }            
+        Test.StopTest();
+        
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_getContactsForServiceAssignment() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        
+        
+        list<PortalLookupSearchResult> plsr = new List<PortalLookupSearchResult>();
+        
+        System.runAs(portalUser) {
+            
+            Test.StartTest();    
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+            
+            plsr = PortalServicesCtrl.getContactsForServiceAssignment(portalServicelist.get(0).id, '');                        
+            
+            Test.StopTest();
+        }
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_grantAccessToContacts() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+        
+        List<String> lstString = new List<String>();
+        lstString.add(c.id);        
+        
+        Test.StartTest();    
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+        
+        PortalServicesCtrl.grantAccessToContacts(lstString, portalServicelist.get(0).id);                        
+        
+        Test.StopTest();
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_requestAccess() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        
+        List<String> lstString = new List<String>();
+        lstString.add(c.id);        
+        List<Contact> contList = new List<Contact>();
+        List<PortalServicesCtrl.ServiceWrapper> paList = new List<PortalServicesCtrl.ServiceWrapper>(); 
+        System.runAs(portalUser) {
+            
+            Test.StartTest();    
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name in ('serviceTest3','serviceTest2','Insurance Providers')];
+            
+            PortalServicesCtrl.requestAccess(portalServicelist.get(0).id);                        
+            contList = PortalServicesCtrl.getPortalAdmins();
+            paList = PortalServicesCtrl.getAllServices(); 
+
+
+            //requestAccessToICCS
+            PortalServicesCtrl.newAppsRequestICCS(portalServicelist.get(1).id, '', c.id);   
+
+            PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false, ''); 
+            Test.StopTest();
+        }
+    }
+    
+    @isTest
+    public static void PortalServicesCtrlTest_getTotalNrContacts() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+        PortalApplicationRight_Sel pars = new PortalApplicationRight_Sel();
+        System.runAs(portalUser) {
+            
+            Test.StartTest();    
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+            
+            Integer paList = pars.getTotalNrContacts(portalServicelist.get(0).id); 
             Test.StopTest();
         }
     }
