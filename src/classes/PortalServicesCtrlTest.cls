@@ -502,7 +502,10 @@ public class PortalServicesCtrlTest {
         list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
         
         Test.StartTest();    
-        Boolean isReq =PortalServicesCtrl.denyAccess(c.id, portalServicelist[0].id, 'Test'); 
+            Boolean isReq =PortalServicesCtrl.denyAccess(c.id, portalServicelist[0].id, 'Test',true); 
+            System.assertEquals(isReq,true);
+            isReq =PortalServicesCtrl.denyAccess(c.id, portalServicelist[0].id, 'Test',false); 
+            System.assertEquals(isReq,true);
         Test.StopTest();
     }
     
@@ -566,44 +569,7 @@ public class PortalServicesCtrlTest {
         Test.StopTest();
         
     }
-    
-    @isTest
-    public static void PortalServicesCtrlTest_getContactsForServiceAssignment() {
-        
-        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
 
-        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
-        
-        
-        list<PortalLookupSearchResult> plsr = new List<PortalLookupSearchResult>();
-        
-        System.runAs(portalUser) {
-            
-            Test.StartTest();    
-            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
-            
-            plsr = PortalServicesCtrl.getContactsForServiceAssignment(portalServicelist.get(0).id, '');                        
-            
-            Test.StopTest();
-        }
-    }
-    
-    @isTest
-    public static void PortalServicesCtrlTest_grantAccessToContacts() {
-        
-        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
-        
-        List<String> lstString = new List<String>();
-        lstString.add(c.id);        
-        
-        Test.StartTest();    
-        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
-        
-        PortalServicesCtrl.grantAccessToContacts(lstString, portalServicelist.get(0).id);                        
-        
-        Test.StopTest();
-    }
-    
     @isTest
     public static void PortalServicesCtrlTest_requestAccess() {
         
@@ -647,6 +613,43 @@ public class PortalServicesCtrlTest {
             list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
             
             Integer paList = pars.getTotalNrContacts(portalServicelist.get(0).id); 
+            Test.StopTest();
+        }
+    }
+
+    @isTest
+    public static void PortalServicesCtrlTest_grantAccessToContacts() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+        
+        List<String> lstString = new List<String>();
+        lstString.add(c.id);        
+        
+        Test.StartTest();    
+        list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+        
+        PortalServicesCtrl.grantAccessToContacts(lstString, portalServicelist.get(0).id);                        
+        
+        Test.StopTest();
+    }
+
+    @isTest
+    public static void PortalServicesCtrlTest_getContactsForServiceAssignment() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        
+        
+        list<PortalLookupSearchResult> plsr = new List<PortalLookupSearchResult>();
+        
+        System.runAs(portalUser) {
+            
+            Test.StartTest();    
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest4'];
+            
+            plsr = PortalServicesCtrl.getContactsForServiceAssignment(portalServicelist.get(0).id, '');                        
+            
             Test.StopTest();
         }
     }
