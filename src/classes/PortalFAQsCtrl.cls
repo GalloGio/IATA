@@ -187,10 +187,6 @@ public with sharing class PortalFAQsCtrl {
         public Integer totalItemCount { get;set; }        
         @AuraEnabled
         public SObject[] records { get;set; }
-        @AuraEnabled
-        public Boolean userAdmin { get;set; }
-        @AuraEnabled
-        public String url { get;set; }
     }
 
 }

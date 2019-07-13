@@ -150,6 +150,7 @@ public with sharing class PortalDocumentsController {
     * @params List<ContentVersion> docs, String UserPortalCountry, String UserPortalRegion
     * @return List<ContentVersion>
     */
+    @TestVisible
     private static List<ContentVersion> sortContentVersions(List<ContentVersion> docs, String UserPortalCountry, String UserPortalRegion) {
         List<ContentVersion> retDocs = new List<ContentVersion>();
         Set<Integer> excludeIndexes = new Set<Integer>();
