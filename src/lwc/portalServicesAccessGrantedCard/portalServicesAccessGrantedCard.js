@@ -5,7 +5,7 @@ import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updat
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
-import { navigateToPage } from'c/navigationUtils';
+import { navigateToPage } from 'c/navigationUtils';
 
 //import labels
 import CSP_Services_ManageService from '@salesforce/label/c.CSP_Services_ManageService';
@@ -20,7 +20,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         CSP_Services_GoToService
     };
 
-    goToManageServiceButtonClick(event){
+    goToManageServiceButtonClick(event) {
         let serviceAux = JSON.parse(JSON.stringify(this.service));
 
         let params = {};
@@ -33,10 +33,10 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
             attributes: {
                 pageName: "manage-service"
             }})
-        .then(url => navigateToPage(url, params));
+            .then(url => navigateToPage(url, params));
     }
 
-    goToServiceButtonClick(){
+    goToServiceButtonClick() {
         //because proxy.......
         let serviceAux = JSON.parse(JSON.stringify(this.service)).recordService;
 
@@ -44,41 +44,68 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         let appUrlData = serviceAux.Application_URL__c
         let appFullUrlData = serviceAux.Application_URL__c;
         let openWindowData = serviceAux.New_Window__c;
-        let requestable = serviceAux.Requestable__c
+        let requestable = serviceAux.Requestable__c;
         let recordId = serviceAux.Id;
-        
+
         // update Last Visit Date on record
         updateLastModifiedService({ serviceId: recordId })
-        
-        let myUrl = appUrlData;
-        
-        //verifies if the event target contains all data for correct redirection
-        if (openWindowData !== undefined) {
-            //determines if the link is to be opened on a new window or on the current
-            if (openWindowData === true) {
-                if (appUrlData !== 'undefined') {
-                    myUrl = appUrlData.replace("/", "");
-                } else if (appFullUrlData !== 'undefined') {
-                    myUrl = appFullUrlData;
-                }
 
-                //is this link a requestable Service?
-                if (requestable === true) {
+        let myUrl;
+        let flag = false;
+        if (appUrlData !== '') {
+            myUrl = appUrlData;
+            flag = true;
+        } else if (appFullUrlData !== '') {
+            myUrl = appFullUrlData;
+            flag = true;
+        }
+        if (flag) {
+            //verifies if the event target contains all data for correct redirection
+
+            if (openWindowData !== null && openWindowData !== undefined) {
+                //determines if the link is to be opened on a new window or on the current
+                if (openWindowData) {
+                    //open new tab with the redirection
+
+                    if (myUrl.startsWith('/')) {
+                        goToOldPortalService({ myurl: myUrl })
+                            .then(result => {
+                                //open new tab with the redirection
+                                window.open(result);
+                                this.toggleSpinner();
+                            })
+                            .catch(error => {
+                                //throws error
+                                this.error = error;
+                            });
+
+                    } else {
+                        if (!myUrl.startsWith('http')) {
+                            myUrl = window.location.protocol + '//' + myUrl;
+                        }
+                        window.open(myUrl);
+                        this.toggleSpinner();
+                    }
+
+
+                } else if (myUrl !== '') {
+                    //redirects on the same page
                     //method that redirects the user to the old portal maintaing the same loginId
                     goToOldPortalService({ myurl: myUrl })
                         .then(result => {
                             //open new tab with the redirection
-                            window.open(result);
+                            window.location.href = result;
+                            this.toggleSpinner();
+                        })
+                        .catch(error => {
+                            //throws error
+                            this.error = error;
                         });
-                } else {
-                    //open new tab with the redirection
-                    window.open(myUrl);
+
                 }
-            } else {
-                //redirects on the same page
-                window.location.href = myUrl;
             }
-            
+        } else {
+            console.info('No link to the service has been set.')
         }
 
 

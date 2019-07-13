@@ -37,6 +37,7 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
 			'Portal_Application_Right__c.Contact__r.Account.Name',
 			'Portal_Application_Right__c.ANG_Portal_Service_Role__c',
 			'Portal_Application_Right__c.Contact__r.User_Portal_Status__c',
+			'Portal_Application_Right__c.Contact__r.Status__c',
 			'Portal_Application_Right__c.Account__c',		
 			'Portal_Application_Right__c.Contact__r.Account.IATACode__c',		
 			'Portal_Application_Right__c.Contact__r.Account.BillingCity'		

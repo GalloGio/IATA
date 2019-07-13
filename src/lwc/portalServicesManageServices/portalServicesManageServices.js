@@ -1,7 +1,10 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track} from 'lwc';
+
+//import navigation methods
+import { NavigationMixin } from 'lightning/navigation';
+import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 
 //import labels
-import manageServiceslb from '@salesforce/label/c.CSP_Manage_Services';
 import aboutlb from '@salesforce/label/c.CSP_About';
 import contactslb from '@salesforce/label/c.ISSP_Contacts';
 import manageUserslb from '@salesforce/label/c.CSP_Manage_Portal_Users';
@@ -27,21 +30,12 @@ import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
 
-//import navigation methods
-import { NavigationMixin } from 'lightning/navigation';
-import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
-
-
-import { refreshApex } from '@salesforce/apex';
-
+//import apex methods
 import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
-
-// Access control methods
-import getPortalAdmins from '@salesforce/apex/PortalServicesCtrl.getPortalAdmins';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
 
@@ -52,7 +46,6 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
 
     label = {
-        manageServiceslb,
         aboutlb,
         contactslb,
         manageUserslb,
@@ -112,12 +105,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //Variables to trak
     @track showConfirm = false; // controls visibility on displaying confirm to request Access to portal sercice
     @track showPopUp = true;
-    @track showSpinner = true;
+    @track showSpinner = false;
+
+    @track componentLoading = true;
 
     
     @track isAdmin = false;
-    @track serviceName = '';
-    @track portalAdminList = [];
+    @track serviceName = false;
     
     
     @track contactTableColums = [];
@@ -134,36 +128,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     PAGE_SIZE=10; //nr of contact record per page
 
-
-    @wire(getPortalAdmins) portalAdminList;
-
-
-
-    @wire(getServiceDetails, { serviceId: '$serviceId' })
-    WireServiceDetails(result) {
-        this.serviceDetailsResult = result;
-        if (result.data) {
-            this.serviceRecord = result.data;
-            this.isAdmin = this.serviceRecord.isAdmin;
-            this.loadReady = true;
-            this.serviceName = this.serviceRecord.recordService.ServiceName__c;         
-            if (this.isAdmin){
-
-                getContacts({ serviceId: this.serviceId,offset:this.nrLoadedRecs}).then(result=>{
-                    let resultData=JSON.parse(JSON.stringify(result));
-                    this.initialPageLoad(resultData,this.serviceRecord.totalNrContacts);
-            
-                    //this.showPopUp = false;
-                    this.showSpinner = false;
-                });
-            }else{
-                //this.showPopUp = false;
-                this.showSpinner = false;
-
-            }
-            
-        }
-    }  
     connectedCallback() {
 
         //get the parameters for this page
@@ -180,6 +144,76 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             { type: 'action',typeAttributes: { iconName: 'utility:delete',disabled:true,  rowActions: this.getRowActions } }
         ];
 
+
+        //get the service details
+        this.getServiceDetailsJS();
+
+    }
+
+    resetComponent(){
+        //Resets the component properties back to the start
+        this.appRejReason='';
+        this.contactList = [];    //list of contacts organized by pages list<list<contacts>
+        this.contactListOg = [];  // stores original contactList after filtering
+        this.currentContactPage = []; //page being displayed
+        this.pageList=[];         // list of pages for the pagination cmp
+        this.totalNrPagesOg =0;
+        this.totalNrPages =0; // total nr pages 
+        this.totalNrRecords =0;
+        this.nrLoadedRecs =0;     //nr of loaded records
+        this.currentPageNumber=1;
+
+        this.getServiceDetailsJS();
+    }
+
+    getServiceDetailsJS(){
+        if(this.serviceId !== undefined && this.serviceId !== ''){
+
+            getServiceDetails({ serviceId: this.serviceId })
+            .then(result => {
+                console.log('getServiceDetails: ' ,JSON.parse(JSON.stringify(result)));
+
+                this.serviceRecord = JSON.parse(JSON.stringify(result));
+                this.isAdmin = this.serviceRecord.isAdmin;
+                this.loadReady = true;
+                this.serviceName = this.serviceRecord.recordService.ServiceName__c;
+
+                if (this.isAdmin){
+                    this.getContactsForPage();
+                }else{
+                    //this.showSpinner = false;
+                    this.componentLoading = false;
+                }
+            })
+            .catch(error => {
+                //this.showSpinner = false;
+                this.componentLoading = false;
+            });
+
+        }
+    }
+
+    getContactsForPage(){
+        console.log('called getContactsForPage getContacts');
+        console.log('serviceId:', this.serviceId);
+        console.log('offset:', this.nrLoadedRecs);
+
+        getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs})
+        .then(result=>{
+            let resultData = JSON.parse(JSON.stringify(result));
+            this.initialPageLoad(resultData,this.serviceRecord.totalNrContacts);
+
+            //this.showSpinner = false;
+            this.componentLoading = false;
+        });
+    }
+
+    get renderCancelRequest(){
+        //for either normal users and admin users
+        let returnBool = this.serviceRecord !== undefined && this.serviceRecord.recordService !== undefined && 
+        ((this.serviceRecord.accessGranted === true && this.serviceRecord.recordService.Requestable__c !== undefined && this.serviceRecord.recordService.Requestable__c === true && this.serviceRecord.recordService.Cannot_be_managed_by_portal_admin__c !== undefined && this.serviceRecord.recordService.Cannot_be_managed_by_portal_admin__c === false) || 
+            (this.serviceRecord.accessRequested === true && this.serviceRecord.recordService.Requestable__c !== undefined && this.serviceRecord.recordService.Requestable__c === true));
+        return returnBool;
     }
 
     //==================== CONTACT LIST METHODS ==============
@@ -187,7 +221,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //loads and organizes the records in pages
     initialPageLoad(contactList,totalNrRecs){
         this.totalNrRecords=totalNrRecs;
-        this.totalNrPages=totalNrRecs.length==0?0:Math.ceil(totalNrRecs/this.PAGE_SIZE);
+        this.totalNrPages=totalNrRecs.length===0?0:Math.ceil(totalNrRecs/this.PAGE_SIZE);
         this.processContacList(contactList,1);
         this.generatePageList();
     }
@@ -199,7 +233,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         for(let i=1;i <=contactList.length;i++){
             tempPage.push(contactList[i-1]);
-            if((i % this.PAGE_SIZE)==0){ // organizes the records by pages
+            if((i % this.PAGE_SIZE)===0){ // organizes the records by pages
                 tempList.push(tempPage);
                 tempPage=[];
             }
@@ -207,7 +241,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         
         if(tempPage.length>0) tempList.push(tempPage);
 
-        if(this.contactList.length==0) //on first load
+        if(this.contactList.length===0) //on first load
             this.contactList=tempList;
         else{
             let contList=JSON.parse(JSON.stringify(this.contactList));
@@ -332,7 +366,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.generatePageList(); 
                 });
             }
-        }else if(searchKey== ''){
+        }else if(searchKey=== ''){
             if(this.searchMode){
                 //Exit search mode
                 //restore all records already retrieved
@@ -394,24 +428,24 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         }
     }
 
-
-
-
-    get renderRequest() {       
-        return this.serviceRecord.accessRequested;
+    get renderRequest() {
+        let returnBool = this.serviceRecord.accessRequested === true;        
+        return returnBool;
     }
 
 
     //only display contact list for portal admins with access granted
     get displayAdminView() {
-        return this.isAdmin && this.serviceRecord.accessGranted;
+        return this.isAdmin;
     }
 
     //Callback on service request submit completed
     requestComplete(event) {
         if (event.detail.success) {
-            refreshApex(this.serviceDetailsResult);
+            this.resetComponent();
+            //refreshApex(this.serviceDetailsResult);
         }
+        this.resetComponent();
         this.showConfirm = false;
     }
 
@@ -483,11 +517,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     //Cancel Service Access
     cancelServiceAccessRequest(event){
-        let contact={contactId:this.serviceRecord.userContactId};
-        let msg=this.label.cancelAccessMsg.replace('{0}',this.serviceName);
+        let contact = {
+            contactId: this.serviceRecord.userContactId
+        };
+        let msg = this.label.cancelAccessMsg.replace('{0}',this.serviceName);
         let title=this.label.cancelAccessTitle;
 
-        this.denyUserAccess(contact,msg,title);
+        this.denyUserAccessJS(contact,msg,title, false);
         
     }
     
@@ -505,9 +541,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.grantUserAccess(row);
                 break;
             case 'deactivateUser':
-                let title=this.label.denyAccessTitle;
-                let msg=this.label.confirmDenyAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',row.contactName);
-                this.denyUserAccess(row,msg,title);
+                let title = this.label.denyAccessTitle;
+                let msg = this.label.confirmDenyAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',row.contactName);
+                this.denyUserAccessJS(row,msg,title, true);
                 break;
             case 'ifapContact':
                 //this.deleteAttach(row);
@@ -527,66 +563,62 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.popupMsg=this.label.confirmGrantAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',contact.contactName);
         }
         this.mode='grant';
-        this.togglePopup();
+        this.showConfirmPopup = true;
     }
 
-    denyUserAccess(contact,msg,title){
-        this.popupTitle=title;
-        this.selectedlRow=contact;
-        this.popupMsg=msg;
+    denyUserAccessJS(contact, msg, title, isFromContactTable ){
+        this.popupTitle = title;
+        this.selectedlRow = contact;
+        this.popupMsg = msg;
+        this.isFromContactTable = isFromContactTable;
         
-        this.mode='deny';
-        this.togglePopup();
-
+        this.mode = 'deny';
+        this.showConfirmPopup = true;
     }
 
     //================== Popup Methods =======================// 
-    togglePopup(){
-        this.showConfirmPopup=!this.showConfirmPopup;
-    }
-    
-    
-    abortAction(){
-        this.togglePopup();
-    }
-
     handleChangeReason(event) {
         this.appRejReason = event.target.value;
     }
 
-    confirmAction(){
+    handlePopupCancelAction(){
+        this.showConfirmPopup = false;
+    }
+
+    handlePopupConfirmAction(){
         this.showSpinner=true;
 
-        console.log(this.mode);
+        let methodParams = {
+            contactId: this.selectedlRow.contactId,
+            serviceId: this.serviceRecord.recordService.Id,
+            reason: this.appRejReason
+        };
         switch(this.mode){
             case 'grant':
-                    grantUserAccess({
-                        contactId:this.selectedlRow.contactId,
-                        serviceId:this.serviceRecord.recordService.Id,
-                        reason:this.appRejReason
-                    }).then(result=>{
-                        this.togglePopup();
-                        this.appRejReason='';
-                        refreshApex(this.serviceDetailsResult);
-                    }).catch(error=>{
-                        console.error(error);
-                        this.togglePopup();
-                    });
-                    break;
+                grantUserAccess(methodParams).then(result=>{
+                    this.componentLoading = true;
+                    this.showSpinner=false;
+                    this.showConfirmPopup = false;
+                    this.resetComponent();
+                }).catch(error=>{
+                    console.log('error: ', error);
+                    this.showConfirmPopup = false;
+                });
+                break;
             case 'deny':
-                    denyUserAccess({
-                        contactId:this.selectedlRow.contactId,
-                        serviceId:this.serviceRecord.recordService.Id,
-                        reason:this.appRejReason
-                    }).then(result=>{
-                        this.togglePopup();
-                        this.appRejReason='';
-                        refreshApex(this.serviceDetailsResult);
-                    }).catch(error=>{
-                        console.error(error);
-                        this.togglePopup();
-                    });
+                methodParams.isFromContactTable = this.isFromContactTable;
+
+                denyUserAccess(methodParams).then(result=>{
+                    this.componentLoading = true;
+                    this.showSpinner = false;
+                    this.showConfirmPopup = false;
+                    this.resetComponent();
+                }).catch(error=>{
+                    this.showConfirmPopup = false;
+                });
+                break;
             default:
+                this.showSpinner=false;
         }        
     }
 

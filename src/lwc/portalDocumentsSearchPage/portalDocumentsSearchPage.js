@@ -1,18 +1,18 @@
 import { LightningElement, track } from 'lwc';
 import { getParamsFromPage } from'c/navigationUtils';
 import CSP_SearchDocuments from '@salesforce/label/c.CSP_SearchDocuments';
-import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
-import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
-import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';	
+import CSP_Search_TypeIn_text1 from '@salesforce/label/c.CSP_Search_TypeIn_text1';
+import CSP_Search_TypeIn_text2 from '@salesforce/label/c.CSP_Search_TypeIn_text2';
+import CSP_Search_TypeIn_text3 from '@salesforce/label/c.CSP_Search_TypeIn_text3';	
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalDocumentsSearchPage extends LightningElement {
     @track label = {
         CSP_SearchDocuments,
-        CSP_Search_NoResults_text1,
-        CSP_Search_NoResults_text2,
-        CSP_Search_NoResults_text3
+        CSP_Search_TypeIn_text1,
+        CSP_Search_TypeIn_text2,
+        CSP_Search_TypeIn_text3
     };
 
     @track topResults = true;
@@ -29,7 +29,6 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     searchIconNoResultsUrl = '/csportal/s/CSPortal/Images/Icons/searchNoResult.svg';
 
     connectedCallback() {
-        
         let pageParams = getParamsFromPage();
 
         if(pageParams !== undefined) {
@@ -67,6 +66,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
     handleFilter(event) {
         this.loading = true; 
         let detailObject = JSON.parse(JSON.stringify(event.detail));
+
         this.documentObject = detailObject;
         let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
         let _categories = [];
@@ -80,6 +80,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
         this.categories = [];
         this.categories = Object.keys(_categories).length > 0 ? _categories : this.documentObject.categories;
+
         this.resultsToRender();
     }
 
@@ -100,7 +101,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
                 break;
             }
         }
-        
+
         this.documentObject = detailObject;
         this.resultsToRender();
     }

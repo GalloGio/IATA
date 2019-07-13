@@ -27,6 +27,7 @@ private class csp_redirectorControllerTest {
 			// Create a fake response
 			HttpResponse res = new HttpResponse();
 			res.setHeader('Content-Type', 'application/json');
+            res.setBody('{"example":"test"}');
 			res.setStatusCode(200);
 			return res;
 		}
@@ -134,7 +135,16 @@ private class csp_redirectorControllerTest {
     @IsTest
     static void testFindLocationWithIpAddress(){
 
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseErrorGenerator());
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+        
+        test.startTest();
+        csp_redirectorController.findLocation(false, '192.0.2.0');
+        test.stopTest();        
+    }
+
+    @IsTest
+    static void testExpetionInRequest(){
+
         
         test.startTest();
         csp_redirectorController.findLocation(false, '192.0.2.0');

@@ -306,6 +306,33 @@ public without sharing class ISSP_AMS_Accreditation {
     set;
     }
 
+    public String portalRedirectToCompanyProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_CompanyInformation?mid=M5S2';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('company-profile');
+            return url;
+        }
+    }
+    set;
+    }
+
+    public String portalRedirectToMyProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_ContactList?MainNav=Admin';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('my-profile');
+            return url;
+        }
+    }
+    set;
+    }
+    
+
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;

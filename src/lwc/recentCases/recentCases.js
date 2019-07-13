@@ -70,7 +70,7 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
                 let row = allDataAux.records[i];
                 row.CaseURL = urlMap[row.Id];
                 row.Country = row.Country_concerned_by_the_query__c;
-                row.statusClass= row.Status.replace(' ','').replace('_', '').replace('-','');
+                row.statusClass= row.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
             }
             this.data = allDataAux.records;
             this.loading = false;
@@ -88,5 +88,32 @@ export default class RecentCases extends NavigationMixin(LightningElement) {
         event.stopPropagation();
 
         navigateToPage(this.casesListUrl, {});
+    }
+
+    navigateToLinkOne(event) {
+        let params = {};
+        params.q = 'case';
+
+        event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "comm__namedPage",
+            attributes: {
+                pageName: "support-view-article"
+            }})
+        .then(url => navigateToPage(url, params));
+    }
+    navigateToLinkTwo(event) {
+        let params = {};
+        params.q = 'case';
+
+        event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "comm__namedPage",
+            attributes: {
+                pageName: "support-view-article"
+            }})
+        .then(url => navigateToPage(url, params));
     }
 }

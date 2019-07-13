@@ -44,7 +44,7 @@ export default class PortalProfilePageHeader extends LightningElement {
 
         getContactDetails().then(result => {
             //because proxy..
-            this.contact = result;
+            this.contact = result.contact;
             this.loading = false;
         })
         

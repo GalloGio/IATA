@@ -43,6 +43,7 @@ import csp_CreateNewCaseAddAttachment from '@salesforce/label/c.csp_CreateNewCas
 import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
 import PKB2_js_error from '@salesforce/label/c.PKB2_js_error';
+import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
 
 // Import standard salesforce labels
 import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
@@ -88,7 +89,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         csp_errorCreatingCase,
         ISSP_ANG_GenericError,
         IDCard_FillAllFields,
-        PKB2_js_error
+        PKB2_js_error,
+        CSP_NoSearchResults
     }
 
     //spinner controller
@@ -278,8 +280,17 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         this.loading = true;
         searchAccounts({ searchTerm: null })
             .then(relatedAccountsResult => {
-                this.relatedAccounts = JSON.parse(JSON.stringify(relatedAccountsResult));
+
+                let allresults = JSON.parse(JSON.stringify(relatedAccountsResult));
+                this.relatedAccounts = allresults;
+
+                if (allresults.length === 1) {
+                    this.singleresult = allresults;
+                } else if (allresults.length === 0) {
+                    this.singleresult = [{ title: this.label.CSP_NoSearchResults }];
+                }
                 this.getProfile();
+
                 //activate spinner
                 this.loading = false;
             });
@@ -390,7 +401,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     //adds recipient to list of recipients
     addNewRecipientButtonClick() {
 
-        let inputCmp = this.template.querySelector('[data-id="emaillookup"]').getSelection()[0].title;
+        let inputCmp = this.template.querySelector('[data-id="emaillookup"]').getSelection()[0].subtitle;
         let comp = this.template.querySelector('[data-id="emaillookup"]');
 
         let lstAdditionalCCFinal = this.lstRecipients;
@@ -492,7 +503,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
                     //Open the modal upon case insert with the success message if is the Create Case button pressed.
                     if (process === 'Show_Success') {
-
+                        //Promise to let JS identify the place to scroll
+                        //Pop up shows -> scrolls up to the Pop-up.
                         let showSuccessModal = new Promise((resolve, reject) => {
                             this.openModal();
 

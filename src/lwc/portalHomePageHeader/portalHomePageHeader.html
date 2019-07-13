@@ -9,8 +9,8 @@
                         <div if:true={loadingGreeting} class="componentLoadingSpinner">
                             <lightning-spinner alternative-text="Loading" size="small" variant="inverse"></lightning-spinner>
                         </div>
-                        <div if:false={loadingGreeting}>
-                            {greetinglabel} &nbsp;
+                        <div if:false={loadingGreeting} class="headerContainerShadow">
+                            <div>{greetinglabel} &nbsp;</div>
                         </div>
                     </div>
 

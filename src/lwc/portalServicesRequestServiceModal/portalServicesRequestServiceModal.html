@@ -133,7 +133,12 @@
                         <div class="customPopupInteriorHalfScreenCentered SSWSSuccessModal" if:true={SSWSSuccessModal}>
                             <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
                                 <lightning-formatted-rich-text class="richTextlinks introMessage"
-                                    value={label.ISSP_Access_Granted}>
+                                    value={label.ISSP_Access_Requested}>
+                                </lightning-formatted-rich-text>
+                            </div>
+                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                    value={label.ISSP_Thanks_for_request}>
                                 </lightning-formatted-rich-text>
                             </div>
                             <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
@@ -185,7 +190,7 @@
                         <div class="customPopupInteriorHalfScreenCentered TDSuccessModal" if:true={TDSuccessModal}>
                             <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
                                 <lightning-formatted-rich-text class="richTextlinks introMessage"
-                                    value={label.ISSP_Access_Granted}>
+                                    value={label.ISSP_Access_Requested}>
                                 </lightning-formatted-rich-text>
                             </div>
                             <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">

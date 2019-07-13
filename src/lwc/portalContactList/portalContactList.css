@@ -63,6 +63,12 @@ td.active {
   color: #333333;
 }
 
+td.activeField{
+    width: 220px;
+    font-size:16px;
+    font-weight: 500;
+}
+
 td.inactive {
   width: 220px;
   height: 26px;

@@ -23,6 +23,8 @@ public with sharing class PortalCasesCtrl {
     public static Id myAccountId;
     public static Set<String> recordTypesSet;
     public static Set<String> openIFAPStatuses;
+    public static Set<Id> amsListForm;
+    public static Set<Id> apListForm;
     public static Contact con;
     public static PagedResult result;
     private static ISSP_PermissionFilterFactory.PermissionSetFilter     thePermissionSetFilter;
@@ -30,6 +32,11 @@ public with sharing class PortalCasesCtrl {
     private static List<ISSPCaseListView__c> csCaseListViews;
     public static Map<String, ISSPCaseListView__c> caseListViewMap;
     public static List<Portal_Application_Right__c> appRightList;
+    public static List<Portal_Application_Right__c> tipServiceRightList;
+    public static List<Portal_Application_Right__c> airlineRightList;
+    public static List<Portal_Application_Right__c> agencyRightList;
+    public static List <AMS_Pax_Accreditation_Form__c> amsList;
+    public static List <AP_Process_Form__c> apList;
     public static ISSP_Portal_Service_Ids__c serviceIdInstance;
     public static Boolean adminProfile = CSP_Utils.isAdmin();
 
@@ -268,7 +275,8 @@ public with sharing class PortalCasesCtrl {
     private static Map<Id, String> setCaseURLs(List<Case> records) {
         Map<Id, String> casesMap;
         Map<Id, String> caseURL;
-        
+        Set<Id> caseSetIds;
+
         /* Generate Case URL */
         recordTypesSet = new Set<String>{
             'FDS ASP Management',
@@ -286,7 +294,7 @@ public with sharing class PortalCasesCtrl {
         serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
 
         if(String.isNotBlank(serviceIdInstance.TIP_Portal_Service_Id__c)) {
-            appRightList = [
+            tipServiceRightList = [
                 SELECT Id 
                 FROM Portal_Application_Right__c
                 WHERE Contact__c = :myUser.ContactId 
@@ -294,8 +302,53 @@ public with sharing class PortalCasesCtrl {
                     AND Portal_Application__c = :serviceIdInstance.TIP_Portal_Service_Id__c 
                 LIMIT 1
             ];
+            System.debug('____ [cls PortalCasesCtrl - setCaseURLs] tipServiceRightList - ' + tipServiceRightList);
+        }
+        
+        if(String.isNotBlank(serviceIdInstance.AirlineParticipation__c) || String.isNotBlank(serviceIdInstance.AirlineParticipation_MinorChange__c) || String.isNotBlank(serviceIdInstance.AirlineParticipation_Bank_Change__c)) {
+            airlineRightList = [
+                SELECT Id
+                FROM Portal_Application_Right__c
+                WHERE Contact__c = :myUser.ContactId
+                    AND Right__c = 'Access Granted'
+                    AND Portal_Application__c IN (:serviceIdInstance.AirlineParticipation__c, :serviceIdInstance.AirlineParticipation_MinorChange__c, :serviceIdInstance.AirlineParticipation_Bank_Change__c)
+            ];
+            System.debug('____ [cls PortalCasesCtrl - setCaseURLs] airlineRightList - ' + airlineRightList);
+        }
 
-            System.debug('____ [cls PortalCasesCtrl - getCases] appRightList - ' + appRightList);
+        if(String.isNotBlank(serviceIdInstance.AgencyAccreditation__c)) {
+            agencyRightList = [
+                SELECT Id 
+                FROM Portal_Application_Right__c
+                WHERE Contact__c = :myUser.ContactId 
+                    AND Right__c = 'Access Granted' 
+                    AND Portal_Application__c = :serviceIdInstance.AgencyAccreditation__c 
+                LIMIT 1
+            ];
+            System.debug('____ [cls PortalCasesCtrl - setCaseURLs] agencyRightList - ' + agencyRightList);
+        }        
+
+        caseSetIds = new Set<Id>();
+        for(Case cs : records) {
+            caseSetIds.add(cs.Id);
+        }
+
+        amsList = [SELECT SAAM_Case__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c IN :caseSetIds];
+
+        if(!amsList.isEmpty()) {
+            amsListForm = new Set<Id>();
+            for(AMS_Pax_Accreditation_Form__c ams : amsList) {
+                amsListForm.add(ams.SAAM_Case__c);
+            }
+        }
+
+        apList = [SELECT Case__c FROM AP_Process_Form__c WHERE Case__c IN :caseSetIds];
+
+        if(!apList.isEmpty()) {
+            apListForm = new Set<Id>();
+            for(AP_Process_Form__c ap : apList) {
+                apListForm.add(ap.Case__c);
+            }
         }
 
         casesMap = new Map<Id, String>();
@@ -305,7 +358,7 @@ public with sharing class PortalCasesCtrl {
             caseURL.putAll(casesMap);
         }
         
-        System.debug('____ [cls PortalCasesCtrl - getCases] caseURL - ' + caseURL);
+        System.debug('____ [cls PortalCasesCtrl - setCaseURLs] caseURL - ' + caseURL);
 
         return caseURL;
     }
@@ -371,7 +424,7 @@ public with sharing class PortalCasesCtrl {
     * @return Map<Id, String>
     */ 
     private static Map<Id, String> pageLoad(Case record) {
-        if(record.CNSCase__c == true) {
+        if(record.CNSCase__c) {
             return new Map<Id, String>{
                 record.Id =>
                 OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Case?caseId=' + record.Id + '&communityName=CNS') 
@@ -379,7 +432,7 @@ public with sharing class PortalCasesCtrl {
         }
 
         /* Transparency in Payment's portal access assignment */
-        if((appRightList != null && !appRightList.isEmpty()) && record.Status == TIP_Utils.CASE_STATUS_DRAFT && record.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS) {
+        if((tipServiceRightList != null && !tipServiceRightList.isEmpty()) && record.Status == TIP_Utils.CASE_STATUS_DRAFT && record.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS) {
             if(record.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) {
                 return new Map<Id, String>{
                     record.Id =>
@@ -403,33 +456,75 @@ public with sharing class PortalCasesCtrl {
                     OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_IFAPCases?id=' + record.Id)
                 };
             }
-        } else if((record.RecordType.Name == 'OSCAR Communication' && (record.Origin == 'Massive FOP Creation' || record.Origin == 'FoP automatic renewal') && record.Owner.Name.startsWith('NewGen PCI')) 
-            || (record.RecordType.Name == 'OSCAR Communication' && record.Status == 'Draft' && (record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT))) {
-            
-            return new Map<Id, String>{
-                record.Id => 
-                OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_PCI?caseId=' + record.Id)
-            };
-        } else if(record.RecordType.Name == 'OSCAR Communication' && record.Reason1__c == 'Annual revalidation' && record.Owner.Name.startsWith('Annual Revalidation')) {
-            return new Map<Id, String>{
-                record.Id => 
-                OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + record.Id)
-            };
-        } else if (record.RecordType.Name == 'OSCAR Communication' && record.Owner.Name.startsWith('Model A Onboarding')) {
-            return new Map<Id, String>{
-                record.Id => 
-                OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ModelA_Onboarding?caseId=' + record.Id)
-            };
+        } else if(record.RecordType.Name == 'OSCAR Communication') {
+            if(amsListForm != null && amsListForm.contains(record.Id) && !agencyRightList.isEmpty()) {
+                if(record.Status == 'Draft' || record.Status == 'Open - EDMC') {
+                    if(record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT) {
+                        return new Map<Id, String>{
+                            record.Id => 
+                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_PCI?caseId=' + record.Id)
+                        }; 
+                    } else if(record.Reason1__c.startsWith('New')) {
+                        return new Map<Id, String>{
+                            record.Id => 
+                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2')
+                        };                    
+                    } else if(record.Reason1__c == 'CLO – Closure') {
+                        return new Map<Id, String>{
+                            record.Id => 
+                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_VoluntaryRelinquishment?caseId=' + record.Id + '&step=1')
+                        };                    
+                    } else if(record.Reason1__c == 'Bank Detail Update') {
+                        return new Map<Id, String>{
+                            record.Id => 
+                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=true&step=2')
+                        };                    
+                    } else {
+                        return new Map<Id, String>{
+                            record.Id => 
+                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=false&step=2')
+                        };
+                    }
+                } else if(((record.Origin == 'Massive FOP Creation' || record.Origin == 'FoP automatic renewal') && record.Owner.Name.startsWith('NewGen PCI')) 
+                    || ((record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT))) {
+                    return new Map<Id, String>{
+                        record.Id => 
+                        OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_PCI?caseId=' + record.Id)
+                    };
+                } else if(record.Reason1__c == 'Annual revalidation' && record.Owner.Name.startsWith('Annual Revalidation')) {
+                    return new Map<Id, String>{
+                        record.Id => 
+                        OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + record.Id)
+                    };
+                } else if (record.Owner.Name.startsWith('Model A Onboarding')) {
+                    return new Map<Id, String>{
+                        record.Id => 
+                        OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ModelA_Onboarding?caseId=' + record.Id)
+                    };
+                }
+            } else {
+                return new Map<Id, String>{
+                    record.Id => 
+                    Label.CSP_PortalPath + 'case-details?caseId=' + record.Id
+                };
+            }
         }
 
         /* If case is a SIS Joining Form */
-        if(record.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process' && record.Classification_SIS__c == 'SIS Membership' 
-            && record.Status == 'Draft' && !record.isClosed && !record.Owner.Name.StartsWith('Recycle Bin')) {
-            
-            return new Map<Id, String>{
-                record.Id => 
-                OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_SISMembershipApplicationForm?id=' + record.Id + '&step=2')
-            };
+        if(record.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process') {
+            if(record.Status == 'Draft' && record.Classification_SIS__c == 'SIS Membership' && !record.isClosed && !record.Owner.Name.StartsWith('Recycle Bin')) {
+                return new Map<Id, String>{
+                    record.Id => 
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_SISMembershipApplicationForm?id=' + record.Id + '&step=2')
+                };
+            } else if((record.Status == 'Draft' || record.Status == 'Open - EDMC' || record.Status == 'Return application to customer') && 
+                    apListForm != null && apListForm.contains(record.Id) &&
+                    airlineRightList != null && !airlineRightList.isEmpty()) {
+                        return new Map<Id, String>{
+                            record.Id => 
+                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_APProcess?caseId=' + record.Id + '&step=2')
+                        };
+            }
         }
 
         /* If Case is an ICCS Case, redirect to ICCS Service */
@@ -443,7 +538,7 @@ public with sharing class PortalCasesCtrl {
         /*If no match was done*/
         return new Map<Id, String>{
             record.Id => 
-                Label.CSP_PortalPath + 'case-details?caseId=' + record.Id
+            Label.CSP_PortalPath + 'case-details?caseId=' + record.Id
         };
     }
 

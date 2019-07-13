@@ -9,7 +9,7 @@ import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 
-
+import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
@@ -18,17 +18,20 @@ import MembershipFunction from '@salesforce/label/c.csp_MembershipFunction';
 import Area from '@salesforce/label/c.csp_WorkingAreas';
 import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
+import CompleteField from '@salesforce/label/c.csp_CompleteField';
 
-
+import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
+import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
-
+    
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
     @api showEdit;
+    @api editBasics;
 
     @api editFields;
     @api recordId;
@@ -52,6 +55,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track selectedValuesFunction = [];
     @track fieldsValid = true;
     @track fieldsLocal;
+    @track jobFunctions;
 
     timeout = null;
 
@@ -64,14 +68,15 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get fields(){ return this.fieldsLocal;}
     set fields(value){ this.fieldsLocal = value;}
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle,InvalidValue };
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle,InvalidValue,CompleteField,IdCardNumber,IdCardValidTo};
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
-    connectedCallback() {
-        this.showEdit = (this.showEdit === 'true' ? true : false);
+    emptyStaticServices = 'emptyStaticServices';
+    emptyServices = 'emptyServices';
 
-        if (this.isContact && !this.isForEdit) {
+    connectedCallback() {
+        if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
                 let contact = JSON.parse(JSON.stringify(this.staticFields));
@@ -89,6 +94,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                     this.selectedvalues = selectedV;
                 }
 
+
                 this.areasOptions = options;
             });
 
@@ -97,11 +103,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 let options = JSON.parse(JSON.stringify(result));
                 let contact = JSON.parse(JSON.stringify(this.staticFields));
                 let selectedV = JSON.parse(JSON.stringify(this.selectedValuesFunction));
+                let functions = [];
 
                 if (contact.Membership_Function__c != null) {
 
                     let values = contact.Membership_Function__c.split(";");
                     values.forEach(function (value) {
+                        functions.push(value);
                         options.forEach(function (option) {
                             if (option.label == value) { option.checked = true; selectedV.push(option.value); }
                         });
@@ -110,6 +118,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                     this.selectedValuesFunction = selectedV;
                 }
 
+                functions.sort();
+
+                this.jobFunctions = functions;
                 this.functionOptions = options;
             });
 
@@ -137,6 +148,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
 
+        isAdmin().then(result => {
+            this.showEdit = (result ? true : false);
+        });
+        
         return this.accessibilityText
     }
 
@@ -146,8 +161,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     loaded(event) {
         this.isLoading = false;
         let fields = JSON.parse(JSON.stringify(event.detail.objectInfos.Contact.fields));
-
     }
+
     loadedEdit() {
         this.isLoadingEdit = false;
         this.styleInputs();
@@ -196,8 +211,19 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let fields = haveEditFields ? JSON.parse(JSON.stringify(this.editFields)) : JSON.parse(JSON.stringify(this.fields));
         let fieldsChanged = false;
         let numberFields = ['Phone','MobilePhone','Phone_Number__c'];
+        let requiredFields = [];
+        let skipValidation = false;
+
+        /*
+        for(let f=0;f<fields.length;f++){
+            if(fields[f].isRequired !== undefined && fields[f].isRequired == true){
+                requiredFields.push(fields[f].fieldName);
+            }
+        }
 
         let fieldsValid = true;
+
+        */
 
         if (inputs) {
             if (inputs.length) {
@@ -216,35 +242,66 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                             }
                         }
                     }
-
-                    if(numberFields.includes(inputs[i].fieldName)){
-                        if(inputs[i].value != null){
-                            let inputValue = inputs[i].value.replace(/ /g,'');
-                            let isNotPhone = phoneRegex.test(inputValue);
-                            if(isNotPhone){
-                                inputs[i].classList.add('invalidValue');
-                                fieldsValid = false;
-
-                                for(let f = 0;f<fields.length;f++){
-                                    if(fields[f].fieldName == inputs[i].fieldName){
-                                        if(fields[f].invalid == null || fields[f].invalid == false){
-                                            fields[f].invalid = true;
-                                            fieldsChanged = true;
-                                        }
+                    /*
+                    if(requiredFields.includes(inputs[i].fieldName)){
+                        if(inputs[i].value === undefined || inputs[i].value.length == 0){
+                            skipValidation = true;
+                            for(let f = 0;f<fields.length;f++){
+                                if(fields[f].fieldName == inputs[i].fieldName){
+                                    if(fields[f].missing == null || fields[f].missing == false){
+                                        fields[f].missing = true;
+                                        fieldsChanged = true;
+                                        fieldsValid = false;
                                     }
                                 }
-
-                            }else{
-                                for(let f = 0;f<fields.length;f++){
-                                    if(fields[f].invalid != null && fields[f].invalid == true){
-                                        fields[f].invalid = false;
+                            }
+                            inputs[i].classList.add('invalidValue');
+                        }else{
+                            for(let f = 0;f<fields.length;f++){
+                                if(fields[f].fieldName == inputs[i].fieldName){
+                                    if(fields[f].missing != null && fields[f].missing == true){
+                                        fields[f].missing = false;
                                         fieldsChanged = true;
                                     }
+                                    inputs[i].classList.remove('invalidValue');
                                 }
-                                inputs[i].classList.remove('invalidValue');
                             }
                         }
                     }
+
+                    if(!skipValidation){
+                        if(numberFields.includes(inputs[i].fieldName)){
+                            if(inputs[i].value != null){
+                                let inputValue = inputs[i].value.replace(/ /g,'');
+                                let isNotPhone = phoneRegex.test(inputValue);
+                                if(isNotPhone){
+                                    inputs[i].classList.add('invalidValue');
+                                    fieldsValid = false;
+
+                                    for(let f = 0;f<fields.length;f++){
+                                        if(fields[f].fieldName == inputs[i].fieldName){
+                                            if(fields[f].invalid == null || fields[f].invalid == false){
+                                                fields[f].invalid = true;
+                                                fieldsChanged = true;
+                                            }
+                                        }
+                                    }
+
+                                }else{
+                                    for(let f = 0;f<fields.length;f++){
+                                        if(fields[f].fieldName == inputs[i].fieldName){
+                                            if(fields[f].invalid != null && fields[f].invalid == true){
+                                                fields[f].invalid = false;
+                                                fieldsChanged = true;
+                                            }
+                                        }
+                                    }
+                                    inputs[i].classList.remove('invalidValue');
+                                }
+                            }
+                        }
+                        
+                    }*/
 
                 }
             } else {
@@ -264,6 +321,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
         }
 
+        /*
         if(fieldsChanged){
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
@@ -272,9 +330,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 }else{
                     this.fields = fields;
                 }
-            },600,this);
+            },400,this);
         }
         this.fieldsValid = fieldsValid;
+        */
     }
 
     handleSubmit(event) {
@@ -405,4 +464,25 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get canSave(){
         return !this.fieldsValid || this.isSaving;
     }
+
+    get canEditBasics(){
+        let isRestrictedSection =  this.sectionTitle == 'Basics' ||  this.sectionTitle == 'Branch Contact';
+        return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
+    }
+
+    get hasIdCard(){
+        return (this.staticFields !== undefined && this.staticFields.cardNumber !== undefined);
+    }
+
+    get hasFunction(){
+        return this.jobFunctions !== undefined && this.jobFunctions.length>0;
+    }
+
+    get hasServices(){
+        return this.services !== undefined && this.services.length>0;
+    }
+
+    get hasStaticServices(){
+            return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length>0;
+        }
 }

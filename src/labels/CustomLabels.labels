@@ -2916,6 +2916,27 @@ Payment required on receipt of this Payment Advice
         <shortDescription>Request New Service</shortDescription>
         <value>Agency Read Only</value>
     </labels>
+	<labels>
+        <fullName>CSP_ANG_Portal_Admin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ANG_Portal_Admin</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures.</value>
+    </labels>
+	<labels>
+        <fullName>CSP_ANG_Portal_Admin_Authorized_Signature</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToMyProfileJs();&quot;&gt;My Profile -&gt; Portal Accessibility&lt;/span&gt; page.</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Announcement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Announcement</shortDescription>
+        <value>Announcement</value>
+    </labels>
     <labels>
         <fullName>csp_TimeoutIEP</fullName>
         <categories>CS Portal</categories>
@@ -3031,7 +3052,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CancelServiceMessage</shortDescription>
-        <value>You can remove {0} from your services.</value>
+        <value>You can cancel your access to {0}</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel_Access_Message</fullName>
@@ -3076,7 +3097,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_CaseMessage_MessageTitle</shortDescription>
-        <value>Messages</value>
+        <value>Comments</value>
     </labels>
     <labels>
         <fullName>CSP_CaseMessage_SubmitSuccess</fullName>
@@ -3117,6 +3138,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_CompanyProfile</shortDescription>
         <value>Company Profile</value>
+    </labels>
+    <labels>
+        <fullName>csp_CompleteField</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Complete required field label</shortDescription>
+        <value>Please complete this information.</value>
     </labels>
     <labels>
         <fullName>CSP_Community</fullName>
@@ -3270,7 +3299,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
-        <value>Hi [username], welcome</value>
+        <value>Welcome [username]</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>
@@ -3473,7 +3502,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Search_NoResults_text2</shortDescription>
-        <value>Sorry, there is not any results for</value>
+        <value>Sorry, no results found for</value>
     </labels>
     <labels>
         <fullName>CSP_Search_NoResults_text3</fullName>
@@ -3521,7 +3550,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Search_TypeIn_text2</shortDescription>
-        <value>Please type in something bigger that 2 letters to start the search.</value>
+        <value>Please type more than 2 letters to start the search.</value>
     </labels>
     <labels>
         <fullName>CSP_Search_TypeIn_text3</fullName>
@@ -3529,7 +3558,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Search_TypeIn_text3</shortDescription>
-        <value>Select a filter section to further improve your search results.</value>
+        <value>Select a filter to further improve your search results.</value>
     </labels>
     <labels>
         <fullName>CSP_SeeAll</fullName>
@@ -3582,7 +3611,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Services_AvailableServicesHelpText</shortDescription>
-        <value>The recommended services and the other available services for your company are listed below.</value>
+        <value>All the available services for your company are listed below.</value>
     </labels>
     <labels>
         <fullName>CSP_Services_AvailableServicesTabTitle</fullName>
@@ -3630,7 +3659,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Services_MyServicesHelpText</shortDescription>
-        <value>Your company&#39;s services are listed below. You can flag services as favorite. These favorite services will appear on the IATA Portal Home page.</value>
+        <value>Your company&#39;s services are listed below.</value>
     </labels>
     <labels>
         <fullName>CSP_Services_MyServicesTabTile</fullName>
@@ -3720,13 +3749,20 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Support_HeaderTitle</shortDescription>
         <value>How can we help?</value>
     </labels>
+	<labels>
+        <fullName>CSP_Task</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Task</shortDescription>
+        <value>Task</value>
+    </labels>
     <labels>
         <fullName>CSP_ThanksFeedback</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_ThanksFeedback</shortDescription>
-        <value>Thanks for your feedback!</value>
+        <value>The recipient has not been added. Please press the Add button.</value>
     </labels>
     <labels>
         <fullName>CSP_Title</fullName>
@@ -3743,6 +3779,27 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_TypeOfCase</shortDescription>
         <value>Type of case</value>
+    </labels>
+	<labels>
+        <fullName>CSP_You_Dont_Have_Announcements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_You_Dont_Have_Announcements</shortDescription>
+        <value>You don’t have any Announcements yet. When you do, they will appear here.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_You_Dont_Have_Notifications</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_You_Dont_Have_Notifications</shortDescription>
+        <value>You don’t have any Notifications yet. When you do, they will appear here.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_You_Dont_Have_Tasks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_You_Dont_Have_Tasks</shortDescription>
+        <value>You don’t have any Tasks yet. When you do, they will appear here.</value>
     </labels>
 	 <labels>
         <fullName>CSP_cpcc_Agent_Credit_Risk</fullName>
@@ -3850,7 +3907,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_FAQReachUsBanner_Text</shortDescription>
-        <value>You can create a case, start a conversation with IATA Live Support or call us.</value>
+        <value>Create a case, chat directly with an IATA Representative or give us a call.</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_Title</fullName>
@@ -3874,7 +3931,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_FAQ_Subtitle</shortDescription>
-        <value>Please select one of the main FAQ categories that you need help with.</value>
+        <value>Select one of the main categories</value>
     </labels>
      <labels>
         <fullName>CSP_Supported_File_Extensions</fullName>
@@ -19244,7 +19301,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Minor Changes</shortDescription>
-        <value>Minor changes to your Agency details e.g. Phone number, email address etc.  can be made directly from your &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; page.</value>
+        <value>Minor changes to your Agency details e.g. Phone number, email address etc.  can be made directly from your &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToCompanyInformationJs();&quot;&gt;Company Information&lt;/span&gt; page.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_New_Application</fullName>
@@ -22263,7 +22320,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
-        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&quot;subNav=contacts&quot;mid=M4S1&quot; target=&quot;_self&quot;&gt;Company Administration -&gt; Contacts section&lt;/a&gt; page.</value>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToMyProfileJs();&quot;&gt;Company Administration -&gt; Contacts section&lt;/span&gt; page.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Portal_IEPAdmin</fullName>
@@ -22294,7 +22351,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>&lt;ul&gt;&lt;li&gt;Adds, withdraws and transfers Master Wallet funds and all Sub-Wallet(s)&lt;/li&gt;&lt;li&gt;Manages user access as “Sub-wallet Manager” or “Ticket Issuer” role&lt;/li&gt;&lt;/ul&gt;</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Portal_Role_SubwalletManager</fullName>
+        <fullName>ISSP_ANG_Portal_Role_SubWalletManager</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Help text for Portal Role Sub-wallet Manager</shortDescription>
@@ -37848,7 +37905,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Select the main topic of your issue.</value>
+        <value>Access Service</value>
     </labels>
     <labels>
         <fullName>csp_ActionIndicator</fullName>
@@ -37935,7 +37992,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Chat directly with an IATA Representative</value>
+        <value>Chat with an IATA Representative</value>
     </labels>
     <labels>
         <fullName>csp_ChooseOption</fullName>
@@ -37967,7 +38024,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Live Agent not configured correctly. Please contact Support.</value>
+        <value>The chat is not available. Please call or create a case.</value>
     </labels>
     <labels>
         <fullName>csp_LiveAgentTimeout</fullName>
@@ -37975,7 +38032,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Live Agent connection timeout. Please refresh the page or contact Support</value>
+        <value>The chat connection timed out. You can refresh the page, or create a case</value>
     </labels>
 	<labels>
         <fullName>csp_My_Profile_Company</fullName>
@@ -38052,7 +38109,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Provide all the details that will help us investigate your query.</value>
+        <value>Provide all the details that will help us investigate your query</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseMainInputBoxTopLabel</fullName>
@@ -38068,7 +38125,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Add another IATA Portal user.</value>
+        <value>Add another Portal user</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseMainInputEmailsTopLabel</fullName>
@@ -38084,7 +38141,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>What&#39;s the subject of your query?</value>
+        <value>What is your question about?</value>
     </labels>
     <labels>
         <fullName>csp_CreateNewCaseMainInputTopLabel</fullName>
@@ -38132,7 +38189,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Create New Case Page Label</shortDescription>
-        <value>Search Email Recipient</value>
+        <value>Search by name or email</value>
     </labels>
         <labels>
         <fullName>csp_CreateNewCaseTopLabel</fullName>
@@ -38291,7 +38348,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Request New Service</shortDescription>
-        <value>This dashboard allows each airline Treasury Team to gain full visibility of their incoming credit card sales, and the related credit card sales downloadable report - in additon to viewing cash flows being processed by each of IATA's main settlement systems: BSP, CASS,ICCS (Currency Clearance Service) and ICH (IATA Clearing House).</value>
+        <value>This dashboard allows each airline Treasury Team to gain full visibility of their incoming credit card sales, and the related credit card sales downloadable report - in addition to viewing cash flows being processed by each of IATA&#39;s main settlement systems: BSP, CASS,ICCS (Currency Clearance Service) and ICH (IATA Clearing House).</value>
     </labels>
     <labels>
         <fullName>csp_TDP_ServiceRequest_MediumLabel2</fullName>
@@ -38307,7 +38364,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Select your preferred support option.</value>
+        <value>Select your preferred support option</value>
     </labels>
     <labels>
         <fullName>csp_Process</fullName>
@@ -38439,7 +38496,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Request New Service</shortDescription>
-        <value>Request New Service</value>
+        <value>Request Access</value>
     </labels>
     <labels>
         <fullName>csp_Sales_Payment</fullName>
@@ -38708,7 +38765,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Contact Support</value>
+        <value>Contact Us</value>
     </labels>
     <labels>
         <fullName>csp_Support_Label</fullName>
