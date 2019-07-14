@@ -2690,12 +2690,12 @@
         <label>Person Account Search Fields</label>
     </fieldSets>
     <fieldSets>
-<<<<<<< HEAD
         <fullName>FieldsExcludedFromTracking</fullName>
         <description>The fields in this list will be tracked on the Account Tracking History object</description>
         <label>FieldsExcludedFromTracking</label>
-=======
-        <fullName>GCS_CompanyContact</fullName>
+	</fieldSets>
+    <fieldSets>        
+    	<fullName>GCS_CompanyContact</fullName>
         <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex. This set is used for all record types, field access is hardcoded.</description>
         <displayedFields>
             <field>Phone</field>
@@ -2848,7 +2848,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>GCS Company Profile - Airline</label>
->>>>>>> bb9eb573ed36f74c36773fb3fa04359273f233b1
     </fieldSets>
     <fieldSets>
         <fullName>ISSP_Account_Portal_Search</fullName>
