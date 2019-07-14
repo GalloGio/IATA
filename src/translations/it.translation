@@ -11461,7 +11461,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Gestisce i fondi dei sottoportafogli assegnati&lt;/li&gt; &lt;li&gt;Gestisce l’accesso e i sottoportafogli degli utenti IATA EasyPay con il ruolo di «emittente biglietto»&lt;/li&gt; &lt;li&gt;Genera numeri IATA EasyPay dai portafogli assegnati da utilizzare per l’emissione di biglietti tramite GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Genera numeri IATA EasyPay da qualsiasi portafoglio assegnato da utilizzare per l’emissione di biglietti tramite GDS&lt;/li&gt;&lt;/ul&gt;</label>

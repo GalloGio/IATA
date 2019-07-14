@@ -11452,7 +11452,7 @@
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Управление средствами в назначенных дополнительных кошельках&lt;/li&gt; &lt;li&gt;Управление доступом пользователей в роли «оформление билетов»&apos; в IATA EasyPay и дополнительными кошельками&lt;/li&gt; &lt;li&gt;Генерирует номера IATA EasyPay с назначенных кошельков, используемых для оформления билетов через GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Генерирует номера IATA EasyPay с любых назначенных кошельков, используемых для оформления билетов через GDS&lt;/li&gt;&lt;/ul&gt;</label>

@@ -11483,7 +11483,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Gestiona fondos del/de los subbilletero(s)&lt;/li&gt; &lt;li&gt;Gestiona el acceso de usuarios del EasyPay de IATA del «Emisor de billetes» y el/los subbilletero(s)&lt;/li&gt; &lt;li&gt;Genera números de EasyPay de IATA a partir del/de los billetero(s) asignado(s) que vaya(n) a usarse para emitir billetes a través del GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Genera números de EasyPay de IATA a partir de cualquier billetero(s) asignado(s) que vaya(n) a usarse para emitir billetes a través del GDS&lt;/li&gt;&lt;/ul&gt;</label>

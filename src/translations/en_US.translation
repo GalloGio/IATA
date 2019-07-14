@@ -11442,7 +11442,7 @@
     </customLabels>
     <customLabels>
         <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label><!-- Help text for Portal Role Ticket Issuer --></label>
