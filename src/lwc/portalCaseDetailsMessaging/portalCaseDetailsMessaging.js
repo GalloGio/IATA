@@ -4,7 +4,7 @@ import submitNewMessage from '@salesforce/apex/PortalCasesCtrl.submitNewMessage'
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-import PORTAL_RESOURCES from '@salesforce/resourceUrl/csPortalResources';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 import { getParamsFromPage } from'c/navigationUtils';
 
@@ -33,7 +33,7 @@ export default class PortalHomeCalendar extends LightningElement {
     @track showCaseMessagingSection = false;
     @track messagingHeight = 'height:400px;';
 
-    conversationImageURL = PORTAL_RESOURCES + '/images/conversation_image.png';
+    conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
     connectedCallback() {
 
