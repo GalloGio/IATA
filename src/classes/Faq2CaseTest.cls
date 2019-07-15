@@ -532,10 +532,7 @@ private class Faq2CaseTest {
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
-
-        ISSP_cs__c cs = new issp_cs__c();
-        cs.name='CS Portal Redirect';
-        insert cs;
+       
         Test.startTest();
         System.runAs(newUser)
         {
