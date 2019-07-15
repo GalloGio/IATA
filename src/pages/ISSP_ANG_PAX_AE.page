@@ -934,7 +934,8 @@
                                 				</div>
                                 				<apex:outputPanel layout="none">
                                   					<div class="field-wrapper">
-                                    					<apex:outputField value="{!hqAccount.name}" style="width:174.4px" />
+                                    					<apex:outputField value="{!hqAccount.name}" style="width:174.4px" rendered="{!NOT(isMultiCountryNewAE)}"/>
+                                              <apex:outputField value="{!newForm.Account_Name__c}" style="width:174.4px" rendered="{!isMultiCountryNewAE}"/>
                                   					</div>
                                 				</apex:outputPanel>
                               				</apex:outputPanel>
@@ -947,7 +948,8 @@
 			                                	</div>
 			                                	<apex:outputPanel layout="none">
 			                                  		<div>
-			                                    		<apex:outputField value="{!hqAccount.TradeName__c}" style="width:174.4px" />                                    
+			                                    		<apex:outputField value="{!hqAccount.TradeName__c}" style="width:174.4px" rendered="{!NOT(isMultiCountryNewAE)}"/>
+                                              <apex:outputField value="{!newForm.Trade_Name__c}" style="width:174.4px" rendered="{!isMultiCountryNewAE}"/>                                    
 			                                  		</div>
 			                                	</apex:outputPanel>
 			                              	</apex:outputPanel>
