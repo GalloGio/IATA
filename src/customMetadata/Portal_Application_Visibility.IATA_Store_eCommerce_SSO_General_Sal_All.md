@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">IATA_Store_eCommerce_SSO</value>
+        <value xsi:type="xsd:string">IATA_Store</value>
     </values>
     <values>
         <field>Sector__c</field>
