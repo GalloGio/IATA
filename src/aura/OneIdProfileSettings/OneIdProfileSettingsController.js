@@ -33,6 +33,7 @@
 		var jobtitle = component.find("editjobtitle").get("v.value");
 		var functionpick = component.find("functionpicklist").get("v.value");
 		var preferredlanguage = component.find("preferredlanguagepicklist").get("v.value");
+		var salutation = component.find("salutationpicklist").get("v.value");
 
 		var contact = component.get("v.contactinfo");
 		console.log(contact.FirstName);
@@ -70,6 +71,7 @@
 
 		var action = component.get("c.saveProfileEdit");
 		action.setParams({
+			"salutation" : salutation,
 			"firstname" : firstname,
 			"lastname" : lastname,
 			"phone" : phone,

@@ -92,7 +92,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
             else
                 listAccount.add(acct);
         isHierarchyMulticountry = false;
-        hasErrors = (listAccount.isEmpty())? true : false;
+
 	}
 
     public void addAccount(){
@@ -101,12 +101,11 @@ public with sharing class ANG_MulticountryAccountCreatorController {
         listAccount.add(acc);
     }
 
-    public PageReference saveAccount() {
+    public boolean saveAccount() {
         try{
 	        For(Account acct : listAccount){
 	
 	            if(acct.id == null){
-	                acct.Location_Type__c = 'AE';
 	                acct.ParentId = mainAccount.Id;
 	                acct.Top_Parent__c = mainAccount.Id;
 	                acct.Category__c = mainAccount.Category__c;
@@ -114,21 +113,35 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	                acct.Sector__c = mainAccount.Sector__c;
 	                acct.Reason_for_creation__c = 'Account is missing';
 	            }
+
+                IATA_ISO_Country__c cntry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acct.IATA_ISO_Country__c})[0];
+
+                if(!cntry.Multicountry_Enabled__c){
+                    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, 'The country ' + cntry.Name  + ' is not enabled for multicountry');
+                    ApexPages.addMessage(myMsg);
+                    hasErrors = true;
+                }
+
 	        }
-	        if(!listAccount.isEmpty())
-				upsert listAccount;
-            
+
+	        if(!hasErrors && !listAccount.isEmpty()){
+                upsert listAccount;
+            }
+
             if(Test.isRunningTest())
                 integer intTest =1/0;//exception for catch test coverage
-            
-	        return null;
-	      
+
+			return !hasErrors;	
+
         }
         catch(Exception e){
 			hasErrors = true;
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
-        	ApexPages.addMessage(myMsg);
-        	return null;
+            if(!ApexPages.hasMessages(ApexPages.Severity.ERROR)){
+                //Only exhibits the message if it was not thrown an error before (e.g. trigger addError)
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
+                ApexPages.addMessage(myMsg);
+            }
+			return false;
         }
     }
 	
@@ -145,9 +158,15 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     }
 	
     public void submitHierarchy(){
-    	hasErrors = false;
+
+        hasErrors = false;
+
+		if(!saveAccount())
+			return;
+
     	try{
 	    	if(checkMulticountry()){
+				
 	    		oscar.ANG_Hierarchy_Created__c = true;
 		        
 		        upsert listAccount;

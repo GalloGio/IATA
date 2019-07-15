@@ -31,51 +31,22 @@ global class AMS_PCI_WizardNotification {
 		emailToSend.saveAsActivity = false;
 		emailToSend.setTargetObjectId(usr.Id);
 		emailToSend.setOrgWideEmailAddressId(owea[0].Id);
-
-		String subject = template.Subject;
-		String htmlBody = template.HtmlValue;
-		String textBody = template.Body;
-
-		subject = subject.replace('{!Case.CaseNumber} ', cse.CaseNumber);
-        emailToSend.setSubject(subject);
-
-        String caseNumber = cse.CaseNumber == null ? '' : cse.CaseNumber;
-        String iatacode = cse.AccountId == null || cse.Account.IATACode__c == null ? '' : cse.Account.IATACode__c;
-        String sContactName = String.isBlank(cse.Contact.Name) ? '' : cse.Contact.Name;
-        Date dTodayPlus30 = (date.today() + 30);
-
-       	if(!String.isBlank(htmlBody)) {
-       		htmlBody = htmlBody.replace('<![CDATA[', '');
-            htmlBody = htmlBody.replace('{!Contact.Name}', sContactName);
-       		htmlBody = htmlBody.replace('{!Case.CaseNumber}', caseNumber);
-            htmlBody = htmlBody.replace('{!Case.IATA_Code__c}', iatacode);
-            htmlBody = htmlBody.replace('{!Today()+30}', dTodayPlus30.format());
-            htmlBody = htmlBody.replace('{!Case.Id}', cse.Id);
-            htmlBody = htmlBody.replace(']]>', '');
-            emailToSend.setHtmlBody(htmlBody);
-       	}
-
-       	if(!String.isBlank(textBody)) {
-       		textBody = textBody.replace('{!Contact.Name}', sContactName);
-       		textBody = textBody.replace('{!Case.CaseNumber}', caseNumber);
-            textBody = textBody.replace('{!Case.IATA_Code__c}', iatacode);
-            textBody = textBody.replace('{!Today()+30}', dTodayPlus30.format());
-            textBody = textBody.replace('{!Case.Id}', cse.Id);
-       		emailToSend.setPlainTextBody(textBody);
-       	}     
+     
 
        	if(!attechments.isEmpty())  {  		
        		emailToSend.setFileAttachments(getAttachmentsLst(attechments));
        	}
 
+       	Messaging.SingleEmailMessage emailsToSend = mergeTemplate(template.Id, cse.contactId, usr.Id, cse.Id, owea[0].Id);
+
        	if(!Test.isRunningTest()) {
-       		Messaging.sendEmail(new List<Messaging.SingleEmailMessage> {emailToSend});
+       		Messaging.sendEmail(new List<Messaging.SingleEmailMessage> {emailsToSend});
        	}
 
        	EmailMessage emailMsg = new EmailMessage();
         emailMsg.ToAddress = usr.Email;
-        emailMsg.Subject = emailToSend.getSubject();
-        emailMsg.HtmlBody = emailToSend.getHtmlBody();
+        emailMsg.Subject = emailsToSend.getSubject();
+        emailMsg.HtmlBody = emailsToSend.getHtmlBody();
         emailMsg.ParentId = cse.Id; //Attach with the case
         emailMsg.MessageDate = System.now();
         emailMsg.Status = '0';       	
@@ -119,6 +90,14 @@ global class AMS_PCI_WizardNotification {
 
    		return emailAttachs;
 	}
+
+	private static Messaging.SingleEmailMessage mergeTemplate(Id templateId, Id contactId, Id userId, Id caseId, Id oweaId) {
+        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, contactId, caseId);   
+        mail.setOrgWideEmailAddressId(oweaId);
+        mail.setTargetObjectId(userId);
+        mail.saveAsActivity = false;
+        return mail;
+    }
 
 
 }

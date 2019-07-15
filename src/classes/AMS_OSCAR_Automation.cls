@@ -391,7 +391,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Local_Inspection_requested__c = Date.today();
-                oscar.Local_Inspection_deadline__c = Date.today() + 10;
+                oscar.Local_Inspection_deadline__c = Date.today() + 15;
                 res = True;
             }
 
@@ -515,7 +515,7 @@ public with sharing class AMS_OSCAR_Automation {
                 }
             }
 
-            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE))
+            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION))
                 && !hasFRRequiredStep) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
@@ -648,6 +648,11 @@ public with sharing class AMS_OSCAR_Automation {
                 
                 if (oscar != null && ((oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD  || oscar.Process__c == AMS_Utils.NEWGESTANDARD|| oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHANGES)) {
 
+				// ENHC0012518 - BEGIN 
+                    if(oscar.Is_NewGen__c){
+                        System.enqueueJob(new PortalRightsForPortalAdmins(oscar));
+                    }
+                // ENHC0012518 - END
                     oscar.Approval_disapproval_date__c = Date.today();
                     oscar.Status__c = 'On Hold_Internal';
                     res = True;
@@ -1330,4 +1335,160 @@ public with sharing class AMS_OSCAR_Automation {
         }
     }
 
+    public class AMS_OSCAR_Step46_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step46_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Invoice_Requested__c = Date.today();
+                oscar.Process_Start_Date__c = Date.today();
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step47_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step47_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Payment_requested__c = Date.today();
+                oscar.Invoice_deadline__c = Date.today() + 7;
+
+                oscar.STEP48__c = 'In Progress';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step48_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step48_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Proof_of_payment_received__c = Date.today();
+                oscar.Invoice_status__c = 'Paid';
+
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step48_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step48_failed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Proof_of_payment_received__c = Date.today();
+                oscar.Invoice_status__c = 'Outstanding';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step48_notApplicable implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step48_notApplicable.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Invoice_status__c = 'N/A';
+
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step49_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step49_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                if(oscar.Endorsement_Requested__c){
+                    oscar.Endorsement_requested_date__c = Date.today();
+                } 
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step50_passed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step50_passed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Financial_security_information_confirmed__c = Date.today();
+                res = true;
+                oscar.status__c = 'Closed';
+            }
+
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step50_failed implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step50_failed.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+
+                oscar.Financial_security_information_confirmed__c = Date.today();
+                res = true;
+                oscar.status__c = 'Closed';
+            }
+
+            return res;
+        }
+    }
+ 
+    /**
+    	Portal_Application_Right__c triggers are query heavy and often trigger a Case or Contact, both also query heavy
+    	resulting oftenly in a query limit exception.
+    **/
+    public class PortalRightsForPortalAdmins implements Queueable{ 
+		
+		public AMS_OSCAR__c oscar;
+		
+		public PortalRightsForPortalAdmins(AMS_OSCAR__c oscar){
+			this.oscar = oscar;
+		}
+
+		public void execute (QueueableContext context){
+           List<AMS_Accreditation_Contact__c> accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
+           Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];
+			
+            if(!accredList.isEmpty() && accredList.get(0).Contact__c != null){
+                Portal_Application_Right__c par = new Portal_Application_Right__c (
+                                        Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
+                                        Contact__c = accredList.get(0).Contact__c,
+                                        Portal_Application__c = pa.Id
+                            );
+                insert par;
+            }
+		}
+	}
 }

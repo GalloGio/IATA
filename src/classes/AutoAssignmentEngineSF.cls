@@ -17,10 +17,10 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
     global void finish(Database.BatchableContext BC) {
 
         try {
-            AutoAssignmentEngineSF assignBatch = new AutoAssignmentEngineSF();
+            //AutoAssignmentEngineSF assignBatch = new AutoAssignmentEngineSF();
 
             //schedule the next batch
-            System.scheduleBatch(assignBatch, 'AutoAssignmentBatch', 10, 10);
+            //System.scheduleBatch(assignBatch, 'AutoAssignmentBatch', 10, 10);
 
             AsyncApexJob a = [SELECT Id, Status, CompletedDate, JobItemsProcessed FROM AsyncApexJob WHERE Id = :BC.getJobId()];
 
@@ -222,7 +222,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
             }
 
 
-            for (Case[] aCase : [select id, OwnerId, status from Case where OwnerId in :sUserId and Status in ('Open', 'In Progress', 'Reopen', 'Action Needed', 'Escalated Internally', 'Escalated Externally', 'Pending customer') and RecordType.Name <> 'Invoicing_Collection_Cases'])
+            for (Case[] aCase : [select id, OwnerId, status from Case where OwnerId in :sUserId and Status in ('Open', 'In Progress', 'Reopen', 'Action Needed', 'Escalated Internally', 'Escalated Externally', 'Pending customer') and (RecordType.Name <> 'Invoicing_Collection_Cases' OR RecordType.Name <> 'SIDRA')])
                 for (Case c : aCase) {
 
                     double currentWorkload = m_agentWorkload.get(c.OwnerId);

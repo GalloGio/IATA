@@ -176,7 +176,7 @@
        </apex:outputPanel>
     </apex:outputPanel>
      
-    <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!accreditationObj != null}">
+    <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!and(accreditationObj != null, showStagingArea)}">
 
     
         <apex:pageBlockButtons location="both">
@@ -237,7 +237,7 @@
                 </apex:pageBlockSectionItem>
 
                  <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
-                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>    
                     <apex:outputPanel >
                             <apex:outputLabel id="mRFLabel" value="{!remittanceFrequencyToShow}"/>
                             <apex:outputPanel id="multipick" style="display: none;">
@@ -254,7 +254,7 @@
                     </apex:outputPanel>
                 </apex:pageBlockSectionItem> 
 
-                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Preferred_RHC_currency__c')}">
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Preferred_RHC_currency__c',oscarObj.Process__c == 'ANG.NEW.GE.STANDARD.1.0')}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
                     <apex:outputPanel >
                             <apex:outputLabel id="mRFLabel" value="{!accreditationObj[field.name]}"/>
@@ -289,10 +289,10 @@
         });
 
         function remittanceFrequencyChange() {
-            if(!({!isNewAE}||{!isNewMulticountryAE})){
+            if(!({!isNewAE}||({!isNewMulticountryAE} && {!isAEAccount}))){
                 $('[id$=saveButton]')[0].style.display = '';
                 $('[id$=cancelButton]')[0].style.display = '';
-            }
+            }   
         }
 
         function showMultiPick() {
@@ -303,7 +303,7 @@
         }
 
         function showCPickList() {
-            if(!({!isNewAE}||{!isNewMulticountryAE})){
+            if(!({!isNewAE}||({!isNewMulticountryAE} && {!isAEAccount}))){
                 $('[id$=cPicklist]')[0].style.display = '';
                 $('[id$=outputRF]')[0].style.display = 'none';
             }
@@ -345,7 +345,9 @@
 
     </apex:form>
     
-    <hr/>
+    <apex:outputPanel rendered="{!showStagingArea}">
+    	<hr/>
+    </apex:outputPanel>
 
     <apex:detail id="detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
 

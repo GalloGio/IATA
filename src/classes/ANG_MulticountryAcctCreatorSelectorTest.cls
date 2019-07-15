@@ -12,19 +12,34 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 
 		insert settlement;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id);
+		AMS_Settlement_System__c settlement2 = new AMS_Settlement_System__c(
+				Name = 'Test Country',
+				RecordTypeId = settlementRTId
+		);
+
+		insert settlement2;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id, Multicountry_Enabled__c = true);
         insert ctry ;
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
+        
+        IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='Test Country',ISO_Code__c='ZZ', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement2.Id, Multicountry_Enabled__c = true);
+        insert ctry2;
+
+        IATA_ISO_State__c stt2 = new IATA_ISO_State__c(Name= 'ZZ', ISO_Code__c = 'ZZ', IATA_ISO_Country__c = ctry2.Id);
+        insert stt2;
 		
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 		
 		List<Account> accountList = new List<Account>();
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewgenAgency GE',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'GE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
-
 		insert a1;
+        
+        Account newBSPCountryAcc = new Account(IATA_ISO_Country__c = ctry2.Id, ParentId = a1.Id, Top_Parent__c = a1.Id, RecordTypeId = accountRT ,Name='NewgenAgency HE 1',Short_Name__c='NewgenAgency HE', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+        insert newBSPCountryAcc;
         
         Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
@@ -87,7 +102,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
         
 		Integer i = 0;
 		
-		IATA_ISO_Country__c ctry = [ Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [ Select Id from IATA_ISO_Country__c Limit 1];
 
 		for(Account acct: multicreator.listAccount){
 			if(acct.Id <> multicreator.mainAccount.Id){
@@ -116,10 +131,56 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		System.debug([Select Id, ParentId, Top_Parent__c, Location_Class__c, Location_Type__c, Name from Account]);
 
 	}
+
+	@isTest static void ANG_MulticountryAccountCreatorTestFailedCountryNotMulticountry() {
+
+		PageReference pageRef = Page.ANG_MulticountryAccountCreator;
+        Test.setCurrentPageReference(pageRef);
+
+		AMS_OSCAR__c oscar = [Select Id, ANG_Type_Of_Change__c from AMS_OSCAR__c];
+
+		ApexPages.CurrentPage().getparameters().put('pid', oscar.id);
+        ApexPages.StandardController sc = new ApexPages.standardController(oscar);
+
+        Test.startTest();
+        
+		ANG_MulticountryAccountCreatorController multicreator = new ANG_MulticountryAccountCreatorController(sc);
+
+		oscar = multicreator.oscar;
+        multicreator.accIndex = 0;
+		Integer accIndex = multicreator.accIndex;
+		multicreator.addAccount();
+
+		IATA_ISO_Country__c ctry = [ Select Id from IATA_ISO_Country__c Limit 1];
+		ctry.Multicountry_Enabled__c = false;
+		update ctry;
+
+//reset IATAIsoCountryDAO maps 
+		IATAIsoCountryDAO.resetMapIataIsoCountry();
+
+		Integer i = 0;
+
+		for(Account acct: multicreator.listAccount){
+			if(acct.Id <> multicreator.mainAccount.Id){
+				acct.Name = 'AE' + String.valueOf(i++);
+				acct.Location_Class__c = 'P';
+				acct.IATA_ISO_Country__c = ctry.Id;
+			}
+		}
+
+		multicreator.saveAccount();
+
+		Test.StopTest();
+
+		//verify the Message in the page
+		ApexPages.Message[] messages = ApexPages.getMessages();
+		System.assertEquals(1, messages.size());
+		System.assertEquals('The country France is not enabled for multicountry', messages[0].getDetail());
+	}
 	
 	@isTest static void ANG_MulticountryHierarchySelectionCrtlTestSAMEBSP() {
         
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c limit 1];
 		
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
@@ -159,18 +220,19 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
         
 		Map<String, List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem>> hierarchy = selectionCrtl.hierarchy;
 		List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
+
 		selectionCrtl.save();
 
 		Test.stopTest();
 
 	}
 	@isTest static void ANG_MulticountryHierarchySelectionCrtlTest2ONLYAE(){
-        
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+
+        IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c limit 1];
 		
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
-		AMS_OSCAR__c oscar = [Select Id, Account__c from AMS_OSCAR__c];
+		AMS_OSCAR__c oscar = [Select Id, Account__c, Account__r.IATA_ISO_Country__c from AMS_OSCAR__c];
 
 		List<Account> accountList = new List<Account>();
 
@@ -182,14 +244,11 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		);
 
 		insert settlement;
-
-		IATA_ISO_Country__c ctryPt = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id);
-        insert ctryPt ;
-
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency GE 1',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
-		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency GE 2',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
-		Account a3 = new Account(IATA_ISO_Country__c = ctryPt.id, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency GE 3',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
-		Account a4 = new Account(IATA_ISO_Country__c = ctryPt.id, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency GE 3',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+        
+		Account a1 = new Account(IATA_ISO_Country__c = oscar.Account__r.IATA_ISO_Country__c, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency AE 1',Short_Name__c='NewgenAgency AE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+		Account a2 = new Account(IATA_ISO_Country__c = oscar.Account__r.IATA_ISO_Country__c, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency AE 2',Short_Name__c='NewgenAgency AE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+		Account a3 = new Account(IATA_ISO_Country__c = oscar.Account__r.IATA_ISO_Country__c, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency AE 3',Short_Name__c='NewgenAgency AE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+		Account a4 = new Account(IATA_ISO_Country__c = oscar.Account__r.IATA_ISO_Country__c, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency AE 3',Short_Name__c='NewgenAgency AE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
 		insert new List<Account>{a1,a2,a3,a4};
 
@@ -217,7 +276,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 
 	@isTest static void ANG_MulticountryHierarchySelectionCrtlTest3OK(){
         
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c limit 1];
 		
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
@@ -230,7 +289,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 
 		insert settlement;
 
-		IATA_ISO_Country__c ctryPt = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id);
+		IATA_ISO_Country__c ctryPt = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id, Multicountry_Enabled__c = true);
         insert ctryPt ;
 
 		AMS_OSCAR__c oscar = [Select Id, Account__c from AMS_OSCAR__c];
@@ -242,8 +301,6 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		Account a3 = new Account(IATA_ISO_Country__c = ctryPt.id, ParentId = oscar.Account__c, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency GE 3',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
 		insert new List<Account>{a1,a2,a3};
-
-		insert new Account(IATA_ISO_Country__c = ctryPt.id, ParentId = a3.Id, Top_Parent__c = oscar.Account__c, RecordTypeId = accountRT ,Name='NewgenAgency GE 4',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'AE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
 		PageReference pageRef = Page.ANG_MulticountryHierarchySelection;
         Test.setCurrentPageReference(pageRef);

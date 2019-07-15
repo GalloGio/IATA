@@ -45,13 +45,14 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>SAP_Distribition_Channel__c</fullName>
         <externalId>false</externalId>
@@ -246,6 +247,23 @@
         <columns>SFDC_Key__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>SAP_Distribition_Channel</fullName>
+        <columns>NAME</columns>
+        <columns>SAP_Distribition_Channel__c</columns>
+        <columns>SAP_Order_Type__c</columns>
+        <columns>SFDC_Order_Channel__c</columns>
+        <columns>SFDC_Order_Source__c</columns>
+        <columns>SFDC_Order_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SAP_Distribition_Channel__c</field>
+            <operation>equals</operation>
+            <value>02</value>
+        </filters>
+        <label>SAP Distribition Channel</label>
         <language>en_US</language>
     </listViews>
     <nameField>

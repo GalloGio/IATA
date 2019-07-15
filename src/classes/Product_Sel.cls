@@ -27,9 +27,6 @@ public class Product_Sel extends Selector
             Product2.Product_Segment__c,
             Product2.Formula_Activity_Code__c,
             Product2.Formula_Version_Number__c,
-            Product2.ZProduct__c,
-            Product2.Zuora_Id__c,
-            Product2.Formula_Zuora_Id__c,
             Product2.Effective_From__c,
             Product2.Effective_To__c,
             Product2.Family,
@@ -80,7 +77,18 @@ public class Product_Sel extends Selector
             Product2.IEC_Page_Areas_of_Activity__c,
             Product2.IEC_Page_Content_Types__c,
             Product2.IEC_Use_on_IATA_org__c,
-            Product2.ImageFile__c
+            Product2.zqu__ZuoraId__c,
+            Product2.zqu__EffectiveStartDate__c,
+            Product2.zqu__EffectiveEndDate__c,
+            Product2.zqu__SKU2__c,
+            Product2.zqu__Deleted__c,
+            Product2.Accepted_Payment_Methods__c,
+            Product2.ProductAudience__c,
+            Product2.ProductCategory__c,
+            Product2.imagefile__c
+
+
+
         };
     }
 
@@ -237,22 +245,22 @@ public class Product_Sel extends Selector
         return eComProducts;
     }
 
-    public Map<Id, Product2> getProductByZproduct(List<Id> zProductIdList)
-    {
-        Map<Id, Product2> ret = new Map<Id, Product2>();
+    //public Map<Id, Product2> getProductByZproduct(List<Id> zProductIdList)
+    //{
+    //    Map<Id, Product2> ret = new Map<Id, Product2>();
 
-        Set<String> zProductIds = new Set<String>();
-        for(Id zprodId : zProductIdList)
-            zProductIds.add((String) zprodId);
+    //    Set<String> zProductIds = new Set<String>();
+    //    for(Id zprodId : zProductIdList)
+    //        zProductIds.add((String) zprodId);
 
-        List<Product2> products = (List<Product2>) selectSObjectByField('ZProduct__c', zProductIds);
+    //    List<Product2> products = (List<Product2>) selectSObjectByField('ZProduct__c', zProductIds);
         
-        for(Product2 prod : products)
-        {
-            ret.put(prod.ZProduct__c, prod);
-        }
-        return ret;
-    }
+    //    for(Product2 prod : products)
+    //    {
+    //        ret.put(prod.ZProduct__c, prod);
+    //    }
+    //    return ret;
+    //}
 
     /****************************************************************************************************
         Created by CGI - David
@@ -262,10 +270,7 @@ public class Product_Sel extends Selector
     {
         Zuora.zObject ret = (Test.isRunningTest()) ? TestDataGenerator.generateZObject('Product') : new Zuora.zObject('Product'); 
 
-        if(product.Formula_Zuora_Id__c != null)
-            ret.setValue('Id', product.Formula_Zuora_Id__c);
-        else if(product.Zuora_Id__c != null)
-            ret.setValue('Id', product.Zuora_Id__c);
+        ret.setValue('Id', product.zqu__ZuoraId__c);
         
         if(product.Name != null)
             ret.setValue('Name', product.Name);
@@ -274,7 +279,7 @@ public class Product_Sel extends Selector
             ret.setValue('Description', product.Description);
             
         //The Zuora ProductAudience__c and ProductCategory__c are required fields, for new product add default value for those fields
-        if(product.Formula_Zuora_Id__c == null && product.Zuora_Id__c == null){
+        if(product.zqu__ZuoraId__c == null){
             ret.setValue('ProductAudience__c', 'DO NOT DISPLAY');
             ret.setValue('ProductCategory__c', 'DO NOT DISPLAY');
         }
@@ -283,10 +288,10 @@ public class Product_Sel extends Selector
             ret.setValue('SAPProductMaterialNo__c', product.SAP_Material_Number__c);
         
         if(product.Effective_From__c != null)
-            ret.setValue('EffectiveStartDate', Zuora.zUtil.getZuoraDate(product.Effective_From__c));
+            ret.setValue('EffectiveStartDate', Zuora.zUtil.getZuoraDateOnly(product.Effective_From__c));
         
         if(product.Effective_To__c != null)
-            ret.setValue('EffectiveEndDate', Zuora.zUtil.getZuoraDate(product.Effective_To__c));
+            ret.setValue('EffectiveEndDate', Zuora.zUtil.getZuoraDateOnly(product.Effective_To__c));
         
         return ret; 
     }
@@ -375,7 +380,7 @@ public class Product_Sel extends Selector
     
     //Return all Products for View All Products Page
     public static list<Product2> getViewAllProducts(String wherecriteria){
-        String query = 'SELECT Id,Family, Name,Media__c,Zuora_Id__c FROM Product2  where '+ wherecriteria  ;
+        String query = 'SELECT Id,Family, Name,Media__c,zqu__ZuoraId__c FROM Product2  where '+ wherecriteria  ;
         return (list<Product2>)Database.query(query);
     }
     
@@ -389,8 +394,8 @@ public class Product_Sel extends Selector
         map<String,Product2> productCode_product = new map<String,Product2>();
         
         //get the list of Product by SAP material number
-        list<Product2> products = [SELECT id, SAP_Material_Number__c, IEC_Static_Cart_Quantity__c, ZProduct__c
-                                        , Charge_Shipping__c, Use_Contract_when_ordered__c
+        list<Product2> products = [SELECT id, SAP_Material_Number__c, IEC_Static_Cart_Quantity__c, 
+                                    Charge_Shipping__c, Use_Contract_when_ordered__c
                                     From Product2 
                                     where SAP_Material_Number__c in :productCode];
         
@@ -658,13 +663,6 @@ public class Product_Sel extends Selector
 
                 PriceDetail_DTO priceDetail = priceByRatePlan.get(zTier.ZRatePlan_ZuoraId__c);
 
-               /* if(zTier.ZCharge_Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_FLAT_FEE) && price.setupFee == null)
-                {
-                    price.setupFee = zTier.zqu__Price__c;
-                    price.setupFeePlanId = zTier.ZRatePlan_ZuoraId__c;
-                    price.setupFeeChargeId = zTier.ZCharge_ZuoraId__c;
-                }*/ 
-
                 //-- Set Standard Prices
                 if(ProductRatePlanChargeTier_Sel.isStandardPrice(zTier))
                 {
@@ -705,7 +703,6 @@ public class Product_Sel extends Selector
                     price.countryPrice.add(priceDetail);
                 }
                 //-- Coupon Code Prices
-                //else if(String.isNotBlank(zTier.ZRatePlan_CouponCode__c) && showAll==true)
                 else if(String.isNotBlank(zTier.ZRatePlan_CouponCode__c))
                 {
                     if(price.couponPrice == null)
@@ -787,7 +784,9 @@ public class Product_Sel extends Selector
                     + '     , IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c '
                     + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, imageFile__c '
                     + ' from Product2'
-                    + ' where SAP_Material_Number__c != null and Display_to_ECommerce__c = true ' + Utility.getSeqTextSetting('ECommerce Products Filter', '')
+                    + ' where SAP_Material_Number__c != null '
+                    + 'and Display_to_ECommerce__c = true ' 
+                    + Utility.getSeqTextSetting('ECommerce Products Filter', '')
                     + ((onlyParent) ? ' and IEC_Parent_Product__c = null' : '')
                     + ((listProductId == null || listProductId.size() == 0) ? '' : ' and Id in :listProductId');
                 
@@ -852,7 +851,7 @@ public class Product_Sel extends Selector
             {
                 mapProductNumber_Price.put(p.SAP_Material_Number__c, null);
             }
-        }            
+        }   
 
         mapProductNumber_Price = exe.getProductPriceInfo(mapProductNumber_Price.keySet(), customerType, null, null, true);
 

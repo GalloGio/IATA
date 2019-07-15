@@ -110,6 +110,10 @@
                 <field>Additional_Email__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ICH_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastCUUpdateDate</field>
             </layoutItems>
@@ -246,6 +250,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Email_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>WebStar_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

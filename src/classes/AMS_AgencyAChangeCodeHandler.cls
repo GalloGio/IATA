@@ -13,8 +13,6 @@ public class AMS_AgencyAChangeCodeHandler {
         set<id> setIdAACC = new set<id>();
         Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
-         //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
-        set<id> setIdAACCForNewApplicationPending = new set<id>();
 
         /*** AMSU-198 ***/
         List<Agency_Applied_Change_code__c> accToProcessPayment = new List<Agency_Applied_Change_code__c>();
@@ -26,9 +24,6 @@ public class AMS_AgencyAChangeCodeHandler {
             {
                 aaccToBeProcessed.add(aaccRecord);
             }
-            //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
-            if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
-                setIdAACCForNewApplicationPending.add(aaccRecord.id);
 
             /*** AMSU-198 ***/
             if(accPaymentDefault.contains(aaccRecord.Change_Code__c)) {
@@ -40,9 +35,6 @@ public class AMS_AgencyAChangeCodeHandler {
         system.debug('SALVES handleAfterInsert -->  minorChangesComingFromOSCAR: ' + AMS_AccountTriggerHandler.minorChangesComingFromOSCAR);
         if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR){
 		   updateAccountReason(setIdAACC, false);
-        }else{
-             if(!setIdAACCForNewApplicationPending.isEmpty()) 
-                updateAccountReason(setIdAACCForNewApplicationPending, true);
         }
 		
         //FM 22-09-2016 - Create "Agency Update" records
@@ -283,7 +275,8 @@ public class AMS_AgencyAChangeCodeHandler {
         Id rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         Id newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
-        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT};
+        //NEWGEN-4852
+        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT,AMS_Utils.RECTYPE_MCAE, AMS_Utils.RECTYPE_NEWGE};
 
         Set<Id> oscarIds = new Set<Id>();
 
@@ -292,28 +285,33 @@ public class AMS_AgencyAChangeCodeHandler {
                 oscarIds.add(code.OSCAR__c);
             }
         }
-
+         
         //let's first find the OSCAR that need to be migrated
         List<AMS_OSCAR__c> oscarsToCopyData = new List<AMS_OSCAR__c>();
         List<AMS_OSCAR__c> oscarsToUpdateAppointments = new List<AMS_OSCAR__c>();
 
-        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
+        oscarsToCopyData = [SELECT ID, STEP10__c, STEP6__c, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c,Account__r.Location_Type__c
+                            from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
 
         if(!oscarsToCopyData.isEmpty()){
+
             AMS_Utils.copyDataToAccount(oscarsToCopyData);
         
-            //moved to oscar trigger, appointment status changes needs to occur in situations without change code generation
-            /*for(AMS_OSCAR__C oscar : oscarsToCopyData)
-            {
-                 if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c))
-                     oscarsToUpdateAppointments.add(oscar);
-
+            //NEWGEN-4852 - Copy Parent Account (GE/HE) information to the staging area of AE in same BSP - Change Code FIN
+            List<ID> accIdList = new List<ID>();
+            for(AMS_OSCAR__C oscar : oscarsToCopyData){
+                if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || (oscar.Process__c == AMS_Utils.MCAE && oscar.Account__r.Location_Type__c == AMS_Utils.HE))
+                    accIdList.add(oscar.Account__c);
+            }
+            System.debug('[ANG_OscarProcessHelper] List of accounts to be copied: ' + accIdList);
+            if(!accIdList.isEmpty()) {
+                System.debug('[ANG_OscarProcessHelper] Call asynchronous process ANG_MulticountryCopyParentInfo for Change Code - FIN');
+                ID jobID = System.enqueueJob(new ANG_MulticountryCopyParentInfo(accIdList, 'FIN'));
+                System.debug('[ANG_OscarProcessHelper] Launching job ID: ' + jobID);
             }       
 
-            if(!oscarsToUpdateAppointments.isEmpty())
-                AMS_Utils.UpdateInspectionsFromOscar(oscarsToUpdateAppointments);*/
-
         }else{
+            
             System.debug('Nothing to migrate here.');
         }
     }
