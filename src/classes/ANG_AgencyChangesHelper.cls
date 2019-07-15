@@ -123,20 +123,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
 
-			if(!accountsToRecalculateRHC.isEmpty()){
-				recalculateRHCInformation(accountsToRecalculateRHC);
-			}
-			
-			if(moveFsAndRiskEventsMap != NULL && !moveFsAndRiskEventsMap.isEmpty()){
-        		System.enqueueJob(new ANG_Risk_Helper.FutureHandler(moveFsAndRiskEventsMap));
-			}
-
 			if(deactivateRhcInformationLst != NULL && !deactivateRhcInformationLst.isEmpty()){
 				ANG_RHCHelper.deactivateRHCInfo(deactivateRhcInformationLst);
-			}
-
-			if(inactivateRiskEventLst != NULL && !inactivateRiskEventLst.isEmpty()){
-				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(inactivateRiskEventLst));
 			}
 
 			if(accountsToCreateRhcInformationLst != NULL && !accountsToCreateRhcInformationLst.isEmpty()){
@@ -150,7 +138,19 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(agencyAuthorizationToUpdateLst != NULL && !agencyAuthorizationToUpdateLst.isEmpty()){
 				update agencyAuthorizationToUpdateLst;
 			}
+
+			if(!accountsToRecalculateRHC.isEmpty()){
+				recalculateRHCInformation(accountsToRecalculateRHC);
+			}
 			
+			if(moveFsAndRiskEventsMap != NULL && !moveFsAndRiskEventsMap.isEmpty()){
+				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(moveFsAndRiskEventsMap));
+			}
+
+			if(inactivateRiskEventLst != NULL && !inactivateRiskEventLst.isEmpty()){
+				System.enqueueJob(new ANG_Risk_Helper.FutureHandler(inactivateRiskEventLst));
+			}
+
 			return hasUpserted;
 		}
 
