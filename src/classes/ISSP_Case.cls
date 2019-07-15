@@ -138,7 +138,6 @@ public without sharing class ISSP_Case {
     public String portalRedirectToUserProfile {
     get {
         if (!isNewPortal) {
-            // /ISSP_Contact?id={!newCase.ContactId}&mid=M1S2{!if(communityName=='CNS','&CommunityName='+communityName,'')
             return '/ISSP_Contact?id=' + newCase.ContactId + '&mid=M1S2' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
         } else 
         {
