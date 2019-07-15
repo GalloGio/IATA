@@ -239,7 +239,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					
 					if(config == null) config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
-					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
+					if(!isMulticountry && containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
 						oscar.Previous_HE__c = currHEAccount;
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
 					}
