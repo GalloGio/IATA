@@ -94,7 +94,7 @@ private class ISSP_AddAttachment_Test {
         af.Name= 'Test';
         af.Full_Name_Unique__c='Test_Record_Amazonfile';
 
-        insert af;
+        //insert af;
         System.runAs(newUser) {
             Apexpages.currentPage().getParameters().put('Caseid', newcase.Id);
             ISSP_AddAttachment controller = new ISSP_AddAttachment();
