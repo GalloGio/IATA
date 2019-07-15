@@ -2,6 +2,20 @@ public with sharing class PortalFAQsCtrl {
 
     public static Integer RESULTS_PER_PAGE = 10;
 
+    public static PortalFAQs__mdt portalFaqCMTD{
+        get{            
+            if(portalFaqCMTD==null){
+                if(!Test.isRunningTest()){
+                    portalFaqCMTD=[SELECT DataCategoryVisibility__c FROM PortalFAQs__mdt WHERE DeveloperName ='PortalFAQs' LIMIT 1];
+                }else{
+                    portalFaqCMTD=new  PortalFAQs__mdt(DataCategoryVisibility__c='[{"topicName":"Accreditation_Travel_Agent","topicLabel":"Accreditation Travel Agent","childs":{"IATA ID Card":"ID_Card","Irregularities & Defaults":"PAX_Irregularities_Defaults"}}]');
+                }
+            }
+            return portalFaqCMTD;
+        }
+        set;
+    } 
+
     @AuraEnabled(cacheable=true)    
     public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getCategoryTiles() {
         List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstOriginal = PortalFAQsCtrl.getFAQsInfo();
@@ -37,8 +51,7 @@ public with sharing class PortalFAQsCtrl {
     public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfo() {
         List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> userAccess = DescribeDataCategoryGroupStructures.describeDataCategoryGroupStructureResults();
 
-        PortalFAQs__mdt portalFaqCMTD = [SELECT DataCategoryVisibility__c FROM PortalFAQs__mdt WHERE DeveloperName ='PortalFAQs' LIMIT 1];
-
+        
         List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> faqList = (List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>) JSON.deserialize(portalFaqCMTD.DataCategoryVisibility__c, List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>.class);
 
         Set<String> hasTopicAccess = new Set<String>();
