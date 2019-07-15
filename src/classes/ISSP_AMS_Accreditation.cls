@@ -29,7 +29,8 @@ public without sharing class ISSP_AMS_Accreditation {
         PARAMCODE_IFAP_CONTACTS,
         PARAMCODE_TRAINED_STAFF,
         PARAMCODE_COPY_OWNERS,
-        PARAMCODE_MAIN_LEGAL_OWNERS
+        PARAMCODE_MAIN_LEGAL_OWNERS_NA,
+        PARAMCODE_MAIN_LEGAL_OWNERS_ACC
     }
 
     private String vSAAMCaseId;
@@ -4393,7 +4394,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
         query += 'FROM AMS_Accreditation_Contact__c ';
 
-        if (String.isBlank(parentFormId)) {
+        if (paramCodeWhere == AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_ACC) {
+            query += 'WHERE AMS_Pax_Accreditation_Form__r.SAAM_Case__r.AccountId = \'' + newform.Same_Legal_Entity_Agency_Account__c + '\'';
+        } else if (String.isBlank(parentFormId)) {
             query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + newForm.Id + '\' ';
         } else {
             query += 'WHERE AMS_Pax_Accreditation_Form__r.Id = \'' + parentFormId + '\' ';
@@ -4448,8 +4451,12 @@ public without sharing class ISSP_AMS_Accreditation {
                 query += 'AND (RecordType.DeveloperName = \'Person\' OR RecordType.DeveloperName = \'Company\') ';
             }
 
-            when PARAMCODE_MAIN_LEGAL_OWNERS {
+            when PARAMCODE_MAIN_LEGAL_OWNERS_NA {
                 query += 'AND Agency_owner__c = true AND AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Status = \'Draft\' ';
+            }
+
+            when PARAMCODE_MAIN_LEGAL_OWNERS_ACC {
+                query += 'AND Agency_owner__c = true AND AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Status = \'Open\' ';
             }
         }
 
@@ -7552,7 +7559,11 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<AMS_Accreditation_Contact__c> getOwnersFromMainLegalEntity() {
-        return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c));
+        if (isHOAccredited) {
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_ACC, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
+        } else {
+            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_NA, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c));
+        }
     }
 
     public PageReference saveAndNavigateToOwnersForm() {
@@ -7566,9 +7577,9 @@ public without sharing class ISSP_AMS_Accreditation {
         String pageURL = '/';
 
         if (newForm.HO_Account__c == null) {
-            pageURL += 'ISSP_ANG_PAX_AE?caseId=' + newCase.Id + commParam +'&step=3&isMultiCountryNewAE=true&currentMCFormId=' + newForm.Same_Legal_Entity_Agency_Form__c;
+            pageURL += 'ISSP_ANG_PAX_AE?caseId=' + newCase.Id + commParam +'&step=3&isMultiCountryNewAE=true&currentMCFormId=' + newForm.Same_Legal_Entity_Agency_Form__c + '&step=3#nav_three';
         } else {
-            pageURL += 'ISSP_ANG_PAX_HE?caseId=' + newCase.Id + commParam +'&step=3&currentMCFormId=' + newForm.Same_Legal_Entity_Agency_Form__c;
+            pageURL += 'ISSP_ANG_PAX_HE?caseId=' + newCase.Id + commParam +'&step=3&currentMCFormId=' + newForm.Same_Legal_Entity_Agency_Form__c + '&step=3#nav_three';
         }
 
         newForm.Validation_ERRORS__c = false;
