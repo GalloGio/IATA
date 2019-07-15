@@ -2472,4 +2472,7 @@ global without sharing class ISSP_APProcess {
         }
         return '';
     } 
+
+    //dummy method to be remoded
+    public List<System.SelectOption> getItems() {return null;}
 }
