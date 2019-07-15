@@ -21267,15 +21267,23 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_View_Owners_Tooltip</shortDescription>
-        <value>On Modifying ownership details you will get redirected to Sec 3 of the main entity</value>
+        <value>On Modifying ownership details you will get redirected to Section 3 of the main entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_View_And_Modify_Owners</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_View_And_Modify_Owners</shortDescription>
+        <value>View &amp; Modify Owners</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_View_Owners</fullName>
         <categories>ISSP, ANG</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_ANG_Import_View_Owners</shortDescription>
-        <value>View &amp; Modify Owners</value>
+        <shortDescription>ISSP_ANG_View_Owners</shortDescription>
+        <value>View Owners</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Least_One_Branch</fullName>
