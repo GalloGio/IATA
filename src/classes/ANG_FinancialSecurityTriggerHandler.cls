@@ -88,7 +88,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			if(parentIDSet == null){
 				parentIDSet = new Set<ID>();
 				for(Account acc : mapAccount.values()){
-					if(acc.ParentId != null) parentIDSet.add(acc.ParentId);
+					if(acc.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include all AEs' && acc.ParentId != null) parentIDSet.add(acc.ParentId);
 					else parentIDSet.add(acc.ID);
 				}
 			}
@@ -105,10 +105,13 @@ public class ANG_FinancialSecurityTriggerHandler{
 	private Map<Id, Account> mapAccount{
 		get{
 			if(mapAccount == null){
-				mapAccount = new Map<Id, Account>();
-				for(Account acc : [SELECT Id, ParentId, Location_Type__c FROM Account WHERE Id IN :accIdSet]) 
-					mapAccount.put(acc.id, acc);
-			}	
+				mapAccount = new Map<Id, Account>([SELECT Id, ParentId, Location_Type__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c,
+													(SELECT Id, Security_Status__c, ANG_ConvertedAmount__c, Account__c, CurrencyIsoCode, Amount__c, 
+													ANG_Financial_Security_Currency__c, ANG_Minimum_Financial_Security__c
+											 		FROM Financial_Securities__r),
+											 		(SELECT id, CurrencyIsoCode FROM RHC_Informations__r) 
+												FROM Account WHERE Id IN :accIdSet and Location_Type__c IN :newgenLocationTypes]);
+			}
 			return mapAccount;
 		}	
 		set;	
@@ -152,18 +155,21 @@ public class ANG_FinancialSecurityTriggerHandler{
 			//List of accounts to be matched with the RHC Information objects
 			List<Account> parentAccount = new List<Account>();
 
-			//Get all accounts in the hierarchy 
-			Map<ID, Account> accountList 
-				= new Map<ID, Account> ([SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, Location_Type__c, ParentId,
+			Map<ID, Account> accountList = null;
+			if(accIdSet.containsAll(parentIDSet)){
+				accountList = mapAccount;
+			}
+			else {
+				//Get all accounts in the hierarchy - Only for Countries with ANG_RHC_LocationType__c == 'Include all AEs'
+				accountList 
+					= new Map<ID, Account> ([SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, Location_Type__c, ParentId, IATA_ISO_Country__r.ANG_RHC_LocationType__c,
 											 (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c, Account__c, CurrencyIsoCode, Amount__c, 
 											 	ANG_Financial_Security_Currency__c, ANG_Minimum_Financial_Security__c
 											 	FROM Financial_Securities__r),
 											 (SELECT id, CurrencyIsoCode FROM RHC_Informations__r) 
 										FROM Account 
 										WHERE (Id IN :accIdSet OR ID IN :parentIDSet OR ParentId IN :parentIDSet) AND Location_Type__c IN :newgenLocationTypes]);
-
-			//if no newgen accounts to process 
-			if(accountList.isEmpty()) return;
+			}
 
 			//Iterate accounList - create new FS list and new map account
 			//Ensure that all the Financial Security of the hierarchy has the same currency 
@@ -197,7 +203,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 				if(!financialSecurityByAccountID.get(acc.id).isEmpty()){
 					
-					ID accountID = acc.Location_Type__c == AMS_Utils.HE ? acc.id : acc.ParentId;
+					ID accountID = acc.ParentId != NULL && acc.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include all AEs' ? acc.ParentId : acc.id ;
 					
 					//Total FS calculation
 					totalFinancialSecurityPerAccount.put(accountID, getCurrentFSValue(totalFinancialSecurityPerAccount.get(accountID)) + ANG_Risk_Helper.sumFSConvertedAmounts(financialSecurityByAccountID.get(acc.id)));
@@ -205,7 +211,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 					//Minimum FS calculation
 					for(Financial_Security__c fs : financialSecurityByAccountID.get(acc.id)){
 
-						if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
+						if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c) && !parentAccount.isEmpty()){
 							String rhcCurrencyCode = accountList.get(accountID).RHC_Informations__r.get(0).CurrencyIsoCode;
 							minimumFinancialSecurityPerAccount.put(accountID, 
 								getCurrentFSValue(minimumFinancialSecurityPerAccount.get(accountID)) + ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c , fs.ANG_Minimum_Financial_Security__c, rhcCurrencyCode != null ? rhcCurrencyCode : fs.ANG_Financial_Security_Currency__c));
@@ -240,33 +246,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 		else return currentFS; 
 	}
 
-/* NEWGEN-5374 - Code merged in the previous method calculateFSTotal_updateMinimumFS
-	private void updateMinimumFS(){
-		set<Id> accIdFsSet= new set<id>();
 
-		for(Financial_Security__c fs:triggerNew){
-			if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && (Trigger.isInsert ||(Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c) )) && fs.Security_Status__c=='Active'){
-				accIdFsSet.add(fs.Account__c);
-			}
-		}
-		ANG_Risk_Helper.accIdSet=accIdFsSet;
-
-		for(Financial_Security__c fs:triggerNew){
-			if( fs.ANG_isToUpdateRHC__c && fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && (Trigger.isInsert ||(Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c) )) && fs.Security_Status__c=='Active'){
-				if( map2Insert.containsKey(fs.Account__c+ANG_RHCHelper.RHC_INFO_STD_RT)){
-					map2Insert.get(fs.Account__c+ANG_RHCHelper.RHC_INFO_STD_RT).ANG_Minimum_Financial_Security__c=ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c , fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c);
-				}else{
-					ANG_RHC_Information__c rhcinf= new ANG_RHC_Information__c(
-						ANG_UniqueKey__c=fs.Account__c+ANG_RHCHelper.RHC_INFO_STD_RT,
-						ANG_Minimum_Financial_Security__c=ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c , fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c)
-					);
-					map2Insert.put(rhcinf.ANG_UniqueKey__c,rhcinf);
-				}
-			}
-		}			
-		doDml();
-	}
-*/
 	private void doDml(){
 		if(!map2Insert.values().isEmpty())upsert map2Insert.values() ANG_UniqueKey__c;
 	}
