@@ -2,11 +2,17 @@ public class RecordUpdater implements Schedulable {
 
     List<SObject> scope = new List<SObject>();
     
+    public boolean isExpiryREBatch;
+
     public RecordUpdater(List<SObject> scope){
         this.scope = scope;
+        this.isExpiryREBatch = false;
     }
     
-    
+    public RecordUpdater(List<SObject> scope, Boolean isExpiryREBatchIn){
+        this.scope = scope;
+        isExpiryREBatch = isExpiryREBatchIn;
+    }
  
     public void schedule(Datetime runningTime){
         System.schedule('RecordUpdater '+System.now().format('dd/MM/yyyy hh:MM:ss.SSS'), 
@@ -16,6 +22,10 @@ public class RecordUpdater implements Schedulable {
     public void execute(SchedulableContext sc){
        
        try{
+
+           if(isExpiryREBatch)
+                ANG_AccountTriggerHandler.isExpiration = true;
+
            update scope;
        }catch(Exception e){
             insert new Technical_Logs__c(Operation__c= 'RecordUpdater Job Id '+sc.getTriggerId(), 

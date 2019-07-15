@@ -214,7 +214,7 @@ global class AmsIataCodeGenerator{
                 
 
 
-                if(!AmsIataCodeGenerator.isIATACodeGeneratedUnique(theAccreditation.IATACode__c)){
+                if(theAccreditation.IATACode__c != null && !AmsIataCodeGenerator.isIATACodeGeneratedUnique(theAccreditation.IATACode__c)){
 
                     if(isImportAgentWithLink){
                     
@@ -521,7 +521,7 @@ global class AmsIataCodeGenerator{
 
                             }
 
-                            if(!AmsIataCodeGenerator.isIATACodeGeneratedUnique(iatacodeToValidate)){
+                            if(iatacodeToValidate != null && !AmsIataCodeGenerator.isIATACodeGeneratedUnique(iatacodeToValidate)){
                                 
                                 if(isImportAgentWithLink){
                                     

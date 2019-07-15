@@ -165,6 +165,78 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_CountrySAttr_Validation --></label>
+        <name>AMS_CountrySAttr_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Check --></label>
+        <name>AMS_DQ_Cannot_Check</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Find --></label>
+        <name>AMS_DQ_Cannot_Find</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Validate City --></label>
+        <name>AMS_DQ_Cannot_Validate_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <name>AMS_DQ_Cannot_Validate_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Check Addr --></label>
+        <name>AMS_DQ_Check_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ City Cumpulsory --></label>
+        <name>AMS_DQ_City_Cumpulsory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ City Not in Database --></label>
+        <name>AMS_DQ_City_Not_in_Database</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ City in Another Country --></label>
+        <name>AMS_DQ_City_in_Another_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ City in Another State --></label>
+        <name>AMS_DQ_City_in_Another_State</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Enter Valid City --></label>
+        <name>AMS_DQ_Enter_Valid_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Found Addr --></label>
+        <name>AMS_DQ_Found_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Review City --></label>
+        <name>AMS_DQ_Review_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Review Country or City --></label>
+        <name>AMS_DQ_Review_Country_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Review State --></label>
+        <name>AMS_DQ_Review_State</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Review State or City --></label>
+        <name>AMS_DQ_Review_State_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Street Compulsory --></label>
+        <name>AMS_DQ_Street_Compulsory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
         <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
@@ -863,6 +935,10 @@
     <customLabels>
         <label>동의합니다</label>
         <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
     </customLabels>
     <customLabels>
         <label>귀하의 국가에서 금융 보안 보험을 제공하는 금융 기관 목록</label>
@@ -1688,6 +1764,10 @@
         <name>CaseKPI2_RecordType</name>
     </customLabels>
     <customLabels>
+        <label><!-- CaseRTtrackedByCS --></label>
+        <name>CaseRTtrackedByCS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CaseTypeReason1List1 --></label>
         <name>CaseTypeReason1List1</name>
     </customLabels>
@@ -1702,6 +1782,10 @@
     <customLabels>
         <label><!-- CaseValidation - Area --></label>
         <name>CaseValidation_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -7906,6 +7990,10 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>주의! 소유권 정보를 대행사에 복사하면 대상 대행사의 기존 소유권 정보가 전부 삭제됩니다.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -9686,6 +9774,10 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>대상 계정 선택</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>* 선택한 하위 조직</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9704,6 +9796,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>시/도</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -10312,6 +10408,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted --></label>
         <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid --></label>
+        <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 HO Full Address --></label>
@@ -11090,6 +11190,22 @@ and
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>확인 중...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>이 조치를 통해 이 계정의 소유권 상세정보를 귀사 계층 구조의 선택한 위치로 복사할 수 있습니다. 이 페이지의 모든 상세정보에 대한 업데이트 확인 후에만, 이러한 조치로 적용된 변화를 대상 대행사에 표시할 수 있습니다.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>처리된 대행사</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>소유권 복사 진행상황</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>PCI 준수에 대해 계속 진행하려면 여기를 클릭하십시오.</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -11208,6 +11324,10 @@ and
     <customLabels>
         <label><!-- Branch to Shipping --></label>
         <name>ISSP_ANG_Local_Details_Copy_Address2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Shipping same as Billing --></label>
+        <name>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
@@ -11400,6 +11520,10 @@ and
     <customLabels>
         <label>인가유형 변경 요청 및/또는주소지, 회사 이름, 법적 상태, 소유권/주주 현황의 변경을 IATA로 통보해야 합니다.</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
     <customLabels>
         <label>A 단계 - 대리점 세부정보 확인</label>
@@ -11899,6 +12023,10 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
         <name>ISSP_Cargo_Agent_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Cargo --></label>
+        <name>ISSP_Cargo_Label_Value</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CaseCommentEmail --></label>
         <name>ISSP_CaseCommentEmail</name>
     </customLabels>
@@ -12051,6 +12179,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>닫힘</label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label>주소</label>
@@ -13137,6 +13269,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
+        <label>옵트인 방식을 통해, 항공사, 호텔 및 여행사와 같은 공급업체 산업에서 제품, 프로모션, 판매 및 대행사 정책과 같은 중요한 메시지를 대행사에 회람할 수 있습니다.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
         <name>ISSP_GeneralPublicNotFound</name>
     </customLabels>
@@ -14161,6 +14297,14 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_PAX_Validating_VAT_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 error --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2_error</name>
+    </customLabels>
+    <customLabels>
         <label><!-- c --></label>
         <name>ISSP_PAX_Validating_VAT_Number_error</name>
     </customLabels>
@@ -14922,8 +15066,16 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>GDP Opt-in을 제외한 변경사항은 연례 재검증 프로세스를 통해 처리해야 합니다</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP SELECT COUNTRY --></label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>- 지역 선택 -</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP SELECT THREE or MORE --></label>
@@ -19496,7 +19648,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>AMS_GDP_Synchronizer</name>
     </customTabs>
     <customTabs>
-        <label><!-- AMS PCI Compliant Mass Oscar Creation --></label>
+        <label><!-- OSCAR mass action --></label>
         <name>AMS_PCI_Compliant_Mass_Oscar_Creation</name>
     </customTabs>
     <customTabs>

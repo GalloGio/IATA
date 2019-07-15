@@ -2348,6 +2348,47 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
     </fields>
+    <fields>
+        <fullName>unbabelapi__Agent_Brand__c</fullName>
+        <deprecated>false</deprecated>
+        <description>This field contains the Agent Brand to which he/she responds to the customers</description>
+        <externalId>false</externalId>
+        <label>Agent Brand</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>unbabelapi__Brands</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>unbabelapi__Unbabel_Known_Languages__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Unbabel Known Languages</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>unbabelapi__Languages</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>unbabelapi__Unbabel_Language__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Unbabel Main Language</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>unbabelapi__Languages</valueSetName>
+        </valueSet>
+    </fields>
     <listViews>
         <fullName>AI_Users</fullName>
         <columns>FULL_NAME</columns>
@@ -2438,7 +2479,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>FULL_NAME</field>
             <operation>contains</operation>
-            <value>goh</value>
+            <value>troll</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>
@@ -2523,9 +2564,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>IS_PORTAL_SELF_REGISTERED</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CORE.PROFILE.USERTYPE</field>
-            <operation>equals</operation>
-            <value>C,c</value>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>startsWith</operation>
+            <value>ISS</value>
         </filters>
         <label>Customer Portal Users</label>
         <language>en_US</language>

@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Active__c</fullName>
         <defaultValue>false</defaultValue>
@@ -155,7 +156,7 @@
                 <value>False</value>
             </filterItems>
             <filterItems>
-                <field>zqu__ProductRatePlan__c.zqu__ZProduct__r.zqu__Deleted__c</field>
+                <field>zqu__ProductRatePlan__c.zqu__Product__r.zqu__Deleted__c</field>
                 <operation>equals</operation>
                 <value>False</value>
             </filterItems>

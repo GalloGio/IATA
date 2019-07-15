@@ -369,8 +369,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
     }
 
+    private static List<OrgWideEmailAddress> getfromAddress(Id OrgWideEmailAddressId) {  
+    		  return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];   
+
+    } 
+
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
-        
         Id templateId;
         Boolean templateToIATA = false;
         List<EmailTemplate> tempIata = new List<EmailTemplate>();
@@ -517,9 +521,10 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
             if(!mailsToSend.isEmpty()){
                 if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);
-                for(Messaging.SingleEmailMessage mail: mailsToSend)
-                {
+                for(Messaging.SingleEmailMessage mail: mailsToSend){
                     EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
+                    emailMsg.FromAddress = getfromAddress(owea.Id)[0].Address;
+                    emailMsg.FromName = getfromAddress(owea.Id)[0].DisplayName;
                     emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
                     emailMsg.Subject = mail.getSubject();
                     emailMsg.HtmlBody = mail.getHtmlBody();

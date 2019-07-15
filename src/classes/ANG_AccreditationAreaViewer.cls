@@ -1,5 +1,13 @@
 global with sharing class ANG_AccreditationAreaViewer {
     
+    public Set<String> pageSections{
+        get{
+            if(pageSections == null)
+                pageSections = new Set<String>{'General Information','Physical and Correspondence Address','Agency Details (In Local Language)'};
+            return pageSections;}
+        set;
+    }
+    
     public Set<String> ahdocComparisonFields = new Set<String>{'ISSP_AMS_Legal_Status__c','ISSP_AMS_GDS_with_signed_contract__c','ISSP_AMS_Premises_located_at_airport__c'};
 
     public Map<String,String> changedFieldsSet{get;set;}
@@ -54,6 +62,60 @@ global with sharing class ANG_AccreditationAreaViewer {
 
     public AMS_Pax_Accreditation_Form__c accreditationObj { get; set; }
 
+    public Map<String, String> fieldsSectionMap{
+        get{
+            if(this.fieldsSectionMap == null){
+                this.fieldsSectionMap  = new Map<String, String> {
+                     'Name' => 'General Information'
+                    ,'HO_Account__c' => 'General Information'
+                    ,'ISSP_AMS_Legal_Status__c' => 'General Information'
+                    ,'ISSP_AMS_License_No__c' => 'General Information'
+                    ,'Account_Name__c' => 'General Information'
+                    ,'Short_Name__c' => 'General Information'
+                    ,'Location_Type__c' => 'General Information'
+                    ,'ISSP_AMS_VAT_number__c' => 'General Information'
+                    ,'Website__c' => 'General Information'
+                    ,'Branch_Office_FAX__c' => 'General Information'
+                    ,'Mobile__c' => 'General Information'
+                    ,'ISSP_AMS_GDS_with_signed_contract__c' => 'General Information'
+                    ,'ISSP_AMS_Premises_located_at_airport__c' => 'General Information'
+                    ,'SAAM_Case__c' => 'General Information'
+                    ,'IATA_Cargo_Code__c' => 'General Information'
+                    ,'ANG_IsNewGenAgency__c' => 'General Information'
+                    ,'ANG_Accreditation_Model_to_Change__c' => 'General Information'
+                    ,'Abbreviated_name__c' => 'General Information'
+                    ,'Trade_Name__c' => 'General Information'
+                    ,'Location_Class__c' => 'General Information'
+                    ,'VAT_Number_2__c' => 'General Information'
+                    ,'Branch_Office_Email__c' => 'General Information'
+                    ,'Branch_Office_Phone__c' => 'General Information'
+                    ,'Remittance_frequency__c' => 'General Information'
+                    ,'CASS_Number__c' => 'General Information'
+                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'General Information'
+                    ,'Branch_Office_Street_name_number__c' => 'Physical and Correspondence Address'
+                    ,'Branch_Office_City__c' => 'Physical and Correspondence Address'
+                    ,'Branch_Office_Postal_code__c' => 'Physical and Correspondence Address'
+                    ,'IATA_ISO_State__c' => 'Physical and Correspondence Address'
+                    ,'Branch_Office_Country__c' => 'Physical and Correspondence Address'
+                    ,'Abbreviated_Address__c' => 'Physical and Correspondence Address'
+                    ,'Shipping_Street__c' => 'Physical and Correspondence Address'
+                    ,'Shipping_Postal_Code__c' => 'Physical and Correspondence Address'
+                    ,'Shipping_City__c' => 'Physical and Correspondence Address'
+                    ,'Shipping_State__c' => 'Physical and Correspondence Address'
+                    ,'Shipping_Country__c' => 'Physical and Correspondence Address'
+                    ,'Shipping_ISO_Country__c' => 'Physical and Correspondence Address'
+                    ,'Shipping_ISO_State__c' => 'Physical and Correspondence Address'
+                    ,'Local_Legally_Registered_Name__c' => 'Agency Details (In Local Language)'
+                    ,'Local_Physical_Address_Street__c' => 'Agency Details (In Local Language)'
+                    ,'Local_Postal_Address_Street__c' => 'Agency Details (In Local Language)'
+        };
+            }
+            return this.fieldsSectionMap;
+
+        }
+            set;
+        }
+    
     public Map<String, String> fieldsMapping{
         get{
             if(this.fieldsMapping == null){
@@ -104,38 +166,9 @@ global with sharing class ANG_AccreditationAreaViewer {
             set;
         }
 
-    public static List<String> fieldsAccContacts = new List<String>{'First_Name__c','Last_Name__c','Email__c','Phone__c','Agency_owner__c','Agency_role__c','Authorised_signatory__c','Financial_Assessment_Contact__c','Portal_administrator__c','Salutation__c','Mobile__c','FAX__c','Financial_interest__c','Time_devoted_to_Agency_business__c','Date_joined_agency__c','Job_title__c','AddressStreet__c','AddressCity__c','AddressPostCode__c','AddressCountry__c'};
+    public static List<String> fieldsAccContacts = new List<String>{'First_Name__c','Last_Name__c','Email__c','Phone__c','Agency_owner__c','Agency_role__c','Authorised_signatory__c','Financial_Assessment_Contact__c','Portal_administrator__c','Salutation__c','Mobile__c','FAX__c','Financial_interest__c','Time_devoted_to_Agency_business__c','Date_joined_agency__c','Job_title__c','AddressStreet__c','AddressCity__c','AddressPostCode__c','AddressState__c','AddressCountry__c','Company_Name_Local__c','Local_First_name__c','Local_Last_Name__c'};
 
 
-/*
-        //using Schema to avoid typos on field Names
-    private List<Schema.SObjectField> fieldsAccContacts{
-        get{
-            return new List<Schema.SObjectField>{
-                  AMS_Accreditation_Contact__c.First_Name__c
-                , AMS_Accreditation_Contact__c.Last_Name__c
-                , AMS_Accreditation_Contact__c.Email__c
-                , AMS_Accreditation_Contact__c.Phone__c
-                , AMS_Accreditation_Contact__c.Agency_owner__c
-                , AMS_Accreditation_Contact__c.Agency_role__c
-                , AMS_Accreditation_Contact__c.Authorised_signatory__c
-                , AMS_Accreditation_Contact__c.Financial_Assessment_Contact__c
-                , AMS_Accreditation_Contact__c.Portal_administrator__c
-                , AMS_Accreditation_Contact__c.Salutation__c
-                , AMS_Accreditation_Contact__c.Mobile__c
-                , AMS_Accreditation_Contact__c.FAX__c
-                , AMS_Accreditation_Contact__c.Financial_interest__c
-                , AMS_Accreditation_Contact__c.Time_devoted_to_Agency_business__c
-                , AMS_Accreditation_Contact__c.Date_joined_agency__c
-                , AMS_Accreditation_Contact__c.Job_title__c
-                , AMS_Accreditation_Contact__c.AddressStreet__c
-                , AMS_Accreditation_Contact__c.AddressCity__c
-                , AMS_Accreditation_Contact__c.AddressPostCode__c
-                , AMS_Accreditation_Contact__c.AddressCountry__c
-            };
-        }
-    }
-*/
     public Map<String,boolean> accountFieldsMapping{
         get{
             if(accountFieldsMapping == null){
@@ -226,45 +259,51 @@ global with sharing class ANG_AccreditationAreaViewer {
     private List<Schema.SObjectField> accreditationFieldList{
         get{
             return new List<Schema.SObjectField>{
-                  AMS_Pax_Accreditation_Form__c.Name
-                , AMS_Pax_Accreditation_Form__c.Account_Name__c
-                , AMS_Pax_Accreditation_Form__c.IATACode__c
-                , AMS_Pax_Accreditation_Form__c.ISSP_AMS_Legal_Status__c
-                , AMS_Pax_Accreditation_Form__c.CASS_Number__c
-                , AMS_Pax_Accreditation_Form__c.SAAM_Case__c
-                , AMS_Pax_Accreditation_Form__c.Short_Name__c
-                , AMS_Pax_Accreditation_Form__c.Location_Class__c
-                , AMS_Pax_Accreditation_Form__c.Location_Type__c
-                , AMS_Pax_Accreditation_Form__c.Trade_Name__c
-                , AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c
-                , AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c
-                , AMS_Pax_Accreditation_Form__c.ISSP_AMS_GDS_with_signed_contract__c
-                , AMS_Pax_Accreditation_Form__c.Branch_Office_Country__c
-                , AMS_Pax_Accreditation_Form__c.Branch_Office_Street_name_number__c
-                , AMS_Pax_Accreditation_Form__c.Branch_Office_Postal_code__c
-                , AMS_Pax_Accreditation_Form__c.Branch_Office_City__c
-                , AMS_Pax_Accreditation_Form__c.IATA_ISO_State__c
-                , AMS_Pax_Accreditation_Form__c.Shipping_Street__c
-                , AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c
-                , AMS_Pax_Accreditation_Form__c.Shipping_ISO_Country__c
-                , AMS_Pax_Accreditation_Form__c.Shipping_Country__c
-                , AMS_Pax_Accreditation_Form__c.Shipping_ISO_State__c
-                , AMS_Pax_Accreditation_Form__c.Shipping_State__c
-                , AMS_Pax_Accreditation_Form__c.Shipping_City__c
-                , AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c
-                , AMS_Pax_Accreditation_Form__c.Website__c
-                , AMS_Pax_Accreditation_Form__c.Branch_Office_Phone__c
-                , AMS_Pax_Accreditation_Form__c.Branch_Office_FAX__c
-                , AMS_Pax_Accreditation_Form__c.ISSP_AMS_Premises_located_at_airport__c
-                , AMS_Pax_Accreditation_Form__c.Mobile__c
-                , AMS_Pax_Accreditation_Form__c.Abbreviated_name__c
-                , AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c
-                , AMS_Pax_Accreditation_Form__c.Remittance_frequency__c
-                , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
-                , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
-                , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
-                , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
-                , AMS_Pax_Accreditation_Form__c.HO_Account__c
+                 AMS_Pax_Accreditation_Form__c.Name
+                ,AMS_Pax_Accreditation_Form__c.Account_Name__c
+                //,AMS_Pax_Accreditation_Form__c.IATACode__c
+                ,AMS_Pax_Accreditation_Form__c.ISSP_AMS_Legal_Status__c
+                ,AMS_Pax_Accreditation_Form__c.CASS_Number__c
+                ,AMS_Pax_Accreditation_Form__c.SAAM_Case__c
+                ,AMS_Pax_Accreditation_Form__c.Short_Name__c
+                ,AMS_Pax_Accreditation_Form__c.Location_Class__c
+                ,AMS_Pax_Accreditation_Form__c.Location_Type__c
+                ,AMS_Pax_Accreditation_Form__c.Trade_Name__c
+                ,AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c
+                ,AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c
+                ,AMS_Pax_Accreditation_Form__c.ISSP_AMS_GDS_with_signed_contract__c
+                ,AMS_Pax_Accreditation_Form__c.Branch_Office_Country__c
+                ,AMS_Pax_Accreditation_Form__c.Branch_Office_Street_name_number__c
+                ,AMS_Pax_Accreditation_Form__c.Branch_Office_Postal_code__c
+                ,AMS_Pax_Accreditation_Form__c.Branch_Office_City__c
+                ,AMS_Pax_Accreditation_Form__c.IATA_ISO_State__c
+                ,AMS_Pax_Accreditation_Form__c.Shipping_Street__c
+                ,AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c
+                ,AMS_Pax_Accreditation_Form__c.Shipping_ISO_Country__c
+                ,AMS_Pax_Accreditation_Form__c.Shipping_Country__c
+                ,AMS_Pax_Accreditation_Form__c.Shipping_ISO_State__c
+                ,AMS_Pax_Accreditation_Form__c.Shipping_State__c
+                ,AMS_Pax_Accreditation_Form__c.Shipping_City__c
+                ,AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c
+                ,AMS_Pax_Accreditation_Form__c.Website__c
+                ,AMS_Pax_Accreditation_Form__c.Branch_Office_Phone__c
+                ,AMS_Pax_Accreditation_Form__c.Branch_Office_FAX__c
+                ,AMS_Pax_Accreditation_Form__c.ISSP_AMS_Premises_located_at_airport__c
+                ,AMS_Pax_Accreditation_Form__c.Mobile__c
+                ,AMS_Pax_Accreditation_Form__c.Abbreviated_name__c
+                ,AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c
+                ,AMS_Pax_Accreditation_Form__c.Remittance_frequency__c
+                ,AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
+                ,AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
+                ,AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
+                //,AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
+                ,AMS_Pax_Accreditation_Form__c.HO_Account__c
+                ,AMS_Pax_Accreditation_Form__c.Local_Legally_Registered_Name__c
+                ,AMS_Pax_Accreditation_Form__c.Local_Physical_Address_Street__c
+                ,AMS_Pax_Accreditation_Form__c.IATA_Cargo_Code__c
+                ,AMS_Pax_Accreditation_Form__c.ANG_Accreditation_Model_to_Change__c
+                //,AMS_Pax_Accreditation_Form__c.TradeName__c
+                ,AMS_Pax_Accreditation_Form__c.Local_Postal_Address_Street__c
             };
         }
     }
@@ -359,7 +398,7 @@ global with sharing class ANG_AccreditationAreaViewer {
 
     global class AccreditationContact{
     
-        public AMS_Accreditation_Contact__c ac{get;set;}
+        public AMS_Accreditation_Contact__c ac{get;set;} 
         public Boolean isNew{get;set;}
         public AMS_Accreditation_Contact__c previousAC{get;set;}
         public Map<String,Boolean> changedFieldsMap{get;set;}

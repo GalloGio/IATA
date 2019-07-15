@@ -206,7 +206,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 					for(Financial_Security__c fs : financialSecurityByAccountID.get(acc.id)){
 
 						if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
-							String rhcCurrencyCode = accountList.get(accountID).RHC_Informations__r.get(0).CurrencyIsoCode;
+                            String rhcCurrencyCode = accountList.get(accountID).RHC_Informations__r.isEmpty() ? null : accountList.get(accountID).RHC_Informations__r.get(0).CurrencyIsoCode;
 							minimumFinancialSecurityPerAccount.put(accountID, 
 								getCurrentFSValue(minimumFinancialSecurityPerAccount.get(accountID)) + ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c , fs.ANG_Minimum_Financial_Security__c, rhcCurrencyCode != null ? rhcCurrencyCode : fs.ANG_Financial_Security_Currency__c));
 						}

@@ -198,14 +198,18 @@
         			<section name="left-side" class="col-md-8 col-sm-12">
 
           			<!-- RHC SECTION -->
-	          			<section name="remittance-holding" class="row" style="display: {!IF(OR(isCashless, isChinaAgent),'none','block')}; min-height: 350px;">
+	          			<section id="remittance-holding" name="remittance-holding" class="row" style="min-height: 350px;">
 	            			<header class="col-xs-12">
 	              				<div class="section-header">
 	                				<apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
 	                				<strong>{!$Label.ISSP_RHC_HUB}</strong>
 	              				</div>
 	            			</header>
-	            			<apex:outputPanel layout="block" id="rhcInfoPanel" styleClass="row" style="margin-right: 15px;">
+	            			<apex:outputPanel layout="block" id="asdHelpText" styleClass="row" style="display: {!IF(isChinaAgent,'block','none')}; text-align: center;">
+	            				<apex:outputLabel value="{!$Label.ANG_ISSP_ASD_HelpText}" style="font-weight: bold;  text-align: center; max-width: 70%; margin-top: 110px;"/>
+	            			</apex:outputPanel>
+
+	            			<apex:outputPanel layout="block" id="rhcInfoPanel" styleClass="row" style="margin-right: 15px; display: {!IF(isChinaAgent,'none','block')};">
 	              				<section id="remittance-holding-table" class="col-md-8 col-sm-12">
 					                <table class="table borderless" style="margin-left: 13px;">
 					                  	<tr style="display: {!IF(isCashless,'none','table-row')}">
@@ -272,7 +276,7 @@
 				              	</section>
 	            			</apex:outputPanel>
 
-	            			<div class="row" style="display: {!IF(isCashless,'none','block')}">
+	            			<div class="row" style="display: {!IF(OR(isCashless, isChinaAgent),'none','block')}">
 	              				<div class="col-col-xs-12 col-md-8 col-md-offset-2">
 	                				<button id="requestRME" onclick="requestBalanceUpdate();return false;" class="btn btn-block btn_iata_primary">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
 	              				</div>
@@ -287,7 +291,7 @@
 	            				</div>
 	            			</div>
 
-	            			<div class="row" style="display: {!IF(isCashless,'none','block')}">
+	            			<div class="row" style="display: {!IF(OR(isCashless, isChinaAgent),'none','block')}">
 	              				<div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
 	                				<apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
 	                				<apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
@@ -296,7 +300,7 @@
 	          			</section>
 
 	          			<!-- Risk Event History -->
-	          			<section name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')};">
+	          			<section id="riskHistory" name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')};">
 	        				<header class="col-xs-12">
 	              				<div class="section-header">
 	                				<apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskEventsHistory.png')}"/>
@@ -386,7 +390,7 @@
 	        		<section name="right-side" class="col-md-4 col-sm-12">
 	          		<!-- Available forms of payment-->
 
-	          			<div style="display: {!IF(isCashless,'none','block')}; min-height: 350px;">
+	          			<div style="display: {!IF(isCashless,'none','block')}; min-height: 350px;" id="afp">
 	            			<c:AFP_Component wrapperClass="{!afpWrapper}"/>
 	          			</div>
 
@@ -497,7 +501,8 @@
 
     		$( document ).ready(function() {
     			if ({!isChinaAgent}) {
-    				$('[name$="risk-profile"]').prependTo($('[name$="left-side"]'));
+    				$('[name$="risk-profile"]').prependTo($('[name$="left-side"]').first());
+    				$('[id$="remittance-holding"]').appendTo($('[name$="right-side"]').first());
     			}
 			});
 
