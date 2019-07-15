@@ -1,0 +1,3 @@
+<apex:page showHeader="false">
+    <apex:iframe src="{!URLFOR($Resource.GCSDowntime, 'Downtime.htm')}"/>
+</apex:page>
