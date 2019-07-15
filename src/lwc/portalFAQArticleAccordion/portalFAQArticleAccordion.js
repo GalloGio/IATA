@@ -404,4 +404,8 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         }
         return null;
     } 
+
+    closeModal(){
+        this.renderConfirmation = !this.renderConfirmation;
+    }
 }
