@@ -25,7 +25,7 @@ global class AMS_ValidateAccSpecialChars_Batch implements Database.Batchable<sOb
 	global Boolean userAlreadyExisted = false;
 	global Boolean toUpdate = false;
 	//WMO-538
-	global String regEx = Label.ISO_8859_1_Pattern;
+	global String regEx;
 
 	public static List<Id> countriesIds{
 		get {
