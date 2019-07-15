@@ -1750,8 +1750,12 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
                         newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
 
-                        if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null)){  //Legal name is editable for BR Abroad, so set default value
+                        if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || ((newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null) && !isMultiCountryNewAE)){  //Legal name is editable for BR Abroad, so set default value
                             newForm.Account_Name__c = hqAccount.Name;                        
+                        }
+
+                        if (isMultiCountryNewAE) {
+                            populateFieldsFromParentForm(newForm);
                         }
 
                         saveAMSForm();
@@ -1770,8 +1774,6 @@ public without sharing class ISSP_AMS_Accreditation {
                 } else {
                     if((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE) && (newForm.AE_separate_Legal_Entity__c == 'No' ||newForm.AE_separate_Legal_Entity__c == null)){ //NEWGEN-1249
                         resetCreatedOwnership(); 
-
-                        newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
 
                         if (isMultiCountryNewAE) {
                             populateFieldsFromParentForm(newForm);
@@ -2149,7 +2151,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (isMultiCountryNewAE) {
                 newform.HO_Account__c = null;
-            } 
+            }
                  
             upsert newForm;
 
@@ -7420,7 +7422,7 @@ public without sharing class ISSP_AMS_Accreditation {
             Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
 
             AMS_Pax_Accreditation_Form__c parentAux = mCApplicationFormMap.get(currentMCForm.Same_Legal_Entity_Agency_Form__c);
-        
+
             currentMCForm.Account_Name__c = parentAux.Account_Name__c;
             currentMCForm.Trade_Name__c = parentAux.Trade_Name__c;
             currentMCForm.ISSP_AMS_Legal_Status__c = parentAux.ISSP_AMS_Legal_Status__c;
