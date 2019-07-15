@@ -1,8 +1,8 @@
 @RestResource(urlMapping='/ANG_GetMasterData/*')
 global class ANG_MasterData_Interface{
 
-    public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY'};
-    public static final Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB};
+    public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY', AMS_Utils.MBPDD_CHANGE_CODE};
+    public static final Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB, AMS_Utils.RECTYPE_IEPMODELBPLUS};
 
     @HttpGet
     global static void doGet(){
@@ -25,9 +25,9 @@ global class ANG_MasterData_Interface{
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
                                             VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c,
-                                            GDI_Status__c,
+                                            GDI_Status__c, Is_PCI_compliant__c,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
-                                            (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
+                                            (Select Id, IATACode__c, Status__c, Is_PCI_compliant__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r), //RHC Information
                                             (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC), //OSCAR
                                             (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles1__r where Active__c = true and RecordType.Name = 'Ownership') // List of Ownwer
@@ -132,11 +132,18 @@ global class ANG_MasterData_Interface{
             this.status = status;
         }
     }
-       
 
     private static final set<string> IGNORE_FIELDS_SET = new set<string>{'FormOfPayment'};
     private static final set<string> REMOVE_FIELDS_SET = new set<string>{'lsChildren', 'RHCInfo'};
 
+    private static Map<String, Boolean> pciCompliantFldMapping = new Map<String, Boolean>{
+        'Yes' => TRUE,
+        'No' => FALSE,
+        'Nil CC' => FALSE,
+        'Corporate Card' => TRUE
+    };
+    
+    @TestVisible
     private class MasterDataPayload{
         /* Agency Information */
         public string isBranchAbroad;
@@ -183,9 +190,7 @@ global class ANG_MasterData_Interface{
         public list<Owner> owners;
         public list<DueDiligence> dueDiligence;
         public list<string> externalSystems; //NEWGEN-4276
-        
-        
-
+        public Boolean isPciDss;
 
         /*Constructor*/
         public MasterDataPayload(Account acc, boolean getChildren, String changeCode){
@@ -234,10 +239,12 @@ global class ANG_MasterData_Interface{
 
                 /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
                 if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
-                    if(changeCode == 'MaddY')
+                    if(changeCode == 'MaddY'){
                         this.dueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
-                    else
-                        this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
+                    }
+                    else {
+                        this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ? acc.oscars__r[0].step17__c : 'Failed')));                    
+                    }
                 }
 
                 //Risk Info
@@ -290,12 +297,19 @@ global class ANG_MasterData_Interface{
                 //externalSystems - NEWGEN-4276
                 this.externalSystems = new list<string>();
                 //EasyPay
-                if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c))
+                if(string.isNotBlank(acc.ANG_IEP_Status_FF__c) && setIEPStatusToPublish.contains(acc.ANG_IEP_Status_FF__c)){
                     this.externalSystems.add(acc.IATA_ISO_Country__r.ANG_Portal_Service__r.Name);
+                }
 
                 //GDI - note: we do publish HE/HO only
                 if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c))
                    this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
+            
+                //Fill isPciDss attribute for every Account IEP Status except "No IEP Account" or blank 
+                if(String.isNotBlank(acc.ANG_IEP_Status_FF__c) && acc.ANG_IEP_Status_FF__c != AMS_Utils.NO_IEP_ACCOUNT){
+                    this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
+                }
+
             }
             catch(exception e){
                 throw e;

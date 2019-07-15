@@ -10,7 +10,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>CaseArea__c</field>
-        <formula>TEXT(Case.CaseArea__c )</formula>
+        <formula>IF(Case.RecordType.Name = &apos;Cases - Global&apos;, TEXT(Case.CaseArea__c), &apos;&apos;)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>ContactId</field>
@@ -22,7 +22,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Reason1__c</field>
-        <formula>TEXT(Case.Reason1__c)</formula>
+        <formula>IF(Case.RecordType.Name = &apos;Cases - Global&apos;, TEXT(Case.Reason1__c), &apos;&apos;)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Region__c</field>
@@ -99,6 +99,11 @@
                 <emptySpace>false</emptySpace>
                 <field>Reason1__c</field>
                 <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Product__c</field>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>

@@ -237,6 +237,22 @@ public without sharing class ISSP_AMS_Accreditation {
     public String optInOutSuccessMessage {get; set;}
     public String optInOutBtn {get; set;}
     public String optInOutErrorNoDate {get; set;}
+    
+    //this checks if there's an open Annual Revalidation case on the user's account
+    public Boolean revCaseOpen {
+        get{
+            List<Case> revCases = [SELECT Id 
+                                FROM Case 
+                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                    AND Reason1__c = 'Annual revalidation' 
+                                    AND Status != 'Closed' 
+                                    AND Status != 'Closed_Rejected' 
+                                    AND Status != 'Closed_Withdrawn'];
+            
+            return !revCases.isEmpty();
+        } 
+        set;
+    }
 
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -423,6 +439,10 @@ public without sharing class ISSP_AMS_Accreditation {
         else
             Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Application_Summary.pdf');
 
+        if (ApexPages.currentPage().getParameters().containsKey('typeOfAgency')) {
+            newForm.Local_Agent_Type__c = ApexPages.currentPage().getParameters().get('typeOfAgency');
+        }
+
         //AS - NoC V2.0 - Now Other Change will always be for 3 types of changes
         if(isBankAccountChange) {
             newForm.Is_change_bank_account_details__c = true;
@@ -528,6 +548,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
+
+                    if (isocountry.ISO_Code__c == 'CN') {
+                        sector += ' - ' + newForm.Local_Agent_Type__c;
+                    }
 
                     if (isNoticeOfChange) {
                         sectorDisplay = Label.ISSP_AMS_NoC_Request_for_Change;
@@ -755,6 +779,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
             sector = sectorValue.replace('_', ' ');
 
+            if (isocountry.ISO_Code__c == 'CN') {
+                sector += ' - ' + newForm.Local_Agent_Type__c;
+            } 
+
             if(isNoticeOfChange) {
                 SYSTEM.DEBUG('Accreditation Attachment NoC Sector: ' + sectorValue);
                 stepNumber='5'; //Set to Step 5, so together with isValidation=true, STEP E docs such as signed contract (NOC_SIGNED_CONTRACT) also appears in list of attachments
@@ -952,7 +980,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private List<Account> getBranchList(Boolean fullHierarchy) {
         List<String> selectedBranchCodes;
         selectedBranchCodes = new List<String>();
-
+        
          if(newForm.Agency_Codes_Concerned__c != null && !fullHierarchy) //Exclude already selected branches
             selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
 
@@ -981,16 +1009,18 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getBranchAccounts() {
-
         System.DeBUG('vHQAccountId for BR Accounts: ' + vHQAccountId);
 
         List<SelectOption> options = new List<SelectOption>();
-
-        List <Account> accountList = getBranchList(false);
+        List <Account> accountList = new List<Account>();
+       
+        for(HierarchyItem hi:  hierarchyValues){
+                accountList.add(hi.acc);
+        }
 
         SYSTEM.DEBUG('ALL Branch Size: ' + accountList.size());
 
-        for (Account thisAccount : accountList) {
+        for (Account thisAccount : accountList) { 
             String theLabel;
             theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
@@ -1010,9 +1040,17 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getAgencyCodesConcerned() {
-        List <Account> accountList;
+        List <Account> accountList = new List<Account>();
         List<SelectOption> options = new List<SelectOption>();
 
+        //SYSTEM.DEBUG('SPLIT size: ' + newForm.Agency_Codes_Concerned__c.split(',').size());
+        if(hierarchyValues.size() > 0){
+            for(HierarchyItem hi:  hierarchyValues){
+                if(hi.selected){
+                    accountList.add(hi.acc);
+                }
+            }
+        }
         if(newForm.Agency_Codes_Concerned__c != null)
             accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
 
@@ -1415,11 +1453,15 @@ public without sharing class ISSP_AMS_Accreditation {
                         newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
                     }
 
-                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) //NEWGEN-1249
+                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
+                    //NEWGEN-1249
                         upsert newform;
+                    }
+                    String auxLocalAgentType = newform.Local_Agent_Type__c;
                     fetchAMSProcessForm();
-
+                    newform.Local_Agent_Type__c = auxLocalAgentType;
                 }
+
                 // Creation of first draft case (either HO or BR)
                 upsert newCase;
 
@@ -1484,6 +1526,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
             SYSTEM.DEBUG('Scope of Change: ' + newForm.Scope_of_Change__c);
 
+            if(agencyCodesConcerned.size()==0){
+                agencyCodesConcerned = getAgencyCodesConcerned();
+            }
+            
             if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
                 return null;
@@ -2671,6 +2717,7 @@ public without sharing class ISSP_AMS_Accreditation {
             saveAMSForm();
 
             if (!validateCharactersInForm() || !validateForm(true) ) {
+                isValError = true;
                 return null;
             }
 
@@ -2778,10 +2825,6 @@ public without sharing class ISSP_AMS_Accreditation {
         if (newForm.Branch_Office_Email__c != null) {
             accChanges_List.add(new AccountChanges('Email__c', accountConcerned.Email__c, newForm.Branch_Office_Email__c));
             accountConcerned.Email__c = newForm.Branch_Office_Email__c;
-        }
-        if (!isocountry.Prevent_Portal_Trade_Name_Change__c && newForm.Trade_Name__c != null) {
-            accChanges_List.add(new AccountChanges('TradeName__c', accountConcerned.TradeName__c, newForm.Trade_Name__c));
-            accountConcerned.TradeName__c = newForm.Trade_Name__c;
         }
 
         upsert accountConcerned;
@@ -3748,7 +3791,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, Country_ISO_Code__c
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
@@ -3763,7 +3806,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                             Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                             ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                             Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Country_ISO_Code__c
                                FROM Account
                                WHERE Id = :vAccountConcernedId
                                           LIMIT 1
@@ -4681,7 +4724,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     }
 
     public Void checkEligibilityForAChange() {
-        if ((sector == AMS_Utils.SECTOR_PASSENGER && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT)) ||
+        if ((sector == AMS_Utils.SECTOR_PASSENGER && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) || (isocountry.ISO_Code__c == 'CN' && con.Account.Category__c == 'Domestic Agent' && isocountry.ANG_Enable_NewGen__c)) ||
                 (sector == AMS_Utils.SECTOR_CARGO && (con.Account.Category__c == 'Non-IATA Cargo Agent' || con.Account.Category__c == 'IATA Cargo Agent' || con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == 'CASS Associates' || con.Account.Category__c == AMS_Utils.CATEGORY_COURIER || con.Account.Category__c == AMS_Utils.CATEGORY_IMPORT_AGENT)))
             isEligableForChange = true;
     }
@@ -5998,7 +6041,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
 
-                    if (cntIFAPContacts == 0 && newForm.Agent_Type__c != AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH) {
+                    if (cntIFAPContacts == 0 && newForm.Agent_Type__c != AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH && newForm.Local_Agent_Type__c != 'Domestic') {
                          ApexPages.Message myMsg;
                          myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Financial_Contact);
                          ApexPages.addMessage(myMsg);
@@ -7398,7 +7441,7 @@ system.debug('aqui sectorValue ' + sectorValue);
                 Position__c,RecordTypeId,Title__c,Valid__c,
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
-                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
+                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry, Contact__r.OtherState,
                 Legacy_External_ID__c
                 FROM AMS_Account_Role__c
                 where Account__c = :lAccountConcerned
@@ -7461,6 +7504,7 @@ system.debug('aqui sectorValue ' + sectorValue);
             auxAccreditCont.AddressCity__c = accRole.Contact__r.OtherCity;
             auxAccreditCont.AddressPostcode__c = accRole.Contact__r.OtherPostalCode;
             auxAccreditCont.AddressCountry__c = accRole.Contact__r.OtherCountry;
+            auxAccreditCont.AddressState__c = accRole.Contact__r.OtherState;
 
         }else
         //Check if owner is PERSON
@@ -7906,4 +7950,142 @@ system.debug('aqui sectorValue ' + sectorValue);
 
         return null;
     }
+
+    //Select Hierarchy
+
+    public Map<Id, HierarchyItem> hierarchy{
+		get{
+			if(hierarchy == null) {
+				hierarchy = new Map<Id, HierarchyItem>();
+				
+				List<Account> acc = getBranchList(false);
+				for(Account a : acc){
+					Boolean isSelected = false;
+					hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
+				}							
+			}
+			return hierarchy;
+		}
+		set;
+	}    
+
+    public Boolean selectAll{
+		get{
+			if(selectAll == null) selectAll = false;
+			return selectAll;
+		}
+		set;
+	}
+
+    public List<HierarchyItem> hierarchyValues{
+		get{
+			return hierarchy.values();
+		}
+	}
+
+	private Integer rowsPerPage = 100;
+
+    public Integer currentPage{
+        get{
+            if(currentPage == null){
+                currentPage = 0;
+            }
+            return currentPage;
+        }
+        set;
+    }
+    
+	public Integer totalPages{
+        get{
+            return hierarchyValuesForDisplay.size();
+        }
+    }
+    
+    public List<List<HierarchyItem>> hierarchyValuesForDisplay{
+        get{
+            if(hierarchyValuesForDisplay == null){
+                hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
+
+                // create as many sub-lists as necessary
+                for(Integer i = 0; i <= (hierarchy.values().size()-1)/rowsPerPage; i++){
+                    hierarchyValuesForDisplay.add(new List<HierarchyItem>());
+                }
+
+                // fill HierarchyItems in the sub-lists
+                Integer itemNumber = 0;
+                for(HierarchyItem item : hierarchy.values()){
+                    hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
+                }
+            }
+            System.debug(loggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
+            return hierarchyValuesForDisplay;
+        }
+        set;
+    }
+
+    // ***********************************
+	// ********** constructor ************
+	// ***********************************
+	/*public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
+		if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
+
+		oscarId = stdController.getId();
+		oscar = (AMS_OSCAR__c)stdController.getRecord();
+	}*/
+
+
+    // ***********************************
+	// *********** wrappers **************
+	// ***********************************
+	public class HierarchyItem{
+
+		public Account acc { get; set; }
+		public Boolean selected { get; set; }
+
+		public HierarchyItem(Account a, Boolean selected){
+			this.acc = a;
+			this.selected = selected;
+		}
+	}
+
+
+    // ***********************************
+	// ********* helper methods **********
+	// ***********************************
+
+	public void doSelectAll(){
+		for(HierarchyItem hi : hierarchyValues){
+            hi.selected = selectAll;
+		}
+	}
+
+    public Boolean getDisablePrevious() { 
+		//this will disable the previous and beginning buttons
+		return (currentPage <= 0);
+	}
+
+	public Boolean getDisableNext() { //this will disable the next and end buttons
+		return (currentPage >= hierarchyValuesForDisplay.size()-1);
+	}
+
+    public PageReference Beginning() { //user clicked beginning 
+		currentPage = 0;
+		return null;
+	}
+
+	public PageReference Previous() { //user clicked previous button
+		currentPage--;
+		return null;
+	}
+
+	public PageReference Next() { //user clicked next button
+		currentPage++;
+		return null;
+	}
+
+	public PageReference End() { //user clicked end
+		currentPage = hierarchyValuesForDisplay.size()-1;
+		return null;
+	}
+    
 }

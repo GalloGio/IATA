@@ -1,4 +1,4 @@
-global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable<sObject>, Schedulable{
+global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable<sObject>, Database.AllowsCallouts, Schedulable{
     
     private final String query = 'SELECT Id, ANG_Issued_Date__c, ANG_Expiration_Date__c, ANG_Event_Status__c, ANG_Expired__c, ANG_Limit_Cash_Conditions__c, ANG_Cash_Conditions_Activation_FF__c FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__r.Region_formula__c  IN :regionList AND ((ANG_Issued_Date__c <= TODAY AND ANG_Expiration_Date__c > TODAY AND ANG_Event_Status__c = :inactiveStatus) OR (ANG_Event_Status__c = :activeStatus AND (ANG_Expiration_Date__c <= TODAY OR (ANG_Cash_Conditions_Activation_FF__c <= TODAY AND ANG_Limit_Cash_Conditions__c = false))))';
     private final String inactiveStatus = ANG_Risk_Helper.STATUS_INACTIVE;
@@ -64,15 +64,17 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
                are.ANG_Expired__c = true;    
                are.ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE;
             }
-            if(are.ANG_Cash_Conditions_Activation_FF__c <= System.today() && are.ANG_Event_Status__c == ANG_Risk_Helper.STATUS_ACTIVE && !are.ANG_Limit_Cash_Conditions__c){
+
+            /*NEWGEN-4998 Fail Financial Statement Risk Event must not apply delayed cash conditions automatically*/
+            /*if(are.ANG_Cash_Conditions_Activation_FF__c <= System.today() && are.ANG_Event_Status__c == ANG_Risk_Helper.STATUS_ACTIVE && !are.ANG_Limit_Cash_Conditions__c){
                are.ANG_Limit_Cash_Conditions__c = true;
-            }
+            }*/
         }
         
         ANG_AccountTriggerHandler.isExpiration = true;
         try{
             //update scope;
-            RecordUpdater updater = new RecordUpdater(scope);
+            RecordUpdater updater = new RecordUpdater(scope, true);
             updater.schedule(System.now().addSeconds(2));
         }catch(Exception e){
             //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_ActivateDeactivateRiskEventsBatch', 'ANG_ActivateDeactivateRiskEventsBatch', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');

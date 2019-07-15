@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to track history of Accounts, stores the label and the API name of the field that has changed along with the old and new values</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -52,11 +53,14 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Related Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
+        <relationshipLabel>Account Tracking History</relationshipLabel>
         <relationshipName>Tracking_History</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
@@ -66,6 +70,7 @@
     </fields>
     <fields>
         <fullName>ApiName__c</fullName>
+        <description>API name of the filed that has changed</description>
         <externalId>false</externalId>
         <label>ApiName</label>
         <length>255</length>
@@ -76,7 +81,7 @@
     </fields>
     <fields>
         <fullName>New_Value__c</fullName>
-        <description>To see the new value</description>
+        <description>Stores the new value of the field</description>
         <externalId>false</externalId>
         <label>New Value</label>
         <length>32768</length>
@@ -86,7 +91,7 @@
     </fields>
     <fields>
         <fullName>Old_Value__c</fullName>
-        <description>To see the old value</description>
+        <description>Stores the old value of the field</description>
         <externalId>false</externalId>
         <label>Old Value</label>
         <length>32768</length>
@@ -96,6 +101,7 @@
     </fields>
     <fields>
         <fullName>What__c</fullName>
+        <description>Label of the field that has changed</description>
         <externalId>false</externalId>
         <label>What</label>
         <length>255</length>

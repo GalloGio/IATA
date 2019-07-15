@@ -240,7 +240,7 @@
                                         
                                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /><br/>
                                         
-                                <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent')}"/><br/><br/>
+                                <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent', AND(con.Account.Category__c == 'Domestic Agent', isoCountry.ISO_Code__c == 'CN'))}"/><br/><br/>
                             </div>
                                     
                             <div class="col-md-5">
@@ -300,13 +300,15 @@
                                 
                         <div class="row">
                             <div class="col-md-12" style="padding-bottom: 10px; display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
-                                <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}"/><br/>
+                                <apex:commandButton styleClass="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
+                                <div style="{!IF(!revCaseOpen, 'display:block', 'display:none')}">
+                                    <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
                                     
-                                <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
+                                    <apex:outputText id="otherChangesPax" rendered="{! namPaxAgent}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent}"/><br/><br/>
                                     
-                                <apex:outputText id="otherChangesPax" rendered="{! namPaxAgent}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent}"/><br/><br/>
-
-                                <apex:outputText id="minorChanges" escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
+                                    <apex:outputText id="minorChanges" escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>                                    
+                                </div>
+                                <apex:outputText id="revalCaseOpen" rendered="{! revCaseOpen}" escape="false" value="{!$Label.ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen}"/>
                             </div>
                         </div>
                     </section>
@@ -347,8 +349,8 @@
                             
                     </section>
                         
-                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
-                        <header>
+                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c)), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                        <header> 
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
                                 <strong>{!$Label.ISSP_AMS_Step0_Other_Forms}</strong>

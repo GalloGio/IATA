@@ -165,6 +165,78 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_CountrySAttr_Validation --></label>
+        <name>AMS_CountrySAttr_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Check --></label>
+        <name>AMS_DQ_Cannot_Check</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Find --></label>
+        <name>AMS_DQ_Cannot_Find</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Validate City --></label>
+        <name>AMS_DQ_Cannot_Validate_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <name>AMS_DQ_Cannot_Validate_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Check Addr --></label>
+        <name>AMS_DQ_Check_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ City Cumpulsory --></label>
+        <name>AMS_DQ_City_Cumpulsory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ City Not in Database --></label>
+        <name>AMS_DQ_City_Not_in_Database</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ City in Another Country --></label>
+        <name>AMS_DQ_City_in_Another_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ City in Another State --></label>
+        <name>AMS_DQ_City_in_Another_State</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Enter Valid City --></label>
+        <name>AMS_DQ_Enter_Valid_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Found Addr --></label>
+        <name>AMS_DQ_Found_Addr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Review City --></label>
+        <name>AMS_DQ_Review_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Review Country or City --></label>
+        <name>AMS_DQ_Review_Country_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Review State --></label>
+        <name>AMS_DQ_Review_State</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Review State or City --></label>
+        <name>AMS_DQ_Review_State_or_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS DQ Street Compulsory --></label>
+        <name>AMS_DQ_Street_Compulsory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS Due Diligence Lock --></label>
         <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
@@ -863,6 +935,10 @@
     <customLabels>
         <label>J’accepte</label>
         <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Apply to GDI button --></label>
+        <name>ANG_ISSP_GDI_Apply</name>
     </customLabels>
     <customLabels>
         <label>La liste des Institutions financières qui fournissent une Garantie financière dans votre pays</label>
@@ -1688,6 +1764,10 @@
         <name>CaseKPI2_RecordType</name>
     </customLabels>
     <customLabels>
+        <label><!-- CaseRTtrackedByCS --></label>
+        <name>CaseRTtrackedByCS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CaseTypeReason1List1 --></label>
         <name>CaseTypeReason1List1</name>
     </customLabels>
@@ -1702,6 +1782,10 @@
     <customLabels>
         <label><!-- CaseValidation - Area --></label>
         <name>CaseValidation_Area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseValidation - Area2 --></label>
+        <name>CaseValidation_Area2</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -7930,6 +8014,10 @@ and
         <name>ISSP_AMS_Contact_Name</name>
     </customLabels>
     <customLabels>
+        <label>Attention ! En copiant les données de propriété vers une agence, vous effacerez toutes les données de propriété existantes dans l’agence cible.</label>
+        <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>-- Choisir le pays -</label>
         <name>ISSP_AMS_Country_Select</name>
     </customLabels>
@@ -9719,6 +9807,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>Sélectionner les comptes cibles</label>
+        <name>ISSP_AMS_Select_Accounts</name>
+    </customLabels>
+    <customLabels>
         <label>* Filiales sélectionnées</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
@@ -9737,6 +9829,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
     <customLabels>
         <label><!-- ISSP_AMS_Signatory --></label>
         <name>ISSP_AMS_Signatory</name>
+    </customLabels>
+    <customLabels>
+        <label>Pays/Département</label>
+        <name>ISSP_AMS_State</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
@@ -10347,6 +10443,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
     <customLabels>
         <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted --></label>
         <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid --></label>
+        <name>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</name>
     </customLabels>
     <customLabels>
         <label>Adresse complète du siège social pour lequel la demande d&apos;approbation est réalisée</label>
@@ -11125,6 +11225,22 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
+        <label>Vérification...</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_CHECKING</name>
+    </customLabels>
+    <customLabels>
+        <label>Cette action vous permet de copier les données de propriété de ce compte vers les emplacements sélectionnés faisant partie de votre hiérarchie. Vous pourrez alors visualiser les modifications effectuées par cette action sur les agences cibles, uniquement après confirmation de la mise à jour de tous les détails de cette page.</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_HINT</name>
+    </customLabels>
+    <customLabels>
+        <label>Agences traitées</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</name>
+    </customLabels>
+    <customLabels>
+        <label>Copie des données de propriété en cours</label>
+        <name>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</name>
+    </customLabels>
+    <customLabels>
         <label>Cliquez ici pour poursuivre avec la conformité PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
@@ -11243,6 +11359,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
     <customLabels>
         <label><!-- Branch to Shipping --></label>
         <name>ISSP_ANG_Local_Details_Copy_Address2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Shipping same as Billing --></label>
+        <name>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_MODEL_A_ONBOARDING_TITLE --></label>
@@ -11435,6 +11555,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
     <customLabels>
         <label>Demander un Modèle de changement d’accréditation et/ou notifier l’IATA d’un changement d’adresse, de nom de l’entreprise, de statut juridique, de propriété/actionnariat.</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
     <customLabels>
         <label>ÉTAPE A - Confirmer les informations relatives à l’agence</label>
@@ -11934,6 +12058,10 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_Cargo_Agent_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Cargo --></label>
+        <name>ISSP_Cargo_Label_Value</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CaseCommentEmail --></label>
         <name>ISSP_CaseCommentEmail</name>
     </customLabels>
@@ -12087,6 +12215,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>Classé</label>
         <name>ISSP_ClosedIFAPCasesStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Closed_Non_Compliance --></label>
+        <name>ISSP_Closed_Non_Compliance</name>
     </customLabels>
     <customLabels>
         <label>Adresse</label>
@@ -13174,6 +13306,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_GSSA</name>
     </customLabels>
     <customLabels>
+        <label>En choisissant cette option, les fournisseurs du secteur tels que les compagnies aériennes, les hôtels et les voyagistes, pourront faire passer des messages importants à votre agence sur leurs produits, promotions, conditions de vente et d’agence.</label>
+        <name>ISSP_Gdp_Opt_In_Hint</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_GeneralPublicNotFound --></label>
         <name>ISSP_GeneralPublicNotFound</name>
     </customLabels>
@@ -14198,6 +14334,14 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_PAX_Validating_VAT_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating VAT Number 2 error --></label>
+        <name>ISSP_PAX_Validating_VAT_Number_2_error</name>
+    </customLabels>
+    <customLabels>
         <label><!-- c --></label>
         <name>ISSP_PAX_Validating_VAT_Number_error</name>
     </customLabels>
@@ -14959,8 +15103,16 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
+        <label>Les modifications, à l’exception du GDP Opt-in, sont à effectuer le cadre du processus annuel de revalidation (Annual Revalidation Process)</label>
+        <name>ISSP_Rev_Case_Open_Acc_Info</name>
+    </customLabels>
+    <customLabels>
         <label>-- Choisir le pays -</label>
         <name>ISSP_SELECT_COUNTRY</name>
+    </customLabels>
+    <customLabels>
+        <label>- Sélectionner le pays -</label>
+        <name>ISSP_SELECT_STATE</name>
     </customLabels>
     <customLabels>
         <label>2 ou plus</label>
@@ -19535,7 +19687,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>AMS_GDP_Synchronizer</name>
     </customTabs>
     <customTabs>
-        <label><!-- AMS PCI Compliant Mass Oscar Creation --></label>
+        <label><!-- OSCAR mass action --></label>
         <name>AMS_PCI_Compliant_Mass_Oscar_Creation</name>
     </customTabs>
     <customTabs>

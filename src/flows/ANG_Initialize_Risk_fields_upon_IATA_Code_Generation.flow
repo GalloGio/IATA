@@ -267,7 +267,7 @@ ISCHANGED({!myVariable_old.ANG_Accreditation_Model__c}) &amp;&amp; TEXT(PRIORVAL
         <object>Account</object>
     </recordUpdates>
     <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

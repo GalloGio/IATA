@@ -52,6 +52,132 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_CountrySAttr_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
+        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Check</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Check</shortDescription>
+        <value>We are not able to check the address in the specified location.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Find</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Find</shortDescription>
+        <value>We could not find that address. If you are sure that your input is correct, you can still submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Validate_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Validate City</shortDescription>
+        <value>We cannot validate address without a {0} city.Please fill in the field.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Validate_City_and_Street</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Validate City and Street</shortDescription>
+        <value>We cannot validate address without a {0} city and street. Please fill in the field.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Cannot_Validate_Street</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Cannot Validate Street</shortDescription>
+        <value>We cannot validate address without a {0} street. Please fill in the field.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Check_Addr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Check Addr</shortDescription>
+        <value>Check Address</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_City_Cumpulsory</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ City Cumpulsory</shortDescription>
+        <value>The {0} city is compulsory. Please fill in the {1} city field.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_City_Not_in_Database</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ City Not in Database</shortDescription>
+        <value>The city {0} is not in our database (or it was spelled differently).</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_City_in_Another_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ City in Another Country</shortDescription>
+        <value>The city {0} is in our database but apparently it belongs to another country according to our database.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_City_in_Another_State</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ City in Another State</shortDescription>
+        <value>The city {0} is in our database but it is associated with another State/Province.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Enter_Valid_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Enter Valid City</shortDescription>
+        <value>Enter a valid city.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Found_Addr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Found Addr</shortDescription>
+        <value>Matching address(es) was(were) found.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Review_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Review City</shortDescription>
+        <value>Review the city name. If you are sure that your input is correct, click submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Review_Country_or_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Review Country or City</shortDescription>
+        <value>Review the country and/or city name(s). If you are sure that your input is correct, click submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Review_State</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Review State</shortDescription>
+        <value>Review state/province and/or city name.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Review_State_or_City</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Review State or City</shortDescription>
+        <value>Review the state/province and/or the city name. If you are sure that your input is correct, click submit.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_DQ_Street_Compulsory</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ Street Compulsory</shortDescription>
+        <value>The {0} street is compulsory. Please fill in the {1} street field.</value>
+    </labels>
+    <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1075,6 +1201,14 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>Annual Fees :</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ASD_HelpText</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ASD_HelpText</shortDescription>
+        <value>Please access ASD to view more details on the Remittance Holding Capacity</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_AssociateEntity</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -1357,6 +1491,13 @@ IATA Customer Service</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_GDI_Agreement</shortDescription>
         <value>I agree</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Apply</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Apply to GDI button</shortDescription>
+        <value>Apply Online to GDI</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_GDI_Breadcrumb</fullName>
@@ -1766,6 +1907,14 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductComparisonFeature10Tooltip</shortDescription>
         <value>Feature 10 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature11</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature11</shortDescription>
+        <value>BOP</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
@@ -2397,7 +2546,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AddressDoctorValidate</shortDescription>
-        <value>Please validate your billing and shipping addresses by clicking on the &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D5E0000008wRK&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; button</value>
+        <value>Please check your billing and shipping addresses by clicking on the check address button</value>
     </labels>
     <labels>
         <fullName>AddressDoctorValidate2</fullName>
@@ -2968,6 +3117,13 @@ Payment required on receipt of this Payment Advice
         <value>ProcessEuropeSCE;ID_Card_Application;OSCAR_Communication</value>
     </labels>
     <labels>
+        <fullName>CaseRTtrackedByCS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseRTtrackedByCS</shortDescription>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global,ComplaintIDFS</value>
+    </labels>
+    <labels>
         <fullName>CaseTypeReason1List1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2997,6 +3153,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees</value>
     </labels>
     <labels>
+        <fullName>CaseValidation_Area2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseValidation - Area2</shortDescription>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),	IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,	Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,	Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning</value>
+    </labels>
+    <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3008,7 +3171,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Reason</shortDescription>
-        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query,Task request</value>
+        <value>Airline data changes,Airline joining,Airline leaving,Airline participation/details,Airline suspension,Fees,Billing data update request,Central Billing,Credit Note request,Invoice information query,Amount to be paid by agents,Amount to be paid by airline,Amount to be paid to agents,Deduction/recovery issue,Dispute,Proof of Payment (IN),Remittance related query,Settlement related query,Task request,SIS for agents,SIS general support</value>
     </labels>
     <labels>
         <fullName>CaseValidation_RecordType</fullName>
@@ -14628,6 +14791,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Contact Name</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Copy_Ownership_Warning</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Copy Ownership Warning</shortDescription>
+        <value>Attention! By copying ownership information to an Agency you will delete any existing ownership information on the target Agency.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Country_Select</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18058,6 +18229,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Section 2.2</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Select_Accounts</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Select Accounts</shortDescription>
+        <value>Select Target Accounts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Selected_Associate_Entities</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18092,6 +18271,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Signatory</shortDescription>
         <value>Signatory:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_State</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS State</shortDescription>
+        <value>State/Province</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_State_Names_Addresses_Field_Label</fullName>
@@ -19278,6 +19464,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_ErrMsg_Time_Devoted</shortDescription>
         <value>Please enter the % of time devoted to Agency Business</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_ErrMsg_Time_Devoted_Invalid</shortDescription>
+        <value>Please enter a value between 0 and 100 on the % of time devoted to Agency Business</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_HO_Full_Address</fullName>
@@ -20753,6 +20946,38 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Specific Sales Activity (SA)</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_CHECKING</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_CHECKING</shortDescription>
+        <value>Checking...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_HINT</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG COPY OWNERSHIP HINT</shortDescription>
+        <value>This action allows you to copy the ownership details from this account into the chosen locations belonging to your hierarchy. You will be able to visualize the changes applied by this action on the target agencies, only after Confirming Update of all the details of this page.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_PROCESSED</shortDescription>
+        <value>Agencies processed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_COPY_OWNERSHIP_PROGRESS</shortDescription>
+        <value>Copy Ownership Progress</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Click_Here_PCI</fullName>
         <categories>ISSP, Portal, ANG</categories>
         <language>en_US</language>
@@ -20982,6 +21207,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>Branch to Shipping</shortDescription>
         <value>Copy Billing Address to Shipping Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Local_Details_Shipping_Same_As_Billing</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shipping same as Billing</shortDescription>
+        <value>Shipping address is same as Billing address</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_MODEL_A_ONBOARDING_TITLE</fullName>
@@ -21251,7 +21484,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_ProdCompAnnualFees</shortDescription>
-        <value>Annual fees for 2018</value>
+        <value>Annual fees for YYYY</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_ProdCompCostTooltip</fullName>
@@ -21346,6 +21579,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
         <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Step0 Other Changes Msg RevCaseOpen</shortDescription>
+        <value>Changes should be made through Annual Revalidation process</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step1_ANNUAL_REV</fullName>
@@ -22321,6 +22562,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Cargo Agent / IFACP Forwarder</value>
     </labels>
     <labels>
+        <fullName>ISSP_Cargo_Label_Value</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Cargo</shortDescription>
+        <value>Freight Forwarder</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CaseCommentEmail</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -22621,6 +22869,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_ClosedIFAPCasesStatus</shortDescription>
         <value>Closed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Closed_Non_Compliance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Closed_Non_Compliance</shortDescription>
+        <value>Closed - Non Compliance</value>
     </labels>
     <labels>
         <fullName>ISSP_CompanyAddressInformation</fullName>
@@ -24738,6 +24993,14 @@ Please add below all your company valid email domains, including different ones 
         <value>General Sales and Service Agent</value>
     </labels>
     <labels>
+        <fullName>ISSP_Gdp_Opt_In_Hint</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Gdp Opt In Hint</shortDescription>
+        <value>By opting-in, Industry suppliers like airlines, hotels and tour operators will be able to circulate important messages to your agency about their products, promotions, sales and agency policies.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_GeneralPublicNotFound</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
@@ -26775,6 +27038,21 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Validating VAT number...</value>
     </labels>
     <labels>
+        <fullName>ISSP_PAX_Validating_VAT_Number_2</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Validating VAT Number 2</shortDescription>
+        <value>Validating VAT number 2...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PAX_Validating_VAT_Number_2_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP PAX Validating VAT Number 2 error</shortDescription>
+        <value>Invalid VAT Number 2</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PAX_Validating_VAT_Number_error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -27502,6 +27780,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP RHC HUB AFP Cash</shortDescription>
         <value>Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_RHC_HUB_AFP_China</fullName>
+        <categories>ISSP,RHC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP RHC HUB AFP China</shortDescription>
+        <value>Authorized Forms of Payment</value>
     </labels>
     <labels>
         <fullName>ISSP_RHC_HUB_AFP_Credit_Card</fullName>
@@ -28246,12 +28532,27 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Return to case</value>
     </labels>
     <labels>
+        <fullName>ISSP_Rev_Case_Open_Acc_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Rev Case Open Acc Info</shortDescription>
+        <value>Changes, except for GDP Opt-in, should be made through Annual Revalidation process</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SELECT_COUNTRY</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SELECT COUNTRY</shortDescription>
         <value>- Select Country -</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SELECT_STATE</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SELECT_STATE</shortDescription>
+        <value>- Select State -</value>
     </labels>
     <labels>
         <fullName>ISSP_SELECT_THREE_or_MORE</fullName>
@@ -30232,7 +30533,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
-        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c</value>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,TACT__c,Weblink__c,NDClink__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
@@ -33559,7 +33860,7 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
-        <value>http://www.iata.org/Pages/NDCMatchmaker.aspx</value>
+        <value>https://www.iata.org/whatwedo/airline-distribution/ndc/Pages/matchmaker.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_NDCMM_Terms_Of_Use_Link</fullName>

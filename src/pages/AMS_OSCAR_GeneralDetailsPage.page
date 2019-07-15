@@ -275,22 +275,22 @@
             });
         });
 
-        function remittanceFrequencyChange() {
-            if(!{!isNewAE}){
+       function remittanceFrequencyChange() {
+            if(!({!isNewAE})||{!rfPerState}){
                 $('[id$=saveButton]')[0].style.display = '';
                 $('[id$=cancelButton]')[0].style.display = '';
-            }
+            }   
         }
 
         function showMultiPick() {
-            if(!{!isNewAE}){
+            if(!({!isNewAE})||{!rfPerState}){
                 $('[id$=multipick]')[0].style.display = '';
                 $('[id$=mRFLabel]')[0].style.display = 'none';
             }
         }
 
         function showCPickList() {
-            if(!{!isNewAE}){
+            if(!({!isNewAE})||{!rfPerState}){
                 $('[id$=cPicklist]')[0].style.display = '';
                 $('[id$=outputRF]')[0].style.display = 'none';
             }

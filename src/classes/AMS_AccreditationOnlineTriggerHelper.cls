@@ -85,6 +85,7 @@ public class AMS_AccreditationOnlineTriggerHelper {
         }
 
         if(!needToPopulateState) {
+            validateRF(newList);
             return;
         }
 
@@ -110,8 +111,10 @@ public class AMS_AccreditationOnlineTriggerHelper {
         }
         system.debug('[AccreditationTriggerHelper] lstInvolvedISOCountriesIds: ' + lstInvolvedISOCountriesIds);
 
-        if (lstInvolvedISOCountriesIds.isEmpty())
+        if (lstInvolvedISOCountriesIds.isEmpty()) {
+            validateRF(newList);
             return;
+        }
 
         map<Id, IATA_ISO_Country__c> mapCountriesPerId = csw.mapIsoCountries;
 
@@ -130,6 +133,28 @@ public class AMS_AccreditationOnlineTriggerHelper {
                     accForm.IATA_ISO_State__c = mapIsoStatesPerCodeKey.get(mapCountriesPerId.get(accForm.Branch_Office_Country__c).ISO_Code__c + '-' + mapCountriesPerId.get(accForm.Branch_Office_Country__c).AMS_Default_State__c);
                     system.debug('[AccreditationTriggerHelper] setting value for form ');
                 }
+        }
+        validateRF(newList);
+    }
+
+    public static void validateRF(list<AMS_Pax_Accreditation_Form__c> newList) {
+        List<String> stateIdList = new List<String>();
+        Map<String, ANG_BSP_Attributes__c> bspPerState = new Map<String, ANG_BSP_Attributes__c>();
+        for(AMS_Pax_Accreditation_Form__c form : newList) {
+            stateIdList.add(form.IATA_ISO_State__c);
+        }
+        for(ANG_BSP_Attributes__c issOp : [SELECT Id, ISO_State__c, Class_Type__c, BSP__r.Remittance_Frequency_per_State__c, Remittance_Frequency__c 
+                                           FROM ANG_BSP_Attributes__c 
+                                           WHERE ISO_State__c =: stateIdList
+                                           AND RecordType.DeveloperName = 'Remittance_Frequency']) {
+                                               bspPerState.put(issOp.ISO_State__c + issOp.Class_Type__c, issOp);
+                                           }
+        
+        for(AMS_Pax_Accreditation_Form__c form : newList) {
+            ANG_BSP_Attributes__c bsp = bspPerState.get(form.IATA_ISO_State__c + form.Location_Class__c);
+            if(bsp != null && bsp.BSP__r.Remittance_Frequency_per_State__c == True && bsp.Class_Type__c == form.Location_Class__c && bsp.Remittance_Frequency__c != form.Remittance_Frequency__c) {
+                form.Remittance_frequency__c = '';
+            }
         }
     }
 
