@@ -26,7 +26,36 @@ public static List<PortalLookupSearchResult> searchAccounts(String searchTerm) {
 
 //Dynamic Query to perform searches on the Account.
 private static List<Account> searchRelatedAccounts(String searchTerm) {
-	//prepare query
+//prepare query
+
+	Account currentAccount = [
+		Select id, Name, IATAcode__c,
+		ParentId,
+		Parent.ParentId,
+		Parent.Parent.ParentId,
+		Parent.Parent.Parent.ParentId,
+		Parent.Parent.Parent.Parent.ParentId
+		From Account
+		Where id = :USER.Contact.AccountId
+	];
+
+// find the top parent
+	Id parentId = null;
+	if (currentAccount.ParentId == null ) {
+		parentId = currentAccount.Id;
+	} else if (currentAccount.Parent.ParentId == null ) {
+		parentId = currentAccount.ParentId;
+	} else if (currentAccount.Parent.Parent.ParentId == null ) {
+		parentId = currentAccount.Parent.ParentId;
+	} else if (currentAccount.Parent.Parent.Parent.ParentId == null ) {
+		parentId = currentAccount.Parent.Parent.ParentId;
+	} else if (currentAccount.Parent.Parent.Parent.Parent.ParentId == null ) {
+		parentId = currentAccount.Parent.Parent.Parent.ParentId;
+	} else {
+		parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
+	}
+
+
 	String finalQuery = 'SELECT ID, IATAcode__c, Name, BillingCity FROM Account '
 	                    + 'WHERE IATAcode__c != null ';
 
@@ -34,7 +63,13 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 		finalQuery += ' AND ( IATAcode__c LIKE  \'%' + String.escapeSingleQuotes(searchTerm)
 		              + '%\' OR BillingCity LIKE \'%' + String.escapeSingleQuotes(searchTerm)
 		              + '%\' OR Name LIKE \'%' + String.escapeSingleQuotes(searchTerm)
-		              + '%\') ';
+		              + '%\') '
+		              + ' AND (Id = \'' + String.escapeSingleQuotes(parentId)
+		              + '\' OR ParentId = \'' + String.escapeSingleQuotes(parentId)
+		              + '\' OR Parent.ParentId = \'' + String.escapeSingleQuotes(parentId)
+		              + '\' OR Parent.Parent.ParentId = \'' + String.escapeSingleQuotes(parentId)
+		              + '\' OR Parent.Parent.Parent.ParentId = \'' + String.escapeSingleQuotes(parentId)
+		              + '\' OR Parent.Parent.Parent.Parent.ParentId = \'' + String.escapeSingleQuotes(parentId) + '\')';
 	}
 
 	finalQuery += ' LIMIT ' + MAX_RESULTS;
