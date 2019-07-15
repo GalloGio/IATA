@@ -36,10 +36,11 @@ public with sharing class PortalNewsController {
     private static void populateVariables() {
         String UserPortalStatus;
         String UserPortalAccountSector;
+        String UserPortalAccountCategory;
         String soql;
-        String TodayInstance = String.valueOf(Date.today());  
+        Date TodayInstance = Date.today();
         Contact PortalContact = [
-            SELECT User_Portal_Status__c, Account.Sector__c, 
+            SELECT User_Portal_Status__c, Account.Sector__c, Account.Category__c,
                 Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c 
             FROM Contact 
             WHERE Id = :[SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId
@@ -51,21 +52,28 @@ public with sharing class PortalNewsController {
         UserPortalCountry = String.isNotEmpty(PortalContact.Account.IATA_ISO_Country__r.Name) ? PortalContact.Account.IATA_ISO_Country__r.Name : 'NoCountryValue';
         UserPortalRegion = String.isNotEmpty(PortalContact.Account.IATA_ISO_Country__r.Region__c) ? PortalContact.Account.IATA_ISO_Country__r.Region__c : 'NoRegionValue';
         UserPortalAccountSector = String.isNotEmpty(PortalContact.Account.Sector__c) ? PortalContact.Account.Sector__c : 'NoSectorValue';
+        UserPortalAccountCategory = String.isNotEmpty(PortalContact.Account.Category__c) ? PortalContact.Account.Category__c : 'NoCategoryValue';
 
         System.debug('____ [cls PortalNewsController - populateVariables] UserPortalCountry / UserPortalRegion - ' + UserPortalCountry + ' / ' + UserPortalRegion);
 
-        soql =  'SELECT Id, Country__c, Publication_end_date__c, Publication_start_date__c, Sector__c, Status__c, User_portal_Status__c, Background_image_url_link__c, Background_image_url_link_target__c '+
-                'FROM ISSP_Banner__c '+
-                'WHERE Status__c = \'Active\''+
-                ' AND Publication_start_date__c < ' + TodayInstance +
-                ' AND Publication_end_date__c > ' + TodayInstance +
-                ' AND User_portal_Status__c INCLUDES (\'' + String.escapeSingleQuotes(UserPortalStatus) + '\')' +
-                ' AND Sector__c INCLUDES (\'' + String.escapeSingleQuotes(UserPortalAccountSector) + '\')' +
-                ' AND Name != \'Ban-001\'';
+        unFilteredBanner_List = new List<ISSP_Banner__c>();
+        //get visible banner records
+        for(ISSP_Banner_Visibility__c bannerVis : [SELECT ISSP_Banner__r.Id ,ISSP_Banner__r.Country__c ,ISSP_Banner__r.Publication_end_date__c
+                ,ISSP_Banner__r.Publication_start_date__c ,ISSP_Banner__r.Status__c, ISSP_Banner__r.Background_image_url_link__c, ISSP_Banner__r.Background_image_url_link_target__c
+        FROM ISSP_Banner_Visibility__c
+        WHERE ((Sector__c = :UserPortalAccountSector AND Category__c INCLUDES (:UserPortalAccountCategory))
+        OR (Sector__c  = 'ALL' AND  Category__c INCLUDES ('ALL')))
+        AND ISSP_Banner__r.Status__c  = 'Active'
+        AND ISSP_Banner__r.Publication_start_date__c < :TodayInstance
+        AND ISSP_Banner__r.Publication_end_date__c > :TodayInstance
+        AND ISSP_Banner__r.User_portal_Status__c INCLUDES (:String.escapeSingleQuotes(UserPortalStatus))
+        AND ISSP_Banner__r.Name != 'Ban-001'
+        ORDER BY ISSP_Banner__r.Publication_start_date__c DESC
+        LIMIT 8]){
 
-        System.debug(LoggingLevel.FINE, '____ [cls PortalNewsController - populateVariables] soql - ' + soql);
+            unFilteredBanner_List.add(bannerVis.ISSP_Banner__r);
+        }
 
-        unFilteredBanner_List = Database.query(soql + ' ORDER BY Publication_start_date__c DESC LIMIT 8');
         System.debug('____ [cls PortalNewsController - populateVariables] unFilteredBanner_List - ' + unFilteredBanner_List.size() + ' record(s) - ' + unFilteredBanner_List);
 
         Banners_List = new List<ISSP_Banner__c>();
@@ -151,14 +159,14 @@ public with sharing class PortalNewsController {
 	private static void createWrapperContent() {
         Map<Id, Id> bannerContent;
         Set<Id> bannersId = new Set<Id>();
-        wrapperBanItem_List = new List<WrapperBanner>();
-        
+
         for(ISSP_Banner__c ban :Banners_List) {
            bannersId.add(ban.Id);
         }
 
         if(!bannersId.isEmpty()) {
             bannerContent = new Map<Id, Id>();
+            wrapperBanItem_List = new List<WrapperBanner>();
 
             getPictures(bannersId, bannerContent);
 
