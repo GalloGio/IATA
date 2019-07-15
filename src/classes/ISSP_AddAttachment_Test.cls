@@ -74,6 +74,11 @@ private class ISSP_AddAttachment_Test {
         System.runAs(newUser) {
             Apexpages.currentPage().getParameters().put('Caseid', newcase.Id);
             ISSP_AddAttachment controller = new ISSP_AddAttachment();
+            Attachment att= new Attachment(
+                name='attTest',
+                body=Blob.valueOf('Test')
+            );
+            controller.attachment=att;
             controller.upload();
             controller.vAccountConcerned = parent.Id;        
             controller.getNoNSAOffices();
