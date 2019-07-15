@@ -59,7 +59,7 @@ public  class PortalCalendarCtrlTest {
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
         contact.LastName = 'test';
-        contact.Email = 'test@email.com';
+        contact.Email = System.now().millisecond() + 'test@email.com';
         insert contact;
         contact.Account = account;
         
