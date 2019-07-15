@@ -42,11 +42,7 @@ public with sharing class clsDataCategoryContainer {
                     if(CSP_Utils.CSPortalRedirectExists()){                        
                         list<DataCategory> childCategories2ndLevel = oneChildCat.getChildCategories();
                         for(DataCategory oneChildCateg: childCategories2ndLevel){
-                            lst_DataCategories.add(new clsDataCategory(oneResult.name
-                                                                       ,oneResult.label    
-                                                                       ,oneChildCateg.getName()
-                                                                       ,oneChildCateg.getLabel()
-                                                                       ,oneChildCateg.getChildCategories()));   
+                            lst_DataCategories.add(new clsDataCategory(oneResult.name,oneResult.label,oneChildCateg.getName(),oneChildCateg.getLabel(),oneChildCateg.getChildCategories()));   
                         }   
                     }else{                      
                         lst_DataCategories.add(new clsDataCategory(oneResult.name
