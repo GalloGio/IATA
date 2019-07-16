@@ -69,7 +69,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 				}else{
 					for(Financial_Security__c fs:triggerNew){	
 						if(Trigger.isUpdate && fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c && fs.Account__c == oldMap.get(fs.id).Account__c 
-							&& fs.ANG_Minimum_Financial_Security__c == oldMap.get(fs.id).ANG_Minimum_Financial_Security__c && fs.ANG_Financial_Security_Currency__c == oldMap.get(fs.id).ANG_Financial_Security_Currency__c && !ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)) continue;
+							&& fs.ANG_Minimum_Financial_Security__c == oldMap.get(fs.id).ANG_Minimum_Financial_Security__c && fs.ANG_Financial_Security_Currency__c == oldMap.get(fs.id).ANG_Financial_Security_Currency__c) continue;
 							accIdSet.add(fs.Account__c);
 					}
 				}							
