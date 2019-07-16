@@ -23875,6 +23875,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Change User Portal Status</value>
     </labels>
     <labels>
+        <fullName>ISSP_Contact_About_IATA_Courses</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Contact About IATA Courses</shortDescription>
+        <value>Are you contacting us concerning IATA courses?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Change_Bank</fullName>
         <categories>ISSP, Portal</categories>
         <language>en_US</language>
@@ -25497,6 +25504,20 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_EnterValidString</shortDescription>
         <value>Please enter a string with only Latin characters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Enter_Company_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Enter Company Name</shortDescription>
+        <value>If above is insufficient to identify your account, please also provide your Company Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Enter_IATA_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Enter IATA Code</shortDescription>
+        <value>Enter your Company&apos;s IATA Code(s)</value>
     </labels>
     <labels>
         <fullName>ISSP_Enter_Value</fullName>
@@ -30904,6 +30925,13 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <value>user status has been changed to Inactive by one of your Portal Administrators</value>
     </labels>
     <labels>
+        <fullName>ISSP_Street</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Street</shortDescription>
+        <value>Street</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Sub_Type</fullName>
         <categories>ISSP, FAQ</categories>
         <language>en_US</language>
@@ -34076,6 +34104,30 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_Create an account</shortDescription>
         <value>Registration Process</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CSP_Terms_Of_Use_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
+        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CSP_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CSP_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CSP_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CSP_Troubleshooting_Link</shortDescription>
+        <value>https://portal.iata.org/faq/articles/en_US/FAQ/Customer-Portal-Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_EligibleExistingUserError</fullName>
