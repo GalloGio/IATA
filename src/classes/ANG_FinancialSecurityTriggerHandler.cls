@@ -43,7 +43,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	public Map<Id, Financial_Security__c> newMap = (Map<Id,Financial_Security__c>) Trigger.newMap;
 	public Map<Id, Financial_Security__c> oldMap = (Map<Id,Financial_Security__c>) Trigger.oldMap;
 
-	private static Set<String> newgenLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.AE};
+	private static Set<String> newgenLocationTypes = new Set<String>{AMS_Utils.GE, AMS_Utils.HE, AMS_Utils.AE};
 
 	private Map<string, ANG_RHC_Information__c> map2Insert {
 		get{
