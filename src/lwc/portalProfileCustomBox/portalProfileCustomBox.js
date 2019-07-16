@@ -19,6 +19,8 @@ import Agent_Credit_Risk from '@salesforce/label/c.CSP_cpcc_Agent_Credit_Risk';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import completeField from '@salesforce/label/c.CSP_Create_Contact_Complete_Field';
 import ICCS_Account_Name_Label from '@salesforce/label/c.ICCS_Account_Name_Label';
+import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
+
 
 
 
@@ -74,7 +76,8 @@ export default class PortalProfileCustomBox extends LightningElement {
         Agent_Credit_Risk,
         InvalidValue,
         completeField,
-        ICCS_Account_Name_Label
+        ICCS_Account_Name_Label,
+        CSP_Error_Message_Mandatory_Fields_Contact
     };
 
     get labels() {
@@ -89,7 +92,11 @@ export default class PortalProfileCustomBox extends LightningElement {
     @track errorfieldsHasError = false;
 
     @track accountList = [];
-    @track accountSelected;
+    @track accountSelected = '';
+
+    @track hasError = false;
+
+    @track workingAreasStyle = 'workingAreasRemoveError';
 
     // LABEL
     @track contactTypeStatus = [{ checked: false, label: this.labels.Portal_Administrator, APINAME: "PortalAdmin" },
@@ -193,6 +200,7 @@ export default class PortalProfileCustomBox extends LightningElement {
     }
 
     handleSubmit(event) {
+        this.hasError = false;
         this.isLoading = true;
         event.preventDefault();
         let fields = event.detail.fields;
@@ -202,6 +210,24 @@ export default class PortalProfileCustomBox extends LightningElement {
         selectedV.forEach(function (item) {
             selected += item + ';';
         });
+
+        let workingAreaCheck = true;
+        if (selected.length > 0) {
+            this.template.querySelector('.workingAreas').classList.remove('workingAreasError');
+
+            let inputs = this.template.querySelectorAll('.workingAreasChangeOnError');
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].classList.remove('errorOnCheckBox');
+            }
+            workingAreaCheck = false;
+        } else {
+            this.template.querySelector('.workingAreas').classList.add('workingAreasError');
+            
+            let inputs = this.template.querySelectorAll('.workingAreasChangeOnError');
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].classList.add('errorOnCheckBox');
+            }
+        }
 
         let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
 
@@ -224,10 +250,22 @@ export default class PortalProfileCustomBox extends LightningElement {
         let numberError = this.numberHasError;
         let fieldError = this.errorfieldsHasError;
 
-        this.canSave = (numberError || fieldError ? false : true);
+        let accountCheck = true;
+        let accountSelected = this.accountSelected;
+        if (accountSelected.length > 0) {
+            accountCheck = false;
+        } else {
+            accountCheck = true;
+            this.template.querySelector('.AccountName').classList.add('slds-has-error');
+        }
+
+        this.canSave = (numberError || fieldError || accountCheck || workingAreaCheck ? false : true);
 
         if (this.canSave) {
             this.template.querySelector('lightning-record-edit-form').submit(fields);
+        } else {
+            this.isLoading = false;
+            this.hasError = true;
         }
 
     }
@@ -246,6 +284,9 @@ export default class PortalProfileCustomBox extends LightningElement {
                     this.dispatchEvent(new CustomEvent('closemodalwithsuccess'));
                 });
 
+            } else {
+                this.isLoading = false;
+                this.dispatchEvent(new CustomEvent('closemodalwithsuccess'));
             }
 
         });
@@ -303,7 +344,7 @@ export default class PortalProfileCustomBox extends LightningElement {
         let isNumberType = JSON.parse(JSON.stringify(this.checkNumbers));
         let isNumberError = false;
         let errorMessage = '';
-        
+
         let phoneRegex = /[^0-9()+-]|(?!^)\+/g;
 
         if (isNumberType.includes(currentField)) {
