@@ -79,7 +79,7 @@ public without sharing class OneIdLightningLoginFormController {
 
                 //sometimes, javascript from component is passing "undefined". Must be interpreted as NULL
                 // redirect to landing vfp replaced by direct community access
-                /*if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
+                if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
 
                     //if login is from mobileApp we do not redirect
                     if(startUrl != 'mobileApp') pageLink = startUrl;
@@ -94,8 +94,8 @@ public without sharing class OneIdLightningLoginFormController {
                     //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
                     //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
                     pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
-                }*/
-                
+                }
+        
             
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
@@ -130,14 +130,16 @@ public without sharing class OneIdLightningLoginFormController {
 
             if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                 mode=OneIdUtils.Mode.ISSP;
+                pageLink=OneIdUtils.getCommunityRedirection(mode,startUrl);
             }
 
             if( String.isNotBlank(serviceName) && serviceName == 'CSP'){
                 mode=OneIdUtils.Mode.CSP;
+                pageLink=OneIdUtils.getCommunityRedirection(mode,startUrl);
             }
 
             //login in siteCompleteUrl
-            ApexPages.PageReference lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(mode,startUrl));
+            ApexPages.PageReference lgn = Site.login(username, password, pageLink);
 
             system.debug('page reference return from login: '+lgn);
                         
@@ -155,15 +157,15 @@ public without sharing class OneIdLightningLoginFormController {
 
             //Check user permissions for FAQs, reassign if needed
             try{
-                PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
+            PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
             }catch(Exception e){
                 System.debug('Unable to validate FAQs permissions assignments. \n'+e);
             }
-
+            
             //redirect to startUrl or some other page returned from the login 
             //for different login cases scenarios
             aura.redirect(lgn);
-
+            
             //return null in case of login success
             return null;
         }
