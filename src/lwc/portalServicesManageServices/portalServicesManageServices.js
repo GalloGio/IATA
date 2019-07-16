@@ -30,6 +30,16 @@ import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults
 import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
+import confirm from '@salesforce/label/c.ISSP_Confirm';
+import cancel from '@salesforce/label/c.CSP_Cancel';
+import addUsers from '@salesforce/label/c.CSP_Add_User';
+import newProfile from '@salesforce/label/c.CSP_NewContactProfile';
+import newProfileMessage from '@salesforce/label/c.CSP_NewServiceUserMessage';
+import addNewUser from '@salesforce/label/c.CSP_Add_New_User';
+
+
+
+
 
 //import apex methods
 import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
@@ -74,7 +84,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         CSP_Search_NoResults_text2,
         cancelAccessMsg,
         cancelAccessTitle,
-        searchContactPlaceholder
+        searchContactPlaceholder,
+        confirm,
+        cancel,
+        addUsers,
+        newProfile,
+        newProfileMessage,
+        addNewUser
     };
 
     //links for images
@@ -120,6 +136,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     
     
     @track contactTableColums = [];
+    @track contactsToAddColumns = [];
     @track showConfirmPopup = false;
     @track popupTitle = '';
     @track popupMsg = '';
@@ -132,8 +149,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track showAddUserModal = false;
     @track availableContacts = [];
     @track contactsToAdd = [];
+    @track grantingAccess = false;
 
     
+
 
     serviceDetailsResult; // wire result holder
 
@@ -150,9 +169,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.contactTableColums = [
             { label: 'User', fieldName: 'contactName', type: 'text' },
             { label: 'Email', fieldName: 'emailAddress', type: 'text' },
-            { label: 'IATA Code Location', fieldName: 'iataCodeLoc', type: 'text' },
+            { label: 'Location IATA Code', fieldName: 'iataCodeLoc', type: 'text' },
             { label: 'Status', fieldName: 'serviceRight', type: 'text' },
             { type: 'action',typeAttributes: { iconName: 'utility:delete',disabled:true,  rowActions: this.getRowActions } }
+        ];
+
+        this.contactsToAddColumns = [
+            { label: 'User', fieldName: 'title', type: 'text' },
+            { label: 'Email', fieldName: 'subtitle', type: 'text' },
+            { label: 'Location IATA Code', fieldName: 'iataCodeLocation', type: 'text' },
+            { label: 'Status', fieldName: 'status', type: 'text' },
+            { label:'',type: 'button',initialWidth:35, typeAttributes:{ label: '',variant:"base", title: 'Remove', name: 'removeContact', iconName: 'utility:delete'}}
         ];
 
 
@@ -525,7 +552,15 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     get noResultsFound(){
         return this.searchMode && this.contactList.length ==0;
-    } 
+    }
+
+    get noContactsToAdd(){
+        return this.contactsToAdd === undefined || this.contactsToAdd.length == 0;
+    }
+
+    get confirmAddUserClass(){
+        return this.noContactsToAdd ? 'footerButtons containedButtonWhite' : 'footerButtons containedButtonSlim';
+    }
 
     //Cancel Service Access
     cancelServiceAccessRequest(event){
@@ -637,8 +672,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     confirmAddUser(){
-        console.log('confirmAddUser..');
 
+        this.grantingAccess = true;
         let contactIds = [];
 
         this.contactsToAdd.forEach((el,pos,arr)=>{
@@ -647,13 +682,16 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         if(contactIds.length>0){
             grantServiceAccessToContacts({contactIds:contactIds, serviceId : this.serviceId}).then(result=>{
+                this.grantingAccess = false;
+                this.contactsToAdd = [];
                 this.showAddUserModal = false;
-                this.resetComponent()
+                this.resetComponent();
             }).catch((error) => {
+                this.grantingAccess = false;
                   this.dispatchEvent(
                       new ShowToastEvent({
                           title: 'Error',
-                          message: 'Unable to grant service access.\n'+error ,
+                          message: 'Unable to grant service access.\n',
                           variant: 'error'
                       })
                   );
@@ -666,9 +704,26 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
         let available = availableContacts.filter(function(c){
+            c.iataCodeLocation = c.extraFields.iataCodeLocation;
+            c.status = c.extraFields.status;
+
             return !toAdd.some(contact => contact.id === c.id)
         });
         this.template.querySelector('[data-id="contactlookup"]').setSearchResults(available);
+    }
+
+    addAllContactEntries(){
+        console.log('add All..');
+        let selection = this.template.querySelector('[data-id="contactlookup"]').getSearchResults();
+
+        let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
+
+        selection.forEach((el,pos,arr)=>{
+            contactsToAdd.push(JSON.parse(JSON.stringify(el)));
+        });
+
+        this.contactsToAdd = contactsToAdd;
+
     }
 
     addContactEntry(){
@@ -687,8 +742,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         if (!contactsToAdd.some(contact => contact.id === value)) {
             let contact = availableContacts.find(function(c){return c.id === value;});
 
+            contact.deleteIcon = 'utility:delete';
+
             if(contact){
-                contactsToAdd.push(contact);
+                contactsToAdd.push(JSON.parse(JSON.stringify(contact)));
             }
         }
 
@@ -704,8 +761,18 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     getContactsForAssignment(){
         getContactsForAssignment({ serviceId: this.serviceId }).then(result => {
-            console.log('got availableContacts: '+result.length);
-            this.availableContacts = JSON.parse(JSON.stringify(result));
+
+            let availableContacts = JSON.parse(JSON.stringify(result));
+            let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
+
+            let available = availableContacts.filter(function(c){
+                c.iataCodeLocation = c.extraFields.iataCodeLocation;
+                c.status = c.extraFields.status;
+                return !toAdd.some(contact => contact.id === c.id)
+            });
+
+            this.availableContacts = available;
+
         });
     }
 
@@ -719,6 +786,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
                     let available = availableContacts.filter(function(c){
+                        c.iataCodeLocation = c.extraFields.iataCodeLocation;
+                        c.status = c.extraFields.status;
                         return !toAdd.some(contact => contact.id === c.id)
                     });
 
@@ -728,7 +797,27 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 .catch((error) => {
                     console.log('Lookup Error: ' + error);
                 });
+        }else{
+            this.getContactsForAssignment();
         }
+    }
+
+    removeContactToAdd(event){
+        const row = event.detail.row;
+
+        if(row.id !== undefined){
+            let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
+            this.contactsToAdd = contactsToAdd.filter(item => item.id !== row.id);
+        }
+    }
+
+    toCompanyContacts(){
+         this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "company-profile"
+            }})
+        .then(url => navigateToPage(url, {'tab':'contact'}));
     }
 
 }

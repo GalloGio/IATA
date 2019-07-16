@@ -922,8 +922,8 @@ public static Boolean denyAccess(String contactId,string serviceId, String reaso
 
 
 
-	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate 
-												 FROM Portal_Application_Right__c 
+	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
+												 FROM Portal_Application_Right__c
 												 WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 
 	System.debug('psaList: ' + psaList);
@@ -956,7 +956,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactId : ' + contactId + '] ');
 		throw new portalServiceException(Label.ISSP_ANG_GenericError);
 	}
-	
+
 	Portal_Application_Right__c psa=psal.get(0);
 
 
@@ -1004,7 +1004,6 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 	}
 
 }
-
     @AuraEnabled
     public static List<PortalLookupSearchResult> getContactsForServiceAssignment(String serviceId,String queryString){
 
@@ -1028,7 +1027,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
         }
 
 
-        String contactsQuery = 'SELECT Id,Name,Email FROM Contact '
+        String contactsQuery = 'SELECT Id,Name,Email,User_Portal_Status__c,Account.iataCode__c,Account.BillingCity FROM Contact '
                 + 'WHERE (Account.Top_Parent__c =\''+u.contact.AccountId+'\' OR AccountId = \''+ u.contact.AccountId+'\') '
                 + ' AND Id NOT IN :alreadyAssignedContactIds ';
 
@@ -1037,12 +1036,24 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
         }
 
         contactsQuery+=' LIMIT 20';
+
         contacts = Database.query(contactsQuery);
 
         // Extract Contacts & convert them into PortalLookupSearchResult (check this class for more info)
         String contactIcon = 'standard:contact';
+        Map<String,String> extraFields;
+
         for (Contact contact : contacts) {
-            results.add(new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Name, contact.Email));
+            PortalLookupSearchResult res = new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Name, contact.Email);
+            String iataCodeLocation = contact.Account.iataCode__c+' ('+contact.Account.BillingCity+')';
+
+            extraFields = new Map<String,String>();
+
+            extraFields.put('iataCodeLocation',iataCodeLocation);
+            extraFields.put('status',contact.User_Portal_Status__c);
+            res.setExtraFields(extraFields);
+
+            results.add(res);
         }
 
         return results;
@@ -1050,9 +1061,33 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
     @AuraEnabled
     public static void grantAccessToContacts(List<String> contactIds, String serviceId){
-        List<Portal_Application_Right__c> existingRights = [SELECT Id,Right__c,Contact__c from Portal_Application_Right__c WHERE Contact__c IN:contactIds];
+        List<Portal_Application_Right__c> existingRights = [SELECT Id,Right__c,Contact__c from Portal_Application_Right__c WHERE Contact__c IN:contactIds AND Portal_Application__c=:serviceid];
+
+        List <Contact> processContactList = [SELECT Id, User_Portal_Status__c, Name FROM Contact WHERE Id IN :contactIds];
+        List <String> activateIdList = new List <String>();
+        Set <Id> createIdSet = new Set <Id>();
+        for (Contact thisContact : processContactList){
+            if (thisContact.User_Portal_Status__c == 'Pending Approval'){
+                activateIdList.add(thisContact.Id);
+                thisContact.User_Portal_Status__c = 'Approved User';
+            }
+            else if (thisContact.User_Portal_Status__c == '' || thisContact.User_Portal_Status__c == null){
+                createIdSet.add(thisContact.Id);
+            }
+        }
+
+        if (!activateIdList.isEmpty()){
+            ISSP_EditPortalServiceAccessExt.updateUserProfiles(activateIdList);
+            update processContactList;
+        }
+
+        if (!createIdSet.isEmpty()){
+            ISSP_ContactList ctrl = new ISSP_ContactList();
+            ctrl.processMultiplePortalUserStatusChange(createIdSet, 'Approved User', 'Active');
+        }
 
         Set<Id> toUpdateIds = new Set<Id>();
+
 
         if(!existingRights.isEmpty()){
             for(Portal_Application_Right__c right:existingRights){
@@ -1076,6 +1111,27 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
             insert newRights;
         }
 
+    }
+
+    /**
+   Returns true if the service can be requested and granted without any approval
+   To have this the requester must be an admin user and the app service must have
+   Cannot_be_managed_by_portal_admin__c = false. Also, there is an exception for IATA EasyPay services, which can be requested even when flag is false.
+    **/
+    @AuraEnabled
+    public static Boolean isRequestableWithoutApproval(Boolean isAdmin, String serviceId) {
+
+        List<Portal_Applications__c> portalServices = [SELECT Id,Name,Cannot_be_managed_by_portal_admin__c FROM Portal_Applications__c WHERE Id=:serviceId];
+
+        if(!portalServices.isEmpty()){
+            Boolean isEasyPay = portalServices[0].Name.contains('IATA EasyPay');
+
+            Boolean canManage = portalServices[0].Cannot_be_managed_by_portal_admin__c == true || isEasyPay;
+
+            return isAdmin && canManage;
+        }
+
+        return false;
     }
 
 }

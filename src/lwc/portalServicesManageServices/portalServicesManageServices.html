@@ -106,8 +106,8 @@
 
                                         <template if:true={displayAdminView}>
                                             <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
-                                                <lightning-button variant="brand" label="Add New User" title="Add New User"
-                                                    class="slds-float_right containedButton" onclick={toggleAddUserModal}>
+                                                <lightning-button variant="brand" label={label.addNewUser} title={label.addNewUser}
+                                                                  class="slds-float_right containedButton" onclick={toggleAddUserModal}>
                                                 </lightning-button>
                                             </div>
                                         </template>
@@ -219,7 +219,7 @@
 
             <!-- Popup Header -->
             <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
-                <span>Add New user</span>
+                <span>{label.addNewUser}</span>
             </div>
 
             <!-- Popup Body -->
@@ -227,36 +227,41 @@
                 <a class="slds-p-around_large textMediumMessage"></a>
 
                 <div class="slds-p-around_large textMediumMessage">
-                    <lightning-formatted-rich-text
-                            value="You can search and add new portal users to this service. If the user you are looking for is not a portal contact yet, you can create <a href=&quot;&quot;>a new contact profile</a> for them.">
-                    </lightning-formatted-rich-text>
+                    <p>{label.newProfileMessage}
+                        <a style="color:blue;" onclick={toCompanyContacts}> {label.newProfile}</a>.</p>
                 </div>
 
                 <div class="slds-align_absolute-center">
 
                     <div class="slds-m-vertical--large fullWidth">
-                        <div class="slds-p-horizontal_xx-large">
-                            <p class="text-xxsmall text-gray userlookupLabel">
-                                Add user
-                            </p>
-                            <c-portal-search-lookup-component onsearch={handleContactSearch} item-name="contactlookup"
-                                                              data-id="contactlookup" oncontactlookup={getAvailableContacts} required-class=''
-                                                              placeholder="Search users" onselectionchange={addContactEntry}
-                                                              selection={contactsToAdd}>
-                            </c-portal-search-lookup-component>
 
-                            <div class="slds-m-top_large slds-scrollable_y recipients-box">
-                                <template for:each={contactsToAdd} for:item="contact">
-                                    <span key={contact.id}
-                                          class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
-                                        {contact.title}
+                        <div class="slds-p-horizontal_large">
 
-                                        <lightning-icon class="cursorPointer" key={contact.id} icon-name="utility:close"
-                                                        size="x-small" onclick={removeContact} data-item={contact.id}>
-                                        </lightning-icon>
-                                    </span>
-                                </template>
-                            </div>
+                            <template if:true={grantingAccess}>
+                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                            </template>
+
+                            <template if:false={grantingAccess}>
+                                <p class="text-xxsmall text-gray userlookupLabel">
+                                    {label.addUsers}
+                                </p>
+
+                                <c-portal-services-add-users-lookup onsearch={handleContactSearch} item-name="contactlookup"
+                                                                    data-id="contactlookup" oncontactlookup={getAvailableContacts} required-class=''
+                                                                    placeholder="" onselectionchange={addContactEntry}
+                                                                    selection={contactsToAdd} onaddall={addAllContactEntries}>
+                                </c-portal-services-add-users-lookup>
+
+                                <div class="slds-m-top_large slds-scrollable_y recipients-box">
+                                    <template if:false={noContactsToAdd}>
+                                        <lightning-datatable data={contactsToAdd} columns={contactsToAddColumns}
+                                                             hide-checkbox-column key-field="id" onrowaction={removeContactToAdd}
+                                                             resize-column-disabled=true
+                                                             class="contactsToAdd">
+                                        </lightning-datatable>
+                                    </template>
+                                </div>
+                            </template>
 
                         </div>
                     </div>
@@ -271,12 +276,12 @@
 
                 <div class="slds-align_absolute-center">
 
-                    <lightning-button class="footerButtons blueCustomButtonLink slds-p-right_xx-large" label="Cancel"
-                        variant="neutral" onclick={toggleAddUserModal}>
+                    <lightning-button class="footerButtons blueCustomButtonLink slds-p-right_xx-large" label={label.cancel}
+                                      variant="neutral" onclick={toggleAddUserModal}>
                     </lightning-button>
 
-                    <lightning-button class="footerButtons containedButtonSlim" label="Confirm" variant="neutral"
-                        onclick={confirmAddUser}>
+                    <lightning-button disabled={noContactsToAdd} class={confirmAddUserClass} label={label.confirm} variant="neutral"
+                                      onclick={confirmAddUser}>
                     </lightning-button>
 
                 </div>

@@ -137,17 +137,24 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             }
 
+            let noSearch = false;
+
             if (pageParams.contactName !== undefined && pageParams.contactName !== '') {
                 this.searchValue = decodeURIComponent((pageParams.contactName+'').replace(/\+/g, '%20'));
                 this.onchangeSearchInputContactsFromNotification(this.searchValue);
+            }else{
+                noSearch = true
             }
 
             this.lstTabs = tabsAux;
             if (viewContacts) {
-                //this.retrieveContacts();
-                this.contactsLoaded = true;
-                this.isFetching = true;
-                this.searchContacts(this.searchValue);
+                if(!noSearch){
+                    this.contactsLoaded = true;
+                    this.isFetching = true;
+                    this.searchContacts(this.searchValue);
+                }else{
+                    this.getContacts();
+                }
             }
 
         });
@@ -351,7 +358,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         let offset = this.contactsOffset;
         getContacts({ offset: offset}).then(result => {
             this.isFetching = false;
-            if (result.length == 0) { this.contactsEnded = true; return; }
+            if (result.length == 0) { this.contactsEnded = true; this.contactsLoaded = true; return; }
 
             let loadedContacts = offset != 0 ? JSON.parse(JSON.stringify(this.contacts)) : [];
             this.contactsOffset = this.contactsOffset + result.length;
@@ -370,9 +377,12 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let user = contacts[i].contactUser;
             let services = contacts[i].services;
 
+            let locationType = contact.Account.Location_Type__c ? contact.Account.Location_Type__c : '';
+            let iataCode = contact.IATA_Code__c ? contact.IATA_Code__c  : '';
 
-            contact.LocationCode = contact.IATA_Code__c + ' ' + contact.Account.Location_Type__c;
-            if (user.LastLoginDate != null) {
+            contact.LocationCode = iataCode + ' ' + locationType;
+
+            if (user && user.LastLoginDate != null) {
                 let locale = user.LanguageLocaleKey.replace('_', '-');
                 let lastLogin = new Date(user.LastLoginDate);
                 contact.LastLoginDate = lastLogin;
@@ -394,8 +404,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             if(services!= null){
                 contact.services = services;
             }
-            //contact.LastLogin = user.LastLoginDate;
-            contact.IsoCountry = contact.Account.IATA_ISO_Country__r.Name;
+
+            contact.IsoCountry = (contact.Account.IATA_ISO_Country__r != null) ? contact.Account.IATA_ISO_Country__r.Name : '';
+
             unwrappedContacts.push(contact);
 
         }
@@ -416,7 +427,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         getBranches({ offset: offset }).then(result => {
 
             this.isFetching = false;
-            if (result.length == 0) { this.branchesEnded = true; return; }
+            if (result.length == 0) { this.branchesEnded = true; this.branchesLoaded = true; return; }
 
             this.branchesOffset = this.branchesOffset + result.length;
 
@@ -540,8 +551,21 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 return;
             }
 
+            let branches = JSON.parse(JSON.stringify(result));
+            let branchesSearch = this.branchesSearch;
+
+            for (let i = 0; i < branches.length; i++) {
+                let branch = branches[i];
+                branch.LocationCode = branch.IATACode__c;
+
+                if(branch.IATA_ISO_Country__r != null){
+                    branch.IsoCountry = branch.IATA_ISO_Country__r.Name;
+                }
+                branchesSearch.push(branch);
+            }
+
             branchesList.recordsInitDone = false;
-            branchesList.records = result;
+            branchesList.records = branchesSearch;
 
              this.branchesOffsetSearch += result.length;
         });
