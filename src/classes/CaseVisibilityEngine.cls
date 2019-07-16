@@ -1,5 +1,11 @@
+/**
+ *  This class is used to apply the logic that makes a case visible on IATA Portal
+ *  When a visible case ownership changes to a Recycle Bin queue the case is set always set to invisible
+ *  Otherwise "Case_Visibility_Rule__mdt" metadata contains the rules, organized by recordType, that make a case visible
+ */
 public without sharing class CaseVisibilityEngine {
 
+    //Map the rules per RecordTypeId
     private static Map<Id,List<Case_Visibility_Rule__mdt>> mapRules = null;
 
     public static void execute(List<Case> cases) {
@@ -15,6 +21,12 @@ public without sharing class CaseVisibilityEngine {
         }
     }
 
+    /**
+     *  Method that compares each rule with the record values, to be set to true all criterias in a rule must be true 
+     *  (it applies AND logic eg.: field1 operator value1 AND field2 operator value2 AND etc..)
+     *  To set visibility to true at least one of the rules must match with record values 
+     *  (it applies OR logic eg.: rule1 OR rule2 OR etc...)
+     */
     private static void processVisibilityRules(List<Case_Visibility_Rule__mdt> rules, Case record) {
         if(rules == null) {
             return;
@@ -23,6 +35,7 @@ public without sharing class CaseVisibilityEngine {
         for(Case_Visibility_Rule__mdt rule : rules) {
             Boolean result = true;
 
+            //if this flag is set to true then it means we this record type should be always visible so no need to process any rule
             if(rule.Always_Visible__c) {
                 record.Visible_on_ISS_Portal__c = true;
                 break;
@@ -32,6 +45,7 @@ public without sharing class CaseVisibilityEngine {
             for(String filter : filters) {
                 List<String> expr = filter.trim().split(' ');
                 String caseField = expr[0];
+                //If the field filter references a standard field, then we need to append the '__c' to match with metadata field
                 String metadataField = caseField.endsWith('__c') ? caseField : caseField + '__c';
                 String operator = expr[1];
 
@@ -54,6 +68,7 @@ public without sharing class CaseVisibilityEngine {
                 }
             }
 
+            //if the record matches one rule we can break the loop and set the visibility to true
             if(result) {
                 record.Visible_on_ISS_Portal__c = true;
                 break;
@@ -61,6 +76,9 @@ public without sharing class CaseVisibilityEngine {
         }
     }
 
+    /**
+     *  Method that check field type and execute the proper auxiliary method
+     */
     private static Boolean compareNonStringValues(String caseField, String metadataField, Case record, Case_Visibility_Rule__mdt rule, String operator) {
         if(rule.get(metadataField) instanceof Date) {
             return compareDates(Date.valueOf(record.get(caseField)), Date.valueOf(rule.get(metadataField)), operator);
@@ -73,6 +91,9 @@ public without sharing class CaseVisibilityEngine {
         }        
     }
 
+    /**
+     *  Method used to apply comparison on Date fields
+     */
     @TestVisible
     private static Boolean compareDates(Date caseDt, Date metadataDt, String operator) {
         if(operator == '>=') {
@@ -88,6 +109,9 @@ public without sharing class CaseVisibilityEngine {
         }
     }
 
+    /**
+     *  Method used to apply comparison on Datetime fields
+     */
     @TestVisible
     private static Boolean compareDatetimes(Datetime caseDt, Datetime metadataDt, String operator) {
         if(operator == '>=') {
@@ -103,6 +127,9 @@ public without sharing class CaseVisibilityEngine {
         }
     }
 
+    /**
+     *  Method used to apply comparison on Integer fields
+     */
     @TestVisible
     private static Boolean compareIntegers(Integer caseI, Integer metadataI, String operator) {
         if(operator == '>=') {
@@ -118,6 +145,9 @@ public without sharing class CaseVisibilityEngine {
         }
     }
 
+    /**
+     *  Method to parse custom metadata field and transform it's values in a Set
+     */
     private static Set<String> getSetOfValues(String metadataValues) {
         List<String> listValues = metadataValues.split('\n');
         Set<String> setValues = new Set<String>();
@@ -128,6 +158,9 @@ public without sharing class CaseVisibilityEngine {
         return setValues;
     }
 
+    /**
+     *  Method that retrives all recycle bin queues ids, those ids are set on a custom setting
+     */
     private static Set<Id> getRecycleBinIds() {
         Set<Id> recycleBinIds;
         UtilityCS__c recycleBinsCS = UtilityCS__c.getValues('CaseRecycleBinIds');
@@ -140,6 +173,10 @@ public without sharing class CaseVisibilityEngine {
         return recycleBinIds;
     }
 
+    /**
+     *  Method to retrieve all rules by RecordTypeId, this method only executes once per transaction to avoid SOQL limits, 
+     *  since queries to a custom metadata including long text fields count to limits
+     */
     private static Map<Id,List<Case_Visibility_Rule__mdt>> getRulesByRecordTypeId() {
         if(mapRules != null) {
             return mapRules;
