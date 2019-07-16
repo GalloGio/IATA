@@ -11457,8 +11457,8 @@ and
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;ul&gt; &lt;li&gt;Verwaltet Felder der zugewiesenen Sub-Wallets&lt;/li&gt; &lt;li&gt;Verwaltet den Zugang für IATA EasyPay-Benutzer „Ticket-Ersteller“ und Sub-Wallets&lt;/li&gt; &lt;li&gt;Generiert IATA EasyPay-Nummern von den zugewiesenen Wallets, die für die Ausgabe von Tickets über GDS verwendet werden&lt;/li&gt; &lt;/ul&gt;&quot;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&quot;&lt;ul&gt;&lt;li&gt;Generiert IATA EasyPay-Nummern von allen zugewiesenen Wallets, die für die Ausgabe von Tickets über GDS verwendet werden&lt;/li&gt;&lt;/ul&gt;&quot;</label>

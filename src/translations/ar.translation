@@ -11453,8 +11453,8 @@ and
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label>&lt;ul&gt; &lt;li&gt;إدارة الودائع بالمحافظ الفرعية المحددة&lt;/li&gt; &lt;li&gt;إدارة صلاحيات دخول «مُصدّري التذاكر» مستخدمي حساب IATA EasyPay والمَحافظ الفرعية&lt;/li&gt; &lt;li&gt;إنشاء أرقام IATA EasyPay من المَحافظ المحددة لاستخدامها في إصدار التذاكر عبر نظام التوزيع العالمي GDS.&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;إنشاء أرقام IATA EasyPay من أي محفظة (مَحافظ) محددة لاستخدامها في إصدار التذاكر عبر نظام التوزيع العالمي GDS.&lt;/li&gt;&lt;/ul&gt;</label>
