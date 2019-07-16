@@ -105,16 +105,28 @@ public class ANG_FinancialSecurityTriggerHandler{
 	private Map<Id, Account> mapAccount{
 		get{
 			if(mapAccount == null){
-				mapAccount = new Map<Id, Account>([SELECT Id, ParentId, Location_Type__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c,
-													(SELECT Id, Security_Status__c, ANG_ConvertedAmount__c, Account__c, CurrencyIsoCode, Amount__c, 
-													ANG_Financial_Security_Currency__c, ANG_Minimum_Financial_Security__c
-											 		FROM Financial_Securities__r),
-											 		(SELECT id, CurrencyIsoCode FROM RHC_Informations__r) 
-												FROM Account WHERE Id IN :accIdSet and Location_Type__c IN :newgenLocationTypes]);
+				mapAccount = fetchAccountsInformation(accIdSet, null, newgenLocationTypes);
 			}
 			return mapAccount;
 		}	
 		set;	
+	}
+
+	private Map<Id, Account> fetchAccountsInformation(Set<Id> accIdSet, Set<Id> parentIdSet, Set<String> locationTypesSet){
+		
+		String accountsQuery = '' +
+			'SELECT Id, ParentId, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
+			' (SELECT Id, CurrencyIsoCode FROM RHC_Informations__r), ' +
+			' (SELECT Id, Amount__c, Account__c, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c FROM Financial_Securities__r) ' +
+			'FROM Account WHERE Location_Type__c IN :locationTypesSet AND (Id IN :accIdSet';
+
+		if(parentIdSet != NULL && !parentIdSet.isEmpty()){
+			accountsQuery += ' OR Id IN :parentIdSet OR ParentId IN :parentIdSet ';
+		}
+
+		accountsQuery += ') ';
+
+		return new Map<Id, Account>((List<Account>) Database.query(accountsQuery));
 	}
 	
 	public void onBeforeInsert(){
@@ -157,20 +169,13 @@ public class ANG_FinancialSecurityTriggerHandler{
 			//List of accounts to be matched with the RHC Information objects
 			List<Account> parentAccount = new List<Account>();
 
-			Map<ID, Account> accountList = null;
+			Map<ID, Account> accountMap = null;
 			if(accIdSet.containsAll(parentIDSet)){
-				accountList = mapAccount;
+				accountMap = mapAccount;
 			}
 			else {
 				//Get all accounts in the hierarchy - Only for Countries with ANG_RHC_LocationType__c == 'Include all AEs'
-				accountList 
-					= new Map<ID, Account> ([SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, Location_Type__c, ParentId, IATA_ISO_Country__r.ANG_RHC_LocationType__c,
-											 (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c, Account__c, CurrencyIsoCode, Amount__c, 
-											 	ANG_Financial_Security_Currency__c, ANG_Minimum_Financial_Security__c
-											 	FROM Financial_Securities__r),
-											 (SELECT id, CurrencyIsoCode FROM RHC_Informations__r) 
-										FROM Account 
-										WHERE (Id IN :accIdSet OR ID IN :parentIDSet OR ParentId IN :parentIDSet) AND Location_Type__c IN :newgenLocationTypes]);
+				accountMap = fetchAccountsInformation(accIdSet, parentIdSet, newgenLocationTypes);
 			}
 
 			//Iterate accounList - create new FS list and new map account
@@ -181,7 +186,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 			Map<ID, Financial_Security__c> mapFinancialSecurities = new Map<ID, Financial_Security__c>();
 
-			for(Account acc : accountList.values()){
+			for(Account acc : accountMap.values()){
 				financialSecurityByAccountID.put(acc.id, new List<Financial_Security__c>());
 
 				//Fill parentAccount list to update the RHC Infomation object
@@ -201,7 +206,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			if(!fsListToConvert.isEmpty() && !mapAccountbyId.isEmpty()) ANG_Risk_Helper.convertFSAmount(fsListToConvert, mapAccountbyId);
 
 			//Calculate the Minimum and Total FS
-			for(Account acc :accountList.values()){
+			for(Account acc :accountMap.values()){
 
 				if(!financialSecurityByAccountID.get(acc.id).isEmpty()){
 					
@@ -214,7 +219,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 					for(Financial_Security__c fs : financialSecurityByAccountID.get(acc.id)){
 
 						if(fs.ANG_Minimum_Financial_Security__c !=null && fs.ANG_Financial_Security_Currency__c!=null && ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c)){
-                            String rhcCurrencyCode = accountList.get(accountID).RHC_Informations__r.isEmpty() ? null : accountList.get(accountID).RHC_Informations__r.get(0).CurrencyIsoCode;
+                            String rhcCurrencyCode = accountMap.get(accountID).RHC_Informations__r.isEmpty() ? null : accountMap.get(accountID).RHC_Informations__r.get(0).CurrencyIsoCode;
 							minimumFinancialSecurityPerAccount.put(accountID, 
 								getCurrentFSValue(minimumFinancialSecurityPerAccount.get(accountID)) + ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c , fs.ANG_Minimum_Financial_Security__c, rhcCurrencyCode != null ? rhcCurrencyCode : fs.ANG_Financial_Security_Currency__c));
 						}
