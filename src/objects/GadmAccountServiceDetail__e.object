@@ -43,5 +43,5 @@
     </fields>
     <label>GADM Account Service Detail</label>
     <pluralLabel>GADM Account Service Details</pluralLabel>
-    <publishBehavior>PublishImmediately</publishBehavior>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>
