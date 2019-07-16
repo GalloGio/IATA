@@ -1,7 +1,9 @@
 public without sharing class CaseVisibilityEngine {
 
+    private static Map<Id,List<Case_Visibility_Rule__mdt>> mapRules = null;
+
     public static void execute(List<Case> cases) {
-        Map<Id,List<Case_Visibility_Rule__mdt>> mapRules = getRulesByRecordTypeId();
+        getRulesByRecordTypeId();
         Set<Id> recycleBinIds = getRecycleBinIds();
 
         for(Case record : cases) {
@@ -139,7 +141,11 @@ public without sharing class CaseVisibilityEngine {
     }
 
     private static Map<Id,List<Case_Visibility_Rule__mdt>> getRulesByRecordTypeId() {
-        Map<Id,List<Case_Visibility_Rule__mdt>> mapRules = new Map<Id,List<Case_Visibility_Rule__mdt>>();
+        if(mapRules != null) {
+            return mapRules;
+        }
+
+        mapRules = new Map<Id,List<Case_Visibility_Rule__mdt>>();
         
         Map<String, Schema.SObjectField> fieldMap = Case_Visibility_Rule__mdt.sObjectType.getDescribe().fields.getMap();
         List<String> fields = new List<String>(fieldMap.keySet());
