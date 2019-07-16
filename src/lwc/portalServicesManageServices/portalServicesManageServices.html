@@ -1,0 +1,228 @@
+<template>
+
+    <div if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+    
+    <div class="header">
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <div>
+                    <div style="height:69px" class="breadcrumbsHeight">
+                        <c-portal-breadcrumbs show-in-white=true>
+                        </c-portal-breadcrumbs>
+                    </div>
+                    <div style="height:115px" class="slds-p-left_headerContainer headerContainerShadow">
+                        <div>
+                            <div class="slds-p-vertical_x-small text-white text-large ">
+                                {serviceRecord.recordService.ServiceName__c}</div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
+
+    <div class="body slds-m-top_xx-large">
+        <c-portal-page-container>
+            <span slot="componentContent">
+
+                <!-- SHOW LOADING -->
+                <div if:true={componentLoading} class="spinnerContainer">
+                    <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+                </div>
+
+                <div if:false={componentLoading}>
+                    <div if:true={loadReady}>
+
+                        <!-- NORMAL USERS VIEW -->
+                        <div if:false={displayAdminView} class="slds-grid slds-wrap slds-m-top_medium slds-p-around_large slds-m-bottom_xx-large customBorderlessCardWhite">
+                            
+                            <div class="slds-col slds-size_3-of-4">
+                                <div class="text-medium text-bold">
+                                    {label.aboutlb}
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4">
+                                <div if:false={renderRequest} >
+                                        <div if:true={serviceRecord.accessGranted}>
+                                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                                    label={label.goToServicelb} onclick={handleTopAction}>
+                                                </lightning-button>
+                                            </div>
+        
+                                            <div if:false={serviceRecord.accessGranted}>
+                                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                                    label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                                </lightning-button>
+                                            </div>
+                                </div>
+    
+                                <div if:true={renderRequest} >
+                                    <div if:true={renderCancelRequest} class="slds-float_right requestedButtonCls">
+                                        <span
+                                            class="slds-p-vertical_x-small slds-p-horizontal_medium text-bold text-xsmall disabledButton">{serviceRecord.btnLabel}</span>
+                                        <lightning-button-menu variant="container" icon-name="utility:threedots_vertical"
+                                            menu-alignment="right"
+                                            onselect={cancelServiceAccessRequest}>
+                                            <lightning-menu-item class="text-bold" value="cancel_request"
+                                            label={label.cancelRequestlb}></lightning-menu-item>
+                                        </lightning-button-menu>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-p-top_medium slds-size_1-of-1">
+                                <lightning-formatted-rich-text class="introMessage" value={serviceRecord.recordService.Service_Description__c}>
+                                </lightning-formatted-rich-text>
+                            </div>
+
+                        </div>
+
+                        <!-- ADMINS VIEW -->
+                        <div if:true={displayAdminView} class="slds-grid slds-wrap slds-m-top_medium">
+    
+                            <div class="slds-col slds-size_3-of-4 slds-m-bottom_large">
+                                <div class="text-xsmall">
+                                    {serviceRecord.recordService.Service_Description__c}
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-m-bottom_large"
+                                if:true={serviceRecord.accessGranted}>
+                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                    label={label.goToServicelb} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-4 slds-m-bottom_large"
+                                if:false={serviceRecord.accessGranted}>
+                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                    label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                </lightning-button>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 customBorderlessCardWhite text-xsmall">
+                                <div class="slds-p-around_large">
+                                    <div class="slds-col  slds-size_1-of-1 text-medium text-bold">
+                                        {label.contactslb}
+                                    </div>
+                                    <div class="slds-col slds-p-top_small slds-size_1-of-1">
+                                        {label.manageUserslb}
+                                    </div>
+                                    <div class="slds-col slds-grid slds-p-top_medium slds-size_1-of-1">
+                                        <div class=" slds-col slds-size_1-of-3 bottomLightGrayBorder searchContainer">                                        
+                                                <img src={searchIconUrl} height="24" width="24" />
+                                                <lightning-input name="newRecipientTextInput" placeholder={label.searchContactPlaceholder}
+                                                class="hideInputLabel borderlessInput grayInputPlaceholder"
+                                                value={searchText} onchange={searchRecord}>
+                                            </lightning-input>
+                                        </div>
+                                        
+                                    </div>
+                                    <div  if:false={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1 text-gray">
+                                        <lightning-datatable data={currentContactPage} 
+                                            columns={contactTableColums}
+                                            hide-checkbox-column key-field="Id"
+                                            onrowaction={handleRowAction}
+                                            is-loading={loadingContacts}
+                                            resize-column-disabled=true
+                                            class="serviceContactList">
+                                        </lightning-datatable>
+                                        <!-- PAGINATION -->
+                                        <c-paginator 
+                    
+                                            page-number={currentPageNumber}
+                                            page-size={PAGE_SIZE}
+                                            total-pages={totalNrPages}
+                                            page-list={pageList}
+                                            onprevious={handlePreviousPage}
+                                            onnext={handleNextPage}
+                                            onselected={handleSelectedPage}
+                                            onfirst={handleFirstPage}
+                                            onlast={handleLastPage}>
+                                        </c-paginator>
+                                    </div>
+                                    <div if:true={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1">
+                                        <div class="slds-p-vertical_medium slds-text-align_center">
+                                            <img src={searchIconNoResultsUrl}/>
+                                            <div class="text-small text-bold text-linkBlue">{label.CSP_Search_NoResults_text1}</div>
+                                            <div class="text-xxsmall text-gray">{label.CSP_Search_NoResults_text2} <span class="text-bold text-darkGray">"{searchKey}"</span></div>
+                                        </div>
+                                    </div>                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CANCEL SERVICE BANNER -->
+                    <div if:true={renderCancelRequest} class="customCardLightGrayService aroundLightGrayBorder slds-m-vertical_xx-large">
+                        <div class="slds-grid slds-wrap slds-p-around_large slds-grid_vertical-align-center ">
+                            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3">
+                                <div class="text-medium text-bold text-darkGray">{label.ServiceAccess}</div>
+                                <div class="slds-m-top_x-small text-xsmall text-gray">{cancelMessage}</div>
+                                <div class="slds-m-top_medium text-xsmall blueCustomButtonLink">
+                                        <lightning-button variant="base" 
+                                        label={cancelLink}
+                                        title={cancelLink}
+                                        onclick={cancelServiceAccessRequest}
+                                        class="slds-p-right_small text-xxsmall text-bold blueCustomButtonLink">
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </span>
+        </c-portal-page-container>
+    </div>
+
+    <!-- CONFIRM POPUP -->
+    <div if:true={showConfirmPopup} class="modal">
+
+        <div class="customPopupInteriorHalfScreenCentered">
+
+            <!-- Popup Header -->
+            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                <span>{popupTitle}</span>
+            </div>
+
+            <!-- Popup Body -->
+            <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                <div class="slds-p-vertical_large textMediumMessage">
+                    <lightning-formatted-rich-text value={popupMsg}></lightning-formatted-rich-text>
+                </div>
+
+                <div class="slds-p-vertical_large textMediumMessage">
+                    <span>{label.appRejectreason}</span>
+                    <lightning-input name="approvalRejectReason"
+                        class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder"
+                        value={appRejReason} onchange={handleChangeReason}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Popup Footer -->
+            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                <div class="slds-align_absolute-center">
+                    <lightning-button class="blueCustomButtonLink slds-p-right_xx-large" label="Cancel"
+                        variant="neutral" onclick={handlePopupCancelAction}>
+                    </lightning-button>
+                    <lightning-button class="containedButtonSlim" label="Confirm" variant="neutral"
+                        onclick={handlePopupConfirmAction}>
+                    </lightning-button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- REQUEST/ENABLE NEW SERVICE MODAL -->
+    <c-portal-services-request-service-modal service-name={serviceName} service-record={serviceRecord} display-confirm={showConfirm}
+        onrequestcompleted={requestComplete}>
+    </c-portal-services-request-service-modal>
+
+</template>

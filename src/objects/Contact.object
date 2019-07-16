@@ -10865,7 +10865,12 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <type>Picklist</type>
         <valueSet>
             <valueSetDefinition>
-                <sorted>false</sorted>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Arabic</fullName>
+                    <default>false</default>
+                    <label>Arabic</label>
+                </value>
                 <value>
                     <fullName>Chinese</fullName>
                     <default>false</default>
@@ -10882,9 +10887,14 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>French</label>
                 </value>
                 <value>
-                    <fullName>Korean</fullName>
+                    <fullName>German</fullName>
                     <default>false</default>
-                    <label>Korean</label>
+                    <label>German</label>
+                </value>
+                <value>
+                    <fullName>Indonesian</fullName>
+                    <default>false</default>
+                    <label>Indonesian</label>
                 </value>
                 <value>
                     <fullName>Italian</fullName>
@@ -10897,9 +10907,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Japanese</label>
                 </value>
                 <value>
+                    <fullName>Korean</fullName>
+                    <default>false</default>
+                    <label>Korean</label>
+                </value>
+                <value>
                     <fullName>Portuguese</fullName>
                     <default>false</default>
                     <label>Portuguese</label>
+                </value>
+                <value>
+                    <fullName>Russian</fullName>
+                    <default>false</default>
+                    <label>Russian</label>
                 </value>
                 <value>
                     <fullName>Spanish</fullName>
@@ -10907,14 +10927,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Spanish</label>
                 </value>
                 <value>
+                    <fullName>Thai</fullName>
+                    <default>false</default>
+                    <label>Thai</label>
+                </value>
+                <value>
                     <fullName>Turkish</fullName>
                     <default>false</default>
                     <label>Turkish</label>
                 </value>
                 <value>
-                    <fullName>Russian</fullName>
+                    <fullName>Vietnamese</fullName>
                     <default>false</default>
-                    <label>Russian</label>
+                    <label>Vietnamese</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -20331,6 +20356,29 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
  ISCHANGED(AccountId)
 )</errorConditionFormula>
         <errorMessage>Only an admin can assign a Financial Assessment contact to a branch agency (BR).</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ID_card_Holder_no_change</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot;	
+), 
+				
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
+), 
+
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,				
+				
+ID_Card_Holder__c=false,
+
+ISCHANGED(ID_Card_Holder__c)
+)</errorConditionFormula>
+        <errorMessage>This conbination of profile and role is not allowed to uncheck ID card holder.</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>

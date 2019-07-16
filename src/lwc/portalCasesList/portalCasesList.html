@@ -1,0 +1,71 @@
+<template> 
+    <lightning-layout multiple-rows pull-to-boundary="small" horizontal-align="spread">
+        <lightning-layout-item padding="around-small" size="12" flexibility="grow" small-device-size="12" medium-device-size="6">
+            <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
+                <img src={searchIconUrl}>
+                <lightning-input name="newRecipientTextInput"
+                    placeholder={label.CSP_SearchingOn}
+                    class="hideInputLabel borderlessInput grayInputBackground grayInputPlaceholder searchStyle"
+                    onkeyup={handleKeyUp}
+                    onchange={handleInputChange}>
+                </lightning-input>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-text-align_right" padding="around-small" size="12" flexibility="auto" small-device-size="12" medium-device-size="3">
+            <lightning-button label={caseListName} class="containedButton" onclick={rerenderCases} if:true={isAdmin}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+    <div class="customCardWhite">        
+        <div class="slds-m-around_medium">
+            <div if:true={loading} class="spinnerContainer">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+            <div if:false={loading}>
+                <div if:true={dataRecords}>
+                    <!-- DATA RECORDS -->
+                    <lightning-datatable
+                        key-field="Id"
+                        data={data}
+                        columns={columns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                    <!-- DATA RECORDS -->
+
+                    <!-- PAGINATION -->
+                    <c-paginator 
+                        page-number={pageNumber}
+                        page-size={pageSize}
+                        total-pages={totalPages}
+                        page-list={pageList}
+                        onprevious={handlePreviousPage}
+                        onnext={handleNextPage}
+                        onselected={handleSelectedPage}
+                        onfirst={handleFirstPage}
+                        onlast={handleLastPage}>
+                    </c-paginator>
+                    <!-- PAGINATION -->
+                </div>
+                <div if:false={dataRecords}>
+                    <div class="noRecentCases slds-text-align_center">
+                        <div>
+                            <img src={noCasesImg}/>
+                        </div>
+                        <span class="text-medium text-darkGray slds-p-around_small">
+                            {label.CSP_NoCases1}
+                        </span>
+                        <span class="text-xsmall text-lightGray">
+                            {label.CSP_NoCases2}
+                        </span>
+                        <span class="noCasesUrls slds-p-around_large">
+                            <span class="text-xxsmall text-linkBlue cursorPointer" onclick={navigateToLinkOne}>{label.CSP_Question1}</span>
+                            <br />
+                            <span class="text-xxsmall text-linkBlue cursorPointer" onclick={navigateToLinkTwo}>{label.CSP_Question2}</span>
+                            <!--<a href={label.CSP_Question1URL}>{label.CSP_Question1}</a>-->
+                            <!--<a href={label.CSP_Question2URL}>{label.CSP_Question2}</a>-->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>      
+</template>

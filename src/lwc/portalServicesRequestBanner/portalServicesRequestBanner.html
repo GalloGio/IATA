@@ -1,0 +1,19 @@
+<template>
+
+    <div class="customCardLightGrayService aroundLightGrayBorder slds-m-vertical_xx-large">
+
+        <div class="slds-grid slds-wrap slds-p-vertical_xx-large slds-p-horizontal_large slds-grid_vertical-align-center ">
+
+            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3">
+                <div class="text-medium text-bold text-darkGray">{label.CSP_Services_RequestServiceBannerTitle}</div>
+                <div class="text-xsmall text-gray">{label.CSP_Services_RequestServiceBannerSubtitle}</div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-text-align_center">
+                <lightning-button label={label.CSP_Services_RequestServiceBannerButton} class="containedButtonSlim" onclick={goToRequestServiceButtonClick}></lightning-button>
+            </div>
+
+        </div>
+    </div>
+
+    
+</template>

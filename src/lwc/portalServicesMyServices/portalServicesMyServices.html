@@ -1,0 +1,19 @@
+<template>
+
+    <!-- Introdutory text -->
+    <div class="slds-p-around_medium bottomLightGrayBorder text-xsmall text-gray" > 
+        {label.CSP_Services_MyServicesHelpText}
+    </div>
+
+    <!-- Access granted component -->
+    <c-portal-services-access-granted></c-portal-services-access-granted>
+
+
+    <!-- Access Requested component -->
+    <c-portal-services-access-requested></c-portal-services-access-requested>
+
+
+    <!-- Request service banner component-->
+    <c-portal-services-request-banner ongotoavailableservicestab={handleGoToAvailableServicesTab}></c-portal-services-request-banner>
+    
+</template>

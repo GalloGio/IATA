@@ -11454,7 +11454,7 @@ and
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;จัดการบัญชีกองทุนสำรองที่กำหนดไว้&lt;/li&gt; &lt;li&gt;จัดการ “ผู้ออกตั๋ว” ผู้เข้าใช้ระบบ IATA EasyPay และกองทุนสำรอง&lt;/li&gt; &lt;li&gt;สร้างหมายเลข IATA EasyPay จากกองทุนที่กำหนดไว้ให้ใช้เพื่อการออกตั๋วผ่านระบบ GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;สร้างหมายเลข IATA EasyPay จากกองทุนใดก็ตามที่กำหนดไว้ให้ใช้เพื่อการออกตั๋วผ่านระบบ GDS&lt;/li&gt;&lt;/ul&gt;</label>

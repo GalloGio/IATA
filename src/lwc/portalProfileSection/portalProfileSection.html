@@ -1,0 +1,36 @@
+<!--
+ - Created by pvavruska on 5/28/2019.
+ -->
+
+<!-- Portal Profile Section Container -->
+<template>
+    <div class={className}>
+        <!-- Header Part -->
+        <div class={headerClass}>
+            <div class="flexCenter">
+
+                <div class="flexOneZero">
+                    <div class="fullWidth">
+
+                        <!-- Section Title -->
+                        <span class="text-medium text-bold text-darkGray">
+                            <slot name="sectionTitle"></slot>
+                        </span>
+                    </div>
+                </div>
+
+
+                <!-- Section actions -->
+                <div class="text-xxsmall">
+                    <slot name="sectionActions"></slot>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Content -->
+        <slot name="componentContent"></slot>
+
+
+    </div>
+</template>

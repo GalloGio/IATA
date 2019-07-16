@@ -1,0 +1,30 @@
+<template>
+    <div if:true={loading} class="spinnerContainer">
+        <lightning-spinner size="medium"></lightning-spinner>
+    </div>
+
+    <div if:false={loading}>
+        <div if:true={hasArticles}>
+            <div class="slds-p-bottom_small text-bold">
+                {label.CSP_RelatedArticles}
+            </div>
+            
+            <template for:each={relatedArticles} for:item="article">
+                <lightning-layout horizontal-align="spread" class="slds-p-top_small borderStyle" key={article.id} data-item={article.id}>
+                        <lightning-layout-item >
+                                <div class="text-bold cursorPointer" data-item={article.id} onclick={renderArticle}>{article.title}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="cursorPointer"> 
+                            <lightning-button variant="base"
+                                icon-name="utility:forward"
+                                size="x-small"
+                                class="blueCustomButtonLink"
+                                data-item={article.id}
+                                onclick={renderArticle}>
+                            </lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>       
+            </template>
+        </div>
+    </div>
+</template>
