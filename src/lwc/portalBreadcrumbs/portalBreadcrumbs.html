@@ -1,0 +1,24 @@
+<template>
+
+    <div class="slds-p-vertical_medium" style="height: 56px;">
+
+        <div if:true={loadingBreadcrumbs} class="componentLoadingSpinner">
+            <lightning-spinner alternative-text="Loading" size="small" variant="inverse"></lightning-spinner>
+        </div>
+        <div if:false={loadingBreadcrumbs}>
+            <template for:each={lstBreadcrumbs} for:item="breadcrumb" for:index="index">
+                <span key={breadcrumb.DeveloperName} class="text-xsmall" >
+                    <span if:true={breadcrumb.clickable} class={breadcrumb.TextClass} onclick={navigateToBreadcrumb} data-item={breadcrumb.DeveloperName}>{breadcrumb.RealLabel}</span>
+                    <span if:false={breadcrumb.clickable} class={breadcrumb.TextClass} >{breadcrumb.RealLabel}</span>
+    
+                    <span if:true={breadcrumb.showSeparator} class="slds-m-horizontal_small">
+                        <span class={breadcrumb.separatorClass} > > </span>
+                    </span>
+    
+                </span>
+            </template>
+        </div>
+
+    </div>
+    
+</template>
