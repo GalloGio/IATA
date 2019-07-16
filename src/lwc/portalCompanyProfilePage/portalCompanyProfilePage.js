@@ -5,6 +5,7 @@
 import { LightningElement, wire, track } from 'lwc';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import canEditBasics from '@salesforce/apex/PortalProfileCtrl.canEditBasics';
+import annualRevalidation from '@salesforce/apex/PortalProfileCtrl.hasAnnualRevalidation';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getFieldsMap from '@salesforce/apex/PortalProfileCtrl.getFieldsMap';
 import getContactFieldsToInsert from '@salesforce/apex/PortalProfileCtrl.getContactFieldsToInsert';
@@ -57,6 +58,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track branchFields;
     @track contactFields;
     @track editBasics = false;
+    @track annualReval = false;
+
 
     //Search
     @track searchMode = false;
@@ -154,6 +157,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         canEditBasics().then(result =>{
             this.editBasics = result;
+        });
+
+        annualRevalidation().then(result =>{
+            this.annualReval = result;
         });
 
         getLoggedUser().then(result => {
@@ -663,6 +670,14 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
 
     }
+
+    get canEditSection(){
+        return !this.annualReval;
+    }
+
+    get canEditBranch(){
+            return !this.annualReval && this.editBasics;
+        }
 
     get tab0Active() { return this.lstTabs[0] != null && this.lstTabs[0].active; }
     get tab1Active() { return this.lstTabs[1] != null && this.lstTabs[1].active; }
