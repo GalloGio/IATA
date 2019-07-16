@@ -1754,10 +1754,6 @@ public without sharing class ISSP_AMS_Accreditation {
                             newForm.Account_Name__c = hqAccount.Name;                        
                         }
 
-                        if (isMultiCountryNewAE) {
-                            populateFieldsFromParentForm(newForm);
-                        }
-
                         saveAMSForm();
 
                         if(newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null) // NEWGEN-1249 only with same legal entity have the owners from parent
