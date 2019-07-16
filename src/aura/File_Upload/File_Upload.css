@@ -35,13 +35,13 @@
 }
 
 .THIS thead p {
-    font-family: AktivGrotesk-Regular;
+    font-family: aktiv-grotesk;
     font-size: 18px;
     color: #666666;
 }
 
 .THIS .listHeader {
-    font-family: AktivGrotesk-Bold;
+    font-family: aktiv-grotesk-bold;
     font-size: 18px;
     color: #666666;
     line-height: 22px;
@@ -49,13 +49,13 @@
 }
 
 .THIS tbody td p{
-    font-family: AktivGrotesk-Regular;
+    font-family: aktiv-grotesk;
     font-size: 14px;
     color: #666666;
 }
 
 .THIS .listText {
-    font-family: AktivGrotesk-Regular;
+    font-family: aktiv-grotesk;
     font-size: 15px;
     color: #666666;
     width:92%;
@@ -78,7 +78,7 @@
 
 
 .THIS .dragDropMessage p{
-    font-family: AktivGrotesk-Bold;
+    font-family: aktiv-grotesk-bold;
     font-size: 22px;
     color: #666666;
     text-align: center;
@@ -104,9 +104,20 @@
 
 .THIS .noRight {
     margin:auto;
+    font-family: aktiv-grotesk;
+    font-size: 15px;
+    color: #666666;
 }
 
 .THIS .disable_content {
     opacity: 0.4;
     pointer-events:none;
+}
+
+.THIS .helpEmail {
+    text-align:center;
+    font-family: aktiv-grotesk;
+    font-size: 15px;
+    color: #666666;
+    padding-top:40px;
 }

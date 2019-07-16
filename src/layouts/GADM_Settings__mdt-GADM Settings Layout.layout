@@ -38,6 +38,10 @@
                 <behavior>Edit</behavior>
                 <field>Actor_Membership_Termination__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_Email_Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

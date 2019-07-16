@@ -18,15 +18,18 @@
                     }
 
                     component.set('v.dashboardCategories', dashboards);
+                    component.set('v.showCategories', true);
                     this.toggleSpinner(component, event);
 
                 }else{
                     console.log('getAvailableDashboards no categories found');
+                    component.set('v.showCategories', true);
                     this.toggleSpinner(component, event);
                 }
 
             }else{
                 console.log('getAvailableDashboards error');
+                component.set('v.showCategories', true);
                 this.toggleSpinner(component, event);
                 this.showToast(component, 'error', 'Unexpected error', $A.get("$Label.c.GADM_PowerBI_categories_error"));
 

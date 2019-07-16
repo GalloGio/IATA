@@ -20,7 +20,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <!-- Lookup Markup : See https://www.lightningdesignsystem.com/components/lookups -->
-    <div class="slds">
+    <div class="slds custom_font">
         <div aura:id="lookup-div" class="slds-lookup" data-select="single" data-scope="single" data-typeahead="true">
             <!-- This is the Input form markup -->
             <div class="slds-form-element">
@@ -40,7 +40,7 @@
                         </span>
                     </div>
                     <!-- This markup is for when searching for a string -->
-                    <ui:inputText aura:id="lookup" value="{!v.searchString}" class="slds-input" updateOn="keyup" keyup="{!c.search}" placeholder="Search User..."/>
+                    <ui:inputText aura:id="lookup" value="{!v.searchString}" class="slds-input custom_font" updateOn="keyup" keyup="{!c.search}" placeholder="Search User..."/>
                 </div>
             </div>
             <!-- This is the lookup list markup. Initially it's hidden slds-lookup__menu-->
@@ -54,7 +54,7 @@
                 <ul aura:id="lookuplist-items" class="slds-lookup__list" role="presentation">
                     <aura:iteration items="{!v.matches}" var="match">
                         <li class="slds-lookup__item">
-                            <a id="{!globalId + '_id_' + match.SObjectId}" role="option" onclick="{!c.select}">
+                            <a id="{!globalId + '_id_' + match.SObjectId}" role="option" onclick="{!c.select}" class="custom_font">
                                 <c:svg class="{!'slds-icon ' + v.listIconClass + ' slds-icon--small'}" xlinkHref="{!v.listIconSVGPath}" />{!match.SObjectLabel}
                             </a>
                         </li>

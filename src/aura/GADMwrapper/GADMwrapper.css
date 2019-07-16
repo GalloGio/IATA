@@ -3,6 +3,11 @@
     src: "{!$Resource.GADM_Portal/fonts/OTF/AktivGrotesk-Regular.otf}";
 }
 
+@font-face {
+    font-family: 'aktiv-grotesk-bold';
+    src: "{!$Resource.GADM_Portal/fonts/OTF/AktivGrotesk-Bold.otf}";
+}
+
 .THIS.cCenterPanel {
     margin: 0 auto;
     max-width: 1040px !important;

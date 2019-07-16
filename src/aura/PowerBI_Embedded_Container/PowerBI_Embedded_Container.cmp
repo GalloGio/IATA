@@ -5,7 +5,7 @@
 
     <!--SHOW ATTRIBUTES-->
     <aura:attribute name="showDashboardCategory" type="Boolean" default="false"/>
-    <aura:attribute name="showCategories" type="Boolean" default="true"/>
+    <aura:attribute name="showCategories" type="Boolean" default="false"/>
     <aura:attribute name="showDashboard" type="Boolean" default="false"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
 

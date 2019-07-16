@@ -7,6 +7,7 @@
     <aura:attribute name="emptyFileSize" type="Integer"/>
     <aura:attribute name="maxFileCount" type="Integer"/>
     <aura:attribute name="credentialsName" type="String"/>
+    <aura:attribute name="iataEmailContact" type="String"/>
 
     <!--USER INFO-->
     <aura:attribute name="userId" type="Id" access="private"/>
@@ -139,6 +140,12 @@
                 </div>
             </aura:if>
 
+            <!--HELP TEXT-->
+            <aura:if isTrue="{! and(not(empty(v.iataEmailContact)), (v.isExternalUser)) }">
+                <div class="helpEmail slds-col slds-size--1-of-1">
+                    <p>{! v.iataEmailContact}</p>
+                </div>
+            </aura:if>
 
         </div>
         <!--DROP ZONE + FILE SELECTED START-->

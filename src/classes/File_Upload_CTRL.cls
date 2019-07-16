@@ -62,7 +62,7 @@ public without sharing class File_Upload_CTRL {
 
     @AuraEnabled
     public static GADM_Settings__mdt getGadmSettings() {
-        GADM_Settings__mdt settings = [SELECT Empty_File_Size_B__c, Max_File_Size_MB__c, Max_Files_Count__c, Permitted_File_Extensions__c, Credentials_Name__c FROM GADM_Settings__mdt WHERE QualifiedApiName = 'GADM'];
+        GADM_Settings__mdt settings = [SELECT Empty_File_Size_B__c, Max_File_Size_MB__c, Max_Files_Count__c, Permitted_File_Extensions__c, Credentials_Name__c, IATA_Email_Contact__c FROM GADM_Settings__mdt WHERE QualifiedApiName = 'GADM'];
         return settings;
     }
 

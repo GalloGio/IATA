@@ -190,7 +190,7 @@
                                 <aura:set attribute="else">
                                     <div class="slds-size--1-of-1 slds-grid line">
                                         <div class="slds-col slds-size--6-of-12">
-                                            <div>No data </div>
+                                            <div>{! $Label.c.GADM_User_Management_no_data}</div>
                                         </div>
                                     </div>
                                 </aura:set>
@@ -219,7 +219,7 @@
                                 <aura:set attribute="else">
                                     <div class="slds-size--1-of-1 slds-grid line">
                                         <div class="slds-col slds-size--6-of-12">
-                                            <div>No data </div>
+                                            <div>{! $Label.c.GADM_User_Management_no_data}</div>
                                         </div>
                                     </div>
                                 </aura:set>
@@ -254,7 +254,7 @@
                                 <aura:set attribute="else">
                                     <div class="slds-size--1-of-1 slds-grid line">
                                         <div class="slds-col slds-size--6-of-12">
-                                            <div>No data </div>
+                                            <div>{! $Label.c.GADM_User_Management_no_data}</div>
                                         </div>
                                     </div>
                                 </aura:set>

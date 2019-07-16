@@ -4641,6 +4641,13 @@ You can choose one or more of the following topics:</value>
         <value>File uploaded successfully:</value>
     </labels>
     <labels>
+        <fullName>GADM_Data_Submission_help</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission help</shortDescription>
+        <value>Need help? Contact us at:</value>
+    </labels>
+    <labels>
         <fullName>GADM_Data_Submission_no_access</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4961,6 +4968,13 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>GADM_User_Management_gadm_user_domain_blocked</shortDescription>
         <value>User can not be activated for main account as user email domain does not match with allowed email domains for this actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_no_data</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Management no data</shortDescription>
+        <value>No data</value>
     </labels>
     <labels>
         <fullName>GADM_User_Management_no_records</fullName>

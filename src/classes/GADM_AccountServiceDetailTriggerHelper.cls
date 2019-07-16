@@ -9,6 +9,10 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
         List<GADM_Account_Service_Detail__c> toUpdate = new List<GADM_Account_Service_Detail__c>();
         List<GADM_Account_Service_Detail__c> toDelete = new List<GADM_Account_Service_Detail__c>();
 
+        List<GADM_Account_Service_Detail__c> toInsertGadmAccountServiceDetail = new List<GADM_Account_Service_Detail__c>();
+        List<GADM_Account_Service_Detail__c> toUpdateGadmAccountServiceDetail = new List<GADM_Account_Service_Detail__c>();
+        List<GADM_Account_Service_Detail__c> toDeleteGadmAccountServiceDetail = new List<GADM_Account_Service_Detail__c>();
+
         if(! tempMap.isEmpty()) {
             if(tempMap.get('Insert') != null) {
                 toInsert = tempMap.get('Insert');
@@ -18,6 +22,15 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
             }
             if(tempMap.get('Delete') != null) {
                 toDelete = tempMap.get('Delete');
+            }
+            if(tempMap.get('Insert_GadmAccountServiceDetail') != null) {
+                toInsertGadmAccountServiceDetail = tempMap.get('Insert_GadmAccountServiceDetail');
+            }
+            if(tempMap.get('Update_GadmAccountServiceDetail') != null) {
+                toUpdateGadmAccountServiceDetail = tempMap.get('Update_GadmAccountServiceDetail');
+            }
+            if(tempMap.get('Delete_GadmAccountServiceDetail') != null) {
+                toDeleteGadmAccountServiceDetail = tempMap.get('Delete_GadmAccountServiceDetail');
             }
 
             if(! toInsert.isEmpty()) {
@@ -41,6 +54,19 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
                 }
             }
 
+            if(! toInsertGadmAccountServiceDetail.isEmpty()) {
+                Map<Id, GADM_Account_Service_Detail__c> objMap = new Map<Id, GADM_Account_Service_Detail__c>(toInsertGadmAccountServiceDetail);
+                PlatformEvents_Helper.publishEvents(objMap, 'GadmAccountServiceDetail__e', 'GADM_Account_Service_Detail__c', true, false, false, false);
+            }
+            if(! toUpdateGadmAccountServiceDetail.isEmpty()) {
+                Map<Id, GADM_Account_Service_Detail__c> objMap = new Map<Id, GADM_Account_Service_Detail__c>(toUpdateGadmAccountServiceDetail);
+                PlatformEvents_Helper.publishEvents(objMap, 'GadmAccountServiceDetail__e', 'GADM_Account_Service_Detail__c', false, true, false, false);
+            }
+            if(! toDeleteGadmAccountServiceDetail.isEmpty()) {
+                Map<Id, GADM_Account_Service_Detail__c> objMap = new Map<Id, GADM_Account_Service_Detail__c>(toDeleteGadmAccountServiceDetail);
+                PlatformEvents_Helper.publishEvents(objMap, 'GadmAccountServiceDetail__e', 'GADM_Account_Service_Detail__c', false, false, true, false);
+            }
+
         }
 
 
@@ -50,44 +76,87 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
     private static Map<String, List<GADM_Account_Service_Detail__c>> findTriggerObjects(Map<Id, GADM_Account_Service_Detail__c> oldMap, Map<Id, GADM_Account_Service_Detail__c> newMap, Boolean isInsert, Boolean isUpdate, Boolean isDelete) {
         Map<String, List<GADM_Account_Service_Detail__c>> toReturn = new Map<String, List<GADM_Account_Service_Detail__c>>();
 
+        //insert trigger
         if(isInsert) {
             List<GADM_Account_Service_Detail__c> toInsert = new List<GADM_Account_Service_Detail__c>();
+            List<GADM_Account_Service_Detail__c> toInsertGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
             for(GADM_Account_Service_Detail__c detail : newMap.values()) {
-                if((detail.External_Actor_Id__c != null && detail.External_Actor_Id__c != '') || (detail.Expected_amount_of_data_submissions__c != null)) {
-                    toInsert.add(detail);
+                if(detail.Service_Name__c == 'GADM') {
+                    if((detail.External_Actor_Id__c != null && detail.External_Actor_Id__c != '')) {
+                        toInsert.add(detail);
+                    }
+                    if(detail.Expected_amount_of_data_submissions__c != null) {
+                        toInsertGadmAccountServiceDetails.add(detail);
+                    }
                 }
             }
             if(! toInsert.isEmpty()) {
                 toReturn.put('Insert', toInsert);
             }
+            if(! toInsertGadmAccountServiceDetails.isEmpty()) {
+                toReturn.put('Insert_GadmAccountServiceDetail', toInsertGadmAccountServiceDetails);
+            }
         }
 
+        //delete trigger
         if(isDelete) {
-            toReturn.put('Delete',oldMap.values());
+            List<GADM_Account_Service_Detail__c> toDelete = new List<GADM_Account_Service_Detail__c>();
+            for(GADM_Account_Service_Detail__c detail : oldMap.values()) {
+                if(detail.Service_Name__c == 'GADM') {
+                    toDelete.add(detail);
+                }
+            }
+            toReturn.put('Delete',toDelete);
+            toReturn.put('Delete_GadmAccountServiceDetail',toDelete);
         }
 
+        //update trigger
         if(isUpdate) {
             List<GADM_Account_Service_Detail__c> toUpdate = new List<GADM_Account_Service_Detail__c>();
             List<GADM_Account_Service_Detail__c> toDelete = new List<GADM_Account_Service_Detail__c>();
             List<GADM_Account_Service_Detail__c> toInsert = new List<GADM_Account_Service_Detail__c>();
 
+            //events for External_Actor_Id__c
             for(GADM_Account_Service_Detail__c accountServiceDetail : newMap.values()) {
+                if(accountServiceDetail.Service_Name__c != 'GADM') {continue;}
+
                 GADM_Account_Service_Detail__c oldObj = oldMap.get(accountServiceDetail.Id);
 
-                //no changes in monitored fields
-                if((oldObj.External_Actor_Id__c == accountServiceDetail.External_Actor_Id__c) && (oldObj.Expected_amount_of_data_submissions__c == accountServiceDetail.Expected_amount_of_data_submissions__c)) {
+                if(oldObj.External_Actor_Id__c == accountServiceDetail.External_Actor_Id__c) {
                     continue;
-                //values changed and are blank
-                }else if((accountServiceDetail.External_Actor_Id__c == null || accountServiceDetail.External_Actor_Id__c == '') && accountServiceDetail.Expected_amount_of_data_submissions__c == null) {
-                    toDelete.add(accountServiceDetail);
-                //values changed are not blank and old values were not blank
-                }else if(oldObj.External_Actor_Id__c != null || oldObj.External_Actor_Id__c != '' && oldObj.Expected_amount_of_data_submissions__c != null){
-                    toUpdate.add(accountServiceDetail);
-                //values changed are not blank and old values were blank
-                }else if(((oldObj.External_Actor_Id__c == null || oldObj.External_Actor_Id__c == '') && (accountServiceDetail.External_Actor_Id__c != null || accountServiceDetail.External_Actor_Id__c != '')) || (oldObj.Expected_amount_of_data_submissions__c == null && accountServiceDetail.Expected_amount_of_data_submissions__c != null)) {
-                    toInsert.add(accountServiceDetail);
                 }
 
+                if((oldObj.External_Actor_Id__c == null || oldObj.External_Actor_Id__c == '') && (accountServiceDetail.External_Actor_Id__c != null && accountServiceDetail.External_Actor_Id__c != '')) {
+                    toInsert.add(accountServiceDetail);
+                }else if(accountServiceDetail.External_Actor_Id__c == null || accountServiceDetail.External_Actor_Id__c == '') {
+                    toDelete.add(accountServiceDetail);
+                }else if(oldObj.External_Actor_Id__c != accountServiceDetail.External_Actor_Id__c) {
+                    toUpdate.add(accountServiceDetail);
+                }
+
+            }
+
+            List<GADM_Account_Service_Detail__c> toUpdateGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
+            List<GADM_Account_Service_Detail__c> toDeleteGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
+            List<GADM_Account_Service_Detail__c> toInsertGadmAccountServiceDetails = new List<GADM_Account_Service_Detail__c>();
+
+            //events for Expected_amount_of_data_submissions__c
+            for(GADM_Account_Service_Detail__c accountServiceDetail : newMap.values()) {
+                if(accountServiceDetail.Service_Name__c != 'GADM') {continue;}
+
+                GADM_Account_Service_Detail__c oldObj = oldMap.get(accountServiceDetail.Id);
+
+                if(oldObj.Expected_amount_of_data_submissions__c == accountServiceDetail.Expected_amount_of_data_submissions__c) {
+                    continue;
+                }
+
+                if(oldObj.Expected_amount_of_data_submissions__c == null && accountServiceDetail.Expected_amount_of_data_submissions__c != null) {
+                    toInsertGadmAccountServiceDetails.add(accountServiceDetail);
+                }else if(accountServiceDetail.Expected_amount_of_data_submissions__c == null) {
+                    toDeleteGadmAccountServiceDetails.add(accountServiceDetail);
+                }else if(oldObj.Expected_amount_of_data_submissions__c != accountServiceDetail.Expected_amount_of_data_submissions__c) {
+                    toUpdateGadmAccountServiceDetails.add(accountServiceDetail);
+                }
             }
 
             if(! toUpdate.isEmpty()) {
@@ -99,8 +168,20 @@ public without sharing class GADM_AccountServiceDetailTriggerHelper {
             if(! toInsert.isEmpty()) {
                 toReturn.put('Insert', toInsert);
             }
+
+            if(! toUpdateGadmAccountServiceDetails.isEmpty()) {
+                toReturn.put('Update_GadmAccountServiceDetail', toUpdateGadmAccountServiceDetails);
+            }
+            if(! toDeleteGadmAccountServiceDetails.isEmpty()) {
+                toReturn.put('Delete_GadmAccountServiceDetail', toDeleteGadmAccountServiceDetails);
+            }
+            if(! toInsertGadmAccountServiceDetails.isEmpty()) {
+                toReturn.put('Insert_GadmAccountServiceDetail', toInsertGadmAccountServiceDetails);
+            }
+
+
         }
-        System.debug('events:: ' + toReturn);
+
         return toReturn;
     }
 
