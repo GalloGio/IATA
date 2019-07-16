@@ -11493,8 +11493,8 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label>&lt;ul&gt; &lt;li&gt;Gère les fonds du ou des portefeuilles attribués&lt;/li&gt; &lt;li&gt;Gère l’accès des utilisateurs IATA EasyPay de l’«Émetteur de billets» et les sous-portefeuilles&lt;/li&gt; &lt;li&gt;Génère des numéros IATA EasyPay depuis le ou les portefeuilles attribués devant être utilisés pour émettre des billets via le GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Génère des numéros IATA EasyPay depuis tout portefeuille attribué devant être utilisé pour émettre des billets via le GDS&lt;/li&gt;&lt;/ul&gt;</label>
