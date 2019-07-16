@@ -26775,22 +26775,6 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Operational Calendar</value>
     </labels>
     <labels>
-        <fullName>ISSP_OperationalCalendar_BSPCASSFilter</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_OperationalCalendar_BSPCASSFilter</shortDescription>
-        <value>BSP/CASS</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_OperationalCalendar_BSPCASS_Filter_Required</fullName>
-        <categories>ISSP, OperationalCalendar</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_OperationalCalendar_BSPCASS_Filter_Required</shortDescription>
-        <value>Please, select a value in BSP/CASS filter</value>
-    </labels>
-    <labels>
         <fullName>ISSP_OperationalCalendar_Billing_Period</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -26821,6 +26805,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_CurrencyFilter</shortDescription>
         <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_CycleFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_CycleFilter</shortDescription>
+        <value>Cycle</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_DownloadDate</fullName>
@@ -26927,12 +26919,36 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Show Calendar</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_SubtypeFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_SubtypeFilter</shortDescription>
+        <value>Calendar Subtype</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_Sync_Calendar</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Sync_Calendar</shortDescription>
         <value>Sync Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_TypeFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_TypeFilter</shortDescription>
+        <value>Calendar Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Type_Filter_Required</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Type_Filter_Required</shortDescription>
+        <value>Operation Type or Subtype required</value>
     </labels>
     <labels>
         <fullName>ISSP_Opt_In</fullName>
