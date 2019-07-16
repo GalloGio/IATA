@@ -86,8 +86,9 @@ public with sharing class PortalProfileCtrlTest {
             List<Account> branches = PortalProfileCtrl.getCompanyBranches(0);
             List<Account> searchBranches = PortalProfileCtrl.searchCompanyBranches('test',0);
 
+            Boolean hasAnnualRevalidation = PortalProfileCtrl.hasAnnualRevalidation();
 
-
+            System.assert(!hasAnnualRevalidation);
             System.assert(!contacts.isEmpty());
             System.assert(!branches.isEmpty());
         }

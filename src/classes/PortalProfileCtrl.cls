@@ -305,6 +305,28 @@ public with sharing class PortalProfileCtrl {
         return rType == 'IATA_Agency';
     }
 
+    @AuraEnabled
+    public static Boolean hasAnnualRevalidation(){
+        String rType = myContact.Account.RecordType.DeveloperName;
+        return rType =='IATA_Agency' && hasRevCases();
+    }
+
+    @AuraEnabled
+    public static boolean hasRevCases(){
+
+        if(myContact.AccountId != null){
+            List<Case> revCases = [SELECT Id FROM Case
+            WHERE (AccountId = :myContact.AccountId OR AccountId = :myContact.Account.Top_Parent__c)
+            AND Reason1__c = 'Annual revalidation'
+            AND Status != 'Closed'
+            AND Status != 'Closed_Rejected'
+            AND Status != 'Closed_Withdrawn'];
+
+            return !revCases.isEmpty();
+        }
+        return false;
+    }
+
 
     /**
     *
