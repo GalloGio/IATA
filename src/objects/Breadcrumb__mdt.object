@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Breadcrumb</label>
-    <pluralLabel>Breadcrumbs</pluralLabel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Environment__c</fullName>
         <description>Contains the environment for this record. eg: csportal, backoffice, etc</description>
@@ -35,4 +32,7 @@
         <label>Replace With Param</label>
         <type>Checkbox</type>
     </fields>
+    <label>Breadcrumb</label>
+    <pluralLabel>Breadcrumbs</pluralLabel>
+    <visibility>Public</visibility>
 </CustomObject>
