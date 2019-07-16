@@ -11458,8 +11458,8 @@ and
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label>&lt;ul&gt; &lt;li&gt;지정된 서브 전자 지갑의 자금을 관리&lt;/li&gt; &lt;li&gt;“항공권 발권자” IATA EasyPay 사용자 접근 권한과 서브 전자 지갑을 관리&lt;/li&gt; &lt;li&gt;GDS를 통해 항공권을 발권하는 데 사용하기 위해 지정된 전자 지갑에서 IATA EasyPay 번호를 생성&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;GDS를 통해 항공권을 발권하는 데 사용하기 위해 임의의 지정된 전자 지갑에서 IATA EasyPay 번호를 생성&lt;/li&gt;&lt;/ul&gt;</label>

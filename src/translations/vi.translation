@@ -11455,8 +11455,8 @@ and
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label>&lt;ul&gt; &lt;li&gt;Quản lý tiền của (các) Ví điện tử Phụ đã được gán&lt;/li&gt; &lt;li&gt;Quản lý quyền truy cập của người dùng IATA EasyPay “Đơn vị Phát hành vé”’ và (các) Ví điện tử Phụ&lt;/li&gt; &lt;li&gt;Tạo Mã số IATA EasyPay từ (các) ví điện tử đã được gán nhằm được dùng để phát hành vé qua GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Tạo Mã số IATA EasyPay từ bất kỳ ví điện tử đã được gán nào nhằm được dùng để phát hành vé qua GDS&lt;/li&gt;&lt;/ul&gt;</label>

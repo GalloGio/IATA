@@ -4,6 +4,41 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>Cases_Emirates</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND 2 AND 3 AND 4) OR (1 AND 4 AND (5 OR 6))</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>equals</operation>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Name</field>
+                <operation>equals</operation>
+                <value>Emirates</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Sector__c</field>
+                <operation>equals</operation>
+                <value>Airline</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>notContain</operation>
+                <value>E&amp;F</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>91207546</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>91207546,36210436,3620010,5729277,5720020</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_IATAN</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
@@ -4505,30 +4540,6 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_Emirates</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Account.Name</field>
-                <operation>equals</operation>
-                <value>Emirates</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Account.Sector__c</field>
-                <operation>equals</operation>
-                <value>Airline</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>notContain</operation>
-                <value>E&amp;F</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 OR 2</booleanFilter>
@@ -5837,7 +5848,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>IDFS Airline Participation Process</value>
+                <value>IDFS Airline Participation Process,FDS ASP Management</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
