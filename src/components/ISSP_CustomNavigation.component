@@ -566,7 +566,7 @@ background-color:#428bca;
   <apex:includeScript value="/lightning/lightning.out.js"/>
   <apex:stylesheet value="{!URLFOR($Resource.PortalHeader_NotiticationCenter_Tab_CSS, '/CSP_CSS/portalHeader_NotiticationCenter_Tab_CSS.css')}"/>
   <script>
-      $Lightning.use("c:portalHeaderApp", function() {
+      $Lightning.use("c:pageBuilderApp", function() {
           $Lightning.createComponent(
               "c:portalHeader",
               {isInOldPortal: true},

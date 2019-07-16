@@ -1417,8 +1417,8 @@ visibility: hidden;
 }
 
 /* USER INACTIVE POPUP */
-#div>.siteforcePanelsContainer{
-    z-index: 5000;
+.siteforcePanelsContainer>div{
+    z-index: 5000 !important;
 }
 
 .headerContainerShadow {
