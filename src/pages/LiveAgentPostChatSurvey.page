@@ -57,6 +57,7 @@
           margin-left: -60px;
           margin-top: 30px;
           position: fixed;
+          color: rgb(32, 106, 164);
         }
         .inputField {
             border-color: #337ab7;
@@ -87,7 +88,7 @@
       });
     </script>
 <!--onload=" resizeTo(400,680);"-->
-    <body >
+    <body style="background-color: rgb(240, 242, 245)">
         <apex:form >
             <apex:image url="{!$Resource.IATAlogo}" width="65" height="40" styleClass="iataLogo"/>
             <apex:outputPanel id="surveyPanel" layout="none">

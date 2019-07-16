@@ -291,6 +291,7 @@
     }
     
     function clearShrinkChat(){
+        document.getElementById("liveAgentChatLog").style.height = "";
         document.getElementById("livechatcontainer").style.height = "calc(100% - 71px)";
         transferAttempt = false;
     }
@@ -386,15 +387,7 @@
     			background-image: linear-gradient(to bottom,#c34a47 0,#dc6460 100%);
     			color: #a71919;
     			border: 1px solid #a71919;
-		 }
-        
-        .liveAgentFileSendButton{
-            border: none;
-            color: white;
-            background: rgb(66, 139, 202);
-            margin: 5px;
-            width: 50px;
-        }
+		}
 
         .liveAgentChatInput {
             width: calc(100% - 60px);
@@ -606,10 +599,46 @@
             margin:5px;
             height: 50px;
             display: inline-block;
-            width: calc(100% - 23px);
+            width: calc(100% - 10px);
             padding: 5px;
             border-radius: 0px;
-        	background-color: #0b3f75;
+        	background-color: #1e32fa;
+        }
+
+        #liveAgentChatInput::placeholder {
+            color: #999;
+            opacity: 1;
+        }
+
+        #liveAgentChatInput:-ms-input-placeholder {
+            color: #999;
+        }
+        
+        .liveAgentFileCancelButton {
+            font-size: 13px;
+            border-radius: 0px;
+            margin-left: 12px;
+            height: 30px;
+            width: 90px;
+            border-radius: 1px;
+            border: solid 1px #e2e2e2;
+            background: white;
+            color: #525252;
+        }
+
+        .liveAgentFileSendButton {
+            font-size: 13px;
+            border-radius: 0px;
+            height: 30px;
+            width: 90px;
+            border: none;
+            background: rgb(66, 139, 202);
+            color: white;
+            margin: 5px;
+        }
+
+        #liveAgentChatInput {
+            color: #333;
         }
 
         #fileDragLink {
@@ -739,26 +768,26 @@
             z-index: 99999;
           }
         
-    	  #headerbackground{
-              overflow: hidden;
-        //max-width: 410px;
-        //    max-height: max-content;
+    	  #headerbackground {
+            overflow: hidden;
+            //max-width: 410px;
+            //max-height: max-content;
             //float: none;
             margin: 0 auto;
         	//overflow: overlay;
         	overflow-y: auto;
-        //width: 400px;
+            //width: 400px;
     		height: 100%;
 		  }
         
       	  
-      	  #chatbuttonsbackground{
+      	  #chatbuttonsbackground {
         	text-align: center;
         	position: relative;
         	width: 100%;
       	  }
       	  
-      	  #livechatcontainer{
+      	  #livechatcontainer {
             position: relative;
             width: 100%;
             height: 0;
@@ -782,7 +811,7 @@
             }
         }*/
       	  
-      	  .buttonEnd {
+      	.buttonEnd {
 			padding: 7px 7px;
             background-image: linear-gradient(to bottom,#f8f8f8 0,#f8f8f8 100%);
             background: #f8f8f8;
@@ -792,15 +821,15 @@
             border-radius: 0px;
             border: 1px solid #3273ad;
             color: #3273ad;
-          }
+        }
           
-          .buttonEnd:hover { 
+        .buttonEnd:hover { 
     			//background-image: linear-gradient(to bottom,#c34a47 0,#dc6460 100%);
     			color: #a71919;
     			border: 1px solid #a71919;
-		  }
+		}
 		   
-		  .buttonSave {
+		.buttonSave {
 		  	padding: 7px 7px;
             background-image: linear-gradient(to bottom,#f8f8f8 0,#f8f8f8 100%);
             background: #f8f8f8;
@@ -810,20 +839,20 @@
             border-radius: 0px;
             border: 1px solid #3273ad;
             color: #3273ad;
-          }
+        }
           
-          .buttonSave:hover { 
-    			//background-image: linear-gradient(to bottom,#499349 0,#6cbf6c 100%);
-    			color: #32ab1e;
-    			border: 1px solid #32ab1e;
-		  }
+        .buttonSave:hover { 
+            //background-image: linear-gradient(to bottom,#499349 0,#6cbf6c 100%);
+            color: #32ab1e;
+            border: 1px solid #32ab1e;
+		}
 		   
-		  .savebutton, .endbutton{
-				width: 49%;
-    			display: inline-block;
-    			text-align: center;
-    			margin: auto;
-    		}
+		.savebutton, .endbutton{
+            width: 49%;
+            display: inline-block;
+            text-align: center;
+            margin: auto;
+    	}
 
         .btnDiv{
             display: inline-block;
@@ -857,120 +886,120 @@
         /*font-weight: 500;*/
         }
 
-			#laSaveButton{
-				display:none;
-			}
-			
-			#laEndButton{
-				display:none;
-			}
-			
-			#chatbuttonscontainer{
-				display:none;
-			}
-			
-			#headerImage, #headerImageEnd{
-			    width: 100%;
-			    height: 50px;
-			    margin: auto;
-        		display: inline-flex;
-                position: relative;
-                box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
-            }
-
-        	#divImage, #divImageEnd{
-                padding: 10px;
-                background-color: white;
-                z-index: 1;
-                position: absolute;
-                display: inline-flex;
-                /* padding-top: 10px; */
-                margin-top: 5px;
-                margin-left: 5px;
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            }
-            
-            #divImage, #divImageEnd{
-                display: none;
-            }
-		
-			#livechat, #livechatEnd{
-                width: 100%;
-                color: #fff;
-                text-decoration-color: white;
-                padding: 12px 16px;
-                font-size: 18px;
-                text-align: left;
-                font-weight: 500;
-                background-color: #1e32fa;
-                position: absolute;
-                display: inline-flex;
-                align-items: center;
-                justify-content: space-between;
-    		}
-    			
-    		#liveAgentClientChatSettings{
-    			height: 100%;
-    		}
-    		
-    		#liveAgentClientChat{
-    			height: 100%;
-            }
-            
-            #liveAgentClientChat form[action="javascript://submit"]{
-                width: 100%;
-                display: inline-flex;
-                background-color: #fff;
-                border-top: 1px solid #ccc;
-                padding: 5px;
-            }
-    		
-    		#liveAgentChatElement{
-    			height: 75%;
-    		}
-    		
-    		#liveAgentChatInput{
-                height: 50px;
-                outline: unset;
-    		}
+        #laSaveButton{
+            display:none;
+        }
         
-        	#liveAgentChatLogAlertMessage{
-        		font-size: 12px;
-        		position: relative;
-        	}
-			
-			#photo-container{
-				display:none;
-				width: 65px;
-				height: 65px;
-			}
-			
-			.photocontainer {
-                border-radius: 50%;
-                position: relative;
-                overflow: hidden;
-        		display: inline-flex;
+        #laEndButton{
+            display:none;
+        }
+        
+        #chatbuttonscontainer{
+            display:none;
+        }
+        
+        #headerImage, #headerImageEnd{
+            width: 100%;
+            height: 50px;
+            margin: auto;
+            display: inline-flex;
+            position: relative;
+            box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+        }
 
-            }
+        #divImage, #divImageEnd{
+            padding: 10px;
+            background-color: white;
+            z-index: 1;
+            position: absolute;
+            display: inline-flex;
+            /* padding-top: 10px; */
+            margin-top: 5px;
+            margin-left: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        
+        #divImage, #divImageEnd{
+            display: none;
+        }
+    
+        #livechat, #livechatEnd{
+            width: 100%;
+            color: #fff;
+            text-decoration-color: white;
+            padding: 12px 16px;
+            font-size: 18px;
+            text-align: left;
+            font-weight: 500;
+            background-color: #1e32fa;
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+        }
             
-            #agentphoto{
-                display: block;           
-                min-width: 100%;
-                min-height: 100%;
-                width: 65px;
-                height: 65px;
-            }
-            
-            #chatAgent{
-        		display: none;
-        //height: max-content;
-            	line-height: 1.2;
-                padding-bottom: 10px;
-                padding-left: 5px;
-            	position: relative;
-            	width: 100%;
-        		margin-top: 14px;
-            }
+        #liveAgentClientChatSettings{
+            height: 100%;
+        }
+        
+        #liveAgentClientChat{
+            height: 100%;
+        }
+        
+        #liveAgentClientChat form[action="javascript://submit"]{
+            width: 100%;
+            display: inline-flex;
+            background-color: #fff;
+            border-top: 1px solid #ccc;
+            padding: 5px;
+        }
+        
+        #liveAgentChatElement{
+            height: 75%;
+        }
+        
+        #liveAgentChatInput{
+            height: 50px;
+            outline: unset;
+        }
+    
+        #liveAgentChatLogAlertMessage{
+            font-size: 12px;
+            position: relative;
+        }
+        
+        #photo-container{
+            display:none;
+            width: 65px;
+            height: 65px;
+        }
+        
+        .photocontainer {
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+
+        }
+        
+        #agentphoto{
+            display: block;           
+            min-width: 100%;
+            min-height: 100%;
+            width: 65px;
+            height: 65px;
+        }
+        
+        #chatAgent{
+            display: none;
+            //height: max-content;
+            line-height: 1.2;
+            padding-bottom: 10px;
+            padding-left: 5px;
+            position: relative;
+            width: 100%;
+            margin-top: 14px;
+        }
           
         .panel-heading {
         	
@@ -984,78 +1013,79 @@
         	padding-top: 5px;
         }
         
-        	a {
-                color: white;
-            }
-            /* mouse over link */
-            a:hover {
-                color: grey;
-            }
-            
-            /* selected link */
-            a:active {
-                color: grey;
-            }
+        a {
+            color: white;
+        }
+        /* mouse over link */
+        a:hover {
+            color: grey;
+        }
+        
+        /* selected link */
+        a:active {
+            color: grey;
+        }
             
         
-            #agent-info{
-        //text-align: left;
-                padding-left: 10px;
-                color: #3273ad;
-                height: fit-content;
-        //display: inline-table;
-                padding-top: 5px;
+        #agent-info {
+            //text-align: left;
+            padding-left: 10px;
+            color: #3273ad;
+            height: fit-content;
+            //display: inline-table;
+            padding-top: 5px;
             width: calc(100% - 80px);
-            }
+        }
             
-            #agent-info-name{
-				font-size: 15px;
-				font-weight: bold;
-            }
-            
-            #agent-info-job{
-				font-weight: bold;
-				font-style: italic;
-        		font-size: 12px;
-            }
+        #agent-info-name{
+            font-size: 15px;
+            font-weight: bold;
+        }
         
-        	#agent-languages{
-        		font-size: 11px;
-            	height: fit-content;
-            }
-            
-            #fileCancelButton{
-            	font-size: 13px;
-            	border-radius: 0px;
-    			margin-left: 12px;
-			}
-            #fileSendButton{
-            	font-size: 13px;
-            	border-radius: 0px;
-            }
+        #agent-info-job{
+            font-weight: bold;
+            font-style: italic;
+            font-size: 12px;
+        }
+    
+        #agent-languages{
+            font-size: 11px;
+            height: fit-content;
+        }
+        
+        #fileCancelButton{
+            font-size: 13px;
+            border-radius: 0px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+        #fileSendButton{
+            font-size: 13px;
+            border-radius: 0px;
+        }
 
-            .bubbleMessageContainer {
-                display: inline-flex;
-                align-items: flex-end;
-                margin-bottom: 5px;
-            }
+        .bubbleMessageContainer {
+            display: inline-flex;
+            align-items: flex-end;
+            margin-bottom: 5px;
+        }
 
-            .liveAgentStateWaiting {
-                display: none;
-            }
+        .liveAgentStateWaiting {
+            display: none;
+        }
 
-            .liveAgentEndButtonTopHeader {
-                border: unset;
-                background: unset;
-                color: #fff;
-                font-size: 14px;
-                font-weight: 500;
-            }
-			
+        .liveAgentEndButtonTopHeader {
+            border: unset;
+            background: unset;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+        }
+		
     </style>
 
 
-	<body style="height:100%">
+	<body style="height:100%; background-color: rgb(240, 242, 245)">
     <!--<body onload=" resizeTo(400,680);">-->
     <div id="headercontainer" class="container">
         <div id="headerbackground" class="row">
