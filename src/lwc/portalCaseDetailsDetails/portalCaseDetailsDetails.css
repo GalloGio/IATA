@@ -10,3 +10,7 @@
 .arrowExpanded{
     transform: rotate(90deg);
 }
+
+.blue{
+    color:blue;
+}
