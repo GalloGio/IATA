@@ -1107,7 +1107,7 @@ private class ISSP_APProcess_Test
         Test.stopTest();
     }
 
-    @isTest static void test_sendEmail() {
+    @isTest static void test_sendEmail1() {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
         insert country;
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -1148,6 +1148,42 @@ private class ISSP_APProcess_Test
             newCase.Region__c = 'Americas';
             newCase.BSPCountry__c = 'Canada';
             ctrl.sendConfirmationEmail(newCase);
+        }
+        Test.stopTest();
+
+    }
+
+    @isTest static void test_sendEmail2() {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal');
+        insert country;
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        insert parent;
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.ParentId = parent.Id;
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        insert child;
+        child.Top_Parent__c = null;
+        update child;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= child.Id;
+        insert con;
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        con.OwnerId = newUser.Id;
+        update con;
+
+        Case newCase = new Case(ContactId = con.Id);
+        insert newCase;
+
+        Test.startTest();
+        System.runAs(newUser) {
+            PageReference pr = Page.ISSP_APCases;
+            pr.getParameters().put('caseId', newCase.Id);
+            ISSP_APProcess ctrl = new ISSP_APProcess();
+
             newCase.BSPCountry__c = 'Brazil';
             ctrl.sendConfirmationEmail(newCase);
             newCase.BSPCountry__c = '';
