@@ -2693,52 +2693,7 @@
         <fullName>FieldsExcludedFromTracking</fullName>
         <description>The fields in this list will be tracked on the Account Tracking History object</description>
         <label>FieldsExcludedFromTracking</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>GCS_CompanyContact</fullName>
-        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex. This set is used for all record types, field access is hardcoded.</description>
-        <displayedFields>
-            <field>Phone</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Fax</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Email__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>BillingStreet</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>BillingCity</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>BillingPostalCode</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>BillingCountry</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>GCS Company Contact</label>
-    </fieldSets>
+	</fieldSets>    
     <fieldSets>
         <fullName>GCS_Profile_Agency</fullName>
         <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
@@ -2850,30 +2805,50 @@
         <label>GCS Company Profile - Airline</label>
     </fieldSets>
     <fieldSets>
-        <fullName>GCS_Profile_GSA</fullName>
-        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
+        <fullName>GCS_CompanyContact</fullName>
+        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex. This set is used for all record types, field access is hardcoded.</description>
         <displayedFields>
-            <field>Legal_name__c</field>
+            <field>Phone</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>IATACode__c</field>
+            <field>Fax</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Sector__c</field>
+            <field>Email__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Category__c</field>
+            <field>Website</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
-        <label>GCS Company Profile - GSA</label>
-    </fieldSets>
+        <displayedFields>
+            <field>BillingStreet</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>BillingCity</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>BillingPostalCode</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>BillingCountry</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>GCS Company Contact</label>
+    </fieldSets>      
     <fieldSets>
         <fullName>GCS_Profile_Others</fullName>
         <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
@@ -2959,6 +2934,31 @@
         </displayedFields>
         <label>ISSP Notification Trigger Field Set</label>
     </fieldSets>
+    <fieldSets>
+        <fullName>GCS_Profile_GSA</fullName>
+        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
+        <displayedFields>
+            <field>Legal_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATACode__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Sector__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Category__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>GCS Company Profile - GSA</label>
+    </fieldSets>		
     <fieldSets>
         <fullName>TrackingHistory</fullName>
         <description>The fields in this list will be tracked on the Account Tracking History object</description>
