@@ -4645,7 +4645,7 @@ You can choose one or more of the following topics:</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GADM Data Submission help</shortDescription>
-        <value>Need help? Contact us at:</value>
+        <value>Need help? Contact us at: {0}</value>
     </labels>
     <labels>
         <fullName>GADM_Data_Submission_no_access</fullName>
@@ -4765,6 +4765,13 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>GADM_FileAlreadyAttached</shortDescription>
         <value>This file is already attached!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Ground_Service_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Ground Service Provider</shortDescription>
+        <value>Ground Service Provider</value>
     </labels>
     <labels>
         <fullName>GADM_Invite_User_invitation_error</fullName>
