@@ -68,7 +68,7 @@ public class AMS_AgencyAChangeCodeHandler {
     	UpdateReasonCode(aacc, true);
 
         for(Agency_Applied_Change_code__c aaccRecord : aacc){
-            if(aaccRecord.AIMS_ID__c.right(1) != 'A' && aaccRecord.Operation__c == 'A')
+            if(aaccRecord.AIMS_ID__c != null && aaccRecord.AIMS_ID__c.right(1) != 'A' && aaccRecord.Operation__c == 'A')
                 aaccRecord.AIMS_ID__c = aaccRecord.AIMS_ID__c + '_A';
         }
     }
