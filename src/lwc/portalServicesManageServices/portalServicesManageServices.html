@@ -104,7 +104,7 @@
                                             </lightning-input>
                                         </div>
 
-                                        <template if:true={displayAdminView}>
+                                        <template if:true={canAddUsers}>
                                             <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
                                                 <lightning-button variant="brand" label={label.addNewUser} title={label.addNewUser}
                                                                   class="slds-float_right containedButton" onclick={toggleAddUserModal}>

@@ -1,6 +1,6 @@
 /**
  * Created by pvavruska on 7/15/2019.
-   Used to search & add user records
+   Used to search & add user records to portal services
 
  */
 import { LightningElement, track, api } from 'lwc';
@@ -51,8 +51,6 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
 
     @api
     setSearchResults(results) {
-        console.log('setSearchResults...')
-        console.log(results);
         this.searchFlag = false;
         this.searchResults = results.map(result => {
             if (typeof result.icon === 'undefined') {
@@ -209,7 +207,6 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
 
     handleAddAll(event){
         this.selection = this.searchResults;
-        console.log('searchResults '+this.selection.length);
         this.dispatchEvent(new CustomEvent('addall'));
 
     }
@@ -258,7 +255,14 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
         this.selection = [];
 
         if (event.target.value.length > 0) {
-            this.updateSearchTerm(event.target.value);
+            this.searchFlag  = true;
+            const searchEvent = new CustomEvent('search', {
+                detail: {
+                    searchTerm: this.searchTerm,
+                    selectedIds: this.selection.map(element => element.id)
+                }
+            });
+            this.dispatchEvent(searchEvent);
         }else{
             const searchEvent = new CustomEvent('search', {
                 detail: {
@@ -268,8 +272,6 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
             });
             this.dispatchEvent(searchEvent);
         }
-        // Notify parent components that selection has changed
-        //this.dispatchEvent(new CustomEvent('selectionchange'));
     }
 
 
@@ -277,7 +279,7 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
 
     get getContainerClass() {
         let css = 'slds-combobox_container squareShadow slds-has-inline-listbox squareBorder slds-p-around_small ';
-        if (this.hasFocus) {//if (this.hasFocus && this.hasResults()) {
+        if (this.hasFocus) {
             css += 'slds-has-input-focus ';
         }
         if (this.errors.length > 0) {
@@ -288,7 +290,7 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
 
     get getDropdownClass() {
         let css = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ';
-        if (this.hasFocus) {//if (this.hasFocus && this.hasResults()) {
+        if (this.hasFocus) {
             css += 'slds-is-open';
         } else {
             css += 'slds-combobox-lookup';
@@ -307,12 +309,7 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
     }
 
     get getComboboxClass() {
-        let css = 'slds-combobox__form-element';//let css = 'slds-combobox__form-element slds-input-has-icon ';
-        if (this.isMultiEntry) {
-            css += 'slds-input-has-icon_right';
-        } else {
-            //css += (this.hasSelection() ? 'slds-input-has-icon_left-right' : 'slds-input-has-icon_right');
-        }
+        let css = 'slds-combobox__form-element';
         return css;
     }
 
@@ -340,7 +337,7 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
     }
 
     get getInputValue() {
-        return this.searchTerm;//return this.hasSelection() ? this.selection[0].title : this.searchTerm;
+        return this.searchTerm;
     }
 
     get getListboxClass() {

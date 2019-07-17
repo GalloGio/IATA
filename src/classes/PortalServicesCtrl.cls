@@ -1035,7 +1035,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
             contactsQuery += ' AND (Name LIKE \'%'+queryString+'%\' ) ';
         }
 
-        contactsQuery+=' LIMIT 20';
+        contactsQuery+=' ORDER BY NAME LIMIT 20';
 
         contacts = Database.query(contactsQuery);
 
@@ -1119,14 +1119,14 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
    Cannot_be_managed_by_portal_admin__c = false. Also, there is an exception for IATA EasyPay services, which can be requested even when flag is false.
     **/
     @AuraEnabled
-    public static Boolean isRequestableWithoutApproval(Boolean isAdmin, String serviceId) {
+    public static Boolean newUserRequestableWithoutApproval(Boolean isAdmin, String serviceId) {
 
         List<Portal_Applications__c> portalServices = [SELECT Id,Name,Cannot_be_managed_by_portal_admin__c FROM Portal_Applications__c WHERE Id=:serviceId];
 
         if(!portalServices.isEmpty()){
             Boolean isEasyPay = portalServices[0].Name.contains('IATA EasyPay');
 
-            Boolean canManage = portalServices[0].Cannot_be_managed_by_portal_admin__c == true || isEasyPay;
+            Boolean canManage = portalServices[0].Cannot_be_managed_by_portal_admin__c == false || isEasyPay;
 
             return isAdmin && canManage;
         }
