@@ -8,12 +8,13 @@ public class AMS_AgencyAChangeCodeHandler {
     }
 
     private static Map<Id, Account> mapAccntToUpdate = new Map<Id, Account>();
-     
+    private static Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
+    private static Id stdRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Standard');
+
     public static void handleAfterInsert(List<Agency_Applied_Change_code__c> aacc) {
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
             verifyActiveAACCuniqueness(aacc);
         Set<Id> setIdAACC = new Set<Id>();
-        Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
 
         /*** AMSU-198 ***/
@@ -57,7 +58,7 @@ public class AMS_AgencyAChangeCodeHandler {
             notifyAirlines(accToProcessPayment);
         }
     }
-    
+
     /*** AMSU-198 ***/
     public static void notifyAirlines(List<Agency_Applied_Change_code__c> aaccs) {
         Database.executeBatch(new AMS_MajorDefaultCommunication(aaccs), 50);
@@ -65,6 +66,11 @@ public class AMS_AgencyAChangeCodeHandler {
     
     public static void handleBeforeUpdate(List<Agency_Applied_Change_code__c> aacc){
     	UpdateReasonCode(aacc, true);
+
+        for(Agency_Applied_Change_code__c aaccRecord : aacc){
+            if(aaccRecord.AIMS_ID__c.right(1) != 'A' && aaccRecord.Operation__c == 'A')
+                aaccRecord.AIMS_ID__c = aaccRecord.AIMS_ID__c + '_A';
+        }
     }
 
     public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc, Map<Id, Agency_Applied_Change_code__c> triggerOldMap) {
@@ -111,9 +117,24 @@ public class AMS_AgencyAChangeCodeHandler {
     }
 
     public static void handleBeforeInsert(List<Agency_Applied_Change_code__c> aacc){
-    	UpdateReasonCode(aacc, false);
+
+        Set<String> accIrregularities = new Set<String> {'IRR','IRS','IRW'};
+        Set<String> locationClassesUnpublish = new Set<String> {'M','T','G','X'};
+
+        UpdateReasonCode(aacc, false);
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
             migrateFieldsFromStagingToAccount(aacc);
+
+        for(Agency_Applied_Change_code__c aaccRecord : aacc){
+
+            aaccRecord.RecordTypeId = accIrregularities.contains(aaccRecord.Change_Code__c) ? irregRtId : stdRtId;
+
+            if(locationClassesUnpublish.contains(aaccRecord.AccountLocationClass__c) || (aaccRecord.OSCAR__c != null && aaccRecord.OscarProcess__c.contains('CER.1.0')))
+                aaccRecord.To_Publish_in_e_Bulletin__c = false;
+
+            if(aaccRecord.AIMS_ID__c != null && aaccRecord.AIMS_ID__c.right(1) != 'A' && aaccRecord.Operation__c == 'A')
+                aaccRecord.AIMS_ID__c = aaccRecord.AIMS_ID__c + '_A';
+        }        
     }
     
     //DTULLO: marked as future because some change codes are generated from account changes (minor changes)
@@ -234,7 +255,7 @@ public class AMS_AgencyAChangeCodeHandler {
 	public static void UpdateReasonCode(List<Agency_Applied_Change_code__c> aacc, Boolean bIsUpdate){
 		Map<String, Map<String,String>> mapStatusReason = new Map<String, Map<String, String>>();
 		
-		for(AMS_Status_Reason__c lsr : [SELECT Status_Description__c, Reason_Code__c, Reason_Description__c FROM AMS_Status_Reason__c]){
+		for(AMS_Status_Reason__c lsr : AMS_Status_Reason__c.getAll().values()){
 			Map<String, String> mapReason;
 			if(mapStatusReason.containsKey(lsr.Status_Description__c))
 				mapReason = mapStatusReason.get(lsr.Status_Description__c);
