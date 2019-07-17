@@ -1937,7 +1937,7 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
-        <label>ยินดีต้อนรับ [ชื่อผู้ใช้]</label>
+        <label>ยินดีต้อนรับ [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>

@@ -2693,52 +2693,7 @@
         <fullName>FieldsExcludedFromTracking</fullName>
         <description>The fields in this list will be tracked on the Account Tracking History object</description>
         <label>FieldsExcludedFromTracking</label>
-	</fieldSets>
-    <fieldSets>        
-    	<fullName>GCS_CompanyContact</fullName>
-        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex. This set is used for all record types, field access is hardcoded.</description>
-        <displayedFields>
-            <field>Phone</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Fax</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Email__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>BillingStreet</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>BillingCity</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>BillingPostalCode</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>BillingCountry</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>GCS Company Contact</label>
-    </fieldSets>
+	</fieldSets>    
     <fieldSets>
         <fullName>GCS_Profile_Agency</fullName>
         <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
@@ -2893,142 +2848,7 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>GCS Company Contact</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>GCS_Profile_Agency</fullName>
-        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
-        <displayedFields>
-            <field>Legal_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>TradeName__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>IATACode__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Sector__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Category__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Location_Type__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_IEP_Status_FF__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Fin_statements_submission_deadline__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Accumulated_Irregularities__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>GCS Company Profile - Agency</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>GCS_Profile_Airline</fullName>
-        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
-        <displayedFields>
-            <field>Legal_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Name_on_AOC__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Airline_designator__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ICAO_designator__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>IATACode__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Airline_Prefix__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Sector__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Category__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Location_Type__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Field_Head_Office__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Membership_status__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>GCS Company Profile - Airline</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>GCS_Profile_GSA</fullName>
-        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
-        <displayedFields>
-            <field>Legal_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>IATACode__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Sector__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Category__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>GCS Company Profile - GSA</label>
-    </fieldSets>
+    </fieldSets>      
     <fieldSets>
         <fullName>GCS_Profile_Others</fullName>
         <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
@@ -3138,57 +2958,7 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>GCS Company Profile - GSA</label>
-    </fieldSets>
-	<fieldSets>
-        <fullName>GCS_Profile_Standard</fullName>
-        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
-        <displayedFields>
-            <field>Legal_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>IATACode__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Sector__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Category__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>GCS Company Profile - Standard</label>
-    </fieldSets>
-	<fieldSets>
-        <fullName>GCS_Profile_Others</fullName>
-        <description>GCS portal - company profile page. Different fields are displayed for different Account record types. Field accessibility might me modified in Apex.</description>
-        <displayedFields>
-            <field>Legal_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>IATACode__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Sector__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Category__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>GCS Company Profile - Others</label>
-    </fieldSets>
+    </fieldSets>		
     <fieldSets>
         <fullName>TrackingHistory</fullName>
         <description>The fields in this list will be tracked on the Account Tracking History object</description>
@@ -18588,7 +18358,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>1</fullName>
+                    <fullName>NDC</fullName>
                     <default>false</default>
                     <label>TIDS for NDC</label>
                 </value>
@@ -34391,7 +34161,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41672,7 +41442,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47750,7 +47520,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53739,7 +53509,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62792,7 +62562,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68799,7 +68569,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77812,7 +77582,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -83879,7 +83649,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -90286,7 +90056,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -99559,7 +99329,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
