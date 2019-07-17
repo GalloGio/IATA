@@ -9718,7 +9718,7 @@ and
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;对分配的子钱包的资金进行管理&lt;/li&gt; &lt;li&gt;对具有“出票员”角色的IATA EasyPay用户的访问权限和子钱包进行管理&lt;/li&gt; &lt;li&gt;从分配的钱包生成IATA EasyPay号码，用于通过GDS出票&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;从分配的钱包生成IATA EasyPay号码，用于通过GDS出票&lt;/li&gt;&lt;/ul&gt;</label>

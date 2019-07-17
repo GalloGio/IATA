@@ -1,11 +1,10 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, track} from 'lwc';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 
 //import labels
-import manageServiceslb from '@salesforce/label/c.CSP_Manage_Services';
 import aboutlb from '@salesforce/label/c.CSP_About';
 import contactslb from '@salesforce/label/c.ISSP_Contacts';
 import manageUserslb from '@salesforce/label/c.CSP_Manage_Portal_Users';
@@ -61,7 +60,6 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
 
     label = {
-        manageServiceslb,
         aboutlb,
         contactslb,
         manageUserslb,
@@ -576,7 +574,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let msg = this.label.cancelAccessMsg.replace('{0}', this.serviceName);
         let title = this.label.cancelAccessTitle;
 
-        this.denyUserAccessJS(contact, msg, title);
+        this.denyUserAccessJS(contact,msg,title, false);
 
     }
 
@@ -595,8 +593,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 break;
             case 'deactivateUser':
                 let title = this.label.denyAccessTitle;
-                let msg = this.label.confirmDenyAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', row.contactName);
-                this.denyUserAccessJS(row, msg, title);
+                let msg = this.label.confirmDenyAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',row.contactName);
+                this.denyUserAccessJS(row,msg,title, true);
                 break;
             case 'ifapContact':
                 //this.deleteAttach(row);
@@ -619,11 +617,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showConfirmPopup = true;
     }
 
-    denyUserAccessJS(contact, msg, title) {
+    denyUserAccessJS(contact, msg, title, isFromContactTable ){
         this.popupTitle = title;
         this.selectedlRow = contact;
         this.popupMsg = msg;
-
+        this.isFromContactTable = isFromContactTable;
+        
         this.mode = 'deny';
         this.showConfirmPopup = true;
     }
@@ -657,6 +656,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 });
                 break;
             case 'deny':
+                methodParams.isFromContactTable = this.isFromContactTable;
+
                 denyUserAccess(methodParams).then(result => {
                     this.componentLoading = true;
                     this.showSpinner = false;

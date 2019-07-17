@@ -31,3 +31,7 @@
     width: 16px;
     vertical-align: middle;
 }
+
+.headerContainerShadow::after{
+    height: 305px;
+}

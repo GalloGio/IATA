@@ -26,9 +26,20 @@ export default class PortalContactList extends LightningElement {
     @track recordsLocal;
     @api recordsInitDone = false;
     @track openId;
+    @track showEditLocal = false;
 
     /* Dynamic fields*/
     @api sectionMap;
+
+
+    @api
+    get showEdit(){
+        return this.showEditLocal;
+    }
+
+    set showEdit(value){
+        this.showEditLocal = value;
+    }
 
 
     @api
@@ -51,7 +62,14 @@ export default class PortalContactList extends LightningElement {
         //In the first run, add rendering flags
         if (!this.recordsInitDone) {
             this.recordsInitDone = true;
-            this.processRecords();
+            if (this.sortBy != null) {
+                this.orderRows(this.sortBy);
+            }else if(this.defaultSort != null){
+                this.orderRows(this.defaultSort);
+            }
+            else{
+                this.processRecords();
+            }
         }
     }
 
@@ -83,7 +101,7 @@ export default class PortalContactList extends LightningElement {
         let records = JSON.parse(JSON.stringify(this.records));
 
         for (let i = 0; i < records.length; i++) {
-            if (recordIndex == i && records[i].open === false) {
+            if (recordIndex == i && (records[i].open === undefined || records[i].open === false)) {
                 this.openId = records[i].Id;
                 records[i].open = true;
             } else {
@@ -92,7 +110,6 @@ export default class PortalContactList extends LightningElement {
         }
 
         this.records = records;
-
     }
 
     @api resetInit() {
@@ -134,6 +151,12 @@ export default class PortalContactList extends LightningElement {
                         rowValue.className = field.className;//this.getRowStyle(fieldName,null);
                     }
 
+                    if(fieldName == this.sortBy){
+                        rowValue.className += ' activeField ';
+                    }else{
+                        rowValue.className = rowValue.className.split(' activeField ').join('');
+                    }
+
                     rowValues.push(rowValue);
                 }
                 record.rowValues = rowValues;
@@ -145,11 +168,6 @@ export default class PortalContactList extends LightningElement {
 
             this.records = records;
             this.originalRecords = records;
-
-            if (this.defaultSort != null) {
-
-                //this.orderRows(this.defaultSort);
-            }
         }
 
 
@@ -225,22 +243,23 @@ export default class PortalContactList extends LightningElement {
 
         this.records = records;
 
-
         //Set field classes
         let fieldsList = JSON.parse(JSON.stringify(this.fieldsList));
         let rowFields = fieldsList.ROWS; //this.rowFields;
         for (let f = 0; f < rowFields.length; f++) {
             if (rowFields[f].fieldName == fieldName) {
-                rowFields[f].className = rowFields[f].className.replace(/\inactive\b/g, ' active ');
+                rowFields[f].className = rowFields[f].className.replace(/\inactive\b/g, ' activated ');
                 rowFields[f].isAsc = isAsc;
                 rowFields[f].isDesc = !isAsc;
             } else {
-                rowFields[f].className = rowFields[f].className.replace(/\active\b/g, ' inactive ');
+                rowFields[f].className = rowFields[f].className.replace(/\activated\b/g, ' inactive ');
                 rowFields[f].isAsc = false;
                 rowFields[f].isDesc = false;
             }
         }
         this.fieldsList = fieldsList;
+
+        this.processRecords();
     }
 
     refreshview() {

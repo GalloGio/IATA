@@ -151,14 +151,14 @@ public with sharing class PortalNewsController {
 	private static void createWrapperContent() {
         Map<Id, Id> bannerContent;
         Set<Id> bannersId = new Set<Id>();
-
+        wrapperBanItem_List = new List<WrapperBanner>();
+        
         for(ISSP_Banner__c ban :Banners_List) {
            bannersId.add(ban.Id);
         }
 
         if(!bannersId.isEmpty()) {
             bannerContent = new Map<Id, Id>();
-            wrapperBanItem_List = new List<WrapperBanner>();
 
             getPictures(bannersId, bannerContent);
 

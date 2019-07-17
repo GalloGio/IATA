@@ -13,7 +13,6 @@
                     </span>
                 </div>
 
-
                 <div class="slds-is-relative">
 
                     <lightning-record-edit-form record-id={recordId} object-api-name={objectName} onload={loadedEdit}
@@ -26,8 +25,6 @@
                             </div>
                         </div>
 
-
-
                         <div
                             class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
 
@@ -38,13 +35,11 @@
                                 class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
                                 <div key={field} class="slds-size_1-of-2">
 
-                                    <label class="specialLabel slds-p-left_x-small">
-                                        Account Name
-                                    </label>
-
-                                    <lightning-input-field class="hideLabel text-small labelValue textValue"
-                                        field-name="AccountId" value={objectId}>
-                                    </lightning-input-field>
+                                    <lightning-combobox class="text-small labelValue textValue"
+                                        name={labels.ICCS_Account_Name_Label} label={labels.ICCS_Account_Name_Label}
+                                        value={accountSelected} placeholder="--None--" options={accountList}
+                                        onchange={handleChangeAccount} required>
+                                    </lightning-combobox>
 
                                 </div>
                                 <div key={field} class="slds-size_1-of-2"></div>

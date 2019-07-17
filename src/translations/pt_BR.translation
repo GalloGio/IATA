@@ -9721,7 +9721,7 @@ and
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt; &lt;li&gt;Gerencia fundos da(s) Subcarteira(s) designada(s)&lt;/li&gt; &lt;li&gt;Gerencia o acesso e a(s) Subcarteira(s) dos usuários EasyPay IATA do “Emissor de passagens”&lt;/li&gt; &lt;li&gt;Gera Números EasyPay IATA da(s) carteira(s) designada(s) a serem usados para emitir passagens pelo GDS&lt;/li&gt; &lt;/ul&gt;</label>
-        <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
+        <name>ISSP_ANG_Portal_Role_SubWalletManager</name>
     </customLabels>
     <customLabels>
         <label>&lt;ul&gt;&lt;li&gt;Gera Números EasyPay IATA de quaisquer carteiras designadas a serem usados para emitir passagens pelo GDS&lt;/li&gt;&lt;/ul&gt;</label>

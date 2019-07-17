@@ -26,7 +26,7 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalProfilePageHeader extends LightningElement {
 
-    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
+    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/CompanyProfileBackground.jpg';
 
         //Loading && Error
         @track loading = true;
@@ -61,8 +61,8 @@ export default class PortalProfilePageHeader extends LightningElement {
         }
 
         get emptyCode(){
-            let isPending = this.userAccount.Status__c.toLowerCase() == 'new application pending';
-            return (isPending || this.userAccount == null || this.userAccount.IATACode__c == null || this.userAccount.IATACode__c.length == 0);
+            let isPending = this.userAccount === undefined || this.userAccount.Status__c == undefined || this.userAccount.Status__c.toLowerCase() == 'new application pending';
+            return (isPending || this.userAccount === undefined || this.userAccount.IATACode__c === undefined || this.userAccount.IATACode__c.length == 0);
         }
 
         connectedCallback() {

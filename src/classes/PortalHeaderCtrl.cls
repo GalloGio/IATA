@@ -170,5 +170,23 @@ public without sharing class PortalHeaderCtrl {
         return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_ChangePassword');
     }
 
+    @AuraEnabled
+    public static String redirectChangePassword(){
+        User loggedUser = [SELECT UID__c, LastPasswordChangeDate FROM USER WHERE Id =: UserInfo.getUserId()];
+
+        integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
+
+        if (loggedUser.UID__c != '' && loggedUser.UID__c != null){
+            String pr = 'ISSP_ChangePassword';
+            return pr;
+        }
+        else if (loggedUser.LastPasswordChangeDate != null){
+            if (loggedUser.LastPasswordChangeDate.addDays(passwordDays) < system.now()){
+                 String pr = 'ISSP_ChangePassword';
+                return pr;
+            }
+        }            
+        return null;
+    }
 
 }

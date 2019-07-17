@@ -9,7 +9,7 @@ import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 
-
+import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
@@ -26,7 +26,7 @@ import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
-
+    
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
@@ -76,8 +76,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     emptyServices = 'emptyServices';
 
     connectedCallback() {
-        this.showEdit = (this.showEdit === 'true' ? true : false);
-
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
@@ -150,6 +148,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
 
+        isAdmin().then(result => {
+            this.showEdit = (result ? true : false);
+        });
+        
         return this.accessibilityText
     }
 
@@ -212,6 +214,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let requiredFields = [];
         let skipValidation = false;
 
+        /*
         for(let f=0;f<fields.length;f++){
             if(fields[f].isRequired !== undefined && fields[f].isRequired == true){
                 requiredFields.push(fields[f].fieldName);
@@ -219,6 +222,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         }
 
         let fieldsValid = true;
+
+        */
 
         if (inputs) {
             if (inputs.length) {
@@ -237,7 +242,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                             }
                         }
                     }
-
+                    /*
                     if(requiredFields.includes(inputs[i].fieldName)){
                         if(inputs[i].value === undefined || inputs[i].value.length == 0){
                             skipValidation = true;
@@ -295,7 +300,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                                 }
                             }
                         }
-                    }
+                        
+                    }*/
 
                 }
             } else {
@@ -315,7 +321,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
         }
 
-
+        /*
         if(fieldsChanged){
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
@@ -327,6 +333,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             },400,this);
         }
         this.fieldsValid = fieldsValid;
+        */
     }
 
     handleSubmit(event) {
@@ -459,7 +466,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     get canEditBasics(){
-        return (this.editBasics && this.sectionTitle == 'Basics' && this.showEdit) || (this.sectionTitle != 'Basics' && this.showEdit);
+        let isRestrictedSection =  this.sectionTitle == 'Basics' ||  this.sectionTitle == 'Branch Contact';
+        return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
     }
 
     get hasIdCard(){

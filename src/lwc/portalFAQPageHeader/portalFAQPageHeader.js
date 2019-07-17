@@ -28,10 +28,6 @@ export default class PortalFAQPageHeader extends NavigationMixin(LightningElemen
     @track secondbackground;
 
     connectedCallback() {
-        this.backgroundStyle = 'background-color:#1e32fa;background-size: cover;height:184px;';
-        this.secondbackground = 'opacity: 0.1;background-image: linear-gradient(256deg, rgba(0, 0, 0, 0), #000000);'
-
-
         //get the parameters for this page
         this.pageParams = getParamsFromPage();
 

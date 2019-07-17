@@ -4,7 +4,7 @@
 
 .searchBarRow {
     display: flex;
-    z-index:9002;
+    z-index:4002;
     position:absolute;
     width:100%;
 }
@@ -31,7 +31,7 @@
     background-color:white;
     position:absolute;
     width:calc(100% + 20px);
-    z-index:9001;
+    z-index:4001;
     top:33px;
     margin: 0px -10px 0px -10px;
     padding: 40px 10px 0px 10px;
@@ -47,4 +47,8 @@
 
 .fullWidth{
     width: 100%;
+}
+
+.slds-backdrop{
+    z-index: 4000;
 }
