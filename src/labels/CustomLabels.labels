@@ -23088,7 +23088,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_IATA_Location_Code</shortDescription>
-        <value>Location IATA Code</value>
+        <value>IATA Location Code</value>
     </labels>
     <labels>
         <fullName>ISSP_IATA_NOT_Found</fullName>
