@@ -365,7 +365,8 @@
     <style>
 
         body {
-            background-color: #f0f2f5;
+            height:100%;
+            background-color: rgb(240, 242, 245)
         }
     
         .liveAgentCancelButton{
@@ -1085,7 +1086,7 @@
     </style>
 
 
-	<body style="height:100%; background-color: rgb(240, 242, 245)">
+	<body>
     <!--<body onload=" resizeTo(400,680);">-->
     <div id="headercontainer" class="container">
         <div id="headerbackground" class="row">
