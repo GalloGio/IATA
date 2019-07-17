@@ -4,6 +4,21 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>L3_Publications_YMQ_CDS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - YMQ CDS</value>
+            </criteriaItems>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_Emirates</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND 2 AND 3 AND 4) OR (1 AND 4 AND (5 OR 6))</booleanFilter>
@@ -2064,12 +2079,6 @@ Product__r.Product_Section__c = &quot;PUA001&quot;
             <template>All/IDFS_Case_assignment_Profit_center_VF</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_CDS_AMS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>ISPICKVAL(Origin, &quot;Email - Publications AMS Queries&quot;)  &amp;&amp;  RecordType.Name = &quot;Process&quot;</formula>
-            <template>All/IDFS_Caseassignmentqueue</template>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>L3_Publications_OPS007</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>And(
@@ -3626,6 +3635,12 @@ RecordType.Name = &quot;Process&quot;
 ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;) , 
 ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
 )</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_CDS_AMS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>ISPICKVAL(Origin, &quot;Email - Publications AMS Orders&quot;)  &amp;&amp;  RecordType.Name = &quot;Process&quot;</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>

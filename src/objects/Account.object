@@ -18358,7 +18358,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>1</fullName>
+                    <fullName>NDC</fullName>
                     <default>false</default>
                     <label>TIDS for NDC</label>
                 </value>
@@ -34161,7 +34161,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41442,7 +41442,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47520,7 +47520,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53509,7 +53509,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62562,7 +62562,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68569,7 +68569,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77582,7 +77582,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -83649,7 +83649,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -90056,7 +90056,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -99329,7 +99329,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Special_remarks__c</picklist>
             <values>
-                <fullName>1</fullName>
+                <fullName>NDC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
