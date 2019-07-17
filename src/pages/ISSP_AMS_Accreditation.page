@@ -234,14 +234,13 @@
         }
 
         function toggleCountries(v) {
-            if (v==undefined || v.indexOf('New BR Abroad')==-1){
+            if (({!isMCNewAEAccredited} && {!isNoticeOfChange}) || (v!=undefined && v.indexOf('New BR Abroad')!=-1)){
+                $('#brcountry').hide();
+                $('#brabroadcountries').show();
+            } else if (v==undefined || v.indexOf('New BR Abroad')==-1){
                 updateAmsCountry();
                 $('#brcountry').show();
                 $('#brabroadcountries').hide();
-            }
-            else{
-                $('#brcountry').hide();
-                $('#brabroadcountries').show();
             }
         }
 
@@ -473,6 +472,23 @@
             }
         }
 
+        function checkMCNoC() {
+            if ($('[id$="LocationType"]').find("input")[1]) {
+                if ($('[id$=countrySelectedMCNOC]').val() === '{!hqAccount.Country_ISO_Code__c}') {
+                    $('[id$="LocationType"]').find("input")[1].disabled = false;
+                    $('[id$="LocationType"]').find("input")[2].disabled = false;
+                    $('[id$="LocationType"]').find("input")[0].disabled = false;
+                } else {
+                    $('[id$="LocationType"]').find("input")[1].disabled = true;
+                    $('[id$="LocationType"]').find("input")[2].disabled = true;
+                    $('[id$="LocationType"]').find("input")[0].disabled = true;
+                    $('[id$="LocationType"]').find("input")[3].checked = true;
+                }
+            }
+            
+            reRenderAccountsNoc();
+        }
+
         function populateLegalAndSeparateFields() {
             var isoSelected = $('[id$=countrySelectedMC]').find(':selected').val();
 
@@ -522,6 +538,12 @@
                 populateLegalAndSeparateFields();
                 enableDisableLegalName();
                 $('[id$=officetypelist]').prop('disabled', true);
+            }
+
+            if ({!isMCNewAEAccredited} && {!isNoticeOfChange}) {
+                $('[id$=nocFormQuestions]').first().insertAfter($('[id$=countrySelection').first());
+                checkMCNoC();
+                reRenderNocOptions();
             }
         }
     </script>
@@ -596,6 +618,9 @@
                             </apex:actionFunction>
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
+                            <apex:actionFunction name="reRenderAccountsNoc" reRender="branchaccountsel"/>
+                            <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions"/>
+
 
                             <apex:pageBlock id="step1Block" mode="edit" >
                                 <apex:pageBlockButtons location="bottom" style="padding-left:100px">
@@ -705,7 +730,7 @@
 
 
 
-                            <apex:outputpanel rendered="{!isNoticeOfChange}">
+                            <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocFormQuestions">
                                 <apex:outputpanel >
                                     <div class="form-group">
                                         <label for="operationtype" class="col-lg-3 control-label">
@@ -715,22 +740,32 @@
                                             <apex:outputPanel rendered="{!AND(isBankAccountChange == true, con.Account.Location_Type__c == 'AE')}">
                                                 {!ContactAccount}
                                             </apex:outputPanel>
+                                            
                                             <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
                                                 <apex:outputPanel rendered="{!OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy')}">
                                                     <apex:selectRadio required="true" id="LegacyLocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
-                                            	    	<apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" rendered="{!isHOcontact}" />
-                                            	    	<apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}" />
-	                                            	<apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_Some_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}"/>
-        	                                    	<apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(isHOcontact,BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
+                                            	    	
+                                                        <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" rendered="{!isHOcontact}" />
+                                            	    	
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}" />
+	                                            	
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_Some_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}"/>
+        	                                    	  
+                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(isHOcontact,BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
-                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}">
-                                                    <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
+
+                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">
+                                                    <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}"/>
-                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}" />
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
-                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Associate_Entity}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
+                                                        
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(NOT(isMCNewAEAccredited), OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(NOT(isMCNewAEAccredited), OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        
+                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(NOT(isMCNewAEAccredited), OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
                                                     </apex:selectRadio>
+
                                                 </apex:outputPanel>
                                             </apex:outputPanel>
                                         </div>
@@ -760,12 +795,18 @@
                                         <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
-                                    <apex:outputPanel rendered="{!isMultiCountryNewAE}">
+                                    <apex:outputPanel rendered="{!AND(isMCNewAEAccredited, isNoticeOfChange)}">
+                                        <apex:selectList id="countrySelectedMCNOC" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="checkMCNoC();">
+                                            <apex:selectOptions value="{!mcNocCountryList}"/>
+                                            <!--<apex:actionSupport event="onselect" rerender=""/>-->
+                                        </apex:selectList>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!AND(isMultiCountryNewAE, NOT(isNoticeOfChange))}">
                                         <apex:selectList id="countrySelectedMC" required="false" styleClass="form-control" style="width:40%" value="{!mcformCountryISO}" size="1" onchange="checkMCAECountry();">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                         </apex:selectList>
-                                    </apex:outputPanel>    
-                                    <apex:outputPanel rendered="{!NOT(isMultiCountryNewAE)}">
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!AND(NOT(isMultiCountryNewAE), NOT(isNoticeOfChange), NOT(isMCNewAEAccredited))}">
                                         <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                         </apex:selectList>

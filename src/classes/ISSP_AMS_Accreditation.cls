@@ -342,6 +342,8 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
+    public Integer branchAccountCount {get; set;}
+
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
         isStep1 = false;
@@ -388,6 +390,7 @@ public without sharing class ISSP_AMS_Accreditation {
         agencyCodesConcerned = new List<SelectOption>();
 
         amsContactCountry = '';
+        branchAccountCount = 0;
 
         popContact();  //Get the contact details of currently logged in user
 
@@ -1027,7 +1030,7 @@ public without sharing class ISSP_AMS_Accreditation {
         return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, 
                     BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c, IATA_ISO_Shipping_Country__c, 
                     IATA_ISO_Shipping_State__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
-                    TradeName__c, Company_Type__c
+                    TradeName__c, Company_Type__c, Status__c
                 FROM Account
                 WHERE (Top_Parent__c = :hqAccount.Id OR Id = :hqAccount.Id)
                 ORDER BY Legal_name__c];
@@ -1147,6 +1150,37 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
+    public List<SelectOption> mcNocCountryList {
+        get {
+            List<SelectOption> options = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_COUNTRY)};
+
+            Map<String, String> countryNameByIsoCode = new Map<String, String>();
+                
+            for (Account a: mcHierarchyAccounts) {
+                if (a.Status__c == 'Approved') {
+                    if (countryNameByIsoCode.get(a.IATA_ISO_Country__r.Name) == null) {
+                        if (a.Location_Type__c == 'GE') {
+                            countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name + ' - Head Entity Country', a.Country_ISO_Code__c);
+                        } else {
+                            countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
+                        }
+                        
+                    }
+                }
+            }
+
+            List<String> countryNames = new List<String>(countryNameByIsoCode.keySet());
+            countryNames.sort();
+
+            for (String countryName: countryNames) {
+                options.add(new SelectOption(countryNameByIsoCode.get(countryName), countryName));
+            }
+
+            return options;
+        }
+        set;
+    }
+
     public List<SelectOption> countryNameList {
         get {
             List<SelectOption> options = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_COUNTRY)};
@@ -1228,7 +1262,7 @@ public without sharing class ISSP_AMS_Accreditation {
         if (isHOcontact) {
             return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, 
                     BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c, IATA_ISO_Shipping_Country__c, 
-                    IATA_ISO_Shipping_State__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c
+                    IATA_ISO_Shipping_State__c, Country_ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c, Status__c
                     FROM Account
                     WHERE Top_Parent__c = :vHQAccountId 
                         AND IATACode__c != null 
@@ -1237,7 +1271,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         AND (IATACode__c NOT IN : selectedBranchCodes)
                     ORDER BY Name, IATACode__c];
         } else { // BR contacts can only apply for changes to their own BR and SAs of their BR
-            return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+            return [SELECT Id, Name, Status__c, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
                     FROM Account
                     WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes)
                         AND (Id = :con.AccountId OR ParentId =: con.AccountId)
@@ -1255,14 +1289,20 @@ public without sharing class ISSP_AMS_Accreditation {
     public List<SelectOption> getBranchAccounts() {
         List<SelectOption> options = new List<SelectOption>();
 
-        List<Account> accountList = getBranchList(false);
-
-        for (Account thisAccount : accountList) {
-            String theLabel;
-            theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
-
-            options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
+        if (isMCNewAEAccredited && isNoticeOfChange) {
+            agencyCodesConcerned = new List<SelectOption>();
         }
+
+        for (Account thisAccount: getBranchList(false)) {
+            branchAccountCount++;
+
+            if (isMCNewAEAccredited && isNoticeOfChange && thisAccount.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
+                continue;
+            }
+                        
+            options.add(new SelectOption(thisAccount.IATACode__c, thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')'));
+        }
+
         return options;
     }
 
@@ -1294,6 +1334,8 @@ public without sharing class ISSP_AMS_Accreditation {
             String theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
+
+            branchAccountCount++;
         }
         
         return options;
@@ -4121,7 +4163,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
-                        Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
+                        Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, 
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
                         IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c,
                         (SELECT Id, Status, Reason1__c, IFAP_Country_ISO__c, Applicable_to_Which_Version_s__c, ContactId, AccountId
