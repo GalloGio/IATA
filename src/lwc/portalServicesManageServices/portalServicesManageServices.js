@@ -169,7 +169,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.contactTableColums = [
             { label: 'User', fieldName: 'contactName', type: 'text' },
             { label: 'Email', fieldName: 'emailAddress', type: 'text' },
-            { label: 'Location IATA Code', fieldName: 'iataCodeLoc', type: 'text' },
+            { label: 'IATA Location Code', fieldName: 'iataCodeLoc', type: 'text' },
             { label: 'Status', fieldName: 'serviceRight', type: 'text' },
             { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
         ];
@@ -177,7 +177,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.contactsToAddColumns = [
             { label: 'User', fieldName: 'title', type: 'text' },
             { label: 'Email', fieldName: 'subtitle', type: 'text' },
-            { label: 'Location IATA Code', fieldName: 'iataCodeLocation', type: 'text' },
+            { label: 'IATA Location Code', fieldName: 'iataCodeLocation', type: 'text' },
             { label: 'Status', fieldName: 'status', type: 'text' },
             { label: '', type: 'button', initialWidth: 35, typeAttributes: { label: '', variant: "base", title: 'Remove', name: 'removeContact', iconName: 'utility:delete' } }
         ];
