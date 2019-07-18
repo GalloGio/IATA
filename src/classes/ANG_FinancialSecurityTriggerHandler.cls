@@ -217,6 +217,8 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 			for(Account acct : allHierarchyAccountsMap.values()){
 				
+				System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] FS List for account: ' + acct.Financial_Securities__r);
+
 				if(acct.Financial_Securities__r != NULL && acct.Financial_Securities__r.size() > 0){
 					
 					//If the current account has a parent means that we have to aggregate the amounts by the parent
