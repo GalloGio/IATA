@@ -1524,11 +1524,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>すべての通知</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>お知らせ</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1740,7 +1740,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>お知らせ</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1912,7 +1912,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>お気に入りのサービス</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2232,7 +2232,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>タスク</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3968,7 +3968,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>プロフィール</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12847,6 +12847,10 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>連絡先情報</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13545,6 +13549,14 @@ and
     <customLabels>
         <label>ローマ字でご入力をお願い致します</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>文字を入力</label>
@@ -14439,7 +14451,7 @@ and
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>マイプロファイル</label>
+        <label>私のプロフィール</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -16291,6 +16303,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>サブタイプ</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17688,7 +17704,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>既読にする</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17832,7 +17848,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>NotificationCenter_Title</name>
     </customLabels>
     <customLabels>
-        <label>通知詳細</label>
+        <label>通知の詳細</label>
         <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
@@ -17886,6 +17902,18 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>カテゴリーをお選びください</label>
@@ -19823,7 +19851,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>タスク</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19883,11 +19911,11 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0}がポータルへのアクセスを要求しました。</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0}が{1}サービスへのアクセスを要求しました</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19919,7 +19947,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>詳細を見る</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
@@ -20427,7 +20455,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>csp_SupportReachUs_ShowSupportOptions</name>
     </customLabels>
     <customLabels>
-        <label>推奨サポートオプションをご覧いただくにはフォームにご記入ください</label>
+        <label>推奨されるサポートオプションを見るためにフォームに記入してください</label>
         <name>csp_SupportReachUs_SpecifyCaseDetails</name>
     </customLabels>
     <customLabels>

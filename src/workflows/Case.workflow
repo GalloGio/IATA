@@ -3889,7 +3889,6 @@
     <alerts>
         <fullName>Send_Email_to_Online_store_support</fullName>
         <ccEmails>iata@servicenow.org</ccEmails>
-        <ccEmails>patryk.danowski@isobar.com</ccEmails>
         <description>Send Email to Online store support</description>
         <protected>false</protected>
         <senderAddress>onlinestoresupport@iata.org</senderAddress>

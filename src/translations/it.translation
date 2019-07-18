@@ -1525,11 +1525,11 @@ la seguente procedura per completarlo :
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>Tutte le notifiche</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>Annuci</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1741,7 +1741,7 @@ la seguente procedura per completarlo :
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>Annuncio</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1913,7 +1913,7 @@ la seguente procedura per completarlo :
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>Servizi preferiti</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2233,7 +2233,7 @@ la seguente procedura per completarlo :
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>Compito</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3969,7 +3969,7 @@ la seguente procedura per completarlo :
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Profilo</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12850,6 +12850,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>Dati di contatto</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13548,6 +13552,14 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>Per favore utilizzare esclusivamente caratteri latini</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>Introdurre texto</label>
@@ -16295,6 +16307,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>Subcategoria</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17692,7 +17708,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>Segna come già letto</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17836,7 +17852,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>NotificationCenter_Title</name>
     </customLabels>
     <customLabels>
-        <label>Dettaglio notifica</label>
+        <label>Dettaglio della notifica</label>
         <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
@@ -17890,6 +17906,18 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Scegliere la categoria</label>
@@ -19827,7 +19855,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>Compiti</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19887,11 +19915,11 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0} ha richiesto l&apos;accesso al portale.</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0} ha richiesto l&apos;accesso al servizio {1}</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19923,7 +19951,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>Visualizza dettagli</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
@@ -20431,7 +20459,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_SupportReachUs_ShowSupportOptions</name>
     </customLabels>
     <customLabels>
-        <label><!-- Support Reach Us Page Label --></label>
+        <label>Completi il modulo per vedere le opzioni di supporto consigliate</label>
         <name>csp_SupportReachUs_SpecifyCaseDetails</name>
     </customLabels>
     <customLabels>

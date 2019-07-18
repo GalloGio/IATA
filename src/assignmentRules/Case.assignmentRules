@@ -1750,7 +1750,7 @@ ISPICKVAL(Reason1__c,&quot;Invoicing&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Account_Receivable_YMQ</assignedTo>
+            <assignedTo>GCS_Finance_AR_BIS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(
@@ -2550,7 +2550,7 @@ Account.Country_ISO_Code__c = &quot;US&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Account_Receivable_YMQ</assignedTo>
+            <assignedTo>GCS_Finance_AR_BIS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(
@@ -3521,7 +3521,7 @@ ISPICKVAL(Reason1__c, &quot;Task request&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Account_Receivable_YMQ</assignedTo>
+            <assignedTo>GCS_Finance_AR_BIS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(

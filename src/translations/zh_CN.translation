@@ -1521,11 +1521,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>所有通知</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>公告</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1737,7 +1737,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>公告</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1909,7 +1909,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>最喜欢的服务</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2229,7 +2229,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>任务</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3965,7 +3965,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>个人资料</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12843,6 +12843,10 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>联系资料</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13541,6 +13545,14 @@ and
     <customLabels>
         <label>请输入一个字符串， 仅限拉丁字母。</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>键入</label>
@@ -14435,7 +14447,7 @@ and
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>我的档案</label>
+        <label>我的个人资料</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -16283,6 +16295,10 @@ and
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Sub_Type --></label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17679,7 +17695,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>标记为已读</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17877,6 +17893,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>请选择类别</label>
@@ -19814,7 +19842,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>任务</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19874,11 +19902,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0}请求访问门户网站。</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0}请求访问{1}服务</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19910,7 +19938,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>查看详情</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
@@ -20418,7 +20446,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_SupportReachUs_ShowSupportOptions</name>
     </customLabels>
     <customLabels>
-        <label>填写表单以查看推荐的支持选项</label>
+        <label>填写表单，参阅推荐的支持选项</label>
         <name>csp_SupportReachUs_SpecifyCaseDetails</name>
     </customLabels>
     <customLabels>
