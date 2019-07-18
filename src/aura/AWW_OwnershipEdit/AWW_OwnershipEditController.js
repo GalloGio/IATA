@@ -30,19 +30,21 @@
         if(proceed) {
             component.set('v.errorMessage', null);
             
-            var row = {};
+            var rows = [];
 
             if(component.get('v.operation') == 'Edit') {
-                row = component.get('v.record');
+                var row = component.get('v.record');
+                rows.push(row);
             } else {
                 var results = component.find('search-results');
                 if(results) {
-                    var selectedRow = results.getSelectedRows()[0];
-                    row = selectedRow ? selectedRow : {};
+                    rows = results.getSelectedRows();
+                } else {
+                    rows.push({});
                 }    
             }
             
-            helper.createRecord(component,row);
+            helper.createRecord(component,rows);
         }
     },
     updateCounter : function(component,event,helper) {

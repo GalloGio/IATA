@@ -104,12 +104,15 @@
                         tabName : 'head_offices'
                     });
                     refreshTab.fire();
+                    this.resetFilters(component);
+                    this.handleVisibility(component,'hide');
                 }
                 this.handleSpinner(component,'hide');
             }
         });
 
         this.handleSpinner(component,'show');
+        component.set('v.data', undefined);
         $A.enqueueAction(action);
     },
     handleSpinner : function(component,action) {

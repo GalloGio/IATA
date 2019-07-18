@@ -75,17 +75,13 @@
                                         data="{!v.data}"
                                         columns="{!v.columns}"
                                         resizeColumnDisabled="true"
-                                        onrowselection="{!c.updateCounter}"
-                                        maxRowSelection="1"/>
+                                        onrowselection="{!c.updateCounter}"/>
                                 </div>
                             </div>
                         </aura:if>
                     </div>
                 </div>
                 <footer class="slds-modal__footer"> 
-                    <aura:if isTrue="{!v.selectedRowsCount > 0}">
-                        <lightning:button variant="destructive" label="Unselect" title="Unselect" onclick="{!c.unselect}"/>  
-                    </aura:if>                   
                     <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{!c.handleModalVisibility}"/> 
                     <aura:if isTrue="{!and(!empty(v.searchName), v.operation == 'Add')}">                   
                         <aura:if isTrue="{!v.selectedRowsCount == 0}">

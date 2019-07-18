@@ -5,7 +5,7 @@
         ];
 
         component.set('v.columns', [
-            {label: 'Account Name', fieldName: 'accountId', type: 'url', typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
+            {label: 'Account Name', fieldName: 'accountLink', type: 'url', typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
             {label: 'Location Type', fieldName: 'locationType', type: 'text'},
             {label: 'IATA Code', fieldName: 'iataCode', type: 'text'},
             {label: 'Country', fieldName: 'country', type: 'text'},

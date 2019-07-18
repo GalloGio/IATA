@@ -54,25 +54,29 @@
 
         $A.enqueueAction(action);
     },
-    createRecord : function(component,row) {
-        var newRecord;
-        if(component.get('v.operation') == 'Add') {
-            if(component.get('v.typeOfRecord') == 'Owner') {
-                newRecord = this.createOwnerRecord(component,row);
+    createRecord : function(component,rows) {
+        var records = [];
+        var operation = component.get('v.operation');
+        var typeOfRecord = component.get('v.typeOfRecord');
+
+        for(var i=0; i<rows.length; i++) {
+            var record;
+            if(operation == 'Add') {
+                record = typeOfRecord == 'Owner' ? this.createOwnerRecord(component,rows[i]) : this.createSubsidiaryRecord(component,rows[i]);
             } else {
-                newRecord = this.createSubsidiaryRecord(component,row);
+                record = rows[i];
             }
-        } else {
-            newRecord = row;
+
+            if(!record.percentage || record.percentage == 0) {
+                delete record.percentage;
         }       
 
-        if(!newRecord.percentage || newRecord.percentage == 0) {
-            delete newRecord.percentage;
+            records.push(record);
         }
 
         var action = component.get('c.addRecord');
         action.setParams({
-            request : JSON.stringify(newRecord)
+            request : JSON.stringify(records)
         });
 
         action.setCallback(this, function(response) {

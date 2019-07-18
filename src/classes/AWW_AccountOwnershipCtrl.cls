@@ -34,8 +34,10 @@ public with sharing class AWW_AccountOwnershipCtrl {
 
     @AuraEnabled 
     public static void addRecord(String request) {
-        AccountRole role = (AccountRole) JSON.deserialize(request, AccountRole.class);
+        List<AccountRole> rolesRequest = (List<AccountRole>) JSON.deserialize(request, List<AccountRole>.class);
 
+        List<AMS_Account_Role__c> sfRoles = new List<AMS_Account_Role__c>();
+        for(AccountRole role : rolesRequest) {
         if(role.ownerId == null) {
             role.ownerId = createAccountRecord(role.ownerName).Id;
         }
@@ -44,8 +46,10 @@ public with sharing class AWW_AccountOwnershipCtrl {
             role.accountId = createAccountRecord(role.accountName).Id;
         }
 
-        AMS_Account_Role__c record = role.convertToSFRecord();
-        upsert record;
+            sfRoles.add(role.convertToSFRecord());
+        }
+
+        upsert sfRoles;
     }
 
     private static Account createAccountRecord(String name) {

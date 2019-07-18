@@ -133,10 +133,10 @@ private class AWW_AgencyManagementTest {
         Map<String,Object> o4 = new Map<String,Object> {
             'ownerId' => wwAccount.Id, 'accountName' => 'A4', 'percentage' => 2
         };
-        AWW_AccountOwnershipCtrl.addRecord(JSON.serialize(o1));
-        AWW_AccountOwnershipCtrl.addRecord(JSON.serialize(o2));
-        AWW_AccountOwnershipCtrl.addRecord(JSON.serialize(o3));
-        AWW_AccountOwnershipCtrl.addRecord(JSON.serialize(o4));
+        AWW_AccountOwnershipCtrl.addRecord(JSON.serialize(new List<Object> {o1}));
+        AWW_AccountOwnershipCtrl.addRecord(JSON.serialize(new List<Object> {o2}));
+        AWW_AccountOwnershipCtrl.addRecord(JSON.serialize(new List<Object> {o3}));
+        AWW_AccountOwnershipCtrl.addRecord(JSON.serialize(new List<Object> {o4}));
 
         AWW_AccountOwnershipCtrl.getOwners(wwAccount.Id);
         AWW_AccountOwnershipCtrl.getSubsidiaries(wwAccount.Id);
