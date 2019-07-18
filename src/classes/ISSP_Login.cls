@@ -128,6 +128,15 @@ public without sharing class ISSP_Login {
 		system.debug('pageLink: ' + pageLink);
         PageReference ans = Site.login(null != oneUser ? oneUser.Username : username, password, pageLink);
         system.debug('ans ans '+ans);
+
+
+        //Check user permissions for FAQs, reassign if needed. Used mainly for CNS accounts as they don't go through OneId.
+        try{
+            PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
+        }catch(Exception e){
+            System.debug('Unable to validate FAQs permissions assignments. \n'+e);
+        }
+
         return ans;
     }
 
@@ -231,11 +240,13 @@ public without sharing class ISSP_Login {
     	set;
     }
 
+	
     public PageReference findLocationCaller(){                
         findLocation(true);
         String getUrl = ApexPages.currentPage().getUrl();
         String oneIDStatus = 'OFF';
-        String identityLogin = '/identity/s/login'; // will work on sandboxes
+        String identityLogin = '/identity/s/login'; // will work on sandboxes		
+
 
         if(ISSP_CS__c.getValues('1ID redirect').value__c != null){
             oneIDStatus = String.ValueOF(ISSP_CS__c.getValues('1ID redirect').value__c);
@@ -244,6 +255,16 @@ public without sharing class ISSP_Login {
         if(ISSP_CS__c.getValues('Identity Login Page') != null){
         	identityLogin = String.ValueOF(ISSP_CS__c.getValues('Identity Login Page').value__c);
         }
+
+        if(ISSP_CS__c.getValues('ISSP Landing Page') != null){
+        	serviceName = String.ValueOF(ISSP_CS__c.getValues('ISSP Landing Page').value__c);
+			tempStart = String.ValueOF(ISSP_CS__c.getValues('ISSP Landing Page').defaultvalue__c);
+        }
+
+        if(ISSP_CS__c.getValues('CS Portal Redirect') != null){
+        	serviceName = String.ValueOF(ISSP_CS__c.getValues('CS Portal Redirect').value__c);
+			tempStart = String.ValueOF(ISSP_CS__c.getValues('CS Portal Redirect').defaultvalue__c);
+        }
         
         String startUrl = ApexPages.currentPage().getParameters().get('startURL');
         String retURL = ApexPages.currentPage().getParameters().get('retURL');
@@ -251,11 +272,11 @@ public without sharing class ISSP_Login {
         if(startUrl == null && retURL != null){            
             startUrl = retURL;
         }
-        
+
         if(startUrl != null){            
             if(oneIDStatus == 'ON'){
 
-                PageReference pr = new PageReference(identityLogin+'?startURL='+startUrl+'&serviceName=ISSP');
+                PageReference pr = new PageReference(identityLogin+'?startURL='+startUrl+'&serviceName='+serviceName);
                 pr.setRedirect(true);                        
                 system.debug('aqui pr ' + pr);
                 return pr;    
@@ -263,9 +284,11 @@ public without sharing class ISSP_Login {
                 return null;
             }            
         }
-        else if(communityName == null && startUrl == null){            
-            if(oneIDStatus == 'ON'){                
-                PageReference pr = new PageReference(identityLogin+'?startURL=%2FISSP_Homepage&serviceName=ISSP');
+        else if(communityName == null && startUrl == null){    
+			startUrl=tempStart;     
+
+            if(oneIDStatus == 'ON'){ 
+                PageReference pr = new PageReference(identityLogin+'?startURL='+startUrl+'&serviceName='+serviceName);
                 pr.setRedirect(true);
                 return pr;    
             }else{
