@@ -326,9 +326,9 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                 //Risk Info
                 for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r){
                     this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
-                    ////////////// WARNING
-                    //ADD REAL FIELD
-                    lsCurrencies.add(new theCurrency(CurrencyMulticountry, rhc.CurrencyIsoCode));
+                    if(this.AccreditationType == 'Multicountry') {
+                        lsCurrencies.add(new theCurrency(CurrencyMulticountry, rhc.CurrencyIsoCode));
+                    }
                 }
 
                 if(this.RHCInfo ==null)
