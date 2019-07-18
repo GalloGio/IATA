@@ -1521,11 +1521,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>Tüm Bildirimler</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>Duyurular</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1737,7 +1737,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>Duyuru</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1909,7 +1909,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>Favori Hizmetler</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2229,7 +2229,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>Görev</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3965,7 +3965,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Profil</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12840,6 +12840,10 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>İrtibat Bilgileri</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13538,6 +13542,14 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
     <customLabels>
         <label>Lütfen sadece Latin harfleri kullanınız</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>Metin Girin</label>
@@ -16294,6 +16306,10 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>Alt Tür</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17695,7 +17711,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>Okundu olarak işaretle</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17893,6 +17909,18 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Lütfen kategori seçin</label>
@@ -19832,7 +19860,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>Görevler</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19892,11 +19920,11 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>&quot;{0}, Portala Erişim istedi.&quot;</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>&quot;{0}, {1} hizmetine erişim istedi&quot;</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19928,7 +19956,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>Detayları Göster</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>

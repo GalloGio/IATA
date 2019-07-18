@@ -1524,11 +1524,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>모든 알림</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>공지 사항</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1740,7 +1740,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>공지 사항</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1912,7 +1912,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>좋아하는 서비스</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2232,7 +2232,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>과제</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3968,7 +3968,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>프로필</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12849,6 +12849,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>연락처 정보</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13547,6 +13551,14 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>오직 라틴문자로만 기입하여 주시기를 요청드립니다</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>텍스트 삽입</label>
@@ -16294,6 +16306,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>Sub Type</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17689,7 +17705,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>읽은 상태로 표시</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17887,6 +17903,18 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>범주를 선택하십시오</label>
@@ -19824,7 +19852,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>과제들</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19884,11 +19912,11 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0}이 (가) 포탈에 대한 액세스를 요청했습니다.</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0}이 {1} 서비스에 대한 액세스를 요청했습니다.</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19920,7 +19948,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>세부 정보 보기</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
@@ -20428,7 +20456,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_SupportReachUs_ShowSupportOptions</name>
     </customLabels>
     <customLabels>
-        <label>양식을 작성하셔서 권장되는 지원 옵션을 확인하십시오.</label>
+        <label>양식을 작성하여 권장되는 지원 옵션을 확인하세요.</label>
         <name>csp_SupportReachUs_SpecifyCaseDetails</name>
     </customLabels>
     <customLabels>

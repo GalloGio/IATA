@@ -3542,7 +3542,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_PortalPath</shortDescription>
-        <value>/csportal/s/</value>
+        <value>/s/</value>
     </labels>
     <labels>
         <fullName>CSP_Portal_Status</fullName>
@@ -24134,6 +24134,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Contact Name</value>
     </labels>
     <labels>
+        <fullName>ISSP_Contact_About_IATA_Courses</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Contact About IATA Courses</shortDescription>
+        <value>Are you contacting us concerning IATA courses?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Contact_Information</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -34043,6 +34050,30 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_Billing Street</shortDescription>
         <value>Billing Street</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CSP_Terms_Of_Use_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
+        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CSP_Troubleshooting</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CSP_Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CSP_Troubleshooting_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CSP_Troubleshooting_Link</shortDescription>
+        <value>https://portal.iata.org/faq/articles/en_US/FAQ/Customer-Portal-Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_CategoryError</fullName>

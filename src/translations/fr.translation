@@ -1524,11 +1524,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>Toutes les notifications</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>Annonces</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1740,7 +1740,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>Annonce</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1912,7 +1912,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>Services préférés</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2232,7 +2232,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>Tâche</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3968,7 +3968,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Profil</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12885,6 +12885,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>Coordonnées</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13583,6 +13587,14 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>S&apos;il vous plait entrez uniquement des caractères latins</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>Entrez texte</label>
@@ -16331,6 +16343,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>Sous-type</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17728,7 +17744,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>Marquer comme lu</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17926,6 +17942,18 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Veuillez choisir la catégorie</label>
@@ -19863,7 +19891,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>Tâches</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19923,11 +19951,11 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0} a demandé l&apos;accès au portail.</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0} a demandé l&apos;accès à {1} service</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19959,7 +19987,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>Voir les détails</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
@@ -20467,7 +20495,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_SupportReachUs_ShowSupportOptions</name>
     </customLabels>
     <customLabels>
-        <label>Remplissez le formulaire pour voir les options d&apos;assistances recommandées</label>
+        <label>Remplissez le formulaire pour voir les options d&apos;assistance recommandées</label>
         <name>csp_SupportReachUs_SpecifyCaseDetails</name>
     </customLabels>
     <customLabels>

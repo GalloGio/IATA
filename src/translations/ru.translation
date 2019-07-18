@@ -1521,11 +1521,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>Все уведомления</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>Новости</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1737,7 +1737,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>Новость</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1909,7 +1909,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>Любимые услуги</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2229,7 +2229,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>Задача</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3965,7 +3965,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Профиль</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12841,6 +12841,10 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>Контактная информация</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13539,6 +13543,14 @@ IATA стремится обеспечить высочайшее качеств
     <customLabels>
         <label>Пожалуйста введите ряд только из символов латинского алфавита.</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>Введите текст</label>
@@ -16295,6 +16307,10 @@ GSA - 3 буквы.
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>Подтип</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17696,7 +17712,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>&quot;Пометить, как прочитанное&quot;</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17840,7 +17856,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>NotificationCenter_Title</name>
     </customLabels>
     <customLabels>
-        <label>Деталь уведомления</label>
+        <label>Информация об уведомлении</label>
         <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
@@ -17894,6 +17910,18 @@ IATA Treasury Dashboard — динамичный информационный в
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Выберите категорию</label>
@@ -19833,7 +19861,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>Задачи</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19893,11 +19921,11 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0} запрашивает доступ к порталу.</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0} запрашивает доступ к {1} услуге</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19929,7 +19957,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>Посмотреть детали</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
@@ -20437,7 +20465,7 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>csp_SupportReachUs_ShowSupportOptions</name>
     </customLabels>
     <customLabels>
-        <label>Заполните форму, чтобы увидеть рекомендуемые варианты поддержки</label>
+        <label>&quot;Заполните форму, чтобы увидеть рекомендуемые варианты поддержки&quot;</label>
         <name>csp_SupportReachUs_SpecifyCaseDetails</name>
     </customLabels>
     <customLabels>
