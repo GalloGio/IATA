@@ -255,6 +255,9 @@ export default class FavoriteServicesLWC extends LightningElement {
         } else if (appFullUrlData.value !== '') {
             myUrl = appFullUrlData.value;
             flag = true;
+        } else if (recordName.value === 'Payment Link') {
+            myUrl = '';
+            flag = true;
         }
         if (flag) {
             //verifies if the event target contains all data for correct redirection
