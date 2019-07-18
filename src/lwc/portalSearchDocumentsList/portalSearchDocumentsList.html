@@ -1,0 +1,71 @@
+<template>
+
+    <div if:true={showComponent}>
+
+        <c-portal-custom-card-container>
+
+            <span slot="cardTitle">
+                <span class={titleClass} onclick={highlightDocumentsComponent} >{label.CSP_Documents} (
+                    <span if:true={filteringObject.documentsComponent.loading} class="nrResultsSpinner">
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </span>
+                    <span if:false={filteringObject.documentsComponent.loading}>
+                        {resultsText}
+                    </span>
+                    )
+                </span>
+            </span>
+    
+            <span slot="cardButton" if:true={showSeeAllLink}>
+                <lightning-button variant="base" 
+                    label={label.CSP_SeeAll} 
+                    title={label.CSP_SeeAll}
+                    icon-name="utility:forward" 
+                    icon-position="right" 
+                    onclick={goToSeeAllDocumentsButtonClick}
+                    class="slds-p-right_small blueCustomButtonLink">
+                </lightning-button>
+            </span>
+
+            <span slot="cardBody"> 
+
+                <div if:true={filteringObject.documentsComponent.loading} class="spinnerContainer">
+                    <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                </div>
+
+                <div if:false={filteringObject.documentsComponent.loading}>
+                    <div if:true={viewResults}>
+                        <div class="slds-p-left_x-small slds-p-bottom_small text-xxsmall text-gray">
+                            {label.CSP_Title}
+                        </div>
+                        <template for:each={documentsList} for:item="document">
+                            <lightning-layout horizontal-align="spread" key={document.Id} data-item={document.Id} class="slds-border_top slds-p-horizontal_x-small slds-grid slds-grid_align-spread slds-hint-parent slds-grid_vertical-align-center">
+                                <lightning-layout-item >
+                                    <div class="text-black text-bold cursorPointer" data-item={document.Id} onclick={renderDocument}>{document.Title}</div>
+                                </lightning-layout-item>
+                                <lightning-layout-item class="cursorPointer"> 
+                                    <lightning-button variant="base"
+                                        icon-name="utility:forward"
+                                        size="x-small"
+                                        class="blueCustomButtonLink"
+                                        data-item={document.Id}
+                                        onclick={renderDocument}>
+                                    </lightning-button>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </template>
+                        <div class="endOfTableDocuments"></div>
+                        <div if:true={loadingMoreResults} class="spinnerContainer">
+                            <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                        </div>
+                    </div>
+                    <div if:false={viewResults} class="slds-p-vertical_small slds-text-align_center text-small text-bold text-linkBlue">
+                        {label.CSP_NoSearchResults}
+                    </div>
+                </div>
+            </span>
+
+        </c-portal-custom-card-container>
+    </div>
+
+</template>
