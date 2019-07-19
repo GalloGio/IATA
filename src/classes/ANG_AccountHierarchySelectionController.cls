@@ -791,13 +791,14 @@ public with sharing class ANG_AccountHierarchySelectionController {
             }
 
             //BSPid,AccountId
-            Map<ID,ID> resultHEPerBSP = (Map<ID,ID>) JSON.deserialize( oscar.HE_per_BSP_Mapping__c, Map<ID,ID>.class);
+            Map<ID,ID> resultHEPerBSP = new Map<ID,ID>();
+            if(String.isNotBlank(oscar.HE_per_BSP_Mapping__c)) resultHEPerBSP = (Map<ID,ID>) JSON.deserialize( oscar.HE_per_BSP_Mapping__c, Map<ID,ID>.class);
 
             for (HierarchyItem i : hierarchy.values()){
 
                 Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
 
-                if((i.selected || i.main) && currentBSP != newParent.IATA_ISO_Country__r.AMS_Settlement_System__c){
+                if((i.selected || i.main) && !existingBSPs.contains(currentBSP)){
 
                     if(!hesPerBSPs.containsKey(currentBSP)) 
                         hesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
