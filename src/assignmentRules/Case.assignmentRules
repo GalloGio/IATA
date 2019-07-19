@@ -4,6 +4,56 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>L3_Publications_YMQ_CDS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - YMQ CDS</value>
+            </criteriaItems>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emirates</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND 2 AND 3 AND 4) OR (1 AND 4 AND (5 OR 6))</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordType__c</field>
+                <operation>equals</operation>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Name</field>
+                <operation>equals</operation>
+                <value>Emirates</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Sector__c</field>
+                <operation>equals</operation>
+                <value>Airline</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>notContain</operation>
+                <value>E&amp;F</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>91207546</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>91207546,36210436,3620010,5729277,5720020</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_IATAN</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
@@ -1700,7 +1750,7 @@ ISPICKVAL(Reason1__c,&quot;Invoicing&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Account_Receivable_YMQ</assignedTo>
+            <assignedTo>GCS_Finance_AR_BIS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(
@@ -2027,12 +2077,6 @@ ISPICKVAL(Product__r.Delivery_Fulfillment_Support__c, &quot;Product Manager&quot
 Product__r.Product_Section__c = &quot;PUA001&quot;
 )</formula>
             <template>All/IDFS_Case_assignment_Profit_center_VF</template>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>L3_CDS_AMS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>ISPICKVAL(Origin, &quot;Email - Publications AMS Queries&quot;)  &amp;&amp;  RecordType.Name = &quot;Process&quot;</formula>
-            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Publications_OPS007</assignedTo>
@@ -2506,7 +2550,7 @@ Account.Country_ISO_Code__c = &quot;US&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Account_Receivable_YMQ</assignedTo>
+            <assignedTo>GCS_Finance_AR_BIS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(
@@ -3477,7 +3521,7 @@ ISPICKVAL(Reason1__c, &quot;Task request&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>L3_Account_Receivable_YMQ</assignedTo>
+            <assignedTo>GCS_Finance_AR_BIS</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
 or(
@@ -3591,6 +3635,12 @@ RecordType.Name = &quot;Process&quot;
 ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;) , 
 ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
 )</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_CDS_AMS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>ISPICKVAL(Origin, &quot;Email - Publications AMS Orders&quot;)  &amp;&amp;  RecordType.Name = &quot;Process&quot;</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
@@ -4503,30 +4553,6 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
 ) 
 ) 
 )</formula>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_Emirates</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Account.Name</field>
-                <operation>equals</operation>
-                <value>Emirates</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Account.Sector__c</field>
-                <operation>equals</operation>
-                <value>Airline</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>notContain</operation>
-                <value>E&amp;F</value>
-            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
@@ -5837,7 +5863,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>IDFS Airline Participation Process</value>
+                <value>IDFS Airline Participation Process,FDS ASP Management</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -6263,7 +6289,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
+                <value>MITA Interline Agreements,General Queries</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -8888,7 +8914,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
+                <value>MITA Interline Agreements,General Queries</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>
@@ -8943,7 +8969,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
+                <value>MITA Interline Agreements,General Queries</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>

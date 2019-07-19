@@ -11,6 +11,17 @@
         <type>Url</type>
     </fields>
     <fields>
+        <fullName>Library_Doc_Name__c</fullName>
+        <description>If the url is empty use this field to get the document from libraries</description>
+        <externalId>false</externalId>
+        <label>Library Doc Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Link_label__c</fullName>
         <externalId>false</externalId>
         <label>Link label</label>
@@ -21,6 +32,17 @@
         <unique>false</unique>
     </fields>
     <label>Airline Participation Country specifics</label>
+    <listViews>
+        <fullName>All_2</fullName>
+        <columns>NAME</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>Download_URL__c</columns>
+        <columns>Link_label__c</columns>
+        <columns>Library_Doc_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <listViews>
         <fullName>Country_specs_bank_mandates</fullName>
         <columns>NAME</columns>
