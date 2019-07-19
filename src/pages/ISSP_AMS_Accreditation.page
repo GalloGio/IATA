@@ -473,20 +473,22 @@
         }
 
         function checkMCNoC() {
-            if ($('[id$="LocationType"]').find("input")[1]) {
-                if ($('[id$=countrySelectedMCNOC]').val() === '{!hqAccount.Country_ISO_Code__c}') {
-                    $('[id$="LocationType"]').find("input")[1].disabled = false;
-                    $('[id$="LocationType"]').find("input")[2].disabled = false;
-                    $('[id$="LocationType"]').find("input")[0].disabled = false;
-                } else {
-                    $('[id$="LocationType"]').find("input")[1].disabled = true;
-                    $('[id$="LocationType"]').find("input")[2].disabled = true;
-                    $('[id$="LocationType"]').find("input")[0].disabled = true;
-                    $('[id$="LocationType"]').find("input")[3].checked = true;
+            if ({!isStep1}) {
+                if ($('[id$="LocationType"]').find("input")[1]) {
+                    if ($('[id$=countrySelectedMCNOC]').val() === '{!hqAccount.Country_ISO_Code__c}') {
+                        $('[id$="LocationType"]').find("input")[1].disabled = false;
+                        $('[id$="LocationType"]').find("input")[2].disabled = false;
+                        $('[id$="LocationType"]').find("input")[0].disabled = false;
+                    } else {
+                        $('[id$="LocationType"]').find("input")[1].disabled = true;
+                        $('[id$="LocationType"]').find("input")[2].disabled = true;
+                        $('[id$="LocationType"]').find("input")[0].disabled = true;
+                        $('[id$="LocationType"]').find("input")[3].checked = true;
+                    }
                 }
+                
+                reRenderAccountsNoc();
             }
-            
-            reRenderAccountsNoc();
         }
 
         function populateLegalAndSeparateFields() {
@@ -543,8 +545,22 @@
             if ({!isMCNewAEAccredited} && {!isNoticeOfChange}) {
                 $('[id$=nocFormQuestions]').first().insertAfter($('[id$=countrySelection').first());
                 checkMCNoC();
-                reRenderNocOptions();
+                if ({!isStep1}) {
+                    reRenderNocOptions(); 
+                }
             }
+        }
+
+        function showfinalConfirmationNoCMCModal() {
+            $(function () {
+                $('#finalConfirmationNoCMCModal').modal('show');
+            });
+        }
+
+        function closefinalConfirmationNoCMCModal() {
+            $(function () {
+                $('#finalConfirmationNoCMCModal').modal('hide');
+            });
         }
     </script>
 
@@ -641,10 +657,13 @@
                                     <div class="alert alert-info" role="alert" style="display:{!IF(NOT(isNoticeOfChange),'','none')}">
                                         <apex:outputText value="{!$Label.ISSP_AMS_Step1_Separate_Application}" escape="false"/>
                                     </div>
-                                    <div class="alert alert-warning" role="alert" style="display: {!IF(AND(isMultiCountryNewAE, NOT(isMCNewAEAccredited)), 'none', '')}">
+                                    <div class="alert alert-warning" role="alert" style="display: {!IF(AND(isMultiCountryNewAE, NOT(isMCNewAEAccredited)), 'none', 'block')}; margin-bottom: {!IF(AND(isMCNewAEAccredited, isNoticeOfChange), '5px !important', '20px;')}">
                                         {!IF(NOT(isNoticeOfChange), 
                                         $Label.ISSP_AMS_Step1_Two_Weeks_Expiry,
                                         $Label.ISSP_AMS_Noc_StepA_message)}
+                                    </div>
+                                    <div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCNewAEAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
+                                        {!$Label.ISSP_AMS_Noc_StepA_message_MC}
                                     </div>
 
                                     <apex:outputPanel style="display:{!IF(newCase.Status!='Open - EDMC', '', 'none')}" rendered="{!NOT(isNoticeOfChange)}">
@@ -1175,7 +1194,9 @@
                     <apex:actionStatus id="buttonLoadingStep5NoC">
                         <apex:facet name="stop"><apex:outputPanel >
                         <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
-                        <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm"/>
+                        <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm" rendered="{!NOT(isMCNewAEAccredited)}"/>
+                        <apex:commandButton value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" reRender="NoCForm" rendered="{!isMCNewAEAccredited}" onclick="showfinalConfirmationNoCMCModal();"/>
+                        
                         <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
                     </apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
@@ -1237,6 +1258,28 @@
             </apex:form>
         </div>
     </apex:pageBlock>
+
+    <apex:form id="finalConfirmationNoCMC">
+        <div class="modal fade" id="finalConfirmationNoCMCModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Test warning message</h4>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        {!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}
+                        
+                    </div>
+
+                    <div class="modal-footer">                      
+                        <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm" onclick="closefinalConfirmationNoCMCModal();"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </apex:form>
 
          </div>
          <c:ISSP_CustomFooter communityName="{!communityName}"/>

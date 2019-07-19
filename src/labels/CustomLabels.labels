@@ -17921,6 +17921,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Draft changes must be submitted within 2 weeks, otherwise you will need to restart the change request.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Noc_StepA_message_MC</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Noc_StepA_message_MC</shortDescription>
+        <value>NoC will be effective only on selecting agencies from the same legal structure.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Noc_Type_of_Change</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -26712,6 +26720,13 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
         <value>Since the conversion of accreditation type must apply to your entire Organization please return to STEP A and select the option &apos;Head Entity &amp; All Associate Entities&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_HE_with_AEs_Warning_MC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
+        <value>the change will only be effective if only agencies belonging to the same legal structure have been selected.</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_Head_Entity_Becoming_a_AE</fullName>

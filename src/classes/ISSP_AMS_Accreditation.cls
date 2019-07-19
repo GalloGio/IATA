@@ -1965,7 +1965,13 @@ public without sharing class ISSP_AMS_Accreditation {
 
             newCase.recordTypeId = RECORD_TYPE_ID;
             newCase.BSPCountry__c = isocountry.Case_BSP_Country__c;
-            newCase.Country_concerned_by_the_query__c = isocountry.Name;
+
+            if (!isMCNewAEAccredited) {
+                newCase.Country_concerned_by_the_query__c = isocountry.Name;
+            } else {
+                newCase.Country_concerned_by_the_query__c = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{newCase.IFAP_Country_ISO__c})[0].Name;
+            }
+            
             newCase.Type_of_customer__c = con.Account.Category__c;
 
             // CNS
@@ -1973,6 +1979,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 newCase.CNSCase__c = true;
                 newCase.Groups__c = 'CNS Team';
             }
+
+            System.debug('rui: ' + newCase.IFAP_Country_ISO__c);
 
             upsert newCase;
 
