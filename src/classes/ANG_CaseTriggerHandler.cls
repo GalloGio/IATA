@@ -115,7 +115,7 @@ public class ANG_CaseTriggerHandler {
 	@future
 	private static void updateRHCInfoFSMinimumAmount(Set<Id> caseIds, Set<Id> accsIds){
 
-		List<Financial_Security__c> financialSecurities = [SELECT Id, Account__c, ANG_isToUpdateRHC__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c FROM Financial_Security__c WHERE Reception_Case__c IN :caseIds AND Security_Status__c IN ('Close to Expiry Date','Active') AND Account__c IN :accsIds AND Account__r.ANG_IsNewGenAgency__c = TRUE];
+		List<Financial_Security__c> financialSecurities = [SELECT Id, Account__c, ANG_isToUpdateRHC__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c, Security_Status__c, Amount__c FROM Financial_Security__c WHERE Reception_Case__c IN :caseIds AND Security_Status__c IN ('Close to Expiry Date','Active') AND Account__c IN :accsIds AND Account__r.ANG_IsNewGenAgency__c = TRUE];
 		
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_CaseTriggerHandler - updateRHCInfoFSMinimumAmount] Financial Securities - ' + financialSecurities);
 
