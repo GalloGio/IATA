@@ -246,12 +246,12 @@ public with sharing class ANG_Risk_Helper{
 		return sum;
 	}
 
-	public static void convertFSAmount(list<Financial_Security__c> fsList, Map<id, Account> mapAccount){	
+	public static void convertFSAmount(list<Financial_Security__c> fsList, Map<Id, Account> mapAccount){	
 		accIdSet = new Set<ID>();
 		//list of HE Accounts to be used when get the RHC Information currency (only He accounts have RHC)
 		for(Account acc : mapAccount.values()){
 			if(acc.Location_Type__c == AMS_Utils.HE || acc.Location_Type__c == AMS_Utils.GE) accIdSet.add(acc.id);
-			else accIdSet.add(acc.ParentID);
+			else accIdSet.add(acc.ParentId);
 		}
 
 		list<Financial_Security__c> tempList= new list<Financial_Security__c>();

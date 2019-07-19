@@ -132,7 +132,7 @@ private class ANG_FinancialSecurityTriggerHandlerTest {
 	}
 
 
-	@isTest static void createFinancialSecurityOnChinaBranches(){
+	@isTest static void createFinancialSecurityOnChinaAssociatedEntities(){
 
 		IATA_ISO_Country__c ctryChina = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', ANG_Enable_NewGen__c = true, Region__c = 'China & North Asia', 
 			ANG_RHC_LocationType__c = 'Include all AEs');
@@ -141,7 +141,7 @@ private class ANG_FinancialSecurityTriggerHandlerTest {
         Id accountAgencyRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         
         Account chinaHE = new Account(IATA_ISO_Country__c = ctryChina.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='HE',Name='Test China HE Agency OK',
-        	Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+        	Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P', ANG_Accreditation_Model__c = 'Cash');
         
         insert chinaHE;
 
@@ -150,7 +150,7 @@ private class ANG_FinancialSecurityTriggerHandlerTest {
         insert rhc1;
 
         Account chinaAE = new Account(IATA_ISO_Country__c = ctryChina.id, ParentId = chinaHE.Id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='AE',
-        	Name='Test China AE Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+        	Name='Test China AE Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P', ANG_Accreditation_Model__c = 'Cash');
 
         insert chinaAE;
 
