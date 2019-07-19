@@ -36,10 +36,9 @@ global class CNSCaseManager {
 
 
     webService static Boolean isUserAllowedToCreateEditCase() {
-
-        Group cnsGroup = [SELECT Id, Name FROM Group WHERE DeveloperName = 'CNS_Collection_Process_Group'];
-                     
-        List<GroupMember> cnsGroupMembers = [SELECT UserOrGroupId FROM GroupMember WHERE GroupId = :cnsGroup.Id];
+        //Group cnsGroup = [SELECT Id, Name FROM Group WHERE DeveloperName = 'CNS_Collection_Process_Group'];                   
+        //List<GroupMember> cnsGroupMembers = [SELECT UserOrGroupId FROM GroupMember WHERE GroupId = :cnsGroup.Id];
+        List<GroupMember> cnsGroupMembers = [SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName = 'CNS_Collection_Process_Group'];
                      
         Boolean userBelongsToCNSGroup = false;
 

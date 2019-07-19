@@ -147,7 +147,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 			//ACAMBAS - WMO-484: Begin
 			if(!parentInsertedCaseIds.isEmpty())  {
-				parentInsertedCasesList = [SELECT Id, Deadline_Date__c, BusinessHoursId FROM Case WHERE Id IN :parentInsertedCaseIds];
+				parentInsertedCasesList = [SELECT Id, Deadline_Date__c, BusinessHoursId FROM Case WHERE Id IN :parentInsertedCaseIds AND RecordTypeId = :CNSRecordTypeID];
 			}
 
 			for(Case parentCase : parentInsertedCasesList) {
@@ -155,7 +155,24 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 
 			if(!parentInsertedCasesList.isEmpty()) {
-				update parentInsertedCasesList;
+				//update parentInsertedCasesList;
+		        Integer enqueuedJobs=[select count() from asyncApexJob where JobType = 'BatchApex' and status in ('Processing', 'Preparing', 'Queued')];
+		        
+		        if(enqueuedJobs == 0) {
+		        	System.enqueueJob(new AsyncDML_Util(parentInsertedCasesList, AsyncDML_Util.DML_UPDATE, false));
+		    	}
+		        else {
+		            Datetime now = Datetime.now().addSeconds(3);
+		            String hour = String.valueOf(now.hour());
+		            String min = String.valueOf(now.minute()); 
+		            String ss = String.valueOf(now.second());
+		            String day = String.valueOf(now.day());
+		            String month = String.valueOf(now.month());
+		            String year = String.valueOf(now.year());
+		            //parse to cron expression
+		            String nextFireTime = ss + ' ' + min + ' ' + hour + ' ' + day + ' ' + month + ' ? ' + year;
+		            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), nextFireTime, new AsyncDML_Util_Schedulable(parentInsertedCasesList, AsyncDML_Util.DML_UPDATE, false));
+		        }
 			}
 			//ACAMBAS - WMO-484: End
 
