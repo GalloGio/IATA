@@ -224,6 +224,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
                     'missing HE for new bsp', 
                     'You need to select an account to be HE in all the new BSP\'s.'
                 );
+
+                errorMessages.put(
+                    'Multicountry GE selected performing change of hierarchy',
+                    'You cannot leave an HE or AE account alone in a multicountry hierarchy. Please choose all the accounts from the hierarchy.'
+                );
                 
             }
             return errorMessages;
@@ -966,8 +971,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
         Set<String> locationTypeSet = new Set<String>();
 
         Id firstItemBSP = null;
-
+        
         integer selectedCount = 0;
+        integer hierarchySize = hierarchyValues.size();
 
         for(HierarchyItem item : hierarchyValues){
 
@@ -1019,6 +1025,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
         }
 
         if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && !diffDestination(oscar.New_parent__c) && isSingleBSPSelected) errorChecks.put('All selected locations are in the same BSP', true);
+
+        //If a GE location is selected when performing a change of hierarchy the user has to select the entire hierarchy
+        //since it is not allowed to leave HE or AE accounts alone in the hierarchy 
+        if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && locationTypeSet.contains(AMS_Utils.GE) && selectedCount != hierarchySize){
+            errorChecks.put('Multicountry GE selected performing change of hierarchy', true);
+        }
 
     }
 
