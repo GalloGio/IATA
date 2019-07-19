@@ -759,9 +759,12 @@
             </apex:actionFunction>
 					
 			<apex:pageBlock id="AMSBlock">
-			<div class="alert alert-info" role="alert">
+			<div class="alert alert-info" role="alert" style="margin-bottom: {!IF(AND(isMCNewAEAccredited, isNoticeOfChange), '5px !important', '20px;')}">
 				{!$Label.ISSP_AMS_NoC_StepB_message}
 			</div>
+			<div class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCNewAEAccredited, isNoticeOfChange), 'block', 'none')}; margin-bottom: 20px;">
+                {!$Label.ISSP_AMS_Noc_StepA_message_MC}
+            </div>
 			<apex:pageBlockButtons >
 				<apex:commandButton action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}"/>&nbsp;
 				<apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" />
@@ -823,7 +826,7 @@
 						<apex:pageBlockSection columns="1">	
 							<apex:pageBlockSectionItem labelStyle="width:26%">
 								<apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
-								<apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash)}" />
+								<apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', $Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash))}" />
 							</apex:pageBlockSectionItem>
 						</apex:pageBlockSection>
 						<apex:pageBlockSection columns="1">
@@ -851,15 +854,12 @@
 					            </script>																	
 							</apex:outputPanel>
 
-							<!--apex:pageBlockSectionItem labelStyle="width:26%;display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}" dataStyle="display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}">
-								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}" styleClass="agencyAccreditationTypeComponent"/>
-								<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this)"></apex:inputField>
-							</apex:pageBlockSectionItem-->
+
 
 							<script>
 								cntIFAPContacts = {!cntIFAPContacts};
 							</script>
-							<!--apex:outputPanel id="addFinancialAssessmentContactItem" rendered="{!con.Account.ANG_Accreditation_Model__c == 'Cashless'}" style="display: {!IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', '', 'none')};"-->
+
 							<apex:outputPanel id="addFinancialAssessmentContactItem" 
 									style="display : {!IF(AND(newForm.Notify_Change_Accreditation_Type__c == true, 
 															  newForm.ANG_Accreditation_Model_to_Change__c == 'Cash'),
@@ -941,7 +941,7 @@
 							
 						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Legal_Details_are_correct__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Legal_Details__c.Label}" style="color:black;font-size:110%"/>
-							<apex:inputCheckbox html-data-group="agencyLegalDetails" html-data-controls="agencyLegalDetailsComponent" value="{!newForm.Notify_Change_Legal_Details__c}"/>
+							<apex:inputCheckbox id="notifyLegalDetailsChange" html-data-group="agencyLegalDetails" html-data-controls="agencyLegalDetailsComponent" value="{!newForm.Notify_Change_Legal_Details__c}" onchange="removeMessage();"/>
 						</apex:pageBlockSectionItem>
 					
 						<apex:pageBlockSection columns="1">		
@@ -1180,7 +1180,7 @@
 						<apex:pageBlockSection columns="1">
 		                    <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Ownership_details_are_correct__c==false,newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label}" style="color:black;font-size:110%"/>
-								<apex:inputCheckbox html-data-group="agencyOwnership" html-data-controls="agencyOwnershipComponent" value="{!newForm.Notify_Change_Ownership__c}"/>
+								<apex:inputCheckbox id="notifyOwnershipChange" html-data-group="agencyOwnership" html-data-controls="agencyOwnershipComponent" value="{!newForm.Notify_Change_Ownership__c}" onchange="removeMessage();"/>
 							</apex:pageBlockSectionItem>    
 						</apex:pageBlockSection>
 					</apex:outputPanel>
@@ -2133,7 +2133,6 @@
 				</div>
 
 				<script>
-
 					function closeIFAPModalByCommandButton() {
 						$j( '#addNewIFAPContactModal' ).modal('hide');
             			clearForm('{!$Component.newIFAPContact}');
@@ -2231,13 +2230,22 @@
 				  allowedAccreditationModelSelectDisplay = allowedAccreditationModelSelect.parent().parent().children(),
 				  confirmAccType = $j('[id$=confirmAccType]');
 
-//alert(allowedAccreditationModelSelectDisplay.value);				  
+//alert(allowedAccreditationModelSelectDisplay.value);	
+
+			function removeMessage() {
+				var warningBox = $j('[id$=warningHoverBox]');
+
+				if (warningBox) {
+					warningBox.remove();
+				}
+			}			  
 
 			function getWarningBox(message) {
 				var alertDiv = document.createElement('div');
 				alertDiv.className = 'alert alert-warning text-justify';
 				alertDiv.role = 'alert';
 				alertDiv.appendChild(document.createTextNode(message));
+				alertDiv.id = 'warningHoverBox';
 				return alertDiv;
 			} 
 
@@ -2248,6 +2256,24 @@
 					whereToAppend.append(getWarningBox(warningMessage));
 				}, function() {
 					whereToAppend.html('');
+				});
+			}
+
+			function setWarningBoxOnHoverMC(where, warningMessage) {
+				var whereToAppend;
+
+				if (~where[0].name.indexOf("notifyOwnershipChange")) {
+					whereToAppend = where.parent().parent().parent().parent().parent().parent().parent().parent().parent().next().children().last();
+                } else {
+                	whereToAppend = where.parent().parent().next().children().last();
+                }
+
+				where.hover(function() {
+					if (!where[0].checked) {
+						whereToAppend.append(getWarningBox(warningMessage));
+					}
+				}, function() {
+					removeMessage();
 				});
 			}
 
@@ -2314,6 +2340,11 @@
 						deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
 					}
 				}
+			}
+
+			if ({!isMCNewAEAccredited} && {!isNoticeOfChange} && lScopeOfChange !== 'HO Only') {
+				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 			}
 			//END - NoC Changes
 			

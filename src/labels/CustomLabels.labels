@@ -17,25 +17,11 @@
         <value>The accepted payment methods is different from the parent product value. Please do not select any value to use the parent product accepted payment methods.</value>
     </labels>
     <labels>
-        <fullName>AIMSAccountBeforeUpdate_AutoProcess</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Automated Process Profile Name used in the AIMS Account Trigger (BU)</shortDescription>
-        <value>System Administrator - automated processes</value>
-    </labels>
-    <labels>
         <fullName>AIMSAccountBeforeUpdate_AutoProcess_Restricted</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>A-P restricted Profile Name used in the AIMS Account trigger (BU)</shortDescription>
         <value>Restricted Profile - automated process</value>
-    </labels>
-    <labels>
-        <fullName>AMP_Services_Active</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMP Services Active</shortDescription>
-        <value>Active</value>
     </labels>
     <labels>
         <fullName>AMS_AttchNotifyOwner</fullName>
@@ -2491,14 +2477,6 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>Action Needed</shortDescription>
         <value>Action Needed</value>
-    </labels>
-    <labels>
-        <fullName>AddToCart</fullName>
-        <categories>IEC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AddToCart</shortDescription>
-        <value>Add To Cart</value>
     </labels>
     <labels>
         <fullName>Add_an_attachment</fullName>
@@ -17802,6 +17780,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Draft changes must be submitted within 2 weeks, otherwise you will need to restart the change request.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Noc_StepA_message_MC</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Noc_StepA_message_MC</shortDescription>
+        <value>NoC will be effective only on selecting agencies from the same legal structure.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Noc_Type_of_Change</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -26595,6 +26581,13 @@ this is the tiess topic help</value>
         <value>Since the conversion of accreditation type must apply to your entire Organization please return to STEP A and select the option &apos;Head Entity &amp; All Associate Entities&apos;</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoC_HE_with_AEs_Warning_MC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
+        <value>the change will only be effective if only agencies belonging to the same legal structure have been selected.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NoC_Head_Entity_Becoming_a_AE</fullName>
         <categories>ISSP,NoC</categories>
         <language>en_US</language>
@@ -32684,13 +32677,6 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Login date</value>
     </labels>
     <labels>
-        <fullName>Login_history</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Login history</shortDescription>
-        <value>Login history</value>
-    </labels>
-    <labels>
         <fullName>Login_information</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -34368,14 +34354,6 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>OneId_Type</shortDescription>
         <value>Type</value>
-    </labels>
-    <labels>
-        <fullName>OneId_URL_To_GDPR</fullName>
-        <categories>GDPR</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_URL_To_GDPR</shortDescription>
-        <value>https://customer-portal-iata.force.com/identity/s/login/?language=en_US&amp;amp;serviceName=dataprivacy</value>
     </labels>
     <labels>
         <fullName>OneId_URL_javaScript</fullName>
@@ -37051,13 +37029,6 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Zip code cannot be empty</shortDescription>
         <value>Zip code cannot be empty</value>
-    </labels>
-    <labels>
-        <fullName>Zuora_Hosted_Payment_Method_error_message</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Zuora Hosted Payment Method error message</shortDescription>
-        <value>An error has occurred was trying to create your new card</value>
     </labels>
     <labels>
         <fullName>contacting_us</fullName>
