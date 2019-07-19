@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Data Category / FAQ visibility for PAX Agents, includes RHC &amp; EasyPay</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>FAQs Visibility Travel Agent NewGen</label>
+    <license>Partner Community</license>
+</PermissionSet>

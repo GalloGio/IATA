@@ -1,0 +1,21 @@
+<aura:component implements="forceCommunity:themeLayout" access="global" description="Sample Custom Theme Layout">
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="newHeader" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="newFooter" type="Aura.Component[]" required="false"/>
+    <div>
+        <div class="navBar">
+            <c:portalHeader/>
+        </div>
+        <div class="newHeader">
+            {!v.newHeader}
+        </div>
+
+        <div class="mainContentArea">
+            {!v.body}
+        </div>
+
+        <div class="newFooter">
+            {!v.newFooter}
+        </div>
+    </div>
+</aura:component>

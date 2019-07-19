@@ -315,6 +315,19 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>New_Agent_Experience</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>New Agent Experience</label>
+        <sharedTo>
+            <role>External_Salesforce</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Process</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>PwC_Case</fullName>
         <accessLevel>Edit</accessLevel>
         <label>PwC Case</label>

@@ -1,0 +1,196 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="GCS_RegistrationController">
+
+    <!-- User & Service Info -->
+    <aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent' }" />
+    <aura:attribute type="Contact" name="contact" default="{ 'sobjectType': 'Contact' }" />
+    <aura:attribute type="String" name="serviceName" />
+
+	<!--Data Quality-->
+	<!--Passing these fields to the account creation component so they are accessible in account selection controller-->
+	<aura:attribute type="String" name="billingCityId" />
+	<aura:attribute type="String" name="billingStateId" />
+	<aura:attribute type="String" name="shippingCityId" />
+	<aura:attribute type="String" name="shippingStateId" />
+	<aura:attribute type="IATA_ISO_Country__c" name="countryShipping" access="private" default="{'sobjectType' : 'IATA_ISO_Country__c'}"/>
+	<!--Data Quality-->
+
+    <!-- Company Information -->
+    <aura:attribute type="Object" name="customerType" default="" access="private"/>
+
+    <!-- Customer type -->
+    <aura:attribute type="Object" name="defautltCustomerType" default="{}" access="private"/>
+
+    <aura:attribute type="String" name="selectedCustomerTypeName" access="private"/>
+    <aura:attribute type="String" name="selectedCustomerTypeName2" access="private"/>
+    <aura:attribute type="String" name="selectedCustomerTypeName3" access="private"/>
+    <aura:attribute type="List" name="customerTypes" default="[]" access="private"/>
+    <aura:attribute type="List" name="customerTypes2" default="[]" access="private"/>
+    <aura:attribute type="List" name="customerTypes3" default="[]" access="private"/>
+    <aura:attribute type="String" name="picklistLabel2" access="private"/>
+    <aura:attribute type="String" name="picklistLabel3" access="private"/>
+    <aura:attribute type="String" name="picklistPlaceholder2" access="private"/>
+    <aura:attribute type="String" name="picklistPlaceholder3" access="private"/>
+    
+    <aura:attribute type="Boolean" name="generalPublicCountryHeader" default="false"/>
+    
+    <!-- Selected types - metadata -->
+    <aura:attribute type="Object" name="customerType1" access="private"/>
+    <aura:attribute type="Object" name="customerType2" access="private"/>
+    <aura:attribute type="Object" name="customerType3" access="private"/>
+
+    <!-- Search bar -->
+    <aura:attribute type="String" name="userInput" access="private"/>
+    <aura:attribute type="Boolean" name="searching" access="private"/>
+
+    <!-- Search results -->
+    <aura:attribute type="List" name="allAccounts" default="[]" access="private"/>
+    <aura:attribute type="List" name="accounts" default="[]" access="private"/>
+
+    <!-- toggles -->
+    <aura:attribute type="Boolean" name="search" default="true" />
+    <aura:attribute type="Boolean" name="create" default="false" />
+    <aura:attribute type="Boolean" name="showSearch" default="false" />
+    <aura:attribute type="Boolean" name="showCreate" default="false" />
+    <aura:attribute type="Boolean" name="secondLevelType" default="false"/>
+    <aura:attribute type="Boolean" name="thirdLevelType" default="false"/>
+    <aura:attribute type="Boolean" name="requireCountry" default="false"/>
+    <aura:attribute type="Boolean" name="showCreateNew" default="false" description="Allow creation of new accounts - defined on Customer Type"/>
+    <aura:attribute type="Boolean" name="accountSelected" default="false" description="Allow submition when account is selected"/>
+
+    <aura:attribute type="GCS_RegistrationController.CountryInformation" name="countryInformation" access="private"/>
+    <aura:attribute type="IATA_ISO_Country__c" name="country" access="private"/>
+    <aura:attribute type="String" name="selectedCountry" access="private"/>
+
+    <!-- EVENTS -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="itemSelected" event="c:OneId_ItemSelected_EVT" action="{!c.handleAccountSelected}"/>
+
+	<aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
+    
+    <aura:if isTrue="{!v.search}">
+        <div class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-size_1-of-1">
+                <h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.OneId_SearchAccount}</h2>
+
+                <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+                    <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_MyProfile_SECTOR}</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputSelect value="{!v.selectedCustomerTypeName}" class="slds-select" change="{!c.customerTypeSelected}">
+                            <ui:inputSelectOption text="" label="{!$Label.c.ISSP_Select_Type_of_Company}" value="true"/>
+
+                            <!-- Iterate over customer types -->
+                            <aura:iteration items="{!v.customerTypes}" var="type">
+                                <ui:inputSelectOption text="{!type.metadataCustomerType.DeveloperName}" label="{!type.label}"/>
+                            </aura:iteration>
+                        </ui:inputSelect>
+                    </div>
+                </div>
+                
+                <!-- Additional picklist for second level of customer type -->
+                <aura:if isTrue="{!and(!empty(v.selectedCustomerTypeName),v.secondLevelType)}">
+                    <div class="slds-m-bottom_medium slds-size_1-of-1">
+                        <aura:if isTrue="{!v.picklistLabel2 != null}">
+                        	<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.picklistLabel2}</label>
+                        </aura:if>
+                        <div class="slds-form-element__control">
+                            <ui:inputSelect value="{!v.selectedCustomerTypeName2}" class="slds-select" change="{!c.customerTypeSelected2}">
+                                <ui:inputSelectOption text="" label="{!v.picklistPlaceholder2}" value="true"/>
+
+                                <!-- Iterate over customer types -->
+                                <aura:iteration items="{!v.customerTypes2}" var="type">
+                                    <ui:inputSelectOption text="{!type.metadataCustomerType.DeveloperName}" label="{!type.label}"/>
+                                </aura:iteration>
+                            </ui:inputSelect>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <!-- Additional picklist for the third level of customer type -->
+                <aura:if isTrue="{!and(!empty(v.selectedCustomerTypeName2),v.thirdLevelType)}">
+                    <div class="slds-m-bottom_medium slds-size_1-of-1">
+                        <aura:if isTrue="{!v.picklistLabel3 != null}">
+                            <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.picklistLabel3}</label>
+                        </aura:if>
+                        <div class="slds-form-element__control">
+                            <ui:inputSelect value="{!v.selectedCustomerTypeName3}" class="slds-select" change="{!c.customerTypeSelected3}">
+                                <ui:inputSelectOption text="" label="{!v.picklistPlaceholder3}" value="true"/>
+
+                                <!-- Iterate over customer types -->
+                                <aura:iteration items="{!v.customerTypes3}" var="type">
+                                    <ui:inputSelectOption text="{!type.metadataCustomerType.DeveloperName}" label="{!type.label}"/>
+                                </aura:iteration>
+                            </ui:inputSelect>
+                        </div>
+                    </div>
+                </aura:if>
+
+
+                <aura:if isTrue="{!v.requireCountry}">
+                    <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+                        <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{! v.generalPublicCountryHeader ? $Label.c.ISSP_Country : $Label.c.ISSP_CompanyLocation}</label>
+                        <div class="slds-form-element__control">
+                            <ui:inputSelect value="{!v.selectedCountry}" class="slds-select" change="{!c.setCountry}">
+                                <ui:inputSelectOption text="" label=""/>
+                                <aura:iteration items="{!v.countryInformation.countryList}" var="country">
+                                    <ui:inputSelectOption text="{!country.Id}" label="{!country.Name}"/>
+                                </aura:iteration>
+                            </ui:inputSelect>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <!-- SHOW ACCOUNT SEARCH -->
+                <aura:if isTrue="{!!empty(v.customerType)  &amp;&amp; v.showSearch &amp;&amp; !empty(v.selectedCountry)}">
+                    <div class="slds-form-element__control">
+                        <c:OneId_ISSP_AccountSearch customerType="{!v.customerType.DeveloperName}" showCreateNew="{!v.showCreateNew}" countryId="{!v.selectedCountry}"
+                                                    disabled="{! empty(v.customerType)|| and(v.customerType.Display_Country__c,empty(v.selectedCountry))}"/>
+                    </div>
+                </aura:if>
+            </div>
+        </div>
+    </aura:if>
+    
+    <!-- Account creation-->
+    <aura:if isTrue="{! !v.search}">
+        <!-- ISSP Account Creation -->
+        <c:OneId_ISSP_AccountCreation aura:id="creationComponent"
+                                      account="{!v.account}"
+                                      country="{!v.country}"
+                                      countryShipping="{!v.countryShipping}"
+                                      billingCityId="{!v.billingCityId}"
+                                      billingStateId="{!v.billingStateId}"
+                                      shippingCityId="{!v.shippingCityId}"
+                                      shippingStateId="{!v.shippingStateId}"				
+                                      countryInformation = "{!v.countryInformation}"
+                                      rootCustomerType="{! v.selectedCustomerTypeName3 != null? v.selectedCustomerTypeName3 : (v.selectedCustomerTypeName2 != null? v.selectedCustomerTypeName2 : v.selectedCustomerTypeName)}"/>
+    </aura:if>
+
+    <!-- backdrop -->
+    <div aura:id="backdrop" class="slds-backdrop"></div>
+    <div aura:id="errorMessage" class="slds-notify_container slds-region_narrow slds-is-absolute slds-hide">
+        <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+            <span class="slds-assistive-text">Error</span>
+            <div class="slds-notify__content">
+                <span class="slds-text-heading_x-small "><aura:unescapedHtml value="{!$Label.c.ISSP_Registration_generalError}"/></span>
+            </div>
+            <button class="slds-button slds-button_icon slds-notify__close" title="Close" onclick="{!c.closeError}">
+                <lightning:icon iconName="utility:close" variant="inverse" class="slds-button__icon slds-button__icon_large"/>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Submit if: is Search Option -> No Search or Automatic Search  AND if country is mandatory and is selected-->
+    <aura:if isTrue="{!v.accountSelected ||
+    ((v.customerType.Search_Option__c == 'No Search' || v.customerType.Search_Option__c == 'Automatic Search' ) &amp;&amp; ((!empty(v.country &amp;&amp; v.customerType.Display_Country__c)) || !v.customerType.Display_Country__c))}">
+
+        <div class="slds-grid slds-grid_align-end slds-m-top_medium">
+            <ui:button label="{!$Label.site.submit}" press="{!c.submit}" class="slds-size_1-of-1 slds-medium-size_3-of-12"/>
+        </div>
+    </aura:if>
+
+    <!-- SPINNER -->
+    <div aura:id="loading" class="slds-hide">
+        <lightning:spinner />
+    </div>
+</aura:component>
