@@ -709,10 +709,13 @@
             "isPortal": isPortal,
             "isSAAMorSIDRA": isSAAMorSIDRA
         });
+       
         getLstAttachmentsAction.setCallback(this, function (response2) {
+
             var state = response2.getState();
             if (state === "SUCCESS") {
                 var lstCases = response2.getReturnValue();
+                console.log('PF',lstCases)
                 if (lstCases) {
 
                     for (var i = 0; i < lstCases.length; i++) {
@@ -776,27 +779,26 @@
     },
 
     attachLineViewAction: function (component, attachId, event) {
-        var isAmazon = false;
         var fullName = '';
 
         var lstAttachments = component.get("v.lstAttachments");
-        for (var i = 0; i < lstAttachments.length; i++) {
-            if (lstAttachments[i].id == attachId && lstAttachments[i].filetype == 'Amazon') {
-                isAmazon = true;
-                fullName = lstAttachments[i].fullName;
-            }
-        }
-
-        if (isAmazon) {
-            var getExpiringLinkAction = component.get("c.getExpiringLink");
-            getExpiringLinkAction.setParams({
-                "fileName": fullName
-            });
+        var selectedAtt;
+        selectedAtt =lstAttachments.filter(elem=>{
+            return elem.id==attachId;
+        })[0];
+        selectedAtt =JSON.parse(JSON.stringify(selectedAtt));
+        switch(selectedAtt.sfdcContext){
+            
+            case 'amazon':
+                var getExpiringLinkAction = component.get("c.getExpiringLink");
+                getExpiringLinkAction.setParams({
+                    "fileName": fullName
+                });
             getExpiringLinkAction.setCallback(this, function (response1) {
                 var state = response1.getState();
                 if (state === "SUCCESS") {
                     var link = response1.getReturnValue().replace("&amp;", "&");
-
+                    
                     var urlEvent = $A.get("e.force:navigateToURL");
                     urlEvent.setParams({
                         "url": link
@@ -805,16 +807,15 @@
                 }
             });
             $A.enqueueAction(getExpiringLinkAction);
-        } else {
-            var link = "/servlet/servlet.FileDownload?file=" + attachId;
-
-            var urlEvent = $A.get("e.force:navigateToURL");
-            urlEvent.setParams({
-                "url": link
-            });
-            urlEvent.fire();
+            break;
+       case 'attachment':
+            var link = "/servlet/servlet.FileDownload?file=" + attachId;            
+            window.open(link,'blank');
+            break;
+        default:
+            var link = "/" + attachId;            
+            window.open(link,'blank');
         }
-
     },
 
     attachLineDeleteAction: function (component, attachId) {
