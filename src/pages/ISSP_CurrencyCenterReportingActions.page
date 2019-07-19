@@ -1,6 +1,8 @@
 <apex:page controller="ISSP_CurrencyCenterReportingActionsCtrl"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
     <html>
         <c:ISSP_Header ></c:ISSP_Header>
+        <apex:stylesheet value="{!URLFOR($Resource.bootstraptoggle,'css/bootstrap-toggle.min.css')}"/>
+        <script src="{!URLFOR($Resource.bootstraptoggle,'js/bootstrap-toggle.min.js')}"></script>
 
         <head>
             <link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/reporting_actions.css')}" />
@@ -85,11 +87,24 @@
                                         color: #AEAEAE;
                                         background-color: #E6E6E6;
                                     }
+
+                                    .whiteLabel {
+                                        color: #FFFFFF;
+                                    }
                                 </style>
                                 <p>&nbsp;</p>
                                 <a class="tabLink active" disabled="true" href="/ISSP_CurrencyCenterReportingActions">Reports</a>
                                 <a class="tabLink stealth" disabled="true" href=""></a>
                                 <a class="tabLink inactive" href="/ISSP_CurrencyCenterReportingActionsSrv">Surveys</a>
+
+                                <!-- ACAMBAS - WMO-545: Begin -->
+                                <apex:outputPanel id="notificationsSwitch" layout="block" style="float:right;">
+                                    <script>$('.toggle').bootstrapToggle();</script>
+                                    <label class="whiteLabel">{!$ObjectType.Portal_Application_Right__c.Fields.Enable_Notifications__c.Label}&nbsp;</label>
+                                    <apex:inputfield styleclass="toggle" value="{!appRight.Enable_Notifications__c}" html-data-toggle="toggle" html-data-onstyle="blue" html-data-offstyle="white" html-data-size="small" onchange="updateAppRight();"/>
+                                </apex:outputPanel>
+                                <apex:actionFunction name="updateAppRight" action="{!updateAppRight}" rerender="notificationsSwitch"/>
+                                <!-- ACAMBAS - WMO-545: End -->
                             </div>
                         </div>
                     </div>

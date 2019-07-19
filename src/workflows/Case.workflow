@@ -6,7 +6,6 @@
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
-        <ccEmails>gwars77@hotmail.com</ccEmails>
         <description>ACCA: Notification on new Application Change Request</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -1363,6 +1362,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1372,10 +1375,6 @@
         </recipients>
         <recipients>
             <recipient>moutany@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1424,10 +1423,6 @@
         </recipients>
         <recipients>
             <recipient>taverasr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3881,6 +3876,24 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Workflow_and_Metrics_team/Salesforce_Change_Request_UAT_Required_Reminder</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_to_L3_IASC_Vendor</fullName>
+        <ccEmails>survey@ipsosresearch.com</ccEmails>
+        <description>Send Email to L3 IASC Vendor</description>
+        <protected>false</protected>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Vendor_Templates/Contact_Vendor</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_to_Online_store_support</fullName>
+        <ccEmails>iata@servicenow.org</ccEmails>
+        <description>Send Email to Online store support</description>
+        <protected>false</protected>
+        <senderAddress>onlinestoresupport@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Vendor_Templates/Contact_Vendor</template>
     </alerts>
     <alerts>
         <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
