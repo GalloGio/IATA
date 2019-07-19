@@ -6,8 +6,9 @@
 <template>
 
     <template if:true={changeUserPortalStatus}>
-        <c-portal-change-user-status record-id={recordId} onclosemodal={closePortalChangeUserStatus}
-                                     onrefreshview={closePortalChangeUserStatusWithRefresh}></c-portal-change-user-status>
+        <c-portal-change-user-status record-id={recordId} onrefreshview={closePortalChangeUserStatusWithRefresh}
+                                     onclosemodal={closePortalChangeUserStatus}
+                                     remove-contact={removeContact}></c-portal-change-user-status>
     </template>
 
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
@@ -454,6 +455,9 @@
                                     <!-- Popup Footer -->
                                     <div
                                             class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+
+                                        <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
+
                                         <lightning-button class="slds-float_right containedButton"
                                                           label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
                                         </lightning-button>

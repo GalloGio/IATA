@@ -21,6 +21,11 @@ import selectReasonLABEL from '@salesforce/label/c.CSP_selectReason';
 import reasonLABEL from '@salesforce/label/c.ICCS_Reason_Label';
 import communityLABEL from '@salesforce/label/c.CSP_Community';
 import portalStatusLABEL from '@salesforce/label/c.CSP_Portal_Status';
+import remove from '@salesforce/label/c.Button_Remove';
+import contact from '@salesforce/label/c.ISSP_Contact';
+import innactivationReason from '@salesforce/label/c.ISSP_ReasonInactivation';
+
+
 
 const FIELDS = [PORTAL_STATUS_FLD, INACTIVATION_REASON_FLD, COMMUNITY_FLD];
 
@@ -29,6 +34,7 @@ const DEACTIVATED_VAL = "Deactivated"
 
 export default class ChangeUserPortalStatus extends LightningElement {
     @api recordId;
+    @api removeContact = false;
 
     @wire(getRejectionReasonsValues) rejectRegionsOptions;
     @wire(getUserPortalStatusOptionsValues, { contactId: "$recordId" }) portalStatusOptions;
@@ -53,7 +59,10 @@ export default class ChangeUserPortalStatus extends LightningElement {
         selectPortalStatusLABEL,
         reasonLABEL,
         communityLABEL,
-        portalStatusLABEL
+        portalStatusLABEL,
+        remove,
+        contact,
+        innactivationReason
     }
 
     get CommunityVal() {
@@ -63,7 +72,9 @@ export default class ChangeUserPortalStatus extends LightningElement {
     }
 
     get PortalStatVal() {
-        var val = getFieldValue(this.contactRecord.data, PORTAL_STATUS_FLD);
+        //If removing contact, deactivated is set by default, select is disabled
+        var val = this.removeContact ? DEACTIVATED_VAL : getFieldValue(this.contactRecord.data, PORTAL_STATUS_FLD);
+
         if (this.selectedPortalStatus !== undefined && this.selectedPortalStatus !== '') val = this.selectedPortalStatus;
 
         if (val === DEACTIVATED_VAL) {
@@ -71,6 +82,7 @@ export default class ChangeUserPortalStatus extends LightningElement {
         } else {
             this.inactiveStatus = false;
         }
+
         return val;
     }
 
@@ -83,6 +95,14 @@ export default class ChangeUserPortalStatus extends LightningElement {
     get renderIdMessage() {
         if (this.hasActiveCardId === undefined) return false;
         return this.inactiveStatus && this.hasActiveCardId.data;
+    }
+
+    get reasonLabel(){
+        return this.removeContact ? this.label.innactivationReason : this.label.reasonLABEL;
+    }
+
+    get titleLabel(){
+        return this.removeContact ? (this.label.remove + ' '+this.label.contact) : this.label.changeUserPortalStatusLABEL;
     }
 
     handlePortalStatusChange(event) {
@@ -127,6 +147,11 @@ export default class ChangeUserPortalStatus extends LightningElement {
     }
 
     saveNewStatus() {
+
+        if(this.removeContact){
+            this.selectedPortalStatus = DEACTIVATED_VAL;
+        }
+
         this.loading = true;
         saveNewAccess({
             community: this.selectedCommunity,

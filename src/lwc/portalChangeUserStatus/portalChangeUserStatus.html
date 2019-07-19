@@ -6,7 +6,7 @@
 
                 <!-- Popup Header -->
                 <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
-                    <span>{label.changeUserPortalStatusLABEL}</span>
+                    <span>{titleLabel}</span>
                     <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                         <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
                             onclick={closeModal}></lightning-icon>
@@ -14,7 +14,6 @@
                 </div>
 
                 <div class="slds-is-relative">
-
                     <template if:true={loading}>
                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                     </template>
@@ -41,13 +40,13 @@
 
                         <lightning-layout-item size="7" flexibility="auto" padding="around-small">
                             <lightning-combobox name="communitySelected" label={label.portalStatusLABEL}
-                                placeholder={label.selectPortalStatusLABEL} value={PortalStatVal}
+                                placeholder={label.selectPortalStatusLABEL} value={PortalStatVal} disabled={removeContact}
                                 options={portalStatusOptions.data} onchange={handlePortalStatusChange} required>
                             </lightning-combobox>
                         </lightning-layout-item>
                         <lightning-layout-item size="7" flexibility="auto" padding="around-small"
                             if:true={inactiveStatus}>
-                            <lightning-combobox name="communitySelected" label={label.reasonLABEL}
+                            <lightning-combobox name="communitySelected" label={reasonLabel}
                                 placeholder={label.selectReasonLABEL} value={InactReasonVal}
                                 options={rejectRegionsOptions.data} onchange={handleReasonCommChange} required>
                             </lightning-combobox>
@@ -56,6 +55,12 @@
 
                         <!-- BUTTON -->
                         <div class="slds-align_absolute-center slds-m-top_medium slds-m-bottom_medium">
+                            <lightning-button variant="neutral" class="slds-m-top_small slds-m-right--medium containedButtonWhite"
+                                              name="closeModal" label="Cancel" title="Cancel"
+                                              onclick={closeModal}
+                                              if:true={removeContact}>
+                            </lightning-button>
+
                             <lightning-button variant="brand" class="slds-m-top_small containedButton"
                                 name="sendPasswordbtn" label={label.submitLABEL} title={label.submitLABEL}
                                 onclick={submitAction} disabled={noSelected}>
