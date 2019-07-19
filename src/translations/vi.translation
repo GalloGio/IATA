@@ -1523,11 +1523,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>Tất cả các thông báo</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>Các thông báo</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1739,7 +1739,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>Thông báo</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1911,7 +1911,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>Các dịch vụ yêu thích</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2231,7 +2231,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>Nhiệm vụ</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3967,7 +3967,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>Hồ sơ</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12845,6 +12845,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>Thông tin Liên hệ</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13543,6 +13547,14 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Vui lòng chỉ nhập các ký tự Latinh</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>Nhập chữ</label>
@@ -14437,7 +14449,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>Hồ Sơ của tôi</label>
+        <label>Hồ sơ của tôi</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -16290,6 +16302,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>Phụ mục</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17688,7 +17704,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>Đánh dấu là đã đọc</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17828,11 +17844,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Notification</name>
     </customLabels>
     <customLabels>
-        <label>Thông báo</label>
+        <label>Các thông báo</label>
         <name>NotificationCenter_Title</name>
     </customLabels>
     <customLabels>
-        <label>Chi tiết thông báo</label>
+        <label>Thông báo chi tiết</label>
         <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
@@ -17886,6 +17902,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>Xin vui lòng chọn danh mục</label>
@@ -19823,7 +19851,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>Các nhiệm vụ</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19883,11 +19911,11 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0} yêu cầu quyền truy cập vào Cổng thông tin.</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0} yêu cầu quyền truy cập vào dịch vụ {1}</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19919,7 +19947,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>Xem chi tiết</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>

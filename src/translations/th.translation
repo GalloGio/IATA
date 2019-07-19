@@ -1521,11 +1521,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>การแจ้งเตือนทั้งหมด</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>การประกาศ</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1737,7 +1737,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>การประกาศ</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1909,7 +1909,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>บริการที่ชื่นชอบ</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -1937,7 +1937,7 @@
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
-        <label>ยินดีต้อนรับ [ชื่อผู้ใช้]</label>
+        <label>ยินดีต้อนรับ [username]</label>
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
@@ -2229,7 +2229,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>งาน</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3965,7 +3965,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>ข้อมูลส่วนตัว</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12845,6 +12845,10 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>ข้อมูลการติดต่อ</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13543,6 +13547,14 @@ and
     <customLabels>
         <label>กรุณากรอกข้อความโดยใช้ตัวอักษรภาษาอังกฤษเท่านั้น</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label>ใส่ข้อความ</label>
@@ -14437,7 +14449,7 @@ and
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>โปรไฟล์ของฉัน</label>
+        <label>ข้อมูลส่วนตัวของฉัน</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -16291,6 +16303,10 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>แยกย่อย</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17689,7 +17705,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>ทำเครื่องหมายว่าอ่านแล้ว</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17829,11 +17845,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- NotificationCenter_Title --></label>
+        <label>การแจ้งเตือน</label>
         <name>NotificationCenter_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- NotificationDetail_Detail --></label>
+        <label>รายละเอียดการแจ้งเตือน</label>
         <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
@@ -17887,6 +17903,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>โปรดเลือกประเภท</label>
@@ -19824,7 +19852,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>งาน</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19884,11 +19912,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0} ได้ขอการเข้าถึงพอร์ทัล</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0} ได้ขอการเข้าถึงบริการ {1}</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19920,7 +19948,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>ดูรายละเอียด</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
@@ -20428,7 +20456,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_SupportReachUs_ShowSupportOptions</name>
     </customLabels>
     <customLabels>
-        <label>กรอกแบบฟอร์ม เพื่อดูตัวเลือกบริการช่วยเหลือที่ แนะนำ</label>
+        <label>กรอกแบบฟอร์มเพื่อดูตัวเลือกบริการช่วยเหลือที่แนะนำ</label>
         <name>csp_SupportReachUs_SpecifyCaseDetails</name>
     </customLabels>
     <customLabels>

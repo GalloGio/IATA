@@ -41,7 +41,7 @@ public without sharing class OneIdLightningLoginFormController {
                                String startUrl,
                                String serviceName) {
         User oneUser;
-        String pageLink='';        
+        String pageLink = startUrl == null || startUrl.equalsIgnoreCase('undefined') ? '' : startUrl;
         //Clear spaces
         username = (null != username) ? username.trim() : username;
                                    
@@ -145,8 +145,13 @@ public without sharing class OneIdLightningLoginFormController {
             }
 
             //login in siteCompleteUrl
-            ApexPages.PageReference lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(mode,startUrl));
-
+			ApexPages.PageReference lgn;
+            if(mode != null){
+            	lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(mode,startUrl));
+            }
+            else{
+            	lgn = Site.login(username, password, pageLink);
+            }
             system.debug('page reference return from login: '+lgn);
                         
             List<User> userListConfirmTempPassword = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
@@ -186,8 +191,15 @@ public without sharing class OneIdLightningLoginFormController {
         thisUser.IsActive = true;
         thisUser.Portal_User_Frozen_Checkbox__c = false;
         update thisUser;
+
+        if(serviceName == 'CSP'){
+            serviceName = 'ISSP';
+        }
+
+        String community = serviceName == 'ISSP' ? Comm_User_Helper.ISSP : Comm_User_Helper.ONEIDENTITY;
+
         Boolean success = Comm_User_Helper.resetPassword(thisUser.email, 
-                                                         Comm_User_Helper.ONEIDENTITY, 
+                                                         community,
                                                          false,
                                                          serviceName);
     }

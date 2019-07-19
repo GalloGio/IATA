@@ -1521,11 +1521,11 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
-        <label><!-- All_Notifications_Notification --></label>
+        <label>جميع الإشعارات</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
     <customLabels>
-        <label><!-- Announcements_Notification --></label>
+        <label>الإعلانات</label>
         <name>Announcements_Notification</name>
     </customLabels>
     <customLabels>
@@ -1737,7 +1737,7 @@
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Announcement --></label>
+        <label>إعلان</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
@@ -1909,7 +1909,7 @@
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FavoriteServices_Title --></label>
+        <label>الخدمات المفضلة</label>
         <name>CSP_FavoriteServices_Title</name>
     </customLabels>
     <customLabels>
@@ -2229,7 +2229,7 @@
         <name>CSP_Supported_File_Extensions</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Task --></label>
+        <label>مهمة</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
@@ -3965,7 +3965,7 @@
         <name>ICCS_Processing_Currency_Label</name>
     </customLabels>
     <customLabels>
-        <label><!-- ICCS Profile --></label>
+        <label>الملف الشخصي</label>
         <name>ICCS_Profile</name>
     </customLabels>
     <customLabels>
@@ -12843,6 +12843,10 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact About IATA Courses --></label>
+        <name>ISSP_Contact_About_IATA_Courses</name>
+    </customLabels>
+    <customLabels>
         <label>معلومات الاتصال</label>
         <name>ISSP_Contact_Information</name>
     </customLabels>
@@ -13541,6 +13545,14 @@ and
     <customLabels>
         <label>الرجاء استخدام الحروف الاتينيه فقط.</label>
         <name>ISSP_EnterValidString</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter Company Name --></label>
+        <name>ISSP_Enter_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Enter IATA Code --></label>
+        <name>ISSP_Enter_IATA_Code</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Enter_Value --></label>
@@ -14435,7 +14447,7 @@ and
         <name>ISSP_MyOutstandingPaymentsCases</name>
     </customLabels>
     <customLabels>
-        <label>حسابي</label>
+        <label>ملفي الشخصي</label>
         <name>ISSP_MyProfile</name>
     </customLabels>
     <customLabels>
@@ -16279,6 +16291,10 @@ and
         <name>ISSP_Status_change_to_Inactive</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Street --></label>
+        <name>ISSP_Street</name>
+    </customLabels>
+    <customLabels>
         <label>الفئة الفرعية</label>
         <name>ISSP_Sub_Type</name>
     </customLabels>
@@ -17675,7 +17691,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- MarkAsRead_Notification --></label>
+        <label>ضع إشارةً بأنه مقروء</label>
         <name>MarkAsRead_Notification</name>
     </customLabels>
     <customLabels>
@@ -17815,11 +17831,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Notification</name>
     </customLabels>
     <customLabels>
-        <label>الإخطارات:</label>
+        <label>الإشعارات:</label>
         <name>NotificationCenter_Title</name>
     </customLabels>
     <customLabels>
-        <label>تفاصيل الإخطار</label>
+        <label>تفاصيل الإشعار</label>
         <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
@@ -17873,6 +17889,18 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Billing Street --></label>
         <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Terms_Of_Use_Link --></label>
+        <name>OneId_CSP_Terms_Of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting --></label>
+        <name>OneId_CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CSP_Troubleshooting_Link --></label>
+        <name>OneId_CSP_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>لُطفاً، اختاروا الفئة</label>
@@ -19810,7 +19838,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Tasks_Notification --></label>
+        <label>مهام</label>
         <name>Tasks_Notification</name>
     </customLabels>
     <customLabels>
@@ -19870,11 +19898,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestPortalAccess --></label>
+        <label>{0} طلب الوصول إلى البوابة.</label>
         <name>UserRequestPortalAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserRequestServiceAccess --></label>
+        <label>{0} طلب الوصول إلى خدمة {1}</label>
         <name>UserRequestServiceAccess</name>
     </customLabels>
     <customLabels>
@@ -19906,7 +19934,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>ViewCart</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewDetails_Notification --></label>
+        <label>عرض التفاصيل</label>
         <name>ViewDetails_Notification</name>
     </customLabels>
     <customLabels>
@@ -20414,7 +20442,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_SupportReachUs_ShowSupportOptions</name>
     </customLabels>
     <customLabels>
-        <label><!-- Support Reach Us Page Label --></label>
+        <label>الرجاء إكمال النموذج لرؤية خيارات الدعم الموصى بها</label>
         <name>csp_SupportReachUs_SpecifyCaseDetails</name>
     </customLabels>
     <customLabels>
