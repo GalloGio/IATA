@@ -1,31 +1,31 @@
 ({
     initTables : function(component) {
         var columns1 = [
-            {label: 'Description', fieldName: 'label', type: 'text'},
-            {label: 'Value', fieldName: 'value', type: 'text', cellAttributes: { alignment: 'center' }}
+            {label: 'Description', fieldName: 'label', type: 'text', sortable : true},
+            {label: 'Value', fieldName: 'value', type: 'text', sortable : true, cellAttributes: { alignment: 'center' }}
         ];
         component.set('v.columns1', columns1);
 
         var columns2 = [
-            {label: 'Country', fieldName: 'label', type: 'text'},
-            {label: 'Total', fieldName: 'value', type: 'number', cellAttributes: { alignment: 'center' }}
+            {label: 'Country', fieldName: 'label', type: 'text', sortable : true},
+            {label: 'Total', fieldName: 'value', type: 'number', sortable : true, cellAttributes: { alignment: 'center' }}
         ];
         component.set('v.columns2', columns2);
 
         var columns3 = [
-            {label: 'Region', fieldName: 'label', type: 'text'},
-            {label: 'Total', fieldName: 'value', type: 'number', cellAttributes: { alignment: 'center' }}
+            {label: 'Region', fieldName: 'label', type: 'text', sortable : true},
+            {label: 'Total', fieldName: 'value', type: 'number', sortable : true, cellAttributes: { alignment: 'center' }}
         ];
         component.set('v.columns3', columns3);
 
         var columns4 = [
-            {label: 'PASSENGER ENTITIES', fieldName: 'label', type: 'text'},
+            {label: 'PASSENGER ENTITIES', fieldName: 'label', type: 'text', sortable : true},
             {label: 'Related', fieldName: 'value', type: 'boolean', cellAttributes: { alignment: 'center' }}
         ];
         component.set('v.columns4', columns4);
 
         var columns5 = [
-            {label: 'CARGO ENTITIES', fieldName: 'label', type: 'text'},
+            {label: 'CARGO ENTITIES', fieldName: 'label', type: 'text', sortable : true},
             {label: 'Related', fieldName: 'value', type: 'boolean', cellAttributes: { alignment: 'center' }}
         ];
         component.set('v.columns5', columns5);

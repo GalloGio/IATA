@@ -1,12 +1,12 @@
 ({
     initTable : function(component) {
         var columns = [
-            {label: 'Name', fieldName: 'Name', type: 'text'},
-            {label: 'Division', fieldName: 'Division__c', type: 'text'},
-            {label: 'Source', fieldName: 'AM_Source_Text__c', type: 'text'},
-            {label: 'Description', fieldName: 'Details__c', type: 'text'},
-            {label: 'Importance', fieldName: 'AM_Level_of_importance__c', type: 'text'},
-            {label: 'Status', fieldName: 'Status__c', type: 'text'},
+            {label: 'Name', fieldName: 'Name', type: 'text', sortable : true},
+            {label: 'Division', fieldName: 'Division__c', type: 'text', sortable : true},
+            {label: 'Source', fieldName: 'AM_Source_Text__c', type: 'text', sortable : true},
+            {label: 'Description', fieldName: 'Details__c', type: 'text', sortable : true},
+            {label: 'Importance', fieldName: 'AM_Level_of_importance__c', type: 'text', sortable : true},
+            {label: 'Status', fieldName: 'Status__c', type: 'text', sortable : true},
             {label: 'Global', fieldName: 'AM_Global__c', fixedWidth: 80, type: 'boolean'},
             {label: 'Regional', fieldName: 'AM_Regional__c', fixedWidth: 85, type: 'boolean'},
             {label: 'Local', fieldName: 'AM_Local__c', fixedWidth: 80, type: 'boolean'},
@@ -58,5 +58,19 @@
             var results = data.filter(row => row.Status__c != 'Closed');
             component.set('v.filteredData', results);
         }
+
+        component.set('v.sortBy', undefined);
+        component.set('v.sortDirection', undefined);
+    },
+    sortData : function(component,fieldName,sortDirection) {
+        var data = component.get('v.filteredData');
+        var reverse = sortDirection == 'asc' ? 1: -1;
+        var key = function(a) { return a[fieldName.replace('Link','Name')]}
+        data.sort(function(a,b) {
+            var a = key(a) ? key(a) : '';
+            var b = key(b) ? key(b) : '';
+            return reverse * ((a>b) - (b>a));
+        });
+        component.set('v.filteredData', data);
     }
 })

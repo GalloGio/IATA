@@ -1,9 +1,9 @@
 ({
     initTable : function(component) {
         var columns = [
-            {label: 'Account Name', fieldName: 'ownerLink', type: 'url', typeAttributes: {label: {fieldName: 'ownerName'}, target: '_blank'}},
-            {label: 'Owner Type', fieldName: 'ownerType', type: 'text'},
-            {label: 'Percentage Held', fieldName: 'percentageTable', type: 'percent', typeAttributes : {maximumFractionDigits: 2, minimumFractionDigits: 2}}            
+            {label: 'Account Name', fieldName: 'ownerLink', type: 'url', sortable : true, typeAttributes: {label: {fieldName: 'ownerName'}, target: '_blank'}},
+            {label: 'Owner Type', fieldName: 'ownerType', type: 'text', sortable : true},
+            {label: 'Percentage Held', fieldName: 'percentageTable', type: 'percent', sortable : true, typeAttributes : {maximumFractionDigits: 2, minimumFractionDigits: 2}}            
         ];
 
         if(component.get('v.canEdit') == true) {
@@ -27,6 +27,9 @@
             if (component.isValid() && state === "SUCCESS") {
                 var result = response.getReturnValue();
                 component.set('v.data', result);
+                if(component.get('v.sortBy')) {
+                    this.sortData(component,component.get('v.sortBy'),component.get('v.sortDirection'));
+                }
             }            
         });
 
@@ -40,5 +43,16 @@
         var modalCmp = component.find('owners-edit');
         var record = event.getParam('row');
         modalCmp.showModal('Owner','Edit',record);
+    },
+    sortData : function(component,fieldName,sortDirection) {
+        var data = component.get('v.data');
+        var reverse = sortDirection == 'asc' ? 1: -1;
+        var key = function(a) { return a[fieldName.replace('Link','Name')]}
+        data.sort(function(a,b) {
+            var a = key(a) ? key(a) : '';
+            var b = key(b) ? key(b) : '';
+            return reverse * ((a>b) - (b>a));
+        });
+        component.set('v.data', data);
     }
 })

@@ -3,6 +3,8 @@
     <aura:attribute name="data" type="List"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/> 
@@ -20,7 +22,10 @@
                         columns="{!v.columns}"
                         resizeColumnDisabled="true"
                         hideCheckboxColumn="true"
-                        onrowaction="{!c.handleRowAction}"/>
+                        onrowaction="{!c.handleRowAction}"
+                        sortedBy="{!v.sortBy}"
+                        sortedDirection="{!v.sortDirection}"
+                        onsort="{!c.handleSort}"/>
                 </div>
             </lightning:card>
         </div>

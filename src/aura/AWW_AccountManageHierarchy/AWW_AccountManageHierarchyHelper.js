@@ -1,10 +1,10 @@
 ({
     initTable : function(component) {
         component.set('v.columns', [
-            {label: 'Account Name', fieldName: 'accountLink', type: 'url', typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
-            {label: 'Location Type', fieldName: 'locationType', type: 'text'},
-            {label: 'IATA Code', fieldName: 'iataCode', type: 'text'},            
-            {label: 'country', fieldName: 'country', type: 'text'}
+            {label: 'Account Name', fieldName: 'accountLink', type: 'url', sortable : true, typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
+            {label: 'Location Type', fieldName: 'locationType', type: 'text', sortable : true},
+            {label: 'IATA Code', fieldName: 'iataCode', type: 'text', sortable : true},            
+            {label: 'country', fieldName: 'country', type: 'text', sortable : true}
         ]);        
     },
     handleVisibility : function(component, action) {
@@ -21,6 +21,8 @@
         inputCmp.setCustomValidity('');
         inputCmp.reportValidity();
         component.set('v.data', undefined);
+        component.set('v.sortBy', undefined);
+        component.set('v.sortDirection', undefined);
     },
     handleActionChange : function(component,event) {
         var currAction = component.get('v.selectedAction');
@@ -119,5 +121,16 @@
         var spinner = component.getEvent('controlSpinner');
         spinner.setParams({'option': action});
         spinner.fire();  
+    },
+    sortData : function(component,fieldName,sortDirection) {
+        var data = component.get('v.data');
+        var reverse = sortDirection == 'asc' ? 1: -1;
+        var key = function(a) { return a[fieldName.replace('Link','Name')]}
+        data.sort(function(a,b) {
+            var a = key(a) ? key(a) : '';
+            var b = key(b) ? key(b) : '';
+            return reverse * ((a>b) - (b>a));
+        });
+        component.set('v.data', data);
     }
 })

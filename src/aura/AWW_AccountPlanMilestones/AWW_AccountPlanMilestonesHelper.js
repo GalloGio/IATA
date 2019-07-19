@@ -1,13 +1,13 @@
 ({
     initTable : function(component) {
         var columns = [
-            {label: 'Milestone' , fieldName: 'Subject__c', type: 'text'},
-            {label: 'Responsible', fieldName: 'AM_Responsible__c', type: 'text'},
-            {label: 'Involved', fieldName: 'AM_Involved__c', type: 'text'},
-            {label: 'Support Required From Account', fieldName: 'AM_Support_Required_from_Account__c', type: 'text'},
-            {label: 'Milestone Status', fieldName: 'Status', type: 'text'},
-            {label: 'End Date', fieldName: 'ActivityDate', type: 'date'},
-            {label: 'Comments', fieldName: 'Description', type: 'text'}
+            {label: 'Milestone' , fieldName: 'Subject__c', type: 'text', sortable : true},
+            {label: 'Responsible', fieldName: 'AM_Responsible__c', type: 'text', sortable : true},
+            {label: 'Involved', fieldName: 'AM_Involved__c', type: 'text', sortable : true},
+            {label: 'Support Required From Account', fieldName: 'AM_Support_Required_from_Account__c', type: 'text', sortable : true},
+            {label: 'Milestone Status', fieldName: 'Status', type: 'text', sortable : true},
+            {label: 'End Date', fieldName: 'ActivityDate', type: 'date', sortable : true},
+            {label: 'Comments', fieldName: 'Description', type: 'text', sortable : true}
         ];
 
         if(component.get('v.canEdit') == true) {
@@ -30,6 +30,9 @@
             var state = response.getState();
             if(component.isValid() && state === "SUCCESS") {
                 component.set('v.data', response.getReturnValue());
+                if(component.get('v.sortBy')) {
+                    this.sortData(component,component.get('v.sortBy'),component.get('v.sortDirection'));
+                }
             }
         });
 
@@ -42,5 +45,16 @@
     deleteRecord : function(component, event) {
         var modalCmp = component.find('delete-record');
         modalCmp.showModal(event.getParam('row').Id);
+    },
+    sortData : function(component,fieldName,sortDirection) {
+        var data = component.get('v.data');
+        var reverse = sortDirection == 'asc' ? 1: -1;
+        var key = function(a) { return a[fieldName]}
+        data.sort(function(a,b) {
+            var a = key(a) ? key(a) : '';
+            var b = key(b) ? key(b) : '';
+            return reverse * ((a>b) - (b>a));
+        });
+        component.set('v.data', data);
     }
 })

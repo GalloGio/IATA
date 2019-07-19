@@ -3,6 +3,8 @@
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/>
@@ -21,7 +23,10 @@
                     columns="{!v.columns}"
                     resizeColumnDisabled="true"
                     onrowaction="{!c.handleRowAction}"
-                    hideCheckboxColumn="true"/> 
+                    hideCheckboxColumn="true"
+                    sortedBy="{!v.sortBy}"
+                    sortedDirection="{!v.sortDirection}"
+                    onsort="{!c.handleSort}"/>
             </div>
         </div>
     </div>

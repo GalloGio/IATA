@@ -5,10 +5,10 @@
         ];
 
         component.set('v.columns', [
-            {label: 'Account Name', fieldName: 'accountLink', type: 'url', typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
-            {label: 'Location Type', fieldName: 'locationType', type: 'text'},
-            {label: 'IATA Code', fieldName: 'iataCode', type: 'text'},
-            {label: 'Country', fieldName: 'country', type: 'text'},
+            {label: 'Account Name', fieldName: 'accountLink', type: 'url', sortable : true, typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
+            {label: 'Location Type', fieldName: 'locationType', type: 'text', sortable : true},
+            {label: 'IATA Code', fieldName: 'iataCode', type: 'text', sortable : true},
+            {label: 'Country', fieldName: 'country', type: 'text', sortable : true},
             {type: 'action', typeAttributes: {rowActions: actions}}
         ]);
     },
@@ -23,6 +23,9 @@
                 var result = response.getReturnValue();
                 component.set('v.data', result);
                 component.set('v.filteredData', result);
+                if(component.get('v.sortBy')) {
+                    this.sortData(component,component.get('v.sortBy'),component.get('v.sortDirection'));
+                }
             }
         });
 
@@ -62,5 +65,16 @@
         } else {
             component.set('v.filteredData', data);
         }
+    },
+    sortData : function(component,fieldName,sortDirection) {
+        var data = component.get('v.filteredData');
+        var reverse = sortDirection == 'asc' ? 1: -1;
+        var key = function(a) { if(fieldName == 'accountLink'){return a['accountName']} else {return a[fieldName]}}
+        data.sort(function(a,b) {
+            var a = key(a) ? key(a) : '';
+            var b = key(b) ? key(b) : '';
+            return reverse * ((a>b) - (b>a));
+        });
+        component.set('v.filteredData', data);
     }
 })

@@ -4,6 +4,8 @@
     <aura:attribute name="columns" type="List"/> 
     <aura:attribute name="selectedAction" type="String" default="add"/>
     <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
 
     <aura:registerEvent name="refreshTab" type="c:AWW_RefreshTabEvent"/>
     <aura:registerEvent name="controlSpinner" type="c:AWW_Spinner"/>
@@ -42,7 +44,10 @@
                                     columns="{!v.columns}"
                                     resizeColumnDisabled="true"
                                     onrowselection="{!c.updateSelectedRows}"
-                                    hideCheckboxColumn="false"/> 
+                                    hideCheckboxColumn="false"
+                                    sortedBy="{!v.sortBy}"
+                                    sortedDirection="{!v.sortDirection}"
+                                    onsort="{!c.handleSort}"/>
                             </div>
                         </div>
                     </aura:renderIf>

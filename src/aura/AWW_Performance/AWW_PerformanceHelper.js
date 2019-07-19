@@ -1,9 +1,9 @@
 ({
     initTable : function(component) {
         var columns = [
-            {label: 'Activity', fieldName: 'Name', type: 'text'},
-            {label: 'Type', fieldName: 'Type__c', type: 'text'},
-            {label: 'Account Status', fieldName: 'Status__c', type: 'text'}
+            {label: 'Activity', fieldName: 'Name', type: 'text', sortable : true},
+            {label: 'Type', fieldName: 'Type__c', type: 'text', sortable : true},
+            {label: 'Account Status', fieldName: 'Status__c', type: 'text', sortable : true}
         ];
 
         if(component.get('v.canEdit') == true) {
@@ -25,9 +25,23 @@
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {
                 component.set('v.data', response.getReturnValue());
+                if(component.get('v.sortBy')) {
+                    this.sortData(component,component.get('v.sortBy'),component.get('v.sortDirection'));
+                }
             }
         });
 
         $A.enqueueAction(action);
+    },
+    sortData : function(component,fieldName,sortDirection) {
+        var data = component.get('v.data');
+        var reverse = sortDirection == 'asc' ? 1: -1;
+        var key = function(a) { return a[fieldName]}
+        data.sort(function(a,b) {
+            var a = key(a) ? key(a) : '';
+            var b = key(b) ? key(b) : '';
+            return reverse * ((a>b) - (b>a));
+        });
+        component.set('v.data', data);
     }
 })
