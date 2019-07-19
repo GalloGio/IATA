@@ -791,7 +791,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
             }
 
             //BSPid,AccountId
-            Map<ID,ID> resultHEPerBSP = (Map<ID,ID>) JSON.deserialize( oscar.HE_per_BSP_Mapping__c, Map<ID,ID>.class);
+            Map<ID,ID> resultHEPerBSP = new Map<ID,ID>();
+            if(String.isNotBlank(oscar.HE_per_BSP_Mapping__c)) resultHEPerBSP = (Map<ID,ID>) JSON.deserialize( oscar.HE_per_BSP_Mapping__c, Map<ID,ID>.class);
 
             for (HierarchyItem i : hierarchy.values()){
 
