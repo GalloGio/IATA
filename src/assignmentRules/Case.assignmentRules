@@ -6289,7 +6289,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
+                <value>MITA Interline Agreements,General Queries</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -8914,7 +8914,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
+                <value>MITA Interline Agreements,General Queries</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>
@@ -8969,7 +8969,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
+                <value>MITA Interline Agreements,General Queries</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>
