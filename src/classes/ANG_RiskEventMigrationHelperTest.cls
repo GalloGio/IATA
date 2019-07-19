@@ -65,7 +65,7 @@ private class ANG_RiskEventMigrationHelperTest {
 	public static void lateShortPaymentTest() {
 
 		Set<Account> setAccs = new set<Account>();
-		Account a = createAccount(true);
+		Account a = createAccount(false);
 		insert a;
 		setAccs.add(a);
 		Agency_Applied_Change_code__c cc 
@@ -74,8 +74,18 @@ private class ANG_RiskEventMigrationHelperTest {
 												Irregularity_Type__c = ANG_Risk_Helper.CHANGE_CODE_IRR_OV1
 												);
 		insert cc;
+
+		a.Location_Type__c = 'HE';
+		update a;
+
+		IATA_ISO_Country__c country = [SELECT Id, ANG_Enable_NewGen__c FROM IATA_ISO_Country__c WHERE Id =: a.IATA_ISO_Country__c LIMIT 1];
+		country.ANG_Enable_NewGen__c = true;
+		update country;
+
+		Test.startTest();
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+		Test.stopTest();
 
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT);
@@ -124,7 +134,7 @@ private class ANG_RiskEventMigrationHelperTest {
 	public static void failFinancialStatementsTest() {
 
 		Set<Account> setAccs = new set<Account>();
-		Account a = createAccount(true);
+		Account a = createAccount(false);
 		insert a;
 		setAccs.add(a);
 		Agency_Applied_Change_code__c cc 
@@ -134,8 +144,18 @@ private class ANG_RiskEventMigrationHelperTest {
 												Date_time_of_change__c =system.today().addDays(-10)
 												);
 		insert cc;
+
+		a.Location_Type__c = 'HE';
+		update a;
+
+		IATA_ISO_Country__c country = [SELECT Id, ANG_Enable_NewGen__c FROM IATA_ISO_Country__c WHERE Id =: a.IATA_ISO_Country__c LIMIT 1];
+		country.ANG_Enable_NewGen__c = true;
+		update country;
+
+		Test.startTest();
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+		Test.stopTest();
 
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(ANG_RiskEventMigrationHelperTest.reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS);
@@ -147,7 +167,7 @@ private class ANG_RiskEventMigrationHelperTest {
 	public static void failFinancialStatementsTestWithCashCondition() {
 
 		Set<Account> setAccs = new set<Account>();
-		Account a = createAccount(true);
+		Account a = createAccount(false);
 		insert a;
 		setAccs.add(a);
 		Agency_Applied_Change_code__c cc 
@@ -157,8 +177,18 @@ private class ANG_RiskEventMigrationHelperTest {
 												Date_time_of_change__c =system.today().addDays(-40)
 												);
 		insert cc;
+
+		a.Location_Type__c = 'HE';
+		update a;
+
+		IATA_ISO_Country__c country = [SELECT Id, ANG_Enable_NewGen__c FROM IATA_ISO_Country__c WHERE Id =: a.IATA_ISO_Country__c LIMIT 1];
+		country.ANG_Enable_NewGen__c = true;
+		update country;
+
+		Test.startTest();
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+		Test.stopTest();
 
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(ANG_RiskEventMigrationHelperTest.reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS);
@@ -170,7 +200,7 @@ private class ANG_RiskEventMigrationHelperTest {
 	public static void failFinancialStatementsTestWithoutCashConditionDueFRresult() {
 
 		Set<Account> setAccs = new set<Account>();
-		Account a = createAccount(true);
+		Account a = createAccount(false);
 		insert a;
 
 
@@ -216,8 +246,17 @@ private class ANG_RiskEventMigrationHelperTest {
 												);
 		
 		insert cc;
+
+		a.Location_Type__c = 'HE';
+		update a;
+
+		IATA_ISO_Country__c country = [SELECT Id, ANG_Enable_NewGen__c FROM IATA_ISO_Country__c WHERE Id =: a.IATA_ISO_Country__c LIMIT 1];
+		country.ANG_Enable_NewGen__c = true;
+		update country;
+
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+		Test.stopTest();
 
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(ANG_RiskEventMigrationHelperTest.reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS);
@@ -615,7 +654,7 @@ private class ANG_RiskEventMigrationHelperTest {
 		//------------------------------FOR LATE/SHORT PAYMENT--------------------------
 
 		Set<Account> setAccs = new set<Account>();
-		Account a = createAccount(true);
+		Account a = createAccount(false);
 		insert a;
 
 		Case c = createCase();
@@ -635,14 +674,29 @@ private class ANG_RiskEventMigrationHelperTest {
 												SIDRA_Case__c = c.id 
 												);
 		insert cc1;
+
+		a.Location_Type__c = 'HE';
+		update a;
+
+		IATA_ISO_Country__c country = [SELECT Id, ANG_Enable_NewGen__c FROM IATA_ISO_Country__c WHERE Id =: a.IATA_ISO_Country__c LIMIT 1];
+		country.ANG_Enable_NewGen__c = true;
+		update country;
+
+		Test.startTest();
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+		Test.stopTest();
 		
 		system.assertEquals(1, listRisks.size());
 		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT);
 		system.assertEquals(ANG_Risk_Helper.STATUS_WITHDRAWN, listRisks.get(0).ANG_Event_Status__c);
 
 		// Invert CC order 
+		a.Location_Type__c = 'HO';
+		update a;
+
+		country.ANG_Enable_NewGen__c = false;
+		update country;
 
 		Case c2 = createCase();
 		insert c2;
@@ -662,6 +716,12 @@ private class ANG_RiskEventMigrationHelperTest {
 
 		insert new list<Agency_Applied_Change_code__c>{cc1,cc};
 
+		a.Location_Type__c = 'HE';
+		update a;
+
+		country.ANG_Enable_NewGen__c = true;
+		update country;
+
 		helper = new ANG_RiskEventMigrationHelper(setAccs);
 		listRisks = helper.convertChangeCodesToRiskEvents();
 		
@@ -677,7 +737,7 @@ private class ANG_RiskEventMigrationHelperTest {
 		//-----------------NTW----------------------------------
 		Set<Account> setAccs = new set<Account>();
 		List<Agency_Applied_Change_code__c> listCCs = new List<Agency_Applied_Change_code__c>(); 
-		Account a = createAccount(true);
+		Account a = createAccount(false);
 		insert a;
 
 		Case c = createCase();
@@ -725,8 +785,17 @@ private class ANG_RiskEventMigrationHelperTest {
 
 		insert listCCs;
 
+		a.Location_Type__c = 'HE';
+		update a;
+
+		IATA_ISO_Country__c country = [SELECT Id, ANG_Enable_NewGen__c FROM IATA_ISO_Country__c WHERE Id =: a.IATA_ISO_Country__c LIMIT 1];
+		country.ANG_Enable_NewGen__c = true;
+		update country;
+
+		Test.startTest();
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
+		Test.stopTest();
 
 		system.assertEquals(2, listRisks.size());
 		system.assertEquals(listRisks.get(0).ANG_Event_Status__c, ANG_Risk_Helper.STATUS_WITHDRAWN);
@@ -758,7 +827,7 @@ private class ANG_RiskEventMigrationHelperTest {
 															ISO_Code_Numeric__c = 620, 
 															ISO_Code__c = 'PT',
 															AIMS_Area_ID__c='1',
-															ANG_Enable_NewGen__c = true);
+															ANG_Enable_NewGen__c = isHE);
 		insert isoTest;
 		
 		Account c = new Account(

@@ -125,16 +125,43 @@ public class AMS_AgencyAChangeCodeHandler {
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
             migrateFieldsFromStagingToAccount(aacc);
 
+        Map<Id,Id> changeCodePerAccount = new Map<Id,Id>();
+        Map<Id,Id> changeCodePerOscar = new Map<Id,Id>();
+        List<Agency_Applied_Change_code__c> toCheckUnpublish = new List<Agency_Applied_Change_code__c>();
+
         for(Agency_Applied_Change_code__c aaccRecord : aacc){
 
             aaccRecord.RecordTypeId = accIrregularities.contains(aaccRecord.Change_Code__c) ? irregRtId : stdRtId;
 
-            if(locationClassesUnpublish.contains(aaccRecord.AccountLocationClass__c) || (aaccRecord.OSCAR__c != null && aaccRecord.OscarProcess__c.contains('CER.1.0')))
-                aaccRecord.To_Publish_in_e_Bulletin__c = false;
+            if(aaccRecord.To_Publish_in_e_Bulletin__c){
+                changeCodePerAccount.put(aaccRecord.Account__c, aaccRecord.Id);
+
+                if(aaccRecord.OSCAR__c != null)
+                    changeCodePerOscar.put(aaccRecord.OSCAR__c, aaccRecord.Id);
+
+                toCheckUnpublish.add(aaccRecord);
+            }
 
             if(aaccRecord.AIMS_ID__c != null && aaccRecord.AIMS_ID__c.right(1) != 'A' && aaccRecord.Operation__c == 'A')
                 aaccRecord.AIMS_ID__c = aaccRecord.AIMS_ID__c + '_A';
-        }        
+        }
+
+        if(toCheckUnpublish.isEmpty()) return;
+
+        Map<Id,Account> mapAccounts =  new Map<Id,Account>();
+        Map<Id,AMS_OSCAR__c> mapOscars = new Map<Id,AMS_OSCAR__c>();
+
+        if(!changeCodePerAccount.isEmpty())
+            mapAccounts = new Map<Id,Account>([SELECT Id, Location_Class__c FROM Account WHERE Id IN: changeCodePerAccount.keySet()]);
+
+        if(!changeCodePerOscar.isEmpty())    
+            mapOscars = new Map<Id,AMS_OSCAR__c>([SELECT Id, Process__c FROM AMS_OSCAR__c WHERE Id IN: changeCodePerOscar.keySet()]);
+
+        for(Agency_Applied_Change_code__c aaccRecord : toCheckUnpublish){
+
+            if(locationClassesUnpublish.contains(mapAccounts.get(aaccRecord.Account__c).Location_Class__c) || (aaccRecord.OSCAR__c != null && mapOscars.get(aaccRecord.OSCAR__c).Process__c.contains('CER.1.0')))
+                aaccRecord.To_Publish_in_e_Bulletin__c = false;
+        }
     }
     
     //DTULLO: marked as future because some change codes are generated from account changes (minor changes)
