@@ -236,6 +236,9 @@ global class WrapperAttach implements Comparable {
     public Boolean getIsSalesforce() {
         return this.filetype == 'Salesforce';
     }
+    public Boolean getIsContent() {
+        return this.sfdcContext == 'content';
+    }
 
     /**
         Change the permission (to see it in the portal) of current attachment
