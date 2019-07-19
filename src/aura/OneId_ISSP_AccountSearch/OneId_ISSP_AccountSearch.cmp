@@ -1,0 +1,141 @@
+<!--
+ - Created by pvavruska on 5/13/2019.
+ -->
+
+<aura:component description="OneId_ISSP_AccountSearch" controller="GCS_RegistrationController">
+
+    <!-- EVTs -->
+    <aura:registerEvent name="itemSelected" type="c:OneId_ItemSelected_EVT"/>
+
+    <!-- Passed attributes -->
+    <aura:attribute type="String" name="customerType"/>
+    <aura:attribute type="String" name="countryId"/>
+    <aura:attribute type="Boolean" name="showCreateNew"/>
+    <aura:attribute type="Boolean" name="disabled"/>
+    
+    <!-- Display params -->
+    <aura:attribute type="Boolean" name="displayIataCodesInputField"/>
+
+    <!-- Search params -->
+    <aura:attribute type="String" name="userInputIataCodes" access="private"/>
+    <aura:attribute type="String" name="userInputCompanyName" access="private"/>
+    <aura:attribute type="Boolean" name="searching" access="private"/>
+    <aura:attribute type="Boolean" name="searched" access="private"/>
+
+    <!-- Search Results -->
+    <aura:attribute type="List" name="foundRecords" default="[]" access="private"/>
+    <aura:attribute type="List" name="fieldLabels" default="[]" access="private"/>
+    <aura:attribute type="List" name="accountIds" default="[]" access="private"/>
+    <aura:attribute type="Account[]" name="accounts" access="private"/>
+    <aura:attribute type="Integer" name="totalAccounts" access="private"/>
+
+    <!-- Handlers -->
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+    
+    <div class="slds-combobox_container">
+        <div aura:id="results" class="slds-combobox slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+            
+            <aura:if isTrue="{! v.displayIataCodesInputField}">
+                <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+                    <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Enter_IATA_Code}</label>
+                    
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <ui:inputText value="{!v.userInputIataCodes}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}"/>
+                        <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                            <aura:if isTrue="{!v.searching}">
+                                <lightning:spinner size="small"/>
+                                <aura:set attribute="else">
+                                    <lightning:icon iconName="utility:search" size="x-small"/>
+                                </aura:set>
+                            </aura:if>
+                        </span>
+                    </div>
+                </div>
+            </aura:if>
+            
+            <div class="slds-m-bottom_medium slds-size_1-of-1">
+                <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{! if(v.displayIataCodesInputField, $Label.c.ISSP_Enter_Company_Name,$Label.c.ISSP_CompanyName)}</label>
+
+                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                    <ui:inputText value="{!v.userInputCompanyName}" updateOn="keyup" keyup="{!c.search}" class="slds-input slds-combobox__input" disabled="{!v.disabled}"/>
+                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                        <aura:if isTrue="{!v.searching}">
+                            <lightning:spinner size="small"/>
+                            <aura:set attribute="else">
+                                <lightning:icon iconName="utility:search" size="x-small"/>
+                            </aura:set>
+                        </aura:if>
+                    </span>
+                </div>
+            </div>
+            
+            <div id="results" role="listbox">
+                
+                <div class="slds-dropdown slds-dropdown_fluid slds-listbox slds-listbox_vertical" role="presentation">
+                    <aura:if isTrue="{!$Browser.isPhone}">
+                        
+                        <aura:iteration items="{!v.foundRecords}" var="a" indexVar="i">
+                            <div role="presentation" class="slds-listbox__item">
+                                <article class="slds-card slds-listbox__option slds-listbox__option_plain" onclick="{!c.suggestionSelected}" data-value="{!a[0]}" data-row-index="{!i}" >
+                                    <div class="slds-card__body slds-card__body_inner slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <aura:iteration items="{!v.fieldLabels}" var="name">
+                                                <div>{!name}</div>
+                                            </aura:iteration>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                        <aura:iteration items="{!a}" var="val">
+                                            <div>{!val}</div>
+                                        </aura:iteration>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </aura:iteration>
+
+                        <aura:set attribute="else">
+                            <div role="presentation" class="slds-listbox__item slds-grid headerRow">
+                                <aura:iteration items="{!v.fieldLabels}" var="name">
+                                    <div class="{!'slds-listbox__option slds-listbox__option_plain slds-size_1-of-'+v.fieldLabels.length}">
+                                    {!name}
+                                </div>
+                                </aura:iteration>
+                            </div>
+                            <!-- TODO: access fields dynamically -->
+                            <div class="tableContainer">
+                                <aura:iteration items="{!v.foundRecords}" var="a" indexVar="i">
+
+                                    <div role="presentation" class="slds-listbox__item" onclick="{!c.suggestionSelected}" data-value="{!a[0]}" data-row-index="{!i}">
+                                        <div class="slds-listbox__option slds-listbox__option_plain slds-grid">
+                                        <aura:iteration items="{!a}" var="val">
+                                            <div class="{!'slds-col slds-size_1-of-'+v.fieldLabels.length}">{!val}</div>
+                                        </aura:iteration>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.foundRecords.length &lt; v.totalAccounts}">
+                        <div role="presentation" class="slds-listbox__item lastRow">
+                            {!format($Label.c.OneId_TotalResults, v.totalAccounts)}
+                        </div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.customerType == 'GSA_GSSA'}"> <!-- old value: "GloballSalesAgent" -->
+                        <div role="presentation" class="slds-listbox__item lastRow">
+                            <aura:unescapedHTML value="{!$Label.c.OneId_GSAWarning}"/>
+                        </div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.showCreateNew}">
+                        <div role="presentation" class="slds-listbox__item lastRow">
+                            {!$Label.c.OneId_AccountNotFound} &nbsp;<span onclick="{!c.createNew }">{!$Label.c.OneId_CreateNew}</span>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>
