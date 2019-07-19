@@ -173,7 +173,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.isSaving = false;
 
         let listSelected = JSON.parse(JSON.stringify(this.listSelected));
-        this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
         //eval("$A.get('e.force:refreshView').fire();");
     }
