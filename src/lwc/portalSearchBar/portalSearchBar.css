@@ -1,0 +1,54 @@
+.mainContentDiv {
+    position:relative;
+}
+
+.searchBarRow {
+    display: flex;
+    z-index:4002;
+    position:absolute;
+    width:100%;
+}
+
+.searchBarRow lightning-button{
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.searchBarIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchBarBarContainer {
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultsContentDiv {
+    background-color:white;
+    position:absolute;
+    width:calc(100% + 20px);
+    z-index:4001;
+    top:33px;
+    margin: 0px -10px 0px -10px;
+    padding: 40px 10px 0px 10px;
+}
+
+.barSpinner{
+    position: relative;
+    display: inline-block;
+    margin-right: 35px;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.fullWidth{
+    width: 100%;
+}
+
+.slds-backdrop{
+    z-index: 4000;
+}

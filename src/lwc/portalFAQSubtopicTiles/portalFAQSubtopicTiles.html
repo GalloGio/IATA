@@ -1,0 +1,21 @@
+<template>
+    <div class="customBorderlessCardGray">
+        <template if:true={loading}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <template if:false={loading}>
+            <template for:each={topicTiles} for:item="topic">
+                <div class={topic.class} onclick={topicSelected} key={topic.value} data-item={topic.value}>
+                    <lightning-icon class="darkBlueIcon" if:true={topic.open} icon-name="utility:chevrondown" size="xx-small" data-item={topic.value}></lightning-icon>
+                    <lightning-icon class="darkBlueIcon" if:false={topic.open} icon-name="utility:chevronright" size="xx-small" data-item={topic.value}></lightning-icon>
+                    <span class="slds-p-left_small text-bold" data-item={topic.value}>{topic.label}</span>
+                </div>        
+                <div if:true={topic.open} key={topic.value} data-item={topic.value}>
+                    <template for:each={subTopicTiles} for:item="subtopic">
+                        <div class={subtopic.class} data-name={subtopic.value} data-label={subtopic.label} key={subtopic.value} onclick={subTopicSelected}>{subtopic.label}</div>
+                    </template>
+                </div>
+            </template>            
+        </template>  
+    </div>   
+</template>
