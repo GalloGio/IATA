@@ -57,7 +57,9 @@ public class ANG_FinancialSecurityTriggerHandler{
 	// ************************************************************
 
 	private List<Financial_Security__c> financialSecurityToProcessLst = new List<Financial_Security__c>();
-
+	//List of financial securities for which the Minimum FS should be calculated
+	private List<Financial_Security__c> calculateMinFsLst = new List<Financial_Security__c>();
+	
 	private set<id> accIdSet{
 		get{
 			if(accIdSet==null){
@@ -116,9 +118,20 @@ public class ANG_FinancialSecurityTriggerHandler{
 		List<Financial_Security__c> fsLst = Trigger.isDelete ? triggerOld : triggerNew;
 
 		for(Financial_Security__c fs : fsLst){
-			if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c && fs.Account__c ==oldMap.get(fs.id).Account__c) continue;
+
+			if(Trigger.isUpdate){
+				Financial_Security__c oldFs = oldMap.get(fs.id);
+				if(fs.Amount__c == oldFs.Amount__c && fs.CurrencyIsoCode == oldFs.CurrencyIsoCode && fs.Security_Status__c == oldFs.Security_Status__c && fs.Account__c == oldFs.Account__c && fs.ANG_Minimum_Financial_Security__c == oldFs.ANG_Minimum_Financial_Security__c && fs.ANG_Financial_Security_Currency__c == oldFs.ANG_Financial_Security_Currency__c){
+					continue;
+				}
+			}
 			accIdSet.add(fs.Account__c);
 			financialSecurityToProcessLst.add(fs);
+
+			if(Trigger.isInsert || (Trigger.isUpdate && (fs.ANG_Minimum_Financial_Security__c != oldMap.get(fs.id).ANG_Minimum_Financial_Security__c || fs.ANG_Financial_Security_Currency__c != oldMap.get(fs.id).ANG_Financial_Security_Currency__c))){
+				calculateMinFsLst.add(fs); 
+			}
+
 		}
 
 	}
@@ -166,10 +179,8 @@ public class ANG_FinancialSecurityTriggerHandler{
 		
 		//List of financial securities for which the calculations will consider the entire hierarchy
 		List<Financial_Security__c> includeAllAeFsLst = new List<Financial_Security__c>();
-		//List of financial securities for which the Minimum FS should be calculated
-		List<Financial_Security__c> calculateMinFsLst = new List<Financial_Security__c>();
 
-		for(Financial_Security__c fs : financialSecurityToProcessLst){
+		for(Financial_Security__c fs : this.financialSecurityToProcessLst){
 			
 			//Skip the financial security 
 			//is not suposed to update the RHC 
@@ -193,10 +204,6 @@ public class ANG_FinancialSecurityTriggerHandler{
 			else if(calculateTotalFs && acct.RHC_Informations__r.size() == 1){
 				decimal fsAmount = ANG_Risk_Helper.sumFSConvertedAmounts(acct.Financial_Securities__r);
 				setFinancialSecurityOnRHC(acct, fsAmount);
-			}
-
-			if(calculateMinFs){
-				calculateMinFsLst.add(fs);
 			}
 
 		}
@@ -270,7 +277,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 		if(calculateMinFs){
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] calculateMinFsLst: ' + calculateMinFsLst);
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] minFsAmountAggregatedByParent: ' + minFsAmountAggregatedByParent);
-			calculateMinimumFS(calculateMinFsLst, minFsAmountAggregatedByParent);
+			calculateMinimumFS(this.calculateMinFsLst, minFsAmountAggregatedByParent);
 		}
 
 		doDml();
@@ -299,7 +306,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			}
 			else {
 				String rhcKey = fs.Account__c + ANG_RHCHelper.RHC_INFO_STD_RT;
-				decimal minFsAmount = ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c) ? ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c, fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c) : null;
+				decimal minFsAmount = (ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c) && fs.ANG_Financial_Security_Currency__c != NULL) ? ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c, fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c) : null;
 				setMinFinancialSecurityAmountOnRHC(rhcKey, minFsAmount);
 			}
 
@@ -356,11 +363,9 @@ public class ANG_FinancialSecurityTriggerHandler{
 			rhcInfo.ANG_UniqueKey__c = rhcKey;
 		}
 
-		if(rhcInfo.ANG_Minimum_Financial_Security__c != minFsAmount){
-			rhcInfo.ANG_Minimum_Financial_Security__c = minFsAmount;
-			map2Insert.put(rhcInfo.ANG_UniqueKey__c, rhcInfo);
-		}
-		
+		rhcInfo.ANG_Minimum_Financial_Security__c = minFsAmount;
+		map2Insert.put(rhcInfo.ANG_UniqueKey__c, rhcInfo);
+	
 	}
 
 	/**
@@ -378,10 +383,8 @@ public class ANG_FinancialSecurityTriggerHandler{
 			rhcInfo.ANG_UniqueKey__c = rhcKey;
 		}
 
-		if(rhcInfo.ANG_Financial_Security__c != fsAmount){
-			rhcInfo.ANG_Financial_Security__c = fsAmount;
-			map2Insert.put(rhcInfo.ANG_UniqueKey__c, rhcInfo);
-		}
+		rhcInfo.ANG_Financial_Security__c = fsAmount;
+		map2Insert.put(rhcInfo.ANG_UniqueKey__c, rhcInfo);
 
 	}
 
@@ -447,6 +450,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	public void updateRHCInfoFSMinimumAmount(Set<Id> accountIds, List<Financial_Security__c> fsLst){
 		this.accIdSet = accountIds;
 		this.financialSecurityToProcessLst = fsLst;
+		this.calculateMinFsLst = fsLst;
 		calculateFinancialSecuritiesAmounts(false, true);
 	}
 
