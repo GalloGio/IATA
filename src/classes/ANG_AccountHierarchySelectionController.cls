@@ -798,7 +798,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
                 Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
 
-                if((i.selected || i.main) && currentBSP != newParent.IATA_ISO_Country__r.AMS_Settlement_System__c){
+                if((i.selected || i.main) && !existingBSPs.contains(currentBSP)){
 
                     if(!hesPerBSPs.containsKey(currentBSP)) 
                         hesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
