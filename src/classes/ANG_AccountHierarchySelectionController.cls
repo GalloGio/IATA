@@ -1,13 +1,15 @@
 public with sharing class ANG_AccountHierarchySelectionController {
+  	
+    public Contact contact {get;set;} // new account to create
+
+	public List<Account> results{get;set;} // search results
 
     public Account newParent{
         get{
             
             if(newParent == null && oscar.New_parent__c != null)
-                return [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c, Top_Parent__r.Location_Type__c, Location_Type__c
-                        from Account where ID = :oscar.New_parent__c];
-            else 
-                return newParent;
+                FetchNewParent();
+            return newParent;
         }
         set;
     }
@@ -34,6 +36,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
                     , 'STEP6__c'
                     , 'Process__c'
                     , 'Account__r.ANG_Accreditation_Model__c'
+                    , 'HE_per_BSP_Mapping__c'
                 };
             }
             return oscarFields;
@@ -216,6 +219,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
                     'All selected locations are in the same BSP', 
                     'All the selected locations are in the same BSP, please process a Conversion or select additional locations.'
                 );
+
+                errorMessages.put(
+                    'missing HE for new bsp', 
+                    'You need to select an account to be HE in all the new BSP\'s.'
+                );
                 
             }
             return errorMessages;
@@ -265,7 +273,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
     public AMS_OSCAR__c oscar{
         get{
-            if(oscar == null && oscarId != null) oscar = Database.query('SELECT Id, '+String.join(oscarFieldList, ',')+' FROM AMS_OSCAR__c WHERE Id = :oscarId');
+            if(oscar == null && oscarId != null) oscar = Database.query('SELECT Id, '+String.join(oscarFieldList, ',')+'  FROM AMS_OSCAR__c WHERE Id = :oscarId');
             return oscar;
         }
         set;
@@ -388,7 +396,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
                 integer nbrOfPendingCases = 0;
                 
-                for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c ' + getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
+                for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c, IATA_ISO_Country__r.AMS_Settlement_System__r.name, IATA_ISO_Country__r.name ' + getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
                     Boolean main = (a.Id == oscar.Account__c);
                     Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
                     hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
@@ -529,6 +537,66 @@ public with sharing class ANG_AccountHierarchySelectionController {
         }
         set;
     }
+
+
+    public Integer totalPagesForHEPerBSP{
+        get{
+            return hesPerBSPs.size();
+        }
+    }
+
+     public Boolean showBSPPanel{
+        get{
+            return !hesPerBSPs.isEmpty();
+        }
+    }
+    
+    public Map<Id,HEPerBSP> hesPerBSPs{
+        get
+        {
+            if(hesPerBSPs == null) hesPerBSPs = new Map<Id,HEPerBSP>();
+            return hesPerBSPs;
+        }
+        set;
+    }    
+
+    public String JSONHEsPerBSPs{
+        get
+        {
+            return JSON.serialize(hesPerBSPs);
+        }
+    }
+    
+    private Set<ID> existingBSPs{
+        get{
+            if(existingBSPs == null) existingBSPs = new Set<ID>();
+            return existingBSPs;
+        }
+
+    set;}
+
+    public List<List<HEPerBSP>> hesPerBSPsForDisplay{
+        get{
+           // if(hesPerBSPsForDisplay == null){
+                hesPerBSPsForDisplay = new List<List<HEPerBSP>>();
+
+                // create as many sub-lists as necessary
+                for(Integer i = 0; i <= (hesPerBSPs.values().size()-1)/rowsPerPage; i++){
+                    hesPerBSPsForDisplay.add(new List<HEPerBSP>());
+                }
+
+                // fill HierarchyItems in the sub-lists
+                Integer itemNumber = 0;
+                for(HEPerBSP item : hesPerBSPs.values()){
+                    hesPerBSPsForDisplay.get(itemNumber++/rowsPerPage).add(item);
+                }
+            //}
+            System.debug(loggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hierarchy items lists - ' + hesPerBSPsForDisplay);
+            return hesPerBSPsForDisplay;
+        }
+        set;
+    }
+
     
     // ***********************************
     // ********** constructor ************
@@ -597,8 +665,19 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
                 if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && diffDestination(oscar.New_parent__c)) errorChecks.put('Mixed types of changes', true);
             }
-        }
 
+            //validate and store in OSCAR
+            Map<ID,ID> resultHEPerBSP = new Map<ID,ID>(); 
+            for(HEPerBSP tt:  hesPerBSPs.values()){
+
+                if(tt.p.ParentId == null)  errorChecks.put('missing HE for new bsp', true);
+                else resultHEPerBSP.put(tt.bspId,tt.p.ParentId);
+            }
+
+            oscar.HE_per_BSP_Mapping__c = JSON.serialize(resultHEPerBSP);
+
+             
+        }
 
         if((tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT) || tocList.contains(AMS_Utils.CONVERTTOLEGACY) || tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)) && existsLocClassDomesticError){
             errorChecks.put('Require Location Class Domestic', true);
@@ -660,10 +739,77 @@ public with sharing class ANG_AccountHierarchySelectionController {
         for(HierarchyItem hi : hierarchyValues) if(hi.main) oscar.Account__c = hi.acc.Id;
     }
 
+     public void handleSelection() {
+
+        string accountID = system.CurrentPageReference().getParameters().get('accountID');
+        string iataCode = system.CurrentPageReference().getParameters().get('iataCode');
+        string bspID = Apexpages.currentPage().getParameters().get('bspID');
+
+        if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){
+
+            HierarchyItem i = hierarchy.get(accountID);
+
+            if(!existingBSPs.contains(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c)){
+
+                //checkbox was selected
+                if(i.selected || i.main){
+
+                    if(!hesPerBSPs.containsKey(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c)){
+                        hesPerBSPs.put(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c, new HEPerBSP(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
+                    } 
+
+                    hesPerBSPs.get(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c).possibleAccounts.put(i.acc.ID,i.acc);
+                
+               
+                //flag was removed. Since it was already selected, should always contain the bsp but just in case
+                }else if(hesPerBSPs.containsKey(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c)) {
+                  //}else{  
+                    hesPerBSPs.get(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c).possibleAccounts.remove(accountID);
+                    if(hesPerBSPs.get(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c).possibleAccounts.isEmpty()) hesPerBSPs.remove(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
+                }
+
+            }  
+        }
+    }
+
     public PageReference FetchNewParent(){
 
-        if(oscar.New_parent__c != null) newParent = [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c, Top_Parent__r.Location_Type__c, Location_Type__c 
+        if(oscar.New_parent__c != null) newParent = [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c, Account.ParentId, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, IATA_ISO_Country__r.AMS_Settlement_System__c,IATA_ISO_Country__r.AMS_Settlement_System__r.id
                                                     from Account where ID = :oscar.New_parent__c];
+
+
+        if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){ 
+
+
+            //fetch all hiearchy to get existing bsp's
+            Set<ID> idsToCompare = new Set<ID>{newParent.id};
+            if (newParent.ParentId != null) idsToCompare.add(newParent.ParentId);
+            if (newParent.Top_Parent__c != null) idsToCompare.add(newParent.Top_Parent__c);
+
+            for(Account acc: [SELECT Id, IATA_ISO_Country__r.AMS_Settlement_System__c FROM Account WHERE ParentId IN :idsToCompare OR Top_Parent__c IN :idsToCompare OR ID IN :idsToCompare ]){
+                existingBSPs.add(acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
+            }
+
+            //BSPid,AccountId
+            Map<ID,ID> resultHEPerBSP = new Map<ID,ID>();
+            if(String.isNotBlank(oscar.HE_per_BSP_Mapping__c)) resultHEPerBSP = (Map<ID,ID>) JSON.deserialize( oscar.HE_per_BSP_Mapping__c, Map<ID,ID>.class);
+
+            for (HierarchyItem i : hierarchy.values()){
+
+                Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
+
+                if((i.selected || i.main) && !existingBSPs.contains(currentBSP)){
+
+                    if(!hesPerBSPs.containsKey(currentBSP)) 
+                        hesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
+                    
+                    hesPerBSPs.get(currentBSP).possibleAccounts.put(i.acc.ID,i.acc);
+
+                    if(resultHEPerBSP.containsKey(currentBSP) && hesPerBSPs.get(currentBSP).possibleAccounts.keySet().contains(resultHEPerBSP.get(currentBSP)))
+                        hesPerBSPs.get(currentBSP).p.parentid = resultHEPerBSP.get(currentBSP); 
+                }
+            }
+        }
 
         return null;
     }
@@ -942,5 +1088,23 @@ public with sharing class ANG_AccountHierarchySelectionController {
             this.selected = selected;
             this.isTopParent = isTopParent;
         }
+    }
+
+    public class HEPerBSP {
+
+        public String name { get; set; }
+        public Id bspId { get; set; }
+        public String country { get; set; }
+        public Account p { get; set; }
+        public Map<ID, Account> possibleAccounts { get; set; }
+
+        public HEPerBSP(Id bspId, String name, String country){
+            this.bspId = bspId;
+            this.name = name;
+            this.country = country;
+            possibleAccounts = new Map<ID, Account>();
+            p = new Account();
+        }
+
     }
 }
