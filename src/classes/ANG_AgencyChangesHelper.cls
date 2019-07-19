@@ -792,7 +792,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			thw = new ANG_MulticountryHelper.TargetHierarchyWrapper();
 
 			thw.hierarchyId = newHierarchy.Id;
-			thw.targetGE = toReturn.accountsMap.get(oscarToProcess.Account__c);
+			thw.targetGE = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
 
 			thw.hierarchyBspMap = new Map<Id, Account>{
 				thw.targetGE.IATA_ISO_Country__r.AMS_Settlement_System__c => thw.targetGE
