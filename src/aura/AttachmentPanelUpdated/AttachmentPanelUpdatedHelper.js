@@ -715,7 +715,6 @@
             var state = response2.getState();
             if (state === "SUCCESS") {
                 var lstCases = response2.getReturnValue();
-                console.log('PF',lstCases)
                 if (lstCases) {
 
                     for (var i = 0; i < lstCases.length; i++) {
