@@ -125,8 +125,8 @@ public class AMS_AgencyAChangeCodeHandler {
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
             migrateFieldsFromStagingToAccount(aacc);
 
-        Map<Id,Id> changeCodePerAccount = new Map<Id,Id>();
-        Map<Id,Id> changeCodePerOscar = new Map<Id,Id>();
+        Set<Id> changeCodeAccounts = new Set<Id>();
+        Set<Id> changeCodeOscars = new Set<Id>();
         List<Agency_Applied_Change_code__c> toCheckUnpublish = new List<Agency_Applied_Change_code__c>();
 
         for(Agency_Applied_Change_code__c aaccRecord : aacc){
@@ -134,10 +134,10 @@ public class AMS_AgencyAChangeCodeHandler {
             aaccRecord.RecordTypeId = accIrregularities.contains(aaccRecord.Change_Code__c) ? irregRtId : stdRtId;
 
             if(aaccRecord.To_Publish_in_e_Bulletin__c){
-                changeCodePerAccount.put(aaccRecord.Account__c, aaccRecord.Id);
+                changeCodeAccounts.add(aaccRecord.Account__c);
 
                 if(aaccRecord.OSCAR__c != null)
-                    changeCodePerOscar.put(aaccRecord.OSCAR__c, aaccRecord.Id);
+                    changeCodeOscars.add(aaccRecord.OSCAR__c);
 
                 toCheckUnpublish.add(aaccRecord);
             }
@@ -151,15 +151,15 @@ public class AMS_AgencyAChangeCodeHandler {
         Map<Id,Account> mapAccounts =  new Map<Id,Account>();
         Map<Id,AMS_OSCAR__c> mapOscars = new Map<Id,AMS_OSCAR__c>();
 
-        if(!changeCodePerAccount.isEmpty())
-            mapAccounts = new Map<Id,Account>([SELECT Id, Location_Class__c FROM Account WHERE Id IN: changeCodePerAccount.keySet()]);
+        if(!changeCodeAccounts.isEmpty())
+            mapAccounts = new Map<Id,Account>([SELECT Id, Location_Class__c FROM Account WHERE Id IN: changeCodeAccounts]);
 
-        if(!changeCodePerOscar.isEmpty())    
-            mapOscars = new Map<Id,AMS_OSCAR__c>([SELECT Id, Process__c FROM AMS_OSCAR__c WHERE Id IN: changeCodePerOscar.keySet()]);
+        if(!changeCodeOscars.isEmpty())    
+            mapOscars = new Map<Id,AMS_OSCAR__c>([SELECT Id, Process__c FROM AMS_OSCAR__c WHERE Id IN: changeCodeOscars]);
 
         for(Agency_Applied_Change_code__c aaccRecord : toCheckUnpublish){
 
-            if(locationClassesUnpublish.contains(mapAccounts.get(aaccRecord.Account__c).Location_Class__c) || (aaccRecord.OSCAR__c != null && mapOscars.get(aaccRecord.OSCAR__c).Process__c.contains('CER.1.0')))
+            if(locationClassesUnpublish.contains(mapAccounts.get(aaccRecord.Account__c).Location_Class__c) || (aaccRecord.OSCAR__c != null && mapOscars.get(aaccRecord.OSCAR__c).Process__c != null && mapOscars.get(aaccRecord.OSCAR__c).Process__c.contains('CER.1.0')))
                 aaccRecord.To_Publish_in_e_Bulletin__c = false;
         }
     }
