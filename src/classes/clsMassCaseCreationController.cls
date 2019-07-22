@@ -396,7 +396,7 @@ public with sharing class clsMassCaseCreationController {
 
       if(exclFAOptOut.equals('true'))
         soql += ' and Account.ANG_FA_Opt_out__c = false';
-      soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\') ';
+      soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\'  or ((Account.Default_date__c >= :sixMonthsAgo or Account.Reinstated_Date__c >= :sixMonthsAgo) and Account.ANG_IsNewGenAgency__c = true ))';
       soql += ' and Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079';
 
       system.debug(LoggingLevel.ERROR, 'QUERY: ' + soql);
