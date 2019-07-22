@@ -780,6 +780,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				insert newH;
 
 				hierarchyId = newH.Id;
+				/** NEWGEN-5751 */
+				newH.Main_Account__c = oscarToProcess.New_parent__c;
 
 				System.debug('[ANG_AgencyChangesHelper] Inserted new Hierarchy with Id:' + newH.Id + ' since the destination account is a single Account.');
 			}

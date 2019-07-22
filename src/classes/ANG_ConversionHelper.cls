@@ -712,7 +712,7 @@ global with sharing class ANG_ConversionHelper {
 
 		if(container != null)
 			reHelper = new ANG_RiskEventMigrationHelper(container.accountsToUpdate);
-	
+
 		update new List<Account>(accountsToUpdate);
 	
 		if(reHelper != null)
@@ -727,6 +727,12 @@ global with sharing class ANG_ConversionHelper {
 		delete new List<AMS_Agencies_Hierarchy__c>(hierarchiesToDelete);
 
 		delete new List<AMS_Agencies_relationhip__c>(relationsToDelete);
+
+		//now that we have performed all the migration, we should fix the hierarchies.
+		hierarchiesToUpdate = updateNewgenHierarchies(accountsToUpdate);
+
+		if(hierarchiesToUpdate <> null && !hierarchiesToUpdate.isEmpty())
+			upsert new List<AMS_Agencies_Hierarchy__c>(hierarchiesToUpdate);
 
 		ANG_RHCHelper.createRHCInfo(topParents, false); //as per NEWGEN-2487
 
@@ -743,6 +749,59 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
+	public static Set<AMS_Agencies_Hierarchy__c> updateNewgenHierarchies(Set<Account> accounts){
+
+		Set<Id> accountsToProcess = new Set<Id>();
+
+		for(Account acct: accounts){
+			if(acct.Location_Type__c == AMS_Utils.HE){
+				accountsToProcess.add(acct.Id);
+			}
+		}
+
+		if(accountsToProcess.isEmpty())
+			return null ;
+
+		Map<Id,Id> accountsHierarchies = new Map<Id,Id>();
+		Set<Id> accountsAlreadyAdjusted = new Set<Id>();
+
+		for(AMS_Agencies_relationhip__c rel: [Select Id, Hierarchy__c, Hierarchy__r.Main_Account__c,Parent_Account__c from AMS_Agencies_relationhip__c where Parent_Account__c in:accountsToProcess]){
+			
+			if(accountsHierarchies.get(rel.Parent_Account__c) <> null)
+				continue;
+
+			if(rel.Hierarchy__r.Main_Account__c <> null){
+				accountsAlreadyAdjusted.add(rel.Hierarchy__r.Main_Account__c);
+			}else{
+				accountsHierarchies.put(rel.Parent_Account__c,rel.Hierarchy__c);
+			}
+		}
+
+		AMS_Agencies_Hierarchy__c hierarchy;
+
+		Set<AMS_Agencies_Hierarchy__c> hierarchiesToUpsert = new Set<AMS_Agencies_Hierarchy__c>();
+
+		for(Id acctId: accountsToProcess){
+			
+			hierarchy = null;
+
+			if(accountsHierarchies.get(acctId) <> null){ // need update the hierachy
+				hierarchy = new AMS_Agencies_Hierarchy__c(Id = accountsHierarchies.get(acctId), Hierarchy_Name__c = 'Hierarchy');
+				hierarchy.Migrated__c = true;
+				hierarchy.Main_Account__c = acctId;
+			}else if(!accountsAlreadyAdjusted.contains(acctId)){ // single account that needs an hierarchy
+				hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+				hierarchy.Migrated__c = true;
+				hierarchy.Main_Account__c = acctId;
+			}
+
+			if(hierarchy <> null)
+				hierarchiesToUpsert.add(hierarchy);
+		}
+
+		return hierarchiesToUpsert;
+
+	}
 
 	public static Set<Account> filterByStatus(Set<Account> accounts){
 
@@ -1012,7 +1071,7 @@ global with sharing class ANG_ConversionHelper {
 			} else {
 
 				if(TOPLEVELLOCATIONTYPES.contains(allAgencies.get(struct.topParentId).Location_Type__c))
-					allAgencies.get(struct.topParentId).Location_Type__c = 'HE';			
+					allAgencies.get(struct.topParentId).Location_Type__c = 'HE';
 				else
 					allAgencies.get(struct.topParentId).Location_Type__c = 'AE';		
 

@@ -59,7 +59,7 @@ global class ANG_OscarProcessHelper {
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c, ANG_IsNewGenAgency__c , Covered_Ownership__c,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
-					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
+					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true),(SELECT Id FROM Main_Accounts__r), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
 					WHERE Id =:accountId FOR UPDATE];
 
@@ -234,6 +234,13 @@ global class ANG_OscarProcessHelper {
 				System.debug('[ANG_OscarProcessHelper] Data to Agency was already migrated (skipped).');
 			}
 			
+			/** NEWGEN-5751 */
+			if(AMS_Utils.TOPLOCATIONSNEWGEN.contains(updater.acctMap.get(theAccount.Id).Location_Type__c) && updater.acctMap.get(theAccount.Id).Main_Accounts__r.isEmpty()){
+				
+				insert new AMS_Agencies_Hierarchy__c(Main_Account__c = theAccount.Id);
+
+			}
+            
 			System.debug('[ANG_OscarProcessHelper] Execution time so far:' + (datetime.now().getTime() - processStartTime.getTime()) /1000);
 	        System.debug('[ANG_OscarProcessHelper] Preparing to generate Change Code (NEW).');
 
