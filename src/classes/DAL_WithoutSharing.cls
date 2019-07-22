@@ -59,10 +59,11 @@ public without sharing class DAL_WithoutSharing {
         and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
 
         List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
-                OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
-                User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
-                Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
-        from Contact where AccountId IN:allBranches.keySet() ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
+	                          OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
+	                          User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
+	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name,
+                              Account_site__c, Account.RecordTypeId, Account.RecordType.Name, Account.BillingCity 
+	                          from Contact where AccountId IN:allBranches.keySet() ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
 
         if(!contacts.isEmpty()){
             return contacts;
