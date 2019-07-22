@@ -522,6 +522,7 @@
         <sharedTo>
             <group>CS_Systems</group>
             <group>FDS_KPI_Reporting_Team</group>
+            <group>I_C_GDC</group>
             <group>Invoicing_Management_Regions</group>
         </sharedTo>
     </listViews>
@@ -551,6 +552,7 @@
         <sharedTo>
             <group>CS_Systems</group>
             <group>FDS_KPI_Reporting_Team</group>
+            <group>I_C_GDC</group>
             <group>Invoicing_Management_Regions</group>
         </sharedTo>
     </listViews>

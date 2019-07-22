@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Environment__c</fullName>
+        <description>Contains the environment for this record. eg: csportal, backoffice, etc</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Contains the environment for this record. eg: csportal, backoffice, etc</inlineHelpText>
+        <label>Environment</label>
+        <length>50</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ParentPage__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>ParentPage</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Replace_With_Param__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to replace this breadcrumb with a given label via component property</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Used to replace this breadcrumb with a given label via component property</inlineHelpText>
+        <label>Replace With Param</label>
+        <type>Checkbox</type>
+    </fields>
+    <label>Breadcrumb</label>
+    <pluralLabel>Breadcrumbs</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

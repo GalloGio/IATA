@@ -1,0 +1,9 @@
+.cardBodyContent {
+    min-height: 318px;
+}
+
+.noRecentCases {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
