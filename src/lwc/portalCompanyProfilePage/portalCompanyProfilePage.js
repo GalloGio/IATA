@@ -379,27 +379,34 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let user = contacts[i].contactUser;
             let services = contacts[i].services;
 
-            let locationType = contact.Account.Location_Type__c ? contact.Account.Location_Type__c : '';
-            let iataCode = contact.IATA_Code__c ? contact.IATA_Code__c  : '';
+            if (contact.Account.RecordType.Name === 'Airline Headquarters' || contact.Account.RecordType.Name === 'Airline Branch') {
+                contact.LocationCode = (contact.hasOwnProperty('IATA_Code__c') ? contact.IATA_Code__c : '') + (contact.hasOwnProperty('Account_site__c') ? ' (' + contact.Account_site__c + ')' : '') + ')';
+            } else if (contact.hasOwnProperty('IATA_Code__c') && contact.IATA_Code__c !== null ) {
+                contact.LocationCode = contact.IATA_Code__c + (contact.Account.hasOwnProperty('BillingCity') ? ' (' + contact.Account.BillingCity + ')' : '');
+            } else {
+                contact.LocationCode = '';
+            }
 
-            contact.LocationCode = iataCode + ' ' + locationType;
+            if (user !== undefined) {
+                if (user.hasOwnProperty('LastLoginDate')) {
+                    if (user.LastLoginDate != null) {
+                        let locale = user.LanguageLocaleKey.replace('_', '-');
+                        let lastLogin = new Date(user.LastLoginDate);
+                        contact.LastLoginDate = lastLogin;
 
-            if (user && user.LastLoginDate != null) {
-                let locale = user.LanguageLocaleKey.replace('_', '-');
-                let lastLogin = new Date(user.LastLoginDate);
-                contact.LastLoginDate = lastLogin;
+                        let day = lastLogin.getDate();
+                        let monthIndex = lastLogin.getMonth();
+                        let year = lastLogin.getFullYear();
+                        let month;
 
-                let day = lastLogin.getDate();
-                let monthIndex = lastLogin.getMonth();
-                let year = lastLogin.getFullYear();
-                let month;
-
-                try {
-                    month = lastLogin.toLocaleString(locale, { month: "long" });
-                    contact.LastLogin = month + ' ' + day + ', ' + year;
-                }
-                catch (e) {
-                    contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
+                        try {
+                            month = lastLogin.toLocaleString(locale, { month: "long" });
+                            contact.LastLogin = month + ' ' + day + ', ' + year;
+                        }
+                        catch (e) {
+                            contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
+                        }
+                    }
                 }
             }
 
