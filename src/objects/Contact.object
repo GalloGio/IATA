@@ -1810,6 +1810,151 @@
     <fieldSets>
         <fullName>FieldsExcludedFromTracking</fullName>
         <description>The fields in this list will be tracked on the Contact Tracking History object</description>
+        <displayedFields>
+            <field>Available_Services_Images__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastModifiedById</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EmailBouncedReason</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EmailBouncedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IsEmailBounced</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__Needs_Score_Synced__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Instant_Survey_Last_survey_sent__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Instant_Survey_Last_feedback_received__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Available_Services__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_activity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__grade__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__notes__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_search_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_search_term__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_touch_url__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_object_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_object_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__Pardot_Last_Scored_At__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__url__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__last_activity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__pardot_hard_bounced__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__created_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__score__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__campaign__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Pardot_Area_of_Interest__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>FieldsExcludedFromTracking</label>
     </fieldSets>
     <fieldSets>
@@ -20000,13 +20145,44 @@ $Profile.Name &lt;&gt; &quot;System Administrator&quot;
         <errorMessage>Internal Users can&apos;t change Portal Status to Administrator.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Change_id_card_holder_account_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+
+
+ID_Card_Holder__c=true,
+
+ISCHANGED(AccountId),
+
+NOT(ISBLANK(PRIORVALUE(AccountId))),
+				
+				or(
+	 $User.Profile_Name__c &lt;&gt;  &quot;IDFS Passenger - Distribution Solutions&quot;,
+		$UserRole.Name  &lt;&gt;   &quot;IDO Industry Solutions&quot;												
+								)				
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. please raise an internal case to ID Card team to move the contact to another account</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;),
+			
+				or(
+	 $User.Profile_Name__c &lt;&gt;  &quot;IDFS Passenger - Distribution Solutions&quot;,
+		$UserRole.Name  &lt;&gt;   &quot;IDO Industry Solutions&quot;												
+								),				
 ID_Card_Holder__c=true,
+	Or(			
+					and(
 ISCHANGED(LastName),
 UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
+									),
+					and(
+ISCHANGED(FirstName), 
+UPPER(PRIORVALUE(FirstName)) &lt;&gt; UPPER(FirstName)																		
+									)
+				)
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
     </validationRules>
