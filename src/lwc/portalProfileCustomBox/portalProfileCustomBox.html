@@ -31,14 +31,25 @@
                             <lightning-messages>
                             </lightning-messages>
 
+                            <template if:true={hasError}>
+                                <div class="whiteIcon text-xxsmall errorBox">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-m-left_medium slds-size_12-of-13">
+                                            {labels.CSP_Error_Message_Mandatory_Fields_Contact}
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
                             <div
                                 class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
                                 <div key={field} class="slds-size_1-of-2">
 
-                                    <lightning-combobox class="text-small labelValue textValue"
+                                    <lightning-combobox class="AccountName text-small labelValue textValue"
                                         name={labels.ICCS_Account_Name_Label} label={labels.ICCS_Account_Name_Label}
-                                        value={accountSelected} placeholder="--None--" options={accountList}
-                                        onchange={handleChangeAccount} required>
+                                        field-name="AccountName" data-field="AccountName" value={accountSelected}
+                                        placeholder="--None--" options={accountList} onchange={handleChangeAccount}
+                                        required>
                                     </lightning-combobox>
 
                                 </div>
@@ -70,7 +81,7 @@
                                 </template>
 
                                 <div
-                                    class="text-small fontWeight slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_medium">
+                                    class="workingAreas text-small fontWeight slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_medium">
                                     {labels.Working_Areas}
                                 </div>
                                 <template for:each={options} for:item="item">
@@ -81,7 +92,7 @@
                                                 <input data-item={item.label} type="checkbox"
                                                     class="checkbox-button__input" onchange={getValueSelected}
                                                     name={item.label}>
-                                                <span data-item={item.label} class="checkbox-button__control"
+                                                <span data-item={item.label} class="workingAreasChangeOnError checkbox-button__control"
                                                     onchange={getValueSelected}></span>
                                                 <span data-item={item.label} class="checkbox-button__label"
                                                     onchange={getValueSelected}>
