@@ -217,6 +217,17 @@
         <template>All/EUR_CaseassignmentBanking</template>
     </alerts>
     <alerts>
+        <fullName>CNS_Deadline_Date_Reached</fullName>
+        <description>CNS Deadline Date Reached</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/CNS_Deadline_Date_Reached</template>
+    </alerts>
+    <alerts>
         <fullName>Case_changed</fullName>
         <description>Case changed</description>
         <protected>false</protected>
@@ -8651,6 +8662,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>CNS Case Send Email When Deadline Date Is Reached</fullName>
+        <actions>
+            <name>CNS_Deadline_Date_Reached</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Case.SAAM_Deadline_Date__c</field>
