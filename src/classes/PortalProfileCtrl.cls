@@ -684,5 +684,26 @@ public with sharing class PortalProfileCtrl {
         }
  
     }
+    @AuraEnabled
+    public static String goToOldIFAP(Boolean hasContact, String contactId, String contactName){
+        if (hasContact){
+            Id accountID = [SELECT AccountId FROM Contact WHERE Id = :contactId LIMIT 1].AccountId;
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID + '&vContactId=' + contactId + '&vContactName=' + contactName);
+        } else {
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + myUser.Contact.AccountId);
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean isAdminAndIATAAgencyAcct(){
+        Boolean isIATAAgencyAcct = false;
+        Boolean isAdmin = CSP_Utils.isAdmin();
+
+        if (myUser.Contact.Account.Category__c=='IATA Passenger Sales Agent' || myUser.Contact.Account.Category__c=='IATA Cargo Agent')
+            isIATAAgencyAcct = true;
+        
+        return isIATAAgencyAcct && isAdmin;
+
+    }
 
 }

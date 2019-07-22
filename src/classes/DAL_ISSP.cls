@@ -4,7 +4,7 @@ public with sharing class DAL_ISSP {
         if (userId == null)
             return null;
         List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,Contact.AccountId,
-		contact.IFG_Production__c, contact.IFG_PreProduction__c, Profile.Id, Profile.Name
+		Contact.Name, Contact.Account.Category__c, contact.IFG_Production__c, contact.IFG_PreProduction__c, Profile.Id, Profile.Name
         from User where Id =:userId];
         if (users.size() > 0)
             return users[0];

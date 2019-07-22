@@ -4,6 +4,8 @@ import { LightningElement, track} from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage, navigateToPage } from 'c/navigationUtils';
 
+import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
+
 //import labels
 import aboutlb from '@salesforce/label/c.CSP_About';
 import contactslb from '@salesforce/label/c.ISSP_Contacts';
@@ -546,7 +548,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.denyUserAccessJS(row,msg,title, true);
                 break;
             case 'ifapContact':
-                //this.deleteAttach(row);
+                const {contactId, contactName } = row;
+                
+                goToOldIFAP({hasContact : true, contactId : contactId, contactName : contactName}).then(results => {
+                    window.open(results, "_self");
+                });
+                
                 break;
             default:
         }

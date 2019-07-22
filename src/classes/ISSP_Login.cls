@@ -4,6 +4,8 @@ public without sharing class ISSP_Login {
 	public Boolean sanctionCountry {get; set;}
 	public String country {get; set;}    
 
+	
+
 	//new CNS
 	public String communityName{
 	  get{        
@@ -246,7 +248,7 @@ public without sharing class ISSP_Login {
         String getUrl = ApexPages.currentPage().getUrl();
         String oneIDStatus = 'OFF';
         String identityLogin = '/identity/s/login'; // will work on sandboxes
-		String serviceName='ISSPs'; // default value old portal
+		String serviceName='ISSP'; // default value old portal
 		String tempStart='%2FISSP_Homepage'; // default value old portal
 
 

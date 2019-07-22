@@ -15,6 +15,8 @@ import getBranches from '@salesforce/apex/PortalProfileCtrl.getCompanyBranches';
 import searchContacts from '@salesforce/apex/PortalProfileCtrl.searchAccountContacts';
 import searchBranches from '@salesforce/apex/PortalProfileCtrl.searchCompanyBranches';
 import checkCanEdit from '@salesforce/apex/PortalProfileCtrl.checkCanEdit';
+import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
+import isAdminAndIATAAgencyAcct from '@salesforce/apex/PortalProfileCtrl.isAdminAndIATAAgencyAcct';
 
 
 import { getParamsFromPage } from 'c/navigationUtils';
@@ -28,6 +30,8 @@ import NewContact from '@salesforce/label/c.csp_CreateNewContact';
 import NoAccount from '@salesforce/label/c.CSP_NoAccount';
 import CSP_Branch_Offices from '@salesforce/label/c.CSP_Branch_Offices';
 import ISSP_Contacts from '@salesforce/label/c.ISSP_Contacts';
+import ISSP_Assign_IFAP from '@salesforce/label/c.ISSP_Assign_IFAP';
+
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -91,6 +95,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track searchValue;
 
     @track showEdit = true;
+    @track showIFAPBtn = false;
     // ------------------- //
 
 
@@ -99,7 +104,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts };
+    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -156,10 +161,11 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         });
 
-        canEditBasics().then(result =>{
-            this.editBasics = result;
+        
+        isAdminAndIATAAgencyAcct().then(result => {
+            this.showIFAPBtn = result;
         });
-
+        
         getLoggedUser().then(result => {
             this.loggedUser = JSON.parse(JSON.stringify(result));
             this.objectid = this.loggedUser.Contact.AccountId;
@@ -678,6 +684,12 @@ export default class PortalCompanyProfilePage extends LightningElement {
         }
 
 
+    }
+
+    navigateToIFAP() { 
+        goToOldIFAP({hasContact : false}).then(results => {
+            window.open(results, "_self");
+        });
     }
 
     get tab0Active() { return this.lstTabs[0] != null && this.lstTabs[0].active; }
