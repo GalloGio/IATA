@@ -63,6 +63,7 @@ public class IEC_EventRelease_Svc
         for(IEC_Event_Release__c release : releases)
         {
             if (!setEventToSkip.contains(release.Id))
+
                 if(!unitPriceByProductId.containsKey(release.Last_Version__c) && !unitPriceByProductId.containsKey(release.Swapped_Product__c))
                 {
                     String msg = (release.Swapped_Product__c != null)

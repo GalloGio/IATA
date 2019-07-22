@@ -269,20 +269,12 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 	@isTest static void chinaConversionHideStagingAreaTest(){
 
-		Case c = 
-			[SELECT 
-				Id, 
-				OSCAR__c 
-			 FROM 
-			 	Case 
-			 WHERE 
-			 	Oscar__c IN 
-			 		(SELECT 
-			 			Id
-			 		 FROM 
-			 		 	AMS_OSCAR__c
-			 		 WHERE 
-			 		 	AMS_Online_Accreditation__c != ''
+		Case c = [SELECT Id, OSCAR__c 
+			 	FROM Case 
+			 	WHERE Oscar__c IN 
+                  	(SELECT Id
+			 		 FROM AMS_OSCAR__c
+			 		 WHERE AMS_Online_Accreditation__c != ''
 			 		) 
 			 LIMIT 1];
 
@@ -291,18 +283,18 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 		oscar.id = c.OSCAR__c;
 		oscar.Process__c = AMS_Utils.NGCHINACONVERSION;
 		
-		update oscar;
-		
-		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
-		pg.getParameters().put('id', c.Id);
-		Test.setCurrentPage(pg);
-		
-		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
-
-        System.assert(!controller.isChangeOfLocation, 'Should not be a change of location');
-
-		System.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
-
+        Test.startTest();
+            update oscar;
+            
+            PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+            pg.getParameters().put('id', c.Id);
+            Test.setCurrentPage(pg);
+            
+            AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+    
+            System.assert(!controller.isChangeOfLocation, 'Should not be a change of location');
+            System.assert(!controller.showStagingArea, 'The staging area for China Conversions should be hidden');
+		Test.stopTest();
 	}
 
 	@isTest static void chinaConversionShowOscarOnGoingWarningTest(){

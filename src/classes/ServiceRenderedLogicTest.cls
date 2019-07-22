@@ -5,10 +5,12 @@ private class ServiceRenderedLogicTest {
         List<Case_Reason_Service__c> caseReasonServices = new List<Case_Reason_Service__c> {
             new Case_Reason_Service__c (Name ='myReason',
                                         Service__c ='CASS Participation',
-                                        Provider_Required__c = false),
+                                        Provider_Required__c = false,
+                                        Create_custom_service_rendered__c = true),
             new Case_Reason_Service__c (Name ='myReason2',
                                         Service__c ='BSP Representation',
-                                        Provider_Required__c = false)
+                                        Provider_Required__c = false,
+                                        Create_custom_service_rendered__c = true)
         };
         
         insert caseReasonServices;                                                                          

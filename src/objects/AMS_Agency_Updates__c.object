@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>ANG_Account_Portal_Service__c</fullName>
         <description>Technical field to define the value to add on eventType parameter in mulesoft request</description>
