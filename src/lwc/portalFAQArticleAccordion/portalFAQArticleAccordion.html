@@ -24,14 +24,18 @@
                     </div>
                     
                     <!-- FEEDBACK -->
-                    <div if:false={article.feedback} class="slds-m-vertical_x-large slds-p-around_large WarningRectangle">
+                    <div if:false={article.feedback} class="slds-m-vertical_x-large slds-p-horizontal_x-large slds-p-vertical_medium WarningRectangle">
                         <lightning-layout horizontal-align="spread">
-                            <lightning-layout-item class="text-bold">
+                            <lightning-layout-item class="text-bold text-xsmall text-darkGray slds-p-vertical_x-small">
                                 {label.CSP_ArticleHelpful}
                             </lightning-layout-item>
-                            <lightning-layout-item class="cursorPointer"> 
-                                <lightning-icon class="slds-p-around_x-small" icon-name="utility:up" size="x-small" onclick={feedbackStatus} data-item={article.id} data-title={article.label} data-number={article.number} data-option="true"></lightning-icon>
-                                <lightning-icon class="slds-p-around_x-small" icon-name="utility:down" size="x-small" onclick={renderModal} data-item={article.id} data-title={article.label} data-number={article.number} data-option="false"></lightning-icon>
+                            <lightning-layout-item class="cursorPointer slds-p-vertical_xx-small">
+                                <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:up" size="small"
+                                    onclick={feedbackStatus} data-item={article.id} data-title={article.label}
+                                    data-number={article.number} data-option="true"></lightning-icon>
+                                <lightning-icon class="slds-p-around_xx-small cursorPointerColor slds-current-color" icon-name="utility:down" size="small"
+                                    onclick={renderModal} data-item={article.id} data-title={article.label}
+                                    data-number={article.number} data-option="false"></lightning-icon>
                             </lightning-layout-item>
                         </lightning-layout>
                     </div>
