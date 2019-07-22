@@ -465,7 +465,13 @@ public class ANG_RHCHelper {
 					RiskInformationUpdateWrapper riuw = new RiskInformationUpdateWrapper();
 					riuw.contactId = contactId;
 					riuw.accountId = accountId;
-					riuw.riskStatus = rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c;
+
+					riuw.riskStatus = '';
+					
+					if(rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c != NULL){
+						riuw.riskStatus = rhc.ANG_AccountId__r.ANG_HE_RiskStatus__c;
+					}
+
 					riuw.cashConditions = rhc.ANG_AccountId__r.ANG_HE_CashCondition__c ? 'Yes' : 'No';
 					riuw.currencyIsoCode = rhc.CurrencyIsoCode;
 
