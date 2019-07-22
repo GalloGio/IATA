@@ -7608,7 +7608,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> getOwnersFromMainLegalEntity() {
         if (isHOAccredited) {
-            return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_ACC, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
+            if (newForm.Same_Legal_Entity_Agency_Account__c != null) {
+                return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_ACC, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, ''));
+            } else {
+                return new List<AMS_Accreditation_Contact__c>();
+            }
         } else {
             return executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_NA, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c));
         }
