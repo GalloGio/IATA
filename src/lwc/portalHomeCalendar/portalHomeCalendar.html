@@ -1,0 +1,122 @@
+<template >
+
+    <div if:true={showCalendar}>
+        <c-portal-custom-card-container body-without-margins>
+
+            <span slot="cardTitle">
+                {label.CSP_OperationalCalendar_HomeTileTitle}
+            </span>
+
+            <span slot="cardButton">
+                <lightning-button variant="base" 
+                    label={label.CSP_OperationalCalendar_SeeMonthlyLink} 
+                    title={label.CSP_OperationalCalendar_SeeMonthlyLink}
+                    icon-name="utility:forward" 
+                    icon-position="right" 
+                    onclick={goToOldPortalCalendarJS}
+                    class="slds-p-right_small blueCustomButtonLink">
+                </lightning-button>
+            </span>
+
+            <span slot="cardBody">
+                <div class="text-gray cardBodyContent">
+                    <div if:true={loading} class="spinnerContainer" >
+                        <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                    </div>
+                    <div if:false={loading}>
+                        <div if:true={showCalendar} class="cardBodyContent">
+                            <div class="slds-m-horizontal_x-large">
+                                <div class="slds-m-top_large slds-m-bottom_medium slds-grid slds-wrap text-xxsmall">
+                                    <div class="slds-size_10-of-12">
+                                        {currentViewingMonth.monthName}, {currentViewingMonth.monthYear}
+                                    </div>
+                                    <div class="slds-size_1-of-12" >
+                                        <a onclick={previousWeek}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" alternative-text="previous month" size="xx-small" > </lightning-icon></a>
+                                    </div>
+                                    <div class="slds-size_1-of-12" >
+                                        <a onclick={nextWeek}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" alternative-text="previous month" size="xx-small"> </lightning-icon></a>
+                                    </div>
+                                </div>
+        
+                                <div class="slds-m-vertical_medium bottomLightGrayBorder"></div>
+        
+                                <div class="slds-grid slds-wrap slds-text-align_center text-xxsmall">
+                                    <div class="slds-col slds-size_1-of-7 weekdayBar">
+                                        {label.ISSP_Weekday_Short_Monday}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-7 weekdayBar">
+                                        {label.ISSP_Weekday_Short_Tuesday}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-7 weekdayBar">
+                                        {label.ISSP_Weekday_Short_Wednesday}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-7 weekdayBar">
+                                        {label.ISSP_Weekday_Short_Thursday}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-7 weekdayBar">
+                                        {label.ISSP_Weekday_Short_Friday}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-7 weekdayBar">
+                                        {label.ISSP_Weekday_Short_Saturday}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-7 weekdayBar">
+                                        {label.ISSP_Weekday_Short_Sunday}
+                                    </div>
+        
+                                    <template for:each={currentViewingWeek.lstDays} for:item="dayItem" for:index="index">
+                                        <div class="slds-col slds-size_1-of-7 dayBar" id={dayItem.dayNumber} key={dayItem.dayNumber} >
+                                            <div if:true={dayItem.isEmpty}>
+                                                &nbsp;
+                                            </div>
+                                            <div if:false={dayItem.isEmpty} class={dayItem.isSelectedClass} >
+                                                <div if:true={dayItem.isSelected} class="cursorPointer">
+                                                    <div class="slds-p-bottom_xx-small slds-align_absolute-center" >
+                                                        <div if:true={dayItem.isHighlighted} class="dayBoxSize selectedDay" data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                            {dayItem.dayNumber}
+                                                        </div>
+                                                        <div if:false={dayItem.isHighlighted} class="dayBoxSize" data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                            {dayItem.dayNumber}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div if:false={dayItem.isSelected}>
+                                                    <div class="slds-p-bottom_xx-small slds-align_absolute-center cursorPointer" >
+                                                        <div if:true={dayItem.isHighlighted} class="dayBoxSize selectedDay" data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                            {dayItem.dayNumber}
+                                                        </div>
+                                                        <div if:false={dayItem.isHighlighted} class="dayBoxSize selectedDayNotHighlighted" data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                            {dayItem.dayNumber}
+                                                        </div>
+                                                    </div>
+                                                </div>
+        
+                                                <template for:each={dayItem.lstEvents} for:item="event">
+                                                    <div key={event.className} class="eventClassNameContainer">
+                                                        <div class={event.className} title={event.title}>&nbsp;</div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+        
+                                </div>
+                            </div>
+                            <div if:true={viewEvents} class="slds-p-horizontal_x-large slds-p-vertical_medium lightGrayBackgorund eventsList" >
+                                <template for:each={lstEventsForCardFooter} for:item="eventTitle">
+                                    <div key={eventTitle.className}>
+                                        <span class={eventTitle.className} style="margin-right:8px;"></span>
+                                        {eventTitle.title}
+                                        <br/>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </span>
+
+        </c-portal-custom-card-container>
+    </div>
+    
+</template>

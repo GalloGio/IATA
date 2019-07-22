@@ -72,8 +72,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			'ACCOUNT' => ' Id in:objectIds',
 			'PORTAL_APPLICATION_RIGHT__C' => ' Contact__r.AccountId IN :objectIds AND Application_Name__c = \'IFAP\'',
 			'AMS_OSCAR__C' => ' Id =:oscarId',
-			'AMS_AGENCIES_HIERARCHY__C' => ' Id in (select Hierarchy__c  from AMS_AGENCIES_RELATIONHIP__C WHERE Child_Account__c in:objectIds or Parent_Account__c in:objectIds)',
-			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds ',
+			'AMS_AGENCIES_HIERARCHY__C' => ' Id in (select Hierarchy__c  from AMS_AGENCIES_RELATIONHIP__C WHERE Child_Account__c in:objectIds or Parent_Account__c in:objectIds or Child_Account__r.Top_Parent__c in :objectIds)',
+			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds or Child_Account__r.Top_Parent__c in :objectIds',
 			'ANG_RISK_ALERT__C' => 'ANG_Account__c in:objectIds'
 	};
 
@@ -293,18 +293,27 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		Set<Id> accountIds = new Set<Id>();
 		
-		Account acct = [Select Id, Location_Type__c, ParentId, ANG_Accreditation_Model__c from Account where Id =:accountOscar];
+		Account acct = [Select Id, Location_Type__c, ParentId, Top_Parent__c, ANG_Accreditation_Model__c from Account where Id =:accountOscar];
 		Id accountId = acct.Id;
+
+		String accountsQuery = 'SELECT Id FROM Account WHERE ';
 
 		Boolean isMulticountry = acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
-		if((isMulticountry && acct.Location_Type__c != AMS_Utils.GE) || 
-		   (!isMulticountry && !this.headLocationTypesSet.contains(acct.Location_Type__c))
-		){
-			accountId = acct.ParentId;
+		if(isMulticountry){
+			if(acct.Location_Type__c != AMS_Utils.GE){
+				accountId = acct.Top_Parent__c;
+			}
+			accountsQuery += 'Top_Parent__c = :accountId';
 		}
-		
-        for(Account acctToSearch: [Select Id from Account where ParentId =:accountId]){
+		else {
+			if(!this.headLocationTypesSet.contains(acct.Location_Type__c)){
+				accountId = acct.ParentId;
+			}
+			accountsQuery += 'ParentId = :accountId';
+		}
+
+        for(Account acctToSearch: Database.query(accountsQuery)){
 			accountIds.add(acctToSearch.Id);
         }
 	

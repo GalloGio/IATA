@@ -2739,4 +2739,27 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 
     }
 
+    public static Boolean assignFormOfPaymentStatus(Agency_Authorization__c aa, String pciCompliant){
+
+        Set<String> ccPciCompliantSet = new Set<String>{'Yes', 'Corporate Card'};
+
+        if(aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != 'Active' && ccPciCompliantSet.contains(pciCompliant)){
+            aa.Status__c = 'Active';
+            return true;
+        }
+
+        if(aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != 'Non-Active' && !ccPciCompliantSet.contains(pciCompliant)){
+            aa.Status__c = 'Non-Active';
+            return true;
+        }
+
+        if((aa.ANG_FormOfPayment_ID__c == 'CA' || aa.ANG_FormOfPayment_ID__c == 'EP') && aa.Status__c != 'Active'){
+            aa.Status__c = 'Active';
+            return true;
+        }
+
+        return false;
+
+    }
+
 }

@@ -57,7 +57,14 @@ private class ANG_MulticountryAgencyChangesTest {
         changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
         changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
 
-        insert new List<ANG_AgencyChangesConfig__c>{changeLocationType, changeLocationTypeDiffLegalEnt};
+		ANG_AgencyChangesConfig__c changeHierarchy = new ANG_AgencyChangesConfig__c();
+        changeHierarchy.Name = 'ChangeHierarchy';
+        changeHierarchy.TC_Hierarchy__c = true;
+        changeHierarchy.TCA_Sanity_check__c = 'CHH';
+        changeHierarchy.TCA_Manager_approval__c = 'HCF';
+        changeHierarchy.TCA_Application_withdrawal__c = 'CWD';
+
+        insert new List<ANG_AgencyChangesConfig__c>{changeLocationType, changeLocationTypeDiffLegalEnt, changeHierarchy};
 
        	AMS_ChangeCodes__c cadCode = new AMS_ChangeCodes__c(
        		Name = 'CAD',
@@ -98,24 +105,52 @@ private class ANG_MulticountryAgencyChangesTest {
        		Published_in_bulletin__c = true
        	);
 
-       	insert new List<AMS_ChangeCodes__c>{cadCode, cdlCode, cdfCode, cwdCode};
+       	AMS_ChangeCodes__c hcfCode = new AMS_ChangeCodes__c(
+       		Name = 'HCF',
+       		Account_status_change__c = '9;8',
+       		Change_Code__c = 'HCF',
+       		Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
+       		Reason_Code__c = '91',
+       		Integration_RecId__c = 'C',
+       		Class_Type__c = 'P'
+       	);
+
+       	AMS_ChangeCodes__c chhCode = new AMS_ChangeCodes__c(
+       		Name = 'CHH',
+       		Account_status_change__c = '8;9',
+       		Change_Code__c = 'CHH',
+       		Reason_Code_Description__c = 'CHANGE IN PROCESS',
+       		Reason_Code__c = '81',
+       		Integration_RecId__c = 'C'
+       	);
+
+       	insert new List<AMS_ChangeCodes__c>{cadCode, cdlCode, cdfCode, cwdCode, chhCode, hcfCode};
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
 			Name = 'BSP-PT',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'EUR'
 		);
 
 		AMS_Settlement_System__c bspGB = new AMS_Settlement_System__c(
 			Name = 'BSP-GB',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'EUR'
 		);
 
 		AMS_Settlement_System__c bspFR = new AMS_Settlement_System__c(
 			Name = 'BSP-FR',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'EUR'
 		);
 
-		insert new List<AMS_Settlement_System__c>{bspPT, bspGB, bspFR};
+		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
+			Name = 'BSP-SG',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'EUR'
+		);
+
+		insert new List<AMS_Settlement_System__c>{bspPT, bspGB, bspFR, bspSG};
 
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c();
 		
@@ -141,12 +176,19 @@ private class ANG_MulticountryAgencyChangesTest {
 		countryFR.AMS_Settlement_System__c = bspFR.Id;
 		countryFR.Multicountry_Enabled__c = true;
 
-		insert new List<IATA_ISO_Country__c>{countryPT, countryUK, countryFR};
+		IATA_ISO_Country__c countrySG = new IATA_ISO_Country__c();
+		
+		countrySG.Name = 'Singapore';
+		countrySG.ISO_Code__c = 'SG';
+		countrySG.ANG_Enable_NewGen__c = true;
+		countrySG.AMS_Settlement_System__c = bspSG.Id;
+		countrySG.Multicountry_Enabled__c = true;
+
+		insert new List<IATA_ISO_Country__c>{countryPT, countryUK, countryFR, countrySG};
 
 		Id agencyRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account accountGE = new Account();
-
 		accountGE.Name = 'Multicountry GE PT';
 		accountGE.Location_Type__c = AMS_Utils.GE;
 		accountGE.Location_Class__c = 'P';
@@ -157,7 +199,18 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountGE.Status__c = 'Approved';
 		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
-		insert accountGE;
+		Account accountUkGE_h2 = new Account();
+		accountUkGE_h2.Name = 'H2 - Multicountry GE UK';
+		accountUkGE_h2.Location_Type__c = AMS_Utils.GE;
+		accountUkGE_h2.Location_Class__c = 'P';
+		accountUkGE_h2.IATA_ISO_Country__c = countryUK.Id;
+		accountUkGE_h2.RecordTypeId = agencyRecTypeId;
+		accountUkGE_h2.IATACode__c = '22300099';
+		accountUkGE_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountUkGE_h2.Status__c = 'Approved';
+		accountUkGE_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;		
+
+		insert new List<Account>{accountGE, accountUkGE_h2};
 
 		Account accountUkHE = new Account();
 		accountUkHE.Name = 'Multicountry HE UK';
@@ -207,7 +260,43 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountAE_2.Status__c = 'Approved';
 		accountAE_2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
-		insert new List<Account>{accountUkHE, accountFrHE, accountAE, accountAE_2};
+		Account accountAeUk_h2 = new Account();
+		accountAeUk_h2.Name = 'H2 - Multicountry AE UK';
+		accountAeUk_h2.ParentId = accountUkGE_h2.Id;
+		accountAeUk_h2.Location_Type__c = AMS_Utils.AE;
+		accountAeUk_h2.Location_Class__c = 'P';
+		accountAeUk_h2.IATA_ISO_Country__c = countryUK.Id;
+		accountAeUk_h2.RecordTypeId = agencyRecTypeId;
+		accountAeUk_h2.IATACode__c = '22300095';
+		accountAeUk_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountAeUk_h2.Status__c = 'Approved';
+		accountAeUk_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		Account accountHePt_h2 = new Account();
+		accountHePt_h2.Name = 'H2 - Multicountry HE PT';
+		accountHePt_h2.ParentId = accountUkGE_h2.Id;
+		accountHePt_h2.Location_Type__c = AMS_Utils.HE;
+		accountHePt_h2.Location_Class__c = 'P';
+		accountHePt_h2.IATA_ISO_Country__c = countryPT.Id;
+		accountHePt_h2.RecordTypeId = agencyRecTypeId;
+		accountHePt_h2.IATACode__c = '32300095';
+		accountHePt_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountHePt_h2.Status__c = 'Approved';
+		accountHePt_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		Account accountHeSg_h2 = new Account();
+		accountHeSg_h2.Name = 'H2 - Multicountry HE SG';
+		accountHeSg_h2.ParentId = accountUkGE_h2.Id;
+		accountHeSg_h2.Location_Type__c = AMS_Utils.HE;
+		accountHeSg_h2.Location_Class__c = 'P';
+		accountHeSg_h2.IATA_ISO_Country__c = countrySG.Id;
+		accountHeSg_h2.RecordTypeId = agencyRecTypeId;
+		accountHeSg_h2.IATACode__c = '42300095';
+		accountHeSg_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountHeSg_h2.Status__c = 'Approved';
+		accountHeSg_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		insert new List<Account>{accountUkHE, accountFrHE, accountAE, accountAE_2, accountAeUk_h2, accountHePt_h2, accountHeSg_h2};
 
 		Account accountUkAE = new Account();
 		accountUkAE.Name = 'Multicountry AE UK';
@@ -257,10 +346,36 @@ private class ANG_MulticountryAgencyChangesTest {
 		accountFrAE_2.Status__c = 'Approved';
 		accountFrAE_2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
-		insert new List<Account>{accountUkAE, accountUkAE_2, accountFrAE, accountFrAE_2};
+		Account accountAePt_h2 = new Account();
+		accountAePt_h2.Name = 'H2 - Multicountry AE PT';
+		accountAePt_h2.ParentId = accountHePt_h2.Id;
+		accountAePt_h2.Location_Type__c = AMS_Utils.AE;
+		accountAePt_h2.Location_Class__c = 'P';
+		accountAePt_h2.IATA_ISO_Country__c = countryPT.Id;
+		accountAePt_h2.RecordTypeId = agencyRecTypeId;
+		accountAePt_h2.IATACode__c = '22300091';
+		accountAePt_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountAePt_h2.Status__c = 'Approved';
+		accountAePt_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		Account accountAeSg_h2 = new Account();
+		accountAeSg_h2.Name = 'H2 - Multicountry AE SG';
+		accountAeSg_h2.ParentId = accountHeSg_h2.Id;
+		accountAeSg_h2.Location_Type__c = AMS_Utils.AE;
+		accountAeSg_h2.Location_Class__c = 'P';
+		accountAeSg_h2.IATA_ISO_Country__c = countrySG.Id;
+		accountAeSg_h2.RecordTypeId = agencyRecTypeId;
+		accountAeSg_h2.IATACode__c = '42300091';
+		accountAeSg_h2.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountAeSg_h2.Status__c = 'Approved';
+		accountAeSg_h2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		insert new List<Account>{accountUkAE, accountUkAE_2, accountFrAE, accountFrAE_2, accountAePt_h2, accountAeSg_h2};
 
         AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy');
-        insert hierarchy;
+		AMS_Agencies_Hierarchy__c hierarchy_h2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy H2');
+		
+        insert new List<AMS_Agencies_Hierarchy__c>{hierarchy, hierarchy_h2};
         
         List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
 
@@ -272,6 +387,12 @@ private class ANG_MulticountryAgencyChangesTest {
 	    rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountUkHE.Id, Is_Newgen_Relation__c = true));
         rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountAE.Id, Is_Newgen_Relation__c = true));
         rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = accountGE.Id, Child_Account__c = accountAE_2.Id, Is_Newgen_Relation__c = true));
+        
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountUkGE_h2.Id, Child_Account__c = accountAeUk_h2.Id, Is_Newgen_Relation__c = true));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountUkGE_h2.Id, Child_Account__c = accountHePt_h2.Id, Is_Newgen_Relation__c = true));
+		rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountUkGE_h2.Id, Child_Account__c = accountHeSg_h2.Id, Is_Newgen_Relation__c = true));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountHePt_h2.Id, Child_Account__c = accountAePt_h2.Id, Is_Newgen_Relation__c = true));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy_h2.Id, Parent_Account__c = accountHeSg_h2.Id, Child_Account__c = accountAeSg_h2.Id, Is_Newgen_Relation__c = true));
         
         insert rels;
 
@@ -292,7 +413,17 @@ private class ANG_MulticountryAgencyChangesTest {
 			ANG_RME_Amount__c = 100
 		);
 
-        insert rhcInfoForGE;
+		ANG_RHC_Information__c rhcInfoForGE_h2 = new ANG_RHC_Information__c(
+        	ANG_AccountId__c = accountUkGE_h2.Id,
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+			ANG_Financial_Security__c = 0,
+			ANG_RHC_Amount_Equals_FS__c = true,
+			ANG_RHC_Amount__c = 15,
+			ANG_RME_Amount__c = 100
+		);
+
+        insert new List<ANG_RHC_Information__c>{rhcInfoForGE, rhcInfoForGE_h2};
 
 		Test.stopTest();
 
@@ -385,16 +516,16 @@ private class ANG_MulticountryAgencyChangesTest {
 
 	} 
 
-	private static void assertAllHierarchy(Map<String,String> expectedHierarchyByNames, Id acctId){
+	private static void assertAllHierarchy(Map<String,String> expectedHierarchyByIataCode, Account acct){
 		
-		Map<Id, List<AMS_Agencies_relationhip__c>> relationsLst = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acctId});
+		Map<Id, List<AMS_Agencies_relationhip__c>> relationsLst = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acct.Id});
 
-		for(AMS_Agencies_relationhip__c rel : relationsLst.get(acctId)){
-			system.assert(expectedHierarchyByNames.get(rel.Child_Account__r.Name) == rel.Parent_Account__r.Name);
+		for(AMS_Agencies_relationhip__c rel : relationsLst.get(acct.Id)){
+			system.assert(expectedHierarchyByIataCode.get(rel.Child_Account__r.IATACode__c) == rel.Parent_Account__r.IATACode__c);
 		}
 
-		for(Account acc : [SELECT Id, Name, Parent.Name FROM Account WHERE ParentId != NULL]){
-			system.assert(expectedHierarchyByNames.get(acc.Name) == acc.Parent.Name);
+		for(Account acc : [SELECT Id, Name, IATACode__c, Parent.IATACode__c FROM Account WHERE ParentId != NULL AND Top_Parent__c = :acct.Top_Parent__c]){
+			system.assert(expectedHierarchyByIataCode.get(acc.IATACode__c) == acc.Parent.IATACode__c);
 		}
 
 	}
@@ -434,11 +565,13 @@ private class ANG_MulticountryAgencyChangesTest {
 		Account acct = 
 			[SELECT 
 				Id, 
-				Name, 
+				Name,
+				IATACode__c, 
 				IATA_ISO_Country__c, 
 				Iso_State__c, 
 				Location_Class__c, 
-				Location_Type__c
+				Location_Type__c,
+				Top_Parent__c
 			 FROM 
 			 	Account 
 			 WHERE 
@@ -484,19 +617,19 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.stopTest();
 		
-		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
-			'Multicountry GE PT' => 'Multicountry AE PT',
-			'Multicountry AE PT 2' => 'Multicountry AE PT',
-			'Multicountry HE FR' => 'Multicountry AE PT',
-			'Multicountry HE UK' => 'Multicountry AE PT',
-			'Multicountry AE FR' => 'Multicountry HE FR',
-			'Multicountry AE FR 2' => 'Multicountry HE FR',
-			'Multicountry AE UK' => 'Multicountry HE UK',
-			'Multicountry AE UK 2' => 'Multicountry HE UK'
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300099' => '12300096',
+			'12300095' => '12300096',
+			'12300097' => '12300096',
+			'12300098' => '12300096',
+			'12300092' => '12300097',
+			'12300091' => '12300097',
+			'12300094' => '12300098',
+			'12300093' => '12300098'
 		};
 
 		assertChangeCodes(oscar.Id, 'CAD', accountsInvolvedSet);
-		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
 
 	}
 
@@ -511,11 +644,13 @@ private class ANG_MulticountryAgencyChangesTest {
 			[SELECT 
 				Id, 
 				Name, 
+				IATACode__c,
 				IATA_ISO_Country__c, 
 				IATA_ISO_Country__r.AMS_Settlement_System__c,
 				Iso_State__c, 
 				Location_Class__c, 
-				Location_Type__c
+				Location_Type__c,
+				Top_Parent__c
 			 FROM 
 			 	Account 
 			 WHERE 
@@ -561,19 +696,19 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.stopTest();
 		
-		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
-			'Multicountry AE PT' => 'Multicountry GE PT',
-			'Multicountry AE PT 2' => 'Multicountry GE PT',
-			'Multicountry HE FR' => 'Multicountry GE PT',
-			'Multicountry AE UK' => 'Multicountry GE PT',
-			'Multicountry AE FR' => 'Multicountry HE FR',
-			'Multicountry AE FR 2' => 'Multicountry HE FR',
-			'Multicountry HE UK' => 'Multicountry AE UK',
-			'Multicountry AE UK 2' => 'Multicountry AE UK'
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300096' => '12300099',
+			'12300095' => '12300099',
+			'12300097' => '12300099',
+			'12300094' => '12300099',
+			'12300092' => '12300097',
+			'12300091' => '12300097',
+			'12300098' => '12300094',
+			'12300093' => '12300094'
 		};
 		
 		assertChangeCodes(oscar.Id, 'CAD', accountsInvolvedSet);
-		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
 
 	}
 
@@ -588,11 +723,13 @@ private class ANG_MulticountryAgencyChangesTest {
 			[SELECT 
 				Id, 
 				Name, 
+				IATACode__c,
 				IATA_ISO_Country__c, 
 				IATA_ISO_Country__r.AMS_Settlement_System__c,
 				Iso_State__c, 
 				Location_Class__c, 
-				Location_Type__c
+				Location_Type__c,
+				Top_Parent__c
 			 FROM 
 			 	Account 
 			 WHERE 
@@ -643,19 +780,19 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.stopTest();
 		
-		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
-			'Multicountry GE PT' => 'Multicountry AE PT',
-			'Multicountry AE PT 2' => 'Multicountry AE PT',
-			'Multicountry HE FR' => 'Multicountry AE PT',
-			'Multicountry HE UK' => 'Multicountry AE PT',
-			'Multicountry AE FR' => 'Multicountry HE FR',
-			'Multicountry AE FR 2' => 'Multicountry HE FR',
-			'Multicountry AE UK' => 'Multicountry HE UK',
-			'Multicountry AE UK 2' => 'Multicountry HE UK'
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300099' => '12300096',
+			'12300095' => '12300096',
+			'12300097' => '12300096',
+			'12300098' => '12300096',
+			'12300092' => '12300097',
+			'12300091' => '12300097',
+			'12300094' => '12300098',
+			'12300093' => '12300098'
 		};
 		
 		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
-		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
 
 	}
 
@@ -670,11 +807,13 @@ private class ANG_MulticountryAgencyChangesTest {
 			[SELECT 
 				Id, 
 				Name, 
+				IATACode__c,
 				IATA_ISO_Country__c, 
 				IATA_ISO_Country__r.AMS_Settlement_System__c,
 				Iso_State__c, 
 				Location_Class__c, 
-				Location_Type__c
+				Location_Type__c,
+				Top_Parent__c
 			 FROM 
 			 	Account 
 			 WHERE 
@@ -725,19 +864,19 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.stopTest();
 		
-		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
-			'Multicountry AE PT' => 'Multicountry GE PT',
-			'Multicountry AE PT 2' => 'Multicountry GE PT',
-			'Multicountry AE FR' => 'Multicountry GE PT',
-			'Multicountry HE UK' => 'Multicountry GE PT',
-			'Multicountry HE FR' => 'Multicountry AE FR',
-			'Multicountry AE FR 2' => 'Multicountry AE FR',
-			'Multicountry AE UK' => 'Multicountry HE UK',
-			'Multicountry AE UK 2' => 'Multicountry HE UK'
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300096' => '12300099',
+			'12300095' => '12300099',
+			'12300092' => '12300099',
+			'12300098' => '12300099',
+			'12300097' => '12300092',
+			'12300091' => '12300092',
+			'12300094' => '12300098',
+			'12300093' => '12300098'
 		};
 		
 		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
-		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
 
 	}
 
@@ -752,11 +891,13 @@ private class ANG_MulticountryAgencyChangesTest {
 			[SELECT 
 				Id, 
 				Name, 
+				IATACode__c,
 				IATA_ISO_Country__c, 
 				IATA_ISO_Country__r.AMS_Settlement_System__c,
 				Iso_State__c, 
 				Location_Class__c, 
-				Location_Type__c
+				Location_Type__c,
+				Top_Parent__c
 			 FROM 
 			 	Account 
 			 WHERE 
@@ -807,19 +948,19 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.stopTest();
 		
-		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
-			'Multicountry GE PT' => 'Multicountry AE UK',
-			'Multicountry AE PT 2' => 'Multicountry GE PT',
-			'Multicountry AE PT' => 'Multicountry GE PT',
-			'Multicountry HE FR' => 'Multicountry AE UK',
-			'Multicountry AE FR' => 'Multicountry HE FR',
-			'Multicountry AE FR 2' => 'Multicountry HE FR',
-			'Multicountry HE UK' => 'Multicountry AE UK',
-			'Multicountry AE UK 2' => 'Multicountry AE UK'
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300099' => '12300094',
+			'12300095' => '12300099',
+			'12300096' => '12300099',
+			'12300097' => '12300094',
+			'12300092' => '12300097',
+			'12300091' => '12300097',
+			'12300098' => '12300094',
+			'12300093' => '12300094'
 		};
 		
 		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
-		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
 
 	}
 
@@ -834,11 +975,13 @@ private class ANG_MulticountryAgencyChangesTest {
 			[SELECT 
 				Id, 
 				Name, 
+				IATACode__c,
 				IATA_ISO_Country__c, 
 				IATA_ISO_Country__r.AMS_Settlement_System__c,
 				Iso_State__c, 
 				Location_Class__c, 
-				Location_Type__c
+				Location_Type__c,
+				Top_Parent__c
 			 FROM 
 			 	Account 
 			 WHERE 
@@ -889,19 +1032,19 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.stopTest();
 		
-		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
-			'Multicountry GE PT' => 'Multicountry HE FR',
-			'Multicountry AE PT 2' => 'Multicountry GE PT',
-			'Multicountry AE PT' => 'Multicountry GE PT',
-			'Multicountry HE UK' => 'Multicountry HE FR',
-			'Multicountry AE FR' => 'Multicountry HE FR',
-			'Multicountry AE FR 2' => 'Multicountry HE FR',
-			'Multicountry AE UK' => 'Multicountry HE UK',
-			'Multicountry AE UK 2' => 'Multicountry HE UK'
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300099' => '12300097',
+			'12300095' => '12300099',
+			'12300096' => '12300099',
+			'12300098' => '12300097',
+			'12300092' => '12300097',
+			'12300091' => '12300097',
+			'12300094' => '12300098',
+			'12300093' => '12300098'
 		};
 		
 		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
-		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
 
 	}
 
@@ -919,6 +1062,7 @@ private class ANG_MulticountryAgencyChangesTest {
 			[SELECT 
 				Id, 
 				Name, 
+				IATACode__c,
 				IATA_ISO_Country__c, 
 				IATA_ISO_Country__r.AMS_Settlement_System__c,
 				Iso_State__c, 
@@ -1037,4 +1181,218 @@ private class ANG_MulticountryAgencyChangesTest {
 		
 		Test.stopTest();
 	}
+
+	@isTest static void changeOfEntireMulticountryHierarchyTest(){
+
+		List<Account> acctLst = new List<Account>( 
+			[SELECT 
+				Id, 
+				Name, 
+				IATACode__c,
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c,
+				Top_Parent__c
+			 FROM 
+			 	Account 
+			 WHERE
+			 	Location_Type__c = :AMS_Utils.GE
+			]
+		);
+
+		Account acct0 = acctLst.get(0);
+		Account acct1 = acctLst.get(1);
+
+		Account acct = acct0.Name.contains('H2') ? acct0: acct1;
+		Account newParentAcct = acct0.Name.contains('H2') ? acct1: acct0;
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			accountsInvolvedSet.add(item.acc.Id);
+			item.selected = true;			
+		}
+
+		con.oscar.New_Parent__c = newParentAcct.Id;
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		con.save();
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Change_effective_as_of__c = System.today();
+
+		update oscar;
+
+		assertChangeCodes(oscar.Id, 'CHH', accountsInvolvedSet);
+
+		oscar.STEP2__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+		
+		assertChangeCodes(oscar.Id, 'HCF', accountsInvolvedSet);
+
+		acct = [SELECT Id, IATACode__c, Top_Parent__c FROM Account WHERE Id = :acct.Id];
+
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300095' => '12300099',
+			'12300096' => '12300099',
+			'12300097' => '12300099',
+			'12300092' => '12300097',
+			'12300091' => '12300097',
+			'12300098' => '12300099',
+			'12300094' => '12300098',
+			'12300093' => '12300098',
+			'22300099' => '12300098',
+			'22300095' => '12300098',
+			'32300095' => '12300099',
+			'22300091' => '12300099',
+			'42300095' => '12300099',
+			'42300091' => '42300095'
+		};
+		
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
+
+	}
+
+	@isTest static void changeOfMulticountryHierarchySplitTest(){
+		
+		Set<String> iataCodesToSelectSet = new Set<String>{
+			'12300097',
+			'12300094',
+			'12300093',
+			'12300092',
+			'12300091'
+		};
+
+		List<Account> acctLst = new List<Account>( 
+			[SELECT 
+				Id, 
+				Name, 
+				IATACode__c,
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c,
+				Top_Parent__c
+			 FROM 
+			 	Account 
+			 WHERE
+			 	IATACode__c IN :iataCodesToSelectSet
+			]
+		);
+	
+		Id formOfPaymentRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+
+		Account acct = null;
+		
+		List<Agency_Authorization__c> authorizationLst = new List<Agency_Authorization__c>();
+
+		for(Account acc : acctLst){
+
+			if(acc.IATACode__c == '12300094'){
+				acct = acc;
+			}
+
+			Agency_Authorization__c fopCC = new Agency_Authorization__c(
+				Account__c = acc.Id, 
+				ANG_FormOfPayment_ID__c = 'CC', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRecId
+			);	
+								
+			Agency_Authorization__c fopCA = new Agency_Authorization__c(
+				Account__c = acc.Id, 
+				ANG_FormOfPayment_ID__c = 'CA', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRecId
+			);	
+								
+			Agency_Authorization__c fopEP = new Agency_Authorization__c(
+				Account__c = acc.Id, 
+				ANG_FormOfPayment_ID__c = 'EP', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRecId
+			);
+
+			authorizationLst.add(fopCC);
+			authorizationLst.add(fopCA);
+			authorizationLst.add(fopEP);	
+
+		}
+
+		insert authorizationLst;
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(iataCodesToSelectSet.contains(item.acc.IATACode__c)){
+				accountsInvolvedSet.add(item.acc.Id);
+				item.selected = true;	
+			}		
+		}
+
+		con.oscar.New_Parent__c = acct.Id;
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		con.save();
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Change_effective_as_of__c = System.today();
+
+		update oscar;
+
+		assertChangeCodes(oscar.Id, 'CHH', accountsInvolvedSet);
+
+		oscar.STEP2__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+		
+		assertChangeCodes(oscar.Id, 'HCF', accountsInvolvedSet);
+
+		Map<String,String> expectedHierarchyByIataCodes = new Map<String, String>{
+			'12300093' => '12300094',
+			'12300097' => '12300094',
+			'12300092' => '12300097',
+			'12300091' => '12300097'
+		};
+		
+		acct = [SELECT Id, IATACode__c, Top_Parent__c FROM Account WHERE ParentId = :acct.Id][0];
+
+		assertAllHierarchy(expectedHierarchyByIataCodes, acct);
+
+	}
+
 }
