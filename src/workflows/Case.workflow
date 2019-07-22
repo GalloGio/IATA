@@ -8651,7 +8651,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>CNS Case Send Email When Deadline Date Is Reached</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Send email when Deadline Date Is reached for CNS cases.</description>
         <formula>SAAM_Deadline_Date__c ==  TODAY()</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
