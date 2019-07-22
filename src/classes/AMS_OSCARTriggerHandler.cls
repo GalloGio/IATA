@@ -1012,7 +1012,7 @@ public class AMS_OSCARTriggerHandler {
 
         //Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
         /*** AMSU-121 ***/
-        allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscars) : allOnlineAccr;
+        allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
         Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations2(oscarOnlineAccredIds, allOnlineAccr);
 
         //Here we will save the accounts that will suffer ownership changes
@@ -3050,7 +3050,7 @@ public class AMS_OSCARTriggerHandler {
                 
                 /*** AMSU-166 ***/
                 if(oscar.Process__c == AMS_Utils.COR || oscar.Process__c == AMS_Utils.AGENCYCHANGES) {
-                    allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscars) : allOnlineAccr;
+                    allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
                     List<String> errorMessages = AMS_Utils.validateCharacters(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c), AMS_Utils.STAGING_AREA_FIELDS_TO_VALIDATE);
                     if(!errorMessages.isEmpty()) {
                         oscar.addError(String.join(errorMessages, '\n'));
@@ -3063,7 +3063,7 @@ public class AMS_OSCARTriggerHandler {
                 Boolean isCorrection = oscar.Process__c == AMS_Utils.COR;
                 Boolean isChangeOfLocation = oscar.Process__c == AMS_Utils.AGENCYCHANGES && String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c.contains(AMS_Utils.Location);               
                 if(isNewAccreditaion || isCorrection || isChangeOfLocation || isNewgenAccreditation) { //ENHC0012583 (|| isNewgenAccreditation)
-                	allOnlineAccr = (allOnlineAccr == null || allOnlineAccr.isEmpty()) ? getAllAccreditations(oscars) : allOnlineAccr;
+                	allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
                 	validateShippingAddress(oscar, allOnlineAccr);
                     validateBillingAddress(oscar, allOnlineAccr);
                 }
