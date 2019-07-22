@@ -17185,6 +17185,20 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Aggregator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Aggregator</shortDescription>
+        <value>Aggregator (If applicable)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Aggregator_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Aggregator_Info</shortDescription>
+        <value>Please indicate the travel content aggregator name, if applicable.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_Alternatively</fullName>
         <language>en_US</language>
         <protected>false</protected>
