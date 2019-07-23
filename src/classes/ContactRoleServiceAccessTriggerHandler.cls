@@ -213,7 +213,7 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
         Set<Id> contactIds = new Set<Id>();
 
         for(Contact_Role_Service_Access__c access : enrichObjects) {
-            if(access.Contact_Role__r.Service_Rendered__c == 'GADM' && access.Contact_Role__r.Contact_Roles__r.name == 'GADM Data Submitter' && access.Status__c == 'Granted') {
+            if(access.Contact_Role__r.Service_Rendered__c == 'GADM' && access.Contact_Role__r.Contact_Roles__r.name == 'GADM Data Consumer' && access.Status__c == 'Granted') {
                 contactIds.add(access.Contact_Role__r.Contact__c);
             }
         }
@@ -286,7 +286,7 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
             List<Contact_Role_Service_Access__c> enrichObjects = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Service_Rendered__c FROM Contact_Role_Service_Access__c WHERE Id = :newObjectsIds];
 
             for(Contact_Role_Service_Access__c access : enrichObjects) {
-                if(access.Contact_Role__r.Service_Rendered__c == 'GADM' && access.Contact_Role__r.Contact_Roles__r.Name == 'GADM Data Submitter') {
+                if(access.Contact_Role__r.Service_Rendered__c == 'GADM' && access.Contact_Role__r.Contact_Roles__r.Name == 'GADM Data Consumer') {
                     contactIds.add(access.Contact_Role__r.Contact__c);
                 }
             }

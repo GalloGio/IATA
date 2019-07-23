@@ -28,7 +28,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
     }
 
     private static Map<Id, List<Data_Submission__c>> getDataSubmissions(Map<Id, List<Id>> inDuePeriodsWithAccounts, Map<Id, SubmissionPeriodCurrentData> periods){
-        string query = 'SELECT Id, Account__c, CreatedDate FROM Data_Submission__c WHERE';
+        string query = 'SELECT Id, Account__c, CreatedDate FROM Data_Submission__c WHERE (Status__c = \'File processed\' OR Status__c = \'Accepted for Processing\' OR Status__c = \'Submitted\')';
         boolean useQuery = false;
         List<string> filters = new List<string>();
         for(Id periodId: inDuePeriodsWithAccounts.keySet()){
