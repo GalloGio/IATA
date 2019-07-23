@@ -634,7 +634,7 @@
                             </apex:actionFunction>
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
-                            <apex:actionFunction name="reRenderAccountsNoc" reRender="branchaccountsel"/>
+                            <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions"/>
 
 
@@ -778,11 +778,11 @@
                                                     <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}"/>
                                                         
-                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(NOT(isMCNewAEAccredited), OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_All_Branches_MC, $Label.ISSP_AMS_NoC_HE_All_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
                                                         
-                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(NOT(isMCNewAEAccredited), OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_HE_Some_Branches_MC, $Label.ISSP_AMS_NoC_HE_Some_Branches)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
                                                         
-                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(NOT(isMCNewAEAccredited), OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
+                                                        <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!IF(AND(isMCNewAEAccredited, isNoticeOfChange), $Label.ISSP_AMS_NoC_Associate_Entity_MC, $Label.ISSP_AMS_NoC_Associate_Entity)}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCNewAEAccredited)), AND(isMCNewAEAccredited, branchAccountCount > 0))}"/>
                                                     </apex:selectRadio>
 
                                                 </apex:outputPanel>
