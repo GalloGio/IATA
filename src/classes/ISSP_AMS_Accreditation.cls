@@ -1366,13 +1366,19 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getBranchAccounts() {
+        
         List<SelectOption> options = new List<SelectOption>();
+        List <Account> accountList = new List<Account>();
 
         if (isMCNewAEAccredited && isNoticeOfChange) {
             agencyCodesConcerned = new List<SelectOption>();
         }
 
-        for (Account thisAccount: getBranchList(false)) {
+        for(HierarchyItem hi:  hierarchyValues){
+                accountList.add(hi.acc);
+        }
+
+        for (Account thisAccount: accountList) {
             branchAccountCount++;
 
             if (isMCNewAEAccredited && isNoticeOfChange && thisAccount.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
@@ -1396,8 +1402,17 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getAgencyCodesConcerned() {
-        List<Account> accountList;
+        List<Account> accountList = new List<Account>();
         List<SelectOption> options = new List<SelectOption>();
+
+        //SYSTEM.DEBUG('SPLIT size: ' + newForm.Agency_Codes_Concerned__c.split(',').size());
+        if(hierarchyValues.size() > 0){
+            for(HierarchyItem hi:  hierarchyValues){
+                if(hi.selected){
+                    accountList.add(hi.acc);
+                }
+            }
+        }
 
         if(newForm.Agency_Codes_Concerned__c != null) {
             accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
@@ -1921,7 +1936,9 @@ public without sharing class ISSP_AMS_Accreditation {
         } else { //This is a NoC
             Boolean changeOfAccountConcerned = false;
 
-            changeOfAccountConcerned = false;
+            if(agencyCodesConcerned.size()==0){
+                agencyCodesConcerned = getAgencyCodesConcerned();
+            }
 
             if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
@@ -7714,4 +7731,145 @@ public without sharing class ISSP_AMS_Accreditation {
 
         return new Pagereference(pageURL);
     }
+
+    //Select Hierarchy
+
+    public Map<Id, HierarchyItem> hierarchy{
+        get{
+            if(hierarchy == null) {
+                hierarchy = new Map<Id, HierarchyItem>();
+
+                Set<Id> accountIds = new Set<Id>();
+                accountIds.add(vHQAccountId);       
+                
+                List<Account> acc = getBranchList(false);
+                for(Account a : acc){
+                    Boolean isSelected = false;
+                    hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
+                }                           
+            }
+            return hierarchy;
+        }
+        set;
+    }    
+
+    public Boolean selectAll{
+        get{
+            if(selectAll == null) selectAll = false;
+            return selectAll;
+        }
+        set;
+    }
+
+    public List<HierarchyItem> hierarchyValues{
+        get{
+            return hierarchy.values();
+        }
+    }
+
+    private Integer rowsPerPage = 100;
+
+    public Integer currentPage{
+        get{
+            if(currentPage == null){
+                currentPage = 0;
+            }
+            return currentPage;
+        }
+        set;
+    }
+    
+    public Integer totalPages{
+        get{
+            return hierarchyValuesForDisplay.size();
+        }
+    }
+    
+    public List<List<HierarchyItem>> hierarchyValuesForDisplay{
+        get{
+            if(hierarchyValuesForDisplay == null){
+                hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
+
+                // create as many sub-lists as necessary
+                for(Integer i = 0; i <= (hierarchy.values().size()-1)/rowsPerPage; i++){
+                    hierarchyValuesForDisplay.add(new List<HierarchyItem>());
+                }
+
+                // fill HierarchyItems in the sub-lists
+                Integer itemNumber = 0;
+                for(HierarchyItem item : hierarchy.values()){
+                    hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
+                }
+            }
+            System.debug(loggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
+            return hierarchyValuesForDisplay;
+        }
+        set;
+    }
+
+    // ***********************************
+    // ********** constructor ************
+    // ***********************************
+    /*public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
+        if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
+
+        oscarId = stdController.getId();
+        oscar = (AMS_OSCAR__c)stdController.getRecord();
+    }*/
+
+
+    // ***********************************
+    // *********** wrappers **************
+    // ***********************************
+    public class HierarchyItem{
+
+        public Account acc { get; set; }
+        public Boolean selected { get; set; }
+
+        public HierarchyItem(Account a, Boolean selected){
+            this.acc = a;
+            this.selected = selected;
+        }
+    }
+
+
+    // ***********************************
+    // ********* helper methods **********
+    // ***********************************
+
+    public void doSelectAll(){
+        for(HierarchyItem hi : hierarchyValues){
+            hi.selected = selectAll;
+        }
+    }
+
+    public Boolean getDisablePrevious() { 
+        //this will disable the previous and beginning buttons
+        return (currentPage <= 0);
+    }
+
+    public Boolean getDisableNext() { //this will disable the next and end buttons
+        return (currentPage >= hierarchyValuesForDisplay.size()-1);
+    }
+
+    public PageReference Beginning() { //user clicked beginning 
+        currentPage = 0;
+        return null;
+    }
+
+    public PageReference Previous() { //user clicked previous button
+        currentPage--;
+        return null;
+    }
+
+    public PageReference Next() { //user clicked next button
+        currentPage++;
+        return null;
+    }
+
+    public PageReference End() { //user clicked end
+        currentPage = hierarchyValuesForDisplay.size()-1;
+        return null;
+    }
+    
 }
