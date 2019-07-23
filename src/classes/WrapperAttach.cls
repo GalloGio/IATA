@@ -556,7 +556,7 @@ global class WrapperAttach implements Comparable {
     public static list<WrapperAttach> getContentInfo(set<id> contentIdSet) {
         list<WrapperAttach> attachList = new list<WrapperAttach>();
         for(ContentVersion cv:[select Id,ContentDocumentId,title,FileExtension,Description,FileType,ContentSize,
-        LastModifiedDate,createdDate,createdById,createdBy.Name
+        LastModifiedDate,createdDate,versionData,createdById,createdBy.Name
                 from ContentVersion where id in :contentIdSet]){
             attachList.add(new WrapperAttach(cv));
         }
