@@ -634,7 +634,7 @@
                             </apex:actionFunction>
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
-                            <apex:actionFunction name="reRenderAccountsNoc" reRender="branchaccountsel"/>
+                            <apex:actionFunction action="{!resetHierarchy}" name="reRenderAccountsNoc" reRender="branchaccountsel"/>
                             <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions"/>
 
 

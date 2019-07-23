@@ -1375,16 +1375,10 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         for(HierarchyItem hi:  hierarchyValues){
-                accountList.add(hi.acc);
+            accountList.add(hi.acc);
         }
 
         for (Account thisAccount: accountList) {
-            branchAccountCount++;
-
-            if (isMCNewAEAccredited && isNoticeOfChange && thisAccount.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
-                continue;
-            }
-                        
             options.add(new SelectOption(thisAccount.IATACode__c, thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')'));
         }
 
@@ -1428,8 +1422,6 @@ public without sharing class ISSP_AMS_Accreditation {
             String theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
-
-            branchAccountCount++;
         }
         
         return options;
@@ -7748,7 +7740,13 @@ public without sharing class ISSP_AMS_Accreditation {
                 
                 List<Account> acc = getBranchList(false);
                 for(Account a : acc){
+                    branchAccountCount++;
                     Boolean isSelected = false;
+
+                    if (isMCNewAEAccredited && isNoticeOfChange && a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
+                        continue;
+                    }
+
                     hierarchy.put(a.Id, new HierarchyItem(a,isSelected));
                 }                           
             }
@@ -7781,6 +7779,11 @@ public without sharing class ISSP_AMS_Accreditation {
             return currentPage;
         }
         set;
+    }
+
+    public void resetHierarchy() {
+        hierarchy = null;
+        hierarchyValuesForDisplay = null;
     }
     
     public Integer totalPages{
