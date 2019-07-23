@@ -146,17 +146,24 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             }
 
+            let noSearch = false;
+
             if (pageParams.contactName !== undefined && pageParams.contactName !== '') {
                 this.searchValue = decodeURIComponent((pageParams.contactName+'').replace(/\+/g, '%20'));
                 this.onchangeSearchInputContactsFromNotification(this.searchValue);
+            }else{
+                noSearch = true
             }
 
             this.lstTabs = tabsAux;
             if (viewContacts) {
-                //this.retrieveContacts();
-                this.contactsLoaded = true;
-                this.isFetching = true;
-                this.searchContacts(this.searchValue);
+                if(!noSearch){
+                    this.contactsLoaded = true;
+                    this.isFetching = true;
+                    this.searchContacts(this.searchValue);
+                }else{
+                    this.getContacts();
+                }
             }
 
         });
