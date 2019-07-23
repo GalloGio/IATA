@@ -54,6 +54,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Contact_Role_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>UniqueKey__c</field>
             </layoutItems>
         </layoutColumns>

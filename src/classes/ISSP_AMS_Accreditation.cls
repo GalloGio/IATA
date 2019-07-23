@@ -342,7 +342,86 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
-    public Integer branchAccountCount {get; set;}
+	public Integer branchAccountCount {get; set;}
+
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
+            isNewPortal = CSP_Utils.isNewPortalActive();
+         }
+         
+        return isNewPortal;
+    }
+    set;
+    }
+
+    public String portalRedirectToCase {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_Case?caseId=' + newCase.Id + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('case-details');
+            return url + '?caseId=' + newCase.Id;
+        }
+        
+    }
+    set;
+    }
+
+    public String portalRedirectToCaseList {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_CaseList' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('cases-list');
+            return url;
+        }
+    }
+    set;
+    }
+
+    public String portalRedirectToSupport {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('support-reach-us');
+            return url;
+        }
+    }
+    set;
+    }
+
+    public String portalRedirectToCompanyProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_CompanyInformation?mid=M5S2';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('company-profile');
+            return url;
+        }
+    }
+    set;
+    }
+
+    public String portalRedirectToMyProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_ContactList?MainNav=Admin';
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('my-profile');
+            return url;
+        }
+    }
+    set;
+    }
+    
 
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
