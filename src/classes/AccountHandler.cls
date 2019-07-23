@@ -83,10 +83,11 @@ public class AccountHandler{
 					|| newAccount.Has_an_Administrator_User_Portal_Sum__c != oldAccount.Has_an_Administrator_User_Portal_Sum__c ) ) {
 				listAccountId.add(newAccount.parentId);
 			}
-		}
-
-		if(ANG_AgencyChangesHelper.changesContainer == null)
+		}       
+        
+        if(ANG_AgencyChangesHelper.changesContainer == null || ANG_ConversionHelper.isMigrationTool || System.isFuture() || System.isBatch()){
 			updateParentAccountFields(listAccountId);
+            }
 		else		
 			updateParentAccountFieldsFuture(listAccountId);
 
