@@ -287,7 +287,8 @@ private class HigherLogicIntegrationTest {
 			 FROM 
 			 	ISSP_Web_Service_Log__c
 			 ORDER BY
-			 	CreatedDate DESC
+			 	CreatedDate DESC,
+			 	Id DESC
 			]
 		);
 		
@@ -299,7 +300,7 @@ private class HigherLogicIntegrationTest {
 			}
 			
 			system.assertEquals('200', log.Error_Code__c, log.Error_Message__c);
-			system.assert(log.Error_Message__c.contains('{"success":true'));
+			system.assert(log.Error_Message__c.contains('{"success":true'), log.Error_Message__c);
 			
 			i++;
 					

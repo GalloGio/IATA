@@ -27,7 +27,8 @@ private class ISSP_Financial_Institutions_Test {
                                                    RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
                                                    IATA_ISO_Country__c = portugal.Id,
                                                    Location_Class__c = 'P',
-                                                   Category__c = 'IATA Passenger Sales Agent');
+                                                   Category__c = 'IATA Passenger Sales Agent',
+                                                   Sector__c = AMS_Utils.SECTOR_PASSENGER);
 
         Account travelAgencySpain = new Account(Name = 'Travel Agency Spain',
                                                 Status__c = AMS_Utils.ACC_S9_APPROVED,
@@ -35,7 +36,8 @@ private class ISSP_Financial_Institutions_Test {
                                                 RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
                                                 IATA_ISO_Country__c = spain.Id,
                                                 Location_Class__c = 'P',
-                                                Category__c = 'IATA Passenger Sales Agent');
+                                                Category__c = 'IATA Passenger Sales Agent',
+                                                Sector__c = AMS_Utils.SECTOR_PASSENGER);
 
         agencies.add(travelAgencyPortugal);
         agencies.add(travelAgencySpain);
@@ -101,13 +103,24 @@ private class ISSP_Financial_Institutions_Test {
 
         List<Financial_Institution__c> financialInstitutions = new List<Financial_Institution__c>();
 
+        Id rtGenericFIId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Generic_FI').getRecordTypeId();
+        Id rtCCBankId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Currency_Center_Bank').getRecordTypeId();
+
         Financial_Institution__c exampleOne = new Financial_Institution__c(Name = 'One',
+                                                                           RecordTypeId = rtGenericFIId,
                                                                            Institution_Status__c = 'Active',
                                                                            Financial_Security_Country_Coverage__c = 'PT',
                                                                            Country__c = 'Portugal',
                                                                            Region__c = 'Europe');
 
         Financial_Institution__c exampleGDI = new Financial_Institution__c(Name = 'Euler Hermes',
+                                                                           RecordTypeId = rtGenericFIId,
+                                                                           Institution_Status__c = 'Active',
+                                                                           Financial_Security_Country_Coverage__c = 'PT',
+                                                                           Country__c = 'Portugal',
+                                                                           Region__c = 'Europe');
+        Financial_Institution__c exampleCCBank = new Financial_Institution__c(Name = 'Euler Hermes',
+                                                                           RecordTypeId = rtCCBankId,
                                                                            Institution_Status__c = 'Active',
                                                                            Financial_Security_Country_Coverage__c = 'PT',
                                                                            Country__c = 'Portugal',
@@ -115,6 +128,7 @@ private class ISSP_Financial_Institutions_Test {
 
         financialInstitutions.add(exampleOne);
         financialInstitutions.add(exampleGDI);
+        financialInstitutions.add(exampleCCBank);//must be ignored
         insert financialInstitutions;
 
         Connected_App_Roles__c gdiCar = new Connected_App_Roles__c(Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
@@ -174,6 +188,7 @@ private class ISSP_Financial_Institutions_Test {
 
             System.assertEquals(2, controller.financialInstitutionList.size());
             System.assertEquals(true, controller.financialInstitutionsFound);
+            System.assertEquals(false, controller.userCanRequestGDI);
         }
 
         Test.stopTest();
@@ -191,6 +206,7 @@ private class ISSP_Financial_Institutions_Test {
 
             System.assertEquals(2, controller.financialInstitutionList.size());
             System.assertEquals(true, controller.financialInstitutionsFound);
+            System.assertEquals(false, controller.userCanRequestGDI);
 
             List<SelectOption> paginationSizeOptions = controller.paginationSizeOptions;
 

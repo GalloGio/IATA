@@ -1209,7 +1209,7 @@
 					                      {!$Label.ISSP_AMS_Not_Listed_Msg}
 					                    </div>
 
-                    					<apex:outputText rendered="{!AND(isMultiCountryNewAE, newForm.AE_separate_Legal_Entity__c == 'No')}" value="hello"/> <!-- rui -->
+                    					<apex:outputText rendered="{!AND(OR(isMultiCountryNewAE, isMCNewAEAccredited), newForm.AE_separate_Legal_Entity__c == 'No')}" value="hello"/> <!-- rui -->
                     
                     					<apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
 

@@ -107,6 +107,13 @@ public without sharing class ISSP_Financial_Institutions {
         }
         private set;
     }
+    public Boolean userCanRequestGDI {
+        get {
+            if (userCanRequestGDI == null) userCanRequestGDI = false;
+            return userCanRequestGDI;
+        }
+        private set;
+    }
 
     public ISSP_Financial_Institutions() {}
 
@@ -144,21 +151,31 @@ public without sharing class ISSP_Financial_Institutions {
                     gdiAppRightRequested = true;
 
             } else {
-                User currentPortalUser = [SELECT Id, ContactId, Contact.Account.Country_ISO_Code__c, Contact.Account.Region_formula__c, Contact.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, Contact.Account.Category__c
+                User currentPortalUser = [SELECT Id, ContactId, Contact.Account.Country_ISO_Code__c, 
+                                            Contact.Account.Region_formula__c, Contact.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, 
+                                            Contact.Account.Category__c, Contact.Account.Sector__c, Contact.Account.Status__c,
+                                            Contact.Financial_Assessment_Contact__c, Contact.User_Portal_Status__c
                                           FROM User 
                                           WHERE Id = :UserInfo.getUserId() 
                                           LIMIT 1];
                 
+                Account userAcc = currentPortalUser.Contact.Account;
                 conId = currentPortalUser.ContactId;
-                agencyCountry = currentPortalUser.Contact.Account.Country_ISO_Code__c;
-                agencyRegion = currentPortalUser.Contact.Account.Region_formula__c;
-                countryIsGDIEnabled = (currentPortalUser.Contact.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c && currentPortalUser.Contact.Account.Category__c == 'IATA Passenger Sales Agent');
+                agencyCountry = userAcc.Country_ISO_Code__c;
+                agencyRegion = userAcc.Region_formula__c;
+                countryIsGDIEnabled = (userAcc.IATA_ISO_Country__r.ANG_GDI_Enabled__c && userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT);
+                userCanRequestGDI = (!gdiAppRightDenied && !gdiAppRightGranted && !gdiAppRightRequested 
+                    && userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
+                    && userAcc.Sector__c == AMS_Utils.SECTOR_PASSENGER
+                    && (AMS_Utils.ACTIVEAGENCYSTATUS.contains(userAcc.Status__c) || userAcc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
+                    && (currentPortalUser.Contact.Financial_Assessment_Contact__c || currentPortalUser.Contact.User_Portal_Status__c == 'Approved Admin'));
             }
         }
 
         List<Financial_Institution__c> financialInstitutions = [SELECT Id, Name, Website__c
                                                                 FROM Financial_Institution__c
                                                                 WHERE Institution_Status__c = 'Active'
+                                                                    AND RecordType.DeveloperName = 'Generic_FI'
                                                                     AND ((Financial_Security_Regional_Coverage__c != null 
                                                                     AND Financial_Security_Regional_Coverage__c INCLUDES (:agencyRegion))
                                                                     OR (Financial_Security_Country_Coverage__c != null

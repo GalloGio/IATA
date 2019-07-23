@@ -12,13 +12,20 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 
 		insert settlement;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id);
+		AMS_Settlement_System__c settlement2 = new AMS_Settlement_System__c(
+				Name = 'Test Country',
+				RecordTypeId = settlementRTId
+		);
+
+		insert settlement2;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id, Multicountry_Enabled__c = true);
         insert ctry ;
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
         
-        IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='Test Country',ISO_Code__c='ZZ', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id);
+        IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='Test Country',ISO_Code__c='ZZ', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement2.Id, Multicountry_Enabled__c = true);
         insert ctry2;
 
         IATA_ISO_State__c stt2 = new IATA_ISO_State__c(Name= 'ZZ', ISO_Code__c = 'ZZ', IATA_ISO_Country__c = ctry2.Id);
@@ -124,6 +131,52 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		System.debug([Select Id, ParentId, Top_Parent__c, Location_Class__c, Location_Type__c, Name from Account]);
 
 	}
+
+	@isTest static void ANG_MulticountryAccountCreatorTestFailedCountryNotMulticountry() {
+
+		PageReference pageRef = Page.ANG_MulticountryAccountCreator;
+        Test.setCurrentPageReference(pageRef);
+
+		AMS_OSCAR__c oscar = [Select Id, ANG_Type_Of_Change__c from AMS_OSCAR__c];
+
+		ApexPages.CurrentPage().getparameters().put('pid', oscar.id);
+        ApexPages.StandardController sc = new ApexPages.standardController(oscar);
+
+        Test.startTest();
+        
+		ANG_MulticountryAccountCreatorController multicreator = new ANG_MulticountryAccountCreatorController(sc);
+
+		oscar = multicreator.oscar;
+        multicreator.accIndex = 0;
+		Integer accIndex = multicreator.accIndex;
+		multicreator.addAccount();
+
+		IATA_ISO_Country__c ctry = [ Select Id from IATA_ISO_Country__c Limit 1];
+		ctry.Multicountry_Enabled__c = false;
+		update ctry;
+
+//reset IATAIsoCountryDAO maps 
+		IATAIsoCountryDAO.resetMapIataIsoCountry();
+
+		Integer i = 0;
+
+		for(Account acct: multicreator.listAccount){
+			if(acct.Id <> multicreator.mainAccount.Id){
+				acct.Name = 'AE' + String.valueOf(i++);
+				acct.Location_Class__c = 'P';
+				acct.IATA_ISO_Country__c = ctry.Id;
+			}
+		}
+
+		multicreator.saveAccount();
+
+		Test.StopTest();
+
+		//verify the Message in the page
+		ApexPages.Message[] messages = ApexPages.getMessages();
+		System.assertEquals(1, messages.size());
+		System.assertEquals('The country France is not enabled for multicountry', messages[0].getDetail());
+	}
 	
 	@isTest static void ANG_MulticountryHierarchySelectionCrtlTestSAMEBSP() {
         
@@ -167,6 +220,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
         
 		Map<String, List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem>> hierarchy = selectionCrtl.hierarchy;
 		List<ANG_MulticountryHierarchySelectionCrtl.HierarchyItem> hierarchyValues = selectionCrtl.hierarchyValues;
+
 		selectionCrtl.save();
 
 		Test.stopTest();
@@ -235,7 +289,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 
 		insert settlement;
 
-		IATA_ISO_Country__c ctryPt = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id);
+		IATA_ISO_Country__c ctryPt = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true, Region__c = 'Europe',AMS_Settlement_System__c=settlement.Id, Multicountry_Enabled__c = true);
         insert ctryPt ;
 
 		AMS_OSCAR__c oscar = [Select Id, Account__c from AMS_OSCAR__c];

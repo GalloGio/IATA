@@ -186,4 +186,15 @@
             <group>MACSLOBs</group>
         </sharedFrom>
     </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Sales_Europe_team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Sales - Europe team</label>
+        <sharedTo>
+            <role>SalesAssistantDirectorEurope</role>
+        </sharedTo>
+        <sharedFrom>
+            <group>Sales_Europe_team</group>
+        </sharedFrom>
+    </sharingOwnerRules>
 </SharingRules>

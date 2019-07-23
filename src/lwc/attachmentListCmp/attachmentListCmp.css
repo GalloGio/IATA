@@ -1,0 +1,50 @@
+.close-mark {
+    color : #999999;
+    cursor: pointer;
+    transform: rotate(45deg);
+}
+
+.attButtonCls{
+    border-radius: 1px;
+    border: solid 1px #1e32fa;
+    background-color: #ffffff;
+    color: #3333ff;
+    font-weight: 500;
+}
+
+
+.textMediumMessage{
+    font-size: 16px;
+    line-height: 1.63;
+    color: #525252;
+}
+.mediumTitle{
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.dimensionContainer{
+    min-height:200px; 
+    max-height:750px;
+}
+
+.noDocContainer{
+    height:200px;
+}
+
+.AddAttButtonContainer{
+    display:flex;
+    justify-content: flex-end;
+}
+
+.customPopupInteriorHalfScreenCentered {
+    width: 100%;
+    max-width: calc( (1440px / 12) * 10);
+}
+
+@media (min-width: 64em) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 83.333333%; /*slds-large-size_10-of-12*/
+    }
+}

@@ -6,7 +6,6 @@
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
-        <ccEmails>gwars77@hotmail.com</ccEmails>
         <description>ACCA: Notification on new Application Change Request</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -199,7 +198,7 @@
         <description>BSPlink Email alert</description>
         <protected>false</protected>
         <recipients>
-            <recipient>mcbrideg@iata.org</recipient>
+            <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -216,6 +215,18 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/EUR_CaseassignmentBanking</template>
+    </alerts>
+    <alerts>
+        <fullName>Case_changed</fullName>
+        <description>Case changed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GDPR_Templates/Case_changed</template>
     </alerts>
     <alerts>
         <fullName>Cases_Russia</fullName>
@@ -662,7 +673,7 @@
         <description>DPC: Notification on new CSR</description>
         <protected>false</protected>
         <recipients>
-            <recipient>mcbrideg@iata.org</recipient>
+            <recipient>jimenezm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -1351,6 +1362,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1360,10 +1375,6 @@
         </recipients>
         <recipients>
             <recipient>moutany@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1412,10 +1423,6 @@
         </recipients>
         <recipients>
             <recipient>taverasr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2289,6 +2296,18 @@
         <template>SCEQOS/InstantSurveyCustomerService</template>
     </alerts>
     <alerts>
+        <fullName>NDC_Matchmaker_Email_Notification_on_Case_Creation</fullName>
+        <description>NDC Matchmaker Email Notification on Case Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>NDC_Matchmaker</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/NDC_Case_Assignment</template>
+    </alerts>
+    <alerts>
         <fullName>NewALmanagementprocess</fullName>
         <description>SCE: New Airline management process</description>
         <protected>false</protected>
@@ -2864,6 +2883,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2877,10 +2900,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3004,6 +3023,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3017,10 +3040,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3859,6 +3878,24 @@
         <template>Workflow_and_Metrics_team/Salesforce_Change_Request_UAT_Required_Reminder</template>
     </alerts>
     <alerts>
+        <fullName>Send_Email_to_L3_IASC_Vendor</fullName>
+        <ccEmails>survey@ipsosresearch.com</ccEmails>
+        <description>Send Email to L3 IASC Vendor</description>
+        <protected>false</protected>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Vendor_Templates/Contact_Vendor</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_to_Online_store_support</fullName>
+        <ccEmails>iata@servicenow.org</ccEmails>
+        <description>Send Email to Online store support</description>
+        <protected>false</protected>
+        <senderAddress>onlinestoresupport@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Vendor_Templates/Contact_Vendor</template>
+    </alerts>
+    <alerts>
         <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
         <description>Send a notification to SIS Customer Support when a SIS E-Joining form is submitted</description>
         <protected>false</protected>
@@ -4039,6 +4076,18 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
+    </alerts>
+    <alerts>
+        <fullName>X1st_email_on_CS_escalated_case</fullName>
+        <description>1st email on CS escalated case</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Escalation_1st_level_CS_managers</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Escalated_cases/X1st_escalation</template>
     </alerts>
     <alerts>
         <fullName>sMAP_Inform_to_CM_Case_Owner</fullName>
@@ -4850,6 +4899,16 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Change_owner_to_be_GDPR_Queue</fullName>
+        <field>OwnerId</field>
+        <lookupValue>GDPR</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change owner to be GDPR Queue</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Change_owner_to_global_KM_queue</fullName>
         <field>OwnerId</field>
         <lookupValue>Knowledge_Management_GVA</lookupValue>
@@ -5016,6 +5075,14 @@
         <name>Chg owner to Fraction (&lt;1USD) Closed</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Clear_Case_New_Interaction_tracking</fullName>
+        <field>New_interaction__c</field>
+        <name>Clear Case New Interaction tracking</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -5542,6 +5609,17 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <name>ICH Case Type</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>ICH_Web_Case_Assignment</fullName>
+        <description>Changes record type to Cases - Global on web cases</description>
+        <field>RecordTypeId</field>
+        <lookupValue>Cases_Global</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>ICH Web CaseAssignment</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -7274,6 +7352,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Case_New_Interaction_tracking</fullName>
+        <field>New_interaction__c</field>
+        <literalValue>The case has been recently updated.</literalValue>
+        <name>Update Case New Interaction tracking</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Case_Status_Sanity_Check_Failure</fullName>
         <field>Status</field>
         <literalValue>Sanity Check Failure</literalValue>
@@ -8417,6 +8504,20 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Assign GDPR cases to queue</fullName>
+        <actions>
+            <name>Change_owner_to_be_GDPR_Queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>contains</operation>
+            <value>GDPR</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>Assign to AIR Tech Zone Queue</fullName>
         <actions>
             <name>Send_notification</name>
@@ -8717,6 +8818,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>Some countries for which we2case cases are created in AME have Europe as record type. This rule changes to the AME record type.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Clear field tracking</fullName>
+        <actions>
+            <name>Clear_Case_New_Interaction_tracking</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>clears field tracking message</description>
+        <formula>ISPICKVAL(New_interaction__c,&apos;The case has been recently updated.&apos;) &amp;&amp; LastModifiedById==OwnerId</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Clicktools Workflow_AM_CX_CHINESE</fullName>
@@ -11884,6 +11996,36 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Escalation case 1st email</fullName>
+        <actions>
+            <name>X1st_email_on_CS_escalated_case</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - Global,Cases - China &amp; North Asia</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>notContain</operation>
+            <value>Recycle</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Escalation</value>
+        </criteriaItems>
+        <description>Sends an email to CS managers when the case has origin &quot;Escalated&quot;</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>External split for OPS Mgt cases</fullName>
         <actions>
             <name>External_OPS_Mgt_cases</name>
@@ -12096,6 +12238,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>the query is reopened and assigned to GDC MAD complaint queue</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>GDPR Case Updated</fullName>
+        <actions>
+            <name>Case_changed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT( ISNEW() ) &amp;&amp; RecordType__c = &apos;GDPR Request&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>I%26C_Update_Status to Action Needed</fullName>
@@ -15997,6 +16149,25 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>NDC Matchmaker Team Notification</fullName>
+        <actions>
+            <name>NDC_Matchmaker_Email_Notification_on_Case_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>New,Open</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>NDC Management</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>NFE System to product owner</fullName>
         <actions>
             <name>Assign_NFE_ACR_to_system_manager</name>
@@ -18140,7 +18311,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Make_new_case_visible_in_CustPortal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
@@ -18355,6 +18526,26 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>SIS and ICH New Web Case</fullName>
+        <actions>
+            <name>ICH_Web_Case_Assignment</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>ICH,SIS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Web</value>
+        </criteriaItems>
+        <description>Whenever a new ICH web case is created, assign record type</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>SNOW Incident</fullName>
         <actions>
             <name>SNOW_Incident</name>
@@ -18541,6 +18732,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <active>true</active>
         <description>This rule is designed to update the Previous Case Owner field of the case, until the owner of the case is changed to a complaint queue. The objective is to get the last non-complaint / non-customer recovery owner in this field.</description>
         <formula>OR (   ISNEW(),   AND (     ISCHANGED( OwnerId ),     Reopen_Count__c = 0 ,     Customer_recovery__c = false ,     IsComplaint__c = false ,     RecordType.DeveloperName &lt;&gt; &apos;ProcessEuropeSCE&apos; ,     RecordType.DeveloperName &lt;&gt; &apos;IDFS_Airline_Participation_Process&apos;   ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Tracking Field</fullName>
+        <actions>
+            <name>Update_Case_New_Interaction_tracking</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Updates field tracking field if a case is updated by someone who is not the case owner</description>
+        <formula>CONTAINS($Label.CaseRTtrackedByCS,RecordType.DeveloperName) &amp;&amp; ( ISCHANGED(CaseArea__c)|| ISCHANGED(Reason1__c)|| ISCHANGED(BSPCountry__c)|| ISCHANGED(Case_Remarks__c)|| ISCHANGED(Attachment_received_possible_POP__c)|| ISCHANGED(Region__c)|| ISCHANGED(AccountId)|| ISCHANGED(ContactId)|| ISCHANGED(Origin)|| ISCHANGED(ParentId)|| ISCHANGED(Priority)|| ISCHANGED(Subject)|| ISCHANGED(Status)  ) &amp;&amp; LastModifiedById&lt;&gt;OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -19067,9 +19269,9 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <criteriaItems>
-            <field>Case.Status</field>
+            <field>Case.IsClosed</field>
             <operation>equals</operation>
-            <value>Closed</value>
+            <value>True</value>
         </criteriaItems>
         <description>DG_Capture_Analytics__c checkbox should updated to true when Case Status equals Closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

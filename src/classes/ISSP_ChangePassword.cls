@@ -34,6 +34,25 @@ public without sharing class ISSP_ChangePassword {
     public String serviceName{ get{ return ApexPages.currentPage().getParameters().get('serviceName'); }set;}
     public String serviceNameParam { get { return String.isNotEmpty(serviceName) ? '&serviceName='+ serviceName : ''; } set;}
 
+    // Network
+    public String networkId {
+        get{
+            String network = null;
+            String retUrl = ApexPages.currentPage().getParameters().get('retURL');
+            
+            if(retUrl != null){
+                String networkParameter = 'networkId=';
+                Integer start = retUrl.indexOf(networkParameter);
+                if(start != -1){
+                    start += networkParameter.length();
+                    network = retUrl.substring(start, start + 15);
+                }
+            }
+            
+            return network;
+        }
+    }
+
     /**
      * Constructor
      */
@@ -74,7 +93,7 @@ public without sharing class ISSP_ChangePassword {
         try {                    
             // validate fields
             errorMessage = new list<string>();
-              
+ 
             if (errorMessage.size() > 0) {
                 return null;
             }
@@ -96,11 +115,23 @@ public without sharing class ISSP_ChangePassword {
                 }
                 
                 if (pageRef != null){
-                    if(!isOneId || serviceName == 'ISSP'){
-                        pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,'/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam));
+                	Boolean isISSP = false;
+                	if(networkId != null){
+                		List<Network> networks = [SELECT Id
+                									FROM Network
+                									WHERE Id =: networkId
+                									AND (Name = 'IATA Portal' OR Name = 'CS Portal')];
+                		isISSP = !networks.isEmpty();
+                	}
+                	
+                    if(!isOneId || serviceName == 'ISSP' || serviceName == 'CSP' || isISSP){
+                        pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.CSP, '/s'));
                     }
                     else if(serviceName == 'FRED'){                            
                         pageRef = null;   
+                    }
+                    else if(serviceName == 'NDCMM'){
+                        pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/ndcmm?serviceName=NDCMM' + commParam));
                     }
                     else{
                         pageref = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam));
@@ -127,6 +158,10 @@ public without sharing class ISSP_ChangePassword {
                 }
 
                 System.debug(loggingLevel.FINE, '____ [cls ISSP_ChangePassword - changePassword] pageRef - ' + pageRef);
+
+                System.debug(loggingLevel.FINE, '____ [cls ISSP_ChangePassword - changePassword]  - Validating FAQ permissions' );
+                PortalFAQsSharingCtrl.validateUserFAQsPermissions(UserInfo.getUserId());
+
                 return pageRef;
             }
         }

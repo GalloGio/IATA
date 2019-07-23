@@ -7,7 +7,7 @@
 
 @isTest(SeeAllData=true)
 public class trgHndlrIECInvoice_tst {
-    private static zqu__ZProduct__c oProduct, oProduct2, oProduct3, oProductTax, oProductShip;
+    private static Product2 oProduct, oProduct2, oProduct3, oProductTax, oProductShip;
     private static zqu__ProductRatePlan__c oProductRatePlan, oProductRatePlan2, oProductRatePlan3, oProductRatePlanTax, oProductRatePlanShip;
     private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge, oProductRatePlanCharge2, oProductRatePlanCharge3;
     private static Zuora__Subscription__c oSubscription, oSubscription2;
@@ -147,26 +147,20 @@ public class trgHndlrIECInvoice_tst {
     static void Init(IECCustomer loggedCustomer) {
 
         //-- Generate Zuora related items 
-        try{
-            //-- ZProduct 1 for Tax & 1 for Shipping
-            List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(2, true);
-    
-            //-- Generate one Rate plan for each
-            zqu__ProductRatePlan__c taxPlan  = TestDataGenerator.generateZRatePlans(zProducts[0].Id,1,false)[0];
-                taxPlan.zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Plan id');
-            zqu__ProductRatePlan__c shipPlan = TestDataGenerator.generateZRatePlans(zProducts[1].Id,1,false)[0];
-                shipPlan.zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Plan id');
-            upsert new List<zqu__ProductRatePlan__c>{taxPlan, shipPlan} zqu__ZuoraId__c;
-    
-            //-- Generate Rate Plan Charges 
-            zqu__ProductRatePlanCharge__c taxCharge = TestDataGenerator.generateZCharges(taxPlan.Id, 1, false)[0];
-                taxCharge.zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Charge id');
-            zqu__ProductRatePlanCharge__c shipCharge = TestDataGenerator.generateZCharges(shipPlan.Id, 1, false)[0];
-                shipCharge.zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Charge id');
-            upsert new List<zqu__ProductRatePlanCharge__c>{taxCharge, shipCharge} zqu__ZuoraId__c;
-        }
-        catch(Exception ex){}
-            
+        
+        //-- ZProduct 1 for Tax & 1 for Shipping
+        List<Product2> zProducts = TestDataGenerator.generateProducts(2, true);
+
+        //-- Generate one Rate plan for each
+        zqu__ProductRatePlan__c taxPlan  = TestDataGenerator.generateZRatePlans2(zProducts[0].Id,1,false)[0];
+        zqu__ProductRatePlan__c shipPlan = TestDataGenerator.generateZRatePlans2(zProducts[1].Id,1,false)[0];
+        upsert new List<zqu__ProductRatePlan__c>{taxPlan, shipPlan}  zqu__ZuoraId__c;
+
+        //-- Generate Rate Plan Charges 
+        zqu__ProductRatePlanCharge__c taxCharge = TestDataGenerator.generateZCharges(taxPlan.Id, 1, false)[0];
+        zqu__ProductRatePlanCharge__c shipCharge = TestDataGenerator.generateZCharges(shipPlan.Id, 1, false)[0];
+        upsert new List<zqu__ProductRatePlanCharge__c>{taxCharge, shipCharge}  zqu__ZuoraId__c;
+        
         List<Product2> lstProduct = TestDataGenerator.generateProducts(3, true);
         Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
         List<PricebookEntry> lstPBE = new List<PricebookEntry>();
@@ -175,28 +169,25 @@ public class trgHndlrIECInvoice_tst {
         insert lstPBE;
         
         // create/get dummy Zuora product
-        oProduct = IECTestUtil.CreateSampleProduct('Product1');
+        oProduct = IECTestUtil.CreateSampleProduct2('Product1');
         oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
         oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
-        oProduct.SAPProductMaterialNo__c = lstProduct[0].SAP_Material_Number__c;
-        oProduct2 = IECTestUtil.CreateSampleProduct('Product2');
+        oProduct2 = IECTestUtil.CreateSampleProduct2('Product2');
         oProduct2.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
         oProduct2.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
-        oProduct2.SAPProductMaterialNo__c = lstProduct[1].SAP_Material_Number__c;
-        oProduct3 = IECTestUtil.CreateSampleProduct('Product3');
+        oProduct3 = IECTestUtil.CreateSampleProduct2('Product3');
         oProduct3.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
         oProduct3.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
-        oProduct3.SAPProductMaterialNo__c = lstProduct[2].SAP_Material_Number__c;
         insert new List<SObject>{oProduct, oProduct2, oProduct3};
-        oProductRatePlanShip = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__ZProduct__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :Utility.getTextSetting('Zuora shipping Plan id')][0];
-        oProductShip = [SELECT zqu__ZuoraId__c, Name, zqu__SKU__c, zqu__EffectiveEndDate__c FROM zqu__ZProduct__c WHERE Id =:oProductRatePlanShip.zqu__ZProduct__c][0];
-        oProductRatePlanTax = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__ZProduct__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :Utility.getTextSetting('Zuora tax Plan id')][0];
-        oProductTax = [SELECT zqu__ZuoraId__c, Name, zqu__SKU__c, zqu__EffectiveEndDate__c FROM zqu__ZProduct__c WHERE Id =:oProductRatePlanTax.zqu__ZProduct__c][0];
+        oProductRatePlanShip = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__Product__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :shipPlan.zqu__ZuoraId__c][0];
+        oProductShip = [SELECT zqu__ZuoraId__c, Name, zqu__SKU2__c, zqu__EffectiveEndDate__c FROM Product2 WHERE Id =:oProductRatePlanShip.zqu__Product__c][0];
+        oProductRatePlanTax = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__Product__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :taxPlan.zqu__ZuoraId__c][0];
+        oProductTax = [SELECT zqu__ZuoraId__c, Name, zqu__SKU2__c, zqu__EffectiveEndDate__c FROM Product2 WHERE Id =:oProductRatePlanTax.zqu__Product__c][0];
         
         // create/get dummy Zuora rate plan
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct);
-        oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct2);
-        oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct3);
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct);
+        oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct2);
+        oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan2('Rate plan 1', false, oProduct3);
         insert new List<SObject>{oProductRatePlan, oProductRatePlan2};
         
         // create dummy Zuora rate plan charge
@@ -216,19 +207,19 @@ public class trgHndlrIECInvoice_tst {
         insert new List<SObject>{oSubscription, oSubscription2};
         
         // create dummy oSubscription charge
-        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         // create dummy oSubscription per unit charge
-        oSubscriptionChargeUnit = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        oSubscriptionChargeUnit = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         oSubscriptionChargeUnit.Zuora__Model__c = IECConstants.ChargeModel_Zuora_PerUnitPricing;
         oSubscriptionChargeUnit.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = oProductRatePlanCharge.zqu__ZuoraId__c);
         // create dummy oSubscription charge for product to reject
-        oSubscriptionChargeError = IECTestUtil.createSampleSubscriptionCharge(oSubscription2.Id, Date.today().addMonths(-6), oProduct3, oProductRatePlan3);
+        oSubscriptionChargeError = IECTestUtil.createSampleSubscriptionCharge2(oSubscription2.Id, Date.today().addMonths(-6), oProduct3, oProductRatePlan3);
         // create dummy tax charge
-        oSubscriptionChargeTax = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProductTax, oProductRatePlanTax);
-        oSubscriptionChargeTax.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Charge id'));
+        oSubscriptionChargeTax = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, Date.today().addMonths(-6), oProductTax, oProductRatePlanTax);
+        oSubscriptionChargeTax.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = taxCharge.zqu__ZuoraId__c);
         // create dummy shipping charge
-        oSubscriptionChargeShip = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProductShip, oProductRatePlanShip);
-        oSubscriptionChargeShip.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Charge id'));
+        oSubscriptionChargeShip = IECTestUtil.createSampleSubscriptionCharge2(oSubscription.Id, Date.today().addMonths(-6), oProductShip, oProductRatePlanShip);
+        oSubscriptionChargeShip.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = shipCharge.zqu__ZuoraId__c);
         insert new List<SObject>{oSubscriptionCharge, oSubscriptionChargeUnit, oSubscriptionChargeError, oSubscriptionChargeTax, oSubscriptionChargeShip};
         
         // create dummy product category
@@ -237,7 +228,7 @@ public class trgHndlrIECInvoice_tst {
         insert oProductCategory;
         
         // create dummy product info
-        Product_Information__c oProductInfo = IECTestUtil.CreateSampleProductInfo('My product', oProductCategory, oProduct);
+        Product_Information__c oProductInfo = IECTestUtil.CreateSampleProductInfo2('My product', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_MEMBERAIRLINE;
         insert oProductInfo;
         

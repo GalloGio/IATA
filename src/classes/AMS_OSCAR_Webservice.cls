@@ -189,7 +189,7 @@ global class AMS_OSCAR_Webservice {
             Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, CaseArea__c = 'Corporate Compliance',
                                     Reason1__c = fetchAMLCaseReason(oscar.Process__c),
                                     ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, 
-                                    Subject = (oscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP || oscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP|| oscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP ? 'Due Diligence – ' + oscarCommCase.OSCAR__r.Account__r.Name : 'Due Diligence – ' + oscarCommCase.OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c),
+                                    Subject = (oscar.Process__c == AMS_Utils.IEPBANKACCOUNTSETUP || oscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP|| oscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP || oscar.Process__c == AMS_Utils.IEPMODELBPLUSACCOUNTSETUP ? 'Due Diligence – ' + oscarCommCase.OSCAR__r.Account__r.Name : 'Due Diligence – ' + oscarCommCase.OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c),
                                     Region__c = oscar.Region__c, BSPCountry__c = oscarCommCase.OSCAR__r.Account__r.IATA_ISO_Country__r.Name);
 
             Database.DMLOptions dmo = new Database.DMLOptions();
@@ -264,7 +264,7 @@ global class AMS_OSCAR_Webservice {
             SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
             SIDRA_Lite_Reason__c, NOT_Date__c, BusinessHoursId,
             oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.Step35__c,
-            oscar__r.RPM_Approval__c, oscar__r.Step44__c
+            oscar__r.RPM_Approval__c, oscar__r.Step44__c, oscar__r.Process__c
             FROM Case
             WHERE OSCAR__c = :oscarId AND ( (ParentId = null or Parent.RecordType.Name != 'OSCAR Communication') OR (Parent.RecordType.Name = 'OSCAR Communication' AND Parent.Reason1__c ='Annual revalidation' ))
             LIMIT 1];
@@ -305,8 +305,13 @@ global class AMS_OSCAR_Webservice {
             if (oscar.Step35__c == 'Failed') return;
             throw new OSCARException(message);
         }       
-        if (step=='44') {
-            if (oscar.Step44__c == 'Failed') return;
+        if (step=='44' && oscar.Step44__c == 'Failed') {
+            if (oscar.Process__c != AMS_Utils.NGANNUALREVAL) return;
+            throw new OSCARException(message);
+        }
+        if (step=='44' && oscar.Step44__c == 'Passed') {
+            if (oscar.Process__c == AMS_Utils.NGANNUALREVAL) return;
+            message = 'Sidra Lite for "' + reason + '" cannot be created if the status is not "Passed" in this step.';
             throw new OSCARException(message);
         }
         if (step=='RPM') {
@@ -514,7 +519,7 @@ global class AMS_OSCAR_Webservice {
 
         try{
 
-            List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c, RPM_Approval__c, Process__c, RecordTypeId, ANG_Type_Of_Change__c from AMS_OSCAR__c where Id =: oscarId];
+            List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c, RPM_Approval__c, Process__c, RecordTypeId, ANG_Type_Of_Change__c, Is_NewGen__c, ANG_Change_Entity_Location__c, Change_of_Entity_Location_within_EU__c, Account__r.ANG_Accreditation_Model__c, Account__r.Location_type__c, AMS_Online_Accreditation__r.Location_Type__c, Account__c from AMS_OSCAR__c where Id =: oscarId];
 
             if(oscar!=null && oscar.size()>0){
 
@@ -523,12 +528,67 @@ global class AMS_OSCAR_Webservice {
 
                 oscar[0].Risk_event_creation_date__c = System.today();
                 oscar[0].STEP36__c = 'Passed';
-                update oscar;
+                
+                boolean isNGNewAccreditation = 
+                        oscar[0].RecordTypeId == AMS_Utils.RECTYPE_NEWHE &&
+                        oscar[0].Is_NewGen__c &&
+                        oscar[0].RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+                        oscar[0].Risk_event_creation_date__c == System.Today() &&
+                        oscar[0].Process__c == AMS_Utils.NEWHESTANDARD;
 
+                boolean isNGNewChangeAccreditationTypeCash = 
+                        oscar[0].RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
+                        oscar[0].Is_NewGen__c &&
+                        oscar[0].RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+                        oscar[0].Risk_event_creation_date__c == System.Today() &&
+                        oscar[0].Process__c == AMS_Utils.NGCHANGES &&
+                        oscar[0].ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE &&
+                        oscar[0].Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH;
+
+                boolean isNGChangeOfHierarchyWithNewRHC =
+                        oscar[0].RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
+                        oscar[0].Is_NewGen__c &&
+                        oscar[0].RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+                        oscar[0].Risk_event_creation_date__c == System.Today() &&
+                        oscar[0].Process__c == AMS_Utils.NGCHANGES &&
+                        oscar[0].ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY &&
+                        oscar[0].Account__r.Location_type__c == AMS_Utils.HE &&
+                        oscar[0].AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.AE;
+
+                
+                if(isNGNewAccreditation || isNGNewChangeAccreditationTypeCash || isNGChangeOfHierarchyWithNewRHC)
+                    AMS_OscarTriggerHandler.applyRHCForecast = true;
+    
+                update oscar;
+                
+                if(isNGChangeOfHierarchyWithNewRHC){
+                
+                    ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :oscar[0].Account__c LIMIT 1];
+                	
+                    if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c)
+                        update rhcInfo;
+                }
+                
+                AMS_OscarTriggerHandler.applyRHCForecast = false;
+                
                 List<ANG_Agency_Risk_Event__c> rskEventLst = [SELECT Id from ANG_Agency_Risk_Event__c where ANG_OscarId__c = :oscarId];
                 
-                if(rskEventLst.isEmpty())
+                if(rskEventLst.isEmpty()){
+
+                    if(isNGNewAccreditation){
+
+                        ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :oscar[0].Account__c LIMIT 1];
+
+                        if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c){
+                            AMS_OscarTriggerHandler.applyRHCForecast = true;                
+                            update rhcInfo;
+                            AMS_OscarTriggerHandler.applyRHCForecast = false;
+                        }
+                    }
+                    
                     return 'No risk event is needed for this OSCAR.';
+
+                } 
                 else
                     return rskEventLst.size() + ' Risk(s) Event(s) generated successfully';
 
@@ -575,10 +635,8 @@ global class AMS_OSCAR_Webservice {
     private static String fetchAMLCaseReason(String process){
         if (process == AMS_Utils.AGENCYCHANGES)
             return 'Agent Change of Ownership';
-        else if (process == AMS_Utils.IEPBANKACCOUNTSETUP || process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP)
+        else if (process == AMS_Utils.IEPBANKACCOUNTSETUP || process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP || process == AMS_Utils.IEPMODELBPLUSACCOUNTSETUP)
             return 'IEP Due Diligence';
-        else if (process == AMS_Utils.IEPMODELAACCOUNTSETUP || process == AMS_Utils.IEPMODELBACCOUNTSETUP)
-            return 'IATA Easy Pay';
         else
             return 'New Accredited Agent';
     }

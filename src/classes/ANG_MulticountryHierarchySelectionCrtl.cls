@@ -254,6 +254,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
         }
         set;
     }
+
+	private static Id oscarMainAccount;
     
 	// ***********************************
 	// ********** constructor ************
@@ -264,7 +266,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		oscarId = stdController.getId();
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
 
-        if(Test.isRunningTest()) oscar =  [Select Id, Account__c, Process__c, Step6__c, ANG_Type_Of_Change__c, STEP45__c, ANG_Hierarchy_Created__c from AMS_OSCAR__c where Id =:oscarId];
+        if(Test.isRunningTest()) oscar =  [Select Id, Account__c, Process__c, Step6__c, ANG_Type_Of_Change__c, STEP45__c, ANG_Hierarchy_Created__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Id =:oscarId];
+	
 	}
 
 
@@ -276,7 +279,14 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 	public void selectMain() {
 		for(HierarchyItem hi : hierarchyValues){
-			if(hi.main)	oscar.Account__c = hi.acc.Id;
+			if(hi.main)	{
+
+				if(oscar.Account__c <> hi.acc.Id){
+					oscar.Account__c = hi.acc.Id;
+					oscarMainAccount = oscar.Account__c;
+				}
+				
+			}
 		}
 	}
 
@@ -336,19 +346,40 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				}
 
 				oscar.Step45__c = AMS_Utils.PASSED;
+				
+                Case caseToUpdate;
+                AMS_Pax_Accreditation_Form__c accreditationForm;
+                
+				selectMain();
+
+				if(oscarMainAccount != null){
+					oscar.Account__c = oscarMainAccount;
+					accreditationForm = [Select Id, SAAM_Case__c from AMS_Pax_Accreditation_Form__c where Id =:oscar.AMS_Online_Accreditation__c];
+					caseToUpdate = new Case(Id = accreditationForm.SAAM_Case__c);
+					caseToUpdate.AccountId = oscar.Account__c;
+					accreditationForm.HO_Account__c = oscar.Account__c;
+				}
 
 				update oscar;
-				//if(updateRelatedRecords()) closeTab = true;
-				
-				//setting Set for batch to create case, oscar and staging area for the child accounts
+
+				if(oscarMainAccount != null){
+					update caseToUpdate;
+					update accreditationForm;
+				}
+
 				Set<Id> acctId = new Set<Id>();
 				
 				for(Account a: accountsToUpdate)
-					AcctId.Add(a.id);
+					acctId.Add(a.id);
 
-                ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
+				if(Test.isRunningTest()){
+					Id accountIdToTest =  (new list<ID>(acctId))[0];
+		            acctId = new Set<Id>{accountIdToTest};
+				}
+
+				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
 				Id batchId = Database.executeBatch(myBatchObject,1);
-			
+
 			} catch(Exception e) {
 				Database.rollback(sp);
 				//DML Exceptions are sometimes displayed on the page

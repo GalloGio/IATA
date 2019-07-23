@@ -9,8 +9,10 @@ private class ISSP_MIR_Metrics_Test {
     	thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
     	system.runAs(thisUser){
 			Account account = ISSP_ObjectFactory.createNewAccount();
+			account.Sector__c = 'Airline';
 	        insert account;
 	        Contact con1 = ISSP_ObjectFactory.createNewContact();
+			con1.AccountId = account.Id;
 	        insert con1;
 	        
 	        Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
