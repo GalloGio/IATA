@@ -14,8 +14,60 @@ public class ANG_MulticountryHelper {
 		public Map<Id, Account> swapMapping;
 	}
 
+	public class AgenciesRelationshipWrapper implements Comparable {
+
+		public AMS_Agencies_relationhip__c relation;
+		public Map<Id, Id> hePerBspMapping;
+
+		public AgenciesRelationshipWrapper(AMS_Agencies_relationhip__c relation, Map<Id, Id> hePerBspMapping){
+			this.relation = relation;
+			this.hePerBspMapping = hePerBspMapping;
+		}
+
+		public Integer compareTo(Object compareTo){
+
+			AgenciesRelationshipWrapper compareToRelationWrapper = (AgenciesRelationshipWrapper) compareTo;
+			AMS_Agencies_relationhip__c compareToRelation = compareToRelationWrapper.relation;
+
+			Id relationHeInBsp = hePerBspMapping.get(relation.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			Id compareRelationHeInBsp = hePerBspMapping.get(compareToRelation.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			
+			//If agencies location type are GE: they have priority over any other 
+			if(relation.Parent_Account__r.Location_Type__c == AMS_Utils.GE){
+				return -1;
+			}
+			else if(compareToRelation.Parent_Account__r.Location_Type__c == AMS_Utils.GE){
+				return 1;
+			}
+			//If any of the agencies with location type AE was selected by the user to become a new HE: they have priority over HE's 
+			else if(relation.Child_Account__r.Location_Type__c == AMS_Utils.AE && relation.Child_Account__c == relationHeInBsp){
+				return -1;
+			}
+			else if(compareToRelation.Child_Account__r.Location_Type__c == AMS_Utils.AE && compareToRelation.Child_Account__c == compareRelationHeInBsp){
+				return 1;
+			}
+			//If agencies location type are HE: they have priority over any other AE
+			else if(relation.Parent_Account__r.Location_Type__c == AMS_Utils.HE){
+				return -1;
+			}
+			else if(compareToRelation.Parent_Account__r.Location_Type__c == AMS_Utils.HE){
+				return 1;
+			}
+
+			return 0;
+
+		}
+
+	}
+
+	public class TargetHierarchyWrapper {
+		public Map<Id, Account> hierarchyBspMap;
+		public Account targetGE;
+		public Id hierarchyId;
+	}
+
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
-    
+
     public static Set<String> locationTypesSet = new Set<String>{
         AMS_Utils.HE, 
         AMS_Utils.AE,
@@ -465,6 +517,251 @@ public class ANG_MulticountryHelper {
 			childAcct.ParentId = parentAcct.Id;
 		}
 
+	}
+
+	/**
+	 * Processes and sorts the acquired hierarchy relationship records.
+	 * - The sort is custom to make sure that we later process the relationship records from top location types to bottom 
+	 * (see compareTo method from wrapper class AgenciesRelationshipWrapper)
+	 *
+	 * @param  acquiredHierarchyLst 		contains all relationship records from the acquired hierarchy 
+	 * @param  hePerBspMapping      		contains the previously user selected HE for each new BSP in the target hierarchy 
+	 * @return acquiredHierarchyWrapperLst	sorted list of relationship wrappers containing all the acquired hierarchy relationships  
+	 */ 
+	public static List<AgenciesRelationshipWrapper> prepareAcquiredHierarchyData(List<AMS_Agencies_relationhip__c> acquiredHierarchyLst, Map<Id, Id> hePerBspMapping){
+
+		List<AgenciesRelationshipWrapper> acquiredHierarchyWrapperLst = new List<AgenciesRelationshipWrapper>();
+
+		integer i = 0;
+		integer listSize = acquiredHierarchyLst.size();
+
+		while(i < listSize){
+			AMS_Agencies_relationhip__c relation = acquiredHierarchyLst.get(i);
+			acquiredHierarchyWrapperLst.add(new AgenciesRelationshipWrapper(relation, hePerBspMapping));
+			i++;
+		}
+
+		acquiredHierarchyWrapperLst.sort();
+
+		return acquiredHierarchyWrapperLst;
+		
+	}
+
+	/**
+	 * Processes all the target relationships from the target hierarchy
+	 * and splits the hierarchy head locations (GE/HE) for each different BSP
+	 * <GE, BSP>; <HE 1; BSP 1>; <HE 2; BSP 2>; etc    
+	 * 
+	 * @param  targetHierarchyLst contains all relationship records from the target hierarchy 
+	 * @return thw                wrapper containing the target hierarchy head locations splited by BSP, GE record and target hierarchy id
+	 */
+	public static TargetHierarchyWrapper prepareTargetHierarchyData(List<AMS_Agencies_relationhip__c> targetHierarchyLst){
+		
+		TargetHierarchyWrapper thw = new TargetHierarchyWrapper();
+
+		thw.hierarchyBspMap = new Map<Id, Account>();
+
+		integer i = 0;
+		integer listSize = targetHierarchyLst.size();
+
+		while(i < listSize){
+			AMS_Agencies_relationhip__c relation = targetHierarchyLst.get(i);
+			
+			if(thw.hierarchyId == NULL){
+				thw.hierarchyId = relation.Hierarchy__c;
+			}
+
+			if(relation.Parent_Account__r.Location_Type__c == AMS_Utils.GE){
+				thw.targetGE = (Account) relation.getSObject('Parent_Account__r');
+				thw.hierarchyBspMap.put(relation.Parent_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, thw.targetGE);
+			}
+
+			if(relation.Child_Account__r.Location_Type__c == AMS_Utils.HE){
+				thw.hierarchyBspMap.put(relation.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, (Account)  relation.getSObject('Child_Account__r'));
+			}
+
+			i++;
+		}
+
+		return thw;
+	}
+
+	/**
+	 * Processes a given acquired agency by another multicountry hierarchy
+	 * or an agency splitted into a new multicountry hierarchy
+	 * 
+	 * @param  agency           current account that is being processed
+	 * @param  oscarAccountId   account id associated with the change oscar
+	 * @param  newParentId      account id of the hierarchy parent (GE)
+	 * @param  currentBspId     bsp associated with the current account
+	 * @param  currentRelation  relationship record associated with the current account
+	 * @param  thw              wrapper containing the hierarchy head locations splited by BSP, GE record and hierarchy record id
+	 * @param  toReturn         agency changes wrapper
+	 * @param  isHierarchySplit identifies if this change of hierarchy is a hierarchy split
+	 */
+	public static void processAgency(Account agency, Id oscarAccountId, Id newParentId, Id currentBspId, AMS_Agencies_relationhip__c currentRelation, TargetHierarchyWrapper thw, ANG_AgencyChangesHelper.AChangeStructure toReturn, Boolean isHierarchySplit){
+		
+		if(isHierarchySplit){
+			processSplitAgency(agency, oscarAccountId, newParentId, currentBspId, currentRelation, thw, toReturn);
+		}
+		else {
+			processAcquiredAgency(agency, newParentId, currentBspId, currentRelation, thw, toReturn);
+		}
+
+		if(agency.Location_Risk_Events__r != NULL){
+			toReturn.addRiskEventsToInactivate(agency.Location_Risk_Events__r);
+		}
+
+	}
+
+	/**
+	 * Processes a given split agency into a new multicountry hierarchy:
+	 *  - Updates current account relationships/location types
+	 *  - Creates RHC information record for the new GE
+	 *  - Deletes previous relationships where the new GE was a child 
+	 * 
+	 * @param  splitAgency     current account that is being processed
+	 * @param  oscarAccountId   account id associated with the change oscar
+	 * @param  newParentId      account id of the hierarchy parent (GE)
+	 * @param  currentBspId     bsp associated with the current account
+	 * @param  currentRelation  relationship record associated with the current account
+	 * @param  thw              wrapper containing the hierarchy head locations splited by BSP, GE record and hierarchy record id
+	 * @param  toReturn         agency changes wrapper
+	 */
+	public static void processSplitAgency(Account splitAgency, Id oscarAccountId, Id newParentId, Id currentBspId, AMS_Agencies_relationhip__c currentRelation, TargetHierarchyWrapper thw, ANG_AgencyChangesHelper.AChangeStructure toReturn){
+
+		Account headEntityIdInBSP = thw.hierarchyBspMap.get(currentBspId);
+
+		if(splitAgency.Id == oscarAccountId){
+			splitAgency.Location_Type__c = AMS_Utils.GE;
+			splitAgency.ParentId = null;
+			splitAgency.Top_Parent__c = null;
+			splitAgency.Identify_as_Multicountry_Key_Hierarchy__c = true;
+
+			toReturn.addAccountToCreateRHC(splitAgency);
+
+			if(currentRelation != NULL){
+				toReturn.addRelationToDelete(currentRelation);
+			}
+
+			return; 
+		}
+		
+		updateAgencyRelationships(splitAgency, oscarAccountId, currentBspId, headEntityIdInBSP, thw.hierarchyBspMap);
+		
+		if(currentRelation != NULL){
+			currentRelation.Hierarchy__c = thw.hierarchyId;
+			currentRelation.Parent_Account__c = splitAgency.ParentId;
+			toReturn.addRelation(currentRelation);
+		}
+
+	}
+
+	/**
+	 * Processes a given acquired agency by another multicountry hierarchy:
+	 * 	- If the agency location is GE we need to create a new relationship record pointing to the target GE
+	 *  and we need to clean and delete a couple of fields/related records (RHC e.g.)
+	 *  - Inactivate risk events associated with the current account
+	 * 	- Updates current account relationships/location types
+	 * 
+	 * @param  acquiredAgency  current account that is being processed
+	 * @param  newParentId     account id of the target hierarchy parent (GE)
+	 * @param  currentBspId    bsp associated with the current account
+	 * @param  currentRelation relationship record associated with the current account
+	 * @param  thw             wrapper containing the target hierarchy head locations splited by BSP, GE record and target hierarchy id
+	 * @param  toReturn        agency changes wrapper
+	 */
+	public static void processAcquiredAgency(Account acquiredAgency, Id newParentId, Id currentBspId, AMS_Agencies_relationhip__c currentRelation, TargetHierarchyWrapper thw, ANG_AgencyChangesHelper.AChangeStructure toReturn){
+
+		Account headEntityIdInBSP = thw.hierarchyBspMap.get(currentBspId);
+
+		if(acquiredAgency.Location_Type__c == AMS_Utils.GE){
+			AMS_Agencies_relationhip__c newRel = new AMS_Agencies_relationhip__c();
+			newRel.Parent_Account__c = headEntityIdInBSP != NULL ? headEntityIdInBSP.Id : newParentId;
+			newRel.Child_Account__c = acquiredAgency.Id;
+			newRel.Is_Newgen_Relation__c = true;
+			newRel.Hierarchy__c = thw.hierarchyId;
+			toReturn.addRelation(newRel);
+
+			acquiredAgency.ANG_HE_RiskHistoryAssessment__c = null;
+			acquiredAgency.ANG_HE_RiskStatus__c = null;
+			acquiredAgency.Assessment_Performed_Date__c = null;
+			acquiredAgency.Financial_Review_Result__c = null;
+			acquiredAgency.ANG_HE_CashCondition__c = false;
+			acquiredAgency.Financial_Assessment_Points__c = null;
+			acquiredAgency.Identify_as_Multicountry_Key_Hierarchy__c = false;
+			
+			if(acquiredAgency.RHC_Informations__r != NULL){
+				toReturn.addRhcInformationToDeactivate(acquiredAgency.RHC_Informations__r[0]);
+			}
+
+		}
+
+		acquiredAgency.ANG_FA_Opt_out__c = thw.targetGE.ANG_FA_Opt_out__c;
+
+		if(headEntityIdInBSP != NULL){
+			acquiredAgency.Remittance_frequency__c = headEntityIdInBSP.Remittance_frequency__c;
+		}
+
+		updateAgencyRelationships(acquiredAgency, newParentId, currentBspId, headEntityIdInBSP, thw.hierarchyBspMap);
+
+		if(currentRelation != NULL){
+			currentRelation.Parent_Account__c = acquiredAgency.ParentId;
+			currentRelation.Hierarchy__c = thw.hierarchyId;
+			toReturn.addRelation(currentRelation);
+		}
+		
+	}
+
+	/**
+	 * Updates the current account relationships (Parent and Top Parent) 
+	 * and assigns the proper location type accordingly to the following:
+	 * 	- If the target hierarchy does not contain (yet) the associated BSP: HE
+	 *	- Otherwise: AE
+	 * 
+	 * @param  acct                  current account that is being processed
+	 * @param  newParentId           account id of the target hierarchy parent (GE)
+	 * @param  currentBspId          bsp associated with the current account
+	 * @param  headEntityIdInBSP     account id of the head entity for the current BSP (if present) 
+	 * @param  targetHierarchyBspMap contains the target hierarchy head locations (GE or HE) splited by BSP 
+	 */
+	private static void updateAgencyRelationships(Account acct, Id newParentId, Id currentBspId, Account headEntityIdInBSP, Map<Id, Account> targetHierarchyBspMap){
+
+		if(headEntityIdInBSP != NULL){
+			acct.Location_Type__c = AMS_Utils.AE;
+			acct.ParentId = headEntityIdInBSP.Id;
+			acct.Top_Parent__c = newParentId;
+		} else {
+			acct.Location_Type__c = AMS_Utils.HE;
+			acct.ParentId = newParentId;
+			acct.Top_Parent__c = newParentId;
+			targetHierarchyBspMap.put(currentBspId, acct);
+		}
+		
+	}
+
+	/**
+	 * Process agencies forms of payments so that: 
+	 *  - Cash & IEP forms of payments are set to Active
+	 *  - Credit Card form of payment are set accordingly to PCI Compliance
+	 *  
+	 * @param  accountLst agencies to process
+	 * @param  toReturn   agency changes wrapper
+	 */
+	public static void processAgenciesFormsOfPayment(List<Account> accountLst, ANG_AgencyChangesHelper.AChangeStructure toReturn){
+
+		for(Account acct : accountLst){
+			List<Agency_Authorization__c> agencyAuthorizationLst = acct.Agency_Authorizations__r;
+
+			if(agencyAuthorizationLst != NULL){
+				for(Agency_Authorization__c aa : agencyAuthorizationLst){
+					if(AMS_Utils.assignFormOfPaymentStatus(aa, acct.Is_PCI_compliant__c)){
+						toReturn.addAgencyAuthorizationToUpdate(aa);
+					}
+				}
+			}
+		}
+		
 	}
 
 }

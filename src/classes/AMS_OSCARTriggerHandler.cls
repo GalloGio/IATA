@@ -4317,7 +4317,7 @@ public class AMS_OSCARTriggerHandler {
             else
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) : 'Refer to ASD' ? 'Active'), RecordTypeId = FormOfPaymentRT));
         */
-            String status = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : ((oscar.Is_PCI_compliant__c == 'No' || oscar.Is_NewGen_Pilot__c) ? 'Active' : 'Non-Active'));
+            String status = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : ((oscar.Is_PCI_compliant__c == 'No' || oscar.Is_NewGen_Pilot__c) ? 'Non-Active' : 'Active'));
             authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = status, RecordTypeId = FormOfPaymentRT));
         }
 
@@ -4640,7 +4640,7 @@ public class AMS_OSCARTriggerHandler {
                 oscar.addError('The case cannot be closed if the sanity check is not passed or failed.');
             }
 
-            if (oscar.Process__c == AMS_Utils.NGANNUALREVAL && oscar.STEP43__c == AMS_Utils.PASSED && oldOscars.get(oscar.Id).STEP43__c != AMS_Utils.FAILED){
+            if (oscar.Process__c == AMS_Utils.NGANNUALREVAL && oscar.STEP43__c == AMS_Utils.PASSED && oldOscars.get(oscar.Id).STEP43__c != AMS_Utils.FAILED && oldOscars.get(oscar.Id).STEP43__c != oscar.STEP43__c){
                 oscarsIdsToProcess.add(oscar.Id);
             }
         }

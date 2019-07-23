@@ -1815,6 +1815,146 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>LastModifiedById</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EmailBouncedReason</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EmailBouncedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IsEmailBounced</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__Needs_Score_Synced__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Instant_Survey_Last_survey_sent__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Instant_Survey_Last_feedback_received__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Available_Services__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_activity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__grade__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__notes__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_search_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_search_term__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__first_touch_url__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_object_type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_object_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__Pardot_Last_Scored_At__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__url__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__last_activity__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__pardot_hard_bounced__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__created_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__score__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__campaign__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__conversion_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>pi__comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Pardot_Area_of_Interest__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>FieldsExcludedFromTracking</label>
     </fieldSets>
     <fieldSets>
@@ -10725,7 +10865,12 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <type>Picklist</type>
         <valueSet>
             <valueSetDefinition>
-                <sorted>false</sorted>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Arabic</fullName>
+                    <default>false</default>
+                    <label>Arabic</label>
+                </value>
                 <value>
                     <fullName>Chinese</fullName>
                     <default>false</default>
@@ -10742,9 +10887,14 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>French</label>
                 </value>
                 <value>
-                    <fullName>Korean</fullName>
+                    <fullName>German</fullName>
                     <default>false</default>
-                    <label>Korean</label>
+                    <label>German</label>
+                </value>
+                <value>
+                    <fullName>Indonesian</fullName>
+                    <default>false</default>
+                    <label>Indonesian</label>
                 </value>
                 <value>
                     <fullName>Italian</fullName>
@@ -10757,9 +10907,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Japanese</label>
                 </value>
                 <value>
+                    <fullName>Korean</fullName>
+                    <default>false</default>
+                    <label>Korean</label>
+                </value>
+                <value>
                     <fullName>Portuguese</fullName>
                     <default>false</default>
                     <label>Portuguese</label>
+                </value>
+                <value>
+                    <fullName>Russian</fullName>
+                    <default>false</default>
+                    <label>Russian</label>
                 </value>
                 <value>
                     <fullName>Spanish</fullName>
@@ -10767,14 +10927,19 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Spanish</label>
                 </value>
                 <value>
+                    <fullName>Thai</fullName>
+                    <default>false</default>
+                    <label>Thai</label>
+                </value>
+                <value>
                     <fullName>Turkish</fullName>
                     <default>false</default>
                     <label>Turkish</label>
                 </value>
                 <value>
-                    <fullName>Russian</fullName>
+                    <fullName>Vietnamese</fullName>
                     <default>false</default>
-                    <label>Russian</label>
+                    <label>Vietnamese</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -20105,6 +20270,29 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
         <errorDisplayField>Email_Status_Update__c</errorDisplayField>
         <errorMessage>Email Status has been modified, please enter update date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ID_card_Holder_no_change</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot; 
+), 
+        
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;  
+), 
+
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,        
+        
+ID_Card_Holder__c=false,
+
+ISCHANGED(ID_Card_Holder__c)
+)</errorConditionFormula>
+        <errorMessage>This conbination of profile and role is not allowed to uncheck ID card holder.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>IFAP_Contact_Under_Branch_Account</fullName>
