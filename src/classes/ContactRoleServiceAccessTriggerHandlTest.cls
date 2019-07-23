@@ -5,10 +5,10 @@ public class ContactRoleServiceAccessTriggerHandlTest {
     private static void setup() {
         IATA_ISO_Country__c canada = createIataCountry('Canada', 'CA', 'Canada');
         Account testAccount = createTestAccount('Test Account', canada);
-        Contact testContact = createTestContact(testAccount, 'testContactRoleServiceAccessTrigger@test.com');
-        Contact testContact2 = createTestContact(testAccount, 'testContactRoleServiceAccessTrigger2@test.com');
+        Contact testContact = createTestContact(testAccount, 'testContactRoleServiceAccessTrigger@test.com', 'John', 'Rambo');
+        Contact testContact2 = createTestContact(testAccount, 'testContactRoleServiceAccessTrigger2@test.com', 'Frank' , 'Herbert');
         User testUser = createTestUser(testContact);
-
+        User testUser2 = createTestUser(testContact2);
 
         Account_Roles__c accountRoles = new Account_Roles__c();
         accountRoles.Name = 'GADM Participant';
@@ -33,6 +33,10 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         Contact_Roles__c contactRoles3 = new Contact_Roles__c();
         contactRoles3.Name = 'Account Sharing';
         insert contactRoles3;
+
+        Contact_Roles__c contactRoles4 = new Contact_Roles__c();
+        contactRoles4.Name = 'GADM Data Submitter';
+        insert contactRoles4;
 
         Portal_Applications__c portalApplications = new Portal_Applications__c();
         portalApplications.Name = 'GADM';
@@ -66,6 +70,12 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         serviceAccess2.Status__c = 'Pending';
         insert serviceAccess2;
 
+        Account_Contact_Role__c accountContactRole3 = new Account_Contact_Role__c();
+        accountContactRole3.Contact__c = testContact2.Id;
+        accountContactRole3.Contact_Roles__c = contactRoles4.Id;
+        accountContactRole3.Account_Role__c = accountRole.Id;
+        accountContactRole3.Service_Rendered__c = 'GADM';
+        insert accountContactRole3;
     }
 
 
@@ -101,11 +111,11 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         return acc;
     }
 
-    private static Contact createTestContact(Account account, String email) {
+    private static Contact createTestContact(Account account, String email, String firstName, String lastName) {
         Contact testContact = new Contact();
         testContact.AccountId = account.id;
-        testContact.Firstname = 'teste3_4';
-        testContact.Lastname='test3';
+        testContact.Firstname = firstName;
+        testContact.Lastname = lastName;
         testContact.Phone = '911111113';
         testContact.MobilePhone = '911111113';
         testContact.Email = email;
@@ -123,8 +133,8 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         newUser.alias = 'dsfsdfds';
         newUser.email = contact.email;
         newUser.emailencodingkey = 'UTF-8';
-        newUser.firstname = contact.firstName;
-        newUser.lastname = contact.lastname;
+        newUser.FirstName = contact.FirstName;
+        newUser.LastName = contact.LastName;
         newUser.languagelocalekey = 'en_US';
         newUser.localesidkey = 'en_US';
         newUser.contactId = contact.Id;
@@ -360,4 +370,155 @@ public class ContactRoleServiceAccessTriggerHandlTest {
         system.assertEquals(wrappers.size(), 2);
         Test.stopTest();
     }
+
+    @IsTest
+    private static void grandAccessToGadmCategoryFilesTest() {
+
+        Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
+        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Submitter'];
+        User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
+
+        List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = 'GADM Public' LIMIT 1];
+        if(existing.isEmpty()) {
+            ContentWorkspace workspace = new ContentWorkspace();
+            workspace.Name = 'GADM Public';
+            insert workspace;
+
+            existing.add(workspace);
+        }
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
+            access.Contact_Role__c = accountContactRole.Id;
+            access.Service__c = gadmApp.Id;
+            access.Status__c = 'Granted';
+            insert access;
+
+        }
+
+        Test.stopTest();
+
+        List<ContentWorkspaceMember> members = [SELECT Id, MemberId FROM ContentWorkspaceMember WHERE ContentWorkspaceId = :existing[0].Id];
+        Set<Id> membersIds = new Set<Id>();
+        for(ContentWorkspaceMember member : members) {
+            membersIds.add(member.MemberId);
+        }
+
+        System.assertEquals(true, membersIds.contains(testUser.Id), 'User should have access to ContentWorkspace!');
+
+    }
+
+    @IsTest
+    private static void grandAccessToGadmCategoryFilesTest2() {
+
+        Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
+        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Submitter'];
+        User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
+
+        List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+
+        List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c];
+        if(existing.isEmpty()) {
+            ContentWorkspace workspace = new ContentWorkspace();
+            workspace.Name = 'GADM Public';
+            insert workspace;
+
+            existing.add(workspace);
+        }
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
+            access.Contact_Role__c = accountContactRole.Id;
+            access.Service__c = gadmApp.Id;
+            access.Status__c = 'Pending';
+            insert access;
+
+        }
+
+        Test.stopTest();
+
+        List<ContentWorkspaceMember> members = [SELECT Id, MemberId FROM ContentWorkspaceMember WHERE ContentWorkspaceId = :existing[0].Id];
+        Set<Id> membersIds = new Set<Id>();
+        for(ContentWorkspaceMember member : members) {
+            membersIds.add(member.MemberId);
+        }
+
+        System.assertEquals(false, membersIds.contains(testUser.Id), 'User should NOT have access to ContentWorkspace!');
+
+    }
+
+    @IsTest
+    private static void removeAccessToGadmCategoryFilesTest() {
+
+        Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
+        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Submitter'];
+        User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
+
+        List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+
+        List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+        if(existing.isEmpty()) {
+            ContentWorkspace workspace = new ContentWorkspace();
+            workspace.Name = 'GADM Public';
+            insert workspace;
+        }
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
+            access.Contact_Role__c = accountContactRole.Id;
+            access.Service__c = gadmApp.Id;
+            access.Status__c = 'Granted';
+            insert access;
+
+            delete access;
+        }
+
+        Test.stopTest();
+
+    }
+
+    @IsTest
+    private static void removeAccessToGadmCategoryFilesTest2() {
+
+        Portal_Applications__c gadmApp = [SELECT Id FROM Portal_Applications__c WHERE Name = 'GADM'];
+        Account_Contact_Role__c accountContactRole = [SELECT Id FROM Account_Contact_Role__c WHERE Contact_Roles__r.Name = 'GADM Data Submitter'];
+        User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger2@test.com'];
+
+        List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+
+        List<ContentWorkspace> existing = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+        if(existing.isEmpty()) {
+            ContentWorkspace workspace = new ContentWorkspace();
+            workspace.Name = 'GADM Public';
+            insert workspace;
+        }
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
+            access.Contact_Role__c = accountContactRole.Id;
+            access.Service__c = gadmApp.Id;
+            access.Status__c = 'Granted';
+            insert access;
+
+            access.Status__c = 'Pending';
+            update access;
+
+        }
+
+        Test.stopTest();
+
+
+    }
+
+
 }

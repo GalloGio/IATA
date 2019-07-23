@@ -5,9 +5,49 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
         fillAccountAndContact(newObjects);
     }
 
+
+    public void OnAfterInsert(List<Contact_Role_Service_Access__c> newObjects) {
+        Set<Id> newObjectIds = new Set<Id>();
+        for(Contact_Role_Service_Access__c access : newObjects) {
+            newObjectIds.add(access.Id);
+        }
+        grandAccessToGadmCategoryFiles(newObjectIds);
+    }
+
     public void OnBeforeUpdate(List<Contact_Role_Service_Access__c> oldObjects, List<Contact_Role_Service_Access__c> updatedObjects, Map<Id, Contact_Role_Service_Access__c> oldMap) {
         fillUniqueKey(updatedObjects);
         fillAccountAndContact(updatedObjects);
+    }
+
+
+    public void OnAfterUpdate(List<Contact_Role_Service_Access__c> newObjects, Map<Id, Contact_Role_Service_Access__c> oldMap) {
+        Set<Id> grantedAdded = new Set<Id>();
+        Set<Id> grantedRemoved = new Set<Id>();
+
+        for(Contact_Role_Service_Access__c access : newObjects) {
+            Contact_Role_Service_Access__c oldObj = oldMap.get(access.Id);
+
+            if(access.Status__c == 'Granted' && oldObj.Status__c != 'Granted') {
+                grantedAdded.add(access.Id);
+            }
+
+            if(access.Status__c != 'Granted' && oldObj.Status__c == 'Granted') {
+                grantedRemoved.add(access.Id);
+            }
+        }
+
+        grandAccessToGadmCategoryFiles(grantedAdded);
+        removeAccessToGadmCategoryFiles(grantedRemoved, Trigger.isDelete);
+    }
+
+
+    public void OnAfterDelete(List<Contact_Role_Service_Access__c> oldObjects) {
+        Set<Id> contactIds = new Set<Id>();
+        for(Contact_Role_Service_Access__c access : oldObjects) {
+            contactIds.add(access.Contact__c);
+        }
+
+        removeAccessToGadmCategoryFiles(contactIds, Trigger.isDelete);
     }
 
     public static List<NotificationWrapper> notifyUserAboutStatusChange(List<Contact_Role_Service_Access__c> changedAccesses){
@@ -43,7 +83,6 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
 
         List<Contact_Role_Service_Access__c> changedOrNewAccesses = new List<Contact_Role_Service_Access__c>();
         for (Contact_Role_Service_Access__c crsaNew : newValues) {
-            system.debug(crsaNew.Service_Name__c);
             if(crsaNew.Service_Name__c == 'GADM') {
                 Contact_Role_Service_Access__c crsaOld = oldValues.get(crsaNew.Id);
                 if (crsaOld != null) {
@@ -70,9 +109,7 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
         }
 
         List<User> users = GADM_InternalUsersHandler.getUsersFromGroup('GADM Internal Users Notification Group');
-        system.debug('PUs');
-        system.debug(users);
-        system.debug(powerUsers);
+
         for(Contact_Role_Service_Access__c puAccess: powerUsers) {
             for (User u : users) {
                 allmsg.add(createNotification(puAccess.Id, u, puAccess.Status__c));
@@ -165,6 +202,143 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
             }
 
         }
+
+    }
+
+    @Future
+    private static void grandAccessToGadmCategoryFiles(Set<Id> newObjectsIds) {
+
+        List<Contact_Role_Service_Access__c> enrichObjects = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Service_Rendered__c, Status__c FROM Contact_Role_Service_Access__c WHERE Id = :newObjectsIds];
+
+        Set<Id> contactIds = new Set<Id>();
+
+        for(Contact_Role_Service_Access__c access : enrichObjects) {
+            if(access.Contact_Role__r.Service_Rendered__c == 'GADM' && access.Contact_Role__r.Contact_Roles__r.name == 'GADM Data Submitter' && access.Status__c == 'Granted') {
+                contactIds.add(access.Contact_Role__r.Contact__c);
+            }
+        }
+
+        List<User> relatedUsers = [SELECT Id FROM User WHERE ContactId = :contactIds];
+
+        if(! relatedUsers.isEmpty()) {
+
+            List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+            if(gadmSettings.isEmpty()) {
+                return;
+            }
+            if(String.isBlank(gadmSettings[0].Files_Folder__c)) {
+                return;
+            }
+
+            List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+            List<ContentWorkspacePermission> viewer = [SELECT Id FROM ContentWorkspacePermission WHERE Name = 'Viewer'];
+
+            if(! gadmWorkspace.isEmpty() && !viewer.isEmpty()) {
+
+                List<ContentWorkspaceMember> existingMembers = [SELECT Id, MemberId FROM ContentWorkspaceMember WHERE ContentWorkspaceId = :gadmWorkspace[0].Id];
+
+                Set<Id> existingMembersIds = new Set<Id>();
+                for(ContentWorkspaceMember member : existingMembers) {
+                    existingMembersIds.add(member.MemberId);
+                }
+
+                Set<Id> relatedUsersIds = new Set<Id>();
+                for(User u : relatedUsers) {
+                    relatedUsersIds.add(u.Id);
+                }
+
+                Set<Id> usersToAddIds = new Set<Id>();
+                for(Id relatedUserId : relatedUsersIds) {
+                    if(!existingMembersIds.contains(relatedUserId)) {
+                        usersToAddIds.add(relatedUserId);
+                    }
+                }
+
+                List<ContentWorkspaceMember> membersToAdd = new List<ContentWorkspaceMember>();
+                for(Id userToAdd : usersToAddIds) {
+                    ContentWorkspaceMember newMember = new ContentWorkspaceMember();
+                    newMember.ContentWorkspaceId = gadmWorkspace[0].Id;
+                    newMember.ContentWorkspacePermissionId = viewer[0].Id;
+                    newMember.MemberId = userToAdd;
+
+                    membersToAdd.add(newMember);
+                }
+
+                if(! membersToAdd.isEmpty()) {
+                    insert membersToAdd;
+                }
+
+            }
+
+        }
+
+
+    }
+
+    @Future
+    private static void removeAccessToGadmCategoryFiles(Set<Id> newObjectsIds, Boolean isDelete) {
+
+        Set<Id> contactIds = new Set<Id>();
+
+        if(isDelete) {
+            contactIds = newObjectsIds;
+        }else {
+            List<Contact_Role_Service_Access__c> enrichObjects = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Service_Rendered__c FROM Contact_Role_Service_Access__c WHERE Id = :newObjectsIds];
+
+            for(Contact_Role_Service_Access__c access : enrichObjects) {
+                if(access.Contact_Role__r.Service_Rendered__c == 'GADM' && access.Contact_Role__r.Contact_Roles__r.Name == 'GADM Data Submitter') {
+                    contactIds.add(access.Contact_Role__r.Contact__c);
+                }
+            }
+
+        }
+
+        List<User> relatedUsers = [SELECT Id FROM User WHERE ContactId = :contactIds];
+
+        if(! relatedUsers.isEmpty()) {
+
+            List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+            if(gadmSettings.isEmpty()) {
+                return;
+            }
+            if(String.isBlank(gadmSettings[0].Files_Folder__c)) {
+                return;
+            }
+
+            List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+            List<ContentWorkspacePermission> viewer = [SELECT Id FROM ContentWorkspacePermission WHERE Name = 'Viewer'];
+
+            if(! gadmWorkspace.isEmpty() && !viewer.isEmpty()) {
+
+                List<ContentWorkspaceMember> existingMembers = [SELECT Id, MemberId FROM ContentWorkspaceMember WHERE ContentWorkspaceId = :gadmWorkspace[0].Id];
+
+                Set<Id> existingMembersIds = new Set<Id>();
+                for(ContentWorkspaceMember member : existingMembers) {
+                    existingMembersIds.add(member.MemberId);
+                }
+
+                Set<Id> relatedUsersIds = new Set<Id>();
+                for(User u : relatedUsers) {
+                    relatedUsersIds.add(u.Id);
+                }
+
+                Set<Id> usersToRemoveIds = new Set<Id>();
+                for(Id relatedUserId : relatedUsersIds) {
+                    if(existingMembersIds.contains(relatedUserId)) {
+                        usersToRemoveIds.add(relatedUserId);
+                    }
+                }
+
+                List<ContentWorkspaceMember> membersToRemove = [SELECT Id FROM ContentWorkspaceMember WHERE ContentWorkspaceId = :gadmWorkspace[0].Id AND ContentWorkspacePermissionId = :viewer[0].Id AND MemberId = :usersToRemoveIds];
+
+                if(! membersToRemove.isEmpty()) {
+                    delete membersToRemove;
+                }
+
+            }
+
+        }
+
 
     }
 

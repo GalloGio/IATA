@@ -42,6 +42,10 @@
                 <behavior>Edit</behavior>
                 <field>IATA_Email_Contact__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Files_Folder__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

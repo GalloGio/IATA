@@ -22,3 +22,25 @@
    line-height: 22px;
    color: black;
 }
+
+.THIS img {
+    border: solid 10px transparent;
+}
+
+.THIS img:hover {
+    border-color: #E6E6E6;
+    cursor:pointer;
+}
+
+.THIS .no_image {
+    border: 10px solid white;
+    text-align: center;
+    height:202px;
+    line-height:182px;
+    background-color:#F2F2F2;
+}
+
+.THIS .no_image:hover {
+    border-color: #E6E6E6;
+    cursor:pointer;
+}

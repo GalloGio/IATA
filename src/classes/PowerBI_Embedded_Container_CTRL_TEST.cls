@@ -326,7 +326,7 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
     }
 
 
-    @IsTest
+    /*@IsTest
     private static void getAvailableDashboardCategoriesForUserTest() {
 
         User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
@@ -350,6 +350,98 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
         System.assertEquals(2, permissions2.size(), 'There should be exactly 2 permissions for Security category!');
         System.assertEquals(2, permissions3.size(), 'There should be exactly 2 permissions fro Service Power User category!');
 
+    }*/
+
+    @IsTest
+    private static void getCategories_accessToWorkspaceTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
+
+        List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+        List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+
+        ContentVersion contentVersion1 = new ContentVersion();
+
+        contentVersion1.Title = 'security';
+        contentVersion1.PathOnClient = 'security.jpg';
+        contentVersion1.VersionData = Blob.valueOf('Test Content Data');
+        contentVersion1.IsMajorVersion = true;
+
+        insert contentVersion1;
+
+        contentVersion1 = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :contentVersion1.Id];
+
+        ContentWorkspaceDoc doc = new ContentWorkspaceDoc();
+        doc.ContentDocumentId = contentVersion1.ContentDocumentId;
+        doc.ContentWorkspaceId = gadmWorkspace[0].Id;
+        insert doc;
+
+        List<ContentWorkspacePermission> permissions = [SELECT Id FROM ContentWorkspacePermission WHERE Name = 'Viewer'];
+
+        List<PowerBI_Embedded_Container_CTRL.CategoryWrapper> wrappers= new List<PowerBI_Embedded_Container_CTRL.CategoryWrapper>();
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            ContentWorkspaceMember workspaceMember = new ContentWorkspaceMember();
+            workspaceMember.ContentWorkspaceId = gadmWorkspace[0].Id;
+            workspaceMember.MemberId = testUser.Id;
+            workspaceMember.ContentWorkspacePermissionId = permissions[0].Id;
+            insert workspaceMember;
+
+            wrappers = PowerBI_Embedded_Container_CTRL.getCategories(testUser.Id);
+        }
+
+        Test.stopTest();
+
+        for(PowerBI_Embedded_Container_CTRL.CategoryWrapper wrapper : wrappers) {
+            if(wrapper.name == 'Security') {
+                System.assertEquals(false, wrapper.pictureUrl == null, 'PictureUrl should not be null if user has access to ContentWorkspace and picture is there!');
+            }
+        }
+
+    }
+
+    @IsTest
+    private static void getCategories_noAccessToWorkspaceTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
+
+        List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+        List<ContentWorkspace> gadmWorkspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+
+        ContentVersion contentVersion1 = new ContentVersion();
+
+        contentVersion1.Title = 'security';
+        contentVersion1.PathOnClient = 'security.jpg';
+        contentVersion1.VersionData = Blob.valueOf('Test Content Data');
+        contentVersion1.IsMajorVersion = true;
+
+        insert contentVersion1;
+
+        contentVersion1 = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :contentVersion1.Id];
+
+        ContentWorkspaceDoc doc = new ContentWorkspaceDoc();
+        doc.ContentDocumentId = contentVersion1.ContentDocumentId;
+        doc.ContentWorkspaceId = gadmWorkspace[0].Id;
+        insert doc;
+
+        List<PowerBI_Embedded_Container_CTRL.CategoryWrapper> wrappers= new List<PowerBI_Embedded_Container_CTRL.CategoryWrapper>();
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            wrappers = PowerBI_Embedded_Container_CTRL.getCategories(testUser.Id);
+        }
+
+        Test.stopTest();
+
+        for(PowerBI_Embedded_Container_CTRL.CategoryWrapper wrapper : wrappers) {
+            if(wrapper.name == 'Security') {
+                System.assertEquals(true, wrapper.pictureUrl == null, 'PictureUrl should be null if user has no access to ContentWorkspace!');
+            }
+        }
 
     }
 

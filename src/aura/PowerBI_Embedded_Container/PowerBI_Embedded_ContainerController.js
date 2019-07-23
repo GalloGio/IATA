@@ -1,13 +1,14 @@
 ({
     init : function(component, event, helper) {
-        helper.getAvailableDashboards(component, event);
+        helper.getAvailableCategories(component, event);
     },
 
-    showDashboardCategory : function(component, event, helper) {
-        helper.handleShowDashboardCategory(component, event);
+    showCategory : function(component, event, helper) {
+        helper.handleShowCategory(component, event);
         let key = event.currentTarget.id;
-        helper.handleTrackUsage(component, event, component.get('v.dashboardCategories')[key].key);
+        helper.handleTrackUsage(component, event, component.get('v.categories')[key].name);
     },
+
     backEvent : function(component, event, helper) {
         helper.handleBackEvent(component, event);
     },

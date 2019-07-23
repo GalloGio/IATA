@@ -1,34 +1,34 @@
 ({
 
-    getAvailableDashboards : function(component, event) {
+    getAvailableCategories : function(component, event) {
         this.toggleSpinner(component, event);
-        let action = component.get('c.getAvailableDashboardCategoriesForUser');
+        let action = component.get('c.getCategories');
         action.setParams({
             'userId' : $A.get('$SObjectType.CurrentUser.Id')
         });
         action.setCallback(this, function(response){
             const state = response.getState();
             if(state === 'SUCCESS') {
-                const dashboardCategories = response.getReturnValue();
-                if(! $A.util.isEmpty(dashboardCategories)) {
+                const categoryWrappers = response.getReturnValue();
+                if(! $A.util.isEmpty(categoryWrappers)) {
 
-                    let dashboards = [];
-                    for(let key in dashboardCategories) {
-                        dashboards.push({key:key, value:dashboardCategories[key]});
-                    }
+                    component.set('v.categories', categoryWrappers);
+                    let self = this;
 
-                    component.set('v.dashboardCategories', dashboards);
-                    component.set('v.showCategories', true);
-                    this.toggleSpinner(component, event);
+                    window.setTimeout(
+                        $A.getCallback(function() {
+                            console.log('waiting...');
+                            component.set('v.showCategories', true);
+                            self.toggleSpinner(component, event);
+                        }), 2000
+                    );
 
                 }else{
-                    console.log('getAvailableDashboards no categories found');
+                    console.log('getAvailableCategories - no categories found');
                     component.set('v.showCategories', true);
                     this.toggleSpinner(component, event);
                 }
-
             }else{
-                console.log('getAvailableDashboards error');
                 component.set('v.showCategories', true);
                 this.toggleSpinner(component, event);
                 this.showToast(component, 'error', 'Unexpected error', $A.get("$Label.c.GADM_PowerBI_categories_error"));
@@ -38,10 +38,9 @@
         $A.enqueueAction(action);
     },
 
-
-    handleShowDashboardCategory : function(component, event) {
+    handleShowCategory : function(component, event) {
         let key = event.currentTarget.id;
-        component.set('v.selectedDashboardCategory', component.get('v.dashboardCategories')[key].value);
+        component.set('v.selectedDashboardCategory', component.get('v.categories')[key].permissions);
 
         component.set('v.showCategories', false);
         component.set('v.showDashboardCategory', true);

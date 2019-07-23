@@ -1,5 +1,7 @@
 public without sharing class PowerBI_Embedded_Container_CTRL {
 
+    private static final String DEFAULT_PICTURE_NAME = 'default';
+
 
     @AuraEnabled
     public static boolean checkSessionCache(Id userId, String key) {
@@ -15,9 +17,7 @@ public without sharing class PowerBI_Embedded_Container_CTRL {
         return false;
     }
 
-
-    @AuraEnabled
-    public static Map<String, List<Contact_Role_Service_Permission__c>> getAvailableDashboardCategoriesForUser(Id userId) {
+    private static Map<String, List<Contact_Role_Service_Permission__c>> getAvailableDashboardCategoriesForUser(Id userId) {
 
         List<Contact_Roles__c> userRoles = Contact_Roles_Helper.getGrantedUserRoles(userId, 'GADM');
         List<Contact_Roles__c> businessUnits = Contact_Roles_Helper.getGrantedBusinessUnits(userId, 'GADM');
@@ -53,6 +53,86 @@ public without sharing class PowerBI_Embedded_Container_CTRL {
         }
 
         return resultMap;
+    }
+
+    @AuraEnabled
+    public static List<CategoryWrapper> getCategories(Id userId) {
+
+        List<CategoryWrapper> toReturn = new List<CategoryWrapper>();
+
+        if(String.isNotBlank(userId)) {
+
+            Map<String, List<Contact_Role_Service_Permission__c>> permissionsMap = getAvailableDashboardCategoriesForUser(userId);
+
+            if(! permissionsMap.isEmpty()) {
+
+                List<ContentDocument> contentDocuments = new List<ContentDocument>();
+
+                List<GADM_Settings__mdt> gadmSettings = [SELECT Id, Files_Folder__c FROM GADM_Settings__mdt WHERE DeveloperName = 'GADM' LIMIT 1];
+                if(! gadmSettings.isEmpty()) {
+                    if(String.isNotBlank(gadmSettings[0].Files_Folder__c)) {
+                        List<ContentWorkspace> workspace = [SELECT Id FROM ContentWorkspace WHERE Name = :gadmSettings[0].Files_Folder__c LIMIT 1];
+                        if(! workspace.isEmpty()) {
+                            contentDocuments = [SELECT Id, Title FROM ContentDocument WHERE ParentId = :workspace[0].Id];
+                        }
+                    }
+
+                }
+
+                Map<String, String> nameToDocumentIdMap = new Map<String, String>();
+                for(ContentDocument document : contentDocuments) {
+                    nameToDocumentIdMap.put(document.Title.toLowerCase(), document.Id);
+                }
+
+                //if used do not have access to category images, show categories without images
+                if(nameToDocumentIdMap.isEmpty()){
+
+                    for(String category : permissionsMap.keySet()) {
+                        CategoryWrapper wrapper = new CategoryWrapper();
+                        wrapper.name = category;
+                        wrapper.permissions = permissionsMap.get(category);
+                        toReturn.add(wrapper);
+                    }
+                    return toReturn;
+
+                }
+
+
+                for(String category : permissionsMap.keySet()) {
+
+                    CategoryWrapper wrapper = new CategoryWrapper();
+                    wrapper.name = category;
+                    wrapper.permissions = permissionsMap.get(category);
+
+                    if(nameToDocumentIdMap.get(category.toLowerCase())== null) {
+                        if(nameToDocumentIdMap.get(DEFAULT_PICTURE_NAME) == null) {
+                            toReturn.add(wrapper);
+                            continue;
+                        }
+                        wrapper.pictureUrl = '/sfc/servlet.shepherd/document/download/' + nameToDocumentIdMap.get(DEFAULT_PICTURE_NAME);
+                    }else{
+                        wrapper.pictureUrl = '/sfc/servlet.shepherd/document/download/' + nameToDocumentIdMap.get(category.toLowerCase());
+                    }
+
+                    toReturn.add(wrapper);
+                }
+
+
+            }
+        }
+
+        return toReturn;
+    }
+
+
+
+    public class CategoryWrapper {
+        @AuraEnabled
+        public String pictureUrl {get; set;}
+        @AuraEnabled
+        public String name {get; set;}
+        @AuraEnabled
+        public List<Contact_Role_Service_Permission__c> permissions {get; set;}
     }
 
 }

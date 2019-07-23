@@ -15,6 +15,10 @@
         <value xsi:type="xsd:double">10.0</value>
     </values>
     <values>
+        <field>Files_Folder__c</field>
+        <value xsi:type="xsd:string">GADM Public</value>
+    </values>
+    <values>
         <field>IATA_Email_Contact__c</field>
         <value xsi:type="xsd:string">pavel.pop@isobar.com</value>
     </values>
