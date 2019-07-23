@@ -4,10 +4,13 @@ private class ANG_FinancialAssessmentTest {
 	@testSetup static void setup(){
 
 		Test.startTest();
-
+		
+        ANG_RME_Alert_Service_Test.createRMEMappings();
+        
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
-			RecordTypeId = AMS_Utils.RECTYPE_BSP
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			CurrencyIsoCode = 'SGD'
 		);
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
@@ -62,7 +65,8 @@ private class ANG_FinancialAssessmentTest {
 			ANG_HE_RiskStatus__c = 'A',
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'Singapore',
-			ANG_HE_CashCondition__c = TRUE
+			ANG_HE_CashCondition__c = TRUE,
+			ANG_Accreditation_Model__c = 'Cash'
 		);
 
 		Account agentPT = new Account(
@@ -76,11 +80,13 @@ private class ANG_FinancialAssessmentTest {
 			Remittance_frequency__c = 'M',
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'Portugal'
-		);
+    	);
 
 		insert new List<Account>{agentSG, agentPT};
-
-		Contact contSG = new Contact(
+			
+		ANG_RHCHelper.createRHCInfo(new Set<Id>{agentSG.Id}, false);
+		
+    	Contact contSG = new Contact(
 			FirstName = 'Agent',
 			LastName = 'Singapore',
 			Type_of_Contact__c = 'IFAP Contact',
