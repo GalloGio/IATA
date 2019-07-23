@@ -159,7 +159,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				//update parentInsertedCasesList;
 		        Integer enqueuedJobs=[select count() from asyncApexJob where JobType = 'BatchApex' and status in ('Processing', 'Preparing', 'Queued')];
 		        
-		        if(enqueuedJobs == 0) {
+		        if(enqueuedJobs == 0 && !Test.isRunningTest()) {
 		        	System.enqueueJob(new AsyncDML_Util(parentInsertedCasesList, AsyncDML_Util.DML_UPDATE, false));
 		    	}
 		        else {

@@ -144,6 +144,14 @@ public class SidraLiteManagerTest {
     }
 
 
+    private static Case createIFAPCase() {
+        Case cse = new Case(
+            RecordtypeId = SidraLiteManager.RECORDTYPE_IFAP
+        );
+        return cse;
+    }
+
+
     @isTest
     public static void testInsertSMAP() {
         Case smapCase = createSMAPPassenger();
@@ -1063,6 +1071,31 @@ public class SidraLiteManagerTest {
             sidraLiteCase = [Select CNSCase__c, SIDRA_Lite_Reason__c from Case Where id = :sidraLiteCase.Id];
             System.assertEquals(true, sidraLiteCase.CNSCase__c);
             System.assertEquals('CNS Collection', sidraLiteCase.SIDRA_Lite_Reason__c);
+        }
+    }
+
+
+    @isTest
+    public static void testIFAPCaseForCNS() {
+        User testUser = getCNSUser();
+        configureUserToCNS(testUser);
+        
+        System.RunAs(testUser) {
+            Case cnsCase = createCNSAgent();
+            insert cnsCase;
+            SidraLiteManager.BLOCK_EXECUTION = false;
+
+            Case iFAPCase = createIFAPCase();
+            iFAPCase.ParentId = cnsCase.Id;
+            iFAPCase.accountId = cnsCase.accountId;
+            iFAPCase.CNSCase__c = true;
+
+            Test.startTest();
+            insert iFAPCase;
+            Test.stopTest();
+
+            iFAPCase = [Select CNSCase__c, SIDRA_Lite_Reason__c from Case Where id = :iFAPCase.Id];
+            System.assertEquals(true, iFAPCase.CNSCase__c);
         }
     }
 
