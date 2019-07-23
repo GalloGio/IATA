@@ -287,7 +287,11 @@ public with sharing class PortalProfileCtrl {
         return sectionMap;
     }
 
-
+    @AuraEnabled
+    public static Boolean isGDPOptInDisplayed(){
+        Set<String> possibleGDPLocationTypes = new Set<String>{'C', 'D', 'G', 'M', 'P', 'R', 'T', 'V', 'X'};
+        return possibleGDPLocationTypes.contains(myContact.Account.Location_Class__c);
+    }
 
     @AuraEnabled
     public static Account getCompanyInfo(String accountId){
@@ -361,6 +365,10 @@ public with sharing class PortalProfileCtrl {
                 editable = false;
             }
             wrapperMap.get(LABEL_COMPANY_CONTACT).add(new FieldWrapper(f.getFieldPath(),editable,true));
+        }
+
+        if(isGDPOptInDisplayed()){
+            wrapperMap.get(LABEL_COMPANY_CONTACT).add(new FieldWrapper('GDP_Opt_In__c',true,true));
         }
 
         return wrapperMap;
