@@ -457,8 +457,8 @@ public with sharing class PortalCasesCtrl {
                 };
             }
         } else if(record.RecordType.Name == 'OSCAR Communication') {
-            if(amsListForm != null && amsListForm.contains(record.Id) && !agencyRightList.isEmpty()) {
-                if(record.Status == 'Draft' || record.Status == 'Open - EDMC') {
+            if(!agencyRightList.isEmpty()) {
+                if(amsListForm != null && amsListForm.contains(record.Id) && (record.Status == 'Draft' || record.Status == 'Open - EDMC') ) {
                     if(record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT) {
                         return new Map<Id, String>{
                             record.Id => 
