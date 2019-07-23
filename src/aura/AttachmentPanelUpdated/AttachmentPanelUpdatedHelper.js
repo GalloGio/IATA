@@ -812,8 +812,14 @@
             window.open(link,'blank');
             break;
         default:
-            var link = "/" + attachId;            
-            window.open(link,'blank');
+           var urlEvent = $A.get("e.force:navigateToURL");
+            urlEvent.setParams({
+                "url": '/'+attachId,
+                "target": "_top"
+
+            });
+
+            urlEvent.fire();
         }
     },
 

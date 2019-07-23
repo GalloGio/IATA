@@ -798,14 +798,16 @@ public with sharing class AttachmentListCtrl {
                     else lstNewAmazon.add(newAtt.amazonFile);
                 }
                 if(attach.getIsContent()){
-                    ContentDocumentLink  cd = [SELECT LinkedEntityId,ContentDocumentId, ShareType, Visibility  FROM ContentDocumentLink 
-                                                WHERE LinkedEntityId =:parentId AND ContentDocumentId = :attach.Id ];
+					// Temporary Conversion from ContentDocument to Attachment
+                    Attachment newAtt = new Attachment();
+                    newAtt.name = attach.name;
+                    newAtt.description = attach.description;
+                    newAtt.Body =attach.versionData;
+                    newAtt.ParentId = cw.Id;
+                    newAtt.OwnerId = UserInfo.getUserId();
 
+                    lstNewAttachments.add(newAtt);
 
-                    ContentDocumentLink newLink = cd.clone(false, true, false, false);
-                    newLink.LinkedEntityId = selectedTargeCaseList.get(0).Id;
-
-                    lstDocumentLinks.add(newLink);
                 }
             }
         }
@@ -833,18 +835,7 @@ public with sharing class AttachmentListCtrl {
                 }
             }
         }
-        if (!lstDocumentLinks.isEmpty()) {
-            Database.SaveResult[] srList = Database.insert(lstDocumentLinks, false);
-            for (Database.SaveResult sr : srList) {
-                if (sr.isSuccess()) {
-                    success ++;
-                } else {
-                    errors ++;
-                    System.debug('ERROR inserting attachment ' + String.ValueOf(sr.getErrors()));
                     
-                }
-            }
-        }
         list<object> formattingArguments = new list<object>{String.ValueOf(success),String.ValueOf(errors),String.ValueOf(parentId)};
        
         string message =string.format(Label.Response_message, formattingArguments);
