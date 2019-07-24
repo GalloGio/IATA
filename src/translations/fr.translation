@@ -169,71 +169,71 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Check --></label>
+        <label>Nous ne sommes pas en mesure de vérifier l&apos;adresse à l&apos;emplacement spécifié.</label>
         <name>AMS_DQ_Cannot_Check</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Find --></label>
+        <label>Nous n&apos;avons pas pu trouver cette adresse. Si vous êtes sûr(e) que votre saisie est correcte, vous pouvez encore la soumettre.</label>
         <name>AMS_DQ_Cannot_Find</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City --></label>
+        <label>Nous ne pouvons pas valider l&apos;adresse sans une ville {0}. Veuillez remplir le champ.</label>
         <name>AMS_DQ_Cannot_Validate_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <label>Nous ne pouvons pas valider l&apos;adresse sans ville et rue {0}. Veuillez remplir le champ.</label>
         <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <label>Nous ne pouvons pas valider l&apos;adresse sans une rue {0}. Veuillez remplir le champ.</label>
         <name>AMS_DQ_Cannot_Validate_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Check Addr --></label>
+        <label>Vérifiez l&apos;adresse</label>
         <name>AMS_DQ_Check_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Cumpulsory --></label>
+        <label>La ville {0} est obligatoire. Veuillez renseigner le champ ville {1}.</label>
         <name>AMS_DQ_City_Cumpulsory</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Not in Database --></label>
+        <label>La ville {0} ne figure pas dans notre base de données (ou elle a été orthographiée différemment).</label>
         <name>AMS_DQ_City_Not_in_Database</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another Country --></label>
+        <label>La ville {0} se trouve dans notre base de données mais apparemment, elle appartient à un autre pays selon notre base de données.</label>
         <name>AMS_DQ_City_in_Another_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another State --></label>
+        <label>La ville {0} est dans notre base de données mais elle est associée à un autre état/une autre province.</label>
         <name>AMS_DQ_City_in_Another_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Enter Valid City --></label>
+        <label>Entrez une ville valide.</label>
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Found Addr --></label>
+        <label>Les adresses correspondantes ont été trouvées.</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review City --></label>
+        <label>Vérifiez le nom de la ville. Si vous êtes certain que votre saisie est correcte, appuyez sur soumettre.</label>
         <name>AMS_DQ_Review_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review Country or City --></label>
+        <label>Vérifiez le nom du pays et/ou de la ville. Si vous êtes certain(e) que votre saisie est correcte, appuyez sur soumettre.</label>
         <name>AMS_DQ_Review_Country_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State --></label>
+        <label>Vérifiez le nom de l&apos;état/province et/ou de la ville.</label>
         <name>AMS_DQ_Review_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State or City --></label>
+        <label>Vérifiez l&apos;état/la province et/ou le nom de la ville. Si vous êtes certain(e) que votre saisie est correcte, appuyez sur soumettre.</label>
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Street Compulsory --></label>
+        <label>La {0} rue est obligatoire. Veuillez renseigner le champ {1} de la rue.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
@@ -1464,7 +1464,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez valider vos adresses de facturation et de livraison en cliquant sur le bouton &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <label>Veuillez vérifier vos adresses de facturation et de livraison en appuyant sur le bouton de vérification de l&apos;adresse.</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>

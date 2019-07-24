@@ -524,9 +524,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Account_status_change__c</field>
+            <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>Not in operation</value>
+            <value>DFW</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
