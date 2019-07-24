@@ -827,6 +827,11 @@ public class AMS_OSCARTriggerHandler {
 
             }
 
+            //WMO-564
+            Boolean statusChanged = oldMap == null ? false : String.isNotBlank(oscar.Status__c) && oscar.Status__c <> oldMap.get(oscar.Id).Status__c && oscar.Status__c.contains('Closed');
+            if(String.isNotBlank(oscar.Case_Reason__c) && (statusChanged || String.isBlank(oscar.Accreditation_Process_Type__c))) {
+                CaseProcessTypeHelper.populateOSCARAccProcess(oscar);
+            }
         }
     }
 

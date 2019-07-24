@@ -5,6 +5,7 @@ private class AMS_OSCAR_Age_CalculatorTest {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
             Name= 'Portugal',
             ISO_Code__c= 'PT',
+            Region__c= 'Europe',
             ISO_Code_Numeric__c= 11
         );
         insert country;
@@ -14,22 +15,31 @@ private class AMS_OSCAR_Age_CalculatorTest {
             IATA_ISO_Country__c= country.Id
         );
         insert acc;
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c(
-            Name= '11111',
-            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW'),
-            Account__c= acc.Id,
-            Dossier_Reception_Date__c= Date.today()
-        );
-        insert oscar;
         Case cse = new Case(
             AccountId= acc.Id,
             Reason1__c= 'New HO',
             CaseArea__c= 'Accreditation Process',
             Status= 'Open',
-            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
-            OSCAR__c= oscar.Id
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
         );
         insert cse;
+
+        AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c(
+            SAAM_Case__c= cse.Id
+        );
+        insert stgArea;
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+            Name= '11111',
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NEW'),
+            AMS_Online_Accreditation__c= stgArea.Id,
+            Account__c= acc.Id,
+            Dossier_Reception_Date__c= Date.today()
+        );
+        insert oscar;      
+
+        cse.OSCAR__c = oscar.Id;
+        update cse;  
     }
 
     @isTest static void closeCase() {
@@ -42,15 +52,15 @@ private class AMS_OSCAR_Age_CalculatorTest {
 
     @isTest static void runBatch() {
         Test.startTest();
-        AMS_OSCAR_Age_Calculator b = new AMS_OSCAR_Age_Calculator(5);
+        AMS_OSCAR_Age_Calculator b = new AMS_OSCAR_Age_Calculator('Europe', 5);
         Database.executeBatch(b);
         Test.stopTest();
     }
 
     @isTest static void scheduleBatch() {
         Test.startTest();
-        AMS_OSCAR_Age_Calculator.start('0 0 22 * * ? *', 5);
-        AMS_OSCAR_Age_Calculator.stop();
+        AMS_OSCAR_Age_Calculator.start('0 0 22 * * ? *', 'Europe', 5);
+        AMS_OSCAR_Age_Calculator.stop('Europe');
         Test.stopTest();
     }
 

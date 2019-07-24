@@ -440,6 +440,18 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Conversion to International&quot;), &q
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Accreditation_Process_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Accreditation Process Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -1606,6 +1618,21 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case_Reason__c</fullName>
+        <externalId>false</externalId>
+        <formula>If($RecordType.DeveloperName = &#39;VOLUNTARY_RELINQUISHMENT&#39;,
+        &#39;CLO - Closure&#39;,
+        TEXT(AMS_Online_Accreditation__r.SAAM_Case__r.Reason1__c)
+        )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Certificate_Generated__c</fullName>
@@ -65173,6 +65200,33 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
 )</errorConditionFormula>
         <errorDisplayField>RPM_Approval__c</errorDisplayField>
         <errorMessage>The manager Approval / Disapproval cannot happen before the assistant manager&apos;s Validation.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>STEP8_Payment_Requested_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+        ISPICKVAL(STEP8__c, &#39;In Progress&#39;),
+        ISNULL(Payment_requested__c )
+        )</errorConditionFormula>
+        <errorMessage>Issue Billing Document cannot be in progress without a payment request date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>STEP12_BG_Requested_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+        ISPICKVAL(STEP12__c, &#39;In Progress&#39;),
+        ISNULL(Bank_Guarantee_requested__c)
+        )</errorConditionFormula>
+        <errorMessage>Manage Financial Security cannot be in progress without a bank guarantee request date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>STEP14_Agreement_Requested_Validation</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+        ISPICKVAL(STEP14__c, &#39;In Progress&#39;),
+        ISNULL(Agreement_requested__c)
+        )</errorConditionFormula>
+        <errorMessage>Manage Agreement cannot be in progress without a bank guarantee request date.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Use_OSCAR_only_on_Agency_Accounts</fullName>

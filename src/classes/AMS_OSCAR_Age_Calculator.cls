@@ -1,21 +1,25 @@
 global class AMS_OSCAR_Age_Calculator implements Database.Batchable<sObject>, Database.Stateful, Schedulable {
 
     private Integer batchSize {get;set;}
+    private String region {get;set;}
+    private List<UpdateResult> executionResult {get;set;}
 
-    public AMS_OSCAR_Age_Calculator(Integer batchSize) {
+    public AMS_OSCAR_Age_Calculator(String region, Integer batchSize) {
         this.batchSize = batchSize;
+        this.region = region;
+        this.executionResult = new List<UpdateResult>();
     }
 
-    public static void start(String cron, Integer batchSize) {
-        String jobName = 'AMS OSCAR Process Eff. Age Calculator';
+    public static void start(String cron, String region, Integer batchSize) {
+        String jobName = 'AMS OSCAR Eff. Age Calculator ' + region;
         if(Test.isRunningTest()) {
             jobName += ' Test';
         }
-        System.schedule(jobName, cron, new AMS_OSCAR_Age_Calculator(batchSize));
+        System.schedule(jobName, cron, new AMS_OSCAR_Age_Calculator(region, batchSize));
     }
 
-    public static void stop() {
-        String jobName = 'AMS OSCAR Process Eff. Age Calculator';
+    public static void stop(String region) {
+        String jobName = 'AMS OSCAR Eff. Age Calculator ' + region;
         if(Test.isRunningTest()) {
             jobName += ' Test';
         }
@@ -32,47 +36,75 @@ global class AMS_OSCAR_Age_Calculator implements Database.Batchable<sObject>, Da
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        Set<String> reasons = AMS_Utils.REASONS_FOR_KPI_CALCULATION;
         Date x1stDay = Date.newInstance(2019, 1, 1);
+        List<String> reasons = Label.KPI_REASONS.split(';');
+        List<String> oscarFields = new List<String>();
+        List<Schema.FieldSetMember> kpiFields = SObjectType.AMS_OSCAR__c.FieldSets.KPI_Fields.getFields();
+        for(Schema.FieldSetMember field : kpiFields) {
+            oscarFields.add('OSCAR__r.' + field.getFieldPath());
+        }
 
-        String queryStr = 'SELECT Id, ClosedDate, OSCAR__c, OSCAR__r.Dossier_Reception_Date__c, OSCAR__r.Payment_requested__c, ';
-        queryStr += 'OSCAR__r.Proof_of_payment_received__c, OSCAR__r.Bank_Guarantee_requested__c, OSCAR__r.Bank_Guarantee_received__c, ';
-        queryStr += 'OSCAR__r.Agreement_requested__c, OSCAR__r.PSAA_EACP_Agreement_received__c, OSCAR__r.Disapproval_date__c, ';
-        queryStr += 'OSCAR__r.Reconsideration_date__c, OSCAR__r.Process_Eff_Age__c, OSCAR__r.Change_effective_as_of__c ';
-        queryStr += 'FROM Case ';
+        String queryStr = 'SELECT Id, ClosedDate, OSCAR__c, ' + String.join(oscarFields, ', ') + ' FROM Case ';
         queryStr += 'WHERE Reason1__c IN :reasons AND IsClosed = false AND OSCAR__c <> null AND CreatedDate >= :x1stDay ';
         queryStr += 'AND OSCAR__r.Dossier_Reception_Date__c <> null AND (NOT Owner.Name LIKE \'%Recycle%\') ';
+        queryStr += 'AND Account.IATA_ISO_Country__r.Region__c = \'' + this.region + '\'';
 
         return Database.getQueryLocator(queryStr);
     }
 
     global void execute(Database.BatchableContext BC, List<Case> scope) {
+        List<Schema.FieldSetMember> kpiFields = SObjectType.AMS_OSCAR__c.FieldSets.KPI_Fields.getFields();
         List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
         for(Case cse : scope) {
-            AMS_OSCAR__c oscar = new AMS_OSCAR__c(
-                Id= cse.OSCAR__c,
-                Dossier_Reception_Date__c= cse.OSCAR__r.Dossier_Reception_Date__c,
-                Payment_requested__c= cse.OSCAR__r.Payment_requested__c,
-                Proof_of_payment_received__c= cse.OSCAR__r.Proof_of_payment_received__c,
-                Bank_Guarantee_requested__c= cse.OSCAR__r.Bank_Guarantee_requested__c,
-                Bank_Guarantee_received__c= cse.OSCAR__r.Bank_Guarantee_received__c,
-                Agreement_requested__c= cse.OSCAR__r.Agreement_requested__c,
-                PSAA_EACP_Agreement_received__c= cse.OSCAR__r.PSAA_EACP_Agreement_received__c,
-                Disapproval_date__c= cse.OSCAR__r.Disapproval_date__c,
-                Reconsideration_date__c= cse.OSCAR__r.Reconsideration_date__c,
-                Process_Eff_Age__c= cse.OSCAR__r.Process_Eff_Age__c,
-                Change_effective_as_of__c= cse.OSCAR__r.Change_effective_as_of__c
-            );
-            
+            AMS_OSCAR__c oscar = (AMS_OSCAR__c) cse.getSobject('OSCAR__r');
+            /* We need to preform this assignment to make sure that null fields are set before flow execution */
+            for(Schema.FieldSetMember field : kpiFields) {
+                if(field.getSObjectField().getDescribe().isUpdateable()) {
+                    oscar.put(field.getFieldPath(), oscar.get(field.getFieldPath()));
+                }
+            }           
             calculate(new Case(Id= cse.Id, ClosedDate= cse.ClosedDate), oscar);
             oscars.add(oscar);
         }
 
-        update oscars;
+        List<Database.SaveResult> results = Database.update(oscars, false);
+        Integer i= 0;
+        for(Database.SaveResult r : results) {
+            if(r.isSuccess()) {
+                this.executionResult.add(new UpdateResult(r.getId(), true));
+            } else {
+                UpdateResult ur = new UpdateResult((Id) scope[i].get('OSCAR__c'), false);
+                for(Database.Error err : r.getErrors()) {
+                    ur.errors.add(err.getMessage().escapeCsv());
+                }
+                this.executionResult.add(ur);
+            }
+            i++;
+        }
     }
 
     global void finish(Database.BatchableContext BC) {
-        
+        String report = 'Id,Success,Errors\n';
+        for(UpdateResult ur : this.executionResult) {
+            report += ur.recordId + ',' + ur.success + ',' + String.join(ur.errors, ' - ') + '\n';
+        }
+
+        Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
+        Blob csvReport = Blob.valueOf(report);
+        csvAttc.setFileName('AMS OSCAR Effective Age Batch.csv');
+        csvAttc.setBody(csvReport);
+
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.subject = 'AMS OSCAR Effective Age Calculation';
+        message.setPlainTextBody('AMS OSCAR Effective Age Calculation - Check attachment with execution results');
+        message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+        Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};    
+
+        if(!Test.isRunningTest()) {
+            message.setTargetObjectId(UserInfo.getUserId());
+            message.setSaveAsActivity(false);
+            Messaging.sendEmail(messages);
+        }   
     }
 
     public static void calculate(Case cse, AMS_OSCAR__c oscar) {
@@ -81,6 +113,18 @@ global class AMS_OSCAR_Age_Calculator implements Database.Batchable<sObject>, Da
         flow.start();
         Decimal val = (Decimal) flow.getVariableValue('EffectiveAge');
         oscar.Process_Eff_Age__c = val;
+    }
+
+    public class UpdateResult {
+        public Id recordId {get;set;}
+        public Boolean success {get;set;}
+        public List<String> errors {get;set;}
+
+        public UpdateResult(Id recordId, Boolean success) {
+            this.recordId = recordId;
+            this.success = success;
+            this.errors = new List<String>();
+        }
     }
 
 }
