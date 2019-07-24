@@ -203,17 +203,14 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             this.sectionMap = JSON.parse(JSON.stringify(result));
 
-            let sectionMap = this.sectionMap;
+            this.mapOfValues = [];
 
-            let localMap = [];
-            for (let key in this.sectionMap) {
-                // Preventing unexcepted data
-                if (sectionMap.hasOwnProperty(key)) { // Filtering the data in the loop
-                    let value = sectionMap[key];
-                    localMap.push({ 'value': value, 'key': key });
-                }
+            for(let i = 0; i < this.sectionMap.length; i++){
+                this.mapOfValues.push({ 
+                                    'value': this.sectionMap[i].lstFieldWrapper, 
+                                    'key': this.sectionMap[i].cardTitle
+                                });
             }
-            this.mapOfValues = localMap;
 
         });
     }
@@ -226,8 +223,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
         if (leftNav) {
             /* Set nav items for sticky navigation */
             let navItems = [];
-            for (let key in this.sectionMap) {
-                navItems.push({ label: key, value: key, open: true });
+            for(let i = 0; i < this.sectionMap.length; i++){
+                navItems.push({ label: this.sectionMap[i].cardTitle, value: this.sectionMap[i].cardTitle, open: true });
             }
 
             leftNav.navItems = navItems;

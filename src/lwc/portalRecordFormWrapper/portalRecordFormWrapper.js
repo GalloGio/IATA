@@ -11,6 +11,7 @@ import { navigateToPage } from 'c/navigationUtils';
 
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
+import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -27,7 +28,7 @@ import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
-
+    
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
@@ -68,8 +69,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track hasError = false;
 
     @api
-    get fields() { return this.fieldsLocal; }
-    set fields(value) { this.fieldsLocal = value; }
+    get fields(){ return this.fieldsLocal;}
+    set fields(value){ this.fieldsLocal = value;}
 
     _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, CSP_Error_Message_Mandatory_Fields_Contact };
     get labels() { return this._labels; }
@@ -155,7 +156,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         isAdmin().then(result => {
             this.showEdit = (result ? true : false);
         });
-
+        
         return this.accessibilityText
     }
 
@@ -213,7 +214,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
         let fields = haveEditFields ? JSON.parse(JSON.stringify(this.editFields)) : JSON.parse(JSON.stringify(this.fields));
         let fieldsChanged = false;
-        let numberFields = ['Phone', 'MobilePhone', 'Phone_Number__c'];
+        let numberFields = ['Phone','MobilePhone','Phone_Number__c'];
         let requiredFields = [];
         let skipValidation = false;
 
@@ -401,7 +402,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
 
             if (canSave) {
-                this.template.querySelector('lightning-record-edit-form').submit(fields);
+            this.template.querySelector('lightning-record-edit-form').submit(fields);
             } else {
                 this.isSaving = false;
             }
@@ -493,28 +494,38 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.changeUserPortalStatus = false;
     }
 
-    get canSave() {
+    get canSave(){
         return !this.fieldsValid || this.isSaving;
     }
 
-    get canEditBasics() {
-        let isRestrictedSection = this.sectionTitle == 'Basics' || this.sectionTitle == 'Branch Contact';
+    get canEditBasics(){
+        let isRestrictedSection =  this.sectionTitle == 'Basics' ||  this.sectionTitle == 'Branch Contact';
         return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
     }
 
-    get hasIdCard() {
+    get hasIdCard(){
         return (this.staticFields !== undefined && this.staticFields.cardNumber !== undefined);
     }
 
-    get hasFunction() {
-        return this.jobFunctions !== undefined && this.jobFunctions.length > 0;
+    get hasFunction(){
+        return this.jobFunctions !== undefined && this.jobFunctions.length>0;
     }
 
-    get hasServices() {
-        return this.services !== undefined && this.services.length > 0;
+    get hasServices(){
+        return this.services !== undefined && this.services.length>0;
     }
 
-    get hasStaticServices() {
-        return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length > 0;
+    get hasStaticServices(){
+            return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length>0;
+        }
+
+    
+    navigateToPrivacyPortal(){
+        goToPrivacyPortal({})
+        .then(results => {
+            window.open(results);
+        });
     }
+
+
 }
