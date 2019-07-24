@@ -1,6 +1,6 @@
 public without sharing class OneIdUtils {
 	
-    public Enum Mode {CURRENT, ISSP, IDENTITY, CSP}
+    public Enum Mode {CURRENT, ISSP, IDENTITY, CSP, PRIVACY}
 
       
 	@AuraEnabled
@@ -38,6 +38,7 @@ public without sharing class OneIdUtils {
                     if(n.name == 'IATA Portal') key =Mode.ISSP ;
                     else if(n.name == 'identity') key =Mode.IDENTITY ;
                     else if(n.name == 'CS Portal') key =Mode.CSP ;
+                    else if(n.name == 'Data Privacy') key =Mode.PRIVACY ;
                     else continue;
                     networks.put(key, String.valueOf(n.Id).substring(0, 15));
                 } 
@@ -58,6 +59,7 @@ public without sharing class OneIdUtils {
         if(portal == 'ISSP') key =Mode.ISSP ;
         else if(portal == 'identity') key =Mode.IDENTITY ;
         else if(portal == 'CSP') key =Mode.CSP ;
+        else if(portal == 'Data Privacy') key =Mode.PRIVACY ;
        
     return getCommunityRedirection (key,startUrl);
     }
