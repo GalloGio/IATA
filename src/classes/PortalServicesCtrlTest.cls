@@ -609,4 +609,17 @@ public class PortalServicesCtrlTest {
         }
     }
 
+    @isTest
+    public static void PortalServicesCtrlTest_testCanAddUsers(){
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+        System.runAs(portalUser) {
+            list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+
+            PortalServicesCtrl.newUserRequestableWithoutApproval(ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId()),portalServicelist.get(0).id);
+        }
+    }
+
 }

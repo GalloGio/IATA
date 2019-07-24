@@ -125,8 +125,8 @@
     	
     	function savechat(){
     		SfdcApp.LiveAgent.Chasitor.saveChat();
-    	}
-    	
+        }
+        
     	liveagent.addEventListener(liveagent.chasitor.Events.CHAT_ESTABLISHED, showhidebuttons);
     	liveagent.addEventListener(liveagent.chasitor.Events.CHAT_ESTABLISHED, newagent);
     	liveagent.addEventListener(liveagent.chasitor.Events.AGENT_CHAT_TRANSFERRED,newagent);
@@ -243,11 +243,12 @@
             }
     
     	function showhidebuttons(){
-    		document.getElementById("chatbuttonscontainer").style.display = 'block';
+    		//document.getElementById("chatbuttonscontainer").style.display = 'block';
     		document.getElementById("laSaveButton").style.display = 'block';
     		document.getElementById("laEndButton").style.display = 'block';
-            document.getElementById("chatAgent").style.display = 'inline-flex';
-            document.getElementById("footer").style.display = 'inline-flex';
+            //document.getElementById("chatAgent").style.display = 'inline-flex';
+            //document.getElementById("footer").style.display = 'inline-flex';
+            document.getElementById("livechatcontainer").style.height = "calc(100% - 71px)";
             
             liveAgentClientChatHeight = document.getElementById("liveAgentChatLog").style.height;
                                    
@@ -290,7 +291,8 @@
     }
     
     function clearShrinkChat(){
-        document.getElementById("livechatcontainer").style.height = "calc(100% - 310px)";
+        document.getElementById("liveAgentChatLog").style.height = "";
+        document.getElementById("livechatcontainer").style.height = "calc(100% - 71px)";
         transferAttempt = false;
     }
     
@@ -306,6 +308,10 @@
     function scrollOnMessage(){
         var objDiv = document.getElementById("liveAgentChatLog");
         objDiv.scrollTop = objDiv.scrollHeight;
+
+        let agentTyping = document.getElementById("liveAgentChatLogTyping");
+        let bubble = '<div class="bubbleMessageContainer"><div class="arrow-left"></div><span class="messageText">. . .</span></div>';
+        agentTyping.innerHTML = bubble;
     }
         
         function notifyOnNewMessage(){
@@ -357,6 +363,11 @@
     </script>
 
     <style>
+
+        body {
+            height:100%;
+            background-color: rgb(240, 242, 245)
+        }
     
         .liveAgentCancelButton{
             padding: 7px 7px;
@@ -377,24 +388,14 @@
     			background-image: linear-gradient(to bottom,#c34a47 0,#dc6460 100%);
     			color: #a71919;
     			border: 1px solid #a71919;
-		 }
-        
-        .liveAgentFileSendButton{
-            border: none;
-            color: white;
-            background: rgb(66, 139, 202);
-            margin: 5px;
-            width: 50px;
-        }
+		}
 
         .liveAgentChatInput {
-            width: calc(100% - 90px);
-            border-color: #337ab7;
+            width: calc(100% - 60px);
+            border: unset;
             padding: 6px;
-            font-size: 13px;
+            font-size: 16px;
             border-radius: 0px;
-        	margin-top: 5px;
-    		margin-left: 5px;
         }
         
         .liveAgentMessage {
@@ -418,7 +419,7 @@
     
 
         #liveAgentChatLogText {
-            font-size: 13px;
+            font-size: 14px;
         	padding-top: 10px;
         }
 
@@ -431,12 +432,11 @@
         }
 
         #liveAgentChatLog {
-            border-color: #337ab7;
-		    margin: auto;
-		    width: calc(100% - 8px);
+		    width: 100%;
 		    height: calc(100% - 40px);
-		    overflow-y: auto;
-		    background-color: white;
+            overflow-y: auto;
+            border: unset;
+            padding: 0 16px;
         }
         
         #liveAgentChatLogText .client{
@@ -453,7 +453,7 @@
             clear:both;
         }
                 
-        #liveAgentChatLogText .messageText{
+        #liveAgentChatLogText .messageText, #liveAgentChatLogTyping .messageText {
             position: relative;
             max-width: 250px;
             -webkit-border-radius: 0px;
@@ -468,32 +468,34 @@
             margin-top: 0px;
             margin-right: 0px;
             margin-left: 0px;
-        	margin-bottom: 5px;
+        	margin-bottom: 0px;
         }
         
-        #liveAgentChatLogText .operator .messageText{
-            background: #0b3f75;
+        #liveAgentChatLogText .operator .messageText, #liveAgentChatLogTyping .messageText{
+            background: #fff;
         	word-wrap: break-word;
-        	margin-right: 25px;
-        	        	
-            border-top-left-radius: 0px;
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 4px;
+            margin-right: 25px;
+            color: #525252;
         }
 
         #liveAgentChatLogText .client .messageText{
-           	background: #438bcb;
+           	background: #1e32fa;
         	word-wrap: break-word;
         	margin-left: 25px;
         	margin-right: 0px;
+        }
         
-        	
-            border-top-left-radius: 4px;
-            border-top-right-radius: 0px;
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 4px;
-    	}
+        #liveAgentChatLogTyping .messageText{
+            font-weight: bold;
+            font-size: 20px;
+            font-family: 'Times New Roman';
+            line-height: 10px;
+            height: 40px;
+        }
+
+        #liveAgentChatLogTyping em{
+            display: none;
+        }
         
         #liveAgentChatLogText .image{
             position: relative;
@@ -514,11 +516,11 @@
         	clear:both;
         }
         
-        #liveAgentChatLogText .operator .arrow-left {
+        #liveAgentChatLogText .operator .arrow-left, #liveAgentChatLogTyping .arrow-left{
             width: 0;
             height: 0;
-            border-bottom: 10px solid transparent;
-            border-right: 10px solid #073f76;
+            border-top: 10px solid transparent;
+            border-right: 10px solid #fff;
             display: inline-flex;
             position: relative;
             margin-left: 5px;
@@ -528,8 +530,8 @@
        	#liveAgentChatLogText .client .arrow-right {
             width: 0;
             height: 0;
-            border-bottom: 10px solid transparent;
-            border-left: 10px solid #448bcb;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #1e32fa;
             display: inline-flex;
             position: relative;
         }
@@ -555,27 +557,31 @@
             margin-left: 25px;
         	padding-bottom: 5px;
         }
+
+        #liveAgentChatLogText .timestamp {
+            font-size: 12px;
+            color: #999999;
+        }
         
         .liveAgentSendButton {
         	border: none;
         	color: transparent;
             margin-left: 10px;
-        	width: 50px;
-            height: 50px;
+        	width: 20px;
+            height: 20px;
         	background: transparent url({!$Resource.LVA_SEND_BUTTON}) no-repeat;
             background-position: center;
-    		background-size: 75%;
+            background-size: 75%;
+            position: absolute;
+            bottom: -2px;
+            right: 15px;
+            outline: unset;
         }
         
         .liveAgentSendButton:hover{
-        	border: none;
-        	color: transparent;
-        	width: 50px;
-            height: 50px;
-            margin-left: 10px;
-        	background: transparent url({!$Resource.LVA_SEND_BUTTON_HOVER}) no-repeat;
-           	background-position: center;
-        	background-size: 75%;
+            background: transparent url({!$Resource.LVA_SEND_BUTTON_HOVER}) no-repeat;
+            background-position: center;
+            background-size: 75%;
         }
         
         em {
@@ -594,10 +600,46 @@
             margin:5px;
             height: 50px;
             display: inline-block;
-            width: calc(100% - 23px);
+            width: calc(100% - 10px);
             padding: 5px;
             border-radius: 0px;
-        	background-color: #0b3f75;
+        	background-color: #1e32fa;
+        }
+
+        #liveAgentChatInput::placeholder {
+            color: #999;
+            opacity: 1;
+        }
+
+        #liveAgentChatInput:-ms-input-placeholder {
+            color: #999;
+        }
+        
+        .liveAgentFileCancelButton {
+            font-size: 13px;
+            border-radius: 0px;
+            margin-left: 12px;
+            height: 30px;
+            width: 90px;
+            border-radius: 1px;
+            border: solid 1px #e2e2e2;
+            background: white;
+            color: #525252;
+        }
+
+        .liveAgentFileSendButton {
+            font-size: 13px;
+            border-radius: 0px;
+            height: 30px;
+            width: 90px;
+            border: none;
+            background: rgb(66, 139, 202);
+            color: white;
+            margin: 5px;
+        }
+
+        #liveAgentChatInput {
+            color: #333;
         }
 
         #fileDragLink {
@@ -690,7 +732,7 @@
 	        min-height:100vh;
 	        //opacity: 0.5;
 	        //background-color:rgba(200, 200, 200, 0.5);
-	        max-width: 410px;
+	        max-width: 600px;
     		max-height: max-content;
     		margin: 0 auto;
     		overflow-y: auto;
@@ -698,8 +740,6 @@
 	          
 	      #modalbox{
 	          display:block;
-	          //background-color:white;
-	          background-color: #f8f8f8;
 	          opacity: 1;
 	          width:80%;
 	          height:60%;
@@ -729,28 +769,29 @@
             z-index: 99999;
           }
         
-    	  #headerbackground{
-        //max-width: 410px;
-        //    max-height: max-content;
+    	  #headerbackground {
+            overflow: hidden;
+            //max-width: 410px;
+            //max-height: max-content;
             //float: none;
             margin: 0 auto;
         	//overflow: overlay;
         	overflow-y: auto;
-        //width: 400px;
+            //width: 400px;
     		height: 100%;
 		  }
         
       	  
-      	  #chatbuttonsbackground{
+      	  #chatbuttonsbackground {
         	text-align: center;
         	position: relative;
         	width: 100%;
       	  }
       	  
-      	  #livechatcontainer{
+      	  #livechatcontainer {
             position: relative;
             width: 100%;
-            height: calc(100% - 310px);
+            height: 0;
       	  }
         
         @media screen and (min-width: 400px) {
@@ -759,7 +800,7 @@
             }
         }
         
-        @media screen and (max-height: 480px) and (orientation: portrait) {
+        /*@media screen and (max-height: 480px) and (orientation: portrait) {
             #livechatcontainer{
         		height: 62%;
             }
@@ -769,9 +810,9 @@
             #livechatcontainer{
         		height: 100%;
             }
-        }
+        }*/
       	  
-      	  .buttonEnd {
+      	.buttonEnd {
 			padding: 7px 7px;
             background-image: linear-gradient(to bottom,#f8f8f8 0,#f8f8f8 100%);
             background: #f8f8f8;
@@ -781,15 +822,15 @@
             border-radius: 0px;
             border: 1px solid #3273ad;
             color: #3273ad;
-          }
+        }
           
-          .buttonEnd:hover { 
+        .buttonEnd:hover { 
     			//background-image: linear-gradient(to bottom,#c34a47 0,#dc6460 100%);
     			color: #a71919;
     			border: 1px solid #a71919;
-		  }
+		}
 		   
-		  .buttonSave {
+		.buttonSave {
 		  	padding: 7px 7px;
             background-image: linear-gradient(to bottom,#f8f8f8 0,#f8f8f8 100%);
             background: #f8f8f8;
@@ -799,20 +840,20 @@
             border-radius: 0px;
             border: 1px solid #3273ad;
             color: #3273ad;
-          }
+        }
           
-          .buttonSave:hover { 
-    			//background-image: linear-gradient(to bottom,#499349 0,#6cbf6c 100%);
-    			color: #32ab1e;
-    			border: 1px solid #32ab1e;
-		  }
+        .buttonSave:hover { 
+            //background-image: linear-gradient(to bottom,#499349 0,#6cbf6c 100%);
+            color: #32ab1e;
+            border: 1px solid #32ab1e;
+		}
 		   
-		  .savebutton, .endbutton{
-				width: 49%;
-    			display: inline-block;
-    			text-align: center;
-    			margin: auto;
-    		}
+		.savebutton, .endbutton{
+            width: 49%;
+            display: inline-block;
+            text-align: center;
+            margin: auto;
+    	}
 
         .btnDiv{
             display: inline-block;
@@ -846,106 +887,120 @@
         /*font-weight: 500;*/
         }
 
-			#laSaveButton{
-				display:none;
-			}
-			
-			#laEndButton{
-				display:none;
-			}
-			
-			#chatbuttonscontainer{
-				display:none;
-			}
-			
-			#headerImage, #headerImageEnd{
-			    width: 100%;
-			    height: 85px;
-			    margin: auto;
-        		display: inline-flex;
-				position: relative;
-			}
+        #laSaveButton{
+            display:none;
+        }
         
-        	#divImage, #divImageEnd{
-                padding: 10px;
-                background-color: white;
-                z-index: 1;
-                position: absolute;
-                display: inline-flex;
-                /* padding-top: 10px; */
-                margin-top: 5px;
-                margin-left: 5px;
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        	}
-		
-			#livechat, #livechatEnd{
-                width: 100%;
-                color: #fff;
-                text-decoration-color: white;
-                padding-top: 10px;
-                padding-bottom: 10px;
-                font-size: 20px;
-                text-align: center;
-                font-weight: bold;
-                background-color: #0a3e75;
-                position: absolute;
-                margin-top: 20px;
-                padding-left: 100px;
-    		}
-    			
-    		#liveAgentClientChatSettings{
-    			height: 100%;
-    		}
-    		
-    		#liveAgentClientChat{
-    			height: 100%;
-    		}
-    		
-    		#liveAgentChatElement{
-    			height: 75%;
-    		}
-    		
-    		#liveAgentChatInput{
-    			height: 50px;
-    		}
+        #laEndButton{
+            display:none;
+        }
         
-        	#liveAgentChatLogAlertMessage{
-        		font-size: 12px;
-        		position: relative;
-        	}
-			
-			#photo-container{
-				display:none;
-				width: 65px;
-				height: 65px;
-			}
-			
-			.photocontainer {
-                border-radius: 50%;
-                position: relative;
-                overflow: hidden;
-        		display: inline-flex;
+        #chatbuttonscontainer{
+            display:none;
+        }
+        
+        #headerImage, #headerImageEnd{
+            width: 100%;
+            height: 50px;
+            margin: auto;
+            display: inline-flex;
+            position: relative;
+            box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+        }
 
-            }
+        #divImage, #divImageEnd{
+            padding: 10px;
+            background-color: white;
+            z-index: 1;
+            position: absolute;
+            display: inline-flex;
+            /* padding-top: 10px; */
+            margin-top: 5px;
+            margin-left: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        
+        #divImage, #divImageEnd{
+            display: none;
+        }
+    
+        #livechat, #livechatEnd{
+            width: 100%;
+            color: #fff;
+            text-decoration-color: white;
+            padding: 12px 16px;
+            font-size: 18px;
+            text-align: left;
+            font-weight: 500;
+            background-color: #1e32fa;
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+        }
             
-            #agentphoto{
-                display: block;           
-                min-width: 100%;
-                min-height: 100%;
-                width: 65px;
-                height: 65px;
-            }
-            
-            #chatAgent{
-        		display: none;
-        //height: max-content;
-            	line-height: 1.2;
-                padding-bottom: 10px;
-                padding-left: 5px;
-            	position: relative;
-            	width: 100%;
-        		margin-top: 14px;
-            }
+        #liveAgentClientChatSettings{
+            height: 100%;
+        }
+        
+        #liveAgentClientChat{
+            height: 100%;
+        }
+        
+        #liveAgentClientChat form[action="javascript://submit"]{
+            width: 100%;
+            display: inline-flex;
+            background-color: #fff;
+            border-top: 1px solid #ccc;
+            padding: 5px;
+        }
+        
+        #liveAgentChatElement{
+            height: 75%;
+        }
+        
+        #liveAgentChatInput{
+            height: 50px;
+            outline: unset;
+        }
+    
+        #liveAgentChatLogAlertMessage{
+            font-size: 12px;
+            position: relative;
+        }
+        
+        #photo-container{
+            display:none;
+            width: 65px;
+            height: 65px;
+        }
+        
+        .photocontainer {
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+
+        }
+        
+        #agentphoto{
+            display: block;           
+            min-width: 100%;
+            min-height: 100%;
+            width: 65px;
+            height: 65px;
+        }
+        
+        #chatAgent{
+            display: none;
+            //height: max-content;
+            line-height: 1.2;
+            padding-bottom: 10px;
+            padding-left: 5px;
+            position: relative;
+            width: 100%;
+            margin-top: 14px;
+        }
           
         .panel-heading {
         	
@@ -959,60 +1014,79 @@
         	padding-top: 5px;
         }
         
-        	a {
-                color: white;
-            }
-            /* mouse over link */
-            a:hover {
-                color: grey;
-            }
-            
-            /* selected link */
-            a:active {
-                color: grey;
-            }
+        a {
+            color: white;
+        }
+        /* mouse over link */
+        a:hover {
+            color: grey;
+        }
+        
+        /* selected link */
+        a:active {
+            color: grey;
+        }
             
         
-            #agent-info{
-        //text-align: left;
-                padding-left: 10px;
-                color: #3273ad;
-                height: fit-content;
-        //display: inline-table;
-                padding-top: 5px;
+        #agent-info {
+            //text-align: left;
+            padding-left: 10px;
+            color: #3273ad;
+            height: fit-content;
+            //display: inline-table;
+            padding-top: 5px;
             width: calc(100% - 80px);
-            }
+        }
             
-            #agent-info-name{
-				font-size: 15px;
-				font-weight: bold;
-            }
-            
-            #agent-info-job{
-				font-weight: bold;
-				font-style: italic;
-        		font-size: 12px;
-            }
+        #agent-info-name{
+            font-size: 15px;
+            font-weight: bold;
+        }
         
-        	#agent-languages{
-        		font-size: 11px;
-            	height: fit-content;
-            }
-            
-            #fileCancelButton{
-            	font-size: 13px;
-            	border-radius: 0px;
-    			margin-left: 12px;
-			}
-            #fileSendButton{
-            	font-size: 13px;
-            	border-radius: 0px;
-            }
-			
+        #agent-info-job{
+            font-weight: bold;
+            font-style: italic;
+            font-size: 12px;
+        }
+    
+        #agent-languages{
+            font-size: 11px;
+            height: fit-content;
+        }
+        
+        #fileCancelButton{
+            font-size: 13px;
+            border-radius: 0px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+        #fileSendButton{
+            font-size: 13px;
+            border-radius: 0px;
+        }
+
+        .bubbleMessageContainer {
+            display: inline-flex;
+            align-items: flex-end;
+            margin-bottom: 5px;
+        }
+
+        .liveAgentStateWaiting {
+            display: none;
+        }
+
+        .liveAgentEndButtonTopHeader {
+            border: unset;
+            background: unset;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+        }
+		
     </style>
 
 
-	<body style="height:100%">
+	<body>
     <!--<body onload=" resizeTo(400,680);">-->
     <div id="headercontainer" class="container">
         <div id="headerbackground" class="row">
@@ -1021,7 +1095,11 @@
                 <div id="divImage">
                     <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
                 </div>
-                <div id="livechat" style="{!if(isRTL, 'padding-left:0px', 'padding-left:100px')}">LIVE CHAT</div>
+                <!--<div id="livechat" style="{!if(isRTL, 'padding-left:0px', 'padding-left:100px')}">LIVE CHAT</div>-->
+                <div id="livechat">
+                    <span>IATA Live Support</span>
+                    <button type="button" class="liveAgentEndButtonTopHeader" onclick="showmodal();">End Chat</button>
+                </div>
             </div>
             <!-- <button id="liveAgentEndButton" type="button" class="liveAgentEndButton" onclick="showmodal();">End Chat</button> -->
             <div class="waitingMessage"></div>
@@ -1111,16 +1189,16 @@
                         if(node.className == 'operator'){
                             arrow = '<div class="arrow-left"></div>';
                             if({!isRTL}){
-                                textNode.innerHTML = '<div style="display: inline-flex;">' + textNode.innerHTML + arrow + '</div>';
+                                textNode.innerHTML = '<div class="bubbleMessageContainer">' + textNode.innerHTML + arrow + '</div>';
                             } else {
-                            	textNode.innerHTML = '<div style="display: inline-flex;">' + arrow + textNode.innerHTML + '</div>';
+                            	textNode.innerHTML = '<div class="bubbleMessageContainer">' + arrow + textNode.innerHTML + '</div>';
                             }
                         } else {
                             arrow = '<div class="arrow-right"></div>';
                             if({!isRTL}){
-                            	textNode.innerHTML = '<div style="display: inline-flex;">' + arrow + textNode.innerHTML + '</div>' ;
+                            	textNode.innerHTML = '<div class="bubbleMessageContainer">' + arrow + textNode.innerHTML + '</div>' ;
                             } else {
-                                textNode.innerHTML = '<div style="display: inline-flex;">' + textNode.innerHTML + arrow + '</div>' ;
+                                textNode.innerHTML = '<div class="bubbleMessageContainer">' + textNode.innerHTML + arrow + '</div>' ;
                             }
                         }
                         
@@ -1185,7 +1263,7 @@
                 <div id="divImageEnd">
                     <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
                 </div>
-                <div id="livechatEnd">LIVE CHAT</div>
+                <div id="livechatEnd">IATA Live Support</div>
             </div>
             <div id="modalbox">
                 <p id="modalmessage"></p>

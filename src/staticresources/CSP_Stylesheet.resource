@@ -1174,13 +1174,56 @@ lightning-datatable .slds-th__action {
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 2.4;
-    letter-spacing: normal;
-    color: #525252;
+    display:none;
+}
+
+.textValue .slds-checkbox_standalone {
+  cursor: pointer;
+}
+
+.textValue input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.textValue .slds-checkbox_standalone input{
+  font-size: 1rem;
+  opacity: 0;
+  position: absolute;
+}
+
+.textValue .slds-checkbox_faux {
+	border-radius:0;
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    right: 2px;
+    top: -4px;
+    vertical-align: middle;
+    background-color: inherit;
+    color: blue;
+    border: 1px solid blue;
+}
+
+.textValue .slds-checkbox_standalone input:checked + .slds-checkbox_faux:after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: blue;
+  transform:none;
+}
+
+.textValue .slds-checkbox_standalone input:checked + .slds-checkbox_faux{
+  border-color: blue;
+}
+
+.textValue .slds-checkbox_faux{
+  transform: scale(0.75);
 }
 
 .textValue .slds-form-element__static {

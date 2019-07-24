@@ -137,13 +137,23 @@
                                         </div>
                                     </div>
 
-                                    <div class="slds-float_right">
+                                    <div class="slds-float_right displayFlex">
                                         <!-- LABELS -->
-                                        <lightning-button variant="brand" label={labels.NewContact}
-                                            title="Create New Contact" disabled={contactsNotLoaded}
-                                            onclick={createContact} class="slds-float_right containedButton">
-                                        </lightning-button>
+                                        <span if:true={showIFAPBtn}>
+                                            <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
+                                                title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
+                                                class="slds-float_right containedButton marginRight">
+                                            </lightning-button>
+                                        </span>
+                                        <span>
+                                            <lightning-button variant="brand" label={labels.NewContact}
+                                                title="Create New Contact" disabled={contactsNotLoaded}
+                                                onclick={createContact} class="slds-float_right containedButton heightCreateContact">
+                                            </lightning-button>
+                                        </span>
                                     </div>
+
+
                                 </div>
 
                                 <div class="slds-grid slds-wrap slds-m-top_x-small">

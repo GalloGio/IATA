@@ -12,7 +12,7 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalProfilePageHeader extends LightningElement {
 
-    @track backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
+    @track backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/MyProfileBackground.jpg';
 
     //Loading && Error
     @track loading = false;
