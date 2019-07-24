@@ -169,71 +169,71 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Check --></label>
+        <label>Мы не можем проверить адрес в указанном месте.</label>
         <name>AMS_DQ_Cannot_Check</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Find --></label>
+        <label>Мы не смогли найти этот адрес. Если вы уверены, что введённые данные верны, вы всё ещё можете отправить их.</label>
         <name>AMS_DQ_Cannot_Find</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City --></label>
+        <label>Мы не можем подтвердить адрес без города {0}. Пожалуйста, заполните поле.</label>
         <name>AMS_DQ_Cannot_Validate_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <label>Мы не можем подтвердить адрес без {0} города и улицы. Пожалуйста, заполните поле.</label>
         <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <label>Мы не можем подтвердить адрес без улицы {0}. Пожалуйста, заполните поле.</label>
         <name>AMS_DQ_Cannot_Validate_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Check Addr --></label>
+        <label>Проверить адрес</label>
         <name>AMS_DQ_Check_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Cumpulsory --></label>
+        <label>Город {0} является обязательным для заполнения. Пожалуйста, заполните поле города {1}.</label>
         <name>AMS_DQ_City_Cumpulsory</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Not in Database --></label>
+        <label>Город {0} отсутствует в нашей базе данных (или он пишется по-другому).</label>
         <name>AMS_DQ_City_Not_in_Database</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another Country --></label>
+        <label>Город {0} находится в нашей базе данных, но, по-видимому, согласно нашей базе данных, он находится в другой стране.</label>
         <name>AMS_DQ_City_in_Another_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another State --></label>
+        <label>Город {0} находится в нашей базе данных, но он связан с другим штатом/провинцией.</label>
         <name>AMS_DQ_City_in_Another_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Enter Valid City --></label>
+        <label>Введите действительный город.</label>
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Found Addr --></label>
+        <label>Соответствующий(е) адрес(а) найден(ы).</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review City --></label>
+        <label>Просмотрите название города. Если вы уверены, что введённые данные верны, нажмите «Отправить».</label>
         <name>AMS_DQ_Review_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review Country or City --></label>
+        <label>Просмотрите название(я) страны и/или города. Если вы уверены, что введённые данные верны, нажмите «Отправить».</label>
         <name>AMS_DQ_Review_Country_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State --></label>
+        <label>Просмотрите название штата/провинции и/или города.</label>
         <name>AMS_DQ_Review_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State or City --></label>
+        <label>Просмотрите название штата/провинции и/или города. Если вы уверены, что введённые данные верны, нажмите «Отправить».</label>
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Street Compulsory --></label>
+        <label>Улица {0} является обязательной к заполнению. Пожалуйста, заполните поле улицы {1}.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
@@ -1461,7 +1461,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label><!-- AddressDoctorValidate --></label>
+        <label>Пожалуйста, проверьте адреса выставления счетов и доставки, нажав на кнопку &quot;проверить адрес&quot;</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -9237,6 +9237,14 @@
     <customLabels>
         <label><!-- ISSP AMS Local Details Title --></label>
         <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator --></label>
+        <name>ISSP_AMS_MSO_Aggregator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_MSO_Aggregator_Info --></label>
+        <name>ISSP_AMS_MSO_Aggregator_Info</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_MSO_Alternatively --></label>

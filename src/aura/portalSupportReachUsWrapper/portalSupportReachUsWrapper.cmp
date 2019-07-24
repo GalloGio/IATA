@@ -23,6 +23,7 @@
     <aura:attribute name="isQuestion" type="Boolean" default="true" />
     <aura:attribute name="phoneNumber" type="String" default="" />
     <aura:attribute name="showPhoneNumber" type="Boolean" default="true" />
+    <aura:attribute name="showLAButtons" type="Boolean" default="true" />
 
     <aura:attribute name="contact" type="Contact" />
     <aura:attribute name="category" type="String" />
@@ -93,6 +94,7 @@
                             </lightning:button>
                         </div>
                         <aura:if isTrue="{!v.isQuestion}">
+                                <aura:if isTrue="{!v.showLAButtons}">
                             <div class="slds-col tile-column 
                                 slds-size_1-of-2 
                                 slds-small-size_1-of-3 
@@ -170,6 +172,7 @@
                                     </aura:if>
                                 </div>
                             </div>
+                        </aura:if>
                             <aura:if isTrue="{!v.showPhoneNumber}">
                                 <div class="slds-col tile-column slds-size_1-of-2 slds-small-size_1-of-3 
                                                     slds-medium-size_1-of-3 slds-large-size_1-of-8 
