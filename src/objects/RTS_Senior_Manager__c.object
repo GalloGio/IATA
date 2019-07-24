@@ -15,6 +15,7 @@
     </fields>
     <fields>
         <fullName>Email__c</fullName>
+        <caseSensitive>true</caseSensitive>
         <description>Email of the senior manager</description>
         <externalId>false</externalId>
         <inlineHelpText>Email of the senior manager</inlineHelpText>

@@ -44,6 +44,9 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 			}
 
 	        for(ID userId : portalAdminUserIDs) {
+
+	        	if(!accsMap.containsKey(auxId)) continue;
+	        	
 	            Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
 	            emailMsg.setTemplateId(accsMap.get(auxId).IATA_Iso_country__r.ANG_IEP_Model__c == 'Model A' ? templateIdA : templateIdB);
 	            emailMsg.setTargetObjectId(userId);

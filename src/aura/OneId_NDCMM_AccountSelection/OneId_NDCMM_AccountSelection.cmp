@@ -1,0 +1,186 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController">
+
+	<aura:handler name="itemSelected" event="c:OneId_ItemSelected_EVT" action="{!c.handleItem}"/>
+	
+	<aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
+
+	<aura:attribute type="Account" name="account" default="{ 'sobjectType': 'Account', 'Sector__c' : 'Travel Agent' }" />
+	<aura:attribute type="Contact" name="contact" default="{ 'sobjectType': 'Contact' }" />
+	<aura:attribute type="Boolean" name="search" default="true" />
+	<aura:attribute type="String" name="serviceName" />
+
+    <!--Data Quality-->
+    <!--Passing these fields to the account creation component so they are accessible in account selection controller-->
+    <aura:attribute type="String" name="billingCityId" />
+    <aura:attribute type="String" name="billingStateId" />
+    <aura:attribute type="String" name="shippingCityId" />
+    <aura:attribute type="String" name="shippingStateId" />
+    <aura:attribute type="IATA_ISO_Country__c" name="countryShipping" access="private" default="{'sobjectType' : 'IATA_ISO_Country__c'}"/>
+    <!--Data Quality-->
+    
+    <aura:attribute type="Map" name="filters" default="{}" access="private"/>
+  	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" access="private"/>
+	<aura:attribute type="String" name="selectedCountry" access="private"/>
+	<aura:attribute type="IATA_ISO_Country__c" name="country" access="private"/>
+    <aura:attribute type="Boolean" name="showCreateNew" default="false" />
+
+    <aura:attribute type="String" name="sector" default="" access="private"/>
+    <aura:attribute type="String" name="category" default="" access="private"/>
+    <aura:attribute type="List" name="categories" access="private"/>
+    <aura:attribute type="Object[]" name="response" access="private"/>
+    <aura:attribute type="String" name="userInput" access="public"/>
+    <aura:attribute type="Boolean" name="isValid" default="false" access="private"/>
+    <aura:attribute type="Boolean" name="accountSelected" default="false" access="private"/>
+    <aura:attribute type="Boolean" name="searching" default="false" access="private" />
+    <aura:attribute type="String" name="searchPlaceholder" default="Search for Company Name (minimum 3 characters)"/>
+    <aura:attribute type="Integer" name="suggestionBoxHeight" default="0"/>
+    
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+	<aura:if isTrue="{!v.search}">
+
+        <div class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-size_1-of-1">				
+                <aura:if isTrue="{! v.contact.Id == undefined}">
+                    <h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.OneId_SearchAccount}</h2>
+                    
+                    <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+                        <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Company Type</label>
+                        <div class="slds-form-element__control">
+                            <ui:inputSelect value="{!v.sector}" class="slds-select" change="{!c.sectorSelected}">
+                                <ui:inputSelectOption text="" label="Select a Company Type" value="true"/>
+                                <ui:inputSelectOption text="Airline" label="Airline"/>
+                                <ui:inputSelectOption text="Travel Agent" label="Seller"/>
+                                <ui:inputSelectOption text="Airline Supplier" label="Aggregator"/>
+                            </ui:inputSelect>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{! and(v.sector != '', v.sector != 'Airline Supplier')}">
+                        <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+                            <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Category</label>
+                            <div class="slds-form-element__control">
+                                <ui:inputSelect value="{!v.category}" class="slds-select" change="{!c.categorySelected}">
+                                    <ui:inputSelectOption text="" label="Select a Category" value="true"/>
+                                    <aura:iteration items="{!v.categories}" var="category">
+                                        <ui:inputSelectOption text="{!category}" label="{!category}"/>
+                                    </aura:iteration>
+                                </ui:inputSelect>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+                        <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_CompanyLocation}</label>
+                        <div class="slds-form-element__control">
+                            <ui:inputSelect value="{!v.selectedCountry}" class="slds-select" change="{!c.setCountry}">
+                                <ui:inputSelectOption text="" label=""/>
+                                <aura:iteration items="{!v.countryInformation.countryList}" var="country">
+                                    <ui:inputSelectOption text="{!country.Id}" label="{!country.Name}"/>
+                                </aura:iteration>
+                            </ui:inputSelect>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <aura:if isTrue="{! and(v.category != '', v.selectedCountry != '') || v.contact.Id != undefined}">
+                    <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
+                        <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_CompanyName}</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-combobox_container slds-has-inline-listbox slds-has-input-focus">
+                                <div class="slds-combobox slds-dropdown-trigger_click" aura:id="agencies" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                        
+                                        <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{! v.contact.Id != undefined}"/>
+                                        
+                                        <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                            <aura:if isTrue="{!v.searching}">
+                                                <lightning:spinner size="small"/>
+                                                <aura:set attribute="else">
+                                                    <lightning:icon iconName="utility:search" size="x-small"/>
+                                                </aura:set>
+                                            </aura:if>
+                                        </span>
+                                        
+                                        <div id="listbox-unique-id" role="listbox">
+                                            <ul aura:id="suggestionBoxID" id="suggestionBoxID" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid suggestionBox" role="presentation">
+                                                <aura:iteration items="{!v.response}" var="account" indexVar="index">
+                                                    <li role="presentation" class="slds-listbox__item">
+                                                        <article class="slds-card">
+                                                            <div class="slds-card__body slds-card__body_inner">
+                                                                <div class="slds-grid slds-wrap slds-grid_pull-padded">
+                                                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 slds-small-size_1-of-1">
+                                                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick="{!c.suggestionSelected}" data-value="{!account.Name}" data-row-index="{!index}"><span class="slds-form-element__label columnTitle">COMPANY NAME: </span><span class="columnValue">{!account.Name} </span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                    </li>
+                                                </aura:iteration>
+                                                
+                                                <aura:if isTrue="{!v.response.length &lt; v.totalResult}">
+                                                    <li role="presentation" class="slds-listbox__item lastRowInfo">
+                                                        <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta contactUsSuggestion" role="option" >
+                                                            <span class="find">First 20 results shown over {!v.totalResult}. Please refine your search</span>
+                                                        </div>
+                                                    </li>
+                                                </aura:if>
+                                                
+												<aura:if isTrue="{! v.sector != 'Airline'}">
+                                                    <div role="presentation" class="slds-listbox__item lastRow">
+                                                        {!$Label.c.OneId_AccountNotFound} &nbsp;<span onclick="{!c.createNew }">{!$Label.c.OneId_CreateNew}</span>
+                                                    </div>
+                                                </aura:if>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+            
+        </div>  
+		<aura:set attribute="else">
+			<c:OneId_AccountCreation aura:id="creationComponent"
+				account="{!v.account}"
+				country="{!v.country}"
+				changeName="{! !(v.sector == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry)}"
+				changeSector="{! false}"
+				changeCategory="{! false}"                 
+                countryShipping="{!v.countryShipping}"
+              	billingCityId="{!v.billingCityId}"
+                billingStateId="{!v.billingStateId}"
+                shippingCityId="{!v.shippingCityId}"
+                shippingStateId="{!v.shippingStateId}"               
+                countryInformation = "{!v.countryInformation}"
+			/>
+		</aura:set>
+	</aura:if>
+
+	<div aura:id="backdrop" class="slds-backdrop"></div>
+	<div aura:id="errorMessage" class="slds-notify_container slds-region_narrow slds-is-absolute slds-hide">
+		<div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+			<span class="slds-assistive-text">Error</span>
+			<div class="slds-notify__content">
+				<span class="slds-text-heading_x-small "><aura:unescapedHtml value="{!$Label.c.ISSP_Registration_generalError}"/></span>
+			</div>
+			<button class="slds-button slds-button_icon slds-notify__close" title="Close" onclick="{!c.closeError}">
+				<lightning:icon iconName="utility:close" variant="inverse" class="slds-button__icon slds-button__icon_large"/>
+				<span class="slds-assistive-text">Close</span>
+			</button>
+		</div>
+	</div>
+	
+	<aura:if isTrue="{!v.showCreateNew || v.contact.Id != undefined}">
+
+		<div class="slds-grid slds-grid_align-end slds-m-top_medium">
+			<ui:button label="{!$Label.site.submit}" press="{!c.submit}" class="slds-size_1-of-1 slds-medium-size_3-of-12"/>
+		</div>
+	</aura:if>
+	<div aura:id="loading" class="slds-hide">
+		<lightning:spinner />
+	</div>
+</aura:component>

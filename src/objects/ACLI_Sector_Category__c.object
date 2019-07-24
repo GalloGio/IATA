@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>List</customSettingsType>
-    <description>Account Sector and Category values per Type of Operations code.</description>
+    <description>Account Sector, Category and Type of Service values per Type of Operations code.</description>
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Category__c</fullName>
@@ -17,6 +17,16 @@
         <fullName>Sector__c</fullName>
         <externalId>false</externalId>
         <label>Sector</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type_of_Service__c</fullName>
+        <externalId>false</externalId>
+        <label>Type of Service</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>

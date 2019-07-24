@@ -46,16 +46,18 @@
     <description>Connector object that ties an Account Strategy to an Opportunity.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Opportunity_Name__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Opportunity</description>
         <externalId>false</externalId>
         <label>Opportunity Name</label>
         <referenceTo>Opportunity</referenceTo>
@@ -68,6 +70,7 @@
     <fields>
         <fullName>SFDC_Strategy__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Strategy</description>
         <externalId>false</externalId>
         <label>Strategy</label>
         <referenceTo>SFDC_Strategy__c</referenceTo>

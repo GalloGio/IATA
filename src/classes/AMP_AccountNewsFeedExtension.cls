@@ -47,7 +47,7 @@ public with sharing class AMP_AccountNewsFeedExtension {
     // url that returns the XML in the response body
 
     //String url = 'https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss&q=' + searchTerm;
-    String url = 'https://news.google.com/_/rss/search?cf=all&pz=1&q='+ searchTerm + '&hl=en-US&gl=US&ceid=US:en';
+    String url = 'https://news.google.com/rss/search?cf=all&pz=1&q='+ searchTerm + '&hl=en-US&gl=US&ceid=US:en';
     req.setEndpoint(url);
     req.setMethod('GET');
     Http h = new Http();

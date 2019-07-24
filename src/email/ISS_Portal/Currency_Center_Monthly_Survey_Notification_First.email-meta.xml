@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to remind users to submit Monthly Survey (first reminder)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Currency Center Monthly Survey Notification First</name>
+    <style>freeForm</style>
+    <subject>Monthly Survey reminder</subject>
+    <textOnly>Dear Currency Center users,
+
+In order to ensure complete and accurate reporting of the monthly currency repatriation report, we would be grateful for your time to fill in our data collection regarding blocked funds.
+It is very important that you report back to us :
+Amount blocked in respective currencies as at month end
+Allocation amounts received
+Any on ground activities/discussions being carried out from your end to unlock blocked funds situation.
+Any specific topic/subject matter you would like a particular focus on
+Please ensure you provide us with complete information by latest 14th {!CASE(MONTH(TODAY()),1,&apos;January&apos;,2,&apos;February&apos;,3,&apos;March&apos;,4,&apos;April&apos;,5,&apos;May&apos;,6,&apos;June&apos;,7,&apos;July&apos;,8,&apos;August&apos;,9,&apos;September&apos;,10,&apos;October&apos;,11,&apos;November&apos;,12,&apos;December&apos;,&apos;&apos;)}. Your participation is essential to IATA Currency Repatriation advocacy efforts.
+Should you have any queries or more feedback, please log a case in your IATA Customer Portal under the topic &quot;Currency Center&quot;.
+
+Kind regards,
+Currency Center Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

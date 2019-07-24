@@ -1,4 +1,8 @@
 <apex:page controller="ISSP_Registration"  showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}">
+
+	<html>
+	
+		<head>
 	<style>
 		.errorMessage {
 			font-size: 10px;
@@ -11,9 +15,59 @@
 		}
 	</style>
 
-<head>
+			<!-- Google Tag Manager -->
+		    <script>
+		        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		        })(window,document,'script','dataLayer','GTM-PWSNSM3');
+		    </script>
+		    <!-- End Google Tag Manager -->
+		    <script>
+		      function getDevice() {
+		        if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+		            return "Tablet";
+		        } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+		            return "Mobile";
+		        } else {
+		            return "Desktop";
+		        }
+		      }      
+
+		      window.dataLayer = window.dataLayer||[];
+		      dataLayer.push({
+		        "user": {
+		          "loginStatus": "Logged Out",
+		          "memberStatus": "No",
+		        },
+		        "page": {
+		          "requestURI": window.location.pathname + window.location.search + "&ga_step=step3-account-registration",
+		          "device": getDevice(),
+		          "breadcrumb": "{!$Label.ISSP_Registration_RegistrationProcess}", 
+		          "language": "{!lang}"
+		        }                  
+		      });
+
+
+		      dataLayer.push({
+		        "event": "VPV",
+		        "page": {
+		          "requestURI": window.location.pathname + window.location.search + "&ga_step=step3-account-registration"
+		        }
+		      });
+
+		    </script>
+
     <title>{!IF(communityName=='CNS','CNS','IATA')}</title>
  </head>
+
+		 <body>
+
+		 	<!-- Google Tag Manager (noscript) -->
+		    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+		      	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		    <!-- End Google Tag Manager (noscript) -->
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
  <apex:stylesheet value="{!URLFOR($Resource.ValidationEngine, 'css/validationEngine.jquery.css')}" />
@@ -722,9 +776,10 @@
                         <div style="display:{!IF(AND(isAirline, sRefererCommunity != 'iec'),'none','')}" >
                         <apex:inputField styleclass="form-control rec" id="sector" value="{!acc.Sector__c}" rendered="{!OR(sRefererCommunity == 'iec', AND(!hqFound, !createAgency))}" />
                         </div>
-                        <apex:outputText styleclass="form-control" id="sectorHQ" value="{!hqAccount.Sector__c}" rendered="{!AND(hqFound, !createAgency)}" />
-                        <apex:outputText styleclass="form-control" id="sectorAgency" value="{!acc.Sector__c}" rendered="{!AND(!hqFound, createAgency)}" />
-                        <apex:outputText styleclass="form-control" id="sectorAirline" value="{!acc.Sector__c}" rendered="{!AND(isAirline, !toSearchDesignatorCode)}" />
+                        <!-- WMO-391 -->
+                        <apex:outputField styleclass="form-control" id="sectorHQ" value="{!hqAccount.Sector__c}" rendered="{!AND(hqFound, !createAgency)}" />
+                        <apex:outputField styleclass="form-control" id="sectorAgency" value="{!acc.Sector__c}" rendered="{!AND(!hqFound, createAgency)}" />
+                        <apex:outputField styleclass="form-control" id="sectorAirline" value="{!acc.Sector__c}" rendered="{!AND(isAirline, !toSearchDesignatorCode)}" />
                     </div>
                     <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
 	                    <div class="form-group col-lg-6" >
@@ -763,14 +818,14 @@
                     <apex:outputPanel layout="block" rendered="{!AND(hqFound, !createAgency)}" >
                     <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.Category__c.Label}</label>
-                        <apex:outputText styleclass="form-control" id="categoryFieldHQ" value="{!hqAccount.Category__c}" />
+                        <apex:outputField styleclass="form-control" id="categoryFieldHQ" value="{!hqAccount.Category__c}" />
                     </div>
                     </apex:outputPanel>
                     <!-- TF - SP08 -->
                     <apex:outputPanel layout="block" rendered="{!AND(!hqFound, createAgency)}" >
                     <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.Category__c.Label}</label>
-                        <apex:outputText styleclass="form-control" id="categoryFieldAgency" value="{!acc.Category__c}" />
+                        <apex:outputField styleclass="form-control" id="categoryFieldAgency" value="{!acc.Category__c}" />
                     </div>
                     </apex:outputPanel>
                     <div class="form-group col-lg-6" id="categoryDiv1" style="display:none" >
@@ -823,12 +878,12 @@
 	                        StatusStyle="{!IF(sRefererCommunity == 'iec','elementBAddressToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1')}"
 	                        FormControlStyle="form-control req" rendered="{!preventAddressDoctorService==false}">
 	                      </DSE:DS_DataQuality>
-	                      <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
-	                      		<div id="divToMove2" class="col-lg-6" style="display: none;">
-	                      			<select class="form-control rec" id="drpdwnBState" onchange="copyToAccBState();">
-	                      				<option value="">--Select One--</option>
-	                      			</select>                		 	
-	                        	</div>
+                          <apex:outputPanel layout="block" styleClass="requiredBlock"  rendered="{!sRefererCommunity == 'iec'}">
+                                <div id="divToMove2" class="col-lg-6" style="display: none;">
+                                    <select class="form-control rec" html-required="true" id="drpdwnBState" onchange="copyToAccBState();">
+                                        <option value=" ">--Select One--</option>
+                                    </select>                           
+                                </div>
                        	  </apex:outputPanel>	
                       </div>
                       <div class="form-group col-lg-6">
@@ -1594,5 +1649,6 @@
      </apex:define>
   </apex:composition>
  
-  
+		 </body>
+	</html>  
 </apex:page>

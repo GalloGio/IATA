@@ -202,9 +202,11 @@ $(".topmenu").hover(function(){
       /*background-size:200%;*/
       background-size: {!$Label.ISSP_Portal_BackgroundImage_size};
       }
-      div.container{
+      
+	div.container{
       background-color:white;
-      }
+      margin-top:15px;
+    }
 
       .panel-primary{
       // min-height:10px;
@@ -560,9 +562,24 @@ background-color:#428bca;
       
    </script>
    
-   
+<apex:outputPanel rendered="{!isPortalNavigationBar}">
+  <apex:includeScript value="/lightning/lightning.out.js"/>
+  <apex:stylesheet value="{!URLFOR($Resource.PortalHeader_NotiticationCenter_Tab_CSS, '/CSP_CSS/portalHeader_NotiticationCenter_Tab_CSS.css')}"/>
+  <script>
+      $Lightning.use("c:portalHeaderApp", function() {
+          $Lightning.createComponent(
+              "c:portalHeader",
+              {isInOldPortal: true},
+              "headerBar",
+              function(cmp) {
+              });
+          });
+  </script>
+  <div id="headerBar"/>
+</apex:outputPanel>
 
 
+<apex:outputPanel rendered="{!NOT(isPortalNavigationBar)}">
 <nav class="navbar navbar-primary"  role="navigation" id="topmenu">
  <div class="container-fluid">
 
@@ -580,8 +597,6 @@ background-color:#428bca;
        <img class="navbar-brand" height="70px" src="{!urlfor($Resource.IIS_Portal,'/images/logocns.png')}" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px; display:{!if(communityName=='CNS','','none')};"></img>
      </a>
       
-     
- 
     <div  class="navbar-brand brandtext">
        <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"> {!$Label.IFAP_Home_Page_Title_4}</a>
     </div>
@@ -708,6 +723,11 @@ background-color:#428bca;
                 {!$Label.ISSP_Available_services}
                 </a>
 </li>
+    <li>
+        <a href="/ISSP_Financial_Institutions?MainNav=Services&subNav=Financial&mid=M3S2" id="M3S2" style="display:{!IF(showFinancialInstitution,'','none')}">
+            {!$Label.ISSP_Financial_Insititutions}
+        </a>
+    </li>
     </ul>
      <ul class="nav navbar-nav collapse" id="four" >
       <li>
@@ -754,7 +774,7 @@ background-color:#428bca;
      <ul  class="nav navbar-nav collapse" id="five">
          <li><a href="/ISSP_PersonalInformation?MainNav=Personalinfor&subNav=perso&mid=M5S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S1"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Registration_MyInformation}</a></li>
          <li><a href="/ISSP_CompanyInformation?MainNav=Companyinfor&subNav=account&mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S2">{!$Label.ISSP_Account_Information}</a></li>
-                <!-- AMSU-201 -->
+                <!-- AMSU-201 -->                
                 <apex:outputPanel layout="none" rendered="{!showFinancialSec}">
                   <li>
                     <a href="/ISSP_FinancialSecInformation?MainNav=FinInfo&subNav=financial_securities&mid=M5S3{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S3">
@@ -796,7 +816,7 @@ background-color:#428bca;
       </div>
     </div>
   </nav>
-
+</apex:outputPanel>
 
     <div class="modal fade bootbox-confirm" id="ModalShowSurvey" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static" data-keyboard="false" >
       <div class="modal-dialog">
@@ -820,5 +840,5 @@ background-color:#428bca;
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
+ 
 </apex:component>

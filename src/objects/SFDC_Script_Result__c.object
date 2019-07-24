@@ -46,14 +46,15 @@
     <description>Stored detailed question-answer results for a given call script occurrence</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Answer__c</fullName>
         <description>The answer to the question.</description>
@@ -66,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Help__c</fullName>
+        <description>Link to download the help file</description>
         <externalId>false</externalId>
         <formula>(HYPERLINK(&quot;/servlet/servlet.FileDownload?file=015200000002o5K&quot;, &quot;Help for Scripts&quot;)) &amp; &quot; &quot; &amp; (IMAGE(&quot;/img/btn_help.gif&quot;, &quot;Help&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

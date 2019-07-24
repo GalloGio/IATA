@@ -390,7 +390,11 @@
                                     <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true"/>
 
                                     <!-- <label class=" lbl col-lg-5 control-label" for="exampleInputEmail1"><span class="required"></span></label> -->
-
+                                    
+                                    <!-- ACAMBAS - WMO-399 - Start -->
+                                    <apex:inputField label="{!$Label.ISSP_Release_Version}" value="{!newCase.Applicable_to_Which_Version_s__c}" rendered="{!isDPCUser}" styleclass="form-control" required="false"/>
+                                    <!-- ACAMBAS - WMO-399 - End -->
+                                        
                                     <apex:inputfield value="{!newCase.Subject}" styleclass="form-control" required="true" />
                                     <apex:inputfield value="{!newCase.Description}" styleclass="form-control" style="height: 100px"  required="true" />
                                         <apex:pageblocksectionitem rendered="{!AND(NOT(isDPCUser), NOT(isFDSRecordType), NOT(isSISCase))}">
@@ -692,8 +696,6 @@
                                         <apex:outputField value="{!newCase.Contact.Email}" rendered="{!caseType =='SIDRA'}"/>
 
                                         <apex:outputfield rendered="{!caseType =='PWC'}" value="{!newCase.ownerId}" />
-                                        <!-- <apex:outPutField rendered="{!isSAAMCase}" value="{!newCase.Dossier_reception_date__c}"/> -->
-
                                         <apex:outputfield label="{!$Label.ISSP_Case_Payment_status}" rendered="{!newCase.RecordType.Name=='Invoicing Collection Cases'}" value="{!newCase.Has_the_agent_paid_invoice__c}" />
 
                                         <!-- SIDRA Fields - Display even when empty -->
@@ -723,7 +725,7 @@
                 							<apex:param value="{!newCase.Update_AIMS_DEF__c}"/>
                 						</apex:outputText>
                                         <apex:outputText value="{!CASE(newCase.Reason_for_Default__c, 'Technical Default', $Label.ISSP_Homepage_Irregularities, newCase.Reason_for_Default__c)}" label="{!$ObjectType.Case.fields.Reason_for_Default__c.Label}" rendered="{!AND(caseType =='SIDRA',newCase.Reason_for_Default__c!=null)}" />
-                                        <!-- <apex:outputfield value="{!newCase.DEF_Withdrawal_Approval_Rejection__c}" label="{!$Label.ISSP_SIDRA_Withdraw_Approval}" rendered="{!AND(caseType =='SIDRA',newCase.DEF_Withdrawal_Approval_Rejection__c=='Approved')}" /> -->
+                                      
 
                                         <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_SIDRA_Withdraw_Approval_Date}" rendered="{!AND(caseType =='SIDRA',newCase.DEF_Withdrawal_Approval_Rejection__c=='Approved')}" >
                 							<apex:param value="{!newCase.DEF_Withdrawal_Approval_Rejection_Date__c}"/>
@@ -757,8 +759,7 @@
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!newCase.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(newCase.Reason1__c, 'New'),newCase.Reason1__c=='Bank Detail Update',newCase.Reason1__c=='FoP Management',newCase.Reason1__c=='CLO - Closure'))}">{!$Label.ISSP_AMS_Click_Here_NoC}</apex:outputLink>
                                             </apex:outputText>
                                         </apex:pageblocksectionitem>
-                                        <!-- AMSU-119 - added isMSO Condition -->
-                                        <!--apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO')}"-->
+                  
                                         <apex:pageblocksectionitem rendered="{!AND(isOnlineOSCARCase, NOT(showAccreditation), newCase.Reason1__c!='FoP Management', newCase.Reason1__c!='PCI DSS Compliant', newCase.Reason1__c!='CLO - Closure', newCase.Reason1__c <> 'New MSO', newCase.Reason1__c != 'Financial review opt-in / opt-out', newCase.Reason1__c != 'Annual revalidation', NOT(isMSOcase))}">
                                             <apex:image value="{!URLFOR($Resource.PDF_icon_large)}" />
                                             <apex:outputText >
@@ -769,7 +770,7 @@
                                                 <apex:outputlink value="{!fullnameNOCFile}" target="_new" rendered="{!newCase.Reason1__c=='Bank Detail Update'}">
                                                     {!$Label.ISSP_AMS_Download_PDF_NOC}
                                                 </apex:outputlink>
-                                                <apex:outputlink value="{!fullnameNOCFile}"  target="_new" rendered="{!OR(BEGINS(newCase.Reason1__c, 'CH'),BEGINS(newCase.Reason1__c, 'CL'),newCase.Reason1__c = 'Major Change')}">
+                                                <apex:outputlink value="{!fullnameNOCFile}"  target="_new" rendered="{!OR(BEGINS(newCase.Reason1__c, 'CH'),BEGINS(newCase.Reason1__c, 'CL'),newCase.Reason1__c = 'Major Change',newCase.Reason1__c = 'Accreditation Type')}">
                                                     {!$Label.ISSP_AMS_Download_PDF_NOC}
                                                 </apex:outputlink>
                                                 <apex:outputlink value="{!IF(OR(newCase.Reason1__c == 'New HE standard',newCase.Reason1__c == 'New HE lite'),'/ISSP_AMS_PDF_ANG_PAX_HE?caseId='+ newCase.Id,'')}" id="amsHEFormLink" rendered="{!OR(newCase.Reason1__c == 'New HE standard', newCase.Reason1__c == 'New HE lite')}" target="_new">
@@ -916,6 +917,9 @@
                                         </apex:pageblocksectionItem>
                                         <apex:outputfield value="{!newCase.CaseArea__c}" rendered="{!IsInterDPCCase}" />
                                         <apex:outputfield value="{!newCase.Reason1__c}" rendered="{!IsInterDPCCase}" />
+                                        <!-- ACAMBAS - WMO-399 - Start -->
+                                        <apex:outputfield value="{!newCase.Applicable_to_Which_Version_s__c}" rendered="{!isDPCUser}" label="{!$Label.ISSP_Release_Version}"/>
+                                        <!-- ACAMBAS - WMO-399 - End -->
                                         <apex:outputfield value="{!newCase.Subject}" />
                                         <apex:outputfield value="{!newCase.Description}" />
                                         <apex:outputfield value="{!newCase.Type}" rendered="{!NOT(IsInterDPCCase)}"/>
@@ -1213,11 +1217,11 @@
                                             </apex:facet>
                                             <a href="javascript:getSelectArtical('{!article.articleId}');">{!article.articleTitle}</a>
                                         </apex:column>
-                                        <apex:column value="{!article.articleType}">
+                                        <!-- <apex:column value="{!article.articleType}">
                                             <apex:facet name="header">
                                                 {!$ObjectType.KnowledgeArticleVersion.Fields.ArticleType.Label}
                                             </apex:facet>
-                                        </apex:column>
+                                        </apex:column> -->
                                     </apex:pageblocktable>
                                 </apex:pageblock>
 

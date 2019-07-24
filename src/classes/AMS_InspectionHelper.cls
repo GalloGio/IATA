@@ -152,6 +152,10 @@ public class AMS_InspectionHelper {
     {
         Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
 		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+        if(statusCodeChanged.keySet().isEmpty())
+            return;
+
         List<Account> accountsToProcess = [select id, Expiry_Date__c, Location_Class__c, Status__c, Reason__c, RecordTypeId from Account where id in :statusCodeChanged.keySet()];
 
         if(accountsToProcess.isEmpty())
@@ -448,7 +452,7 @@ public class AMS_InspectionHelper {
                     appt.Date_Organisation_Status_attained__c = System.today();
                 }
                 //If Account__c is not null means that the appointment is being created in an Account
-                if(appt.Account__c != null){
+                else if(appt.Account__c != null){
                     String accStatus = mAccounts.get(appt.Account__c).Status__c;
                     if(accStatus == 'Approved'){
                         appt.Accreditation_Endorsement_Status_code__c = '9';

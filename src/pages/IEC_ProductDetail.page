@@ -77,7 +77,7 @@
                         "requestURI": window.location.pathname + window.location.search,
                         "device": getDevice(),
                         "language": "{!language}",
-                        "breadcrumb": "{!$Label.Home} > {!selectedCategory.label} > {!selectedTopicLabel} > {!ecomProduct.ProductName}"
+                        "breadcrumb": {!productBreadcrumb}
                     },
                     "ecommerce": {!productWrapper}
                 });
@@ -97,7 +97,7 @@
                             "event": "userAction",
                             "eventCategory": "Product Details Page",
                             "eventAction": "Click on Access CheckACode Evaluation",
-                            "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                            "eventLabel": {!productNameAndIdStr}
                         });
                     }
                 }
@@ -143,7 +143,7 @@
                         "event": "userAction",
                         "eventCategory": "Product Details Page",
                         "eventAction": "Click on Create an Account",
-                        "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                        "eventLabel": {!productNameAndIdStr}
                     });
                 }
 
@@ -152,7 +152,7 @@
                         "event": "userAction",
                         "eventCategory": "Product Details Page",
                         "eventAction": "Click on Free Pro Trial",
-                        "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                        "eventLabel": {!productNameAndIdStr}
                     });
                 }
 
@@ -396,11 +396,14 @@
 
                                 <!-- Interactive Maps -->
                                 <apex:outputPanel rendered="{!bSection7Show}">
-                                    <section class="section-container resources" id="interactiveMap">
-                                        <h2 class="section-title">Interactive Statistics</h2>
-                                        <p class="light">IATA agencies on maps and charts</p>
-                                        <a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
-                                    </section>
+
+                                    <apex:outputPanel rendered="{!bSection7Show}">
+                                        <section class="section-container resources" id="interactiveMap">
+                                            <h2 class="section-title">Interactive Statistics</h2>
+                                            <p class="light">IATA agencies on maps and charts</p>
+                                            <a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
+                                        </section>
+                                    </apex:outputPanel>
                                 </apex:outputPanel>
                             </section>
                         </div>
