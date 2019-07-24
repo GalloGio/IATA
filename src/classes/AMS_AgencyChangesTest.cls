@@ -252,8 +252,7 @@ public class AMS_AgencyChangesTest {
 		// Initialize the hierarchy and create an OSCAR
 
 		init2Hierarchies(true);
-		Map<Contact,Double> owContacts = new Map<Contact,Double> {OW1 => 50, OW2 => 50};
-		createOSCAR(HO1, C1, CHANGEOWNERSHIPNONIATA, owContacts);
+		createOSCAR(HO1, C1, CHANGEOWNERSHIPNONIATA, null);
 		
 		Test.startTest();
 		
