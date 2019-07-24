@@ -29,7 +29,7 @@ import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults
 import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
-
+import ISSP_Homepage_Pending_approval from '@salesforce/label/c.ISSP_Homepage_Pending_approval';
 //import apex methods
 import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
@@ -69,7 +69,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         CSP_Search_NoResults_text2,
         cancelAccessMsg,
         cancelAccessTitle,
-        searchContactPlaceholder
+        searchContactPlaceholder,
+        ISSP_Homepage_Pending_approval
     };
 
     //links for images
@@ -123,7 +124,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track showSpinner=false;
     @track loadingContacts=false;
     
-
+	@track isIFG_Service = false;
     serviceDetailsResult; // wire result holder
 
     PAGE_SIZE=10; //nr of contact record per page
@@ -177,7 +178,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.isAdmin = this.serviceRecord.isAdmin;
                 this.loadReady = true;
                 this.serviceName = this.serviceRecord.recordService.ServiceName__c;
-
+		this.isIFG_Service = this.serviceRecord.isIFGPending;
                 if (this.isAdmin){
                     this.getContactsForPage();
                 }else{
