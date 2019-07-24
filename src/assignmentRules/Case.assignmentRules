@@ -3372,7 +3372,6 @@ ISPICKVAL(Reason1__c, &quot;Order / Subscription request&quot;),
 ISPICKVAL(Reason1__c, &quot;Refund&quot;), 
 ISPICKVAL(Reason1__c, &quot;User Management&quot;), 
 ISPICKVAL(Reason1__c, &quot;Pre-sales&quot;),
-ISPICKVAL(Reason1__c, &quot;Collection&quot;),
 ISPICKVAL(Reason1__c, &quot;Dispute&quot;),
 ISPICKVAL(Reason1__c, &quot;Pricing&quot;) 
 ), 
@@ -4729,20 +4728,6 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_E_F_Malaysia</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>E&amp;F - Enhancement &amp; Financing</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.BSPCountry__c</field>
-                <operation>equals</operation>
-                <value>Malaysia</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <criteriaItems>
                 <field>Case.From_IFAPRest__c</field>
                 <operation>equals</operation>
@@ -4765,26 +4750,6 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
                 <value>TD</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>E_F_Operations</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 OR 2 OR 3</booleanFilter>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - E&amp;F Services</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>E&amp;F Operations</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>E&amp;F - Enhancement &amp; Financing</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
