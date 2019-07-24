@@ -1,0 +1,20 @@
+.searchCasesList {
+    display: inline-block;
+    width: 80%;
+}
+
+.inputFilter {
+    display: flex;
+    align-items: center;
+}
+
+.inputFilter lightning-input {
+    width: 100%;
+    margin-top: -1px;
+}
+
+.noRecentCases {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
