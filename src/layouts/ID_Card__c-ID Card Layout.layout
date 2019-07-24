@@ -403,6 +403,10 @@
                 <behavior>Edit</behavior>
                 <field>CIN__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>WebStar_P00_Key__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

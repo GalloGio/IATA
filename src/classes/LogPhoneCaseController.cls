@@ -91,7 +91,7 @@ public with sharing class LogPhoneCaseController {
     public PageReference Save() {
         try {
         	newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
-        	
+        	newcase.case_record_Type__C=strSelectedRType;
         	insert newcase;
         	
         	if (isNewTaskRequested) {
@@ -113,6 +113,7 @@ public with sharing class LogPhoneCaseController {
     public PageReference SaveAndClose() {
         try {
         	newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
+            newcase.case_record_Type__C=strSelectedRType;
         	newcase.Status = 'Closed';
         	
         	insert newcase;
