@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
+        <name>Calculate_Eff_Age</name>
+        <label>Calculate Eff Age</label>
+        <locationX>50</locationX>
+        <locationY>693</locationY>
+        <assignmentItems>
+            <assignToReference>EffectiveAge</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CLO_Age</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Set_Total_Time</name>
         <label>Set Total Time</label>
         <locationX>346</locationX>
@@ -94,6 +107,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_CLO_Closure</name>
+        <label>Is CLO - Closure?</label>
+        <locationX>42</locationX>
+        <locationY>266</locationY>
+        <defaultConnector>
+            <targetReference>Set_Total_Time</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>oscar.Case_Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CLO - Closure</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Was_Rejected_Not_Accepted</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Payment_Requested</name>
         <label>Payment Requested?</label>
         <locationX>686</locationX>
@@ -147,6 +185,35 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Was_Rejected_Not_Accepted</name>
+        <label>Was Rejected/Not Accepted?</label>
+        <locationX>44</locationX>
+        <locationY>496</locationY>
+        <defaultConnector>
+            <targetReference>Calculate_Eff_Age</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes3</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>oscar.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed_ Not Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>oscar.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed_Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>AgreementTime</name>
         <dataType>Number</dataType>
@@ -178,6 +245,12 @@
         <scale>2</scale>
     </formulas>
     <formulas>
+        <name>CLO_Age</name>
+        <dataType>Number</dataType>
+        <expression>IF({!oscar.Form_Effective_Date__c} == {!oscar.Suspended_in_BSPLink_CASSLink__c}, 1, 2)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
         <name>PaymentTime</name>
         <dataType>Number</dataType>
         <expression>IF(ISNULL({!oscar.Proof_of_payment_received__c}),
@@ -200,9 +273,10 @@
         <dataType>Date</dataType>
         <expression>IF(ISNULL({!oscar.Change_effective_as_of__c}),
 	{!oscar.Dossier_Reception_Date__c},
-	IF({!oscar.Dossier_Reception_Date__c} &gt; {!oscar.Change_effective_as_of__c},
-		{!oscar.Dossier_Reception_Date__c},
-		{!oscar.Change_effective_as_of__c}
+	IF({!oscar.Dossier_Reception_Date__c} &lt; {!oscar.Change_effective_as_of__c},
+		{!oscar.Change_effective_as_of__c},
+		{!oscar.Dossier_Reception_Date__c}
+		
 	)
 )</expression>
     </formulas>
@@ -230,7 +304,7 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <startElementReference>Set_Total_Time</startElementReference>
+    <startElementReference>Is_CLO_Closure</startElementReference>
     <status>Active</status>
     <variables>
         <name>case_record</name>
