@@ -198,5 +198,22 @@
         <unique>false</unique>
     </fields>
     <label>ISSP Integration Error Handling</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Caller_ID__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Description__c</columns>
+        <columns>Urgency__c</columns>
+        <columns>Subcategory__c</columns>
+        <columns>Short_Description__c</columns>
+        <columns>Severity__c</columns>
+        <columns>Impact__c</columns>
+        <columns>Business_Service__c</columns>
+        <columns>Assignment_Group__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>
