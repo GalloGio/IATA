@@ -103,6 +103,12 @@
             component.set("v.callCenterInfo_Label", emergency2);
         }
 
+        if(data.myliveAgentButtonInfo && data.myliveAgentButtonInfo.length > 0){
+            component.set("v.showLAButtons", true);
+        }else{
+            component.set("v.showLAButtons", false);
+        }
+
         data.myliveAgentButtonInfo.forEach(function (laButton) {
             if (laButton.Button_Per_Topic__c == true) {
                 component.set("v.liveAgentOnlineDefault", laButton.ButtonId__c);

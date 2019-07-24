@@ -166,12 +166,15 @@
     </listViews>
     <listViews>
         <fullName>All1</fullName>
+        <columns>ANG_Risk_ID__c</columns>
         <columns>NAME</columns>
         <columns>ANG_Agency_Risk_Calculation__c</columns>
         <columns>ANG_Description__c</columns>
         <columns>ANG_nr_occurence_ff__c</columns>
         <columns>Limit_Cash_conditions__c</columns>
         <columns>Grouping_Number__c</columns>
+        <columns>ANG_Delay_Cash_Condition__c</columns>
+        <columns>ANG_Expiration__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
