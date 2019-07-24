@@ -390,32 +390,28 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
 
         if(! rolesForAccessGrantedIds.isEmpty()) {
 
-
             Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
             List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Contact_Role__r.Contact__c, Contact_Role__r.Contact_Roles__r.Name, Contact_Role__r.Contact_Roles__r.Category__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__r.Contact__c = : con.Id AND Contact_Role__r.Contact_Roles__c = :rolesForAccessGrantedIds AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId  AND (Contact_Role__r.Contact_Roles__r.Category__c = null OR Contact_Role__r.Contact_Roles__r.Category__c = '') AND Service__r.Name = 'GADM' AND Status__c != 'Granted'];
+
+            Map<Id, Contact_Role_Service_Access__c> rolesToAccessMap = new Map<Id, Contact_Role_Service_Access__c>();
+            for(Contact_Role_Service_Access__c access : serviceAccesses) {
+                rolesToAccessMap.put(access.Contact_Role__r.Contact_Roles__c, access);
+            }
+
             List<Contact_Role_Service_Access__c> accessGrantedToUpdate = new List<Contact_Role_Service_Access__c>();
-            List<Id> rolesToUpdate = new List<Id>();
+            List<Id> createNewRolesIds = new List<Id>();
 
-
-            if(! serviceAccesses.isEmpty()) {
-                for(Contact_Role_Service_Access__c access : serviceAccesses) {
-                    if(rolesForAccessGrantedIds.contains(access.Contact_Role__r.Contact_Roles__c)) {
-                        accessGrantedToUpdate.add(access);
-                        rolesToUpdate.add(access.Contact_Role__r.Contact_Roles__c);
-                    }
+            for(Id roleId : rolesForAccessGrantedIds) {
+                if(rolesToAccessMap.get(roleId) != null) {
+                    accessGrantedToUpdate.add(rolesToAccessMap.get(roleId));
+                }else{
+                    createNewRolesIds.add(roleId);
                 }
             }
 
-            //change access to granted
+            //update
             for(Contact_Role_Service_Access__c access : accessGrantedToUpdate) {
                 access.Status__c = 'Granted';
-            }
-
-            List<Id> createNewRolesIds = new List<Id>();
-            for(Id newRoleToGrand : rolesForAccessGrantedIds) {
-                if(! rolesToUpdate.contains(newRoleToGrand)){
-                    createNewRolesIds.add(newRoleToGrand);
-                }
             }
 
             //create new granted access
@@ -499,9 +495,7 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
     }
 
 
-    private static boolean handleBusinessUnits(Map<Id, BusinessUnit> originalBusinessUnits, Map<Id, BusinessUnit> modifiedBusinessUnits, Map<Id, Contact_Role_Service_Access__c> userBusinessUnits, Contact con) {
-
-        boolean result = true;
+    private static void handleBusinessUnits(Map<Id, BusinessUnit> originalBusinessUnits, Map<Id, BusinessUnit> modifiedBusinessUnits, Map<Id, Contact_Role_Service_Access__c> userBusinessUnits, Contact con) {
 
         List<Contact_Role_Service_Access__c> accessDeniedToUpdate = new List<Contact_Role_Service_Access__c>();
         List<Id> businessUnitsForAccessGrantedIds = new List<Id>();
@@ -537,53 +531,21 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
             }
 
             List<Contact_Role_Service_Access__c> accessGrantedToUpdate = new List<Contact_Role_Service_Access__c>();
-            List<Id> createNewAccessBusinessUnits = new List<Id>();
+            List<Id> createNewBusinessUnitIds = new List<Id>();
 
             for(Id roleId : businessUnitsForAccessGrantedIds) {
                 if(roleToAccessMap.get(roleId) != null) {
                     accessGrantedToUpdate.add(roleToAccessMap.get(roleId));
                 }else{
-                    createNewAccessBusinessUnits.add(roleId);
+                    createNewBusinessUnitIds.add(roleId);
                 }
             }
-
 
             //update
             for(Contact_Role_Service_Access__c access : accessGrantedToUpdate) {
                 access.Status__c = 'Granted';
             }
 
-            //create new access
-            List<Id> createNewBusinessUnitIds = new List<Id>();
-            createNewBusinessUnitIds.addAll(createNewAccessBusinessUnits);
-
-            /*for(Contact_Role_Service_Access__c access : serviceAccesses) {
-                System.debug('access:: ' +access.Contact_Role__r.Contact_Roles__c);
-            }
-            List<Contact_Role_Service_Access__c> accessGrantedToUpdate = new List<Contact_Role_Service_Access__c>();
-            List<Id> businessUnitsToGranted = new List<Id>();
-            List<Id> tempList = new List<Id>();
-
-            if(! serviceAccesses.isEmpty()) {
-                for(Contact_Role_Service_Access__c access : serviceAccesses) {
-                    if(businessUnitsForAccessGrantedIds.contains(access.Contact_Role__r.Contact_Roles__c)) {
-                        accessGrantedToUpdate.add(access);
-                        businessUnitsToGranted.add(access.Contact_Role__r.Contact_Roles__c);
-                    }
-                }
-            }
-
-            //change access to granted
-            for(Contact_Role_Service_Access__c access : accessGrantedToUpdate) {
-                access.Status__c = 'Granted';
-            }
-
-            List<Id> createNewBusinessUnitIds = new List<Id>();
-            for(Id newRoleToGrand : businessUnitsForAccessGrantedIds) {
-                if(! businessUnitsToGranted.contains(newRoleToGrand)){
-                    createNewBusinessUnitIds.add(newRoleToGrand);
-                }
-            }*/
             //create new granted access
             if(! createNewBusinessUnitIds.isEmpty()) {
 
@@ -667,13 +629,11 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
 
         update accessDeniedToUpdate;
 
-        return result;
-
     }
 
 
 
-    private static boolean handleActors(Map<Id, Actor> originalActors, Map<Id, Actor> modifiedActors, Map<Id, Account_Contact_Role__c> userActors, Contact con) {
+    private static void handleActors(Map<Id, Actor> originalActors, Map<Id, Actor> modifiedActors, Map<Id, Account_Contact_Role__c> userActors, Contact con) {
 
         Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
         List<Account_Contact_Role__c> toDelete = new List<Account_Contact_Role__c>();
@@ -729,12 +689,8 @@ public without sharing class GADM_ExternalUserContactDetail_CTRL {
                 insert accountContactRolesToCreate;
             }
 
-
         }
 
-
-        boolean result = true;
-        return  result;
     }
 
 

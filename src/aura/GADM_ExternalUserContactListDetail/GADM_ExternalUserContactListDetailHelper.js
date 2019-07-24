@@ -197,20 +197,20 @@
                     }else{
 
                         console.log('handleSave - unable to save changes');
-                        this.handleErrorMessage(component, 'Unable to save data!');
+                        this.handleErrorMessage(component, $A.get("$Label.c.GADM_User_Management_unable_to_save"));
                         this.toggleSpinner(component);
                         component.set('v.showTable', true);
                     }
 
                 }else{
                     console.log('handleSave - unable to save changes');
-                    this.handleErrorMessage(component, 'Unable to save data!');
+                    this.handleErrorMessage(component, $A.get("$Label.c.GADM_User_Management_unable_to_save"));
                     this.toggleSpinner(component);
                     component.set('v.showTable', true);
                 }
             }else{
                 console.log('handleSave - unable to save changes');
-                this.handleErrorMessage(component, 'Unable to save data!');
+                this.handleErrorMessage(component, $A.get("$Label.c.GADM_User_Management_unable_to_save"));
                 this.toggleSpinner(component);
                 component.set('v.showTable', true);
 
@@ -246,13 +246,13 @@
 
                 }else{
                     console.log('reloadAfterSave error - empty result');
-                    this.handleErrorMessage(component, 'Unable to save data!');
+                    this.handleErrorMessage(component, $A.get("$Label.c.GADM_User_Management_unable_to_save"));
                     this.toggleSpinner(component);
                     component.set('v.showTable', true);
                 }
             }else{
                 console.log('reloadAfterSave error');
-                this.handleErrorMessage(component, 'Unable to save data!');
+                this.handleErrorMessage(component, $A.get("$Label.c.GADM_User_Management_unable_to_save"));
                 this.toggleSpinner(component);
                 component.set('v.showTable', true);
             }
