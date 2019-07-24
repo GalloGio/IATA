@@ -33938,6 +33938,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Not Applicable</value>
     </labels>
     <labels>
+        <fullName>Not_In_CNS_Group_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not In CNS Group Error</shortDescription>
+        <value>This is a CNS process and you are not authorized to make changes. Please contact your system administrator for more information.</value>
+    </labels>
+    <labels>
         <fullName>Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
