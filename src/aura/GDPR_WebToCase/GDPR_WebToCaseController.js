@@ -4,18 +4,18 @@
         //Check if contact is DPO
         var checkIfContactIsDPOAction = component.get("c.checkIfContactIsDPO");
         checkIfContactIsDPOAction.setCallback(this, function(response){
-        	var state = response.getState();
+            var state = response.getState();
             
-        	if (state === "SUCCESS") {
+            if (state === "SUCCESS") {
                 var isDPO = response.getReturnValue();
                 if(isDPO == null)
                 isDPO = false;
                 component.set("v.isContactDPO", isDPO);
                 component.set("v.showDPOArea", isDPO);
                 component.set("v.localLoading", false);
-         	}
-      	});
-       	$A.enqueueAction(checkIfContactIsDPOAction);
+            }
+        });
+        $A.enqueueAction(checkIfContactIsDPOAction);
         
         //get data privacy rights pick values
         var getDataPrivacyRightsPickValuesAction = component.get("c.getDataPrivacyRightsPickValues");
@@ -117,6 +117,35 @@
             component.set("v.localLoading", false);
         }
     },
+
+    fecthAWSInformation : function(c, e, h){
+        
+        let controlDPOField = h.controlDPOFields(c);
+
+        if(controlDPOField){
+            let fullName = c.get("v.newCaseDPO.Passenger_Name_PXNM__c");
+            let ticketNumber = c.get("v.newCaseDPO.Ticket_Number_TDNR__c");
+
+            let lName = fullName.split('/')[0].replace(new RegExp('\s+', 'g'), '').toUpperCase();
+            let lastName = sha256(lName);
+            let tdnr = sha256(ticketNumber);
+            let tacn = sha256(ticketNumber.substring(0,3));
+            
+            //convert date from app yyyy-mm-dd to desired format yymmdd 
+            let d = c.get("v.newCaseDPO.Date_of_Issue_DAIS__c");
+            let issued = d.substring(2).replace(new RegExp('-', 'g'), '');
+
+            //for testing purposes
+            // let lastName = 'd7314c6819a99299675b6f370bfab10b7f43fd9ef5a6f23e2f4e835f99940b25';
+            // let tdnr = 'f9bc993a852123cad93631622c43ab68bc455ad0c15850ab7dd9d6046a1bca6f';
+            // let issued = '190426';
+            
+            let path = `/gdpr/pax?issued=${issued}&tdnr=${tdnr}&lastname=${lastName}`;
+
+            c.set("v.jsonPath", path);
+            c.find("jsonTable").loadTable();
+        }
+    }, 
     
     submitNewCaseButtonHandler : function (component, event, helper){
         //Clear fields

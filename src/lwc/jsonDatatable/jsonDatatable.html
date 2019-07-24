@@ -1,0 +1,9 @@
+<template>
+    <div class="container" if:true={showData}>
+        <lightning-datatable data={mydata}
+                columns={columnNames}
+                keyfield="id"
+                hidecheckboxcolumn="true"
+        ></lightning-datatable> 
+    </div>
+</template>
