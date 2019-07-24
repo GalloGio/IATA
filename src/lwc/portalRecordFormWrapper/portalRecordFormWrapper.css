@@ -137,3 +137,21 @@ input[type="checkbox"] {
     display:table-cell;
     vertical-align:middle;
 }
+.errorOnCheckBox {
+  border-color: #c23934;
+}
+
+.workingAreasError {
+  text-decoration: underline;
+  text-decoration-color: #c23934;
+}
+
+.errorBox {
+  color: #fff;
+  border-radius: 4px;
+  background: #c23934;
+  padding: 10px;
+  margin-left: 38px;
+  width: 89%;
+  white-space: normal;
+}

@@ -255,7 +255,7 @@ export default class FavoriteServicesLWC extends LightningElement {
         } else if (appFullUrlData.value !== '') {
             myUrl = appFullUrlData.value;
             flag = true;
-        }
+        } 
         if (flag) {
             //verifies if the event target contains all data for correct redirection
 

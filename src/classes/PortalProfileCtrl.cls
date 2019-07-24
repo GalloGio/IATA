@@ -287,7 +287,11 @@ public with sharing class PortalProfileCtrl {
         return sectionMap;
     }
 
-
+    @AuraEnabled
+    public static Boolean isGDPOptInDisplayed(){
+        Set<String> possibleGDPLocationTypes = new Set<String>{'C', 'D', 'G', 'M', 'P', 'R', 'T', 'V', 'X'};
+        return possibleGDPLocationTypes.contains(myContact.Account.Location_Class__c);
+    }
 
     @AuraEnabled
     public static Account getCompanyInfo(String accountId){
@@ -361,6 +365,10 @@ public with sharing class PortalProfileCtrl {
                 editable = false;
             }
             wrapperMap.get(LABEL_COMPANY_CONTACT).add(new FieldWrapper(f.getFieldPath(),editable,true));
+        }
+
+        if(isGDPOptInDisplayed()){
+            wrapperMap.get(LABEL_COMPANY_CONTACT).add(new FieldWrapper('GDP_Opt_In__c',true,true));
         }
 
         return wrapperMap;
@@ -668,6 +676,42 @@ public with sharing class PortalProfileCtrl {
         }
 
         return wrapperMap;
+    }
+
+    @AuraEnabled
+    public static Boolean checkCanEdit(){
+        User loggedUser = CSP_Utils.getLoggedUser();
+        if (loggedUser.Contact.User_Portal_Status__c == 'Approved Admin') {
+            if (!loggedUser.Profile.Name.contains('Airline') ) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+ 
+    }
+    @AuraEnabled
+    public static String goToOldIFAP(Boolean hasContact, String contactId, String contactName){
+        if (hasContact){
+            Id accountID = [SELECT AccountId FROM Contact WHERE Id = :contactId LIMIT 1].AccountId;
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID + '&vContactId=' + contactId + '&vContactName=' + contactName);
+        } else {
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + myUser.Contact.AccountId);
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean isAdminAndIATAAgencyAcct(){
+        Boolean isIATAAgencyAcct = false;
+        Boolean isAdmin = CSP_Utils.isAdmin();
+
+        if (myUser.Contact.Account.Category__c=='IATA Passenger Sales Agent' || myUser.Contact.Account.Category__c=='IATA Cargo Agent')
+            isIATAAgencyAcct = true;
+        
+        return isIATAAgencyAcct && isAdmin;
 
     }
+
 }

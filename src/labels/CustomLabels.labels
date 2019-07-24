@@ -2722,6 +2722,22 @@ Payment required on receipt of this Payment Advice
         <value>Add New Documents</value>
     </labels>
     <labels>
+        <fullName>CSP_Add_New_User</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_New_User</shortDescription>
+        <value>Add New User</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Add_User</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_User</shortDescription>
+        <value>Add User</value>
+    </labels>
+    <labels>
         <fullName>CSP_ArticleHelpful</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -2736,6 +2752,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>Request New Service</shortDescription>
         <value>Agency Read Only</value>
+    </labels>
+	<labels>
+        <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_AMS_StepFinal_In_Addition2</shortDescription>
+        <value>Support -&gt; Reach Us</value>
     </labels>
 	<labels>
         <fullName>CSP_ANG_Portal_Admin</fullName>
@@ -3050,7 +3073,15 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Documents_PubliCountry</shortDescription>
         <value>Publication Countries</value>
-    </labels>    
+    </labels>
+	<labels>
+        <fullName>CSP_Error_Message_Mandatory_Fields_Contact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Error_Message_Mandatory_Fields_Contact</shortDescription>
+        <value>Please fill all the mandatory fields</value>
+    </labels>	
     <labels>
         <fullName>CSP_FAQs_Title</fullName>
         <categories>CS Portal</categories>
@@ -3699,6 +3730,22 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Name</shortDescription>
         <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NewContactProfile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NewContactProfile</shortDescription>
+        <value>a new contact profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NewServiceUserMessage</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NewServiceUserMessage</shortDescription>
+        <value>You can search and add new portal users to this service. If the user you are looking for is not a portal contact yet, you can create for them</value>
     </labels>
     <labels>
         <fullName>CSP_CompanyCases</fullName>
@@ -23088,7 +23135,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_IATA_Location_Code</shortDescription>
-        <value>Location IATA Code</value>
+        <value>IATA Location Code</value>
     </labels>
     <labels>
         <fullName>ISSP_IATA_NOT_Found</fullName>

@@ -14,6 +14,10 @@ import getContacts from '@salesforce/apex/PortalProfileCtrl.getAccountContacts';
 import getBranches from '@salesforce/apex/PortalProfileCtrl.getCompanyBranches';
 import searchContacts from '@salesforce/apex/PortalProfileCtrl.searchAccountContacts';
 import searchBranches from '@salesforce/apex/PortalProfileCtrl.searchCompanyBranches';
+import checkCanEdit from '@salesforce/apex/PortalProfileCtrl.checkCanEdit';
+import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
+import isAdminAndIATAAgencyAcct from '@salesforce/apex/PortalProfileCtrl.isAdminAndIATAAgencyAcct';
+
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -26,6 +30,8 @@ import NewContact from '@salesforce/label/c.csp_CreateNewContact';
 import NoAccount from '@salesforce/label/c.CSP_NoAccount';
 import CSP_Branch_Offices from '@salesforce/label/c.CSP_Branch_Offices';
 import ISSP_Contacts from '@salesforce/label/c.ISSP_Contacts';
+import ISSP_Assign_IFAP from '@salesforce/label/c.ISSP_Assign_IFAP';
+
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -87,6 +93,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track objectName = "Contact";
     @track fieldsListToCreate = [];
     @track searchValue;
+
+    @track showEdit = true;
+    @track showIFAPBtn = false;
     // ------------------- //
 
 
@@ -95,7 +104,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
         return (this.loggedUser == null || this.loggedUser.Contact == null || this.loggedUser.Contact.AccountId == null);
     }
 
-    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts };
+    _labels = { CompanyInformation, FindBranch, FindContact, NewContact, NoAccount, CSP_Branch_Offices, ISSP_Contacts, ISSP_Assign_IFAP };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -137,25 +146,33 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             }
 
+            let noSearch = false;
+
             if (pageParams.contactName !== undefined && pageParams.contactName !== '') {
                 this.searchValue = decodeURIComponent((pageParams.contactName+'').replace(/\+/g, '%20'));
                 this.onchangeSearchInputContactsFromNotification(this.searchValue);
+            }else{
+                noSearch = true
             }
 
             this.lstTabs = tabsAux;
             if (viewContacts) {
-                //this.retrieveContacts();
-                this.contactsLoaded = true;
-                this.isFetching = true;
-                this.searchContacts(this.searchValue);
+                if(!noSearch){
+                    this.contactsLoaded = true;
+                    this.isFetching = true;
+                    this.searchContacts(this.searchValue);
+                }else{
+                    this.getContacts();
+                }
             }
 
         });
 
-        canEditBasics().then(result =>{
-            this.editBasics = result;
+        
+        isAdminAndIATAAgencyAcct().then(result => {
+            this.showIFAPBtn = result;
         });
-
+        
         getLoggedUser().then(result => {
             this.loggedUser = JSON.parse(JSON.stringify(result));
             this.objectid = this.loggedUser.Contact.AccountId;
@@ -167,6 +184,11 @@ export default class PortalCompanyProfilePage extends LightningElement {
         getContactFieldsToInsert().then(result => {
             this.fieldsListToCreate = result;
         });
+
+        checkCanEdit().then(result => {
+            this.showEdit = result;
+        });
+
     }
 
     refreshview() {
@@ -370,27 +392,34 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let user = contacts[i].contactUser;
             let services = contacts[i].services;
 
-            let locationType = contact.Account.Location_Type__c ? contact.Account.Location_Type__c : '';
-            let iataCode = contact.IATA_Code__c ? contact.IATA_Code__c  : '';
+            if (contact.Account.RecordType.Name === 'Airline Headquarters' || contact.Account.RecordType.Name === 'Airline Branch') {
+                contact.LocationCode = (contact.hasOwnProperty('IATA_Code__c') ? contact.IATA_Code__c : '') + (contact.hasOwnProperty('Account_site__c') ? ' (' + contact.Account_site__c + ')' : '') + ')';
+            } else if (contact.hasOwnProperty('IATA_Code__c') && contact.IATA_Code__c !== null ) {
+                contact.LocationCode = contact.IATA_Code__c + (contact.Account.hasOwnProperty('BillingCity') ? ' (' + contact.Account.BillingCity + ')' : '');
+            } else {
+                contact.LocationCode = '';
+            }
 
-            contact.LocationCode = iataCode + ' ' + locationType;
+            if (user !== undefined) {
+                if (user.hasOwnProperty('LastLoginDate')) {
+                    if (user.LastLoginDate != null) {
+                        let locale = user.LanguageLocaleKey.replace('_', '-');
+                        let lastLogin = new Date(user.LastLoginDate);
+                        contact.LastLoginDate = lastLogin;
 
-            if (user && user.LastLoginDate != null) {
-                let locale = user.LanguageLocaleKey.replace('_', '-');
-                let lastLogin = new Date(user.LastLoginDate);
-                contact.LastLoginDate = lastLogin;
+                        let day = lastLogin.getDate();
+                        let monthIndex = lastLogin.getMonth();
+                        let year = lastLogin.getFullYear();
+                        let month;
 
-                let day = lastLogin.getDate();
-                let monthIndex = lastLogin.getMonth();
-                let year = lastLogin.getFullYear();
-                let month;
-
-                try {
-                    month = lastLogin.toLocaleString(locale, { month: "long" });
-                    contact.LastLogin = month + ' ' + day + ', ' + year;
-                }
-                catch (e) {
-                    contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
+                        try {
+                            month = lastLogin.toLocaleString(locale, { month: "long" });
+                            contact.LastLogin = month + ' ' + day + ', ' + year;
+                        }
+                        catch (e) {
+                            contact.LastLogin = day + '.' + (monthIndex + 1) + '. ' + year;
+                        }
+                    }
                 }
             }
 
@@ -662,6 +691,12 @@ export default class PortalCompanyProfilePage extends LightningElement {
         }
 
 
+    }
+
+    navigateToIFAP() { 
+        goToOldIFAP({hasContact : false}).then(results => {
+            window.open(results, "_self");
+        });
     }
 
     get tab0Active() { return this.lstTabs[0] != null && this.lstTabs[0].active; }
