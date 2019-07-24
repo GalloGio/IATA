@@ -24,6 +24,9 @@ import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
 import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 
+import remove from '@salesforce/label/c.Button_Remove';
+import contact from '@salesforce/label/c.ISSP_Contact';
+
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -33,6 +36,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api sectionTitle;
     @api showEdit;
     @api editBasics;
+    @api allowContactDelete=false;
 
     @api editFields;
     @api recordId;
@@ -57,6 +61,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track fieldsValid = true;
     @track fieldsLocal;
     @track jobFunctions;
+    @track removeContact = false;
 
     timeout = null;
 
@@ -71,7 +76,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get fields() { return this.fieldsLocal; }
     set fields(value) { this.fieldsLocal = value; }
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, CSP_Error_Message_Mandatory_Fields_Contact };
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, remove, contact, CSP_Error_Message_Mandatory_Fields_Contact };
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -203,6 +208,16 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     get showMembershipFunction() {
         return this.showfunction;
+    }
+
+    get removeContactLabel(){
+        return this.labels.remove +' '+this.labels.contact;
+    }
+
+    removeUser(){
+        this.removeContact = true;
+        this.changeUserPortalStatus = true;
+        this.showEditModal = false;
     }
 
     styleInputs() {
@@ -485,11 +500,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     closePortalChangeUserStatus() {
+        this.removeContact = false;
         this.changeUserPortalStatus = false;
     }
 
     closePortalChangeUserStatusWithRefresh() {
         this.dispatchEvent(new CustomEvent('refreshview'));
+        this.removeContact = false;
         this.changeUserPortalStatus = false;
     }
 
