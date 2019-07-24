@@ -80,7 +80,7 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
 //Trigger the platform events
     if(trigger.isAfter){
       if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0) {
-        System.enqueueJob(new PlatformEventsQueueable((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+        System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
       } else {
     	  PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Account__e', 'Account', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
       }
