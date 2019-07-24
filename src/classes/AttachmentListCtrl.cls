@@ -766,6 +766,8 @@ public with sharing class AttachmentListCtrl {
         //list<Archived_Attachment__c> lstNewArchived = new list<Archived_Attachment__c>();
         list<AmazonFile__c> lstNewAmazon = new list<AmazonFile__c>();
 
+        list<ContentDocumentLink> lstDocumentLinks = new list<ContentDocumentLink>();
+
         // go through the list of related cases and create the new attachment(s) for every selected case
         for (case cw : selectedTargeCaseList) {
             for (WrapperAttach attach : listAttachmentSelected) {
@@ -773,7 +775,7 @@ public with sharing class AttachmentListCtrl {
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'is SF ' + attach.getIsSalesforce() ));
 
                 // if is a regular attachment, clone it
-                if (attach.getIsSalesforce() ) {
+                if (attach.getIsSalesforce() && !attach.getIsContent() ) {
                     Attachment newAtt = attach.fileAttachment.clone();
                     newAtt.Body = attach.fileAttachment.Body;
                     newAtt.ParentId = cw.Id;
@@ -794,6 +796,18 @@ public with sharing class AttachmentListCtrl {
 
                     if ( newAtt == null ) errors++;
                     else lstNewAmazon.add(newAtt.amazonFile);
+                }
+                if(attach.getIsContent()){
+					// Temporary Conversion from ContentDocument to Attachment
+                    Attachment newAtt = new Attachment();
+                    newAtt.name = attach.name;
+                    newAtt.description = attach.description;
+                    newAtt.Body =attach.versionData;
+                    newAtt.ParentId = cw.Id;
+                    newAtt.OwnerId = UserInfo.getUserId();
+
+                    lstNewAttachments.add(newAtt);
+
                 }
             }
         }
@@ -821,6 +835,7 @@ public with sharing class AttachmentListCtrl {
                 }
             }
         }
+                    
         list<object> formattingArguments = new list<object>{String.ValueOf(success),String.ValueOf(errors),String.ValueOf(parentId)};
        
         string message =string.format(Label.Response_message, formattingArguments);
