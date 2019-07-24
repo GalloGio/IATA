@@ -318,8 +318,8 @@ private class ANG_MulticountryHelperTest {
         	insert GEnotMulticountryEnabled;
         }
         catch(Exception e){
-        	Boolean expectedExceptionThrown = e.getMessage().contains(Label.ANG_Multicountry_Country_not_Enabled_for_Multicountry);
-        	System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Country_not_Enabled_for_Multicountry + '\'.');
+        	Boolean expectedExceptionThrown = e.getMessage().contains('The selected country is not enabled for multicountry');
+        	System.assert(expectedExceptionThrown, 'Should throw The selected country is not enabled for multicountry.');
         }
 
         Test.stopTest();
