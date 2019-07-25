@@ -1,0 +1,43 @@
+<template>
+    <!-- PAGINATION -->
+    <lightning-layout vertical-align="center" horizontal-align="center" class="slds-m-around_large text-gray text-xsmall" if:true={hasPages}>
+        <lightning-layout-item if:true={renderSliders} >
+            <lightning-icon icon-name="utility:left" size="small" class={isFirstPage} onclick={handleFirstPage}></lightning-icon>
+            <lightning-icon icon-name="utility:chevronleft" size="small" class={isFirstPage} onclick={handlePrevious}></lightning-icon>
+        </lightning-layout-item>
+
+        <!-- FIRST PAGE -->
+        <lightning-layout-item padding="around-small" >
+            <a data-page name="1" onclick={handleSelected} class="selected">1</a>
+        </lightning-layout-item>
+        <!-- FIRST PAGE -->
+
+        <div class="slds-p-horizontal_xxx-small" if:true={rerenderFirstPages}>
+            <a>...</a>
+        </div>
+
+        <!-- DYNAMIC PAGINATION -->
+        <template for:each={pageList} for:item="item">
+            <lightning-layout-item padding="around-small" value={item} key={item.Id}>
+                <a data-page name={item} onclick={handleSelected}>{item}</a>
+            </lightning-layout-item>
+        </template>
+        <!-- DYNAMIC PAGINATION -->
+
+        <div class="slds-p-horizontal_xxx-small" if:true={rerenderLastPages}>
+            <a>...</a>
+        </div>
+
+        <!-- LAST PAGE -->
+        <lightning-layout-item padding="around-small" if:true={multiplePages}>
+            <a data-page name={totalPages} onclick={handleSelected}>{totalPages}</a>
+        </lightning-layout-item>
+        <!-- LAST PAGE -->
+        
+        <lightning-layout-item if:true={renderSliders} >                           
+            <lightning-icon icon-name="utility:chevronright" size="small" class={isLastPage} onclick={handleNext}></lightning-icon>
+            <lightning-icon icon-name="utility:right" size="small" class={isLastPage} onclick={handleLastPage}></lightning-icon>
+        </lightning-layout-item>
+    </lightning-layout>
+    <!-- PAGINATION -->
+</template>

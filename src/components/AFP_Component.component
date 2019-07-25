@@ -52,7 +52,7 @@
 
       <!--i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
       <i class="{! wrapper.isIEP}" aria-hidden="true"></i-->
-      <a style="display:{!IF(wrapper.isSearch,'none','')};" id="iepLink" href="{! wrapper.iepLink}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
+      <a style="display:{!IF(wrapper.isSearch,'none','')};" id="iepLink" href="{!IF(isNewPortal, portalRedirectToIEP , wrapper.iepLink)}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
     </div>
     <div class="col-md-4 col-sm-12 text-center">
       <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/CreditCard.png')}" width="100" height="100"/>

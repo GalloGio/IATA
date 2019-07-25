@@ -1,0 +1,326 @@
+<template>
+
+    <template if:true={showConfirm}>
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+                <div class="customPopupInteriorHalfScreenCentered defaultMessage">
+                    <div if:true={defaultMessage}>
+                        <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                            <span>{label.newServiceRequestlb}</span>
+                        </div>
+                        <div
+                            class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                            <div class="slds-p-vertical_large textMediumMessage">
+                                {confirmMessage}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--IATA EASYPAY MODAL-->
+                    <div if:true={ShowIEPModal}>
+
+                        <div if:true={ShowIEPIntroMessage}>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                <span>{IEPIntroOptionalMessages}</span>
+                            </div>
+                            <div
+                                class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                                <div class="slds-p-vertical_large textMediumMessage">
+                                    <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                        value={IEPOptionalMessages}>
+                                    </lightning-formatted-rich-text>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_medium" if:true={showRoleSelection}>
+                            <template for:each={roleList} for:item='role'>
+                                <div key={role}>
+                                    <input type="radio" id={role.Role__c} name="options" data-id={role.Role__c}
+                                        value={radioOption} onchange={handlRadioOptions} />
+                                    <label class="slds-checkbox__label" for={role.Role__c}>
+                                        <span class="slds-checkbox_faux cursorPointer slds-m-right_xx-small"></span>
+                                        <span class="text-xxsmall slds-p-horizontal_x-small">
+                                            {role.Role__c}
+                                        </span>
+                                    </label>
+                                    <div class="slds-m-bottom_x-small">
+                                        <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                            value={role.label}>
+                                        </lightning-formatted-rich-text>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+
+                        <div class="IEPOpenAccountModal" if:true={IEPOpenAccountModal}>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                {label.ANG_ISSP_Open_IATA_EasyPay_Account}
+                            </div>
+                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                <div class="slds-align_absolute-center">
+                                    <div class="slds-p-around_large">
+                                        <img src={iataLoadingImage} />
+                                        <div class="slds-p-around_medium">
+                                            {loadingMessage}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="IEPRoleSuccessModal" if:true={IEPRoleSuccessModal}>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                {label.ISSP_Thanks_for_request}
+                            </div>
+                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                <div class="slds-align_absolute-center">
+                                    <lightning-button class="containedButton" label="Close" variant="neutral"
+                                        onclick={reloadPage}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--IATA EASYPAY MODAL-->
+
+                    <!--IATA ICSS MODAL-->
+                    <div if:true={ShowICCSModal}>
+                        <div class="customPopupInteriorHalfScreenCentered ICCSsuccessModal" if:true={ICCSsuccessModal}>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-small">
+                                <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                    value={ICCSSuccessMessage}>
+                                </lightning-formatted-rich-text>
+                            </div>
+                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                <div class="slds-align_absolute-center">
+                                    <lightning-button class="containedButton" label="Close" variant="neutral"
+                                        onclick={reloadPage}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customPopupInteriorHalfScreenCentered ICCSMessage" if:true={ICCSMessage}>
+
+                            <div if:true={showSpinner}>
+                                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                            </div>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                <span>{IEPIntroOptionalMessages}</span>
+                            </div>
+
+                            <div
+                                class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                                <div class="slds-p-vertical_large textMediumMessage">
+                                    <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                        value={ICCSOptionalMessages}>
+                                    </lightning-formatted-rich-text>
+                                </div>
+                            </div>
+                            <div class="slds-p-around_medium" if:true={showICCSRoleSelection}>
+                                <lightning-combobox class="cursorPointerComboBox text-xxsmall customPickList"
+                                    value={ICCSRole} options={roleICCSList} dropdown-alignment="auto"
+                                    onchange={ICCSRolePick} placeholder="Select Role" size=5>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <!--IATA ICSS MODAL-->
+
+                    <!--IATA SSWS MODAL-->
+                    <div if:true={ShowSSWSModal}>
+                        <div class="customPopupInteriorHalfScreenCentered SSWSSuccessModal" if:true={SSWSSuccessModal}>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                    value={label.ISSP_Access_Requested}>
+                                </lightning-formatted-rich-text>
+                            </div>
+                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                    value={label.ISSP_Thanks_for_request}>
+                                </lightning-formatted-rich-text>
+                            </div>
+                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                <div class="slds-align_absolute-center">
+                                    <lightning-button class="containedButton" label="Close" variant="neutral"
+                                        onclick={reloadPage}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customPopupInteriorHalfScreenCentered SSWSMessage" if:true={SSWSMessage}>
+                            <div if:true={showSpinner}>
+                                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                            </div>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                <span>{IEPIntroOptionalMessages}</span>
+                            </div>
+                            <div
+                                class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                                <div class="slds-p-vertical_large textMediumMessage">
+                                    {confirmMessage}
+                                </div>
+                            </div>
+                            <div
+                                class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                                <div class="slds-p-vertical_large textMediumMessage">
+                                    <lightning-formatted-rich-text class="richTextlinks slds-text-title introMessage"
+                                        value={SSWSOptionalMessages}>
+                                    </lightning-formatted-rich-text>
+                                </div>
+                                <div class="slds-checkbox slds-p-bottom_medium">
+                                    <input type="checkbox" name="options" id="checkbox" value={acceptSSWSConditions}
+                                        onchange={handleSSWSConditions} />
+                                    <label class="slds-checkbox__label" for="checkbox">
+                                        <span class="slds-checkbox_faux cursorPointer"></span>
+                                        <span class=" slds-text-title slds-p-horizontal_x-small">
+                                            {label.ISSP_AcceptTermsAndConditions}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--IATA SSWS MODAL-->
+
+                    <!--IATA TD MODAL-->
+                    <div if:true={ShowTDModal}>
+                        <div class="customPopupInteriorHalfScreenCentered TDSuccessModal" if:true={TDSuccessModal}>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                    value={label.ISSP_Access_Requested}>
+                                </lightning-formatted-rich-text>
+                            </div>
+                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                    value={label.ISSP_Thanks_for_request}>
+                                </lightning-formatted-rich-text>
+                            </div>
+                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                                <div class="slds-align_absolute-center">
+                                    <lightning-button class="containedButton" label="Close" variant="neutral"
+                                        onclick={reloadPage}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="customPopupInteriorHalfScreenCentered TDMessage" if:true={TDMessage}>
+                            <div if:true={showSpinner}>
+                                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                            </div>
+                            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                <span class='introMessage'>{IEPIntroOptionalMessages}</span>
+                            </div>
+
+                            <div class="slds-p-horizontal_small slds-p-horizontal_large
+                                 slds-size_1-of-1 customWhiteBackground">
+                                <div class="slds-p-vertical_large textMediumMessage">
+                                    <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                        value={TDOptionalMessages}>
+                                    </lightning-formatted-rich-text>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--IATA TD MODAL-->
+
+                    <!--ALL Buttons-->
+                    <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix"
+                        if:true={showButtons}>
+                        <div class="slds-align_absolute-center">
+                            <button class="containedButtonAlt containedButton-size 
+                                cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={abortRequest}>
+                                {label.Button_Cancel}
+                            </button>
+                            <button if:true={DefaultRequestButton}
+                                class="containedButton containedButton-size slds-m-horizontal_small"
+                                onclick={handleSubmitRequest}>
+                                {label.IDCard_Confirm_Replacement}
+                            </button>
+                            <button if:true={IEPOpenAccountButton}
+                                class="IEPOpenAccount containedButton containedButton-size slds-m-horizontal_small"
+                                onclick={openIEPAccount}>
+                                {label.IDCard_Confirm_Replacement}
+                            </button>
+                            <button if:true={IEPRoleChangeButton}
+                                class="containedButton changeIEPRole containedButton-size slds-m-horizontal_small"
+                                onclick={changeIEPRole}>
+                                {label.IDCard_Confirm_Replacement}
+                            </button>
+                            <button if:true={ICCSOpenAccount}
+                                class="containedButton openICCSAccount containedButton-size slds-m-horizontal_small"
+                                onclick={openICCSAccount}>
+                                {label.IDCard_Confirm_Replacement}
+                            </button>
+                            <button if:true={ICCSRoleChangeConfirm}
+                                class="containedButton changeICCSRole containedButton-size slds-m-horizontal_small"
+                                onclick={changeICCSRole}>
+                                {label.IDCard_Confirm_Replacement}
+                            </button>
+                            <button if:true={acceptSSWSConditions}
+                                class="containedButton OpenSSWSAccount containedButton-size slds-m-horizontal_small"
+                                onclick={OpenSSWSAccount}>
+                                {label.IDCard_Confirm_Replacement}
+                            </button>
+                            <button if:true={acceptTDConditions}
+                                class="containedButton OpenTDAccount containedButton-size slds-m-horizontal_small"
+                                onclick={OpenTDAccount}>
+                                {label.IDCard_Confirm_Replacement}
+                            </button>
+                        </div>
+                    </div>
+                    <!--ALL Buttons-->
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={showPopUp}>
+        <div class="slds-backdrop slds-backdrop_open">
+            <div if:true={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+            <section if:false={showSpinner} role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open slds-text-align_center">
+                <div class="dot-white overlap-top-center">
+                    <div class="dot-lightgreen">
+                        <div class="dot-green dot-allign">
+                            <div class="dot-white-small dot-allign">
+                                <img src={exclamationIcon} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__container customCreateCaseModal">
+                    <div class="slds-p-horizontal_large text-xsmall successBoxContainer">
+                        <p
+                            class="slds-align_absolute-center slds-m-horizontal_large slds-p-top_xx-large slds-p-bottom_small">
+                            {submitMessage}
+                        </p>
+                        <ul class="slds-m-horizontal_xx-large slds-m-top_medium">
+                            <template for:each={portalAdminList.data} for:item="pa">
+                                <li class="slds-m-around_x-small" key={pa.Name}>
+                                    <span class=" slds-m-horizontal_x-small text-bold" key={pa.Name}>{pa.Name}</span>
+                                    <span key={pa.Name}>
+                                        <lightning-formatted-email value={pa.Email} hide-icon>
+                                        </lightning-formatted-email>
+                                    </span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                    <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                        <div class="slds-align_absolute-center">
+                            <button class="containedButton slds-p-vertical_medium" onclick={navigateToServicesPage}>
+                                {label.goToServiceslb}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </template>
+</template>
