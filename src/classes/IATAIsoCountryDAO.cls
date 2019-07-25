@@ -62,6 +62,7 @@ public class IATAIsoCountryDAO {
                                                  EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
                                                  LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c,
                                                  State_Province_Picklist__c, ANG_IEP_Model__c, 
+												 Region_Province_and_Cities_Enabled__c,
 						AMS_Settlement_System__r.Name,
                                                  
                                                  (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c

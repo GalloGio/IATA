@@ -4255,7 +4255,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),	IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,	Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,	Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),	IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,	Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,	Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -17224,6 +17224,20 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Aggregator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Aggregator</shortDescription>
+        <value>Aggregator (If applicable)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Aggregator_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Aggregator_Info</shortDescription>
+        <value>Please indicate the travel content aggregator name, if applicable.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_Alternatively</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23912,13 +23926,6 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_ContactList</shortDescription>
         <value>Change User Portal Status</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Contact_About_IATA_Courses</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Contact About IATA Courses</shortDescription>
-        <value>Are you contacting us concerning IATA courses?</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Bank</fullName>
@@ -34198,30 +34205,6 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_Create an account</shortDescription>
         <value>Registration Process</value>
-    </labels>
-    <labels>
-        <fullName>OneId_CSP_Terms_Of_Use_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
-    </labels>
-    <labels>
-        <fullName>OneId_CSP_Troubleshooting</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_CSP_Troubleshooting</shortDescription>
-        <value>Troubleshooting</value>
-    </labels>
-    <labels>
-        <fullName>OneId_CSP_Troubleshooting_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_CSP_Troubleshooting_Link</shortDescription>
-        <value>https://portal.iata.org/faq/articles/en_US/FAQ/Customer-Portal-Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_EligibleExistingUserError</fullName>
