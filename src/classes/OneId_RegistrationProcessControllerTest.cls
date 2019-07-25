@@ -127,7 +127,7 @@ private class OneId_RegistrationProcessControllerTest {
         Test.startTest();
         
         // Call linked method
-        List<String> returnedValue = OneId_RegistrationProcessController.getContactJobFunctionValues();
+        List<OneId_RegistrationProcessController.PicklistEntry> returnedValue = OneId_RegistrationProcessController.getContactJobFunctionValues();
         
         // Stop the test
         Test.stopTest();
