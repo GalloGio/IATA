@@ -3,9 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3-Training-ProductMgmt-Madalina Luntrar</name>
     <queueMembers>
-        <users>
-            <user>luntrarum@iata.org.prod</user>
-        </users>
+        <publicGroups>
+            <publicGroup>L3_Training_ProductMgmt_Madalina_Luntrar</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
