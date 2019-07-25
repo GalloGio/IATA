@@ -1,4 +1,4 @@
 .container{
-    max-height: var(--box-height, 100%);
+    /*max-height: var(--box-height); not able to use var() dynamically because LWC compiles them*/
     overflow-y: auto;
 }

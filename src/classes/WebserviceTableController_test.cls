@@ -1,16 +1,14 @@
 @isTest
 private class WebserviceTableController_test{
-	static final string ENDPOINT='endpoint.com';
-	static final string METHODPATH='\\path\\method';
-	static final string MESSAGE_BODY='{message:This is the body}';
-	static final string EXCEPTION_MESSAGE='Invalid Endpoint!';
+	static final String ENDPOINT='endpoint.com';
+	static final String METHOD='POST';
+	static final String MESSAGE_BODY='{message:This is the body}';
 
 	public class MockHttpResponse implements HttpCalloutMock {
-		private integer status;
-		private boolean generateException;
-		public MockHttpResponse(integer st,boolean genEx){
+		private Integer status;
+
+		public MockHttpResponse(Integer st){
 			this.status=st;
-			this.generateException=genEx;
 		}
 
 		public HTTPResponse respond(HTTPRequest req) {
@@ -20,55 +18,58 @@ private class WebserviceTableController_test{
 			res.setStatusCode(this.status);
 			res.setBody(WebserviceTableController_test.MESSAGE_BODY);
 
-			if(this.generateException){
-				CalloutException e = (CalloutException)CalloutException.class.newInstance();
-		        e.setMessage(WebserviceTableController_test.EXCEPTION_MESSAGE);
-		        throw e;
-
-			}
 			return res;
 		}
 	}
 
-	@testSetup static void setupdata(){
+	static testMethod void defaultHandlerSuccess(){
 
-	}
-	
-	static testmethod void accessWebserviceWithSuccess(){
+		Test.setMock(HttpCalloutMock.class,new MockHttpResponse(200));
 
-		Test.setMock(HttpCalloutMock.class,new MockHttpResponse(200,false) );
 		Test.startTest();
-		String result=WebserviceTableController.getJSON(ENDPOINT,METHODPATH,200);
+		String result = WebserviceTableController.getJSON(null, ENDPOINT,METHOD, '{"request":"success"');
 		Test.stopTest();
-		system.assertEquals(result,MESSAGE_BODY);
-
+		
+		System.assertEquals(result,MESSAGE_BODY);
 	} 
 
-	
-	static testmethod void accessWebserviceWithoutFail(){
+	static testMethod void DefaultHandlerException(){
 
-		Test.setMock(HttpCalloutMock.class,new MockHttpResponse(201,false) );
-		Test.startTest();
-		String result=WebserviceTableController.getJSON(ENDPOINT,METHODPATH,200);
-		Test.stopTest();
-		system.assertEquals(result,null);
+		Test.setMock(HttpCalloutMock.class,new MockHttpResponse(500));
 		
-	}
-
-	static testmethod void accessWebserviceException(){
-
-		Test.setMock(HttpCalloutMock.class,new MockHttpResponse(201,true) );
-		
-		try{
-			Test.startTest();			
-			string result=WebserviceTableController.getJSON(ENDPOINT,METHODPATH,201);
-			Test.stopTest();
+		Test.startTest();	
+		try{		
+			String result=WebserviceTableController.getJSON(null, ENDPOINT,METHOD, '{"request":"exception"');
 		}catch(Exception e){
-			system.assertEquals(e.getMessage(),EXCEPTION_MESSAGE);
+			System.assertEquals('System.AuraHandledException', e.getTypeName());
 			
 		}
-		
+		Test.stopTest();
 	} 
 
+	
+	static testMethod void DataPrivacyNotFound(){
 
+		Test.setMock(HttpCalloutMock.class,new MockHttpResponse(404));
+
+		Test.startTest();
+		String result=WebserviceTableController.getJSON('WebserviceTableController.DataPrivacy', ENDPOINT,METHOD, '{"request":"not found"');
+		Test.stopTest();
+
+		System.assertEquals('[]', result, 'Result should be an empty array');
+	}
+
+	static testMethod void DataPrivacyException(){
+
+		Test.setMock(HttpCalloutMock.class,new MockHttpResponse(201));
+		
+		Test.startTest();
+		try{			
+			WebserviceTableController.getJSON('WebserviceTableController.DataPrivacy', ENDPOINT, METHOD, '{"request":"exception"');
+		}catch(Exception e){
+			System.assertEquals('System.AuraHandledException', e.getTypeName());
+		}
+		
+		Test.stopTest();
+	} 
 }

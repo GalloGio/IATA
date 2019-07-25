@@ -1,131 +1,128 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
-import fetchJSON from '@salesforce/apex/WebserviceTableController.getJSON';
-import { refreshApex } from '@salesforce/apex';
+import fetchJSON from '@salesforce/apex/JsonDataTableCalloutHandler.getJSON';
 
 export default class JsonDatatable extends LightningElement {
 
-    /* Helper Methods */
-
-
-    //returns a new object with renamed keys
-    // so if the keyMap is {a: newA, b: newB} and obj is {a: 1, b: 2}
-    //result will be {newA: 1, newB: 2}
-    renameKeys(keysMap, obj){
-        //reduce function performs an operation (first parameter) into every key in the array starting with a initial value (second parameter)
-        //in this case we use an empty object {} as starting point and:
-        //1. Check if the keysMap has a new key and use it (if not, use the old key) - [keysMap[key] || key
-        //2. create a new object with the resulting key and the value for the old key - { _resulting key_: obj[key] }
-        //3. merge it to the current temporary object using the spread operator { ...oldObj, ... newObj}
-        //4. the reduce function repeats it for all keys
-        return Object.keys(obj).reduce(
-            (tempObject, key) => ({ ...tempObject, ...{ [keysMap[key] || key]: obj[key] } }), 
-            {} 
-        );
-    }
-
-
     /* Variables */
+
+    order;
+    names;
+    height;
+
     @track mydata;
     @track showData = false;
-    //TODO add an "search while texting function"
-
-    @api autoLoad;
-
-	@api operationType = 'GET';
-	@api webserviceEndpoint;
+    @track showSpinner = false;
+    @track noResults = false;
+    @track hasError = false;
+    
+    @api autoLoad = false;
+    
+    @api handler = '';
+    @api operationType = 'GET';
+    @api webserviceEndpoint;
     @api endpointType;
     @api webservicePath;
     @api webserviceBody;
-	@api okStatusCode = 200;
     
-    @api columnNames; //the names to diplay in each column
-    @api //the columns from the webservice response
+    @track columns;
+    
+    @api
+    get columnOrder(){
+        return this.order;
+    }
     set columnOrder(value){
         //if not provided, the columnNames will be the same as the columnOrder
         if(this.columnNames === undefined) this.columnNames = value;
-        this.columnOrder = value;
+        this.order = value;
+
+        this.assembleColumns();
     }
-    get columnOrder(){
-        return this.columnOrder;
+
+    @api
+    get columnNames(){
+        return this.names;
+    }
+    set columnNames(value){
+        this.names = value;
+        this.assembleColumns();
     }
     
     @api
+    get maxHeight(){
+        return this.height;
+    }
     set maxHeight(value){
         //we need to check if the value is provided and has a unit 
         if(value === undefined) value = "100%"
         else if(value && !isNaN(value)){
             value+='px';// leaves in px by default
         }
-        this.maxHeight = value;
-        this.template.querySelector(".container").style.setProperty("--box-height", this.maxHeight);
-
+        this.height = value;
     }
-    get maxHeight(){
-        return this.maxHeight;
-    }
-
-
 
     get finalEndpoint(){
-        let endpoint = (this.endpointType.toUpperCase() === 'URL'?'':'Callout:') + this.webserviceEndpoint;
+        let endpoint = (this.endpointType === 'URL'? '' : 'Callout:') + this.webserviceEndpoint;
 
-        if(this.methodpath) endpoint += this.methodpath;
+        if(this.webservicePath) endpoint += this.webservicePath;
         //TODO replace e cenas
 
         return endpoint;
     }
 
-    get keyMapping(){
-        if(this.keyMapping === undefined){
-            let keys = this.columnOrder.split(',');
-            let names = this.columnNames.split(',');
-    
-            let map = {};
-            for(let i = 0; i < names.length; i++){
-                map[keys[i].trim()] = names[i].trim();
+
+
+    /**********************************************/
+    /*************** Helper Methods ***************/
+    /**********************************************/
+    assembleColumns(){
+        let c = [];
+
+        if(this.columnNames && this.columnOrder){
+            let fieldNameList = this.columnOrder.split(',');
+            let labelList = this.columnNames.split(',');
+            for(let i = 0; i < labelList.length; i++){
+                c.push({label: labelList[i].trim(), fieldName: fieldNameList[i].trim()});
             }
-            this.keyMapping = map;
         }
-        return this.keyMapping;
-    }
-    
-    /* Actions */
 
-    //need to refetch if any mutable parameter changes (endpoint may have query parameters changed, body can change everything)
-    @wire(fetchJSON, {endpoint: '$finalEndpoint', method: this.operationType, okStatusCode: this.okStatusCode, jsonBody: '$webserviceBody'})
-    wiredRetrieve({error, data}){
-        if(data){
-
-            let returnData;
-            if ( !(data instanceof Array) ){ 
-                //means the webservice does not return an array
-                //TODO show errors OR find the array in the list (maybe use a parameters to parse)
-            }else{
-                returnData = data;
-            }
-
-            let dataToDisplay=[];
-
-            returnData.forEach(function(record){
-                dataToDisplay.push(this.renameKeys(this.keyMapping, record));
-            });
-            this.mydata = dataToDisplay;         
-        }else if(error){
-            //TODO handle error
-        }
+        this.columns = c;
     }
 
-    //once the component is loaded, only make the call if autoload is true
-    connectedCallback(){
-        if(this.autoLoad) this.showData = true
-    }
-
-    //exposing a function so parents can call: shows table and forces refresh (in case it's already shown)
+    //exposing a function so parents can call exposes table AND makes another call
     @api
-    loadTable(){    
-        this.showData = true;
-        refreshApex(this.wiredRetrieve);
+    loadTable(){
+        this.showData = false;
+        this.noResults = false;
+        this.hasError = false;
+        this.showSpinner = true;
+
+        fetchJSON({handler: this.handler, endpoint: this.finalEndpoint, method: this.operationType, jsonBody: this.webserviceBody})
+        .then(data => {
+            let returnData = JSON.parse(data);
+            
+            if ( !(returnData instanceof Array) ){ 
+                returnData = [];
+                this.hasError = true;
+                console.error('Result is not an array, please fix webservice or use a handler to parse the result');
+                return;
+            }
+
+            this.mydata = returnData;
+
+            if(this.mydata.length > 0){
+                this.showData = true;
+            }else{
+                this.noResults = true;
+            }
+        })
+        .catch(error => {
+            this.hasError = true;
+            console.error(JSON.stringify(error));
+        })
+        .finally(() => {
+            this.showSpinner = false;
+        });
     }
 
     //exposing a method do hide the table so parents can call
@@ -134,4 +131,22 @@ export default class JsonDatatable extends LightningElement {
         this.showData = false;
     }
     
+
+    
+
+    /**********************************************/
+    /*************** Lifecycle Hooks **************/
+    /**********************************************/
+
+    //once the component is loaded, only make the call if autoload is true
+    connectedCallback(){
+        if(this.autoLoad){
+            this.loadTable();
+        }
+    }
+
+    renderedCallback(){
+
+        this.template.querySelector(".container").style.maxHeight = this.height;
+    }
 }
