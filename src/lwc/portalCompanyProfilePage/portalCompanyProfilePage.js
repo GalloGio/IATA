@@ -18,7 +18,7 @@ import searchBranches from '@salesforce/apex/PortalProfileCtrl.searchCompanyBran
 import checkCanEdit from '@salesforce/apex/PortalProfileCtrl.checkCanEdit';
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
 import isAdminAndIATAAgencyAcct from '@salesforce/apex/PortalProfileCtrl.isAdminAndIATAAgencyAcct';
-
+import LANG from '@salesforce/i18n/lang';
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -41,6 +41,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     //icons
     searchColored = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
+
+    lang = LANG;
 
     constructor() {
         super();
@@ -394,6 +396,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
     processContacts(result,unwrappedContacts){
         let contacts = JSON.parse(JSON.stringify(result));
 
+        let locale = this.lang;
+
         for (let i = 0; i < contacts.length; i++) {
             let contact = contacts[i].contact;
             let user = contacts[i].contactUser;
@@ -410,7 +414,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
             if (user !== undefined) {
                 if (user.hasOwnProperty('LastLoginDate')) {
                     if (user.LastLoginDate != null) {
-                        let locale = user.LanguageLocaleKey.replace('_', '-');
                         let lastLogin = new Date(user.LastLoginDate);
                         contact.LastLoginDate = lastLogin;
 
