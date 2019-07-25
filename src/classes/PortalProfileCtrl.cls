@@ -26,13 +26,14 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_BUSINESS_CONTACT = System.label.csp_Profile_BusinessContact;
     PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
     PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
-
+    
 
     PRIVATE STATIC FINAL STRING LABEL_FIRST_NAME = System.label.First_name;
     PRIVATE STATIC FINAL STRING LABEL_LAST_NAME = System.label.Last_name;
     PRIVATE STATIC FINAL STRING LABEL_LOCATION_CODE = System.label.ISSP_IATA_Location_Code;
     PRIVATE STATIC FINAL STRING LABEL_CITY = System.label.City;
     PRIVATE STATIC FINAL STRING LABEL_STATUS = System.label.Status;
+    PRIVATE STATIC FINAL STRING LABEL_PORTAL_STATUS = System.label.CSP_Portal_Status;
 
     PRIVATE STATIC FINAL STRING LABEL_NAME = System.label.ISSP_Local_Groups_Contact_Name;
     PRIVATE STATIC FINAL STRING LABEL_EMAIL = System.label.Email;
@@ -440,6 +441,9 @@ public with sharing class PortalProfileCtrl {
         public Boolean isContactServices;
 
         @AuraEnabled
+        public Boolean isLastLogin;
+
+        @AuraEnabled
         public Boolean isRequired;
 
         @AuraEnabled
@@ -541,7 +545,14 @@ public with sharing class PortalProfileCtrl {
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
 
-        List<String> toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
+        List<String> toRow;
+
+        if(rType == 'IATA_Agency') {
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','PortalStatus'};
+        }else{
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','PortalStatus'};
+        }
+
         Map<String,String> fieldLabels = new Map<String,String>();
 
         FieldWrapper fw;
@@ -552,7 +563,7 @@ public with sharing class PortalProfileCtrl {
         fieldLabels.put('Type_of_Contact__c',LABEL_CONTACT_TYPE);
         fieldLabels.put('Name',LABEL_NAME);
         fieldLabels.put('LocationCode',LABEL_LOCATION_CODE);
-        fieldLabels.put('LastLogin',LABEL_LAST_LOGIN);
+        fieldLabels.put('PortalStatus',LABEL_PORTAL_STATUS);
 
         for(String fieldName: toRow){
             if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
@@ -587,6 +598,11 @@ public with sharing class PortalProfileCtrl {
         }
 
         wrapperMap.get(viewFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
+
+        fw = new FieldWrapper('LastLogin',false,true,true);
+        fw.isLastLogin = true;
+        wrapperMap.get(viewFields).add(fw);
+
 
         //EDIT
         wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));

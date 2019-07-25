@@ -154,7 +154,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let noSearch = false;
 
             if (pageParams.contactName !== undefined && pageParams.contactName !== '') {
-                this.searchValue = decodeURIComponent((pageParams.contactName+'').replace(/\+/g, '%20'));
+                this.searchValue = decodeURIComponent((pageParams.contactName + '').replace(/\+/g, '%20'));
                 this.onchangeSearchInputContactsFromNotification(this.searchValue);
             }else{
                 noSearch = true
@@ -163,9 +163,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.lstTabs = tabsAux;
             if (viewContacts) {
                 if(!noSearch){
-                    this.contactsLoaded = true;
-                    this.isFetching = true;
-                    this.searchContacts(this.searchValue);
+                this.contactsLoaded = true;
+                this.isFetching = true;
+                this.searchContacts(this.searchValue);
                 }else{
                     this.getContacts();
                 }
@@ -380,20 +380,20 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     retrieveContacts() {
         let offset = this.contactsOffset;
-        getContacts({ offset: offset}).then(result => {
+        getContacts({ offset: offset }).then(result => {
             this.isFetching = false;
             if (result.length == 0) { this.contactsEnded = true; this.contactsLoaded = true; return; }
 
             let loadedContacts = offset != 0 ? JSON.parse(JSON.stringify(this.contacts)) : [];
             this.contactsOffset = this.contactsOffset + result.length;
-            let unwrappedContacts =  this.processContacts(result,loadedContacts);
+            let unwrappedContacts = this.processContacts(result, loadedContacts);
 
             this.contacts = unwrappedContacts; //contacts;
             this.contactsLoaded = true;
         });
     }
 
-    processContacts(result,unwrappedContacts){
+    processContacts(result, unwrappedContacts) {
         let contacts = JSON.parse(JSON.stringify(result));
 
         let locale = this.lang;
@@ -402,6 +402,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let contact = contacts[i].contact;
             let user = contacts[i].contactUser;
             let services = contacts[i].services;
+            let status = contact.User_Portal_Status__c;
+
+            contact.PortalStatus = status;
 
             if (contact.Account.RecordType.Name === 'Airline Headquarters' || contact.Account.RecordType.Name === 'Airline Branch') {
                 contact.LocationCode = (contact.hasOwnProperty('IATA_Code__c') ? contact.IATA_Code__c : '') + (contact.hasOwnProperty('Account_site__c') ? ' (' + contact.Account_site__c + ')' : '') + ')';
@@ -433,7 +436,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 }
             }
 
-            if(services!= null){
+            if (services != null) {
                 contact.services = services;
             }
 
@@ -470,7 +473,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             for (let i = 0; i < branches.length; i++) {
                 let branch = branches[i];
                 branch.LocationCode = branch.IATACode__c;
-                if(branch.IATA_ISO_Country__r != null){
+                if (branch.IATA_ISO_Country__r != null) {
                     branch.IsoCountry = branch.IATA_ISO_Country__r.Name;
                 }
                 existingBranches.push(branch);
@@ -513,8 +516,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             let contactList = this.template.querySelector('c-portal-contact-list');
 
-           this.contactsQuery = this.searchTextContacts;
-           this.searchRecords('Contact');
+            this.contactsQuery = this.searchTextContacts;
+            this.searchRecords('Contact');
 
         }, 500, this);
 
@@ -542,8 +545,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
     }
 
-    searchContacts(query){
-        searchContacts({queryString:query, offset: this.contactsOffsetSearch }).then(result => {
+    searchContacts(query) {
+        searchContacts({ queryString: query, offset: this.contactsOffsetSearch }).then(result => {
             let contactList = this.template.querySelector('c-portal-contact-list');
 
             this.isFetching = false;
@@ -551,25 +554,25 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             if (result.length == 0) {
                 this.contactsEndedSearch = true;
-                if(this.contactsOffsetSearch == 0){
+                if (this.contactsOffsetSearch == 0) {
                     contactList.records = [];
-                 }
+                }
                 return;
-              }
+            }
 
 
-             let contactsSearch = this.contactsSearch;
-             let processed = this.processContacts(result,contactsSearch);
+            let contactsSearch = this.contactsSearch;
+            let processed = this.processContacts(result, contactsSearch);
 
-             contactList.recordsInitDone = false;
-             contactList.records = processed;
+            contactList.recordsInitDone = false;
+            contactList.records = processed;
 
-             this.contactsOffsetSearch += result.length;
+            this.contactsOffsetSearch += result.length;
         });
     }
 
-    searchBranches(query){
-        searchBranches({queryString:query, offset:this.branchesOffsetSearch }).then(result => {
+    searchBranches(query) {
+        searchBranches({ queryString: query, offset: this.branchesOffsetSearch }).then(result => {
             let branchesList = this.template.querySelector('c-portal-contact-list');
             this.isFetching = false;
             this.searchMode = true;
@@ -577,9 +580,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             if (result.length == 0) {
                 this.branchesEndedSearch = true;
 
-                if(this.branchesOffsetSearch == 0){
+                if (this.branchesOffsetSearch == 0) {
                     branchesList.records = [];
-                 }
+                }
                 return;
             }
 
@@ -599,19 +602,19 @@ export default class PortalCompanyProfilePage extends LightningElement {
             branchesList.recordsInitDone = false;
             branchesList.records = branchesSearch;
 
-             this.branchesOffsetSearch += result.length;
+            this.branchesOffsetSearch += result.length;
         });
     }
 
-    searchRecords(sobjectType){
+    searchRecords(sobjectType) {
         let query;
-        if(sobjectType == 'Contact'){
+        if (sobjectType == 'Contact') {
             query = this.contactsQuery;
             this.contactsOffsetSearch = 0;
             this.contactsEndedSearch = false;
             this.contactsSearch = [];
 
-            if(query == null || query.length == 0){
+            if (query == null || query.length == 0) {
                 this.contactsOffset = 0;
                 this.searchMode = false;
                 this.contactsQuery = '';
@@ -619,17 +622,17 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 let recordList = this.template.querySelector('c-portal-contact-list');
                 recordList.resetInit();
                 this.retrieveContacts();
-            }else{
+            } else {
                 this.searchContacts(query);
             }
-        }else if(sobjectType == 'Account'){
+        } else if (sobjectType == 'Account') {
 
             query = this.branchesQuery;
             this.branchesOffsetSearch = 0;
             this.branchesEndedSearch = false;
             this.branchesSearch = [];
 
-            if(query == null || query.length == 0){
+            if (query == null || query.length == 0) {
                 this.branchesOffset = 0;
                 this.searchMode = false;
                 this.branchesQuery = '';
@@ -637,7 +640,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 let recordList = this.template.querySelector('c-portal-contact-list');
                 recordList.resetInit();
                 this.retrieveBranches();
-            }else{
+            } else {
                 this.searchBranches(query);
                 this.searchMode = true;
             }
@@ -679,9 +682,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let contactList = this.template.querySelector('c-portal-contact-list');
             contactList.resetInit();
 
-            if(this.searchMode){
+            if (this.searchMode) {
                 this.searchBranches(this.branchesQuery);
-            }else{
+            } else {
                 this.retrieveBranches();
             }
         }
@@ -693,9 +696,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             let contactList = this.template.querySelector('c-portal-contact-list');
             contactList.resetInit();
 
-            if(this.searchMode){
+            if (this.searchMode) {
                 this.searchContacts(this.contactsQuery);
-            }else{
+            } else {
                 this.retrieveContacts();
             }
         }

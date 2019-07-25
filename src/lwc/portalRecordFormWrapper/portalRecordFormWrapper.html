@@ -90,36 +90,50 @@
                                 <template if:false={field.isContactServices}>
                                     <template if:false={field.isJobFunction}>
                                         <template if:false={field.isIdCardInfo}>
-                                            <span key={field.fieldName}
-                                                class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                                <div if:true={field.visible}>
-                                                    <template if:false={field.changeUserStatus}>
-                                                        <lightning-output-field class="labelValue textValue"
-                                                            field-name={field.fieldName}>
-                                                        </lightning-output-field>
-                                                    </template>
-
-                                                    <template if:true={field.changeUserStatus}>
-                                                        <div class="changeUserStatus">
+                                            <template if:false={field.isLastLogin}>
+                                                <span key={field.fieldName}
+                                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                                    <div if:true={field.visible}>
+                                                        <template if:false={field.changeUserStatus}>
                                                             <lightning-output-field class="labelValue textValue"
                                                                 field-name={field.fieldName}>
                                                             </lightning-output-field>
-                                                            <template if:false={isForEdit}>
-                                                                <span class="changeUserStatusButton">
-                                                                    <lightning-icon icon-name="utility:custom_apps"
-                                                                        size="x-small"
-                                                                        class="darkBlueIcon cursorPointer"
-                                                                        onclick={openChangeUserPortalStatus}>
-                                                                    </lightning-icon>
-                                                                </span>
-                                                            </template>
-                                                        </div>
+                                                        </template>
 
-                                                    </template>
-                                                </div>
-                                            </span>
+                                                        <template if:true={field.changeUserStatus}>
+                                                            <div class="changeUserStatus">
+                                                                <lightning-output-field class="labelValue textValue"
+                                                                    field-name={field.fieldName}>
+                                                                </lightning-output-field>
+                                                                <template if:false={isForEdit}>
+                                                                    <span class="changeUserStatusButton">
+                                                                        <lightning-icon icon-name="utility:custom_apps"
+                                                                            size="x-small"
+                                                                            class="darkBlueIcon cursorPointer"
+                                                                            onclick={openChangeUserPortalStatus}>
+                                                                        </lightning-icon>
+                                                                    </span>
+                                                                </template>
+                                                            </div>
+
+                                                        </template>
+                                                    </div>
+                                                </span>
+                                            </template>
                                         </template>
                                     </template>
+                                </template>
+
+                                <template if:true={field.isLastLogin}>
+                                    <div key={field.fieldName} class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue">
+                                        <div class="slds-form-element__label">
+                                            {labels.LastLoginDate}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">{staticFields.LastLogin}</div>
+                                        </div>
+                                    </div>
                                 </template>
 
                                 <template if:true={field.isJobFunction}>
