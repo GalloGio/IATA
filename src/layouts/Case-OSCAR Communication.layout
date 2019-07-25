@@ -340,6 +340,10 @@
         <relatedList>Instant_Surveys__c.Relationship_to_Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Pax_Accreditation_Form__c.SAAM_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
     <relatedLists>
