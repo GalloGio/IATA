@@ -249,6 +249,7 @@ private class ISSP_HomepageTest {
         
         system.runAs(newUser4){
             ISSP_Homepage ctrl = new ISSP_Homepage();
+            system.AssertEquals(ctrl.isPortalNavigationBar,true);
         }
         
         system.runAs(newUser5){

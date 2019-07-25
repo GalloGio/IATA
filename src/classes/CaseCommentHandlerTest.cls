@@ -6,6 +6,8 @@ private class CaseCommentHandlerTest {
             + '"type":"Case",'
             + '"url":"/services/data/v25.0/sobjects/Case/500E0000002nH2fIAE"},'
             + '"Subject":"Test Case Subject",'
+            + '"Reason1__c":"New Account request",'
+            + '"CaseArea__c":"Global System Solution",'
             + '"Status":"Closed",'
             + '"CreatedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
             + '"ClosedDate":' + JSON.serialize(DateTime.now().addMonths(-3))

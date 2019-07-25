@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
     <fields>
         <fullName>AIMS_Area_ID__c</fullName>
         <description>Area identifier used by AIMS</description>
@@ -248,6 +249,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Banking Model</fullName>
                     <default>false</default>
                     <label>Banking Model</label>
+                </value>
+                <value>
+                    <fullName>Model B+</fullName>
+                    <default>false</default>
+                    <label>Model B+</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -2577,6 +2583,16 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Region_Province_and_Cities_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Enabled: This country has Cities mapped by State</inlineHelpText>
+        <label>Region/Province and Cities Enabled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Region__c</fullName>

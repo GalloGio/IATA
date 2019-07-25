@@ -19,6 +19,25 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>BSPLink_ACR_shared_with_NDC_and_IFG_teams</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>BSPLink ACR shared with NDC and IFG teams</description>
+        <label>BSPLink ACR shared with NDC and IFG teams</label>
+        <sharedTo>
+            <group>iiNET_and_IFG</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Application Change Request (DPC System),Application Change Request (DPC Systems) - ACCA,Application Change Request (DPC Systems - locked)</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>BSPlink</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>DPC_Accelya_Maestro</fullName>
         <accessLevel>Edit</accessLevel>
         <label>DPC Accelya Maestro</label>
@@ -287,6 +306,47 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>L3_Global_RT</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>sharing all Cases - Global record type cases with GCS level 3 users</description>
+        <label>L3 Global RT</label>
+        <sharedTo>
+            <group>L3_All_Users</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Global</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>L3_Process_RT</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>sharing all Process record type cases with GCS level 3 users</description>
+        <label>L3 Process RT</label>
+        <sharedTo>
+            <group>L3_All_Users</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Process</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>New_Agent_Experience</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>New Agent Experience</label>
+        <sharedTo>
+            <role>External_Salesforce</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Process</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>PwC_Case</fullName>
         <accessLevel>Edit</accessLevel>
         <label>PwC Case</label>
@@ -313,6 +373,18 @@
             <value>SIDRA Lite,SIDRA</value>
         </criteriaItems>
     </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>APCS</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>share cases between APCS users</description>
+        <label>APCS</label>
+        <sharedTo>
+            <role>Airport_Passenger_Cargo_Security</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Airport_Passenger_Cargo_Security</role>
+        </sharedFrom>
+    </sharingOwnerRules>
     <sharingOwnerRules>
         <fullName>Case_Sharing_Rule_with_IFG_Support_Team</fullName>
         <accessLevel>Edit</accessLevel>
@@ -489,6 +561,18 @@
         </sharedTo>
         <sharedFrom>
             <group>IDFSACCACSTeam</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>L3_Cases</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>sharing all cases owned by L3 users with other level 3 users</description>
+        <label>L3 Cases</label>
+        <sharedTo>
+            <group>L3_All_Users</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>L3_All_Users</group>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
