@@ -76,7 +76,7 @@
                             {!$Label.site.forgot_your_password_q}
                         </a>
                         <aura:if isTrue="{!v.isSelfRegistrationEnabled}">
-                            <span class="black">|</span>
+                            <span class="black slds-p-horizontal_xx-small">|</span>
                             <a href="{!if(v.serviceName != null, v.communitySelfRegisterUrl+'?serviceName='+v.serviceNameForLink, v.communitySelfRegisterUrl)}">
                                 {!$Label.site.new_user_q}
                             </a>
