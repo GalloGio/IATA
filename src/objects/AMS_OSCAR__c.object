@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AIMS_updated__c</fullName>
         <externalId>false</externalId>
@@ -261,6 +262,38 @@
                     <fullName>Not Applicable</fullName>
                     <default>true</default>
                     <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_GFA_Change_Assessment__c</fullName>
+        <description>GFA Change Assessment</description>
+        <externalId>false</externalId>
+        <label>GFA Change Assessment</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1696,6 +1729,17 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Change_of_Entity_Location_within_EU__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field related to the scenario of an accredited agency relocating in a different BSP, but within European Union</description>
+        <externalId>false</externalId>
+        <label>Change of Entity Location within EU</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Change_of_location_type_behavior__c</fullName>
@@ -3213,8 +3257,8 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <fields>
         <fullName>Notification_days__c</fullName>
         <externalId>false</externalId>
-        <formula>if(DGR_Expiry_Date__c - today() &gt; 60,&quot;90&quot;,
-if(DGR_Expiry_Date__c - today() &gt; 30,&quot;60&quot;,
+        <formula>if(DGR_Expiry_Date__c - today() &gt; 62,&quot;90&quot;,
+if(DGR_Expiry_Date__c - today() &gt; 32,&quot;60&quot;,
 if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Notification days</label>
@@ -71913,7 +71957,8 @@ NOT(ISPICKVAL(STEP35__c, &quot;Passed&quot;)),
 OR(
 ISPICKVAL(Process__c, &quot;ANG.MAJOR.CHANGES.1.0&quot;),
 ISPICKVAL(Process__c, &quot;ANG.NEW.HE.LITE.1.0&quot;),
-ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;)
+ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;),
+ISPICKVAL(Process__c, &quot;ANG.NEW.GE.STANDARD.1.0&quot;)
 )
 )</errorConditionFormula>
         <errorMessage>If &quot;Request financial security&quot; step is set to passed and &quot;Confirm financial security received&quot; is not set to passed then the Manager is not allowed to approve the OSCAR</errorMessage>

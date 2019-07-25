@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fieldSets>
         <fullName>AMS_CorrectionAllHierarchy</fullName>
         <description>This is used on the CORRECTION Process</description>
@@ -2525,6 +2526,24 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Confirm Accreditation Type is correct</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Copy_Ownership_Records__c</fullName>
+        <externalId>false</externalId>
+        <label>Copy Ownership Records</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Copy_Ownership__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Copy ownership to other locations</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -5431,9 +5450,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <externalId>false</externalId>
         <label>Case</label>
         <referenceTo>Case</referenceTo>
+        <relationshipLabel>AMS Online Accreditations</relationshipLabel>
         <relationshipName>AMS_Pax_Accreditation_Form</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -27417,6 +27437,21 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Allow_Reparenting_on_MC_Cases</fullName>
+        <active>true</active>
+        <description>You can only reparent case field for Newgen Standard Accounts</description>
+        <errorConditionFormula>AND(
+				 ISCHANGED(SAAM_Case__c) ,
+				NOT(AND(
+				CONTAINS(SAAM_Case__r.Subject, &apos;New Associate Entity - GoGlobal - &apos;) ,
+				 ISBLANK(SAAM_Case__r.Account.IATACode__c),
+				 ISPICKVAL(SAAM_Case__r.Account.Top_Parent__r.Location_Type__c,&apos;GE&apos;),
+				 ISPICKVAL(SAAM_Case__r.Account.Status__c,&apos;&apos;)
+))
+				)</errorConditionFormula>
+        <errorMessage>You can only reparent case field for Newgen Multicountry Accreditations</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>CASS_Number_3_Digits</fullName>
         <active>true</active>
