@@ -364,7 +364,7 @@ public without sharing class GDPR_Helper {
     private static List<Lead> searchLeadsHelper(String email){
         List<Lead> searchLeads = new List<Lead>();
         try{
-            searchLeads = [SELECT ID, LastName, FirstName, IndividualId FROM LEAD WHERE Email = :email ORDER BY LastModifiedDate];
+            searchLeads = [SELECT ID, LastName, FirstName, IndividualId FROM LEAD WHERE Email = :email ORDER BY pi__url__c ASC NULLS LAST, LastModifiedDate ASC];
             System.debug('[SEARCH LEADS] - '+searchLeads);
         }catch(Exception e){
             System.debug('[GDPR_HELPER] - '+e.getStackTraceString());

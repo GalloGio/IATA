@@ -15,6 +15,7 @@
 
         <p><b>Are you a new user?</b> Start by entering below the email address through which you want to receive our news</p>
         <p><b>Are you already subscribed to our news?</b> Enter the email address through which you receive our updates</p>
+        <p><b>Are you a Customer Portal user?</b> Use the same e-mail address as for your Customer Portal account</p>
         <div class="slds-align_absolute-center" style="height: 5rem;">
             <div class="slds-align_absolute-center" style="height: 3rem;">
                 <ui:inputEmail aura:id="inputEmail" class="form-control inputHeight" placeholder="Enter your email address"/>&nbsp;&nbsp;
