@@ -1,6 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 
-import fetchJSON from '@salesforce/apex/JsonDataTableCalloutHandler.getJSON';
+import fetchJSON from '@salesforce/apex/WebserviceTableController.getJSON';
 
 export default class JsonDatatable extends LightningElement {
 
