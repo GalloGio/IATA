@@ -1,0 +1,75 @@
+.textarea {
+    width: 100%;
+    overflow: hidden;
+    resize: none;
+    min-height: 70px;
+    border: 0;
+    font-size: 18px;
+}
+
+textarea::placeholder{
+    font-size: 18px;
+    color: #999;
+}
+
+textarea:focus{
+    box-shadow: unset;
+}
+
+.sendIcon {
+    display: flex;
+    justify-content: center;
+}
+
+.messagesContainer {
+    display: flex; 
+    flex-direction: column;
+}
+
+.caseMessagesSelfBubbleContainer, .caseMessagesOtherBubbleContainer {
+    max-width: 60%;
+}
+
+.caseMessagesSelfBubbleContainer {
+    align-self: flex-end;
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-end;
+}
+
+.caseMessagesOtherBubbleContainer {
+    align-self: flex-start; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start;
+}
+
+.caseMessagesSelfBubble, .caseMessagesOtherBubble {
+    position: relative;   
+}
+
+.caseMessagesSelfBubble:after {
+    content: "";
+    position: absolute;
+    border-bottom: 8px solid #525252;
+    border-left: 8px solid #525252;
+    border-right: 8px solid transparent;
+    border-top: 8px solid transparent;
+    top: calc(100% - 16px);
+    right: -15px;
+}
+
+.caseMessagesOtherBubble:after {
+    content: "";
+    position: absolute;
+    border-bottom: 8px solid #ffffff;
+    border-left: 8px solid transparent;
+    border-right: 8px solid #ffffff;
+    border-top: 8px solid transparent;
+    top: calc(100% - 16px);
+    left: -15px;
+}
+
+.breakWord{
+    word-break: break-all;
+}
