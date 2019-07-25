@@ -49,7 +49,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
             if (period != null && accountIds != null) {
                 string accounts = '\''+String.join(accountIds,'\',\'')+'\'';
-                filters.add(' (Account__c IN (' + accounts + ') AND Submission_date__c >=' +  dtFrom.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + '  AND Submission_date__c <=' + dtTo.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + ' ) ');
+                filters.add(' AND (Account__c IN (' + accounts + ') AND Submission_date__c >=' +  dtFrom.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + '  AND Submission_date__c <=' + dtTo.formatGMT('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'') + ' ) ');
             }
         }
 
