@@ -16,6 +16,7 @@ trigger FinancialSecurityHandler on Financial_Security__c (after delete, after i
     } else if (Trigger.isUpdate) {
         if (Trigger.isBefore ){
             new ANG_FinancialSecurityTriggerHandler().onBeforeUpdate();
+            FinancialSecurityUtil.HandleFSBeforeUpdate(Trigger.newMap, Trigger.oldMap);
             if(userinfo.getProfileId() == '00e20000000h0gFAAQ' && Test.isRunningTest()) FinancialSecurityUtil.HandleFSBeforeUpdate(Trigger.newMap, Trigger.oldMap);// include system administrator profile for code coverage
         } else if (Trigger.isAfter) {
             new ANG_FinancialSecurityTriggerHandler().onAfterUpdate();
