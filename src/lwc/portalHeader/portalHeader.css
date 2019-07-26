@@ -288,7 +288,8 @@
   position: absolute;
   top: 40px;
   z-index: 10000;
-  min-width: 340px;
+  width: 100%;
+  max-width: 500px;
   height: 550px;
   max-height: 550px;
   right: calc(10% + 1.5rem + 24px);
@@ -296,8 +297,7 @@
 
 @media only screen and (max-width: 767px) {
   .openNotifications {
-    width: 300px;
-    min-width: 280px;
+    width: 90%;
     height: 400px;
     max-height: 440px;
     right: calc(16px - 16px); /* parent margin - this margin */
@@ -330,7 +330,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 93.5%;
   display: block;
 }
 
