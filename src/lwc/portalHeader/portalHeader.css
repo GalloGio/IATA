@@ -447,10 +447,32 @@
 .sideBar {
   height: 100%;
   position: fixed;
-  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   white-space: nowrap;
   z-index: 10011;
   color: white;
+}
+
+.sideBar::-webkit-scrollbar-track
+{
+	background-color: transparent;
+}
+
+.sideBar::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #1e32fa;
+}
+
+.sideBar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, #1a29d3),
+									   color-stop(0.86, #1422b3));
 }
 
 .sideBar.topMenu {
@@ -481,7 +503,7 @@
 .sideBarContainer .language-picker {
   border-top: 1px solid rgba(255, 255, 255, .19);
   margin-top: 50px;
-  font-size: 0.7em;
+  font-size: 1em;
 }
 
 .sideBarProfileContainer .headerBarButton {
