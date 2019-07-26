@@ -25,14 +25,19 @@
             width: {!IF(isstep2,'90% !important','40% !important')};
         }
 
-       .pbBody {
-        padding-left:10px !important;
-       }
+        .pbBody {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            padding-top: 10px !important;
+        }
 
-       .pbBody a{color:#337ab7 !important}
+        .pbBody a {
+            color:#337ab7 !important
+        }
 
         .bPageBlock {
             border-top-width : thin !important;
+            border-top: 1px solid #eaeaea;
         }
 
         .bEditBlock input {
@@ -127,29 +132,135 @@
             border: 1px solid #e0e3e5 !important;
         }
 
-            .col1 {
-                padding-bottom:5px;
-                width:40%;
-                vertical-align: text-top;
-                font-weight:bold
-            }
+        .col1 {
+            padding-bottom:5px;
+            width:40%;
+            vertical-align: text-top;
+            font-weight:bold
+        }
 
-            .col1_regular {
-                padding-bottom:5px;
-                width:25%;
-                vertical-align: text-top;
-                font-weight:bold
-            }
+        .col1_regular {
+            padding-bottom:5px;
+            width:25%;
+            vertical-align: text-top;
+            font-weight:bold
+        }
 
-            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
-            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
-            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
-            .col3 {width:50%;vertical-align: text-top;}
+        .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+        .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+        .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+        .col3 {width:50%;vertical-align: text-top;}
 
-            .col1_inner {width:25%; vertical-align: text-top;}
-            .col2_inner {width:25%; vertical-align: text-top;}
+        .col1_inner {width:25%; vertical-align: text-top;}
+        .col2_inner {width:25%; vertical-align: text-top;}
 
-             .row1 {padding-bottom:16px; vertical-align: text-top;}
+        .row1 {padding-bottom:16px; vertical-align: text-top;}
+
+        body, div.container {
+            background-color: rgb(240, 242, 245) !important;
+        }
+
+        .panel-heading {
+            background-color: #1e32fa !important;
+            background-image: none !important;
+        }
+
+        .panel-body {
+            background-color: white;
+            box-shadow: 5px 5px 20px #e2e2e2;
+        }
+
+        .container a, .container .customlink {
+            color: #3333ff !important;
+        }
+
+        a.link-white,
+        a.link-white:hover {
+            color: white !important;
+        }
+
+        div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
+        .iatabtn,
+        .btn.iatabtn,
+        .btnDisabled.iatabtn {
+            border-radius: 1px;
+            font-size: 16px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.5;
+            letter-spacing: normal;
+            text-align: center;
+            min-height: 40px;
+            word-break: break-word;
+            border: none;
+            text-decoration: none;
+            box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+            background-color: #1e32fa;
+            color: #ffffff;
+            min-width: 130px;
+            background-image: none;
+        }
+
+        .iatabtn.iatabtn-default,
+        .iatabtn.iatabtn-success {
+            box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+            background-color: #1e32fa;
+            color: #ffffff;
+        }
+
+        .iatabtn.iatabtn-danger {
+            box-shadow: none;
+            background-color: transparent;
+            color: #1e32fa;
+        }
+
+        .iatabtn:hover,
+        .btn.iatabtn:hover,
+        .btnDisabled.iatabtn:hover,
+        .iatabtn:focus,
+        .btn.iatabtn:focus,
+        .btnDisabled.iatabtn:focus {
+            color: #ffffff;
+        }
+
+        .iatabtn.iatabtn-danger:hover,
+        .iatabtn.iatabtn-danger:focus {
+            color: #1e32fa;
+        }
+
+        .progress.iata-tabs {
+            background-image: none;
+            background-color: transparent;
+            border: none;
+            border: 1px solid darkgray;
+            border-bottom: 1px solid darkgray;
+            box-shadow: none;
+            height: 40px;
+            border-radius: 8px;
+        }
+        
+        .progress-bar.iata-tab {
+            background-image: none;
+            border: none;
+            box-shadow: none;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 10px;
+            padding-bottom: 30px;
+            font-weight: bold;
+            color: white !important;
+            background-color: #1e32fa !important;
+        }
+
+        .iata-tabs .iata-tab:not(:first-child) {
+            border-left: 1px solid lightgray;
+        }
+
+        .iata-tab.tabl-active {
+            color: #1e32fa !important;
+            background-color: #eee !important;
+        }
     </style>
 
     <script>
@@ -446,9 +557,9 @@
       </script>
     </apex:outputPanel>
 
-     <div class="container">
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+    <div class="container">
        <div id="contentWrapper">
-           <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!----------------------------------------->
     <!-- STEP 1 -->
@@ -465,28 +576,28 @@
     <div class="panel-body" id="body-enquiries">
 
     <apex:form id="step1Form" styleClass="form-horizontal">
-        <div class="progress">
+        <div class="progress iata-tabs">
 
-            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+            <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
                 {!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!lblStepB}" id="Next2">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!lblStepB}" id="Next2">
                     <apex:param value="2" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');if(hasPermission != true) return false;" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Next3">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');if(hasPermission != true) return false;" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Next3">
                     <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" value="{!lblStepD}" id="Next4">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" value="{!lblStepD}" id="Next4">
                     <apex:param value="4" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5">
                     <apex:param value="5" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
@@ -505,14 +616,18 @@
         <apex:pageBlock id="step1Block" mode="edit" >
             <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                 <apex:actionStatus id="buttonLoadingStep1">
-                    <apex:facet name="stop"><apex:outputPanel >
-                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
-                        <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form"/>
-                    </apex:outputPanel></apex:facet>
-                    <apex:facet name="start"><apex:outputPanel >
-                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
-                        <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." rendered="{!NOT(amsIsGSA=='YES')}" disabled="true" reRender="step1Form"/>
-                    </apex:outputPanel></apex:facet>
+                    <apex:facet name="stop">
+                        <apex:outputPanel >
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:facet name="start">
+                        <apex:outputPanel >
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default"  value="{!$Label.ISSP_Next}..." rendered="{!NOT(amsIsGSA=='YES')}" disabled="true" reRender="step1Form"/>
+                        </apex:outputPanel>
+                    </apex:facet>
                 </apex:actionStatus>
             </apex:pageBlockButtons>
          <apex:pageMessages escape="false"></apex:pageMessages>
@@ -784,21 +899,21 @@
             </div>
             <div class="panel-body" id="body-enquiries">
                 <apex:form >
-                <div class="progress">
-                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" id="Prev1"/>
+                <div class="progress iata-tabs">
+                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                        <apex:commandLink styleclass="link-white" action="{!goToStep1}" value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" id="Prev1"/>
                     </div>
-                    <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+                    <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
                         {!lblStepB}
                     </div>
-                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange), lblStepC, lblNoCStepC)}" id="Next3"/>
+                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                        <apex:commandLink styleclass="link-white" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange), lblStepC, lblNoCStepC)}" id="Next3"/>
                     </div>
-                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!lblStepD}" id="Next4"/>
+                    <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
+                        <apex:commandLink styleclass="link-white" action="{!goToStep4}" value="{!lblStepD}" id="Next4"/>
                     </div>
-                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep5}" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5"/>
+                     <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+                        <apex:commandLink styleclass="link-white" action="{!goToStep5}" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5"/>
                     </div>
                 </div>
                 </apex:form>
@@ -827,8 +942,8 @@
 
                     <center>
                     <apex:pageBlock mode="edit">
-                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous"/>
-                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3}" value="{!$Label.ISSP_Next}" id="Next"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3}" value="{!$Label.ISSP_Next}" id="Next"/>
                     </apex:pageBlock>
                     </center>
                 </apex:form>
@@ -868,20 +983,20 @@
             </div>
     <div class="panel-body" id="body-enquiries">
         <apex:form >
-        <div class="progress">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>
+        <div class="progress iata-tabs">
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                <apex:commandLink styleclass="link-white" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!lblStepB}" id="Prev2"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+                <apex:commandLink styleclass="link-white" action="{!goToStep2}" value="{!lblStepB}" id="Prev2"/>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Prev3"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
+                <apex:commandLink styleclass="link-white" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Prev3"/>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!lblStepD}" id="Prev4"/>
+            <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
+                <apex:commandLink styleclass="link-white" action="{!goToStep4}" value="{!lblStepD}" id="Prev4"/>
             </div>
-             <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
+             <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
                 {!IF(AND(isNoticeOfChange, newForm.Is_change_ownership_or_shareholding__c), lblNoCStepD, lblStepE)}
             </div>
         </div>
@@ -912,11 +1027,11 @@
             reqIdentifier="{!reqs.File_Identifier2__c}"  
             rendered="{!NOT(ISBLANK(reqs.File_Identifier2__c))}" 
             />
-        <apex:outputPanel  rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
+        <apex:outputPanel rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
             <div class = "well">
-            <apex:outputText style="font-weight:bold" value ="{!reqs.Name}" escape="false"/>
+            <apex:outputText style="font-weight:bold" value="{!reqs.Name}" escape="false"/>
             <br/> 
-            <apex:outputText value ="{!reqs.Requirement_text__c}" escape="false"/>
+            <apex:outputText value="{!reqs.Requirement_text__c}" escape="false"/>
             <br/>
             </div>
         </apex:outputPanel>
@@ -1117,29 +1232,23 @@
             <br/><br/>
                 <a href="{!portalRedirectToCase}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
-           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="{!portalRedirectToCaseList}" target="_self">{!IF(isNewPortal, $Label.CSP_AMS_StepFinal_In_Addition2, $Label.ISSP_AMS_StepFinal_In_Addition2)}</a>.
+            {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="{!portalRedirectToCaseList}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
             <br/><br/><br/><br/>
-            <!---
-            <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>
-            -->
+ 
             <apex:form rendered="{!AND(OR(BEGINS(sectorValue, 'Travel_Agent'), AND(BEGINS(sectorValue, 'Cargo_Agent'), newForm.Agent_Type__c!='IATA Cargo Agent', newForm.Agent_Type__c!='EACP Intermediary')),!isNoticeOfChange,newForm.SAAM_Case__r.Reason1__c != 'FoP Management',newCase.Reason1__c!='CLO - Closure')}">
-                 <apex:pageBlockSection rendered="{!newCase.Reason1__c!='Annual revalidation'}" >
-                     <apex:pageBlockSectionItem >
-                         <apex:image value="{!URLFOR($Resource.PDF_icon_large)}"/>
-<!--                          <apex:outputLink value="/ISSP_AMS_PDF_ApplicationForm?caseId={!newCase.Id}" id="amsFormLink" target="_new">
-                             {!$Label.ISSP_AMS_Download_PDF_Copy}
-                        </apex:outputLink> -->
-                                        <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" styleClass="hist-submitButton" style="color: #ffffff" id="theCommandLink" target="_new"/>
-                     </apex:pageBlockSectionItem>
-                 </apex:pageBlockSection>
-
+                <apex:pageBlockSection rendered="{!newCase.Reason1__c!='Annual revalidation'}" >
+                    <apex:pageBlockSectionItem >
+                        <apex:image value="{!URLFOR($Resource.PDF_icon_large)}"/>
+                        <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" styleClass="hist-submitButton" style="color: #ffffff" id="theCommandLink" target="_new"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
             </apex:form>
         </div>
-    </apex:pageBlock>
+        </apex:pageBlock>
 
          </div>
-         <c:ISSP_CustomFooter communityName="{!communityName}"/>
-         </div>
+        </div>
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
 
     </body>
 </html>
