@@ -772,7 +772,16 @@
     
     static testMethod void triggerHandler() {
 
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR',ANG_Enable_NewGen__c = true, Case_BSP_Country__c = 'Test', AMS_Default_State__c = 'FR');       
+        insert ctry;
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name = 'Test_state', IATA_ISO_Country__c = ctry.Id, ISO_Code__c = 'FR');
+        insert stt;
+
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+        AMS_OSCARTriggerHandler.allOnlineAccr = null;
+
 		loadCredentials();
 
         insert new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Test Combination', TC_Name__c = true);
@@ -805,6 +814,17 @@
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
         insert owner;
+
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(id=oscar.AMS_Online_Accreditation__c);
+            
+            stagingArea.IATA_ISO_State__c=stt.Id;
+            stagingArea.Branch_Office_Country__c= ctry.Id;
+            stagingArea.Shipping_ISO_State__c = stt.Id;
+            stagingArea.Shipping_ISO_Country__c = ctry.Id;
+            stagingArea.Shipping_Street__c = 'street';
+            stagingArea.Shipping_City__c = 'city';
+
+        update stagingArea;
 
         oscar.recordTypeID = newRT;
         oscar.STEP6__c = AMS_Utils.PASSED;
@@ -1024,7 +1044,16 @@
 
     @isTest static void testMCLocationType() {
 
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR',ANG_Enable_NewGen__c = true, Case_BSP_Country__c = 'Test', AMS_Default_State__c = 'FR');       
+        insert ctry;
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name = 'Test_state', IATA_ISO_Country__c = ctry.Id, ISO_Code__c = 'FR');
+        insert stt;
+
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+        AMS_OSCARTriggerHandler.allOnlineAccr = null;
+
 		loadCredentials();
 
         Test.startTest();
@@ -1072,7 +1101,14 @@
         );
         insert attc;
 
-        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c );
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c,            IATA_ISO_State__c=stt.Id,
+            Branch_Office_Country__c= ctry.Id,
+            Shipping_ISO_State__c = stt.Id,
+            Shipping_ISO_Country__c = ctry.Id,
+            Shipping_Street__c = 'street',
+            Shipping_City__c = 'city'
+            );
+
         insert stagingArea;
 
         /*** AMSU-180 ***/
@@ -1106,8 +1142,17 @@
 
     @isTest static void testMCOwnershipToIATA() {
 
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR',ANG_Enable_NewGen__c = true, Case_BSP_Country__c = 'Test', AMS_Default_State__c = 'FR');       
+        insert ctry;
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name = 'Test_state', IATA_ISO_Country__c = ctry.Id, ISO_Code__c = 'FR');
+        insert stt;
+		        
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
-		loadCredentials();
+
+        AMS_OSCARTriggerHandler.allOnlineAccr = null;
+
+        loadCredentials();
 
         
 
@@ -1141,10 +1186,9 @@
         dmo.assignmentRuleHeader.useDefaultRule= false;
         newCase.setOptions(dmo);
         
+        insert newCase;  
         Test.startTest();
 
-        insert newCase;               
-        
         Attachment attc = new Attachment(
           OwnerId = UserInfo.getUserId(),
           IsPrivate = true,
@@ -1153,7 +1197,14 @@
           Name = 'test'
         );
         insert attc;
-        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c );
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c,
+            IATA_ISO_State__c=stt.Id,
+            Branch_Office_Country__c= ctry.Id,
+            Shipping_ISO_State__c = stt.Id,
+            Shipping_ISO_Country__c = ctry.Id,
+            Shipping_Street__c = 'street',
+            Shipping_City__c = 'city' );
+
         insert stagingArea;
 
         
@@ -1180,7 +1231,16 @@
 
     @isTest static void testMCOwnershipToNonIATA() {
 
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR',ANG_Enable_NewGen__c = true, Case_BSP_Country__c = 'Test', AMS_Default_State__c = 'FR');       
+        insert ctry;
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name = 'Test_state', IATA_ISO_Country__c = ctry.Id, ISO_Code__c = 'FR');
+        insert stt;
+
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+        AMS_OSCARTriggerHandler.allOnlineAccr = null;
+
 		loadCredentials();
 
         Test.startTest();
@@ -1220,7 +1280,14 @@
           Name = 'test'
         );
         insert attc;
-        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=a.Name, Short_Name__c=a.Short_Name__c );
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=a.Name, Short_Name__c=a.Short_Name__c ,
+            IATA_ISO_State__c=stt.Id,
+            Branch_Office_Country__c= ctry.Id,
+            Shipping_ISO_State__c = stt.Id,
+            Shipping_ISO_Country__c = ctry.Id,
+            Shipping_Street__c = 'street',
+            Shipping_City__c = 'city');
+
         insert stagingArea;
 
         /*** AMSU-180 ***/
@@ -1253,6 +1320,12 @@
     }
 
     @isTest static void testMCChangeOfLocation() {
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR',ANG_Enable_NewGen__c = true, Case_BSP_Country__c = 'Test', AMS_Default_State__c = 'FR');       
+        insert ctry;
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name = 'Test_state', IATA_ISO_Country__c = ctry.Id, ISO_Code__c = 'FR');
+        insert stt;
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 		loadCredentials();
@@ -1298,7 +1371,24 @@
           Name = 'test'
         );
         insert attc;
-        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c );
+
+
+
+        AMS_OSCARTriggerHandler.allOnlineAccr = null;
+
+
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(
+            SAAM_Case__c = newCase.Id, 
+            Account_Name__c=aBr.Name,
+            Short_Name__c=aBr.Short_Name__c,
+            IATA_ISO_State__c=stt.Id,
+            Branch_Office_Country__c= ctry.Id,
+            Shipping_ISO_State__c = stt.Id,
+            Shipping_ISO_Country__c = ctry.Id,
+            Shipping_Street__c = 'street',
+            Shipping_City__c = 'city'
+        );
+
         insert stagingArea;
 
         /*** AMSU-180 ***/
@@ -1316,11 +1406,12 @@
 
         AMS_OSCAR__c oscarToUpdate = [SELECT id, STEP6__c, Type_of_change__c, Change_effective_as_of__c from AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];        
 
-        oscarToUpdate.STEP6__c = AMS_Utils.PASSED;
+
+        oscarToUpdate.AMS_Online_Accreditation__c = stagingArea.Id;
         oscarToUpdate.Type_of_change__c = AMS_Utils.LOCATION;
         oscarToUpdate.Change_effective_as_of__c = date.today();
-        oscarToUpdate.AMS_Target_Agency__c = aHo.Id;
-        oscarToUpdate.AMS_Online_Accreditation__c = stagingArea.Id;
+        oscarToUpdate.AMS_Target_Agency__c = aHo.Id;       
+        oscarToUpdate.STEP6__c = AMS_Utils.PASSED;
         update oscarToUpdate;
 
         AMS_OSCAR__c oscarT = [SELECT id, STEP6__c from AMS_OSCAR__c where id = :oscar.id];
@@ -1403,6 +1494,7 @@
         child.RecordTypeId = rtIdBr ;
         child.IATACode__c = '2000000';
         child.Location_Type__c = 'BR';
+        child.ParentId = parent.Id;
         insert child;
         System.debug('child Id: ' + child.Id);
 
@@ -1463,7 +1555,13 @@
         country.Name = 'Portugal';
         country.ISO_Code__c = 'PT';
         country.ISO_Code_Numeric__c = 11;
+        country.Case_BSP_Country__c = 'Test';
+        country.AMS_Default_State__c = 'FR';
         insert country;
+
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name = 'Test_state', IATA_ISO_Country__c = country.Id, ISO_Code__c = 'PT');
+        insert stt;
 
         Account agency = new Account();
         agency.Name = 'Agency';
@@ -1507,6 +1605,13 @@
         stagingArea.Account_Name__c = agency.Name;
         stagingArea.Short_Name__c= agency.Short_Name__c;
         stagingArea.Location_Class__c = 'P';
+        stagingArea.IATA_ISO_State__c=stt.Id;
+        stagingArea.Branch_Office_Country__c= country.Id;
+        stagingArea.Shipping_ISO_State__c = stt.Id;
+        stagingArea.Shipping_ISO_Country__c = country.Id;
+        stagingArea.Shipping_Street__c = 'street';
+        stagingArea.Shipping_City__c = 'city';
+
         insert stagingArea;
 
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
@@ -1535,7 +1640,16 @@
         operation.Name = 'TEST';
         insert operation;
 
+		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
+			Name = 'BSP-SG',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			ANG_RHC_Amount_Equals_FS__c = true
+		);
+
+        insert bspSG;
+
         ANG_BSP_Attributes__c attribute = new ANG_BSP_Attributes__c();
+        attribute.BSP__c = bspSG.Id;
         attribute.Operation__c = operation.Id;
         attribute.Remittance_Frequency__c = 'M';
         attribute.Class_Type__c = 'P';

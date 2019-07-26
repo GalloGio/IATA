@@ -1,0 +1,30 @@
+<!--
+ - Created by pvavruska on 5/27/2019.
+ -->
+
+<!-- Portal Company Profile Info Nav -->
+<template>
+    <div class="customCardWhite slds-p-top_x-small">
+
+        <template for:each={navItems} for:item="topic">
+            <template if:true={topic.open}>
+                <div key={topic.value} class="slds-p-around_small cust  omCardTitleBox cursorPointer selectedItem" onclick={itemSelected}
+                    data-item={topic.value}>
+                    <span class="slds-p-left_small text-bold" data-item={topic.value}>{topic.label}</span>
+                </div>
+            </template>
+
+            <template if:false={topic.open}>
+                <div class="slds-p-around_small customCardTitleBox cursorPointer" onclick={itemSelected}
+                    key={topic.value} data-item={topic.value}>
+                    <span class="slds-p-left_small text-bold" data-item={topic.value}>{topic.label}</span>
+                </div>
+            </template>
+
+        </template>
+
+    </div>
+
+
+
+</template>

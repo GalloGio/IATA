@@ -2962,13 +2962,13 @@ public class ANG_AgencyChangesHelperTest {
 
 		update oscar;
 
-		assertChangeCodes(oscar.Id, 'CDL', accountsInvolvedSet);
+		assertChangeCodes('CDL', accountsInvolvedSet);
 
 		oscar.STEP2__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update oscar;
 
-		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
+		assertChangeCodes('CDF', accountsInvolvedSet);
 
 		Test.stopTest();
 

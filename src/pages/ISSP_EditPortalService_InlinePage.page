@@ -54,6 +54,10 @@
 			<apex:outputLabel value="Reason" for="reason" />
 			<apex:inputField value="{!Portal_Application_Right__c.Access_Status_Reason__c}" id="reason" />
 		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem >
+			<apex:outputLabel value="Enable Notifications" for="enable_notifications" />
+			<apex:inputField value="{!Portal_Application_Right__c.Enable_Notifications__c}" id="enable_notifications" />
+		</apex:pageBlockSectionItem>
 		<apex:pageBlockSectionItem rendered="{!isTD}" >
 			<apex:outputLabel value="Main Currency" for="currency1" />
 			<apex:selectList id="currency1" value="{!Portal_Application_Right__c.Currency1__c}" size="1" >

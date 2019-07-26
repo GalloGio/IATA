@@ -180,7 +180,7 @@ private class AMS_ChangeCodesHelperTest {
 		String formOfPayments = AMS_ChangeCodesHelper.generateFOPString(listAgencyAuth, isNewgen, changeCode);
 		Test.stopTest();
 
-		System.assertEquals('BOP: Authorized - Cash - Credit Card', formOfPayments);
+		System.assertEquals('BOP - Cash - Credit Card: Authorized', formOfPayments);
 	}
 
 

@@ -5,6 +5,10 @@
         <formula>Case.AccountId</formula>
     </fieldOverrides>
     <fieldOverrides>
+        <field>Assign__c</field>
+        <formula>TRUE</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>BSPCountry__c</field>
         <formula>TEXT(Case.BSPCountry__c)</formula>
     </fieldOverrides>
@@ -99,6 +103,11 @@
                 <emptySpace>false</emptySpace>
                 <field>Reason1__c</field>
                 <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Product__c</field>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>

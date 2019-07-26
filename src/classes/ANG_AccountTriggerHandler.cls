@@ -28,6 +28,7 @@ public class ANG_AccountTriggerHandler {
 	public void onBeforeInsert(){
 		adjustShortName();
 		updateRiskStatus();
+		populateIEPStatus();
 	}
 	public void onAfterInsert() {
 
@@ -37,6 +38,7 @@ public class ANG_AccountTriggerHandler {
 		adjustShortName();
 		updateRiskStatus();
 		runRiskAssessment();
+		populateIEPStatus();
 	}
 	public void onAfterUpdate() {
 		updateRiskEventStatus();
@@ -46,6 +48,7 @@ public class ANG_AccountTriggerHandler {
 		manageUpgrades();
 		createIEPModelAOscars();
 		updateFormsOfPayment();
+		handleAccountUpdate();
 	}
 
 	public void onBeforeDelete(){}
@@ -214,8 +217,8 @@ public class ANG_AccountTriggerHandler {
 					, Account__c = acc.Id
 					, Change_Code__c = config.Change_Code__c
 					, Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
-					, Reason_Code__c = config.Reason_Code__c
-					, Reason_Description__c = config.Reason_Code_Description__c
+					, Reason_Code__c = acc.Reason__c.left(2)
+					, Reason_Description__c = acc.Reason__c.right(acc.Reason__c.length()-3)
 					, Source__c = source
 					, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
 					, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
@@ -232,7 +235,7 @@ public class ANG_AccountTriggerHandler {
 	private void manageUpgrades() {
 		if(!isExpiration && !isLastFinancialReviewUpgrade) return;
 
-		Set<Id> toNotify = new Set<Id>();
+		//Set<Id> toNotify = new Set<Id>();
 		Set<Id> toChangeCode = new Set<Id>();
 
 		AMS_ChangeCodes__c config;
@@ -255,12 +258,12 @@ public class ANG_AccountTriggerHandler {
 			}
 
 			if(oldAcc.ANG_HE_CashCondition__c != acc.ANG_HE_CashCondition__c && acc.ANG_HE_CashCondition__c == false){
-				toNotify.add(acc.Id);
+				//toNotify.add(acc.Id);
 				if(config != null) toChangeCode.add(acc.Id);
 			}
 		}
 
-		if(toChangeCode.isEmpty() && toNotify.isEmpty()) return;
+		if(toChangeCode.isEmpty() /*&& toNotify.isEmpty()*/) return;
 
 		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
@@ -272,8 +275,8 @@ public class ANG_AccountTriggerHandler {
 				, Account__c = acc.Id
 				, Change_Code__c = config.Change_Code__c
 				, Bulletin_Information__c = (config.Bulletin_Memo_Text__c == null) ? '' : config.Bulletin_Memo_Text__c.replace('<Risk Status>', acc.ANG_HE_RiskStatus__c).replace('<Cash Condition>', acc.ANG_HE_CashCondition__c?'Yes':'No').toUpperCase()
-				, Reason_Code__c = config.Reason_Code__c
-				, Reason_Description__c = config.Reason_Code_Description__c
+				, Reason_Code__c = acc.Reason__c.left(2)
+				, Reason_Description__c = acc.Reason__c.right(acc.Reason__c.length()-3)
 				, Source__c = source
 				, CreatedDate_User__c = AMS_ChangeCodesHelper.convertToHubEffectiveDate(system.today())
 				, To_Publish_in_e_Bulletin__c = config.Published_in_bulletin__c
@@ -282,7 +285,8 @@ public class ANG_AccountTriggerHandler {
 
 		if(!changeCodes.isEmpty()) insert changeCodes;
 		
-			
+		/* Replaced by the notification Risk_Information_Update (NEWGEN-5261)
+
 		List<EmailTemplate> emailTemplates = [SELECT DeveloperName,Id FROM EmailTemplate WHERE DeveloperName ='Risk_Status_Upgrade' AND isActive = true Order by DeveloperName desc];
 		
 		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='Risk_Status_Upgrade'];
@@ -323,7 +327,7 @@ public class ANG_AccountTriggerHandler {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageUpgrades] Notifications - ' + notifications);
 		
-		if(!notifications.isEmpty()) insert notifications;
+		if(!notifications.isEmpty()) insert notifications; */
 	}
 
 	public void updateRiskEventStatus (){
@@ -376,6 +380,9 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	private void updateRHCInformation() {
+
+		if(ANG_OscarProcessHelper.isIATACodeGenerationRunning) return;
+
 		Map<Id, ANG_RHC_Information__c> rhcToUpdate = new Map<Id, ANG_RHC_Information__c>();
 		Map<Id, Boolean> changedConditions = new Map<Id, Boolean>();
 		Set<Id> changedStatus = new Set<Id>();
@@ -721,5 +728,43 @@ public class ANG_AccountTriggerHandler {
 	
 	if(!AgencyAuthorizationsToUpdate.isEmpty()) update AgencyAuthorizationsToUpdate;
 
+	}
+
+	private void populateIEPStatus() {
+
+		for(Account acc : triggerNew) {
+
+			if((acc.Location_Class__c == 'P' || acc.Location_Class__c == 'D') 
+				&& acc.IATA_ISO_Country__c != null && acc.ANG_IEP_Status__c == null 
+				&& acc.Status__c != 'Terminated' && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) {
+				
+				//Just go in the IsoCountryDao if the other conditions are true, to avoid a query
+				List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acc.IATA_ISO_Country__c});
+				if(!listCountries.isEmpty() && (listCountries.get(0).ANG_Portal_Service__c != null || listCountries.get(0).ANG_IEP_Model__c == 'Banking Model'))
+					acc.ANG_IEP_Status__c = 'No IEP Account';
+			}
+		}
+	}
+
+	private void handleAccountUpdate(){
+		
+		Set<Id> toNotify = new Set<Id>();
+
+		for(account acc : triggerNew){
+			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(acc.Id) && acc.ANG_HE_RiskStatus__c != oldMap.get(acc.Id).ANG_HE_RiskStatus__c){
+				Boolean sendNotification = true;
+				
+				//no need to iterate the Iso Countries, just passing the ID of the current account. Getting the first Element
+				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{acc.IATA_ISO_Country__c}).get(0).AMS_Country_Specific_Attributes__r)
+					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_Risk_Status_update__c) sendNotification = false;
+				
+				if(sendNotification) toNotify.add(acc.Id);
+
+			}
+		}
+
+		if(!toNotify.isEmpty()){
+			ANG_RHCHelper.handleRiskOrForecastedRhcAmountUpdates(toNotify);
+		}
 	}
 }

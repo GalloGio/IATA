@@ -686,7 +686,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 from AMS_Pax_Accreditation_Form__c where Id = :accreditationId];*/
 
         //query is done using the same fields that will appear on the page
-        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+' FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
+        List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+', Branch_Office_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
 
         if(accreditationLst.isEmpty()) return null;
 
@@ -721,7 +721,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Owner.Phone,Owner.Email,Owner.Name,CreatedBy.Name,Owner.UserRole.Name,LastModifiedBy.Name,Contact_Name__c,Contact_Phone__c,Contact_Email__c,
                         createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c, Account__r.Sector__c,
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
-                        ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
+                        ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c, Account__r.Iso_State__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
                         Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151 
                         FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
@@ -750,7 +750,19 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
             if(accreditationObj != null){ 
 
-                if(rightOptionsRF != null && rightOptionsRF.size()>2){
+                if(accreditationObj.Branch_Office_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c 
+                    && oscarObj.ANG_Type_Of_Change__c == AMS_Utils.ANG_LOCATION && oscarObj.Account__r.Iso_State__c != accreditationObj.IATA_ISO_State__c){
+
+                    accreditationObj.Remittance_frequency__c = [SELECT Id, BSP__r.Remittance_Frequency_per_State__c, Remittance_Frequency__c 
+                                         FROM ANG_BSP_Attributes__c 
+                                         WHERE ISO_State__c =: accreditationObj.IATA_ISO_State__c 
+                                         AND RecordType.DeveloperName = 'Remittance_Frequency'][0].Remittance_Frequency__c;
+
+                    update accreditationObj;
+                    this.saveAction = true;
+                }
+
+                else if(rightOptionsRF != null && rightOptionsRF.size()>2){
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The maximum amount of allowed values for Remmitance Frequency is 2.')); 
                     displayErrorMsg = true;
                     rightOptionsRF = null; // force repopulation 
