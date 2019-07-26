@@ -1381,6 +1381,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>Code Voluntary Change Request Fee - 701929</label>
                 </value>
                 <value>
+                    <fullName>ETTEST_FILE – 800975</fullName>
+                    <default>false</default>
+                    <label>ETTEST_FILE – 800975</label>
+                </value>
+                <value>
                     <fullName>FDS_TDPMS</fullName>
                     <default>false</default>
                     <label>FDS_TDPMS</label>
@@ -1725,6 +1730,10 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <valueName>NDCFEE_RENEW</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Other</controllingFieldValue>
+                <valueName>ETTEST_FILE – 800975</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>WebLink</controllingFieldValue>
                 <valueName>WebLink - Implementation Fee (752545)</valueName>
             </valueSettings>
@@ -2067,6 +2076,11 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>450.00</label>
                 </value>
+                <value>
+                    <fullName>2700</fullName>
+                    <default>false</default>
+                    <label>2700</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2261,6 +2275,10 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_PALMF - 800351</controllingFieldValue>
                 <valueName>450.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ETTEST_FILE – 800975</controllingFieldValue>
+                <valueName>2700</valueName>
             </valueSettings>
         </valueSet>
     </fields>

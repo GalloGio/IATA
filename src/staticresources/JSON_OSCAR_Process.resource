@@ -5685,6 +5685,7 @@
                 ],
                 "DisplayFields": [
                   "ANG_FA_Opt_out__c",
+                  "ANG_GFA_Change_Assessment__c",
                   "STEP11__c"
                 ],
                 "IsDependent": false

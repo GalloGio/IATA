@@ -267,6 +267,38 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>ANG_GFA_Change_Assessment__c</fullName>
+        <description>GFA Change Assessment</description>
+        <externalId>false</externalId>
+        <label>GFA Change Assessment</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>ANG_Hierarchy_Created__c</fullName>
         <defaultValue>false</defaultValue>
         <description>For Multi-country, checkbox to verify if user already defined the hierarchy before the oscar inits</description>
@@ -2738,6 +2770,17 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>HE_per_BSP_Mapping__c</fullName>
+        <externalId>false</externalId>
+        <label>HE per BSP Mapping</label>
+        <length>11048</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>IATACode__c</fullName>
