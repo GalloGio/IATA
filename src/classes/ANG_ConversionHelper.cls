@@ -729,6 +729,7 @@ global with sharing class ANG_ConversionHelper {
 		delete new List<AMS_Agencies_relationhip__c>(relationsToDelete);
 
 		//now that we have performed all the migration, we should fix the hierarchies.
+		/**NEWGEN-5751 */
 		hierarchiesToUpdate = updateNewgenHierarchies(accountsToUpdate);
 
 		if(hierarchiesToUpdate <> null && !hierarchiesToUpdate.isEmpty())

@@ -237,7 +237,7 @@ global class ANG_OscarProcessHelper {
 			/** NEWGEN-5751 */
 			if(AMS_Utils.TOPLOCATIONSNEWGEN.contains(updater.acctMap.get(theAccount.Id).Location_Type__c) && updater.acctMap.get(theAccount.Id).Main_Accounts__r.isEmpty()){
 				
-				insert new AMS_Agencies_Hierarchy__c(Main_Account__c = theAccount.Id);
+				insert new AMS_Agencies_Hierarchy__c(Main_Account__c = theAccount.Id,Hierarchy_Name__c = 'New Hierarchy ');
 
 			}
             

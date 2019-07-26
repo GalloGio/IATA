@@ -341,8 +341,28 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		if(adhocConditions != null)
 			query += ' WHERE ' + adhocConditions;
+		
+		if(selectedObject == 'AMS_AGENCIES_HIERARCHY__C'){
 
-		return Database.query(query);
+			List<sObject> hierarchiesList =  Database.query(query);
+
+			query = 'SELECT '+ String.join(fieldList, ', ') + ' FROM '+selectedObject;
+			query += ' WHERE main_account__c in:objectIds';
+		
+			hierarchiesList.addAll(Database.query(query));
+
+			Set<sObject> setList = new Set<sObject>();
+
+			for(sObject obj : hierarchiesList){
+				setList.add(obj);
+			}
+
+			return new List<sObject>(setList);
+		
+		}else{
+			return Database.query(query);	
+		}
+
 
 	}
 

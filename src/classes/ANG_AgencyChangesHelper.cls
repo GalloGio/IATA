@@ -18,6 +18,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public Set<Id> accountsChanged;
 
+		public Map<Id,AMS_Agencies_Hierarchy__c> hierarchies;
+
+
 		public AChangeStructure(){
 
 			relationsMap = new Map<Id, AMS_Agencies_relationhip__c>();
@@ -28,6 +31,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			changesStruct = new Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 			accountsToApplyChangeCodes = new List<Account>();
 			accountsToRecalculateRHC = new Set<Id>();
+			hierarchies = new Map<Id,AMS_Agencies_Hierarchy__c>();
 		}
 
 		public void addAccount(Account account){
@@ -52,9 +56,13 @@ public with sharing class ANG_AgencyChangesHelper {
 			accountsToRecalculateRHC.add(accountId);
 		}
 
+		public void addHierarchy(AMS_Agencies_Hierarchy__c hierarchy){
+			hierarchies.put(hierarchy.Id, hierarchy);
+		}
+
 		public Boolean runUpsert(){
 
-			System.debug('[ANG_AgencyChangesHelper] Running upsert');
+			System.debug('[ANG_AgencyChangesHelper] Running upsert'); 
 
 			Boolean hasUpserted = false;
 
@@ -64,6 +72,12 @@ public with sharing class ANG_AgencyChangesHelper {
 				System.debug('[ANG_AgencyChangesHelper] Upserting following relations:'+relationsMap);
 				upsert relationsMap.values();
 				hasUpserted = true;
+			}
+
+			if(hierarchies != null && !hierarchies.isEmpty()){
+				System.debug('[ANG_AgencyChangesHelper] Upserting following hierarchies:'+hierarchies);
+				upsert hierarchies.values();
+				hasUpserted = true;	
 			}
 
 
@@ -465,7 +479,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		else if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 		
 			changesContainer = applyChangeOfHierarchy(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected);
-		
+			//throw new AMS_ApplicationException('STOP PLEASE.');
+
 			//For the Change Of Hierarchy (HE Included), we need to take care of the hidden accounts 
 			//(with Status terminated, "Terminated", "Not accreditated","New application pending" and "Not in Operation") and disconnect them from their parent
 
@@ -480,6 +495,8 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	public static AChangeStructure  detachTerminatedAccountsFromHierarchy(Map<Id, List<AMS_Agencies_relationhip__c>> allRelations, AChangeStructure toReturn){
+
+		Set<Id> hierarchiesToDelete = new Set<Id>();
 
 		Set<String> terminatedStatus = new Set <String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, AMS_Utils.ACC_S3_NOTINOPERATION, ''};
 		
@@ -498,6 +515,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					toReturn.addAccount(childAccount);
 
 					relToDelete.add(rel);
+					hierarchiesToDelete.add(rel.hierarchy__c);
 				}
 			
 			}
@@ -505,6 +523,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(!relToDelete.isEmpty())
 			delete relToDelete;
+
+		if(!hierarchiesToDelete.isEmpty())
+			delete [Select ID from AMS_Agencies_Hierarchy__c where id in :hierarchiesToDelete];
 
 		return toReturn;
 
@@ -651,6 +672,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
 
+		AMS_Agencies_Hierarchy__c hierarchy = null;
+
 		if(accountHierarchyRelationships == null)
 			accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c});
 
@@ -690,6 +713,10 @@ public with sharing class ANG_AgencyChangesHelper {
 				toReturn.addAccount(childAccount);
 
 				ANG_RHCHelper.moveRHCInfos(parentAccount.RHC_Informations__r, new Map<Id,Id>{rel.Child_Account__c => oscarToProcess.Account__C});
+
+				hierarchy = new AMS_Agencies_Hierarchy__c(Id=rel.Hierarchy__c, Main_Account__c = childAccount.Id);
+
+				toReturn.addHierarchy(hierarchy);
 
 			} else{
 
@@ -787,6 +814,13 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c) != null ? toReturn.accountsMap.get(oscarToProcess.Account__c) : new Account(Id = oscarToProcess.Account__c);
+			
+			if(oscarAccount.Location_type__c == AMS_Utils.HE){
+				// it should have his own hierarchy, so we need to remove it since he is becoming an AE.
+				System.debug('[ANG_AgencyChangesHelper] Deleting Hierarchy since the main account is becoming an AE');
+				delete [Select Id from AMS_Agencies_Hierarchy__c where Main_account__c = :oscarAccount.Id LIMIT 1];
+			}
+
 			oscarAccount.Location_Type__c = AMS_Utils.AE;
 			oscarAccount.Financial_Assessment_Points__c = null;
 			oscarAccount.ParentId = oscarToProcess.New_parent__c;
@@ -855,7 +889,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(isNewHierarchy){ // meaning is to create a new hierarchy ?
 
-			newH = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Newgen Hierarchy');
+			newH = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Newgen Hierarchy', Main_account__C = oscarToProcess.New_parent__c);
 			insert newH;
 			System.debug('[ANG_AgencyChangesHelper] - Inserted new Hierarchy with Id:' + newH.Id);
 
@@ -863,7 +897,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			hierarchyId = fetchHierarchyFromExternalAccount(oscarToProcess.New_parent__c);
 			if(hierarchyId == null){
-				newH = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Newgen Hierarchy');
+				newH = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Newgen Hierarchy',Main_account__c = oscarToProcess.New_parent__c);
 				insert newH;
 				System.debug('[ANG_AgencyChangesHelper] - Inserted new Hierarchy with Id:' + newH.Id + ' since the destination account is a single Account.');
 			}
@@ -922,7 +956,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			toReturn.addAccount(a);
 
-
 		}
 
 		System.debug('[ANG_AgencyChangesHelper]- relations to create:' + toReturn.relationsMap);
@@ -945,7 +978,13 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		delete new List<AMS_Agencies_relationhip__c>(relationsToDelete);
 
-		if(sizeOfOldRelations == sizeOfDeletedRelations && oldHierarchyId != null){
+		System.debug('[ANG_AgencyChangesHelper] sizeOfOldRelations:'+ sizeOfOldRelations);
+		System.debug('[ANG_AgencyChangesHelper] sizeOfDeletedRelations:'+ sizeOfDeletedRelations);
+		System.debug('[ANG_AgencyChangesHelper] oldHierarchyId:'+ oldHierarchyId);
+		System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected:'+ isAllHierarchySelected);
+
+		//since now all single agency hierarchies have a Hierarchy, only if all hierarchy is Migrated we delete the hierarchy.
+		if(sizeOfOldRelations == sizeOfDeletedRelations && oldHierarchyId != null && isAllHierarchySelected){
 
 			AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c (Id = oldHierarchyId);
 			delete hierarchy;
@@ -1018,12 +1057,20 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static Id fetchHierarchyFromExternalAccount(Id accountId){
 
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id from AMS_Agencies_Hierarchy__c where Main_account__c = :accountId];
+		
+		if(!hierarchies.isEmpty()){
+			return hierarchies.get(0).Id;
+		}
+
 		List<AMS_Agencies_relationhip__c> rels = [Select Id, Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c = :accountId];
 
-		if(rels.isEmpty())
-			return null;
-		else
-				return rels.get(0).Hierarchy__c;
+		if(!rels.isEmpty()){
+			return rels.get(0).Hierarchy__c;
+		}
+
+		return null;
+				
 	}
 
 	public static AChangeStructure applyChangeOfFields(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
