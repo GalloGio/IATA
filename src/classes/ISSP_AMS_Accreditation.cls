@@ -2068,8 +2068,6 @@ public without sharing class ISSP_AMS_Accreditation {
                 newCase.Groups__c = 'CNS Team';
             }
 
-            System.debug('rui: ' + newCase.IFAP_Country_ISO__c);
-
             upsert newCase;
 
             if (String.isBlank(String.ValueOf(newForm.SAAM_Case__c))) {
@@ -2398,8 +2396,11 @@ public without sharing class ISSP_AMS_Accreditation {
         Boolean isFirstHE = accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c) == null || 
             accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c).isEmpty();
 
+        Map<Id, Account> mcHierarchyAccountsMap = new Map<Id, Account>(mcHierarchyAccounts);
+        Account parentAux = mcHierarchyAccountsMap.get(newForm.Same_Legal_Entity_Agency_Account__c);
+
         if (isMultiCountryAccredittedAddingAEs() && newForm.AE_separate_Legal_Entity__c == 'No') {
-            copyOwnersFromSelectedLegalName(SFDCAccount);
+            copyOwnersFromSelectedLegalName(SFDCAccount, parentAux.Id); 
         }
 
         if (isMultiCountryNewAE || getIsAccreditationModelNotNullOrLegacy()) {
@@ -2449,12 +2450,12 @@ public without sharing class ISSP_AMS_Accreditation {
         SFDCAccount.BillingPostalCode = newForm.Branch_Office_Postal_code__c;
     }
 
-    private void copyOwnersFromSelectedLegalName(Account newAcc) {
+    private void copyOwnersFromSelectedLegalName(Account newAcc, String parentAccId) {
         List<AMS_Account_Role__c> copiedOwners = new List<AMS_Account_Role__c>();
 
         for (AMS_Account_Role__c aar: [SELECT Id, Name, Owner_Name__c, Title__c, Percentage__c, Contact__c, Person__c, Owner_Account__c
                                     FROM AMS_Account_Role__c
-                                    WHERE Valid__c = true 
+                                    WHERE Valid__c = true AND Account__c = :parentAccId
                                         AND RecordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership')]) {
 
             AMS_Account_Role__c newAar = new AMS_Account_Role__c(Owner_Name__c = aar.Owner_Name__c,
