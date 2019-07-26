@@ -447,6 +447,18 @@ lightning-datatable .slds-th__action {
     border: solid 1px #e2e2e2;
 }
 
+@media only screen and (max-width: 1000px) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 90%;
+    }
+}
+
 /* ############################################## */
 
 /* ############################################## */
