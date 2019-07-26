@@ -39,7 +39,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         AddDocumentsMsg,
         CaseDetails,
         DocumentsLabel,
-        RelatedAccount
+        RelatedAccount,
         ISSP_AMS_Download_PDF_Copy,
         ISSP_AMS_Download_PDF_NOC
     };
