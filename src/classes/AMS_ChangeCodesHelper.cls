@@ -641,7 +641,7 @@ public class AMS_ChangeCodesHelper {
         if(fOPs != null && !fOPs.isEmpty() && isNewGen){
 
             for(Agency_Authorization__c fop : fOPs) {
-                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : (fop.Authority__c == 'BOP Payment Method' ? 'BOP: Authorized' : ''))));
+                authRelabel = (fop.Authority__c == 'Card Payment Method' ? 'Credit Card' : (fop.Authority__c == 'IEP Payment Method' ? 'IATA EasyPay' : (fop.Authority__c == 'Cash Payment Method' ? 'Cash' : (fop.Authority__c == 'BOP Payment Method' ? 'BOP' : ''))));
 
                 // if a payment method is being restricted do not display it on ebulletin
                 if( !(authRelabel == 'Credit Card' && (changeCodeName == 'CCA' || changeCodeName == 'FOP')) && !(authRelabel == 'Cash' && (changeCodeName == 'PCA' || changeCodeName == 'FOP'))) {
@@ -661,6 +661,7 @@ public class AMS_ChangeCodesHelper {
             }
 
             fopString = fopString.removeEnd(' - ');
+            if(AMS_Utils.setChinaCountries.contains(fOPs[0].ISO_Country__c)) fopString += ': Authorized';
         }
 
         return fopString;
