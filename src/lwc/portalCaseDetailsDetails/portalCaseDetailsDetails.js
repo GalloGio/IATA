@@ -96,7 +96,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             this.pageParams.Att = "";
             console.log('open sayz me!');
         }
-        this.toggleCollapsed('[data-caseicon]', 'arrowExpanded');
+        
     }
 
     get hasTopic() {
