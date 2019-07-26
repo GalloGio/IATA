@@ -641,7 +641,7 @@ public ContactWrapper(Portal_Application_Right__c par){
 	this.emailAddress=par.contact__r.email;
 	this.iataCodeLoc=par.contact__r.Account.iataCode__C+' ('+par.Contact__r.Account.BillingCity+')';
 	this.userPortalStatus=par.contact__r.user_portal_status__c;
-	if(par.IsSCIMIFG__c && par.Technical_Provisioning_Status__c != 'External Access Granted') {
+	if(par.IsSCIMIFG__c && par.Technical_Provisioning_Status__c != 'External Access Granted' && par.right__c == 'Access Granted') {
 		this.serviceRight= System.Label.ISSP_Homepage_Pending_approval;
 	}else{
 		this.serviceRight= par.right__C;
