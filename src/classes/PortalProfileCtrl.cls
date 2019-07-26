@@ -795,7 +795,7 @@ public with sharing class PortalProfileCtrl {
 
     @AuraEnabled
     public static String goToPrivacyPortal(){
-        return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.PRIVACY, '');
+        return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.GDPR, '');
     }
 
 }
