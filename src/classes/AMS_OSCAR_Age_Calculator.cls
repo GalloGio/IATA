@@ -37,7 +37,10 @@ global class AMS_OSCAR_Age_Calculator implements Database.Batchable<sObject>, Da
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
         Date x1stDay = Date.newInstance(2019, 1, 1);
-        List<String> reasons = Label.KPI_REASONS.split(';');
+        List<String> reasons = new List<String>();
+        for(Case_Process_Type__mdt mt : [SELECT Reason__c FROM Case_Process_Type__mdt WHERE Record_Type__c = 'OSCAR_Communication']) {
+            reasons.add(mt.Reason__c);
+        }
         List<String> oscarFields = new List<String>();
         List<Schema.FieldSetMember> kpiFields = SObjectType.AMS_OSCAR__c.FieldSets.KPI_Fields.getFields();
         for(Schema.FieldSetMember field : kpiFields) {
