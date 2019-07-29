@@ -19,6 +19,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>ANG_Risk_Calculation_UK_Remittance_Freq</fullName>
+        <description>Update ANG_UniqueKey__c field for Remittance Frequency Values</description>
+        <field>ANG_UniqueKey__c</field>
+        <formula>RecordType.DeveloperName + &apos;_&apos; + TEXT( ANG_Remittance_Frequency__c)</formula>
+        <name>ANG Risk Calculation UK Remittance Freq</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ANG_Risk_Calculation_UK_Rules</fullName>
         <field>ANG_UniqueKey__c</field>
         <formula>RecordType.DeveloperName + &apos;_&apos; + TEXT(ANG_Accreditation_Model__c) + &apos;_&apos; + TEXT(ANG_Occurrence_Num__c)+ &apos;_&apos; +TEXT(ANG_Adjusted__c)</formula>
@@ -54,6 +64,21 @@
             <value>Risk Status Assessment</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ANG Risk Calculation UK Remittance Frequency</fullName>
+        <actions>
+            <name>ANG_Risk_Calculation_UK_Remittance_Freq</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>ANG_Agency_Risk_Calculation__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Remittance Frequency Values</value>
+        </criteriaItems>
+        <description>Update Unique Key rule for record type Remittance Frequency Values</description>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>ANG Risk Calculation UK Rules</fullName>
