@@ -1433,6 +1433,7 @@ public without sharing class AMS_Utils {
         Map<String, String> fieldsMapping = new Map<String, String>(fieldsMap.clone());
         fieldsMapping.put('Link_agent_name__c', 'Link_agent_name__c');
         fieldsMapping.put('Short_Name__c', 'Short_Name__c');
+        fieldsMapping.put('Covered_Ownership__c', 'ISSP_AMS_Total_Current_Ownership__c'); //Account -> Pax Accreditation  
 
         //AMSU-151
         fieldsMapping.put('In_a_Airport__c', 'ISSP_AMS_Premises_located_at_airport__c');
@@ -1471,7 +1472,7 @@ public without sharing class AMS_Utils {
             Set<Id> accountIds = new Set<Id>();
             accountIds.add(oscar.Account__c); 
             accountIds.addAll(accounts.keySet());
-            String query = 'SELECT id,recordTypeID,ParentId,Is_Branch_Abroad__c,IATA_ISO_Country__r.ISO_Code__c, Link_agent_name__r.Name, Reason__c, ';
+            String query = 'SELECT id,recordTypeID,ParentId,Is_Branch_Abroad__c,IATA_ISO_Country__r.ISO_Code__c, Link_agent_name__r.Name, Reason__c,  Top_Parent__c, CNS_Agency__c, Status__c,';
             if(!fieldsINtheQuery.contains('Location_Type__c')){
                 query += 'Location_Type__c, ';                
             }
@@ -1576,19 +1577,17 @@ public without sharing class AMS_Utils {
                         
                         system.debug('DDD oldValue:' + oldValue);
                         system.debug('DDD newValue:' + newValue);
-                        
-                        if (oldValue != newValue)
-                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
-                            
+                                                    
+                        if (oldValue != newValue || (accFieldApiName == 'Covered_Ownership__c' && AMS_AccountRoleCreator.isAccountRoleCreationRunning) ) //Correction with Change of Ownership
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));                       
 
                         acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
                     }
 
                 if(!objectChangesList.isEmpty()) { //AMSU-151
                     AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
-
                     accountsToUpdate.put(acc.Id,acctChangesStruct);
-                }
+                }else if(objectChangesList.isEmpty() && AMS_AccountRoleCreator.isAccountRoleCreationRunning) AMS_OSCARTriggerHandler.accToGenerateCC.add(acc);
             }
 
         }
