@@ -65290,10 +65290,10 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
         <fullName>STEP8_Payment_Requested_Validation</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-        ISPICKVAL(STEP8__c, &#39;In Progress&#39;),
+        ISPICKVAL(STEP8__c, &#39;Passed&#39;),
         ISNULL(Payment_requested__c )
-        )</errorConditionFormula>
-        <errorMessage>Issue Billing Document cannot be in progress without a payment request date.</errorMessage>
+)</errorConditionFormula>
+    <errorMessage>Issue Billing Document Step cannot be &quot;Passed&quot; without a &quot;Payment requested date&quot;. Please check the &quot;Payment Requested&quot; checkbox before passing the step.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>STEP12_BG_Requested_Validation</fullName>

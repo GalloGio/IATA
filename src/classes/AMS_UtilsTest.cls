@@ -244,6 +244,7 @@ private class AMS_UtilsTest {
         oscarCase.Financial_Security_Amount__c = 1235;
         oscarCase.Financial_Security_Currency__c = 'EUR';
         oscarCase.FS_Deadline_Date__c = date.today();
+        oscarCase.Bank_Guarantee_requested__c = Date.today();
         insert oscarCase;
 
         Case oscarCaseToCompare = new Case(Oscar__c = oscar2.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));

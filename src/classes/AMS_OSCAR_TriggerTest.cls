@@ -205,6 +205,7 @@
         oscar.First_Step_Completed__c = true;
         
         oscar.STEP12__c = 'In Progress';
+        oscar.Bank_Guarantee_requested__c = Date.today();
         oscar.STEP13__c = 'In Progress';
 
         insert oscar;
