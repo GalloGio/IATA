@@ -41,13 +41,13 @@ public with sharing class PortalProfileCtrlTest {
 
             System.assert(airline.Id == MyAirline.Id);
 
-            Map<String, List<PortalProfileCtrl.FieldWrapper>> contactWrappers = PortalProfileCtrl.getFieldsMap('MyProfile');
+            List<PortalProfileCtrl.CardWrapper> contactWrappers = PortalProfileCtrl.getFieldsMap('MyProfile');
             System.assert(!contactWrappers.isEmpty());
 
-            Map<String, List<PortalProfileCtrl.FieldWrapper>> companyWrappers = PortalProfileCtrl.getFieldsMap('CompanyProfile');
+            List<PortalProfileCtrl.CardWrapper> companyWrappers = PortalProfileCtrl.getFieldsMap('CompanyProfile');
             System.assert(!companyWrappers.isEmpty());
 
-            Map<String, List<PortalProfileCtrl.FieldWrapper>> contactAccWrappers = PortalProfileCtrl.getFieldsMap('MyProfileAccFields');
+            List<PortalProfileCtrl.CardWrapper> contactAccWrappers = PortalProfileCtrl.getFieldsMap('MyProfileAccFields');
             System.assert(!contactAccWrappers.isEmpty());
 
         }

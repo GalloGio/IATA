@@ -3279,6 +3279,38 @@ Payment required on receipt of this Payment Advice
         <value>Portal Status</value>
     </labels>
     <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Link</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Link</shortDescription>
+        <value>Go to Subscriptions &amp; Privacy</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Text</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Text</shortDescription>
+        <value>Manage your subscriptions to IATA’s newsletters, blogs, press releases, products and services. You can also reach out directly to Privacy Officer for more information about your data privacy rights.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Title</shortDescription>
+        <value>Subscriptions &amp; Privacy</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_URL</shortDescription>
+        <value>/dataprivacy/s/landing</value>
+    </labels>
+    <labels>
         <fullName>CSP_Question1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

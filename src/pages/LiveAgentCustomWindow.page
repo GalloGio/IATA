@@ -363,10 +363,31 @@
     </script>
 
     <style>
+        @font-face {
+            font-family: 'DaMaWebFont';
+            font-weight: 400;
+            font-style: normal;
+            src: url('/csportal/s/CSPortal/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot'); /* IE9 Compat Modes */
+            src: url('/csportal/s/CSPortal/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                url('/csportal/s/CSPortal/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2') format('woff2'), /* Super Modern Browsers */
+                url('/csportal/s/CSPortal/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff') format('woff'); /* Pretty Modern Browsers */
+        }
+
+        @font-face {
+            font-family: 'DaMaWebFont';
+            font-weight: 500;
+            font-style: normal;
+            src: url('/csportal/s/CSPortal/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot'); /* IE9 Compat Modes */
+            src: url('/csportal/s/CSPortal/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                url('/csportal/s/CSPortal/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2') format('woff2'), /* Super Modern Browsers */
+                url('/csportal/s/CSPortal/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff') format('woff'); /* Pretty Modern Browsers */
+        }
 
         body {
             height:100%;
-            background-color: rgb(240, 242, 245)
+            background-color: white;
+            font-family: DaMaWebFont;
+            color: #333;
         }
     
         .liveAgentCancelButton{
@@ -423,12 +444,17 @@
         	padding-top: 10px;
         }
 
-        .waitingMessage{
+        .waitingMessage {
             width: 100%;
             margin: 0 auto;
             text-align: center;
-            color: #206aa4;
+            color: #333;
             padding-top: 12%;
+        }
+        
+        .waitingMessage h5 {
+            color: #333;
+            font-weight: unset;
         }
 
         #liveAgentChatLog {
@@ -633,7 +659,7 @@
             height: 30px;
             width: 90px;
             border: none;
-            background: rgb(66, 139, 202);
+            background: #1e32fa;
             color: white;
             margin: 5px;
         }
@@ -646,7 +672,12 @@
             margin:5px;
         }
 
-        #fileDropLabel{
+        #fileDragLink:hover {
+            text-decoration: underline;
+            color: white;
+        }
+
+        #fileDropLabel {
             border: 1px solid #337ab7;
             border-radius: 4px;
             margin:5px;
@@ -656,7 +687,7 @@
             padding: 5px;
         }
 
-        #fileNameLabel{
+        #fileNameLabel {
             margin:5px;
         }
 
@@ -682,7 +713,7 @@
             z-index: 99999;
         }
 
-        .liveAgentAlert button{
+        .liveAgentAlert button {
             border: none;
             color: white;
             background: #d9534f;
@@ -690,7 +721,7 @@
             width: 50px;
         }
         
-        #liveAgentMessageContainer{
+        #liveAgentMessageContainer {
             background-color: #CD6571;
             -webkit-animation: pulse 2s infinite alternate;
             -moz-animation: pulse 2s infinite alternate;
@@ -726,91 +757,66 @@
 	    }
 	        
 	    #modalbackground {
-	        //position: fixed;
 	        display:block;
-	        //min-width:100vw;
 	        min-height:100vh;
-	        //opacity: 0.5;
-	        //background-color:rgba(200, 200, 200, 0.5);
 	        max-width: 600px;
     		max-height: max-content;
     		margin: 0 auto;
     		overflow-y: auto;
-	        }
+        }
 	          
-	      #modalbox{
-	          display:block;
-	          opacity: 1;
-	          width:80%;
-	          height:60%;
-	          margin-top:35%;
-	          //margin-right:10%;
-	          //margin-left:10%;
-	          margin-left: auto;
-	          margin-right: auto;
-	          padding: 10px;
-	          color: #0a3e75;
-	      }
-	      
-	      #headercontainer {
-        	display:block;
-        	z-index:99999;
-        //width:100%;
-        	height:100%;
-        	padding-left: 0px;
-    		padding-right: 0px;
+        #modalbox {
+            display:block;
+            opacity: 1;
+            width:80%;
+            height:60%;
+            margin-top:35%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
             color: #0a3e75;
-          }
-          
-          #chatbuttonscontainer {
-        	display: block;
-        	position: relative;
+        }
+        
+        #headercontainer {
+            display:block;
+            z-index:99999;
+            height:100%;
+            padding-left: 0px;
+            padding-right: 0px;
+            color: #0a3e75;
+        }
+        
+        #chatbuttonscontainer {
+            display: block;
+            position: relative;
             top: 50px;
             z-index: 99999;
-          }
-        
-    	  #headerbackground {
+        }
+    
+        #headerbackground {
             overflow: hidden;
-            //max-width: 410px;
-            //max-height: max-content;
-            //float: none;
             margin: 0 auto;
-        	//overflow: overlay;
-        	overflow-y: auto;
-            //width: 400px;
-    		height: 100%;
-		  }
+            overflow-y: auto;
+            height: 100%;
+        }
         
-      	  
-      	  #chatbuttonsbackground {
-        	text-align: center;
-        	position: relative;
-        	width: 100%;
-      	  }
-      	  
-      	  #livechatcontainer {
+        #chatbuttonsbackground {
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+        
+        #livechatcontainer {
             position: relative;
             width: 100%;
             height: 0;
-      	  }
+        }
         
         @media screen and (min-width: 400px) {
             #headercontainer{
                 max-width: 600px;
             }
         }
-        
-        /*@media screen and (max-height: 480px) and (orientation: portrait) {
-            #livechatcontainer{
-        		height: 62%;
-            }
-        }
-        
-        @media screen and (max-height: 480px) and (orientation: landscape) {
-            #livechatcontainer{
-        		height: 100%;
-            }
-        }*/
       	  
       	.buttonEnd {
 			padding: 7px 7px;
@@ -843,30 +849,28 @@
         }
           
         .buttonSave:hover { 
-            //background-image: linear-gradient(to bottom,#499349 0,#6cbf6c 100%);
             color: #32ab1e;
             border: 1px solid #32ab1e;
 		}
 		   
-		.savebutton, .endbutton{
+		.savebutton, .endbutton {
             width: 49%;
             display: inline-block;
             text-align: center;
             margin: auto;
     	}
 
-        .btnDiv{
+        .btnDiv {
             display: inline-block;
     		padding: 5px;
         }
 
-        .buttons{
+        .buttons {
             display: inline-block;
             padding: 5px;
         }
-        
 
-        .thumbButt img{
+        .thumbButt img {
             height:50px !important;
             width: 50px;
             border: 0px;
@@ -884,22 +888,21 @@
         h5 {
             color: rgb(32, 107, 164);
             cursor: pointer;
-        /*font-weight: 500;*/
         }
 
-        #laSaveButton{
+        #laSaveButton {
             display:none;
         }
         
-        #laEndButton{
+        #laEndButton {
             display:none;
         }
         
-        #chatbuttonscontainer{
+        #chatbuttonscontainer {
             display:none;
         }
         
-        #headerImage, #headerImageEnd{
+        #headerImage, #headerImageEnd {
             width: 100%;
             height: 50px;
             margin: auto;
@@ -908,23 +911,22 @@
             box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
         }
 
-        #divImage, #divImageEnd{
+        #divImage, #divImageEnd {
             padding: 10px;
             background-color: white;
             z-index: 1;
             position: absolute;
             display: inline-flex;
-            /* padding-top: 10px; */
             margin-top: 5px;
             margin-left: 5px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
         
-        #divImage, #divImageEnd{
+        #divImage, #divImageEnd {
             display: none;
         }
     
-        #livechat, #livechatEnd{
+        #livechat, #livechatEnd {
             width: 100%;
             color: #fff;
             text-decoration-color: white;
@@ -939,15 +941,15 @@
             justify-content: space-between;
         }
             
-        #liveAgentClientChatSettings{
+        #liveAgentClientChatSettings {
             height: 100%;
         }
         
-        #liveAgentClientChat{
+        #liveAgentClientChat {
             height: 100%;
         }
         
-        #liveAgentClientChat form[action="javascript://submit"]{
+        #liveAgentClientChat form[action="javascript://submit"] {
             width: 100%;
             display: inline-flex;
             background-color: #fff;
@@ -955,21 +957,29 @@
             padding: 5px;
         }
         
-        #liveAgentChatElement{
+        #liveAgentChatElement {
             height: 75%;
         }
+
+        #liveAgentChatLog.liveAgentChatElement {
+            background-color: #f0f2f5;
+        }
+
+        #liveAgentClientChat textarea#liveAgentChatTextArea {
+            height: 100% !important;
+        }
         
-        #liveAgentChatInput{
+        #liveAgentChatInput {
             height: 50px;
             outline: unset;
         }
     
-        #liveAgentChatLogAlertMessage{
+        #liveAgentChatLogAlertMessage {
             font-size: 12px;
             position: relative;
         }
         
-        #photo-container{
+        #photo-container {
             display:none;
             width: 65px;
             height: 65px;
@@ -1082,6 +1092,12 @@
             font-size: 14px;
             font-weight: 500;
         }
+
+        #liveAgentChatLogText .system {
+            color: #999;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
 		
     </style>
 
@@ -1125,7 +1141,7 @@
                     <liveAgent:clientChatStatusMessage />
                     <liveAgent:clientChatLog showTimeStamp="true" combineMessagesText="true" />
                     <liveagent:clientChatCancelButton />
-                    <liveagent:clientChatInput />
+                    <liveagent:clientChatInput useMultiline="true" />
                     <liveAgent:clientChatSendButton />
                     <liveAgent:clientChatFileTransfer />
                     <liveAgent:clientChatQueuePosition />

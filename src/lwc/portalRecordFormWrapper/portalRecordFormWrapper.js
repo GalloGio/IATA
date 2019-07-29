@@ -11,6 +11,7 @@ import { navigateToPage } from 'c/navigationUtils';
 
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
+import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -535,4 +536,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get hasStaticServices(){
             return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length>0;
         }
+
+    
+    navigateToPrivacyPortal(){
+        goToPrivacyPortal({})
+        .then(results => {
+            window.open(results);
+        });
+    }
+
+
 }
