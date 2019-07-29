@@ -80,7 +80,8 @@ public static List<Portal_Application_Right__c> getUsersFavoriteServicesList(Str
 	                    'FROM Portal_Application_Right__c ' +
 	                    'WHERE (Contact__c = \'' + contactId + '\' AND '+
 	                    '   Right__c = \'Access Granted\' AND ' +
-	                    '   Portal_Application__r.Hide_on_Homepage__c = false)';
+	                    '   Portal_Application__r.Hide_on_Homepage__c = false)' +
+			    ' AND (IsSCIMIFG__c = false OR (IsSCIMIFG__c = true AND Technical_Provisioning_Status__c = \' External Access Granted \' ))';
 
 
 	finalQuery += ' ORDER BY Last_Visit_Date__c DESC NULLS LAST, Portal_Application__r.New_Window__c ASC, Portal_Application__r.Name ASC LIMIT 15';
@@ -119,12 +120,10 @@ public static List<Portal_Application_Right__c> getFavoriteServicesList(){
 @AuraEnabled(cacheable=true)
 public static String paymentLinkRedirect(){
 
-	User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+	User userAux = [SELECT Id, Contact.Credit_Card_Payment_Link__c FROM User WHERE Id = :UserInfo.getUserId()];
 
-	Contact con = [Select id, Credit_Card_Payment_Link__c from Contact where id =:userAux.ContactId];
-
-	if(con.Credit_Card_Payment_Link__c != null) {
-		return con.Credit_Card_Payment_Link__c;
+	if(userAux.Contact != null && userAux.Contact.Credit_Card_Payment_Link__c != null) {
+		return userAux.Contact.Credit_Card_Payment_Link__c;
 	}else{
 		return '';
 	}
@@ -350,7 +349,8 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
 
 	List<ServiceWrapper> lstToReturn = new List<ServiceWrapper>();
 	for(ServiceWrapper serviceWrapperAux : lstAllServices) {
-		if(serviceWrapperAux.status == PortalServicesCtrl.PORTAL_ACCESS_REQUESTED) {
+		if(serviceWrapperAux.status == PortalServicesCtrl.PORTAL_ACCESS_REQUESTED
+		   || serviceWrapperAux.status == 'Access Under Provisioning' ) {
 			lstToReturn.add(serviceWrapperAux);
 		}
 	}
@@ -362,7 +362,7 @@ public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map
 
 	Map<Id,List<ServiceWrapper> > contactToServices = new Map<Id,List<ServiceWrapper> >();
 
-	List<Portal_Application_Right__c > usersGrantedList = [select id,Application_Name__c,Right__c,Portal_Application__r.ServiceName__c,Portal_Application__r.Id,Portal_Application__r.Application_URL__c,Contact__r.Account.ANG_IEP_Status_FF__c
+	List<Portal_Application_Right__c > usersGrantedList = [select id,IsSCIMIFG__c,Application_Name__c,Right__c,Portal_Application__r.ServiceName__c,Portal_Application__r.Id,Portal_Application__r.Application_URL__c,Contact__r.Account.ANG_IEP_Status_FF__c
 	                                                       from Portal_Application_Right__c
 	                                                       where Contact__c IN:contactToUserIds.keySet() AND Right__c =: PORTAL_ACCESS_GRANTED];
 
@@ -641,7 +641,11 @@ public ContactWrapper(Portal_Application_Right__c par){
 	this.emailAddress=par.contact__r.email;
 	this.iataCodeLoc=par.contact__r.Account.iataCode__C+' ('+par.Contact__r.Account.BillingCity+')';
 	this.userPortalStatus=par.contact__r.user_portal_status__c;
-	this.serviceRight= par.right__C;
+	if(par.IsSCIMIFG__c && par.Technical_Provisioning_Status__c != 'External Access Granted' && par.right__c == PortalServicesCtrl.PORTAL_ACCESS_GRANTED) {
+		this.serviceRight= System.Label.ISSP_Homepage_Pending_approval;
+	}else{
+		this.serviceRight= par.right__C;
+	}
 
 	this.cannotBeManagedByPortalAdmin = par.Portal_Application__r.Cannot_be_managed_by_portal_admin__c;
 	this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c);
@@ -721,6 +725,8 @@ public List<ContactWrapper> contactList {get; set;}
 public integer totalNrContacts {get; set;}
 @AuraEnabled
 public string userContactId {get; set;}
+@AuraEnabled
+public Boolean isIFGPending {get; set;}
 private string iepStatus {get; set;}
 private boolean isAuthorisedSignatory {get; set;}
 
@@ -781,8 +787,15 @@ private static void alignStatus(ServiceWrapper sw,string newStatus){
 		sw.btnLabel =System.Label.CSP_Services_GoToService;
 		sw.accessGranted =true;
 		sw.accessRequested =false;
+		sw.isIFGPending = false;
 	}else if(sw.status==PortalServicesCtrl.PORTAL_ACCESS_REQUESTED) {
 		sw.btnLabel = System.Label.ISSP_Access_Requested;
+		sw.accessGranted =false;
+		sw.accessRequested =true;
+		sw.isIFGPending = false;
+	}else if(sw.status=='Access Under Provisioning') {
+		sw.btnLabel = System.Label.ISSP_Access_Under_Provisioning;
+		sw.isIFGPending = true;
 		sw.accessGranted =false;
 		sw.accessRequested =true;
 	}else{
@@ -796,6 +809,7 @@ private static void alignStatus(ServiceWrapper sw,string newStatus){
 		else sw.btnLabel =System.Label.CSP_Request_Service;
 		sw.accessGranted =false;
 		sw.accessRequested =false;
+		sw.isIFGPending = false;
 	}
 
 	if(flagIsIepPortalService) {

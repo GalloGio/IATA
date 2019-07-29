@@ -126,6 +126,8 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     //does the user have an Agent profile?
     @track relatedAccounts;
 
+    @track relatedContacts;
+
     //store parameters in globals for later use
     category;
     topic;
