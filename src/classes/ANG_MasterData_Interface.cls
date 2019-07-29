@@ -165,7 +165,6 @@ global class ANG_MasterData_Interface{
         public string email;
         public string fax;
         public string IATACode;
-        public boolean isMulticountryKeyHierarchy;
         //public string id; //Silence for now
         public string IEPStatus;
         public string LocationClass;
@@ -217,7 +216,6 @@ global class ANG_MasterData_Interface{
                 this.email = acc.Email__c;
                 this.fax = acc.fax;
                 this.IATACode = acc.IATACode__c;
-                this.isMulticountryKeyHierarchy = acc.Multicountry_Key_Hierarchy__c;
                 //this.id = acc.Id; // Silence for now
                 this.IEPStatus = acc.ANG_IEP_Status_FF__c;
                 this.LocationClass = acc.Location_Class__c;
