@@ -103,13 +103,24 @@ private class ISSP_Financial_Institutions_Test {
 
         List<Financial_Institution__c> financialInstitutions = new List<Financial_Institution__c>();
 
+        Id rtGenericFIId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Generic_FI').getRecordTypeId();
+        Id rtCCBankId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Currency_Center_Bank').getRecordTypeId();
+
         Financial_Institution__c exampleOne = new Financial_Institution__c(Name = 'One',
+                                                                           RecordTypeId = rtGenericFIId,
                                                                            Institution_Status__c = 'Active',
                                                                            Financial_Security_Country_Coverage__c = 'PT',
                                                                            Country__c = 'Portugal',
                                                                            Region__c = 'Europe');
 
         Financial_Institution__c exampleGDI = new Financial_Institution__c(Name = 'Euler Hermes',
+                                                                           RecordTypeId = rtGenericFIId,
+                                                                           Institution_Status__c = 'Active',
+                                                                           Financial_Security_Country_Coverage__c = 'PT',
+                                                                           Country__c = 'Portugal',
+                                                                           Region__c = 'Europe');
+        Financial_Institution__c exampleCCBank = new Financial_Institution__c(Name = 'Euler Hermes',
+                                                                           RecordTypeId = rtCCBankId,
                                                                            Institution_Status__c = 'Active',
                                                                            Financial_Security_Country_Coverage__c = 'PT',
                                                                            Country__c = 'Portugal',
@@ -117,6 +128,7 @@ private class ISSP_Financial_Institutions_Test {
 
         financialInstitutions.add(exampleOne);
         financialInstitutions.add(exampleGDI);
+        financialInstitutions.add(exampleCCBank);//must be ignored
         insert financialInstitutions;
 
         Connected_App_Roles__c gdiCar = new Connected_App_Roles__c(Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,

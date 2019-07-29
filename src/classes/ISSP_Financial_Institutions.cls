@@ -175,6 +175,7 @@ public without sharing class ISSP_Financial_Institutions {
         List<Financial_Institution__c> financialInstitutions = [SELECT Id, Name, Website__c
                                                                 FROM Financial_Institution__c
                                                                 WHERE Institution_Status__c = 'Active'
+                                                                    AND RecordType.DeveloperName = 'Generic_FI'
                                                                     AND ((Financial_Security_Regional_Coverage__c != null 
                                                                     AND Financial_Security_Regional_Coverage__c INCLUDES (:agencyRegion))
                                                                     OR (Financial_Security_Country_Coverage__c != null

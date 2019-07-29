@@ -1,4 +1,8 @@
 <apex:component controller="ISSP_APProcess">
+        <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
+            Any doubts? Please check out our&nbsp;
+            <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
+        </apex:outputPanel>
 		<div class="alert alert-info" role="alert">Please make sure you are compliant with the list of local requirements below before proceeding.</div>
         
     	<table class="table table-striped">
@@ -53,5 +57,22 @@
                      <td><apex:outputField value="{!countryRequirement.Comments__c}"/></td></tr>
             </tbody>
     	</table>
-           
+
+        <!-- for CASS show an Accept conditions box -->
+        <apex:outputPanel layout="block" style="padding: 40px;" rendered="{!AND(isCASS,strAreaType=='Airline Joining')}">
+        <div class="alert alert-danger" role="alert">Please note that as part of the joining process, a test file for CASSlink billing have to be submitted. The requirements dor this file are described in the CASSlink specifications handbook, and we have also prepared a guide with the most frequent issues encuntered during the testing process. Please make sure you read the documents below and made the necessary preparation.</div>
+        <div class="row">
+            <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentCASSSpecificationUrl!=null}">
+                Download the&nbsp;<apex:outputLink value="{!DocumentCASSSpecificationUrl}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!DocumentCASSSpecificationName}</apex:outputLink>&nbsp;(pdf)
+                <br/>
+                <apex:image styleclass="doc-border" value="{!URLFOR($Resource.ISSP_APProcess,'/img/CASS_Technical_Specifications_Handbook_screenshot.png')}"/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentAppendixAUrl!=null}">
+                Download the&nbsp;<apex:outputLink value="{!DocumentAppendixAUrl}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!DocumentAppendixAName}</apex:outputLink>&nbsp;(pdf)
+                <br/>
+                <apex:image styleclass="doc-border" value="{!URLFOR($Resource.ISSP_APProcess,'/img/AppendixA_screenshot.png')}"/>
+            </apex:outputPanel>
+        </div>
+        </apex:outputPanel>
+
 </apex:component>

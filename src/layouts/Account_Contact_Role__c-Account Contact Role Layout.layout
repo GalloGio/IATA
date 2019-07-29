@@ -54,6 +54,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Contact_Role_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>UniqueKey__c</field>
             </layoutItems>
         </layoutColumns>
@@ -88,6 +92,12 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ATC__c</fields>
+        <fields>ATC_ID__c</fields>
+        <relatedList>Yardstick_Contact_Details__c.Account_Contact_Role__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
