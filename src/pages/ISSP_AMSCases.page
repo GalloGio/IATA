@@ -82,6 +82,17 @@
                 left: 50%;
             }
 
+            .customlink {
+                cursor: pointer;
+                color: #337ab7;
+            }
+
+            .customlink:hover {
+                cursor: pointer;
+                color: #337ab7;
+                text-decoration: underline;
+            }
+
         </style>
         <script type="text/javascript">
             var typeAccredSelected = '';
@@ -107,19 +118,32 @@
             function proceedToVMFR() {
                 bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step0_Proceed_VMFR)}", function(result) {
                     if(result) {
-                        window.open('/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1', '_self');
+                        window.open('{!portalRedirectToSupport}', '_self');
                     }
                 });
             }
 
             function proceedToVR() {
                 if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' == 'Approved Admin') {
-                    bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
+                    if( {!isNewPortal} ){
+                        bootbox.alert("{!JSENCODE($Label.CSP_ANG_Portal_Admin_Authorized_Signature)}");
+                    } else {
+                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
+                    }                
                 } else if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' != 'Approved Admin') {
-                    bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin}');
+                    if( {!isNewPortal} ){
+                        bootbox.alert("{!JSENCODE($Label.CSP_ANG_Portal_Admin)}");
+                    }
+                    else {
+                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin}');
+                    }
                 } else {
                     navigateToUrl('/ISSP_ANG_VoluntaryRelinquishment','_self');
                 }
+            }
+
+            function redirectToMyProfileJs() {
+                window.open('{!portalRedirectToMyProfile}', '_self');
             }
 
             function newnAccreditationApplicationNavigateTo() {
@@ -191,6 +215,10 @@
                 
             function endLoading() {
                 $('.loadingBox').hide();
+            }
+
+            function redirectToCompanyInformationJs(){
+                window.open('{!portalRedirectToCompanyProfile}', '_self');
             }
 
             </script>

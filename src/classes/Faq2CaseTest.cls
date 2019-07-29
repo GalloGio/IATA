@@ -532,6 +532,7 @@ private class Faq2CaseTest {
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
+       
         Test.startTest();
         System.runAs(newUser)
         {

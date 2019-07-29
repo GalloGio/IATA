@@ -1,0 +1,129 @@
+.THIS .disabled {
+  background-color: #c2cacf;
+  cursor: default;
+}
+
+.THIS .disabled:hover {
+  background-color: #c2cacf;
+  cursor: default;
+}
+
+.THIS .disabled:focus {
+  background-color: #c2cacf;
+  cursor: default;
+}
+
+.THIS .tile-column {
+  background: #fff;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  background-clip: border-box;
+  border: 1px solid #fff;
+  border-radius: 0;
+}
+
+.THIS .containedButtonLiveAgent {
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  background-color: #3333ff;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 40px;
+  width: 60px;
+  word-break: normal;
+  border: none;
+}
+
+.THIS .containedButtonLiveAgent button:hover {
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  background-color: #1e32fa;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 40px;
+  width: 60px;
+  word-break: normal;
+  border: none;
+}
+
+.THIS .containedButtonOfflineLiveAgent {
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 40px;
+  width: 60px;
+  word-break: normal;
+  border: none;
+}
+
+.THIS .containedButton, .THIS .containedButton button, .THIS .containedButton button:active, .THIS .containedButton button:visited, .THIS .containedButton button:focus {
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  background-color: #3333ff;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 40px;
+  width: 220px;
+  word-break: break-all;
+  border: none;
+}
+
+.THIS .containedButton button:hover {
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  background-color: #1e32fa;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 40px;
+  width: 220px;
+  word-break: break-all;
+  border: none;
+}
+
+.THIS.customCard .cardSizing {
+  height: 180px;
+  width: 250px;
+}
