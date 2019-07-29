@@ -18,11 +18,18 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean displayErrorMsg{get{return false;} set;}
     public Boolean showStagingArea {get; set;}
     public Boolean rfPerState{get{
-        List<IATA_ISO_Country__c> cList = [SELECT Id, AMS_Settlement_System__r.Remittance_Frequency_per_State__c
-                                           FROM IATA_ISO_Country__c
-                                           WHERE Id =: accreditationObj.Branch_Office_Country__c];
-        if(cList.isEmpty())return false;
-            else return cList[0].AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+
+        if(AMS_Utils.oscarNewGenNewAppProcesses.contains(oscarObj.Process__c)){
+            List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
+            
+            if(!countries.isEmpty()){
+                IATA_ISO_Country__c cntry = countries.get(0);
+                return cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+            }
+        }
+        
+        return false;
+        
     }set;}
 
     private Set<Id> hierarchyAccountIds = new Set<Id>();
