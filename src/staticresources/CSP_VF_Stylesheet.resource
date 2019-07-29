@@ -124,3 +124,17 @@ body .bPageBlock .pbBody .pbSubheader {
         background-color: #1e32fa;
         color: #fff;
 }
+
+.modal-header {
+    background-color: #f7f8fc;
+}
+
+.modal-title {
+    color: black;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.centered {
+    text-align: center;
+}
