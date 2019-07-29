@@ -247,6 +247,35 @@
                         <a style="color:blue;" onclick={toCompanyContacts}> {label.newProfile}</a>.</p>
                 </div>
 
+                <div if:true={isIEPService}>
+                    <div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                        <div class="slds-p-vertical_large textMediumMessage">
+                            <lightning-formatted-rich-text class="richTextlinks introMessage slds-text-title_bold"
+                                value={label.ANG_ISSP_PORTAL_SERVICE_ROLE}>
+                            </lightning-formatted-rich-text>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_medium">
+                        <template for:each={roleList} for:item='role'>
+                            <div key={role}>
+                                <input type="radio" id={role.Role__c} name="options" data-id={role.Role__c}
+                                    value={radioOption} onchange={handlRadioOptions} />
+                                <label class="slds-checkbox__label" for={role.Role__c}>
+                                    <span class="slds-checkbox_faux cursorPointer slds-m-right_xx-small"></span>
+                                    <span class="text-xxsmall slds-p-horizontal_x-small">
+                                        {role.Role__c}
+                                    </span>
+                                </label>
+                                <div class="slds-m-bottom_x-small">
+                                    <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                        value={role.label}>
+                                    </lightning-formatted-rich-text>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
                 <div class="slds-align_absolute-center">
 
                     <div class="slds-m-vertical--large fullWidth">
@@ -305,6 +334,46 @@
 
         </div>
 
+    </div>
+
+    <div class="modal" if:true={IEPRoleSuccessModal}>
+        <div class="customPopupInteriorHalfScreenCentered threeQuartersWidth">
+            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                <span>{label.ANG_ISSP_Request_Access_IATA_EasyPay}</span>
+            </div>
+            <div class="slds-p-vertical_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                <lightning-formatted-rich-text class="richTextlinks introMessage"
+                    value={label.ANG_ISSP_IEP_Portal_Request_Access_Msg}>
+                </lightning-formatted-rich-text>
+            </div>
+            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                <div class="slds-align_absolute-center">
+                    <lightning-button class="containedButton" label={label.ISSP_AMC_CLOSE} variant="neutral"
+                        onclick={closeIEPConfirm}>
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" if:true={IEPDeniedModal}>
+        <div class="customPopupInteriorHalfScreenCentered threeQuartersWidth">
+            <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                <span>{label.addNewUser}</span>
+            </div>
+            <div class="slds-p-vertical_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                <lightning-formatted-rich-text class="richTextlinks introMessage"
+                    value={label.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg}>
+                </lightning-formatted-rich-text>
+            </div>
+            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                <div class="slds-align_absolute-center">
+                    <lightning-button class="containedButton" label={label.ISSP_AMC_CLOSE} variant="neutral"
+                        onclick={closeIEPDenied}>
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- REQUEST/ENABLE NEW SERVICE MODAL -->
