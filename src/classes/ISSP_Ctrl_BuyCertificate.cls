@@ -97,6 +97,17 @@ public class ISSP_Ctrl_BuyCertificate {
         isExtinstion = true ;
         initialization();
     }
+
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            isNewPortal = CSP_Utils.isNewPortalActive();
+         }
+         
+        return isNewPortal;
+    }
+    set;
+    }
     
     public PageReference initialization() {
         try {
@@ -435,10 +446,18 @@ public class ISSP_Ctrl_BuyCertificate {
             if(accountList[0].IATA_ISO_Country__r.OSCAR_enabled__c){
                 AMS_RecordCreatorWebservice.createAccreditation(con.AccountId, AMS_RecordCreatorWebservice.EMPTYACCREDITATIONID, 'CER.1.0', newCase.Id);
             }
+
+            if (isNewPortal) {
+                String url = CSP_Utils.redirectfromPortalHeader('case-details');
+                PageReference p = new PageReference(url + '?caseId=' + newCase.Id);
+                p.setRedirect(true);
+                return p;
+            } else {
+                PageReference p = new PageReference('/ISSP_Case?caseId='+newCase.Id);
+                p.setRedirect(true);
+                return p;
+            }
             
-            PageReference p = new PageReference('/ISSP_Case?caseId='+newCase.Id);
-            p.setRedirect(true);
-            return p;
         }
         catch (Exception  e)
         {
