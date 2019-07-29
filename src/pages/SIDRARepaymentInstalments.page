@@ -12,7 +12,7 @@
     
     <apex:form id="mainform">
         <apex:pageBlock >
-            <apex:pageMessages></apex:pageMessages>
+            <apex:pageMessages ></apex:pageMessages>
             <apex:pageBlockButtons location="top">
                 <apex:commandButton value="Save" action="{!Save}" rendered="{! isEditMode }" rerender="mainform"/>
                 <apex:commandButton value="Cancel" action="{!Cancel}" rendered="{! isEditMode }" rerender="mainform" immediate="true"/>
@@ -46,8 +46,8 @@
                 </apex:column>
                 
                 <apex:column headerValue="Due Date">
-                    <apex:inputField value="{!ri.Due_Date__c}" rendered="{! isEditMode }" />
-                    <apex:outputField value="{!ri.Due_Date__c}" rendered="{! NOT(isEditMode) }" />
+                    <apex:inputField value="{!ri.Due_date__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Due_date__c}" rendered="{! NOT(isEditMode) }" />
                 </apex:column>
                 
                 <apex:column headerValue="Status">
@@ -78,25 +78,25 @@
                     </apex:outputText></p>
 
                 <!-- ACAMBAS - WMO-546 - Begin -->
-                <p style="font-weight: bold;">Interest amount: {!instalmentsDetails.Interest_Currency__c}
+                <p style="font-weight: bold;">Interest amount: {!cs.Currency__c} 
                     <apex:outputText value="{0, number, #,##0.00}">
-                        <apex:param value="{!instalmentsDetails.Interest_Amount__c}" />
+                        <apex:param value="{!IF(instalmentsDetails == null, 0, instalmentsDetails.Interest_Amount__c)}" />
                     </apex:outputText></p>
                   <!-- ACAMBAS - WMO-546 - End -->
             </apex:outputPanel>
 
             <!-- ACAMBAS - WMO-546 - Begin -->
-            <apex:outputPanel rendered="{!isEditMode && (instalmentsDetails.Interest_Currency__c == null)}">
+            <apex:outputPanel rendered="{!isEditMode && (instalmentsDetails.Interest_Amount__c == null)}">
                 <p style="font-weight: bold;">
                     Interest amount*: &nbsp; <apex:inputField value="{!instalmentsDetails.Interest_Amount__c}"/>&nbsp;&nbsp;&nbsp; 
-                    Interest currency*: &nbsp; <apex:inputField value="{!instalmentsDetails.Interest_Currency__c}"/>&nbsp;&nbsp;&nbsp; 
+                    Interest currency: &nbsp;{!cs.Currency__c}&nbsp;&nbsp;&nbsp; 
                     (Interest on repayment plan to be paid to Finance once recovered)
                 </p>
                 <br/>
-                *Values are mandatory and cannot be changed afterwards!
+                *Value is mandatory and cannot be changed afterwards!
             </apex:outputPanel>
-            <apex:outputPanel rendered="{!isEditMode && (instalmentsDetails.Interest_Currency__c != null)}">
-                <p style="font-weight: bold;">Interest amount: {!instalmentsDetails.Interest_Currency__c}
+            <apex:outputPanel rendered="{!isEditMode && (instalmentsDetails.Interest_Amount__c != null)}">
+                <p style="font-weight: bold;">Interest amount: {!cs.Currency__c}
                     <apex:outputText value="{0, number, #,##0.00}">
                         <apex:param value="{!instalmentsDetails.Interest_Amount__c}" /> 
                     </apex:outputText>*

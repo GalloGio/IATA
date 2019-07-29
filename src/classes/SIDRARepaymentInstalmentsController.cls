@@ -60,7 +60,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
 
     //ACAMBAS - WMO-546: Begin
     private static Case_Detail__c getInstalmentsDetails(Id caseId) {
-        List<Case_Detail__c> instalmentDetails = [SELECT Id, Interest_Amount__c, Interest_Currency__c
+        List<Case_Detail__c> instalmentDetails = [SELECT Id, Interest_Amount__c
                                                   FROM Case_Detail__c 
                                                   WHERE Case__c = :caseId AND 
                                                         RecordTypeId = :RT_REPAYM_INSTAL_DETAILS_ID];
@@ -110,12 +110,12 @@ public with sharing class SIDRARepaymentInstalmentsController {
             Case_Detail__c oldInstalmentDetails = this.cs != null ? getInstalmentsDetails(this.cs.Id) : null;
 
             if(oldInstalmentDetails == null) {
-                if(this.instalmentsDetails.Interest_Amount__c >= 0 && !String.isBlank(this.instalmentsDetails.Interest_Currency__c)) {
-                    insert this.instalmentsDetails; 
+                if(this.instalmentsDetails.Interest_Amount__c >= 0) {
+                    insert this.instalmentsDetails;
                     this.isEditMode = false;
                 }
                 else {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Interest Amount and Interest Currency are mandatory fields!'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Interest Amount is mandatory!'));
                 }
             }
             else {
