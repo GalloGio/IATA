@@ -24,6 +24,7 @@ import portalStatusLABEL from '@salesforce/label/c.CSP_Portal_Status';
 import remove from '@salesforce/label/c.Button_Remove';
 import contact from '@salesforce/label/c.ISSP_Contact';
 import innactivationReason from '@salesforce/label/c.ISSP_ReasonInactivation';
+import removeContactReason from '@salesforce/label/c.CSP_RemoveContact_Reason';
 
 
 
@@ -34,7 +35,7 @@ const DEACTIVATED_VAL = "Deactivated"
 
 export default class ChangeUserPortalStatus extends LightningElement {
     @api recordId;
-    @api removeContact = false;
+    @track removeContactLocal = false;
 
     @wire(getRejectionReasonsValues) rejectRegionsOptions;
     @wire(getUserPortalStatusOptionsValues, { contactId: "$recordId" }) portalStatusOptions;
@@ -62,7 +63,21 @@ export default class ChangeUserPortalStatus extends LightningElement {
         portalStatusLABEL,
         remove,
         contact,
-        innactivationReason
+        innactivationReason,
+        removeContactReason
+    }
+
+    @api
+    get removeContact(){
+        return this.removeContactLocal;
+    }
+
+    set removeContact(value){
+        this.removeContactLocal = value;
+
+        if(value == true){
+            this.inactiveStatus = true;
+        }
     }
 
     get CommunityVal() {
@@ -98,7 +113,7 @@ export default class ChangeUserPortalStatus extends LightningElement {
     }
 
     get reasonLabel(){
-        return this.removeContact ? this.label.innactivationReason : this.label.reasonLABEL;
+        return this.removeContact ? this.label.removeContactReason : this.label.reasonLABEL;
     }
 
     get titleLabel(){

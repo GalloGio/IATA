@@ -1044,11 +1044,13 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
         for(Portal_Application_Right__c right:existingRights) {
             alreadyAssignedContactIds.add(right.Contact__c);
         }
-
+        
 
         String contactsQuery = 'SELECT Id,Name,Email,User_Portal_Status__c,Account.iataCode__c,Account.BillingCity FROM Contact '
                 + 'WHERE (Account.Top_Parent__c =\''+u.contact.AccountId+'\' OR AccountId = \''+ u.contact.AccountId+'\') '
-                + ' AND Id NOT IN :alreadyAssignedContactIds ';
+                + ' AND Id NOT IN :alreadyAssignedContactIds '
+                + ' AND Status__c = \'Active\' '
+                + ' AND User_Portal_Status__c != \'Rejected\' AND User_Portal_Status__c != \'Deactivated\'';
 
         if(!String.isBlank(queryString)){
             contactsQuery += ' AND (Name LIKE \'%'+queryString+'%\' ) ';

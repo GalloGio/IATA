@@ -268,7 +268,7 @@
                                                                     selection={contactsToAdd} onaddall={addAllContactEntries}>
                                 </c-portal-services-add-users-lookup>
 
-                                <div class="slds-m-top_large slds-scrollable_y recipients-box">
+                                <div class="slds-m-top_large slds-scrollable_y recipients-box" data-name="selectionList" tabindex="0">
                                     <template if:false={noContactsToAdd}>
                                         <lightning-datatable data={contactsToAdd} columns={contactsToAddColumns}
                                                              hide-checkbox-column key-field="id" onrowaction={removeContactToAdd}
