@@ -6,7 +6,7 @@
 
                 <!-- Popup Header -->
                 <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
-                    <span>{titleLabel}</span>
+                    <span class="modalTitle">{titleLabel}</span>
                     <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                         <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
                             onclick={closeModal}></lightning-icon>
@@ -40,7 +40,7 @@
 
                         <lightning-layout-item size="7" flexibility="auto" padding="around-small">
                             <lightning-combobox name="communitySelected" label={label.portalStatusLABEL}
-                                placeholder={label.selectPortalStatusLABEL} value={PortalStatVal} disabled={removeContact}
+                                placeholder={label.selectPortalStatusLABEL} value={PortalStatVal} if:false={removeContactLocal}
                                 options={portalStatusOptions.data} onchange={handlePortalStatusChange} required>
                             </lightning-combobox>
                         </lightning-layout-item>
@@ -58,7 +58,7 @@
                             <lightning-button variant="neutral" class="slds-m-top_small slds-m-right--medium containedButtonWhite"
                                               name="closeModal" label="Cancel" title="Cancel"
                                               onclick={closeModal}
-                                              if:true={removeContact}>
+                                              if:true={removeContactLocal}>
                             </lightning-button>
 
                             <lightning-button variant="brand" class="slds-m-top_small containedButton"
