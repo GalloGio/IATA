@@ -1184,7 +1184,7 @@ public class  AmsIataCodeGeneratorTest
          ag2.Sector__c = 'Cargo Agent';
          insert ag2;
          
-         AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= ag2.Id, Contact__c= c.Id, Percentage__c= 1, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
+         AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c= ag2.Id, Contact__c= c.Id, Percentage__c= 100, RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'));
          insert owner2;
 
          AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = ag2.Id);

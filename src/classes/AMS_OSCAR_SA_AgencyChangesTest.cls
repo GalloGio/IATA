@@ -871,6 +871,20 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         insert pds;
 
         Test.startTest();
+        AMS_Account_Role__c r = [SELECT Owner_Name__c, RecordTypeId, Percentage__c, Contact__c, Account__c FROM AMS_Account_Role__c WHERE Account__c = :HO2.Id LIMIT 1];
+        AMS_Account_Role__c r1 = r.clone(false,true,false,false);
+        r1.Account__c = BR1.Id;
+        AMS_Account_Role__c r2 = r.clone(false,true,false,false);
+        r2.Account__c = BR2.Id;
+        AMS_Account_Role__c r3 = r.clone(false,true,false,false);
+        r3.Account__c = SA1.Id;
+        AMS_Account_Role__c r4 = r.clone(false,true,false,false);
+        r4.Account__c = SA2.Id;
+        AMS_Account_Role__c r5 = r.clone(false,true,false,false);
+        r5.Account__c = SA3.Id;
+        AMS_Account_Role__c r6 = r.clone(false,true,false,false);
+        r6.Account__c = SA4.Id;
+        insert new List<AMS_Account_Role__c> {r1,r2,r3,r4,r5,r6};
 
         //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         oscar.STEP6__c = AMS_Utils.PASSED;
