@@ -2714,6 +2714,14 @@ Payment required on receipt of this Payment Advice
         <value>Accept the Terms before you proceed.</value>
     </labels>
     <labels>
+        <fullName>CSP_Add_All</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_All</shortDescription>
+        <value>Add All</value>
+    </labels>
+    <labels>
         <fullName>CSP_Add_New_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

@@ -1,4 +1,4 @@
-import { LightningElement, track} from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -235,11 +235,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     //Display Add New User button if isAdmin and service can be managed or is EasyPay
-    getCanAddUsers(){
-        newUserRequestableWithoutApproval({isAdmin : this.isAdmin, serviceId:this.serviceId})
-        .then(result => {
-            this.canAddUsers = result;
-        });
+    getCanAddUsers() {
+        newUserRequestableWithoutApproval({ isAdmin: this.isAdmin, serviceId: this.serviceId })
+            .then(result => {
+                this.canAddUsers = result;
+            });
     }
 
     getContactsForPage() {
@@ -576,7 +576,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let msg = this.label.cancelAccessMsg.replace('{0}', this.serviceName);
         let title = this.label.cancelAccessTitle;
 
-        this.denyUserAccessJS(contact,msg,title, false);
+        this.denyUserAccessJS(contact, msg, title, false);
 
     }
 
@@ -595,8 +595,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 break;
             case 'deactivateUser':
                 let title = this.label.denyAccessTitle;
-                let msg = this.label.confirmDenyAccessMsg.replace('{0}',this.serviceRecord.recordService.ServiceName__c).replace('{1}',row.contactName);
-                this.denyUserAccessJS(row,msg,title, true);
+                let msg = this.label.confirmDenyAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', row.contactName);
+                this.denyUserAccessJS(row, msg, title, true);
                 break;
             case 'ifapContact':
                 const {contactId, contactName } = row;
@@ -629,7 +629,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedlRow = contact;
         this.popupMsg = msg;
         this.isFromContactTable = isFromContactTable;
-        
+
         this.mode = 'deny';
         this.showConfirmPopup = true;
     }
@@ -739,26 +739,23 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     addContactEntry() {
-        let inputCmp = this.template.querySelector('[data-id="contactlookup"]').getSelection()[0].id;
-        let comp = this.template.querySelector('[data-id="contactlookup"]');
+        let inputCmp = this.template.querySelector('[data-id="contactlookup"]').getSelection();//[0].id;
+        let comp = this.template.querySelector('[data-name="selectionList"]');
 
-        let value = inputCmp;
-        inputCmp = '';
+        let values = inputCmp;
+        inputCmp = [];
         comp.focus();
 
         let availableContacts = JSON.parse(JSON.stringify(this.availableContacts));
 
         let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
-        if (!contactsToAdd.some(contact => contact.id === value)) {
-            let contact = availableContacts.find(function (c) { return c.id === value; });
+        values.forEach((c, pos, arr) => {
+            let contact = availableContacts.find(function (con) { return c.id === con.id; });
+            contact .deleteIcon = 'utility:delete';
 
-            contact.deleteIcon = 'utility:delete';
-
-            if (contact) {
-                contactsToAdd.push(JSON.parse(JSON.stringify(contact)));
-            }
-        }
+            contactsToAdd.push(contact);
+        });
 
         this.contactsToAdd = contactsToAdd;
     }

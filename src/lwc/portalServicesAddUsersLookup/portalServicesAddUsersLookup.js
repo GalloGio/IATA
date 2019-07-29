@@ -7,6 +7,7 @@ import { LightningElement, track, api } from 'lwc';
 
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
 import add from '@salesforce/label/c.Button_Add';
+import addAll from '@salesforce/label/c.CSP_Add_All';
 
 
 const MINIMAL_SEARCH_TERM_LENGTH = 3; // Min number of chars required to search
@@ -17,7 +18,7 @@ const SEARCH_DELAY = 300; // Wait 300 ms after user stops typing then, peform se
 export default class PortalServicesAddUsersLookup extends LightningElement {
 
     @track label = {
-        CSP_NoSearchResults,add
+        CSP_NoSearchResults,add,addAll
     }
 
     @api selection = [];
@@ -33,6 +34,7 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
     @track searchResults = [];
     @track hasFocus = false;
     @track getContainerClass;
+    @track checkedIds = [];
 
     cleanSearchTerm;
     blurTimeout;
@@ -52,10 +54,17 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
     @api
     setSearchResults(results) {
         this.searchFlag = false;
+        let checkedIds = this.checkedIds;
+
         this.searchResults = results.map(result => {
             if (typeof result.icon === 'undefined') {
                 result.icon = 'standard:default';
             }
+
+            if(checkedIds.indexOf(result.id) >= 0){
+                result.checked = true;
+            }
+
             return result;
         });
     }
@@ -185,8 +194,34 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
 
     handleResultClick(event) {
         const recordId = event.currentTarget.dataset.recordid;
-        // Save selection
-        let selectedItem = this.searchResults.filter(result => result.id === recordId);
+
+        let searchResults = JSON.parse(JSON.stringify(this.searchResults));
+        let checkedIds = [];
+
+        for(let i=0;i<searchResults.length;i++){
+            let current = searchResults[i];
+
+            let isChecked = searchResults[i].checked;
+
+            if(current.id === recordId){
+                if(isChecked){
+                    searchResults[i].checked = false;
+                }else{
+                    searchResults[i].checked = true;
+                }
+            }else{
+                searchResults[i].checked = isChecked;
+            }
+
+            if(searchResults[i].checked){
+                checkedIds.push(searchResults[i].id);
+            }
+        }
+
+        this.searchResults = searchResults;
+        this.checkedIds = checkedIds;
+
+        /*
         if (selectedItem.length === 0) {
             return;
         }
@@ -202,21 +237,34 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
 
         if (this.itemName === 'contactlookup') {
             this.dispatchEvent(new CustomEvent('selectionchange'));
-        }
+        }*/
     }
 
-    handleAddAll(event){
+    handleAddAll(){
         this.selection = this.searchResults;
         this.dispatchEvent(new CustomEvent('addall'));
 
     }
 
+    handleAdd(){
+        let results = JSON.parse(JSON.stringify(this.searchResults));
+        let selectedIds = this.checkedIds;
+
+        let filtered = results.filter(item => selectedIds.indexOf(item.id) > -1);
+
+        this.selection = filtered;
+
+        if(filtered !== undefined && filtered.length > 0){
+            this.dispatchEvent(new CustomEvent('selectionchange'));
+        }
+
+        this.handleBlur();
+    }
+
     handleComboboxClick() {
-        // Hide combobox immediatly
         if (this.blurTimeout) {
             window.clearTimeout(this.blurTimeout);
         }
-        this.hasFocus = false;
     }
 
     handleFocus() {
@@ -230,13 +278,10 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
     }
 
     handleBlur() {
-        // Prevent action if selection is not allowed
-        if (!this.isSelectionAllowed()) {
-            return;
-        }
         // Delay hiding combobox so that we can capture selected result
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.blurTimeout = window.setTimeout(() => {
+            this.checkedIds = [];
             this.hasFocus = false;
             this.blurTimeout = null;
         },
@@ -341,7 +386,7 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
     }
 
     get getListboxClass() {
-        return 'slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid customMaxHeight slds-scrollable_y '
+        return 'contactListbox slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid customMaxHeight slds-scrollable_y '
             + (this.scrollAfterNItems ? 'slds-dropdown_length-with-icon-' + this.scrollAfterNItems : '');
     }
 
@@ -361,7 +406,11 @@ export default class PortalServicesAddUsersLookup extends LightningElement {
     }
 
     get cantAdd(){
-        let cantAdd = this.searchResults === undefined || this.searchResults.length == 0 || !this.hasFocus;
+        let cantAdd = this.checkedIds === undefined || this.checkedIds.length === 0;//this.searchResults === undefined || this.searchResults.length == 0 || !this.hasFocus;
         return cantAdd;
+    }
+
+    get cantAddAll(){
+        return this.searchResults === undefined || this.searchResults.length == 0 || !this.hasFocus;
     }
 }
