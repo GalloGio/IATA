@@ -46,13 +46,14 @@
     <description>IDCard Price tables (fee)</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Can_Pay_by_Cheque__c</fullName>
         <defaultValue>false</defaultValue>
@@ -253,6 +254,7 @@
         <columns>Expedite_Delivery_added_to_IDCard_Price__c</columns>
         <columns>IATA_Package__c</columns>
         <columns>Can_Pay_by_Cheque__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

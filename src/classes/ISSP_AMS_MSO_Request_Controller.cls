@@ -65,7 +65,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             if (oscarCase.Id == null)
                 accreditationForm = new AMS_Pax_Accreditation_Form__c();
             else {
-                accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name,Branch_Office_Country__r.Region__c, Accept_terms_and_conditions__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id limit 1];
+                accreditationForm = [SELECT Id, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name,Branch_Office_Country__r.Region__c, Accept_terms_and_conditions__c, Trade_Name__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id limit 1];
                 countrySelected = accreditationForm.Branch_Office_Country__c;
                 refreshStates();
                 billingState = accreditationForm.IATA_ISO_State__c;
@@ -179,10 +179,6 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         System.debug('accreditationForm: ' + accreditationForm);
         System.debug('countrySelected: ' + countrySelected);
 
-        Id saveLogRecId;
-        String saveLogMessage;
-
-
         if (countrySelected == null) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Country_ErrMsg));
             isValid = false;
@@ -217,6 +213,12 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             }
         }
 
+        //WMO-578
+        if(accreditationForm.Trade_Name__c != null && !p.matcher(accreditationForm.Trade_Name__c).matches()) {
+            accreditationForm.Trade_Name__c.addError(Label.ISSP_EnterValidString);
+            isValid = false;
+        }
+
 
         if (!isValid) {
             return null;
@@ -234,8 +236,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 msoAccount.Location_Type__c = 'HO';
                 msoAccount.Reason_for_creation__c = 'New Agent';
                 msoAccount.Location_Category__c = currentUserContact.Account.IATA_Member__c == true ? 'IC' : 'NI';
-                saveLogRecId = msoAccount.Id;
-                saveLogMessage = 'Insert MSO Account';
+                // WMO-578
+                msoAccount.TradeName__c = accreditationForm.Trade_Name__c;
                 insert msoAccount;
 
                 // create new OSCAR
@@ -243,8 +245,6 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscar.Name = 'tempName'; //oscarCase.CaseNumber;                
                 oscar.Process__c = 'NEW.MSO.1.0';
                 oscar.Account__c = msoAccount.Id;
-                saveLogRecId = oscar.Id;
-                saveLogMessage = 'Insert Oscar';
                 insert oscar;
 
                 // avoid sending notification email
@@ -266,8 +266,6 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 oscarCase.Status = 'Draft';
                 oscarCase.Region__c = selectedCountryInfo.Region__c;
                 oscarCase.Country_concerned_by_the_query__c = selectedCountryInfo.Name;
-                saveLogRecId = oscarCase.Id;
-                saveLogMessage = 'Insert Oscar Case';
                 insert oscarCase;
 
                 oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id =:oscarCase.Id];
@@ -280,14 +278,10 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 accreditationForm.Location_Type__c = 'HO';
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
-                saveLogRecId = accreditationForm.Id;
-                saveLogMessage = 'Insert Accreditation Form';
                 insert accreditationForm;
 
                 oscar.AMS_Online_Accreditation__c = accreditationForm.Id;
                 oscar.Name = oscarCase.CaseNumber;
-                saveLogRecId = oscar.Id;
-                saveLogMessage = 'Update Oscar';
                 update oscar;
 
                 //AMS_Inspection__c app = new AMS_Inspection__c();
@@ -295,8 +289,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 //app.Account__c = msoAccount.Id;
                 //app.OSCAR__c = oscar.Id;
                 //insert app;
-                saveLogRecId = oscar.Id;
-                saveLogMessage = 'Create Appointment';
+
                 if(!Test.isRunningTest()) {
                     createAppointment(String.valueOf(currentUserContact.AccountId), String.valueOf(msoAccount.Id), String.valueOf(oscar.Id));  
                 }
@@ -306,18 +299,12 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             } else {
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
-                saveLogRecId = accreditationForm.Id;
-                saveLogMessage = 'Upsert AccreditationForm';
 
                 upsert accreditationForm;
             }
         } catch (Exception ex) {
             System.debug('ex' + ex);
             System.debug('ex' + ex.getStackTraceString());
-            new Technical_Logs__c(Operation__c= 'UPSERT MSO Acc, Oscar, Comm Case, Acc Form and Appointment: ' + saveLogMessage, 
-                                                        Record__c= saveLogRecId,
-                                                        Status__c= 'Error',
-                                                        Log__c= 'Cause: ' + ex.getCause() + '|Line: ' + ex.getLineNumber() + '|Message: ' + ex.getMessage() + '|StackTrace: ' + ex.getStackTraceString());
             ApexPages.addMessages(ex);
             return null;
         }
@@ -374,15 +361,6 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
 
         if (accountId == null || accreditationId == null || oscarID == null)  return false;
-
-        /*String[] generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
-        if (generateResult[0] != '1') return false;
-
-        String copyResult = AMS_OSCAR_Webservice.copyDataToAccount(oscarId);
-        if (copyResult != 'OK') return false;
-
-        String changeCodeResult = AMS_OSCAR_Webservice.createChangeCodeNEW(oscarId);
-        if (changeCodeResult != 'OK') return false;*/
 
         String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(accountId, accreditationId,oscarId);
         if (result[0] != '0') return false;

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Pardot credentials to use REST API</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>API_Version__c</fullName>
+        <description>API version of Pardot API. Can be 3 or</description>
+        <externalId>false</externalId>
+        <label>API Version</label>
+        <length>1</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Assigned_User__c</fullName>
+        <description>Pardot user ID that will be assigned for prospect in Pardot</description>
+        <externalId>false</externalId>
+        <label>Assigned User</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <description>Pardot integration user email</description>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Password__c</fullName>
+        <description>Pardot integration user password</description>
+        <externalId>false</externalId>
+        <label>Password</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>User_Key__c</fullName>
+        <description>Pardot integration user api key</description>
+        <externalId>false</externalId>
+        <label>User Key</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Pardot_API</label>
+    <visibility>Protected</visibility>
+</CustomObject>

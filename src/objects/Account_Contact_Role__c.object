@@ -46,13 +46,14 @@
     <description>Related to the Account Role, used to designate an existing contact, under the account, that acts as a primary contact for the associated type of account role.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
-    <enableReports>false</enableReports>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Account_Role__c</fullName>
         <description>Reference to the Account Role</description>
@@ -88,6 +89,19 @@
         <externalId>false</externalId>
         <formula>Contact__r.Phone</formula>
         <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Role_Name__c</fullName>
+        <description>A functional role that a Contact belonging to an Account may assume when interacting with an IATA Salesforce functional capability. This designation technically supports the provisioning and delivery of IATA Salesforce functional capabilities.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Contact Role Name to fill accordingly to the application using the record</inlineHelpText>
+        <label>Contact Role Name</label>
+        <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -193,6 +207,11 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
                     <fullName>TIP</fullName>
                     <default>false</default>
                     <label>TIP</label>
@@ -243,6 +262,30 @@
     </nameField>
     <pluralLabel>Account Contacts Role</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Master</fullName>
+        <active>true</active>
+        <description>Master RecordType</description>
+        <label>Master</label>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Service_Rendered__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>Payment_Provider_Contact</fullName>
         <active>true</active>

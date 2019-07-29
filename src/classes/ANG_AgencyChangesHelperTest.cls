@@ -48,6 +48,9 @@ public class ANG_AgencyChangesHelperTest {
 		AMS_Agencies_relationhip__c r3 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Child_Account__c = a3.Id , Parent_Account__c = account.Id, Hierarchy__c = h.Id);
 
 		insert new List<AMS_Agencies_relationhip__c>{r1,r2,r3};
+		
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		insert pa;
 
 	}
 
@@ -1348,7 +1351,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfOwnership(oscar, accountIdsInvolvedSet, null, true);
 
-        List<AMS_Account_Role__c> roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c];
+        List<AMS_Account_Role__c> roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c where Active__c = true];
 
         For(AMS_Account_Role__c role :roleList)
 	        System.debug('[ANG_AgencyChangesHelperTest]: Owner inserted:' + role);
@@ -1477,7 +1480,7 @@ public class ANG_AgencyChangesHelperTest {
         For(AMS_Account_Role__c role :roleList)
 	        System.debug('[ANG_AgencyChangesHelperTest]: Owner inserted:' + role);
 
-        System.assertEquals(14,roleList.size());
+        System.assertEquals(17,roleList.size());
 
 		roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c where Active__c = true];
 

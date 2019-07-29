@@ -94,7 +94,7 @@ private class AMS_OSCARTriggerHandlerTest {
         update cse;
 
         // Create a new Financial Institution
-        Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank');
+        Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Financial_Institution__c', 'Generic_FI'));
         insert fi;
 
         // Create a new Financial Security
@@ -110,6 +110,8 @@ private class AMS_OSCARTriggerHandlerTest {
 
     @isTest static void processOscarOptinoutTest1() {
 
+        AMS_OSCARTriggerHandler aoth = new AMS_OSCARTriggerHandler();
+        aoth.fakemethod();
 
         List<String> fieldListOscar = new List<String>();
 
@@ -231,7 +233,7 @@ private class AMS_OSCARTriggerHandlerTest {
         insert fop;
 
         Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', 
-                                    Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin',
+                                    Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, //User_Portal_Status__c = 'Approved Admin',
                                     Preferred_Language__c = 'English', Financial_Assessment_Contact__c = false);    
         insert co1;
          
@@ -305,5 +307,7 @@ private class AMS_OSCARTriggerHandlerTest {
         System.assertEquals('Yes',[SELECT Is_PCI_compliant__c FROM Account WHERE Id = :a.Id].Is_PCI_compliant__c);
 
     }
+
+    
     
 }

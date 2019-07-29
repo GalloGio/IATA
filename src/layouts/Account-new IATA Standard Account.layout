@@ -3,6 +3,7 @@
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -58,6 +59,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Identify_as_Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                 <behavior>Readonly</behavior>
+                 <field>Multicountry_Key_Hierarchy__c</field>
+             </layoutItems>
+             <layoutItems>
+                 <behavior>Edit</behavior>
+                 <field>Identify_as_Multicountry_Key_Hierarchy__c</field>
+             </layoutItems>
+             <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Site</field>
             </layoutItems>
             <layoutItems>
@@ -78,10 +91,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Identify_as_Key_Customer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>CNS_Account__c</field>
             </layoutItems>
             <layoutItems>
@@ -95,6 +104,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Training_Membership__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Baggage_Tag_Range_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -130,6 +143,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Geoname_Billing_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Billing_State__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Phone</field>
             </layoutItems>
             <layoutItems>
@@ -143,6 +164,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Website</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Global_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -161,6 +186,18 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Sub_Region__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Shipping_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Iso_State__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Shipping_State__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -215,6 +252,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIS_Sub_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Give_SIS_Membership__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -495,6 +536,7 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <customButtons>Contact_Related_List</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>Airline_Contact_Type__c</fields>
@@ -503,8 +545,8 @@
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
-        <fields>CORE.USERS.ALIAS</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
+        <fields>VER_Number_2__c</fields>
         <relatedList>RelatedContactList</relatedList>
         <sortField>FULL_NAME</sortField>
         <sortOrder>Asc</sortOrder>
@@ -633,6 +675,7 @@
         <customButtons>Mass_Update_Contracts</customButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>Product_Family__c</fields>
+        <fields>CONTRACT.NAME</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <fields>CONTRACT_TERM</fields>
@@ -688,7 +731,15 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Started__c</fields>
+        <fields>Response__c</fields>
+        <fields>Success__c</fields>
+        <fields>System__c</fields>
+        <fields>User__c</fields>
+        <fields>Web_Service__c</fields>
         <relatedList>ISSP_Web_Service_Log__c.Account__c</relatedList>
+        <sortField>Started__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

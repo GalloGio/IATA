@@ -47,8 +47,11 @@ private class ANG_OscarProcessHelperTest {
 		ID oscarNewHeRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = AMS_Utils.NEWHESTANDARD, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = oscarNewHeRt);
-
 		insert oscar;
+
+		ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
+		AMS_OSCAR__c oscar_china = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT);
+		insert oscar_china;
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
         oscarCase.AccountId = a1.Id;
@@ -68,7 +71,6 @@ private class ANG_OscarProcessHelperTest {
 
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
 
-		theAccreditation.Account_Name__c='NEWGEN-559 HE5';
 		theAccreditation.ISSP_AMS_Legal_Status__c='Association';
 		theAccreditation.Branch_Office_Country__c= ctry.Id;
 		theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
@@ -125,6 +127,16 @@ private class ANG_OscarProcessHelperTest {
             ),
             new AMS_ChangeCodes__c(
                 Name = 'NEW-AMS', Change_Code__c = 'NEW', Integration_RecId__c = 'A'
+            ),
+            new AMS_ChangeCodes__c(
+                Name = 'DOM', 
+                Change_Code__c = 'DOM', 
+                Integration_RecId__c = 'C', 
+                Reason_Code__c = '43', 
+                Reason_Code_Description__c = 'Voluntary relinquishment', 
+                Bulletin_Memo_Text__c = 'Agent is upgrading from Domestic to International', 
+                Published_in_bulletin__c = true,
+                Account_status_change__c = '4'
             )
         };
 
@@ -132,6 +144,9 @@ private class ANG_OscarProcessHelperTest {
 	}
 
 	@isTest static void testIATACodeGenerationOKNoDueDiligenceCase() {
+
+		ANG_OscarProcessHelper aoph = new ANG_OscarProcessHelper();
+		aoph.fakemethod();
 
 		System.debug('Starting testIATACodeGenerationOKNoDueDiligenceCase');
 
@@ -532,7 +547,6 @@ private class ANG_OscarProcessHelperTest {
         Case c = [Select Id from Case LIMIT 1];
 
 		ANG_OscarProcessHelper.createFOPOscar(a.Id, c.Id);
-		ANG_OscarProcessHelper.fakemethod();
 
         Test.stopTest();
 	 }
@@ -655,8 +669,8 @@ private class ANG_OscarProcessHelperTest {
 		System.assertEquals(1, oscars[0].cases__r.size(), '1 case record should to be created for the account');
 		
 		// test Change Code and SIDRA Lite creation
-		oscars[0].step43__c = 'Failed';
-		oscars[0].step44__c = 'Failed';
+		oscars[0].step43__c = AMS_Utils.PASSED;
+		oscars[0].step44__c = 'Passed';
 
 		update oscars;
 
@@ -943,4 +957,76 @@ private class ANG_OscarProcessHelperTest {
 		System.assertEquals([Select Id, Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' ].get(0).Status__c, 'Not Authorized');
 
 	 }
+
+	@isTest static void createGenericChangeCodeTest() {
+
+		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c where Name = 'France'];
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'D', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent', Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing', Company_Type__c = 'A', IATACode__c = '1234567', Status__c = 'Approved');
+		insert a1;
+
+		ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
+		AMS_OSCAR__c oscar_china = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT, ANG_Type_Of_Change__c = 'Conversion to International');
+		insert oscar_china;
+
+		List<AMS_Oscar__c> oscars = [select id, Account__c, Process__c, Is_NewGen__c, RecordTypeId, ANG_Type_Of_Change__c from AMS_Oscar__c where Process__c = :AMS_Utils.NGCHINACONVERSION AND Account__c = :a1.Id limit 1];
+
+		Test.startTest();
+
+		ANG_OscarProcessHelper.createGenericChangeCode(oscars[0], 'DOM');
+
+		List<Agency_Applied_Change_code__c> changeCodes = [select Reason_Code__c, Reason_Description__c, Bulletin_Information__c, To_Publish_in_e_Bulletin__c from Agency_Applied_Change_code__c where Change_Code__c = 'DOM' and OSCAR__c = :oscars[0].id and Account__c = :oscars[0].Account__c];
+
+		System.assertEquals('43', changeCodes[0].Reason_Code__c);
+		System.assertEquals('VOLUNTARY RELINQUISHMENT', changeCodes[0].Reason_Description__c);
+		System.assertEquals('AGENT IS UPGRADING FROM DOMESTIC TO INTERNATIONAL', changeCodes[0].Bulletin_Information__c);
+		System.assertEquals(true, changeCodes[0].To_Publish_in_e_Bulletin__c);	
+	
+		Test.stopTest();
+	}
+	
+	@isTest static void createOscarChangesCaseTest(){
+		
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Account accHO = new Account(name = 'HO test Account', RecordTypeId = accountRT);
+		insert accHO;
+		
+		Test.startTest();
+			AMS_Pax_Accreditation_Form__c accred = [SELECT Id, HO_Account__c, SAAM_Case__c FROM AMS_Pax_Accreditation_Form__c LIMIT 1];
+			accred.HO_Account__c = accHO.Id;
+			update accred;
+			
+			String[] str = ANG_OscarProcessHelper.createOscarChangesCase(accred.Id);
+			AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c FROM AMS_OSCAR__c WHERE Account__c =: accHO.Id];
+			Case oscarCase = [SELECT Id, Oscar__c, Casenumber FROM Case WHERE Oscar__c =: oscar.Id];
+			
+			System.assertEquals(str[0], oscarCase.Id);
+			System.assertEquals(str[1], oscarCase.Casenumber);
+			System.assertEquals(AMS_Utils.NGCHANGES, oscar.Process__c);
+			
+		Test.stopTest();
+	}
+	
+	@isTest static void createOscarCorrectionCaseTest(){
+		
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Account accHO = new Account(name = 'HO test Account', RecordTypeId = accountRT);
+		insert accHO;
+		
+		Test.startTest();
+			AMS_Pax_Accreditation_Form__c accred = [SELECT Id, HO_Account__c, SAAM_Case__c FROM AMS_Pax_Accreditation_Form__c LIMIT 1];
+			accred.HO_Account__c = accHO.Id;
+			update accred;
+			
+			String[] str = ANG_OscarProcessHelper.createOscarCorrectionCase(accred.Id);
+			AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c FROM AMS_OSCAR__c WHERE Account__c =: accHO.Id];
+			Case oscarCase = [SELECT Id, Oscar__c, Casenumber FROM Case WHERE Oscar__c =: oscar.Id];
+			
+			System.assertEquals(str[0], oscarCase.Id);
+			System.assertEquals(str[1], oscarCase.Casenumber);
+			System.assertEquals(AMS_Utils.NGCORRECTION, oscar.Process__c);
+			
+		Test.stopTest();
+	}
 }

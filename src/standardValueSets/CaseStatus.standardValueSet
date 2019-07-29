@@ -595,7 +595,7 @@
         <label>Return application to customer</label>
         <closed>false</closed>
     </standardValue>
-    <standardValue>        
+    <standardValue>
         <fullName>Closed_Non compliance</fullName>
         <default>false</default>
         <label>Closed_Non compliance</label>

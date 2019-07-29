@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      body{
+	font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#004577;
+      }
+     
+      
+div.main{
+margin:auto;
+width:90%;
+}
+      hr{
+	color:#0A4279;
+      }
+    </style>
+    
+  </head>
+
+  <body>
+<div class="main">
+<table width="640px">
+<tr>
+<td colspan="3">
+  <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+  </td>
+  </tr>
+<tr>
+
+<tr>
+<td colspan="3">
+|noReply|
+</td>
+</tr>
+<tr>
+
+<td colspan="3" style="font-size:26px;color:#0A4279;text-align:center;">     
+
+</td>
+</tr>
+<tr>
+<td colspan="3">
+  <br />
+   <hr style="width:80%"/>
+   <p> |bodyText| 
+
+  </p>
+   <p> </p>
+   <p>
+		|docs|
+   </p>
+  </td>
+  </tr>
+  <tr>
+  <td width="30%">
+  
+    </td>
+
+  <td width="30%">
+  </td>
+  </tr>
+<tr><td colspan="3">
+
+</td></tr>
+  <tr>
+  <td colspan="3">
+    <p>
+Kind Regards,
+    </p>
+    <p>
+IATA Customer Service
+    </p>
+  </td>
+    </tr>
+    
+    <BR />
+
+
+    <tr>
+    <td colspan="3">
+    <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF&lastMod=1389346115000" />
+      </td>
+    </tr>
+
+   
+</table>
+</div>
+  </body>
+</html>

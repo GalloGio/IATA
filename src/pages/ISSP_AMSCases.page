@@ -2,7 +2,7 @@
            sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" 
            standardStylesheets="false" language="{!displayLanguage}">
     <html>
-    <c:ISSP_Header />
+        <c:ISSP_Header />
 
         <body>
         <script src="{!URLFOR($Resource.bootbox)}"/>
@@ -82,8 +82,19 @@
                 left: 50%;
             }
 
-            td > span {
+			td > span {
                 margin-left: inherit;
+            }
+
+            .customlink {
+                cursor: pointer;
+                color: #337ab7;
+            }
+
+            .customlink:hover {
+                cursor: pointer;
+                color: #337ab7;
+                text-decoration: underline;
             }
 
         </style>
@@ -111,26 +122,39 @@
             function proceedToVMFR() {
                 bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step0_Proceed_VMFR)}", function(result) {
                     if(result) {
-                        window.open('/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1', '_self');
+                        window.open('{!portalRedirectToSupport}', '_self');
                     }
                 });
             }
 
             function proceedToVR() {
                 if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' == 'Approved Admin') {
-                    bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
+                    if( {!isNewPortal} ){
+                        bootbox.alert("{!JSENCODE($Label.CSP_ANG_Portal_Admin_Authorized_Signature)}");
+                    } else {
+                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin_Authorized_Signature}');
+                    }                
                 } else if ('{!con.Authorized_Signatory__c}' == 'false' && '{!con.User_Portal_Status__c}' != 'Approved Admin') {
-                    bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin}');
+                    if( {!isNewPortal} ){
+                        bootbox.alert("{!JSENCODE($Label.CSP_ANG_Portal_Admin)}");
+                    }
+                    else {
+                        bootbox.alert('{!$Label.ISSP_ANG_Portal_Admin}');
+                    }
                 } else {
                     navigateToUrl('/ISSP_ANG_VoluntaryRelinquishment','_self');
                 }
+            }
+
+            function redirectToMyProfileJs() {
+                window.open('{!portalRedirectToMyProfile}', '_self');
             }
 
             function newnAccreditationApplicationNavigateTo() {
                 if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
                     $('#modalChooseAccreditationType').modal('toggle');
                 } else {
-                    navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', 'isMultiCountryNewAE=true&isMCNewAEAccredited=true&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                 }
                 return false;
             }
@@ -197,15 +221,60 @@
                 $('.loadingBox').hide();
             }
 
+			function redirectToCompanyInformationJs(){
+                window.open('{!portalRedirectToCompanyProfile}', '_self');
+            }
+
             function multiCountryNewAE() {
                 navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_AMSCases&isMultiCountryNewAE=true');
             }
 
-            function confirmMCCaseDelete(caseId) {
+            function confirmMCFormDelete(formId) {
                 bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
-                    if(result) deleteMCCase(caseId);
+                    if(result) deleteMCForm(formId);
                 });
                 return false;
+            }
+
+            function submitMultiCountry() {
+                submitMultiCountryApplication();
+            }
+
+            function discardMultiCountry() {
+                discardMCApplication();
+            }
+
+            $(document).ready(function() {
+                if ("{!mcAbleToSubmit}" == 'false') {
+                    $('#submitMCButton').attr('disabled', 'false');
+                }
+            });
+
+            function rerenderAllSections() {
+                $('[id$=left-side-regular]').css('display', 'block');
+                $('[id$=left-side-mc]').css('display', 'none');
+                $('[id$=ongoing-apps]').css('display', 'block');
+                $('[id$=accredMCTable]').css('display', 'none');
+
+                if ({!isUserAccAccredited}) {
+                    $('[id$=other-forms]').css('display', 'block');
+                }
+            }
+
+            function showTermsAndConditionsModal() {
+                $('[id$="termsAndConsitionsMCModal"]').css('display', 'block');
+                changeContinueButtonState();
+            }
+
+            function hideTermsAndConditionsModal() {
+                $('[id$="termsAndConsitionsMCModal"]').css('display', 'none');
+            }
+
+            function changeContinueButtonState() {
+                if($('[id$="tcModalAgreeCheckbox"]').prop("checked"))
+                    $('[id$="tcModalConfirmButton"]').removeAttr('disabled');
+                else
+                    $('[id$="tcModalConfirmButton"]').attr('disabled','disabled');
             }
             </script>
         <div class="container">
@@ -225,13 +294,15 @@
                 <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
-                <apex:actionFunction action="{!deleteMCCase}" name="deleteMCCase" reRender="onGoingMultiCountryCases">
-                    <apex:param value="" name="mcCaseNumber" assignTo="{!mcCaseIdToDelete}"/>
-                </apex:actionFunction>    
-            
-                <div class="container" style="width: 100%">
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms">
+                    <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
+                </apex:actionFunction>
+                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="other-forms, DraftCases" oncomplete="rerenderAllSections();"/>
+                <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" rerender="other-forms, DraftCases, left-side-mc, left-side-regular" oncomplete="rerenderAllSections();"/>
+
+                <div class="container" style="width: 100%" id="allSections">
                     <div class="row">
-                        <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px; display: {!IF(isMultiCountryStarted, 'none', '')};">
+                        <section name="left-side-agency-accred" id="left-side-regular" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)), 'none', '')};">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -245,28 +316,33 @@
 
                                     <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
 
-                                    <br/>
-                                            
-                                    <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred))}" escape="false"/>
-                                            
-                                    <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /><br/>
-                                            
-                                    <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent')}"/><br/><br/>
-                                </div>
+                                <br/>
                                         
-                                <div class="col-md-5">
-                                    <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) ,$Label.ISSP_AMS_Apply_New_Travel_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
-                                </div>
+                                <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred))}" escape="false"/>
+                                        
+                                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /><br/>
+                                        
+                                <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent')}"/><br/><br/>
                             </div>
                                     
-                            <div class="row" style="padding-bottom: 20px">
-                                <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
-                                    <input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/><br/>
-                                            <apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/>
-                                </div>
-                                        
-                                <div class="col-md-5"/>
+                            <div class="col-md-5">
+                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
                             </div>
+                            <div class="col-md-5">
+                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(AND(isHOAccredited,con.Account.Location_Class__c=='R'), '','none')};"/>
+                            </div>
+                        </div>
+                                
+                        <div class="row" style="padding-bottom: 20px; {!IF(isMCNewAEAccredited, 'padding-top: 20px;', '')}">
+                            <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
+                                <input type="button" class="btn btn_iata_primary" onClick="proofOfPCI();return false;" value="{!$Label.ISSP_ANG_proof_PCI}"/><br/>
+                                        <apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/>
+                            </div>
+                                    
+                            <div class="col-md-5" >
+                                
+                            </div>
+                        </div>
 
                             <div class="row" style="padding-bottom: 20px">
                                 <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
@@ -288,7 +364,7 @@
                              </div>   
                         </section>
 
-                        <section name="left-side-agency-accred-multicountry" class="col-md-7" style="min-height: 350px; display: {!IF(isMultiCountryStarted, '', 'none')};">
+                        <section name="left-side-agency-accred-multicountry" id="left-side-mc" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)), '', 'none')};">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -302,27 +378,7 @@
                                 </div>
                             </div>
 
-                            <div class="row" style="padding-top: 20px">
-                                <div class="col-md-12">
-                                    <apex:pageBlock>
-                                        <apex:pageBlockTable id="onGoingMultiCountryCases" value="{!multiCountryApplicationCases}" var="mcCase" styleClass="table" rendered="{!mcApplicationCasesFound}">
-                                            
-                                            <apex:column headerValue="">
-                                                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!mcCase.Id}&step=5{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}">Modify &nbsp;</apex:outputLink>
-                                                
-                                                <apex:outputLink value="/ISSP_ANG_PAX_AE?caseId={!mcCase.Id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}">Edit &nbsp;</apex:outputLink>
-
-                                                <apex:commandLink immediate="true" onfocus="confirmMCCaseDelete('{!mcCase.Id}'); return false;" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}" reRender="">Remove</apex:commandLink>
-                                                
-                                            </apex:column>
-                        
-                                            <apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}" value="{!mcCase.Subject}" style="margin-left: {!IF(BEGINS(mcCase.Reason1__c, 'New AE'), '40px', 'none')};"/>
-                        
-                                            <apex:column value="{!mcCase.Portal_Case_Status__c}"/>
-                                        </apex:pageBlockTable>
-                                    </apex:pageBlock>
-                                </div>
-                            </div>
+                            <c:ISSP_MCStagingRecordTable/>
                         </section>
                             
                         <section name="right-side-agency-changes" class="col-md-5" style="min-height: 350px;">
@@ -340,7 +396,7 @@
                             </div>
                                     
                             <div class="row">
-                                <div class="col-md-12" style="padding-bottom: 10px;">
+                                <div class="col-md-12" style="padding-bottom: 10px; display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
                                     <input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}"/><br/>
                                         
                                     <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
@@ -354,7 +410,7 @@
                     </div>
                     
                     <div class="row">
-                        <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(isMultiCountryStarted, 'none', '')};">
+                        <section name="left-side-ongoing-apps" id="ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)), 'none', '')}">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -366,7 +422,7 @@
                                 <apex:pageBlock >
                                     <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
                                         <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', '&isMultiCountryNewAE=true&isMCNewAEAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                                             
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 
@@ -388,7 +444,7 @@
                                 
                         </section>
                             
-                        <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isMultiCountryStarted, 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                        <section name="right-side-other-forms" id="other-forms" class="col-md-5" style="display:{!IF(AND(isMultiCountryStarted, NOT(isMCNewAEAccredited)), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -482,6 +538,37 @@
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <!-- Modal GDI Portal App Request --> 
+                <div class="modal" id="termsAndConsitionsMCModal" tabindex="-1" role="dialog">
+                    <apex:outputPanel layout="block" id="myModalContent"> 
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button id="tcModalCloseButtonSecondary" type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="hideTermsAndConditionsModal();">&times;</button>
+                                    <h4 class="modal-title">{!$Label.OneId_TermsAndConditions}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        <b>
+                                            <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>
+                                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>
+                                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs3}"/>
+                                        </b>
+                                    </p>
+                                    <p>
+                                        <apex:inputCheckbox id="tcModalAgreeCheckbox" value="{!termsAndConditionsMC}" onchange="changeContinueButtonState();" required="true"/>
+                                        <apex:outputText value="&nbsp;{!$Label.ANG_ISSP_GDI_Agreement}" escape="false"/>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <apex:commandButton id="tcModalConfirmButton" styleClass="btn_iata_success btn" value="{!$Label.ISSP_PCI_Stay}" onclick="hideTermsAndConditionsModal(); submitMultiCountry(); return false;" reRender=""/>
+                                    <apex:commandButton id="tcModalCloseButton" styleClass="btn btn-secondary" value="{!$Label.IFAP_close}" onclick="hideTermsAndConditionsModal(); return false;" reRender=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
                 </div>
             </apex:form>
 

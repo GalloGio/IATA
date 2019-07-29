@@ -245,7 +245,7 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 					
 					from zqu__ProductRatePlan__c 
 					where  Id in : relevantProductRatePlanIdSet
-					order by zqu__ZProduct__r.zqu__EffectiveEndDate__c ASC, Id DESC
+					order by zqu__Product__r.zqu__EffectiveEndDate__c ASC, Id DESC
 					limit 100]);
 			
 				displayedProductRatePlanIdToObjectMap = prodRatePlanIdMap;

@@ -3,14 +3,13 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>SIS Help Desk</name>
     <queueMembers>
-        <publicGroups>
-            <publicGroup>IATASISHelpDeskAgent</publicGroup>
-        </publicGroups>
         <users>
             <user>minculesca@iata.org</user>
             <user>kordestana@iata.org</user>
-            <user>rousselb@iata.org</user>
             <user>charkovad@iata.org</user>
+            <user>filiutai@iata.org</user>
+            <user>tiwarik@iata.org</user>
+            <user>punditv@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

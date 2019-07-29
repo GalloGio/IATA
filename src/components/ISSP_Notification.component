@@ -11,7 +11,7 @@
 
     <style>
         /* The Modal (background) */
-        .modal {
+        .modalB {
             position: fixed;
             z-index: 1;
             left: 0;
@@ -80,7 +80,7 @@
             <apex:form >
                 <apex:actionFunction name="closeModal" action="{!closeModalPopup}" reRender="myModal" />
 
-                <div class="{!IF(showPopUp==true, 'modal showModal', 'modal notShowModal')}">
+                <div class="{!IF(showPopUp==true, 'modalB showModal', 'modalB notShowModal')}">
                     <div class="{!IF(showPopUp==true, 'modal-content', 'notShowModal modal-content')}" >
                         <div class="modal-header iataBlue">
                             <span class="close" onclick="closeModal(); return false;">&times;</span>

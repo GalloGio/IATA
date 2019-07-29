@@ -42,7 +42,7 @@ language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Po
   <BR/>  
   {!$Label.ANG_ISSP_Notify_Admin_app_req_1}
   
-  <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_AccessToService?mid=M4S2&ListViewName=ISSP_Pending_Approval">{!$Label.ISSP_Email_Here}</a>  
+  <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/s/manage-service?serviceId={!relatedTo.Portal_Application__c}">{!$Label.ISSP_Email_Here}</a> 
   
   {!$Label.ANG_ISSP_Notify_Admin_app_req_2}
 </apex:outputPanel>
@@ -52,7 +52,7 @@ language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Po
 
 <apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">
   {!IF(relatedTo.Portal_Application__r.Name = "Join BSP / CASS", $Label.ISSP_Email_AppReq_AccessRequest2, $Label.ISSP_Email_AppReq_AccessRequest )}
-  <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_AccessToService?mid=M4S2&ListViewName=ISSP_Pending_Approval">{!$Label.ISSP_Email_Here}</a>.<BR/>
+  <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/s/manage-service?serviceId={!relatedTo.Portal_Application__c}">{!$Label.ISSP_Email_Here}</a>.<BR/>
   <BR/>
   {!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
   <BR/>

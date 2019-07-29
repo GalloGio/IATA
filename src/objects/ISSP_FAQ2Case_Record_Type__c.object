@@ -105,6 +105,8 @@ the case field refers to &quot;IFAP_Country_ISO__c&quot; which is named &quot;CO
         <columns>RecordType__c</columns>
         <columns>OwnerId__c</columns>
         <columns>Country_concerned_by_the_query__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

@@ -17,31 +17,31 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     public Map<Id, Boolean> mapProduct2Id_Compliance;
     
     //TC map to know which countries don't have zip code
-	public Map<String, Boolean> zipCodeApplicableMap {
-		get{
-			return zipCodeApplicableMap != null ? zipCodeApplicableMap : new Map<String, Boolean>();
-		}
-		set;
-	}
+    public Map<String, Boolean> zipCodeApplicableMap {
+        get{
+            return zipCodeApplicableMap != null ? zipCodeApplicableMap : new Map<String, Boolean>();
+        }
+        set;
+    }
 
     public List<SelectOption> availableCountries{get{
-		if(availableCountries == null){
-			//TC get options and fill map zipCodeApplicable
-			Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
-			availableCountries = (List<SelectOption>) countries.get('options');
-			zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
-		}
-		return availableCountries;
-	}set;}
+        if(availableCountries == null){
+            //TC get options and fill map zipCodeApplicable
+            Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+            availableCountries = (List<SelectOption>) countries.get('options');
+            zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
+        }
+        return availableCountries;
+    }set;}
 
-	//TC 
-	public Boolean unlockZipCode {
-		get{
-			return newShipToAddress != null && !String.isBlank(newShipToAddress.countryCode) && 
-				zipCodeApplicableMap.get(newShipToAddress.countryCode) != null && zipCodeApplicableMap.get(newShipToAddress.countryCode);
-		}
-		set;
-	}
+    //TC 
+    public Boolean unlockZipCode {
+        get{
+            return newShipToAddress != null && !String.isBlank(newShipToAddress.countryCode) && 
+                zipCodeApplicableMap.get(newShipToAddress.countryCode) != null && zipCodeApplicableMap.get(newShipToAddress.countryCode);
+        }
+        set;
+    }
 
     public List<SelectOption> newAddressAvailableStates{get;set;}
 
@@ -164,6 +164,8 @@ global without sharing class IEC_ShippingController extends IEC_PageController
                 }
                 cartProducts = String.join( lstProductNames,' - ');
             }
+
+            cartProducts = JSON.serialize(cartProducts);
 
             return cartProducts;
 
@@ -467,17 +469,17 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     public Pagereference displayCallBackfailure() 
     {
         String errMsg = ApexPages.currentPage().getParameters().get('errMsg');
-		
+        
         PageReference curPage = new Pagereference(URL.getSalesforceBaseUrl().toExternalForm() + Site.getPathPrefix() + errMsg);
-		
-		system.debug('curPage ' + curPage.getParameters());
-		
-		Boolean validationError = false;
-		
+        
+        system.debug('curPage ' + curPage.getParameters());
+        
+        Boolean validationError = false;
+        
         List<String> validationErrors = new List<String>();
         for ( String errorField : IECErrorCodeMapping.ERROR_FIELD_MAPPING.keySet() ) {
-        	
-        	system.debug('errorField ' + errorField);
+            
+            system.debug('errorField ' + errorField);
             String errorFieldValue = curPage.getParameters().get( errorField ); 
             
             system.debug('errorFieldValue ' + errorFieldValue);
@@ -490,10 +492,10 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         
         //if No validation Error verified if they are some Transactions errors
         if(!validationError){
-        	String errorMessage = curPage.getParameters().get('errorMessage');
-        	if(errorMessage != null && errorMessage != ''){
-        		addErrorMessage(errorMessage);
-        	}
+            String errorMessage = curPage.getParameters().get('errorMessage');
+            if(errorMessage != null && errorMessage != ''){
+                addErrorMessage(errorMessage);
+            }
         }
         
         loadHPMIframe();
@@ -812,19 +814,19 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         
         //TC 2017-05-16
         if(!String.isBlank(newShipToAddress.street1) && newShipToAddress.street1.length() > 70) {
-        	addErrorMessage(Label.IEC_ShippingAddressLimit);
-        	hError = true;
-        	//return null;	
+            addErrorMessage(Label.IEC_ShippingAddressLimit);
+            hError = true;
+            //return null;  
         }      
         
         if(newShipToAddress != null && !String.isBlank(newShipToAddress.street1) && IECUtil.isPostOfficeBox(newShipToAddress.street1)) {
-        	addErrorMessage(Label.IEC_PO_BOX_ERROR);
-        	hError = true;
-        	//return null;
+            addErrorMessage(Label.IEC_PO_BOX_ERROR);
+            hError = true;
+            //return null;
         }
         
-        if(hError) {        	
-        	return null;	
+        if(hError) {            
+            return null;    
         }
         
 
@@ -1040,7 +1042,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
                     item.couponCode = null;
 
                     if(item.PriceInfo.couponPrice != null && item.PriceInfo.couponPrice.get(0).isFreeShipping)
-                    	item.chargeShipping = true;
+                        item.chargeShipping = true;
                     item.PriceInfo.couponPrice = null;
                     
                     //Apply the Coupon Code to the Order Item 
@@ -1260,16 +1262,16 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         if(!isShipToValid()) return null;
         
         //TC 2017-05-10 check if shipping adddess is a post office box
-	    
-	    if(sfOrder != null && !String.isBlank(sfOrder.ShippingStreet) && IECUtil.isPostOfficeBox(sfOrder.ShippingStreet)) {
-	    	addErrorMessage(Label.IEC_PO_BOX_ERROR);
-	    	return null;
-	    }	    
-	    
+        
+        if(sfOrder != null && !String.isBlank(sfOrder.ShippingStreet) && IECUtil.isPostOfficeBox(sfOrder.ShippingStreet)) {
+            addErrorMessage(Label.IEC_PO_BOX_ERROR);
+            return null;
+        }       
+        
         //Validate T&C
         if(!isTermsAccepted()) return null;
 
-    	//Validate payment method
+        //Validate payment method
 
         //Validation for the Total amount allowed for Credit card 
         Map<String,IEC_Payment_Threshold__c> paymentMethodThresholdByType = Order_Sel.getPaymentMethodThresholdByType();
@@ -1280,11 +1282,11 @@ global without sharing class IEC_ShippingController extends IEC_PageController
             return null;
         }
 
-		//Valide that customer have at lease on card selected if the payment method is credit card
-		if(sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && (orderCreditCardId == null || orderCreditCardId == '')){
-			addErrorMessage(Label.Credit_card_validation);
-		  	return null;
-		}
+        //Valide that customer have at lease on card selected if the payment method is credit card
+        if(sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && (orderCreditCardId == null || orderCreditCardId == '')){
+            addErrorMessage(Label.Credit_card_validation);
+            return null;
+        }
         
         //Validation for the minimun amount allowed for ICH
         IEC_Payment_Threshold__c thresholdForIch = paymentMethodThresholdByType.get(IECConstants.PaymentThresholdType_ICH);
@@ -1587,5 +1589,5 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         vfOrder.taxes                = totalTaxes;
         vfOrder.orderTotalAmount     = totalAmount;
     } //*** end of "calculateFreightTaxDTO"
-	
+    
 }

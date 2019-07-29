@@ -1,6 +1,53 @@
 @isTest
 private class ISSP_HomepageTest {
-    
+
+    @testSetup static void customSettingSetup() {
+        Portal_Applications__c insuranceApp = new Portal_Applications__c(Name = 'Insurance Providers',
+                                                                        ANG_Restrict_by_Agency_Category__c = 'IATA Passenger Sales Agent; IATA Cargo Agent',
+                                                                        Agency__c = true);
+        
+        Portal_Applications__c otherApp = new Portal_Applications__c(Name = 'Other', 
+                                                                    Agency__c = true,
+                                                                    ANG_Accredited_Agents_Only__c = true,
+                                                                    ANG_Restrict_by_Agency_Sector__c = 'Travel Agent');
+        insert new List<Portal_Applications__c>{insuranceApp, otherApp};
+    }
+
+    @isTest static void testServiceList() {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'Portugal', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
+                                    IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
+                                    IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'pt',
+                                    IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test', Region__c = 'Europe',
+                                    Informatica_Value__c = 'test', Hide_Tax_Number_VAT__c = true, ANG_Enable_NewGen__c = true,
+                                    AMS_Default_State__c = 'PT');
+        insert country;
+
+        Account a = new Account(Name = 'agency',
+                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                Location_Type__c = 'HE',
+                                Location_Class__c = 'P',
+                                Status__c = 'Approved',
+                                Sector__c = 'Travel Agent',
+                                Category__c = 'IATA Passenger Sales Agent',
+                                IATA_ISO_Country__c = country.Id);
+        insert a;
+
+        Contact c = ISSP_ObjectFactory.createNewContact();
+        c.Email = 'hey@hdasoojdihu.com';
+        c.AccountId = a.Id;
+        c.Financial_Assessment_Contact__c = true;
+        insert c;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(c);
+        c.OwnerId = newUser.Id;
+        update c;
+
+        Test.startTest();
+        System.runAs(newUser) {
+            ISSP_Homepage ctrl = new ISSP_Homepage();
+        }
+        Test.stopTest();
+    }
    
     public static testMethod void testISSP_HomepageTest() {
         
@@ -38,9 +85,10 @@ private class ISSP_HomepageTest {
         //insert con3;
         
         FAQ__kav FAQkav;
-        Portal_news__kav Portal_newska;
-        Content__kav Contentkav;
-        How_To__kav howTokav ;  
+        //Portal_news__kav Portal_newska;
+        //+++kb migration vanja
+        //Content__kav Contentkav;
+        //How_To__kav howTokav ;  
         Test.startTest() ;
         //system.runAs(adminUser){
             
@@ -51,32 +99,32 @@ private class ISSP_HomepageTest {
             FAQkav.UrlName = 'test00qwe';
             FAQkav.Title ='Test';
             //FAQkav.PublishStatus='Online';
-            FAQkav.To_display_on_Homepage__c=true;
+            //FAQkav.To_display_on_Homepage__c=true;
             insert FAQkav;
             
-            Portal_newska =  (Portal_news__kav)ISSP_ObjectFactory.createSObject('Portal_news__kav',false,6);
-            Portal_newska.Language='en_US';
-            Portal_newska.UrlName = 'test1qwefghgf';
-            Portal_newska.Title = 'test001';
+            //Portal_newska =  (Portal_news__kav)ISSP_ObjectFactory.createSObject('Portal_news__kav',false,6);
+            //Portal_newska.Language='en_US';
+            //Portal_newska.UrlName = 'test1qwefghgf';
+            //Portal_newska.Title = 'test001';
             //Portal_newska.PublishStatus='Online';
-            Portal_newska.To_display_on_Homepage__c=true;
-            insert Portal_newska;
-            
-            Contentkav =  (Content__kav)ISSP_ObjectFactory.createSObject('Content__kav',false,11);
-            Contentkav.Language='en_US';
-            Contentkav.UrlName = 'test2qweghfgh';
-            Contentkav.Title='test2';
+            //Portal_newska.To_display_on_Homepage__c=true;
+            //insert Portal_newska;
+            //+++kb migration vanja
+            //Contentkav =  (Content__kav)ISSP_ObjectFactory.createSObject('Content__kav',false,11);
+            //Contentkav.Language='en_US';
+            //Contentkav.UrlName = 'test2qweghfgh';
+            //Contentkav.Title='test2';
             //Contentkav.PublishStatus='Online';
-            Contentkav.To_display_on_Homepage__c=true;
-            insert Contentkav;
+            //Contentkav.To_display_on_Homepage__c=true;
+            //insert Contentkav;
             
-            howTokav =  (How_To__kav)ISSP_ObjectFactory.createSObject('How_To__kav',false,12);
-            howTokav.Language='en_US';
-            howTokav.UrlName = 'test2qwesdf';
-            howTokav.Title='test2';
+            //howTokav =  (How_To__kav)ISSP_ObjectFactory.createSObject('How_To__kav',false,12);
+            //howTokav.Language='en_US';
+            //howTokav.UrlName = 'test2qwesdf';
+            //howTokav.Title='test2';
             //howTokav.PublishStatus='Online';
-            howTokav.To_display_on_Homepage__c=true;
-            insert howTokav;
+            //howTokav.To_display_on_Homepage__c=true;
+            //insert howTokav;
             
         //}
         
@@ -94,11 +142,12 @@ private class ISSP_HomepageTest {
             ctrl.isLogined();  
             ctrl.populateVariables();
             ISSP_Homepage.KnowledgeArticleVersionWrapper kbv= new ISSP_Homepage.KnowledgeArticleVersionWrapper(FAQkav);
-            ISSP_Homepage.KnowledgeArticleVersionWrapper kbv1= new ISSP_Homepage.KnowledgeArticleVersionWrapper(Portal_newska);
-            ISSP_Homepage.KnowledgeArticleVersionWrapper kbv2= new ISSP_Homepage.KnowledgeArticleVersionWrapper(Contentkav);
-            ISSP_Homepage.KnowledgeArticleVersionWrapper kbv3= new ISSP_Homepage.KnowledgeArticleVersionWrapper(howTokav);
-            kbv2.compareTo(kbv1);
-            kbv1.compareTo(kbv2);
+            //ISSP_Homepage.KnowledgeArticleVersionWrapper kbv1= new ISSP_Homepage.KnowledgeArticleVersionWrapper(Portal_newska);
+            //+++kb migration vanja
+            //ISSP_Homepage.KnowledgeArticleVersionWrapper kbv2= new ISSP_Homepage.KnowledgeArticleVersionWrapper(Contentkav);
+            //ISSP_Homepage.KnowledgeArticleVersionWrapper kbv3= new ISSP_Homepage.KnowledgeArticleVersionWrapper(howTokav);
+            //kbv2.compareTo(kbv1);
+            //kbv1.compareTo(kbv2);
             
             Portal_Applications__c app = new Portal_Applications__c(Name = 'Test Method App'); 
             insert app;
@@ -200,6 +249,7 @@ private class ISSP_HomepageTest {
         
         system.runAs(newUser4){
             ISSP_Homepage ctrl = new ISSP_Homepage();
+            system.AssertEquals(ctrl.isPortalNavigationBar,true);
         }
         
         system.runAs(newUser5){
