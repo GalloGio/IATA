@@ -138,6 +138,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         serviceDetail.External_Actor_Id__c = 'ExtTestId001';
         serviceDetail.Data_Submission_Period__c = submissionPeriod.Id;
         serviceDetail.Submission_Period_Extension__c = 30;
+        serviceDetail.Periods_without_data_submission_notify__c = 2;
         insert serviceDetail;
 
         GADM_Account_Service_Detail__c serviceDetail2 = new GADM_Account_Service_Detail__c();
@@ -146,6 +147,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         serviceDetail2.Active_User_Count__c = 10;
         serviceDetail2.External_Actor_Id__c = 'ExtTestId002';
         serviceDetail2.Data_Submission_Period__c = submissionPeriod.Id;
+        serviceDetail2.Periods_without_data_submission_notify__c = 2;
         insert serviceDetail2;
 
         Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
@@ -535,7 +537,7 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
         User testUser = [SELECT Id FROM User WHERE Email = 'leo.black.test@somedomain.com'];
         Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account 2'];
 
-        List<String> statusValues = getPicklistValues('Data_Submission__c', 'Status__c');
+        List<String> statusValues = new List<String>{'File processed'};
         List<String> typeValues = getPicklistValues('Data_Submission__c', 'Type__c');
 
         Date today = Date.today();
@@ -572,6 +574,69 @@ public with sharing class GADM_DataSubmissionPeriodHelper_TEST {
 
         System.assertEquals('sent', result, 'Notification emails should be correctly sent!');
         System.assertEquals(1, timesSent, 'Email should be sent!');
+
+    }
+
+    @IsTest
+    private static void notifyContacts_notSubmittingTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'leo.black.test@somedomain.com'];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test account'];
+
+        Contact testContact1 =[SELECT Id FROM Contact WHERE FirstName = 'Neo' AND LastName = 'Smith'];
+        Contact testContact2 =[SELECT Id FROM Contact WHERE FirstName = 'Jack' AND LastName = 'Lincoln'];
+
+        List<String> statusValues = new List<String>{'File processed'};
+        List<String> typeValues = getPicklistValues('Data_Submission__c', 'Type__c');
+
+        Date today = Date.today();
+        Date submissionDate = Date.newInstance(today.year(), 4, 5);
+
+        Data_Submission__c dataSubmission = new Data_Submission__c();
+        dataSubmission.Account__c = testAccount.Id;
+        dataSubmission.Submission_date__c = submissionDate;
+        dataSubmission.External_Actor_Id__c = 'ExtTestId002';
+        dataSubmission.Original_User__c = testUser.Id;
+        dataSubmission.Submitter__c = testUser.Id;
+        dataSubmission.Status__c = statusValues[0];
+        dataSubmission.Type__c = typeValues[0];
+
+        insert dataSubmission;
+
+        Data_Submission__c dataSubmission2 = new Data_Submission__c();
+        dataSubmission2.Account__c = testAccount.Id;
+        dataSubmission2.Submission_date__c = submissionDate.addDays(1);
+        dataSubmission2.External_Actor_Id__c = 'ExtTestId002';
+        dataSubmission2.Original_User__c = testUser.Id;
+        dataSubmission2.Submitter__c = testUser.Id;
+        dataSubmission2.Status__c = statusValues[0];
+        dataSubmission2.Type__c = typeValues[0];
+
+        insert dataSubmission2;
+
+
+        Date testDate = Date.newInstance(today.year(), 4, 8);
+
+        Map<String, List<GADM_DataSubmissionPeriodHelper.NotificationWrapper>> result = new Map<String, List<GADM_DataSubmissionPeriodHelper.NotificationWrapper>>();
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            result = GADM_DataSubmissionPeriodHelper.notifyContactsBySubmissionPeriods(testDate);
+
+        }
+
+        Test.stopTest();
+
+        List<GADM_DataSubmissionPeriodHelper.NotificationWrapper> notSubmitting = result.get('NotSubmitting');
+        System.assertEquals(1, notSubmitting.size());
+
+        List<Id> contacts = notSubmitting[0].contactsNotSubmitting;
+        System.assertEquals(true, notSubmitting[0].accountName == 'Test account 2', 'Data for wrong account retrieved!');
+        System.assertEquals(true, contacts.contains(testContact1.Id), 'Contact id missing among notified contacts!');
+        System.assertEquals(true, contacts.contains(testContact2.Id), 'Contact id missing among notified contacts!');
+
 
     }
 

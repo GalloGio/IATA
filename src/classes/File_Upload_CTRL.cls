@@ -35,12 +35,16 @@ public without sharing class File_Upload_CTRL {
         return info;
     }
 
-
+    //filter out accounts that do not have External_Actor_Id__c set
+    //and Accounts that are not Active and Effective
     private static List<Account> checkRelatedExternalActorId(List<Account> accounts) {
         List<Account> toReturn = new List<Account>();
 
         if(! accounts.isEmpty()) {
-            List<Account_Role__c> accountRoles = [SELECT Id, Account__c FROM Account_Role__c WHERE Account_Roles__r.Name = 'GADM Participant' AND Account__c = :accounts];
+
+            Date today = System.today();
+
+            List<Account_Role__c> accountRoles = [SELECT Id, Account__c FROM Account_Role__c WHERE Account_Roles__r.Name = 'GADM Participant' AND Status__c = 'Active' AND Effective_From_Date__c <= :today AND Effective_To_Date__c >= :today AND Account__c = :accounts];
 
             List<GADM_Account_Service_Detail__c> serviceDetails = [SELECT Id, Account_Role_Service__r.Account_Role__r.Account__c FROM GADM_Account_Service_Detail__c WHERE (External_Actor_Id__c != null AND External_Actor_Id__c != '') AND Account_Role_Service__r.Account_Role__c = :accountRoles];
             
@@ -85,7 +89,7 @@ public without sharing class File_Upload_CTRL {
 
         if(String.isNotBlank(contactId)) {
             List<User> users = [SELECT Id FROM User WHERE ContactId =:contactId];
-            if(! users.isEmpty()) {
+            if(users != null && users.size() > 0) {
                 return users[0].Id;
             }
         }

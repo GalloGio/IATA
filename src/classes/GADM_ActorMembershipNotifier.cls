@@ -164,12 +164,11 @@ public without sharing class GADM_ActorMembershipNotifier {
 
                 //active gadm users with active power user role
                 Set<Id> gadmAndPowerUsers = new Set<Id>();
-                for(Id accountId : accountToPowerUsersMap.keySet()) {
+                for(Id accountId : accountToGadmUsersMap.keySet()) {
                     if(accountToGadmUsersMap.get(accountId) == null) {continue;}
                     if(accountToPowerUsersMap.get(accountId) == null) {continue;}
                     List<Id> powerUsers = accountToPowerUsersMap.get(accountId);
                     List<Id> gadmUser = accountToGadmUsersMap.get(accountId);
-                    if(powerUsers == null || gadmUser == null) {continue;}
                     for(Id powerUserId : powerUsers) {
                         if(gadmUser.contains(powerUserId)) {
                             gadmAndPowerUsers.add(powerUserId);

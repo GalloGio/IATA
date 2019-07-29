@@ -77,6 +77,42 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
         return accountDataSubmissions;
     }
 
+    private static Map<Id, Datetime> getAccountsNewestDataSubmission(Map<Id, Datetime> accountToTargetDateMap) {
+
+        Map<Id, Datetime> accountToNewestSubmissionDate = new Map<Id, Datetime>();
+
+        if(accountToTargetDateMap.isEmpty()) {
+            return accountToNewestSubmissionDate;
+        }
+
+        Datetime oldest = System.today();
+        for(Datetime d : accountToTargetDateMap.values()) {
+            if(d < oldest) {
+                oldest = d;
+            }
+        }
+
+        List<Data_Submission__c> dataSubmissions = [SELECT Id, Account__c, Submission_date__c FROM Data_Submission__c WHERE Account__c = :accountToTargetDateMap.keySet() AND Submission_date__c >= :oldest AND (Status__c = 'File processed' OR Status__c = 'Accepted for Processing' OR Status__c = 'Submitted')];
+        for(Data_Submission__c dataSubmission : dataSubmissions) {
+            if(accountToNewestSubmissionDate.get(dataSubmission.Account__c) == null) {
+                accountToNewestSubmissionDate.put(dataSubmission.Account__c, dataSubmission.Submission_date__c);
+            }else{
+                Datetime existing = accountToNewestSubmissionDate.get(dataSubmission.Account__c);
+                if(existing < dataSubmission.Submission_date__c) {
+                    accountToNewestSubmissionDate.put(dataSubmission.Account__c, dataSubmission.Submission_date__c);
+                }
+            }
+        }
+
+        for(Id accountId : accountToTargetDateMap.keySet()) {
+            if(accountToNewestSubmissionDate.get(accountId) == null) {
+                accountToNewestSubmissionDate.put(accountId, null);
+            }
+        }
+        
+        return accountToNewestSubmissionDate;
+    }
+
     private static Map<Id, List<Contact_Role_Service_Access__c>> getActiveUsersForAccounts(List<Id> allAccounts){
         Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
         List<Account_Contact_Role__c> grantedAccounts = [SELECT Id, Contact__c, Contact_Roles__c, Account_Role__r.Account__c FROM Account_Contact_Role__c
@@ -227,6 +263,75 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
         return accountAccess;
     }
 
+
+    private static Map<Id, List<Id>> getActiveSuperUsersForAccount(Map<Id, List<Contact_Role_Service_Access__c>> activeUsersForAccount) {
+        Map<Id, List<Id>> activeSuperUsersToAccountMap = new Map<Id, List<Id>>();
+
+        Set<Id> contactIds = new Set<Id>();
+        for(Id accountId : activeUsersForAccount.keySet()) {
+            if(activeUsersForAccount.get(accountId) == null) {continue;}
+            List<Contact_Role_Service_Access__c> accesses = activeUsersForAccount.get(accountId);
+            for(Contact_Role_Service_Access__c access : accesses) {
+                contactIds.add(access.Contact__c);
+            }
+        }
+
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+        List<Contact_Role_Service_Access__c> grantedAccesses = [SELECT Id, Contact_Roles_Name__c, Contact__c, Account__c FROM Contact_Role_Service_Access__c WHERE Contact__c = :contactIds AND Status__c = 'Granted' AND Service_Name__c = 'GADM' AND Contact_Role__r.RecordTypeId = :functionalRecordTypeId AND (Contact_Roles_Name__c = 'GADM User' OR Contact_Roles_Name__c = 'Service Super User')];
+
+        Map<Id, List<Id>> accountToGadmUsersMap = new Map<Id, List<Id>>();
+        for(Contact_Role_Service_Access__c access : grantedAccesses) {
+            if(access.Contact_Roles_Name__c == 'GADM User') {
+                if(accountToGadmUsersMap.get(access.Account__c) ==  null) {
+                    accountToGadmUsersMap.put(access.Account__c, new List<Id>{access.Contact__c});
+                }else{
+                    accountToGadmUsersMap.get(access.Account__c).add(access.Contact__c);
+                }
+
+            }
+        }
+
+
+        Map<Id, List<Id>> accountToSuperUsersMap = new Map<Id, List<Id>>();
+        for(Contact_Role_Service_Access__c access : grantedAccesses) {
+            if(access.Contact_Roles_Name__c == 'Service Super User') {
+                if(accountToSuperUsersMap.get(access.Account__c) == null) {
+                    accountToSuperUsersMap.put(access.Account__c, new List<Id>{access.Contact__c});
+                }else{
+                    accountToSuperUsersMap.get(access.Account__c).add(access.Contact__c);
+                }
+            }
+        }
+
+        Set<Id> gadmAndSuperUsers = new Set<Id>();
+        for(Id accountId : accountToGadmUsersMap.keySet()) {
+            if(accountToGadmUsersMap.get(accountId) == null) {continue;}
+            if(accountToSuperUsersMap.get(accountId) == null) {continue;}
+            List<Id> superUsers = accountToSuperUsersMap.get(accountId);
+            List<Id> gadmUsers = accountToGadmUsersMap.get(accountId);
+            for(Id superUserId : superUsers) {
+                if(gadmUsers.contains(superUserId)) {
+                    gadmAndSuperUsers.add(superUserId);
+                }
+            }
+
+        }
+
+
+        Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
+        List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact__c, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c = :gadmAndSuperUsers AND Account_Role__r.Account__c = :activeUsersForAccount.keySet() AND RecordTypeId = :groupRecordTypeId AND Contact_Roles__r.Name = 'GADM User' AND Service_Rendered__c =  'GADM'];
+
+        for(Account_Contact_Role__c contactRole : accountContactRoles) {
+            if(activeSuperUsersToAccountMap.get(contactRole.Account_Role__r.Account__c) == null) {
+                activeSuperUsersToAccountMap.put(contactRole.Account_Role__r.Account__c, new List<Id>{contactRole.Contact__c});
+            }else{
+                activeSuperUsersToAccountMap.get(contactRole.Account_Role__r.Account__c).add(contactRole.Contact__c);
+            }
+        }
+
+        return activeSuperUsersToAccountMap;
+    }
+
     private static Map<Id, Id> getActorsBySubmisionPeriod(Set<Id> periodIds){
         Map<Id, Id> accounts = new  Map<Id, Id>();
         List<GADM_Account_Service_Detail__c> details = [Select Id, Account_Role_Service__r.Account_Role__r.Account__c, Data_Submission_Period__c  From GADM_Account_Service_Detail__c WHERE Data_Submission_Period__c =: (periodIds)];
@@ -238,6 +343,18 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
         return accounts;
     }
 
+    private static Map<Id, GADM_Account_Service_Detail__c> getServiceDetailsByActor(Set<Id> actorIds) {
+        Map<Id, GADM_Account_Service_Detail__c> toReturn = new Map<Id, GADM_Account_Service_Detail__c>();
+
+        List<GADM_Account_Service_Detail__c> details = [SELECT Id, Account_Role_Service__r.Account_Role__r.Account__c, Periods_without_data_submission_notify__c FROM GADM_Account_Service_Detail__c WHERE Account_Role_Service__r.Account_Role__r.Account__c = :actorIds];
+        for(GADM_Account_Service_Detail__c detail : details) {
+            toReturn.put(detail.Account_Role_Service__r.Account_Role__r.Account__c, detail);
+        }
+
+        return toReturn;
+    }
+
+    @TestVisible
     private static Map<String, List<NotificationWrapper>> notifyContactsBySubmissionPeriods(Date testDate){
         Map<Id, SubmissionPeriodCurrentData> periods = getAllPeriodsWithCurrentData(testDate);
         Set<Id> upcomingPeriods = new Set<Id>();
@@ -333,8 +450,98 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
                 inDueNotificationWrappers.add(notificationWrapper);
             }
         }
-
         contactToBeNotifiedWrapperMap.put('InDue', inDueNotificationWrappers);
+
+        Map<Id, GADM_Account_Service_Detail__c> serviceDetailToAccountMap = getServiceDetailsByActor(inDuePeriodAccounts.keySet());
+
+        Map<Id, Datetime> accountToTargetDateMap = new Map<Id, Datetime>();
+        Map<Id, Integer> monthsNotSubmittingMap = new Map<Id, Integer>();
+
+        for(Id accountId :inDuePeriodAccounts.keySet()){
+
+            Id periodId = inDuePeriodAccounts.get(accountId);
+            if (periodId == null){
+                continue;
+            }
+
+            SubmissionPeriodCurrentData period = periods.get(periodId);
+            if (period == null){
+                continue;
+            }
+
+            GADM_Account_Service_Detail__c detail = serviceDetailToAccountMap.get(accountId);
+            if(detail == null) {
+                continue;
+            }
+
+            Date periodStartDate = period.CurrentPeriodStart;
+            Integer periodLength = (Integer)period.period.Period_Length__c;
+            Integer periodsWithoutSubmissions = (Integer)detail.Periods_without_data_submission_notify__c;
+
+            if(periodStartDate == null) {continue;}
+            if(periodLength == null) {continue;}
+            if(periodsWithoutSubmissions == null) {continue;}
+
+            Datetime targetDate = periodStartDate.addMonths((periodLength*periodsWithoutSubmissions) * (-1));
+            accountToTargetDateMap.put(accountId, targetDate);
+            monthsNotSubmittingMap.put(accountId, (periodLength*periodsWithoutSubmissions));
+
+        }
+
+
+        List<Id> accountsInDueMore = new List<Id>();
+
+        Map<Id, Datetime> accountsToNewestDataSubmissionMap = getAccountsNewestDataSubmission(accountToTargetDateMap);
+        for(Id accId : accountToTargetDateMap.keySet()) {
+
+            //account do not have any submission from target date
+            if(accountsToNewestDataSubmissionMap.get(accId) == null) {
+
+                accountsInDueMore.add(accId);
+
+            }else{
+
+                Datetime newestSubmissionDate = accountsToNewestDataSubmissionMap.get(accId);
+                Datetime targetDate = accountToTargetDateMap.get(accId);
+                if(newestSubmissionDate == null) {continue;}
+                if(targetDate == null) {continue;}
+
+                if(targetDate > newestSubmissionDate) {
+
+                    accountsInDueMore.add(accId);
+
+                }
+            }
+        }
+
+
+        List<NotificationWrapper> notSubmittingNotificationWrappers = new List<NotificationWrapper>();
+
+        Map<Id, List<Id>> activeSuperUsersForAccount = getActiveSuperUsersForAccount(accountAccess);
+
+        for(Id accountId : accountsInDueMore) {
+
+            List<Id> contacts = activeSuperUsersForAccount.get(accountId);
+            if(contacts != null && contacts.size() > 0) {
+
+                if(acocunts.get(accountId) == null) {continue;}
+
+                String monthsNotSubmitting = '';
+                if(monthsNotSubmittingMap.get(accountId) != null) {
+                    monthsNotSubmitting = String.valueOf(monthsNotSubmittingMap.get(accountId));
+                }
+
+                NotificationWrapper notificationWrapper = new NotificationWrapper();
+                notificationWrapper.accountName = acocunts.get(accountId).Name;
+                notificationWrapper.monthsNotSubmitting = monthsNotSubmitting;
+                notificationWrapper.contactsNotSubmitting = activeSuperUsersForAccount.get(accountId);
+
+                notSubmittingNotificationWrappers.add(notificationWrapper);
+            }
+        }
+
+        contactToBeNotifiedWrapperMap.put('NotSubmitting', notSubmittingNotificationWrappers);
+
 
         return contactToBeNotifiedWrapperMap;
     }
@@ -360,6 +567,16 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             }
         }
 
+        List<NotificationWrapper> notSubmittingNotificationWrappers = notificationsWrapperMap.get('NotSubmitting'); {
+            if(! notSubmittingNotificationWrappers.isEmpty()) {
+                EmailTemplate notSubmittingEmailTemplate = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName =: 'Data_Submission_NotSubmitting'];
+
+                for(NotificationWrapper wrapper : notSubmittingNotificationWrappers) {
+                    wrapper.emailTemplate = notSubmittingEmailTemplate;
+                }
+            }
+        }
+
         return notificationsWrapperMap;
     }
 
@@ -369,6 +586,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
         List<NotificationWrapper> upcomingNotificationWrappers = notificationsWrapperMap.get('Upcoming');
         List<NotificationWrapper> inDueNotificationWrappers = notificationsWrapperMap.get('InDue');
+        List<NotificationWrapper> notSubmittingWrappers = notificationsWrapperMap.get('NotSubmitting');
 
         List<Messaging.SingleEmailMessage> allmsg = new List<Messaging.SingleEmailMessage>();
 
@@ -409,6 +627,26 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
             }
         }
 
+        for(NotificationWrapper notSubmittingWrapper : notSubmittingWrappers) {
+
+            List<Id> accesses = notSubmittingWrapper.contactsNotSubmitting;
+            String accountName = notSubmittingWrapper.accountName;
+            String monthsNotSubmitting = notSubmittingWrapper.monthsNotSubmitting;
+
+            for(Id contactId : accesses) {
+                Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(notSubmittingWrapper.emailTemplate.Id, contactId, null);
+                String bodyHtml = mail.getHtmlBody();
+                String replacedHtmlbody = bodyHtml.replace('*actor*', accountName).replace('*monthsNotSubmitting*', String.valueOf(monthsNotSubmitting));
+                mail.setHtmlBody(replacedHtmlBody);
+
+                String bodyText = mail.getPlainTextBody();
+                String replacedTextbody = bodyText.replace('*actor*', accountName).replace('*monthsNotSubmitting*', String.valueOf(monthsNotSubmitting));
+                mail.setPlainTextBody(replacedTextBody);
+                mail.setUseSignature(false);
+                allmsg.add(mail);
+            }
+        }
+
         try {
             Messaging.sendEmail(allmsg,false);
             return 'sent';
@@ -425,6 +663,8 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
         public Date submissionStart {get; set;}
         public Date submissionEnd {get; set;}
         public string accountName {get; set;}
+        public String monthsNotSubmitting {get; set;}
+        public List<Id> contactsNotSubmitting {get; set;}
     }
 
     public class SubmissionPeriodCurrentData{

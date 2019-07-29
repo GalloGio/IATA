@@ -23,14 +23,22 @@ public class File_Upload_CTRL_TEST {
         accountRoles.Name = 'GADM Participant';
         insert accountRoles;
 
+        Date today = System.today();
+
         Account_Role__c accountRole = new Account_Role__c();
         accountRole.Account__c = testAccount.Id;
         accountRole.Account_Roles__c = accountRoles.Id;
+        accountRole.Effective_From_Date__c = today.addDays(-10);
+        accountRole.Effective_To_Date__c = today.addDays(10);
+        accountRole.Status__c = 'Active';
         insert accountRole;
 
         Account_Role__c accountRole2 = new Account_Role__c();
         accountRole2.Account__c = testAccount2.Id;
         accountRole2.Account_Roles__c = accountRoles.Id;
+        accountRole2.Effective_From_Date__c = today.addDays(-10);
+        accountRole2.Effective_To_Date__c = today.addDays(10);
+        accountRole2.Status__c = 'Active';
         insert accountRole2;
 
         Contact_Roles__c contactRoles = new Contact_Roles__c();
