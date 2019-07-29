@@ -54,9 +54,9 @@ ul li, ol li {
         }
         
         body .bPageBlock .pbBody .pbSubheader {
-        	background-image: url('') !important;
-        	background-color:  #1797C0 !important;
-        	color: #fff !important;
+            background-image: none !important;
+            background-color: #1e32fa;
+            color: #fff;
         }
         
         .bPageBlock {
