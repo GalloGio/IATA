@@ -702,7 +702,6 @@ Name
         <unique>false</unique>
     </fields>
     <fields>
-        <fields>
         <fullName>Service_Description__c</fullName>
         <externalId>false</externalId>
         <formula>IF( NOT(ISNULL(Service_Description_List_A__c))  , Service_Description_List_A__c,
@@ -716,7 +715,7 @@ Name
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
+        </fields>
     <fields>
         <fullName>Service_Description_List_A__c</fullName>
         <description>Contains first portion of Portal Services Description Labels</description>
