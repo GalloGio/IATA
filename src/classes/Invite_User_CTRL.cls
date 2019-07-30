@@ -1,5 +1,9 @@
 public without sharing class Invite_User_CTRL {
-
+	@AuraEnabled 
+    public static user getCurrenthUserInfo(){     
+      	User oUser = [select id, UserType FROM User Where id =: userInfo.getUserId()];
+        return oUser;
+    }
     @AuraEnabled
     public static List<Account> getGadmActors() {
         List<Account> gadmActors = new List<Account>();

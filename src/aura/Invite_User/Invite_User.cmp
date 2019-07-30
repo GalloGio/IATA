@@ -13,6 +13,7 @@
 
     <!--ARE WE IN LIGHTNING OR CLASSIC?-->
     <aura:attribute name="theme" type="String" default="Theme4d"/>
+    <aura:attribute name="userType" type="String" default="Standard"/>
 
     <!--EVENTS-->
     <aura:registerEvent name="Back_EVT" type="c:GADM_ExternalUserContactList_EVT"/>
@@ -116,8 +117,8 @@
                         <li class="slds-form-element__help inblock">{!$Label.c.GADM_User_Invitation_job_function_help_text}</li>
                     </ul>
                 </div>
-
-                <aura:if isTrue="{! v.theme != 'Theme4d'}">
+				
+                <aura:if isTrue="{! v.userType == 'Standard'}">
                     <div class="slds-col--padded  slds-size--1-of-1">
                         <label class="slds-form-element__label">{!$Label.c.GADM_Power_User}</label>
                     </div>

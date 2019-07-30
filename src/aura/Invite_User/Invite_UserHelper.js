@@ -28,6 +28,15 @@
         });
         $A.enqueueAction(action);
     },
+    currentUserType: function(component) {
+        var action = component.get("c.getCurrenthUserInfo");
+        action.setCallback(this, function(a) {
+            component.set("v.userType", a.getReturnValue().UserType);
+            this.getActors(component);
+        });
+        $A.enqueueAction(action);
+    },
+	
     jobFunctionOptions: function(component) {
         var action = component.get("c.getContactJobFunctionValues");
         action.setCallback(this, function(a) {
@@ -35,7 +44,7 @@
         });
         $A.enqueueAction(action);
     },
-
+    
     handleInviteUser : function(component, event) {
         if(this.checkRequiredFields(component, event)) {
             this.toggleSpinner(component);
@@ -95,13 +104,11 @@
     },
 
     getActors: function(component) {
-        let theme = component.get('v.theme');
-        if(theme === 'Theme4d') {
-            //lightning
-            this.getActorsForExternalUser(component, event);
+        let userType = component.get('v.userType');
+        if(userType === 'Standard') {
+            this.getActorsForInternalUser(component, event);            
         }else{
-            //classic
-            this.getActorsForInternalUser(component, event);
+            this.getActorsForExternalUser(component, event);
         }
 
 	},
@@ -223,17 +230,16 @@
     },
 
     disableContent : function(component, event) {
-        let theme = component.get('v.theme');
-        if(theme === 'Theme4d') {
+        let userType = component.get('v.userType');
+        if(userType === 'Standard') {
+            let form = component.find('form');
+            form.getElement().classList.add('disabled');
+        }else{
             let form = component.find('form');
             let container = component.find('v.container');
             $A.util.removeClass(container, 'slds-hide');
-            $A.util.addClass(form, 'disabled');
-        }else{
-            let form = component.find('form');
-            form.getElement().classList.add('disabled');
+            $A.util.addClass(form, 'disabled');            
         }
-
     },
 
 

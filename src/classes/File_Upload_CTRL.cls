@@ -18,7 +18,7 @@ public without sharing class File_Upload_CTRL {
         UserInformation info = new UserInformation();
         if(String.isNotBlank(userId)) {
             List<User> users = [SELECT Id, UserType FROM User WHERE Id = :userId];
-            if(users[0].UserType == 'PowerPartner') {//external user
+            if(users[0].UserType != 'Standard') {//external user
                 List<Account> userActors = Contact_Roles_Helper.getUserAccounts(userId);
                 List<Account> accountsWithExternalActorIdSet = checkRelatedExternalActorId(userActors);
 

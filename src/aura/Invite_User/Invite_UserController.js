@@ -1,8 +1,9 @@
 ({
     doInit : function(cmp, event, helper) {
-    	helper.contactLabels(cmp);
+    	helper.currentUserType(cmp);
+        helper.contactLabels(cmp);
     	helper.jobFunctionOptions(cmp);
-        helper.getActors(cmp);
+        //helper.getActors(cmp);        
 	},
     validateNumber : function(c, e, h){
         var input = c.find(e.getSource().getLocalId());
