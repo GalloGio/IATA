@@ -2195,7 +2195,10 @@ public without sharing class ISSP_AMS_Accreditation {
     private String getLocationClass() {
         String locationClass = 'P';
 
-        if (sectorValue.StartsWith('Cargo_Agent')) {
+        if(newForm.Local_Agent_Type__c == 'Domestic'){
+            locationClass = 'D';
+        }
+        else if (sectorValue.StartsWith('Cargo_Agent')) {
             if (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary')
                 locationClass = 'C';
             else if (newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE)
