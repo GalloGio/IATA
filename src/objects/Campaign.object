@@ -474,6 +474,27 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
     <fields>
         <fullName>UniqueMarketingLinkClicks</fullName>
     </fields>
+    <fields>
+        <fullName>pi__Pardot_Campaign_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>The Pardot identifier for the connected campaign record</description>
+        <externalId>true</externalId>
+        <label>Pardot Campaign Id</label>
+        <length>10</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>pi__Pardot_Has_Dependencies__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Determines if Pardot has marketing assets using this campaign</description>
+        <externalId>false</externalId>
+        <label>Pardot Has Dependencies</label>
+        <type>Checkbox</type>
+    </fields>
     <listViews>
         <fullName>Advertising22</fullName>
         <columns>CAMPAIGN.NAME</columns>
@@ -805,5 +826,16 @@ else {
         <openType>sidebar</openType>
         <protected>false</protected>
         <url>https://members.s6.exacttarget.com/Integration/SalesforceUI/EmailSend.aspx?sendtype=Campaign&amp;sfid={!Campaign.Id}&amp;sessid={!API.Session_ID}&amp;sessurl={!API.Partner_Server_URL_60}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>pi__Send_Single_Pardot_Email</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Send Engage Email</masterLabel>
+        <openType>sidebar</openType>
+        <page>pi__MicroCampaignSingleCampaign</page>
+        <protected>false</protected>
     </webLinks>
 </CustomObject>

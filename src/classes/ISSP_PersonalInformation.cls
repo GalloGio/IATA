@@ -42,6 +42,8 @@ public with sharing class ISSP_PersonalInformation {
     
 	//Global Variables
 	public String UserPortalStatus {get;set;}
+    public String NameOnAOC {get;set;}
+    public String LegalNameToShow {get;set;}
 	public String UserPortalAccountSector {get;set;}
 	public boolean isValidatedAirlineUser {get;set;}
 	public String ValidatedAirlineUser_Str {get;set;}
@@ -60,20 +62,13 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isIATAAgencyCargoBR {get; private set;}
     public boolean isIATAAgencyTravelBR {get; private set;}
 
-    
-    public List<AccountTeamMember> portalAdmins { 
+    //WMO-386
+    public List<UserWrapper> listAdmins {
         get {
-            if(null == portalAdmins)
-                portalAdmins = new list<AccountTeamMember>();
-            return portalAdmins;
+            if(listAdmins == null) {
+                listAdmins = new List<UserWrapper>();
         }
-        set;
-    }
-    public map<ID, AccountTeamMember> portalAdminMap { 
-        get{
-            if(null == portalAdminMap)
-                portalAdminMap = new map<ID, AccountTeamMember>();
-            return portalAdminMap;
+            return listAdmins;
         }
         set;
     }
@@ -86,6 +81,22 @@ public with sharing class ISSP_PersonalInformation {
     public string iataCode {get;set;}
     public string accountType {get;private set;}
     public list<String> errorMessage {get; set;}
+    
+    //this checks if there's an open Annual Revalidation case on the user's account
+    public Boolean revCaseOpen {
+        get{
+            List<Case> revCases = [SELECT Id 
+                                FROM Case 
+                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                    AND Reason1__c = 'Annual revalidation' 
+                                    AND Status != 'Closed' 
+                                    AND Status != 'Closed_Rejected' 
+                                    AND Status != 'Closed_Withdrawn'];
+            
+            return !revCases.isEmpty();
+        } 
+        set;
+    }
     
     
     public ISSP_PersonalInformation(){ 
@@ -176,6 +187,16 @@ public with sharing class ISSP_PersonalInformation {
 
         if (con.Account.Top_Parent__r.Legal_name__c != null) {
             isLegalNamePopulated = true;
+            LegalNameToShow = con.Account.Top_Parent__r.Legal_name__c;
+        } else if (con.Account.Legal_name__c != null) {
+            isLegalNamePopulated = true;
+            LegalNameToShow = con.Account.Legal_name__c;
+        }
+
+        if (con.Account.Top_Parent__c != null) {
+            NameOnAOC = con.Account.Top_Parent__r.Name_on_AOC__c;
+        } else {
+            NameOnAOC = con.Account.Name_on_AOC__c;
         }
         
         //AS - SP11
@@ -241,10 +262,18 @@ public with sharing class ISSP_PersonalInformation {
         }
     }*/
 
+    public Boolean isGDPOptInDisplayed {
+        get {
+            Set<String> possibleGDPLocationTypes = new Set<String>{'C', 'D', 'G', 'M', 'P', 'R', 'T', 'V', 'X'};
+            return possibleGDPLocationTypes.contains(con.Account.Location_Class__c);
+        }
+        set;
+    }
+
     public List<ISSP_AMS_Accreditation.AccountChanges> getAccountChangesList(){
         List<ISSP_AMS_Accreditation.AccountChanges> accChanges_List = new List<ISSP_AMS_Accreditation.AccountChanges>();
 
-        Account acc = [Select Phone,PhoneNational__c,Fax,FaxNational__c,Email__c,TradeName__c,WebSite From Account Where id=:con.Account.Id limit 1];
+        Account acc = [Select Phone, PhoneNational__c, Fax, FaxNational__c, Email__c, TradeName__c, WebSite, GDP_Opt_In__c From Account Where id=:con.Account.Id limit 1];
 
         if(acc.Phone != con.Account.Phone)
             accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Phone',acc.Phone,con.Account.Phone));
@@ -266,6 +295,9 @@ public with sharing class ISSP_PersonalInformation {
         
         if(acc.WebSite != con.Account.WebSite)
             accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('WebSite',acc.WebSite,con.Account.WebSite));
+        
+        if(acc.GDP_Opt_In__c != con.Account.GDP_Opt_In__c && isGDPOptInDisplayed)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('GDP_Opt_In__c',String.valueOf(acc.GDP_Opt_In__c),String.valueOf(con.Account.GDP_Opt_In__c)));
         
         return accChanges_List;
     }
@@ -289,7 +321,7 @@ public with sharing class ISSP_PersonalInformation {
                             IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
                             Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
                             IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-                            Website, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, RecordTypeId, RecordType.DeveloperName, DDS_Status__c,
+                            Website, GDP_Opt_In__c, Status__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, RecordTypeId, RecordType.DeveloperName, DDS_Status__c,
                             Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c
                         FROM Account 
                         WHERE Id=:con.Account.Id LIMIT 1];
@@ -447,7 +479,7 @@ public with sharing class ISSP_PersonalInformation {
         					IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
                             Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
                             IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-                            Website, Status__c, Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c
+                            Website, GDP_Opt_In__c, Status__c, Top_Parent__r.Name_on_AOC__c, Top_Parent__r.Legal_name__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c
         					FROM Account
                             WHERE Id = :selectedBranchAccount];
         
@@ -497,5 +529,26 @@ public with sharing class ISSP_PersonalInformation {
     **/
     public Boolean getPermissionForStandardAccount() {
         return this.bIsAdmin && getIsStandardAccount() && !getisVerifiedAccount();
+    }
+
+    //WMO-386
+    public class UserWrapper {
+        public String salutation {get;set;}
+        public String name {get;set;}
+        public String email {get;set;}
+        public String country {get;set;}
+        public String userRole {get;set;}
+        public Id accountId {get;set;}
+        public Id contactId {get;set;}
+
+        public UserWrapper(String salutation, String name, String email, String country, String userRole, Id accountId, Id contactId) {
+            this.salutation = salutation;
+            this.name = name;
+            this.email = email;
+            this.country = country;
+            this.userRole = userRole;
+            this.accountId = accountId;
+            this.contactId = contactId;
+        }
     }
 }

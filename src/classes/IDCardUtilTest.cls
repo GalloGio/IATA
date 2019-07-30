@@ -334,7 +334,7 @@ private class IDCardUtilTest {
         insert application;
         Test.startTest();
         IATAIsoCountryDAO.resetMapIataIsoCountry();
-        ID contactID = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
+        Contact contactID = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
         Test.stopTest();
     }
     
@@ -511,18 +511,18 @@ private class IDCardUtilTest {
         
         insert application;
         Test.startTest();
-        ID contactID = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
+        Contact contactID = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
         Test.stopTest();
         
         ID_Card__c newCard = IDCardUtil.CreateIDCardObjectFromApplication(application);     
         
         newCard.Valid_To_Date__c = date.today().addDays(10);
         newCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;       
-        ID_Card__c[] card1 = IDCardUtil.getRenewableIDCard (contactId);
+        ID_Card__c[] card1 = IDCardUtil.getRenewableIDCard (contactId.ID);
         
         insert newCard;
         
-        newCard.Related_Contact__c = contactId;     
+        newCard.Related_Contact__c = contactId.ID;     
         newCard.Valid_To_Date__c = date.today().addDays(150);
         newCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
         
@@ -532,7 +532,7 @@ private class IDCardUtilTest {
         System.debug('***************************************** card Status ' + newCard.Card_Status__c);
         System.debug('***************************************** card Date ' + newCard.Valid_To_Date__c);
                 
-        ID_Card__c[] card2 = IDCardUtil.getRenewableIDCard (contactId);
+        ID_Card__c[] card2 = IDCardUtil.getRenewableIDCard (contactId.ID);
             
     }
     

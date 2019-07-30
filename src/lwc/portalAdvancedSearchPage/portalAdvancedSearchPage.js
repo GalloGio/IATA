@@ -43,7 +43,7 @@ export default class PortalAdvancedSearchPage extends LightningElement {
     @track loadingTypehead = false;
 
     //links for images
-    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
+    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/AdvancedSearchBackground.jpg';
     @track backgroundStyle;
 
     connectedCallback(){

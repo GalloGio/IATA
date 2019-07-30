@@ -88,7 +88,7 @@
                     <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#environment_hub'}" class="slds-icon slds-icon-standard-environment-hub slds-icon--medium" />
                 </div>
                 <div class="slds-media__body slds-truncate">
-                    <span class="slds-text-heading--small">Membership on Main IATA Industry Groups</span>
+                    <span class="slds-text-heading--small">Participation in Main IATA Industry Groups</span>
                 </div>
             </div>
         </div>

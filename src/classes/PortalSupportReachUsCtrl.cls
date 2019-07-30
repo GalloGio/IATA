@@ -128,7 +128,7 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 		         FROM LiveAgentButtonSettings__c
 		         WHERE Sectors__c Like : sector
 		         AND ((Language__c = 'en' AND Region__c =: selectedCountryRegion)
-		              OR (Language__c =: country AND Region__c =: region))];
+		              OR (Language__c =: country AND Region__c =: selectedCountryRegion))];
 
 	}
 	else{

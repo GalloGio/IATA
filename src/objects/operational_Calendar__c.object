@@ -46,13 +46,14 @@
     <description>used to host information on the ISS / ICH / ICCS calendars</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>ISSP_Page_Detail_For_BSP_Agency</fullName>
         <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Agencies and BSP</description>

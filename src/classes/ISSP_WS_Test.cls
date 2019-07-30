@@ -282,6 +282,7 @@ private class ISSP_WS_Test {
         newAppRight.Right__c = 'Access Granted';
         insert newAppRight;
         
+        Test.startTest();
         User myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
         system.runAs(myUser){
             ISSP_WS_NewUser.UserInputData myInput = new ISSP_WS_NewUser.UserInputData();
@@ -304,6 +305,7 @@ private class ISSP_WS_Test {
             update con;
             ISSP_WS_NewUser.createUser(myInput);
         }
+        Test.stopTest();
     }
     
     static testMethod void NewUser_9() {
@@ -480,6 +482,7 @@ private class ISSP_WS_Test {
         theIds.BSPLink__c = newApp.Id;
         insert theIds;
         
+        Test.startTest();
         User myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
         system.runAs(myUser){
             ISSP_WS_DisableUser.UserInputData myInput = new ISSP_WS_DisableUser.UserInputData();
@@ -500,6 +503,7 @@ private class ISSP_WS_Test {
             myInput.fedId = conId15;
             ISSP_WS_DisableUser.disableUser(myInput);
         }
+        Test.stopTest();
     }
     
     static testMethod void NewUser_12() {

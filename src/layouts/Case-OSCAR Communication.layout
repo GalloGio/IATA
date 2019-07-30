@@ -64,6 +64,13 @@
         <label>New Section</label>
         <layoutColumns>
             <layoutItems>
+                <height>45</height>
+                <page>DetailPageMessageClassicCase</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>50%</width>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Subject</field>
             </layoutItems>
@@ -198,6 +205,10 @@
                 <behavior>Readonly</behavior>
                 <field>Termination_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Process_Start_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -325,6 +336,14 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Instant_Surveys__c.Relationship_to_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Pax_Accreditation_Form__c.SAAM_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -365,6 +384,9 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedAttachmentList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEmailMessageList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>

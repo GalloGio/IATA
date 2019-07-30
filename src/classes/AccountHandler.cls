@@ -1,10 +1,27 @@
 public class AccountHandler{
 
 	/**
+		CODE BEFORE INSERT
+	
+	**/
+	public static void beforeInsert( list<Account> listNews){
+		setIataMembershipStatus(listNews);
+		updateSiteIndex(listNews);
+	}
+	
+	/**
 		CODE AFTER INSERT
 	**/
 	public static void afterInsert( list<Account> listNews) {
 		findParentAcountsToUpdate(listNews);
+	}
+
+	/**
+		CODE BEFORE UPDATE
+	
+	**/
+	public static void beforeUpdate( list<Account> listNews){
+		updateSiteIndex(listNews);
 	}
 
 	/**
@@ -173,4 +190,33 @@ public class AccountHandler{
 
 	}
 	/*** AMSU-128 End ***/
+	
+	
+	public static void setIataMembershipStatus(list<Account> listAccount){
+		if(!Test.isRunningTest()){
+			for(Account acc : listAccount){
+				acc.Membership_Status__c = 'Non-IATA Member';
+			}
+		}
+	}
+
+	public static void updateSiteIndex(list<Account> listAccount){
+
+		for(Account acc : listAccount){
+
+			if(acc.Industry == 'Travel Agent' || acc.Industry == 'Cargo Agent'){
+
+				acc.Site_index__c = acc.Site;
+
+			} else if(acc.IATACode__c == null) {
+
+				acc.Site_index__c = acc.Airline_designator__c + ' ' + acc.Country_ISO_Code__c;
+			} else {
+
+				acc.Site_index__c = acc.Airline_designator__c + ' ' + acc.IATACode__c + ' ' + acc.Country_ISO_Code__c;
+			}
+		}
+	}
+
+
 }

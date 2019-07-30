@@ -1,5 +1,8 @@
 public class AmazonFileTrgHelper {
 
+    public static final ID RT_CERTIFICATE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'Certificate');
+    private static final ID RT_SAAM_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+
     public static String sapNumberRequiredJSON{
         get{
             return JSON.serialize(new List<String>(AmazonFileTrgHelper.sapNumberRequired));
@@ -50,6 +53,16 @@ public class AmazonFileTrgHelper {
 
     private static final AmazonCredentials CREDENTIALS = AmazonCredentials.getCredentials('GenericAttach');
     private static final AmazonCredentials RECYCLEBIN = AmazonCredentials.getCredentials('RecycleBin');
+
+    public static void AfterInsert(list<AmazonFile__c> listNews) {
+        runProcessFromActionField(listNews);
+		sendMailToPortalUsers(listNews, null);
+    }
+    
+    public static void AfterUpdate(map<Id,AmazonFile__c> mapNews, map<Id,AmazonFile__c> mapOlds) {
+        runProcessFromActionField(mapNews, mapOlds);
+		sendMailToPortalUsers(mapNews, mapOlds);
+    }
 
     public static void AfterUndelete(map<Id,AmazonFile__C> trgNewMap){
 
@@ -380,4 +393,477 @@ public class AmazonFileTrgHelper {
         }
     }
 
+    /**
+        Check if there is a AmazonFile__c record with its Action__c field modified to trigger an action
+        Only when insert
+    **/
+    public static void runProcessFromActionField(list<AmazonFile__c> listNews) {
+        list<AmazonFile__c> listAmazonFileToUpdate = new list<AmazonFile__c>();
+        for (AmazonFile__c newFile: listNews) {
+            if (!String.isBlank(newFile.Action__c)) {
+                listAmazonFileToUpdate.add(newFile);
+            }
+        }
+        executeActions(listAmazonFileToUpdate);
+    }
+
+    /**
+        Check if there is a AmazonFile__c record with its Action__c field modified to trigger an action
+        Only when update
+    **/
+    public static void runProcessFromActionField(map<Id,AmazonFile__c> mapNews, map<Id,AmazonFile__c> mapOlds) {
+        list<AmazonFile__c> listAmazonFileToUpdate = new list<AmazonFile__c>();
+        for (AmazonFile__c newFile: mapNews.values()) {
+            AmazonFile__c oldFile = mapOlds.get(newFile.Id);
+            if (!String.isBlank(newFile.Action__c) && newFile.Action__c!=oldFile.Action__c) {
+                listAmazonFileToUpdate.add(newFile);
+            }
+        }
+        executeActions(listAmazonFileToUpdate);
+    }
+    
+    /**
+        Prepared the execution of the actions, separates actions in different calls
+    **/
+    public static void executeActions(list<AmazonFile__c> listAmazonFiles) {
+        map<String,list<AmazonFile__c>> mapActions = new map<String,list<AmazonFile__c>>();
+        for (AmazonFile__c newFile: listAmazonFiles) {
+            list<AmazonFile__c> listFiles = mapActions.get(newFile.Action__c);
+            if (listFiles==null) listFiles = new list<AmazonFile__c>();
+            listFiles.add(newFile);
+            mapActions.put(newFile.Action__c,listFiles);
+        }
+        executeActionCreateCase(mapActions.get('Create Case'));
+        executeActionReminder30days(mapActions.get('Reminder 30 days'));
+        executeActionReminderOnExpiry(mapActions.get('Reminder on Expiry'));
+    }
+    
+    /**
+        Create Case action
+        Creates a case related to current AmazonFile__c.
+        For the moment only available for Recordtype Certificate
+        After the case creation the current Amazon File record will be linked to that new case
+    **/
+    public static void executeActionCreateCase(list<AmazonFile__c> listAmazonFiles){
+        if(listAmazonFiles==null) return;
+        list<Id> listAccountId = new list<Id>();
+        // find Amazon File related objects
+        for (AmazonFile__c newFile: listAmazonFiles) {
+            if (newFile.RecordTypeId==RT_CERTIFICATE_ID && newFile.Account__c!=null) {
+                listAccountId.add(newFile.Account__c);
+            }
+        }
+        map<Id,Account> mapAccount = new map<Id,Account>(
+            [SELECT Id, Name,
+                (SELECT Id, Type__c, Expiry_Date__c
+                FROM AmazonFiles__r
+                WHERE RecordTypeId=:AmazonFileTrgHelper.RT_CERTIFICATE_ID
+                ORDER BY Expiry_Date__c ASC)
+            FROM Account
+            WHERE Id IN :listAccountId]);
+
+        // Create cases
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.assignmentRuleHeader.useDefaultRule= true;
+        map<Id,Case> mapCaseToCreate = new map<Id,Case>();
+        for (AmazonFile__c newFile: listAmazonFiles) {
+            if (newFile.RecordTypeId==RT_CERTIFICATE_ID && newFile.Account__c!=null && newFile.Case__c==null) {
+                Account parentAccount = mapAccount.get(newFile.Account__c);
+                AmazonFile__c anotherCertificate = findAnotherCertificate(parentAccount.AmazonFiles__r, newFile);
+                if( anotherCertificate==null ) {
+                    Case cse = new Case(
+                    RecordTypeId = RT_SAAM_ID,
+                    Subject = 'AP COMPLIANCE CHINA - ' + newFile.Type__c + ' - ' + parentAccount.Name,
+                    CaseArea__c = 'Participation Compliance',
+                    Reason1__c = 'Compliance',
+                    AccountId = parentAccount.Id);
+                    cse.setOptions(dmo);
+                    mapCaseToCreate.put(newFile.Id,cse);
+                } else {
+                    newFile.addError('There is another active certificate(' + anotherCertificate.Id + '), cannot create a new case');
+                }
+            }
+        }
+        if (!mapCaseToCreate.isEmpty()) insert mapCaseToCreate.values();
+        
+        // Update Case Lookup Field in Amazon Files
+        map<Id,Id> mapAmazonFileCaseId = new map<Id,Id>();
+        for (Id amazonFileId: mapCaseToCreate.keyset()) {
+            mapAmazonFileCaseId.put(amazonFileId, mapCaseToCreate.get(amazonFileId).Id);
+        }
+        updateCaseLookupInAmazonFiles(mapAmazonFileCaseId);
+    }
+    
+    /**
+        This requires 2 inputs, a list of AmazonFiles (this must be complete list 
+        of amazonfile certificates in the same account) and the amazonfile certificate to test.
+        This will return a certificate if there is another one under the same account 
+        and same type and has a newer expiration date,
+        and will return null if there is no other certificate
+        
+    **/
+    private static AmazonFile__c findAnotherCertificate(list<AmazonFile__c> listRelatedAmazonFile, AmazonFile__c currentAmazonFile) {
+        for(AmazonFile__c otherFile: listRelatedAmazonFile){
+            if (otherFile.Id != currentAmazonFile.Id &&
+                otherFile.Type__c == currentAmazonFile.Type__c &&
+                otherFile.Expiry_Date__c > currentAmazonFile.Expiry_Date__c) {
+                    return otherFile;
+                }
+        }
+        return null;
+    }
+    /**
+        Updates a list of AmazonFile__c to be linked to their case objects.
+    **/
+    @future
+    private static void updateCaseLookupInAmazonFiles(map<Id,Id> mapAmazonFileCaseId) {
+        list<AmazonFile__c> listAmazon = [SELECT Id, Case__c FROM AmazonFile__c WHERE Id IN :mapAmazonFileCaseId.keyset()];
+        for (AmazonFile__c amazonFile: listAmazon) {
+            amazonFile.Case__c = mapAmazonFileCaseId.get(amazonFile.Id);
+        }
+        update listAmazon;
+    }
+    
+    /**
+        Reminder 30 days before the Expiry date
+        only for Certificates
+    **/
+    public static void executeActionReminder30Days(list<AmazonFile__c> listAmazonFiles){
+        if(listAmazonFiles==null) return;
+        list<Id> listCaseId = new list<Id>();
+        for (AmazonFile__c newFile: listAmazonFiles) {
+            if (newFile.RecordTypeId==RT_CERTIFICATE_ID) {
+                listCaseId.add(newFile.Case__c);
+            }
+        }
+        list<Case> listCase = 
+            [SELECT Id, ContactId, OwnerId
+            FROM Case 
+            WHERE Id IN :listCaseId
+            AND isClosed=false
+            AND (NOT Owner.Name like '%recycle%')];
+        System.debug('*** listCase ' + listCase);
+        String templateName = 'AoP_permit_or_Commercial_Registry_reminder';
+        sendCertificateReminder(templateName,listCase,'ContactId');
+        //String templateName2 = 'AoP_permit_or_Commercial_Registry_reminder_internal';
+        //sendCertificateReminder(templateName2,listCase,'OwnerId');
+    }
+    
+    /**
+        Reminder on the Expiry date
+        only for Certificates
+    **/
+    private static void executeActionReminderOnExpiry(list<AmazonFile__c> listAmazonFiles){
+        if(listAmazonFiles==null) return;
+        list<Id> listCaseId = new list<Id>();
+        for (AmazonFile__c newFile: listAmazonFiles) {
+            if (newFile.RecordTypeId==RT_CERTIFICATE_ID) {
+                listCaseId.add(newFile.Case__c);
+            }
+        }
+        list<Case> listCase = 
+            [SELECT Id, OwnerId, ContactId
+            FROM Case
+            WHERE Id IN :listCaseId
+            AND isClosed=false
+            AND (NOT Owner.Name like '%recycle%')];
+        String templateName1 = 'AOC_permit_OR_Commercial_registry_expired';
+        sendCertificateReminder(templateName1,listCase,'ContactId');
+        String templateName2 = 'AOC_permit_OR_Commercial_registry_expired_internal';
+        sendCertificateReminder(templateName2,listCase,'OwnerId');
+    }
+
+    /**
+        Send an email to the input cases, and their related contacts using the input template
+    **/
+    private static void sendCertificateReminder(String templateName, list<Case> listCase, String targetField){
+        try {
+            if (listCase.isEmpty()) return;
+            OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+            EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :templateName];
+
+            List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
+            for(Case cse : listCase) {
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                Id targetId = (Id)cse.get(targetField);
+                if (targetId.getSObjectType() == User.sObjectType) {
+                    // tsrget is a user
+                    mail.setOrgWideEmailAddressId(orgAddress.Id);
+                    mail.setTemplateId(template.Id);
+                    mail.setTargetObjectId(targetId);
+                    mail.setTreatTargetObjectAsRecipient(true);
+                    mail.setSaveAsActivity(false);
+                    listEmail.add(mail);
+                }
+                if (targetId.getSObjectType() == Contact.sObjectType) {
+                    //target is a contact
+                    mail.setOrgWideEmailAddressId(orgAddress.Id);
+                    mail.setTemplateId(template.Id);
+                    mail.setTargetObjectId(targetId);
+                    mail.setWhatId(cse.Id);
+                    mail.setTreatTargetObjectAsRecipient(true);
+                    mail.setSaveAsActivity(false);
+                    listEmail.add(mail);
+                }
+                System.debug('*** email ' + mail);
+            }
+
+            if (!listEmail.isEmpty()) {
+                for (Messaging.SendEmailResult emailResult: Messaging.sendEmail(listEmail,false)) {
+                    if (emailResult.isSuccess()) {
+                        System.debug('sendMassEmail(' + templateName + ',' + listCase + '): OK');
+                    } else {
+                        System.debug('sendMassEmail(' + templateName + ',' + listCase + ') ERROR: ' + emailResult.getErrors());
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.debug('Error sending an email sendMassEmail(' + templateName + ',' + listCase + '): ' + e.getMessage());
+        }
+    }
+	
+    public static void sendMailToPortalUsers(map<Id,AmazonFile__c> mapNews, map<Id,AmazonFile__c> mapOlds) {
+        List<AmazonFile__c> listNews = new List<AmazonFile__c>();
+        for(Id key : mapNews.keyset()) {
+            listNews.add(mapNews.get(key));
+        }
+        sendMailToPortalUsers(listNews, mapOlds);          
+    }
+
+    /**
+    Send mails to portal users.
+    **/
+    public static void sendMailToPortalUsers(list<AmazonFile__c> listNews, map<Id,AmazonFile__c> mapOlds) {
+
+        Map<Id, List<AmazonFile__c>> externalReportFileMap = new Map<Id, List<AmazonFile__c>>();
+
+        Set<Id> erIds = new Set<Id>();
+
+        //
+        // Send an email to all users where the amazon file is linked to an external report.
+        // when the amazon file is set to public.
+        //
+        // Each user will receive an email with his new files.
+        //
+        // The users are the contacts linked to the accounts in the external_reports linked to the amazon files.
+        // Contacts in the hierarchy will also receive mails.
+        //
+
+        //
+        // Determine the set of amazon files to send their users an email.
+        //
+        for(AmazonFile__c aFile : listNews) {
+            if(aFile.sObject_Id__c != null) {
+                Id auxId = aFile.sObject_Id__c;
+                String auxStr = '' + auxId.getsobjecttype();
+
+                Boolean erFileFlag = false;
+                if(mapOlds == null) {
+                    if(auxStr == 'ISSP_External_Report__c' &&
+                       aFile.isPublic__c) {
+
+                        erFileFlag = true; 
+
+                    }
+                } else {
+                    if(auxStr == 'ISSP_External_Report__c' && !mapOlds.get(aFile.Id).isPublic__c &&
+                       aFile.isPublic__c) {
+
+                        erFileFlag = true;
+
+                    }
+                }
+                if(erFileFlag) {
+
+                    List<AmazonFile__c> files = externalReportFileMap.get(aFile.sObject_Id__c);
+
+                    if(files == null) {
+                        List<AmazonFile__c> auxList = new List<AmazonFile__c>();
+                        auxList.add(aFile);
+                        externalReportFileMap.put(aFile.sObject_Id__c, auxList);    
+                    } else {
+                        files.add(aFile);
+                    }
+
+                    erIds.add(aFile.sObject_Id__c);
+                }
+            }
+        }
+
+        if(externalReportFileMap.keySet().size() != 0) {
+
+            //
+            // Group the amazon files by account
+            //
+            Map<Id, List<AmazonFile__c>> accountFileMap = new Map<Id, List<AmazonFile__c>>();
+
+            List<ISSP_External_Report__c> erList = [Select Id, Account__c, Report_ID__c From ISSP_External_Report__c Where Id in :erIds];
+
+            Set<Id> accountsIds = new Set<Id>();
+
+            Set<String> reportTypes = new Set<String>();
+
+            for(ISSP_External_Report__c er : erList) {
+                List<AmazonFile__c> files = accountFileMap.get(er.Account__c);
+
+                if(files == null) {
+                    List<AmazonFile__c> auxList = new List<AmazonFile__c>();
+                    auxList.addAll(externalReportFileMap.get(er.Id));
+
+                    accountFileMap.put(er.Account__c, auxList);                        
+                } else {
+                    files.addAll(externalReportFileMap.get(er.Id));
+                }
+                accountsIds.add(er.Account__c);
+                reportTypes.add(er.Report_ID__c);
+            }
+
+            // Having the amazon files grouped by account now:
+            //
+            // Group the amazon files by contact.
+            //
+            // The contacts are those that belong to the accounts and have access to the portal services
+            // in the external reports.
+            //
+            List<ISSP_External_Reports_Config__c> externalReportSetting = [SELECT Portal_Service_ID__c
+                                                                             FROM ISSP_External_Reports_Config__c
+                                                                            WHERE Report_ID__c In :reportTypes];
+
+
+            Set<Id> portalServicesId = new Set<Id>();
+
+            for(ISSP_External_Reports_Config__c erc : externalReportSetting) {
+                portalServicesId.add(erc.Portal_Service_ID__c);
+            }
+
+            List<Contact> SharingContacts_List = new List<Contact>([select Id 
+                                                                      From Contact
+                                                                     Where AccountId In :accountsIds
+                                                                        OR Account.Top_Parent__c In :accountsIds]);
+
+            Map<Id, List<AmazonFile__c>> contactFileMap = new Map<Id, List<AmazonFile__c>>();
+            Map<Id, Id> contactUserMap = new Map<Id, Id>();
+
+            if (!SharingContacts_List.isEmpty()) {
+                Set<Id> ContactIDs_set = new Set<Id>();
+
+                Map<Id, List<Id>> accountContactMap = new Map<Id, List<Id>>();
+
+                Set <Id> contactIds_haveAccess = new Set<Id>();
+                
+                for (Contact con : SharingContacts_List) {
+                    ContactIDs_set.add(con.id);
+                } 
+
+                //Get contacts with access to the portal service
+                List <Portal_Application_Right__c> accessList = [SELECT Id, Contact__c, Contact__r.AccountId FROM Portal_Application_Right__c
+                                                                    WHERE Portal_Application__c In :portalServicesId
+                                                                    AND Right__c = 'Access Granted'
+                                                                    AND Contact__c IN :ContactIDs_set];
+                
+                Set<Id> contactsIds = new Set<Id>();
+                if (!accessList.isEmpty()) {
+
+                    for (Portal_Application_Right__c thisAccess : accessList) {
+                        contactsIds.add(thisAccess.Contact__c);
+
+                        List<AmazonFile__c> files = contactFileMap.get(thisAccess.Contact__c);
+
+                        if(files == null) {
+                            List<AmazonFile__c> auxList = new List<AmazonFile__c>();
+
+                            if(accountFileMap.get(thisAccess.Contact__r.AccountId) != null) {
+                                auxList.addAll(accountFileMap.get(thisAccess.Contact__r.AccountId));
+                                contactFileMap.put(thisAccess.Contact__c, auxList);
+                            }
+                        } else {
+                            if(accountFileMap.get(thisAccess.Contact__r.AccountId) != null) {
+                                files.addAll(accountFileMap.get(thisAccess.Contact__r.AccountId));
+                            }
+                        }
+                    }
+                }
+
+                List<User> userList = [Select id, ContactId From User Where ContactId In :contactsIds];
+
+                for(User u : userList) {
+                    contactUserMap.put(u.ContactId, u.Id);
+                }
+            }
+
+
+            if(contactFileMap.keySet().size() != 0) {
+                list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
+
+                ID templateId = PortalServiceAccessTriggerHandler.getEmailTemplateIdByName(ENV.EmailTemplateData.ISSP_TIP_notifyNewExternalReports);
+
+                OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'noreply@iata.org'];
+
+                EmailTemplate emailTemplate = [Select Id, Subject, HtmlValue, Body
+                                                 From EmailTemplate
+                                                Where DeveloperName = :ENV.EmailTemplateData.ISSP_TIP_notifyNewExternalReports];
+
+
+                for(Id key : contactFileMap.keySet()) {
+                    List<AmazonFile__c> files = contactFileMap.get(key);
+
+                    Id userId = contactUserMap.get(key);
+
+                    // process the merge fields
+                    String subject = emailTemplate.Subject;
+                    //subject = subject.replace('{!Contact.FirstName}', c.FirstName);
+
+                    String htmlBody = emailTemplate.HtmlValue;
+
+                    htmlBody = htmlBody.replace('|noReply|', Label.ISSP_Email_do_not_reply);
+
+                    htmlBody = htmlBody.replace('|bodyText|', 'There are new documents available:');
+                    
+                    String auxStr = '<ul>';
+
+                    for(AmazonFile__c file : files) {
+                        auxStr += '<li>';
+
+                        auxStr += file.Name;                        
+
+                        auxStr += '</li>';
+                    }
+
+                    auxStr += '</ul>';
+
+                    htmlBody = htmlBody.replace('|docs|', auxStr);
+
+                        //build the email message
+                    Messaging.Singleemailmessage email = new Messaging.Singleemailmessage();
+                        
+                    if(userId != null) 
+                        email.setTargetObjectId(userId);
+                    else
+                        email.setTargetObjectId(key);
+
+                    if ( owea.size() > 0 ) {
+                        email.setOrgWideEmailAddressId(owea[0].Id);
+                    }
+
+                    email.setSaveAsActivity(false);
+
+                    email.setSubject(subject);
+                    email.setHtmlBody(htmlBody);
+ 
+                    msgList.add(email);                    
+
+                }
+
+                if(!msgList.isEmpty()) {
+                    System.debug('Mails send : ' + msgList.size());
+                    Messaging.sendEmail(msgList);
+                } else {
+                    system.debug(LoggingLevel.ERROR, 'Emails not sent !');
+                }
+            }
+
+        }
+
+    }
 }

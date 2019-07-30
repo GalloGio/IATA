@@ -14,7 +14,7 @@ export default class PortalSupportPageHeader extends LightningElement {
     };
 
     //links for images
-    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ControlTower.jpg';
+    backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/FAQsBackground.jpg';
 
     @track backgroundStyle;
 

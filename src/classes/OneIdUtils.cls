@@ -1,8 +1,7 @@
 public without sharing class OneIdUtils {
 	
-    public Enum Mode {CURRENT, ISSP, IDENTITY, CSP}
-
-      
+    public Enum Mode {CURRENT, ISSP, IDENTITY, GDPR, CSP}
+    
 	@AuraEnabled
 	public static String ORG_URL {get; set;}
     @AuraEnabled
@@ -38,6 +37,7 @@ public without sharing class OneIdUtils {
                     if(n.name == 'IATA Portal') key =Mode.ISSP ;
                     else if(n.name == 'identity') key =Mode.IDENTITY ;
                     else if(n.name == 'CS Portal') key =Mode.CSP ;
+                    else if(n.name == Label.TECH_GDPR_Network_Name) key =Mode.GDPR ;
                     else continue;
                     networks.put(key, String.valueOf(n.Id).substring(0, 15));
                 } 

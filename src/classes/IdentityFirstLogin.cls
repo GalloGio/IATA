@@ -51,7 +51,9 @@ public class IdentityFirstLogin {
                         if(!test.isRunningTest()){
                             //ApexPages.PageReference lgn = new PageReference('/identity/s');
                             if(serviceName == 'ISSP'){
-                                aura.redirect(new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,'/ISSP_Home')));
+                                aura.redirect(new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,'')));
+                            }else if(serviceName == Label.TECH_GDPR_Community_Name) { // GDPR
+                                aura.redirect(new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,'/'+Label.TECH_GDPR_Community_Name)));
                             }else{
                                 aura.redirect(new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam)));
                             }

@@ -40,7 +40,7 @@ private class AcliDownloadAndScheduleTest {
         Test.startTest();
 
 		//AcliFileDownload.TEST_CSV = 'Aero Contractors Company Nigeria Ltd.                                           708 NIGNG Murtala Muhammed Airport Ikeja          P.M.B. 21090                            Lagos                                        Nigeria                                                                                                                                                           I     <br>';
-		AcliFileDownload.TEST_CSV = 'Aer Lingus Limited                                                              053 EINEI Dublin Airport                                                                  DUBLIN                                       Ireland                                                                                                                                                       YYY YI 053 0010000141X000000001234567890 Coding status                 20151014   ';
+		AcliFileDownload.TEST_CSV = 'Aer Lingus Limited                                                              053 EINEI Dublin Airport                                                                  DUBLIN                                       Ireland                                                                                                                                                       YYY YI 053 0010000141X000000001234567890 Coding status                 20151014   Aer Lingus Limited                                                              DIE';
         AcliFileDownload.downLoadAcliFile();
 
         Test.stopTest();

@@ -168,8 +168,8 @@ public with sharing class TestDataGenerator
                 obj.setValue('Id',generateZuoraFakeId());
                 obj.setValue('Name','Zuora Product '+i);
                 obj.setValue('SAPProductMaterialNo__c', generateProductCode());
-                obj.setValue('EffectiveStartDate',Zuora.zUtil.getZuoraDate(DEFAULT_EFFECTIVE_START_DATE));
-                obj.setValue('EffectiveEndDate',Zuora.zUtil.getZuoraDate(DEFAULT_EFFECTIVE_END_DATE));
+                obj.setValue('EffectiveStartDate',Zuora.zUtil.getZuoraDateOnly(DEFAULT_EFFECTIVE_START_DATE));
+                obj.setValue('EffectiveEndDate',Zuora.zUtil.getZuoraDateOnly(DEFAULT_EFFECTIVE_END_DATE));
 
             results.add(obj); 
         }
@@ -596,8 +596,7 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        Database.insert(pricebookEntries, false);
-        //insert pricebookEntries;
+        insert pricebookEntries;
         
         for(Integer i = 0; i < nb; i++)
         {
@@ -770,10 +769,9 @@ public with sharing class TestDataGenerator
     {
         System.debug('generateDirectSaleProductsWithPrice STARTED =========');
         //-- Generate nb Products With Associated ZProducts 
-        List<Product2> products = TestDataGenerator.generateProducts(nb,false);
+        List<Product2> products = TestDataGenerator.generateProducts(nb, true);
 
-        List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(nb, true);
-        System.debug('zProducts generated::'+zProducts);
+        System.debug('Products generated::' + products);
 
         //-- Generate RatePlans & Charges & Tiers
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
@@ -783,15 +781,14 @@ public with sharing class TestDataGenerator
 
         for(Integer x = 0; x < products.size(); x++)
         {
-            zRatePlans.addAll(TestDataGenerator.generateZRatePlans(zProducts[x].Id,1,false)); //1 rate plan per product
+            zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(products[x].Id,1,false)); //1 rate plan per product
             products[x].Direct_Sales__c = true;
 
             products[x].Post_to_Ecommerce_Date__c = System.today().addDays(-7);
-            products[x].ZProduct__c = zProducts[x].Id;
         }
         
-        //insert products;
-        upsert products SAP_Material_Number__c;
+        update products;
+        //upsert products SAP_Material_Number__c;
 
         System.debug('products generated::'+products);
 
@@ -841,20 +838,10 @@ public with sharing class TestDataGenerator
 
     public static List<Product2> generateProductsWithPrice(Integer nb)
     {
-       //-- Generate nb Products With Aasociated ZProducts 
-        List<Product2> products = TestDataGenerator.generateProducts(nb,false);
+       //-- Generate nb Products
+        List<Product2> products = TestDataGenerator.generateProducts(nb, true);
 
-        
-        List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(nb, false);
 
-        for(Integer x = 0; x < nb; x++)
-        {
-            zqu__ZProduct__c zProduct = zProducts[x];
-            Product2 prod = products[x]; 
-            zProduct.SAPProductMaterialNo__c = prod.SAP_Material_Number__c;
-        }
-        database.insert( zProducts,false);
-        
         //-- Generate RatePlans & Charges & Tiers
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
         List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
@@ -864,15 +851,13 @@ public with sharing class TestDataGenerator
         for(Integer x = 0; x < products.size(); x++)
         {
             Product2 prod = products[x]; 
-            zqu__ZProduct__c zprod = zProducts[x];
-            zRatePlans.addAll(TestDataGenerator.generateZRatePlans(zprod.Id,1,false)); //1 rate plan per product
-            prod.SAP_Status_Code__c = 'A';
-            prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
-            prod.ZProduct__c = zprod.Id;
+            zRatePlans.addAll(TestDataGenerator.generateZRatePlans2(prod.Id,1,false)); //1 rate plan per product
+            //prod.SAP_Status_Code__c = 'A';
+            //prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
         }
 
-        database.insert(zRatePlans,false) ;
-        
+        insert zRatePlans;
+
         //Create Unit Price Charge & Discount for each Plan 
         for(zqu__ProductRatePlan__c rp : zRatePlans)
         {
@@ -884,8 +869,7 @@ public with sharing class TestDataGenerator
             charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
             zCharges.addAll(charges);
         }
-        database.insert(zCharges,false) ;
-
+        insert zCharges;
         
         //-- Generate Tiers for Volume Prices 
         List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
@@ -902,6 +886,7 @@ public with sharing class TestDataGenerator
         }
         insert zTiers;
         System.debug('zTiers::'+zTiers);
+
         //database.insert(products,false) ;
         upsert products SAP_Material_Number__c;
 
@@ -915,7 +900,7 @@ public with sharing class TestDataGenerator
                 UnitPrice = 20
             ));
         }
-                        database.insert(lst_pbe,false) ;
+        insert lst_pbe;
 
         return products;
     }
@@ -935,6 +920,7 @@ public with sharing class TestDataGenerator
 
             String productCode = generateProductCode();
             String activityCode = productCode.split('-')[0];
+            String sku = generateProductCode();
             products.add(new Product2(
                 Name                            = 'Product '+i,
                 Short_Title__c                  = 'P '+i,
@@ -944,10 +930,11 @@ public with sharing class TestDataGenerator
                 SAP_Status_Code__c              = 'A',
                 Is_Shippable__c                 = true,
                 Activity_Code__c                = activityCode,
+                SAP_Sales_Channel_Code__c       = '03',
+                SAP_Division_Code__c            = '01',
                 Post_to_Ecommerce_Date__c       = Date.today().addDays(-1),
                 Effective_From__c               = DEFAULT_EFFECTIVE_START_DATE,
                 Effective_To__c                 = DEFAULT_EFFECTIVE_END_DATE,
-                Zuora_Id__c                     = generateZuoraFakeId(),
                 //Division__c                     = Utility.getRandomPicklistValue('Product2','Division__c'),
                 //Taxation_Country__c             = Utility.getRandomPicklistValue('Product2','Taxation_Country__c'),
                 Inventory_Status__c             = Utility.getRandomPicklistValue('Product2','Inventory_Status__c'),
@@ -961,7 +948,14 @@ public with sharing class TestDataGenerator
                 Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
                 Sales_Notification__c           = true,
-                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House',
+                zqu__SKU2__c                    = sku,
+                zqu__SKU__c                     = sku,
+                zqu__EffectiveStartDate__c      = DEFAULT_EFFECTIVE_START_DATE,
+                zqu__EffectiveEndDate__c        = DEFAULT_EFFECTIVE_END_DATE,
+                zqu__Deleted__c                 = false,
+                zqu__ZuoraId__c                 = generateZuoraFakeId()
+
             ));
         }
 
@@ -980,6 +974,7 @@ public with sharing class TestDataGenerator
         {
             String productCode = generateProductCode(); 
             String activityCode = productCode.split('-')[0];
+            String sku = generateProductCode();
             products.add(new Product2(
                 Name                            = 'Product '+i,
                 Short_Title__c                  = 'P '+i,
@@ -989,10 +984,11 @@ public with sharing class TestDataGenerator
                 SAP_Status_Code__c              = 'A',
                 Is_Shippable__c                 = true,
                 Activity_Code__c                = activityCode,
-                Post_to_Ecommerce_Date__c       = Date.today().addDays(-1),
+                SAP_Sales_Channel_Code__c       = '03',
+                SAP_Division_Code__c            = '01',
+                Post_to_Ecommerce_Date__c       = Date.today().addDays(-7),
                 Effective_From__c               = DEFAULT_EFFECTIVE_START_DATE,
                 Effective_To__c                 = DEFAULT_EFFECTIVE_END_DATE,
-                Zuora_Id__c                     = zId,
                 //Division__c                     = Utility.getRandomPicklistValue('Product2','Division__c'),
                 //Taxation_Country__c             = Utility.getRandomPicklistValue('Product2','Taxation_Country__c'),
                 Inventory_Status__c             = Utility.getRandomPicklistValue('Product2','Inventory_Status__c'),
@@ -1006,7 +1002,13 @@ public with sharing class TestDataGenerator
                 Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
                 Sales_Notification__c           = true,
-                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House',
+                zqu__SKU2__c                    = sku,
+                zqu__SKU__c                     = sku,
+                zqu__EffectiveStartDate__c      = DEFAULT_EFFECTIVE_START_DATE,
+                zqu__EffectiveEndDate__c        = DEFAULT_EFFECTIVE_END_DATE,
+                zqu__Deleted__c                 = false,
+                zqu__ZuoraId__c                 = generateZuoraFakeId()
             ));
         }
 
@@ -1035,7 +1037,7 @@ public with sharing class TestDataGenerator
                 Post_to_Ecommerce_Date__c       = Date.today().addDays(-1),
                 Effective_From__c               = DEFAULT_EFFECTIVE_START_DATE,
                 Effective_To__c                 = DEFAULT_EFFECTIVE_END_DATE,
-                Zuora_Id__c                     = generateZuoraFakeId(),
+                zqu__ZuoraId__c                     = generateZuoraFakeId(),
                 //Division__c                     = Utility.getRandomPicklistValue('Product2','Division__c'),
                 //Taxation_Country__c             = Utility.getRandomPicklistValue('Product2','Taxation_Country__c'),
                 Inventory_Status__c             = Utility.getRandomPicklistValue('Product2','Inventory_Status__c'),
@@ -1104,6 +1106,28 @@ public with sharing class TestDataGenerator
             zRatePlans.add(new zqu__ProductRatePlan__c(
                 Name = 'ZRatePlan '+i,
                 zqu__ZProduct__c = zProductId, 
+                zqu__EffectiveStartDate__c = DEFAULT_EFFECTIVE_START_DATE,
+                zqu__EffectiveEndDate__c = DEFAULT_EFFECTIVE_END_DATE,
+                zqu__Deleted__c = false,
+                zqu__ZuoraId__c = generateZuoraFakeId()
+            ));
+        }
+
+        if(doInsert)
+            insert zRatePlans;
+
+        return zRatePlans;
+    }
+
+    public static List<zqu__ProductRatePlan__c> generateZRatePlans2(Id zProductId, Integer nb, Boolean doInsert)
+    {
+        List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
+
+        for(Integer i=0; i < nb;  i++)
+        {
+            zRatePlans.add(new zqu__ProductRatePlan__c(
+                Name = 'ZRatePlan '+i,
+                zqu__Product__c = zProductId, 
                 zqu__EffectiveStartDate__c = DEFAULT_EFFECTIVE_START_DATE,
                 zqu__EffectiveEndDate__c = DEFAULT_EFFECTIVE_END_DATE,
                 zqu__Deleted__c = false,
@@ -1715,8 +1739,19 @@ public with sharing class TestDataGenerator
         );
 
         if(doInsert)
-            Database.insert(eventRelease, false);
+            insert eventRelease;
 
         return eventRelease;
     }
+
+
+    public static void generateCustomSettingDisableRecaptcha(){
+
+        UtilityCS__c disableRecaptcha = new UtilityCS__c(Name ='DisableRecaptcha', Value__c = 'false');
+
+        insert disableRecaptcha;
+
+    }
+
+
 }

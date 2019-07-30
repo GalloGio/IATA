@@ -103,9 +103,10 @@
 
 			<apex:panelGrid id="fields" columns="2" rendered="{!showTopPanel}">
 				<apex:pageBlockSection id="controlField" columns="1">
-					<apex:inputField value="{!oscar.ANG_Type_Of_Change__c}">
+					<apex:inputField value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!NOT(isChinaConversion)}">
 						<apex:actionSupport event="onchange" status="blockEditing" reRender="dependentFields, notes"/>
 					</apex:inputField>
+					<apex:outputField value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!isChinaConversion}" />
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
 					<apex:inputField value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}">
@@ -137,21 +138,22 @@
                 <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
 					
 					<apex:column headerValue="Main">
-						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}"/>
+						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}" disabled="{!isChinaConversion}"/>
 					</apex:column>
 
 					<apex:column >
 						<apex:facet name="header">
-							<apex:inputCheckbox value="{!selectAll}">
+							<apex:inputCheckbox value="{!selectAll}" disabled="{!isChinaConversion}">
 								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
 							</apex:inputCheckbox>
 						</apex:facet>
 
-						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
+						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" disabled="{!isChinaConversion}"/>
 					</apex:column>
 
 					<apex:column value="{!hi.acc['Name']}"/>
 					<apex:column value="{!hi.acc['Location_Type__c']}"/>
+					<apex:column value="{!hi.acc['Location_Class__c']}" rendered="{!isChinaConversion}"/>
 					<apex:column value="{!hi.acc['IATACode__c']}"/>
 					<apex:column value="{!hi.acc['Status__c']}"/>
 					<apex:column value="{!hi.acc['BillingCity']}"/>
@@ -209,6 +211,7 @@
 
 					<apex:column value="{!hi.acc['Name']}"/>
 					<apex:column value="{!hi.acc['Location_Type__c']}"/>
+					<apex:column value="{!hi.acc['Location_Class__c']}" rendered="{!isChinaConversion}"/>
 					<apex:column value="{!hi.acc['IATACode__c']}"/>
 					<apex:column value="{!hi.acc['Status__c']}"/>
 					<apex:column value="{!hi.acc['BillingCity']}"/>

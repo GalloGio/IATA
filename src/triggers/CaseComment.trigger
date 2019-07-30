@@ -1,7 +1,11 @@
 trigger CaseComment on CaseComment (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
 
+    CaseCommentHandler handler = new CaseCommentHandler();
+
     if ( Trigger.isAfter ) {
         if (Trigger.isInsert) {
+            handler.doAfterInsert(Trigger.new);
+            Unbabel_CaseCommentRequestTranslation.requestTranslation(Trigger.new);
         }
         if (Trigger.isUpdate) {
         }
