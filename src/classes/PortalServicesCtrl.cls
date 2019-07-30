@@ -123,12 +123,10 @@ public static List<Portal_Application_Right__c> getFavoriteServicesList(){
 @AuraEnabled(cacheable=true)
 public static String paymentLinkRedirect(){
 
-	User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+	User userAux = [SELECT Id, Contact.Credit_Card_Payment_Link__c FROM User WHERE Id = :UserInfo.getUserId()];
 
-	Contact con = [Select id, Credit_Card_Payment_Link__c from Contact where id =:userAux.ContactId];
-
-	if(con.Credit_Card_Payment_Link__c != null) {
-		return con.Credit_Card_Payment_Link__c;
+	if(userAux.Contact != null && userAux.Contact.Credit_Card_Payment_Link__c != null) {
+		return userAux.Contact.Credit_Card_Payment_Link__c;
 	}else{
 		return '';
 	}
