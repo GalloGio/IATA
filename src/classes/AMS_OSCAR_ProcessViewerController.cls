@@ -391,6 +391,8 @@ public class AMS_OSCAR_ProcessViewerController {
                 picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
             }
         }
+        //NEWGEN-5707 - Add the 'empty'(--None--) value to the picklist
+        if(fieldName == 'ANG_GFA_Change_Assessment__c' && currentPickValue != null) picklistValues.add(new SelectOption('', '--None--'));
         
         return picklistValues;
     }
