@@ -766,6 +766,8 @@ public with sharing class AttachmentListCtrl {
         //list<Archived_Attachment__c> lstNewArchived = new list<Archived_Attachment__c>();
         list<AmazonFile__c> lstNewAmazon = new list<AmazonFile__c>();
 
+        list<ContentDocumentLink> lstDocumentLinks = new list<ContentDocumentLink>();
+
         // go through the list of related cases and create the new attachment(s) for every selected case
         for (case cw : selectedTargeCaseList) {
             for (WrapperAttach attach : listAttachmentSelected) {
@@ -773,7 +775,7 @@ public with sharing class AttachmentListCtrl {
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'is SF ' + attach.getIsSalesforce() ));
 
                 // if is a regular attachment, clone it
-                if (attach.getIsSalesforce() ) {
+                if (attach.getIsSalesforce() && !attach.getIsContent() ) {
                     Attachment newAtt = attach.fileAttachment.clone();
                     newAtt.Body = attach.fileAttachment.Body;
                     newAtt.ParentId = cw.Id;
@@ -795,6 +797,16 @@ public with sharing class AttachmentListCtrl {
                     if ( newAtt == null ) errors++;
                     else lstNewAmazon.add(newAtt.amazonFile);
                 }
+                if(attach.getIsContent()){
+                    ContentDocumentLink  cd = [SELECT LinkedEntityId,ContentDocumentId, ShareType, Visibility  FROM ContentDocumentLink 
+                                                WHERE LinkedEntityId =:parentId AND ContentDocumentId = :attach.Id ];
+
+
+                    ContentDocumentLink newLink = cd.clone(false, true, false, false);
+                    newLink.LinkedEntityId = selectedTargeCaseList.get(0).Id;
+
+                    lstDocumentLinks.add(newLink);
+                }
             }
         }
 
@@ -811,6 +823,18 @@ public with sharing class AttachmentListCtrl {
         }
         if (!lstNewAmazon.isEmpty()) {
             Database.SaveResult[] srList = Database.insert(lstNewAmazon, false);
+            for (Database.SaveResult sr : srList) {
+                if (sr.isSuccess()) {
+                    success ++;
+                } else {
+                    errors ++;
+                    System.debug('ERROR inserting attachment ' + String.ValueOf(sr.getErrors()));
+                    
+                }
+            }
+        }
+        if (!lstDocumentLinks.isEmpty()) {
+            Database.SaveResult[] srList = Database.insert(lstDocumentLinks, false);
             for (Database.SaveResult sr : srList) {
                 if (sr.isSuccess()) {
                     success ++;
