@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String WILDCARD = 'ALL';
 
 public class portalServiceException extends Exception {}
@@ -47,12 +48,15 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	portalApplicationList.addAll(requestableAppList);
 
 	for (Portal_Applications__c pApp: portalApplicationList) {
+		if((pApp.Name == 'Trained Staff Certificates' || pApp.Name == 'Local Industry Groups') && con.User_Portal_Status__c == PORTAL_ADMIN_APPROVED) {
+			externalLinksList.add(pApp);
+		}
 		if (pApp.Name == 'Insurance Providers' || pApp.Name == 'Financial Securities') {
 			if (((con.Account.Sector__c == 'Travel Agent' || con.Account.Sector__c == 'Cargo Agent')
 			     && con.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) &&
 			    (allowedLocTypes.contains(con.Account.Location_Type__c) || con.Account.Is_Branch_Abroad__c == 'Yes') &&
 			    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(con.Account.Status__c) || con.Account.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
-			    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == 'Approved Admin')) {
+			    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == PORTAL_ADMIN_APPROVED)) {
 				externalLinksList.add(pApp);
 			}
 		} else if (pApp.ANG_Flag_Restrict_Accredited_Agent__c && pApp.ANG_Flag_Restrict_Sector__c) {
@@ -878,7 +882,7 @@ public static String serviceWrapperRedirect(String serviceId){
 	                          WHERE id =: UserInfo.getUserId()];
 
 
-	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == 'Approved Admin');
+	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == PORTAL_ADMIN_APPROVED);
 
 	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
 	                                                                                 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
