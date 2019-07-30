@@ -55,7 +55,7 @@ public with sharing class PortalProfileCtrl {
     public static User myUser {
         get {
             if(myUser == null) {
-                myUser = DAL_ISSP.getUser(UserInfo.getUserId());
+                myUser = CSP_Utils.getLoggedUser();
             }
             return myUser;
         }
@@ -672,11 +672,12 @@ public with sharing class PortalProfileCtrl {
     }
     @AuraEnabled
     public static String goToOldIFAP(Boolean hasContact, String contactId, String contactName){
+        Id accountID = (myUser.Contact.Account.Top_Parent__c != null || myUser.Contact.Account.Top_Parent__c != '' ? myUser.Contact.Account.Top_Parent__c : myUser.Contact.AccountId);
+
         if (hasContact){
-            Id accountID = [SELECT AccountId FROM Contact WHERE Id = :contactId LIMIT 1].AccountId;
             return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID + '&vContactId=' + contactId + '&vContactName=' + contactName);
         } else {
-            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + myUser.Contact.AccountId);
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID);
         }
     }
 
@@ -685,9 +686,10 @@ public with sharing class PortalProfileCtrl {
         Boolean isIATAAgencyAcct = false;
         Boolean isAdmin = CSP_Utils.isAdmin();
 
-        if (myUser.Contact.Account.Category__c=='IATA Passenger Sales Agent' || myUser.Contact.Account.Category__c=='IATA Cargo Agent')
-            isIATAAgencyAcct = true;
-        
+        String categoryAcc = (myUser.Contact.Account.Top_Parent__c == null ? myUser.Contact.Account.Category__c : myUser.Contact.Account.Top_Parent__r.Category__c);
+
+        isIATAAgencyAcct = categoryAcc == 'IATA Passenger Sales Agent' || categoryAcc == 'IATA Cargo Agent';
+
         return isIATAAgencyAcct && isAdmin;
 
     }
