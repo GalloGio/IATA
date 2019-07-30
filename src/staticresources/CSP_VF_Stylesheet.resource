@@ -59,6 +59,11 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
     background-image: none;
 }
 
+.iatabtn.smaller,
+.btn.iatabtn.smaller {
+    min-width: 110px;
+}
+
 .iatabtn.iatabtn-default,
 .iatabtn.iatabtn-success {
     box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);

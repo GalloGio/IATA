@@ -875,8 +875,8 @@
                 {!$Label.ISSP_AMS_Step3_Save_Anytime}
             </div>
             <apex:pageBlockButtons >
-                <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}"/>&nbsp;
-                <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" />
+                <apex:commandButton styleClass="iatabtn iatabtn-default smaller" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}"/>&nbsp;
+                <apex:commandButton styleClass="iatabtn iatabtn-default smaller" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" style="float:right" />
                 <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
             </apex:pageBlockButtons>
             <apex:PageMessages id="msgs"/>
