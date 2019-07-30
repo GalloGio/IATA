@@ -715,7 +715,7 @@ Name
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-        </fields>
+    </fields>
     <fields>
         <fullName>Service_Description_List_A__c</fullName>
         <description>Contains first portion of Portal Services Description Labels</description>
