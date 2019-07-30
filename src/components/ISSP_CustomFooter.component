@@ -47,6 +47,28 @@ font-size:85%;
     float: right;
 }
 
+#footerBar .langSelect input[role="textbox"] {
+    border: 0;
+    cursor: pointer;
+    width: 140px;
+    text-align: center;
+    font-size: 13px;
+}
+
+#footerBar .langSelect input[name="language"] {
+    background-color: #333 !important;
+    font-size: 11px !important;
+}
+
+#footerBar .langSelect .slds-combobox_container lightning-base-combobox-item {
+    background-color: #333 !important;
+    font-size: 11px !important;
+}
+#footerBar .langSelect .slds-combobox_container lightning-base-combobox-item:hover,
+#footerBar .langSelect .slds-combobox_container lightning-base-combobox-item[aria-selected="true"] {
+    color: white;
+}
+
 </style>
 
 <apex:outputPanel rendered="{!isPortalNavigationBar}">
