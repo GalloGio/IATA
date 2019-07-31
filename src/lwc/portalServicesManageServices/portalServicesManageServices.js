@@ -37,8 +37,19 @@ import addUsers from '@salesforce/label/c.CSP_Add_User';
 import newProfile from '@salesforce/label/c.CSP_NewContactProfile';
 import newProfileMessage from '@salesforce/label/c.CSP_NewServiceUserMessage';
 import addNewUser from '@salesforce/label/c.CSP_Add_New_User';
+import ISSP_ANG_Portal_Role_AgencyReadOnly from '@salesforce/label/c.ISSP_ANG_Portal_Role_AgencyReadOnly';
+import ISSP_ANG_Portal_Role_TicketIssuer from '@salesforce/label/c.ISSP_ANG_Portal_Role_TicketIssuer';
+import ISSP_ANG_Portal_Role_MasterWalletManager from '@salesforce/label/c.ISSP_ANG_Portal_Role_MasterWalletManager';
+import ISSP_ANG_Portal_Role_IEPAdmin from '@salesforce/label/c.ISSP_ANG_Portal_Role_IEPAdmin';
+import ANG_ISSP_PORTAL_SERVICE_ROLE from '@salesforce/label/c.ANG_ISSP_PORTAL_SERVICE_ROLE';
+import ISSP_Homepage_Pending_approval from '@salesforce/label/c.ISSP_Homepage_Pending_approval';
+import ANG_ISSP_Request_Access_IATA_EasyPay from '@salesforce/label/c.ANG_ISSP_Request_Access_IATA_EasyPay';
+import ANG_ISSP_IEP_Portal_Request_Access_Msg from '@salesforce/label/c.ANG_ISSP_IEP_Portal_Request_Access_Msg';
+import ANG_ISSP_IEP_add_users_to_account_not_open_error_msg from '@salesforce/label/c.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg';
+import ISSP_AMC_CLOSE from '@salesforce/label/c.ISSP_AMC_CLOSE';
 
-
+//import user id
+import Id from '@salesforce/user/Id';
 
 
 
@@ -52,7 +63,13 @@ import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
 import getContactsForAssignment from '@salesforce/apex/PortalServicesCtrl.getContactsForServiceAssignment';
 import grantServiceAccessToContacts from '@salesforce/apex/PortalServicesCtrl.grantAccessToContacts';
+import getUserOptions from '@salesforce/apex/PortalServicesCtrl.getUserOptions';
+import availableIEPPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableIEPPortalServiceRoles';
 import newUserRequestableWithoutApproval from '@salesforce/apex/PortalServicesCtrl.newUserRequestableWithoutApproval';
+import ActivateIEPUsers from '@salesforce/apex/PortalServicesCtrl.ActivateIEPUsers';
+import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNewPortalAccess';
+
+
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -91,7 +108,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         addUsers,
         newProfile,
         newProfileMessage,
-        addNewUser
+        addNewUser,
+        ISSP_ANG_Portal_Role_AgencyReadOnly,
+        ISSP_ANG_Portal_Role_TicketIssuer,
+        ISSP_ANG_Portal_Role_MasterWalletManager,
+        ISSP_ANG_Portal_Role_IEPAdmin,
+        ANG_ISSP_PORTAL_SERVICE_ROLE,
+        ISSP_Homepage_Pending_approval,
+        ANG_ISSP_Request_Access_IATA_EasyPay,
+        ANG_ISSP_IEP_Portal_Request_Access_Msg,
+        ANG_ISSP_IEP_add_users_to_account_not_open_error_msg,
+        ISSP_AMC_CLOSE
     };
 
     //links for images
@@ -153,8 +180,19 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track grantingAccess = false;
     @track canAddUsers = false;
 
+    //IEP Rolelist
+    @track roleList;
+    @track isIEPService = false;
+    @track radioOption;
+    @track serviceFullName;
 
 
+    @track IEPRoleSuccessModal = false;
+    @track IEPDeniedModal = false;
+    @track serviceIEPStatus;
+
+    //user id from import
+    userID = Id;
 
     serviceDetailsResult; // wire result holder
 
@@ -216,6 +254,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.isAdmin = this.serviceRecord.isAdmin;
                     this.loadReady = true;
                     this.serviceName = this.serviceRecord.recordService.ServiceName__c;
+                    this.serviceFullName = this.serviceRecord.recordService.Name;
+                    this.isIFG_Service = this.serviceRecord.isIFGPending;
+
+                    if (this.serviceName.includes('IATA EasyPay')) {
+                        this.serviceIEPStatus = this.serviceRecord.accessGranted;
+                    }
+
 
                     if (this.isAdmin) {
                         this.getContactsForPage();
@@ -682,9 +727,106 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     /* Add Users to service */
     toggleAddUserModal() {
         this.showAddUserModal = !this.showAddUserModal;
+        if (this.serviceIEPStatus) {
+            if (this.serviceIEPStatus === true) {
+
+                if (this.showAddUserModal) {
+                    this.isIEPService = false;
+                    if (this.serviceName.includes('IATA EasyPay')) {
+                        this.isIEPService = true;
+                        getUserOptions({ portalUser: this.userID })
+                            .then(useropts => {
+                                let userOptions = JSON.parse(JSON.stringify(useropts));
+                                if (userOptions.IEP_Status === 'Open') {
+
+                                    availableIEPPortalServiceRoles({ serviceId: this.serviceId })
+                                        .then(data => {
+                                            let roleslist = JSON.parse(JSON.stringify(data));
+                                            this.roleList = roleslist;
+                                            this.roleList = this.roleList.filter(obj => obj.Connected_App__c === this.serviceFullName);
+                                            this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
+                                            for (const item of this.roleList) {
+                                                let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
+                                                item.label = this.label[newlabel];
+                                            }
+                                        });
+                                }
+                            });
+                    }
+                }
+            } else {
+                this.IEPDeniedModal = true;
+                this.showAddUserModal = !this.showAddUserModal;
+            }
+        }
+
+    }
+
+    closeIEPDenied() {
+        this.IEPDeniedModal = false;
+    }
+
+    handlRadioOptions(event) {
+        const radioOption = event.target.attributes.getNamedItem('data-id');
+        event.target.value = !event.target.value;
+        this.selectedRole(radioOption);
+    }
+
+    selectedRole(radioOption) {
+        this.radioOption = radioOption.value;
     }
 
     confirmAddUser() {
+
+        if (this.isIEPService && (this.radioOption === undefined || this.radioOption === null)) {
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Please select a role.\n',
+                    variant: 'error'
+                })
+            );
+
+        } else if (this.isIEPService && (this.radioOption !== undefined || this.radioOption !== null)) {
+
+            console.log(this.contactsToAdd);
+            const contactsToAddIDs = this.contactsToAdd.map(function (el) { return el.id; });
+            const serviceid = this.serviceId;
+            const roleSelected = this.radioOption;
+            this.showSpinner = true;
+            //Activate Users that are inactive
+
+            ActivateIEPUsers({ contactIds: contactsToAddIDs })
+                .then(() => {
+
+                    CreateNewPortalAccess({
+                        ContactIds: contactsToAddIDs,
+                        ServiceId: serviceid,
+                        PortalServiceRole: roleSelected
+                    }).then(result => {
+
+                        this.showSpinner = false;
+                        this.showAddUserModal = false;
+                        const results = JSON.parse(JSON.stringify(result));
+
+                        if (results === 'Success') {
+                            this.IEPRoleSuccessModal = true;
+
+                        } else if (results === 'Failure') {
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error',
+                                    message: 'Unable to grant service access.\n',
+                                    variant: 'error'
+                                })
+                            );
+                        }
+                    });
+
+                });
+
+        } else {
 
             this.grantingAccess = true;
             let contactIds = [];
@@ -694,23 +836,30 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             });
 
             if (contactIds.length > 0) {
-                grantServiceAccessToContacts({ contactIds: contactIds, serviceId: this.serviceId }).then(result => {
-                    this.grantingAccess = false;
-                    this.contactsToAdd = [];
-                    this.showAddUserModal = false;
-                    this.resetComponent();
-                }).catch((error) => {
-                    this.grantingAccess = false;
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error',
-                            message: 'Unable to grant service access.\n',
-                            variant: 'error'
-                        })
-                    );
-                });
+                grantServiceAccessToContacts({ contactIds: contactIds, serviceId: this.serviceId })
+                    .then(result => {
+                        this.grantingAccess = false;
+                        this.contactsToAdd = [];
+                        this.showAddUserModal = false;
+                        this.resetComponent();
+                    }).catch((error) => {
+                        this.grantingAccess = false;
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error',
+                                message: 'Unable to grant service access.\n',
+                                variant: 'error'
+                            })
+                        );
+                    });
             }
         }
+
+    }
+
+    closeIEPConfirm() {
+        this.IEPRoleSuccessModal = false;
+    }
 
     getAvailableContacts() {
         let availableContacts = JSON.parse(JSON.stringify(this.availableContacts));
