@@ -71,6 +71,7 @@
         		<apex:outputText escape="false" value="{!wrapper.creditCardMessage}"/>
       		</apex:outputPanel>      
 		</div>
+	</div>
   	</section>
 
   	<div class="modal" id="ModalErrorMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
