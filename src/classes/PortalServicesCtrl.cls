@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_EXTERNAL_ACCESS_GRANTED='External Access Granted';
 Public static final String WILDCARD = 'ALL';
 
 public class portalServiceException extends Exception {}
@@ -79,9 +80,9 @@ public static List<Portal_Application_Right__c> getUsersFavoriteServicesList(Str
 	                    'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c  ' +
 	                    'FROM Portal_Application_Right__c ' +
 	                    'WHERE (Contact__c = \'' + contactId + '\' AND '+
-	                    '   Right__c = \'Access Granted\' AND ' +
+	                    '   Right__c = \'' +  PORTAL_ACCESS_GRANTED + '\' AND ' +
 	                    '   Portal_Application__r.Hide_on_Homepage__c = false)' +
-			    ' AND (IsSCIMIFG__c = false OR (IsSCIMIFG__c = true AND Technical_Provisioning_Status__c = \' External Access Granted \' ))';
+			    ' AND (IsSCIMIFG__c = false OR (IsSCIMIFG__c = true AND Technical_Provisioning_Status__c = \'' + PORTAL_EXTERNAL_ACCESS_GRANTED + '\' ))';
 
 
 	finalQuery += ' ORDER BY Last_Visit_Date__c DESC NULLS LAST, Portal_Application__r.New_Window__c ASC, Portal_Application__r.Name ASC LIMIT 15';
