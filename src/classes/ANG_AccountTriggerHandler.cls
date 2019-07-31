@@ -253,7 +253,7 @@ public class ANG_AccountTriggerHandler {
 			oldAcc = oldMap.get(acc.Id);
 
 			if(oldAcc.ANG_HE_RiskStatus__c <> acc.ANG_HE_RiskStatus__c && (oldAcc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C || acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A)){
-				toNotify.add(acc.Id);
+				//toNotify.add(acc.Id);
 				if((isExpiration||isLastFinancialReviewUpgrade) && config != null) toChangeCode.add(acc.Id);
 			}
 
