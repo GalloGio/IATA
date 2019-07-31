@@ -26,6 +26,7 @@
         .statusBox{margin-left: 60%;margin-top: -32.5%;}
         
         .pbTitle {
+            display: none;
             width: {!IF(isstep2,'90% !important','40% !important')};
         }
         
@@ -475,9 +476,9 @@
                 {!$Label.ISSP_AMS_Step3_Save_Anytime}
             </div>
             <apex:pageBlockButtons >
-                <apex:commandButton styleClass="iatabtn iatabtn-default smaller" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}"/>&nbsp;
-                <apex:commandButton styleClass="iatabtn iatabtn-default smaller" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" style="float:right" />
-                <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
+                <apex:commandButton styleClass="iatabtn iatabtn-default smaller" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" style="float:right" />&nbsp;
+                <apex:commandButton styleClass="iatabtn iatabtn-danger smaller" action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}" style="float:right" />
+                <apex:commandButton styleClass="iatabtn iatabtn-default" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" />
             </apex:pageBlockButtons>
             <apex:PageMessages id="msgs"/>
             <div class="apcontainer" style="border: 1px solid #ececec;">

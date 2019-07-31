@@ -86,15 +86,15 @@
         </apex:outputPanel>
     </apex:repeat>
        </apex:pageBlock>
-         <apex:form id="UploadForm">
-         <apex:pageBlock >
-             <apex:pageBlockButtons location="bottom">
-                <apex:commandButton styleClass="iatabtn" action="{!goToStep3}" value="{!$Label.ISSP_Back}"/>&nbsp;
-                 <apex:commandButton styleClass="iatabtn" action="{!goToStep5}" value="{!$Label.ISSP_Next}" />
-                <apex:commandButton styleClass="iatabtn" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" /> 
-            </apex:pageBlockButtons>
-        </apex:pageBlock>
-             </apex:form>
+            <apex:form id="UploadForm">
+                <apex:pageBlock >
+                    <apex:pageBlockButtons location="bottom">
+                        <apex:commandButton styleClass="iatabtn" action="{!goToStep5}" value="{!$Label.ISSP_Next}" style="float:right" />&nbsp;
+                        <apex:commandButton styleClass="iatabtn" action="{!goToStep3}" value="{!$Label.ISSP_Back}" style="float:right" />
+                        <apex:commandButton styleClass="iatabtn" action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" /> 
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:form>
          </div>               
       </div>
     </div>    

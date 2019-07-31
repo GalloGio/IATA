@@ -22,6 +22,7 @@
 
     <style>
         .pbTitle {
+            display: none;
             width: {!IF(isstep2,'90% !important','40% !important')};
         }
 
@@ -492,14 +493,14 @@
                 <apex:actionStatus id="buttonLoadingStep1">
                     <apex:facet name="stop">
                         <apex:outputPanel >
-                            <apex:commandButton styleclass="iatabtn iatabtn-danger" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
-                            <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default" style="float:right" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger" style="margin-right:8px; float:right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
                         </apex:outputPanel>
                     </apex:facet>
                     <apex:facet name="start">
                         <apex:outputPanel >
-                            <apex:commandButton styleclass="iatabtn iatabtn-danger" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
-                            <apex:commandButton styleclass="iatabtn iatabtn-default"  value="{!$Label.ISSP_Next}..." rendered="{!NOT(amsIsGSA=='YES')}" disabled="true" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-default" style="float:right" value="{!$Label.ISSP_Next}..." rendered="{!NOT(amsIsGSA=='YES')}" disabled="true" reRender="step1Form"/>
+                            <apex:commandButton styleclass="iatabtn iatabtn-danger" style="margin-right:8px; float:right" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
                         </apex:outputPanel>
                     </apex:facet>
                 </apex:actionStatus>
@@ -816,8 +817,8 @@
 
                     <center>
                     <apex:pageBlock mode="edit">
-                            <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous"/>
-                            <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3}" value="{!$Label.ISSP_Next}" id="Next"/>
+                        <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3}" value="{!$Label.ISSP_Next}" id="Next" style="float:right" />
+                        <apex:commandButton styleclass="iatabtn iatabtn-danger" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous" style="float:right" />
                     </apex:pageBlock>
                     </center>
                 </apex:form>
@@ -957,15 +958,18 @@
                 <br/>
                 <div style="text-align:center;">
                     <apex:actionStatus id="buttonLoadingStep5PAX">
-                    <apex:facet name="stop"><apex:outputPanel >
-                    <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
-                    <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5PAX"/>
-                        </apex:outputPanel></apex:facet>
-                    <apex:facet name="start"><apex:outputPanel >
-                    <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
-                    <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+                    <apex:facet name="stop">
+                        <apex:outputPanel >
+                            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5PAX" reRender="PAXForm" style="float:right" />
+                            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX" style="float:right" />
+                            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" status="buttonLoadingStep5PAX"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:facet name="start">
+                        <apex:outputPanel >
+                            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true" style="float:right" />
+                            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true" style="float:right" />
+                            <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}"  disabled="true"/>
                          </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
                 </div>

@@ -52,9 +52,9 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
     word-break: break-word;
     border: none;
     text-decoration: none;
-    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
-    background-color: #1e32fa;
-    color: #ffffff;
+    /*box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);*/
+    background-color: #d0d7fb;
+    color: #3333ff;
     min-width: 130px;
     background-image: none;
 }
@@ -66,15 +66,15 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
 
 .iatabtn.iatabtn-default,
 .iatabtn.iatabtn-success {
-    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
-    background-color: #1e32fa;
-    color: #ffffff;
+    /*box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);*/
+    background-color: #d0d7fb;
+    color: #3333ff;
 }
 
 .iatabtn.iatabtn-danger {
     box-shadow: none;
-    background-color: transparent;
-    color: #1e32fa;
+    background-color: #f7f8fc;
+    color: #9a9eb0;
 }
 
 .iatabtn:hover,
@@ -83,12 +83,18 @@ div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
 .iatabtn:focus,
 .btn.iatabtn:focus,
 .btnDisabled.iatabtn:focus {
-    color: #ffffff;
+    color: #3333ff;
 }
 
 .iatabtn.iatabtn-danger:hover,
 .iatabtn.iatabtn-danger:focus {
-    color: #1e32fa;
+    color: #9a9eb0;
+}
+
+a.iatabtn {
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .progress.iata-tabs {

@@ -1,6 +1,7 @@
 <apex:page controller="ISSP_Ctrl_Country_Requirements" standardstylesheets="false" showheader="false" sidebar="false" applybodytag="false" applyhtmltag="false" action="{!checkAccess}">
   <html>
     <c:ISSP_Header ></c:ISSP_Header>
+		<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
 
     <script>
       window.hideTags = function() {
@@ -23,8 +24,8 @@
     </script>
 
     <body>      
+      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
       <div class="container">
-        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 			  <apex:form id="mainFrm">	
           <apex:pagemessages id="errors" />
 
@@ -276,8 +277,8 @@
             </div>            
           </apex:outputpanel>
         </apex:form>
-        <c:ISSP_CustomFooter communityName="{!communityName}"/>
       </div><!-- end container-->    
+      <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </body>
   </html>
 </apex:page>

@@ -86,17 +86,6 @@
                 left: 50%;
             }
 
-            .customlink {
-                cursor: pointer;
-                color: #337ab7;
-            }
-
-            .customlink:hover {
-                cursor: pointer;
-                color: #337ab7;
-                text-decoration: underline;
-            }
-
             .content-box {
                 box-shadow: 5px 5px 20px #e2e2e2;
                 background-color: white;
@@ -105,51 +94,6 @@
             .content-box > .row {
                 padding-left: 15px;
                 padding-right: 15px;
-            }
-
-            .container a, .container .customlink {
-                color: #3333ff !important;
-            }
-
-            div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
-            .iatabtn {
-                border-radius: 1px;
-                font-size: 16px;
-                font-weight: 500;
-                font-style: normal;
-                font-stretch: normal;
-                line-height: 1.5;
-                letter-spacing: normal;
-                text-align: center;
-                min-height: 40px;
-                word-break: break-word;
-                border: none;
-                text-decoration: none;
-                box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
-                background-color: #1e32fa;
-                color: #ffffff;
-                min-width: 130px;
-                background-image: none;
-            }
-
-            .iatabtn.iatabtn-success {
-                box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
-                background-color: #1e32fa;
-                color: #ffffff;
-            }
-
-            .iatabtn.iatabtn-danger {
-                box-shadow: none;
-                background-color: #ffffff;
-                color: #1e32fa;
-            }
-
-            .iatabtn:hover, .iatabtn:focus {
-                color: #ffffff;
-            }
-
-            .iatabtn.iatabtn-danger:hover, .iatabtn.iatabtn-danger:focus {
-                color: #1e32fa;
             }
 
             .padded-on-top {
@@ -181,6 +125,8 @@
             }
 
         </style>
+        <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
+
         <script type="text/javascript">
             var typeAccredSelected = '';
 
@@ -423,7 +369,7 @@
                 
                 <div class="row">
                     <!-- Ongoing Applications & Changes -->
-                    <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px">
+                    <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 130px; padding-top: 20px">
                         <div class="content-box">
                             <header>
                                 <div class="section-header">
@@ -453,13 +399,20 @@
                                     </apex:pageBlockTable>
                                 </apex:pageBlock>
                             </div>
+                                
+                            <apex:outputPanel rendered="{!(IsEmpty)}" layout="none" >
+                                <div class="row padded-on-top padded-on-bottom">
+                                    <div class="col-md-12">
+                                        <apex:outputText styleClass="bg-info" value="{!if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending)}" />
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
 
-                            <apex:outputText styleClass="bg-info" value="{!if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending)}" rendered="{!IsEmpty}"/>
                         </div>
                     </section>
                     
                     <!-- Other Useful Forms -->
-                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 130px; padding-top: 20px;">
                         <div class="content-box">
                             <header>
                                 <div class="section-header">
