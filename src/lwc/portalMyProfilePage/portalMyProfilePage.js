@@ -77,17 +77,21 @@ export default class PortalMyProfilePage extends LightningElement {
         getFieldsMap({ type: 'MyProfile' }).then(result => {
 
             this.sectionMapContact = JSON.parse(JSON.stringify(result));
+            let sectionMapContactLocal = JSON.parse(JSON.stringify(result));
 
             this.mapOfValuesContact = [];
+            let mapOfValuesContactLocal = [];
 
-            for(let i = 0; i < this.sectionMapContact.length; i++){
-                this.mapOfValuesContact.push({ 
-                                    'value': this.sectionMapContact[i].lstFieldWrapper, 
-                                    'key': this.sectionMapContact[i].cardTitle, 
-                                    'showfunction' : (this.sectionMapContact[i].cardTitle === 'Professional'),
-                                    'isEditable' : this.sectionMapContact[i].isEditable
-                                });
+            for (let i = 0; i < sectionMapContactLocal.length; i++) {
+                mapOfValuesContactLocal.push({
+                    'value': sectionMapContactLocal[i].lstFieldWrapper,
+                    'key': sectionMapContactLocal[i].cardTitle,
+                    'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
+                    'isEditable': sectionMapContactLocal[i].isEditable
+                });
             }
+
+            this.mapOfValuesContact = mapOfValuesContactLocal;
 
         });
     }
