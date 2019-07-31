@@ -95,6 +95,14 @@ public static Case createCase(String countryiso, Boolean isConcernCase, String t
 	Map<String,String> recordTypeCountry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(CONTACT, countryiso.toUpperCase());
 	topic = topic + '__c';
 	subtopic = subtopic + '__c';
+
+	if(countryiso == null || countryiso == '') {
+		newCase.IFAP_Country_ISO__c = CONTACT.Account.Country_ISO_Code__c;
+		countryiso = CONTACT.Account.Country_ISO_Code__c;
+	}else{
+		newCase.IFAP_Country_ISO__c = countryiso;
+	}
+
 	if(recordTypeCountry != null) {
 		if(isConcernCase) {
 			List<ISSP_FAQ2Case_Record_Type__c> complaintRecordType = setRecordType('%' + countryiso.toUpperCase() + '%', '%' + topic + '%', '%' + subtopic  + '%', true);
@@ -119,11 +127,7 @@ public static Case createCase(String countryiso, Boolean isConcernCase, String t
 	newCase.CaseArea__c = 'Customer Portal';
 	newCase.Origin = 'Portal';
 
-	if(countryiso == null || countryiso == '') {
-		newCase.IFAP_Country_ISO__c = CONTACT.Account.Country_ISO_Code__c;
-	}else{
-		newCase.IFAP_Country_ISO__c = countryiso;
-	}
+	
 
 	return newCase;
 
