@@ -65,30 +65,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>myRule_1_A1</targetReference>
-            </connector>
-            <label>log a phone case is created</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision2</name>
-        <label>myDecision2</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision5</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_3</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -120,6 +96,30 @@
                     <stringValue>Phone call received on the</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>log a phone case is created</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision2</name>
+        <label>myDecision2</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_3</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -149,6 +149,37 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Subject</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>Phone call received on the</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -203,6 +234,37 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Subject</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>Phone call received on the</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_6_A1</targetReference>
             </connector>
@@ -222,7 +284,7 @@ IF (CONTAINS ($UserRole.Name,&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;,
 &quot;&quot;))))))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_4_myRule_3_A1_3813726937</name>
+        <name>formula_4_myRule_3_A1_7529705673</name>
         <dataType>String</dataType>
         <expression>IF (CONTAINS ({!$UserRole.Name},&quot;China &amp; N. Asia&quot;),&quot;01220000000Q36W&quot;,
 IF (CONTAINS ({!$UserRole.Name},&quot;Africa &amp; ME&quot;),&quot;012200000004c0i&quot;,
@@ -232,7 +294,7 @@ IF (CONTAINS ({!$UserRole.Name}, &quot;IATAN&quot;),&quot;012200000000AQF&quot;,
 IF (CONTAINS ({!$UserRole.Name},&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;,
 &quot;&quot;))))))</expression>
     </formulas>
-    <interviewLabel>update_status_and_create_task-30_InterviewLabel</interviewLabel>
+    <interviewLabel>update_status_and_create_task-32_InterviewLabel</interviewLabel>
     <label>update status and create task</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1292,13 +1354,13 @@ IF (CONTAINS ({!$UserRole.Name},&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;
             </processMetadataValues>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>formula_4_myRule_3_A1_3813726937</elementReference>
+                <elementReference>formula_4_myRule_3_A1_7529705673</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

@@ -1,0 +1,94 @@
+.withPointerTile {
+    cursor:pointer; 
+}
+
+.extIconClass{
+    color: blue !important;
+    padding-left: 85%;
+    padding-top: 5%;
+}
+
+.noExtIconClass{
+    color: white !important;
+    padding-left: 85%;
+    padding-top: 5%;
+}
+
+.bigTile{
+    height:228px;
+}
+
+.bigTile h1{
+    margin-top: 80%;
+}
+
+.smallTile{
+    height: 110px;
+}
+
+.smallTile h1{
+    margin-top: 23%;
+}
+
+.tileText{
+    bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+.tileNewServiceText{
+    margin-top: 20px;
+    bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.tileNewServiceIcon{
+    margin-top: 50px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(30, 50, 250, 0.1);
+    color: #3333ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.noPointerEvents{
+    pointer-events: none;
+    height:100%;
+}
+
+.cardBodyContent {
+    min-height: 296px;
+}
+
+.serviceImageStyles {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+  
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.extDivHeight {
+    height: 10%;
+}
+.imageDivHeight {
+    height: 70%;
+}
+.textDivHeight {
+    height: 20%;
+}

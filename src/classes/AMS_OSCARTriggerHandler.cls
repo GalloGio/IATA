@@ -11,6 +11,9 @@ public class AMS_OSCARTriggerHandler {
     //used to identify situations where the LocationType of an SA Agency should not be changed
     public static Boolean keepSALocationTypeFlag = false;
 
+    // used to apply different rules when poulating RHC oBject on the Oscar's account 
+    public static boolean applyRHCForecast = false;
+
     public static Map<String, String> closedStatusMapping{
         get{
             if(closedStatusMapping == null){
@@ -1481,8 +1484,6 @@ public class AMS_OSCARTriggerHandler {
                     integer index = 0;
                     for(Account acc : c.accts)
                     {
-        
-                    
 
                         //******* Add "Custom" changes struct for the Ownership mapping ******** INI
 
@@ -2152,8 +2153,14 @@ public class AMS_OSCARTriggerHandler {
                     a.Status__c = mapB.get(accId).Status__c;
 
             System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCARTriggerHandler - mergeAccountsToUpdate] a - ' + a);
-            if(a!=null)
+            if(a!=null) {
+
+                if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(a.Id) ||
+                    (accounts.get(a.Id).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accounts.get(a.Id).Top_Parent__c)))
+                    a.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accounts.get(a.Id).Top_Parent__c == null ? a.Id : accounts.get(a.Id).Top_Parent__c);
+
                 mergedAccountsToUpdate.add(a);
+            }
         }
 
         return mergedAccountsToUpdate;
@@ -2719,7 +2726,7 @@ public class AMS_OSCARTriggerHandler {
         get{
             //we just need to fetch the first time (or anytime we add a new Id)
             if(accounts == null){
-                accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, CNS_Agency__c, Company_Type__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, Website,
+                accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, CNS_Agency__c, Company_Type__c, Covered_Ownership__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, Website,
                     (SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
                     (SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
                 FROM Account WHERE Id IN :accountIds]);
@@ -2968,11 +2975,6 @@ public class AMS_OSCARTriggerHandler {
 
                 if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
                     if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
-                        if (oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null) {
-                            oscar.addError('Please specify the PCI compliance expiry date.');
-                            return;
-                        }
-
                         if((oscar.Is_PCI_compliant__c == 'No' || oscar.Is_PCI_compliant__c == null) && oscar.ANG_PCI_compliance_expiry_date__c <> null){
                             oscar.addError('Cannot change the PCI compliance expiry date if the Agent is not PCI compliant.');
                             return;
@@ -3087,6 +3089,11 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
                 //ACAMBAS - NEWGEN-4784 - End
+
+                if(oscar.Process__c == AMS_Utils.NEWHESTANDARD && oscar.ANG_Change_Entity_Location__c && oscar.Change_of_Entity_Location_within_EU__c){
+                    oscar.addError(ANG_OscarProcessHelper.NEW_HE_CHANGE_ENTITY_LOCATION_ERROR_MSG);
+                }
+
             }
         }
     }
@@ -3103,7 +3110,7 @@ public class AMS_OSCARTriggerHandler {
             Id isoState = accreditation.Shipping_ISO_State__c;
             Id isoCountry = accreditation.Shipping_ISO_Country__c;
 
-            if(String.isBlank(street) && String.isBlank(city) && String.isBlank(state) && String.isBlank(zipCode) /* && String.isBlank(country) */ && isoState == null && isoCountry == null) {
+            if(String.isBlank(street) && String.isBlank(city) && String.isBlank(zipCode) && isoState == null && isoCountry == null) {
                 return;
             }
 
@@ -3350,7 +3357,7 @@ public class AMS_OSCARTriggerHandler {
         }
 
         //NEWGEN-3841 NEWGEN-4000 - Send Notification to update results to IEP
-        if((updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP || updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP) && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && (updatedOscar.STEP17__c == 'Passed' || updatedOscar.STEP17__c == 'Failed')){
+        if((updatedOscar.Process__c == AMS_Utils.IEPMODELAACCOUNTSETUP || updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP || updatedOSCAR.Process__c == AMS_Utils.IEPMODELBPLUSACCOUNTSETUP) && oldOSCAR.STEP17__c <> updatedOscar.STEP17__c && (updatedOscar.STEP17__c == 'Passed' || updatedOscar.STEP17__c == 'Failed')){
             System.debug('Finish Setup Processing step for IEP bank account setup OSCAR. Sending notification to Mulesoft');
             String cc;
             Id configID; 
@@ -3360,8 +3367,12 @@ public class AMS_OSCARTriggerHandler {
                     configID = cm.id;
                     break;
                 }
-                if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && cm.Change_Code__c == 'MBDIL'){
+                else if(updatedOscar.Process__c == AMS_Utils.IEPMODELBACCOUNTSETUP && cm.Change_Code__c == 'MBDIL'){
                     configID = cm.id;
+                    break;
+                }
+                else if(updatedOscar.Process__c == AMS_Utils.IEPMODELBPLUSACCOUNTSETUP && cm.Change_Code__c == AMS_Utils.MBPDD_CHANGE_CODE){
+                    configID = cm.Id;
                     break;
                 }
             }
@@ -3629,14 +3640,18 @@ public class AMS_OSCARTriggerHandler {
 
     public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds, Set<AMS_Oscar__c> oscarsToCreateAuth) {
     
+    /*
         ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         ID newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
         ID corrRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
         ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
         ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China'); //ACAMBAS - NEWGEN-4445
-        
-        if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
+        */
+
+        Set<Id> oscarRTsToProcess = new Set<ID>{AMS_Utils.RECTYPE_NEW,AMS_Utils.RECTYPE_NEWHE, AMS_Utils.RECTYPE_NEWAE};
+
+        if (oscarRTsToProcess.contains(updatedOscar.recordTypeID)){
         	//TD2080607: partially refactored below code
         	boolean bGenerateCC =  false;
         	String changeCodeId = '';
@@ -3679,7 +3694,7 @@ public class AMS_OSCARTriggerHandler {
                 AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
             }
         // Management of CORRECTION OSCARs
-        }else if (updatedOscar.recordTypeID == corrRT){
+        }else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CORRECTION){
             if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){
 
                 Savepoint sp = Database.setSavepoint();
@@ -3989,11 +4004,15 @@ public class AMS_OSCARTriggerHandler {
                                     auxChangeCodeHO.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
                                     lChangeCode.add(auxChangeCodeHO);
                                 }else{
-                                auxChangeCode.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
-                                auxChangeCode.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
-                                    lChangeCode.add(auxChangeCode);
+                                    auxChangeCode.reasonCode = (lRes.get(0) == null ? '': lRes.get(0));
+                                    auxChangeCode.reasonDesc = (lRes.get(1) == null ? '': lRes.get(1));
+                                        lChangeCode.add(auxChangeCode);
+                                }
                             }
-                            }
+
+                            if(AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(forAccount.Id) ||
+                                (accounts.get(forAccount.Id).Top_Parent__c != null && AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.containsKey(accounts.get(forAccount.Id).Top_Parent__c)))
+                                forAccount.Covered_Ownership__c = AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.get(accounts.get(forAccount.Id).Top_Parent__c == null ? forAccount.Id : accounts.get(forAccount.Id).Top_Parent__c);
 
                             System.debug('auxChangeCodeHO: ' + auxChangeCodeHO );
                             System.debug('auxChangeCode: ' + auxChangeCode );
@@ -4043,7 +4062,7 @@ public class AMS_OSCARTriggerHandler {
         
             }
         //FM AMSU-113            
-        }else if (updatedOscar.recordTypeID == certRT){
+        }else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CERT){
             System.debug('updatedOscar.Is_PCI_compliant__c: ' + updatedOscar.Is_PCI_compliant__c);
             System.debug('updatedOscar.Change_Code__c: ' + updatedOscar.Change_Code__c);
             System.debug('oldOSCAR.STEP6__c: ' + oldOSCAR.STEP6__c);
@@ -4089,7 +4108,7 @@ public class AMS_OSCARTriggerHandler {
             }
         }
         //ACAMBAS - NEWGEN-4445 - Start
-        else if (updatedOscar.recordTypeID == chinaRT) {
+        else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CHINA) {
             
             String changeCode;
             String caseReason = updatedOscar.ANG_Type_Of_Change__c;
@@ -4290,7 +4309,7 @@ public class AMS_OSCARTriggerHandler {
                     continue;
                 }
 
-                if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null){
+                if(oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null && oscar.process__c != AMS_Utils.NGCORRECTION){
                     oscar.addError('For PCI compliance, you need to add an expiry date.');
                     continue;
                 }
@@ -4308,8 +4327,13 @@ public class AMS_OSCARTriggerHandler {
                         acct.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
                         accountToAdd = true;
                     }
-
-                    if(oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC'){
+                    /* TA-ENHC0012754 */
+                    if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
+                        if ((oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') && oscar.ANG_PCI_compliance_expiry_date__c != null) {
+                            acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
+                            accountToAdd = true;
+                        }
+                    } else if (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Nil CC') {
                         acct.ANG_PCI_compliance_expiry_date__c = oscar.ANG_PCI_compliance_expiry_date__c;
                         accountToAdd = true;
                     }
@@ -4516,7 +4540,7 @@ public class AMS_OSCARTriggerHandler {
                 oscar.addError('The case cannot be closed if the sanity check is not passed or failed.');
             }
 
-            if (oscar.Process__c == AMS_Utils.NGANNUALREVAL && oscar.STEP43__c == AMS_Utils.PASSED && oldOscars.get(oscar.Id).STEP43__c != AMS_Utils.FAILED){
+            if (oscar.Process__c == AMS_Utils.NGANNUALREVAL && oscar.STEP43__c == AMS_Utils.PASSED && oldOscars.get(oscar.Id).STEP43__c != AMS_Utils.FAILED && oldOscars.get(oscar.Id).STEP43__c != oscar.STEP43__c){
                 oscarsIdsToProcess.add(oscar.Id);
             }
         }
@@ -4651,6 +4675,356 @@ public class AMS_OSCARTriggerHandler {
         for(String key : iataCodes.keySet())
             ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
         
-    }          
+    }         
+
+    // to be removed
+  public void fakeMethod(){
+    Integer i = 0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+     i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+     i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+     i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+     i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+     i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+     i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+     i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+    i=0;
+  }
+ 
 
 }

@@ -2328,6 +2328,7 @@ if(ApexPages.currentPage() != null){
 
     public void refreshTopicPickList()
     {
+        showCallUsButton = false;
         System.debug('basto1p - refreshTopicPickList myTopic='+myTopic);
         system.debug('JK22 isComplain refreshTopicPickList START: ' + isComplain);
         resetCase();

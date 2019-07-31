@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Metadata type is used to define the available Customer Types during the GCS registration process, the Sub-categorizations, .. 
+DESCRIPTION TO BE COMPLETED</description>
+    <fields>
+        <fullName>Can_Account_Be_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if an Account with this customer type can be created</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Indicates if an Account with this customer type can be created</inlineHelpText>
+        <label>Can Account Be Created</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Created_Account_Category__c</fullName>
+        <description>When the user creates an Account, this value will be assigned to the Account.Category__c field</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>When the user creates an Account, this value will be assigned to the Account.Category__c field</inlineHelpText>
+        <label>Created Account Category</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Created_Account_Sector__c</fullName>
+        <description>When the user creates an Account, this value will be assigned to the Account.Sector__c field</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>When the user creates an Account, this value will be assigned to the Account.Sector__c field</inlineHelpText>
+        <label>Created Account Sector</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Country__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the Country picklist must be displayed when the record is the current categorization</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Indicates if the Country picklist must be displayed when the record is the current categorization</inlineHelpText>
+        <label>Display Country</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Display_Submit_for_Account_Creation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the user can create the Account when this record is the current categorization</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Indicates if the user can create the Account when this record is the current categorization</inlineHelpText>
+        <label>Display Submit for Account Creation</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Fields_Displayed__c</fullName>
+        <description>List of Account fields to display in the search result list (API Names, comma separated)</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>List of Account fields to display in the search result list (API Names, comma separated)</inlineHelpText>
+        <label>Fields Displayed</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fields_Targeted_Exact_Match__c</fullName>
+        <description>List of Account fields to in which the user input will be searched (API Names, comma separated).
+EXACT MATCH</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>List of Account fields to in which the user input will be searched (API Names, comma separated).
+EXACT MATCH</inlineHelpText>
+        <label>Fields Targeted Exact Match</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fields_Targeted_Partial_Match__c</fullName>
+        <description>List of Account fields to in which the user input will be searched (API Names, comma separated).
+PARTIAL MATCH</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>List of Account fields to in which the user input will be searched (API Names, comma separated).
+PARTIAL MATCH</inlineHelpText>
+        <label>Fields Targeted Partial Match</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filter_on_Category__c</fullName>
+        <description>List of Categories targeted by the Search (semi-colon separated, no quotes)</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>List of Categories targeted by the Search (semi-colon separated, no quotes)</inlineHelpText>
+        <label>Filter on Category</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filter_on_Record_Type__c</fullName>
+        <description>List of Account Record Types Developer Names targeted by the Search (comma separated, no quotes)</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>List of Account Record Types Developer Names targeted by the Search (comma separated, no quotes)</inlineHelpText>
+        <label>Filter on Record Type</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filter_on_Sector__c</fullName>
+        <description>List of Sectors targeted by the Search (semi-colon separated, no quotes)</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>List of Sectors targeted by the Search (semi-colon separated, no quotes)</inlineHelpText>
+        <label>Filter on Sector</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the record is active and must be retrieved for the user registration process</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Indicates if the record is active and must be retrieved for the user registration process</inlineHelpText>
+        <label>Is Active</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parent__c</fullName>
+        <description>Name of the Parent record</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Name of the Parent record</inlineHelpText>
+        <label>Parent</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placeholder_Custom_Label__c</fullName>
+        <description>Custom Label of the sub-categorization&apos;s picklist placeholder</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Custom Label of the sub-categorization&apos;s picklist placeholder</inlineHelpText>
+        <label>Placeholder Custom Label</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Search_Option__c</fullName>
+        <defaultValue>&apos;No Search&apos;</defaultValue>
+        <description>Indicates in the case where the record is the current customer type if the user can search account or if the account will be automatically assigned or if the search is not available at all</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Indicates in the case where the record is the current customer type if the user can search account or if the account will be automatically assigned or if the search is not available at all</inlineHelpText>
+        <label>Search Option</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No Search</fullName>
+                    <default>true</default>
+                    <label>No Search</label>
+                </value>
+                <value>
+                    <fullName>User Search</fullName>
+                    <default>false</default>
+                    <label>User Search</label>
+                </value>
+                <value>
+                    <fullName>Automatic Search</fullName>
+                    <default>false</default>
+                    <label>Automatic Search</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Sub_Categorization_Custom_Label__c</fullName>
+        <description>Custom Label of the sub-categorization</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Custom Label of the sub-categorization</inlineHelpText>
+        <label>Sub-Categorization Custom Label</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>Type of entry. Used in the front-end to retrieve the translated value</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Type of entry. Used in the front-end to retrieve the translated value</inlineHelpText>
+        <label>Type</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Sector</fullName>
+                    <default>true</default>
+                    <label>Sector</label>
+                </value>
+                <value>
+                    <fullName>Category</fullName>
+                    <default>false</default>
+                    <label>Category</label>
+                </value>
+                <value>
+                    <fullName>Custom Label</fullName>
+                    <default>false</default>
+                    <label>Custom Label</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>GCS Customer Type For Registration</label>
+    <listViews>
+        <fullName>Detailed_View</fullName>
+        <columns>DeveloperName</columns>
+        <columns>Is_Active__c</columns>
+        <columns>Type__c</columns>
+        <columns>Parent__c</columns>
+        <columns>Sub_Categorization_Custom_Label__c</columns>
+        <columns>Display_Country__c</columns>
+        <columns>Search_Option__c</columns>
+        <columns>Filter_on_Record_Type__c</columns>
+        <columns>Filter_on_Sector__c</columns>
+        <columns>Filter_on_Category__c</columns>
+        <columns>Can_Account_Be_Created__c</columns>
+        <columns>Display_Submit_for_Account_Creation__c</columns>
+        <columns>Created_Account_Sector__c</columns>
+        <columns>Created_Account_Category__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Detailed View</label>
+        <language>en_US</language>
+    </listViews>
+    <pluralLabel>GCS Customer Types For Registration</pluralLabel>
+    <validationRules>
+        <fullName>Account_Creatable_Restriction</fullName>
+        <active>true</active>
+        <description>If Auto Search or No Search is selected, Account cannot be created</description>
+        <errorConditionFormula>AND(
+					OR(
+									ISPICKVAL(Search_Option__c, &apos;No Search&apos;),
+									ISPICKVAL(Search_Option__c, &apos;Auto Search&apos;)
+					),
+     Can_Account_Be_Created__c 				
+	)</errorConditionFormula>
+        <errorDisplayField>Can_Account_Be_Created__c</errorDisplayField>
+        <errorMessage>If Auto Search or No Search is selected, Account cannot be created</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Auto_Search_Constraints</fullName>
+        <active>true</active>
+        <description>If Auto Search is selected, the following fields must be  filled:
+- Filter on Category
+- Filter on Record Type
+- Filter on Sector
+And the following fields must be empty:
+- Fields Displayed
+- Fields Targeted</description>
+        <errorConditionFormula>AND(
+					ISPICKVAL(Search_Option__c, &apos;Auto Search&apos;),
+					OR(
+									NOT(ISBLANK(Fields_Displayed__c)),
+									NOT(ISBLANK(Fields_Targeted_Partial_Match__c)),
+									ISBLANK(Filter_on_Category__c),
+									ISBLANK(Filter_on_Record_Type__c),
+									ISBLANK(Filter_on_Sector__c)
+					)
+	)</errorConditionFormula>
+        <errorMessage>If Auto Search is selected, the following fields must be  filled:
+- Filter on Category
+- Filter on Record Type
+- Filter on Sector
+And the following fields must be empty:
+- Fields Displayed
+- Fields Targeted</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Display_Submit_Restrictions</fullName>
+        <active>true</active>
+        <description>If Display Submit for Account Creation is true, Created Account Sector and Created Account Category must be filled.
+Otherwise, they must be empty.</description>
+        <errorConditionFormula>OR(
+				AND(
+								Display_Submit_for_Account_Creation__c,
+								OR(
+												ISBLANK(Created_Account_Sector__c),
+												ISBLANK(Created_Account_Category__c)
+								)
+				),
+    AND(
+								NOT(Display_Submit_for_Account_Creation__c),
+								NOT(
+												AND(
+																ISBLANK(Created_Account_Sector__c),
+																ISBLANK(Created_Account_Category__c)
+												)
+								)
+				)
+	)</errorConditionFormula>
+        <errorDisplayField>Display_Submit_for_Account_Creation__c</errorDisplayField>
+        <errorMessage>If Display Submit for Account Creation is true, Created Account Sector and Created Account Category must be filled.
+Otherwise, they must be empty.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_Search_Constraints</fullName>
+        <active>true</active>
+        <description>If No Search is selected, the following fields must be  empty:
+- Fields Displayed
+- Fields Targeted
+- Filter on Category
+- Filter on Record Type
+- Filter on Sector</description>
+        <errorConditionFormula>AND(
+					ISPICKVAL(Search_Option__c, &apos;No Search&apos;),
+					OR(
+									NOT(ISBLANK(Fields_Displayed__c)),
+									NOT(ISBLANK(Fields_Targeted_Partial_Match__c)),
+									NOT(ISBLANK(Filter_on_Category__c)),
+									NOT(ISBLANK(Filter_on_Record_Type__c)),
+									NOT(ISBLANK(Filter_on_Sector__c))
+					)
+	)</errorConditionFormula>
+        <errorMessage>If No Search is selected, the following fields must be  empty:
+- Fields Displayed
+- Fields Targeted
+- Filter on Category
+- Filter on Record Type
+- Filter on Sector</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Placeholder_Rule</fullName>
+        <active>true</active>
+        <description>If Sub-Categorization Custom Label is filled, Placeholder Custom Label must filled as well</description>
+        <errorConditionFormula>AND(
+    NOT(ISBLANK(Sub_Categorization_Custom_Label__c)),
+    ISBLANK(Placeholder_Custom_Label__c)
+)</errorConditionFormula>
+        <errorDisplayField>Placeholder_Custom_Label__c</errorDisplayField>
+        <errorMessage>If Sub-Categorization Custom Label is filled, Placeholder Custom Label must filled as well</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

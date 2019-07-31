@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Limit__c</fullName>
         <description>Number for limiting the number of records. Max Limit of results (&lt;10000)</description>

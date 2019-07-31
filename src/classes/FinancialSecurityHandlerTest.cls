@@ -20,8 +20,10 @@ private class FinancialSecurityHandlerTest {
         List<Contact> cos = new List<Contact>{co1,co2}; 
         insert cos;
 
+        Id rtGenericFIId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Generic_FI').getRecordTypeId();
+
         // Create a new Financial Institution
-        Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank');
+        Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', RecordTypeId = rtGenericFIId, Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank');
         insert fi;
         
         // create a reception case

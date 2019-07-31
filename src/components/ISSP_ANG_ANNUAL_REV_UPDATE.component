@@ -51,6 +51,11 @@
         .hiddenStyle {
             display: none;
         }
+
+        .country__c{
+            background: lightgray !important;
+        }
+
     </style>
 
     <script>
@@ -90,14 +95,14 @@
             <!--Line 2 Legal / Registered Name -->
             <apex:outputPanel >
                 <apex:pageBlockSection columns="2">
-                    <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem>
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" />
                         <apex:outputField value="{!ca.account.Name}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}"/>
-                        <apex:inputField id="Account_Name__c" value="{!ca.fw.newform.Account_Name__c}" />
+                    <apex:pageBlockSectionItem rendered="true">
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" styleClass="agencyLegalDetailsComponent"/>
+                        <apex:inputField id="Account_Name__c" value="{!ca.fw.newform.Account_Name__c}" styleClass="agencyLegalDetailsComponent"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -116,14 +121,14 @@
             <!--Line 4 Trade Name -->
             <apex:outputPanel >
                 <apex:pageBlockSection columns="2">
-                    <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem>
                         <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
                         <apex:outputField value="{!ca.account.TradeName__c}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" />
-                        <apex:inputField id="Trade_Name__c" value="{!ca.fw.newform.Trade_Name__c}" />
+                    <apex:pageBlockSectionItem rendered="true">
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" styleClass="agencyLegalDetailsComponent"/>
+                        <apex:inputField id="Trade_Name__c" value="{!ca.fw.newform.Trade_Name__c}" styleClass="agencyLegalDetailsComponent"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -138,20 +143,20 @@
                 
                 <apex:pageBlockSection columns="2">
                 
-                    <apex:pageBlockSectionItem >
-                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
+                    <apex:pageBlockSectionItem>
+                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}"/>
                         <apex:outputField value="{!ca.account.VAT_Number__c}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
-                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_VAT_field_mandatory__c, '* ','')}{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
-
-                        <apex:outputPanel id="VATNumberInput">
-
+                    <apex:pageBlockSectionItem rendered="true">
+                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_VAT_field_mandatory__c, '* ','')}{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" styleClass="agencyLegalDetailsComponent"/>
+                        
+                        <apex:outputPanel id="VATNumberInput" styleClass="agencyLegalDetailsComponent">
+                            
                             <span style="margin-left:{!If(ca.isocountry.EU_Country__c,'0px', '17px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;">
                                 <apex:outputfield value="{!ca.isocountry.ISO_Code__c}" rendered="{!ca.isocountry.EU_Country__c}" />
                             </span>
-
+                            
                             <apex:inputfield id="vatinput" value="{!ca.fw.newForm.ISSP_AMS_VAT_Number_Input__c}" html-placeholder="{!ca.isocountry.Tax_number_format__c}" onblur="if(this.value != '' && {!ca.isocountry.EU_Country__c}) {validateVAT(this.value.trim());}" style="margin-left:0px"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!IF(ca.isocountry.Tax_number_help_text__c == null, txtHelpTaxNumber, ca.isocountry.Tax_number_help_text__c)}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                             <apex:actionstatus id="actValidVAT" startstyleclass="bg-info">
@@ -159,7 +164,7 @@
                                     {!$Label.ISSP_PAX_Validating_VAT_Number}
                                 </apex:facet>
                             </apex:actionstatus>
-                    </apex:outputPanel>
+                        </apex:outputPanel>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -174,15 +179,15 @@
                 
                 <apex:pageBlockSection columns="2">
                     
-                    <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem>
                         <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_2_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_2_Input__c.Label, ca.isocountry.Tax_Number_2_label__c)}" />
                         <apex:outputField value="{!ca.account.VAT_Number_2__c}" />
                     </apex:pageBlockSectionItem>
                     
-                    <apex:pageBlockSectionItem labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
-                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_2_VAT_field_2_mandatory__c, '* ','')}{!IF(ca.isocountry.Tax_Number_2_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_2_Input__c.Label, ca.isocountry.Tax_Number_2_label__c)}" />
+                    <apex:pageBlockSectionItem rendered="true">
+                        <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_2_VAT_field_2_mandatory__c, '* ','')}{!IF(ca.isocountry.Tax_Number_2_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_2_Input__c.Label, ca.isocountry.Tax_Number_2_label__c)}" styleClass="agencyLegalDetailsComponent"/>
                         
-                        <apex:outputPanel id="VATNumber2Input">
+                        <apex:outputPanel id="VATNumber2Input" styleClass="agencyLegalDetailsComponent">
                             
                             <span style="margin-left:{!If(ca.isocountry.EU_Country__c,'0px', '17px')};padding-right:2px;padding-top:3px;padding-bottom:3px; background-color:#EEEEEE;font-size:14px;">
                                 <apex:outputfield value="{!ca.isocountry.ISO_Code__c}" rendered="{!ca.isocountry.EU_Country__c}" />
@@ -419,6 +424,7 @@
                                 if (isToClean) {
                                     $('[id$="ShippingCountryList"]').val('');
                                     $('#shipping_country__c > input').val('');
+                                    resetPCHint();
                                 }
                             }
 
@@ -641,7 +647,7 @@
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(ca.errorFoundCheckBoxes, ca.fw.newForm.Confirm_Ownership_details_are_correct__c==false, ca.fw.newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px;', 'margin-right:5px')}">
                         <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" style="color:black;font-size:110%"/>
-                        <apex:inputCheckbox disabled="{!ca.isReadonly || ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="$('[id$=currcorporatedetails]').hide();"/>
+                        <apex:inputCheckbox disabled="{!ca.isReadonly || ca.fw.newForm.ISSP_AMS_Total_Previous_Ownership__c != 100}" html-data-group="agencyOwnership" value="{!ca.fw.newForm.Confirm_Ownership_details_are_correct__c}" onclick="hideCurrCorporateDetails();"/>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
             </apex:outputPanel>
@@ -718,6 +724,30 @@
         </apex:pageBlockSection>
 
         <apex:pageBlockSection columns="1" collapsible="false" id="Section31">
+            
+            <apex:outputPanel styleClass="agencyOwnershipComponent">
+                <apex:pageBlockSection columns="1">
+                    <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;margin-right:5px;">
+                        <apex:outputpanel>
+                            <div>
+                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Copy_Ownership__c.Label}" style="color:black;font-size:110%"/>
+                                <a href="" data-html="true" data-toggle="popover" data-trigger="hover" data-content="<div escape='false'>{!$Label.ISSP_ANG_COPY_OWNERSHIP_HINT}</div>">
+                                    <apex:image value="/img/msg_icons/info16.png"/></a>                            
+                                <apex:inputCheckbox id="copyOwnershipCheckbox" disabled="{!ca.isReadonly}" html-data-controls="copyOwnershipComponent" html-data-group="copyOwnership" value="{!ca.fw.newForm.Copy_Ownership__c}" onclick="copyOwnership();"/>
+                            </div>
+                        </apex:outputpanel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+            <apex:outputPanel styleClass="copyOwnershipComponent" >
+                <apex:pageBlockSection columns="2">
+                    <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:15%;margin-right:5px;">
+                        <apex:commandLink rendered="{!NOT(ca.isReadonly)}" id="copyOwnershipEdit" status="" oncomplete="showCopyOwnershipDialog();" rerender="copyOwnership">
+                            <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Select_Accounts}
+                        </apex:commandLink>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
 
             <!-- previousOwners (PERSON) -->
             <apex:outputPanel id="currentPersonOwners">
@@ -1082,7 +1112,10 @@
 
             if ($('[id$="disableCheckBoxBranch"]')[0].checked) {
                 $('[id$="ShippingStateList"]').attr('style', 'display: none;');
-                $('[id$="shippingStateInput"]').attr('style', 'display: none;');
+            	$('[id$="shippingStateInput"]').attr('style', 'display: none;');
+            	$(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');            
+            } else {
+                $(".branch_office_postal_code__c").attr('placeholder', '{!ca.isocountry.Postal_Code_Hint_Format__c}');
             }
 
             // checks initial state
@@ -1107,6 +1140,11 @@
 
         function showCurrCorporateDetails() {
             if($('[id$="ownershipCheckbox"]').prop("checked")) {
+                if($('[id$="ownershipCheckbox"]').prop("checked")) {
+                    $('[id$=copyOwnershipEdit]').show();
+                } else {
+                    $('[id$=copyOwnershipEdit]').hide();
+                }
                 if($('[id$=UpdatedLegalStatus]').val() == 'Corporation') {
                     $('[id$=currcorporatedetails]').show();
                 }
@@ -1115,7 +1153,19 @@
                 }
             } else {
                 $('[id$=currcorporatedetails]').hide();
+                $('[id$=copyOwnershipEdit]').hide();
             }
+        }
+
+        function hideCurrCorporateDetails() {
+        	$('[id$=currcorporatedetails]').hide();
+            $('[id$=copyOwnershipEdit]').hide();
+        }
+
+		function copyOwnership() {
+            if(!$('[id$="copyOwnershipCheckbox"]').prop("checked")) {
+                copyOwnershipClear();
+            } 
         }
 
         function populateShippingCountry() {
