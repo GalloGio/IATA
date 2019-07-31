@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>SIDRA</label>
+    <label>SIDRA_1</label>
     <protected>false</protected>
     <values>
         <field>Always_Visible__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">CreatedDate &gt;=, Update_AIMS_DEF__c NULL, NOI_sent__c NULL</value>
+        <value xsi:type="xsd:string">CreatedDate &gt;=, NOI_sent__c NOT_NULL</value>
     </values>
     <values>
         <field>Origin__c</field>
