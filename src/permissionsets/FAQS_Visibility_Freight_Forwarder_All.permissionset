@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>All Cargo Agent Categories</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>FAQS Visibility Freight Forwarder All</label>
+    <license>Partner Community</license>
+</PermissionSet>

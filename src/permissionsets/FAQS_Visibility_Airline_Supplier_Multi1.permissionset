@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Ground Handler,Caterer,Consultancy Firm,Fuel Supplier,Maintenance, Repair, Overhaul,Security</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>FAQS Visibility Airline Supplier Multi1</label>
+    <license>Partner Community</license>
+</PermissionSet>

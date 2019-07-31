@@ -5,6 +5,7 @@ public class ISSP_Ctrl_Bannertestpage {
   public String UserPortalCountry {get;Set;}
   public String UserPortalRegion {get;Set;}
   public String UserPortalAccountSector {get;Set;}
+  public String UserPortalAccountCategory{get;Set;}
   public String FirstBannerId {get;Set;}
 
 
@@ -24,21 +25,15 @@ public class ISSP_Ctrl_Bannertestpage {
 	Init();
 	//Filter By Country Method
 	FilterContentVersionByCountry();
-	system.debug('SFII Last  Banners_List '+Banners_List);
 
 	 if(Banners_List == null || Banners_List.size() < 1){
         getDefaultBanner();
      }
 	//Call method that set the language of the banner
 	setBannerLanguage();
-	system.debug('SFII Last  wrapperBanItem_List '+wrapperBanItem_List);
-	system.debug('SFII Last  wrapperBanItem_List.size() '+wrapperBanItem_List.size());
     if (wrapperBanItem_List != null && !wrapperBanItem_List.isEmpty() ){
 			FirstBannerId = wrapperBanItem_List[0].bannerItem.Id;
-			system.debug('SFII  FirstBannerId '+FirstBannerId);
     }
-	system.debug('SFII 2 Last  wrapperBanItem_List '+wrapperBanItem_List);
-	system.debug('SFII 2 Last  wrapperBanItem_List.size() '+wrapperBanItem_List.size());
  }
 
   //Initialize Variables and Parameters
@@ -48,16 +43,14 @@ public class ISSP_Ctrl_Bannertestpage {
 	//Init Wrapper Banners List
 	wrapperBanItem_List = new List<WrapperBanner> ();
 	//Today's Date
-	String TodayInstanse = String.valueOf(Date.today());
+	Date TodayInstance = Date.today();
 	//Select Current logged in user
     User tmpPortalUSer = [select Id , ContactId From User Where id =: userinfo.getuserid()];
     //Get Parameters According to the Contact Related to User
     Contact PortalContact = [select Id ,Name, Status__c ,User_Portal_Status__c,OwnerId ,Account.BillingCountry ,Account.sector__c,
-    						 Account.IATA_ISO_Country__r.Name ,Account.IATA_ISO_Country__r.Region__c
+							 Account.Category__c, Account.IATA_ISO_Country__r.Name ,Account.IATA_ISO_Country__r.Region__c
                              From Contact
                              where Id =: tmpPortalUSer.ContactId][0]  ;
-
-    system.debug('KER0  PortalContact '+PortalContact);
 
 	//Prepare Permissions parameters
 	//STATUS
@@ -86,44 +79,46 @@ public class ISSP_Ctrl_Bannertestpage {
     if (UserPortalAccountSector == null){
     	UserPortalAccountSector = '';
     }
+	//CATEGORY
+	UserPortalAccountCategory = PortalContact.Account.Category__c;
+	if(UserPortalAccountCategory == null){
+	   UserPortalAccountCategory = '';
+	}
 
-	system.debug('SFII  TodayInstanse '+TodayInstanse);
+	unFilteredBanner_List = new List<ISSP_Banner__c>();
+	//get visible banner records
+	for(ISSP_Banner_Visibility__c bannerVis : [SELECT ISSP_Banner__r.Id, ISSP_Banner__r.Background_image__c ,ISSP_Banner__r.Background_image_url_link__c ,ISSP_Banner__r.Background_image_url_link_target__c
+			  ,ISSP_Banner__r.Country__c ,ISSP_Banner__r.Publication_end_date__c ,ISSP_Banner__r.Publication_start_date__c ,ISSP_Banner__r.Sector__c ,ISSP_Banner__r.Status__c
+			  ,ISSP_Banner__r.User_portal_Status__c ,ISSP_Banner__r.DE_Zone_text_1__c ,ISSP_Banner__r.Zone_1_text__c ,ISSP_Banner__r.Zone_1_text_background_colour__c
+			  ,ISSP_Banner__r.ZH_Zone_1_text__c ,ISSP_Banner__r.Zone_1_text_colour__c ,ISSP_Banner__r.FR_Zone_1_text__c ,ISSP_Banner__r.Zone_1_text_hyperlink__c
+			  ,ISSP_Banner__r.Zone_1_text_hyperlink_target_window__c ,ISSP_Banner__r.IT_Zone_text_1__c ,ISSP_Banner__r.JA_Zone_1_text__c ,ISSP_Banner__r.KO_Zone_1_text__c
+			  ,ISSP_Banner__r.PT_Zone_1_text__c ,ISSP_Banner__r.Zone_1_text_size__c ,ISSP_Banner__r.ES_Zone_1_text__c ,ISSP_Banner__r.Zone_2_text__c ,ISSP_Banner__r.Zone_2_text_background_colour__c
+			  ,ISSP_Banner__r.ZH_Zone_2_text__c ,ISSP_Banner__r.Zone_2_text_colour__c ,ISSP_Banner__r.FR_Zone_2_text__c
+			  ,ISSP_Banner__r.Zone_2_text_hyperlink__c ,ISSP_Banner__r.Zone_2_text_hyperlink_target_window__c ,ISSP_Banner__r.IT_Zone_2_text__c
+			  ,ISSP_Banner__r.JA_Zone_2_text__c ,ISSP_Banner__r.KO_Zone_2_text__c ,ISSP_Banner__r.PT_Zone_2_text__c ,ISSP_Banner__r.Zone_2_text_size__c
+			  ,ISSP_Banner__r.ES_Zone_2_text__c ,ISSP_Banner__r.Zone_3_text__c ,ISSP_Banner__r.Zone_3_text_background_colour__c ,ISSP_Banner__r.ZH_Zone_text_3__c
+			  ,ISSP_Banner__r.Zone_3_text_colour__c ,ISSP_Banner__r.FR_Zone_3_text__c ,ISSP_Banner__r.Zone_3_text_hyperlink__c ,ISSP_Banner__r.Zone_3_text_hyperlink_target_window__c
+			  ,ISSP_Banner__r.IT_Zone_3_text__c ,ISSP_Banner__r.JA_Zone_3_text__c ,ISSP_Banner__r.KO_Zone_3_text__c ,ISSP_Banner__r.PT_Zone_3_text__c ,ISSP_Banner__r.Zone_3_text_size__c
+			  ,ISSP_Banner__r.ES_Zone_3_text__c ,ISSP_Banner__r.AR_Zone_text_1__c ,ISSP_Banner__r.ID_Zone_text_1__c ,ISSP_Banner__r.TH_Zone_text_1__c
+			  ,ISSP_Banner__r.VI_Zone_text_1__c ,ISSP_Banner__r.AR_Zone_text_2__c ,ISSP_Banner__r.DE_Zone_text_2__c ,ISSP_Banner__r.ID_Zone_text_2__c
+			  ,ISSP_Banner__r.TH_Zone_text_2__c ,ISSP_Banner__r.VI_Zone_text_2__c ,ISSP_Banner__r.AR_Zone_text_3__c ,ISSP_Banner__r.DE_Zone_text_3__c
+			  ,ISSP_Banner__r.ID_Zone_text_3__c ,ISSP_Banner__r.TH_Zone_text_3__c ,ISSP_Banner__r.VI_Zone_text_3__c
+	 		FROM ISSP_Banner_Visibility__c
+	  		WHERE ((Sector__c = :UserPortalAccountSector AND Category__c INCLUDES (:UserPortalAccountCategory))
+	  				OR (Sector__c  = 'ALL' AND  Category__c INCLUDES ('ALL')))
+	  		AND ISSP_Banner__r.Status__c  = 'Active'
+			AND ISSP_Banner__r.Publication_start_date__c < :TodayInstance
+			AND ISSP_Banner__r.Publication_end_date__c > :TodayInstance
+			AND ISSP_Banner__r.User_portal_Status__c INCLUDES (:String.escapeSingleQuotes(UserPortalStatus))
+	  		AND ISSP_Banner__r.Name != 'Ban-001'
+	 		ORDER BY ISSP_Banner__r.Publication_start_date__c DESC
+			LIMIT 8]){
 
-	soql = 	'select id ,Background_image__c ,Background_image_url_link__c ,Background_image_url_link_target__c ,Country__c ,'+
-			'Publication_end_date__c ,Publication_start_date__c ,Sector__c ,Status__c ,User_portal_Status__c ,DE_Zone_text_1__c ,'+
-			'Zone_1_text__c ,Zone_1_text_background_colour__c ,ZH_Zone_1_text__c ,Zone_1_text_colour__c ,FR_Zone_1_text__c ,'+
-			'Zone_1_text_hyperlink__c ,Zone_1_text_hyperlink_target_window__c ,IT_Zone_text_1__c ,JA_Zone_1_text__c ,'+
-			'KO_Zone_1_text__c ,PT_Zone_1_text__c ,Zone_1_text_size__c ,ES_Zone_1_text__c ,Zone_2_text__c ,'+
-			'Zone_2_text_background_colour__c ,ZH_Zone_2_text__c ,Zone_2_text_colour__c ,FR_Zone_2_text__c ,'+
-			'Zone_2_text_hyperlink__c ,Zone_2_text_hyperlink_target_window__c ,IT_Zone_2_text__c ,JA_Zone_2_text__c ,'+
-			'KO_Zone_2_text__c ,PT_Zone_2_text__c ,Zone_2_text_size__c ,ES_Zone_2_text__c ,Zone_3_text__c ,'+
-			'Zone_3_text_background_colour__c ,ZH_Zone_text_3__c ,Zone_3_text_colour__c ,FR_Zone_3_text__c ,'+
-			'Zone_3_text_hyperlink__c ,Zone_3_text_hyperlink_target_window__c ,IT_Zone_3_text__c ,JA_Zone_3_text__c ,'+
-			'KO_Zone_3_text__c ,PT_Zone_3_text__c ,Zone_3_text_size__c ,ES_Zone_3_text__c ,AR_Zone_text_1__c ,'+
-			'ID_Zone_text_1__c ,TH_Zone_text_1__c ,VI_Zone_text_1__c ,AR_Zone_text_2__c ,DE_Zone_text_2__c ,'+
-			'ID_Zone_text_2__c ,TH_Zone_text_2__c ,VI_Zone_text_2__c ,AR_Zone_text_3__c ,DE_Zone_text_3__c ,'+
-			'ID_Zone_text_3__c ,TH_Zone_text_3__c ,VI_Zone_text_3__c '+
-			'From ISSP_Banner__c '+
-			'Where Status__c  = \'Active\''+
-			' AND Publication_start_date__c < ' +TodayInstanse +
-			' AND Publication_end_date__c > '+TodayInstanse +
-		    ' AND User_portal_Status__c includes (\''+String.escapeSingleQuotes(UserPortalStatus)+'\')' +
-		    ' AND Sector__c includes (\''+String.escapeSingleQuotes(UserPortalAccountSector)+'\')' +
-			' AND Name != \'Ban-001\'';
-
-
-
-	 unFilteredBanner_List = new List<ISSP_Banner__c>();
-	 //Run the soql Query
-	 system.debug('SFII  soql '+soql);
-     unFilteredBanner_List  = Database.query(soql + ' order by Publication_start_date__c Desc Limit 8' );
-
-	system.debug('SFII  unFilteredBanner_List '+unFilteredBanner_List);
-	system.debug('SFII  unFilteredBanner_List size '+unFilteredBanner_List.size());
+		unFilteredBanner_List.add(bannerVis.ISSP_Banner__r);
+	}
 
     if (unFilteredBanner_List != null && !unFilteredBanner_List.isEmpty() ){
 			Banners_List = unFilteredBanner_List ;
-			system.debug('SFII  Banners_List '+Banners_List);
     }
   }
 
@@ -131,13 +126,10 @@ public class ISSP_Ctrl_Bannertestpage {
   public void FilterContentVersionByCountry(){
 		//Temporary Helper Banners set
 		set<ISSP_Banner__c> tmpBanner_set = new set<ISSP_Banner__c>();
-		system.debug('SFIIcountry  UserPortalCountry '+UserPortalCountry);
-		system.debug('SFIIcountry  UserPortalRegion '+UserPortalRegion);
         User u = [SELECT Id, Contact.Account.CNS_Agency__c,  Contact.Account.CNS_Account__c FROM User WHERE Id =:UserInfo.getUserId()];
         Boolean isCNS = false;
         if(u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c) { isCNS = true;}
         for(ISSP_Banner__c ban : unFilteredBanner_List ){
-		system.debug('SFIIcountry  ban.Country__c '+ban.Country__c);
 
         if(isCNS) {
                 if(ban.Country__c != null && ban.Country__c.contains('All - CNS')) {
@@ -157,7 +149,7 @@ public class ISSP_Ctrl_Bannertestpage {
             }
             }
 
-        }system.debug('SFIIcountry tmpBanner_set '+tmpBanner_set);
+        }
         //Filters the List to display
         if(tmpBanner_set != null && tmpBanner_set.size() > 0){
             Banners_List.clear();
@@ -190,9 +182,7 @@ public class ISSP_Ctrl_Bannertestpage {
 
 
 	public void setBannerLanguage(){
-	system.debug('SFII  START setBannerLanguage');
 		String currentLanguage = UserInfo.getLanguage();
-		system.debug('SFII   currentLanguage' +currentLanguage);
 		for(ISSP_Banner__c ban :Banners_List)
 		{
 			WrapperBanner wrapItem = new WrapperBanner(ban);
@@ -256,7 +246,6 @@ public class ISSP_Ctrl_Bannertestpage {
 				if (ban.AR_Zone_text_2__c != null) {	wrapItem.Zone_text_2 = ban.AR_Zone_text_2__c; }
 				if (ban.AR_Zone_text_1__c != null) {	wrapItem.Zone_text_1 = ban.AR_Zone_text_1__c; }
 			}
-			system.debug('SFII   wrapItem' +wrapItem);
 			wrapperBanItem_List.add(wrapItem);
 		}
 
@@ -283,7 +272,6 @@ public class ISSP_Ctrl_Bannertestpage {
 
 		if (noResults_List != null && !noResults_List.isEmpty() ){
 				Banners_List = noResults_List ;
-				system.debug('SFII  Banners_List '+Banners_List);
 		}
 	}
 }

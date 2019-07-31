@@ -82,6 +82,11 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
+                <field>Product__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
                 <field>Service_Level__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
@@ -100,6 +105,11 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Effective_time_spent__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Support_Evaluation_Grade__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>

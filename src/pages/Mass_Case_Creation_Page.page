@@ -26,7 +26,8 @@
           document.getElementById("targetFinancialYear").value,
           //document.getElementById("yearend").value,
           document.getElementById("exclOpenCases").checked,
-          document.getElementById("exclClosedCases").checked
+          document.getElementById("exclClosedCases").checked,
+          document.getElementById("exclFAOptOut").checked
           );
       }
       
@@ -173,6 +174,8 @@
           <apex:param name="targetFinancialYear" value="" />
           <apex:param name="exclOpenCases" value="" />
           <apex:param name="exclClosedCases" value="" />
+          <apex:param name="exclFAOptOut" value="" />
+
       </apex:actionFunction>
  
  
@@ -526,7 +529,11 @@
             <input type="checkbox" id="exclClosedCases" />
         </td>
       </tr>
-
+      <tr>
+        <td style="font-weight:bold;">Exclude Agents with Financial Assessment opt-out:<br />
+            <input type="checkbox" id="exclFAOptOut" />
+        </td>
+      </tr>
       <tr>
         <td> 
             <apex:actionRegion >
@@ -738,6 +745,14 @@
                 <apex:outputField value="{!c.con.account.CCG_IRR_Distribution_list__c}"/>
             </apex:column>
             
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Agents with Financial Assessment opt-out" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="account.ANG_FA_Opt_out__c" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!c.con.account.ANG_FA_Opt_out__c}"/>
+            </apex:column>
             
         </apex:pageBlockTable>
 

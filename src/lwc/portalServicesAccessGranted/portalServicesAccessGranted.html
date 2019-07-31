@@ -1,0 +1,19 @@
+<template>
+
+    <div if:true={componentLoading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+
+    <div if:false={componentLoading} class="slds-grid slds-wrap slds-gutters_direct-small">
+
+        <template for:each={lstServicesGranted} for:item="serviceGranted">
+            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-vertical_small" key={serviceGranted.Id}>
+
+                <c-portal-services-access-granted-card service={serviceGranted}></c-portal-services-access-granted-card>
+
+            </div>
+        </template>
+
+    </div>
+    
+</template>

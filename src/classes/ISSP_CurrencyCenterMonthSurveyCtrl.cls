@@ -139,7 +139,14 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		List<SelectOption> banksListOptions = new List<SelectOption>();
 		
 
-		List<Financial_Institution__c> countryBanksList = [SELECT Id, Name FROM Financial_Institution__c WHERE Country__c = :selectedCountrySurvey AND Institution_Type__c = 'Bank' AND (NOT Name LIKE '*%') ORDER BY Name LIMIT 999];
+		List<Financial_Institution__c> countryBanksList = [
+			SELECT Id, Name
+			FROM Financial_Institution__c
+			WHERE RecordType.DeveloperName = 'Currency_Center_Bank'
+			AND Country__c = :selectedCountrySurvey
+			AND Institution_Type__c = 'Bank'
+			AND (NOT Name LIKE '*%')
+			ORDER BY Name LIMIT 999];
 
 		if(!countryBanksList.isEmpty()) {
 			Set<String> bankNames = new Set<String>();
