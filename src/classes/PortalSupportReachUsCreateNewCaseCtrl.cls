@@ -155,17 +155,48 @@ public static Case insertCase(Case caseToInsert, List<String> recipientsToAdd) {
 	return [SELECT Id, CaseNumber FROM Case WHERE id =: caseToInsert.Id LIMIT 1];
 }
 
-private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country, String topic, String subtopic, Boolean emergency){
-	return [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
-	        Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c,
-	        Flag_Assignment_Rules__c
-	        FROM ISSP_FAQ2Case_Record_Type__c
-	        WHERE Complaint__c =: emergency
-	                             AND (Topic__c =: topic
-	                                             OR SubTopic__c = : subtopic
-	                                                              OR Country_concerned_by_the_query__c like: country
-	                                                              OR Country_concerned_by_the_query2__c like: country
-	                                                              OR Country_concerned_by_the_query3__c like: country)];
+private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country, String topic, String subtopic, Boolean isComplaint){
+
+
+	if(isComplaint) {
+
+		Map<String, ISSP_FAQ2Case_Record_Type__c> mapRecordType = new Map<String, ISSP_FAQ2Case_Record_Type__c>();
+		List<ISSP_FAQ2Case_Record_Type__c> finalRecordType = new  List<ISSP_FAQ2Case_Record_Type__c>();
+		List<ISSP_FAQ2Case_Record_Type__c> lstRecordType = [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
+		                                                    Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c,Flag_Assignment_Rules__c
+		                                                    FROM ISSP_FAQ2Case_Record_Type__c
+		                                                    WHERE Complaint__c =: isComplaint
+		                                                                         AND ( Country_concerned_by_the_query__c like: country
+		                                                                               OR Country_concerned_by_the_query2__c like: country
+		                                                                               OR Country_concerned_by_the_query3__c like: country)];
+		for(ISSP_FAQ2Case_Record_Type__c rt : lstRecordType)
+		{
+			mapRecordType.put(rt.Topic__c + '#' + rt.SubTopic__c, rt);
+		}
+		if(mapRecordType.containsKey(topic + '#' + subtopic)) {
+			finalRecordType.add(mapRecordType.get(topic + '#' + subtopic));
+			return finalRecordType;
+		}
+		else if(mapRecordType.containsKey(topic + '#')) {
+			finalRecordType.add(mapRecordType.get(topic + '#'));
+			return finalRecordType;
+		}
+		else{
+			finalRecordType.add(mapRecordType.get('#'));
+			return finalRecordType;
+		}
+
+	}else{
+
+		return [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
+		        Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c, Flag_Assignment_Rules__c
+		        FROM ISSP_FAQ2Case_Record_Type__c
+		        WHERE  (Topic__c =: topic
+		                           OR SubTopic__c = : subtopic
+		                                            OR Country_concerned_by_the_query__c like: country
+		                                            OR Country_concerned_by_the_query2__c like: country
+		                                            OR Country_concerned_by_the_query3__c like: country)];
+	}
 }
 
 //Creates a CaseTeamMember with the contacts (related to the emails of course)
