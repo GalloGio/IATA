@@ -7,6 +7,8 @@
     <customButtons>Cancel_Assessment</customButtons>
     <customButtons>Close_Case_c</customButtons>
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
+    <customButtons>Apply_Cash_Condition</customButtons>
+    <customButtons>Remove_Cash_Condition</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -278,6 +280,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Sanity_Check_Failure_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financial_Assessment_Points__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

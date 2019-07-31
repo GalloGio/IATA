@@ -16,6 +16,18 @@
         <description>KPI - Send email to responsible person to update the KPI value</description>
         <protected>false</protected>
         <recipients>
+            <recipient>chautas@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodrigos@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>weitz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <field>Responsible__c</field>
             <type>userLookup</type>
         </recipients>

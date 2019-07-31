@@ -1,5 +1,5 @@
 ({
-	checkTerms: function(component, event, helper) {
+    checkTerms: function(component, event, helper) {
         // Check fields validity
         if (component.get("v.Terms") && helper.validateEmail(component)) {
             helper.checkUsername(component);
@@ -16,6 +16,16 @@
                 // email should be disabled
                 component.find("email").set("v.disabled", true);
             }
+            if(component.get("v.serviceName") == 'NDCMM' && !component.get("v.isGuest")){
+                // email should be disabled
+                component.find("email").set("v.disabled", true);
+            }
+
         }
+
+    },
+    
+    next : function(component, event, helper){
+        helper.next(component);
     }
 })

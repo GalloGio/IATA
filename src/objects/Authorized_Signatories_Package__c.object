@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>ASP_Effective_Date__c</fullName>
         <description>This represents the last date when a new attachment was added to the Authorized Signatory Package record.</description>
@@ -65,6 +66,7 @@
     </fields>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Related Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <lookupFilter>
@@ -89,6 +91,7 @@
     </fields>
     <fields>
         <fullName>Ongoing_Request_for_Documents__c</fullName>
+        <description>Represents the ongoing request for document on the related Account</description>
         <externalId>false</externalId>
         <formula>Account__r.Ongoing_Request_for_Documents__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

@@ -152,7 +152,14 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 	public List<SelectOption> getBankOptions() {
 		List<SelectOption> banksListOptions = new List<SelectOption>();
 
-		List<Financial_Institution__c> countryBanksList = [SELECT Id, Name FROM Financial_Institution__c WHERE Country__c = :selectedCountrySurvey AND Institution_Type__c = 'Bank' AND (NOT Name LIKE '*%') ORDER BY Name LIMIT 999];
+		List<Financial_Institution__c> countryBanksList = [
+			SELECT Id, Name
+			FROM Financial_Institution__c 
+			WHERE RecordType.DeveloperName = 'Currency_Center_Bank'
+			AND Country__c = :selectedCountrySurvey
+			AND Institution_Type__c = 'Bank' 
+			AND (NOT Name LIKE '*%')
+			ORDER BY Name LIMIT 999];
 
 		if(!countryBanksList.isEmpty()) {
 			Set<String> bankNames = new Set<String>();
@@ -548,8 +555,7 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 		Set<Id> countryManagerEmailList = new Set<Id>();
 
 		List<String> managerNameList = new List<String>();
-		System.debug('query country ' + [SELECT Id, Name, Country_Manager__c FROM IATA_ISO_Country__c WHERE Name IN :wccsObjectMap.keySet() LIMIT 999]);
-		for(IATA_ISO_Country__c country: [SELECT Id, Name, Country_Manager__c FROM IATA_ISO_Country__c WHERE Name IN :wccsObjectMap.keySet() LIMIT 999]) {
+		for(IATA_ISO_Country__c country: IATAIsoCountryDAO.getIsoCountryByCountriesName(wccsObjectMap.keySet())) {
 			if(country.Country_Manager__c != null) {
 
 				countryManagerEmailList.add(country.Country_Manager__c);
@@ -1139,7 +1145,7 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 		//inicialize the map of countries
 		iataIsoCountryMap = new Map<String, IATA_ISO_Country__c>();
 
-		for(IATA_ISO_Country__c countryObj:  [SELECT ID, Name, CurrencyIsoCode FROM IATA_ISO_Country__c ORDER BY Name ASC]) {
+		for(IATA_ISO_Country__c countryObj: IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')) {
 			iataIsoCountryMap.put(countryObj.Name, countryObj);
 		}
 	}

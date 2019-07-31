@@ -21,7 +21,7 @@ global class GSS_REST_Test {
     public static IATA_ISO_Country__c myCountry;
     public static Account myAcct;
     public static Zuora__CustomerAccount__c myBillingAcct;
-    public static zqu__ZProduct__c myZProduct;
+    public static Product2 myZProduct;
     public static Product_Category__c myProductCategory;
     public static Product_Information__c myProductInformation;
     public static Zuora__Subscription__c mySubscription;
@@ -79,7 +79,7 @@ global class GSS_REST_Test {
         
         
         // add a ZProduct
-        myZProduct = IECTestUtil.CreateSampleProduct('Test zProduct');
+        myZProduct = IECTestUtil.CreateSampleProduct2('Test zProduct');
         insert myZProduct;
         
         // Create Product Category
@@ -87,7 +87,7 @@ global class GSS_REST_Test {
         insert myProductCategory;
         
         // Create Product Information                 
-        myProductInformation = IECTestUtil.CreateSampleProductInfo('Test ProductInformation', myProductCategory, myZProduct);
+        myProductInformation = IECTestUtil.CreateSampleProductInfo2('Test ProductInformation', myProductCategory, myZProduct);
         myProductInformation.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
         insert myProductInformation;
         

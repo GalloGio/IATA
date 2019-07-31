@@ -20,7 +20,13 @@ private class AMP_ChatterBroadcastToolControllerTest {
 
 
         test.startTest();
+			
+			PageReference pageRef = Page.AMP_ChatterBroadcastTool;
+			
+			Test.setCurrentPage(pageRef);
 
+			ApexPages.currentPage().getParameters().put('accountId', acct_hq.Id);
+		
         	AMP_ChatterBroadcastToolController ctrl = new AMP_ChatterBroadcastToolController();
         	system.assertEquals(1, ctrl.lstAccounts.size());
         	system.assertEquals(6, ctrl.getlstRegions().size());

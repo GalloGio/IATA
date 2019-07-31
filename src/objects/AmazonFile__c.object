@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AMS_Updated_By__c</fullName>
         <description>The name of the user that accept or reject the file</description>
@@ -1186,7 +1187,7 @@
         <filters>
             <field>Case__c</field>
             <operation>equals</operation>
-            <value>09737094</value>
+            <value>10350990</value>
         </filters>
         <label>files by case</label>
         <language>en_US</language>
