@@ -4573,6 +4573,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>BSP &amp; CASS PROFILE</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_BSP_ICCS_Availability</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_BSP_ICCS_Availability</shortDescription>
+        <value>BSP ICCS Availability</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_BSP_Profile</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4627,6 +4634,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_CASS</shortDescription>
         <value>CASS</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_CASS_ICCS_Availability</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_CASS_ICCS_Availability</shortDescription>
+        <value>CASS ICCS Availability</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_CASS_Profile</fullName>
