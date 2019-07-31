@@ -254,7 +254,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 							System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] lastModifiedFs: ' + lastModifiedFs);
 							//Aggregates by head entity (parent) the Minimum Financial Security amount from the given financial security (on the map minFsAmountAggregatedByParent)
 							//Converts the Minimum Financial Security amount considering the RHC currency
-							processAggregatedAmountsByAccount(accId, minFsAmountAggregatedByParent, ANG_Risk_Helper.currencyConverter(lastModifiedFs.ANG_Financial_Security_Currency__c, lastModifiedFs.ANG_Minimum_Financial_Security__c, ANG_Risk_Helper.accCurMap.get(lastModifiedFs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(lastModifiedFs.Account__c) : lastModifiedFs.ANG_Financial_Security_Currency__c));
+							processAggregatedAmountsByAccount(accId, minFsAmountAggregatedByParent, ANG_Risk_Helper.currencyConverter(lastModifiedFs.ANG_Financial_Security_Currency__c, lastModifiedFs.ANG_Minimum_Financial_Security__c, ANG_Risk_Helper.accCurMap.get(accId) != NULL ? ANG_Risk_Helper.accCurMap.get(accId) : lastModifiedFs.ANG_Financial_Security_Currency__c));
 						}
 
 					}
