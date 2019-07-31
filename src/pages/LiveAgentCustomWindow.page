@@ -367,20 +367,20 @@
             font-family: 'DaMaWebFont';
             font-weight: 400;
             font-style: normal;
-            src: url('{!$Label.CSP_PortalPath}CSPortal/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot'); /* IE9 Compat Modes */
-            src: url('{!$Label.CSP_PortalPath}CSPortal/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-                url('{!$Label.CSP_PortalPath}CSPortal/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2') format('woff2'), /* Super Modern Browsers */
-                url('{!$Label.CSP_PortalPath}CSPortal/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff') format('woff'); /* Pretty Modern Browsers */
+            src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot')}"); /* IE9 Compat Modes */
+            src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix')}") format('embedded-opentype'), /* IE6-IE8 */
+                 url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2')}") format('woff2'), /* Super Modern Browsers */
+                 url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff')}") format('woff'); /* Pretty Modern Browsers */
         }
 
         @font-face {
             font-family: 'DaMaWebFont';
             font-weight: 500;
             font-style: normal;
-            src: url('{!$Label.CSP_PortalPath}CSPortal/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot'); /* IE9 Compat Modes */
-            src: url('{!$Label.CSP_PortalPath}CSPortal/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-                url('{!$Label.CSP_PortalPath}CSPortal/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2') format('woff2'), /* Super Modern Browsers */
-                url('{!$Label.CSP_PortalPath}CSPortal/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff') format('woff'); /* Pretty Modern Browsers */
+            src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}"); /* IE9 Compat Modes */
+            src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'), /* IE6-IE8 */
+                 url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'), /* Super Modern Browsers */
+                 url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff'); /* Pretty Modern Browsers */
         }
 
         body {
@@ -1118,11 +1118,11 @@
         }
 
         button.liveAgentChatElement.liveAgentSendButton {
-            background: transparent url('{!$Label.CSP_PortalPath}CSPortal/Images/Icons/send_blue.svg') no-repeat;
+            background: transparent url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Images/Icons/send_blue.svg')}") no-repeat;
         }
 
         button.liveAgentChatElement.liveAgentSendButton:hover {
-            background: transparent url('{!$Label.CSP_PortalPath}CSPortal/Images/Icons/send_blue_hover.svg') no-repeat;
+            background: transparent url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Images/Icons/send_blue_hover.svg')}") no-repeat;
         }
 		
     </style>
