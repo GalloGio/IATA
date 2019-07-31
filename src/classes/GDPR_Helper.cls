@@ -19,7 +19,7 @@ public without sharing class GDPR_Helper {
             return UserType.FORBID;
 
         try{
-            searchUsers = [SELECT ID FROM USER WHERE Email = :email ORDER BY LastModifiedDate];        
+            searchUsers = [SELECT ID FROM USER WHERE Email = :email ORDER BY LastModifiedDate DESC];        
             System.debug('[SEARCH USERS] - '+searchUsers);
         }catch(Exception e){
             System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
@@ -353,7 +353,7 @@ public without sharing class GDPR_Helper {
     private static List<Contact> searchContactsHelper(String email){
         List<Contact> searchContacts = new List<Contact>();
         try{
-            searchContacts = [SELECT ID, LastName, FirstName, IndividualId FROM CONTACT WHERE Email = :email ORDER BY LastModifiedDate];        
+            searchContacts = [SELECT ID, LastName, FirstName, IndividualId FROM CONTACT WHERE Email = :email ORDER BY LastModifiedDate DESC];        
             System.debug('[SEARCH CONTACTS] - '+searchContacts);
         }catch(Exception e){
             System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
@@ -364,7 +364,7 @@ public without sharing class GDPR_Helper {
     private static List<Lead> searchLeadsHelper(String email){
         List<Lead> searchLeads = new List<Lead>();
         try{
-            searchLeads = [SELECT ID, LastName, FirstName, IndividualId FROM LEAD WHERE Email = :email ORDER BY pi__url__c ASC NULLS LAST, LastModifiedDate ASC];
+            searchLeads = [SELECT ID, LastName, FirstName, IndividualId FROM LEAD WHERE Email = :email ORDER BY pi__url__c ASC NULLS LAST, LastModifiedDate DESC];
             System.debug('[SEARCH LEADS] - '+searchLeads);
         }catch(Exception e){
             System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
