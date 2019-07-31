@@ -250,7 +250,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 							}
 						}
 
-						if(lastModifiedFs != NULL){
+						if(lastModifiedFs != NULL && lastModifiedFs.ANG_Financial_Security_Currency__c != NULL){
 							System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - calculateFinancialSecuritiesAmounts] lastModifiedFs: ' + lastModifiedFs);
 							//Aggregates by head entity (parent) the Minimum Financial Security amount from the given financial security (on the map minFsAmountAggregatedByParent)
 							//Converts the Minimum Financial Security amount considering the RHC currency
