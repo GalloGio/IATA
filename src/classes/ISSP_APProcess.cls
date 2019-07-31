@@ -1694,8 +1694,8 @@ global without sharing class ISSP_APProcess {
     /**
         Returns true if the account meets the conditions to show the field Airline_wish_to_join_ICCS__c
     **/
-    public Boolean getShowJoinICCSQuestion() {
-        return ICCSProductCountry!=null;
+    public Boolean getShowJoinICCSQuestion() { 
+        return (strAreaType=='Airline Joining' || strChangeType=='Bank Account Instructions') && ICCSProductCountry!=null;    
     }
 
     /**
