@@ -65,6 +65,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Account_Global_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account_Role_Service__r.Account_Role__r.Account__r.Global_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Global ID</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
         <formula>Account_Role_Service__r.Account_Role__r.Account__r.Name</formula>
