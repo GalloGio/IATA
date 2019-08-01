@@ -361,6 +361,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 		if(rhcInfo == NULL){
 			rhcInfo = new ANG_RHC_Information__c();
 			rhcInfo.ANG_UniqueKey__c = rhcKey;
+			rhcInfo.ANG_AccountId__c = rhcKey.substring(0,18);
 		}
 
 		rhcInfo.ANG_Minimum_Financial_Security__c = minFsAmount;
