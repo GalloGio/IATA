@@ -18,11 +18,9 @@
                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                     </template>
 
-                    <div
-                        class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large customWhiteBackground">
+                    <div class="customWhiteBackground">
 
-
-                        <div class="slds-grid slds-wrap">
+                        <div class="slds-grid slds-wrap slds-p-around_large">
                             <div class="slds-col slds-size_1-of-1">
                                 <template if:true={hasError}>
                                     <div class="whiteIcon text-xxsmall errorBox">
@@ -49,7 +47,7 @@
                                 </lightning-layout-item>
                             </div>
                             <div class="slds-col slds-size_1-of-1">
-                                <label class="form-label">
+                                <label class="form-label text-bold">
                                     {reasonLabel}
                                 </label>
                             </div>
@@ -66,17 +64,18 @@
                         </div>
 
                         <!-- BUTTON -->
-                        <div class="slds-align_absolute-center slds-m-top_medium slds-m-bottom_medium">
-                            <lightning-button variant="neutral" class="slds-m-top_small slds-m-right--medium containedButtonWhite"
-                                              name="closeModal" label="Cancel" title="Cancel"
+                        <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
+                            <lightning-button variant="brand" class="slds-m-right_medium containedButtonWhite"
+                                name="sendPasswordbtn" label={label.submitLABEL} title={label.submitLABEL}
+                                onclick={submitAction} disabled={noSelected}>
+                            </lightning-button>
+
+                            <lightning-button variant="neutral" class="containedButton"
+                                              name="closeModal" label={label.cancelLABEL} title={label.cancelLABEL}
                                               onclick={closeModal}
                                               if:true={removeContactLocal}>
                             </lightning-button>
 
-                            <lightning-button variant="brand" class="slds-m-top_small containedButton"
-                                name="sendPasswordbtn" label={label.submitLABEL} title={label.submitLABEL}
-                                onclick={submitAction} disabled={noSelected}>
-                            </lightning-button>
                         </div>
 
                     </div>

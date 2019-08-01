@@ -13,7 +13,8 @@ import INACTIVATION_REASON_FLD from '@salesforce/schema/Contact.Portal_Inactivat
 import COMMUNITY_FLD from '@salesforce/schema/Contact.Community__c'
 
 import changeUserPortalStatusLABEL from '@salesforce/label/c.ISSP_ChangeUserPortalStatus';
-import submitLABEL from '@salesforce/label/c.ISSP_Submit';
+import submitLABEL from '@salesforce/label/c.ISSP_Confirm';
+import cancelLABEL from '@salesforce/label/c.ISSP_Cancel';
 import activeIdCardUserLABEL from '@salesforce/label/c.ISSP_InactiveUser_IdCard';
 import confirmContinueLABEL from '@salesforce/label/c.ISSP_SureToContinue';
 import selectPortalStatusLABEL from '@salesforce/label/c.CSP_SelectPortalStatus';
@@ -54,6 +55,7 @@ export default class ChangeUserPortalStatus extends LightningElement {
     label = {
         changeUserPortalStatusLABEL,
         submitLABEL,
+        cancelLABEL,
         activeIdCardUserLABEL,
         confirmContinueLABEL,
         selectReasonLABEL,
