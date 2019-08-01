@@ -348,8 +348,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 
                 // for changes and corrections populate only with BSP attributes of operation codes related with the current account
                 }else if((oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
-
-                    if(!agencyOperations.isEmpty()){                     
+                    if(!issOp.isEmpty() && issOp[0].BSP__r.Remittance_Frequency_per_State__c == True) {
+                        rfPicklistValues.add(new SelectOption (issOp[0].Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(issOp[0].Remittance_Frequency__c)));
+                    } else if(!agencyOperations.isEmpty()){                     
                         for(AMS_Operation__c opCode: operationCodes) {
                             //Make sure attributes are related with the current account
                             if(agencyOperations.keySet().contains(opCode.id)) {
