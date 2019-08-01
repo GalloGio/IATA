@@ -177,6 +177,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
         isAdminAndIATAAgencyAcct().then(result => {
             this.showIFAPBtn = result;
         });
+
+        canEditBasics().then(result => {
+            this.editBasics = result;
+        });
         
         annualRevalidation().then(result =>{
             this.annualReval = result;
