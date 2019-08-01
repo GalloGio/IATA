@@ -1,0 +1,14 @@
+.carouselBanner {
+    height: 100%; 
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block;
+}
+
+.infoBanner {
+    height: 228px;
+}
+
+.cardBodyContent {
+    min-height: 288px;
+}
