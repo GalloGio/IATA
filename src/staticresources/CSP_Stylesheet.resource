@@ -468,7 +468,7 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 .containedButton button:hover {
@@ -485,7 +485,7 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 
