@@ -718,6 +718,7 @@ public with sharing class AttachmentListCtrl {
                 if(wa.sfdcContext == 'content') wa.contentVersion=cvBodyMap.get(wa.id);
                 listAttachmentSelected.add(wa);
             }
+		}
 
         if ( listAttachmentSelected.isEmpty() ) {
            // ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.Select_one_Attachment));
