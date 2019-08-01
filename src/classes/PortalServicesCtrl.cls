@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String WILDCARD = 'ALL';
 
 public class portalServiceException extends Exception {}
@@ -1047,10 +1048,10 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
         
 
         String contactsQuery = 'SELECT Id,Name,Email,User_Portal_Status__c,Account.iataCode__c,Account.BillingCity FROM Contact '
-                + 'WHERE (Account.Top_Parent__c =\''+u.contact.AccountId+'\' OR AccountId = \''+ u.contact.AccountId+'\') '
-                + ' AND Id NOT IN :alreadyAssignedContactIds '
-                + ' AND Status__c = \'Active\' '
-                + ' AND User_Portal_Status__c != \'Rejected\' AND User_Portal_Status__c != \'Deactivated\'';
+	                       + 'WHERE (User_Portal_Status__c = \'' + PortalServicesCtrl.PORTAL_USER_APPROVED + '\' '
+						   + ' OR User_Portal_Status__c = \'' +  PortalServicesCtrl.PORTAL_ADMIN_APPROVED + '\' '
+						   + ' AND  (Account.Top_Parent__c =\''+u.contact.AccountId+'\' OR AccountId = \''+ u.contact.AccountId+'\') '
+	                       + ' AND Id NOT IN :alreadyAssignedContactIds AND Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\' AND User_Portal_Status__c != \'Deactivated\'';
 
         if(!String.isBlank(queryString)){
             contactsQuery += ' AND (Name LIKE \'%'+queryString+'%\' ) ';

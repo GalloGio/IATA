@@ -749,7 +749,18 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                                                 let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
                                                 item.label = this.label[newlabel];
                                             }
+                                        }).catch(error => {
+                                            console.log(error);
                                         });
+                                }else{
+                                    this.showAddUserModal = !this.showAddUserModal;
+                                    this.dispatchEvent(
+                                        new ShowToastEvent({
+                                            title: 'Error',
+                                            message: 'Your IATA Easy Pay Status is not "Open". Please contact Support.',
+                                            variant: 'error'
+                                        })
+                                    );
                                 }
                             });
                     }
