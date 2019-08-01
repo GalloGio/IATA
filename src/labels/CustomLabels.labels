@@ -3193,6 +3193,14 @@ Payment required on receipt of this Payment Advice
         <value>Manage Services</value>
     </labels>
     <labels>
+        <fullName>CSP_Manage_Services_NoIEPAccount</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Services</shortDescription>
+        <value>Your IATA Easy Pay Status is not "Open". Please contact Support.</value>
+    </labels>
+    <labels>
         <fullName>csp_MembershipFunction</fullName>
         <language>en_US</language>
         <protected>false</protected>

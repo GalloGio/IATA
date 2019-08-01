@@ -47,6 +47,7 @@ import ANG_ISSP_Request_Access_IATA_EasyPay from '@salesforce/label/c.ANG_ISSP_R
 import ANG_ISSP_IEP_Portal_Request_Access_Msg from '@salesforce/label/c.ANG_ISSP_IEP_Portal_Request_Access_Msg';
 import ANG_ISSP_IEP_add_users_to_account_not_open_error_msg from '@salesforce/label/c.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg';
 import ISSP_AMC_CLOSE from '@salesforce/label/c.ISSP_AMC_CLOSE';
+import CSP_Manage_Services_NoIEPAccount from '@salesforce/label/c.CSP_Manage_Services_NoIEPAccount';
 
 //import user id
 import Id from '@salesforce/user/Id';
@@ -118,7 +119,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         ANG_ISSP_Request_Access_IATA_EasyPay,
         ANG_ISSP_IEP_Portal_Request_Access_Msg,
         ANG_ISSP_IEP_add_users_to_account_not_open_error_msg,
-        ISSP_AMC_CLOSE
+        ISSP_AMC_CLOSE,
+        CSP_Manage_Services_NoIEPAccount
     };
 
     //links for images
@@ -757,7 +759,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                                     this.dispatchEvent(
                                         new ShowToastEvent({
                                             title: 'Error',
-                                            message: 'Your IATA Easy Pay Status is not "Open". Please contact Support.',
+                                            message: this.label.CSP_Manage_Services_NoIEPAccount,
                                             variant: 'error'
                                         })
                                     );
