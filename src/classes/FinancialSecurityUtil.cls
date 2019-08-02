@@ -109,7 +109,7 @@ public with sharing class FinancialSecurityUtil {
 
         OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
         List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
-        List<Financial_Security__c> recordsToUpdate = new List<Financial_Security__c>();
+        Set<Financial_Security__c> recordsToUpdate = new Set<Financial_Security__c>();
         for(Financial_Security__c fs : recordsToProcess) {
             List<Contact> contacts = mapAccountContacts.get(fs.Account__c);
             if(contacts == null) {
@@ -140,7 +140,7 @@ public with sharing class FinancialSecurityUtil {
                 Messaging.sendEmail(mailsToSend);
             }
             acknowledgeRunning = true;
-            update recordsToUpdate;
+            update new List<Financial_Security__c>(recordsToUpdate);
         }   
     }
 
