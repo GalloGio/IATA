@@ -53,12 +53,19 @@ public class SidraLiteManagerTest {
         return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, CARGO);
     }
 
+    //ACAMBAS - WMO-483: Begin
+    public static Case createCNSAgent() {
+        return createParentCase(SidraLiteManager.RECORDTYPE_CNS, AGENT);
+    }
+    //ACAMBAS - WMO-483: End
+
     private static Case createParentCase(Id recordtypeID, String type) {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(
             Name = 'Canada',
             ISO_Code__c = 'CA',
             AIMS_Area_Name__c = 'Canada',
-            AIMS_Area_ID__c = '1'
+            AIMS_Area_ID__c = '1',
+            CNS_Country__c = (recordtypeId == SidraLiteManager.RECORDTYPE_CNS) ? true : false  //ACAMBAS - WMO-483
         );
         insert country;
 
@@ -70,6 +77,7 @@ public class SidraLiteManagerTest {
             IATA_ISO_Country__c = country.Id,
             Location_Type__c = 'HO',
             IATACode__c = '1234567',
+            Location_Class__c = 'C',    //ACAMBAS - WMO-483
             Type = type==AGENT?PASSENGER: type
         );
         insert account;
@@ -88,7 +96,18 @@ public class SidraLiteManagerTest {
         );
         insert contact;
 
-        Case cse = new Case(
+        Case cse;
+
+        if(recordtypeId == SidraLiteManager.RECORDTYPE_CNS) {
+            cse = new Case(
+                RecordtypeId = recordtypeId,
+                ContactId = contact.Id,
+                AccountId = account.Id,
+                Origin = 'IATA Internal User'
+            );
+        }
+        else {
+            cse = new Case(
             RecordtypeId = recordtypeId,
             BSPCountry__c = 'Canada',
             Subject = 'Test Case 1',
@@ -107,6 +126,8 @@ public class SidraLiteManagerTest {
             Next_Remittance_Date__c = Date.today(),
             Has_the_agent_paid_invoice__c = 'Not paid'
         );
+        }
+        
 
         if (type==AGENT) {
             account.type = 'TIDS Agent';
@@ -118,6 +139,14 @@ public class SidraLiteManagerTest {
     private static Case createSIDRALite() {
         Case cse = new Case(
             RecordtypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE
+        );
+        return cse;
+    }
+
+
+    private static Case createIFAPCase() {
+        Case cse = new Case(
+            RecordtypeId = SidraLiteManager.RECORDTYPE_IFAP
         );
         return cse;
     }
@@ -1017,5 +1046,92 @@ public class SidraLiteManagerTest {
         SidraLiteManager.getRelatedCase(parentCase);
         Test.stopTest();
     }
+
+    //ACAMBAS - WMO-483: Begin
+    @isTest
+    public static void testSIDRACaseForCNS() {
+        User testUser = getCNSUser();
+        configureUserToCNS(testUser);
+        
+        System.RunAs(testUser) {
+            Case cnsCase = createCNSAgent();
+            insert cnsCase;
+            SidraLiteManager.BLOCK_EXECUTION = false;
+
+            Case sidraLiteCase = createSIDRALite();
+            sidraLiteCase.ParentId = cnsCase.Id;
+            sidraLiteCase.accountId = cnsCase.accountId;
+            sidraLiteCase.CNSCase__c = true;
+            sidraLiteCase.SIDRA_Lite_Reason__c = 'CNS Collection';
+
+            Test.startTest();
+            insert sidraLiteCase;
+            Test.stopTest();
+
+            sidraLiteCase = [Select CNSCase__c, SIDRA_Lite_Reason__c from Case Where id = :sidraLiteCase.Id];
+            System.assertEquals(true, sidraLiteCase.CNSCase__c);
+            System.assertEquals('CNS Collection', sidraLiteCase.SIDRA_Lite_Reason__c);
+        }
+    }
+
+
+    @isTest
+    public static void testIFAPCaseForCNS() {
+        User testUser = getCNSUser();
+        configureUserToCNS(testUser);
+        
+        System.RunAs(testUser) {
+            Case cnsCase = createCNSAgent();
+            insert cnsCase;
+            SidraLiteManager.BLOCK_EXECUTION = false;
+
+            Case iFAPCase = createIFAPCase();
+            iFAPCase.ParentId = cnsCase.Id;
+            iFAPCase.accountId = cnsCase.accountId;
+            iFAPCase.CNSCase__c = true;
+
+            Test.startTest();
+            insert iFAPCase;
+            Test.stopTest();
+
+            iFAPCase = [Select CNSCase__c, SIDRA_Lite_Reason__c from Case Where id = :iFAPCase.Id];
+            System.assertEquals(true, iFAPCase.CNSCase__c);
+        }
+    }
+
+
+    public static User getCNSUser() {
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+
+        User testUser = New User(
+            Alias = 'cnsUser', Email='cnsuser@test.com',
+            EmailEncodingKey='UTF-8', LastName='CNSTest2', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='cnsuser@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+
+        return testUser;
+    }
+    
+
+    public static void configureUserToCNS(User testUser) {
+        Group cnsGroup = [SELECT Id FROM Group WHERE DeveloperName = 'CNS_Collection_Process_Group' LIMIT 1];
+
+        GroupMember gm = new GroupMember(UserOrGroupId = testUser.Id,
+                                         GroupId = cnsGroup.Id);
+        insert gm;
+
+
+        PermissionSet cnsPermissionSet = [SELECT Id FROM PermissionSet WHERE Name = 'CNS_Collection_Process_Super_User' LIMIT 1];
+
+        List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
+        PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = cnsPermissionSet.Id, 
+                                                                  AssigneeId = testUser.Id);
+        permissionSetList.add(psa);
+        upsert permissionSetList;
+    }
+    //ACAMBAS - WMO-483: End
 
 }
