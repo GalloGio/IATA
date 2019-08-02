@@ -601,19 +601,17 @@ public class AMS_OscarCase_RiskMgmt {
 		Boolean isCCBellowEigthOrDiffFour = false;
         String previousReasonAux = null;
 
-		if(mapAccountCaseChangeCodes.containsKey(AccountId)){
-			if(mapAccountCaseChangeCodes.get(AccountId) == null || mapAccountCaseChangeCodes.get(AccountId).isEmpty()){
-				sCurrReason = acct.Reason__c;
-				sPrevReason = acct.Previous_Reason__c;
-				sCurrStatus = acct.Status__c;
-				sPrevStatus = acct.PreviousStatus__c;
-			}else{
-				Agency_Applied_Change_code__c aacclast = mapAccountCaseChangeCodes.get(AccountId).get(0);
-				sCurrReason = aacclast.Reason_Code__c + '-' + aacclast.Reason_Description__c;
-				sPrevReason = aacclast.PreviousReason__c;
-				sCurrStatus = aacclast.AccountNewStatus__c;
-				sPrevStatus = aacclast.AccountPreviousStatus__c;
-			}
+		if(mapAccountCaseChangeCodes.containsKey(AccountId) && mapAccountCaseChangeCodes.get(AccountId) != null && !mapAccountCaseChangeCodes.get(AccountId).isEmpty()){
+			Agency_Applied_Change_code__c aacclast = mapAccountCaseChangeCodes.get(AccountId).get(0);
+			sCurrReason = aacclast.Reason_Code__c + '-' + aacclast.Reason_Description__c;
+			sPrevReason = aacclast.PreviousReason__c;
+			sCurrStatus = aacclast.AccountNewStatus__c;
+			sPrevStatus = aacclast.AccountPreviousStatus__c;
+		} else {
+			sCurrReason = acct.Reason__c;
+			sPrevReason = acct.Previous_Reason__c;
+			sCurrStatus = acct.Status__c;
+			sPrevStatus = acct.PreviousStatus__c;
 		}
 
 		if(toUpdateStatus){
