@@ -425,10 +425,16 @@ public with sharing class PortalProfileCtrl {
         List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
         for(Schema.FieldSetMember f : contactFields) {
             Boolean editable = true;
-            if(f.getFieldPath().toLowerCase() =='billingcountry' || (f.getFieldPath().toLowerCase().contains('billing') && rType != 'Standard_Account')){
+            
+            if(f.getFieldPath().toLowerCase() == 'billingcountry' || (f.getFieldPath().toLowerCase().contains('billing') && rType != 'Standard_Account')) {
                 editable = false;
             }
-            lstfw2.add(new FieldWrapper(f.getFieldPath(),editable,true));
+
+            if(hasAnnualRevalidation() && ('phone'.equals(f.getFieldPath().toLowerCase())  || 'fax'.equals(f.getFieldPath().toLowerCase())  || 'email__c'.equals(f.getFieldPath().toLowerCase())  || 'website'.equals(f.getFieldPath().toLowerCase()) )) {
+                editable = false;
+            }
+
+            lstfw2.add(new FieldWrapper(f.getFieldPath(), editable, true));
         }
 
         if(isGDPOptInDisplayed()){
