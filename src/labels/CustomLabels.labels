@@ -16055,6 +16055,20 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>* Email</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Aggregator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Aggregator</shortDescription>
+        <value>Aggregator (If applicable)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Aggregator_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Aggregator_Info</shortDescription>
+        <value>Please indicate the travel content aggregator name, if applicable.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_FACILITIES_Fax</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -17191,6 +17205,20 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS Local Details Title</shortDescription>
         <value>Agency Details in Local language</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Aggregator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Aggregator</shortDescription>
+        <value>Aggregator (If applicable)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_Aggregator_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Aggregator_Info</shortDescription>
+        <value>Please indicate the travel content aggregator name, if applicable.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_Alternatively</fullName>
@@ -23881,13 +23909,6 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_ContactList</shortDescription>
         <value>Change User Portal Status</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Contact_About_IATA_Courses</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Contact About IATA Courses</shortDescription>
-        <value>Are you contacting us concerning IATA courses?</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Bank</fullName>
@@ -34143,30 +34164,6 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_Create an account</shortDescription>
         <value>Registration Process</value>
-    </labels>
-    <labels>
-        <fullName>OneId_CSP_Terms_Of_Use_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_CSP_Terms_Of_Use_Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/terms.aspx</value>
-    </labels>
-    <labels>
-        <fullName>OneId_CSP_Troubleshooting</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_CSP_Troubleshooting</shortDescription>
-        <value>Troubleshooting</value>
-    </labels>
-    <labels>
-        <fullName>OneId_CSP_Troubleshooting_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_CSP_Troubleshooting_Link</shortDescription>
-        <value>https://portal.iata.org/faq/articles/en_US/FAQ/Customer-Portal-Troubleshooting</value>
     </labels>
     <labels>
         <fullName>OneId_EligibleExistingUserError</fullName>
