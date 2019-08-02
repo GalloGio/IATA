@@ -1,8 +1,12 @@
 .THIS.container {
     min-height:300px;
+    background-color:white;
 }
 
 .THIS .drop_zone {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     background-color: #FFFFFF;
     outline: 2px dashed grey;
     outline-offset: -10px;
@@ -12,14 +16,19 @@
     margin: 0 auto;
 }
 
+.THIS .containerMargin{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color:white;
+}
 .THIS .chooseButton {
     display: table;
     margin: 0 auto;
 }
 
 .THIS .dragDropMessage {
-    position: relative;
-    margin-top: 20%;
+    margin: auto;
+        position: absolute;
 
 }
 

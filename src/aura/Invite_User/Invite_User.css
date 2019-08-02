@@ -8,9 +8,17 @@
     height:100px !important;
 }
 
-.THIS .content {
+.THIS .content{
+    display: block;
     width:80%;
     margin: 0 auto;
+    background-color:white;
+}
+
+.THIS.sfContainer{
+     padding-bottom:30px;
+     padding-top:30px;
+     background-color:white;
 }
 
 .THIS .button_width {

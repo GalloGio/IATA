@@ -43,6 +43,7 @@
 
     <div class="slds-container--fluid container">
 
+        <div aura:id="margin" class="{!v.isInternalUser ? 'containerMargin' : ''}">
         <!--DROP ZONE + FILE SELECTED START-->
         <div aura:id="content" class="gadmContent slds-grid slds-wrap slds-hide">
 
@@ -149,7 +150,7 @@
 
         </div>
         <!--DROP ZONE + FILE SELECTED START-->
-
+        </div>
 
         <!--SPINNER-->
         <aura:if isTrue="{! v.showSpinner}">

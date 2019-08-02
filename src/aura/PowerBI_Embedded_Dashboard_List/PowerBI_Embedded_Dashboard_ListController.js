@@ -14,5 +14,4 @@
     show : function(component, event, helper) {
         helper.handleShowDashboard(component, event);
     },
-
 })

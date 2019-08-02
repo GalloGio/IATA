@@ -5,15 +5,17 @@
 
     <!--SHOW ATTRIBUTES-->
     <aura:attribute name="showDashboards" type="Boolean" default="true"/>
-    <aura:attribute name="showDashboard" type="Boolean" default="false"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
 
     <!--EVENTS-->
     <aura:registerEvent name="backListEvent" type="c:PowerBI_Embedded_Dashboard_List_Back_EVT"/>
     <aura:handler name="backEvent" event="c:PowerBI_Embedded_Dashboard_Back_EVT" action="{!c.backEvent}"/>
 
-    <aura:handler name="init" value="{! this}" action="{! c.init}"/>
+    <aura:attribute name="cssStyle" type="String" />
+    <style>{!v.cssStyle}</style>
 
+    <aura:handler name="init" value="{! this}" action="{! c.init}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
     <div class="slds-container--fluid">
 
         <aura:if isTrue="{! v.showDashboards}">
@@ -35,16 +37,6 @@
             </div>
 
         </aura:if>
-
-
-
-        <aura:if isTrue="{! v.showDashboard}">
-
-            <c:PowerBI_Embedded_Dashboard dashboard="{! v.selectedDashboard}"/>
-
-        </aura:if>
-
-
 
         <aura:if isTrue="{! v.showSpinner}">
             <lightning:spinner alternativeText="Loading"/>

@@ -1,4 +1,4 @@
-<aura:component controller="Invite_User_CTRL">
+<aura:component controller="Invite_User_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
     <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
     <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
     <aura:attribute name="invitation" type="SObject" default="{ 'sobjectType': 'Invitation__c' }" />
@@ -28,12 +28,11 @@
     </aura:if>
 
 
-    <div aura:id="container" class="slds-container--fluid">
-
+    <div aura:id="container" class="{!v.userType == 'Standard' ? 'sfContainer slds-container--fluid' : 'slds-container--fluid'}">
 
         <div aura:id="form" class="slds-grid slds-wrap slds-size--8-of-12 content">
 
-            <div class="slds-col center slds-size--8-of-12 ">
+            <div class="{!v.userType == 'Standard' ? 'slds-hide' : 'slds-col center slds-size--8-of-12 '}">
                 <h2>Invite User</h2>
             </div>
 
@@ -46,15 +45,15 @@
 
             <!--BACK AND VALIDATE BUTTONS-->
             <div class="slds-grid slds-wrap slds-col slds-size--8-of-12 center">
-                <!--LIGHTNING-->
-                <aura:if isTrue="{! v.theme == 'Theme4d'}">
+                <!--External-->
+                <aura:if isTrue="{! v.userType != 'Standard'}">
 
                     <div class="slds-col slds-size-1-of-1 text_center">
                         <lightning:button variant="base" label="Back" title="Back" onclick="{! c.back }" class="btn btn-primary btn-grey button_width right" />
                         <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left" />
                     </div>
 
-                    <!--NOT LIGHTNING-->
+                    <!--internal-->
                     <aura:set attribute="else">
                         <div class="slds-col--padded  text_center">
                             <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left" />

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
-        <application>GADM_Classic</application>
+        <application>GADM</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <classAccesses>
+        <apexClass>Invite_User_CTRL</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Contact_Role__c.Account_Name__c</field>
@@ -455,6 +459,10 @@
         <object>Portal_Applications__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <pageAccesses>
+        <apexPage>Invite_User</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Account_Contact_Role__c.Functional</recordType>
         <visible>true</visible>
@@ -506,6 +514,10 @@
     <tabSettings>
         <tab>GADM_Account_Service_Detail__c</tab>
         <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Invite_User</tab>
+        <visibility>Available</visibility>
     </tabSettings>
     <tabSettings>
         <tab>Portal_Applications__c</tab>

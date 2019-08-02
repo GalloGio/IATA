@@ -3,7 +3,7 @@
     <apex:includeScript value="{!$Resource.PBIJS}"/>
 
         <div>
-            <div id="dashboard" style="height:800px;"></div>
+            <div id="dashboard" style="position:absolute; height:100%; width:100%"></div>
         </div>
 
         <style type="text/css">
@@ -42,6 +42,7 @@
             type: "report",
             embedUrl: "{!embedUrl}",
             tokenType: typeOfToken,
+            pageView: "actualSize",
             accessToken: "{!accessToken}",
             settings : {
                 filterPaneEnabled: false,
@@ -52,7 +53,6 @@
 
         //var embedContainer = $('#embedContainer')[0];
         var report = powerbi.embed(element, embedConfiguration);
-
 
         </script>
 
