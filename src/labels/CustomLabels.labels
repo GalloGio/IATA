@@ -3002,7 +3002,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_AMS_StepFinal_In_Addition2</shortDescription>
-        <value>Support -&gt; Reach Us</value>
+        <value>Profile -&gt; Cases</value>
     </labels>
     <labels>
         <fullName>CSP_ANG_Portal_Admin</fullName>
