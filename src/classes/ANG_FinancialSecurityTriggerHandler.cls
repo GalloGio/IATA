@@ -309,7 +309,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			else {
 				String rhcKey = fs.Account__c + ANG_RHCHelper.RHC_INFO_STD_RT;
 				decimal minFsAmount = (ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c) && fs.ANG_Financial_Security_Currency__c != NULL) ? ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c, fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c) : null;
-				setMinFinancialSecurityAmountOnRHC(accId, rhcKey, minFsAmount);
+				setMinFinancialSecurityAmountOnRHC(acct.Id, rhcKey, minFsAmount);
 			}
 
 		}
