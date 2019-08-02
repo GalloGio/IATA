@@ -172,11 +172,20 @@ private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country,
 		                                                    WHERE Complaint__c =: isComplaint
 		                                                                         AND ( Country_concerned_by_the_query__c like: country
 		                                                                               OR Country_concerned_by_the_query2__c like: country
-		                                                                               OR Country_concerned_by_the_query3__c like: country)];
-		for(ISSP_FAQ2Case_Record_Type__c rt : lstRecordType)
-		{
-			mapRecordType.put(rt.Topic__c + '#' + rt.SubTopic__c, rt);
-		}
+                                                                                       OR Country_concerned_by_the_query3__c like: country)];
+        for(ISSP_FAQ2Case_Record_Type__c rt : lstRecordType)
+        {
+            if(rt.SubTopic__c != null && rt.SubTopic__c.contains(',')){
+                List<String> lstSubtopic = rt.SubTopic__c.split(',');
+                for(String subT : lstSubtopic){
+                    mapRecordType.put(rt.Topic__c + '#' + subT, rt);
+                }
+            }else{
+				String keymap=(rt.Topic__c==null?'': rt.Topic__c)+'#'+(rt.SubTopic__c==null?'': rt.SubTopic__c);
+				mapRecordType.put(keymap, rt);
+            }
+        }
+
 		if(mapRecordType.containsKey(topic + '#' + subtopic)) {
 			finalRecordType.add(mapRecordType.get(topic + '#' + subtopic));
 			return finalRecordType;
