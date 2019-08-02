@@ -98,11 +98,13 @@ public class ANG_FinancialSecurityTriggerHandler{
 			'SELECT Id, ParentId, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
 			' (SELECT Id, CurrencyIsoCode FROM RHC_Informations__r), ' +
 			' (SELECT Id, Amount__c, Account__c, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c FROM Financial_Securities__r ORDER BY LastModifiedDate DESC) ' +
-			'FROM Account WHERE Id IN :accIdSet';
+			'FROM Account WHERE ANG_isNewGenAgency__c = TRUE AND ( Id IN :accIdSet';
 
 		if(fetchFromParents){
 			accountsQuery += ' OR ParentId IN :accIdSet ';
 		}
+
+		accountsQuery += ')';
 
 		return new Map<Id, Account>((List<Account>) Database.query(accountsQuery));
 	}
@@ -268,7 +270,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 					Account acct = this.accountsMap.get(fs.Account__c);
 					Id accId = acct.ParentId != NULL ? acct.ParentId : acct.Id;
 					//Sets the total financial security amount on the related RHC considering the aggregated amount by head entity (parent)
-					setTotalFinancialSecurityAmountOnRHC(accId + ANG_RHCHelper.RHC_INFO_STD_RT, totalFsAmountAggregatedByParent.get(accId));
+					setTotalFinancialSecurityAmountOnRHC(accId, accId + ANG_RHCHelper.RHC_INFO_STD_RT, totalFsAmountAggregatedByParent.get(accId));
 				}
 			}
 			
@@ -302,12 +304,12 @@ public class ANG_FinancialSecurityTriggerHandler{
 			if(acct.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include all AEs'){
 				Id accId = acct.ParentId != NULL ? acct.ParentId : acct.Id;
 				String rhcKey = accId + ANG_RHCHelper.RHC_INFO_STD_RT;
-				setMinFinancialSecurityAmountOnRHC(rhcKey, minFsAmountAggregatedByParent.get(accId));
+				setMinFinancialSecurityAmountOnRHC(accId, rhcKey, minFsAmountAggregatedByParent.get(accId));
 			}
 			else {
 				String rhcKey = fs.Account__c + ANG_RHCHelper.RHC_INFO_STD_RT;
 				decimal minFsAmount = (ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c) && fs.ANG_Financial_Security_Currency__c != NULL) ? ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c, fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c) : null;
-				setMinFinancialSecurityAmountOnRHC(rhcKey, minFsAmount);
+				setMinFinancialSecurityAmountOnRHC(accId, rhcKey, minFsAmount);
 			}
 
 		}
@@ -354,14 +356,14 @@ public class ANG_FinancialSecurityTriggerHandler{
 	 * @param  rhcKey:      RHC unique key identifier (Account Id + RHC RecordTypeId) 
 	 * @param  minFsAmount: Minimum financial security amount to set
 	 */
-  private void setMinFinancialSecurityAmountOnRHC(String rhcKey, Decimal minFsAmount){
+  private void setMinFinancialSecurityAmountOnRHC(Id AccountID, String rhcKey, Decimal minFsAmount){
 		
 		ANG_RHC_Information__c rhcInfo = map2Insert.get(rhcKey);
 			
 		if(rhcInfo == NULL){
 			rhcInfo = new ANG_RHC_Information__c();
 			rhcInfo.ANG_UniqueKey__c = rhcKey;
-			rhcInfo.ANG_AccountId__c = rhcKey.substring(0,18);
+			rhcInfo.ANG_AccountId__c = AccountID;
 		}
 
 		rhcInfo.ANG_Minimum_Financial_Security__c = minFsAmount;
@@ -375,13 +377,14 @@ public class ANG_FinancialSecurityTriggerHandler{
 	 * @param  rhcKey:   RHC unique key identifier (Account Id + RHC RecordTypeId) 
 	 * @param  fsAmount: Financial security amount to set
 	 */
-	private void setTotalFinancialSecurityAmountOnRHC(String rhcKey, Decimal fsAmount){
+	private void setTotalFinancialSecurityAmountOnRHC(Id AccountID, String rhcKey, Decimal fsAmount){
 		
 		ANG_RHC_Information__c rhcInfo = map2Insert.get(rhcKey);
 			
 		if(rhcInfo == NULL){
 			rhcInfo = new ANG_RHC_Information__c();
 			rhcInfo.ANG_UniqueKey__c = rhcKey;
+			rhcInfo.ANG_AccountId__c = AccountID;
 		}
 
 		rhcInfo.ANG_Financial_Security__c = fsAmount;
