@@ -292,7 +292,7 @@
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
-                <page>CaseAttachmentsView</page>
+                <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
@@ -387,9 +387,6 @@
         <relatedList>RelatedEmailMessageList</relatedList>
     </relatedLists>
 	<relatedLists>
-        <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>RECORDTYPE</fields>

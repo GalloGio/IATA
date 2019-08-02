@@ -425,7 +425,7 @@
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
-                <page>CaseAttachmentsView</page>
+                <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
@@ -531,9 +531,6 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
-    <relatedLists>
-        <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
