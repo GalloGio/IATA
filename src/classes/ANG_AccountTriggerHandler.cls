@@ -21,13 +21,14 @@ public class ANG_AccountTriggerHandler {
 		set;
 	}
 
-	private Map<Id, Agency_Authorization__c> formOfPaymentsMap {
+	public Map<Id, List<Agency_Authorization__c>> formOfPaymentsMap {
 		get {
 			if(formOfPaymentsMap == NULL){
 				formOfPaymentsMap = getFormOfPaymentsPerAccount();
 			}
 			return formOfPaymentsMap;
 		}
+		set;
 	}
 
 	// ************************************************************
@@ -822,7 +823,7 @@ public class ANG_AccountTriggerHandler {
 		
 		List<Agency_Authorization__c> fopToReturnLst = new List<Agency_Authorization__c>();
 
-		List<Agency_Authorization__c> fopLst = getFormOfPaymentsByAccountId(accId);
+		List<Agency_Authorization__c> fopLst = getFormOfPaymentsByAccountId(acctId);
 
 		for(Agency_Authorization__c aa : fopLst){
 			if(aa.Status__c == 'Active' || aa.Status__c == 'Authorized'){
