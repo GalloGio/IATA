@@ -5,6 +5,11 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		Test.startTest();
 
+		Portal_Applications__c par = new Portal_Applications__c(
+			Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE
+		);
+
+		insert par;
 		AMS_ChangeCodes__c chgFin = new AMS_ChangeCodes__c();
 		chgFin.Name = 'FIN-AMS';
 		chgFin.Account_status_change__c = '9';
@@ -295,6 +300,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Last_name__c = 'owner',
 			Email__c = 'owner.test@test.com',
 			Phone__c = '123456789',
+			Agency_owner__c = true,
 			Financial_interest__c = 100,
 			AMS_Pax_Accreditation_Form__c = oscar.AMS_Online_Accreditation__c,
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
@@ -308,7 +314,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			Phone__c = '123456789',
 			Financial_interest__c = 100,
 			AMS_Pax_Accreditation_Form__c = changesOscar.AMS_Online_Accreditation__c,
-			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'),
+			Agency_owner__c = true
 		);
 
 		insert new List<AMS_Accreditation_Contact__c>{owner, ownerChg};
@@ -439,18 +446,21 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 	}
 
 	@isTest static void newHEStandardAgentAutomaticallyOptOutFATest(){
-
+		
+        AMS_OSCARTriggerHandler.allOnlineAccr = null;
+        
 		AMS_OSCAR__c oscar = 
 			[SELECT
 				Id,
-				ANG_FA_Opt_Out__c
+				ANG_FA_Opt_Out__c,
+             	AMS_Online_Accreditation__c
 			 FROM 
 				AMS_OSCAR__c
 			 WHERE
 				Process__c = :AMS_Utils.NEWHESTANDARD
 			 LIMIT 1
 			];
-
+		        
 		system.assert(oscar.ANG_FA_Opt_Out__c == AMS_Utils.NOT_APPLICABLE, 'The OSCAR should have the default value \'' + AMS_Utils.NOT_APPLICABLE + '\' for \'Financial Assessment opt-in/opt-out\' before passing the sanity check');
 
 		oscar.Is_PCI_compliant__c = 'Yes';
@@ -488,9 +498,9 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update oscar;
 
-		Test.stopTest();
 
 		assessfinancialReviewOptOut(oscar.Id);
+		Test.stopTest();
 
 	}
 
