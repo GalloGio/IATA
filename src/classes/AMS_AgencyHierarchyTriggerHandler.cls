@@ -15,10 +15,4 @@ public class AMS_AgencyHierarchyTriggerHandler extends TriggerHandler {
 			ANG_AgencyHierarchyUniqueVerifier.class
 		};
 	}
-
-	protected override List<Type> getBeforeDeleteActions(){
-		return new List<Type>{
-			ANG_AgencyHierarchyRelationsDependencies.class
-		};
-	}
 }
