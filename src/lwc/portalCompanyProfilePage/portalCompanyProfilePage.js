@@ -5,7 +5,6 @@
 import { LightningElement, wire, track } from 'lwc';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import canEditBasics from '@salesforce/apex/PortalProfileCtrl.canEditBasics';
-import annualRevalidation from '@salesforce/apex/PortalProfileCtrl.hasAnnualRevalidation';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getFieldsMap from '@salesforce/apex/PortalProfileCtrl.getFieldsMap';
 import getContactFieldsToInsert from '@salesforce/apex/PortalProfileCtrl.getContactFieldsToInsert';
@@ -66,8 +65,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track branchFields;
     @track contactFields;
     @track editBasics = false;
-    @track annualReval = false;
-
 
     //Search
     @track searchMode = false;
@@ -177,13 +174,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
         isAdminAndIATAAgencyAcct().then(result => {
             this.showIFAPBtn = result;
         });
-
+        
         canEditBasics().then(result => {
             this.editBasics = result;
-        });
-        
-        annualRevalidation().then(result =>{
-            this.annualReval = result;
         });
 
         getLoggedUser().then(result => {
@@ -708,7 +701,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
     }
 
     get canEditAccount(){
-        return !this.annualReval && this.editBasics;
+        return this.editBasics;
     }
 
     navigateToIFAP() { 

@@ -136,7 +136,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             });
 
         }
-
+        
+        isAdmin().then(result => {
+            this.showEdit = result;
+        });
     }
 
     get accessibilityGetter() {
@@ -158,10 +161,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.accessibilityText = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
-
-        isAdmin().then(result => {
-            this.showEdit = (result ? true : false);
-        });
         
         return this.accessibilityText
     }
