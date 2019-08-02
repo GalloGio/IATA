@@ -767,6 +767,15 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
         </valueSet>
     </fields>
     <fields>
+        <fullName>Send_FS_acknowledgment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Send FS acknowledgment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Source__c</fullName>
         <defaultValue>&quot;Manual entry&quot;</defaultValue>
         <externalId>false</externalId>

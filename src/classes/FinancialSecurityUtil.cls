@@ -6,6 +6,11 @@
 public with sharing class FinancialSecurityUtil {
 	
 	/*
+     *  WMO-470 variable to avoid trigger to run again when we are resetting the field "Send_FS_acknowledgment__c"
+     */
+    public static Boolean acknowledgeRunning = false;
+	
+	/*
      *  Handles the actions of the Before Update trigger for Financial Security records
      */
     public static void HandleFSBeforeUpdate (Map<Id, Financial_Security__c> mapTriggerNew, Map<Id, Financial_Security__c> mapTriggerOld) {
@@ -68,4 +73,127 @@ public with sharing class FinancialSecurityUtil {
     	}
     }
 
+    /*
+     *  WMO-470 
+     *  Method to send the acknowledgement, because regions have different processes to sent the acknowledge (through a button or
+     *  by a dataloader), was requested to create a checkbox to control when to send the acknowledge. So when the field is set to "true"
+     *  we send the acknowledge a after that we reset the value to "false"
+     */
+    public static void sendAcknowledge(List<Financial_Security__c> records) {
+        Set<Id> accountIds = new Set<Id>();
+        List<Financial_Security__c> recordsToProcess = new List<Financial_Security__c>();
+        
+        for(Financial_Security__c record : records) {
+            if(record.Send_FS_acknowledgment__c) {
+                accountIds.add(record.Account__c);
+                recordsToProcess.add(record);
+            }
+        }
+
+        if(accountIds.isEmpty()) {
+            return;
+        }
+
+        //Retrieve top parent ids
+        for(Account acc : [SELECT Id, Top_Parent__c FROM Account WHERE Id IN :accountIds]) {
+            if(acc.Top_Parent__c != null) {
+                accountIds.add(acc.Top_Parent__c);
+            }             
+        }
+
+        //Retrieve all admin and fa contact users for each agency hierarchy
+        Map<Id,List<Contact>> mapAccountContacts = getContactsMap(accountIds);
+
+        //Retrive email templates
+        Map<String,EmailTemplate> mapTemplates = getEmailTemplates();
+
+        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+        List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
+        List<Financial_Security__c> recordsToUpdate = new List<Financial_Security__c>();
+        for(Financial_Security__c fs : recordsToProcess) {
+            List<Contact> contacts = mapAccountContacts.get(fs.Account__c);
+            if(contacts == null) {
+                fs.addError('No Admin or Financial Assessment Signatory contact.');
+                continue;
+            }
+            for(Contact c : contacts) {
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.saveAsActivity = false;
+                mail.setTargetObjectId(c.Id);
+                mail.setWhatId(fs.Id);
+                mail.setOrgWideEmailAddressId(owea[0].Id);              
+                mail.setTemplateId(getTemplateByContact(c,fs,mapTemplates).Id);
+                mailsToSend.add(mail);
+
+                Financial_Security__c recordToUpdate = new Financial_Security__c(
+                    Id= fs.Id,
+                    Send_FS_acknowledgment__c= false,
+                    Acknowledgment_sent__c= true,
+                    Acknowledge_Sent_Date__c= Datetime.now()
+                );
+                recordsToUpdate.add(recordToUpdate);
+            }
+        }   
+
+        if(!mailsToSend.isEmpty()) {
+            if(!Test.isRunningTest()) {
+                Messaging.sendEmail(mailsToSend);
+            }
+            acknowledgeRunning = true;
+            update recordsToUpdate;
+        }   
+    }
+
+    private static EmailTemplate getTemplateByContact(Contact con, Financial_Security__c fs, Map<String,EmailTemplate> mapTemplates) {
+        String templateName = fs.Unlimited_Security__c ? 'Unlimited_' : '';
+        String lang = String.isBlank(con.Preferred_Language__c) ? 'English' : con.Preferred_Language__c;
+
+        EmailTemplate res = mapTemplates.get(templateName + lang);
+        if(res == null) {
+            res = mapTemplates.get(templateName + 'English');
+        }
+
+        return res;
+    }
+
+    private static Map<String,EmailTemplate> getEmailTemplates() {
+        Map<String,EmailTemplate> mapLangToTemplate = new Map<String,EmailTemplate>();
+        List<EmailTemplate> templates = [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName LIKE 'AMS_FS_Notification%'];
+        for(EmailTemplate t : templates) {
+            List<String> parsedName = t.DeveloperName.split('_');
+            String lang = (t.DeveloperName.contains('Unlimited') ? 'Unlimited_' : '') + parsedName[parsedName.size() - 1];
+            mapLangToTemplate.put(lang,t);
+        }
+
+        return mapLangToTemplate;
+    }
+
+    private static Map<Id,List<Contact>> getContactsMap(Set<Id> accountIds) { 
+        Map<Id,List<Contact>> mapAccountContacts = new Map<Id,List<Contact>>();
+        List<Contact> contacts = [
+            SELECT Id, AccountId, Account.Top_Parent__c, Preferred_Language__c
+            FROM Contact 
+            WHERE AccountId IN :accountIds AND IsEmailBounced = false AND 
+                (Financial_Assessment_Contact__c = true OR User_Portal_Status__c = 'Approved Admin')
+            ORDER BY Account.Top_Parent__c ASC NULLS FIRST
+        ];
+
+        for(Contact c : contacts) {
+            List<Contact> accountContacts = mapAccountContacts.get(c.AccountId);
+            if(accountContacts == null) {
+                accountContacts = new List<Contact>();
+                mapAccountContacts.put(c.AccountId,accountContacts);
+            }
+            accountContacts.add(c);
+
+            if(c.Account.Top_Parent__c != null) {
+                List<Contact> topParentContacts = mapAccountContacts.get(c.Account.Top_Parent__c);
+                if(topParentContacts != null) {
+                    accountContacts.addAll(topParentContacts);
+                }
+            }
+        }
+
+        return mapAccountContacts;
+    }
 }

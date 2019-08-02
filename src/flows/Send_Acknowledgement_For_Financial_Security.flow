@@ -1,51 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Send_Acknowledge</name>
-        <label>Send Acknowledge</label>
-        <locationX>545</locationX>
-        <locationY>321</locationY>
-        <actionName>FinancialSecurityFlowHelper</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Result_Message</targetReference>
-        </connector>
-        <inputParameters>
-            <name>recordIds</name>
-            <value>
-                <elementReference>record.Id</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>acknowledgeResult</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <decisions>
-        <name>Is_Expired</name>
-        <label>Is Expired?</label>
-        <locationX>535</locationX>
-        <locationY>52</locationY>
-        <defaultConnector>
-            <targetReference>Send_Acknowledge</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>record.Security_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Expired</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Error_Expired</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <interviewLabel>Send Acknowledgement For Financial Security {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Send Acknowledgement For Financial Security</label>
     <processMetadataValues>
@@ -61,15 +15,17 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordLookups>
-        <name>Get_Record</name>
-        <label>Get Record</label>
-        <locationX>341</locationX>
+    <recordUpdates>
+        <name>Update_Record</name>
+        <label>Update Record</label>
+        <locationX>375</locationX>
         <locationY>50</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Expired</targetReference>
+            <targetReference>Finish</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -77,78 +33,53 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Send_FS_acknowledgment__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <object>Financial_Security__c</object>
-        <outputReference>record</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>LastModifiedDate</queriedFields>
-        <queriedFields>Acknowledge_Sent_Date__c</queriedFields>
-        <queriedFields>Acknowledgment_sent__c</queriedFields>
-        <queriedFields>Security_Status__c</queriedFields>
-    </recordLookups>
+    </recordUpdates>
     <screens>
-        <name>Error_Expired</name>
-        <label>Error_Expired</label>
-        <locationX>789</locationX>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>378</locationX>
+        <locationY>325</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessageDisplay</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Finish</name>
+        <label>Finish</label>
+        <locationX>757</locationX>
         <locationY>50</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
-            <name>Expired_Message</name>
-            <fieldText>You cannot sent an acknowledgment if the status of Financial Security is expired.</fieldText>
+            <name>FinalMessage</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;The acknowledge was successfuly sent.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Result_Message</name>
-        <label>Result Message</label>
-        <locationX>818</locationX>
-        <locationY>321</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>ResultText</name>
-            <fieldText>{!acknowledgeResult}</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <startElementReference>Get_Record</startElementReference>
+    <startElementReference>Update_Record</startElementReference>
     <status>Active</status>
-    <variables>
-        <name>acknowledgeResult</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue/>
-        </value>
-    </variables>
-    <variables>
-        <name>record</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Financial_Security__c</objectType>
-    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>result</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

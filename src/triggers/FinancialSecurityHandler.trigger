@@ -3,6 +3,11 @@
  */
 trigger FinancialSecurityHandler on Financial_Security__c (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
     
+    //WMO-470
+    if(FinancialSecurityUtil.acknowledgeRunning) {
+        return;
+    }
+
     if (Trigger.isInsert) {
         
         if (Trigger.isBefore) {
@@ -19,6 +24,7 @@ trigger FinancialSecurityHandler on Financial_Security__c (after delete, after i
             if(userinfo.getProfileId() == '00e20000000h0gFAAQ' && Test.isRunningTest()) FinancialSecurityUtil.HandleFSBeforeUpdate(Trigger.newMap, Trigger.oldMap);// include system administrator profile for code coverage
         } else if (Trigger.isAfter) {
             new ANG_FinancialSecurityTriggerHandler().onAfterUpdate();
+            FinancialSecurityUtil.sendAcknowledge(Trigger.new);
         }
         
         
