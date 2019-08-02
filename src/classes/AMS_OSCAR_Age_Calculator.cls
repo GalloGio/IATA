@@ -70,7 +70,9 @@ global class AMS_OSCAR_Age_Calculator implements Database.Batchable<sObject>, Da
             oscars.add(oscar);
         }
 
+        AMS_OSCARTriggerHandler.isRunningAgeCalculator = true;
         List<Database.SaveResult> results = Database.update(oscars, false);
+        AMS_OSCARTriggerHandler.isRunningAgeCalculator = false;
         Integer i= 0;
         for(Database.SaveResult r : results) {
             if(r.isSuccess()) {
@@ -98,7 +100,7 @@ global class AMS_OSCAR_Age_Calculator implements Database.Batchable<sObject>, Da
         csvAttc.setBody(csvReport);
 
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-        message.subject = 'AMS OSCAR Effective Age Calculation';
+        message.subject = 'AMS OSCAR Effective Age Calculation ' + this.region;
         message.setPlainTextBody('AMS OSCAR Effective Age Calculation - Check attachment with execution results');
         message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
         Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};    
