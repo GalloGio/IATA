@@ -789,6 +789,7 @@
         switch(selectedAtt.sfdcContext){
             
             case 'amazon':
+                fullName=selectedAtt.fullName;
                 var getExpiringLinkAction = component.get("c.getExpiringLink");
                 getExpiringLinkAction.setParams({
                     "fileName": fullName
