@@ -13,6 +13,10 @@
 			var c = component;
 			var h = helper;
 						
+			city.getElement().addEventListener('focusout', function(e){
+				h.selectFirstPrediction(c,e,h,modes[i]);
+			});
+			
 			city.getElement().addEventListener('input', function(e){
 				h.toggleInvalidCityWarning(c,e,h);			
 				h.getPredictions(c, e, h, this.value, modes[i]);

@@ -135,6 +135,13 @@
         <shortDescription>AMS DQ Enter Valid City</shortDescription>
         <value>Enter a valid city.</value>
     </labels>
+	<labels>
+        <fullName>AMS_DQ_First_Suggestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ First Suggestion</shortDescription>
+        <value>The selected city is {0}</value>
+    </labels>
     <labels>
         <fullName>AMS_DQ_Found_Addr</fullName>
         <language>en_US</language>
