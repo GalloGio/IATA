@@ -565,8 +565,7 @@ private class OneId_RegistrationProcessControllerTest {
                                                                                   'მონრეალი,ᒧᕆᐊᓪ,モントリオール,蒙特利尔,몬트리올' );
         insert city;
 
-        OneId_RegistrationProcessController.getStates('Canada');
-        OneId_RegistrationProcessController.getAllCities('Portugal');        
+        OneId_RegistrationProcessController.getStates('Canada');             
         OneId_RegistrationProcessController.registrationAux(new Account(), new Contact(), null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
                                                                                                                        'billingStateId' => String.valueOf(state.Id),
                                                                                                                        'shippingCityId' => String.valueOf(city.Id),
