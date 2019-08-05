@@ -108,12 +108,13 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                             +' Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, '
                             +' IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, '
                             +' VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c, ParentId,'
-                            +' GDI_Status__c, Location_Type_Ordered__c, Multicountry_Key_Hierarchy__c '
+                            +' GDI_Status__c, Location_Type_Ordered__c, Multicountry_Key_Hierarchy__c, Identify_as_Key_Customer__c  '
                             +' , (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in (\'BSPLink\',\'FormOfPayment\'))'  //Accelya Email + FOP
                             +' , (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\' )' //List of children
                             +' , (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r)'  //RHC Information
                             +' , (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC)' //OSCAR
-                            +' , (select Hierarchy__r.name from AMS_Agencies_relationships__r limit 1)' //hierarchy name 
+                            +' , (select Hierarchy__c, Hierarchy__r.name from AMS_Agencies_relationships__r limit 1)' //hierarchy name
+            				+' , (select Id, Main_account__c from Main_Accounts__r)'
 //                          +' , (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles1__r where Active__c = true and RecordType.Name = \'Ownership\') ' // List of Ownwer
                             +' from Account';
 
@@ -271,6 +272,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
             set<string> setIEPStatusToPublish = new set<string>{'Open','In Progress'};
             set<string> setGDIStatusToPublish = new set<string>{'Open','In Progress'};
             try{
+                this.hierarchyId = this.hierarchyId = acc.Main_Accounts__r.isEmpty() ? acc.AMS_Agencies_relationships__r.get(0).hierarchy__r.Id : acc.Main_Accounts__r.get(0).Id;
                 this.isBranchAbroad = acc.Is_Branch_Abroad__c;
                 this.PurgeCode = acc.Purge_Flag__c;
                 this.AccreditationDate = FormatDateMS(acc.Accreditation_date__c);
@@ -310,6 +312,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                 this.vatNumber = acc.VAT_Number__c;
                 this.topParentIATACode = acc.Top_Parent__r.IATACode__c;
                 this.dueDiligence = new List<DueDiligence>();
+                this.isMulticountryKeyCustomer = acc.Identify_as_Key_Customer__c;
                 this.isMulticountryKeyHierarchy = acc.Multicountry_Key_Hierarchy__c;
 
                 /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
