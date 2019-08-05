@@ -248,13 +248,12 @@
             $A.getCallback(
                 function() {
                     let width = component.find("iframe").getElement().getBoundingClientRect().width;
-                    let height = component.find("iframe").getElement().getBoundingClientRect().height;
                     $A.createComponent(
                       "aura:html",
                       {
                           tag: "iframe",
                           HTMLAttributes:{"frameBorder": "0", "src": "/apex/PowerBI_Dashboard?embedUrl="+encodeURIComponent('https://app.powerbi.com/reportEmbed?reportId=' + reportId + '&groupId=' + groupId)+'+&accessToken='+accessToken+'&objectId='+objectId+'&tokenType='+tokenType
-                                                                                                          ,"width": width, "height": (width-60)*0.59, "scrolling": "yes"}
+                                                                                                          ,"width": width, "height": (width-60)*0.48/*0.59 for full width with scrollbar*/, "scrolling": "no"}
                       },
                       function(iframe){
                           component.set('v.showWorkspaces', false);
@@ -301,7 +300,7 @@
         component.set('v.showSpinner', ! component.get('v.showSpinner'));
     },
     applyCSS: function(component){
-        component.set("v.cssStyle", ".uiMenu {z-index:0} .oiHeader a.homeIcon {z-index:0} .forceIcon .slds-icon_xx-small {width: 1.5rem; height: 1.5rem} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton {padding: 0px !important} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton, input.uiButton {margin-top: 0px; background-color: transparent;}");
+        component.set("v.cssStyle", ".modal-header {padding-bottom:0rem; border-bottom: 0px solid #e9ecef} .slds-text-heading_medium, .slds-text-heading--medium {display:none;} .uiMenu {z-index:0} .oiHeader a.homeIcon {z-index:0} .forceIcon .slds-icon_xx-small {width: 1.5rem; height: 1.5rem} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton {padding: 0px !important} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton, input.uiButton {margin-top: 0px; background-color: transparent;}");
     },
 
 })

@@ -35,7 +35,7 @@
                        showCloseButton: true,
                        cssClass: "slds-modal_large",
                        closeCallback: function() {
-                           component.set("v.cssStyle", ".uiMenu {z-index:10} .oiHeader a.homeIcon {z-index:9} .forceIcon .slds-icon_xx-small {width: 0.875rem; height: 0.875rem} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton {padding: 7px 16px !important;} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton, input.uiButton {margin-top: 15px; background-color: #eb3014;}");
+                           component.set("v.cssStyle", ".modal-header {padding-bottom:1rem; border-bottom: 1px solid #e9ecef} .slds-text-heading_medium, .slds-text-heading--medium {display:block;} .uiMenu {z-index:10} .oiHeader a.homeIcon {z-index:9} .forceIcon .slds-icon_xx-small {width: 0.875rem; height: 0.875rem} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton {padding: 7px 16px !important;} button.uiButton, .salesforceIdentityLoginBody button.sfdc_button.uiButton, input.uiButton {margin-top: 15px; background-color: #eb3014;}");
                        }
                    })
                }
