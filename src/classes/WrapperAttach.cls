@@ -77,6 +77,7 @@ global class WrapperAttach implements Comparable {
     @AuraEnabled
     public Attachment fileAttachment {get;set;}
     @AuraEnabled
+    public ContentVersion contentVersion {get;set;}
     public Archived_Attachment__c fileArchived {get;set;}
     @AuraEnabled
     public AmazonFile fileAmazon {get;set;}
@@ -90,7 +91,7 @@ global class WrapperAttach implements Comparable {
     public String updatedBy {get;set;}
     @AuraEnabled
     public DateTime updatedDate {get;set;}
-    
+
     public WrapperAttach(){}
 
     public WrapperAttach(Attachment file, ISSPAttachmentPermission__c permission) {
@@ -134,6 +135,7 @@ global class WrapperAttach implements Comparable {
     public WrapperAttach(ContentVersion cv) {
         this.isSelected = false;
         this.id = cv.ContentDocumentId;
+        this.contentVersion = cv;
         this.filetype = 'Salesforce';
         this.sfdcContext = 'content';
         this.name = cv.title+'.'+cv.FileExtension;
@@ -145,10 +147,8 @@ global class WrapperAttach implements Comparable {
         this.createdBy = cv.createdById;
         this.fileIdentifier = '';
         this.createdByName = cv.createdBy.Name;
-        this.viewURL ='';
+        this.viewURL =cv.id;
         this.isPublic=true;
-
-        this.versionData=cv.versionData;
     }
 
     public WrapperAttach(Archived_Attachment__c file) {
@@ -221,7 +221,7 @@ global class WrapperAttach implements Comparable {
     **/
     public Pagereference viewFile() {
         if (filetype == 'Salesforce' || filetype == 'Archived' ) {
-            PageReference pageref = new PageReference('/servlet/servlet.FileDownload?file=' + this.Id);
+            PageReference pageref = new PageReference('/'+this.viewURL);
             pageref.setRedirect(true);
             return pageref;
         }
@@ -373,10 +373,11 @@ global class WrapperAttach implements Comparable {
     public static list<WrapperAttach> getListAttachments(Id sobjectId,Boolean withBody,Boolean isPortal) {
         list<WrapperAttach> listAttachments = getSalesforceAttachments(sobjectId, withBody);
         //listAttachments.addAll(getArchivedAttachments(sobjectId)); //silenced from the lightning migration
-        list<WrapperAttach> contentList=getContentAttachments(sobjectId,isPortal);
+        
+        list<WrapperAttach> contentList=getContentAttachments(sobjectId,isPortal,false,null);
 
         listAttachments.addAll(contentList);// gets content documents (introduced with lightning)
-
+         
         listAttachments.addAll(getAmazonAttachments(sobjectId));
         
         return listAttachments;
@@ -529,20 +530,37 @@ global class WrapperAttach implements Comparable {
     /**
         Get all Content salesforce attachments related to an object
     **/
-    public static list<WrapperAttach> getContentAttachments(Id sobjectId,boolean isPortal) {
+    public static list<WrapperAttach> getContentAttachments(Id sobjectId,boolean isPortal,boolean withBody,set<id> contentDocFilterSet) {
         list<WrapperAttach> attachList = new list<WrapperAttach>();
-        //attached Files list
+        //attached Files list       
         set<id> contentDocSet= new set<id>();
-        for(ContentDocumentLink  cd :[select ContentDocument.LatestPublishedVersionId from ContentDocumentLink where LinkedEntityId =:sobjectId]){
-            contentDocSet.add(cd.ContentDocument.LatestPublishedVersionId);
-        }
+        if(isPortal ||contentDocFilterSet==null)
+            for(ContentDocumentLink  cd :[select ContentDocument.LatestPublishedVersionId from ContentDocumentLink where LinkedEntityId =:sobjectId]){
+                contentDocSet.add(cd.ContentDocument.LatestPublishedVersionId);
+            }
         if(isPortal){
             attachList= getContentInfo(contentDocSet);
         }else{
-            for(ContentVersion  cv :[select ContentDocumentId,Title, FileExtension,Description,FileType,
-            ContentSize,CreatedById,CreatedBy.name,CreatedDate,versionData,
-            LastModifiedDate from ContentVersion where id =:contentDocSet AND IsLatest = true]){
-                    attachList.add(new WrapperAttach(cv));
+            
+            string query='Select ContentDocumentId,Title, FileExtension,Description,FileType,ContentSize,CreatedById,CreatedBy.name,CreatedDate,LastModifiedDate ';
+            if(withBody)query+=',versionData';
+
+
+            string queryEnd=' From ContentVersion where IsLatest = true ';
+
+            if(contentDocFilterSet!=null){
+                queryEnd+=' AND contentDocumentId IN :contentDocFilterSet';
+            }else {
+                queryEnd+=' AND id IN :contentDocSet';
+
+            }
+            system.debug(query+queryEnd);
+            
+            list<contentVersion> cvList=Database.query(query+queryEnd);
+
+            for(ContentVersion  cv :cvList){
+                WrapperAttach att=new WrapperAttach(cv);
+                attachList.add(att);
             }
         }  
         return attachList;
@@ -556,7 +574,7 @@ global class WrapperAttach implements Comparable {
     public static list<WrapperAttach> getContentInfo(set<id> contentIdSet) {
         list<WrapperAttach> attachList = new list<WrapperAttach>();
         for(ContentVersion cv:[select Id,ContentDocumentId,title,FileExtension,Description,FileType,ContentSize,
-        LastModifiedDate,createdDate,versionData,createdById,createdBy.Name
+        LastModifiedDate,createdDate,createdById,createdBy.Name
                 from ContentVersion where id in :contentIdSet]){
             attachList.add(new WrapperAttach(cv));
         }
@@ -579,6 +597,21 @@ global class WrapperAttach implements Comparable {
         cdi.PreferencesAllowOriginalDownload= true;
         
         return cdi;
+    }  
+
+    /**
+        Return map with versionData used in transfer Attachments, contentDocumentid as key
+    **/
+    public static map<id,contentVersion> getContentVersionWithVersionData (set<id> contentDocSet) {       
+        
+        map<id,contentVersion> cvBodyMap= new map<id,contentVersion>();
+        if(!contentDocSet.isEmpty()){
+            //get contentDocsWithBody
+            for(ContentVersion cv:[Select id,contentDocumentId,versionData From ContentVersion where contentDocumentId in :contentDocSet AND IsLatest = true]){
+                cvBodyMap.put(cv.contentDocumentId,cv);
+            }
+        }
+        return cvBodyMap;
     }    
     
 }
