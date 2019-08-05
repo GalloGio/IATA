@@ -1965,15 +1965,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         set;
     }
 
-    public AMS_Accreditation_Country_CheckList__c countryCheckList {
+    public static AMS_Accreditation_Country_CheckList__c countryCheckList {
         get{
-            List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, 
-            														Statement_of_International_Sales_Branch__c
-                  												FROM AMS_Accreditation_Country_CheckList__c
-                 												WHERE IATA_ISO_Country__r.ISO_Code__c = :currentAccount.isocountry.Iso_code__c 
-                 													AND Operation__c = :currentAccount.Account.Sector__c];
+			if (countryCheckList == null) {
+				List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, 
+																		Statement_of_International_Sales_Branch__c
+																	FROM AMS_Accreditation_Country_CheckList__c
+																	WHERE IATA_ISO_Country__r.ISO_Code__c = :currentAccount.isocountry.Iso_code__c 
+																		AND Operation__c = :currentAccount.Account.Sector__c];
 
-            return (!aux.isEmpty()) ? aux[0] : null;
+				return (!aux.isEmpty()) ? aux[0] : null;
+			}
+			return countryCheckList;
         }
         set;
     }
