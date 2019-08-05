@@ -37621,6 +37621,14 @@ title,Title,Name</value>
         <value>Please enter the quantity you wish to order for each product listed below</value>
     </labels>
     <labels>
+        <fullName>SidraLiteROFieldError</fullName>
+        <categories>SIDRA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error displayed when a RO field is changed in a SIDRA Lite case</shortDescription>
+        <value>You can&apos;t modify &quot;{0}&quot; for a CNS collection process.</value>
+    </labels>
+    <labels>
         <fullName>SignIn</fullName>
         <categories>IEC</categories>
         <language>en_US</language>

@@ -428,7 +428,7 @@
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
-                <page>CaseAttachmentsView</page>
+                <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
@@ -608,6 +608,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>Case_Detail__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>X2015_Overall_Satisfaction__c</fields>
         <fields>X2015_CES__c</fields>
         <fields>X2015_Communication_Satisfaction__c</fields>
@@ -629,9 +633,6 @@
         <fields>EndTime</fields>
         <fields>MessagingChannel</fields>
         <relatedList>MessagingSession</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
