@@ -95,10 +95,10 @@ public class ANG_FinancialSecurityTriggerHandler{
 	private Map<Id, Account> fetchAccountsInformation(Set<Id> accIdSet, Boolean fetchFromParents){
 		Set<String> fsActiveStatus = ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET;
 		String accountsQuery = '' +
-			'SELECT Id, ParentId, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
+			'SELECT Id, ParentId, ANG_isNewGenAgency__c, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
 			' (SELECT Id, CurrencyIsoCode FROM RHC_Informations__r), ' +
 			' (SELECT Id, Amount__c, Account__c, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c FROM Financial_Securities__r ORDER BY LastModifiedDate DESC) ' +
-			'FROM Account WHERE ANG_isNewGenAgency__c = TRUE AND ( Id IN :accIdSet';
+			'FROM Account WHERE ( Id IN :accIdSet';
 
 		if(fetchFromParents){
 			accountsQuery += ' OR ParentId IN :accIdSet ';
@@ -297,6 +297,8 @@ public class ANG_FinancialSecurityTriggerHandler{
 		for(Financial_Security__c fs : fsLst){
 
 			Account acct = this.accountsMap.get(fs.Account__c);
+
+			if(!acct.ANG_isNewGenAgency__c) continue;
 
 			//If the related country has RHC LocationType = 'Include all AEs'
 			//the Minimum Financial Security amount considers 
