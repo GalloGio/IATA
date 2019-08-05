@@ -20,16 +20,14 @@ global Class ANG_FillCaseTypeOfCustomer{
         
 		Account acct = [Select Id, category__c, location_type__c from Account where Id =:accountId];
         
-		if(acct.location_type__c == null)
-            return null;
+		if(acct.location_type__c == null) return null;
 
         if(acct.location_type__c == 'SA'){
             resultLst.Add('IATA Travel Agent');
 			return resultLst;
         }
         
-        if(acct.category__c == null)
-            return null;
+        if(acct.category__c == null) return null;
       
         resultLst.Add(categoryCustomerMap.get(acct.category__c)); 
         
