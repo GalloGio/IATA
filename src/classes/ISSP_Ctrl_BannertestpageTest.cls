@@ -8,7 +8,6 @@ private class ISSP_Ctrl_BannertestpageTest {
         parent.BillingCity = 'test';
         parent.Name = 'test';
         insert parent;
-        System.debug('parent Id: ' + parent.Id);
 
         Account child = ISSP_ObjectFactory.createNewAccount();
         child.ParentId = parent.Id;
@@ -18,18 +17,16 @@ private class ISSP_Ctrl_BannertestpageTest {
         child.Site = 'headSite';
         child.Top_Parent__c = parent.Id;
 		child.Sector__c = 'Airline';
+		child.Category__c = 'Passenger only';
 		child.BillingCountry = 'Italy';
         insert child;
-        System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
  
         con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
 		con.User_Portal_Status__c = 'Approved Admin';
         insert con;
-        System.debug('con Id: ' + con.Id);
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         update con;
 	}
@@ -44,7 +41,7 @@ private class ISSP_Ctrl_BannertestpageTest {
 		Ban1.Publication_start_date__c = System.today()-1;
 		Ban1.Publication_end_date__c = System.today()+1;
 		Ban1.User_portal_Status__c = 'Approved Admin';
- 		Ban1.Sector__c = 'Airline';
+ 		//Ban1.Sector__c = 'Airline';
 		Ban1.Country__c = 'Italy';
 		Ban1.Zone_1_text__c = 'Zone1';
 		Ban1.Zone_2_text__c = 'Zone2';
@@ -57,14 +54,20 @@ private class ISSP_Ctrl_BannertestpageTest {
 		Ban2.Publication_end_date__c = System.today()+1;
 		Ban2.User_portal_Status__c = 'Approved Admin';
 		//Ban.Name = 'Ban-002';
-		Ban2.Sector__c = 'Airline';
+		//Ban2.Sector__c = 'Airline';
 		Ban2.Country__c = 'Italy';
 		Ban2.Zone_1_text__c = 'Zone1';
 		Ban2.Zone_2_text__c = 'Zone2';
 		Ban2.Zone_3_text__c = 'Zone3';
 
 		insert Ban2 ;
-		
+
+		ISSP_Banner_Visibility__c bannerVsb1 = new ISSP_Banner_Visibility__c();
+		bannerVsb1.ISSP_Banner__c = ban1.Id;
+		bannerVsb1.sector__c = 'Airline';
+		bannerVsb1.category__c = 'Passenger only';
+		insert bannerVsb1;
+
         Test.startTest();
         System.runAs(newUser)
         {
