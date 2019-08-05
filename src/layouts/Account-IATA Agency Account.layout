@@ -97,6 +97,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Multicountry_Key_Hierarchy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identify_as_Multicountry_Key_Hierarchy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Site</field>
             </layoutItems>
             <layoutItems>
@@ -284,6 +292,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ICCS_Membership_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bulletin_Headquarter__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -894,8 +906,9 @@
         <fields>ANG_Severity__c</fields>
         <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_RHC_Information__c</fields>
-        <fields>CREATED_DATE</fields>
         <fields>ANG_Direction__c</fields>
+        <fields>ANG_Triggered_Rules__c</fields>
+        <fields>CREATED_DATE</fields>
         <fields>ANG_Threshold_Level__c</fields>
         <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>

@@ -13,6 +13,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public Boolean isHOAccredited {get;set;}
     public String category {get;set;}
     public Boolean isNewgenEnabled {get;set;}
+    public Boolean isMulticountryEnabled {get; set;}
     public String countryIsoCode {get; set;}
     public String selectedLang {get; set;}
     public String accredModel {get; set;}
@@ -60,6 +61,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                            contact.Account.Category__c,
                            contact.Account.IATA_ISO_Country__r.Name,
                            contact.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c,
+                           contact.Account.IATA_ISO_Country__r.Multicountry_Enabled__c,
                            contact.Account.IATA_ISO_Country__r.ISO_Code__c,
                            contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
                            contact.Account.IATA_ISO_Country__r.IATA_Country_FR__c,
@@ -135,6 +137,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             amsCountryLabel = countryName;
             isHOAccredited = false;
             isNewgenEnabled = user.contact.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c;
+            isMulticountryEnabled = user.contact.Account.IATA_ISO_Country__r.Multicountry_Enabled__c;
 
             if (user.contact.Account.Top_Parent__c == null &&
                 user.contact.Account.IATACode__c != null && 
@@ -391,6 +394,8 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             if(isNewgenEnabled) {                
                 accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASH, Label.ISSP_AMS_Head_Entity_Cash));
                 accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, Label.ISSP_AMS_Head_Entity_No_Cash));
+                if (isMulticountryEnabled) 
+                    accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, Label.ISSP_AMS_Head_Entity_Multicountry));
             } else {
                 accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_HO));
             }

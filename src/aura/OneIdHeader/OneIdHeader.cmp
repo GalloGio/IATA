@@ -33,33 +33,20 @@
                 <aura:if isTrue="{!v.blockLogo}">
                     <a class="homeIcon loginIcon" >
                         <span class="icon icon-logo"></span>
-                        <span class="{!'subLogo' + v.serviceName}"></span>
+                        <span class="{!(v.serviceName == 'CSP') ? 'subLogoISSP' : 'subLogo' + v.serviceName}"></span>
                     </a>
                     <aura:set attribute="else">
-                        <a class="homeIcon loginIcon" href="{!'/' + (empty(v.serviceName) ? $Label.c.OneId_Community_Name : v.serviceName)}">
+                        <a class="homeIcon loginIcon" href="{!'/' + $Label.c.OneId_Community_Name + '/login/?language=' + v.selectedLanguage + '&amp;' + (empty(v.serviceName) ? '' : 'serviceName='+v.serviceName)}">
                             <span class="icon icon-logo"></span>
-                            <span class="{!'subLogo' + v.serviceName}"></span>
+                            <span class="{!(v.serviceName == 'CSP') ? 'subLogoISSP' : 'subLogo' + v.serviceName}"></span>
                         </a>
                     </aura:set>
                 </aura:if>
 
-                <aura:if isTrue="{!equals(v.serviceName,'FRED')}">                        
-                    <a class="homeIcon" href="{!'/'+ $Label.c.OneId_Community_Name+'/login/?language=en_US&amp;serviceName='+v.serviceName}">
-                        <span class="icon icon-logo"></span>
-                        <span class="{!'subLogo' + v.serviceName}"></span>
-                    </a>
-                </aura:if>
-
-                <aura:if isTrue="{!equals(v.serviceName,'NDCMM')}">
-                    <a class="homeIcon" href="{!'/'+ $Label.c.OneId_Community_Name+'/ndcmm?serviceName=NDCMM'}">
-                        <span class="icon icon-logo"></span>
-                        <span class="{!'subLogo' + v.serviceName}"></span>
-                    </a>
-                </aura:if>
 		    </div>
 
             <div class="slds-col slds-max-small-size_1-of-1 slds-align-bottom slds-p-horizontal_large">
-                <aura:if isTrue="{!equals(v.serviceName, 'ISSP')}">
+                <aura:if isTrue="{!equals(v.serviceName, 'ISSP') || equals(v.serviceName, 'CSP')}">
                     <lightning:select class="noLabel" value="{!v.selectedLanguage}" onchange="{!c.langPickerChange}">
                         <aura:iteration items="{!v.langPickerOptions}" var="item">
                             <option text="{!item.label}" value="{!item.value}" selected="{!item.selected}"/>

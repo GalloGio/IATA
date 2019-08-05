@@ -1107,6 +1107,11 @@
         <label>E-mail to Case - YMQ -  ATS</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - YMQ CDS</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ CDS</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - YMQ - Customer Service</fullName>
         <default>false</default>
         <label>E-mail to Case - YMQ - Customer Service</label>
@@ -1155,6 +1160,11 @@
         <fullName>Exact Target commercial TEST</fullName>
         <default>false</default>
         <label>Exact Target commercial TEST</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Facebook</fullName>
+        <default>false</default>
+        <label>Facebook</label>
     </standardValue>
     <standardValue>
         <fullName>Fax</fullName>

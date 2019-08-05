@@ -1911,6 +1911,11 @@
                     <label>GoLite</label>
                 </value>
                 <value>
+                    <fullName>Multicountry</fullName>
+                    <default>false</default>
+                    <label>GoGlobal</label>
+                </value>
+                <value>
                     <fullName>Standard Accreditation with Cash</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -5122,6 +5127,17 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Preferred_RHC_currency__c</fullName>
+        <externalId>false</externalId>
+        <label>Preferred RHC currency</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Previous_City__c</fullName>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingCity</formula>
@@ -5434,9 +5450,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <externalId>false</externalId>
         <label>Case</label>
         <referenceTo>Case</referenceTo>
+        <relationshipLabel>AMS Online Accreditations</relationshipLabel>
         <relationshipName>AMS_Pax_Accreditation_Form</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -5459,6 +5476,19 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Same_Legal_Entity_Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Same Legal Entity Agency</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (Same Legal Entity Agency)</relationshipLabel>
+        <relationshipName>Same_Legal_Entity_Agency</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Saved_At_Least_Once__c</fullName>
@@ -6300,6 +6330,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7241,6 +7275,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
@@ -8014,6 +8052,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8791,6 +8833,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
@@ -9564,6 +9610,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10340,6 +10390,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11129,6 +11183,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
@@ -11914,6 +11972,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12703,6 +12765,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
@@ -13487,6 +13553,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14401,6 +14471,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
@@ -15185,6 +15259,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15972,6 +16050,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16925,6 +17007,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Accreditation_type__c</picklist>
@@ -16934,6 +17020,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17845,6 +17935,29 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_type__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
@@ -18741,6 +18854,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19680,6 +19797,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20630,6 +20751,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Enable_Credit_Card_FOP__c</picklist>
@@ -21073,6 +21198,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22034,6 +22163,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
@@ -22807,6 +22940,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23699,6 +23836,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
@@ -24472,6 +24613,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25422,6 +25567,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Accreditation_type__c</picklist>
@@ -26370,6 +26519,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Accreditation_type__c</picklist>
@@ -27303,6 +27456,21 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Allow_Reparenting_on_MC_Cases</fullName>
+        <active>true</active>
+        <description>You can only reparent case field for Newgen Standard Accounts</description>
+        <errorConditionFormula>AND(
+				 ISCHANGED(SAAM_Case__c) ,
+				NOT(AND(
+				CONTAINS(SAAM_Case__r.Subject, &apos;New Associate Entity - GoGlobal - &apos;) ,
+				 ISBLANK(SAAM_Case__r.Account.IATACode__c),
+				 ISPICKVAL(SAAM_Case__r.Account.Top_Parent__r.Location_Type__c,&apos;GE&apos;),
+				 ISPICKVAL(SAAM_Case__r.Account.Status__c,&apos;&apos;)
+))
+				)</errorConditionFormula>
+        <errorMessage>You can only reparent case field for Newgen Multicountry Accreditations</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>CASS_Number_3_Digits</fullName>
         <active>true</active>

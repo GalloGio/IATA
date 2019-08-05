@@ -35,7 +35,7 @@ public class IATAIsoCountryDAO {
                                                  Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, VAT_2_Validation_Required__c ,
                                                  IEC_Zip_Postal_Code_required__c,
                                                  Acli_Country__c,
-                                                 
+                                                 Multicountry_Enabled__c,
                                                  AMS_Pilot_Country__c,
                                                  Travel_Branch_Country__c, 
                                                  Travel_HO_Country__c, 
@@ -62,6 +62,8 @@ public class IATAIsoCountryDAO {
                                                  EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
                                                  LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c,
                                                  State_Province_Picklist__c, ANG_IEP_Model__c, 
+												 Region_Province_and_Cities_Enabled__c,
+						AMS_Settlement_System__r.Name,
                                                  
                                                  (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
                                                   FROM IATA_ISO_States__r
@@ -111,7 +113,7 @@ public class IATAIsoCountryDAO {
 	 * 
 	 * @return Map of Iata_Iso_Country 
 	 */
-	private static Map<String, IATA_ISO_Country__c> getMapIataIsoCountryByIsoCode(){
+	public static Map<String, IATA_ISO_Country__c> getMapIataIsoCountryByIsoCode(){
 		if(IATAIsoCountryDAO.mapIataIsoCountrybyIsoCode == null) {
 
 			IATAIsoCountryDAO.mapIataIsoCountrybyIsoCode = new Map<String, IATA_ISO_Country__c>();
@@ -317,6 +319,26 @@ public class IATAIsoCountryDAO {
 		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
 			if(isoCountry.Case_BSP_Country__c != null && isoCountry.Case_BSP_Country__c != ''){
 				isoCountryList.add(isoCountry);
+			}
+		}
+		return isoCountryList;
+	}
+
+	/**
+	 * Method that return a list of IATA_ISO_Country list without all
+	 * Case_BSP_Country__c != null AND Case_BSP_Country__c != ''
+	 * 
+	 * @return List of IATA_ISO_Country
+	 */
+	public static List<IATA_ISO_Country__c> getIsoCountriesBySettlementSystemName(Set<String> setSettlementNames){  
+
+		List<IATA_ISO_Country__c> isoCountryList = new List<IATA_ISO_Country__c>();
+
+		for(IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.getIsoCountries()){
+			if(isoCountry.AMS_Settlement_System__c != null && isoCountry.AMS_Settlement_System__r.Name != null && isoCountry.AMS_Settlement_System__r.Name != ''){
+				if(setSettlementNames != null && !setSettlementNames.isEmpty() && setSettlementNames.contains(isoCountry.AMS_Settlement_System__r.Name)){
+					isoCountryList.add(isoCountry);
+				}
 			}
 		}
 		return isoCountryList;

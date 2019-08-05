@@ -90,6 +90,10 @@
                 <behavior>Edit</behavior>
                 <field>BSP_Country_free_text__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Region_Province_and_Cities_Enabled__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -254,6 +258,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Enable_NewGen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Multicountry_Enabled__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

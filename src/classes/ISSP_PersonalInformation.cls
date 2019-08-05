@@ -330,14 +330,10 @@ public with sharing class ISSP_PersonalInformation {
     public Pagereference saveAccount(){
         try {
             isEditMode = false;
-            if(isHOAccredited && bIsMinorChangeEnabled){
-             //   ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
-            }
+
             update con.Account;
             popContact();  
-            //Pagereference homePage = Page.ISSP_Homepage;
-            //homePage.setRedirect(true); 
-            //return homePage;
+
             return null;
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
@@ -348,14 +344,10 @@ public with sharing class ISSP_PersonalInformation {
     public Pagereference saveAccountBR(){
         try {
             isEditMode = false;
-            if(isHOAccredited && bIsMinorChangeEnabled){
-             //   ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
-            }
+            
             update branchOffice;
             popContact();  
-            //Pagereference homePage = Page.ISSP_Homepage;
-            //homePage.setRedirect(true); 
-            //return homePage;
+
             return null;
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);

@@ -359,7 +359,9 @@ public class AMS_ChangeCodesHelper {
             
             if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
 
-            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE ) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE || oscar.RecordTypeId == AMS_Utils.RECTYPE_MCAE) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) 
+            	oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            
             if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }

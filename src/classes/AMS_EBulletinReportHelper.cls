@@ -24,12 +24,16 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String SECTION			= 	'0-Section';
 
 	public static final String IATACODE			= 	'2-Agency Code';
+	public static final String AGENCYNAME		=	'3-Agency Name';
+	public static final String LOCATIONTYPE		=	'4-Location Type';
 	public static final String LEGALSTATUS		= 	'5-Legal Status';
     public static final String ACCREDITATIONTYPE	= 	'6-Accreditation Type';
     public static final String CASHCONDITION    = '9-Cash Condition equal to FS';
 	public static final String LOCATIONCLASS	= 	'10-Program';
 	
 	public static final String HIERARCHY		= 	'11-Hierarchy';
+	public static final String GOGLOBALXREF 	= '11.5-GoGlobal Xref';
+
 
 	public static final String STATE  	        = 	'14-Country or State';
 	public static final String COUNTRY  	    =	'15-Country or State';
@@ -266,6 +270,10 @@ public without sharing class AMS_EBulletinReportHelper {
 				ccFieldToReturn.add(customFields.getAPIFieldValue(header));
 				}
 		}
+
+		ccFieldToReturn.add('Account__r.Bulletin_Headquarter__c');
+		ccFieldToReturn.add('Account__r.Parent.Location_Type__c');
+		ccFieldToReturn.add('Account__r.Top_Parent__r.Location_Type__c');
 		
 		//system.debug('ccFieldToReturn:' + ccFieldToReturn);
 						
@@ -700,11 +708,29 @@ public without sharing class AMS_EBulletinReportHelper {
 				
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWHIERARCHY)) strVal = '=""' + strVal + '""';
-                
-                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY)){
+					if(cc.Account__r.Parent.Location_Type__c == 'GE') strVal = '';
+					else strVal = '=""' + strVal + '""';
+				}
 
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWHIERARCHY)) strVal = '=""' + strVal + '""';
+                
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
+
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(AGENCYNAME) && !String.isEmpty(cc.Account__r.Bulletin_Headquarter__c) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) strVal = strVal + ' on behalf of ' + cc.Account__r.Bulletin_Headquarter__c;
+
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONTYPE) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+					if(strVal == 'GE') strVal = 'HE';
+					else if(strVal == 'HE' || strVal == 'AE') strVal = 'AE';
+				}
+
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(GOGLOBALXREF)) {
+						if(cc.Account__r.Top_Parent__r.Location_Type__c != 'GE') strVal = '';
+						else strVal = '=""' + strVal + '""';
+				}
+				
 				recordsList.add(strVal);
+
 			}
 			else if(  NEWCHANGECODESET.contains(cc.change_code__c) && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
 				recordsList.add('');
@@ -725,23 +751,42 @@ public without sharing class AMS_EBulletinReportHelper {
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(STATUS)) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + AMS_Utils.overrideEBulletinStatusDescr(strVal);
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY)) strVal = '=""' + strVal + '""';
-                
-                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)) strVal = '=""' + strVal + '""';
 
-                else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION)) strVal = (cc.Account__r.ANG_IsNewGenAgency__c ? strVal : NOTAPPLICABLE);
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY)){
+					if(cc.Account__r.Parent.Location_Type__c == 'GE') strVal = '';
+					else strVal = '=""' + strVal + '""';
+				}
+                
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(ACCREDITATIONTYPE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(NEWACCREDITATIONTYPE)) strVal = AMS_Utils.transformAccreditationType(strVal);
+
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(CASHCONDITION)) strVal = (cc.Account__r.ANG_IsNewGenAgency__c ? strVal : NOTAPPLICABLE);
+
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(AGENCYNAME) && !String.isEmpty(cc.Account__r.Bulletin_Headquarter__c) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) strVal = strVal + ' on behalf of ' + cc.Account__r.Bulletin_Headquarter__c;
+
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONTYPE) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+					if(strVal == 'GE') strVal = 'HE';
+					else if(strVal == 'HE' || strVal == 'AE') strVal = 'AE';
+				}
+
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(GOGLOBALXREF)){
+						if(cc.Account__r.Top_Parent__r.Location_Type__c != 'GE') strVal = '';
+						else strVal = '=""' + strVal + '""';
+				}
 
 				recordsList.add(strVal);
-                if (fieldsList.get(position - customFieldsCounter) == 'BULLETIN_INFORMATION__C') {
-                    remarkPosition = recordsList.size() - 1;
-                }
+
+				if (fieldsList.get(position - customFieldsCounter) == 'BULLETIN_INFORMATION__C') {
+						remarkPosition = recordsList.size() - 1;
+				}
                 
 			}
 			
 		}
-        if (ownersByType.get('old') > 8 || ownersByType.get('new') > 8) {
-            recordsList.set(remarkPosition, recordsList.get(remarkPosition) + Label.EBulletin_More_than_8_owners_message);
-        } 
+
+		if (ownersByType.get('old') > 8 || ownersByType.get('new') > 8) {
+				recordsList.set(remarkPosition, recordsList.get(remarkPosition) + Label.EBulletin_More_than_8_owners_message);
+		} 
         
 		return recordsList;
 	}

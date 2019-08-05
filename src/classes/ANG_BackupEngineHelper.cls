@@ -72,11 +72,11 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			'ACCOUNT' => ' Id in:objectIds',
 			'PORTAL_APPLICATION_RIGHT__C' => ' Contact__r.AccountId IN :objectIds AND Application_Name__c = \'IFAP\'',
 			'AMS_OSCAR__C' => ' Id =:oscarId',
-			'AMS_AGENCIES_HIERARCHY__C' => ' Id in (select Hierarchy__c  from AMS_AGENCIES_RELATIONHIP__C WHERE Child_Account__c in:objectIds or Parent_Account__c in:objectIds)',
-			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds '
+			'AMS_AGENCIES_HIERARCHY__C' => ' Id in (select Hierarchy__c  from AMS_AGENCIES_RELATIONHIP__C WHERE Child_Account__c in:objectIds or Parent_Account__c in:objectIds or Child_Account__r.Top_Parent__c in :objectIds)',
+			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds or Child_Account__r.Top_Parent__c in :objectIds'
 	};
 
-	private Set<String> headLocationTypesSet = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+	private Set<String> headLocationTypesSet = new Set<String>{AMS_Utils.GE, AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
 
 	private Map<String,Set<String>> fieldsInEntity;
 
@@ -168,7 +168,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountFields.add('ANG_IEP_Status__c');
 		accountFields.add('ANG_IEP_HE_AccntNum__c');
 		accountFields.add('Financial_Assessment_Points__c');
-
+		accountFields.add('Identify_as_Multicountry_Key_Hierarchy__c');
+		
 		Set<String> contactFields = new Set<String>();
 		
 		contactFields.add('FirstName');
@@ -291,14 +292,27 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		Set<Id> accountIds = new Set<Id>();
 		
-		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
+		Account acct = [Select Id, Location_Type__c, ParentId, Top_Parent__c, ANG_Accreditation_Model__c from Account where Id =:accountOscar];
 		Id accountId = acct.Id;
-		
-        if(!this.headLocationTypesSet.contains(acct.Location_Type__c)){
-			accountId = acct.ParentId;
-    	}
-		
-        for(Account acctToSearch: [Select Id from Account where ParentId =:accountId]){
+
+		String accountsQuery = 'SELECT Id FROM Account WHERE ';
+
+		Boolean isMulticountry = acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		if(isMulticountry){
+			if(acct.Location_Type__c != AMS_Utils.GE){
+				accountId = acct.Top_Parent__c;
+			}
+			accountsQuery += 'Top_Parent__c = :accountId';
+		}
+		else {
+			if(!this.headLocationTypesSet.contains(acct.Location_Type__c)){
+				accountId = acct.ParentId;
+			}
+			accountsQuery += 'ParentId = :accountId';
+		}
+
+        for(Account acctToSearch: Database.query(accountsQuery)){
 			accountIds.add(acctToSearch.Id);
         }
 	
@@ -336,8 +350,28 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		if(adhocConditions != null)
 			query += ' WHERE ' + adhocConditions;
+		
+		if(selectedObject == 'AMS_AGENCIES_HIERARCHY__C'){
 
-		return Database.query(query);
+			List<sObject> hierarchiesList =  Database.query(query);
+
+			query = 'SELECT '+ String.join(fieldList, ', ') + ' FROM '+selectedObject;
+			query += ' WHERE main_account__c in:objectIds';
+		
+			hierarchiesList.addAll(Database.query(query));
+
+			Set<sObject> setList = new Set<sObject>();
+
+			for(sObject obj : hierarchiesList){
+				setList.add(obj);
+			}
+
+			return new List<sObject>(setList);
+		
+		}else{
+			return Database.query(query);	
+		}
+
 
 	}
 

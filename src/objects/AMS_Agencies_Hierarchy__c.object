@@ -65,6 +65,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Main_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Main Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Agency Hierarchies</relationshipLabel>
+        <relationshipName>Main_Accounts</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Migrated__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

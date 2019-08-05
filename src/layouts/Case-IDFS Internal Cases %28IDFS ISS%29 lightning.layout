@@ -84,6 +84,10 @@
                 <behavior>Edit</behavior>
                 <field>Subtopic__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -292,7 +296,7 @@
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
-                <page>CaseAttachmentsView</page>
+                <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
