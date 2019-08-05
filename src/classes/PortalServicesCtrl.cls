@@ -407,6 +407,20 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 		}
 	}
 
+	User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+	String contactId = userAux.ContactId;
+
+	List<Portal_Applications__c> lstPA = getNonRequestableServicesList(contactId);
+	List<ServiceWrapper> lstServiceWrapper = new List<ServiceWrapper>();
+
+	if(!lstPA.isEmpty()) {
+		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
+		for(Portal_Applications__c portalAppAux : lstPA) {
+			lstServiceWrapper.add(new ServiceWrapper(portalAppAux, false, '', false, ''));
+		}
+		lstToReturn.addAll(lstServiceWrapper);
+	}
+
 	return lstToReturn;
 }
 
