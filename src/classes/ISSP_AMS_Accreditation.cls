@@ -242,12 +242,13 @@ public without sharing class ISSP_AMS_Accreditation {
     public Boolean revCaseOpen {
         get{
             List<Case> revCases = [SELECT Id 
-                                FROM Case 
-                                WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
-                                    AND Reason1__c = 'Annual revalidation' 
-                                    AND Status != 'Closed' 
-                                    AND Status != 'Closed_Rejected' 
-                                    AND Status != 'Closed_Withdrawn'];
+                                   FROM Case 
+                                   WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+                                   AND Reason1__c = 'Annual revalidation' 
+                                   AND Status != 'Closed' 
+                                   AND Status != 'Closed_Rejected' 
+                                   AND Status != 'Closed_Withdrawn'
+                                   AND Status != 'Closed_ Not Accepted'];
             
             return !revCases.isEmpty();
         } 
@@ -7504,8 +7505,8 @@ system.debug('aqui sectorValue ' + sectorValue);
                 Position__c,RecordTypeId,Title__c,Valid__c,
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
-                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry, Contact__r.OtherState,
-                Legacy_External_ID__c
+                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
+                Legacy_External_ID__c, Contact__r.OtherState
                 FROM AMS_Account_Role__c
                 where Account__c = :lAccountConcerned
                 and RecordTypeId = :rtAccRoleOwnership
