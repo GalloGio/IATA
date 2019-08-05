@@ -43,13 +43,13 @@ public with sharing class ISSP_CurrencyCenterCountriesMapCtrl {
 	public list<CountryWrapper> lstCountries {get{
             // use the wrapper just for formatting the issue started date in the locale of the user
             list<CountryWrapper> tmpList = new list<CountryWrapper>();
-            for (Country_Profile__c cp : [SELECT Id, Name, Country_Name__r.ISO_Code__c, Country_Name__r.Name, Actual_Amount_Blocked__c, Issue_Started__c, Number_of_Airlines_Reporting_Issues__c FROM Country_Profile__c WHERE Listed_In__c = :listType]) {
+            for (Country_Profile__c cp : [SELECT Id, Name, Country_Name__r.ISO_Code__c, Country_Name__r.Name, Actual_Amount_Blocked__c, Issue_Started__c, Number_of_Airlines_Reporting_Issues__c, CASS_ICCS_Availability__c, BSP_ICCS_Availability__c FROM Country_Profile__c WHERE Listed_In__c = :listType]) {
                 String tmpDate = '';
                 if(cp.Issue_Started__c !=null){
                     DateTime dt = DateTime.newInstance(cp.Issue_Started__c.year(), cp.Issue_Started__c.month(), cp.Issue_Started__c.day());
                     tmpDate = dt.format('dd MMM yyyy');
                 }
-                tmpList.add(new CountryWrapper(String.valueOf(cp.Id), cp.Country_Name__r.Name, cp.Country_Name__r.ISO_Code__c, cp.Actual_Amount_Blocked__c, tmpDate, Integer.valueOf(cp.Number_of_Airlines_Reporting_Issues__c)));
+                tmpList.add(new CountryWrapper(String.valueOf(cp.Id), cp.Country_Name__r.Name, cp.Country_Name__r.ISO_Code__c, cp.Actual_Amount_Blocked__c, tmpDate, Integer.valueOf(cp.Number_of_Airlines_Reporting_Issues__c), cp.CASS_ICCS_Availability__c, cp.BSP_ICCS_Availability__c));
             }
             return tmpList;
         } set;}
@@ -70,14 +70,18 @@ public with sharing class ISSP_CurrencyCenterCountriesMapCtrl {
         public String AmtBlocked {get;set;}
         public String IssueStarted {get;set;}
         public Integer NbAirlinesReporting {get; set;}
+        public String CASS_ICCS_Availability {get;set;}
+        public String BSP_ICCS_Availability {get;set;}
 
-        public CountryWrapper(String Id, String Name, String IsoCode, String AmtBlocked, String IssueStarted, Integer NbAirlinesReporting){
+        public CountryWrapper(String Id, String Name, String IsoCode, String AmtBlocked, String IssueStarted, Integer NbAirlinesReporting, String CASS_ICCS_Availability, String BSP_ICCS_Availability){
             this.Id = Id;
             this.Name = Name;
             this.IsoCode = IsoCode;
             this.AmtBlocked = AmtBlocked;
             this.IssueStarted = IssueStarted;
             this.NbAirlinesReporting = NbAirlinesReporting;
+            this.CASS_ICCS_Availability = CASS_ICCS_Availability;
+            this.BSP_ICCS_Availability = BSP_ICCS_Availability;
         }
     }
 }
