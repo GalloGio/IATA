@@ -3387,6 +3387,14 @@ Payment required on receipt of this Payment Advice
         <value>Publication Countries</value>
     </labels>
     <labels>
+        <fullName>CSP_Error_Message_Mandatory_Fields_Contact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Error_Message_Mandatory_Fields_Contact</shortDescription>
+        <value>Please fill all the mandatory fields</value>
+    </labels>
+    <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4636,6 +4644,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>BSP &amp; CASS PROFILE</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_BSP_ICCS_Availability</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_BSP_ICCS_Availability</shortDescription>
+        <value>BSP ICCS Availability</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_BSP_Profile</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4690,6 +4705,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_CASS</shortDescription>
         <value>CASS</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_CASS_ICCS_Availability</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_CASS_ICCS_Availability</shortDescription>
+        <value>CASS ICCS Availability</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_CASS_Profile</fullName>
@@ -34062,6 +34084,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Not Applicable</value>
     </labels>
     <labels>
+        <fullName>Not_In_CNS_Group_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not In CNS Group Error</shortDescription>
+        <value>This is a CNS process and you are not authorized to make changes. Please contact your system administrator for more information.</value>
+    </labels>
+    <labels>
         <fullName>Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -37706,6 +37735,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>ShoppingCartQtyMsg</shortDescription>
         <value>Please enter the quantity you wish to order for each product listed below</value>
+    </labels>
+    <labels>
+        <fullName>SidraLiteROFieldError</fullName>
+        <categories>SIDRA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error displayed when a RO field is changed in a SIDRA Lite case</shortDescription>
+        <value>You can&apos;t modify &quot;{0}&quot; for a CNS collection process.</value>
     </labels>
     <labels>
         <fullName>SignIn</fullName>
