@@ -670,7 +670,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		if (currentAccount.isoCountry.State_Province_Picklist__c && !String.isEmpty(billingStateForm)) {
 
-			for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByStateName(billingStateForm)){
+			for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByStateName(new Set<String>{billingStateForm})){
 				if(state.IATA_ISO_Country__c == currentAccount.account.IATA_ISO_Country__c){
 					currentAccount.fw.newform.IATA_ISO_State__c = state.Id;
 					break;
