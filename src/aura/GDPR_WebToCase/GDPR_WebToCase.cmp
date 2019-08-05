@@ -97,6 +97,8 @@
                                 <lightning:button class="btn btn-primary slds-float_right" variant="brand" label="Submit" onclick="{!c.fecthAWSInformation}" />
                             </div>
 
+                            <lightning:spinner aura:id="loadingApi" alternativeText="Loading" size="medium" class="slds-hide" />
+
                             <div class="slds-p-vertical_medium slds-p-horizontal_medium slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
                                 <c:jsonDatatable 
                                     aura:id="jsonTable"
