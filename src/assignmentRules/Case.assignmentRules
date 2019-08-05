@@ -2715,7 +2715,7 @@ or(
 RecordType.Name= &quot;Complaint (IDFS ISS)&quot;,
 RecordType.Name= &quot;Cases - Global&quot;
 ),
-ISPICKVAL(Topic__c, &quot;IATA Publications&quot;)
+ISPICKVAL(Topic__c, &quot;Publications&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -4323,6 +4323,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
         <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 AND ((2 AND 3) OR 4)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -4337,6 +4338,11 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>Update configuration request,General information,Integrated file processing,iiNet WEB File retrieval,iiNet WEB interface,Invoicing / Billing request,New Account request,New Connectivity request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.SuppliedEmail</field>
+                <operation>equals</operation>
+                <value>iinetcare@iata.org</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
