@@ -4,55 +4,55 @@
 @isTest
 public with sharing class vfIECGADResult_tst {
 
-    private static Product_Category__c oProductCategory;
-    private static Product_Information__c oProductInfo;
-    private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
-    private static Terms_and_Conditions__c oTC;
-    private static zqu__ZProduct__c oProduct;
-    private static zqu__ProductRatePlan__c oProductRatePlan;
-    private static Zuora__Subscription__c oSubscription;
-    private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge;
-    private static IEC_Subscription_History__c oSubscriptionHist;
-    private static Account oAccount;
-    private static Account oAgencyAccount;
-    private static Zuora__CustomerAccount__c oBillingAccount;
-    private static Contact oContact;
-    private static Date dtSubscriptionEnddate;
-    
-    private static GDP_Reference_Table__c oRefAgencyStatus;
-    private static GDP_Reference_Table__c oRefAgencyStatusTerminated;
-    private static GDP_Reference_Table__c oRefIncorporationType;
-    private static GDP_Reference_Table__c oRefLocationType;
-    private static GDP_Products_Account_View__c oGDPAccount1;
-    private static GDP_Products_Account_View__c oGDPAccount2;
-    private static GDP_Products_Account_View__c oGDPAccount3;
-    private static Accreditation__c oAccreditation1;
-    private static Accreditation__c oAccreditation2;
-    private static Accreditation__c oAccreditation3;
-    
-    private static final Integer SUB_USAGE_QTY = 42;
-    private static final String AGENCY1_CODE = '5555555';
-    private static final String AGENCY2_CODE = '6666666';
-    private static final String AGENCY3_CODE = '7777777';
-    private static final String AGENT_VER_NUMBER = '5578000523';
-    private static final String AGENCY_CHECK_DIGIT = '9';
-    private static final String AGENCY1_NAME = 'Chillwave Agency';
-    private static final String AGENCY2_NAME = 'Chilly Cheese Agency';
-    private static final String AGENCY3_NAME = 'Kashmir Coats';
-    
-    static void setupData() {
-        oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_GAD, true);
-        insert oProductCategory;
-        
-        oProduct = IECTestUtil.CreateSampleProduct('PTST');
-        insert oProduct;
-        
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
-        oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
-        insert oProductInfo;
+	private static Product_Category__c oProductCategory;
+	private static Product_Information__c oProductInfo;
+	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
+	private static Terms_and_Conditions__c oTC;
+	private static Product2 oProduct;
+	private static zqu__ProductRatePlan__c oProductRatePlan;
+	private static Zuora__Subscription__c oSubscription;
+	private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge;
+	private static IEC_Subscription_History__c oSubscriptionHist;
+	private static Account oAccount;
+	private static Account oAgencyAccount;
+	private static Zuora__CustomerAccount__c oBillingAccount;
+	private static Contact oContact;
+	private static Date dtSubscriptionEnddate;
+	
+	private static GDP_Reference_Table__c oRefAgencyStatus;
+	private static GDP_Reference_Table__c oRefAgencyStatusTerminated;
+	private static GDP_Reference_Table__c oRefIncorporationType;
+	private static GDP_Reference_Table__c oRefLocationType;
+	private static GDP_Products_Account_View__c oGDPAccount1;
+	private static GDP_Products_Account_View__c oGDPAccount2;
+	private static GDP_Products_Account_View__c oGDPAccount3;
+	private static Accreditation__c oAccreditation1;
+	private static Accreditation__c oAccreditation2;
+	private static Accreditation__c oAccreditation3;
+	
+	private static final Integer SUB_USAGE_QTY = 42;
+	private static final String AGENCY1_CODE = '5555555';
+	private static final String AGENCY2_CODE = '6666666';
+	private static final String AGENCY3_CODE = '7777777';
+	private static final String AGENT_VER_NUMBER = '5578000523';
+	private static final String AGENCY_CHECK_DIGIT = '9';
+	private static final String AGENCY1_NAME = 'Chillwave Agency';
+	private static final String AGENCY2_NAME = 'Chilly Cheese Agency';
+	private static final String AGENCY3_NAME = 'Kashmir Coats';
+	
+	static void setupData() {
+		oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_GAD, true);
+		insert oProductCategory;
+		
+		oProduct = IECTestUtil.CreateSampleProduct2('PTST');
+		insert oProduct;
+		
+		oProductInfo = IECTestUtil.CreateSampleProductInfo2('PITST', oProductCategory, oProduct);
+		oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
+		insert oProductInfo;
 
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
-        insert oProductRatePlan;
+		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan2('PRPTST', false, oProduct);
+		insert oProductRatePlan;
 
         oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', false, oProductRatePlan, oProductInfo);
         oProductRatePlanInfo.Display_As_Monthly_Fee__c = true;
@@ -127,8 +127,8 @@ public with sharing class vfIECGADResult_tst {
         insert oSubscription;
         
         // create dummy subscription charge
-        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, dtSubscriptionEnddate.addYears(-1).addDays(1), oProduct, oProductRatePlan);
-        insert oSubscriptionCharge;
+        //oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, dtSubscriptionEnddate.addYears(-1).addDays(1), oProduct, oProductRatePlan);
+        //insert oSubscriptionCharge;
         
         oSubscriptionHist = IECTestUtil.createSampleSubscriptionHistory(oAccount.Id, oContact.Id, oSubscription.Name, oProductCategory.Id, oProductInfo.Id, oProductRatePlanInfo.Id, IECConstants.PaymentType.CREDIT_CARD, oTC);
         insert oSubscriptionHist;

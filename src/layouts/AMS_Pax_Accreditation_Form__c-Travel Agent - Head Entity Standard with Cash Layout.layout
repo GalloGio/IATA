@@ -182,6 +182,10 @@
                 <behavior>Edit</behavior>
                 <field>Local_Postal_Address_Area__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>HO_Shipping_Address__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

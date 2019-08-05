@@ -35,7 +35,7 @@ public without sharing class OneId_RegistrationProcessController {
 		}
 		else if(sector == 'Airline Supplier'){
 			recordTypesSet = '(\'Others\',\'Standard_Account\')';
-			categoryFilter = ' AND Category__c in (\'GDS\',\'Content Aggregator\')';
+			categoryFilter = ' AND Category__c in (\'Global Distribution System\',\'Content Aggregator\')';
 		}
 		
 		if(recordTypesSet == ''){
@@ -173,6 +173,8 @@ public without sharing class OneId_RegistrationProcessController {
         Contact con {get;set;}
         @AuraEnabled
         Account acc {get;set;}
+        @AuraEnabled
+        Boolean accessRequested {get; set;}
     }
 
     @AuraEnabled
@@ -275,9 +277,44 @@ public without sharing class OneId_RegistrationProcessController {
             || (acc.Sector__c == 'Travel Agent' 
                 && ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
             || (acc.Sector__c == 'Airline Supplier' 
-                && (acc.Category__c == 'GDS' || acc.Category__c == 'Content Aggreagator')
+                && (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator')
                 && (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
         return isEligible;
+    }
+
+
+    @AuraEnabled
+    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
+        // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
+        Savepoint sp = Database.setSavepoint();
+
+        try {
+            User testingUser = new User(LastName = 'DUMMY',
+                 FirstName='DUMMY',
+                 Alias = 'DUMMY',
+                 CommunityNickname = 'DUMMY',
+                 Email = email,
+                 Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
+                 ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
+                 ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+                 TimeZoneSidKey = 'GMT',
+                 LanguageLocaleKey = 'en_US',
+                 EmailEncodingKey = 'UTF-8',
+                 LocaleSidKey = 'en_US',
+                 License_Cost_center__c = 'ISF005CH01'
+            );
+            system.debug(testingUser);
+            insert testingUser;
+
+            // Rollback to avoid creation of the user
+            Database.rollback(sp);
+            return true;
+
+        } catch(Exception e) {
+            System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
+            Database.rollback(sp);
+            return false;
+        }
     }
     
     @AuraEnabled
@@ -326,7 +363,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     public static Account returnRelatedAcc(Id accID){
-        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
+        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
     }
 
 
@@ -376,6 +413,7 @@ public without sharing class OneId_RegistrationProcessController {
             'BillingState',
             'BillingStreet',
             'Category__c',
+            'Category_Other_Value__c',
             'Email__c',
             'IATACode__c',
             'Legal_name__c',
@@ -402,12 +440,12 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
     @AuraEnabled
-    public static List<String> getContactJobFunctionValues(){
-        List<String> values =  new  List<String>();
+    public static List<PicklistEntry> getContactJobFunctionValues(){
+        List<PicklistEntry> values =  new  List<PicklistEntry>();
 
         List<Schema.PicklistEntry> controllingFieldValues = Schema.Contact.Function__c.getDescribe().getPickListValues();
         for (Schema.PicklistEntry p : controllingFieldValues){
-           values.add(p.getLabel());
+           values.add(new PicklistEntry(p.getLabel(), p.getValue()));
         }
         return values;
     }
@@ -468,18 +506,50 @@ public without sharing class OneId_RegistrationProcessController {
         return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
     }
 
+    //Method created as a workaround due to not be able to populate lookups in the Lightning Component. This was a quick fix in order to not change registration method signature. 
+    //Probably the way to set this IDs should be reviewed. 
+    @AuraEnabled
+    public static boolean registrationAux(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
+        
+        if(cityAndStateIds != null){
+            String billingCityId = (String) cityAndStateIds.get('billingCityId');
+            String billingStateId = (String) cityAndStateIds.get('billingStateId');
+            String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
+            String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
+            
+            if(!String.isBlank(billingCityId)){
+                acc.Geoname_Billing_City__c = billingCityId;                
+            }
+
+            if(!String.isBlank(billingStateId)){
+                acc.ISO_State__c = billingStateId;
+                acc.IATA_ISO_Billing_State__c = billingStateId;                            
+            }
+
+            if(!String.isBlank(shippingCityId)){
+                acc.Geoname_Shipping_City__c = shippingCityId;                
+            }
+
+            if(!String.isBlank(shippingStateId)){
+                acc.IATA_ISO_Shipping_State__c = shippingStateId;                            
+            }
+        }
+
+        return OneId_RegistrationProcessController.registration(acc, con, serviceName);
+    }
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName){
+              
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
         system.debug('contact  --> ' + con);
         system.debug('serviceName  --> ' + serviceName);
 
-        if(serviceName == null)
+       if(serviceName == null)
             serviceName = 'IDENTITY';
 
         //it's general public account? create contact / user
-        if(acc.Sector__c == 'General Public'){
+        if(acc.Id == null && acc.Sector__c == 'General Public'){
             List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
             if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
         }
@@ -539,7 +609,7 @@ public without sharing class OneId_RegistrationProcessController {
 
         //create contact        
         con.ISO_Country__c = acc.IATA_ISO_Country__c;
-        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Country__c;
+        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
         con.Country__c = acc.IATA_ISO_Country__c;
         con.Preferred_Language__c = languageString;
         con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
@@ -637,10 +707,17 @@ public without sharing class OneId_RegistrationProcessController {
                 if (!String.isBlank(acc.BillingCountry)) {
                     List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
                     if (cn.size()!=0) {
-                        acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                        acc.IATA_ISO_Country__c = cn[0].id;
                     }
                 }
-            
+                
+                if (!String.isBlank(acc.ShippingCountry)) {
+                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.ShippingCountry});
+                    if (cn.size()!=0) {
+                        acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+                    }
+                }
+
                 database.insert(acc);
             }
           
@@ -671,13 +748,46 @@ public without sharing class OneId_RegistrationProcessController {
                     newRight.Portal_Application__c = appListId;
                     insert newRight;
                }
-            }else if(!isAlreadyContact){
+
+            //Start ACLI
+                // ACLI Requirement: The first user registering under a new airline account will get it automatically.
+            }else if(acc.Sector__c == 'Airline' && isNewAcc &&
+                        acc.RecordTypeId == Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId() ){
+
+                System.debug('Adding ACLI service');
+                con.Primary_Contact__c = true;
+                con.User_Portal_Status__c = 'Approved Admin';
+
+                checkConAvailable(con);
+
+                con.account=acc;
+
+                //ACLI Requirement: if first user on an Airline account then the user gets automatically the Coding Service
+                Id appListId;
+                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c)){
+                    appListId = serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c;
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
+                }
+
+
+            }
+            //End ACLI
+            else if(!isAlreadyContact){
                 checkConAvailable(con);
                 system.debug('::: Is not a contact already: ' + con);
-            }else{
+            }
+            else{
+                checkConAvailable(con);
                 updateContactInFuture(String.valueOf(con.Id), con.Community__c, String.valueOf(con.User_Portal_Status__C), con.Email, con.AccountId);
                 system.debug('::: Is contact already UPDATING: ' + con);
                 //update con;
+
             }
 
 
@@ -820,448 +930,134 @@ public without sharing class OneId_RegistrationProcessController {
         }
         return null;
     }
-  
-  
-  public static void increaseCodeCoverage(){
-      Integer i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
+   @AuraEnabled
+    public static StatesAndAlternateNames getStates(String country){
+        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+        Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT GeonameAlternateNames__c FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
+        StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
+
+        return states;
     }
+    
+    @TestVisible
+    public class StatesAndAlternateNames{
+        @AuraEnabled 
+        public List<IATA_ISO_State__c> states;
+        
+        @AuraEnabled
+        public Map<ID, IATA_ISO_City__c> idAndAlternateNames;
+
+         public StatesAndAlternateNames(List<IATA_ISO_State__c> states, Map<ID, IATA_ISO_City__c> idAndAlternateNames){
+           this.states = states;
+           this.idAndAlternateNames = idAndAlternateNames;  
+        }
+        
+    }
+
+    @AuraEnabled
+    public static String getAllCities(String country){
+        String allCities = '';
+        
+        for(IATA_ISO_City__c iic : [SELECT Name FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name != :country] ){
+            allCities += iic.Name+', ';
+        }
+        
+        Integer allCitiesSize = allCities.length(); 
+        
+        return allCitiesSize > 0 ? allCities.substring(0,allCitiesSize-2):null;
+    } 
+    /* Manuel Conde commented this... 
+
+    public static void increaseCodeCoverage(){
+        Integer i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+    }
+
+     */
 
 }

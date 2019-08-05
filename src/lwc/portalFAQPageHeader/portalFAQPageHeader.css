@@ -1,0 +1,40 @@
+.portalFAQPageHeader {
+    background-color: rgb(30, 50, 250, 0.7);
+    background-size: cover;
+    height:184px;
+}
+
+.breadcrumbsHeight{
+    height: 69px;
+}
+
+.headerContainer{
+    display: flex;
+    width:100%;
+}
+
+.headerIconContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerTextContainer{
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerIconDiv{
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 1px;
+    box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+    background-color: #ffffff;
+}
+
+.headerTextAlign {
+    width: 100%;
+}

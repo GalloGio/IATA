@@ -52,6 +52,42 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fieldSets>
+        <fullName>Request_Provisional</fullName>
+        <description>ANG_RequestProvisionalRHCPage</description>
+        <displayedFields>
+            <field>ANG_AccountId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_IATA_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_RHC_Amount_Provisional__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Provisional_RHC_Last_Update__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_RHC_Amount_Forecasted__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Forecasted_RHC_Effective_date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Request Provisional</label>
+    </fieldSets>
     <fields>
         <fullName>ANG_AccountId__c</fullName>
         <description>Holds the id of the account to wich the RHC record is related.</description>
@@ -155,6 +191,16 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Forecasted_RHC_Effective_date__c</fullName>
+        <description>Forecasted RHC Effective date based on the next 1st day of the Billing Period</description>
+        <externalId>false</externalId>
+        <label>Forecasted RHC Effective date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>ANG_IATA_Code__c</fullName>
@@ -304,6 +350,18 @@
         <type>Text</type>
         <unique>true</unique>
     </fields>
+    <fields>
+        <fullName>RHC_Amount_Equals_FS_Percent__c</fullName>
+        <description>Percentage of Financial Security to be applied on RHC calculation when &quot;RHC Amount Equals FS&quot; is true</description>
+        <externalId>false</externalId>
+        <label>RHC Amount Equals FS %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
     <label>RHC Information</label>
     <nameField>
         <displayFormat>RHCI-{000000000}</displayFormat>
@@ -405,6 +463,49 @@ if(result[0].isSuccess == &quot;true&quot;){
 window.location.reload();
 }else{
 alert(result[0].description);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Request_Provisional</fullName>
+        <availability>online</availability>
+        <description>Request Provisional RHC</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request RHC calculation</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/apex.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/support/console/43.0/integration.js&quot;)} 
+
+
+try{
+    var result = sforce.connection.query(&quot;Select Id, ANG_AccountId__c From ANG_RHC_Information__c Where Id = &apos;{!ANG_RHC_Information__c.Id}&apos;&quot;);
+
+    var records = result.getArray(&quot;records&quot;);
+    var rhc;
+
+    if (records.length &gt; 0)
+        rhc = records[0];
+                else
+                    throw &apos;RHC record not found&apos;;
+                                
+    if (sforce.console.isInConsole()) {
+    
+        sforce.console.getEnclosingPrimaryTabId(openPrimarytab);   
+
+        function openPrimarytab(result) {
+            var primaryTabId = result.id;
+			sforce.console.openSubtab(primaryTabId , &apos;/apex/ANG_RequestProvisionalRHC?id={!ANG_RHC_Information__c.Id}&apos;, true, &apos;Request Provisional RHC&apos;, null);
+        };
+                                
+    } else {
+       window.open(&apos;/apex/ANG_RequestProvisionalRHC?id={!ANG_RHC_Information__c.Id}&apos;,&apos;_blank&apos;,&apos;height=450,width=600&apos;);
+    }
+                                                                
+                
+} catch (err) {
+    alert(err);
 }</url>
     </webLinks>
     <webLinks>

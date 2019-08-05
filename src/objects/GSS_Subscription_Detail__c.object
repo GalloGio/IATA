@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Calendar_Monthly_Option__c</fullName>
         <externalId>false</externalId>
@@ -573,7 +574,7 @@
         <filters>
             <field>NAME</field>
             <operation>equals</operation>
-            <value>A-S00011935</value>
+            <value>A-S00019355</value>
         </filters>
         <label>01-Search by Subscription Number</label>
         <language>en_US</language>
