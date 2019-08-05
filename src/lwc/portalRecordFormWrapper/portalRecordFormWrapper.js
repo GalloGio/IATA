@@ -136,7 +136,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             });
 
         }
-
+        
+        isAdmin().then(result => {
+            this.showEdit = result && this.showEdit;
+        });
     }
 
     get accessibilityGetter() {
@@ -158,10 +161,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.accessibilityText = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
-
-        isAdmin().then(result => {
-            this.showEdit = (result ? true : false);
-        });
         
         return this.accessibilityText
     }
@@ -185,7 +184,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
         let listSelected = JSON.parse(JSON.stringify(this.listSelected));
         this.closeModal();
-        //eval("$A.get('e.force:refreshView').fire();");
+
+        this.updateMembershipFunctions(event.detail);
     }
 
     handleError(event) {
@@ -220,6 +220,17 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.removeContact = true;
         this.changeUserPortalStatus = true;
         this.showEditModal = false;
+    }
+
+    updateMembershipFunctions(eventDetail) {
+        if(eventDetail.fields.hasOwnProperty('Membership_Function__c')) {
+            let functions = [];
+            if(eventDetail.fields.Membership_Function__c) {
+                const values = eventDetail.fields.Membership_Function__c.value.split(";");
+                values.forEach( (value) => { functions.push(value); });
+            }
+            this.jobFunctions = functions;
+        }
     }
 
     styleInputs() {
@@ -406,19 +417,27 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             let listSelected = JSON.parse(JSON.stringify(this.listSelected));
             if (listSelected.length > 0) {
                 let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
-
+                
                 contactTypeStatusLocal.forEach(function (item) {
                     if (listSelected.includes(item.label)) {
                         fields[item.APINAME] = true;
+                        item.checked = true;
                     } else {
                         fields[item.APINAME] = false;
+                        item.checked = false;
                     }
                 });
 
+                // Update accessibility fields
+                this.fields.forEach(function (item) {
+                    if (item.isAccessibility) {
+                        item.accessibilityList = contactTypeStatusLocal;
+                    }
+                });
             }
 
             if (canSave) {
-            this.template.querySelector('lightning-record-edit-form').submit(fields);
+                this.template.querySelector('lightning-record-edit-form').submit(fields);
             } else {
                 this.isSaving = false;
             }
