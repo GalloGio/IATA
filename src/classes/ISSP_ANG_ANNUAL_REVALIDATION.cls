@@ -111,16 +111,19 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     public String stateListByCountryName {
         get {
             if (stateListByCountryNameMap == null) {
-                stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
+							stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
                 
-                for (IATA_ISO_State__c state: [SELECT Id, Name, IATA_ISO_Country__r.Name
-                                               FROM IATA_ISO_State__c
-                                               WHERE IATA_ISO_Country__r.State_Province_Picklist__c = true]) {
-                                                   if (!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Name)) {
-                                                       stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Name, new List<IATA_ISO_State__c>());
-                                                   }
-                                                   stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Name).add(state);
-                                               }
+							List<IATA_ISO_State__c> isoStatesLst = IATAIsoStateDAO.getIsoStates();
+
+							for(IATA_ISO_State__c state : isoStatesLst){
+								if(state.IATA_ISO_Country__r.State_Province_Picklist__c){
+									if(!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Name)){
+										stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Name, new List<IATA_ISO_State__c>());
+									}
+									stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Name).add(state);
+								}
+							}
+
             }
             return JSON.serialize(stateListByCountryNameMap);
         }
@@ -196,13 +199,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     	get {
     		if (countryInfoByCountryNameMap == null) {
     			countryInfoByCountryNameMap = new Map<String, IATA_ISO_Country__c>();
-    			for (IATA_ISO_Country__c cnt: [SELECT Name, Postal_Code_Hint_Format__c, State_Province_Mandatory__c, 
-                                            	IEC_Zip_Postal_Code_required__c, Informatica_Value__c
-	                                        FROM IATA_ISO_Country__c 
-	                                        WHERE Region__c != '' AND Iso_code__c NOT IN ('IO','TF','GS','UM','UP','VI') 
-	                                        ORDER BY name ASC]) {
-	                countryInfoByCountryNameMap.put(cnt.Name.toUpperCase(), cnt);
-	            }
+
+					List<IATA_ISO_Country__c> countryLst = IATAIsoCountryDAO.getIsoCountries();
+
+					Set<String> countriesToExcludeSet = new Set<String>{'IO','TF','GS','UM','UP','VI'};
+
+					for(IATA_ISO_Country__c cnt : IATAIsoCountryDAO.sortIATAIsoCountryList(countryLst, 'Name')){
+						if(String.isNotBlank(cnt.Region__c) && !countriesToExcludeSet.contains(cnt.ISO_Code__c)){
+							countryInfoByCountryNameMap.put(cnt.Name.toUpperCase(), cnt);
+						}
+					}
+
     		}
 			return countryInfoByCountryNameMap;
     	}
@@ -662,12 +669,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 
 		if (currentAccount.isoCountry.State_Province_Picklist__c && !String.isEmpty(billingStateForm)) {
-			IATA_ISO_State__c state = [SELECT Id, Name
-                                    FROM IATA_ISO_State__c
-                                    WHERE IATA_ISO_Country__c = :currentAccount.account.IATA_ISO_Country__c
-                                    	AND Name = :billingStateForm];
 
-            currentAccount.fw.newform.IATA_ISO_State__c = state.Id;
+			for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByStateName(new Set<String>{billingStateForm})){
+				if(state.IATA_ISO_Country__c == currentAccount.account.IATA_ISO_Country__c){
+					currentAccount.fw.newform.IATA_ISO_State__c = state.Id;
+					break;
+				}
+			}
+
 		}
 	}
 
@@ -1956,15 +1965,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         set;
     }
 
-    public AMS_Accreditation_Country_CheckList__c countryCheckList {
+    public static AMS_Accreditation_Country_CheckList__c countryCheckList {
         get{
-            List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, 
-            														Statement_of_International_Sales_Branch__c
-                  												FROM AMS_Accreditation_Country_CheckList__c
-                 												WHERE IATA_ISO_Country__r.ISO_Code__c = :currentAccount.isocountry.Iso_code__c 
-                 													AND Operation__c = :currentAccount.Account.Sector__c];
+			if (countryCheckList == null) {
+				List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, 
+																		Statement_of_International_Sales_Branch__c
+																	FROM AMS_Accreditation_Country_CheckList__c
+																	WHERE IATA_ISO_Country__r.ISO_Code__c = :currentAccount.isocountry.Iso_code__c 
+																		AND Operation__c = :currentAccount.Account.Sector__c];
 
-            return (!aux.isEmpty()) ? aux[0] : null;
+				return (!aux.isEmpty()) ? aux[0] : null;
+			}
+			return countryCheckList;
         }
         set;
     }
