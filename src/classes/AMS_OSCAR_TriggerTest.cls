@@ -1148,7 +1148,18 @@
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name = 'Test_state', IATA_ISO_Country__c = ctry.Id, ISO_Code__c = 'FR');
         insert stt;
 		        
-        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+    //I wonder why this is being called here - what does this oscar has to do with Change of Ownership to IATA ?! .......   
+        //AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Location_Type__c = 'HO', IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency', Status__c = AMS_Utils.ACC_S9_APPROVED, Location_Class__c = 'R');
+
+        insert a1;
+
+		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, Location_Type__c = 'BR', IATACode__c='9876543',Name='Test2 Agency',Short_Name__c='Test2 Agency', ParentId = a1.Id);
+
+        insert a2;
 
         AMS_OSCARTriggerHandler.allOnlineAccr = null;
 
