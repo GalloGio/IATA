@@ -83,6 +83,7 @@ global class WrapperAttach implements Comparable {
 
     @AuraEnabled
     public String sfdcContext {get;set;} // attachment or contentDocument
+    public Blob versionData {get;set;} // attachment or contentDocument
 
     /*** AMSU-139 ***/
     @AuraEnabled
@@ -147,6 +148,7 @@ global class WrapperAttach implements Comparable {
         this.viewURL ='';
         this.isPublic=true;
 
+        this.versionData=cv.versionData;
     }
 
     public WrapperAttach(Archived_Attachment__c file) {
@@ -235,6 +237,9 @@ global class WrapperAttach implements Comparable {
     }
     public Boolean getIsSalesforce() {
         return this.filetype == 'Salesforce';
+    }
+    public Boolean getIsContent() {
+        return this.sfdcContext == 'content';
     }
 
     /**
@@ -535,8 +540,8 @@ global class WrapperAttach implements Comparable {
             attachList= getContentInfo(contentDocSet);
         }else{
             for(ContentVersion  cv :[select ContentDocumentId,Title, FileExtension,Description,FileType,
-            ContentSize,CreatedById,CreatedBy.name,CreatedDate,
-            LastModifiedDate from ContentVersion where id =:contentDocSet]){
+            ContentSize,CreatedById,CreatedBy.name,CreatedDate,versionData,
+            LastModifiedDate from ContentVersion where id =:contentDocSet AND IsLatest = true]){
                     attachList.add(new WrapperAttach(cv));
             }
         }  
@@ -551,7 +556,7 @@ global class WrapperAttach implements Comparable {
     public static list<WrapperAttach> getContentInfo(set<id> contentIdSet) {
         list<WrapperAttach> attachList = new list<WrapperAttach>();
         for(ContentVersion cv:[select Id,ContentDocumentId,title,FileExtension,Description,FileType,ContentSize,
-        LastModifiedDate,createdDate,createdById,createdBy.Name
+        LastModifiedDate,createdDate,versionData,createdById,createdBy.Name
                 from ContentVersion where id in :contentIdSet]){
             attachList.add(new WrapperAttach(cv));
         }
