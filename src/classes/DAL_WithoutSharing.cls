@@ -96,7 +96,7 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 
 	//returns user Information wihtout visibility control
 	@AuraEnabled
-	public static user getUserDetails(String userID){
-		return [select id,userRoleId, UserRole.Name from user where id=:userID];
+	public static user getUserDetails(Id userId){
+		return [select id,userRoleId, UserRole.Name from user where id=:userId];
 	}
 }
