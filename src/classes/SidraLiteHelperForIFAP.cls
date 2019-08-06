@@ -82,61 +82,72 @@ public with sharing class SidraLiteHelperForIFAP {
         returnCase.Origin = 'Internal Case';
         returnCase.Status= 'Open';
         returnCase.BSP_CASS__c = SidraLiteUtil.getBSPCASS(parentCase.account);
-        // for FS
-        if ( isFS(parentCase) ) {
-            returnCase.Subject = 'SIDRA Lite - Financial Security Non-compliance';
-            returnCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
-            if ( SidraLiteUtil.isPassenger(parentCase.account) ) {
-                if (SidraLiteUtil.isAccountActive(parentCase.account)) {
-                    returnCase.SIDRA_Lite_Default_Date__c = Date.today();
-                    //returnCase.IRR_Approval_Rejection__c = 'Approved';
-                    //returnCase.Propose_Irregularity__c = DateTime.now();
-                    //returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
-                    //returnCase.IRR_Type__c =  'Double Irregularity';
-                    returnCase.Reason_for_Default__c =  'Suspension - FS Non Compliance';
-                } else {
-                    returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
-                }
-            }
-            if ( SidraLiteUtil.isCargoCASS(parentCase.account) ) {
-                if (SidraLiteUtil.isAccountActive(parentCase.account)) {
-                    returnCase.IRR_Withdrawal_Reason__c  = 'Cargo Reminder only';
-                    returnCase.IRR_Approval_Rejection__c = '';
-                    returnCase.IRR_Type__c = '';
-                } else {
-                    returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
-                }
-            }
-        }
 
-        // for FA
-        if ( !isFS(parentCase) || parentCase.Status == 'Sanity Check Failure') {
-            if (parentCase.Status == 'Sanity Check Failure') {
-                returnCase.SIDRA_Lite_Reason__c = 'Sanity Check failure of financial statement';
-            } else {
-                returnCase.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
-            }
-            returnCase.Subject = 'SIDRA Lite - ' + returnCase.SIDRA_Lite_Reason__c;
-            if ( SidraLiteUtil.isPassenger(parentCase.account) ) {
-                if (SidraLiteUtil.isAccountActive(parentCase.account)) {
-                    returnCase.IRR_Approval_Rejection__c = 'Approved';
-                    returnCase.Propose_Irregularity__c = DateTime.now();
-                    returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
-                    returnCase.IRR_Type__c =  'Double Irregularity';
-                    returnCase.IRR_Withdrawal_Reason__c = '';
-                } else {
-                    returnCase.IRR_approval_Rejection__c = '';
-                    returnCase.IRR_Type__c =  '';
-                    returnCase.IRR_Withdrawal_Reason__c = 'Default Prev';
+        //ACAMBAS - WMO-485: Begin
+        if(parentCase.Parent.RecordTypeId == SidraLiteManager.RECORDTYPE_CNS) {
+            returnCase.Subject = 'SIDRA Lite - CNS Financial Review';
+            returnCase.SIDRA_Lite_Reason__c = 'CNS Financial Review';
+            returnCase.CNSCase__c = true;
+        }
+        else {
+        //ACAMBAS - WMO-485: End
+            
+            // for FS
+            if ( isFS(parentCase) ) {
+                returnCase.Subject = 'SIDRA Lite - Financial Security Non-compliance';
+                returnCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
+                if ( SidraLiteUtil.isPassenger(parentCase.account) ) {
+                    if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                        returnCase.SIDRA_Lite_Default_Date__c = Date.today();
+                        //returnCase.IRR_Approval_Rejection__c = 'Approved';
+                        //returnCase.Propose_Irregularity__c = DateTime.now();
+                        //returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
+                        //returnCase.IRR_Type__c =  'Double Irregularity';
+                        returnCase.Reason_for_Default__c =  'Suspension - FS Non Compliance';
+                    } else {
+                        returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
+                    }
+                }
+                if ( SidraLiteUtil.isCargoCASS(parentCase.account) ) {
+                    if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                        returnCase.IRR_Withdrawal_Reason__c  = 'Cargo Reminder only';
+                        returnCase.IRR_Approval_Rejection__c = '';
+                        returnCase.IRR_Type__c = '';
+                    } else {
+                        returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
+                    }
                 }
             }
-            if ( SidraLiteUtil.isCargoCASS(parentCase.account) ) {
-                returnCase.IRR_approval_Rejection__c = '';
-                returnCase.IRR_Type__c = '';
-                if (SidraLiteUtil.isAccountActive(parentCase.account)) {
-                    returnCase.IRR_Withdrawal_Reason__c  = 'Cargo Reminder only';
+
+            // for FA
+            if ( !isFS(parentCase) || parentCase.Status == 'Sanity Check Failure') {
+                if (parentCase.Status == 'Sanity Check Failure') {
+                    returnCase.SIDRA_Lite_Reason__c = 'Sanity Check failure of financial statement';
                 } else {
-                    returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
+                    returnCase.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
+                }
+                returnCase.Subject = 'SIDRA Lite - ' + returnCase.SIDRA_Lite_Reason__c;
+                if ( SidraLiteUtil.isPassenger(parentCase.account) ) {
+                    if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                        returnCase.IRR_Approval_Rejection__c = 'Approved';
+                        returnCase.Propose_Irregularity__c = DateTime.now();
+                        returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
+                        returnCase.IRR_Type__c =  'Double Irregularity';
+                        returnCase.IRR_Withdrawal_Reason__c = '';
+                    } else {
+                        returnCase.IRR_approval_Rejection__c = '';
+                        returnCase.IRR_Type__c =  '';
+                        returnCase.IRR_Withdrawal_Reason__c = 'Default Prev';
+                    }
+                }
+                if ( SidraLiteUtil.isCargoCASS(parentCase.account) ) {
+                    returnCase.IRR_approval_Rejection__c = '';
+                    returnCase.IRR_Type__c = '';
+                    if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                        returnCase.IRR_Withdrawal_Reason__c  = 'Cargo Reminder only';
+                    } else {
+                        returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
+                    }
                 }
             }
         }
@@ -171,6 +182,12 @@ public with sharing class SidraLiteHelperForIFAP {
     **/
     public static list<Case> updateSidraLiteAndParent(Case parentCase, Case childCase) {
         Account account = parentCase.account;
+
+        //WMO-485 - ACAMBAS : Begin
+        if(childCase.SIDRA_Lite_Reason__c == 'CNS Financial Review') {
+            throw new SidraLiteException('Second non compliance is not allowed for a CNS agency.');          
+        }
+        //WMO-485 - ACAMBAS : End
 
         // ACTIONS for FS
         if (isFS(parentCase)) {
