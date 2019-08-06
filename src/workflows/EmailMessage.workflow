@@ -1105,6 +1105,21 @@ Request an agent to upload Financial Documents&apos; is sent</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>iiNET Update Case Status from SNOW</fullName>
+        <actions>
+            <name>Case_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Change_Owner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>When the case under “iiNET Technical Support” queue gets updated with the response from SNOW – the case status should be changed to “Action needed”, check if the case has a Parent case, and if yes – change the case owner to “GCS-iiNET” queue</description>
+        <formula>AND( Parent.OwnerId = &apos;00G1r0000031kjM&apos;, NOT( CONTAINS(Subject, &apos;has been created&apos;)  ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>test anita</fullName>
         <active>false</active>
         <criteriaItems>
