@@ -81,6 +81,9 @@ global class WrapperAttach implements Comparable {
     @AuraEnabled
     public AmazonFile fileAmazon {get;set;}
 
+    @AuraEnabled
+    public String sfdcContext {get;set;} // attachment or contentDocument
+
     /*** AMSU-139 ***/
     @AuraEnabled
     public String updatedBy {get;set;}
@@ -95,6 +98,7 @@ global class WrapperAttach implements Comparable {
         this.permission = permission;
         this.id = file.Id;
         this.filetype = 'Salesforce';
+        this.sfdcContext = 'attachment';
         this.name = file.name;
         this.description = file.description;
         this.contentType = file.contentType;
@@ -106,6 +110,42 @@ global class WrapperAttach implements Comparable {
         this.createdByName = file.createdBy.Name;
         this.viewURL = new PageReference('/servlet/servlet.FileDownload?file=' + file.Id).getUrl();
         setPermission();
+    }
+
+    public WrapperAttach(ContentDistribution cd) {
+        this.isSelected = false;
+        this.id = cd.ContentVersion.ContentDocumentId;
+        this.filetype = 'Salesforce';
+        this.sfdcContext = 'content';
+        this.name = cd.name+'.'+cd.ContentVersion.FileExtension;
+        this.description = cd.ContentVersion.Description;
+        this.contentType = cd.ContentVersion.FileType;
+        this.size = cd.ContentVersion.ContentSize * 0.000001;
+        this.lastModified = cd.ContentVersion.LastModifiedDate;
+        this.createdDate = cd.ContentVersion.createdDate;
+        this.createdBy = cd.ContentVersion.createdById;
+        this.fileIdentifier = '';
+        this.createdByName = cd.ContentVersion.createdBy.Name;
+        this.viewURL =cd.DistributionPublicUrl;
+        this.isPublic=true;
+
+    }
+    public WrapperAttach(ContentVersion cv) {
+        this.isSelected = false;
+        this.id = cv.ContentDocumentId;
+        this.filetype = 'Salesforce';
+        this.sfdcContext = 'content';
+        this.name = cv.title+'.'+cv.FileExtension;
+        this.description = cv.Description;
+        this.contentType = cv.FileType;
+        this.size = cv.ContentSize * 0.000001;
+        this.lastModified = cv.LastModifiedDate;
+        this.createdDate = cv.createdDate;
+        this.createdBy = cv.createdById;
+        this.fileIdentifier = '';
+        this.createdByName = cv.createdBy.Name;
+        this.viewURL ='';
+        this.isPublic=true;
 
     }
 
@@ -132,7 +172,8 @@ global class WrapperAttach implements Comparable {
         this.isSelected = false;
         this.fileAmazon = file;
         this.id = file.getId();
-        this.filetype = 'Amazon';
+        this.filetype = 'Amazon';        
+        this.sfdcContext = 'amazon';
         this.name = file.getName();
         this.size = file.getSize();
         this.description = file.getDescription();
@@ -201,8 +242,13 @@ global class WrapperAttach implements Comparable {
     **/
     public void changePermission() {
         if (filetype == 'Salesforce') {
-            this.permission.ShowToPortalUsers__c = ! this.permission.ShowToPortalUsers__c;
-            upsert this.permission;
+            if(sfdcContext == 'content'){
+
+            }
+            if(sfdcContext=='attachment'){
+                this.permission.ShowToPortalUsers__c = ! this.permission.ShowToPortalUsers__c;
+                upsert this.permission;
+            }
         } else if (filetype == 'Archived') {
 
         } else if (this.filetype == 'Amazon') {
@@ -312,12 +358,22 @@ global class WrapperAttach implements Comparable {
         Get all attachments related to an object
     **/
     public static list<WrapperAttach> getListAttachments(Id sobjectId) {
-        return getListAttachments(sobjectId, false);
+        return getListAttachments(sobjectId, false,false);
     }
+
     public static list<WrapperAttach> getListAttachments(Id sobjectId,Boolean withBody) {
+        return getListAttachments(sobjectId, withBody,false);
+    }
+
+    public static list<WrapperAttach> getListAttachments(Id sobjectId,Boolean withBody,Boolean isPortal) {
         list<WrapperAttach> listAttachments = getSalesforceAttachments(sobjectId, withBody);
-        //listAttachments.addAll(getArchivedAttachments(sobjectId));
+        //listAttachments.addAll(getArchivedAttachments(sobjectId)); //silenced from the lightning migration
+        list<WrapperAttach> contentList=getContentAttachments(sobjectId,isPortal);
+
+        listAttachments.addAll(contentList);// gets content documents (introduced with lightning)
+
         listAttachments.addAll(getAmazonAttachments(sobjectId));
+        
         return listAttachments;
     }
 
@@ -330,7 +386,7 @@ global class WrapperAttach implements Comparable {
        fullAttachmentAccess = perms.size()==0;
 
         list<WrapperAttach> listAttachments = new list<WrapperAttach>();
-        for (WrapperAttach attach: getListAttachments(sobjectId) ) {
+        for (WrapperAttach attach: getListAttachments(sobjectId,false,true) ) {
              SYSTEM.DEBUG('Attach File type:' + attach.filetype);
 
             if (attach.isPublic || (attach.filetype=='Salesforce' && fullAttachmentAccess)) {
@@ -339,6 +395,7 @@ global class WrapperAttach implements Comparable {
         }
         return listAttachments;
     }
+   
 
     /**
         Get all standard salesforce attachments related to an object
@@ -454,7 +511,7 @@ global class WrapperAttach implements Comparable {
         }
     }
 
-    /**
+     /**
         Return the folder where we store the attachments for an specific sobject
     **/
     public static String getAmazonFolder(Id sobjectId) {
@@ -462,4 +519,61 @@ global class WrapperAttach implements Comparable {
         return AMAZON_BASE_FOLDER + suffix + '/' + String.valueOf(sobjectId) + '/';
     }
 
+
+
+    /**
+        Get all Content salesforce attachments related to an object
+    **/
+    public static list<WrapperAttach> getContentAttachments(Id sobjectId,boolean isPortal) {
+        list<WrapperAttach> attachList = new list<WrapperAttach>();
+        //attached Files list
+        set<id> contentDocSet= new set<id>();
+        for(ContentDocumentLink  cd :[select ContentDocument.LatestPublishedVersionId from ContentDocumentLink where LinkedEntityId =:sobjectId]){
+            contentDocSet.add(cd.ContentDocument.LatestPublishedVersionId);
+        }
+        if(isPortal){
+            attachList= getContentInfo(contentDocSet);
+        }else{
+            for(ContentVersion  cv :[select ContentDocumentId,Title, FileExtension,Description,FileType,
+            ContentSize,CreatedById,CreatedBy.name,CreatedDate,
+            LastModifiedDate from ContentVersion where id =:contentDocSet]){
+                    attachList.add(new WrapperAttach(cv));
+            }
+        }  
+        return attachList;
+    }
+
+    public static list<ContentDocument> getContentDocInfo(set<Id> sobjectId) {      
+        return [select title,LatestPublishedVersionId  from ContentDocument where id in :sobjectId];
+    }
+
+
+    public static list<WrapperAttach> getContentInfo(set<id> contentIdSet) {
+        list<WrapperAttach> attachList = new list<WrapperAttach>();
+        for(ContentVersion cv:[select Id,ContentDocumentId,title,FileExtension,Description,FileType,ContentSize,
+        LastModifiedDate,createdDate,createdById,createdBy.Name
+                from ContentVersion where id in :contentIdSet]){
+            attachList.add(new WrapperAttach(cv));
+        }
+        return attachList;
+    }
+
+
+   
+    /**
+        Return generates content public link
+    **/
+    public static ContentDistribution generateContentDistribution (ContentDocument cd) {       
+        ContentDistribution cdi = new ContentDistribution();
+        cdi.name = cd.title;
+        cdi.ContentVersionId = cd.LatestPublishedVersionId;
+        cdi.PreferencesAllowViewInBrowser= true;
+        cdi.PreferencesLinkLatestVersion=true;
+        cdi.PreferencesNotifyOnVisit=false;
+        cdi.PreferencesPasswordRequired=false;
+        cdi.PreferencesAllowOriginalDownload= true;
+        
+        return cdi;
+    }    
+    
 }
