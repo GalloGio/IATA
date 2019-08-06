@@ -994,7 +994,10 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 		String key = buildReportTypeMapKey('Blocked Amount', countryCurrency);
 
 		Decimal tempPercentage = 0;
-		
+
+		// ICCS value
+		wccsObject.typeReportMap.get(key).ICCS__c = null;
+
 		for(Currency_Center_Survey__c typeOper: wccsObject.typeOfOperationsMap.get(key)) {
 
 			//count the total percentage value
@@ -1003,7 +1006,7 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 				tempPercentage += typeOper.Type_Of_Operations_Percentage__c;
 			}
 
-			if(typeOper.Type_of_Operations__c != null && typeOper.Type_of_Operations__c.equals('ICCS') && typeOper.Type_Of_Operations_Percentage__c < 100 && typeOper.Type_Of_Operations_Percentage__c > 0) {
+			if(typeOper.Type_of_Operations__c != null && typeOper.Type_of_Operations__c.equals('ICCS') && typeOper.Type_Of_Operations_Percentage__c <= 100 && typeOper.Type_Of_Operations_Percentage__c >= 0) {
 				System.debug(typeOper);
 				wccsObject.typeReportMap.get(key).ICCS__c = String.valueOf(typeOper.Type_Of_Operations_Percentage__c);
 				errorMessage = false;
