@@ -180,7 +180,7 @@
                 </div>
             </apex:repeat>
             <apex:repeat value="{!List_CurrentCompaniesOwners}" var="transfereeOwner">
-                <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
+                <div class="row" style="width:50%; float:right; page-break-inside:avoid; margin-top:20px;">
                     <table border="0" cellpadding="3">
                         <tr>
                             <th colspan="2">{!$Label.ISSP_AMS_NoC_Transferee}</th>
