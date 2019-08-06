@@ -615,7 +615,7 @@ public with sharing class PortalCasesCtrl {
         Id profileId = Userinfo.getProfileId();
         String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
         ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(newCase.RecordType__c);
-        String userRole =  newCase.WhoClosedCase__c != null ? DAL_WithoutSharing.getRoleName(newCase.WhoClosedCase__c).UserRole.Name : '';
+        String userRole =  newCase.WhoClosedCase__c != null ? DAL_WithoutSharing.getUserDetails(newCase.WhoClosedCase__c).UserRole.Name : '';
 
         String caseType = ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);
 
