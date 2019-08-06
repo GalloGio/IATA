@@ -652,10 +652,12 @@ public boolean hasNoContact {get; set;}
 
 
 public ContactWrapper(Portal_Application_Right__c par){
+	String accountLocation = String.isNotBlank(par.Contact__r.Account.BillingCity) ? ' (' + par.Contact__r.Account.BillingCity + ')' : '';
+
 	this.contactId=par.contact__c;
 	this.contactName=par.contact__r.name;
 	this.emailAddress=par.contact__r.email;
-	this.iataCodeLoc=par.contact__r.Account.iataCode__C+' ('+par.Contact__r.Account.BillingCity+')';
+	this.iataCodeLoc=par.contact__r.Account.IATACode__c + accountLocation;
 	this.userPortalStatus=par.contact__r.user_portal_status__c;
 	this.serviceRight= par.right__C;
 

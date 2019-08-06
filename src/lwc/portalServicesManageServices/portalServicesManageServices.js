@@ -40,7 +40,10 @@ import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPor
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
-
+import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
+import Email from '@salesforce/label/c.Email';
+import Status from '@salesforce/label/c.Status';
+import CSP_User from '@salesforce/label/c.CSP_User';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -139,10 +142,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         }
 
         this.contactTableColums = [
-            { label: 'User', fieldName: 'contactName', type: 'text' },
-            { label: 'Email', fieldName: 'emailAddress', type: 'text' },
-            { label: 'IATA Code Location', fieldName: 'iataCodeLoc', type: 'text' },
-            { label: 'Status', fieldName: 'serviceRight', type: 'text' },
+            { label: CSP_User, fieldName: 'contactName', type: 'text' },
+            { label: Email, fieldName: 'emailAddress', type: 'text' },
+            { label: ISSP_IATA_Location_Code, fieldName: 'iataCodeLoc', type: 'text' },
+            { label: Status, fieldName: 'serviceRight', type: 'text' },
             { type: 'action',typeAttributes: { iconName: 'utility:delete',disabled:true,  rowActions: this.getRowActions } }
         ];
 
