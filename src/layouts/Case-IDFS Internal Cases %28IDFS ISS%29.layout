@@ -74,6 +74,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Product__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Priority</field>
             </layoutItems>
             <layoutItems>
@@ -401,6 +405,9 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedRecordConnectionList</relatedList>
     </relatedLists>

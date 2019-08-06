@@ -515,16 +515,18 @@ public without sharing class DPCCasesUtil {
         }
 
         //find all portal users for the related accounts in the incoming cases
-        for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
-                FROM User
-                WHERE isActive = true
-                AND Contact.AccountId IN :listAccountId
-                AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User')
-                AND Contact.Status__c = 'Active']) {
-            list<User> listUser = MAP_ACCOUNT_USERS.get(user.Contact.AccountId);
-            if (listUser==null) listUser = new list<User>();
-            listUser.add(user);
-            MAP_ACCOUNT_USERS.put(user.Contact.AccountId, listUser);
+        if(!listAccountId.isEmpty()) {
+            for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
+                    FROM User
+                    WHERE isActive = true
+                    AND Contact.AccountId IN :listAccountId
+                    AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User')
+                    AND Contact.Status__c = 'Active']) {
+                list<User> listUser = MAP_ACCOUNT_USERS.get(user.Contact.AccountId);
+                if (listUser==null) listUser = new list<User>();
+                listUser.add(user);
+                MAP_ACCOUNT_USERS.put(user.Contact.AccountId, listUser);
+            }
         }
 
         //update AdditionalCC field on the incoming DPC cases
