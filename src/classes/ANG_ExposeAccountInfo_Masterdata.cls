@@ -114,7 +114,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                             +' , (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r)'  //RHC Information
                             +' , (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC)' //OSCAR
                             +' , (select Hierarchy__c, Hierarchy__r.name from AMS_Agencies_relationships__r limit 1)' //hierarchy name
-            				+' , (select Id, Main_account__c from Main_Accounts__r)'
+                            +' , (select Id, Name, Main_account__c from Main_Accounts__r)'
 //                          +' , (Select Id, Percentage__c, Owner_Name__c,Owner_Account__r.Name, Contact__r.Name From AMS_Account_Roles1__r where Active__c = true and RecordType.Name = \'Ownership\') ' // List of Ownwer
                             +' from Account';
 
@@ -272,7 +272,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
             set<string> setIEPStatusToPublish = new set<string>{'Open','In Progress'};
             set<string> setGDIStatusToPublish = new set<string>{'Open','In Progress'};
             try{
-                this.hierarchyId = this.hierarchyId = acc.Main_Accounts__r.isEmpty() ? acc.AMS_Agencies_relationships__r.get(0).hierarchy__r.Id : acc.Main_Accounts__r.get(0).Id;
+                this.hierarchyId = acc.Main_Accounts__r.isEmpty() ? acc.AMS_Agencies_relationships__r.isEmpty() ? null : acc.AMS_Agencies_relationships__r.get(0).hierarchy__r.Name : acc.Main_Accounts__r.get(0).Name;
                 this.isBranchAbroad = acc.Is_Branch_Abroad__c;
                 this.PurgeCode = acc.Purge_Flag__c;
                 this.AccreditationDate = FormatDateMS(acc.Accreditation_date__c);
