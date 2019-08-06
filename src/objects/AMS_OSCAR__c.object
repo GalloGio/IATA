@@ -1621,18 +1621,15 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     </fields>
     <fields>
         <fullName>Case_Reason__c</fullName>
-        <externalId>false</externalId>
-        <formula>If($RecordType.DeveloperName = &#39;VOLUNTARY_RELINQUISHMENT&#39;,
-        &#39;CLO - Closure&#39;,
-        TEXT(AMS_Online_Accreditation__r.SAAM_Case__r.Reason1__c)
-        )</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Case Reason</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+		<externalId>false</externalId>
+		<label>Case Reason</label>
+		<length>255</length>
+		<required>false</required>
+		<trackFeedHistory>false</trackFeedHistory>
+		<trackHistory>false</trackHistory>
+		<trackTrending>false</trackTrending>
+		<type>Text</type>
+		<unique>false</unique>
     </fields>
     <fields>
         <fullName>Certificate_Generated__c</fullName>
