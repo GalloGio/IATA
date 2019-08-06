@@ -1049,7 +1049,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
         String contactsQuery = 'SELECT Id,Name,Email,User_Portal_Status__c,Account.iataCode__c,Account.BillingCity FROM Contact '
 	                       + 'WHERE (User_Portal_Status__c = \'' + PortalServicesCtrl.PORTAL_USER_APPROVED + '\' '
-						   + ' OR User_Portal_Status__c = \'' +  PortalServicesCtrl.PORTAL_ADMIN_APPROVED + '\' '
+						   + ' OR User_Portal_Status__c = \'' +  PortalServicesCtrl.PORTAL_ADMIN_APPROVED + '\') '
 						   + ' AND  (Account.Top_Parent__c =\''+u.contact.AccountId+'\' OR AccountId = \''+ u.contact.AccountId+'\') '
 	                       + ' AND Id NOT IN :alreadyAssignedContactIds AND Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\' AND User_Portal_Status__c != \'Deactivated\'';
 
