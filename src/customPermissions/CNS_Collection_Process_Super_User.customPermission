@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Specific permission to create/edit SIDRA Lite cases for CNS</description>
+    <label>CNS Collection Process Super User</label>
+</CustomPermission>
