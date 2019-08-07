@@ -469,7 +469,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.debug('[performChangeOfLocationTypeScenario1]- Relations are:'+relsToCheck);
 		System.debug('[performChangeOfLocationTypeScenario1]- Hierarchies are:'+hierarchies);
 		
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		System.assertEquals(3,relsToCheck.size());
 
 		Integer parentAccountOriginal = 0;
@@ -587,7 +587,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.debug('[performChangeOfLocationTypeScenario1]- Relations are:'+relsToCheck);
 		System.debug('[performChangeOfLocationTypeScenario1]- Hierarchies are:'+hierarchies);
 		
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		System.assertEquals(4,relsToCheck.size());
 
 		Integer parentAccountOriginal = 0;
@@ -717,7 +717,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.debug('[performChangeOfLocationTypeScenario1]- Relations are:'+relsToCheck);
 		System.debug('[performChangeOfLocationTypeScenario1]- Hierarchies are:'+hierarchies);
 		
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		System.assertEquals(5,relsToCheck.size());
 
 		Integer parentAccountOriginal = 0;
