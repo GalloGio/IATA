@@ -371,29 +371,33 @@
             let hierarchyLower = hierarchy.toLowerCase();
             let predictions = c.get("v.predictions"+modes[i]);
             
-            switch(true){
-                
-                case hierarchyCities[hierarchyLower]?true:false:
+            if(hierarchyCities){
 
-                    if(i===0){
-                        billingCityId = hierarchyCities[hierarchyLower].CityId;
-                        billingStateId = hierarchyCities[hierarchyLower].StateId;
-                    }else{
-                        shippingCityId = hierarchyCities[hierarchyLower].CityId;
-                        shippingStateId = hierarchyCities[hierarchyLower].StateId;
-                    }
-                break;
+            
+                switch(true){
                 
-                case predictions.length === 1:
+                    case hierarchyCities[hierarchyLower]?true:false:
+
                         if(i===0){
-                            billingCityId = hierarchyCities[predictions[0].toLowerCase()].CityId;
-                            billingStateId = hierarchyCities[predictions[0].toLowerCase()].StateId;
+                            billingCityId = hierarchyCities[hierarchyLower].CityId;
+                            billingStateId = hierarchyCities[hierarchyLower].StateId;
                         }else{
-                            shippingCityId = hierarchyCities[predictions[0].toLowerCase()].CityId;
-                            shippingStateId = hierarchyCities[predictions[0].toLowerCase()].StateId;
+                            shippingCityId = hierarchyCities[hierarchyLower].CityId;
+                            shippingStateId = hierarchyCities[hierarchyLower].StateId;
                         }
-                break;
+                    break;
+                    
+                    case predictions.length === 1:
+                            if(i===0){
+                                billingCityId = hierarchyCities[predictions[0].toLowerCase()].CityId;
+                                billingStateId = hierarchyCities[predictions[0].toLowerCase()].StateId;
+                            }else{
+                                shippingCityId = hierarchyCities[predictions[0].toLowerCase()].CityId;
+                                shippingStateId = hierarchyCities[predictions[0].toLowerCase()].StateId;
+                            }
+                    break;
 
+                }
             }
 
             if( emptyCity || emptyStreet ){
