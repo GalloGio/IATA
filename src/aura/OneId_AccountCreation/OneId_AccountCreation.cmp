@@ -141,10 +141,10 @@
 	<div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_medium">
 		<h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.ISSP_CompanyInformation}</h2>
 	
-		<div id="legalNameContainer" class="slds-col slds-m-bottom_medium slds-size_1-of-1">
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
 			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Legal_name__c}</label>
 			<div class="slds-form-element__control">
-				<ui:inputText aura:id="legalName" value="{!v.account.Name}" class="slds-input" disabled="{!!v.changeName}" change="{! c.validateRequiredFields}"/>
+				<ui:inputText value="{!v.account.Name}" class="slds-input" disabled="{!!v.changeName}" change="{! c.validateRequiredFields}"/>
 			</div>
 		</div>
 

@@ -422,8 +422,6 @@
         var domPhone = officePhone.getElement();
         var country = $(domPhone).intlTelInput("getSelectedCountryData").iso2;
 
-        var legalName = c.find('legalName');
-        var legalNameValue = legalName.get('v.value');
         var isAllFilled = true;
 
         if($A.util.isEmpty(category.get("v.value"))){
@@ -450,15 +448,6 @@
         }else{
            email.set("v.errors",null);
         }
-
-        if($A.util.isEmpty(legalNameValue)){
-            legalName.set("v.errors",[{message: $A.get("$Label.c.ISSP_Registration_Error_LegalName")}]);
-            isAllFilled = false;
-            let lnc = document.getElementById('legalNameContainer');
-            lnc.scrollIntoView();
-         }else{
-            legalName.set("v.errors",null);
-         }
 
         if($A.util.isEmpty(officePhone.get("v.value"))){
            officePhone.set("v.errors",[{message: $A.get("$Label.c.ISSP_Registration_Error_BusinessPhone")}]);
