@@ -107,24 +107,29 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
     public Boolean ownerWithSameIATACode {get; set;}
     
     public List<SelectOption> contactStateList {get;set;}
-    public Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {get; set;}
+    public static Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {
+			get {
+				if (stateListByCountryNameMap == null) {
+					stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
+						
+					List<IATA_ISO_State__c> isoStatesLst = IATAIsoStateDAO.getIsoStates();
+
+					for(IATA_ISO_State__c state : isoStatesLst){
+						if(state.IATA_ISO_Country__r.State_Province_Picklist__c){
+							if(!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Name)){
+								stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Name, new List<IATA_ISO_State__c>());
+							}
+							stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Name).add(state);
+						}
+					}
+
+				}
+				return stateListByCountryNameMap;
+			} 
+			set;
+		}
     public String stateListByCountryName {
         get {
-            if (stateListByCountryNameMap == null) {
-							stateListByCountryNameMap = new Map<String, List<IATA_ISO_State__c>>();
-                
-							List<IATA_ISO_State__c> isoStatesLst = IATAIsoStateDAO.getIsoStates();
-
-							for(IATA_ISO_State__c state : isoStatesLst){
-								if(state.IATA_ISO_Country__r.State_Province_Picklist__c){
-									if(!stateListByCountryNameMap.containsKey(state.IATA_ISO_Country__r.Name)){
-										stateListByCountryNameMap.put(state.IATA_ISO_Country__r.Name, new List<IATA_ISO_State__c>());
-									}
-									stateListByCountryNameMap.get(state.IATA_ISO_Country__r.Name).add(state);
-								}
-							}
-
-            }
             return JSON.serialize(stateListByCountryNameMap);
         }
         set;
@@ -197,7 +202,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Boolean pollerBool{get;set;}
     public Integer progressBar{get;set;}
 
-    public Map<String, IATA_ISO_Country__c> countryInfoByCountryNameMap {
+    public static Map<String, IATA_ISO_Country__c> countryInfoByCountryNameMap {
     	get {
     		if (countryInfoByCountryNameMap == null) {
     			countryInfoByCountryNameMap = new Map<String, IATA_ISO_Country__c>();
@@ -1967,7 +1972,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
         set;
     }
 
-    public static AMS_Accreditation_Country_CheckList__c countryCheckList {
+    public AMS_Accreditation_Country_CheckList__c countryCheckList {
         get{
 			if (countryCheckList == null) {
 				List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, 
