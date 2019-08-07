@@ -36,6 +36,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
                     , 'Process__c'
                     , 'Account__r.ANG_Accreditation_Model__c'
                     , 'HE_per_BSP_Mapping__c'
+                    , 'RecordTypeId'
                 };
             }
             return oscarFields;

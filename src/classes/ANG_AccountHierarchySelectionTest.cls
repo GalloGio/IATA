@@ -498,8 +498,10 @@ private class ANG_AccountHierarchySelectionTest {
 
 		Map<Id, ANG_AccountHierarchySelectionController.HierarchyItem> hierarchy = con.hierarchy;
 		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
-
-		con.save();
+		
+		Test.startTest();
+			con.save();
+		Test.stopTest();
 
 		ApexPages.Message[] pageMessages = ApexPages.getMessages();
 		
