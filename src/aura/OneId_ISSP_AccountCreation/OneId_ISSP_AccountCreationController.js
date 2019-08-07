@@ -358,6 +358,7 @@
             let hierarchyLower = hierarchy.toLowerCase();
             let predictions = c.get("v.predictions"+modes[i]);
             
+            if(hierarchyCities){
             switch(true){
                 
                 case hierarchyCities[hierarchyLower]?true:false:
@@ -382,7 +383,7 @@
                 break;
 
             }
-
+        }
             if( emptyCity || emptyStreet ){
                 c.set('v.valid'+modes[i], 0);
 
