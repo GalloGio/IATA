@@ -391,7 +391,8 @@ private class PortalCasesCtrlTest {
 
     @IsTest
     static void testGetSurveyLink(){
-        User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+        CaseClosedStatus__c ccs= new CaseClosedStatus__c(name='Closed');
+        insert ccs;
 
         Case newCase = [SELECT Id,RecordType.Name FROM Case WHERE Subject = 'Case Test' LIMIT 1];
         newCase.Status = 'Closed';
