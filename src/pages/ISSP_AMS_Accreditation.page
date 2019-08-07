@@ -432,7 +432,20 @@
 
     function redirectToPDF() {
          window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
-    } 
+    }
+
+    function navigateToComparison() {
+        var urlComparison = '/apex/ISSP_ANG_ProductComparison';
+        
+        var chinaAgentTypeId = '{!$Component.step1Form.step1Block.chinaagenttype}';
+        var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]').val();
+
+        if ('{!isocountry.ISO_Code__c}' == 'CN') {
+            urlComparison += '?chinaAccred=' + chinaAgentType;
+        }
+        
+        window.open(urlComparison, '_self');
+    }
 
     </script>
 
@@ -555,7 +568,7 @@
                                 </apex:selectList>
 
                                 <apex:outputPanel id="compare">
-                                    <apex:outputLink id="ProductComparisonLink" value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
+                                    <apex:commandLink id="ProductComparisonLink" onclick="navigetToComparison(); return false;" value="{!$Label.ISSP_AMS_Compare_Accreditation_Types}" reRender=""/>
                                 </apex:outputPanel>
 
                                 <script>
