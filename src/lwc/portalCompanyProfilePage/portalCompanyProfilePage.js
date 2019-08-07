@@ -201,6 +201,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.mapOfValues = localMap;
 
         });
+
+        this.contactsOffset = 0;
+        this.contacts = [];
+        this.getContacts();
     }
 
     renderedCallback() {
