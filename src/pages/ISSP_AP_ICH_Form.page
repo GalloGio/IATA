@@ -453,7 +453,7 @@
             <input id="hidden-input" type="hidden" class="required" required=""/>
 
             <apex:actionFunction name="saveContactController" action="{!saveContact}" rerender="ICHForm" status="WaitingStatus"/>
-            <apex:actionFunction name="saveBSPFormAndGoForward" action="{!saveBSPFormAndGoForward}" rerender="blockButtons" status="WaitingStatus"/>
+            <apex:actionFunction name="saveBSPFormAndGoForward" action="{!saveBSPFormAndGoForward}" rerender="ICHForm" status="WaitingStatus"/>
             <apex:actionFunction name="newContact" action="{!newContact}" rerender="ICHForm" status="WaitingStatus"/>
             <apex:actionFunction name="editContact" action="{!editContact}" rerender="ICHForm" status="WaitingStatus">
                 <apex:param name="contactEndorsement" assignTo="{!selectedContactId}" value=""/>

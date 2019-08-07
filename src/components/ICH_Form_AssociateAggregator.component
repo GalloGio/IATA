@@ -104,25 +104,39 @@
         </apex:outputPanel>
 
         <apex:outputPanel rendered="{!ctrl.newform.Is_publicly_traded_company__c=='No'}">
-            <tr><td colspan="4" class="required"><div class="strong-label">Please attach an scan copy of the following documents:</div></td></tr>
-            <apex:outputText ></apex:outputText>
-            <tr><td colspan="4" class="required">
-                <apex:iframe scrolling="false" height="180px"
-                src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName={!URLENCODE('Certificate Of Registration/Incorporation')}&reqDescription=&reqIdentifier=CertificateRegistration&onlyOne=true"/>
-            </td></tr>
-
-            <apex:outputText ></apex:outputText>
-            <tr><td colspan="4" class="required">
-                <apex:iframe scrolling="false" height="180px"
-                src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName={!URLENCODE('List of shareholders')}&reqDescription={!URLENCODE('Including the percentage of ownership/number of shares owned.')}&reqIdentifier=ShareholdersList&onlyOne=false"/>
-            </td></tr>
-
-            <tr><td colspan="4" class="required"><div class="strong-label">For each shareholders and officer must be provided:</div></td></tr>
-            <apex:outputText ></apex:outputText>
-            <tr><td colspan="4" class="required">
-                <apex:iframe scrolling="false" height="180px"
-                src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information (Excel file)')}&reqDescription={!URLENCODE('Complete legal name, nationality, date of birth and passport number.')}&reqIdentifier=Shareholders_information&onlyOne=false"/>
-            </td></tr>
+            <tr>
+                <td colspan="4">
+                    <div class="strong-label">In addition to the below, if any of the owners/shareholders are a legal entity ICH will require the company registration
+                        and shareholders list for each entity.</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div class="strong-label">Please attach an scan copy of the following documents:</div>
+                </td>
+            </tr>
+            <apex:outputText></apex:outputText>
+            <tr>
+                <td colspan="4" class="required">
+                    <apex:iframe scrolling="false" height="180px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=2&reqRequired=Mandatory&reqName={!URLENCODE('Certificate Of Registration/Incorporation')}&reqDescription=&reqIdentifier=CertificateRegistration&onlyOne=true"
+                    />
+                </td>
+            </tr>
+            <apex:outputText></apex:outputText>
+            <tr>
+                <td colspan="4" class="required">
+                    <apex:iframe scrolling="false" height="190px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName={!URLENCODE('List of shareholders')}&reqDescription={!URLENCODE('It has to be an official document or on company’s letterhead, signed by an officer of the company, company stamped and dated.')}&reqIdentifier=ShareholdersList&onlyOne=false"
+                    />
+                </td>
+            </tr>
+        
+            <apex:outputText></apex:outputText>
+            <tr>
+                <td colspan="4" class="required">
+                    <apex:iframe scrolling="false" height="180px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information (Excel file)')}&reqDescription={!URLENCODE('For each shareholder and officer a copy of their valid passport.')}&reqIdentifier=Shareholders_information&onlyOne=false"
+                    />
+                </td>
+            </tr>
         </apex:outputPanel>
 
         <script>setRequired();</script>
@@ -137,7 +151,7 @@
         </apex:facet>
 
         <tr><td colspan="4">
-            <div class="strong-label">The airline/associate will need to provide some users:</div>
+            <div class="strong-label">The airline/ associate will need to provide the following:</div>
         </td></tr>
 
         <apex:outputPanel rendered="{!!ctrl.isSISMember}">
@@ -149,7 +163,7 @@
                 <div class="blue-label-title">Super User</div>
             </td></tr>
             <tr><td colspan="4">
-                <div class="strong-label">This user will be granted administrator access rights associated to their company’s SIS access for all billing category MISC. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web. After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</div>
+                <div class="strong-label">This user will be granted administrator access rights associated to their company’s SIS membership type. The user will have the ability to create as many users as required and grant appropriate permissions to users in IS-Web. After your company is activated in SIS if you want to change the Super User please log a query in our IATA Customer Portal.</div>
             </td></tr>
         </apex:outputPanel>
 
@@ -205,7 +219,7 @@
             <apex:outputPanel layout="block" styleclass="alert alert-danger" html-role="danger" 
                 rendered="{!AND(!ctrl.isSISMember,!ctrl.isSISSuperUser) || NOT(AND(ctrl.isICHPrimary,ctrl.isICHFinancial,ctrl.isICHAdvice,ctrl.isICHClearConfirmation,ctrl.isICHClearInitialization))}">
                 <ul>
-                    <apex:outputText value="<li>At least one contact must be SIS Super User</li>" rendered="{!AND(!ctrl.isSISMember,!ctrl.isSISSuperUser)}" escape="false"/>
+                    <apex:outputText value="<li>Only one contact must be SIS Super User</li>" rendered="{!AND(!ctrl.isSISMember,!ctrl.isSISSuperUser)}" escape="false"/>
                     <apex:outputText value="<li>At least one contact must be ICH Primary</li>" rendered="{!!ctrl.isICHPrimary}" escape="false"/>
                     <apex:outputText value="<li>At least one contact must be ICH Financial</li>" rendered="{!!ctrl.isICHFinancial}" escape="false"/>
                     <apex:outputText value="<li>At least one contact must be ICH Advice Day Contact</li>" rendered="{!!ctrl.isICHAdvice}" escape="false"/>

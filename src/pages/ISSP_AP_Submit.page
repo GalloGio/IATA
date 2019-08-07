@@ -338,7 +338,7 @@
                     <apex:outputPanel >
                         <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
                         <apex:outputLink value="/ISSP_AP_ICH_Form_PDF?caseId={!newCase.Id}&step=3" style="color:#31708f; text-decoration: underline;" target="_new">
-                            Download PDF Form
+                            Download ICH application Form
                         </apex:outputLink>
                     </apex:outputPanel>
                 </apex:pageBlockSection>

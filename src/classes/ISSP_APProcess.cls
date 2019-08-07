@@ -19,51 +19,51 @@ global without sharing class ISSP_APProcess {
     public static final String ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR = 'Associate Member - Aggregator'; //3
 
     private static final map<String,set<String>> ICH_FORM_ASSIGNATION = new map<String,set<String>>{
-        'Airline|Cargo Only' => new set<String>{
+        'AIRLINE|CARGO ONLY' => new set<String>{
             ICH_TYPE_IATA_MEMBER,ICH_TYPE_NON_IATA_MEMBER,ICH_TYPE_SPONSORED_AIRLINE,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY},
-        'Airline|Passenger and Cargo' => new set<String>{
+        'AIRLINE|PASSENGER AND CARGO' => new set<String>{
             ICH_TYPE_IATA_MEMBER,ICH_TYPE_NON_IATA_MEMBER,ICH_TYPE_SPONSORED_AIRLINE,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY},
-        'Airline|Passenger Only' => new set<String>{
+        'AIRLINE|PASSENGER ONLY' => new set<String>{
             ICH_TYPE_IATA_MEMBER,ICH_TYPE_NON_IATA_MEMBER,ICH_TYPE_SPONSORED_AIRLINE,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY},
-        'Airline|Courier' => new set<String>{
+        'AIRLINE|COURIER' => new set<String>{
             ICH_TYPE_IATA_MEMBER,ICH_TYPE_NON_IATA_MEMBER,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY},
-        'Airline Supplier|Caterer' => new set<String>{
+        'AIRLINE SUPPLIER|CATERER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|Consultancy Firm' => new set<String>{
+        'AIRLINE SUPPLIER|CONSULTANCY FIRM' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|Fuel Supplier' => new set<String>{
+        'AIRLINE SUPPLIER|FUEL SUPPLIER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|Global Distribution System' => new set<String>{
+        'AIRLINE SUPPLIER|GLOBAL DISTRIBUTION SYSTEM' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|Ground Handler' => new set<String>{
+        'AIRLINE SUPPLIER|GROUND HANDLER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|Maintenance, Repair, Overhaul' => new set<String>{
+        'AIRLINE SUPPLIER|MAINTENANCE, REPAIR, OVERHAUL' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|Other' => new set<String>{
+        'AIRLINE SUPPLIER|OTHER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|System Solution Provider' => new set<String>{
+        'AIRLINE SUPPLIER|SYSTEM SOLUTION PROVIDER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|Leasing Company' => new set<String>{
+        'AIRLINE SUPPLIER|LEASING COMPANY' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Airline Supplier|Handling Agent' => new set<String>{
+        'AIRLINE SUPPLIER|HANDLING AGENT' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
         'DPC|DPC' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Equipment Manufacturer|Aircraft Manufacturer' => new set<String>{
+        'EQUIPMENT MANUFACTURER|AIRCRAFT MANUFACTURER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Equipment Manufacturer|Engine Manufacturer' => new set<String>{
+        'EQUIPMENT MANUFACTURER|ENGINE MANUFACTURER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Financial Institution|Airline Global Card Acquirer' => new set<String>{
+        'FINANCIAL INSTITUTION|AIRLINE GLOBAL CARD ACQUIRER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Financial Institution|Lessor' => new set<String>{
+        'FINANCIAL INSTITUTION|LESSOR' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Financial Institution|IATA Head Office' => new set<String>{
+        'FINANCIAL INSTITUTION|IATA HEAD OFFICE' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Financial Institution|IATA Local Office' => new set<String>{
+        'FINANCIAL INSTITUTION|IATA LOCAL OFFICE' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Infrastructer Partner|Railway Line' => new set<String>{
+        'INFRASTRUCTER PARTNER|RAILWAY LINE' => new set<String>{
             ICH_TYPE_IATA_MEMBER,ICH_TYPE_NON_IATA_MEMBER,ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR},
-        'Infrastructer Partner|Courier' => new set<String>{
+        'INFRASTRUCTER PARTNER|COURIER' => new set<String>{
             ICH_TYPE_SPONSORED_ASSOCIATES,ICH_TYPE_ASSOCIATE_MEMBER_SP,ICH_TYPE_ASSOCIATE_MEMBER_SUBSIDIARY,ICH_TYPE_ASSOCIATE_MEMBER_AGGREGATOR}
     };
 
@@ -700,6 +700,7 @@ global without sharing class ISSP_APProcess {
             WHERE AP_Process_Form__c = :this.newForm.Id
             AND RecordTypeId = :PERSON_RT_ID];
         this.isSISSuperUser = false;
+        Integer superUserCount = 0;
         this.isICHPrimary = false;
         this.isICHFinancial = false;
         this.isICHAdvice = false;
@@ -707,7 +708,7 @@ global without sharing class ISSP_APProcess {
         this.isICHClearInitialization = false;
         for (Contact_Endorsement__c contact: this.listContactEndorsement) {
             if (contact.Position__c!=null) {
-                this.isSISSuperUser |= contact.Position__c.contains('SIS Super User');
+                if (contact.Position__c.contains('SIS Super User')) superUserCount++;
                 this.isICHPrimary |= contact.Position__c.contains('ICH Primary Contact');
                 this.isICHFinancial |= contact.Position__c.contains('ICH Financial Contact');
                 this.isICHAdvice |= contact.Position__c.contains('ICH Advice Day Contact');
@@ -715,6 +716,7 @@ global without sharing class ISSP_APProcess {
                 this.isICHClearInitialization |= contact.Position__c.contains('ICH Clearance Initialization Contact');
             }
         }
+        this.isSISSuperUser = superUserCount==1;
     }
 
     public Case retrieveCase(String vCaseId){
@@ -1012,7 +1014,7 @@ global without sharing class ISSP_APProcess {
         try {
             saveBSPForm();
             return goToStep4();
-        } catch (DmlException ex) {
+        } catch (Exception ex) {
             ApexPages.addMessages(ex);
         }
         return null;
@@ -1383,7 +1385,7 @@ global without sharing class ISSP_APProcess {
         if (this.hqaccount.ICH_Member__c) {
             return new list<String>();
         }
-        String key = this.hqaccount.Sector__c + '|' + this.hqaccount.Category__c;
+        String key = (this.hqaccount.Sector__c + '|' + this.hqaccount.Category__c).toUpperCase();
         set<String> setTypes = ICH_FORM_ASSIGNATION.get(key);
         if (setTypes==null) {
             return new list<String>();

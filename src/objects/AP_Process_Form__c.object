@@ -15087,6 +15087,18 @@ OR(
         <errorMessage>Please accept the Terms and Conditions before submitting the Joining Application to IATA.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Derired_Date_to_start_ICH_Lower_than_SIS</fullName>
+        <active>true</active>
+        <description>The field Desired_date_to_start_in_ICH__c can&apos;t be earlier than field Desired_date_to_start_in_SIS__c</description>
+        <errorConditionFormula>AND(
+				NOT(ISBLANK(Desired_date_to_start_in_ICH__c)),
+				NOT(ISBLANK(Desired_date_to_start_in_SIS__c)),
+    Desired_date_to_start_in_ICH__c &lt; Desired_date_to_start_in_SIS__c
+)</errorConditionFormula>
+        <errorDisplayField>Desired_date_to_start_in_ICH__c</errorDisplayField>
+        <errorMessage>Desired Date to start in ICH can&apos;t be earlier than Desired Date to start in SIS</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Russia_Double_Tax_avoiding_Treaty</fullName>
         <active>true</active>
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp; RecordType.DeveloperName==&quot;BSP&quot; &amp;&amp; ISPICKVAL(Case__r.BSPCountry__c, &apos;Russian Federation&apos;) &amp;&amp; ISPICKVAL(BSP_Russia_Double_Tax_avoiding_Treaty__c, &apos;&apos;)</errorConditionFormula>
