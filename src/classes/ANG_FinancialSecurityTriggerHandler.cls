@@ -460,4 +460,41 @@ public class ANG_FinancialSecurityTriggerHandler{
 		calculateFinancialSecuritiesAmounts(false, true);
 	}
 
+	public void updateRhcInformationFSAmounts(Set<Id> accountIds, List<Financial_Security__c> fsLst, Boolean totalFsCalc, Boolean minFsCalc){
+		this.accIdSet = accountIds;
+		this.financialSecurityToProcessLst = fsLst;
+		this.calculateMinFsLst = fsLst;
+		calculateFinancialSecuritiesAmounts(totalFsCalc, minFsCalc);
+	}
+
+	@future
+	public static void triggerFsAmountsRecalculation(Set<Id> accountIds, Boolean totalFsCalc, Boolean minFsCalc){
+
+		List<Financial_Security__c> financialSecurities = new List<Financial_Security__c>(
+			[SELECT 
+				Id, 
+				Amount__c,
+				Account__c, 
+				Security_Status__c,
+				ANG_isToUpdateRHC__c, 
+				ANG_Minimum_Financial_Security__c, 
+				ANG_Financial_Security_Currency__c 
+			 FROM 
+			 	Financial_Security__c 
+			 WHERE 
+			 	Account__c IN :accountIds
+			 AND
+			 	Security_Status__c IN ('Close to Expiry Date','Active')
+			]
+		);
+		
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - updateRhcInformationFSAmounts] Financial Securities - ' + financialSecurities);
+
+		if(!financialSecurities.isEmpty()){
+			ANG_FinancialSecurityTriggerHandler fsth = new ANG_FinancialSecurityTriggerHandler();
+			fsth.updateRhcInformationFSAmounts(accountIds, financialSecurities, totalFsCalc, minFsCalc);
+		}
+
+	}
+    
 }
