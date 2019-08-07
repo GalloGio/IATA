@@ -12,11 +12,11 @@ public with sharing class ANG_AgencyChangesHelper {
 		public List<AMS_OSCAR_JSON.ChangeCode> changeCodesToCreateDef;
 		public List<Account> accountsToApplyChangeCodes;
 		public Set<Id> accountsToRecalculateRHC; 
+		public Set<Id> accountsToRecalculateFsAmounts;
 
 		public Set<Id> accountsChanged;
 
 		public AChangeStructure(){
-
 			relationsMap = new Map<Id, AMS_Agencies_relationhip__c>();
 			accountsMap = new Map<Id, Account>();
 			changeCodesToCreate = new List<Agency_Applied_Change_code__c>();
@@ -25,6 +25,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			changesStruct = new Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 			accountsToApplyChangeCodes = new List<Account>();
 			accountsToRecalculateRHC = new Set<Id>();
+			accountsToRecalculateFsAmounts = new Set<Id>();
 		}
 
 		public void addAccount(Account account){
@@ -47,6 +48,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public void addAccountToRecalculateRHC(Id accountId){
 			accountsToRecalculateRHC.add(accountId);
+		}
+
+		public void addAccountsToRecalculateFsAmounts(Id accountId){
+			accountsToRecalculateFsAmounts.add(accountId);
 		}
 
 		public Boolean runUpsert(){
@@ -94,7 +99,12 @@ public with sharing class ANG_AgencyChangesHelper {
 				recalculateRHCInformation(accountsToRecalculateRHC);
 			}
 
+			if(!accountsToRecalculateFsAmounts.isEmpty()){
+				ANG_FinancialSecurityTriggerHandler.triggerFsAmountsRecalculation(accountsToRecalculateFsAmounts, true, true);
+			}
+
 			return hasUpserted;
+		
 		}
 
 		public void addChangesStruct(Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> changesStruct){
@@ -214,6 +224,13 @@ public with sharing class ANG_AgencyChangesHelper {
 						accountHierarchyRelationships.add(oscar.Account__c);
                 		isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
                         System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
+
+						Account acct = changesContainer.accountsMap.get(oscar.Account__c);
+
+						if(acct.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include All AEs'){
+							changesContainer.addAccountsToRecalculateFsAmounts(currHEAccount);
+							changesContainer.addAccountsToRecalculateFsAmounts(oscar.New_Parent__c);
+						}
 					}
 					
 					changesContainer = processHierarchyChangesAux(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected,allRelationsOnHierarchy);
@@ -1412,7 +1429,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Covered_Ownership__c, Financial_Assessment_Points__c
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Covered_Ownership__c, Financial_Assessment_Points__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 

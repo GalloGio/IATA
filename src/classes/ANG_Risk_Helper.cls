@@ -250,7 +250,7 @@ public with sharing class ANG_Risk_Helper{
 		accIdSet = new Set<ID>();
 		//list of HE Accounts to be used when get the RHC Information currency (only He accounts have RHC)
 		for(Account acc : mapAccount.values()){
-			if(acc.Location_Type__c == AMS_Utils.HE) accIdSet.add(acc.id);
+			if(acc.Location_Type__c == AMS_Utils.HE || !acc.ANG_isNewGenAgency__c) accIdSet.add(acc.id);
 			else accIdSet.add(acc.ParentId);
 		}
 
@@ -259,7 +259,7 @@ public with sharing class ANG_Risk_Helper{
 		for(Financial_Security__c fs:fsList){
 			//Get parent account Id to match with RHC Information object
 			Account acct = mapAccount.get(fs.Account__c);
-			Id accountId = acct.Location_Type__c == AMS_Utils.HE ? fs.account__c : acct.ParentId;
+			Id accountId = (acct.Location_Type__c == AMS_Utils.HE || !acct.ANG_isNewGenAgency__c) ? fs.account__c : acct.ParentId;
 			String targetoCurIso = accCurMap.get(accountId);
 			Decimal convertedValue=ANG_Risk_Helper.currencyConverter(fs.CurrencyIsoCode,fs.Amount__c,targetoCurIso==null?fs.CurrencyIsoCode:targetoCurIso);
 			if(fs.ANG_ConvertedAmount__c != convertedValue){

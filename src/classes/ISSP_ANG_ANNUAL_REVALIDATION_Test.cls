@@ -33,8 +33,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		insert account;
 
-		System.debug('ola. ' + account);
-
 		Account child = ISSP_ObjectFactory.createNewAccount();
         child.BillingCity = 'test';
         child.Name = 'test child';
@@ -182,7 +180,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		AMS_Accreditation_Country_CheckList__c aacc = [SELECT Id, IATA_ISO_Country__c, Operation__c
 													FROM AMS_Accreditation_Country_CheckList__c
 													WHERE Operation__c = 'Travel Agent'];
-
+		insert new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
+		
 		Account account;
 		Account child;
 
@@ -407,6 +406,10 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact = new AMS_Accreditation_Contact__c();
 		ctrl.contactType = 'Person';
         ctrl.amsContactCountry = 'Country';
+
+        System.currentPageReference().getParameters().put('countryName', 'test');
+
+        ctrl.getContactStates();
         
 		ctrl.createAgencyContact();
 
@@ -455,6 +458,17 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.currentAccount.fw.newform.Account_Name__c = '中文';
 		ctrl.currentAccount.fw.newform.Trade_Name__c = '中文';
+
+		ctrl.currentAccount.fw.newform.Branch_Office_Postal_code__c = '中文';
+		ctrl.currentAccount.fw.newform.Website__c = '中文';
+		ctrl.currentAccount.fw.newform.Branch_Office_Email__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_State__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Postal_Code__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Country__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_City__c = '中文';
+		ctrl.currentAccount.fw.newform.Shipping_Street__c = '中文';
+		ctrl.currentAccount.fw.newform.Branch_Office_Street_name_number__c = '中文';
+
 		ctrl.currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c = null;
 		ctrl.currentAccount.isocountry.Tax_Number_VAT_field_mandatory__c = true;
         ctrl.currentAccount.isocountry.Tax_Number_2_VAT_field_2_mandatory__c = true;

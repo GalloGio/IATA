@@ -95,10 +95,10 @@ public class ANG_FinancialSecurityTriggerHandler{
 	private Map<Id, Account> fetchAccountsInformation(Set<Id> accIdSet, Boolean fetchFromParents){
 		Set<String> fsActiveStatus = ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET;
 		String accountsQuery = '' +
-			'SELECT Id, ParentId, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
+			'SELECT Id, ParentId, ANG_isNewGenAgency__c, Location_Type__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.ANG_RHC_LocationType__c, ' +
 			' (SELECT Id, CurrencyIsoCode FROM RHC_Informations__r), ' +
 			' (SELECT Id, Amount__c, Account__c, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, ANG_Minimum_Financial_Security__c, ANG_Financial_Security_Currency__c FROM Financial_Securities__r ORDER BY LastModifiedDate DESC) ' +
-			'FROM Account WHERE ANG_isNewGenAgency__c = TRUE AND ( Id IN :accIdSet';
+			'FROM Account WHERE ( Id IN :accIdSet';
 
 		if(fetchFromParents){
 			accountsQuery += ' OR ParentId IN :accIdSet ';
@@ -298,6 +298,8 @@ public class ANG_FinancialSecurityTriggerHandler{
 
 			Account acct = this.accountsMap.get(fs.Account__c);
 
+			if(!acct.ANG_isNewGenAgency__c) continue;
+
 			//If the related country has RHC LocationType = 'Include all AEs'
 			//the Minimum Financial Security amount considers 
 			//the aggregated amounts for each head entity (parent)
@@ -458,4 +460,41 @@ public class ANG_FinancialSecurityTriggerHandler{
 		calculateFinancialSecuritiesAmounts(false, true);
 	}
 
+	public void updateRhcInformationFSAmounts(Set<Id> accountIds, List<Financial_Security__c> fsLst, Boolean totalFsCalc, Boolean minFsCalc){
+		this.accIdSet = accountIds;
+		this.financialSecurityToProcessLst = fsLst;
+		this.calculateMinFsLst = fsLst;
+		calculateFinancialSecuritiesAmounts(totalFsCalc, minFsCalc);
+	}
+
+	@future
+	public static void triggerFsAmountsRecalculation(Set<Id> accountIds, Boolean totalFsCalc, Boolean minFsCalc){
+
+		List<Financial_Security__c> financialSecurities = new List<Financial_Security__c>(
+			[SELECT 
+				Id, 
+				Amount__c,
+				Account__c, 
+				Security_Status__c,
+				ANG_isToUpdateRHC__c, 
+				ANG_Minimum_Financial_Security__c, 
+				ANG_Financial_Security_Currency__c 
+			 FROM 
+			 	Financial_Security__c 
+			 WHERE 
+			 	Account__c IN :accountIds
+			 AND
+			 	Security_Status__c IN ('Close to Expiry Date','Active')
+			]
+		);
+		
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_FinancialSecurityTriggerHandler - updateRhcInformationFSAmounts] Financial Securities - ' + financialSecurities);
+
+		if(!financialSecurities.isEmpty()){
+			ANG_FinancialSecurityTriggerHandler fsth = new ANG_FinancialSecurityTriggerHandler();
+			fsth.updateRhcInformationFSAmounts(accountIds, financialSecurities, totalFsCalc, minFsCalc);
+		}
+
+	}
+    
 }
