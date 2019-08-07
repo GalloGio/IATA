@@ -69,6 +69,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Customer_Type__c</fields>
+        <fields>Customer_Number__c</fields>
         <relatedList>UIS_Account_Role_Details__c.Account_Role__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

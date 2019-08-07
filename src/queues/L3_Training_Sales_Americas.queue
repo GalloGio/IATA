@@ -3,10 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3-Training-Sales-Americas</name>
     <queueMembers>
-        <users>
-            <user>solorzanoj@iata.org</user>
-            <user>rinon@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>L3_Training_Sales_Americas</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
