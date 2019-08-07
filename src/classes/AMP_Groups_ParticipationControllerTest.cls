@@ -28,10 +28,10 @@ private class AMP_Groups_ParticipationControllerTest {
 			// Create an Airline HQ account
 			Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 			
-			Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
-			RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
+			Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', Sector__c = AMS_Utils.SECTOR_AIRLINE,
+                                        Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY, RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
 
-			Account a = new Account(name='testAccount', RecordTypeId=AirlineHQ_RT_Id);
+			Account a = new Account(name='testAccount', RecordTypeId=AirlineHQ_RT_Id, Sector__c = AMS_Utils.SECTOR_AIRLINE, Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY);
 			
 			insert new List<Account>{ acct_hq, a};
 
