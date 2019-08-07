@@ -10475,6 +10475,16 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Number_of_Authorized_Signatory__c</fullName>
+        <description>Counts the number of occurrences in Authorized Signatory.</description>
+        <externalId>false</externalId>
+        <label>Number of Authorized Signatory</label>
+        <summaryForeignKey>Authorized_Signatory__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>OPS_Customer_ID__c</fullName>
         <externalId>false</externalId>
         <label>Customer ID</label>
@@ -20174,24 +20184,24 @@ $Profile.Name &lt;&gt; &quot;System Administrator&quot;
     <validationRules>
         <fullName>Change_id_card_holder_account_name</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(
+        <errorConditionFormula>AND( 
 
 
-ID_Card_Holder__c=true,
+ID_Card_Holder__c=true, 
 
-ISCHANGED(AccountId),
+ISCHANGED(AccountId), 
 
-NOT(ISBLANK(PRIORVALUE(AccountId))),
-				
-				or(
-	 $User.Profile_Name__c &lt;&gt;  &quot;IDFS Passenger - Distribution Solutions&quot;,
-		$UserRole.Name  &lt;&gt;   &quot;IDO Industry Solutions&quot;												
-								)		,						
+NOT(ISBLANK(PRIORVALUE(AccountId))), 
+
+or( 
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
+)	,	
 or( 
 $User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
 $UserRole.Name &lt;&gt; &quot;GDP&quot; 
-)
-				
+) 
+
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. please raise an internal case to ID Card team to move the contact to another account</errorMessage>
     </validationRules>
@@ -20199,12 +20209,18 @@ $UserRole.Name &lt;&gt; &quot;GDP&quot;
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-			
-				or(
-	 $User.Profile_Name__c &lt;&gt;  &quot;IDFS Passenger - Distribution Solutions&quot;,
-		$UserRole.Name  &lt;&gt;   &quot;IDO Industry Solutions&quot;												
-								),				
 ID_Card_Holder__c=true,
+
+				or( 
+$User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
+$UserRole.Name &lt;&gt; &quot;GDP&quot; 
+),
+				
+				or(
+$User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;,
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot; 
+) ,
+				
 	Or(			
 					and(
 ISCHANGED(LastName),
@@ -20277,6 +20293,39 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <errorConditionFormula>AND(ISCHANGED( Email_Status__c ), OR( Email_Status_Update__c    &lt;    TODAY(), ISNULL( Email_Status_Update__c  )))</errorConditionFormula>
         <errorDisplayField>Email_Status_Update__c</errorDisplayField>
         <errorMessage>Email Status has been modified, please enter update date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Has_Authorized_Signatory_External</fullName>
+        <active>true</active>
+        <description>External users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
+        <errorConditionFormula>AND(
+  Number_of_Authorized_Signatory__c &gt; 0,
+  OR(
+   ISCHANGED( FirstName ),
+   ISCHANGED( LastName ),
+   ISCHANGED( Email )  
+ ),
+  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+    NOT( ISPICKVAL($User.UserType, &quot;Standard&quot; )),
+   $User.ToU_accepted__c = TRUE
+)</errorConditionFormula>
+        <errorMessage>Please be aware that this is an airline signatory contact and that changes to them have to be done by IATA for security reasons. Please log a query on the CS portal.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Has_Authorized_Signatory_Internal</fullName>
+        <active>true</active>
+        <description>Internal users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
+        <errorConditionFormula>AND(
+  Number_of_Authorized_Signatory__c &gt; 0,
+  OR(
+   ISCHANGED( FirstName ),
+   ISCHANGED( LastName ),
+   ISCHANGED( Email )  
+ ),
+  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+    ISPICKVAL($User.UserType, &quot;Standard&quot; )
+)</errorConditionFormula>
+        <errorMessage>This is an Authorized Signatory contact so you can’t modify first name, last name or email address. Please contact Airline Participation team.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>ID_card_Holder_no_change</fullName>
