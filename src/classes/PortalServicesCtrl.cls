@@ -48,6 +48,9 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	portalApplicationList.addAll(requestableAppList);
 
 	for (Portal_Applications__c pApp: portalApplicationList) {
+		if(pApp.Name.contains('Paypal') && pApp.VisibleCNS__c) {
+			continue;
+		}		
 		if((pApp.Name == 'Trained Staff Certification' || pApp.Name == 'Local Industry Groups') && con.User_Portal_Status__c != PORTAL_ADMIN_APPROVED) {
 			continue;
 		}
