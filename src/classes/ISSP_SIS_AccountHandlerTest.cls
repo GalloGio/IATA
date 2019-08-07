@@ -285,8 +285,8 @@ private class ISSP_SIS_AccountHandlerTest {
         insert account;
         
         Test.startTest();
-        account.Sector__c = 'Airline';
-        account.Category__c = 'CASS Associate';
+        account.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+        account.Category__c = AMS_Utils.CATEGORY_CASSASSOCIATE;
         update account;
         Test.stopTest();
     }
