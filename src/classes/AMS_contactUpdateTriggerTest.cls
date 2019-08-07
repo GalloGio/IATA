@@ -5,7 +5,7 @@ private class AMS_contactUpdateTriggerTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Account acc = new Account(type = 'IATA Passenger Sales Agent', Location_Class__c = 'R', IATA_ISO_Country__c = isoc.id,Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', AIMS_ID__c = '12345678', Is_AIMS_Account__c = true,Location_Type__c = 'HO');
+        Account acc = new Account(type = 'IATA Passenger Sales Agent', Sector__c = AMS_Utils.SECTOR_PASSENGER ,Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT ,Location_Class__c = 'R', IATA_ISO_Country__c = isoc.id,Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', AIMS_ID__c = '12345678', Is_AIMS_Account__c = true,Location_Type__c = 'HO');
         insert acc;
 
         Contact c1 = new Contact(AccountId = acc.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test1@test.com',
