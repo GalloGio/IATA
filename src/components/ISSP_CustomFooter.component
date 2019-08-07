@@ -83,7 +83,7 @@ font-size:85%;
                 });
         });
     </script>
-    <div id="footerBar" />
+    <div id="footerBar" style="float: left; width: 100%; margin-top: -100px;"/>
 </apex:outputPanel>
 
 <apex:outputPanel rendered="{!NOT(isPortalNavigationBar)}">
