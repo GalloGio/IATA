@@ -28,22 +28,14 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 	}
 
 	public Set<String> accountFields{
-		//DO NOT include Id on this Set
 		get{
 			if(accountFields == null){
-				accountFields = new Set<String>{
-					 'Name'
-					,'IATA_ISO_Country__r.Name'
-					,'IATA_ISO_Country__r.AMS_Settlement_System__r.Name'
-					,'BillingCity'
-					,'BillingAddress'
-					,'Location_type__c'
-					,'Category__c'
-					,'BillingStreet'
-					,'BillingPostalCode'
-					,'IATACODE__c'
-					,'Status__c'
-				};
+				accountFields = new Set<String>();
+				Map<String, Schema.SObjectField> schemaFieldMapAccounts = Account.sObjectType.getDescribe().fields.getMap();
+				for (String field : schemaFieldMapAccounts.keySet()){
+					accountFields.add(field);
+				}
+				accountFields.add('IATA_ISO_Country__r.Name');
 			}
 			return accountFields;
 		}
@@ -169,14 +161,23 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		set;
 	}
 
+	public Map<Id, Account> mapHierarchyAccounts{
+		get{
+			if(mapHierarchyAccounts == null){
+				Id accountId = oscar.Account__c;
+				mapHierarchyAccounts = new Map<Id, Account>((List<Account>)Database.query('SELECT ' + String.join(accountFieldList, ',') + ', IATA_ISO_Country__r.AMS_Settlement_System__r.Name FROM Account WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name'));
+			}
+			return mapHierarchyAccounts;
+		}
+		set;
+	}
+
 	public Map<String, List<HierarchyItem>> hierarchy{
 		get{
 			if(hierarchy == null) {
 				hierarchy = new Map<String, List<HierarchyItem>>();
 
-				Id accountId = oscar.Account__c;
-
-				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name')){
+				for(Account a : mapHierarchyAccounts.values()){
 					Boolean main = (a.Id == oscar.Account__c);
 					if(a.Location_Type__c == null){
 						a.Location_Type__c = AMS_Utils.AE;
@@ -358,6 +359,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					caseToUpdate = new Case(Id = accreditationForm.SAAM_Case__c);
 					caseToUpdate.AccountId = oscar.Account__c;
 					accreditationForm.HO_Account__c = oscar.Account__c;
+					Account account = mapHierarchyAccounts.get(oscar.Account__c);
+					Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(account);
+					accreditationForm.Account_Name__c = account.Name;
+					accreditationForm = (AMS_Pax_Accreditation_Form__c)ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
 				}
 
 				update oscar;
