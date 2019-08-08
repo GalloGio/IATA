@@ -363,7 +363,8 @@ private class ANG_LocalFinancialCriteriaTest {
         	IATA_ISO_Country__c = countrySG.Id,
         	Location_Class__c = 'P',
         	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A'
+        	ANG_HE_RiskStatus__c = 'A',
+            ANG_Accreditation_Model__c = 'Cash'
         );
 
 		Account agentHK = new Account(
@@ -375,7 +376,8 @@ private class ANG_LocalFinancialCriteriaTest {
         	IATA_ISO_Country__c = countryHK.Id,
         	Location_Class__c = 'P',
         	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A'
+        	ANG_HE_RiskStatus__c = 'A',
+            ANG_Accreditation_Model__c = 'Cash'
         );
 
 		Account agentMO = new Account(
@@ -387,7 +389,8 @@ private class ANG_LocalFinancialCriteriaTest {
         	IATA_ISO_Country__c = countryMO.Id,
         	Location_Class__c = 'P',
         	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A'
+        	ANG_HE_RiskStatus__c = 'A',
+            ANG_Accreditation_Model__c = 'Cash'
         );
 
 		Account agentFR = new Account(
@@ -399,7 +402,8 @@ private class ANG_LocalFinancialCriteriaTest {
         	IATA_ISO_Country__c = countryFR.Id,
         	Location_Class__c = 'P',
         	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A'
+        	ANG_HE_RiskStatus__c = 'A',
+            ANG_Accreditation_Model__c = 'Cash'
         );
         
         insert new List<Account>{agentSG, agentHK, agentMO, agentFR};
@@ -636,19 +640,16 @@ private class ANG_LocalFinancialCriteriaTest {
         test.startTest();
         
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = acct.Id
+			ANG_AccountId__c = acct.Id, 
+            CurrencyIsoCode = 'EUR',
+            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+            RHC_Amount_Equals_FS_Percent__c = 214
 		);
 
 		insert rhcInfo;
         
       	Financial_Security__c fs = createFinancialData(acct.Id);
         
-        rhcInfo.CurrencyIsoCode = 'EUR';
-		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
-		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 214;
-        
-        update rhcInfo;
-
 		ANG_RHC_Information__c rhcUpdated = 
 			[SELECT 
 				ANG_RHC_Amount__c, 
