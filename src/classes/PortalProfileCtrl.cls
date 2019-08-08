@@ -511,7 +511,13 @@ public with sharing class PortalProfileCtrl {
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
 
-        List<String> toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
+        List<String> toRow;
+
+        if(rType == 'IATA_Agency' && myContact.Account.Status__c != AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) {
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
+        }else{
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LastLogin'};
+        }
         Map<String,String> fieldLabels = new Map<String,String>();
 
         FieldWrapper fw;
