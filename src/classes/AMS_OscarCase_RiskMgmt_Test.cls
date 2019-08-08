@@ -895,12 +895,12 @@ private class AMS_OscarCase_RiskMgmt_Test {
             system.assert(e.getMessage().contains('This field is only available for China HE\'s Financial Security non-compliance'), 'The exception message should be: \'This field is only available for China HE\'s Financial Security non-compliance\'');
         }
 
+        AMS_OscarCase_RiskMgmt.EndRun();
+
         cse.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
         cse.Group_Single_Agent__c = 'Group';
 
         update cse;
-
-        AMS_OscarCase_RiskMgmt.EndRun();
 
         List<Agency_applied_change_code__c> changeCodeLst = new List<Agency_applied_change_code__c>(
             [SELECT
