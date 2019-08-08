@@ -9,6 +9,8 @@ public class ANG_RHCInformationTriggerHandler{
 	public Map<Id, ANG_RHC_Information__c> newMap = (Map<Id,ANG_RHC_Information__c>) Trigger.newMap;
 	public Map<Id, ANG_RHC_Information__c> oldMap = (Map<Id,ANG_RHC_Information__c>) Trigger.oldMap;
 
+	public static Boolean skipConvertAndSumFSAmounts = false;
+
 	// ************************************************************
 	// ****************** distribution methods ********************
 	// ************************************************************
@@ -66,6 +68,13 @@ public class ANG_RHCInformationTriggerHandler{
 	}
 
 	private void convertAndSumFS(){
+		
+		//In case of rollback RHC record for countries that 
+		//have the flag RHC Location Type == 'Include All AEs'
+		if(skipConvertAndSumFSAmounts){
+			return;
+		}
+
 		set<id> accIdSet = new set<id>();		
 		map<id,ANG_RHC_Information__c> accRhcMap = new map<id,ANG_RHC_Information__c>();
 		for(ANG_RHC_Information__c rhc:triggerNew){
