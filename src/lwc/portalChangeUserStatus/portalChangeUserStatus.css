@@ -6,3 +6,7 @@
   width: 100%;
   white-space: normal;
 }
+
+.wrapContent {
+  flex: auto;
+}
