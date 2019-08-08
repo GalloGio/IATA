@@ -169,71 +169,71 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Check --></label>
+        <label>Non siamo in grado di verificare l&apos;indirizzo nella posizione specificata.</label>
         <name>AMS_DQ_Cannot_Check</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Find --></label>
+        <label>Non è stato possibile trovare l&apos;indirizzo. Se è certo di aver inserito correttamente i dati, può immetterli ugualmente.</label>
         <name>AMS_DQ_Cannot_Find</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City --></label>
+        <label>Non possiamo convalidare l&apos;indirizzo senza una città {0}. Si prega di compilare il campo.</label>
         <name>AMS_DQ_Cannot_Validate_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <label>Non possiamo convalidare l&apos;indirizzo senza una città {0} e una via. Si prega di compilare il campo.</label>
         <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <label>Non possiamo convalidare l&apos;indirizzo senza una via {0}. Si prega di compilare il campo.</label>
         <name>AMS_DQ_Cannot_Validate_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Check Addr --></label>
+        <label>Controlli l&apos;indirizzo</label>
         <name>AMS_DQ_Check_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Cumpulsory --></label>
+        <label>Il campo città {0} è obbligatorio. Si prega di compilare il campo città {1}.</label>
         <name>AMS_DQ_City_Cumpulsory</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Not in Database --></label>
+        <label>La città {0} non è nel nostro database (o è stata scritta in modo diverso).</label>
         <name>AMS_DQ_City_Not_in_Database</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another Country --></label>
+        <label>La città {0} è nel nostro database ma, apparentemente, appartiene a un altro paese secondo il nostro database.</label>
         <name>AMS_DQ_City_in_Another_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another State --></label>
+        <label>La città {0} è nel nostro database ma è associata a un altro stato/provincia.</label>
         <name>AMS_DQ_City_in_Another_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Enter Valid City --></label>
+        <label>Inserisca una città valida.</label>
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Found Addr --></label>
+        <label>Indirizzo/i corrispondente/i trovato/i.</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review City --></label>
+        <label>Controlli il nome della città. Se è certo di aver inserito correttamente i dati, faccia clic su &quot;Invia&quot;.</label>
         <name>AMS_DQ_Review_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review Country or City --></label>
+        <label>Controlli il nome del paese e/o della città. Se è certo di aver inserito correttamente i dati, faccia clic su &quot;Invia&quot;.</label>
         <name>AMS_DQ_Review_Country_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State --></label>
+        <label>Controlli stato/provincia e/o nome della città.</label>
         <name>AMS_DQ_Review_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State or City --></label>
+        <label>Controlli stato/provincia e/o nome della città. Se è certo di aver inserito correttamente i dati, faccia clic su &quot;Invia&quot;.</label>
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Street Compulsory --></label>
+        <label>Il campo via {0} è obbligatorio. Si prega di compilare il campo della via {1}.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
@@ -1465,7 +1465,7 @@ la seguente procedura per completarlo :
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>Si prega di validare l&apos;indirizzo di fatturazione e quello di consegna cliccando sull&apos;icona &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <label>Controlli i suoi indirizzi di fatturazione e spedizione facendo clic sul pulsante di controllo dell&apos;indirizzo.</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1887,6 +1887,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Paesi di pubblicazione</label>
         <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
     </customLabels>
     <customLabels>
         <label>Contattaci</label>
@@ -2549,6 +2553,10 @@ la seguente procedura per completarlo :
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -2579,6 +2587,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -17852,6 +17864,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
         <label>Notifica</label>
         <name>Notification</name>
     </customLabels>
@@ -19773,6 +19789,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- ShoppingCartQtyMsg --></label>
         <name>ShoppingCartQtyMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
     </customLabels>
     <customLabels>
         <label><!-- SignIn --></label>
