@@ -5,7 +5,6 @@ import { navigateToPage } from 'c/navigationUtils';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
-import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -14,9 +13,6 @@ import AddDocumentsMsg from '@salesforce/label/c.CSP_No_Documents_Message';
 import DocumentsLabel from '@salesforce/label/c.ISSP_Documents';
 import CaseDetails from '@salesforce/label/c.IDCard_CaseDetails';
 import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLabel';
-import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
-import Open from '@salesforce/label/c.Open';
-
 
 /* PDF Labels */
 import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PDF_Copy';
@@ -31,7 +27,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track caseDetails;
     @track caseId;
     @track optionBuilder;
-    @track surveyLink;
 
     @track pdfImage = PDFICON;
 
@@ -46,9 +41,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         DocumentsLabel,
         RelatedAccount,
         ISSP_AMS_Download_PDF_Copy,
-        ISSP_AMS_Download_PDF_NOC,
-	ISSP_Survey,
-        Open
+        ISSP_AMS_Download_PDF_NOC
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
@@ -71,7 +64,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                         });
 
                     this.loading = false;
-                    this.getSurveyLink();
                 })
                 .catch(error => {
                     console.log('error: ', error);
@@ -137,9 +129,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     get showNrDocs() {
         return this.nrDocs > 0;
-    }
-    get hasSurveyLink() {
-        return this.surveyLink !== undefined && this.surveyLink.length > 0;
     }
 
     get hasAccount() {
@@ -264,16 +253,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     handleClick() {
         //display modal on attachment component
         this.showAddDocsModal = true;
-    }
-
-    getSurveyLink(){
-        getSurveyLink({ caseId: this.caseId })
-            .then(result => {
-                this.surveyLink = result;
-            })
-            .catch(error => {
-                this.surveyLink = undefined;
-            });
     }
 
 }
