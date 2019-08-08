@@ -387,5 +387,7 @@ private class PortalCasesCtrlTest {
             Case__c = newCase4.Id
         );
         insert apForm;
+
+        PortalCasesCtrl.OptionWrapper opBuilder = PortalCasesCtrl.optionBuilder(newCase4);
     }
 }

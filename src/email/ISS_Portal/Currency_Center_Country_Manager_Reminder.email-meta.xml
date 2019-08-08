@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Every 5th day of every month an email reminder will be sent to the country manager, to request update of facts and figures (review and edit economic profile)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>ISS_Portal_Letterhead</letterhead>
+    <name>Currency Center Country Manager Reminder</name>
+    <style>freeForm</style>
+    <subject>Currency Center Country Manager Reminder</subject>
+    <textOnly>Dear [ Name of the Country Manager ],
+
+Kindly ensure you that reviewed and updated the Currency Center with regards to country updates and additional information you may have.
+
+Your last update for [Country] was [ Date ]
+
+As a reminder, please be aware that you are able to update the Currency Center at all times with relevant country information and over [Number of users] airline users connect to the Currency Center for information when it comes to currency repatriation and IATA activities.
+
+Kind regards
+Currency Center Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

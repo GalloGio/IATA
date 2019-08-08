@@ -348,6 +348,9 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>Custom_New</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
