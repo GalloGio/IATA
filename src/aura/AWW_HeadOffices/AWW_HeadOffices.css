@@ -1,3 +1,23 @@
 .THIS .bckColor{
     background: inherit !important;
 }
+
+.THIS .pagination-btn {
+    width: 100px;
+}
+
+.THIS .pagination-info input {
+    text-align: center;
+}
+
+.THIS .rows_per_page {
+    width: 60px;
+}
+
+.THIS .rows_per_page > label {
+    display: none;
+}
+
+.THIS .selected{
+    color:orange;
+}
