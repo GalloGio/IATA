@@ -338,9 +338,10 @@ public with sharing class AMS_AccountRoleCreator
 
         //upsert roles
         listClonesRoles.addAll(rolesToUpsert.values());
-        isAccountRoleCreationRunning = true;
-        upsert listClonesRoles;
-        isAccountRoleCreationRunning = false;
+        if(!listClonesRoles.isEmpty()){
+            isAccountRoleCreationRunning = true;
+            upsert listClonesRoles;
+        }
 
         // fill the accreditation contacts with the new roles ids
         for(AMS_Account_Role__c roleAfterUpsert : listClonesRoles) {
