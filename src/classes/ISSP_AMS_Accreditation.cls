@@ -1282,7 +1282,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         } else if (sectorValue.StartsWith('Travel_Agent')) { //User has selected Travel in STEP A
 
-            if (isHOAccredited && con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) { //And this is an Accredited PAX Agent
+            if (isHOAccredited && (con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) || (con.Account.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT && AMS_Utils.setDomesticCountries.contains(isocountry.ISO_Code__c))) { //And this is an Accredited PAX Agent
 
                 if(!getIsAccreditationModelNotNullOrLegacy()){
                     options.add(new SelectOption(AMS_Utils.TYPE_PAX_BRANCH_L, Label.ISSP_AMS_OPTION_PAX_BRANCH));

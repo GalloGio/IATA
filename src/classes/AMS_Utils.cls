@@ -135,6 +135,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
 
     public static final Set<String> setChinaCountries = new Set <String>{'CN'};
+    public static final Set<String> setDomesticCountries = new Set<String>{'CN', 'ID'};
 
 
     //other types of process
