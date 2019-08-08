@@ -311,9 +311,7 @@
 					<aura:if isTrue="{!v.cityInAnotherStateBilling}">
 						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!$Label.c.AMS_DQ_Review_State}</span>
 					</aura:if>
-					<aura:if isTrue="{!v.cityFirstSuggestionBilling}">
-						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!format($Label.c.AMS_DQ_First_Suggestion, v.suggestionBilling)}</span>
-					</aura:if>
+					<span id="firstSuggestionBilling" class="slds-hide"><lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!format($Label.c.AMS_DQ_First_Suggestion, v.suggestionBilling)}</span></span>
 				</div>
 				
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingStreet}</label>
@@ -444,9 +442,7 @@
 					<aura:if isTrue="{!v.cityInAnotherStateShipping}">
 						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!$Label.c.AMS_DQ_Review_State}</span>
 					</aura:if>
-					<aura:if isTrue="{!v.cityFirstSuggestionShipping}">
-						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!format($Label.c.AMS_DQ_First_Suggestion, v.suggestionShipping)}</span>
-					</aura:if>
+					<span id="firstSuggestionShipping" class="slds-hide"><lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!format($Label.c.AMS_DQ_First_Suggestion, v.suggestionShipping)}</span></span>
             </div>
 			
             <div class="slds-form-element slds-m-bottom_small">

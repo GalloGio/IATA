@@ -37,7 +37,6 @@
             c.set("v.citiesShipping", c.get("v.citiesBilling"));
             c.set("v.allCitiesShipping", c.get("v.allCitiesBilling"));
             c.set("v.idAndAlternateNamesShipping", c.get("v.idAndAlternateNamesBilling"));
-           // c.set("v.stateNameIdShipping", c.get("v.stateNameIdBilling"));
             c.set("v.cityNameIdShipping", c.get("v.cityNameIdBilling"));
             c.set("v.hierarchyCitiesShipping", c.get("v.hierarchyCitiesBilling"));
             c.set("v.shippingCityId", c.get("v.billingCityId"));
@@ -201,14 +200,19 @@
     },
     
     clearWarnings: function(c,e,h,m){     
-        
-        c.set('v.cityFirstSuggestion'+m,false);
+                
         c.set('v.cityDoesNotExist'+m, false);
         c.set('v.cityInAnotherState'+m, false);
         c.set('v.'+m+'CityEmpty', false);
         c.set('v.'+m+'StreetEmpty', false);
         c.set('v.'+m+'CityStreetEmpty', false);
         c.set('v.validationError', false);
+        if(c.get('v.cityFirstSuggestion'+m)){
+            c.set('v.cityFirstSuggestion'+m, false);
+        }else{
+            var warningElement = document.getElementById("firstSuggestion"+m);
+            warningElement.classList.add("slds-hide");
+        }
     },
     
     clearContextLabelWarnings: function(c,e,h, m){
@@ -231,38 +235,22 @@
             let idAndAlternateNames = res.idAndAlternateNames;             
             let stateCities = {};
             let allCities = [];
-            //let stateNameId = {};
-            //let cityNameId = {};
             
             for(var i = 0; i < states.length; i++){
                 fetchedStates.push(states[i].Name);
                 stateCities[states[i].Name] = states[i].IATA_ISO_Cities__r;                
                 allCities.push(states[i].IATA_ISO_Cities__r);                
-                //stateNameId[states[i].Name] = states[i];
+            
             }
             
             let allCitiesMerged = [].concat.apply([], allCities);            
-             /* let name = '';
-            let id;
-            for(var j = 0; j < allCitiesMerged.length; j++){
-
-                if(allCitiesMerged[j]){
-                    
-                    id = allCitiesMerged[j];
-                    name  = allCitiesMerged[j].Name;
-
-                    cityNameId[name] = id;
-                }            
-            }*/
-            
+           
             stateCities["All"] = allCitiesMerged;
             
             c.set('v.cities'+m, stateCities);
             c.set('v.states'+m, fetchedStates);
             c.set('v.allCities'+m, allCitiesMerged);
             c.set('v.idAndAlternateNames'+m, idAndAlternateNames);
-            //c.set('v.stateNameId'+m, stateNameId);
-            //c.set('v.cityNameId'+m, cityNameId);
             h.setCities(c, null, h, m);            
         });
         
@@ -284,7 +272,7 @@
     },
     
     checkCountryStates: function(c, e, h, m, cn){
-        c.set("v.countryHasStates"+m, false)
+        c.set("v.countryHasStates"+m, false);
         c.set('v.account.'+m+'State', null);
         
         //country has states
@@ -299,8 +287,7 @@
             c.set('v.cities'+m, null);
             c.set('v.states'+m, null);
             c.set('v.allCities'+m, null);
-            c.set('v.idAndAlternateNames'+m, null);
-            //c.set('v.stateNameId'+m, null);
+            c.set('v.idAndAlternateNames'+m, null);            
             c.set('v.cityNameId'+m, null);
         }
     },
@@ -319,6 +306,8 @@
         let predictions = c.get('v.predictions'+m);
         if(!(currentState?true:false) && predictions.length > 0) {
             c.set('v.cityFirstSuggestion'+m,true);
+            var warningElement = document.getElementById("firstSuggestion"+m);
+            warningElement.classList.remove("slds-hide");
             let hierarchyCities = c.get('v.hierarchyCities'+m);
             c.set('v.suggestion'+m,predictions[0]);
             let selectedHierarchy = predictions[0].toLowerCase();        
