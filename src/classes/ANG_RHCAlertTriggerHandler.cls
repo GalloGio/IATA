@@ -877,7 +877,10 @@ public class ANG_RHCAlertTriggerHandler{
         
         List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
 
-        List<String> toAddresses = new List<String>();
+        Set<String> toAddresses = new Set<String>();
+        Set<Email> toAddressesNoUsers = new Set<Email>();
+        Set<Id> toAddressesUsers = new Set<Id>();
+        Map<String, Id> targetedUsers = new Map<String, Id>();
         List<RTS_Senior_Manager__c> sManagersRed = RTS_Senior_Manager__c.getAll().values();
         List<RTS_Orange_Senior_Manager__c> sManagersOrange = RTS_Orange_Senior_Manager__c.getAll().values();
 
@@ -902,6 +905,18 @@ public class ANG_RHCAlertTriggerHandler{
 
         system.debug('toAddresses: ' + toAddresses);
 
+        for(User u : [SELECT Id, Email from User where Email IN :toAddresses]) {
+            targetedUsers.add(u.Email, u.Id);
+        }
+
+        for(String mail : toAddresses) {
+            if(targetedUsers.contains(mail)){
+                toAddressesUsers.add(targetedUsers.get(mail));
+            } else {
+                toAddressesNoUsers.add(mail);
+            }
+        }
+
         if(String.isEmpty(emailTemplate)){
             System.debug('Warning: No email Template defined');
             return emailLst;
@@ -920,10 +935,6 @@ public class ANG_RHCAlertTriggerHandler{
         }
 
         for (ANG_Risk_Alert__c riskAlert: riskAlerts) {
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            mail.setToAddresses(toAddresses);
-            mail.setSubject(template.Subject); 
-            mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
             String tBody = template.Body;
             String subjectName = String.isNotBlank(raAccMap.get(riskAlert.id).Name) ? (raAccMap.get(riskAlert.id).Name + ' - ') : '';
             String subjectIATACode = String.isNotBlank(raAccMap.get(riskAlert.id).IATACode__c) ? (raAccMap.get(riskAlert.id).IATACode__c + ', ') : '';
@@ -939,9 +950,21 @@ public class ANG_RHCAlertTriggerHandler{
             tBody = tBody.replace('{{currencyIsoCode}}', (agentSales == '' ? '' : riskAlert.CurrencyIsoCode));
             tbody = tBody.replace('{{fsAmount}}', gAmount);
             
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setToAddresses(toAddressesNoUsers);
+            mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
             mail.setPlainTextBody(tBody);
 
             emailLst.add(mail);
+
+            for(Id targetUser: toAddressesUsers) {
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.setTargetObjectId(targetUser);
+                mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
+                mail.setSubject('Real Time Sales Monitoring – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectName + subjectIATACode + subjectCountry + ')');
+                mail.setPlainTextBody(tBody); 
+                emailLst.add(mail);
+            }
         }
 
         return emailLst;
