@@ -2627,8 +2627,15 @@ public without sharing class AMS_Utils {
     *   Method that validates if the record fields contain only latin characters
     **/
     public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck) {
+        //WMO-538
+		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+        String ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        return validateCharacters(record, fieldsToCheck, ISO_8859_1_regEx);
+    }
+
+    public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck,  String ISO_8859_1_regEx) {
         List<String> res = new List<String>();
-        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         for(Schema.FieldSetMember field : fieldsToCheck) {
@@ -2665,8 +2672,15 @@ public without sharing class AMS_Utils {
     *   Method that validates if the record fields contain only latin characters
     **/
     public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate) {
+        //WMO-538
+		Apex_Setting__c regExCS = Apex_Setting__c.getValues('ISO_8859_1_custom');
+        String ISO_8859_1_regEx = regExCS != null && String.isNotBlank(regExCS.Text_1__c) ? regExCS.Text_1__c : '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        return cleanAndUpdateSpecialChars(record, fieldsToCheck, toUpdate, ISO_8859_1_regEx);
+    }
+
+    public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate, String ISO_8859_1_regEx) {
         List<String> res = new List<String>();
-        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
         for(Schema.FieldSetMember field : fieldsToCheck) {
