@@ -15,7 +15,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', ANG_Enable_NewGen__c = true,
-									Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?', Region__c = 'Europe', Informatica_Value__c = 'test');
+									Postal_Code_Format_regEx__c = '\\d{4}([\\-]\\d{3})?', Region__c = 'Europe', Informatica_Value__c = 'test', State_Province_Picklist__c = true);
 		insert country;
 
 		insert new AMS_Accreditation_Country_CheckList__c(IATA_ISO_Country__c = country.Id, Operation__c = 'Travel Agent');
