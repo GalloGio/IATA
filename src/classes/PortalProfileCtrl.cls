@@ -514,9 +514,9 @@ public with sharing class PortalProfileCtrl {
         List<String> toRow;
 
         if(rType == 'IATA_Agency' && myContact.Account.Status__c != AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) {
-            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','PortalStatus'};
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
         }else{
-            toRow = new List<String>{'Name','Email','Type_of_Contact__c','PortalStatus'};
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LastLogin'};
         }
         Map<String,String> fieldLabels = new Map<String,String>();
 
