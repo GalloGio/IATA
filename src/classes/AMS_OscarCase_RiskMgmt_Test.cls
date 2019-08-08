@@ -863,6 +863,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
     @isTest static void fsNonComplianceConsequencesChinaHETest(){
 
+        AMS_OscarCase_RiskMgmt.runOnce();
+
         Account acct = 
             [SELECT 
                 Id
@@ -885,8 +887,6 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         insert cse;
 
-        AMS_OscarCase_RiskMgmt.EndRun();
-
         try {
             cse.Group_Single_Agent__c = 'Group';
             update cse;
@@ -894,8 +894,6 @@ private class AMS_OscarCase_RiskMgmt_Test {
         catch(Exception e){
             system.assert(e.getMessage().contains('This field is only available for China HE\'s Financial Security non-compliance'), 'The exception message should be: \'This field is only available for China HE\'s Financial Security non-compliance\'');
         }
-
-        AMS_OscarCase_RiskMgmt.EndRun();
 
         cse.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
         cse.Group_Single_Agent__c = 'Group';
