@@ -14,6 +14,8 @@ import getContacts from '@salesforce/apex/PortalProfileCtrl.getAccountContacts';
 import getBranches from '@salesforce/apex/PortalProfileCtrl.getCompanyBranches';
 import searchContacts from '@salesforce/apex/PortalProfileCtrl.searchAccountContacts';
 import searchBranches from '@salesforce/apex/PortalProfileCtrl.searchCompanyBranches';
+import checkCanEdit from '@salesforce/apex/PortalProfileCtrl.checkCanEdit';
+
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -87,6 +89,8 @@ export default class PortalCompanyProfilePage extends LightningElement {
     @track objectName = "Contact";
     @track fieldsListToCreate = [];
     @track searchValue;
+
+    @track showEdit = true;
     // ------------------- //
 
 
@@ -167,6 +171,11 @@ export default class PortalCompanyProfilePage extends LightningElement {
         getContactFieldsToInsert().then(result => {
             this.fieldsListToCreate = result;
         });
+
+        checkCanEdit().then(result => {
+            this.showEdit = result;
+        });
+
     }
 
     refreshview() {
