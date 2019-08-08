@@ -1,0 +1,9 @@
+.folder {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.subtitleHeight{
+  min-height: 75px;
+}

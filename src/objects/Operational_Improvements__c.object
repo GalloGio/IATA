@@ -3955,7 +3955,7 @@
         <label>Exchange rate</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>3</scale>
+        <scale>4</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -5979,11 +5979,12 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <externalId>false</externalId>
         <inlineHelpText>this field is filled by QRM team.</inlineHelpText>
         <label>QRM Analysis Conclusions</label>
-        <required>false</required>
+        <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>TextArea</type>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
@@ -6801,6 +6802,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Currency__c</columns>
         <columns>Amount_LC__c</columns>
         <columns>OI_Approval_date__c</columns>
+        <columns>QRM_Analysis_Conclusions__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -6834,6 +6836,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Currency__c</columns>
         <columns>Amount_LC__c</columns>
         <columns>OI_Approval_date__c</columns>
+        <columns>QRM_Analysis_Conclusions__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -6867,6 +6870,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Currency__c</columns>
         <columns>Amount_LC__c</columns>
         <columns>OI_Approval_date__c</columns>
+        <columns>QRM_Analysis_Conclusions__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -6900,6 +6904,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Currency__c</columns>
         <columns>Amount_LC__c</columns>
         <columns>OI_Approval_date__c</columns>
+        <columns>QRM_Analysis_Conclusions__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -6933,6 +6938,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Currency__c</columns>
         <columns>Amount_LC__c</columns>
         <columns>OI_Approval_date__c</columns>
+        <columns>QRM_Analysis_Conclusions__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -7179,6 +7185,30 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Data_Governance2</fullName>
+        <columns>NAME</columns>
+        <columns>OI_Status_auto__c</columns>
+        <columns>Subject__c</columns>
+        <columns>Data_governance__c</columns>
+        <columns>Originator_System__c</columns>
+        <columns>Description__c</columns>
+        <columns>Root_Cause_s__c</columns>
+        <columns>Root_Cause_Analysis__c</columns>
+        <columns>Solution_details__c</columns>
+        <columns>Status_update__c</columns>
+        <columns>Issue_Start_Date__c</columns>
+        <columns>Number_of_records_affected__c</columns>
+        <columns>Affected_Products__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OI_Type__c</field>
+            <operation>equals</operation>
+            <value>Data Issue</value>
+        </filters>
+        <label>Data Governance - Data Issues</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>RQM_A_P_Operational_Improvements</fullName>
