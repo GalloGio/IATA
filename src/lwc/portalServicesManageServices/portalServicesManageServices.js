@@ -31,6 +31,10 @@ import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults
 import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
+import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
+import Email from '@salesforce/label/c.Email';
+import Status from '@salesforce/label/c.Status';
+import CSP_User from '@salesforce/label/c.CSP_User';
 
 //import apex methods
 import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
@@ -40,10 +44,7 @@ import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPor
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
-import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
-import Email from '@salesforce/label/c.Email';
-import Status from '@salesforce/label/c.Status';
-import CSP_User from '@salesforce/label/c.CSP_User';
+import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -117,7 +118,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     
     @track isAdmin = false;
     @track serviceName = false;
-    
+    @track isAgency = false;
     
     @track contactTableColums = [];
     @track showConfirmPopup = false;
@@ -141,13 +142,30 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.serviceId = this.pageParams.serviceId;
         }
 
-        this.contactTableColums = [
-            { label: CSP_User, fieldName: 'contactName', type: 'text' },
-            { label: Email, fieldName: 'emailAddress', type: 'text' },
-            { label: ISSP_IATA_Location_Code, fieldName: 'iataCodeLoc', type: 'text' },
-            { label: Status, fieldName: 'serviceRight', type: 'text' },
-            { type: 'action',typeAttributes: { iconName: 'utility:delete',disabled:true,  rowActions: this.getRowActions } }
-        ];
+        getLoggedUser().then(userResult => {
+            let loggedUser = JSON.parse(JSON.stringify(userResult));
+
+            if(loggedUser.Contact != null && loggedUser.Contact.AccountId != null) {
+                let account = loggedUser.Contact.Account;
+                if(account.RecordType.DeveloperName === 'IATA_Agency' && 
+                account.Status__c !== undefined && account.Status__c !== 'New application pending') {
+                        this.isAgency = true;
+                }
+
+                this.contactTableColums = [
+                    { label: CSP_User, fieldName: 'contactName', type: 'text' },
+                    { label: Email, fieldName: 'emailAddress', type: 'text' },
+                    { label: ISSP_IATA_Location_Code, fieldName: 'iataCodeLoc', type: 'text' },
+                    { label: Status, fieldName: 'serviceRight', type: 'text' },
+                    { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
+                ];
+        
+                //Remove column IATA Code (Location) if User Account is not an Agency
+                if(!this.isAgency) {
+                    this.contactTableColums = this.contactTableColums.slice(0, 2).concat(this.contactTableColums.slice(3));
+                }
+            }
+        });
 
 
         //get the service details
