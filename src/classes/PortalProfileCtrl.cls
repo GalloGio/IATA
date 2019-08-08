@@ -794,7 +794,7 @@ public with sharing class PortalProfileCtrl {
 
     @AuraEnabled
     public static String goToOldIFAP(Boolean hasContact, String contactId, String contactName){
-        Id accountID = (myUser.Contact.Account.Top_Parent__c != null || myUser.Contact.Account.Top_Parent__c != '' ? myUser.Contact.Account.Top_Parent__c : myUser.Contact.AccountId);
+        Id accountID = (myUser.Contact.Account.Top_Parent__c != null  ? myUser.Contact.Account.Top_Parent__c : myUser.Contact.AccountId);
 
         if (hasContact){
             return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID + '&vContactId=' + contactId + '&vContactName=' + contactName);
