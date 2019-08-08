@@ -169,11 +169,11 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 
     /* Currency Wrapper */
     private class theCurrency{
-        public string scurrency;
+        public string currencyCode;
         public string type;
-        public theCurrency(string type, string scurrency){
+        public theCurrency(string type, string currencyCode){
             this.type = type;
-            this.scurrency = scurrency;
+            this.currencyCode = currencyCode;
         }
     }
     
@@ -256,7 +256,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
         public string topParentIATACode;
         public list<FOP> FormOfPayment;
         public RHCInfoClass RHCInfo;    //Risk Information
-        public list<string> lsChildren; //List of Children IATA Code
+        //public list<string> lsChildren; //List of Children IATA Code
         public string dueDiligenceStatus;
         public boolean isNewGenAgency;
         public list<Owner> owners;
@@ -265,7 +265,6 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
         public list<theCurrency> currencies;
         public string hierarchyId;
         public boolean isMultiCountryKeyCustomer;
-        public boolean isMulticountryKeyHierarchy;
 
         /*Constructor*/
         public INT008_SuccessPayload(Account acc, String changeCode, list<AMS_Account_Role__c> lsAccRoleOwners){
@@ -312,8 +311,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
                 this.vatNumber = acc.VAT_Number__c;
                 this.topParentIATACode = acc.Top_Parent__r.IATACode__c;
                 this.dueDiligence = new List<DueDiligence>();
-                this.isMulticountryKeyCustomer = acc.Identify_as_Key_Customer__c;
-                this.isMulticountryKeyHierarchy = acc.Multicountry_Key_Hierarchy__c;
+                this.isMulticountryKeyCustomer = acc.Multicountry_Key_Hierarchy__c;
 
                 /* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
                 if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
