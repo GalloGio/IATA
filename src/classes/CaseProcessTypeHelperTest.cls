@@ -33,7 +33,6 @@ private class CaseProcessTypeHelperTest {
         Case cse = new Case(
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Case','OSCAR_Communication'),
             Subject= 'New HO Test',
-            Reason1__c= 'New HO',
             Region__c= 'Europe',
             Closed_by_Role__c= 'Test Class User',
             AccountId= acc.Id,
@@ -63,6 +62,7 @@ private class CaseProcessTypeHelperTest {
         
         Case cse = new Case(
             Id= oscar.AMS_Online_Accreditation__r.SAAM_Case__c,
+            Reason1__c= 'New HO',
             Status= 'Closed_Rejected'
         );
         update cse;
@@ -72,7 +72,6 @@ private class CaseProcessTypeHelperTest {
         Case_Process_Type__mdt process = [SELECT Type__c FROM Case_Process_Type__mdt process WHERE Reason__c = 'New HO'];
 
         System.assertNotEquals(null, cse.KPI_Calculation__c);
-        System.assertEquals(process.Type__c, oscar.Accreditation_Process_Type__c);
         Test.stopTest();
     }
 
