@@ -54,7 +54,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
         AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c, ANG_Type_Of_Change__c, Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c from AMS_OSCAR__c where Id =:oscarId];
 
-        if(oscar.Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include All AEs'){
+        if(oscar.Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include all AEs'){
             //Making sure that we do not override FS amounts for countries that 
             //can have financial securities on associated entities
             ANG_RHCInformationTriggerHandler.skipConvertAndSumFSAmounts = true;
