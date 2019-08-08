@@ -20293,6 +20293,39 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <errorMessage>Email Status has been modified, please enter update date</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Has_Authorized_Signatory_External</fullName>
+        <active>true</active>
+        <description>External users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
+        <errorConditionFormula>AND(
+  Number_of_Authorized_Signatory__c &gt; 0,
+  OR(
+   ISCHANGED( FirstName ),
+   ISCHANGED( LastName ),
+   ISCHANGED( Email )  
+ ),
+  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+    NOT( ISPICKVAL($User.UserType, &quot;Standard&quot; )),
+   $User.ToU_accepted__c = TRUE
+)</errorConditionFormula>
+        <errorMessage>Please be aware that this is an airline signatory contact and that changes to them have to be done by IATA for security reasons. Please log a query on the CS portal.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Has_Authorized_Signatory_Internal</fullName>
+        <active>true</active>
+        <description>Internal users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
+        <errorConditionFormula>AND(
+  Number_of_Authorized_Signatory__c &gt; 0,
+  OR(
+   ISCHANGED( FirstName ),
+   ISCHANGED( LastName ),
+   ISCHANGED( Email )  
+ ),
+  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
+    ISPICKVAL($User.UserType, &quot;Standard&quot; )
+)</errorConditionFormula>
+        <errorMessage>This is an Authorized Signatory contact so you can’t modify first name, last name or email address. Please contact Airline Participation team.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>ID_card_Holder_no_change</fullName>
         <active>false</active>
         <errorConditionFormula>AND(
@@ -20314,22 +20347,6 @@ ID_Card_Holder__c=false,
 ISCHANGED(ID_Card_Holder__c)
 )</errorConditionFormula>
         <errorMessage>This conbination of profile and role is not allowed to uncheck ID card holder.</errorMessage>
-	</validationRules>
-    <validationRules>
-		<fullName>Has_Authorized_Signatory_Internal</fullName>
-        <active>true</active>
-        <description>Internal users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
-        <errorConditionFormula>AND(
-  Number_of_Authorized_Signatory__c &gt; 0,
-  OR(
-   ISCHANGED( FirstName ),
-   ISCHANGED( LastName ),
-   ISCHANGED( Email )  
- ),
-  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
-    ISPICKVAL($User.UserType, &quot;Standard&quot; )
-)</errorConditionFormula>
-        <errorMessage>This is an Authorized Signatory contact so you can’t modify first name, last name or email address. Please contact Airline Participation team.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>IFAP_Contact_Under_Branch_Account</fullName>
@@ -20416,23 +20433,6 @@ Account.Is_Branch_Abroad__c = &apos;No&apos; &amp;&amp;
  ISCHANGED(AccountId)
 )</errorConditionFormula>
         <errorMessage>Only an admin can assign a Financial Assessment contact to a branch agency (BR).</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Has_Authorized_Signatory_External</fullName>
-        <active>true</active>
-        <description>External users can&apos;t edit the first and last name nor the email of the Account if there is at least 1 Authorized Signatory.</description>
-        <errorConditionFormula>AND(
-  Number_of_Authorized_Signatory__c &gt; 0,
-  OR(
-   ISCHANGED( FirstName ),
-   ISCHANGED( LastName ),
-   ISCHANGED( Email )  
- ),
-  $User.Profile_Name__c  &lt;&gt; &quot;IDFS Airline Participation Staff - HO&quot;,
-    NOT( ISPICKVAL($User.UserType, &quot;Standard&quot; )),
-   $User.ToU_accepted__c = TRUE
-)</errorConditionFormula>
-        <errorMessage>Please be aware that this is an airline signatory contact and that changes to them have to be done by IATA for security reasons. Please log a query on the CS portal.</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>

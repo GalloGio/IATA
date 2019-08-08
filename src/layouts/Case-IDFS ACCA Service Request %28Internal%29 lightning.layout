@@ -386,9 +386,6 @@
     <relatedLists>
         <relatedList>RelatedEmailMessageList</relatedList>
     </relatedLists>
-	<relatedLists>
-        <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
