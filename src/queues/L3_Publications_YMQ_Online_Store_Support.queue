@@ -3,10 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3 Publications YMQ Online Store Support</name>
     <queueMembers>
-        <users>
-            <user>ganeaa@iata.org</user>
-            <user>szpyndam@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>L3_Publications_YMQ_Online_Store_Support</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

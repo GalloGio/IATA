@@ -169,71 +169,71 @@
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Check --></label>
+        <label>لا يمكننا التحقق من العنوان في الموقع المحدد.</label>
         <name>AMS_DQ_Cannot_Check</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Find --></label>
+        <label>لم نتمكن من العثور على هذا العنوان. إذا كنتم متأكدين من صحة معلوماتكم، فلا يزال بإمكانكم الإرسال.</label>
         <name>AMS_DQ_Cannot_Find</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City --></label>
+        <label>لا يمكننا التحقق من صحة العنوان بدون مدينة {0}. الرجاء ملء هذا الحقل.</label>
         <name>AMS_DQ_Cannot_Validate_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate City and Street --></label>
+        <label>لا يمكننا التحقق من صحة العنوان بدون {0} مدينة وشارع. الرجاء ملء هذا الحقل.</label>
         <name>AMS_DQ_Cannot_Validate_City_and_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Cannot Validate Street --></label>
+        <label>لا يمكننا التحقق من صحة العنوان بدون شارع {0}. الرجاء ملء هذا الحقل.</label>
         <name>AMS_DQ_Cannot_Validate_Street</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Check Addr --></label>
+        <label>تحقق من العنوان</label>
         <name>AMS_DQ_Check_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Cumpulsory --></label>
+        <label>المدينة {0} إلزامية. الرجاء ملء حقل المدينة {1}.</label>
         <name>AMS_DQ_City_Cumpulsory</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City Not in Database --></label>
+        <label>المدينة {0} ليست موجودة في قاعدة البيانات الخاصة بنا (أو تمت تهجئتها بشكل مختلف).</label>
         <name>AMS_DQ_City_Not_in_Database</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another Country --></label>
+        <label>المدينة {0} موجودة في قاعدة بياناتنا ولكن يبدو أنها تنتمي إلى بلد آخر وفقًا لقاعدة البيانات الخاصة بنا.</label>
         <name>AMS_DQ_City_in_Another_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ City in Another State --></label>
+        <label>المدينة {0} موجودة في قاعدة بياناتنا ولكنها مرتبطة بولاية / مقاطعة أخرى.</label>
         <name>AMS_DQ_City_in_Another_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Enter Valid City --></label>
+        <label>الرجاء إدخال مدينة صحيحة.</label>
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Found Addr --></label>
+        <label>تم العثور على العنوان (العناوين) المطابق (المطابقة).</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review City --></label>
+        <label>مراجعة اسم المدينة. إذا كنتم متأكدين من صحة معلوماتكم المُدخلة ، الرجاء النقر فوق &quot;إرسال&quot;.</label>
         <name>AMS_DQ_Review_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review Country or City --></label>
+        <label>مراجعة اسم (اسماء) البلد و / أو المدينة. إذا كنتم متأكدين من صحة معلوماتكم المُدخلة ، الرجاء النقر فوق &quot;إرسال&quot;.</label>
         <name>AMS_DQ_Review_Country_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State --></label>
+        <label>مراجعة اسم الولاية / المقاطعة و / أو المدينة.</label>
         <name>AMS_DQ_Review_State</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Review State or City --></label>
+        <label>مراجعة الولاية / المقاطعة و / أو اسم المدينة. إذا كنتم متأكدين من صحة معلوماتكم المُدخلة ، الرجاء النقر فوق &quot;إرسال&quot;.</label>
         <name>AMS_DQ_Review_State_or_City</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS DQ Street Compulsory --></label>
+        <label>الشارع {0} إلزامي. الرجاء ملء حقل الشارع {1}.</label>
         <name>AMS_DQ_Street_Compulsory</name>
     </customLabels>
     <customLabels>
@@ -1461,7 +1461,7 @@
         <name>AddressDoctorNoState</name>
     </customLabels>
     <customLabels>
-        <label>نرجو منك التحقق من صحة عناوين الفوترة والشحن الخاصة بك عن طريق الضغط على زر &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <label>الرجاء التحقق من عناوين إرسال الفواتير والشحن الخاصة بكم عن طريق النقر على زر مراجعة العنوان</label>
         <name>AddressDoctorValidate</name>
     </customLabels>
     <customLabels>
@@ -1883,6 +1883,10 @@
     <customLabels>
         <label>دول النشر</label>
         <name>CSP_Documents_PubliCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
     </customLabels>
     <customLabels>
         <label>التواصل معنا</label>
@@ -2545,6 +2549,10 @@
         <name>CurrencyCenter_BSP_CASS_Proffile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_ICCS_Availability --></label>
+        <name>CurrencyCenter_BSP_ICCS_Availability</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -2575,6 +2583,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_CASS --></label>
         <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_ICCS_Availability --></label>
+        <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
@@ -17835,6 +17847,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Not_Applicable</name>
     </customLabels>
     <customLabels>
+        <label><!-- Not In CNS Group Error --></label>
+        <name>Not_In_CNS_Group_Error</name>
+    </customLabels>
+    <customLabels>
         <label>إخطار</label>
         <name>Notification</name>
     </customLabels>
@@ -19756,6 +19772,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- ShoppingCartQtyMsg --></label>
         <name>ShoppingCartQtyMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error displayed when a RO field is changed in a SIDRA Lite case --></label>
+        <name>SidraLiteROFieldError</name>
     </customLabels>
     <customLabels>
         <label><!-- SignIn --></label>
