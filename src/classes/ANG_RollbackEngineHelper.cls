@@ -14,6 +14,8 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
     private boolean isHierarchyChange;
 
+	private boolean skipConvertAndSumFSAmounts;
+	
     public void execute(QueueableContext context){
         executeAdhoc();
     }
@@ -53,11 +55,13 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
         fetchTechnicalLogs(oscarId);
 
         AMS_OSCAR__c oscar = [Select Name, Account__c,New_parent__c, ANG_Type_Of_Change__c, Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c from AMS_OSCAR__c where Id =:oscarId];
-
+		
+		skipConvertAndSumFSAmounts = false;
+		
         if(oscar.Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c == 'Include all AEs'){
-            //Making sure that we do not override FS amounts for countries that 
+			//Making sure that we do not override FS amounts for countries that 
             //can have financial securities on associated entities
-            ANG_RHCInformationTriggerHandler.skipConvertAndSumFSAmounts = true;
+			skipConvertAndSumFSAmounts = true;
         }
 
         accountsRelated = new Set<Id>();
@@ -91,11 +95,17 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
     }
 
     private void rollbackData(){
-        
+
         if(technicalLogsMap.isEmpty()){
             System.System.debug('There is nothing to rollback, doing nothing here.');
             return;
         }
+		
+		if(skipConvertAndSumFSAmounts){
+			//Making sure that we do not override FS amounts for countries that 
+            //can have financial securities on associated entities
+			ANG_RHCInformationTriggerHandler.skipConvertAndSumFSAmounts = true;
+		}
 
         For(String entity: technicalLogsMap.keySet()){
 
