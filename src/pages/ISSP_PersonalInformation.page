@@ -21,14 +21,15 @@
 
 </script>
      <style>
-           	.has-error .hiddenerror {display: inline !important;}
-           	.errormsg {font-weight: bold; font-size: 14px; color: #C90435;}
-           	.btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
-         	.required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
+            .has-error .hiddenerror {display: inline !important;}
+            .errormsg {font-weight: bold; font-size: 14px; color: #C90435;}
+            .alertmsg {font-weight: bold; font-size: 14px; background-color: yellow}
+            .btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
+            .required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
     </style>
     <div class="container">
         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-        <apex:messages />
+        <apex:messages styleClass="alertmsg"/>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">{!$Label.ISSP_Registration_PersonalInformation}</h3>

@@ -3037,6 +3037,13 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_AMS_StepFinal_In_Addition2</shortDescription>
+        <value>Profile -&gt; Cases</value>
+    </labels>
+    <labels>
         <fullName>CSP_ANG_Portal_Admin</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -37396,14 +37403,6 @@ Short Payment Amount USD: {3}
 Remittance date: {4}
 
 ***Above details might change after the creation of the case, Please refer to the case mentioned for accurate information.</value>
-    </labels>
-    <labels>
-        <fullName>SidraLiteROFieldError</fullName>
-        <categories>SIDRA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Error displayed when a RO field is changed in a SIDRA Lite case</shortDescription>
-        <value>You can't modify &quot;{0}&quot; for a CNS collection process.</value>
     </labels>
     <labels>
         <fullName>SIS</fullName>

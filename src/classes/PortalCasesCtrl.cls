@@ -458,8 +458,8 @@ public with sharing class PortalCasesCtrl {
                 };
             }
         } else if(record.RecordType.Name == 'OSCAR Communication') {
-            if(amsListForm != null && amsListForm.contains(record.Id) && !agencyRightList.isEmpty()) {
-                if(record.Status == 'Draft' || record.Status == 'Open - EDMC') {
+            if(!agencyRightList.isEmpty()) {
+                if(amsListForm != null && amsListForm.contains(record.Id) && (record.Status == 'Draft' || record.Status == 'Open - EDMC') ) {
                     if(record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT) {
                         return new Map<Id, String>{
                             record.Id => 
@@ -603,6 +603,61 @@ public with sharing class PortalCasesCtrl {
                         WHERE Id = :caseId];
 
         return caseAux;
+    }
+
+    @AuraEnabled
+    public static String getSurveyLink(String caseId){
+        Case newCase = getCaseById(caseId);
+
+        if(newCase.status != 'Closed'){
+            return null;
+        }
+
+        Id profileId = Userinfo.getProfileId();
+        String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
+        ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(newCase.RecordType__c);
+        String userRole =  newCase.WhoClosedCase__c != null ? DAL_WithoutSharing.getUserDetails(newCase.WhoClosedCase__c).UserRole.Name : '';
+
+        String caseType = ISSP_Constant.caseTypeMap.get(newCase.RecordType.Name);
+
+        String surveyLanguage = UserInfo.getLanguage();
+
+        Boolean matchingStatus = newCase.status == 'Closed';
+        Boolean isPWCCase = newCase.RecordType.Name == 'ISS Portal PwC' || newCase.RecordType.Name == 'ISS Portal PwC for IATA user';
+        Boolean isDPCuser = profileName.startsWith('ISS Portal DPC Admin');
+        Boolean isToShowSurveyBtn = csValues != null && csValues.RolesAvailable__c.contains(userRole) || csValues.RolesAvailable__c.contains('All');
+        Boolean matchingCaseType = caseType == null;
+        Boolean surveyCompleted = false;
+
+        List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
+        FROM Instant_Surveys__c
+        WHERE Relationship_to_Case__c = :newCase.Id
+        AND recordType.developername != 'Live_Agent_Chat']);
+
+        if (Survey_List != null && Survey_List.size() > 0) {
+            surveyCompleted = true ;
+        }
+
+        Boolean showLink = matchingStatus && !isPWCCase && !isDPCuser && isToShowSurveyBtn && matchingCaseType && !surveyCompleted;
+
+        if(!showLink){
+            return null;
+        }
+
+        String fName = newCase.Contact.FirstName != null ? newCase.Contact.FirstName : '';
+        String lName = newCase.Contact.LastName != null ? newCase.Contact.LastName : '';
+        String email = newCase.Contact.Email != null ? newCase.Contact.Email : '';
+        String phone = newCase.Contact.Phone != null ? newCase.Contact.Phone : '';
+
+        String surveyLink = 'http://survey.clicktools.com/go?iv='
+                +System.Label.ISSP_SurveyClosedCase
+                +'&q1='+newCase.Id
+                +'&q2='+newCase.CaseNumber+
+                +'&q3='+newCase.ContactId
+                +'&q9='+fName+'|'+lName+'|'+email+'|'+phone
+                +'&language='+surveyLanguage;
+
+        return surveyLink;
     }
 
     /*
