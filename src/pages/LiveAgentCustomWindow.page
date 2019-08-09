@@ -1243,7 +1243,7 @@
                         </div>
                         <!--<div id="livechat" style="{!if(isRTL, 'padding-left:0px', 'padding-left:100px')}">LIVE CHAT</div>-->
                         <div id="livechat">
-                            <span>IATA Live Support</span>
+                            <span>IATA Live Chat</span>
                             <div>
                                 <button type="button" class="liveAgentEndButtonTopHeader" onclick="showmodal();" style="float:right; ">End Chat</button>
                                 <button type="button" class="liveAgentEndButtonTopHeader" onclick="savechat();" style="float:right; margin-right:15px">Save Chat</button>                    	
@@ -1412,7 +1412,7 @@
                     <div id="divImageEnd">
                         <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
                     </div>
-                    <div id="livechatEnd">IATA Live Support</div>
+                    <div id="livechatEnd">IATA Live Chat</div>
                 </div>
                 <div id="modalbox">
                     <p id="modalmessage"></p>

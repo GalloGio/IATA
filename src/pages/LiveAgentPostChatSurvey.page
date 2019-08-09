@@ -214,7 +214,7 @@
                                 <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
                             </div>
                             <div id="livechat">
-                                <span>IATA Live Support</span>
+                                <span>IATA Live Chat</span>
                             </div>
                         </div>
                     </div>
