@@ -730,7 +730,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     toggleAddUserModal() {
         this.showAddUserModal = !this.showAddUserModal;
         this.contactsToAdd = [];
-        if (this.serviceIEPStatus) {
+        if (this.showAddUserModal && this.serviceIEPStatus) {
             if (this.serviceIEPStatus === true) {
 
                 if (this.showAddUserModal) {
