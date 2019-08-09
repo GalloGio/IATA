@@ -961,6 +961,7 @@ public class ANG_RHCAlertTriggerHandler{
                 Messaging.SingleEmailMessage targetEmail = new Messaging.SingleEmailMessage();
                 targetEmail.setTargetObjectId(targetUser);
                 targetEmail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
+                targetEmail.saveAsActivity = false;
                 targetEmail.setSubject('Real Time Sales Monitoring – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectName + subjectIATACode + subjectCountry + ')');
                 targetEmail.setPlainTextBody(tBody); 
                 emailLst.add(targetEmail);
