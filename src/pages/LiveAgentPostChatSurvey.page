@@ -221,7 +221,7 @@
                 </div>
                 <apex:form >
                     <apex:outputPanel styleclass="contentPanel" id="surveyPanel" layout="none">
-                        <apex:outputPanel layout="block"  styleclass="postChatForm"> <!--rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}"-->
+                        <apex:outputPanel layout="block" rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}" styleclass="postChatForm">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h class="panel-title">{!$Label.LiveAgentPostChatTitle}</h>
