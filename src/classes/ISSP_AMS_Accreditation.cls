@@ -7531,7 +7531,8 @@ public without sharing class ISSP_AMS_Accreditation {
                                                                             State_Province__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
                                                                             Same_Legal_Entity_Agency_Form__c, Same_Legal_Entity_Agency_Account__c, Account_Name__c, Location_Type__c,
                                                                             Branch_Office_Country__r.ISO_Code__c, Trade_Name__c, ISSP_AMS_Legal_Status__c,
-                                                                            SAAM_Case__r.Status, Same_Legal_Entity_Agency_Form__r.Status__c
+                                                                            SAAM_Case__r.Status, Same_Legal_Entity_Agency_Form__r.Status__c,
+                                                                            Previous_Postal_code__c, Previous_Street_Name_Number__c, Previous_City__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id
                                                                         ORDER BY Name ASC];
