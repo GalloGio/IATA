@@ -595,6 +595,9 @@ public with sharing class ANG_AgencyChangesHelper {
 	*
 	*/
 	public static AChangeStructure applyChangeOfLocationTypeMulticountry(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+
+		// The hierarchy object ID. In case there is new GE Account, we need to change the Main_Account__c field on the hierarchy.
+		Id hierarchyId;
 		
 		//Accounts Map contains only the two agencies that we are gonna swap
 		Map<Id, Account> accountsMap = toReturn.accountsMap.deepClone();
@@ -609,6 +612,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		
 		//Update the necessary relationships and respective accounts 
 		for(AMS_Agencies_relationhip__c rel : accountHierarchyRelationships.get(oscarToProcess.Account__c)){
+
+			hierarchyId = rel.Hierarchy__c;
 
 			Account childAcct  = accountsMap.get(rel.Child_Account__c);
 			Account parentAcct = accountsMap.get(rel.Parent_Account__c);
@@ -699,6 +704,11 @@ public with sharing class ANG_AgencyChangesHelper {
 		
 		}
 
+		if(swapAccountsWrapper.newGE <> NULL){
+			AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(id = hierarchyId, Main_account__c = swapAccountsWrapper.newGE);
+			toReturn.addHierarchy(hierarchy);
+		}
+		
 		return toReturn;
 	
 	}
