@@ -145,8 +145,7 @@
             for(var i = 0; i < citiesToSearch.length; i++){                
                 if(citiesToSearch[i]){
                     let cityName = citiesToSearch[i]["Name"].toLowerCase();
-                    let cityStateName = citiesToSearch[i]["IATA_ISO_State__r"].Name.toLowerCase();			
-                    //if(cityName===currentCityLowerCase&&cityStateName===currentState) cityAndStateMatch=true;
+                    let cityStateName = citiesToSearch[i]["IATA_ISO_State__r"].Name.toLowerCase();			                    
                     if(cityName===currentCityLowerCase&&cityStateName!==currentState) cityMatch=true;
                 }                
             }
