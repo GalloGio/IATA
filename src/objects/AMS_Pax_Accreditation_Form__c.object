@@ -2864,6 +2864,24 @@ SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Full_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(ISBLANK(Previous_Street_Name_Number__c), ISBLANK(Previous_City__c), ISBLANK(Previous_Postal_code__c)), &apos;-&apos; , 
+			IF(ISBLANK(Previous_Street_Name_Number__c), &apos;&apos;, 
+						Previous_Street_Name_Number__c) + 
+			IF(ISBLANK(Previous_Postal_code__c), &apos;&apos;, 
+						&apos;, &apos; + Previous_Postal_code__c) + 
+		 IF(ISBLANK(Previous_City__c), &apos;&apos;, 
+						 &apos;, &apos; + Previous_City__c)
+)</formula>
+        <label>Full Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Give_details_for_authorization_to_act__c</fullName>
         <externalId>false</externalId>
         <label>If Yes please provide details</label>
