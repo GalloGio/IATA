@@ -63,6 +63,26 @@ public with sharing class PortalCasesCtrl {
         return lstPickValues;
     }
 
+    @AuraEnabled
+    public static List<CSP_Utils.PickListWrapper> companyCasesContactsPicklist(){
+        seeAllCases = true;
+        initialization();
+
+        String queryConditions = getQueryConditions();
+
+        String queryString = 'SELECT CreatedBy.Id creatorid, CreatedBy.Name creatorname FROM Case ' + queryConditions + ' GROUP BY CreatedBy.Id, CreatedBy.Name ORDER BY CreatedBy.Name ASC ';
+
+        List<Aggregateresult> lstCases = Database.query(queryString);
+
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+
+        for(Aggregateresult caseAux : lstCases){
+            lstPickValues.add(new CSP_Utils.PickListWrapper(caseAux.get('creatorid') + '', caseAux.get('creatorname')+''));
+        }
+
+        return lstPickValues;
+    }
+
     /* 
     * @description Main method that returns a list of cases 
     * @params
@@ -239,6 +259,13 @@ public with sharing class PortalCasesCtrl {
                         queryConditions = ' WHERE Country_concerned__c includes (\'' + filtersWrapper.casesComponent.caseCountryFilter + '\') ';
                     }else{
                         queryConditions += ' AND Country_concerned__c includes (\'' + filtersWrapper.casesComponent.caseCountryFilter + '\') ';
+                    }
+                }
+                if(filtersWrapper.casesComponent.caseContactFilter != null && filtersWrapper.casesComponent.caseContactFilter != ''){
+                    if(queryConditions == ''){
+                        queryConditions = ' WHERE CreatedById = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
+                    }else{
+                        queryConditions += ' AND CreatedById = \'' + filtersWrapper.casesComponent.caseContactFilter + '\' ';
                     }
                 }
             }
@@ -558,8 +585,8 @@ public with sharing class PortalCasesCtrl {
     * @params String searchKey
     * @return List<Case>
     */
-    @AuraEnabled(cacheable=true)
-    public static PagedResult getFilteredCasesResultsPage(String searchKey, String requestedPage) {
+    @AuraEnabled(cacheable=false)
+    public static PagedResult getFilteredCasesResultsPage(String searchKey, String requestedPage, Boolean isAdminUser) {
 
         PortalSearchFilterWrapper filterWrapperAux = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
         System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] filterWrapperAux - ' + filterWrapperAux);
@@ -571,9 +598,15 @@ public with sharing class PortalCasesCtrl {
 
         requestedPageNumber = requestedPageAux;
 
-        Boolean isAdmin = ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
-        System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdmin - ' + isAdmin);
-
+        Boolean isAdmin = false;
+        if(isAdminUser == null ){
+            isAdmin = CSP_Utils.isAdmin();
+            System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdmin - ' + isAdmin);
+        }else{
+            isAdmin = isAdminUser;
+            System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdminUser - ' + isAdminUser);
+        }
+        
         PagedResult pages = getRecentCases(false, isAdmin);
 
         return pages;
