@@ -612,7 +612,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     get confirmAddUserClass() {
-        return this.noContactsToAdd ? 'footerButtons containedButtonWhite' : 'footerButtons containedButtonSlim';
+        return this.noContactsToAdd ? 'footerButtons containedButtonWhite' : 'footerButtons containedButton';
     }
 
     //Cancel Service Access
