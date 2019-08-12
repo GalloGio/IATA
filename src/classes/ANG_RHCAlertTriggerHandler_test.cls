@@ -1001,8 +1001,8 @@ private class ANG_RHCAlertTriggerHandler_test {
 	    insert con;
 
 	    //NEWGEN-2005
-	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
-	    
+	    insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', Active__c = true);
+	    insert new RTS_Orange_Senior_Manager__c(Name = 'Test2', Email__c = 'test.2005@yopmail.com', Active__c = true);
 	    test.StartTest();
 	    
 	    ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(

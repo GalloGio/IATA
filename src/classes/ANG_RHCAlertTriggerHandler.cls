@@ -878,9 +878,7 @@ public class ANG_RHCAlertTriggerHandler{
         List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
 
         Set<String> toAddresses = new Set<String>();
-        Set<String> toAddressesNoUsersSet = new Set<String>();
-        Set<Id> toAddressesUsers = new Set<Id>();
-        Map<String, Id> targetedUsers = new Map<String, Id>();
+        List<Id> toAddressesUsers = new List<Id>();
         List<RTS_Senior_Manager__c> sManagersRed = RTS_Senior_Manager__c.getAll().values();
         List<RTS_Orange_Senior_Manager__c> sManagersOrange = RTS_Orange_Senior_Manager__c.getAll().values();
 
@@ -903,20 +901,12 @@ public class ANG_RHCAlertTriggerHandler{
             }
         }
 
-        system.debug('toAddresses: ' + toAddresses);
-
+        List<String> toAddressesNoUsers = new List<String>(toAddresses);
         for(User u : [SELECT Id, Email from User where Email IN :toAddresses]) {
-            targetedUsers.put(u.Email, u.Id);
+            toAddressesUsers.add(u.Id);
+            toAddressesNoUsers.remove(toAddressesNoUsers.IndexOf(u.Email));
         }
-
-        for(String mail : toAddresses) {
-            if(targetedUsers.containsKey(mail)){
-                toAddressesUsers.add(targetedUsers.get(mail));
-            } else {
-                toAddressesNoUsersSet.add(mail);
-            }
-        }
-        List<String> toAddressesNoUsers = new List<String>(toAddressesNoUsersSet);
+        
         if(String.isEmpty(emailTemplate)){
             System.debug('Warning: No email Template defined');
             return emailLst;
@@ -929,7 +919,7 @@ public class ANG_RHCAlertTriggerHandler{
             return emailLst;
         }
 
-        if(toAddresses.isEmpty()){
+        if(toAddressesNoUsers.isEmpty() && toAddressesUsers.isEmpty()){
              System.debug('Warning: No active RTS Senior Managers or valid manager\'s email found');
              return emailLst;
         }
