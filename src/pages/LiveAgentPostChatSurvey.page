@@ -43,13 +43,6 @@
             font-family: DaMaWebFont;
         }
         
-        .outter-container{
-            margin-left: auto;
-            margin-right: auto;
-            max-width: 600px;
-            border: darkgrey 1px solid;
-        }
-        
         .iataLogo {
             margin: 5px;
         }
@@ -128,6 +121,25 @@
             border: darkgrey 1px solid;
             max-width: 600px;
         }
+        
+        .panel{
+            margin-bottom: 0px; 
+            background-color: #fff;
+            border: 0px solid transparent; 
+            border-radius: 0px;
+            -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0); 
+            box-shadow: 0 0px 0px rgba(0,0,0,0); 
+        }
+        
+        .outter-container{
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 600px;
+            border: 1px solid  #337ab7;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }       
         
         #headercontainer {
         display:block;
@@ -221,7 +233,7 @@
                 </div>
                 <apex:form >
                     <apex:outputPanel styleclass="contentPanel" id="surveyPanel" layout="none">
-                        <apex:outputPanel layout="block" rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}" styleclass="postChatForm">
+                        <apex:outputPanel layout="block" rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}" styleclass="postChatForm"> <!---->
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h class="panel-title">{!$Label.LiveAgentPostChatTitle}</h>

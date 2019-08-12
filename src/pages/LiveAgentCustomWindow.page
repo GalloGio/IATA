@@ -1168,8 +1168,8 @@
             margin-bottom: 5px;
             font-family: DaMaWebFont;
             }
-            #fileSendButton{
             
+            #fileSendButton{
             font-size: 13px;
             border-radius: 0px;
             font-family: DaMaWebFont;
@@ -1205,7 +1205,7 @@
             
             #liveAgentClientChat textarea#liveAgentChatTextArea {
             width: calc(100% - 50px);
-            //max-height: 36px;
+            max-height: 36px;
             font-family: DaMaWebFont;
             }
             
@@ -1274,7 +1274,7 @@
                             <liveAgent:clientChatStatusMessage />
                             <liveAgent:clientChatLog showTimeStamp="true" combineMessagesText="true" />
                             <liveagent:clientChatCancelButton />
-                            <liveagent:clientChatInput useMultiline="true" />
+                            <liveagent:clientChatInput useMultiline="true"/>
                             <liveAgent:clientChatSendButton />
                             <liveAgent:clientChatFileTransfer />
                             <liveAgent:clientChatQueuePosition />
@@ -1364,72 +1364,72 @@
                             //imgSrc ='https://'+window.location.host+'/profilephoto/005/T';
                             $j(node.lastChild).html(clientMessage.replace('[timeStamp]', timeStamp));
                         }*/
-                        $j(node.lastChild).html(timeStamp);
-                        
-                        /*if(imgSrc){
+                                $j(node.lastChild).html(timeStamp);
+                                
+                                /*if(imgSrc){
                             insertChatImage(node,imgSrc);
                         }else{
                             getAgentDetails(node, liveagent.chasitor.getDetails().agent.userId);
                         }*/
-                        
-                        observer.disconnect();
+                                
+                                observer.disconnect();
+                                observer.observe(target, config);
+                            }                    
+                        }
+                        // pass in the target node, as well as the observer options
                         observer.observe(target, config);
-                    }                    
-                }
-                // pass in the target node, as well as the observer options
-                observer.observe(target, config);
-                
-                // later, you can stop observing
-                //observer.disconnect();
-                
-                </script>
-                
-            </div>
-            
-            <div id ="chatbuttonscontainer">
-                <div id="chatbuttonsbackground">
-                    <div class="savebutton">
-                        <button id="laSaveButton" type="button" class="buttonSave" onclick="savechat();">{!$Label.LVA_SaveChat}</button>
+                        
+                        // later, you can stop observing
+                        //observer.disconnect();
+                        
+                        </script>
+                        
                     </div>
-                    <div class="endbutton">
-                        <button id="laEndButton" type="button" class="buttonEnd" onclick="showmodal();">{!$Label.LVA_EndChat}</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="footer" class="footer col-md-12">
-            </div>
-            
-        </div>
-        </div> 
-        
-        
-        <!-- FME Start -->
-        <div id="modalcontainer" class="container">
-            <div id="modalbackground" class="row">
-                <div id="headerImageEnd">
                     
-                    <div id="divImageEnd">
-                        <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
-                    </div>
-                    <div id="livechatEnd">IATA Live Chat</div>
-                </div>
-                <div id="modalbox">
-                    <p id="modalmessage"></p>
-                    <div class="endchatbuttons">
-                        <div class="savebutton">
-                            <button id="laModalCancelButton" type="button" class="buttonSave" onclick="hidemodal();">{!$Label.LVA_ReturnToChat}</button>
+                    <div id ="chatbuttonscontainer">
+                        <div id="chatbuttonsbackground">
+                            <div class="savebutton">
+                                <button id="laSaveButton" type="button" class="buttonSave" onclick="savechat();">{!$Label.LVA_SaveChat}</button>
+                            </div>
+                            <div class="endbutton">
+                                <button id="laEndButton" type="button" class="buttonEnd" onclick="showmodal();">{!$Label.LVA_EndChat}</button>
+                            </div>
                         </div>
-                        <div class="endbutton">
-                            <button id="laModalEndButton" type="button" class="buttonEnd" onclick="laEndChat();">{!$Label.LVA_EndChat}</button>
+                    </div>
+                    
+                    <div id="footer" class="footer col-md-12">
+                    </div>
+                    
+                </div>
+            </div> 
+            
+            
+            <!-- FME Start -->
+            <div id="modalcontainer" class="container">
+                <div id="modalbackground" class="row">
+                    <div id="headerImageEnd">
+                        
+                        <div id="divImageEnd">
+                            <apex:image url="{!$Resource.IATAlogo}" width="80" height="50" styleClass="iataLogo"/>
+                        </div>
+                        <div id="livechatEnd">IATA Live Chat</div>
+                    </div>
+                    <div id="modalbox">
+                        <p id="modalmessage"></p>
+                        <div class="endchatbuttons">
+                            <div class="savebutton">
+                                <button id="laModalCancelButton" type="button" class="buttonSave" onclick="hidemodal();">{!$Label.LVA_ReturnToChat}</button>
+                            </div>
+                            <div class="endbutton">
+                                <button id="laModalEndButton" type="button" class="buttonEnd" onclick="laEndChat();">{!$Label.LVA_EndChat}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        
-        <!-- FME End -->
+            
+            
+            <!-- FME End -->
         </body>
     </html>
 </apex:page>
