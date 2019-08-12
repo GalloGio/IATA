@@ -34464,7 +34464,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Access Service</value>
+        <value>Select the topic covering the problem.</value>
     </labels>
     <labels>
         <fullName>csp_ActionIndicator</fullName>
@@ -35369,7 +35369,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Select the topic covering the problem.</value>
+        <value>Select the sub topic covering the problem.</value>
     </labels>        
     <labels>
         <fullName>csp_Compliment</fullName>

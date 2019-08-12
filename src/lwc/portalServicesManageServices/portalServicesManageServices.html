@@ -112,7 +112,8 @@
                                         {label.manageUserslb}
                                     </div>
                                     <div class="slds-col slds-grid slds-wrap slds-p-top_medium slds-size_1-of-1">
-                                        <div class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-3 bottomLightGrayBorder searchContainer">
+                                        <div
+                                            class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-top_medium bottomLightGrayBorder searchContainer">
                                             <img src={searchIconUrl} height="24" width="24" />
                                                 <lightning-input name="newRecipientTextInput" placeholder={label.searchContactPlaceholder}
                                                 class="hideInputLabel borderlessInput grayInputPlaceholder"
@@ -120,13 +121,13 @@
                                             </lightning-input>
                                         </div>
 
-                                        <template if:true={canAddUsers}>
-                                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
-                                                <lightning-button variant="brand" label={label.addNewUser} title={label.addNewUser}
-                                                                  class="slds-float_right containedButton" onclick={toggleAddUserModal}>
+                                        
+                                        <div if:true={canAddUsers} class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3">
+                                            <lightning-button variant="brand" label={label.addNewUser}
+                                                title={label.addNewUser} class="slds-float_right containedButtonSlim"
+                                                onclick={toggleAddUserModal}>
                                                 </lightning-button>
                                             </div>
-                                        </template>
 
                                     </div>
                                     <div  if:false={noResultsFound} class="slds-col slds-p-top_medium slds-size_1-of-1 text-gray">
