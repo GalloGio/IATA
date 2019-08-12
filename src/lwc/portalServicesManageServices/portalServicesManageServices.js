@@ -48,6 +48,7 @@ import ANG_ISSP_IEP_Portal_Request_Access_Msg from '@salesforce/label/c.ANG_ISSP
 import ANG_ISSP_IEP_add_users_to_account_not_open_error_msg from '@salesforce/label/c.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg';
 import ISSP_AMC_CLOSE from '@salesforce/label/c.ISSP_AMC_CLOSE';
 import CSP_Manage_Services_NoIEPAccount from '@salesforce/label/c.CSP_Manage_Services_NoIEPAccount';
+import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
 
 //import user id
 import Id from '@salesforce/user/Id';
@@ -120,7 +121,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         ANG_ISSP_IEP_Portal_Request_Access_Msg,
         ANG_ISSP_IEP_add_users_to_account_not_open_error_msg,
         ISSP_AMC_CLOSE,
-        CSP_Manage_Services_NoIEPAccount
+        CSP_Manage_Services_NoIEPAccount,
+        ISSP_ANG_GenericError
     };
 
     //links for images
@@ -730,50 +732,37 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     toggleAddUserModal() {
         this.showAddUserModal = !this.showAddUserModal;
         this.contactsToAdd = [];
-        if (this.showAddUserModal && this.serviceIEPStatus) {
-            if (this.serviceIEPStatus === true) {
-
-                if (this.showAddUserModal) {
-                    this.isIEPService = false;
-                    if (this.serviceName.includes('IATA EasyPay')) {
-                        this.isIEPService = true;
-                        getUserOptions({ portalUser: this.userID })
-                            .then(useropts => {
-                                let userOptions = JSON.parse(JSON.stringify(useropts));
-                                if (userOptions.IEP_Status === 'Open') {
-
-                                    availableIEPPortalServiceRoles({ serviceId: this.serviceId })
-                                        .then(data => {
-                                            let roleslist = JSON.parse(JSON.stringify(data));
-                                            this.roleList = roleslist;
-                                            this.roleList = this.roleList.filter(obj => obj.Connected_App__c === this.serviceFullName);
-                                            this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
-                                            for (const item of this.roleList) {
-                                                let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
-                                                item.label = this.label[newlabel];
-                                            }
-                                        }).catch(error => {
-                                            console.log(error);
-                                        });
-                                }else{
-                                    this.showAddUserModal = !this.showAddUserModal;
-                                    this.dispatchEvent(
-                                        new ShowToastEvent({
-                                            title: 'Error',
-                                            message: this.label.CSP_Manage_Services_NoIEPAccount,
-                                            variant: 'error'
-                                        })
-                                    );
-                                }
-                            });
-                    }
+        this.radioOption = '';
+        if (this.showAddUserModal) {
+            if (this.showAddUserModal) {
+                this.isIEPService = false;
+                if (this.serviceName.includes('IATA EasyPay')) {
+                    this.isIEPService = true;
+                    getUserOptions({ portalUser: this.userID })
+                        .then(useropts => {
+                            let userOptions = JSON.parse(JSON.stringify(useropts));
+                            if (userOptions.IEP_Status === 'Open') {
+                                availableIEPPortalServiceRoles({ serviceId: this.serviceId })
+                                    .then(data => {
+                                        let roleslist = JSON.parse(JSON.stringify(data));
+                                        this.roleList = roleslist;
+                                        this.roleList = this.roleList.filter(obj => obj.Connected_App__c === this.serviceFullName);
+                                        this.roleList = this.roleList.sort((a, b) => (a.Order__c > b.Order__c) ? 1 : -1);
+                                        for (const item of this.roleList) {
+                                            let newlabel = 'ISSP_ANG_Portal_Role_' + item.Role__c.split(' ').join('');
+                                            item.label = this.label[newlabel];
+                                        }
+                                    }).catch(error => {
+                                        console.log(error);
+                                    });
+                            } else {
+                                this.showAddUserModal = !this.showAddUserModal;
+                                this.IEPDeniedModal = true;
+                            }
+                        });
                 }
-            } else {
-                this.IEPDeniedModal = true;
-                this.showAddUserModal = !this.showAddUserModal;
             }
         }
-
     }
 
     closeIEPDenied() {

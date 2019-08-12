@@ -101,4 +101,25 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 	public static user getUserDetails(Id userId){
 		return [select id,userRoleId, UserRole.Name from user where id=:userId];
 	}
+
+	@AuraEnabled
+	public static void ActivateIEPUsers(List<String> contactIds){
+	
+		List<User> usersList = [select id, isActive, contactId from User where contactId in : contactIds];
+		if(!usersList.isEmpty()) {
+			List<User> usersToActivate = new List<User>();
+	
+			for(User user : usersList) {
+				if(!user.isActive) {
+					user.isActive = true;
+					usersToActivate.add(user);
+				}
+			}
+	
+			if(usersToActivate.size() != 0) {
+				update usersToActivate;
+			}
+		}
+	
+	}
 }
