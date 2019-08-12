@@ -53,25 +53,28 @@
         .btn_iata_primary {
             border: none;
             color: white;
-            background-color: #5cb85c;
+            background-color: #1e32fa;
             margin: 5px;
             width: 90px;
+            border-radius: 1px;
         }
         .btn_thumbs_down {
             border: none;
             color: white;
-            background-color: #d9534f;
+            background-color: #f04632;
             margin: 5px;
             width: 50px;
             height: 30px;
+            border-radius: 1px;
         }
         .btn_thumbs_up {
             border: none;
             color: white;
-            background-color: #5cb85c;
+            background-color: #289632;
             margin: 5px;
             width: 50px;
             height: 30px;
+            border-radius: 1px;
         }
         .postChatForm {
             margin: 5px;
@@ -108,8 +111,8 @@
             padding-right: 20px;
         }
         .inputField {
-            border-color: #337ab7;
-            border-radius: 4px;
+            border-color: lightgray;
+            border-radius: 0px;
             margin: 5px;
             width: calc(100% - 22px);
             padding: 6px;
@@ -130,15 +133,26 @@
             -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0); 
             box-shadow: 0 0px 0px rgba(0,0,0,0); 
         }
+
+        .panel-lexheading {
+            color: #fff;
+            background-color: #1e32fa;
+            border-color: #1e32fa;
+            border-radius: 1px;
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+        }
         
         .outter-container{
             margin-left: auto;
             margin-right: auto;
             max-width: 600px;
-            border: 1px solid  #337ab7;
-            border-radius: 4px;
+            border: 0.1px solid  #337ab7;
             -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
             box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+        .btn.focus, .btn:focus, .btn:hover {
+            color: #fff !important;
         }       
         
         #headercontainer {
@@ -233,9 +247,9 @@
                 </div>
                 <apex:form >
                     <apex:outputPanel styleclass="contentPanel" id="surveyPanel" layout="none">
-                        <apex:outputPanel layout="block" rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}" styleclass="postChatForm"> <!---->
+                        <apex:outputPanel layout="block" styleclass="postChatForm" rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}">
                             <div class="panel panel-primary">
-                                <div class="panel-heading">
+                                <div class="panel-lexheading">
                                     <h class="panel-title">{!$Label.LiveAgentPostChatTitle}</h>
                                 </div>
                                 <div class="questionLbl">
