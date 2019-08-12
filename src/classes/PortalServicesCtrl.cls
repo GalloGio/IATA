@@ -784,13 +784,12 @@ public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, Str
 private static String getServiceDescription (Portal_Applications__c recordService) {
 	String description = '';
 
-	User user = [select Id,ContactId from User where Id=:Userinfo.getUserId()];
-	Contact contact = [select Id,Preferred_Language__c from Contact where Id=:user.ContactId limit 1];
+	User user = [select Id,ContactId, Contact.Preferred_Language__c from User where Id=:Userinfo.getUserId()];
 
 	try {
 		LabelTranslator translator = new LabelTranslator();
 
-		String translatedString = translator.translate(recordService.Service_Description_Label__c,contact.Preferred_Language__c);
+		String translatedString = translator.translate(recordService.Service_Description_Label__c,user.Contact.Preferred_Language__c);
 
 		description = translatedString == null ? '' : translatedString;
 
