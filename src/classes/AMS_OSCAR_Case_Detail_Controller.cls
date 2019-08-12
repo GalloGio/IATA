@@ -573,6 +573,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Boolean hasEditableFields{
         get{
+
+            if(oscarObj.Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry'){
+                return false;
+            }
+            
             Boolean editable = false;
             for(FormField field : accreditationFields) if(field.inlineEdit) editable = true;
 
