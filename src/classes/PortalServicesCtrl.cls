@@ -1159,23 +1159,12 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 	//Activates old Iata Easy Pay users that were disabled after some time (Add users in Manage Portal Service)
 	@AuraEnabled
 	public static void ActivateIEPUsers(List<String> contactIds){
-
-		List<User> usersList = [select id, isActive, contactId from User where contactId in : contactIds];
-		if(!usersList.isEmpty()) {
-			List<User> usersToActivate = new List<User>();
-
-			for(User user : usersList) {
-				if(!user.isActive) {
-					user.isActive = true;
-					usersToActivate.add(user);
-				}
-			}
-
-			if(usersToActivate.size() != 0) {
-				update usersToActivate;
-			}
+		try{
+			DAL_WithoutSharing.ActivateIEPUsers(contactIds);
+		}catch(Exception e) {
+			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
-
+	
 	}
 
 	@AuraEnabled
