@@ -6,7 +6,6 @@
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
-        <ccEmails>gwars77@hotmail.com</ccEmails>
         <description>ACCA: Notification on new Application Change Request</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -216,6 +215,17 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/EUR_CaseassignmentBanking</template>
+    </alerts>
+    <alerts>
+        <fullName>CNS_Deadline_Date_Reached</fullName>
+        <description>CNS Deadline Date Reached</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/CNS_Deadline_Date_Reached</template>
     </alerts>
     <alerts>
         <fullName>Case_changed</fullName>
@@ -1363,6 +1373,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1372,10 +1386,6 @@
         </recipients>
         <recipients>
             <recipient>moutany@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1424,10 +1434,6 @@
         </recipients>
         <recipients>
             <recipient>taverasr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2888,6 +2894,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2901,10 +2911,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3028,6 +3034,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>kutsera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>lopezbaism@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3041,10 +3051,6 @@
         </recipients>
         <recipients>
             <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nabulsis@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3898,11 +3904,11 @@
 	<ccEmails>ganeaa@iata.org</ccEmails>
         <description>Send Email to Online store support</description>
         <protected>false</protected>
-        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderAddress>onlinestoresupport@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>Vendor_Templates/Contact_SNOW_ecommercecs</template>
+        <template>Vendor_Templates/Contact_Vendor</template>
     </alerts>
-	<alerts>
+    <alerts>
         <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
         <description>Send a notification to SIS Customer Support when a SIS E-Joining form is submitted</description>
         <protected>false</protected>
@@ -8657,6 +8663,31 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>CNS Case Send Email When Deadline Date Is Reached</fullName>
+        <actions>
+            <name>CNS_Deadline_Date_Reached</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.SAAM_Deadline_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CNS Collection Process</value>
+        </criteriaItems>
+        <description>Send email when Deadline Date Is reached for CNS cases.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <offsetFromField>Case.SAAM_Deadline_Date__c</offsetFromField>
+            <timeLength>4</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
         <fullName>CSR %3A New comment added</fullName>
         <actions>
             <name>BPSlink_New_Case_comment</name>
@@ -10223,7 +10254,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10336,7 +10367,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10394,7 +10425,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10447,7 +10478,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10510,7 +10541,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10568,7 +10599,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10626,7 +10657,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10684,7 +10715,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10742,7 +10773,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10800,7 +10831,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10858,7 +10889,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10916,7 +10947,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10974,7 +11005,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11032,7 +11063,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11090,7 +11121,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11148,7 +11179,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 6:00 PM</value>
+            <value>12/31/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -12094,7 +12125,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR (  RecordType.DeveloperName = &quot;Cases_Global&quot;,  RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;,RecordType.DeveloperName =&apos;DPC_Service_Request&apos;) , OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(OR (  RecordType.DeveloperName = &quot;Cases_Global&quot;,  RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; , RecordType.DeveloperName = &quot;CasesMENA&quot; , RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, RecordType.DeveloperName =&quot;ID_Card_Application&quot;, RecordType.DeveloperName =&apos;Airline_Coding_Application&apos;,RecordType.DeveloperName =&apos;DPC_Service_Request&apos;) , RecordType.DeveloperName =&apos;CNS_Collection_Process&apos;, OwnerId = LastModifiedById, contains(TEXT(Status),&quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13377,7 +13408,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND (2 OR 3 OR 4 OR 6) and 5</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3 OR 4 OR 6) AND 5 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13401,12 +13432,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/20/2013</value>
+            <value>12/20/2013 1:00 AM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
             <value>&quot;Macedonia, the former Yugoslav Republic of&quot;</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.SIDRA_Lite_Reason__c</field>
+            <operation>notContain</operation>
+            <value>CNS Collection,CNS Financial Review</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -13470,7 +13506,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterThan</operation>
-            <value>9/29/2012 6:00 PM</value>
+            <value>9/29/2012 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Short_Payment_Amount_USD__c</field>
@@ -13628,7 +13664,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 6:00 PM</value>
+            <value>9/1/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -13668,7 +13704,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 6:00 PM</value>
+            <value>9/1/2013 7:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -15396,7 +15432,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>5/30/2016 6:00 PM</value>
+            <value>5/30/2016 7:00 PM</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

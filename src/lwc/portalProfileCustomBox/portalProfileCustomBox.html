@@ -1,0 +1,152 @@
+<template>
+
+    <section aria-modal="true" class="slds-modal slds-fade-in-open">
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                    <span>{labels.New_Contact_Profile}</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                            onclick={closeModal}></lightning-icon>
+                    </span>
+                </div>
+
+                <div class="slds-is-relative">
+
+                    <lightning-record-edit-form record-id={recordId} object-api-name={objectName} onload={loadedEdit}
+                        onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+
+                        <div if:true={isLoading}>
+                            <div class="modalSpinnerContainer">
+                                <lightning-spinner class="" alternative-text="Loading" size="medium">
+                                </lightning-spinner>
+                            </div>
+                        </div>
+
+                        <div
+                            class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
+
+                            <lightning-messages>
+                            </lightning-messages>
+
+                            <template if:true={hasError}>
+                                <div class="whiteIcon text-xxsmall errorBox">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-m-left_medium slds-size_12-of-13">
+                                            {labels.CSP_Error_Message_Mandatory_Fields_Contact}
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div
+                                class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
+                                <div key={field} class="slds-size_1-of-2">
+
+                                    <lightning-combobox class="AccountName text-small labelValue textValue"
+                                        name={labels.ICCS_Account_Name_Label} label={labels.ICCS_Account_Name_Label}
+                                        field-name="AccountName" data-field="AccountName" value={accountSelected}
+                                        placeholder="--None--" options={accountList} onchange={handleChangeAccount}
+                                        required>
+                                    </lightning-combobox>
+
+                                </div>
+                                <div key={field} class="slds-size_1-of-2"></div>
+
+                                <template for:each={trackedFieldsList} for:item="field">
+
+                                    <template if:true={field.fullSize}>
+                                        <div key={field} class="text-small slds-size_1-of-1">
+                                            <lightning-input-field class="specialLabel textValue"
+                                                field-name={field.fieldName}>
+                                            </lightning-input-field>
+                                        </div>
+                                    </template>
+
+                                    <template if:false={field.fullSize}>
+                                        <div key={field} class="text-small slds-size_1-of-2">
+                                            <div class="slds-m-around_x-small">
+                                                <lightning-input-field class={field.class} data-field={field.fieldName}
+                                                    field-name={field.fieldName} onchange={checkValue}>
+                                                </lightning-input-field>
+                                                <div if:true={field.hasError} class="fieldError">
+                                                    {field.errorToDisplay}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                </template>
+
+                                <div
+                                    class="workingAreas text-small fontWeight slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_medium">
+                                    {labels.Working_Areas}
+                                </div>
+                                <template for:each={options} for:item="item">
+                                    <div key={item.label} class="text-xsmall slds-size_1-of-1 slds-large-size_1-of-2">
+
+                                        <div class="slds-m-left_x-small slds-m-bottom_small">
+                                            <label class="checkbox-button">
+                                                <input data-item={item.label} type="checkbox"
+                                                    class="checkbox-button__input" onchange={getValueSelected}
+                                                    name={item.label}>
+                                                <span data-item={item.label} class="workingAreasChangeOnError checkbox-button__control"
+                                                    onchange={getValueSelected}></span>
+                                                <span data-item={item.label} class="checkbox-button__label"
+                                                    onchange={getValueSelected}>
+                                                    {item.value}</span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </template>
+
+                                <div
+                                    class="text-small fontWeight slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_medium">
+                                    {labels.Contact_Type_Status}
+                                </div>
+                                <template for:each={contactTypeStatus} for:item="item">
+                                    <div key={item.label} class="text-xsmall slds-size_1-of-2">
+
+                                        <div class="slds-m-left_x-small slds-m-bottom_small">
+                                            <label class="checkbox-button">
+                                                <input data-checked={item.checked} data-item={item.label}
+                                                    type="checkbox" class="checkbox-button__input"
+                                                    onchange={getValueSelectedContactTypeStatus} name={item.label}>
+                                                <span data-checked={item.checked} data-item={item.label}
+                                                    class="checkbox-button__control"
+                                                    onchange={getValueSelectedContactTypeStatus}></span>
+                                                <span data-checked={item.checked} data-item={item.label}
+                                                    class="checkbox-button__label"
+                                                    onchange={getValueSelectedContactTypeStatus}>
+                                                    {item.label}</span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="slds-align_absolute-center slds-m-top_medium slds-m-bottom_medium">
+                                <span class="slds-m-right_medium">
+                                    <lightning-button variant="base" class="slds-m-top_small containedButtonWhite"
+                                        type="close" label={labels.Cancel} onclick={closeModal}>
+                                    </lightning-button>
+                                </span>
+                                <span>
+                                    <lightning-button variant="brand" class="slds-m-top_small containedButton"
+                                        type="submit" label={labels.Save} onclick={save}>
+                                    </lightning-button>
+                                </span>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</template>

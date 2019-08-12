@@ -16,8 +16,8 @@ public with sharing class ISSP_CurrencyCenterSurveyListingCtrl {
 
 	public Map<String,List<survey>> monthlySurveys {get; set;}
 
-	public Set<String> availableYearsAnnual {get; set;}
-	public Set<String> availableYearsMonthly {get; set;}
+	public List<String> availableYearsAnnual {get; set;}
+	public List<String> availableYearsMonthly {get; set;}
 
 	public ISSP_CurrencyCenterSurveyListingCtrl(){
 		this.user = [
@@ -70,7 +70,8 @@ public with sharing class ISSP_CurrencyCenterSurveyListingCtrl {
 				}
 				survey s = new survey();
 				s.Id = ccs.Id;
-				s.MonthName = getMonthName(Integer.valueOf(ccs.Month_Survey__c));
+				s.month = Integer.valueOf(ccs.Month_Survey__c);
+				s.MonthName = getMonthName(s.month);
 				s.Status = ccs.Status__c;
 				//s.AnnualSurveyId = '';
 				if(this.annualSurveys.keySet().contains(surveyYear)){
@@ -93,12 +94,29 @@ public with sharing class ISSP_CurrencyCenterSurveyListingCtrl {
 			}
 		}*/
 
-		this.availableYearsAnnual =  this.annualSurveys.keySet();
-		this.availableYearsMonthly =  this.monthlySurveys.keySet();
+		// sort annual values
+		this.availableYearsAnnual =  new List<String>(this.annualSurveys.keySet());
+		this.availableYearsAnnual.sort();
+		this.availableYearsAnnual = reverse(this.availableYearsAnnual);
+		//sort monthly values
+		this.availableYearsMonthly =  new List<String>(this.monthlySurveys.keySet());
+		this.availableYearsMonthly.sort();
+		this.availableYearsMonthly = reverse(this.availableYearsMonthly);
+		for(String month: this.availableYearsMonthly){
+			list<survey> listSurvey = this.monthlySurveys.get(month);
+			listSurvey.sort();
+		}
 		System.debug('jmc - ISSP_CurrencyCenterSurveyListingCtrl ctor annualSurveys: ' + annualSurveys);
 		System.debug('jmc - ISSP_CurrencyCenterSurveyListingCtrl ctor monthlySurveys: ' + monthlySurveys);
 	}
 
+	public static List<String> reverse(List<String> listString) {
+		List<String> listResult = new List<String>();
+		for(Integer i = listString.size()-1; i >= 0; i--) {
+			listResult.add(listString[i]);
+		}
+		return listResult;
+	}
 
 	public String getMonthName(Integer month){
 		String result = '';
@@ -143,11 +161,21 @@ public with sharing class ISSP_CurrencyCenterSurveyListingCtrl {
 		return result;
 	}
 
-	public class survey{
+	public class survey implements Comparable{
 		public String Id {get;set;}
+		public Integer Month {get; set;}
 		public String MonthName {get; set;}
 		public String Status {get; set;}
 		public String AnnualSurveyId {get;set;}
 		public String AnnualSurveyStatus {get;set;}
+
+		public Integer compareTo(Object compareTo) {
+			try {
+				survey surveyObject = (survey)compareTo;
+				return Month - surveyObject.Month;
+			} catch (Exception e) {
+				return -1;
+			}
+		}
 	}
 }

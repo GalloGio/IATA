@@ -27,7 +27,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Process__c</field>
             </layoutItems>
             <layoutItems>
@@ -54,6 +54,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sanity_check_received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Change_Entity_Location__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Change_of_Entity_Location_within_EU__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

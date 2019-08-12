@@ -1137,11 +1137,11 @@
 
 
            <br/> <br/>
-            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!newCase.CaseNumber}</a>.
+            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="{!portalRedirectToCase}" target="_self">{!newCase.CaseNumber}</a>.
             <br/><br/>
-                <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
+                <a href="{!portalRedirectToCase}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
-           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="/ISSP_CaseList{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
+           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="{!portalRedirectToCaseList}" target="_self">{!IF(isNewPortal, $Label.CSP_AMS_StepFinal_In_Addition2, $Label.ISSP_AMS_StepFinal_In_Addition2)}</a>.
             <br/><br/><br/><br/>
             <!---
             <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>

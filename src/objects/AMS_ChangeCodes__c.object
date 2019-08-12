@@ -449,6 +449,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field6__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Clear_Irregularities__c</columns>
+        <columns>Risk_ChangeCode__c</columns>
         <filterScope>Everything</filterScope>
         <label>ALL</label>
         <language>en_US</language>
@@ -525,7 +526,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CHL,CHN,CHC,CHO,NEW</value>
+            <value>LSP</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
@@ -575,6 +576,21 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Irregularities</fullName>
+        <columns>Change_Code__c</columns>
+        <columns>NAME</columns>
+        <columns>Risk_ChangeCode__c</columns>
+        <columns>Clear_Irregularities__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>IRR</value>
+        </filters>
+        <label>Irregularities</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>NG_RB</fullName>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
@@ -618,6 +634,32 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
             <value>0</value>
         </filters>
         <label>Not Applicable to CNS</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>RVW_Change_Code</fullName>
+        <columns>Class_Type__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field5Values__c</columns>
+        <columns>Field6__c</columns>
+        <columns>Field6Values__c</columns>
+        <columns>Accreditation_Model__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>RVW</value>
+        </filters>
+        <label>RVW Change Code</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -676,6 +718,16 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Change_Code__c</columns>
         <columns>Class_Type__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Account_status_change__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Record_Type__c</field>
@@ -693,6 +745,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Class_Type__c</columns>
+        <columns>Reason_Code__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>Field1__c</columns>
         <columns>Field1Values__c</columns>
@@ -704,7 +757,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field4Values__c</columns>
         <columns>Field5__c</columns>
         <columns>Field5Values__c</columns>
-        <columns>Account_status_change__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Record_Type__c</field>
@@ -716,6 +768,44 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>STR</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field2Values__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field3Values__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field4Values__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field5Values__c</columns>
+        <columns>Field6__c</columns>
+        <columns>Field6Values__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>STR</value>
+        </filters>
+        <label>STR</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>TER</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>TER</value>
+        </filters>
+        <label>TER</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>TIDS_Billable_CC</fullName>
