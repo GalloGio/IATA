@@ -11,6 +11,27 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Case_Status</fullName>
+        <field>Status</field>
+        <literalValue>Action Needed</literalValue>
+        <name>Case Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <targetObject>ParentId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Owner</fullName>
+        <field>OwnerId</field>
+        <lookupValue>GCS_iiNet</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change Owner</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <targetObject>ParentId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Change_case_status_to_Action_Needed</fullName>
         <field>Status</field>
         <literalValue>Action Needed</literalValue>
