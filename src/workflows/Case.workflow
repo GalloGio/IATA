@@ -5735,7 +5735,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
   (IF(OR(
     CONTAINS($UserRole.Name, &quot;Record owner&quot;),
     CONTAINS($UserRole.Name, &quot;System Integration non AIMS&quot;),
-    CONTAINS($UserRole.Name, &quot;IATA Information Technology Services &quot;)
+    CONTAINS($UserRole.Name, &quot;IATA Information Technology Services&quot;)
   ),
     &quot;IATA System&quot;,
   
