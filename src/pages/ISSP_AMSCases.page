@@ -430,7 +430,7 @@
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update',MyAMSCases.Reason1__c=='FoP Management'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                                         </apex:column>
 
-                                        <apex:column rowspan="2" headerValue="{!$ObjectType.Case.fields.Subject.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
+                                        <apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
                                             <apex:outputField value="{!MyAMSCases.Subject}"/> <br/>
 
                                             <apex:outputText value="{!MyAMSCases.AMS_Pax_Accreditation_Form__r[0].Full_Address__c}" style="color: grey; font-size: 12px;" rendered="{!CONTAINS(MyAMSCases.Subject, 'GoGlobal')}"/>
