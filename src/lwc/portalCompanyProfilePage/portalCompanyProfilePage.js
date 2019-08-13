@@ -160,11 +160,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
             this.lstTabs = tabsAux;
             if (viewContacts) {
                 if(!noSearch){
-                this.contactsLoaded = true;
-                this.isFetching = true;
-                this.searchContacts(this.searchValue);
-                }else{
-                    this.getContacts();
+					this.contactsLoaded = true;
+					this.isFetching = true;
+					this.searchContacts(this.searchValue);
                 }
             }
 
