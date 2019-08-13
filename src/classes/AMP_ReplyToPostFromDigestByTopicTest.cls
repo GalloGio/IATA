@@ -43,7 +43,8 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 			RecordTypeId = airlineHQRectTypeId, 
 			IATA_ISO_Country__c = countryQR.Id, 
 			Membership_status__c = 'IATA member', 
-			Sector__c = 'Airline', 
+			Sector__c = AMS_Utils.SECTOR_AIRLINE,
+            Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY,
 			ACLI_Status__c = 'Active Company'
 		);
 
@@ -56,7 +57,8 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 			RecordTypeId = airlineHQRectTypeId, 
 			IATA_ISO_Country__c = countryPT.Id, 
 			Membership_status__c = 'IATA member', 
-			Sector__c = 'Airline', 
+			Sector__c = AMS_Utils.SECTOR_AIRLINE,
+            Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY,
 			ACLI_Status__c = 'Active Company'
 		);
 		

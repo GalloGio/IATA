@@ -213,6 +213,10 @@
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
         <label>Địa chỉ phù hợp đã được tìm thấy.</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
@@ -1717,6 +1721,10 @@
     <customLabels>
         <label><!-- CC --></label>
         <name>CC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ANG_Portal_Admin --></label>
@@ -15389,6 +15397,10 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
     <customLabels>
         <label>Xin vui lòng nhập họ của bạn</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>Xin vui lòng chọn quốc gia của bạn</label>

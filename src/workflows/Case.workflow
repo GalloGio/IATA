@@ -840,7 +840,6 @@
     <alerts>
         <fullName>IATA_iiNet_Service_Now</fullName>
         <ccEmails>iata@service-now.com</ccEmails>
-        <ccEmails>iinetCare@iata.org</ccEmails>
         <description>IATA iiNet Service Now</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3902,9 +3901,9 @@
         <ccEmails>iata@servicenow.org</ccEmails>
         <description>Send Email to Online store support</description>
         <protected>false</protected>
-        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderAddress>onlinestoresupport@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>Vendor_Templates/Contact_SNOW_ecommercecs</template>
+        <template>Vendor_Templates/Contact_Vendor</template>
     </alerts>
     <alerts>
         <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
@@ -8834,6 +8833,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>created to replace standard notification from the assignment rules.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Cases Escalated To SNOW</fullName>
+        <actions>
+            <name>IATA_iiNet_Service_Now</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <description>Cases Escalated To SNOW</description>
+        <formula>OwnerId = &apos;00G1r0000031kjM&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Change record type from Europe to AME</fullName>

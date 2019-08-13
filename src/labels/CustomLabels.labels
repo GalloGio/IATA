@@ -136,6 +136,13 @@
         <value>Enter a valid city.</value>
     </labels>
     <labels>
+        <fullName>AMS_DQ_First_Suggestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ First Suggestion</shortDescription>
+        <value>The selected city is {0}</value>
+    </labels>
+    <labels>
         <fullName>AMS_DQ_Found_Addr</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2996,6 +3003,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CC</shortDescription>
         <value>CC</value>
+    </labels>
+    <labels>
+        <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_AMS_StepFinal_In_Addition2</shortDescription>
+        <value>Profile -&gt; Cases</value>
     </labels>
     <labels>
         <fullName>CSP_ANG_Portal_Admin</fullName>
@@ -29110,6 +29124,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Please enter your last name</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_Error_LegalName</fullName>
+        <categories>ISSP, login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Registration Error LegalName</shortDescription>
+        <value>Please enter your legal name</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_Error_Location</fullName>
         <categories>ISSP, login</categories>
         <language>en_US</language>
@@ -37333,14 +37355,6 @@ Short Payment Amount USD: {3}
 Remittance date: {4}
 
 ***Above details might change after the creation of the case, Please refer to the case mentioned for accurate information.</value>
-    </labels>
-    <labels>
-        <fullName>SidraLiteROFieldError</fullName>
-        <categories>SIDRA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Error displayed when a RO field is changed in a SIDRA Lite case</shortDescription>
-        <value>You can't modify &quot;{0}&quot; for a CNS collection process.</value>
     </labels>
     <labels>
         <fullName>SIS</fullName>

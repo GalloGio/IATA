@@ -98,9 +98,15 @@
 
                             <div class="slds-col slds-size_1-of-4 slds-m-bottom_large"
                                 if:false={serviceRecord.accessGranted}>
-                                <lightning-button class=" slds-float_right containedButtonSlim"
-                                    label={serviceRecord.btnLabel} onclick={handleTopAction}>
-                                </lightning-button>
+                                <div if:true={isIFG_Service}>
+                                    <span class="slds-p-vertical_x-small slds-p-horizontal_medium 
+                                        text-bold text-xsmall disabledButton">{serviceRecord.btnLabel}</span>
+                                </div>
+                                <div if:false={isIFG_Service}>
+                                    <lightning-button class=" slds-float_right containedButtonSlim"
+                                        label={serviceRecord.btnLabel} onclick={handleTopAction}>
+                                    </lightning-button>
+                                </div>
                             </div>
 
                             <div class="slds-col slds-size_1-of-1 customBorderlessCardWhite text-xsmall">

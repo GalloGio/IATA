@@ -213,6 +213,10 @@
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
         <label>تم العثور على العنوان (العناوين) المطابق (المطابقة).</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
@@ -1715,6 +1719,10 @@
     <customLabels>
         <label><!-- CC --></label>
         <name>CC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ANG_Portal_Admin --></label>
@@ -15383,6 +15391,10 @@ and
     <customLabels>
         <label>يرجى إدخال اسم العائلة</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>يرجى اختيار البلد</label>

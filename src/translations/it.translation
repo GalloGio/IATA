@@ -213,6 +213,10 @@
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
         <label>Indirizzo/i corrispondente/i trovato/i.</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
@@ -1719,6 +1723,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- CC --></label>
         <name>CC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ANG_Portal_Admin --></label>
@@ -15394,6 +15402,10 @@ Tenga presente che molte fatture IATA vengono addebitate via BSP/CASS. La preghi
     <customLabels>
         <label>Inserisca il suo cognome</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>Selezioni il suo paese</label>
