@@ -745,9 +745,9 @@ public with sharing class PortalProfileCtrl {
         fieldLabels.put('Billed_Member_Name__c', LABEL_BILLING_MEMBER_NAME);
         fieldLabels.put('Invoice_Date__c', LABEL_INVOICE_DATE);
 
-        for(String fieldName: toRow){
+        /*for(String fieldName: toRow){
             if(!fieldLabels.containsKey(fieldName)){ fieldLabels.put(fieldName,fieldName);}
-        }
+        }*/
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
 

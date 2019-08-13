@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-unused-vars */
 /**
  * Created by pvavruska on 5/23/2019.
  */
@@ -24,7 +26,7 @@ import NewContact from '@salesforce/label/c.csp_CreateNewContact';
 import NoAccount from '@salesforce/label/c.CSP_NoAccount';
 import CSP_Branch_Offices from '@salesforce/label/c.CSP_Branch_Offices';
 import ISSP_Contacts from '@salesforce/label/c.ISSP_Contacts';
-import CSP_Outstanding_Invoices from '@salesforce/label/c.CSP_Outstanding_Invoices'; //WMO-627 - ACAMBAS 
+import CSP_Outstanding_Invoices from '@salesforce/label/c.CSP_Outstanding_Invoices'; //WMO-627 - ACAMBAS
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import IATA_Invoices from '@salesforce/label/c.CSP_IATA_Invoices'; //WMO-627 - ACAMBAS 
 import EF_Invoices from '@salesforce/label/c.CSP_EF_Invoices'; //WMO-627 - ACAMBAS
@@ -127,6 +129,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
                 }
 
                 let tabsAux = [];
+                this.isAdmin = true;
                 let tabNames = [this.labels.CompanyInformation, this.labels.CSP_Branch_Offices, this.labels.ISSP_Contacts, this.labels.CSP_Outstanding_Invoices]; //+'Company Calendar', 'Activity Log'];
 
                 for (let i = 0; i < tabNames.length; i++) {
@@ -407,8 +410,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
         for (let i = 0; i < tabsAux.length; i++) {
             if (i + "" === clickedTab) {
                 tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
-            } else {
-                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
             }
         }
 
@@ -424,8 +425,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
             for (let i = 0; i < subTabsAux.length; i++) {
                 if (i + "" === clickedSubTab) {
-                    subTabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
-                } else {
                     subTabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
                 }
             }
@@ -707,7 +706,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
         clearTimeout(this.timeout);
 
         // Make a new timeout set to go off in 1500ms
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
             //this.testfunction();
 
@@ -729,7 +727,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
         clearTimeout(this.timeout);
 
         // Make a new timeout set to go off in 1500ms
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
             //this.testfunction();
 
@@ -855,7 +852,6 @@ export default class PortalCompanyProfilePage extends LightningElement {
         clearTimeout(this.timeout);
 
         // Make a new timeout set to go off in 1500ms
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
             //this.testfunction();
             this.branchesQuery = this.searchTextBranches;
