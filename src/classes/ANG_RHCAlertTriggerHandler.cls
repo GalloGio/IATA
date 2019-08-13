@@ -900,13 +900,12 @@ public class ANG_RHCAlertTriggerHandler{
                     toAddresses.add(sManager.Email__c);
             }
         }
-
-        List<String> toAddressesNoUsers = new List<String>(toAddresses);
+        
         for(User u : [SELECT Id, Email from User where Email IN :toAddresses]) {
             toAddressesUsers.add(u.Id);
-            toAddressesNoUsers.remove(toAddressesNoUsers.IndexOf(u.Email));
+            toAddresses.remove(u.Email);
         }
-        
+        List<String> toAddressesNoUsers = new List<String>(toAddresses);
         if(String.isEmpty(emailTemplate)){
             System.debug('Warning: No email Template defined');
             return emailLst;
