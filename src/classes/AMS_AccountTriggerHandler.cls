@@ -64,9 +64,18 @@ public class AMS_AccountTriggerHandler {
     }
 
     public static void handleBeforeUpdate(List<Account> accs, Map<Id,Account> oldMap){
-        
         //resizeNumericString
-       handleSectorChangesChanges(accs, oldMap); 
+        for(Account  ag: accs){
+            validateCharacters(ag);//AMSU-179
+            if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+                
+                if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric() && oldMap.get(ag.Id).Cass_number__c!=ag.Cass_number__c){
+                    ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
+                }
+            }
+            if(ag.Status__c!= null && ag.Status__c!=oldMap.get(ag.Id).Status__c)
+                ag.Date_Organisation_Status_attained__c = Date.today();
+        }
 
        System.debug('Start CASS verification');
        verifyCassNumberUniqueness(accs,oldMap);
@@ -523,50 +532,6 @@ public class AMS_AccountTriggerHandler {
         if(certs != null && !certs.isEmpty()){
             update certs;
         }
-    }
-
-    private static void handleSectorChangesChanges(List<Account> accs, Map<Id,Account> oldMap){
-        Set<Id> citiesIds = new Set<Id>();
-        Set<Id> statesIds = new Set<Id>();
-        Set<Id> countriesIds = new Set<Id>();
-
-        for(Account  ag: accs){  
-            
-            validateCharacters(ag);//AMSU-179
-            if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
-                
-                if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric() && oldMap.get(ag.Id).Cass_number__c!=ag.Cass_number__c){
-                    ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
-                }
-            }
-            if(ag.Status__c!= null && ag.Status__c!=oldMap.get(ag.Id).Status__c)
-                ag.Date_Organisation_Status_attained__c = Date.today();
-            
-            countriesIds.add(ag.IATA_ISO_Country__c);
-            countriesIds.add(ag.IATA_ISO_Shipping_Country__c);
-            citiesIds.add(ag.Geoname_Billing_City__c);
-            citiesIds.add(ag.Geoname_Shipping_City__c);
-            statesIds.add(ag.IATA_ISO_Billing_State__c);
-            statesIds.add(ag.IATA_ISO_Shipping_State__c);            
-        }
-
-        Map<Id, IATA_ISO_City__c> citiesMap = new Map<Id, IATA_ISO_City__c>([SELECT Name FROM IATA_ISO_City__c WHERE Id in :citiesIds]);
-        Map<Id, IATA_ISO_State__c> statesMap = new Map<Id, IATA_ISO_State__c>([SELECT Name FROM IATA_ISO_State__c WHERE Id in :statesIds]);
-        Map<Id, IATA_ISO_Country__c> countriesMap = new Map<Id, IATA_ISO_Country__c>([SELECT Name FROM IATA_ISO_Country__c WHERE Id in :countriesIds]);
-        
-        updateAddressAccordingToLookup(accs, citiesMap, statesMap, countriesMap);        
-    }
-
-    private static void updateAddressAccordingToLookup(List<Account> accs, Map<Id, IATA_ISO_City__c> citiesMap, Map<Id, IATA_ISO_State__c> statesMap, Map<Id, IATA_ISO_Country__c> countriesMap){
-        
-        for(Account a : accs){
-            a.BillingCity     = a.Geoname_Billing_City__c != null ? citiesMap.get(a.Geoname_Billing_City__c).Name : a.BillingCity;
-            a.BillingState    = a.IATA_ISO_Billing_State__c != null ? statesMap.get(a.IATA_ISO_Billing_State__c).Name : a.BillingState;
-            a.BillingCountry  = a.IATA_ISO_Country__c != null ? countriesMap.get(a.IATA_ISO_Country__c).Name : a.BillingCountry;
-            a.ShippingCity    = a.Geoname_Shipping_City__c != null ? citiesMap.get(a.Geoname_Shipping_City__c).Name : a.ShippingCity;
-            a.ShippingState   = a.IATA_ISO_Shipping_State__c != null ? statesMap.get(a.IATA_ISO_Shipping_State__c).Name : a.ShippingState;
-            a.ShippingCountry = a.IATA_ISO_Shipping_Country__c != null ? countriesMap.get(a.IATA_ISO_Shipping_Country__c).Name : a.ShippingCountry;
-        }        
     }
 
 }
