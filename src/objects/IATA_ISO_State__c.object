@@ -53,7 +53,7 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-	<fields>
+    <fields>
         <fullName>Admin_Subdivision_Level__c</fullName>
         <externalId>false</externalId>
         <label>Admin Subdivision Level</label>
