@@ -825,8 +825,30 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                                 })
                             );
                         }
+                    }).catch(error => {
+                        this.showSpinner = false;
+                        console.log(error);
+                        this.componentLoading = false;
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error',
+                                message: this.label.ISSP_ANG_GenericError,
+                                variant: 'error'
+                            })
+                        );
                     });
 
+                }).catch(error => {
+                    this.showSpinner = false;
+                    this.componentLoading = false;
+                    console.log(error);
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: this.label.ISSP_ANG_GenericError,
+                            variant: 'error'
+                        })
+                    );
                 });
 
         } else {
