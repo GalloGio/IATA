@@ -271,16 +271,16 @@ public class ANG_PortalApplicationRightHandler {
 			
 			for(Portal_Application_Right__c par : triggerNew){
 				
-				List<User> usersToGetAccess = new List<User>();
+				Set<Id> usersToGetAccess = new Set<Id>();
 				
 				for(ISSP_External_Report__c er : externalReports){
 					for(User u : users){
 						if(u.ContactId == par.Contact__c && u.AccountId == er.Account__c)
-							usersToGetAccess.add(u);
+							usersToGetAccess.add(u.Id);
 					}
 					
 					if(!usersToGetAccess.isEmpty())
-						ExternalFilesUtils.setExternalReportsSharingSetting(usersToGetAccess, er, 'Read');
+						ExternalFilesUtils.setExternalReportsSharingSetting(usersToGetAccess, er.Id, 'Read');
 				}
 			}
 		}
