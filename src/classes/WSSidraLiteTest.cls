@@ -2162,4 +2162,77 @@ public class WSSidraLiteTest {
         Test.stopTest();
     }
 
+    //ACAMBAS - WMO-483: Begin
+    @isTest
+    public static void testCreateSidraLiteForCNS() {
+        Case sidraLiteCase;
+
+        User testUser = SidraLiteManagerTest.getCNSUser();
+        SidraLiteManagerTest.configureUserToCNS(testUser);
+
+        System.RunAs(testUser) {
+            Case cnsCase = SidraLiteManagerTest.createCNSAgent();
+            insert cnsCase;
+
+            try {
+                //Should fail with the error: 'Sidra Lite case cannot be created before Deadline Date'
+                sidraLiteCase = WSSidraLite.sidraLiteAction(cnsCase.Id);
+            }
+            catch (Exception e) {
+                System.assert(true);
+            }
+
+            Test.startTest();
+
+            cnsCase.SAAM_Deadline_Date__c = Date.today();
+            update cnsCase;
+
+            sidraLiteCase = WSSidraLite.sidraLiteAction(cnsCase.Id);
+
+            Test.stopTest();
+
+            System.assertEquals(true, sidraLiteCase.CNSCase__c);
+            System.assertEquals('CASS', sidraLiteCase.BSP_CASS__c);
+            System.assertEquals('CNS Collection', sidraLiteCase.SIDRA_Lite_Reason__c);
+            System.assertEquals(Date.today(), sidraLiteCase.NOT_Date__c);
+        }
+    }
+
+    @isTest
+    public static void testUpdateSidraLiteForCNS() {
+        User testUser = SidraLiteManagerTest.getCNSUser();
+        SidraLiteManagerTest.configureUserToCNS(testUser);
+
+        System.RunAs(testUser) {
+            Case cnsCase = SidraLiteManagerTest.createCNSAgent();
+            insert cnsCase;
+
+            cnsCase.SAAM_Deadline_Date__c = Date.today();
+            update cnsCase;
+
+            Test.startTest();
+
+            Case sidraLiteCase = WSSidraLite.sidraLiteAction(cnsCase.Id);
+            insert sidraLiteCase;
+
+            try {
+                WSSidraLite.sidraLiteAction(cnsCase.Id);
+            }
+            catch (Exception e) {
+                //Update child Sidra Lite case, continue?
+                System.assert(true);
+            }
+
+            WSSidraLite.updateSecondAndThirdDeadline(cnsCase.Id);
+
+            sidraLiteCase = [SELECT Propose_Default__c, Termination_Reason__c FROM Case WHERE Id = :sidraLiteCase.Id];
+
+            System.assertEquals(Date.today(), sidraLiteCase.Propose_Default__c);
+            System.assertEquals(null, sidraLiteCase.Termination_Reason__c);
+
+            Test.stopTest();
+        }
+    }
+    //ACAMBAS - WMO-483: End
+
 }

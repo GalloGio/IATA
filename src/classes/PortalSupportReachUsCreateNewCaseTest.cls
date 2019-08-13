@@ -35,21 +35,21 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
         
         Account child2 = ISSP_ObjectFactory.createNewAccount();
         child2.BillingCity = 'GB';
-        child2.Name = 'GB';
+        child2.Name = 'GB1';
         child2.Site = 'headSite';
         child2.sector__c = 'Travel Agent';
         child2.Top_Parent__c = parent.Id;
-        child2.IATAcode__c = '1234568';
+        child2.IATAcode__c = '1234565';
         child2.IATA_ISO_Country__c = country.Id;
         child2.RecordTypeId = rtIdBr;
         insert child2;
         
         Account child3 = ISSP_ObjectFactory.createNewAccount();
-        child3.Name = 'GB';
+        child3.Name = 'GB2';
         child3.Site = 'headSite';
         child3.sector__c = 'Travel Agent';
         child3.Top_Parent__c = parent.Id;
-        child3.IATAcode__c = '1234568';
+        child3.IATAcode__c = '1234566';
         child3.IATA_ISO_Country__c = country.Id;
         child3.RecordTypeId = rtIdBr;
         insert child3;
@@ -88,6 +88,13 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
             Complaint__c = true,
             Recordtype__c = 'Cases_Global',
             Topic__c = 'ICCS__c',
+            Subtopic__c = '',
+            Country_concerned_by_the_query__c = 'GB'));
+        listFaq2CaseRT.add( new ISSP_FAQ2Case_Record_Type__c(
+            Name = '4',
+            Complaint__c = true,
+            Recordtype__c = 'Cases_Global',
+            Topic__c = '',
             Subtopic__c = '',
             Country_concerned_by_the_query__c = 'GB'));
         insert listFaq2CaseRT;
