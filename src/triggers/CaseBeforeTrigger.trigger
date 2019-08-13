@@ -907,6 +907,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isInsert]');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
             DPCCasesUtil.addAdditionalContactsBefore(Trigger.new);
+            CNSCaseManager.insertCNSCases(Trigger.new); //ACAMBAS - WMO-482
         }
         /*trgCase Trigger.isInsert*/
 
@@ -1451,8 +1452,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
         if (trgCase){
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isUpdate]');
-            SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
+            SidraLiteManager.updateSidraLiteCases(Trigger.newMap, Trigger.oldMap); //ACAMBAS - WMO-483: Changed parameters from lists to maps
             CaseDueDiligence.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+            CNSCaseManager.updateCNSCases(Trigger.new, Trigger.oldMap); //ACAMBAS - WMO-482
         }
 
         /*trgProcessISSCase Trigger.isUpdate*/
