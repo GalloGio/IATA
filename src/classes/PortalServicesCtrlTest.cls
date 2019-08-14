@@ -608,7 +608,7 @@ public class PortalServicesCtrlTest {
 		//requestAccessToICCS
 		PortalServicesCtrl.newAppsRequestICCS(portalServicelist.get(1).id, '', c.id);
 
-		PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false);
+		PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false,'');
 		Test.StopTest();
 	}
 }
