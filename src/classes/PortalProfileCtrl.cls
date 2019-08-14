@@ -55,7 +55,7 @@ public with sharing class PortalProfileCtrl {
     public static User myUser {
         get {
             if(myUser == null) {
-                myUser = DAL_ISSP.getUser(UserInfo.getUserId());
+                myUser = CSP_Utils.getLoggedUser();
             }
             return myUser;
         }
@@ -511,7 +511,13 @@ public with sharing class PortalProfileCtrl {
         String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
 
 
-        List<String> toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
+        List<String> toRow;
+
+        if(rType == 'IATA_Agency' && myContact.Account.Status__c != AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) {
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LocationCode','LastLogin'};
+        }else{
+            toRow = new List<String>{'Name','Email','Type_of_Contact__c','LastLogin'};
+        }
         Map<String,String> fieldLabels = new Map<String,String>();
 
         FieldWrapper fw;
@@ -670,4 +676,28 @@ public with sharing class PortalProfileCtrl {
         return wrapperMap;
 
     }
+    @AuraEnabled
+    public static String goToOldIFAP(Boolean hasContact, String contactId, String contactName){
+        Id accountID = (myUser.Contact.Account.Top_Parent__c != null || myUser.Contact.Account.Top_Parent__c != '' ? myUser.Contact.Account.Top_Parent__c : myUser.Contact.AccountId);
+
+        if (hasContact){
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID + '&vContactId=' + contactId + '&vContactName=' + contactName);
+        } else {
+            return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, 'ISSP_AssignFinancialContact' + '?id=' + accountID);
+        }
+    }
+
+    @AuraEnabled
+    public static Boolean isAdminAndIATAAgencyAcct(){
+        Boolean isIATAAgencyAcct = false;
+        Boolean isAdmin = CSP_Utils.isAdmin();
+
+        String categoryAcc = (myUser.Contact.Account.Top_Parent__c == null ? myUser.Contact.Account.Category__c : myUser.Contact.Account.Top_Parent__r.Category__c);
+
+        isIATAAgencyAcct = categoryAcc == 'IATA Passenger Sales Agent' || categoryAcc == 'IATA Cargo Agent';
+
+        return isIATAAgencyAcct && isAdmin;
+
+    }
+
 }

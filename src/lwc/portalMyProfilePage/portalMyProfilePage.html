@@ -25,16 +25,6 @@
                         </template>
                     </template>
 
-                    <template if:true={mapOfValuesAccount}>
-                        <template for:each={mapOfValuesAccount} for:item="keyValue">
-                            <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
-                                record-id={loggedUser.Contact.AccountId} fields={keyValue.value} show-edit="true"
-                                class="section" section-title={keyValue.key} data-name={keyValue.key}
-                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
-                            </c-portal-record-form-wrapper>
-                        </template>
-                    </template>
-
                 </div>
             </div>
 

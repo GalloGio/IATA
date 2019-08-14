@@ -51,13 +51,15 @@
     flex: 1 0 auto;
     align-items: center;
     justify-content: center;
+
+.displayFlex {
+  display: flex;
 }
 
-.slds-form-element__label{
-    display:none;
+.marginRight {
+  margin-right: 10px;
 }
 
-.borderedSearch{
-    width:30%;
-    border-bottom: solid #e2e4e8 2px;
+.heightCreateContact {
+  height: 100%;
 }

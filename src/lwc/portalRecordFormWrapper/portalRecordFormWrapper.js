@@ -124,35 +124,40 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 this.functionOptions = options;
             });
 
+
         }
+
+        isAdmin().then(result => {
+            this.showEdit = (result ? true : false);
+        });
 
     }
 
     get accessibilityGetter() {
 
+        let accessibilityTextLocal = '';
         let contactTypeStatus = [];
         let contactType = [];
         let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
-        fieldsToIterate.forEach(function (item) {
-            if (item.isAccessibility) {
-                contactType = item.accessibilityList;
-                item.accessibilityList.forEach(function (acc) {
-                    if (acc.checked) {
-                        contactTypeStatus.push(acc.label);
-                    }
-                });
-            }
-        });
 
-        this.accessibilityText = contactTypeStatus.join(', ');
+        if (fieldsToIterate) {
+            fieldsToIterate.forEach(function (item) {
+                if (item.isAccessibility) {
+                    contactType = item.accessibilityList;
+                    item.accessibilityList.forEach(function (acc) {
+                        if (acc.checked) {
+                            contactTypeStatus.push(acc.label);
+                        }
+                    });
+                }
+            });
+        }
+
+        accessibilityTextLocal = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
 
-        isAdmin().then(result => {
-            this.showEdit = (result ? true : false);
-        });
-        
-        return this.accessibilityText
+        return accessibilityTextLocal
     }
 
     openModal() { this.showEditModal = true; }
@@ -173,7 +178,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.isSaving = false;
 
         let listSelected = JSON.parse(JSON.stringify(this.listSelected));
-        this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
         //eval("$A.get('e.force:refreshView').fire();");
     }

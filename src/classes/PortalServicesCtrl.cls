@@ -6,6 +6,7 @@ Public static final String PORTAL_ACCESS_REQUESTED='Access Requested';
 Public static final String PORTAL_ACCESS_DENIED='Access Denied';
 Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
+Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String WILDCARD = 'ALL';
 
 public class portalServiceException extends Exception {}
@@ -47,12 +48,18 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	portalApplicationList.addAll(requestableAppList);
 
 	for (Portal_Applications__c pApp: portalApplicationList) {
+		if(pApp.Name.contains('Paypal') && pApp.VisibleCNS__c) {
+			continue;
+		}		
+		if((pApp.Name == 'Trained Staff Certification' || pApp.Name == 'Local Industry Groups') && con.User_Portal_Status__c != PORTAL_ADMIN_APPROVED) {
+			continue;
+		}
 		if (pApp.Name == 'Insurance Providers' || pApp.Name == 'Financial Securities') {
 			if (((con.Account.Sector__c == 'Travel Agent' || con.Account.Sector__c == 'Cargo Agent')
 			     && con.Account.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) &&
 			    (allowedLocTypes.contains(con.Account.Location_Type__c) || con.Account.Is_Branch_Abroad__c == 'Yes') &&
 			    (AMS_Utils.ACTIVEAGENCYSTATUS.contains(con.Account.Status__c) || con.Account.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
-			    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == 'Approved Admin')) {
+			    (con.Financial_Assessment_Contact__c || con.User_Portal_Status__c == PORTAL_ADMIN_APPROVED)) {
 				externalLinksList.add(pApp);
 			}
 		} else if (pApp.ANG_Flag_Restrict_Accredited_Agent__c && pApp.ANG_Flag_Restrict_Sector__c) {
@@ -119,12 +126,10 @@ public static List<Portal_Application_Right__c> getFavoriteServicesList(){
 @AuraEnabled(cacheable=true)
 public static String paymentLinkRedirect(){
 
-	User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+	User userAux = [SELECT Id, Contact.Credit_Card_Payment_Link__c FROM User WHERE Id = :UserInfo.getUserId()];
 
-	Contact con = [Select id, Credit_Card_Payment_Link__c from Contact where id =:userAux.ContactId];
-
-	if(con.Credit_Card_Payment_Link__c != null) {
-		return con.Credit_Card_Payment_Link__c;
+	if(userAux.Contact != null && userAux.Contact.Credit_Card_Payment_Link__c != null) {
+		return userAux.Contact.Credit_Card_Payment_Link__c;
 	}else{
 		return '';
 	}
@@ -405,6 +410,20 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 		}
 	}
 
+	User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+	String contactId = userAux.ContactId;
+
+	List<Portal_Applications__c> lstPA = getNonRequestableServicesList(contactId);
+	List<ServiceWrapper> lstServiceWrapper = new List<ServiceWrapper>();
+
+	if(!lstPA.isEmpty()) {
+		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
+		for(Portal_Applications__c portalAppAux : lstPA) {
+			lstServiceWrapper.add(new ServiceWrapper(portalAppAux, false, '', false, ''));
+		}
+		lstToReturn.addAll(lstServiceWrapper);
+	}
+
 	return lstToReturn;
 }
 
@@ -636,10 +655,12 @@ public boolean hasNoContact {get; set;}
 
 
 public ContactWrapper(Portal_Application_Right__c par){
+	String accountLocation = String.isNotBlank(par.Contact__r.Account.BillingCity) ? ' (' + par.Contact__r.Account.BillingCity + ')' : '';
+
 	this.contactId=par.contact__c;
 	this.contactName=par.contact__r.name;
 	this.emailAddress=par.contact__r.email;
-	this.iataCodeLoc=par.contact__r.Account.iataCode__C+' ('+par.Contact__r.Account.BillingCity+')';
+	this.iataCodeLoc=par.contact__r.Account.IATACode__c + accountLocation;
 	this.userPortalStatus=par.contact__r.user_portal_status__c;
 	this.serviceRight= par.right__C;
 
@@ -721,6 +742,8 @@ public List<ContactWrapper> contactList {get; set;}
 public integer totalNrContacts {get; set;}
 @AuraEnabled
 public string userContactId {get; set;}
+@AuraEnabled
+public String serviceDescriptionLabel {get; set;}
 private string iepStatus {get; set;}
 private boolean isAuthorisedSignatory {get; set;}
 
@@ -742,9 +765,30 @@ public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, Str
 		this.accountNotOpenError = false;
 	}
 
+	this.serviceDescriptionLabel = getServiceDescription(recordService);
+
 	alignStatus(this,status);
 }
 
+}
+
+private static String getServiceDescription (Portal_Applications__c recordService) {
+	String description = '';
+
+	User user = [select Id,ContactId, Contact.Preferred_Language__c from User where Id=:Userinfo.getUserId()];
+
+	try {
+		LabelTranslator translator = new LabelTranslator();
+
+		String translatedString = translator.translate(recordService.Service_Description_Label__c,user.Contact.Preferred_Language__c);
+
+		description = translatedString == null ? '' : translatedString;
+
+	}catch(Exception err) {
+		System.debug(err);
+	}
+
+	return description;
 }
 
 /**
@@ -878,7 +922,7 @@ public static String serviceWrapperRedirect(String serviceId){
 	                          WHERE id =: UserInfo.getUserId()];
 
 
-	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == 'Approved Admin');
+	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == PORTAL_ADMIN_APPROVED);
 
 	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
 	                                                                                 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
