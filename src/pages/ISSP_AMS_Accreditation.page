@@ -568,7 +568,7 @@
                                 </apex:selectList>
 
                                 <apex:outputPanel id="compare">
-                                    <apex:commandLink id="ProductComparisonLink" onclick="navigetToComparison(); return false;" value="{!$Label.ISSP_AMS_Compare_Accreditation_Types}" reRender=""/>
+                                    <apex:commandLink id="ProductComparisonLink" onclick="navigateToComparison(); return false;" value="{!$Label.ISSP_AMS_Compare_Accreditation_Types}" reRender=""/>
                                 </apex:outputPanel>
 
                                 <script>
