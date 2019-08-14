@@ -751,7 +751,6 @@ public integer totalNrContacts {get; set;}
 public string userContactId {get; set;}
 @AuraEnabled
 public Boolean isIFGPending {get; set;}
-public String serviceDescriptionLabel {get; set;}
 private string iepStatus {get; set;}
 private boolean isAuthorisedSignatory {get; set;}
 
@@ -772,32 +771,13 @@ public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, Str
 		this.addUsersEnable =  isAdmin;
 		this.accountNotOpenError = false;
 	}
-
-	this.serviceDescriptionLabel = getServiceDescription(recordService);
-
+	
 	alignStatus(this,status);
 }
 
 }
 
-private static String getServiceDescription (Portal_Applications__c recordService) {
-	String description = '';
 
-	User user = [select Id,ContactId, Contact.Preferred_Language__c from User where Id=:Userinfo.getUserId()];
-
-	try {
-		LabelTranslator translator = new LabelTranslator();
-
-		String translatedString = translator.translate(recordService.Service_Description_Label__c,user.Contact.Preferred_Language__c);
-
-		description = translatedString == null ? '' : translatedString;
-
-	}catch(Exception err) {
-		System.debug(err);
-	}
-
-	return description;
-}
 
 /**
    Returns true if current user is a Portal Admin
