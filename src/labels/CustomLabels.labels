@@ -3072,43 +3072,6 @@ Payment required on receipt of this Payment Advice
         <value>Add User</value>
     </labels>
     <labels>
-        <fullName>CSP_ArticleHelpful</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ArticleHelpful</shortDescription>
-        <value>Was this article helpful?</value>
-    </labels>
-    <labels>
-        <fullName>csp_AgencyReadOnly</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Request New Service</shortDescription>
-        <value>Agency Read Only</value>
-    </labels>
-	<labels>
-        <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_AMS_StepFinal_In_Addition2</shortDescription>
-        <value>Support -&gt; Reach Us</value>
-    </labels>
-	<labels>
-        <fullName>CSP_ANG_Portal_Admin</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ANG_Portal_Admin</shortDescription>
-        <value>Only Legal Authorized Signatories can notify IATA about office closures.</value>
-    </labels>
-	<labels>
-        <fullName>CSP_ANG_Portal_Admin_Authorized_Signature</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
-        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToMyProfileJs();&quot;&gt;My Profile -&gt; Portal Accessibility&lt;/span&gt; page.</value>
-    </labels>
-    <labels>
         <fullName>CSP_Announcement</fullName>
         <language>en_US</language>
         <protected>false</protected>
