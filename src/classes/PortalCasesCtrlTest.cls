@@ -406,22 +406,5 @@ private class PortalCasesCtrlTest {
         String link = PortalCasesCtrl.getSurveyLink(newCase.Id);
         System.assert(link != null);
 
-    }
-
-    @IsTest
-    static void testGetSurveyLink(){
-        CaseClosedStatus__c ccs= new CaseClosedStatus__c(name='Closed');
-        insert ccs;
-
-        Case newCase = [SELECT Id,RecordType.Name FROM Case WHERE Subject = 'Case Test' LIMIT 1];
-        newCase.Status = 'Closed';
-        update newCase;
-
-        ClosedSurvey__c closedSurvey = new ClosedSurvey__c(RolesAvailable__c='All',Name=newCase.RecordType.Name);
-        insert closedSurvey;
-
-        String link = PortalCasesCtrl.getSurveyLink(newCase.Id);
-        System.assert(link != null);
-
-    }
+    }   
 }
