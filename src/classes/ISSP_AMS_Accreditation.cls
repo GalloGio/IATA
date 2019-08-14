@@ -1878,7 +1878,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
                         newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
 
-                        if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || ((newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null) && !isMultiCountryNewAE)){  //Legal name is editable for BR Abroad, so set default value
+                        if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null)){  //Legal name is editable for BR Abroad, so set default value
                             newForm.Account_Name__c = hqAccount.Name;                        
                         }
 
@@ -4689,7 +4689,8 @@ public without sharing class ISSP_AMS_Accreditation {
             Set<string> closedStatusesList = createListOfClosedStatuses();
             if (setConn == null) {
                 setConn = new ApexPages.StandardSetController(Database.getQueryLocator(
-                    [SELECT Id, CaseNumber, CreatedDate, Account.Name, Country_concerned_by_the_query__c, Subject, Status, Portal_Case_Status__c, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c
+                    [SELECT Id, CaseNumber, CreatedDate, Account.Name, Country_concerned_by_the_query__c, Subject, Status, Portal_Case_Status__c, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c,
+                    (SELECT Full_Address__c FROM AMS_Pax_Accreditation_Form__r) 
                 FROM Case
                 WHERE RecordType.Name IN ('SAAM', 'OSCAR Communication')
                 AND (Status = 'Draft' OR (Status Not In :closedStatusesList AND Case.ContactId = :con.Id))
