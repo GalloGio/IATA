@@ -226,13 +226,6 @@ public class PortalServicesCtrlTest {
 	insert new List<Portal_Application_Right__c> {appRight,appRight2,appRight3,appRight4,appRight5,appRight6,appRight7};
 
 
-	PortalServicesCtrl.ContactWrapper cw = new PortalServicesCtrl.ContactWrapper(appRight5);
-
-    cw.isIFAPService = false;
-    cw.hide = false;
-    cw.isAdmin = true;
-    cw.portalRole = '';
-
 	ISSP_CS__c cs= new ISSP_CS__c(
 		name='ISS_Portal_Agency_Delegated_Admin',
 		Value__c=ISSP_Constant.TEST_User_ProfileID
