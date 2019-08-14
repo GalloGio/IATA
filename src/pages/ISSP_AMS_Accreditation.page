@@ -454,26 +454,30 @@
         <div class="progress iata-tabs">
 
             <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                {!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}
+                <apex:outputText value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" escape="false"/>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!lblStepB}" id="Next2">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" id="Next2">
                     <apex:param value="2" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                    <apex:outputText value="{!lblStepB}" escape="false"/>
                 </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');if(hasPermission != true) return false;" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Next3">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');if(hasPermission != true) return false;" id="Next3">
                     <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                    <apex:outputText value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" escape="false"/>
                 </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" value="{!lblStepD}" id="Next4">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" id="Next4">
                     <apex:param value="4" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                    <apex:outputText value="{!lblStepD}" escape="false"/>
                 </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5">
+                <apex:commandLink styleclass="link-white" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" id="Next5">
                     <apex:param value="5" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
+                    <apex:outputText value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" escape="false"/>
                 </apex:commandLink>
             </div>
 
@@ -776,19 +780,27 @@
                 <apex:form >
                 <div class="progress iata-tabs">
                     <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                        <apex:commandLink styleclass="link-white" action="{!goToStep1}" value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" id="Prev1"/>
+                        <apex:commandLink styleclass="link-white" action="{!goToStep1}" id="Prev1">
+                            <apex:outputText value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" escape="false"/>
+                        </apex:commandLink>
                     </div>
                     <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-                        {!lblStepB}
+                        <apex:outputText value="{!lblStepB}" escape="false"/>
                     </div>
                     <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                        <apex:commandLink styleclass="link-white" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange), lblStepC, lblNoCStepC)}" id="Next3"/>
+                        <apex:commandLink styleclass="link-white" action="{!goToStep3}" id="Next3">
+                            <apex:outputText value="{!IF(NOT(isNoticeOfChange), lblStepC, lblNoCStepC)}" escape="false"/>
+                        </apex:commandLink>
                     </div>
                     <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                        <apex:commandLink styleclass="link-white" action="{!goToStep4}" value="{!lblStepD}" id="Next4"/>
+                        <apex:commandLink styleclass="link-white" action="{!goToStep4}" id="Next4">
+                            <apex:outputText value="{!lblStepD}" escape="false"/>
+                        </apex:commandLink>
                     </div>
                      <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                        <apex:commandLink styleclass="link-white" action="{!goToStep5}" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5"/>
+                        <apex:commandLink styleclass="link-white" action="{!goToStep5}" id="Next5">
+                            <apex:outputText value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" escape="false"/>
+                        </apex:commandLink>
                     </div>
                 </div>
                 </apex:form>
@@ -860,19 +872,27 @@
         <apex:form >
         <div class="progress iata-tabs">
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="link-white" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>
+                <apex:commandLink styleclass="link-white" action="{!goToStep1}" id="Prev1">
+                    <apex:outputText value="{!lblStepA}" escape="false"/>
+                </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-                <apex:commandLink styleclass="link-white" action="{!goToStep2}" value="{!lblStepB}" id="Prev2"/>
+                <apex:commandLink styleclass="link-white" action="{!goToStep2}" id="Prev2">
+                    <apex:outputText value="{!lblStepB}" escape="false"/>
+                </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="link-white" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Prev3"/>
+                <apex:commandLink styleclass="link-white" action="{!goToStep3}" id="Prev3">
+                    <apex:outputText value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" escape="false"/>
+                </apex:commandLink>
             </div>
             <div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                <apex:commandLink styleclass="link-white" action="{!goToStep4}" value="{!lblStepD}" id="Prev4"/>
+                <apex:commandLink styleclass="link-white" action="{!goToStep4}" id="Prev4">
+                    <apex:outputText value="{!lblStepD}" escape="false"/>
+                </apex:commandLink>
             </div>
              <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                {!IF(AND(isNoticeOfChange, newForm.Is_change_ownership_or_shareholding__c), lblNoCStepD, lblStepE)}
+                <apex:outputText value="{!IF(AND(isNoticeOfChange, newForm.Is_change_ownership_or_shareholding__c), lblNoCStepD, lblStepE)}" escape="false"/>
             </div>
         </div>
        </apex:form>

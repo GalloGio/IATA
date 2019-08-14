@@ -33,7 +33,9 @@ body, div.container {
 
 a.link-white,
 a.link-white:hover {
-    color: white !important;
+    /*color: white !important;*/
+    color: gray !important; 
+    font-weight: normal !important;
 }
 
 div[role="dialog"].bootbox.bootbox-alert button.btn.btn-primary,
@@ -101,11 +103,11 @@ a.iatabtn {
     background-image: none;
     background-color: transparent;
     border: none;
-    border: 1px solid darkgray;
-    border-bottom: 1px solid darkgray;
+    /*border: 1px solid darkgray;
+    border-bottom: 1px solid darkgray;*/
     box-shadow: none;
-    height: 40px;
-    border-radius: 8px;
+    height: unset;
+    margin-bottom: unset;
 }
 
 .progress-bar.iata-tab {
@@ -115,19 +117,34 @@ a.iatabtn {
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 10px;
-    padding-bottom: 30px;
-    font-weight: bold;
-    color: white !important;
-    background-color: #1e32fa !important;
+    padding-bottom: 25px;
+    color: gray !important;
+    font-weight: normal !important;
+    /*background-color: #1e32fa !important;*/
 }
 
-.iata-tabs .iata-tab:not(:first-child) {
-    border-left: 1px solid lightgray;
+.iata-tab span.progress-tab-step{
+    display: inline-block;
+    text-align: center;
+    background-color: lightgray;
+    color: white;
+    /* padding: 6px; */
+    width: 3.2em;
+    height: 3.2em;
+    line-height: 3.2em;
+    border-radius: 1.6em;
+    margin-right: 10px;
 }
 
-.iata-tab.tabl-active {
-    color: #1e32fa !important;
-    background-color: #eee !important;
+.iata-tab.tabl-active{
+    /*color: #1e32fa !important;*/
+    /*background-color: #eee !important;*/
+    background-color: transparent !important;
+    color: #000 !important;
+}
+
+.iata-tab.tabl-active span.progress-tab-step{
+    background-color: #289632;
 }
         
 body .bPageBlock .pbBody .pbSubheader {
