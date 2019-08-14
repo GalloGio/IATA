@@ -192,6 +192,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isEditable(String fieldName){
 
+        if(this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry'){
+			return false;
+		}
+		
         //Enforce non editable fields for newgen processes.  NEWGEN-1862/NEWGEN-3387: Don't enforce for newgen changes/correction
         if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c && (this.oscarObj.Process__c != AMS_Utils.NGCHANGES && this.oscarObj.Process__c != AMS_Utils.NGCORRECTION))
             if(notEditableForNEWGEN.contains(fieldName))
@@ -574,7 +578,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean hasEditableFields{
         get{
 
-            if(oscarObj.Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry'){
+            if(oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == 'Multicountry'){
                 return false;
             }
             
