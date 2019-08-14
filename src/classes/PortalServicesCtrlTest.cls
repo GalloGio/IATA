@@ -226,13 +226,6 @@ public class PortalServicesCtrlTest {
 	insert new List<Portal_Application_Right__c> {appRight,appRight2,appRight3,appRight4,appRight5,appRight6,appRight7};
 
 
-	PortalServicesCtrl.ContactWrapper cw = new PortalServicesCtrl.ContactWrapper(appRight5);
-
-    cw.isIFAPService = false;
-    cw.hide = false;
-    cw.isAdmin = true;
-    cw.portalRole = '';
-
 	ISSP_CS__c cs= new ISSP_CS__c(
 		name='ISS_Portal_Agency_Delegated_Admin',
 		Value__c=ISSP_Constant.TEST_User_ProfileID
@@ -594,17 +587,15 @@ public class PortalServicesCtrlTest {
 	List<String> lstString = new List<String>();
 	lstString.add(c.id);
 	List<Contact> contList = new List<Contact>();
-	List<PortalServicesCtrl.ServiceWrapper> paList = new List<PortalServicesCtrl.ServiceWrapper>();
 	System.runAs(portalUser) {
 
-		Test.StartTest();
+		
 		list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name in ('serviceTest3','serviceTest2','Insurance Providers')];
 
 		PortalServicesCtrl.requestAccess(portalServicelist.get(0).id);
 		contList = PortalServicesCtrl.getPortalAdmins();
-		paList = PortalServicesCtrl.getAllServices();
 
-
+		Test.StartTest();
 		//requestAccessToICCS
 		PortalServicesCtrl.newAppsRequestICCS(portalServicelist.get(1).id, '', c.id);
 
