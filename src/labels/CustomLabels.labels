@@ -135,7 +135,7 @@
         <shortDescription>AMS DQ Enter Valid City</shortDescription>
         <value>Enter a valid city.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>AMS_DQ_First_Suggestion</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29125,7 +29125,7 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
     </labels>
     <labels>
         <fullName>ISSP_Registration_Error_LegalName</fullName>
-		<categories>ISSP, login</categories>
+        <categories>ISSP, login</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Registration Error LegalName</shortDescription>

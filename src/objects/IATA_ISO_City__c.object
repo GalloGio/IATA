@@ -120,7 +120,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-	<fields>
+    <fields>
         <fullName>GeonameName__c</fullName>
         <externalId>false</externalId>
         <label>GeonameName</label>
