@@ -7,10 +7,8 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
     String query;
 	//Record Types for the Account
     public static final String ACCOUNT_AGENCY_RT     = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-   
-    public static final String ACCOUNT_STANDARD_RT   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-   
-    public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT,ACCOUNT_STANDARD_RT};
+      
+    public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT};
    
     public static final Set<String> INACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S1_NOTACCREDITED,'Not Accredited',AMS_Utils.ACC_S3_NOTINOPERATION,AMS_Utils.ACC_S0_TERMINATED,'',null,AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING};
 
@@ -70,9 +68,10 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 
             hierarchiesToUpsert.add(h);
 
-            if(executeReport)
-                totalReport.add('"' + acct.IATACODE__c + '"' + ',' + (h.id == null ? 'New Record' : h.id));
-
+            if(executeReport){
+                String accountid = acct.IATACODE__c == null ? String.valueOf(acct.Id) : acct.IATACODE__c;
+                totalReport.add('"' + accountid + '"' + ',' + (h.id == null ? 'New Record' : h.id));
+            }
         }
 
         if(!hierarchiesToUpsert.isEmpty() && !executeReport){
@@ -174,7 +173,7 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 	} 
 
     global String fetchGeneralHierarchyQuery(){
-        return 'Select Id, IATACODE__c , (select Id, Main_account__c from Main_Accounts__r), (select Id, hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c from AMS_Agencies_relationships1__r ) from Account where ParentId = null and Location_type__c in (\'HE\',\'GE\') and Location_Class__c in (\'P\',\'D\') and recordTypeId in:ALLOWEDRECORDTYPES and Status__c not in :INACTIVEAGENCYSTATUS LIMIT 50000';
+        return 'Select Id, IATACODE__c , (select Id, Main_account__c from Main_Accounts__r), (select Id, hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c from AMS_Agencies_relationships1__r ) from Account where IATACODE__c <> null and ParentId = null and Location_type__c in (\'HE\',\'GE\') and Location_Class__c in (\'P\',\'D\') and recordTypeId in:ALLOWEDRECORDTYPES and Status__c not in :INACTIVEAGENCYSTATUS LIMIT 50000';
     }
 
 
