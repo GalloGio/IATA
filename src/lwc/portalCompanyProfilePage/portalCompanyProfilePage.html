@@ -62,7 +62,7 @@
                                         <template for:each={mapOfValues} for:item="keyValue">
                                             <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
                                                 record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
-                                                show-edit="true" class="section" section-title={keyValue.key}
+                                                show-edit={canEditAccount} class="section" section-title={keyValue.key}
                                                 data-name={keyValue.key} edit-basics={editBasics}
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
@@ -102,7 +102,7 @@
                                     <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
                                         fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
                                         default-sort="TradeName__c" records={branches} openmodel={openmodel} recordid={recordid}
-                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={editBasics}>
+                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={canEditAccount}>
                                     </c-portal-contact-list>
                                 </div>
                             </template>

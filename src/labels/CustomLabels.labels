@@ -2998,27 +2998,6 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
-        <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_AMS_StepFinal_In_Addition2</shortDescription>
-        <value>Profile -&gt; Cases</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ANG_Portal_Admin</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ANG_Portal_Admin</shortDescription>
-        <value>Only Legal Authorized Signatories can notify IATA about office closures.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ANG_Portal_Admin_Authorized_Signature</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
-        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToMyProfileJs();&quot;&gt;My Profile -&gt; Portal Accessibility&lt;/span&gt; page.</value>
-    </labels>
-    <labels>
         <fullName>CSP_About</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3033,12 +3012,73 @@ Payment required on receipt of this Payment Advice
         <value>Accept the Terms before you proceed.</value>
     </labels>
     <labels>
+        <fullName>CSP_Add_All</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_All</shortDescription>
+        <value>Add All</value>
+    </labels>
+    <labels>
         <fullName>CSP_Add_New_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Add_New_Documents</shortDescription>
         <value>Add New Documents</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Add_New_User</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_New_User</shortDescription>
+        <value>Add New User</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Add_User</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Add_User</shortDescription>
+        <value>Add User</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ArticleHelpful</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ArticleHelpful</shortDescription>
+        <value>Was this article helpful?</value>
+    </labels>
+    <labels>
+        <fullName>csp_AgencyReadOnly</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request New Service</shortDescription>
+        <value>Agency Read Only</value>
+    </labels>
+	<labels>
+        <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_AMS_StepFinal_In_Addition2</shortDescription>
+        <value>Support -&gt; Reach Us</value>
+    </labels>
+	<labels>
+        <fullName>CSP_ANG_Portal_Admin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ANG_Portal_Admin</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures.</value>
+    </labels>
+	<labels>
+        <fullName>CSP_ANG_Portal_Admin_Authorized_Signature</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ANG_Portal_Admin_Authorized_Signature</shortDescription>
+        <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency Authorized Signatory in the &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToMyProfileJs();&quot;&gt;My Profile -&gt; Portal Accessibility&lt;/span&gt; page.</value>
     </labels>
     <labels>
         <fullName>CSP_Announcement</fullName>
@@ -3096,6 +3136,13 @@ Payment required on receipt of this Payment Advice
         <value>Home</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrump_MyProfile_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrump_MyProfile_Title</shortDescription>
+        <value>User Profile</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_Services_Title</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3126,13 +3173,6 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Breadcrumb_Support_Title</shortDescription>
         <value>Support</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Breadcrump_MyProfile_Title</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Breadcrump_MyProfile_Title</shortDescription>
-        <value>User Profile</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
@@ -3331,6 +3371,14 @@ Payment required on receipt of this Payment Advice
         <value>Publication Countries</value>
     </labels>
     <labels>
+        <fullName>CSP_Error_Message_Mandatory_Fields_Contact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Error_Message_Mandatory_Fields_Contact</shortDescription>
+        <value>Please fill all the mandatory fields</value>
+    </labels>
+    <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3473,12 +3521,21 @@ Payment required on receipt of this Payment Advice
         <value>Manage Services</value>
     </labels>
     <labels>
+        <fullName>CSP_Manage_Services_NoIEPAccount</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Services</shortDescription>
+        <value>Your IATA Easy Pay Status is not "Open". Please contact Support.</value>
+    </labels>
+    <labels>
         <fullName>CSP_MyCases</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_MyCases</shortDescription>
         <value>View My Cases</value>
     </labels>
+
     <labels>
         <fullName>CSP_Name</fullName>
         <categories>CS Portal</categories>
@@ -3486,6 +3543,22 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Name</shortDescription>
         <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NewContactProfile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NewContactProfile</shortDescription>
+        <value>a new contact profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_NewServiceUserMessage</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NewServiceUserMessage</shortDescription>
+        <value>You can search and add new portal users to this service. If the user you are looking for is not a portal contact yet, you can create for them</value>
     </labels>
     <labels>
         <fullName>CSP_NoAccount</fullName>
@@ -3567,6 +3640,38 @@ Payment required on receipt of this Payment Advice
         <value>Portal Status</value>
     </labels>
     <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Link</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Link</shortDescription>
+        <value>Go to Subscriptions &amp; Privacy</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Text</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Text</shortDescription>
+        <value>Manage your subscriptions to IATA’s newsletters, blogs, press releases, products and services. You can also reach out directly to Privacy Officer for more information about your data privacy rights.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_Title</shortDescription>
+        <value>Subscriptions &amp; Privacy</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Profile_PrivacyManagement_URL</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Profile_PrivacyManagement_URL</shortDescription>
+        <value>/dataprivacy/s/landing</value>
+    </labels>
+    <labels>
         <fullName>CSP_Question1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3613,6 +3718,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_RelatedArticles</shortDescription>
         <value>Related Articles</value>
+    </labels>
+    <labels>
+        <fullName>CSP_RemoveContact_Reason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_RemoveContact_Reason</shortDescription>
+        <value>Please select why you want to remove this contact.</value>
     </labels>
     <labels>
         <fullName>CSP_Request_Service</fullName>
@@ -26593,7 +26705,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_IATA_Location_Code</shortDescription>
-        <value>IATA Code (Location)</value>
+        <value>Location IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_IATA_NOT_Found</fullName>
@@ -38175,7 +38287,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
-        <value>Access Service</value>
+        <value>Select the topic covering the problem.</value>
     </labels>
     <labels>
         <fullName>csp_ActionIndicator</fullName>

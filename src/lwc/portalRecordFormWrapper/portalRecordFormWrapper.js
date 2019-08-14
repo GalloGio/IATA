@@ -11,6 +11,7 @@ import { navigateToPage } from 'c/navigationUtils';
 
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
+import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -22,6 +23,11 @@ import CompleteField from '@salesforce/label/c.csp_CompleteField';
 
 import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
 import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
+import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
+import LastLoginDate from '@salesforce/label/c.csp_LastLoginDate';
+
+import remove from '@salesforce/label/c.Button_Remove';
+import contact from '@salesforce/label/c.ISSP_Contact';
 
 
 
@@ -32,6 +38,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api sectionTitle;
     @api showEdit;
     @api editBasics;
+    @api allowContactDelete=false;
 
     @api editFields;
     @api recordId;
@@ -56,6 +63,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track fieldsValid = true;
     @track fieldsLocal;
     @track jobFunctions;
+    @track removeContact = false;
 
     timeout = null;
 
@@ -64,11 +72,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     @track changeUserPortalStatus = false;
 
+    @track hasError = false;
+
     @api
     get fields(){ return this.fieldsLocal;}
     set fields(value){ this.fieldsLocal = value;}
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area,ServicesTitle,InvalidValue,CompleteField,IdCardNumber,IdCardValidTo};
+    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, remove, contact, CSP_Error_Message_Mandatory_Fields_Contact,LastLoginDate};
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -76,6 +86,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     emptyServices = 'emptyServices';
 
     connectedCallback() {
+
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
@@ -126,11 +137,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
 
         }
-
+        
         isAdmin().then(result => {
-            this.showEdit = (result ? true : false);
+            this.showEdit = result && this.showEdit;
         });
-
     }
 
     get accessibilityGetter() {
@@ -156,8 +166,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         accessibilityTextLocal = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
-
-        return accessibilityTextLocal
+        
+        return this.accessibilityText
     }
 
     openModal() { this.showEditModal = true; }
@@ -179,7 +189,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
         let listSelected = JSON.parse(JSON.stringify(this.listSelected));
         this.closeModal();
-        //eval("$A.get('e.force:refreshView').fire();");
+
+        this.updateMembershipFunctions(event.detail);
     }
 
     handleError(event) {
@@ -204,6 +215,27 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     get showMembershipFunction() {
         return this.showfunction;
+    }
+
+    get removeContactLabel(){
+        return this.labels.remove +' '+this.labels.contact;
+    }
+
+    removeUser(){
+        this.removeContact = true;
+        this.changeUserPortalStatus = true;
+        this.showEditModal = false;
+    }
+
+    updateMembershipFunctions(eventDetail) {
+        if(eventDetail.fields.hasOwnProperty('Membership_Function__c')) {
+            let functions = [];
+            if(eventDetail.fields.Membership_Function__c) {
+                const values = eventDetail.fields.Membership_Function__c.value.split(";");
+                values.forEach( (value) => { functions.push(value); });
+            }
+            this.jobFunctions = functions;
+        }
     }
 
     styleInputs() {
@@ -344,7 +376,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.isSaving = true;
         if (this.isContact) {
             event.preventDefault();
-
+            let canSave = true;
             let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
             let selected = '';
             selectedV.forEach(function (item) { selected += item + ';'; });
@@ -362,21 +394,58 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
             fields.Membership_Function__c = selectedF;
 
+
+            let hasFunctionLocal = this.showfunction;
+
+            if (hasFunctionLocal) {
+                if (selectedF.length > 0) {
+                    this.hasError = false;
+                    this.template.querySelector('.workingAreas').classList.remove('workingAreasError');
+
+                    let inputs = this.template.querySelectorAll('.workingAreasChangeOnError');
+                    for (let i = 0; i < inputs.length; i++) {
+                        inputs[i].classList.remove('errorOnCheckBox');
+                    }
+
+                } else {
+                    canSave = false;
+                    this.hasError = true;
+                    this.template.querySelector('.workingAreas').classList.add('workingAreasError');
+
+                    let inputs = this.template.querySelectorAll('.workingAreasChangeOnError');
+                    for (let i = 0; i < inputs.length; i++) {
+                        inputs[i].classList.add('errorOnCheckBox');
+                    }
+                }
+            }
+
             let listSelected = JSON.parse(JSON.stringify(this.listSelected));
             if (listSelected.length > 0) {
                 let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
-
+                
                 contactTypeStatusLocal.forEach(function (item) {
                     if (listSelected.includes(item.label)) {
                         fields[item.APINAME] = true;
+                        item.checked = true;
                     } else {
                         fields[item.APINAME] = false;
+                        item.checked = false;
                     }
                 });
 
+                // Update accessibility fields
+                this.fields.forEach(function (item) {
+                    if (item.isAccessibility) {
+                        item.accessibilityList = contactTypeStatusLocal;
+                    }
+                });
             }
 
-            this.template.querySelector('lightning-record-edit-form').submit(fields);
+            if (canSave) {
+                this.template.querySelector('lightning-record-edit-form').submit(fields);
+            } else {
+                this.isSaving = false;
+            }
         }
     }
 
@@ -457,11 +526,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     closePortalChangeUserStatus() {
+        this.removeContact = false;
         this.changeUserPortalStatus = false;
     }
 
     closePortalChangeUserStatusWithRefresh() {
         this.dispatchEvent(new CustomEvent('refreshview'));
+        this.removeContact = false;
         this.changeUserPortalStatus = false;
     }
 
@@ -489,4 +560,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get hasStaticServices(){
             return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length>0;
         }
+
+    
+    navigateToPrivacyPortal(){
+        goToPrivacyPortal({})
+        .then(results => {
+            window.open(results);
+        });
+    }
+
+
 }
