@@ -131,6 +131,12 @@ input[type="checkbox"] {
   text-decoration: none;
 }
 
+.removeLink{
+    color:blue;
+    height:40px;
+    display:table-cell;
+    vertical-align:middle;
+}
 .errorOnCheckBox {
   border-color: #c23934;
 }

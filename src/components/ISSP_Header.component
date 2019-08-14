@@ -48,6 +48,71 @@
         <script src="{!URLFOR($Resource.datePicker_langs, 'datepicker-ar.js')}" />
         <script src="{!URLFOR($Resource.datePicker_langs, 'datepicker-in.js')}" />
         
+        <style>
+            /* Mobile side menu select language styles */
+            .sideBar .langSelect,
+            .sideBar .langSelect input[role="textbox"],
+            .sideBar .langSelect div[role="listbox"] {
+                background-color: #1e32fa;
+                border-radius: 0;
+            }
+            
+            .sideBar .langSelect input[role="textbox"] {
+                border: 0;
+                cursor: pointer;
+                width: 140px;
+                text-align: center;
+                font-size: 13px;
+            }
+            
+            .sideBar .langSelect div[role="listbox"] {
+                max-width: unset;
+                width: 140px;
+            }
+            
+            .sideBar .changingLangSpinner .slds-spinner_container {
+                position: fixed;
+            }
+            
+            .sideBar .langSelect .slds-form-element__label {
+                display: none;
+            }
+            
+            .sideBar .slds-combobox_container lightning-base-combobox-item {
+                font-size: 13px;
+            }
+            
+            .sideBar .slds-combobox_container lightning-base-combobox-item:hover,
+            .sideBar .slds-combobox_container lightning-base-combobox-item[aria-selected="true"] {
+                color: #1e32fa;
+            }
+            
+            .sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:before {
+                border-top: 6px solid #fff;
+                border-bottom: 0;
+            }
+            .sideBar .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:before {
+                border-bottom: 6px solid #fff;
+                border-top: 0;
+            }
+            .sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:after {
+                border-top: 6px solid #1e32fa;
+                border-bottom: 0;
+            }
+            .sideBar .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after {
+                border-bottom: 6px solid #1e32fa;
+                border-top: 0;
+            }
+            
+            .sideBar .slds-combobox_container input[role="textbox"] {
+                height: 32px;
+            }
+            
+            .sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg {
+                fill: #fff;
+            }
+        </style>
+        
     </head>
 
 </apex:component>
