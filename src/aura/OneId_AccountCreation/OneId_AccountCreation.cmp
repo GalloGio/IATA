@@ -41,10 +41,7 @@
 	-->
 	<aura:attribute type="Object" name="idAndAlternateNamesBilling"/>
 	<aura:attribute type="Object" name="idAndAlternateNamesShipping"/>
-
-	<!-- Objects that hold the relationship between state name and state object-->
-	<aura:attribute type="Object" name="stateNameIdShipping" default="{}"/>
-	<aura:attribute type="Object" name="stateNameIdBilling" />
+	
 	
 	<!-- Objects that hold the relationship between city name and city object-->
 	<aura:attribute type="Object" name="cityNameIdShipping" default="{}"/>
@@ -61,12 +58,7 @@
 	
 	<aura:attribute type="String" name="shippingCityId" />
 	<aura:attribute type="String" name="shippingStateId" />
-
-	<!-- String with all city names in the database besides the one in the current country
-	-->
-	<aura:attribute type="String" name="allCitiesAllCountriesBilling" />
-	<aura:attribute type="String" name="allCitiesAllCountriesShipping" />
-		
+	
 	<!--Flags for warnings-->
 	<aura:attribute type="Boolean" name="showListBilling" default="true"/>
 	<aura:attribute type="Boolean" name="showListShipping" default="true"/>
@@ -78,10 +70,8 @@
 	<aura:attribute type="Boolean" name="ShippingCityEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="ShippingStreetEmpty" default="false"/>
 	<aura:attribute type="Boolean" name="ShippingCityStreetEmpty" default="false"/>
-	<aura:attribute type="Boolean" name="cityInAnotherCountryBilling" default="false"/>
 	<aura:attribute type="Boolean" name="cityDoesNotExistBilling" default="false"/>
 	<aura:attribute type="Boolean" name="cityInAnotherStateBilling" default="false"/>
-	<aura:attribute type="Boolean" name="cityInAnotherCountryShipping" default="false"/>
 	<aura:attribute type="Boolean" name="cityDoesNotExistShipping" default="false"/>
 	<aura:attribute type="Boolean" name="cityInAnotherStateShipping" default="false"/>
 	<aura:attribute type="Boolean" name="cityInvalidWarning" default="false" />
@@ -89,14 +79,19 @@
 	<aura:attribute type="Boolean" name="cityDoesntExistWarning" default="false" />
 	<aura:attribute type="Boolean" name="spinner" default="false" />
 
+	<aura:attribute type="Boolean" name="cityFirstSuggestionBilling" default="false" />
+	<aura:attribute type="Boolean" name="cityFirstSuggestionShipping" default="false" />
+
 	<aura:attribute type="String"  name="invalidCity" />
 	<aura:attribute type="String" name="selectedCountry" access="private"/>
 	<aura:attribute type="OneId_RegistrationProcessController.CountryInformation" name="countryInformation" />
 	<aura:attribute type="String[]" name="listOfCountriesWithStates" />
 	<aura:attribute type="String" name="mode" />
 	
+	<aura:attribute type="String" name="suggestionBilling"/>
+	<aura:attribute type="String" name="suggestionShipping"/>
+
 	<aura:attribute type="Boolean" name="init" default="true"/>
-	<aura:attribute type="Boolean" name="initAllCountries" default="true"/>
 	<!--Data Quality-->
 
 	<aura:attribute type="Boolean" name="copyAddress" default="false"/>
@@ -141,10 +136,10 @@
 	<div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_medium">
 		<h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.ISSP_CompanyInformation}</h2>
 	
-		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
+		<div id="legalNameContainer" class="slds-col slds-m-bottom_medium slds-size_1-of-1">
 			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Legal_name__c}</label>
 			<div class="slds-form-element__control">
-				<ui:inputText value="{!v.account.Name}" class="slds-input" disabled="{!!v.changeName}" change="{! c.validateRequiredFields}"/>
+				<ui:inputText aura:id="legalName" value="{!v.account.Name}" class="slds-input" disabled="{!!v.changeName}" />
 			</div>
 		</div>
 
@@ -233,16 +228,7 @@
 	</aura:if>
 
 
-	<aura:if isTrue="{! and(or(v.cityInAnotherCountryBilling, v.cityInAnotherCountryShipping), v.cityInvalidWarning)}">			
-			<div class="warningBox">
-					<lightning:icon iconName="utility:warning" size="small" alternativeText="Indicates approval" variant="warning"/>
-					<div>
-						<p>{!format($Label.c.AMS_DQ_City_in_Another_Country, v.invalidCity)}</p>
-						<p>{!$Label.c.AMS_DQ_Review_Country_or_City}</p>		
-					</div>
-				</div>
-				<br/>						 
-		</aura:if>
+	
 
 		<aura:if isTrue="{! and(or(v.cityInAnotherStateBilling, v.cityInAnotherStateShipping), v.stateInvalidWarning)}">			
 			<div class="warningBox">
@@ -335,14 +321,14 @@
 					<aura:if isTrue="{!v.cityDoesNotExistBilling}">
 						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!$Label.c.AMS_DQ_Enter_Valid_City}</span>
 					</aura:if>
+					<aura:if isTrue="{!v.cityInAnotherStateBilling}">
+						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!$Label.c.AMS_DQ_Review_State}</span>
+					</aura:if>					
+					<span id="firstSuggestionBilling" class="slds-hide"><lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!format($Label.c.AMS_DQ_First_Suggestion, v.suggestionBilling)}</span></span>					
 				</div>
 				
-
-				<aura:if isTrue="{!v.cityInAnotherStateBilling}">
-						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!$Label.c.AMS_DQ_Review_State}</span>
-				</aura:if>
-
 				
+		
 
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingStreet}</label>
 				<div class="slds-form-element__control">
@@ -452,25 +438,6 @@
 					</aura:set>				
 			</aura:if>
 			
-		<!--	<aura:if isTrue="{! and(!v.copyAddress, !v.countryHasStatesShipping)}">
-				<div aura:id="ShippingContainer" class="slds-form-element slds-m-bottom_small">
-						<label class="slds-form-element__label">{!v.accountLabels.ShippingState}</label>
-						<div class="slds-form-element__control">
-							<ui:inputText aura:id="ShippingState" value="{!v.account.ShippingState}" class="slds-input" change="{!c.updateAddress}"/>			
-						</div>
-					</div>					
-			</aura:if>
-			
-			
-			This inputbox was added as a workaround due to a constraint on setting the correct state on the shipping picklist when the "Copy Billing Address to Shipping Address" checkbox is selected
-			<aura:if isTrue="{! and(v.copyAddress, v.countryHasStatesShipping)}">
-					<div class="slds-form-element slds-m-bottom_small">
-						<label class="slds-form-element__label">{!v.accountLabels.ShippingState}</label>
-						<div class="slds-form-element__control">
-							<ui:inputText aura:id="InputShippingState" disabled="{!v.copyAddress}" value="{!v.account.ShippingState}" class="slds-input"/>					
-						</div>
-					</div>
-			</aura:if>-->
 				
 				<div class="slds-form-element slds-m-bottom_small">
 					<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingCity}</label>
@@ -491,12 +458,13 @@
 					<aura:if isTrue="{!v.cityDoesNotExistShipping}">
 						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!$Label.c.AMS_DQ_Enter_Valid_City}</span>
 					</aura:if>
+					<aura:if isTrue="{!v.cityInAnotherStateShipping}">
+						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!$Label.c.AMS_DQ_Review_State}</span>
+					</aura:if>
+					<span id="firstSuggestionShipping" class="slds-hide"><lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!format($Label.c.AMS_DQ_First_Suggestion, v.suggestionShipping)}</span></span>					
 				</div>
 				
-				<aura:if isTrue="{!v.cityInAnotherStateShipping}">
-						<lightning:icon iconName="utility:warning" size="xx-small" alternativeText="Indicates approval" variant="warning"/><span class="warningMsg">{!$Label.c.AMS_DQ_Review_State}</span>
-				</aura:if>
-			
+				
 
 			<div class="slds-form-element slds-m-bottom_small">
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingStreet}</label>
@@ -591,7 +559,7 @@
 			<div class="slds-form-element">
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Office_Phone}</label>
 				<div class="slds-form-element__control">
-					<ui:inputPhone aura:id="officePhone" value="{!v.account.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" change="{!c.validateRequiredFields}"/>
+					<ui:inputPhone aura:id="officePhone" value="{!v.account.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" />
 				</div>
 			</div>
 		</div>
