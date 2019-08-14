@@ -3137,7 +3137,23 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_FeedbackTitle</shortDescription>
         <value>Feedback</value>
-    </labels>    
+    </labels>
+    <labels>
+        <fullName>CSP_Filter</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Filter</shortDescription>
+        <value>Filter</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Filtered</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Filtered</shortDescription>
+        <value>Filtered</value>
+    </labels>        
     <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
