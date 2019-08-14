@@ -256,9 +256,9 @@ public with sharing class PortalCasesCtrl {
                 }
                 if(filtersWrapper.casesComponent.caseCountryFilter != null && filtersWrapper.casesComponent.caseCountryFilter != ''){
                     if(queryConditions == ''){
-                        queryConditions = ' WHERE Country_concerned__c includes (\'' + filtersWrapper.casesComponent.caseCountryFilter + '\') ';
+                        queryConditions = ' WHERE IFAP_Country_ISO__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
                     }else{
-                        queryConditions += ' AND Country_concerned__c includes (\'' + filtersWrapper.casesComponent.caseCountryFilter + '\') ';
+                        queryConditions += ' AND IFAP_Country_ISO__c = \'' + filtersWrapper.casesComponent.caseCountryFilter + '\' ';
                     }
                 }
                 if(filtersWrapper.casesComponent.caseContactFilter != null && filtersWrapper.casesComponent.caseContactFilter != ''){
@@ -290,8 +290,7 @@ public with sharing class PortalCasesCtrl {
         }
         result.userAdmin = adminProfile;
 
-        System.debug(LoggingLevel.FINE, '____ [cls PortalCasesCtrl - getCases] queryString - ' + queryString);
-        System.debug('____ [cls PortalCasesCtrl - getCases] queryResult - ' + result.records.size() + ' record(s) - ' + result.records);
+        System.debug('____ [cls PortalCasesCtrl - getCases] queryString - ' + queryString);
 
         /* Generate Case URL */
         result.url = JSON.serialize(setCaseURLs((List<Case>)result.records));
@@ -606,6 +605,7 @@ public with sharing class PortalCasesCtrl {
             isAdmin = isAdminUser;
             System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] isAdminUser - ' + isAdminUser);
         }
+        seeAllCases = isAdmin;
         
         PagedResult pages = getRecentCases(false, isAdmin);
 

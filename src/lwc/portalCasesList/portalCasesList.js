@@ -17,8 +17,9 @@ import Created_By from '@salesforce/label/c.Created_By';
 import CSP_MyCases from '@salesforce/label/c.CSP_MyCases';
 import CSP_CompanyCases from '@salesforce/label/c.CSP_CompanyCases';
 import CSP_SearchingOn from '@salesforce/label/c.CSP_SearchingOn';
-
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_Filter from '@salesforce/label/c.CSP_Filter';
+import CSP_Filtered from '@salesforce/label/c.CSP_Filtered';
 
 export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
@@ -28,10 +29,13 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         Created_By,
         CSP_MyCases,
         CSP_CompanyCases,
-        CSP_SearchingOn
+        CSP_SearchingOn,
+        CSP_Filter,
+        CSP_Filtered
     };
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
+    filterIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filter.svg';
 
     fieldLabels = [
         'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned__c', 'LastModifiedDate', 'Portal_Case_Status__c'
@@ -66,6 +70,26 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     @track countryPickOptions = []; 
     @track contactPickOptions = [];
+
+    @track normalView = true; //stores if the user is viewing it's own cases
+    @track adminView = false; //stores if the user is viewing company cases
+    @track filtered = false;
+
+    get viewNormalUserCasesTableViewButton(){
+        return this.adminView === true && this.isAdminUser === true;
+    }
+
+    get viewAdminUserCasesTableViewButton(){
+        return this.normalView === true && this.isAdminUser === true;
+    }
+
+    get isFiltered() {
+        return this.isAdminUser && this.filtered;
+    }
+
+    get viewContactsFilterPicklist(){
+        return this.isAdminUser === true && this.adminView === true;
+    }
 
     connectedCallback() {
 
@@ -242,22 +266,6 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         this.filteringObject = filteringObjectAux;
     }
 
-
-    @track normalView = true; //stores if the user is viewing it's own cases
-    @track adminView = false; //stores if the user is viewing company cases
-
-    get viewNormalUserCasesTableViewButton(){
-        return this.adminView === true && this.isAdminUser === true;
-    }
-
-    get viewAdminUserCasesTableViewButton(){
-        return this.normalView === true && this.isAdminUser === true;
-    }
-
-    get viewContactsFilterPicklist(){
-        return this.isAdminUser === true && this.adminView === true;
-    }
-
     changeToUserCasesTableView(){
         this.loading = true;
 
@@ -310,6 +318,8 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     }
 
     applyFilters(event){
+        this.filtered = true;
+
         //update filtering object
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         filteringObjectAux.casesComponent.caseCountryFilter = this.countryFiltersTemp;
@@ -325,6 +335,8 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     }
 
     resetFilters(event){
+        this.filtered = false;
+
         this.resetFiltersMethod();
 
         //close modal
@@ -348,7 +360,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     }
 
     getPickWithAllValue(picklist){
-        let picklistAux = [{checked: false, label: '', value: ''}];
+        let picklistAux = [{checked: false, label: 'All', value: ''}];
         return picklistAux.concat(picklist);
     }
     

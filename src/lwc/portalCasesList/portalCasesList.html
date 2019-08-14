@@ -20,7 +20,12 @@
                 </div>
 
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-text-align_right" >
-                    <lightning-button class="slds-m-right_small containedButtonWhite" label="Filtered" icon-position="right" onclick={openCasesFilterModal} if:true={isAdminUser}></lightning-button>
+                    <button class="slds-m-right_small slds-button slds-button_icon slds-button_icon-container slds-button__icon_right filterButton" onclick={openCasesFilterModal} if:true={isFiltered} title="Filtered">
+                        {label.CSP_Filtered}<img style="padding-left: 7rem;" src={filterIconUrl}>
+                    </button>
+                    <button class="slds-m-right_small slds-button slds-button_icon slds-button_icon-container slds-button__icon_right filterButton" onclick={openCasesFilterModal} if:false={isFiltered} title="Filter">
+                        {label.CSP_Filter}<img style="padding-left: 7rem;" src={filterIconUrl}>
+                    </button>
                     <lightning-button label={label.CSP_MyCases} class="containedButton" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
                     <lightning-button label={label.CSP_CompanyCases} class="containedButton" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
                 </div>
