@@ -8,12 +8,7 @@
 
         //Data Quality//
         helper.checkCountryStates(component, event, helper,'Billing',component.get("v.country"));
-        
-        //Set shipping country picklist equals to billing country since account.BillingCountry and account.ShippingCountry
-        //are the same from the previous component
-        //component.find("ShippingCountry").set("v.value", component.get("v.country.Id"));
-        //helper.setCountry(component, event, helper);
-        
+               
         //Data Quality//
 	},
     
@@ -91,8 +86,7 @@
         let stateElement = c.find(mode+'State');        
         let cityElement = c.find(mode+'City');        
         let streetElement = addDocComponent.find('Street');        
-        
-        c.set('v.cityInAnotherCountry'+mode,false);        
+                     
         c.set('v.error'+mode+'StateProvince', false);
         c.set('v.cityDoesNotExist'+mode, false);
         c.set('v.cityInAnotherState'+mode, false);
@@ -134,38 +128,29 @@
         
             
             c.set("v.valid"+mode, 2); //set spinner
-            if(countryHasStates){
+        if(countryHasStates){
 
-            
+            let hierarchyCities = c.get('v.hierarchyCities'+mode);
+            let hierarchyLower; 
+            if(currentState) hierarchyLower = currentState.toLowerCase()+' > '+currentCityLowerCase;
+
+            let predictions = c.get('v.predictions'+mode);
             let citiesAvailable = c.get('v.cities'+mode);            
             let citiesToSearch = citiesAvailable["All"];
             let cityAndStateMatch = false;
             let cityMatch = false;
             
+            cityAndStateMatch = (hierarchyCities[hierarchyLower]?true:false || predictions.length === 1)?true:false;
+            
             for(var i = 0; i < citiesToSearch.length; i++){                
                 if(citiesToSearch[i]){
                     let cityName = citiesToSearch[i]["Name"].toLowerCase();
-                    let cityStateName = citiesToSearch[i]["IATA_ISO_State__r"].Name.toLowerCase();			
-                    if(cityName===currentCityLowerCase&&cityStateName===currentState) cityAndStateMatch=true;
+                    let cityStateName = citiesToSearch[i]["IATA_ISO_State__r"].Name.toLowerCase();			                    
                     if(cityName===currentCityLowerCase&&cityStateName!==currentState) cityMatch=true;
                 }                
             }
-            
-            let allCitiesAllCountries = c.get('v.allCitiesAllCountries'+mode);
-            let cityExistsInOtherCountry = false;
-            cityExistsInOtherCountry = allCitiesAllCountries.toLowerCase().includes(currentCityLowerCase);
-            
-            
-
-            if(!cityAndStateMatch && !cityMatch && cityExistsInOtherCountry){
-                c.set('v.cityInAnotherCountry'+mode, true);
-                c.set('v.invalidCity', currentCity);
-                
-                c.set('v.cityInvalidWarning', true);
-                c.set('v.cityDoesntExistWarning', false);
-                c.set('v.stateInvalidWarning', false);
-
-            }else if(!cityAndStateMatch && !cityMatch){
+           
+            if(!cityAndStateMatch && !cityMatch){
             
                 c.set('v.cityDoesNotExist'+mode, true);        
                 c.set('v.invalidCity', currentCity);
@@ -193,7 +178,7 @@
         }
             
 
-            if( c.get('v.cityDoesNotExist'+mode) || c.get('v.cityInAnotherState'+mode) || c.get('v.cityInAnotherCountry'+mode) ){
+            if( c.get('v.cityDoesNotExist'+mode) || c.get('v.cityInAnotherState'+mode) ){
                 c.set('v.valid'+mode, 3);
                 h.copyBillingToShipping(c, e, h);
             }else{
@@ -274,23 +259,20 @@
             c.set("v.statesShipping", []);        
             c.set("v.citiesShipping", []);
             c.set("v.allCitiesShipping", {});
-            c.set("v.idAndAlternateNamesShipping", {});
-            c.set("v.stateNameIdShipping", {});
+            c.set("v.idAndAlternateNamesShipping", {});          
             c.set("v.cityNameIdShipping", {});
             c.set("v.hierarchyCitiesShipping", {});
             c.set("v.shippingCityId", '');
-            c.set("v.shippingStateId", '');
-            c.set("v.allCitiesAllCountriesShipping", '');                        
+            c.set("v.shippingStateId", '');                    
             c.set("v.ShippingCityEmpty", false);
             c.set("v.ShippingStreetEmpty", false);
             c.set("v.ShippingCityStreetEmpty", false);
             c.set("v.cityDoesNotExistShipping", false);
             c.set("v.cityInAnotherStateShipping", false);
-            c.set("v.cityInAnotherCountryShipping", false);
             c.set("v.cityDoesNotExistShipping", false);
             c.set("v.account.ShippingCountry", '');                                     
             c.set("v.account.ShippingStreet", '');
-            c.set("v.account.ShippingCity", '');
+			c.set("v.account.ShippingCity", '');
             c.set("v.account.ShippingState", '');            
             c.set("v.account.ShippingPostalCode", '');
             c.set("v.countryHasStatesShipping",false);
@@ -315,7 +297,7 @@
         
         let mode = e.currentTarget.getAttribute('data-mode');
         let hierarchyCities = c.get('v.hierarchyCities'+mode);
-        let selectedHierarchy = e.currentTarget.getAttribute('data-attriVal');
+        let selectedHierarchy = e.currentTarget.getAttribute('data-attriVal').toLowerCase();
         
         c.set('v.predictions'+mode, []); 
         c.set('v.account.'+mode+'City', hierarchyCities[selectedHierarchy].CityName);
@@ -335,22 +317,20 @@
         c.set('v.account.Data_quality_feedback__c',null);
         
         let modes = ['Billing', 'Shipping'];
-        let billingCityObj;
-        let billingStateObj;
-        let shippingCityObj;
-        let shippingStateObj;
+        let billingCityId;
+        let billingStateId;
+        let shippingCityId;
+        let shippingStateId;
         let billingCityDoesNotExist = c.get('v.cityDoesNotExistBilling');
         let billingCityInAnotherState = c.get('v.cityInAnotherStateBilling');
-        let billingCityInAnotherCountry = c.get('v.cityInAnotherCountryBilling');
+        
         let shippingCityDoesNotExist = c.get('v.cityDoesNotExistShipping');
         let shippingCityInAnotherState = c.get('v.cityInAnotherStateShipping');
-        let shippingCityInAnotherCountry = c.get('v.cityInAnotherCountryShipping');
+        
         
         for(let i = 0 ; i < modes.length ; i++){            
             
-            let statenameid = c.get('v.stateNameId'+modes[i]);
-            let citynameid = c.get('v.cityNameId'+modes[i]);
-
+            let hierarchyCities = c.get('v.hierarchyCities'+modes[i]);
             //checking if the value of the state is in the inputBox(added as workaround) or in a picklist
             
             let stateElement = (c.get("v.copyAddress")&&modes[i]==='Shipping')?c.find('InputShippingState'):c.find(modes[i]+'State');
@@ -373,15 +353,36 @@
             
             let emptyCity =  $A.util.isEmpty(city);
             let emptyStreet =$A.util.isEmpty(street);
+            let hierarchy = state+' > '+city;
+            let hierarchyLower = hierarchy.toLowerCase();
+            let predictions = c.get("v.predictions"+modes[i]);
             
-            if(i===0){
-                if(citynameid) billingCityObj = citynameid[city];
-                if(statenameid) billingStateObj = statenameid[state];
-            }else if(i === 1){
-                if(citynameid) shippingCityObj = citynameid[city];
-                if(statenameid) shippingStateObj = statenameid[state];
-            } 
+            if(hierarchyCities){
+            switch(true){
+                
+                case hierarchyCities[hierarchyLower]?true:false:
 
+                    if(i===0){
+                        billingCityId = hierarchyCities[hierarchyLower].CityId;
+                        billingStateId = hierarchyCities[hierarchyLower].StateId;
+                    }else{
+                        shippingCityId = hierarchyCities[hierarchyLower].CityId;
+                        shippingStateId = hierarchyCities[hierarchyLower].StateId;
+                    }
+                break;
+                
+                case predictions.length === 1:
+                        if(i===0){
+                            billingCityId = hierarchyCities[predictions[0].toLowerCase()].CityId;
+                            billingStateId = hierarchyCities[predictions[0].toLowerCase()].StateId;
+                        }else{
+                            shippingCityId = hierarchyCities[predictions[0].toLowerCase()].CityId;
+                            shippingStateId = hierarchyCities[predictions[0].toLowerCase()].StateId;
+                        }
+                break;
+
+            }
+        }
             if( emptyCity || emptyStreet ){
                 c.set('v.valid'+modes[i], 0);
 
@@ -409,6 +410,8 @@
         var domPhone = officePhone.getElement();
         var country = $(domPhone).intlTelInput("getSelectedCountryData").iso2;
 
+        var legalName = c.find('legalName');
+        var legalNameValue = legalName.get('v.value');
         var isAllFilled = true;
 
         var customerType = c.get("v.currentMetadataCustomerType");
@@ -430,6 +433,15 @@
         }else{
            email.set("v.errors",null);
         }
+
+        if($A.util.isEmpty(legalNameValue)){
+            legalName.set("v.errors",[{message: $A.get("$Label.c.ISSP_Registration_Error_LegalName")}]);
+            isAllFilled = false;
+            let lnc = document.getElementById('legalNameContainer');
+            lnc.scrollIntoView();
+         }else{
+            legalName.set("v.errors",null);
+         }
 
         if($A.util.isEmpty(officePhone.get("v.value"))){
            officePhone.set("v.errors",[{message: $A.get("$Label.c.ISSP_Registration_Error_BusinessPhone")}]);
@@ -464,29 +476,27 @@
         if(isAllFilled){		
             		
             let dataQualityFeedback = ''; 		
-            		
-            if(billingCityInAnotherCountry) dataQualityFeedback=';Billing city found in another country';                    		
-                		
+            		             		
             if(billingCityInAnotherState) dataQualityFeedback=';Billing city found in another state';                    		
                 		
             if(billingCityDoesNotExist) dataQualityFeedback=';Billing city not found in our Database';		
             		
             if(c.get("v.validBilling") === -1) dataQualityFeedback=';Billing address not found by address doctor';		
-            		
-            if(shippingCityInAnotherCountry) dataQualityFeedback=';Shipping city found in another country';                    		
-                		
+            		                		
             if(shippingCityInAnotherState) dataQualityFeedback+=';Shipping city found in another state'; 		
                     		
             if(shippingCityDoesNotExist) dataQualityFeedback+=';Shipping city not found in our Database'; 		
             		
             if(c.get("v.validShipping") === -1) dataQualityFeedback+=';Shipping address not found by address doctor'; 		
             		
-            if(billingCityObj) c.set('v.billingCityId', billingCityObj.Id);		
-            		
-            if(billingStateObj) c.set('v.billingStateId', billingStateObj.Id);		
-            if(shippingCityObj) c.set('v.shippingCityId', shippingCityObj.Id);		
-            		
-            if(shippingStateObj) c.set('v.shippingStateId', shippingStateObj.Id);		
+            if(billingCityId) c.set('v.billingCityId', billingCityId);
+            
+            if(billingStateId) c.set('v.billingStateId', billingStateId);
+
+            if(shippingCityId) c.set('v.shippingCityId', shippingCityId);
+            
+            if(shippingStateId) c.set('v.shippingStateId', shippingStateId);
+
             c.set('v.account.Comment_data_quality_feedback__c','Registration errors.');		
             c.set('v.account.Data_quality_feedback__c', dataQualityFeedback.substring(1));		
             		

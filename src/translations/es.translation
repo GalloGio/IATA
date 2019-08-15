@@ -213,6 +213,10 @@
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
         <label>Hemos encontrado coincidencia con la dirección o direcciones.</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
@@ -15422,6 +15426,10 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
     <customLabels>
         <label>Indique su apellido</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>Seleccione su país</label>

@@ -136,6 +136,13 @@
         <value>Enter a valid city.</value>
     </labels>
     <labels>
+        <fullName>AMS_DQ_First_Suggestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS DQ First Suggestion</shortDescription>
+        <value>The selected city is {0}</value>
+    </labels>
+    <labels>
         <fullName>AMS_DQ_Found_Addr</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29115,6 +29122,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_Registration_Error_LastName</shortDescription>
         <value>Please enter your last name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Error_LegalName</fullName>
+        <categories>ISSP, login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Registration Error LegalName</shortDescription>
+        <value>Please enter your legal name</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Error_Location</fullName>

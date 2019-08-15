@@ -213,6 +213,10 @@
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
         <label>一致するアドレスが見つかりました。</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
@@ -15395,6 +15399,10 @@ IATA公認代理店の多くのIATA請求書はBSP/CASSを通して徴収しま�
     <customLabels>
         <label>姓を入力してください</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>国をお選びください</label>
