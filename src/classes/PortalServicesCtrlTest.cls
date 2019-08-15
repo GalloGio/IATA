@@ -588,15 +588,13 @@ public class PortalServicesCtrlTest {
 	lstString.add(c.id);
 	List<Contact> contList = new List<Contact>();
 	System.runAs(portalUser) {
-
-		
-		list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name in ('serviceTest3','serviceTest2','Insurance Providers')];
-		
-		contList = PortalServicesCtrl.getPortalAdmins();
-	
-		Test.StartTest();
-		PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false);
-		Test.StopTest();
+ list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name in ('serviceTest3','serviceTest2','Insurance Providers')];
+        Test.StartTest();
+        PortalServicesCtrl.requestAccess(portalServicelist.get(0).id);
+    
+       
+       // PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false,'');
+        Test.StopTest();
 	}
 }
 

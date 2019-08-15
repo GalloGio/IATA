@@ -69,6 +69,14 @@ global class PostCopyScript implements SandboxPostCopy {
 			delete listKVSettings;
 		}
 
+		//delete Apex setting Setting custom setting record
+		List<Apex_Setting__c> apexSettings = new List<Apex_Setting__c>();
+		apexSettings = Apex_Setting__c.getAll().values();
+		for(Apex_Setting__c a: apexSettings){
+			if(a.name=='Pardot Campaign') {
+				delete a;
+			}
+		}
 	}
 
 }
