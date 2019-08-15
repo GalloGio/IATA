@@ -63,6 +63,8 @@
         <fields>Is_Visible__c</fields>
         <fields>Auto_grant_service__c</fields>
         <relatedList>Portal_Application_Visibility__mdt.Parent__c</relatedList>
+        <sortField>Sector__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
