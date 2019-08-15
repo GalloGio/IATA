@@ -1,0 +1,17 @@
+<template>
+    <c-portal-custom-card-container>
+        <span slot="cardTitle">
+            <span>Restricted Login</span>
+        </span>
+        <span slot="cardBody">
+            <div class="cardBodyContent slds-p-bottom_medium">
+                <lightning-layout multiple-rows vertical-align="end">
+                    <lightning-layout-item size="12">
+                          <lightning-formatted-rich-text value={label.message} class="text-small fixed-text"></lightning-formatted-rich-text>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </span>
+    </c-portal-custom-card-container>
+</template>
+
