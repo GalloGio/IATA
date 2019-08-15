@@ -1,0 +1,91 @@
+<!--
+ - Created by pvavruska on 7/15/2019.
+ -->
+
+<!-- Portal Services Add Users Lookup -->
+<template>
+    <div class="slds-form-element">
+        <div class="slds-form-element__control" tabindex="0" >
+            <div class={getContainerClass}>
+                <div class={getDropdownClass} aria-expanded={isExpanded} aria-haspopup="listbox" role="combobox">
+
+                    <!-- Search input start -->
+                    <!-- New Search -->
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <input type="text" class="slds-input slds-combobox__input threeQuarters customWhiteBackground userSeachInput" id="combobox-id-1" aria-autocomplete="list" aria-controls="listbox-id-1"
+                               placeholder={placeholder}
+                               onclick={handleClearSelection} value={getInputValue} readonly={isInputReadonly}
+                               onfocus={handleFocus} onblur={handleBlur} oninput={handleInput}/>
+
+                        <span class="addUserBttnContainer">
+
+                            <template if:false={searchFlag}>
+                                <button class="addUserBttn" disabled={cantAdd} onmousedown={handleAdd}>{label.add}</button>
+                                <button class="addUserBttn slds-m-left--xxx-small" disabled={cantAddAll} onclick={handleAddAll}>{label.addAll}</button>
+                            </template>
+
+                            <template if:true={searchFlag}>
+                                <!-- Spinner -->
+                                <div role="presentation"
+                                     class="slds-input__icon slds-input__icon_right slds-is-relative">
+                                    <lightning-spinner alternative-text="Loading" size="small">
+                                    </lightning-spinner>
+                                </div>
+                            </template>
+                        </span>
+
+
+
+
+                    </div>
+                    <!-- END of New Search -->
+                    <!-- Search input end -->
+
+                    <!-- Result list box start -->
+                    <div id="listbox" role="listbox" onclick={handleComboboxClick}>
+                        <ul class={getListboxClass} role="presentation"  tabindex="0" onblur={handleBlur}>
+
+                            <template for:each={searchResults} for:item="result">
+                                <li key={result.id} role="presentation" class="slds-listbox__item resultLine">
+                                    <div
+                                            class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta slds-grid"
+                                            role="option" onclick={handleResultClick} data-recordid={result.id}>
+
+                                            <div class="slds-col checkPlace">
+                                                <template if:true={result.checked}>
+                                                    <lightning-icon icon-name="utility:check" size="x-small" class="cursorPointer"></lightning-icon>
+                                                </template>
+                                            </div>
+
+                                            <div class="slds-col breakWord slds-size_1-of-4">{result.title}</div>
+                                            <div class="slds-col breakWord slds-size_1-of-4">{result.subtitle}</div>
+                                            <div class="slds-col breakWord slds-size_1-of-4">{result.iataCodeLocation}</div>
+                                            <div class="slds-col breakWord slds-size_1-of-4">{result.status}</div>
+
+                                    </div>
+                                </li>
+                            </template>
+
+                            <template if:true={hasNoResults}>
+                                <li key={label.CSP_NoSearchResults} role="presentation" class="slds-listbox__item resultLine">
+                                    <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta slds-grid" role="option">
+                                        <div class="slds-col slds-size_3-of-3 slds-align_absolute-center">{label.CSP_NoSearchResults}</div>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                    <!-- Result list box end -->
+
+                </div>
+            </div>
+
+            <!-- Errors start -->
+            <template for:each={errors} for:item="error">
+                <label key={error.id} role="alert"
+                       class="slds-form-element__label slds-m-top_xx-small form-error">{error.message}</label>
+            </template>
+            <!-- Errors end -->
+        </div>
+    </div>
+</template>
