@@ -1,0 +1,8 @@
+<aura:component description="PortalLoginTheme" implements="forceCommunity:themeLayout" access="global">
+        <aura:attribute name="body" type="Aura.Component[]" required="false"/>
+    <lightning:layout multipleRows="false">
+        <lightning:layoutItem size="12">
+            {!v.body}
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

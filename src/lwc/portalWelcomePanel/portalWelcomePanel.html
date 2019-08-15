@@ -1,0 +1,115 @@
+<!--
+- Created by ukaya01 on 09/08/2019.
+-->
+
+<!-- Portal Welcome Panel -->
+<template>
+
+    <div class="contentContainer" style={backgroundStyle}>
+
+        <img src={logoIcon}>
+
+        <br/> <br/> <br/>
+
+        <div class="headerTitle">
+            Welcome to
+            IATA Customer Portal
+        </div>
+
+        <br/> <br/>
+
+        <div class="infoText">
+            This is the center of IATA customer experience, where you can access and manage IATA services and products and get support about any subject.
+        </div>
+
+        <br/> <br/>
+
+        <div class="rectangle">
+
+            <lightning-layout multiple-rows=true>
+                    <lightning-layout-item size=12 class="bounds">
+                        <lightning-layout multiple-rows=false>
+                            <lightning-layout-item size=2>
+                                <img src={serviceIcon} class="service">
+                            </lightning-layout-item>
+                            <lightning-layout-item size=10>
+                                <div class="cardItemTitle">
+                                    Access IATA services
+                                </div>
+                                <div class="description">
+                                    Access nearly 60 IATA services such as BSPLink, ICCS, TIESS.
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item size=12 class="bounds">
+                        <lightning-layout multiple-rows=false>
+                            <lightning-layout-item size=2>
+                                <img src={uptodateIcon} class="service">
+                            </lightning-layout-item>
+                            <lightning-layout-item size=10>
+                                <div class="cardItemTitle">
+                                    Keep up to date
+                                </div>
+                                <div class="description">
+                                    Easily manage and update your IATA profile. Open and follow up cases.
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item size=12 class="bounds">
+                        <lightning-layout multiple-rows=false>
+                            <lightning-layout-item size=2>
+                                <img src={offerIcon} class="service">
+                            </lightning-layout-item>
+                            <lightning-layout-item size=10>
+                                <div class="cardItemTitle">
+                                    Find special offers for you
+                                </div>
+                                <div class="description">
+                                    Discover the selection of publications, trainings and other IATA products and services.
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item size=12 class="bounds">
+                        <lightning-layout multiple-rows=false>
+                            <lightning-layout-item size=2>
+                                <img src={supportIcon} class="service">
+                            </lightning-layout-item>
+                            <lightning-layout-item size=10>
+                                <div class="cardItemTitle">
+                                    Find answers
+                                </div>
+                                <div class="description">
+                                    Reach the extensive collection of questions & answers; and document archive.
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size=12 class="bounds">
+                        <lightning-layout multiple-rows=false>
+                            <lightning-layout-item size=2>
+
+                            </lightning-layout-item>
+                            <lightning-layout-item size=10>
+                                <div class="textAlignCenter text-xsmall">
+                                    <lightning-button variant="base"
+                                                      label="Go to FAQ"
+                                                      title="Go to FAQ"
+                                                      onclick={handleNavigateToFAQ}
+                                                      class="blueCustomButtonLinkSmall">
+                                    </lightning-button>
+                                    <img src={arrowIcon} class="service faqPointer" onclick={handleNavigateToFAQ}>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+
+                </lightning-layout>
+
+        </div>
+
+    </div>
+</template>
