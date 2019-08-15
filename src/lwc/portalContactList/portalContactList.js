@@ -195,6 +195,7 @@ export default class PortalContactList extends LightningElement {
 
     columnSort(event) {
         let fieldName = event.target.dataset.name;
+        this.isAsc=!this.isAsc;
         this.orderRows(fieldName);
     }
 
@@ -209,17 +210,17 @@ export default class PortalContactList extends LightningElement {
         //Choose different field for login date
         if (fieldName === 'LastLogin') { fieldName == 'LastLoginDate'; }
 
+        this.sortBy = fieldName;
         //Handle sort direction
         if (sortBy != null) {
             if (sortBy == fieldName) {
-                this.isAsc = !isAsc;
-                isAsc = !isAsc;
+                isAsc = this.isAsc;
             } else {
                 isAsc = true;
                 this.isAsc = true;
             }
         }
-        this.sortBy = fieldName;
+        
 
         //Do sorting
         records.sort((a, b) => {

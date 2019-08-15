@@ -62,7 +62,7 @@
                                         <template for:each={mapOfValues} for:item="keyValue">
                                             <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
                                                 record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
-                                                show-edit={showEdit} class="section" section-title={keyValue.key}
+                                                show-edit={canEditAccount} class="section" section-title={keyValue.key}
                                                 data-name={keyValue.key} edit-basics={editBasics}
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
@@ -102,7 +102,7 @@
                                     <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
                                         fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
                                         default-sort="TradeName__c" records={branches} openmodel={openmodel} recordid={recordid}
-                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={editBasics}>
+                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={canEditAccount}>
                                     </c-portal-contact-list>
                                 </div>
                             </template>
@@ -137,13 +137,23 @@
                                         </div>
                                     </div>
 
-                                    <div class="slds-float_right">
+                                    <div class="slds-float_right displayFlex">
                                         <!-- LABELS -->
-                                        <lightning-button variant="brand" label={labels.NewContact}
-                                            title="Create New Contact" disabled={contactsNotLoaded}
-                                            onclick={createContact} class="slds-float_right containedButton">
-                                        </lightning-button>
+                                        <span if:true={showIFAPBtn}>
+                                            <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
+                                                title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
+                                                class="slds-float_right containedButton marginRight">
+                                            </lightning-button>
+                                        </span>
+                                        <span>
+                                            <lightning-button variant="brand" label={labels.NewContact}
+                                                title="Create New Contact" disabled={contactsNotLoaded}
+                                                onclick={createContact} class="slds-float_right containedButton heightCreateContact">
+                                            </lightning-button>
+                                        </span>
                                     </div>
+
+
                                 </div>
 
                                 <div class="slds-grid slds-wrap slds-m-top_x-small">
