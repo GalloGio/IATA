@@ -20327,26 +20327,24 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
     </validationRules>
     <validationRules>
         <fullName>ID_card_Holder_no_change</fullName>
-        <active>false</active>
+        <active>true</active>
         <errorConditionFormula>AND(
 
 or( 
 $User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
-$UserRole.Name &lt;&gt; &quot;GDP&quot; 
+$UserRole.Name &lt;&gt; &quot;GDP&quot;	
 ), 
-        
+				
 or( 
 $User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;, 
-$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;  
+$UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;	
 ), 
 
-$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,        
-        
-ID_Card_Holder__c=false,
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,				
 
 ISCHANGED(ID_Card_Holder__c)
 )</errorConditionFormula>
-        <errorMessage>This conbination of profile and role is not allowed to uncheck ID card holder.</errorMessage>
+        <errorMessage>Your Salesforce profile is restricted to change the ID Card Holder checkbox. Please contact the ID Card team.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>IFAP_Contact_Under_Branch_Account</fullName>
