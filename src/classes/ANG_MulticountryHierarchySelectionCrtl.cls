@@ -36,6 +36,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					accountFields.add(field);
 				}
 				accountFields.add('IATA_ISO_Country__r.Name');
+				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Name'); 
 			}
 			return accountFields;
 		}
@@ -165,7 +166,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		get{
 			if(mapHierarchyAccounts == null){
 				Id accountId = oscar.Account__c;
-				mapHierarchyAccounts = new Map<Id, Account>((List<Account>)Database.query('SELECT ' + String.join(accountFieldList, ',') + ', IATA_ISO_Country__r.AMS_Settlement_System__r.Name FROM Account WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name'));
+				mapHierarchyAccounts = new Map<Id, Account>((List<Account>)Database.query('SELECT ' + String.join(accountFieldList, ',') + ' FROM Account WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name'));
 			}
 			return mapHierarchyAccounts;
 		}
