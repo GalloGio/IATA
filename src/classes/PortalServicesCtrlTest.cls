@@ -591,15 +591,11 @@ public class PortalServicesCtrlTest {
 
 		
 		list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name in ('serviceTest3','serviceTest2','Insurance Providers')];
-
-		PortalServicesCtrl.requestAccess(portalServicelist.get(0).id);
+		
 		contList = PortalServicesCtrl.getPortalAdmins();
-
+	
 		Test.StartTest();
-		//requestAccessToICCS
-		PortalServicesCtrl.newAppsRequestICCS(portalServicelist.get(1).id, '', c.id);
-
-		PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false,'');
+		PortalServicesCtrl.newAppsRequest2(portalServicelist.get(2).id, '', c.id, '', false);
 		Test.StopTest();
 	}
 }
