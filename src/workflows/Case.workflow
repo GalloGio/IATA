@@ -3898,7 +3898,9 @@
     </alerts>
     <alerts>
         <fullName>Send_Email_to_Online_store_support</fullName>
-        <ccEmails>iata@servicenow.org</ccEmails>
+        <ccEmails>servicedesk@iata.org</ccEmails>
+	<ccEmails>szpyndam@iata.org</ccEmails>
+	<ccEmails>ganeaa@iata.org</ccEmails>
         <description>Send Email to Online store support</description>
         <protected>false</protected>
         <senderAddress>onlinestoresupport@iata.org</senderAddress>
