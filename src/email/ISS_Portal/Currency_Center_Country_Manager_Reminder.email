@@ -1,0 +1,6 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p data-pm-slice="1 1 []">Dear <em><strong>{!User.Name}</strong></em>,</p><p data-pm-slice="1 1 []"><br></p><p>Kindly ensure you that reviewed and updated the Currency Center with regards to country updates and additional information you may have.</p><p><br></p><p>Your last update for <em><strong>{!Country_Profile__c.Country_Name__c}</strong></em> was <strong><em>{!Country_Profile__c.LastModifiedDate}</em></strong><em><strong></strong></em></p><p><em><strong><br></strong></em> </p><p>As a reminder, please be aware that you are able to update the Currency Center at all times with relevant country information and over <em><strong>[Number of users]</strong></em> airline users connect to the Currency Center for information when it comes to currency repatriation and IATA activities.</p><p><br></p><p>Kind regards</p><p>Currency Center Team</p>]]></td>
+</tr>
+</table>

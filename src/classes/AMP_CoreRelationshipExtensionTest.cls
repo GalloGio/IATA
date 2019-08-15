@@ -25,8 +25,8 @@ private class AMP_CoreRelationshipExtensionTest {
 
 			Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 			Account a = new Account(
-				Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
-				RecordTypeId = accountRecordTypeId, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
+				Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', Sector__c = AMS_Utils.SECTOR_AIRLINE,
+				Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY, RecordTypeId = accountRecordTypeId, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
 			insert a;
 
 			Contact testContact = new Contact();

@@ -3,6 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>L3 Publications BGA001</name>
     <queueMembers>
+        <publicGroups>
+            <publicGroup>L3_Publications_BGA001</publicGroup>
+        </publicGroups>
         <users>
             <user>wana@iata.org</user>
         </users>

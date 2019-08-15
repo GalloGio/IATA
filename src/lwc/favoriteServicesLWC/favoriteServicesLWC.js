@@ -256,6 +256,10 @@ export default class FavoriteServicesLWC extends LightningElement {
             myUrl = appFullUrlData.value;
             flag = true;
         }
+        else if (recordName.value === 'Payment Link' || recordName.value === 'Paypal') {
+            myUrl = '';
+            flag = true;
+        }
         if (flag) {
             //verifies if the event target contains all data for correct redirection
 
@@ -277,7 +281,7 @@ export default class FavoriteServicesLWC extends LightningElement {
                             });
 
                     } else {
-                        if (recordName.value === 'Payment Link') {
+                        if (recordName.value === 'Payment Link' || recordName.value === 'Paypal') {
                             paymentLinkRedirect()
                                 .then(result => {
                                     if (result !== undefined && result !== '') {
