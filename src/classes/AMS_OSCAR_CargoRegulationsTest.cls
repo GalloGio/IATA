@@ -2,7 +2,6 @@
     
     @testSetup static void setup(){
 		AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
-		AMS_OSCAR_TestDataFactory.increasecoverage();
     }
 
     private static void loadCredentials() {
@@ -68,9 +67,10 @@
 
         	//force DGR renewal oscar creation
         	for(AMS_Agency_Regulation__c areg : aregs){
-                if(areg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
+                if(areg.Type_Of_Certificate__c == AMS_Utils.CERT_DGR){
                     areg.Notification_sent__c = true;
                     update areg;
+                    break;
                 }
             }
 

@@ -14,13 +14,28 @@ private class AMP_ChatterBroadcastToolControllerTest {
 
         // Create an Airline HQ account
         Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-        Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
-                                RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'IATA member');
+        Account acct_hq = new Account(
+            						Name = 'Qatar Airways',
+            						Airline_designator__c = 'QR',
+            						ICCS_Membership_Status__c = 'Member',
+            						Industry='Airline',
+            						Type='Passenger',
+            						Sector__c = AMS_Utils.SECTOR_AIRLINE,
+            						Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY,
+                                	RecordTypeId = AirlineHQ_RT_Id,
+            						IATA_ISO_Country__c = country_qr.Id,
+            						Membership_status__c = 'IATA member');
         insert acct_hq;
 
 
         test.startTest();
+			
+			PageReference pageRef = Page.AMP_ChatterBroadcastTool;
+			
+			Test.setCurrentPage(pageRef);
 
+			ApexPages.currentPage().getParameters().put('accountId', acct_hq.Id);
+		
         	AMP_ChatterBroadcastToolController ctrl = new AMP_ChatterBroadcastToolController();
         	system.assertEquals(1, ctrl.lstAccounts.size());
         	system.assertEquals(6, ctrl.getlstRegions().size());

@@ -27,6 +27,10 @@
                 <behavior>Edit</behavior>
                 <field>Value_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -79,6 +83,7 @@
         <fields>Not_Available__c</fields>
         <fields>Date_Value__c</fields>
         <fields>Scope__c</fields>
+        <fields>Deadline__c</fields>
         <relatedList>KPI_Value__c.FDS_KPI_Reporting__c</relatedList>
         <sortField>Date_Value__c</sortField>
         <sortOrder>Desc</sortOrder>

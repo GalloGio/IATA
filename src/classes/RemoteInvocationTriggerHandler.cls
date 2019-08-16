@@ -1,185 +1,305 @@
-public with sharing class RemoteInvocationTriggerHandler {
+public without sharing class RemoteInvocationTriggerHandler {
 
-	//Trigger variables
-	public List<Remote_Invocation__c> triggerNew = (List<Remote_Invocation__c>) Trigger.new;
-	public List<Remote_Invocation__c> triggerOld = (List<Remote_Invocation__c>) Trigger.old;
-	public Map<Id, Remote_Invocation__c> newMap = (Map<Id,Remote_Invocation__c>) Trigger.newMap;
-	public Map<Id, Remote_Invocation__c> oldMap = (Map<Id,Remote_Invocation__c>) Trigger.oldMap;
+    //Trigger variables
+    public List<Remote_Invocation__c> triggerNew = (List<Remote_Invocation__c>) Trigger.new;
+    public List<Remote_Invocation__c> triggerOld = (List<Remote_Invocation__c>) Trigger.old;
+    public Map<Id, Remote_Invocation__c> newMap = (Map<Id,Remote_Invocation__c>) Trigger.newMap;
+    public Map<Id, Remote_Invocation__c> oldMap = (Map<Id,Remote_Invocation__c>) Trigger.oldMap;
 
-	//Remote Invocation Request Types
-	public static final String NEWGEN_EASY_PAY = 'ANG_IEP_MODEL_A';
-	public static final String TIP_IFG_REPORT  = 'TIP_IFG_REPORT';
+    //Remote Invocation Request Types
+    public static final String NEWGEN_EASY_PAY = 'ANG_IEP_MODEL_A';
+    public static final String TIP_IFG_REPORT  = 'TIP_IFG_REPORT';
+    public static final String NEWGEN_GDI_ENDO  = 'GDI_ENDORSEMENT';
 
-	//Remote Invocation Status
-	public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
-	public static final String REMOTE_INVOCATION_STATUS_PROGRESS     = 'In Progress';
+    //Remote Invocation Status
+    public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
+    public static final String REMOTE_INVOCATION_STATUS_PROGRESS     = 'In Progress';
 
-	//Remote Invocation Recordtypes
-	public static final ID RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_EASY_PAY);
-	public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', TIP_IFG_REPORT);
+    //Remote Invocation Recordtypes
+    public static final ID RECTYPE_NEWGEN = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_EASY_PAY);
+    public static final ID RECTYPE_TIP    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', TIP_IFG_REPORT);
+    public static final ID RECTYPE_GDI    = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c', NEWGEN_GDI_ENDO);
 
-	//to store the remote invocations with errors
-	public Set<ID> remoteInvocationWithErrors;
+    //to store the remote invocations with errors
+    public Set<ID> remoteInvocationWithErrors;
 
-	private Map<String,Account> mapIATACodeAccs;
+    private Map<String,Account> mapIATACodeAccs;
 
-	public RemoteInvocationTriggerHandler(){
-	}
+    private Map<String,String> mapTypeRecordtype = new Map<String,String>{  NEWGEN_EASY_PAY => RECTYPE_NEWGEN,
+                                                                            TIP_IFG_REPORT  => RECTYPE_TIP,
+                                                                            NEWGEN_GDI_ENDO => RECTYPE_GDI};
 
-	public void handleBeforeInsert(){
-		assignRecordtypeToRequest();
-	}
+    //private final List<String> typesToProcess = new List<String>{'ANG_IEPRemoteInvocation','ANG_GDIRemoteInvocation'};
+     private Map<String,String> typesToProcess = new Map<String,String>{  NEWGEN_EASY_PAY => 'ANG_IEPRemoteInvocation',
+                                                                            NEWGEN_GDI_ENDO => 'ANG_GDIRemoteInvocation'};
 
-	public void handleBeforeUpdate(){
-		processInvocationsInProgress();
-	}
+    public RemoteInvocationTriggerHandler(){
+    }
 
+    public void handleAfterInsert(){
+        handlePlatformEvent();
+    }
 
-	public void assignRecordtypeToRequest(){
-		for(Remote_Invocation__c er : triggerNew){
-			er.recordtypeid = (er.Request_Type__c == NEWGEN_EASY_PAY ? RECTYPE_NEWGEN : RECTYPE_TIP);
-		}
-	}
+    public void handleAfterUpdate(){
+        handlePlatformEvent();
+        processInvocationsInProgress(NEWGEN_GDI_ENDO);
+        
+    }
 
-	public void processInvocationsInProgress(){
-		Set<ID> parentIDs = new Set<ID>();
-		Set<String> iatacodesToFetch = new Set<String>();
-		Map<string,Account> mapIATACodeAccs = new Map<String, Account>();
+    public void handleAfterDelete(){
+        handlePlatformEvent();
+    }
 
-		for(Remote_Invocation__c re :  triggerNew){
-			if(re.Status__c == REMOTE_INVOCATION_STATUS_PROGRESS && oldMap.get(re.Id).Status__c == REMOTE_INVOCATION_STATUS_INITIALIZING){
-				parentIDs.add(re.id);
-			}
-		}
-		Map<ID,Remote_Invocation_Artefact__c> artefacts = new Map<ID,Remote_Invocation_Artefact__c>([SELECT ID, External_ID__c, Format__c, Internal_ID__c, Name__c, Previous_Version__c, Remote_Invocation__c, 
-															Request_Result__c, Source__c, Status__C, Status_Detail__c, Valid_From__c, Valid_To__c, Version__c, Version_Notes__c
-															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :parentIDs]);
-		for(Remote_Invocation_Artefact__c artifact : artefacts.values())
-			iatacodesToFetch.add(artifact.Internal_ID__c);
+    public void handleAfterUndelete(){
+        handlePlatformEvent();
+    }
 
+    public void handleBeforeInsert(){
+        assignRecordtypeToRequest();
+    }
 
-		for(Account acc : [SELECT ID, name, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c, IATACode__c, recordtypeid FROM Account WHERE iataCode__c IN :iatacodesToFetch])
-			mapIATACodeAccs.put(acc.IATACode__c,acc);
-
-		if(!mapIATACodeAccs.isEmpty()) performSanityCheck(artefacts, mapIATACodeAccs);		
-	}
-
-	public void performSanityCheck(Map<ID,Remote_Invocation_Artefact__c> remoteInvocationToProcess, Map<string,Account> mapIATACodeAccs){
-
-		remoteInvocationWithErrors = new Set<ID>();
-		List<Remote_Invocation_Artefact__c> reqsWithError = new List<Remote_Invocation_Artefact__c>(); 
-		Map<String,Remote_Invocation_Artefact__c> mapNewgenIATAcodeReqsToProcess = new Map<String,Remote_Invocation_Artefact__c>();		
-		
-		Map<ID,Account> mapAccsWithIDs = new Map<ID,Account>(); //to pass to the method to create the IEP accounts for NewGen
+    public void handleBeforeUpdate(){
+        processInvocationsInProgress(NEWGEN_EASY_PAY);
+        handleAutomaticUploadReports();
+    }
 
 
-		//-----RUN VALIDATIONS--------
-		for(Remote_Invocation_Artefact__c artifact : remoteInvocationToProcess.values()){
-			Remote_Invocation__c parent = newMap.get(artifact.Remote_Invocation__c);
-			Account acc = mapIATACodeAccs.get(parent.Internal_ID__c);
-			if(parent != null && acc != null){
-				
-				//NEWGEN validations
-				if(parent.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY && acc.recordtypeid == AMS_Utils.RECTYPE_IATAAGENCY){
-					mapNewgenIATAcodeReqsToProcess.put(artifact.Internal_Id__c,artifact);
-					mapAccsWithIDs.put(acc.id,acc);
-				}
-				//else if (TIP validations)
+    public void assignRecordtypeToRequest(){
+        for(Remote_Invocation__c er : triggerNew){
+            er.recordtypeid = mapTypeRecordtype.get(er.Request_Type__c);
+        }
+    }
 
-				else{
-					reqsWithError.add(artifact);
-					artifact.Request_Result__c = 'Failed';
+    public void handlePlatformEvent(){
+        for(Remote_Invocation__c re : triggerNew){
 
-					//mark parent with error
-					parent.Status__c = 'Failed';
-					parent.Status_detail__c = 'Fail to Passed the validations for NewGen';
-					remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
-				}
-				
-			}
-			else{
-				reqsWithError.add(artifact);
-				artifact.Request_Result__c = 'Failed';
+            //if oldmap doesn't contain id, trigger is insert. Note: this method only runs on after, id is allways populated 
+            if((oldMap == null || ( oldMap != null && oldMap.get(re.id).Status__c != re.Status__c)) && (re.Status__c == 'Completed' || re.Status__c == 'Failed'))
+                PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+        }
+    }
 
-				//mark parent with error
-				parent.Status__c = 'Failed';
-				parent.Status_detail__c = 'Fail to Passed the general validations';
-				remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
-			}
-		}
-	
-		if(!mapNewgenIATAcodeReqsToProcess.isEmpty()) process_NewGen_Model_A(mapNewgenIATAcodeReqsToProcess, mapAccsWithIDs);
-		if(!reqsWithError.isEmpty()) update reqsWithError;
-		
+    public void processInvocationsInProgress(string whatToProcess){
+        
+        Set<Remote_Invocation__c> IEPToProcess = new Set<Remote_Invocation__c>();
+        Set<Remote_Invocation__c> GDIToProcess = new Set<Remote_Invocation__c>();
+        
+        for(Remote_Invocation__c re :  triggerNew){
+            if(re.Status__c == REMOTE_INVOCATION_STATUS_PROGRESS && oldMap.get(re.Id).Status__c == REMOTE_INVOCATION_STATUS_INITIALIZING){
+                if(whatToProcess==NEWGEN_GDI_ENDO && re.Request_Type__c==NEWGEN_GDI_ENDO)
+                    GDIToProcess.add(re);
+                
+                if(whatToProcess==NEWGEN_EASY_PAY && re.Request_Type__c==NEWGEN_EASY_PAY)
+                    IEPToProcess.add(re);
+            }
+        }
+        
+        if(IEPToProcess.isEmpty() && GDIToProcess.isEmpty()) return; // move along, nothing to see here ...
 
-		/*after processing all, update Remote Invocations (Parents) with results 
-		Mark parents as pass thoose wich id is not in the list of remoteInvocationWithErrors*/
+        // Get the Type corresponding to the class name
+        Type t = Type.forName(typesToProcess.get(whatToProcess));
 
-		for(Remote_Invocation__c re :newMap.values())			
-			if(!remoteInvocationWithErrors.contains(re.id)) //otherwise it's already populated when the error occurred
-				re.Status__c = 'Completed';
-		//update newMap.values();
-	}
+        ANG_RemoteInvocationINT processor = (ANG_RemoteInvocationINT)t.newInstance();
+
+        if(whatToProcess==NEWGEN_GDI_ENDO){
+            processor.doProcess(GDIToProcess);
+        }
+
+        if(whatToProcess==NEWGEN_EASY_PAY){
+            processor.doSanityCheck(IEPToProcess);
+            processor.doProcess(IEPToProcess);
+        }
+    }
+
+    public void handleAutomaticUploadReports() {
+
+        //
+        // Get all remote invocations that were updated to In Progress by mulesoft.
+        //
+        List<Remote_Invocation__c> remoteInvocationInProgressList = new List<Remote_Invocation__c>();
+        Set<Id> riSet = new Set<Id>();
+        Set<String> airLineCodes = new Set<String>();
+
+        for(Remote_Invocation__c ri : triggerNew) {
+            //
+            // ONLY TIP AUTOMATIC REPORTS
+            //
+            if(oldMap.get(ri.id).Status__c == TIP_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING && 
+                ri.Status__c == TIP_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS && 
+                ri.Request_Type__c == TIP_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS
+              ) {
+                remoteInvocationInProgressList.add(ri);
+                riSet.add(ri.Id);
+                airLineCodes.add(ri.Internal_ID__c);
+            }
+        }
 
 
-	public void process_NewGen_Model_A(Map<String,Remote_Invocation_Artefact__c> reqsToCreateOSCAR, Map<ID,Account> mapIDAccs){
+        if(remoteInvocationInProgressList.size() != 0) {
 
-		/*
-		1.	Fetch Account ID from IATA Code received
-		2.	Fetch Active, Authorized signatory Contact associated to Account
-		3.	Create OSCAR Communication case
-		4.	Create Staging Area ???? 
-		5.	Create Oscar
+            List<Account> accounts = [Select Id, IATACode__c From Account Where IATACode__c In :airLineCodes And RecordTypeId = :AMS_Utils.RECTYPE_AIRLINE];
 
-		(just calling the method to create IEP accounts in the ANG_OSCARProcessHelper class )
-		*/ 
-		List<Remote_Invocation_Artefact__c> requestToUpdate = new List<Remote_Invocation_Artefact__c>();
-		
-		try{
-			List<AMS_OSCAR__c> listOSCARs = ANG_OSCARProcessHelper.createIEPAccountOscar(mapIDAccs,'setup'); //mudar o metodo para devolver a lista de oscars
-			if(listOSCARs !=null && !listOSCARs.isEmpty()) 
-				for(AMS_OSCAR__c oscar : listOSCARs){
-					String iataCode = mapIDAccs.get(oscar.Account__c).IATACode__c;
-					reqsToCreateOSCAR.get(iataCode).Request_Result__c = 'Completed';
-					reqsToCreateOSCAR.get(iataCode).Object_ID_Created__c = oscar.id;
-					requestToUpdate.add(reqsToCreateOSCAR.get(iataCode));	
-					reqsToCreateOSCAR.remove(iataCode);
-				}
-		}catch(Exception e){
-			for(Remote_Invocation_Artefact__c artifact : reqsToCreateOSCAR.values()){
-				artifact.Request_Result__c = 'Failed';
-				
-				//mark parent with error
-				newMap.get(artifact.Remote_Invocation__c).Status__c = 'Failed';
-				newMap.get(artifact.Remote_Invocation__c).Status_detail__c = e.getMessage();
-				//status details should be filled with error description but...
-				remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
-				
-				requestToUpdate.add(artifact);
-				reqsToCreateOSCAR.remove(artifact.Internal_Id__c);
-			}
-		}
+            Map<String, Id> airLineCodeAccountId = new Map<String, Id>();
 
-		/*After processing all OSCAR's, the reqsToCreateOSCAR should be empty 
-		and all the requests should now be in the requestToUpdate List
-		. 
-		The existence of records in this map means that some error occur. */ 
+            Set<Id> accountsSet  = new Set<Id>();
+            for(Account a : accounts) {
+                airLineCodeAccountId.put(a.IATACode__c, a.Id);
+                accountsSet.add(a.id);           
+            }
 
-		if(!reqsToCreateOSCAR.isEmpty()){
-			for(Remote_Invocation_Artefact__c artifact : reqsToCreateOSCAR.values()){
-				artifact.Request_Result__c = 'Failed';
-				
-				//mark parent with error
-				newMap.get(artifact.Remote_Invocation__c).Status__c = 'Failed';
-				newMap.get(artifact.Remote_Invocation__c).Status_detail__c = 'Unknown Error occurred';
-				//status details should be filled with error description but...
-				remoteInvocationWithErrors.add(artifact.Remote_Invocation__c);
-				
-				requestToUpdate.add(artifact);
-				reqsToCreateOSCAR.remove(artifact.Internal_Id__c);
-			}
-		}
-		update requestToUpdate;
-	}
+            List<ISSP_External_Report__c> existingExternalReportsList = [Select id, Account__c
+                                                               From ISSP_External_Report__c
+                                                              Where Account__c In :accountsSet
+                                                                And Report_ID__c = :TIP_Utils.REPORT_TYPE_TIP_AUTO_REPORTS];
 
+
+            Map<Id, ISSP_External_Report__c> accountExternalReportMap = new Map<Id, ISSP_External_Report__c>();
+
+            for(ISSP_External_Report__c er : existingExternalReportsList) {
+                accountExternalReportMap.put(er.Account__c, er);
+            }
+
+            List<Remote_Invocation_Artefact__c> riaList = [Select id, Remote_Invocation__c, Object_ID_Created__c, Status__c From Remote_Invocation_Artefact__c Where Remote_Invocation__c In : riSet];
+
+            Map<Id, List<Remote_Invocation_Artefact__c>> riRiaListMap = new Map<Id, List<Remote_Invocation_Artefact__c>>();
+
+            for(Remote_Invocation_Artefact__c ria : riaList) {
+
+                if(riRiaListMap.get(ria.Remote_Invocation__c) == null) {
+                    List<Remote_Invocation_Artefact__c> aux = new List<Remote_Invocation_Artefact__c>();
+                    aux.add(ria);
+
+                    riRiaListMap.put(ria.Remote_Invocation__c, aux);
+                } else {
+                    riRiaListMap.get(ria.Remote_Invocation__c).add(ria);
+                }
+            }
+
+            List<RemoteInvocationExternalReportWrapper> remoteInvocationExternalReportWrapperList = new List<RemoteInvocationExternalReportWrapper>();
+
+            String auxStatus = '';
+            String auxErrorMessage = '';
+
+
+            //
+            // For each remoted invocation that were update to In Progress we need to create a External Report
+            //
+            Integer tempId = 0;
+            for(Remote_Invocation__c ipRi : remoteInvocationInProgressList) {
+
+                Id auxAccountId = airLineCodeAccountId.get(ipRi.Internal_ID__c);
+
+                if(auxAccountId == null) {
+                    auxStatus = TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED;
+                    auxErrorMessage = 'The account : ' + ipRi.Internal_ID__c + ' does not exist';
+
+                    remoteInvocationExternalReportWrapperList.add(
+                        new remoteInvocationExternalReportWrapper(
+                            tempId,
+                            ipRi,
+                            null
+                        )
+                    );
+                }
+
+                if(auxAccountId != null) {
+                    ISSP_External_Report__c auxEr = accountExternalReportMap.get(auxAccountId); 
+
+                    if(auxEr == null) {
+                        auxEr = new ISSP_External_Report__c (
+                                        Account__c = auxAccountId,
+                                        Report_ID__c = TIP_Utils.REPORT_TYPE_TIP_AUTO_REPORTS
+                                    );
+                    }
+
+                    remoteInvocationExternalReportWrapperList.add(
+                        new remoteInvocationExternalReportWrapper(
+                            tempId,
+                            ipRi,
+                            auxEr
+                        )
+                    );
+                }
+
+                tempId++;
+
+            }
+
+            List<ISSP_External_Report__c> externalReportsToInsert = new List<ISSP_External_Report__c>();
+            Map<Integer, RemoteInvocationExternalReportWrapper> tempIdWrapperMap = new Map<Integer, RemoteInvocationExternalReportWrapper>();
+
+            for(RemoteInvocationExternalReportWrapper rierw : remoteInvocationExternalReportWrapperList) {
+                if(rierw.er != null) externalReportsToInsert.add(rierw.er);
+                tempIdWrapperMap.put(rierw.tempId, rierw);
+            }
+
+            //
+            // We are creating an external report for each 
+            //
+            if(externalReportsToInsert.size() != 0 || auxStatus != '') {
+
+                if(auxStatus == '') {
+                    try {
+                        upsert externalReportsToInsert;
+
+                        //
+                        // All good
+                        //
+                        auxStatus = TIP_Utils.REMOTE_INVOCATION_STATUS_COMPLETED;
+
+                    } catch(DmlException de) {
+                        //
+                        // Error!!!
+                        //
+                        System.debug('ERROR : ' + de.getMessage());
+                        auxStatus = TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED;
+                        auxErrorMessage = de.getMessage();
+                    }
+                }
+
+                //
+                // Update the remote_invocation with the result status
+                // Update the artifacts with the correct External Report ID
+                //
+                List<Remote_Invocation__c> riToUpdate = new List<Remote_Invocation__c>();
+                List<Remote_Invocation_Artefact__c> riaToUpdate = new List<Remote_Invocation_Artefact__c>();
+
+                for(Integer key : tempIdWrapperMap.keySet()) {
+                    RemoteInvocationExternalReportWrapper rierw = tempIdWrapperMap.get(key);
+                    
+                    List<Remote_Invocation_Artefact__c> riaList2 = riRiaListMap.get(rierw.ri.Id);
+                    rierw.ri.Status__c = auxStatus;
+
+                    riToUpdate.add(rierw.ri);
+
+                    for(Remote_Invocation_Artefact__c ria : riaList2) {
+                        if(rierw.er != null) ria.Object_ID_Created__c = rierw.er.Id;
+
+                        if(auxStatus == TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED) {
+                            ria.Request_Result__c = TIP_Utils.REMOTE_INVOCATION_ARTEFACT_STATUS_FAILED;
+                        } else if(auxStatus == TIP_Utils.REMOTE_INVOCATION_STATUS_COMPLETED) {
+                            ria.Request_Result__c = TIP_Utils.REMOTE_INVOCATION_ARTEFACT_STATUS_COMPLETED;
+                        }
+
+                        ria.Status_Detail__c = auxErrorMessage;
+                        riaToUpdate.add(ria);
+                    }
+                }
+
+                update riaToUpdate;  
+            }
+        }
+    }
+
+    public class RemoteInvocationExternalReportWrapper {
+        public Integer tempId {get; set;}
+        public Remote_Invocation__c ri {get; set;}
+        public ISSP_External_Report__c er {get; set;}
+
+        public RemoteInvocationExternalReportWrapper(Integer tempId, Remote_Invocation__c ri, ISSP_External_Report__c er) {
+            this.tempId = tempId;
+            this.ri = ri;
+            this.er = er;
+        }
+    }
 }

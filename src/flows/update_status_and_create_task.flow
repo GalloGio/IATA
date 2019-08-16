@@ -538,7 +538,7 @@ IF (CONTAINS ({!$UserRole.Name},&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -670,7 +670,7 @@ IF (CONTAINS ({!$UserRole.Name},&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -802,7 +802,7 @@ IF (CONTAINS ({!$UserRole.Name},&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -934,7 +934,7 @@ IF (CONTAINS ({!$UserRole.Name},&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -1066,7 +1066,7 @@ IF (CONTAINS ({!$UserRole.Name},&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -1198,7 +1198,7 @@ IF (CONTAINS ({!$UserRole.Name},&quot;MAD Hub&quot;),&quot;0122000000002Ht&quot;
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>

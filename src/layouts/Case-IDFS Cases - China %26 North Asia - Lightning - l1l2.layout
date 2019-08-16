@@ -6,6 +6,57 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customConsoleComponents>
+        <subtabComponents>
+            <containers>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
+                <region>Right</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Editing</label>
+                    <page>dgAI2__DG_OnDemandCase</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Portal</label>
+                    <page>dgec__DG_WelcomeEmailPromts</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Chat</label>
+                    <page>dglc__DG_LiveChat</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>AI Suggestion</label>
+                    <page>DG_ProposedTemplate</page>
+                </sidebarComponents>
+                <style>Accordion</style>
+                <unit>Pixel</unit>
+                <width>300</width>
+            </containers>
+            <containers>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <region>Left</region>
+                <sidebarComponents>
+                    <componentType>Lookup</componentType>
+                    <height>50</height>
+                    <lookup>Contact</lookup>
+                    <unit>Percentage</unit>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>Lookup</componentType>
+                    <enableLinking>true</enableLinking>
+                    <height>50</height>
+                    <lookup>Account</lookup>
+                    <unit>Percentage</unit>
+                </sidebarComponents>
+                <style>Stack</style>
+                <unit>Percentage</unit>
+                <width>35</width>
+            </containers>
+        </subtabComponents>
+    </customConsoleComponents>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -370,44 +421,44 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
-        <label>Emails</label>
-        <layoutColumns/>
-        <style>OneColumn</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>false</editHeading>
         <label>Attachments</label>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>GenericAttachmentListCase</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Case.Send_Email_l1l2_lightning</actionName>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Case_Close_Region</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Send_to_Recycle_Bin</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
             <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.New_Copy_Parent_Details_RegionCNA</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>MassAccept</actionName>
             <actionType>StandardButton</actionType>
-            <sortOrder>4</sortOrder>
+            <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
+            <actionName>E2CP__New_Comment_Lightning</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Case.Escalate_within_IATA_lightning</actionName>
@@ -415,32 +466,32 @@
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Close_Case_lightning</actionName>
+            <actionName>Case.Send_Email_l1l2_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>Case.Log_Phone_case_lightning</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>Case.New_Copy_Parent_Details_RegionCNA</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>E2CP__New_Comment_Lightning</actionName>
-            <actionType>CustomButton</actionType>
+            <actionName>Case.Send_to_Recycle_Bin</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Log_Phone_case_lightning</actionName>
+            <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
+            <actionName>Case.Log_a_call_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>11</sortOrder>
         </platformActionListItems>
@@ -450,8 +501,8 @@
             <sortOrder>12</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Log_a_call_lightning</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
             <sortOrder>13</sortOrder>
         </platformActionListItems>
     </platformActionList>
@@ -536,6 +587,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>Case_Detail__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>X2015_Overall_Satisfaction__c</fields>
         <fields>X2015_CES__c</fields>
         <fields>X2015_Communication_Satisfaction__c</fields>
@@ -558,7 +613,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000000NMPl</masterLabel>
+        <masterLabel>00h1r00000k7zPU</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

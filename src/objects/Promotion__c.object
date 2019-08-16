@@ -46,16 +46,18 @@
     <description>For ID Card promotions</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Promotion_Code__c</fullName>
         <caseSensitive>false</caseSensitive>
+        <description>Promotion Code used for ID Card</description>
         <externalId>false</externalId>
         <label>Promotion Code</label>
         <length>6</length>
@@ -66,6 +68,7 @@
     </fields>
     <fields>
         <fullName>Promotion_Duration_Valid_From__c</fullName>
+        <description>First date of validity period</description>
         <externalId>false</externalId>
         <label>Promotion Duration - Valid From</label>
         <required>true</required>
@@ -74,6 +77,7 @@
     </fields>
     <fields>
         <fullName>Promotion_Duration_Valid_Up_to__c</fullName>
+        <description>Last date of validity period</description>
         <externalId>false</externalId>
         <label>Promotion Duration - Valid Up to</label>
         <required>true</required>
@@ -82,6 +86,7 @@
     </fields>
     <fields>
         <fullName>Promotion_Value__c</fullName>
+        <description>Percentage of promotion</description>
         <externalId>false</externalId>
         <label>Promotion Value</label>
         <precision>18</precision>
@@ -92,6 +97,7 @@
     </fields>
     <fields>
         <fullName>Type_of_Application__c</fullName>
+        <description>Represents 4 types of promotion applications: &quot;New&quot; promotions, promotions for &quot;renewal&quot;, promotions for &quot;reissue&quot;, promotions for &quot;replacement&quot;</description>
         <externalId>false</externalId>
         <label>Type of Application</label>
         <required>false</required>

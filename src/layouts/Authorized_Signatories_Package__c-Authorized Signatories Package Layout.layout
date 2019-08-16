@@ -62,6 +62,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contact.NAME</fields>
         <fields>Contact__c</fields>
         <fields>Contact_Title__c</fields>
         <fields>ASP_Effective_Date__c</fields>

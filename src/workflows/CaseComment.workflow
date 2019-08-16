@@ -471,7 +471,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.First_Contact_with_Client__c</field>
@@ -510,7 +510,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c))) ,Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;SEDA&quot;, Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName = &quot;Airline_Coding_Application&quot;, Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;), NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;)) ,NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
+        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c))) ,Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;SEDA&quot;, Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName = &quot;Airline_Coding_Application&quot;, Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, Parent.RecordType.DeveloperName = &quot;CNS_Collection_Process&quot;), NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;)) ,NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -520,7 +520,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c))) ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName =&quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName =&quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, Parent.RecordType.DeveloperName =&quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;), OR(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;) ,ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
+        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c))) ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName =&quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName =&quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, Parent.RecordType.DeveloperName =&quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;, Parent.RecordType.DeveloperName =&quot;CNS_Collection_Process&quot;), OR(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;) ,ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -559,7 +559,8 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( $User.Id &lt;&gt; Parent.Owner:User.Id, ISPICKVAL(Parent.Status, &apos;Closed&apos; ),  OR (  Parent.RecordType.DeveloperName = &apos;CasesEurope&apos;,  Parent.RecordType.DeveloperName = &apos;CasesAmericas&apos;,  Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;,  Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;,  Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;,  Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;,  Parent.RecordType.DeveloperName = &apos;Inter_DPCs&apos;, Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName = &apos;Cases_SIS_Help_Desk&apos;, Parent.RecordType.DeveloperName = &apos;InternalCasesEuropeSCE&apos;  ), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
+        <formula>AND ( $User.Id &lt;&gt; Parent.Owner:User.Id, ISPICKVAL(Parent.Status, &apos;Closed&apos; ),  OR (  Parent.RecordType.DeveloperName = &apos;CasesEurope&apos;,
+        Parent.RecordType.DeveloperName = &apos;Cases_Global&apos;, Parent.RecordType.DeveloperName = &apos;CasesAmericas&apos;,  Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;,  Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;,  Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;,  Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;,  Parent.RecordType.DeveloperName = &apos;Inter_DPCs&apos;, Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName = &apos;Cases_SIS_Help_Desk&apos;, Parent.RecordType.DeveloperName = &apos;InternalCasesEuropeSCE&apos;  ), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -569,7 +570,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND( CreatedById &lt;&gt;  Parent.OwnerId ,  not(Parent.IsClosed),  OR( Parent.RecordType.Name = &quot;Cases - Europe&quot;,  Parent.RecordType.Name = &quot;Cases - Americas&quot;,  Parent.RecordType.Name = &quot;Cases - Africa &amp; Middle East&quot;,  Parent.RecordType.Name = &quot;Cases - Asia &amp; Pacific&quot;,  Parent.RecordType.Name = &quot;Cases - China &amp; North Asia&quot;,  Parent.RecordType.Name = &quot;Cases - SIS Help Desk&quot;,   Parent.RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, Parent.RecordType.Name = &quot;Invoicing Collection Cases&quot;, Parent.RecordType.Name = &quot;Cases - IFG&quot; ))</formula>
+        <formula>AND( CreatedById &lt;&gt;  Parent.OwnerId ,  not(Parent.IsClosed),  OR(  Parent.RecordType.Name = &quot;Cases - Global&quot;,   Parent.RecordType.Name = &quot;Cases - Europe&quot;,  Parent.RecordType.Name = &quot;Cases - Americas&quot;,  Parent.RecordType.Name = &quot;Cases - Africa &amp; Middle East&quot;,  Parent.RecordType.Name = &quot;Cases - Asia &amp; Pacific&quot;,  Parent.RecordType.Name = &quot;Cases - China &amp; North Asia&quot;,  Parent.RecordType.Name = &quot;Cases - SIS Help Desk&quot;,   Parent.RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, Parent.RecordType.Name = &quot;Invoicing Collection Cases&quot;, Parent.RecordType.Name = &quot;Cases - IFG&quot; ))</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

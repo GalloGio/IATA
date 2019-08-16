@@ -8,11 +8,11 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>label</name>
-                <value>My team - CSR performance</value>
+                <value>My team CSR performance</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>reportName</name>
-                <value>CSR_performance_light</value>
+                <value>CSR_Performance_Matrix</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>showRefreshButton</name>
@@ -31,11 +31,11 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>label</name>
-                <value>My team First time resolution</value>
+                <value>My team first time resolution</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>reportName</name>
-                <value>MY_team_GDC_MAD_queries_1st_time_reso_mo</value>
+                <value>GDC_MAD_Queries_1st_time_reso_monthly</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>showRefreshButton</name>
@@ -54,11 +54,11 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>label</name>
-                <value>Closed query by CSR - My team</value>
+                <value>Closed queries by CSR - My team</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>reportName</name>
-                <value>MY_team_GDC_MAD_queries_closed_1bday_p</value>
+                <value>GDC_MAD_queries_closed_1bday_perCSR</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>showRefreshButton</name>
@@ -73,9 +73,9 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>context</name>
-                <value>BOOKMARKS</value>
+                <value>GLOBAL</value>
             </componentInstanceProperties>
-            <componentName>forceChatter:exposedFeed</componentName>
+            <componentName>forceChatter:publisher</componentName>
         </componentInstances>
         <name>sidebar</name>
         <type>Region</type>

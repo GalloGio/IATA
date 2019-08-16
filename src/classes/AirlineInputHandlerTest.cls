@@ -35,7 +35,9 @@ private class AirlineInputHandlerTest {
                                  IATA_ISO_Country__c=isoCountry.id,
                                  recordtypeID = hqrt,
                                  IATACode__c ='1234567',
-                                 Type = 'IATA Cargo Agent',
+                                 Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+                                 Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+                                 Sector__c = AMS_Utils.SECTOR_PASSENGER,
                                  billingCountry = 'CH',Location_Type__c = 'AO');
         insert a;
         
@@ -56,7 +58,7 @@ private class AirlineInputHandlerTest {
         Case c1 = new Case(recordtypeID = chinaRTID,
                           Region__c = 'China & North Asia',
                           BSPCountry__c = 'China',
-                          Status = 'Financial Security Requested',
+                          Status = 'Open',
                           FS_Submitted_Date__c = date.today(),
                           FS_Deadline_Date__c = twoweeksAgo,
                           Origin = 'asd',

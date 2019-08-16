@@ -41,7 +41,7 @@ public without sharing class OneIdLightningLoginFormController {
                                String startUrl,
                                String serviceName) {
         User oneUser;
-        String pageLink='';        
+        String pageLink = startUrl == null || startUrl.equalsIgnoreCase('undefined') ? '' : startUrl;
         //Clear spaces
         username = (null != username) ? username.trim() : username;
                                    
@@ -69,8 +69,8 @@ public without sharing class OneIdLightningLoginFormController {
                      LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
                 }
 
-                //to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
-                //oneUser.Portal_User_Frozen_Checkbox__c=true; 
+//to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
+//oneUser.Portal_User_Frozen_Checkbox__c=true; 
                 
                 system.debug('user id: ' + oneUser.Id);
                 system.debug('contact id: ' + oneUser.ContactId);
@@ -89,14 +89,22 @@ public without sharing class OneIdLightningLoginFormController {
                         pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
                     }
 
+                    if( String.isNotBlank(serviceName) && serviceName == 'NDCMM'){
+	                     pageLink = '/s/login/SelfRegister?language=en_US&serviceName=NDCMM';
+                    }
+
                 }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
-                    //pageLink = '/ISSP_Homepage';
-                    //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
-                    //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
-                    pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+                	 //pageLink = '/ISSP_Homepage';
+                	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
+                	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
+			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+                } else if( String.isNotBlank(serviceName) && serviceName == Label.TECH_GDPR_Community_Name){
+                    //  GP-17: GDPR need a direct redirection to the GDPR portal not to OneId home page
+                    pageLink = '/apex/CommunitiesLanding?serviceName='+Label.TECH_GDPR_Community_Name;
+                }else if( String.isNotBlank(serviceName) && serviceName == 'NDCMM'){
+					pageLink = '/s/ndcmm?serviceName=NDCMM';
                 }
-        
-            
+                
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
                     show90Days = true;
                     reactivateUser(oneUser,serviceName);
@@ -133,17 +141,20 @@ public without sharing class OneIdLightningLoginFormController {
 
             if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                 mode=OneIdUtils.Mode.ISSP;
-                pageLink=OneIdUtils.getCommunityRedirection(mode,startUrl);
             }
 
             if( String.isNotBlank(serviceName) && serviceName == 'CSP'){
                 mode=OneIdUtils.Mode.CSP;
-                pageLink=OneIdUtils.getCommunityRedirection(mode,startUrl);
             }
 
             //login in siteCompleteUrl
-            ApexPages.PageReference lgn = Site.login(username, password, pageLink);
-
+			ApexPages.PageReference lgn;
+            if(mode != null){
+            	lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(mode,startUrl));
+            }
+            else{
+            	lgn = Site.login(username, password, pageLink);
+            }
             system.debug('page reference return from login: '+lgn);
                         
             List<User> userListConfirmTempPassword = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
@@ -160,15 +171,15 @@ public without sharing class OneIdLightningLoginFormController {
 
             //Check user permissions for FAQs, reassign if needed
             try{
-            PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
+                PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
             }catch(Exception e){
                 System.debug('Unable to validate FAQs permissions assignments. \n'+e);
             }
-            
+
             //redirect to startUrl or some other page returned from the login 
             //for different login cases scenarios
             aura.redirect(lgn);
-            
+
             //return null in case of login success
             return null;
         }
@@ -183,8 +194,15 @@ public without sharing class OneIdLightningLoginFormController {
         thisUser.IsActive = true;
         thisUser.Portal_User_Frozen_Checkbox__c = false;
         update thisUser;
+
+        if(serviceName == 'CSP'){
+            serviceName = 'ISSP';
+        }
+
+        String community = serviceName == 'ISSP' ? Comm_User_Helper.ISSP : Comm_User_Helper.ONEIDENTITY;
+
         Boolean success = Comm_User_Helper.resetPassword(thisUser.email, 
-                                                         Comm_User_Helper.ONEIDENTITY, 
+                                                         community,
                                                          false,
                                                          serviceName);
     }

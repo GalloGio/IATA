@@ -28,7 +28,17 @@
                     <apex:variable value="{!0}" var="rowIndex"/>
                     <apex:repeat value="{!lstCountries}" var="country" >
                         {! IF (rowIndex == 0, '', ',')}
-                        ['{!country.IsoCode}','<h4>{!JSENCODE(country.Name)}</h4><div style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; display: inline-block; white-space: nowrap;">{!$Label.CurrencyCenter_Actual_Amount_Blocked}: <b>{!JSENCODE(country.AmtBlocked)}</b><br/>{!$Label.CurrencyCenter_Issue_Started}: <b>{!country.IssueStarted}</b><br/>{!$Label.CurrencyCenter_Number_of_Airlines_Reporting}: <b>{!country.NbAirlinesReporting}</b></div>']
+                        ['{!country.IsoCode}',
+                        '<h4>{!JSENCODE(country.Name)}</h4>'+
+                        '<div style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; display: inline-block; white-space: nowrap;">'+
+                            '{!$Label.CurrencyCenter_Actual_Amount_Blocked}: <b>{!JSENCODE(country.AmtBlocked)}</b><br/>'+
+                            '{!$Label.CurrencyCenter_Issue_Started}: <b>{!country.IssueStarted}</b><br/>'+
+                            '{!$Label.CurrencyCenter_Number_of_Airlines_Reporting}: <b>{!country.NbAirlinesReporting}</b><br/>'+
+                            '{!IF($CurrentPage.parameters.type="All Others",
+                                $Label.CurrencyCenter_CASS_ICCS_Availability + ": <b>" + country.CASS_ICCS_Availability + "</b></br>" +
+                                $Label.CurrencyCenter_BSP_ICCS_Availability  + ": <b>" + country.BSP_ICCS_Availability  + "</b>"
+                            ,"")}'+
+                        '</div>']
                         <apex:variable var="rowIndex" value="{!rowIndex + 1}"/>
                     </apex:repeat>
                 ]);

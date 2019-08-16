@@ -46,13 +46,14 @@
     <description>Filters to query Salesforce products to send Zuora pricing to SAP</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Exclude_SAP_Material_Number__c</fullName>
         <description>List of SAP material number of products to exclude from interface.  Should be in format &apos;mat1&apos;,&apos;mat2&apos;,...</description>

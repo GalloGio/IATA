@@ -15,7 +15,7 @@
         </publicGroups>
         <users>
             <user>strydomk@iata.org</user>
-            <user>martinsp@iata.org</user>
+            <user>martinsp@iata.org.inactive</user>
             <user>alostar@iata.org.inactive</user>
         </users>
     </queueMembers>

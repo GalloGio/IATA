@@ -566,7 +566,7 @@ background-color:#428bca;
   <apex:includeScript value="/lightning/lightning.out.js"/>
   <apex:stylesheet value="{!URLFOR($Resource.PortalHeader_NotiticationCenter_Tab_CSS, '/CSP_CSS/portalHeader_NotiticationCenter_Tab_CSS.css')}"/>
   <script>
-      $Lightning.use("c:portalHeaderApp", function() {
+      $Lightning.use("c:pageBuilderApp", function() {
           $Lightning.createComponent(
               "c:portalHeader",
               {isInOldPortal: true},
@@ -723,6 +723,11 @@ background-color:#428bca;
                 {!$Label.ISSP_Available_services}
                 </a>
 </li>
+    <li>
+        <a href="/ISSP_Financial_Institutions?MainNav=Services&subNav=Financial&mid=M3S2" id="M3S2" style="display:{!IF(showFinancialInstitution,'','none')}">
+            {!$Label.ISSP_Financial_Insititutions}
+        </a>
+    </li>
     </ul>
      <ul class="nav navbar-nav collapse" id="four" >
       <li>
@@ -769,6 +774,14 @@ background-color:#428bca;
      <ul  class="nav navbar-nav collapse" id="five">
          <li><a href="/ISSP_PersonalInformation?MainNav=Personalinfor&subNav=perso&mid=M5S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S1"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Registration_MyInformation}</a></li>
          <li><a href="/ISSP_CompanyInformation?MainNav=Companyinfor&subNav=account&mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S2">{!$Label.ISSP_Account_Information}</a></li>
+                <!-- AMSU-201 -->                
+                <apex:outputPanel layout="none" rendered="{!showFinancialSec}">
+                  <li>
+                    <a href="/ISSP_FinancialSecInformation?MainNav=FinInfo&subNav=financial_securities&mid=M5S3{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S3">
+                      {!$Label.ISSP_Financial_Securities_Information}
+                    </a>
+                  </li>
+                </apex:outputPanel>
       </ul>
 
       <ul  class="nav navbar-nav collapse" id="six">

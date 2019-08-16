@@ -423,9 +423,14 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 4 --> Query issued: ' + Limits.getQueries());
 
+        insert new Case_Detail__c(
+            Case__c = SidraLiteCase4.Id,
+            RecordTypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Repayment_Instalment'),
+            Due_Date__c=Date.Today());
+
         string sMemo1 = '<Termination Date> <Financial Securities> <DEF Withdrawal reason> <SIDRA Lite Reason>';
         string sMemo2 = ' <End Grace Period Date> <IRR Withdrawal Reason> <Outstanding Amount> <Termination Reason>';
-        string sMemo3 = ' <Update AIMS-DEF> <IRRS Sequence> <Reason for default> <Reason of REI/WD> <Inform GDS to Shut Down TKT System>';
+        string sMemo3 = ' <Update AIMS-DEF> <IRRS Sequence> <Reason for default> <Reason of REI/WD> <Inform GDS to Shut Down TKT System> <Last Due Date>';
 
         list<Case> lsCase = [select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,
                                   Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c,

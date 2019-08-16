@@ -54,3 +54,8 @@
 .breakWord{
   word-break: break-word;
 }
+
+.extIconClass {
+  color: blue;
+  float: right;
+}

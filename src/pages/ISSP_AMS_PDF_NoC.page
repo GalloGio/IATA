@@ -154,7 +154,7 @@
           <br/>
         </apex:outputPanel>
         <apex:outputPanel rendered="{!sectorValue=='Travel_Agent'}">
-            <apex:repeat value="{!List_PreviousOwners}" var="transferorOwner">
+            <apex:repeat value="{!List_PreviousCompaniesOwners}" var="transferorOwner">
                 <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
                     <table border="0" cellpadding="3">
                         <tr>
@@ -179,7 +179,7 @@
                     </table>
                 </div>
             </apex:repeat>
-            <apex:repeat value="{!List_CurrentOwners}" var="transfereeOwner">
+            <apex:repeat value="{!List_CurrentCompaniesOwners}" var="transfereeOwner">
                 <div class="row" style="width:50%; float:left; page-break-inside:avoid; margin-top:20px;">
                     <table border="0" cellpadding="3">
                         <tr>

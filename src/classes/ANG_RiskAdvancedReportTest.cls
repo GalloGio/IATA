@@ -60,7 +60,7 @@ private class ANG_RiskAdvancedReportTest {
 
 		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(ANG_Account__c = chield.id,
 			ANG_Severity__c = 'Red',
-			Recordtypeid = Schema.ANG_Risk_Alert__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId() );
+			Recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS') );
 		insert ra;
 	}
 

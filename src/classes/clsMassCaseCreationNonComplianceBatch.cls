@@ -1,6 +1,5 @@
 global class clsMassCaseCreationNonComplianceBatch implements Database.Batchable<sObject> {
 
-
     global List<Case> caseList = new List<Case>();
     global String Subject;
     global String Description;
@@ -14,12 +13,6 @@ global class clsMassCaseCreationNonComplianceBatch implements Database.Batchable
 
         try {
             for (Case c : scope) {
-
-                System.debug('parent case ID ' + c.Id );
-                System.debug('c.AccountID ' + c.AccountID );
-                System.debug('c.ContactID ' + c.ContactID );
-                System.debug('c.Account.Type ' + c.Account.Type );
-
 
                 Case complianceCase = new Case();
 
@@ -41,9 +34,7 @@ global class clsMassCaseCreationNonComplianceBatch implements Database.Batchable
                 //Query to get BSP country and Region
                 List<IATA_ISO_Country__c> isoCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(c.Account.BillingCountry);
 
-
                 if (isoCountry[0].Case_BSP_Country__c != null && isoCountry[0].Case_BSP_Country__c != '') {
-                    System.debug('** setting country');
                     complianceCase.BSPCountry__c = isoCountry[0].Case_BSP_Country__c;
                     complianceCase.Region__c = isoCountry[0].Region__c;
                 } else {
@@ -71,7 +62,6 @@ global class clsMassCaseCreationNonComplianceBatch implements Database.Batchable
                 //Setting the DMLOption on Case instance
                 complianceCase.setOptions(dmlOpts);
 
-
                 Insert complianceCase;
                 System.debug('case for ' + c.ID + ' Inserted ' + complianceCase.ID);
                 Update c;
@@ -80,10 +70,8 @@ global class clsMassCaseCreationNonComplianceBatch implements Database.Batchable
         } catch (Exception e) {
             System.debug('Error in Non Compliance Batch' + e);
         }
-
     }
 
-    global void finish(Database.BatchableContext BC) {
-    }
+    global void finish(Database.BatchableContext BC) { }
 
 }

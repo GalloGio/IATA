@@ -1,24 +1,28 @@
 @isTest
 private class CaseDueDiligenceTest {
 
-    public static final Id RT_ICCS_ASP_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('IDFS_Airline_Participation_Process').getRecordTypeId();
-    public static final Id RT_CODING_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('Airline_Coding_Application').getRecordTypeId();
+    public static final Id RT_ICCS_ASP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','IDFS_Airline_Participation_Process');
+    public static final Id RT_CODING_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','Airline_Coding_Application');
 
 
     static testMethod void testCaseBeforeUpdate() {
         insert new Case_Reason_Service__c(Name = 'SIS Client', Service__c = 'SIS Client', Provider_Required__c = false);
         Account account = new Account(
+            RecordtypeId = RecordTypeSingleton.getInstance().getRecordType('Account','IATA_Airline').Id,
             Name='testaccount',
-            Date_of_last_clearance__c = Date.today()
+            Date_of_last_clearance__c = Date.today().addYears(-1)
         );
         insert account;
         
+        Contact contact = new Contact(FirstName = 'testContact', LastName = 'testContact');
+        insert contact;
         Case cse = new Case(
             AccountId = account.Id,
             RecordTypeId = RT_ICCS_ASP_ID,
             CaseArea__c = 'Airline Joining',
             Reason1__c = 'SIS Client',
-            Type = 'TOU'
+            Type = 'TOU',
+            ContactId = contact.Id
         );
         insert cse;
         
@@ -28,7 +32,7 @@ private class CaseDueDiligenceTest {
             update cse;
             System.assert(false,'DueDiligenceException expected');
         } catch(Exception e) {
-            System.assert(true);
+            System.assert(e.getMessage().contains('Last clearance date is approaching'), 'Wrong Exception: ' + e.getTypeName() + ' -> ' + e.getMessage());
         }
         Test.stopTest();
     }
@@ -184,6 +188,46 @@ private class CaseDueDiligenceTest {
         
         Test.startTest();
         assertException(cse,account);
+        Test.stopTest();
+    }
+
+    static testMethod void testvalidateWithTopParent() {
+        insert new Case_Reason_Service__c(Name = 'SIS Client', Service__c = 'SIS Client', Provider_Required__c = false);
+        Account topAccount = new Account(
+            RecordtypeId = RecordTypeSingleton.getInstance().getRecordType('Account','IATA_Airline').Id,
+            Name='TopAccount',
+            Date_of_last_clearance__c = Date.today(),
+            Clearance_level__c = '4'
+        );
+        insert topAccount;
+        Account account = new Account(
+            RecordtypeId = RecordTypeSingleton.getInstance().getRecordType('Account','IATA_Airline').Id,
+            ParentId = topAccount.Id,
+            Name='testaccount',
+            Date_of_last_clearance__c = Date.today().addYears(-1)
+        );
+        insert account;
+        
+        Contact contact = new Contact(FirstName = 'testContact', LastName = 'testContact');
+        insert contact;
+        Case cse = new Case(
+            AccountId = account.Id,
+            RecordTypeId = RT_ICCS_ASP_ID,
+            CaseArea__c = 'Airline Joining',
+            Reason1__c = 'SIS Client',
+            Type = 'TOU',
+            ContactId = contact.Id
+        );
+        insert cse;
+
+        Test.startTest();
+        try {
+            cse.Status = 'Closed';
+            update cse;
+        } catch(Exception e) {
+            System.assert(false, e.getMessage());
+        }
+        CaseDueDiligence.isValid(cse,account);
         Test.stopTest();
     }
 
