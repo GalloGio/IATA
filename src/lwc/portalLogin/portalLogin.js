@@ -77,7 +77,7 @@ export default class PortalLogin extends LightningElement {
     }
 
     get svgURL(){
-        return '/csportal/s/show_blue.png';
+        return CSP_PortalPath + 'show_blue.png';
     }
 
     /* ==============================================================================================================*/
@@ -86,15 +86,13 @@ export default class PortalLogin extends LightningElement {
 
     connectedCallback() {
 
-        console.log('isGuest: ', isGuest);
         if(isGuest == false){
             //todo:this shouldnt navigate on community builder!
-            navigateToPage('/csportal/s/',{});
+            navigateToPage(CSP_PortalPath,{});
             return;
         }
 
         let pageParams = getParamsFromPage();
-        console.log('pageParams: ', pageParams);
         if(pageParams !== undefined && pageParams.email !== undefined){
             this.email = decodeURIComponent(pageParams.email);
             this.isEmailFieldReadOnly = true;
@@ -105,19 +103,17 @@ export default class PortalLogin extends LightningElement {
         }
 
         const RegistrationUtilsJs = new RegistrationUtils();
-        console.log('initialize utils');
         RegistrationUtilsJs.getUserLocation().then(result=> {
-            console.log('result: ', result);
             this.isSanctioned = result.isRestricted;
             if(this.isSanctioned == true){
                 //navigate to error page
-                navigateToPage('/csportal/s/restricted-login');
+                navigateToPage(CSP_PortalPath + 'restricted-login');
             }else{
                 getInitialConfig().then(result => {
                     var config = JSON.parse(JSON.stringify(result));
-                    config.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf("/csportal"));
-                    config.forgotPasswordUrl = result.forgotPasswordUrl.substring(result.forgotPasswordUrl.indexOf("/csportal"));
                     console.log('config: ', config);
+                    config.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
+                    config.forgotPasswordUrl = result.forgotPasswordUrl.substring(result.forgotPasswordUrl.indexOf(CSP_PortalPath));
                     this.config = config;
 
                     //todo remove this part - for testing only.
@@ -140,7 +136,6 @@ export default class PortalLogin extends LightningElement {
 
                 })
                 .catch(error => {
-                    console.log('Error: ', error);
                     this.isLoading = false;
                 });
             }
@@ -158,7 +153,6 @@ export default class PortalLogin extends LightningElement {
         /*
         //disable autocomplete - 1 ( does not work )
         var input = this.template.querySelector('[data-id="emailInput"]');
-        console.log('input: ', input);
         if(input.getAttribute("autocomplete") !== "off"){
             input.setAttribute("autocomplete","off");
         }
@@ -241,8 +235,6 @@ export default class PortalLogin extends LightningElement {
 
     handleLogin(event){
 
-        console.log('email: ', this.email);
-        console.log('password: ', this.password);
         this.isLoading = true;
 
         const RegistrationUtilsJs = new RegistrationUtils();
@@ -267,12 +259,10 @@ export default class PortalLogin extends LightningElement {
                     }
                 })
                 .catch(error => {
-                    console.log('Error 1: ' , JSON.parse(JSON.stringify(error)));
                     this.isLoading = false;
                 });
             }
         }).catch(error => {
-            console.log('Error 2: ' , JSON.parse(JSON.stringify(error)));
             this.isLoading = false;
         });
 
@@ -336,7 +326,6 @@ export default class PortalLogin extends LightningElement {
             emailDiv.classList.remove('slds-has-error');
             passwordDiv.classList.remove('slds-has-error');
         }
-        console.log('div style added');
 
     }
 

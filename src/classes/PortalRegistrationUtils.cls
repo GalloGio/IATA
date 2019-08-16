@@ -61,8 +61,6 @@ public with sharing class PortalRegistrationUtils {
 
         if ((ipAddress != '' && ipAddress != null && country == '') || test.isRunningTest()){
             List <String> ipList = ipAddress.split('\\.');
-            system.debug(ipAddress);
-            system.debug(ipList);
             Decimal ipInteger_1 = Decimal.valueOf(ipList[0]);
             Decimal ipInteger_2 = Decimal.valueOf(ipList[1]);
             Decimal ipInteger_3 = Decimal.valueOf(ipList[2]);
@@ -81,7 +79,6 @@ public with sharing class PortalRegistrationUtils {
                 }
             }
         }
-        system.debug(loc.isRestricted);
         loc.country = countryName;
         loc.countryId = countryId;
         return loc;
