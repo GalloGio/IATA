@@ -38,6 +38,8 @@ public class PortalSearchFilterWrapper {
         public String caseTypeFilter {get; set;}
         @AuraEnabled
         public String caseCountryFilter {get; set;}
+        @AuraEnabled
+        public String caseContactFilter {get; set;}
 
         public casesComponent(){}
     }
