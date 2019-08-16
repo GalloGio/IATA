@@ -3,6 +3,7 @@ import { navigateToPage } from 'c/navigationUtils';
 import getInitialConfig   from '@salesforce/apex/PortalForgotPasswordController.getInitialConfig';
 import RegistrationUtils  from 'c/registrationUtils';
 import isGuest            from '@salesforce/user/isGuest';
+import CSP_PortalPath     from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalForgotPasswordCard extends LightningElement {
 
@@ -20,13 +21,13 @@ export default class PortalForgotPasswordCard extends LightningElement {
        RegistrationUtilsJs.getUserLocation().then(result=> {
            this.isSanctioned = result.isRestricted;
            if(this.isSanctioned == true){
-               navigateToPage("/csportal/s/restricted-login");
+               navigateToPage(CSP_PortalPath + "restricted-login");
            }
            else{
                //get initial configuration information
                 getInitialConfig().then(result => {
-                   this.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf("/csportal"));
-                   this.loginUrl = result.loginUrl.substring(result.loginUrl.indexOf("/csportal"));
+                   this.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
+                   this.loginUrl = result.loginUrl.substring(result.loginUrl.indexOf(CSP_PortalPath));
                    this.changeIsLoadingMain();
                })
                .catch(error => {
@@ -37,7 +38,7 @@ export default class PortalForgotPasswordCard extends LightningElement {
 
     checkUserIsGuest(){
        if(isGuest == false){
-           navigateToPage('/csportal/s/',{});
+           navigateToPage(CSP_PortalPath,{});
            return;
        }
     }

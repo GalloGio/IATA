@@ -48,14 +48,16 @@ public without sharing class PortalPasswordHandler {
         List<User> userList = [Select id, contactId, uid__c, userName from user where email = :email and contactId != '' and
                                      (isActive = true or portal_user_frozen_checkbox__c = true)];
 
-        if(userList != null && userList.size() > 0){
+        if(!userList.isEmpty()){
             user = userList.get(0);
         }
         return user;
     }
 
     //update user information
-    public static void updateUserPassword(User user){
+    public static boolean updateUserPassword(User user){
+        boolean success = true;
+
         user.uid__c   = Comm_User_Helper.NewGuid();
         user.isActive = true;
         user.portal_user_frozen_checkbox__c = false;
@@ -66,9 +68,13 @@ public without sharing class PortalPasswordHandler {
             system.setPassword(user.id, password);
             sendEmail(user,password);
         }
-        catch(Exception ex){}
+        catch(Exception ex){
+            success = false;
+        }
 
-        update user;
+        if(success == true) update user;
+
+        return success;
     }
 
     public static void sendEmail(User user, String password) {
@@ -84,11 +90,6 @@ public without sharing class PortalPasswordHandler {
         String link     = prefix + '/firstLogin?' + encodedPart;
         String template = 'CSP_Forgot_Password_Email';
         String imageURL = Label.OneId_Email_Header_Identity;
-        //String headerImgName = 'OneIdentity_Email_Header' + ((serviceName == '')? '': ('_' + serviceName));
-        //Map<String,String> emailWrapper = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( contactInfo, password, link, 'ISSP');
-        //List<Document> doc = [Select id, Name, SystemModStamp From Document Where DeveloperName = :headerImgName];
-        //if(doc.size() > 0)
-        //imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();
 
         Map<String, String> mapBodyParams = new map<String, String>{
                 '{!Contact.Salutation}' => contactInfo.Salutation,
@@ -158,7 +159,7 @@ public without sharing class PortalPasswordHandler {
         if(result.success == true){
             User user = getUserFromEmail(email);
             if(user != null){
-                updateUserPassword(user);
+                result.success = updateUserPassword(user);
             }
             else{
                 result.success = false;
