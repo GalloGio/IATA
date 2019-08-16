@@ -27,7 +27,6 @@ export default class PortalLoginHeader extends LightningElement {
         this.loadingLangs = true;
         getCommunityAvailableLanguages().then(result => {
             if (result) {
-                console.log('result: ', result);
                 var lowerCaseLangOpts = result.map(function(a) {
                      a.value = a.value.toLowerCase();
                      return a;
@@ -37,7 +36,6 @@ export default class PortalLoginHeader extends LightningElement {
             }
             this.loadingLangs = false;
         }).catch(error => {
-            console.error('Error getCommunityAvailableLanguages', error);
             this.loadingLangs = false;
         });
     }

@@ -5,7 +5,6 @@
 .headerTitle {
   width: 368px;
   height: 80px;
-  font-family: AktivGrotesk;
   font-size: 30px;
   font-weight: 500;
   font-style: normal;
@@ -18,7 +17,6 @@
 .infoText {
   width: 368px;
   height: 78px;
-  font-family: AktivGrotesk;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -52,7 +50,6 @@
 .cardItemTitle {
   width: 272px;
   height: 24px;
-  font-family: AktivGrotesk;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -65,7 +62,6 @@
 .description {
   width: 272px;
   height: 40px;
-  font-family: AktivGrotesk;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
@@ -78,7 +74,6 @@
 .link {
   width: 66px;
   height: 24px;
-  font-family: AktivGrotesk;
   font-size: 14px;
   font-weight: 500;
   font-style: normal;
@@ -91,7 +86,6 @@
 
 .contentContainer {
     width: 528px;
-    /*height: 900px;*/
     padding:70px;
 }
 
