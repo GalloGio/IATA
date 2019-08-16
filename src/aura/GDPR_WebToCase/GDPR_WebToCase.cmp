@@ -82,11 +82,11 @@
                                 <lightning:spinner aura:id="loadingApi" alternativeText="Loading" size="medium" class="slds-hide" />
 
                                 <div class="slds-p-horizontal_medium slds-size_1-of-1 slds-medium-size_1-of-3">
-                                    <ui:inputText aura:id="passengerName"  label="Passenger Name (PXNM)" value="{!v.newCaseDPO.Passenger_Name_PXNM__c}" required="true"/>
+                                    <ui:inputText aura:id="passengerName" placeholder="LAST NAME / FIRST NAME TITLE" label="Passenger Name (PXNM)" value="{!v.newCaseDPO.Passenger_Name_PXNM__c}" required="true"/>
                                 </div>
                                 
                                 <div class="slds-p-horizontal_medium slds-size_1-of-1 slds-medium-size_1-of-3">
-                                    <ui:inputText aura:id="ticketNumber"  label="Ticket Number (TDNR)" value="{!v.newCaseDPO.Ticket_Number_TDNR__c}" required="true"/>
+                                    <ui:inputText aura:id="ticketNumber"  placeholder="0000000000000" label="Ticket Number (TDNR)" value="{!v.newCaseDPO.Ticket_Number_TDNR__c}" required="true"/>
                                 </div>
                                 
                                 <div class="slds-p-horizontal_medium slds-size_1-of-1 slds-medium-size_1-of-3">
@@ -100,7 +100,7 @@
                                 <div class="slds-p-horizontal_medium slds-size_1-of-1">
                                     <c:jsonDatatable 
                                         aura:id="jsonTable"
-                                        columnOrder="applicationName,flowName,dateTime,description"
+                                        columnOrder="applicationName,subsequentApplication,dateTime,description"
                                         columnNames="Application,Flow,Date/Time,Description" 
                                         autoLoad="false"
                                         operationType="GET"
